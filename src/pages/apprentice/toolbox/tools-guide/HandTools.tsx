@@ -7,6 +7,10 @@ import { Link } from "react-router-dom";
 import { useToolsData } from "@/hooks/useToolsData";
 import ToolsFeaturedCarousel from "@/components/electrician-tools/ToolsFeaturedCarousel";
 import ToolsGrid from "@/components/electrician-tools/ToolsGrid";
+import ToolComparison from "@/components/electrician-tools/ToolComparison";
+import ProfessionalTips from "@/components/electrician-tools/ProfessionalTips";
+import JobSpecificRecommendations from "@/components/electrician-tools/JobSpecificRecommendations";
+import QuickToolFinder from "@/components/electrician-tools/QuickToolFinder";
 
 const HandTools = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -85,30 +89,47 @@ const HandTools = () => {
             <p className="text-white/90">Try adjusting your search terms.</p>
           </div>
         ) : (
-          <div className="space-y-6 sm:space-y-8">
+          <div className="space-y-8">
+            {/* Quick Tool Finder */}
+            <QuickToolFinder />
+            
+            {/* Tool Comparison */}
+            <ToolComparison tools={handTools} />
+            
+            {/* Professional Tips */}
+            <ProfessionalTips />
+            
+            {/* Job-Specific Recommendations */}
+            <JobSpecificRecommendations />
+            
             {/* Featured Carousel */}
             {featuredTools.length > 0 && (
-              <div className="transform transition-all duration-300">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+                  <h3 className="text-xl font-semibold text-white px-4">
+                    Featured Hand Tools
+                  </h3>
+                  <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+                </div>
                 <ToolsFeaturedCarousel />
               </div>
             )}
 
             {/* Remaining Tools Grid */}
             {gridTools.length > 0 && (
-              <div className="space-y-4 sm:space-y-6">
+              <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-                  <h3 className="text-lg sm:text-xl font-semibold text-white px-4">
-                    More Hand Tools
+                  <h3 className="text-xl font-semibold text-white px-4">
+                    All Hand Tools
                   </h3>
                   <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
                 </div>
-                <div className="transform transition-all duration-300">
-                  <ToolsGrid 
-                    tools={gridTools}
-                    excludeIds={featuredToolIds}
-                  />
-                </div>
+                <ToolsGrid 
+                  tools={gridTools}
+                  excludeIds={featuredToolIds}
+                />
               </div>
             )}
           </div>
