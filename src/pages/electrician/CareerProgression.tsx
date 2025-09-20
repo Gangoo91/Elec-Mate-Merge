@@ -43,121 +43,171 @@ const CareerProgression = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in px-2 sm:px-0">
+    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-gray to-elec-dark">
       <Helmet>
         <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
         <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
         <link rel="canonical" href="/electrician/career-progression" />
       </Helmet>
 
-      {/* Header */}
-      <div className="space-y-3">
-        {!activeSection && (
-          <>
-            <h1 className="text-xl sm:text-2xl font-bold text-center mb-4">
-              Career Progression
-            </h1>
-            <p className="text-sm sm:text-base text-white text-center max-w-4xl mx-auto px-4">
-              Comprehensive career development resources for qualified electricians. Explore emerging technologies, 
-              strategic career planning tools, and professional growth opportunities in the rapidly evolving electrical sector.
-            </p>
-          </>
-        )}
-        {!activeSection && (
-          <Link to="/electrician" className="w-full sm:w-auto">
-            <Button variant="outline" className="flex items-center gap-2 w-full">
-              <ArrowLeft className="h-4 w-4" /> Back to Electrical Hub
-            </Button>
-          </Link>
-        )}
-        {activeSection && (
-          <Button variant="outline" className="flex items-center gap-2 w-full sm:w-auto" onClick={handleBackToSections}>
-            <ArrowLeft className="h-4 w-4" /> Back to Sections
-          </Button>
-        )}
+      {/* Hero Section */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-elec-dark via-elec-gray to-elec-dark">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        <div className="relative px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <div className="max-w-4xl mx-auto text-center">
+            {!activeSection && (
+              <>
+                <div className="mb-6">
+                  <span className="inline-flex items-center px-4 py-2 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-sm font-medium">
+                    ⚡ Professional Development Hub
+                  </span>
+                </div>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 gradient-text leading-tight">
+                  Career Progression
+                </h1>
+                <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed max-w-3xl mx-auto">
+                  Comprehensive career development resources for qualified electricians. Explore emerging technologies, 
+                  strategic career planning tools, and professional growth opportunities in the rapidly evolving electrical sector.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/electrician" className="group">
+                    <Button variant="outline" className="flex items-center gap-2 h-12 px-6 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-300">
+                      <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" /> 
+                      Back to Electrical Hub
+                    </Button>
+                  </Link>
+                </div>
+              </>
+            )}
+            {activeSection && (
+              <div className="text-center">
+                <Button 
+                  variant="outline" 
+                  className="flex items-center gap-2 mx-auto h-12 px-6 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-300" 
+                  onClick={handleBackToSections}
+                >
+                  <ArrowLeft className="h-4 w-4" /> Back to Sections
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
+
+      <div className="space-y-8 px-4 sm:px-6 lg:px-8 py-8">
 
       {activeSection === null ? (
         <>
 
 
           {/* Career Sections Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {electricianCareerSections.map((section) => (
-              <Card 
-                key={section.id}
-                className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/90 transition-all duration-300 cursor-pointer hover-scale group"
-                onClick={() => setActiveSection(section.id)}
-              >
-                <CardContent className="p-6 text-center h-full flex flex-col justify-between">
-                  <div>
-                    <div className="mb-4 flex justify-center">
-                      {section.icon}
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Choose Your Path</h2>
+              <p className="text-white/80 max-w-2xl mx-auto">Select a career development area to explore resources, opportunities, and strategic guidance</p>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {electricianCareerSections.map((section, index) => (
+                <Card 
+                  key={section.id}
+                  className="relative border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-dark overflow-hidden h-full hover:border-elec-yellow/40 transition-all duration-500 cursor-pointer group hover:scale-105 hover:shadow-2xl hover:shadow-elec-yellow/10"
+                  onClick={() => setActiveSection(section.id)}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <CardContent className="relative p-6 text-center h-full flex flex-col justify-between">
+                    <div>
+                      <div className="mb-6 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
+                        {section.icon}
+                      </div>
+                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-elec-yellow transition-colors duration-300">{section.title}</h3>
+                      <p className="text-sm text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">{section.description}</p>
                     </div>
-                    <h3 className="text-lg font-semibold text-white mb-2">{section.title}</h3>
-                    <p className="text-sm text-muted-foreground">{section.description}</p>
+                    <div className="mt-6 flex items-center justify-center">
+                      <div className="flex items-center gap-2 text-xs text-elec-yellow opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                        <span className="font-medium">Explore Now</span>
+                        <ArrowLeft className="h-3 w-3 rotate-180" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+              
+              {/* Job Vacancies Card */}
+              <Card 
+                className="relative border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-dark overflow-hidden h-full hover:border-elec-yellow/40 transition-all duration-500 cursor-pointer group hover:scale-105 hover:shadow-2xl hover:shadow-elec-yellow/10"
+                onClick={() => setActiveSection("job-vacancies")}
+                style={{ animationDelay: `${electricianCareerSections.length * 100}ms` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <CardContent className="relative p-6 text-center h-full flex flex-col justify-between">
+                  <div>
+                    <div className="mb-6 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
+                      <Briefcase className="h-12 w-12 text-elec-yellow opacity-80" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-elec-yellow transition-colors duration-300">Job Vacancies</h3>
+                    <p className="text-sm text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">Browse current electrical job opportunities and positions</p>
                   </div>
-                  <div className="mt-4 text-xs text-elec-yellow opacity-0 group-hover:opacity-100 transition-opacity">
-                    Click to explore →
+                  <div className="mt-6 flex items-center justify-center">
+                    <div className="flex items-center gap-2 text-xs text-elec-yellow opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <span className="font-medium">Explore Now</span>
+                      <ArrowLeft className="h-3 w-3 rotate-180" />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
-            ))}
-            
-            {/* Job Vacancies Card */}
-            <Card 
-              className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/90 transition-all duration-300 cursor-pointer hover-scale group"
-              onClick={() => setActiveSection("job-vacancies")}
-            >
-              <CardContent className="p-6 text-center h-full flex flex-col justify-between">
-                <div>
-                  <div className="mb-4 flex justify-center">
-                    <Briefcase className="h-12 w-12 text-elec-yellow opacity-80" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">Job Vacancies</h3>
-                  <p className="text-sm text-muted-foreground">Browse current electrical job opportunities and positions</p>
+            </div>
+          </div>
+
+          {/* Industry Statistics */}
+          <div className="max-w-6xl mx-auto">
+            <Card className="relative border-elec-yellow/20 bg-gradient-to-br from-elec-gray via-elec-dark to-elec-gray overflow-hidden">
+              <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+              <CardContent className="relative p-8">
+                <div className="text-center mb-10">
+                  <h3 className="text-2xl sm:text-3xl font-bold gradient-text mb-4">Industry Overview</h3>
+                  <p className="text-white/80 max-w-2xl mx-auto">Real-time insights into the UK electrical industry landscape</p>
                 </div>
-                <div className="mt-4 text-xs text-elec-yellow opacity-0 group-hover:opacity-100 transition-opacity">
-                  Click to explore →
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                  <div className="text-center group">
+                    <div className="bg-elec-yellow/10 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:bg-elec-yellow/20 transition-colors duration-300">
+                      <div className="text-4xl font-bold text-elec-yellow">
+                        {marketData?.careerpathways || '15'}+
+                      </div>
+                    </div>
+                    <div className="text-lg text-white font-semibold mb-1">Specialist Pathways</div>
+                    <div className="text-sm text-white/70">Available career routes</div>
+                  </div>
+                  <div className="text-center group">
+                    <div className="bg-blue-500/10 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors duration-300">
+                      <div className="text-4xl font-bold text-blue-400">
+                        {marketData?.totalCourses || '350'}+
+                      </div>
+                    </div>
+                    <div className="text-lg text-white font-semibold mb-1">Training Courses</div>
+                    <div className="text-sm text-white/70">Professional development</div>
+                  </div>
+                  <div className="text-center group">
+                    <div className="bg-green-500/10 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:bg-green-500/20 transition-colors duration-300">
+                      <div className="text-2xl font-bold text-green-400">
+                        {marketData?.professionalRange || '£30k-£85k+'}
+                      </div>
+                    </div>
+                    <div className="text-lg text-white font-semibold mb-1">Salary Range</div>
+                    <div className="text-sm text-white/70">Current market rates</div>
+                  </div>
+                  <div className="text-center group">
+                    <div className="bg-purple-500/10 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors duration-300">
+                      <div className="text-4xl font-bold text-purple-400">18%</div>
+                    </div>
+                    <div className="text-lg text-white font-semibold mb-1">Growth Forecast</div>
+                    <div className="text-sm text-white/70">Next 5 years</div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
-
-          {/* Industry Statistics */}
-          <Card className="border-elec-yellow/20 bg-elec-gray mb-6">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold text-elec-yellow mb-6 text-center">Industry Overview</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-elec-yellow mb-2">
-                    {marketData?.careerpathways || '15'}+
-                  </div>
-                  <div className="text-sm text-white font-medium">Specialist Pathways</div>
-                  <div className="text-xs text-white/70 mt-1">Available career routes</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-elec-yellow mb-2">
-                    {marketData?.totalCourses || '350'}+
-                  </div>
-                  <div className="text-sm text-white font-medium">Training Courses</div>
-                  <div className="text-xs text-white/70 mt-1">Professional development</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-elec-yellow mb-2">
-                    {marketData?.professionalRange || '£30k-£85k+'}
-                  </div>
-                  <div className="text-sm text-white font-medium">Salary Range</div>
-                  <div className="text-xs text-white/70 mt-1">Current market rates</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-elec-yellow mb-2">18%</div>
-                  <div className="text-sm text-white font-medium">Growth Forecast</div>
-                  <div className="text-xs text-white/70 mt-1">Next 5 years</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
           {/* High-Demand Career Opportunities */}
           <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -435,10 +485,13 @@ const CareerProgression = () => {
           </Card>
         </>
       ) : (
-        <div className="space-y-4">
-          {renderSectionContent()}
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-gradient-to-br from-elec-gray to-elec-dark rounded-2xl border border-elec-yellow/20 overflow-hidden">
+            {renderSectionContent()}
+          </div>
         </div>
       )}
+    </div>
     </div>
   );
 };
