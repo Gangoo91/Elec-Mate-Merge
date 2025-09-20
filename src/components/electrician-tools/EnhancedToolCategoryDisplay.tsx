@@ -28,7 +28,7 @@ import EnhancedProductGrid from "./EnhancedProductGrid";
 // Hand Tools specific components
 import ToolComparison from "./ToolComparison";
 import ProfessionalTips from "./ProfessionalTips";
-import JobSpecificRecommendations from "./JobSpecificRecommendations";
+
 import QuickToolFinder from "./QuickToolFinder";
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
@@ -282,7 +282,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
               <ProfessionalTips />
               
               {/* Job-Specific Recommendations */}
-              <JobSpecificRecommendations />
+              
               
               {/* Section Divider */}
               <div className="flex items-center gap-3 py-4">
