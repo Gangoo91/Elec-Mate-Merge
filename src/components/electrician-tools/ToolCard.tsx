@@ -283,7 +283,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
               <Zap className="h-3 w-3 text-elec-yellow" />
               Specifications
             </div>
-            <div className="text-xs font-medium text-foreground">Professional Grade</div>
+            
           </div>
           
           <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
