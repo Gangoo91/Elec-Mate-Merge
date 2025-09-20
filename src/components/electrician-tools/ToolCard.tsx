@@ -278,7 +278,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
         {/* 2x2 Information grid */}
         <div className="grid grid-cols-2 gap-2 mb-4">
-          <div className="bg-background/50 p-2 space-y-1">
+          <div className="bg-background/50 bg-white/5 p-2 space-y-1">
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <Zap className="h-3 w-3 text-elec-yellow" />
               Specifications
