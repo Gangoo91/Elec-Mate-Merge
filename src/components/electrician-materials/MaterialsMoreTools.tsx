@@ -1,7 +1,12 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { 
   MoreHorizontal, 
   Scale, 
@@ -28,103 +33,100 @@ const MaterialsMoreTools = ({
   onAIInsightsClick 
 }: MaterialsMoreToolsProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Handle clicks outside to close dropdown
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   const tools = [
     {
-      icon: Scale,
-      label: "Compare Materials",
+      id: "compare",
+      title: "Compare Materials",
       description: "Side-by-side comparison",
+      icon: Scale,
       onClick: onCompareClick,
-      disabled: selectedCount === 0,
-      badge: selectedCount > 0 ? selectedCount : undefined
+      disabled: selectedCount === 0
     },
     {
-      icon: Calculator,
-      label: "Bulk Pricing",
+      id: "bulk-pricing",
+      title: "Bulk Pricing", 
       description: "Calculate bulk discounts",
+      icon: Calculator,
       onClick: onBulkPricingClick,
       disabled: false
     },
     {
+      id: "price-alerts",
+      title: "Price Alerts",
+      description: "Track price changes", 
       icon: TrendingUp,
-      label: "Price Alerts",
-      description: "Track price changes",
       onClick: onPriceAlertsClick,
       disabled: false
     },
     {
-      icon: Brain,
-      label: "AI Insights",
+      id: "ai-insights",
+      title: "AI Insights",
       description: "Smart recommendations",
+      icon: Brain,
       onClick: onAIInsightsClick,
       disabled: false
     }
   ];
 
-  return (
-    <div ref={dropdownRef} className="relative">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => setIsOpen(!isOpen)}
-        className="border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
-      >
-        <MoreHorizontal className="h-4 w-4 mr-2" />
-        More Tools
-        {selectedCount > 0 && (
-          <Badge variant="secondary" className="ml-2 bg-elec-yellow text-elec-dark">
-            {selectedCount}
-          </Badge>
-        )}
-        <ChevronDown className={`h-4 w-4 ml-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-      </Button>
+  const handleToolClick = (toolId: string) => {
+    const tool = tools.find(t => t.id === toolId);
+    if (tool && !tool.disabled) {
+      tool.onClick();
+      setIsOpen(false);
+    }
+  };
 
-      {isOpen && (
-        <Card className="absolute top-full right-0 z-50 mt-2 w-72 border-elec-yellow/20 shadow-lg">
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <CollapsibleTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          className="relative border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50 data-[state=open]:bg-elec-yellow/10"
+        >
+          <MoreHorizontal className="h-4 w-4 mr-2" />
+          More Tools
+          <ChevronDown className={`h-4 w-4 ml-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+          {selectedCount > 0 && (
+            <Badge 
+              variant="secondary" 
+              className="absolute -top-2 -right-2 h-5 w-5 p-0 text-xs bg-elec-yellow text-elec-dark border-elec-dark/20"
+            >
+              {selectedCount}
+            </Badge>
+          )}
+        </Button>
+      </CollapsibleTrigger>
+
+      <CollapsibleContent className="relative">
+        <Card className="fixed md:absolute top-2 left-0 right-0 md:top-full md:right-0 md:left-auto z-50 mt-2 w-full md:w-80 max-h-[80vh] overflow-y-auto backdrop-blur-sm bg-card/95 border-elec-yellow/20 shadow-lg">
           <CardContent className="p-0">
             <div className="py-2">
-              {tools.map((tool, index) => {
+              {tools.map((tool) => {
                 const Icon = tool.icon;
                 return (
                   <button
-                    key={index}
-                    onClick={() => {
-                      if (!tool.disabled) {
-                        tool.onClick();
-                        setIsOpen(false);
-                      }
-                    }}
+                    key={tool.id}
+                    onClick={() => handleToolClick(tool.id)}
                     disabled={tool.disabled}
                     className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-all duration-200 ${
                       tool.disabled
                         ? 'opacity-50 cursor-not-allowed'
-                        : 'hover:bg-elec-yellow/10 text-elec-light'
+                        : 'hover:bg-elec-yellow/10 text-elec-light active:bg-elec-yellow/20'
                     }`}
                   >
-                    <Icon className="h-5 w-5 text-elec-yellow" />
-                    <div className="flex-1">
+                    <Icon className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-sm">{tool.label}</span>
-                        {tool.badge && (
+                        <span className="font-medium text-sm truncate">{tool.title}</span>
+                        {tool.id === "compare" && selectedCount > 0 && (
                           <Badge variant="secondary" className="bg-elec-yellow text-elec-dark text-xs">
-                            {tool.badge}
+                            {selectedCount}
                           </Badge>
                         )}
                       </div>
-                      <p className="text-xs text-muted-foreground">{tool.description}</p>
+                      <p className="text-xs text-muted-foreground truncate">{tool.description}</p>
                     </div>
                   </button>
                 );
@@ -132,8 +134,8 @@ const MaterialsMoreTools = ({
             </div>
           </CardContent>
         </Card>
-      )}
-    </div>
+      </CollapsibleContent>
+    </Collapsible>
   );
 };
 
