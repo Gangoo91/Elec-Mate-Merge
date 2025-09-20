@@ -304,7 +304,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
       
       <CardContent className="pt-0 flex-grow flex flex-col">
         {/* Supplier section at top */}
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+        <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
           <Package className="h-4 w-4" />
           <span className="font-medium">{item.supplier}</span>
           <span>⭐ {reviewData?.rating || '4.8'}</span>
