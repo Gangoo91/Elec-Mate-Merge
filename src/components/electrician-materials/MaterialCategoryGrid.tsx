@@ -33,7 +33,7 @@ const MaterialCategoryGrid = () => {
               </CardHeader>
               
               <CardContent>
-                <div className="bg-elec-card/70 h-32 rounded-md flex items-center justify-center mb-4">
+                <div className="h-32 rounded-md flex items-center justify-center mb-4">
                   <span className="text-elec-yellow/70 text-lg">{supplier.name} Logo</span>
                 </div>
                 
@@ -44,7 +44,7 @@ const MaterialCategoryGrid = () => {
                       <Link 
                         key={category}
                         to={`/electrician/suppliers/${supplierKey}?category=${encodeURIComponent(category)}`}
-                        className="bg-elec-card hover:bg-elec-card/70 text-xs rounded-full px-2 py-1 transition-colors"
+                        className="hover:bg-primary/10 text-xs rounded-full px-2 py-1 transition-colors"
                       >
                         {category}
                       </Link>

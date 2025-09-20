@@ -67,7 +67,7 @@ const SupplierDealOfDay = ({ supplierInfo }: SupplierDealOfDayProps) => {
           </div>
           
           <div className="flex items-center justify-center">
-            <div className="bg-elec-card w-full h-40 rounded-md flex items-center justify-center text-elec-yellow/50">
+            <div className="w-full h-40 rounded-md flex items-center justify-center text-elec-yellow/50">
               Product Image
             </div>
           </div>

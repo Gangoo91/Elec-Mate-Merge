@@ -115,7 +115,7 @@ const MaterialSmartSearch = ({ value, onChange, materials, placeholder = "Search
           value={value}
           onChange={(e) => handleInputChange(e.target.value)}
           onFocus={handleInputFocus}
-          className={`pl-10 pr-10 h-12 bg-elec-card/50 border-elec-yellow/20 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200 ${
+          className={`pl-10 pr-10 h-12 border-elec-yellow/20 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow/40 focus:ring-elec-yellow/20 transition-all duration-200 ${
             isFocused ? 'ring-2 ring-elec-yellow/20' : ''
           }`}
         />
@@ -133,7 +133,7 @@ const MaterialSmartSearch = ({ value, onChange, materials, placeholder = "Search
 
       {/* Suggestions Dropdown */}
       {showSuggestions && suggestions.length > 0 && (
-        <Card className="absolute top-full left-0 right-0 z-50 mt-1 bg-elec-card border-elec-yellow/20 shadow-lg">
+        <Card className="absolute top-full left-0 right-0 z-50 mt-1 border-elec-yellow/20 shadow-lg">
           <CardContent className="p-0">
             <div className="max-h-64 overflow-y-auto">
               {suggestions.map((suggestion, index) => (

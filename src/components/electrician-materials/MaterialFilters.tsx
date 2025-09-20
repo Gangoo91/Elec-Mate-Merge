@@ -100,7 +100,7 @@ const MaterialFilters = ({ materials, filters, onFiltersChange }: MaterialFilter
             className={`cursor-pointer transition-all duration-200 ${
               filters[category].includes(item)
                 ? "bg-elec-yellow text-elec-dark shadow-sm"
-                : "bg-elec-card/50 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/40"
+                : "border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/40"
             }`}
             onClick={() => toggleFilter(category, item)}
           >
@@ -122,7 +122,7 @@ const MaterialFilters = ({ materials, filters, onFiltersChange }: MaterialFilter
           variant="outline"
           size="sm"
           onClick={() => setIsExpanded(!isExpanded)}
-          className="bg-elec-card/50 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10"
+          className="border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10"
         >
           <Filter className="h-4 w-4 mr-2" />
           Filters
@@ -191,7 +191,7 @@ const MaterialFilters = ({ materials, filters, onFiltersChange }: MaterialFilter
       {/* Expanded Filters */}
       <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
         <CollapsibleContent>
-          <Card className="bg-elec-card/30 border-elec-yellow/20">
+          <Card className="border-elec-yellow/20">
             <CardContent className="p-4 space-y-6">
               <FilterSection title="Price Range" items={priceRanges} category="priceRanges" />
               

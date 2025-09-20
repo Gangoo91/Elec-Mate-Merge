@@ -109,7 +109,7 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
   })();
 
   return (
-    <Card className="group hover:border-elec-yellow/30 transition-all duration-200 bg-elec-card/30 border-elec-yellow/20">
+    <Card className="group hover:border-elec-yellow/30 transition-all duration-200 border-elec-yellow/20">
       <CardContent className="p-4">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Image */}

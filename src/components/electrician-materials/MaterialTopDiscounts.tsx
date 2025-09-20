@@ -40,7 +40,7 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
   };
 
   return (
-    <Card className="bg-elec-card/50 border-elec-yellow/20">
+    <Card className="border-elec-yellow/20">
       <CardContent className="p-4">
         <div className="flex items-center gap-2 mb-4">
           <TrendingDown className="h-5 w-5 text-elec-yellow" />

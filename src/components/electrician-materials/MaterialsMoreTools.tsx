@@ -80,7 +80,7 @@ const MaterialsMoreTools = ({
         variant="outline"
         size="sm"
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-elec-card/50 border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+        className="border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
       >
         <MoreHorizontal className="h-4 w-4 mr-2" />
         More Tools
@@ -93,7 +93,7 @@ const MaterialsMoreTools = ({
       </Button>
 
       {isOpen && (
-        <Card className="absolute top-full right-0 z-50 mt-2 w-72 bg-elec-card border-elec-yellow/20 shadow-lg">
+        <Card className="absolute top-full right-0 z-50 mt-2 w-72 border-elec-yellow/20 shadow-lg">
           <CardContent className="p-0">
             <div className="py-2">
               {tools.map((tool, index) => {

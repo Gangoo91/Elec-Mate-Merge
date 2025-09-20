@@ -158,7 +158,7 @@ const EnhancedMaterialsGrid = ({
 
         <div className="flex items-center gap-3">
           {/* View Mode Toggle */}
-          <div className="flex items-center border border-elec-yellow/20 rounded-lg p-1 bg-elec-card/30">
+          <div className="flex items-center border border-elec-yellow/20 rounded-lg p-1">
             <Button
               variant={viewMode === "grid" ? "gold" : "ghost"}
               size="sm"
@@ -179,10 +179,10 @@ const EnhancedMaterialsGrid = ({
 
           {/* Sort Options */}
           <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-            <SelectTrigger className="w-48 bg-elec-card/50 border-elec-yellow/20 text-elec-light">
+            <SelectTrigger className="w-48 border-elec-yellow/20 text-elec-light">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="z-50 bg-elec-card border-elec-yellow/20 shadow-lg">
+            <SelectContent className="z-50 border-elec-yellow/20 shadow-lg">
               <SelectItem value="relevance">
                 <div className="flex items-center gap-2">
                   <SortAsc className="h-4 w-4" />
@@ -220,7 +220,7 @@ const EnhancedMaterialsGrid = ({
 
       {/* Product Grid/List */}
       {sortedMaterials.length === 0 ? (
-        <Card className="bg-elec-card/30 border-elec-yellow/20">
+        <Card className="border-elec-yellow/20">
           <CardContent className="p-8 text-center">
             <p className="text-elec-light mb-2">No materials found matching your criteria</p>
             <p className="text-text-muted text-sm">Try adjusting your search or filters</p>
