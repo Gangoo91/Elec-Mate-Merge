@@ -1300,6 +1300,7 @@ export type Database = {
           description: string
           external_url: string
           id: string
+          image_url: string | null
           location: string
           posted_date: string
           salary: string | null
@@ -1314,6 +1315,7 @@ export type Database = {
           description: string
           external_url: string
           id?: string
+          image_url?: string | null
           location: string
           posted_date?: string
           salary?: string | null
@@ -1328,6 +1330,7 @@ export type Database = {
           description?: string
           external_url?: string
           id?: string
+          image_url?: string | null
           location?: string
           posted_date?: string
           salary?: string | null
