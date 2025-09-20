@@ -126,7 +126,7 @@ const JobSpecificMaterialRecommendations = () => {
   }, 0);
 
   return (
-    <Card className="bg-gradient-to-br from-purple-500/5 via-transparent to-pink-500/5 border-purple-500/20">
+    <Card>
       <CardHeader>
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-purple-600/20 text-purple-400">
