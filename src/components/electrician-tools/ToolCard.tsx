@@ -249,13 +249,6 @@ const ToolCard: React.FC<ToolCardProps> = ({
           )}
         </div>
         
-        {/* Bottom left badge for recent views */}
-        <div className="absolute bottom-2 left-2">
-          <Badge className="bg-background/90 text-foreground border-border text-xs">
-            <Eye className="w-3 h-3 mr-1" />
-            {recentlyViewed}
-          </Badge>
-        </div>
       </div>
 
       <CardContent className="p-4 flex-grow flex flex-col">
