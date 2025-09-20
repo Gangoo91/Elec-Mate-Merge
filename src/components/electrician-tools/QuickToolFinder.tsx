@@ -254,7 +254,7 @@ const QuickToolFinder = () => {
             <h3 className="text-xl font-semibold text-white">{currentQuestion.title}</h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-wrap">
             {currentQuestion.options.map((option) => (
               <Button
                 key={option.id}
