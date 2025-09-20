@@ -1,9 +1,8 @@
-
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ExternalLink, Plus, Check, Star, Package, Zap } from "lucide-react";
+import { ExternalLink, Plus, Check, Package } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 import { MaterialItem as BaseMaterialItem } from "@/data/electrician/productData";
@@ -28,6 +27,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   isCompareDisabled = false 
 }) => {
   const isMobile = useIsMobile();
+  
   // Extract cable-specific information
   const getCableInfo = () => {
     const name = item.name.toLowerCase();
@@ -94,35 +94,24 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
     return buildSearch(item.name);
   };
 
-  // Normalise image paths and update wid/hei parameters
-  const imageSrc = (() => {
-    const src = item.image;
-    if (!src) return "/placeholder.svg";
-    
-    let finalSrc = src;
-    
-    // If it's not already an absolute URL, make it one
-    if (!/^https?:\/\//i.test(src) && !src.startsWith("/")) {
-      finalSrc = `/${src}`;
+  const getPriorityColor = (status: string) => {
+    switch (status) {
+      case "In Stock": return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "Low Stock": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+      case "Out of Stock": return "bg-red-500/20 text-red-400 border-red-500/30";
+      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
-    
-    // Update image size parameters from 136x136 to 236x236
-    if (finalSrc.includes("wid=136") && finalSrc.includes("hei=136")) {
-      finalSrc = finalSrc.replace(/wid=136/g, "wid=236").replace(/hei=136/g, "hei=236");
-    }
-    
-    return finalSrc;
-  })();
+  };
 
   return (
     <Card className="bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full">
       <CardHeader>
         <div className="flex items-center gap-3 mb-2">
-          <Zap className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-elec-yellow text-lg font-semibold">{item.name}</h3>
+          <Package className="h-5 w-5 text-elec-yellow" />
+          <CardTitle className="text-elec-yellow text-lg">{item.category}</CardTitle>
         </div>
         <p className="text-sm text-muted-foreground leading-relaxed">
-          Quality {item.category.toLowerCase()} from {item.supplier}
+          {item.supplier} electrical materials
         </p>
       </CardHeader>
       
@@ -130,33 +119,23 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         <div className="space-y-3">
           <div className="border border-elec-yellow/30 rounded-lg p-3">
             <div className="flex items-start justify-between mb-2">
-              <h4 className="font-medium text-white text-sm">{item.supplier}</h4>
-              <Badge 
-                className={
-                  item.stockStatus === "In Stock" 
-                    ? "bg-green-500/20 text-green-400 border-green-500/30" :
-                  item.stockStatus === "Low Stock" 
-                    ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" :
-                    "bg-red-500/20 text-red-400 border-red-500/30"
-                }
-                variant="outline"
-              >
-                {item.stockStatus || 'Available'}
+              <h4 className="font-medium text-white text-sm">{item.name}</h4>
+              <Badge className={getPriorityColor(item.stockStatus || 'Available')} variant="outline">
+                {item.stockStatus || 'available'}
               </Badge>
             </div>
             <p className="text-xs text-muted-foreground mb-2">
               {item.highlights && item.highlights.length > 0 
-                ? item.highlights.slice(0, 2).join(" • ") 
+                ? item.highlights[0] 
                 : `Professional grade ${item.category.toLowerCase()}`}
             </p>
             <div className="flex items-center justify-between text-xs">
               <span className="text-elec-yellow font-medium">
                 {item.isOnSale ? item.salePrice : item.price}
-                {item.isOnSale && (
-                  <span className="ml-2 text-muted-foreground line-through">{item.price}</span>
-                )}
               </span>
-              <span className="text-blue-300">{item.category}</span>
+              {isCable && cableInfo.size && (
+                <span className="text-blue-300">{cableInfo.size}</span>
+              )}
             </div>
           </div>
         </div>
@@ -166,14 +145,14 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             <strong>Material Tip:</strong> {
               isCable && cableInfo.type 
                 ? `${cableInfo.type} cable${cableInfo.size ? ` with ${cableInfo.size} capacity` : ''} suitable for professional installations.`
-                : `This ${item.category.toLowerCase()} meets BS7671 18th edition standards for professional electrical work.`
+                : `This ${item.category.toLowerCase()} meets professional standards for electrical work.`
             }
           </AlertDescription>
         </Alert>
 
         <Alert className="border-amber-500/30 bg-amber-500/10">
           <AlertDescription className="text-amber-200 text-xs">
-            <strong>UK Compliance:</strong> All materials certified to British Standards for safe electrical installation work.
+            <strong>UK Consideration:</strong> Certified to BS7671 18th edition standards for safe electrical installation work.
           </AlertDescription>
         </Alert>
 
