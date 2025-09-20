@@ -118,7 +118,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
       <CardHeader className="pb-3">
         {/* Image at the very top */}
         <div className="relative overflow-hidden rounded-lg -mx-6 -mt-6 mb-4">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10 rounded-t-lg"></div>
           <div className={`${isMobile ? 'h-40' : 'h-48'} overflow-hidden`}>
             <img
               src={imageSrc}
