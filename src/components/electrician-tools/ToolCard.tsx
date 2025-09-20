@@ -1,9 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Plus, Minus, Check, Star, Clock, Users, Package, CheckCircle } from "lucide-react";
+import { ExternalLink, Plus, Minus, Check, Star, Clock, Users, Package, CheckCircle, Zap, Shield, TrendingUp, Award, Eye, ShoppingCart, Timer, Flame } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ToolItem } from "@/hooks/useToolsData";
+import { useState, useEffect } from "react";
 
 interface ToolCardProps {
   item: ToolItem;
@@ -21,6 +22,73 @@ const ToolCard: React.FC<ToolCardProps> = ({
   isCompareDisabled = false 
 }) => {
   const isMobile = useIsMobile();
+  const [isHovered, setIsHovered] = useState(false);
+  const [recentlyViewed, setRecentlyViewed] = useState(0);
+
+  // Simulate dynamic data for demonstration
+  useEffect(() => {
+    const baseViews = Math.floor(Math.random() * 50) + 10;
+    setRecentlyViewed(baseViews);
+  }, []);
+
+  // Calculate discount percentage
+  const getDiscountPercentage = () => {
+    if (!item.isOnSale || !item.salePrice || !item.price) return null;
+    
+    const originalPrice = parseFloat(item.price.replace(/[£,]/g, ''));
+    const salePrice = parseFloat(item.salePrice.replace(/[£,]/g, ''));
+    
+    if (originalPrice > salePrice) {
+      return Math.round(((originalPrice - salePrice) / originalPrice) * 100);
+    }
+    return null;
+  };
+
+  // Get dynamic badges based on tool characteristics
+  const getDynamicBadges = () => {
+    const badges = [];
+    const discount = getDiscountPercentage();
+    
+    // Deal badges
+    if (discount && discount >= 30) {
+      badges.push({ label: "🔥 Hot Deal", variant: "destructive", animate: true });
+    } else if (discount && discount >= 20) {
+      badges.push({ label: "⚡ Flash Sale", variant: "warning", animate: true });
+    } else if (item.isOnSale) {
+      badges.push({ label: "💥 Sale", variant: "warning", animate: false });
+    }
+    
+    // Trending badge
+    if (recentlyViewed > 40) {
+      badges.push({ label: "🔥 Trending", variant: "success", animate: true });
+    } else if (recentlyViewed > 25) {
+      badges.push({ label: "⭐ Popular", variant: "gold", animate: false });
+    }
+    
+    // Professional badges
+    const name = item.name.toLowerCase();
+    if (name.includes('professional') || name.includes('pro')) {
+      badges.push({ label: "👨‍🔧 Pro Grade", variant: "outline", animate: false });
+    }
+    
+    // BS7671 compliance
+    if (name.includes('test') || name.includes('meter') || item.category?.toLowerCase().includes('test')) {
+      badges.push({ label: "✅ BS7671", variant: "success", animate: false });
+    }
+    
+    return badges.slice(0, 2); // Limit to 2 badges to avoid clutter
+  };
+
+  // Get urgency indicators
+  const getUrgencyIndicator = () => {
+    if (item.stockStatus === "Low Stock") {
+      return { text: "Only few left!", color: "text-red-400", icon: Timer };
+    }
+    if (recentlyViewed > 35) {
+      return { text: `${recentlyViewed} people viewed today`, color: "text-amber-400", icon: Eye };
+    }
+    return null;
+  };
 
   // Extract tool-specific information
   const getToolInfo = () => {
@@ -151,8 +219,16 @@ const ToolCard: React.FC<ToolCardProps> = ({
     return finalSrc;
   })();
 
+  const dynamicBadges = getDynamicBadges();
+  const urgencyIndicator = getUrgencyIndicator();
+  const discount = getDiscountPercentage();
+
   return (
-    <Card className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full">
+    <Card 
+      className="bg-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full relative group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <CardHeader className="pb-3">
         {/* Image section matching course cards */}
         <div className="relative -mx-6 -mt-6 mb-4">
@@ -165,41 +241,96 @@ const ToolCard: React.FC<ToolCardProps> = ({
               onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
             />
           </div>
-          {/* Badges overlaid on image */}
+          {/* Enhanced badges overlaid on image */}
           <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2">
-            <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
-              {item.category}
-            </Badge>
-            {item.stockStatus && (
-              <Badge 
-                className={
-                  item.stockStatus === "In Stock" 
-                    ? "bg-green-500/20 text-green-400 border-green-500/30" :
-                  item.stockStatus === "Low Stock" 
-                    ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" :
-                    "bg-red-500/20 text-red-400 border-red-500/30"
-                }
-                variant="outline"
-              >
-                {item.stockStatus}
+            <div className="flex flex-col gap-1">
+              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+                {item.category}
               </Badge>
-            )}
+              {/* Dynamic badges */}
+              {dynamicBadges.map((badge, index) => (
+                <Badge 
+                  key={index}
+                  className={`text-xs ${
+                    badge.variant === "destructive" ? "bg-red-500/20 text-red-400 border-red-500/30" :
+                    badge.variant === "warning" ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" :
+                    badge.variant === "success" ? "bg-green-500/20 text-green-400 border-green-500/30" :
+                    badge.variant === "gold" ? "bg-amber-500/20 text-amber-400 border-amber-500/30" :
+                    "bg-purple-500/20 text-purple-400 border-purple-500/30"
+                  } ${badge.animate ? "animate-pulse" : ""}`}
+                  variant="outline"
+                >
+                  {badge.label}
+                </Badge>
+              ))}
+            </div>
+            <div className="flex flex-col gap-1 items-end">
+              {discount && (
+                <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-xs font-bold animate-pulse">
+                  -{discount}%
+                </Badge>
+              )}
+              {item.stockStatus && (
+                <Badge 
+                  className={
+                    item.stockStatus === "In Stock" 
+                      ? "bg-green-500/20 text-green-400 border-green-500/30" :
+                    item.stockStatus === "Low Stock" 
+                      ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30 animate-pulse" :
+                      "bg-red-500/20 text-red-400 border-red-500/30 animate-pulse"
+                  }
+                  variant="outline"
+                >
+                  {item.stockStatus}
+                </Badge>
+              )}
+            </div>
+          </div>
+          
+          {/* Interactive overlay on hover */}
+          <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 ${isHovered ? 'opacity-100' : ''}`}>
+            <Button 
+              size="sm" 
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+              onClick={() => window.open(getProductUrl(), '_blank')}
+            >
+              <ShoppingCart className="h-4 w-4 mr-1" />
+              Quick View
+            </Button>
           </div>
         </div>
 
-        {/* Course card style header */}
+        {/* Enhanced header with social proof */}
         <div className="flex justify-between items-start gap-2 mb-2">
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg leading-tight font-semibold line-clamp-2">
+            <h3 className="text-lg leading-tight font-semibold line-clamp-2 group-hover:text-elec-yellow transition-colors duration-200">
               {item.name}
             </h3>
-            <p className="text-elec-yellow text-sm mt-1">
-              {item.supplier}
-            </p>
+            <div className="flex items-center gap-2 mt-1">
+              <p className="text-elec-yellow text-sm">
+                {item.supplier}
+              </p>
+              {urgencyIndicator && (
+                <div className="flex items-center gap-1">
+                  <urgencyIndicator.icon className={`h-3 w-3 ${urgencyIndicator.color}`} />
+                  <span className={`text-xs ${urgencyIndicator.color}`}>
+                    {urgencyIndicator.text}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs">
-            <Star className="h-3 w-3 fill-amber-400" />
-            <span>{reviewData?.rating || '4.2'}</span>
+          <div className="flex flex-col items-end gap-1">
+            <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs">
+              <Star className="h-3 w-3 fill-amber-400" />
+              <span>{reviewData?.rating || '4.2'}</span>
+            </div>
+            {recentlyViewed > 20 && (
+              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                <TrendingUp className="h-3 w-3" />
+                <span>Popular</span>
+              </div>
+            )}
           </div>
         </div>
       </CardHeader>
@@ -212,23 +343,31 @@ const ToolCard: React.FC<ToolCardProps> = ({
             : `Professional ${item.category?.toLowerCase() || 'tool'} from ${item.supplier}`}
         </div>
         
-        {/* Key metrics grid matching course card style */}
+        {/* Enhanced metrics grid with professional context */}
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div className="flex items-center gap-1.5">
             <Package className="h-3 w-3 text-elec-yellow flex-shrink-0" />
             <span>{toolInfo.type || 'Tool'}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Users className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            {toolInfo.cordless ? (
+              <Zap className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            ) : (
+              <Users className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            )}
             <span>{toolInfo.power || toolInfo.voltage || 'Professional'}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Clock className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span>{item.stockStatus || 'Available'}</span>
+            <Shield className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            <span>
+              {item.category?.toLowerCase().includes('test') ? 'BS7671 Ready' : 
+               toolInfo.type === 'Multimeter' ? 'CAT III/IV' : 
+               'Professional'}
+            </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Star className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-            <span>Rating: {reviewData?.rating || '4.2'}/5</span>
+            <Award className="h-3 w-3 text-elec-yellow flex-shrink-0" />
+            <span>{reviewData?.count ? `${reviewData.count} reviews` : 'Rated'}</span>
           </div>
         </div>
 
@@ -297,28 +436,33 @@ const ToolCard: React.FC<ToolCardProps> = ({
           </div>
         )}
 
-        {/* Footer */}
+        {/* Enhanced footer with better pricing display */}
         <div className="flex justify-between items-center mt-auto pt-3 border-t border-elec-yellow/10">
           <div className="space-y-1">
             {item.isOnSale ? (
-              <>
-                <p className="text-xs text-amber-400/80 flex items-center gap-1">
-                  <Badge variant="destructive" className="text-xs mr-1">SALE</Badge>
-                  {item.salePrice}
-                </p>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg font-bold text-elec-yellow">{item.salePrice}</span>
+                  {discount && (
+                    <Badge variant="destructive" className="text-xs animate-pulse">
+                      SAVE {discount}%
+                    </Badge>
+                  )}
+                </div>
                 <p className="text-xs text-muted-foreground line-through">{item.price}</p>
-              </>
+              </div>
             ) : (
-              <p className="text-xs text-amber-400/80">{item.price}</p>
+              <p className="text-lg font-bold text-elec-yellow">{item.price}</p>
             )}
           </div>
           <div className="flex items-center gap-2">
             <Button 
               variant="outline" 
               size="sm" 
-              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-200 hover:scale-105"
               onClick={() => window.open(getProductUrl(), '_blank')}
             >
+              <ExternalLink className="h-3 w-3 mr-1" />
               View Deal
             </Button>
             {onAddToCompare && (
@@ -333,7 +477,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
                 disabled={isCompareDisabled && !isSelected}
                 variant="ghost"
                 size="sm"
-                className="p-2"
+                className="p-2 hover:scale-110 transition-transform duration-200"
               >
                 {isSelected ? (
                   <Check className="h-4 w-4 text-green-400" />
@@ -344,6 +488,29 @@ const ToolCard: React.FC<ToolCardProps> = ({
             )}
           </div>
         </div>
+        
+        {/* Quick action bar for mobile */}
+        {isMobile && isHovered && (
+          <div className="absolute bottom-2 left-2 right-2 flex gap-2 animate-fade-in">
+            <Button 
+              size="sm" 
+              className="flex-1 bg-elec-yellow/90 text-elec-dark hover:bg-elec-yellow"
+              onClick={() => window.open(getProductUrl(), '_blank')}
+            >
+              Quick Buy
+            </Button>
+            {onAddToCompare && (
+              <Button 
+                size="sm" 
+                variant="outline"
+                className="border-elec-yellow/50"
+                onClick={() => onAddToCompare && onAddToCompare(item)}
+              >
+                Compare
+              </Button>
+            )}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
