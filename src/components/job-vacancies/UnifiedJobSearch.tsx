@@ -493,11 +493,11 @@ const UnifiedJobSearch = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6 overflow-hidden">{currentJobs.map((job) => {
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 p-2">{currentJobs.map((job) => {
               const matchPercentage = getMatchPercentage(job);
               
               return (
-                <Card key={job.id} className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden group">
+                <Card key={job.id} className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.01] transition-all duration-300 rounded-xl overflow-hidden group">
                   {/* Header Image */}
                   <div className="relative h-48 overflow-hidden">
                     <img 

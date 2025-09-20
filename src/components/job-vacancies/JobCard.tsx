@@ -57,7 +57,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, selectedJob, handleApply }) => {
     <div
       id={`job-${job.id}`}
       className={cn(
-        "border rounded-xl transition-all bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] duration-300 overflow-hidden h-full relative group",
+        "border rounded-xl transition-all bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.01] duration-300 overflow-hidden h-full relative group",
         isSelected
           ? "border-elec-yellow bg-elec-yellow/5 shadow-md"
           : "border-gray-200 hover:border-elec-yellow/50 hover:bg-elec-yellow/5"
