@@ -300,93 +300,99 @@ const ToolCard: React.FC<ToolCardProps> = ({
           </div>
         </div>
 
-        {/* Simple header */}
-        <div className="mb-4">
-          <h3 className="text-lg leading-tight font-semibold line-clamp-2 group-hover:text-elec-yellow transition-colors duration-200 mb-2">
-            {item.name}
-          </h3>
-          <div className="flex items-center gap-2 text-sm text-elec-yellow">
-            <span>{item.supplier}</span>
-            <span>⭐ {reviewData?.rating || '4.2'} ({reviewData?.count || '143'})</span>
-          </div>
-        </div>
       </CardHeader>
       
-      <CardContent className="pt-0 flex-grow flex flex-col space-y-3">
-        {/* Tool description */}
-        <div className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-          {item.highlights && item.highlights.length > 0 
-            ? item.highlights.slice(0, 2).join(" • ") 
-            : `Professional ${item.category?.toLowerCase() || 'tool'} from ${item.supplier}`}
-        </div>
-        
-        {/* 2x2 Information Grid */}
-        <div className="grid grid-cols-2 gap-3 text-sm">
-          <div className="flex items-center gap-2 p-2 bg-elec-dark/20 rounded-lg">
-            <Zap className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div>
-              <div className="text-xs text-muted-foreground">Size</div>
-              <div className="font-medium">{toolInfo.voltage || toolInfo.power || 'Standard'}</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 p-2 bg-elec-dark/20 rounded-lg">
-            <Shield className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div>
-              <div className="text-xs text-muted-foreground">Standard</div>
-              <div className="font-medium">
-                {item.category?.toLowerCase().includes('test') ? 'BS7671' : 'Professional'}
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 p-2 bg-elec-dark/20 rounded-lg">
-            <Star className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div>
-              <div className="text-xs text-muted-foreground">Rating</div>
-              <div className="font-medium">{reviewData?.rating || '4.2'} ⭐</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 p-2 bg-elec-dark/20 rounded-lg">
-            <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div>
-              <div className="text-xs text-muted-foreground">Stock</div>
-              <div className="font-medium">{item.stockStatus || 'Available'}</div>
-            </div>
+      <CardContent className="pt-0 flex-grow flex flex-col">
+        {/* Simple header - tool name and supplier with rating */}
+        <div className="space-y-2 mb-4">
+          <h3 className="text-lg leading-tight font-semibold line-clamp-2 group-hover:text-elec-yellow transition-colors duration-200">
+            {item.name}
+          </h3>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span className="font-medium">{item.supplier}</span>
+            <span>⭐ {reviewData?.rating || '4.8'}</span>
+            <span className="text-xs">({reviewData?.count || '143'})</span>
           </div>
         </div>
 
-        {/* Simple Features */}
-        <div className="space-y-2">
+        {/* 2x2 Information grid - clean layout */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="bg-muted/50 rounded-lg p-3 space-y-1">
+            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+              <Zap className="h-3 w-3" />
+              Specifications
+            </div>
+            <div className="text-sm font-medium">
+              {item.name.includes('Cable') ? 'Multi-core' : 
+               item.name.includes('Socket') ? '13A' :
+               item.name.includes('Switch') ? '2-way' : 'Professional'}
+            </div>
+          </div>
+          
+          <div className="bg-muted/50 rounded-lg p-3 space-y-1">
+            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+              <Shield className="h-3 w-3" />
+              Standard
+            </div>
+            <div className="text-sm font-medium">BS7671</div>
+          </div>
+          
+          <div className="bg-muted/50 rounded-lg p-3 space-y-1">
+            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+              <Star className="h-3 w-3" />
+              Rating
+            </div>
+            <div className="text-sm font-medium">⭐ {reviewData?.rating || '4.8'}</div>
+          </div>
+          
+          <div className="bg-muted/50 rounded-lg p-3 space-y-1">
+            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+              <CheckCircle className="h-3 w-3" />
+              Stock
+            </div>
+            <div className="text-sm font-medium text-green-600">In Stock</div>
+          </div>
+        </div>
+
+        {/* Simple features list with checkmarks */}
+        <div className="space-y-2 mb-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-sm">
-              <Check className="h-4 w-4 text-green-400 flex-shrink-0" />
-              <span>Professional grade installation cable</span>
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <span>Professional grade electrical tool</span>
             </div>
             <div className="flex items-center gap-2 text-sm">
-              <Check className="h-4 w-4 text-green-400 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-green-600" />
               <span>BS7671 18th edition compliant</span>
             </div>
-            {item.highlights && item.highlights.length > 0 && (
+            {item.highlights && item.highlights[0] && (
               <div className="flex items-center gap-2 text-sm">
-                <Check className="h-4 w-4 text-green-400 flex-shrink-0" />
+                <CheckCircle className="h-4 w-4 text-green-600" />
                 <span>{item.highlights[0]}</span>
               </div>
             )}
           </div>
         </div>
 
-        {/* Clean Footer */}
-        <div className="flex items-center justify-between gap-2 pt-3 border-t border-elec-yellow/10">
-          <div>
-            <p className="text-lg font-bold text-elec-yellow">{item.isOnSale && item.salePrice ? item.salePrice : item.price}</p>
+        {/* Clean footer with price and single button */}
+        <div className="flex items-center justify-between pt-2 border-t mt-auto">
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-bold text-primary">
+              £{item.salePrice || item.price}
+            </span>
+            {item.salePrice && item.salePrice !== item.price && (
+              <span className="text-sm text-muted-foreground line-through">
+                £{item.price}
+              </span>
+            )}
           </div>
           <Button 
-            variant="outline" 
             size="sm" 
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-200"
             onClick={() => window.open(getProductUrl(), '_blank')}
+            className="gap-2"
           >
-            <ExternalLink className="h-3 w-3 mr-1" />
             View Product
+            <ExternalLink className="h-3 w-3" />
           </Button>
         </div>
         
