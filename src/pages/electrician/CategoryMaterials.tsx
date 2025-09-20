@@ -18,7 +18,7 @@ import MaterialFilters, { MaterialFilterState } from "@/components/electrician-m
 import MaterialsMoreTools from "@/components/electrician-materials/MaterialsMoreTools";
 import MaterialDealsOfTheDay from "@/components/electrician-materials/MaterialDealsOfTheDay";
 import MaterialTopDiscounts from "@/components/electrician-materials/MaterialTopDiscounts";
-import MaterialComparison from "@/components/electrician-materials/MaterialComparison";
+
 import MaterialTips from "@/components/electrician-materials/MaterialTips";
 
 import QuickMaterialFinder from "@/components/electrician-materials/QuickMaterialFinder";
@@ -379,8 +379,6 @@ const CategoryMaterials = () => {
 
           {/* Enhanced Interactive Sections */}
           <QuickMaterialFinder />
-          
-          <MaterialComparison materials={materials || []} />
           
           <MaterialTips />
         </section>
