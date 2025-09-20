@@ -18,6 +18,10 @@ import MaterialFilters, { MaterialFilterState } from "@/components/electrician-m
 import MaterialsMoreTools from "@/components/electrician-materials/MaterialsMoreTools";
 import MaterialDealsOfTheDay from "@/components/electrician-materials/MaterialDealsOfTheDay";
 import MaterialTopDiscounts from "@/components/electrician-materials/MaterialTopDiscounts";
+import MaterialComparison from "@/components/electrician-materials/MaterialComparison";
+import MaterialTips from "@/components/electrician-materials/MaterialTips";
+import JobSpecificMaterialRecommendations from "@/components/electrician-materials/JobSpecificMaterialRecommendations";
+import QuickMaterialFinder from "@/components/electrician-materials/QuickMaterialFinder";
 import { useCategoryMaterials } from "@/hooks/useCategoryMaterials";
 import { useMaterialsDeals } from "@/hooks/useMaterialsDeals";
 
@@ -242,6 +246,15 @@ const CategoryMaterials = () => {
           {topDiscounts.length > 0 && (
             <MaterialTopDiscounts deals={topDiscounts} />
           )}
+
+          {/* Enhanced Interactive Sections */}
+          <QuickMaterialFinder />
+          
+          <MaterialComparison materials={materials || []} />
+          
+          <MaterialTips />
+          
+          <JobSpecificMaterialRecommendations />
 
           {/* Smart Search + Filters */}
           <div className="space-y-4">
