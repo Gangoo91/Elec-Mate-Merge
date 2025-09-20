@@ -238,6 +238,7 @@ const CategoryMaterials = () => {
       {/* Enhanced Browse Section - Main Focus */}
       {currentView === 'browse' && (
         <section className="space-y-6">
+          {/* SECTION A: QUICK DISCOVERY */}
           {/* Deals Integration */}
           {dealOfTheDay && (
             <MaterialDealsOfTheDay deal={dealOfTheDay} />
@@ -247,30 +248,21 @@ const CategoryMaterials = () => {
             <MaterialTopDiscounts deals={topDiscounts} />
           )}
 
-          {/* Enhanced Interactive Sections */}
-          <QuickMaterialFinder />
-          
-          <MaterialComparison materials={materials || []} />
-          
-          <MaterialTips />
-          
-          
+          {/* Smart Search Bar */}
+          <MaterialSmartSearch
+            value={searchTerm}
+            onChange={setSearchTerm}
+            materials={materials || []}
+            placeholder="Search materials, suppliers, categories..."
+          />
 
-          {/* Smart Search + Filters */}
-          <div className="space-y-4">
-            <MaterialSmartSearch
-              value={searchTerm}
-              onChange={setSearchTerm}
-              materials={materials || []}
-              placeholder="Search materials, suppliers, categories..."
-            />
-            
-            <MaterialFilters
-              materials={materials || []}
-              filters={filters}
-              onFiltersChange={setFilters}
-            />
-          </div>
+          {/* SECTION B: BROWSE & FILTER */}
+          {/* Material Filters */}
+          <MaterialFilters
+            materials={materials || []}
+            filters={filters}
+            onFiltersChange={setFilters}
+          />
 
           {/* Quick Compare Bar */}
           {selectedMaterials.length > 0 && (
@@ -303,7 +295,7 @@ const CategoryMaterials = () => {
             </Card>
           )}
 
-          {/* Category Items - Main Focus */}
+          {/* Enhanced Materials Grid - Main Focus */}
           {isLoading && (
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardContent className="p-6 text-center">
@@ -360,7 +352,6 @@ const CategoryMaterials = () => {
                 </Card>
               ) : (
                 <section aria-label={`${meta.title} products`} className="space-y-4">
-                   
                   <EnhancedMaterialsGrid
                     materials={filteredMaterials}
                     searchTerm={searchTerm}
@@ -375,6 +366,23 @@ const CategoryMaterials = () => {
               )}
             </>
           )}
+
+          {/* SECTION C: RECOMMENDATIONS & TOOLS */}
+          {/* Section Divider */}
+          <div className="flex items-center gap-3 py-6">
+            <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+            <h3 className="text-xl font-semibold text-elec-light px-4">
+              Tools & Recommendations
+            </h3>
+            <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
+          </div>
+
+          {/* Enhanced Interactive Sections */}
+          <QuickMaterialFinder />
+          
+          <MaterialComparison materials={materials || []} />
+          
+          <MaterialTips />
         </section>
       )}
 
