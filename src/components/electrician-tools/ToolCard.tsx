@@ -224,7 +224,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
   const discount = getDiscountPercentage();
 
   return (
-    <Card className="bg-card border-border hover:border-elec-yellow/20 transition-all duration-200 rounded-lg overflow-hidden h-full">
+    <Card className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full relative group">
       {/* Image section */}
       <div className="relative">
         <div className="h-48 overflow-hidden">
