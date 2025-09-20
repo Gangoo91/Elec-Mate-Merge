@@ -231,10 +231,10 @@ const EnhancedMaterialsGrid = ({
           ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
           : "space-y-4"
         }>
-          {sortedMaterials.map((material) => (
+          {sortedMaterials.map((material, index) => (
             viewMode === "grid" ? (
               <MaterialCard
-                key={material.id || material.name}
+                key={`${material.id || material.name}-${material.supplier}-${index}`}
                 item={material}
                 onAddToCompare={onAddToCompare}
                 onRemoveFromCompare={onRemoveFromCompare}
@@ -246,7 +246,7 @@ const EnhancedMaterialsGrid = ({
               />
             ) : (
               <MaterialListCard
-                key={material.id || material.name}
+                key={`${material.id || material.name}-${material.supplier}-${index}`}
                 item={material}
                 onAddToCompare={onAddToCompare}
                 onRemoveFromCompare={onRemoveFromCompare}

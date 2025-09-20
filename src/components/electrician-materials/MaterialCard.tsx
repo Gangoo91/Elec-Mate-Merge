@@ -19,7 +19,7 @@ import {
   Timer
 } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import { MaterialItem as BaseMaterialItem } from "@/data/electrician/productData";
 
@@ -127,15 +127,17 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
     return badges;
   };
 
-  // Simulate social proof
-  const getSocialProof = () => {
-    const baseViews = Math.floor(Math.random() * 50) + 10;
-    const rating = (4.2 + Math.random() * 0.8).toFixed(1);
-    const reviews = Math.floor(Math.random() * 200) + 50;
+  // Generate consistent social proof based on item properties
+  const getSocialProof = useMemo(() => {
+    // Create a simple hash from item name to ensure consistency
+    const hash = item.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const baseViews = (hash % 50) + 10;
+    const rating = (4.2 + ((hash % 80) / 100)).toFixed(1);
+    const reviews = (hash % 200) + 50;
     return { views: baseViews, rating: parseFloat(rating), reviews };
-  };
+  }, [item.name]);
 
-  const socialProof = getSocialProof();
+  const socialProof = getSocialProof;
   const badges = getBadges();
 
   // Get key metrics for display
