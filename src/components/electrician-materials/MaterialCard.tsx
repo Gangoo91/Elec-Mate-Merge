@@ -114,7 +114,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   })();
 
   return (
-    <Card className="bg-black border-slate-700 hover:border-elec-yellow/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full flex flex-col group">
+    <Card className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer flex flex-col">
       <CardHeader className="pb-3">
         {/* Image at the very top */}
         <div className="relative overflow-hidden rounded-lg -mx-6 -mt-6 mb-4">
