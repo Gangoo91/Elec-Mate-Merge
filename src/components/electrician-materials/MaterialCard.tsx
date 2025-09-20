@@ -114,53 +114,50 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   })();
 
   return (
-    <Card className="group border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 hover:bg-elec-gray/80 transition-all duration-300 cursor-pointer h-full overflow-hidden">
-      {/* Image at the very top */}
-      <div className="relative overflow-hidden rounded-t-xl">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10 overflow-hidden"></div>
-        <div className={`${isMobile ? 'h-40' : 'h-48'} overflow-hidden`}>
-          <img
-            src={imageSrc}
-            alt={`${item.name} from ${item.supplier}`}
-            loading="lazy"
-            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105 transform-gpu"
-            style={{ transformOrigin: 'center center' }}
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
-          />
-        </div>
-        {/* Badges overlaid on image */}
-        <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-20">
-          <Badge variant="secondary" className="text-xs bg-black/70 text-white border-white/20 backdrop-blur-sm">
-            {item.category}
-          </Badge>
-          {item.stockStatus && (
-            <Badge 
-              className={
-                item.stockStatus === "In Stock" 
-                  ? "bg-green-500/80 text-white border-green-500/30 backdrop-blur-sm" :
-                item.stockStatus === "Low Stock" 
-                  ? "bg-yellow-500/80 text-white border-yellow-500/30 backdrop-blur-sm" :
-                  "bg-red-500/80 text-white border-red-500/30 backdrop-blur-sm"
-              }
-              variant="outline"
-            >
-              {item.stockStatus}
+    <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 hover:bg-elec-gray/80 transition-all duration-300 cursor-pointer h-full flex flex-col group">
+      <CardHeader className="pb-3">
+        {/* Image at the very top */}
+        <div className="relative overflow-hidden rounded-lg -mx-6 -mt-6 mb-4">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10"></div>
+          <div className={`${isMobile ? 'h-40' : 'h-48'} overflow-hidden`}>
+            <img
+              src={imageSrc}
+              alt={`${item.name} from ${item.supplier}`}
+              loading="lazy"
+              className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105 transform-gpu"
+              style={{ transformOrigin: 'center center' }}
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+            />
+          </div>
+          {/* Badges overlaid on image */}
+          <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-20">
+            <Badge variant="secondary" className="text-xs bg-black/70 text-white border-white/20 backdrop-blur-sm">
+              {item.category}
             </Badge>
-          )}
+            {item.stockStatus && (
+              <Badge 
+                className={
+                  item.stockStatus === "In Stock" 
+                    ? "bg-green-500/80 text-white border-green-500/30 backdrop-blur-sm" :
+                  item.stockStatus === "Low Stock" 
+                    ? "bg-yellow-500/80 text-white border-yellow-500/30 backdrop-blur-sm" :
+                    "bg-red-500/80 text-white border-red-500/30 backdrop-blur-sm"
+                }
+                variant="outline"
+              >
+                {item.stockStatus}
+              </Badge>
+            )}
+          </div>
         </div>
-      </div>
 
-      <div className="p-4 sm:p-5 space-y-3 flex flex-col flex-1">
         {/* Header Section */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            <h3 
-              className="font-semibold text-sm sm:text-base text-white group-hover:text-elec-yellow transition-colors line-clamp-2"
-              style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}
-            >
+            <h3 className="text-lg font-semibold text-elec-yellow group-hover:text-elec-yellow/90 transition-colors line-clamp-2">
               {item.name}
             </h3>
-            <p className="text-elec-yellow font-medium mt-1 text-xs sm:text-sm">
+            <p className="text-sm text-elec-light/80 mt-1">
               {item.supplier}
             </p>
           </div>
@@ -169,28 +166,30 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             <span className="text-white font-medium">4.2</span>
           </div>
         </div>
-
+      </CardHeader>
+      
+      <CardContent className="flex-1 flex flex-col justify-between pt-0">
         {/* Specifications Grid */}
-        <div className="grid grid-cols-2 gap-3 text-sm">
-          <div className="flex items-center gap-2">
-            <Package className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div>
-              <div className="text-white/60 text-xs">Type</div>
-              <div className="text-white font-medium">{isCable && cableInfo.type ? cableInfo.type : 'Standard'}</div>
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="flex items-center gap-2">
+              <Package className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+              <div>
+                <div className="text-white/60 text-xs">Type</div>
+                <div className="text-white font-medium">{isCable && cableInfo.type ? cableInfo.type : 'Standard'}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+              <div>
+                <div className="text-white/60 text-xs">Size</div>
+                <div className="text-white font-medium">{isCable && cableInfo.size ? cableInfo.size : 'Standard'}</div>
+              </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Users className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div>
-              <div className="text-white/60 text-xs">Size</div>
-              <div className="text-white font-medium">{isCable && cableInfo.size ? cableInfo.size : 'Standard'}</div>
-            </div>
-          </div>
-        </div>
 
-        {/* Additional specifications for cables */}
-        {isCable && (cableInfo.length || cableInfo.cores) && (
-          <div className="space-y-2">
+          {/* Additional specifications for cables */}
+          {isCable && (cableInfo.length || cableInfo.cores) && (
             <div className="flex flex-wrap gap-1">
               {cableInfo.length && (
                 <Badge variant="outline" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
@@ -203,44 +202,44 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
                 </Badge>
               )}
             </div>
-          </div>
-        )}
-
-        {/* Highlights */}
-        {item.highlights && item.highlights.length > 0 && (
-          <div className="space-y-2">
-            <h4 className="text-sm font-medium text-white">Key Features:</h4>
-            <div className="flex flex-wrap gap-1">
-              {item.highlights.slice(0, 3).map((highlight, index) => (
-                <Badge key={index} variant="outline" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
-                  {highlight}
-                </Badge>
-              ))}
-              {item.highlights.length > 3 && (
-                <Badge variant="outline" className="text-xs text-white/60">
-                  +{item.highlights.length - 3} more
-                </Badge>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Price section */}
-        <div className="bg-background/30 rounded-lg p-3 border border-elec-yellow/10">
-          <div className="text-xs text-white/60 mb-1">Price</div>
-          {item.isOnSale ? (
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-elec-yellow font-semibold text-lg">{item.salePrice}</span>
-              <span className="line-through text-white/60 text-sm">{item.price}</span>
-              <Badge variant="destructive" className="text-xs">SALE</Badge>
-            </div>
-          ) : (
-            <span className="text-elec-yellow font-semibold text-lg">{item.price}</span>
           )}
+
+          {/* Highlights */}
+          {item.highlights && item.highlights.length > 0 && (
+            <div className="space-y-2">
+              <h4 className="text-sm font-medium text-white">Key Features:</h4>
+              <div className="flex flex-wrap gap-1">
+                {item.highlights.slice(0, 3).map((highlight, index) => (
+                  <Badge key={index} variant="outline" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
+                    {highlight}
+                  </Badge>
+                ))}
+                {item.highlights.length > 3 && (
+                  <Badge variant="outline" className="text-xs text-white/60">
+                    +{item.highlights.length - 3} more
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Price section */}
+          <div className="bg-background/30 rounded-lg p-3 border border-elec-yellow/10">
+            <div className="text-xs text-white/60 mb-1">Price</div>
+            {item.isOnSale ? (
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-elec-yellow font-semibold text-lg">{item.salePrice}</span>
+                <span className="line-through text-white/60 text-sm">{item.price}</span>
+                <Badge variant="destructive" className="text-xs">SALE</Badge>
+              </div>
+            ) : (
+              <span className="text-elec-yellow font-semibold text-lg">{item.price}</span>
+            )}
+          </div>
         </div>
 
         {/* Action buttons */}
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between pt-4">
           <Button 
             onClick={() => window.open(getProductUrl(), '_blank')}
             className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
@@ -270,7 +269,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             </Button>
           )}
         </div>
-      </div>
+      </CardContent>
     </Card>
   );
 };
