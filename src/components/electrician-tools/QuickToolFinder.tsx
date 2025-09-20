@@ -260,7 +260,7 @@ const QuickToolFinder = () => {
                 key={option.id}
                 variant="outline"
                 onClick={() => handleSelection(currentQuestion.id, option.id)}
-                className="h-auto p-4 border-white/20 text-left hover:border-green-500/50 hover:bg-green-500/10 break-words overflow-hidden"
+                className="h-auto p-4 border-white/20 text-left hover:border-green-500/50 hover:bg-green-500/10 break-words overflow-hidden text-wrap"
               >
                 <div className="w-full">
                   <div className="flex items-center justify-between mb-1">
