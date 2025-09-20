@@ -256,12 +256,6 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
             {badge.text}
           </div>
         ))}
-        
-        {/* Social Proof Overlay */}
-        <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-black/60 backdrop-blur-sm rounded-full px-2 py-1">
-          <Eye className="h-3 w-3 text-white/80" />
-          <span className="text-xs text-white/80">{socialProof.views}</span>
-        </div>
       </div>
 
       <CardHeader className="pb-3">
