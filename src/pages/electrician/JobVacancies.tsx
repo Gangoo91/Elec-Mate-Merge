@@ -30,6 +30,7 @@ export interface JobListing {
   expires_at?: string | null;
   is_remote?: boolean;
   aiMatchScore?: number;
+  image_url?: string;
 }
 
 interface JobVacanciesProps {

@@ -15,6 +15,7 @@ export interface UnifiedJob {
   source: string;
   updated_at?: string;
   is_fresh?: boolean;
+  image_url?: string;
 }
 
 export interface JobSourceStatus {

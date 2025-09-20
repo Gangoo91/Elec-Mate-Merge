@@ -17,6 +17,7 @@ interface JobListing {
   source: string | null;
   expires_at?: string | null;
   is_remote?: boolean;
+  image_url?: string;
 }
 
 interface JobGridProps {

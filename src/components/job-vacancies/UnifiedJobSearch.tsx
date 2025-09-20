@@ -500,11 +500,14 @@ const UnifiedJobSearch = () => {
                   {/* Header Image */}
                   <div className="relative h-48 overflow-hidden">
                     <img 
-                      src={`https://images.unsplash.com/800x600/?${encodeURIComponent(`electrical work office ${job.type.toLowerCase()}`)}&auto=format&fit=crop&w=800&h=600`}
+                      src={job.image_url || `https://images.unsplash.com/800x600/?${encodeURIComponent(`electrical work office ${job.type.toLowerCase()}`)}&auto=format&fit=crop&w=800&h=600`}
                       alt={`${job.title} workplace`}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       onError={(e) => {
-                        e.currentTarget.src = 'https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=800&h=600';
+                        const target = e.target as HTMLImageElement;
+                        if (target.src !== 'https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=800&h=600') {
+                          target.src = 'https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=800&h=600';
+                        }
                       }}
                     />
                     
