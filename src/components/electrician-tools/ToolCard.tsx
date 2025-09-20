@@ -357,7 +357,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
         {/* Simple features list with checkmarks */}
         <div className="space-y-2 mb-4">
-          <div className="space-y-1">
+          <div className="space-y-1 text-left">
             <div className="flex items-center gap-2 text-sm">
               <CheckCircle className="h-4 w-4 text-green-600" />
               <span>Professional grade electrical tool</span>
