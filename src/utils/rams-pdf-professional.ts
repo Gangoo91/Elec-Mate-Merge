@@ -419,9 +419,9 @@ class ProfessionalRAMSPDFGenerator {
 
     // Section title
     this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(18);
+    this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("2. RISK ASSESSMENT MATRIX", this.pageWidth / 2, this.yPosition, { align: "center" });
+    this.doc.text("2. RISK ASSESSMENT MATRIX", this.MARGIN, this.yPosition);
     this.yPosition += 25;
 
     // Professional explanation box
