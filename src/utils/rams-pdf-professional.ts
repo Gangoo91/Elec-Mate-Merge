@@ -222,7 +222,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(18);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("RISK ASSESSMENT (TEMPLATE)", this.pageWidth - 100, 15, { align: "center" });
+    this.doc.text("RISK ASSESSMENT", this.pageWidth - 100, 15, { align: "center" });
     
     // Reference number area
     this.doc.setFontSize(12);
