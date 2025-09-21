@@ -444,633 +444,289 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("2. RISK ASSESSMENT MATRIX", this.MARGIN, this.yPosition);
     this.yPosition += 25;
 
-    // Professional explanation box
-    const boxHeight = 28;
+    // Professional explanation box matching template style
+    const boxHeight = 35;
     const boxWidth = this.pageWidth - (2 * this.MARGIN);
-    this.doc.setFillColor(248, 250, 252);
+    
+    // Main instruction box
+    this.doc.setFillColor(240, 240, 240);
     this.doc.rect(this.MARGIN, this.yPosition, boxWidth, boxHeight, 'F');
-    this.doc.setDrawColor(...this.PRIMARY_COLOR);
+    this.doc.setDrawColor(0, 0, 0);
     this.doc.setLineWidth(1);
     this.doc.rect(this.MARGIN, this.yPosition, boxWidth, boxHeight);
 
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("Risk Assessment Formula", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
-    
-    this.doc.setTextColor(55, 65, 81);
-    this.doc.setFontSize(10);
-    this.doc.setFont("helvetica", "normal");
-    this.doc.text("Risk Rating = Likelihood × Severity (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 22, { align: "center" });
-    this.yPosition += 40;
-
-    // Calculate table dimensions for consistent padding
-    const tableWidth = 140; // Fixed table width for consistency
-    const cellSize = 18;
-    const headerWidth = 20;
-    const totalTableWidth = headerWidth + (cellSize * 5);
-    const tableStartX = (this.pageWidth - totalTableWidth) / 2; // Center the table
-    const tableStartY = this.yPosition;
-
-    // Draw table border
-    this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.setLineWidth(2);
-    this.doc.rect(tableStartX, tableStartY, totalTableWidth, headerWidth + (cellSize * 5));
-
-    // Top header row (Severity)
-    this.doc.setFillColor(59, 130, 246);
-    this.doc.rect(tableStartX, tableStartY, totalTableWidth, headerWidth, 'F');
-    
-    this.doc.setTextColor(255, 255, 255);
+    this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("SEVERITY →", tableStartX + totalTableWidth / 2, tableStartY + 6, { align: "center" });
+    this.doc.text("Risk Assessment Matrix", this.MARGIN + 5, this.yPosition + 10);
+    
+    this.doc.setFontSize(9);
+    this.doc.setFont("helvetica", "normal");
+    this.doc.text("Use this matrix to determine the risk rating by finding the intersection of likelihood and consequence.", 
+                  this.MARGIN + 5, this.yPosition + 20);
+    this.doc.text("Risk Rating = Likelihood × Consequence (Both factors scored from 1 to 5)", 
+                  this.MARGIN + 5, this.yPosition + 30);
+    this.yPosition += 45;
 
-    // Severity column headers
-    const severityLabels = ["Negligible", "Minor", "Moderate", "Major", "Catastrophic"];
-    severityLabels.forEach((label, index) => {
-      const x = tableStartX + headerWidth + (index * cellSize);
-      
-      // Header cell background
-      this.doc.setFillColor(79, 70, 229);
-      this.doc.rect(x, tableStartY + headerWidth, cellSize, cellSize, 'F');
-      
-      // Border
-      this.doc.setDrawColor(255, 255, 255);
-      this.doc.setLineWidth(0.5);
-      this.doc.rect(x, tableStartY + headerWidth, cellSize, cellSize);
-      
-      // Number
-      this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(12);
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text((index + 1).toString(), x + cellSize/2, tableStartY + headerWidth + 8, { align: "center" });
-      
-      // Label
-      this.doc.setFontSize(7);
-      this.doc.setFont("helvetica", "normal");
-      this.doc.text(label, x + cellSize/2, tableStartY + headerWidth + 17, { align: "center" });
+    // Professional Risk Matrix matching reference template
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(14);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("Risk Matrix", this.MARGIN, this.yPosition);
+    this.yPosition += 15;
+
+    // Risk Matrix Table with professional design
+    const matrixData = [];
+    const severityLabels = ['Catastrophic', 'Severe', 'Significant', 'Minor', 'Negligible'];
+    
+    severityLabels.forEach((severityLabel, severityIndex) => {
+      const row = [severityLabel];
+      for (let likelihood = 1; likelihood <= 5; likelihood++) {
+        const riskValue = (5 - severityIndex) * likelihood;
+        row.push(riskValue.toString());
+      }
+      matrixData.push(row);
     });
 
-    // Likelihood rows
-    const likelihoodLabels = ["Very Unlikely", "Unlikely", "Possible", "Likely", "Very Likely"];
-    
-    for (let likelihood = 5; likelihood >= 1; likelihood--) {
-      const rowY = tableStartY + headerWidth + cellSize + ((5 - likelihood) * cellSize);
-      
-      // Row header cell
-      this.doc.setFillColor(79, 70, 229);
-      this.doc.rect(tableStartX, rowY, headerWidth, cellSize, 'F');
-      
-      // Row header border
-      this.doc.setDrawColor(255, 255, 255);
-      this.doc.setLineWidth(0.5);
-      this.doc.rect(tableStartX, rowY, headerWidth, cellSize);
-      
-      // Likelihood number
-      this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(12);
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text(likelihood.toString(), tableStartX + 12, rowY + 8, { align: "center" });
-      
-      // Likelihood label
-      this.doc.setFontSize(7);
-      this.doc.setFont("helvetica", "normal");
-      this.doc.text(likelihoodLabels[likelihood - 1], tableStartX + 12, rowY + 17, { align: "center" });
+    autoTable(this.doc, {
+      head: [['Consequences', '1', '2', '3', '4', '5']],
+      body: matrixData,
+      startY: this.yPosition,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [220, 220, 220],
+        textColor: [0, 0, 0],
+        fontStyle: 'bold',
+        fontSize: 10,
+        halign: 'center'
+      },
+      bodyStyles: {
+        fontSize: 9,
+        halign: 'center',
+        valign: 'middle',
+        cellPadding: 4
+      },
+      columnStyles: {
+        0: { 
+          fillColor: [240, 240, 240], 
+          fontStyle: 'bold',
+          cellWidth: 35,
+          halign: 'left'
+        }
+      },
+      tableWidth: 120,
+      margin: { left: this.MARGIN },
+      styles: {
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5
+      },
+      didParseCell: (data) => {
+        if (data.column.index > 0 && data.row.index >= 0) {
+          const severityIndex = data.row.index;
+          const likelihood = data.column.index;
+          const riskValue = (5 - severityIndex) * likelihood;
+          const cellColor = getRiskColor(riskValue);
+          data.cell.styles.fillColor = cellColor;
+          data.cell.styles.textColor = [255, 255, 255];
+          data.cell.styles.fontStyle = 'bold';
+        }
+      }
+    });
 
-      // Risk rating cells for this row
-      for (let severity = 1; severity <= 5; severity++) {
-        const cellX = tableStartX + headerWidth + (severity - 1) * cellSize;
-        const riskRating = likelihood * severity;
-        const [r, g, b] = getRiskColor(riskRating);
-        
-        // Cell background
-        this.doc.setFillColor(r, g, b);
-        this.doc.rect(cellX, rowY, cellSize, cellSize, 'F');
-        
-        // Cell border
-        this.doc.setDrawColor(255, 255, 255);
-        this.doc.setLineWidth(0.5);
-        this.doc.rect(cellX, rowY, cellSize, cellSize);
-        
-        // Risk rating number
-        this.doc.setTextColor(255, 255, 255);
-        this.doc.setFontSize(14);
-        this.doc.setFont("helvetica", "bold");
-        this.doc.text(riskRating.toString(), cellX + cellSize/2, rowY + cellSize/2 + 2, { align: "center" });
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 15;
+
+    // Consequences descriptions matching reference
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(12);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("Consequences", this.MARGIN + 140, this.yPosition - 60);
+    
+    const consequences = [
+      "5 - Catastrophic: Death or permanent disability",
+      "4 - Severe: Major injury requiring hospitalisation", 
+      "3 - Significant: Medical treatment required",
+      "2 - Minor: First aid treatment required",
+      "1 - Negligible: No injury or minor discomfort"
+    ];
+
+    this.doc.setFontSize(8);
+    this.doc.setFont("helvetica", "normal");
+    consequences.forEach((consequence, index) => {
+      this.doc.text(consequence, this.MARGIN + 140, this.yPosition - 45 + (index * 8));
+    });
+
+    // Likelihood descriptions
+    this.doc.setFontSize(12);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("Likelihood", this.MARGIN + 140, this.yPosition - 10);
+    
+    const likelihoods = [
+      "5 - Very Likely: Almost certain to occur",
+      "4 - Likely: Probable under normal conditions", 
+      "3 - Possible: Could occur at some time",
+      "2 - Unlikely: Not likely to occur",
+      "1 - Very Unlikely: Rare or exceptional circumstances"
+    ];
+
+    this.doc.setFontSize(8);
+    this.doc.setFont("helvetica", "normal");
+    likelihoods.forEach((likelihood, index) => {
+      this.doc.text(likelihood, this.MARGIN + 140, this.yPosition + 5 + (index * 8));
+    });
+
+    this.yPosition += 50;
+    this.addPageNumber();
+  }
+
+  // Enhanced Risk Assessment Table matching reference template
+  private addRiskAssessmentTable(data: RAMSData, context: VariableContext): void {
+    const risks = deduplicateRisks(data.risks);
+    if (risks.length === 0) return;
+
+    this.doc.addPage();
+    this.currentPage++;
+    this.yPosition = this.MARGIN + 10;
+    this.addDocumentHeader();
+    this.addTOCEntry("Risk Assessment Table");
+
+    this.yPosition += 10;
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(14);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("RISK ASSESSMENT", this.pageWidth / 2, this.yPosition, { align: "center" });
+    this.yPosition += 15;
+
+    // Create numbered rows (1-5) as shown in reference
+    const tableData = [];
+    for (let i = 0; i < 5; i++) {
+      const risk = risks[i];
+      if (risk) {
+        tableData.push([
+          (i + 1).toString(),
+          truncateText(risk.hazard, 20),
+          safeNumber(risk.likelihood).toString(),
+          safeNumber(risk.severity).toString(),
+          safeNumber(risk.riskRating).toString(),
+          truncateText(risk.controls, 30),
+          Math.max(1, Math.min(5, Math.floor(safeNumber(risk.riskRating) * 0.6))).toString(),
+          Math.max(1, Math.min(5, Math.floor(safeNumber(risk.riskRating) * 0.5))).toString(),
+          safeNumber(risk.residualRisk).toString(),
+          safeText(risk.responsible) || 'Site Supervisor'
+        ]);
+      } else {
+        // Empty numbered rows
+        tableData.push([
+          (i + 1).toString(),
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          ''
+        ]);
       }
     }
 
-    // Add vertical "LIKELIHOOD" label on the left
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(10);
-    this.doc.setFont("helvetica", "bold");
-    const likelihoodText = "LIKELIHOOD";
-    const letterSpacing = 12;
-    const startY = tableStartY + headerWidth + cellSize + (cellSize * 2.5) - (likelihoodText.length * letterSpacing / 2);
+    // Calculate available table width with equal margins
+    const availableWidth = this.pageWidth - (2 * this.MARGIN);
     
-    for (let i = 0; i < likelihoodText.length; i++) {
-      this.doc.text(likelihoodText[i], tableStartX - 15, startY + (i * letterSpacing), { align: "center" });
-    }
-
-    this.yPosition = tableStartY + headerWidth + (cellSize * 6) + 12;
-
-    // Professional legend with complete data
-    const legendY = this.yPosition;
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(13);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("RISK LEVEL INTERPRETATION", this.pageWidth / 2, legendY, { align: "center" });
-
-    const legendData = [
-      { range: "1-4", level: "LOW RISK", color: [34, 197, 94], action: "Monitor and review periodically. Standard precautions apply." },
-      { range: "5-9", level: "MEDIUM RISK", color: [245, 158, 11], action: "Implement specific controls and monitor regularly. Risk assessment required." },
-      { range: "10-16", level: "HIGH RISK", color: [249, 115, 22], action: "Immediate controls required. Work must not proceed without approval." },
-      { range: "17-25", level: "VERY HIGH RISK", color: [220, 38, 127], action: "Work prohibited. Alternative methods must be found." }
-    ];
-
+    // Professional table matching reference template
     autoTable(this.doc, {
-      startY: legendY + 10,
-      head: [["Risk Rating", "Risk Level", "Required Action"]],
-      body: legendData.map(item => [
-        item.range,
-        item.level,
-        item.action
-      ]),
-      theme: "grid",
+      head: [[
+        'TASK STEP', 'HAZARDS / RISKS', 'L', 'C', 'R', 'CONTROLS', 'L(R)', 'C(R)', 'R(R)', 'PERSON RESPONSIBLE'
+      ]],
+      body: tableData,
+      startY: this.yPosition,
+      theme: 'grid',
       headStyles: {
-        fillColor: this.PRIMARY_COLOR,
-        textColor: [255, 255, 255],
-        fontStyle: "bold",
-        fontSize: 10,
-        halign: "center"
+        fillColor: [220, 220, 220],
+        textColor: [0, 0, 0],
+        fontStyle: 'bold',
+        fontSize: 8,
+        halign: 'center',
+        valign: 'middle'
       },
-      styles: {
-        fontSize: 9,
-        cellPadding: 5,
-        valign: "middle"
+      bodyStyles: {
+        fontSize: 7,
+        cellPadding: 2,
+        valign: 'top',
+        minCellHeight: 15
       },
-      tableWidth: 'auto',
       columnStyles: {
-        0: { halign: "center", fontStyle: "bold", cellWidth: 25 },
-        1: { halign: "center", fontStyle: "bold", cellWidth: 35 },
-        2: { cellWidth: 'auto' }
+        0: { cellWidth: availableWidth * 0.08, halign: 'center' },  // TASK STEP
+        1: { cellWidth: availableWidth * 0.20, halign: 'left' },    // HAZARDS / RISKS
+        2: { cellWidth: availableWidth * 0.04, halign: 'center' },  // L
+        3: { cellWidth: availableWidth * 0.04, halign: 'center' },  // C
+        4: { cellWidth: availableWidth * 0.04, halign: 'center' },  // R
+        5: { cellWidth: availableWidth * 0.28, halign: 'left' },    // CONTROLS
+        6: { cellWidth: availableWidth * 0.05, halign: 'center' },  // L(R)
+        7: { cellWidth: availableWidth * 0.05, halign: 'center' },  // C(R)
+        8: { cellWidth: availableWidth * 0.05, halign: 'center' },  // R(R)
+        9: { cellWidth: availableWidth * 0.17, halign: 'center' }   // PERSON RESPONSIBLE
       },
-      margin: { left: this.MARGIN, right: this.MARGIN }
+      tableWidth: availableWidth,
+      margin: { left: this.MARGIN, right: this.MARGIN },
+      styles: {
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        cellPadding: 2
+      },
+      didParseCell: (data) => {
+        // Risk rating color coding for R and R(R) columns
+        if (data.column.index === 4 || data.column.index === 8) {
+          const rating = parseInt(data.cell.text[0]) || 0;
+          if (rating > 0) {
+            const color = getRiskColor(rating);
+            data.cell.styles.fillColor = color;
+            data.cell.styles.textColor = [255, 255, 255];
+            data.cell.styles.fontStyle = 'bold';
+          }
+        }
+      }
     });
 
-    // Update position after the legend table to manage spacing
     this.yPosition = (this.doc as any).lastAutoTable.finalY + 10;
     this.addPageNumber();
   }
 
-  // Enhanced Detailed Risk Assessment
-  private addDetailedRiskAssessment(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(45);
-    this.addTOCEntry("5. Detailed Risk Assessment");
-
-    this.yPosition += 16;
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(16);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("5. DETAILED RISK ASSESSMENT", this.MARGIN, this.yPosition);
-    this.yPosition += 16;
-
-    const deduplicatedRisks = deduplicateRisks(data.risks);
-    
-    if (deduplicatedRisks.length === 0) {
-      this.doc.setTextColor(0, 0, 0);
-      this.doc.setFontSize(10);
-      this.doc.text("No risks have been identified for this assessment.", this.MARGIN, this.yPosition);
-      return;
-    }
-
-    // Professional risk table with optimized landscape layout that fits page width
-    const riskTableData = deduplicatedRisks.map((risk, index) => [
-      (index + 1).toString(),
-      truncateText(safeText(risk.hazard), 30),
-      truncateText(safeText(risk.risk), 25),
-      safeNumber(risk.likelihood).toString(),
-      safeNumber(risk.severity).toString(),
-      `${safeNumber(risk.riskRating)}`,
-      getRiskLevel(risk.riskRating),
-      truncateText(safeText(risk.controls), 50),
-      `${safeNumber(risk.residualRisk)}`,
-      getRiskLevel(risk.residualRisk)
-    ]);
-
-    // Calculate available table width (page width minus equal margins)
-    const availableWidth = this.pageWidth - (2 * this.MARGIN);
-    
-    // Enhanced professional table for landscape format with proper fit and equal margins
-    autoTable(this.doc, {
-      startY: this.yPosition,
-      head: [["Ref", "Hazard Identified", "Who Might Be Harmed", "L", "S", "Initial Risk", "Risk Level", "Control Measures / Precautions", "Residual Risk", "Final Level"]],
-      body: riskTableData,
-      theme: "grid",
-      headStyles: {
-        fillColor: this.PRIMARY_COLOR,
-        textColor: [255, 255, 255],
-        fontStyle: "bold",
-        fontSize: 8,
-        halign: "center",
-        cellPadding: 3,
-        minCellHeight: 12
-      },
-      styles: {
-        fontSize: 7,
-        cellPadding: 3,
-        lineColor: [200, 200, 200],
-        lineWidth: 0.5,
-        valign: "middle",
-        minCellHeight: 10,
-        overflow: 'linebreak'
-      },
-      tableWidth: availableWidth,
-      margin: { left: this.MARGIN, right: this.MARGIN },
-      tableLineColor: [200, 200, 200],
-      tableLineWidth: 0.5,
-      columnStyles: {
-        0: { halign: "center", cellWidth: availableWidth * 0.05, fontStyle: "bold" }, // 5% - Ref
-        1: { cellWidth: availableWidth * 0.17, valign: "top" }, // 17% - Hazard
-        2: { cellWidth: availableWidth * 0.14, valign: "top" }, // 14% - Who might be harmed
-        3: { halign: "center", cellWidth: availableWidth * 0.04, fontStyle: "bold" }, // 4% - L
-        4: { halign: "center", cellWidth: availableWidth * 0.04, fontStyle: "bold" }, // 4% - S
-        5: { halign: "center", cellWidth: availableWidth * 0.07, fontStyle: "bold" }, // 7% - Initial Risk
-        6: { halign: "center", cellWidth: availableWidth * 0.11, fontStyle: "bold" }, // 11% - Risk Level
-        7: { cellWidth: availableWidth * 0.26, valign: "top" }, // 26% - Control Measures
-        8: { halign: "center", cellWidth: availableWidth * 0.07, fontStyle: "bold" }, // 7% - Residual Risk
-        9: { halign: "center", cellWidth: availableWidth * 0.11, fontStyle: "bold" } // 11% - Final Level (total: 100%)
-      },
-      didParseCell: (data: any) => {
-        // Enhanced color coding for risk levels with better contrast
-        if (data.column.index === 6 || data.column.index === 9) {
-          const level = data.cell.text[0];
-          if (level === "Low") {
-            data.cell.styles.fillColor = [34, 197, 94];
-            data.cell.styles.textColor = [255, 255, 255];
-          } else if (level === "Medium") {
-            data.cell.styles.fillColor = [245, 158, 11];
-            data.cell.styles.textColor = [0, 0, 0];
-          } else if (level === "High") {
-            data.cell.styles.fillColor = [249, 115, 22];
-            data.cell.styles.textColor = [255, 255, 255];
-          } else if (level === "Very High") {
-            data.cell.styles.fillColor = [220, 38, 127];
-            data.cell.styles.textColor = [255, 255, 255];
-          }
-          
-          if (data.cell.styles.fillColor) {
-            data.cell.styles.fontStyle = "bold";
-          }
-        }
-
-        // Highlight initial and residual risk numbers
-        if (data.column.index === 5 || data.column.index === 8) {
-          const riskValue = parseInt(data.cell.text[0]);
-          if (riskValue <= 4) {
-            data.cell.styles.fillColor = [34, 197, 94];
-            data.cell.styles.textColor = [255, 255, 255];
-          } else if (riskValue <= 9) {
-            data.cell.styles.fillColor = [245, 158, 11];
-            data.cell.styles.textColor = [0, 0, 0];
-          } else if (riskValue <= 16) {
-            data.cell.styles.fillColor = [249, 115, 22];
-            data.cell.styles.textColor = [255, 255, 255];
-          } else {
-            data.cell.styles.fillColor = [220, 38, 127];
-            data.cell.styles.textColor = [255, 255, 255];
-          }
-        }
-      }
-    });
-
-    this.yPosition = (this.doc as any).lastAutoTable.finalY + 20;
-    this.addPageNumber();
-  }
-
-  // Professional Method Statement Section
-  private addMethodStatement(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(50);
-    this.addTOCEntry("6. Method Statement");
-
-    this.yPosition += 16;
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(16);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("6. METHOD STATEMENT", this.MARGIN, this.yPosition);
-    this.yPosition += 16;
-
-    // Professional section header
-    this.doc.setFillColor(...this.LIGHT_GRAY);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 12, 'F');
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(10);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("SAFE WORK PROCEDURES", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
-    this.yPosition += 18;
-
-    const methodStatements = extractMethodStatements(data.risks);
-
-    // Professional method list
-    if (methodStatements.length === 0) {
-      const defaultMethods = [
-        "Isolate and lock-off electrical supply before commencing work",
-        "Test circuits dead using approved voltage indicators",
-        "Wear appropriate PPE including insulated gloves and safety footwear",
-        "Maintain safe working distances from live conductors",
-        "Use properly rated tools and equipment for electrical work",
-        "Implement appropriate barriers and warning signs"
-      ];
-      
-      defaultMethods.forEach((method, index) => {
-        this.checkPageBreak(8);
-        this.doc.setTextColor(0, 0, 0);
-        this.doc.setFontSize(10);
-        this.doc.setFont("helvetica", "bold");
-        this.doc.text(`${index + 1}.`, this.MARGIN + 5, this.yPosition);
-        this.doc.setFont("helvetica", "normal");
-        const wrappedMethod = this.doc.splitTextToSize(method, this.pageWidth - 2 * this.MARGIN - 20);
-        wrappedMethod.forEach((line: string, lineIndex: number) => {
-          this.doc.text(line, this.MARGIN + 18, this.yPosition + (lineIndex * 5));
-        });
-        this.yPosition += Math.max(6, wrappedMethod.length * 4 + 2);
-      });
-    } else {
-      methodStatements.forEach((statement, index) => {
-        this.checkPageBreak(8);
-        this.doc.setTextColor(0, 0, 0);
-        this.doc.setFontSize(10);
-        this.doc.setFont("helvetica", "bold");
-        this.doc.text(`${index + 1}.`, this.MARGIN + 5, this.yPosition);
-        this.doc.setFont("helvetica", "normal");
-        const wrappedStatement = this.doc.splitTextToSize(statement, this.pageWidth - 2 * this.MARGIN - 20);
-        wrappedStatement.forEach((line: string, lineIndex: number) => {
-          this.doc.text(line, this.MARGIN + 18, this.yPosition + (lineIndex * 5));
-        });
-        this.yPosition += Math.max(6, wrappedStatement.length * 4 + 2);
-      });
-    }
-
-    this.yPosition += 4;
-    this.addPageNumber();
-  }
-
-  // Professional Safety Requirements Section  
-  private addSafetyInformation(context: VariableContext): void {
-    this.checkPageBreak(60);
-    this.addTOCEntry("7. Critical Safety Requirements");
-
-    this.yPosition += 16;
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(16);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("7. CRITICAL SAFETY REQUIREMENTS", this.MARGIN, this.yPosition);
-    this.yPosition += 16;
-
-    // Professional warning box
-    this.doc.setFillColor(254, 242, 242);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 35, 'F');
-    this.doc.setDrawColor(220, 38, 127);
-    this.doc.setLineWidth(2);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 35);
-
-    this.doc.setFillColor(220, 38, 127);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 8, 'F');
-    
-    this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(10);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("⚠ MANDATORY SAFETY REQUIREMENTS", this.pageWidth / 2, this.yPosition + 6, { align: "center" });
-
-    this.doc.setTextColor(51, 65, 85);
-    this.doc.setFontSize(9);
-    this.doc.setFont("helvetica", "normal");
-    const warningText = "These requirements are mandatory for all electrical work. Failure to comply may result in serious injury or death and could constitute a criminal offence under health and safety legislation.";
-    const wrappedWarning = this.doc.splitTextToSize(warningText, this.pageWidth - (2 * this.MARGIN) - 12);
-    wrappedWarning.forEach((line: string, index: number) => {
-      this.doc.text(line, this.pageWidth / 2, this.yPosition + 14 + (index * 4), { align: "center" });
-    });
-
-    this.yPosition += 45;
-
-    const safetyPoints = [
-      "All personnel must be competent and appropriately trained for electrical work",
-      "Isolate and securely lock-off all relevant power supplies before work commences",
-      "Use appropriate PPE including insulated gloves, safety footwear, and eye protection",
-      "Test all circuits dead using properly calibrated voltage detection equipment",
-      "Maintain safe working distances from live conductors as per BS 7671:2018+A2:2022",
-      "Have emergency procedures and first aid readily available",
-      "Report any unsafe conditions immediately to supervision",
-      "Follow permit to work procedures where applicable"
-    ];
-
-    this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(9);
-    this.doc.setFont("helvetica", "normal");
-
-    safetyPoints.forEach((point, index) => {
-      // Use proper bullet character with consistent spacing
-      const bulletPoint = `• ${point}`;
-      const wrappedPoint = this.doc.splitTextToSize(bulletPoint, this.pageWidth - (2 * this.MARGIN) - 20);
-      
-      wrappedPoint.forEach((line: string, lineIndex: number) => {
-        // Proper indentation with hanging indent for wrapped text
-        const xPosition = lineIndex === 0 ? this.MARGIN + 8 : this.MARGIN + 12;
-        this.doc.text(line, xPosition, this.yPosition + (lineIndex * 4.5));
-      });
-      
-      this.yPosition += Math.max(8, wrappedPoint.length * 4 + 2);
-    });
-
-    this.yPosition += 8; // Optimized section spacing
-
-    this.addPageNumber();
-  }
-
-  // Enhanced Approvals Section
-  private addEnhancedApprovals(signOff?: SignOff, context?: VariableContext): void {
-    this.doc.addPage();
-    this.currentPage++;
-    this.yPosition = this.MARGIN + 20;
-    this.addTOCEntry("8. Authorisation & Sign-off");
-
-    this.yPosition += 16;
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(16);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("8. AUTHORISATION & SIGN-OFF", this.MARGIN, this.yPosition);
-    this.yPosition += 25;
-
-    const signatureBoxHeight = 50;
-    const signatureBoxWidth = (this.pageWidth - (4 * this.MARGIN)) / 3;
-
-    // Three-tier approval system
-    const approvals = [
-      { title: "PREPARED BY", data: signOff?.preparedBy, color: [34, 197, 94] as [number, number, number] },
-      { title: "REVIEWED BY", data: signOff?.reviewedBy, color: [255, 193, 7] as [number, number, number] },
-      { title: "APPROVED BY", data: signOff?.approvedBy, color: [239, 68, 68] as [number, number, number] }
-    ];
-
-    approvals.forEach((approval, index) => {
-      const x = this.MARGIN + (index * (signatureBoxWidth + this.MARGIN));
-      
-      this.doc.setTextColor(...approval.color);
-      this.doc.setFontSize(12);
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text(approval.title, x, this.yPosition);
-      
-      this.doc.setDrawColor(...approval.color);
-      this.doc.setLineWidth(2);
-      this.doc.rect(x, this.yPosition + 5, signatureBoxWidth, signatureBoxHeight);
-      
-      if (approval.data) {
-        this.doc.setTextColor(0, 0, 0);
-        this.doc.setFontSize(9);
-        this.doc.setFont("helvetica", "normal");
-        this.doc.text(`Name: ${approval.data.name}`, x + 5, this.yPosition + signatureBoxHeight - 18);
-        this.doc.text(`Date: ${approval.data.date}`, x + 5, this.yPosition + signatureBoxHeight - 8);
-        
-        // Render actual signature if available
-        if (approval.data.signatureDataUrl) {
-          try {
-            this.doc.addImage(
-              approval.data.signatureDataUrl,
-              'PNG',
-              x + 5,
-              this.yPosition + 15,
-              40,
-              8
-            );
-          } catch (error) {
-            // Fallback if signature fails to render
-            this.doc.setFontSize(8);
-            this.doc.setTextColor(100, 100, 100);
-            this.doc.text("Digital Signature", x + 5, this.yPosition + 25);
-          }
-        } else {
-          // Show placeholder text when no signature
-          this.doc.setFontSize(8);
-          this.doc.setTextColor(100, 100, 100);
-          this.doc.text("Awaiting Signature", x + 5, this.yPosition + 25);
-        }
-      }
-    });
-
-    this.yPosition += signatureBoxHeight + 20;
-
-    // Document control information
-    this.doc.setFillColor(248, 250, 252);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 30, 'F');
-    this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 30);
-
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("DOCUMENT CONTROL", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
-
-    this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(9);
-    this.doc.setFont("helvetica", "normal");
-    const docInfo = [
-      `Document: RAMS-${context?.project_name || 'Document'}`,
-      `Version: v1.0`,
-      `Generated: ${context?.document_generated || safeDatetime(new Date())}`,
-      `Status: CONFIDENTIAL`
-    ];
-
-    docInfo.forEach((info, index) => {
-      this.doc.text(info, this.pageWidth / 2, this.yPosition + 15 + (index * 3.5), { align: "center" });
-    });
-
-    this.addPageNumber();
-  }
-
-  // Enhanced footer for all pages
-  private addEnhancedFooter(context: VariableContext, pageNum: number): void {
-    // Footer is now removed as requested
-  }
-
-  // Table of Contents
-  private addTableOfContents(): void {
-    this.doc.addPage();
-    this.currentPage++;
-    this.yPosition = this.MARGIN + 20;
-
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(18);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("TABLE OF CONTENTS", this.pageWidth / 2, this.yPosition, { align: "center" });
-    this.yPosition += 8;
-
-    // Add a line under the title
-    this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.setLineWidth(1);
-    this.doc.line(this.MARGIN, this.yPosition, this.pageWidth - this.MARGIN, this.yPosition);
-    this.yPosition += 10;
-
-    const tocData = this.toc.map(item => [item.title, item.page.toString()]);
-
-    autoTable(this.doc, {
-      startY: this.yPosition,
-      body: tocData,
-      theme: "plain",
-      tableWidth: 'auto',
-      styles: {
-        fontSize: 11,
-        cellPadding: 6,
-        lineColor: [220, 220, 220],
-        lineWidth: 0.1
-      },
-      columnStyles: {
-        0: { fontStyle: "normal", cellWidth: 'auto' },
-        1: { halign: "right", fontStyle: "bold", cellWidth: 20 }
-      },
-      margin: { left: this.MARGIN, right: this.MARGIN }
-    });
-
-    this.addPageNumber();
-  }
-
-  // Main generation method
-  public generatePDF(data: RAMSData, options: PDFOptions = {}): string {
-    // Create variable context for dynamic substitution
+  // Generate the complete RAMS PDF
+  generatePDF(data: RAMSData, options: PDFOptions = {}): jsPDF {
     const context = createVariableContext(data, options);
     
-    // Add sections in order (TOC entries will be populated)
+    // Generate all sections
     this.addTitlePage(data, options, context);
     this.addRiskMatrix();
     this.addWorkActivities(data, context);
     this.addRiskSummary(data, context);
-    this.addDetailedRiskAssessment(data, context);
-    this.addMethodStatement(data, context);
-    this.addSafetyInformation(context);
-    this.addEnhancedApprovals(options.signOff, context);
-
-    // Add enhanced footer to all pages
-    for (let i = 1; i <= this.currentPage; i++) {
-      this.doc.setPage(i);
-      this.addEnhancedFooter(context, i);
-    }
-
-    // Generate table of contents after all sections are added
-    this.addTableOfContents();
-
-    return this.doc.output('datauristring');
+    this.addRiskAssessmentTable(data, context);
+    
+    return this.doc;
   }
 }
 
-// Export functions
-export function generateRAMSPDF(data: RAMSData, options: PDFOptions = {}): string {
-  const generator = new ProfessionalRAMSPDFGenerator();
-  return generator.generatePDF(data, options);
+// Public interface functions
+export function generateRAMSPDF(data: RAMSData, options: RAMSReportOptions = {}): jsPDF {
+  try {
+    const generator = new ProfessionalRAMSPDFGenerator();
+    return generator.generatePDF(data, options);
+  } catch (error) {
+    console.error('Error generating RAMS PDF:', error);
+    throw new Error('Failed to generate PDF document. Please check your data and try again.');
+  }
 }
 
-export function generateRAMSPDFPreview(data: RAMSData, options: PDFOptions = {}): Promise<string> {
-  return new Promise((resolve) => {
-    const generator = new ProfessionalRAMSPDFGenerator();
-    const pdfDataUri = generator.generatePDF(data, options);
-    resolve(pdfDataUri);
+export function generateRAMSPDFPreview(data: RAMSData, options: RAMSReportOptions = {}): Promise<string> {
+  return new Promise((resolve, reject) => {
+    try {
+      const pdfDoc = generateRAMSPDF(data, options);
+      const pdfDataUri = pdfDoc.output('datauristring');
+      resolve(pdfDataUri);
+    } catch (error) {
+      console.error('Error generating RAMS PDF preview:', error);
+      reject(new Error('Failed to generate PDF preview. Please check your data and try again.'));
+    }
   });
 }

@@ -30,4 +30,9 @@ export interface RAMSReportOptions {
   documentReference?: string;
   reviewDate?: string;
   distribution?: string[];
+  signOff?: {
+    preparedBy?: { name: string; date: string; signatureDataUrl?: string };
+    reviewedBy?: { name: string; date: string; signatureDataUrl?: string };
+    approvedBy?: { name: string; date: string; signatureDataUrl?: string };
+  };
 }
