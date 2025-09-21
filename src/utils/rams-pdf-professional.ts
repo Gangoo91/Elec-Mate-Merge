@@ -413,68 +413,89 @@ class ProfessionalRAMSPDFGenerator {
   private addRiskMatrix(): void {
     this.doc.addPage();
     this.currentPage++;
-    this.yPosition = this.MARGIN + 5;
+    this.yPosition = this.MARGIN + 10;
     this.addDocumentHeader();
     this.addTOCEntry("2. Risk Assessment Matrix");
 
+    // Section title with enhanced styling
     this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(16);
+    this.doc.setFontSize(18);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("2. RISK ASSESSMENT MATRIX", this.MARGIN, this.yPosition);
-    this.yPosition += 12;
+    this.doc.text("2. RISK ASSESSMENT MATRIX", this.pageWidth / 2, this.yPosition, { align: "center" });
+    this.yPosition += 20;
 
-    // Professional explanation box
-    this.doc.setFillColor(...this.LIGHT_GRAY);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 15, 'F');
-    this.doc.setDrawColor(...this.BORDER_GRAY);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 15);
+    // Professional explanation box with better styling
+    const boxHeight = 25;
+    this.doc.setFillColor(239, 246, 255); // Light blue background
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), boxHeight, 'F');
+    this.doc.setDrawColor(...this.PRIMARY_COLOR);
+    this.doc.setLineWidth(1);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), boxHeight);
 
+    // Enhanced explanation text
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(12);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("Risk Assessment Formula", this.pageWidth / 2, this.yPosition + 10, { align: "center" });
+    
     this.doc.setTextColor(51, 65, 85);
     this.doc.setFontSize(10);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("Risk Rating = Likelihood × Severity (Both scored 1-5)", this.pageWidth / 2, this.yPosition + 10, { align: "center" });
-    this.yPosition += 25;
+    this.doc.setFont("helvetica", "normal");
+    this.doc.text("Risk Rating = Likelihood × Severity (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 18, { align: "center" });
+    this.yPosition += 35;
 
-    // Professional 5x5 matrix with optimized sizing
-    const cellSize = 25;
-    const matrixStartX = (this.pageWidth - (cellSize * 6)) / 2 + cellSize/2;
-    const matrixStartY = this.yPosition;
+    // Enhanced 5x5 matrix with better proportions
+    const cellSize = 28;
+    const matrixWidth = cellSize * 5;
+    const matrixStartX = (this.pageWidth - matrixWidth) / 2;
+    const matrixStartY = this.yPosition + 25;
 
-    // Professional matrix labels
+    // Enhanced matrix labels with better positioning
     this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(11);
+    this.doc.setFontSize(14);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("SEVERITY →", matrixStartX + (cellSize * 2.5), matrixStartY - 15, { align: "center" });
+    this.doc.text("SEVERITY", this.pageWidth / 2, matrixStartY - 25, { align: "center" });
     
-    // Vertical text for likelihood
-    this.doc.text("LIKELIHOOD", matrixStartX - 20, matrixStartY + (cellSize * 2.5), { align: "center", angle: 90 });
+    // Vertical likelihood label with better styling
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(14);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("LIKELIHOOD", matrixStartX - 35, matrixStartY + (cellSize * 2.5), { align: "center", angle: 270 });
 
-    // Severity scale with professional labels
+    // Enhanced severity scale with better labels
     const severityLabels = ["Insignificant", "Minor", "Moderate", "Major", "Catastrophic"];
     severityLabels.forEach((label, index) => {
-      this.doc.setFontSize(7);
+      this.doc.setFontSize(8);
       this.doc.setFont("helvetica", "normal");
       this.doc.setTextColor(75, 85, 99);
-      this.doc.text(label, matrixStartX + (index * cellSize) + cellSize/2, matrixStartY - 8, { align: "center" });
+      this.doc.text(label, matrixStartX + (index * cellSize) + cellSize/2, matrixStartY - 12, { align: "center" });
+      
+      // Enhanced number styling
+      this.doc.setFontSize(10);
       this.doc.setFont("helvetica", "bold");
       this.doc.setTextColor(...this.PRIMARY_COLOR);
-      this.doc.text((index + 1).toString(), matrixStartX + (index * cellSize) + cellSize/2, matrixStartY - 2, { align: "center" });
+      this.doc.text((index + 1).toString(), matrixStartX + (index * cellSize) + cellSize/2, matrixStartY - 4, { align: "center" });
     });
 
-    // Likelihood scale with professional labels
+    // Enhanced likelihood scale with better positioning
     const likelihoodLabels = ["Very Unlikely", "Unlikely", "Possible", "Likely", "Very Likely"];
     likelihoodLabels.forEach((label, index) => {
-      this.doc.setFontSize(7);
+      const y = matrixStartY + ((4 - index) * cellSize) + cellSize/2;
+      
+      // Enhanced number styling
+      this.doc.setFontSize(10);
       this.doc.setFont("helvetica", "bold");
       this.doc.setTextColor(...this.PRIMARY_COLOR);
-      const y = matrixStartY + ((4 - index) * cellSize) + cellSize/2;
-      this.doc.text((index + 1).toString(), matrixStartX - 12, y + 2, { align: "center" });
+      this.doc.text((index + 1).toString(), matrixStartX - 20, y + 3, { align: "center" });
+      
+      // Enhanced label styling
+      this.doc.setFontSize(8);
       this.doc.setFont("helvetica", "normal");
       this.doc.setTextColor(75, 85, 99);
-      this.doc.text(label, matrixStartX - 18, y + 2, { align: "right" });
+      this.doc.text(label, matrixStartX - 30, y + 3, { align: "right" });
     });
 
-    // Professional matrix cells with enhanced styling
+    // Enhanced matrix cells with improved visual design
     for (let likelihood = 1; likelihood <= 5; likelihood++) {
       for (let severity = 1; severity <= 5; severity++) {
         const x = matrixStartX + (severity - 1) * cellSize;
@@ -482,23 +503,23 @@ class ProfessionalRAMSPDFGenerator {
         const riskRating = likelihood * severity;
         const [r, g, b] = getRiskColor(riskRating);
         
-        // Cell background with risk color
+        // Enhanced cell background with gradient effect
         this.doc.setFillColor(r, g, b);
         this.doc.rect(x, y, cellSize, cellSize, 'F');
         
-        // Professional border
+        // Enhanced border with better contrast
         this.doc.setDrawColor(255, 255, 255);
-        this.doc.setLineWidth(1.5);
+        this.doc.setLineWidth(2);
         this.doc.rect(x, y, cellSize, cellSize);
         
-        // Risk rating with shadow effect
+        // Enhanced risk rating with better shadow effect
         this.doc.setTextColor(0, 0, 0);
-        this.doc.setFontSize(12);
+        this.doc.setFontSize(14);
         this.doc.setFont("helvetica", "bold");
-        this.doc.text(riskRating.toString(), x + cellSize/2 + 0.3, y + cellSize/2 + 2.3, { align: "center" });
+        this.doc.text(riskRating.toString(), x + cellSize/2 + 0.5, y + cellSize/2 + 3.5, { align: "center" });
         
         this.doc.setTextColor(255, 255, 255);
-        this.doc.text(riskRating.toString(), x + cellSize/2, y + cellSize/2 + 2, { align: "center" });
+        this.doc.text(riskRating.toString(), x + cellSize/2, y + cellSize/2 + 3, { align: "center" });
       }
     }
 
