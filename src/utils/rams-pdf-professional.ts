@@ -335,14 +335,14 @@ class ProfessionalRAMSPDFGenerator {
 
   // Work Activities Section  
   private addWorkActivities(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(25);
+    this.checkPageBreak(20);
     this.addTOCEntry("3. Work Activities");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("3. WORK ACTIVITIES", this.MARGIN, this.yPosition);
-    this.yPosition += 12;
+    this.yPosition += 10;
 
     const activities = safeArrayFilter(data.activities);
     if (activities.length === 0) {
@@ -600,7 +600,7 @@ class ProfessionalRAMSPDFGenerator {
     });
 
     // Update position after the legend table to manage spacing
-    this.yPosition = (this.doc as any).lastAutoTable.finalY + 15;
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 10;
     this.addPageNumber();
   }
 
