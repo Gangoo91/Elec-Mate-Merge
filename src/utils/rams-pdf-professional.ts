@@ -489,21 +489,29 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFont("helvetica", "bold");
     this.doc.text("CONSEQUENCE", matrixStartX + matrixWidth / 2, matrixStartY + 14, { align: "center" });
 
-    // Consequence numbers (1-5) across the top
-    for (let i = 1; i <= 5; i++) {
-      const x = matrixStartX + rowHeaderWidth + ((i - 1) * cellSize);
+    // Consequence headers with numbers and labels
+    const consequenceLabels = [
+      { num: 1, label: "NEGLIGIBLE" },
+      { num: 2, label: "MINOR" },
+      { num: 3, label: "MODERATE" },
+      { num: 4, label: "MAJOR" },
+      { num: 5, label: "CATASTROPHIC" }
+    ];
+
+    consequenceLabels.forEach((item, index) => {
+      const x = matrixStartX + rowHeaderWidth + (index * cellSize);
       
-      this.doc.setFillColor(100, 149, 237); // Lighter blue for numbers
+      this.doc.setFillColor(100, 149, 237); // Lighter blue matching likelihood headers
       this.doc.rect(x, matrixStartY + headerHeight, cellSize, cellSize, 'F');
       this.doc.setDrawColor(0, 0, 0);
       this.doc.setLineWidth(1);
       this.doc.rect(x, matrixStartY + headerHeight, cellSize, cellSize);
       
       this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(16);
+      this.doc.setFontSize(10);
       this.doc.setFont("helvetica", "bold");
-      this.doc.text(i.toString(), x + cellSize/2, matrixStartY + headerHeight + 17, { align: "center" });
-    }
+      this.doc.text(`${item.num} - ${item.label}`, x + cellSize/2, matrixStartY + headerHeight + 17, { align: "center" });
+    });
 
     // Likelihood rows (5 down to 1)
     const likelihoodData = [
