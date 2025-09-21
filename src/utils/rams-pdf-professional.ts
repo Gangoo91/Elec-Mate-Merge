@@ -127,7 +127,7 @@ class ProfessionalRAMSPDFGenerator {
   private yPosition: number;
   private currentPage: number = 1;
   private toc: TOCItem[] = [];
-  private readonly MARGIN = 15; // 15mm margins for professional appearance
+  private readonly MARGIN = 10; // 10mm margins for optimized space usage
   private readonly HEADER_HEIGHT = 35;
   private readonly FOOTER_HEIGHT = 20;
   private readonly PRIMARY_COLOR: [number, number, number] = [30, 64, 175]; // Professional blue #1e40af
@@ -446,8 +446,8 @@ class ProfessionalRAMSPDFGenerator {
 
     // Calculate table dimensions for consistent padding
     const tableWidth = 140; // Fixed table width for consistency
-    const cellSize = 22;
-    const headerWidth = 25;
+    const cellSize = 18;
+    const headerWidth = 20;
     const totalTableWidth = headerWidth + (cellSize * 5);
     const tableStartX = (this.pageWidth - totalTableWidth) / 2; // Center the table
     const tableStartY = this.yPosition;
@@ -464,7 +464,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(255, 255, 255);
     this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("SEVERITY →", tableStartX + totalTableWidth / 2, tableStartY + 8, { align: "center" });
+    this.doc.text("SEVERITY →", tableStartX + totalTableWidth / 2, tableStartY + 6, { align: "center" });
 
     // Severity column headers
     const severityLabels = ["Negligible", "Minor", "Moderate", "Major", "Catastrophic"];
@@ -553,7 +553,7 @@ class ProfessionalRAMSPDFGenerator {
       this.doc.text(likelihoodText[i], tableStartX - 15, startY + (i * letterSpacing), { align: "center" });
     }
 
-    this.yPosition = tableStartY + headerWidth + (cellSize * 6) + 20;
+    this.yPosition = tableStartY + headerWidth + (cellSize * 6) + 12;
 
     // Professional legend with complete data
     const legendY = this.yPosition;
@@ -735,7 +735,7 @@ class ProfessionalRAMSPDFGenerator {
         wrappedMethod.forEach((line: string, lineIndex: number) => {
           this.doc.text(line, this.MARGIN + 18, this.yPosition + (lineIndex * 5));
         });
-        this.yPosition += Math.max(8, wrappedMethod.length * 5 + 2);
+        this.yPosition += Math.max(6, wrappedMethod.length * 4 + 2);
       });
     } else {
       methodStatements.forEach((statement, index) => {
@@ -749,11 +749,11 @@ class ProfessionalRAMSPDFGenerator {
         wrappedStatement.forEach((line: string, lineIndex: number) => {
           this.doc.text(line, this.MARGIN + 18, this.yPosition + (lineIndex * 5));
         });
-        this.yPosition += Math.max(8, wrappedStatement.length * 5 + 2);
+        this.yPosition += Math.max(6, wrappedStatement.length * 4 + 2);
       });
     }
 
-    this.yPosition += 10;
+    this.yPosition += 4;
     this.addPageNumber();
   }
 
@@ -820,10 +820,10 @@ class ProfessionalRAMSPDFGenerator {
         this.doc.text(line, xPosition, this.yPosition + (lineIndex * 4.5));
       });
       
-      this.yPosition += Math.max(10, wrappedPoint.length * 4.5 + 3);
+      this.yPosition += Math.max(8, wrappedPoint.length * 4 + 2);
     });
 
-    this.yPosition += 12; // Optimized section spacing
+    this.yPosition += 8; // Optimized section spacing
 
     this.addPageNumber();
   }
@@ -841,7 +841,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("8. AUTHORISATION & SIGN-OFF", this.MARGIN, this.yPosition);
     this.yPosition += 25;
 
-    const signatureBoxHeight = 60;
+    const signatureBoxHeight = 40;
     const signatureBoxWidth = (this.pageWidth - (4 * this.MARGIN)) / 3;
 
     // Three-tier approval system
@@ -879,7 +879,7 @@ class ProfessionalRAMSPDFGenerator {
               x + 5,
               this.yPosition + 15,
               40,
-              10
+              8
             );
           } catch (error) {
             // Fallback if signature fails to render
@@ -896,18 +896,18 @@ class ProfessionalRAMSPDFGenerator {
       }
     });
 
-    this.yPosition += signatureBoxHeight + 30;
+    this.yPosition += signatureBoxHeight + 20;
 
     // Document control information
     this.doc.setFillColor(248, 250, 252);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 40, 'F');
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 30, 'F');
     this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 40);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 30);
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("DOCUMENT CONTROL", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
+    this.doc.text("DOCUMENT CONTROL", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
 
     this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(9);
@@ -920,7 +920,7 @@ class ProfessionalRAMSPDFGenerator {
     ];
 
     docInfo.forEach((info, index) => {
-      this.doc.text(info, this.pageWidth / 2, this.yPosition + 20 + (index * 4), { align: "center" });
+      this.doc.text(info, this.pageWidth / 2, this.yPosition + 15 + (index * 3.5), { align: "center" });
     });
 
     this.addPageNumber();
@@ -941,13 +941,13 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(18);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("TABLE OF CONTENTS", this.pageWidth / 2, this.yPosition, { align: "center" });
-    this.yPosition += 20;
+    this.yPosition += 8;
 
     // Add a line under the title
     this.doc.setDrawColor(...this.PRIMARY_COLOR);
     this.doc.setLineWidth(1);
     this.doc.line(this.MARGIN, this.yPosition, this.pageWidth - this.MARGIN, this.yPosition);
-    this.yPosition += 15;
+    this.yPosition += 10;
 
     const tocData = this.toc.map(item => [item.title, item.page.toString()]);
 
