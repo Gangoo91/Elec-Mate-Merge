@@ -642,10 +642,10 @@ class ProfessionalRAMSPDFGenerator {
       getRiskLevel(risk.residualRisk)
     ]);
 
-    // Calculate available table width (page width minus margins)
+    // Calculate available table width (page width minus margins) and ensure equal padding
     const availableWidth = this.pageWidth - (2 * this.MARGIN);
     
-    // Enhanced professional table for landscape format with proper fit
+    // Enhanced professional table for landscape format with proper fit and equal margins
     autoTable(this.doc, {
       startY: this.yPosition,
       head: [["Ref", "Hazard Identified", "Who Might Be Harmed", "L", "S", "Initial Risk", "Risk Level", "Control Measures / Precautions", "Residual Risk", "Final Level"]],
@@ -670,6 +670,9 @@ class ProfessionalRAMSPDFGenerator {
         overflow: 'linebreak'
       },
       tableWidth: availableWidth,
+      margin: { left: this.MARGIN, right: this.MARGIN },
+      tableLineColor: [200, 200, 200],
+      tableLineWidth: 0.5,
       columnStyles: {
         0: { halign: "center", cellWidth: availableWidth * 0.05, fontStyle: "bold" }, // 5% - Ref
         1: { cellWidth: availableWidth * 0.17, valign: "top" }, // 17% - Hazard
@@ -682,7 +685,6 @@ class ProfessionalRAMSPDFGenerator {
         8: { halign: "center", cellWidth: availableWidth * 0.07, fontStyle: "bold" }, // 7% - Residual Risk
         9: { halign: "center", cellWidth: availableWidth * 0.11, fontStyle: "bold" } // 11% - Final Level (total: 100%)
       },
-      margin: { left: this.MARGIN, right: this.MARGIN },
       didParseCell: (data: any) => {
         // Enhanced color coding for risk levels with better contrast
         if (data.column.index === 6 || data.column.index === 9) {
