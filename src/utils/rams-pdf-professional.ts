@@ -911,6 +911,7 @@ class ProfessionalRAMSPDFGenerator {
       startY: this.yPosition,
       body: tocData,
       theme: "plain",
+      tableWidth: 'auto',
       styles: {
         fontSize: 11,
         cellPadding: 6,
@@ -918,7 +919,7 @@ class ProfessionalRAMSPDFGenerator {
         lineWidth: 0.1
       },
       columnStyles: {
-        0: { fontStyle: "normal", cellWidth: this.pageWidth - 60 },
+        0: { fontStyle: "normal", cellWidth: 'auto' },
         1: { halign: "right", fontStyle: "bold", cellWidth: 20 }
       },
       margin: { left: this.MARGIN, right: this.MARGIN }
