@@ -201,88 +201,105 @@ class ProfessionalRAMSPDFGenerator {
     this.yPosition = this.MARGIN + 5;
   }
 
-  // Professional Title Page with Corporate Design
+  // Professional Title Page matching reference template
   private addTitlePage(data: RAMSData, options: PDFOptions, context: VariableContext): void {
-    // Professional gradient header
-    this.doc.setFillColor(...this.PRIMARY_COLOR);
-    this.doc.rect(0, 0, this.pageWidth, 55, 'F');
-    
-    // Accent stripe
-    this.doc.setFillColor(...this.ACCENT_COLOR);
-    this.doc.rect(0, 50, this.pageWidth, 5, 'F');
-    
-    // Company logo area - professional placement
+    // Professional header matching template
     this.doc.setFillColor(255, 255, 255);
-    this.doc.rect(this.MARGIN, 10, 45, 30, 'F');
-    this.doc.setDrawColor(...this.BORDER_GRAY);
-    this.doc.setLineWidth(1);
-    this.doc.rect(this.MARGIN, 10, 45, 30);
+    this.doc.rect(0, 0, this.pageWidth, 45, 'F');
     
-    this.doc.setTextColor(100, 116, 139);
-    this.doc.setFontSize(8);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("COMPANY", this.MARGIN + 22.5, 22, { align: "center" });
-    this.doc.text("LOGO", this.MARGIN + 22.5, 30, { align: "center" });
-
-    // Main title with professional typography
+    // Company branding area (SPIRE SAFETY style)
+    this.doc.setFillColor(...this.PRIMARY_COLOR);
+    this.doc.rect(this.MARGIN, 8, 80, 25, 'F');
+    
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(20);
+    this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("HEALTH & SAFETY", this.pageWidth / 2, 22, { align: "center" });
-    this.doc.text("RISK ASSESSMENT", this.pageWidth / 2, 32, { align: "center" });
-    
-    // Professional compliance badge
+    this.doc.text("SPIRE SAFETY", this.MARGIN + 40, 18, { align: "center" });
     this.doc.setFontSize(10);
-    this.doc.setFont("helvetica", "normal");
-    this.doc.text("BS 7671:2018+A2:2022 Compliant", this.pageWidth / 2, 42, { align: "center" });
+    this.doc.text("RISK ASSESSMENT", this.MARGIN + 40, 28, { align: "center" });
 
-    this.yPosition = 65;
-
-    // Company name with professional styling
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    // Document title (center-right)
+    this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(18);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text(context.company_name, this.pageWidth / 2, this.yPosition, { align: "center" });
-    this.yPosition += 20;
-
-    // Professional project information card
-    const cardHeight = 55;
-    this.doc.setFillColor(...this.LIGHT_GRAY);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), cardHeight, 'F');
+    this.doc.text("RISK ASSESSMENT (TEMPLATE)", this.pageWidth - 100, 15, { align: "center" });
     
-    this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.setLineWidth(2);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), cardHeight);
-
-    // Card header
-    this.doc.setFillColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 12, 'F');
+    // Reference number area
+    this.doc.setFontSize(12);
+    this.doc.setFont("helvetica", "normal");
+    this.doc.text("Ref: SS-WHS-SAF-000", this.pageWidth - 100, 25, { align: "center" });
     
-    this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(11);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("PROJECT INFORMATION", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
+    // Authorization fields
+    this.doc.setFontSize(10);
+    this.doc.text("Authorised By: _________________", this.pageWidth - 120, 35);
+    this.doc.text(`Rev: 1.0    Date: ${context.assessment_date}`, this.pageWidth - 60, 35);
 
-    // Project details with improved layout
-    const projectDetails = [
-      { label: "Project:", value: context.project_name },
-      { label: "Location:", value: context.location },
-      { label: "Assessment Date:", value: context.assessment_date },
-      { label: "Assessor:", value: context.assessor }
+    this.yPosition = 50;
+
+    // Task Information Section matching template
+    this.yPosition += 10;
+    
+    // Task Description Table
+    const taskTableData = [
+      ['TASK / LOCATION / EQUIPMENT DESCRIPTION'],
+      [safeText(data.projectName) + ' - ' + safeText(data.location)]
     ];
 
-    this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(10);
-    
-    projectDetails.forEach((detail, index) => {
-      const y = this.yPosition + 20 + (index * 8);
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text(detail.label, this.MARGIN + 8, y);
-      this.doc.setFont("helvetica", "normal");
-      this.doc.text(detail.value, this.MARGIN + 45, y);
+    autoTable(this.doc, {
+      startY: this.yPosition,
+      body: taskTableData,
+      theme: 'grid',
+      tableWidth: this.pageWidth - (2 * this.MARGIN),
+      margin: { left: this.MARGIN, right: this.MARGIN },
+      headStyles: {
+        fillColor: [240, 240, 240],
+        textColor: [0, 0, 0],
+        fontStyle: 'bold',
+        fontSize: 10,
+        halign: 'left'
+      },
+      styles: { 
+        cellPadding: 3,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        fontSize: 9
+      }
     });
 
-    this.yPosition += cardHeight + 10;
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 5;
+
+    // Assessed By and Date row
+    const assessorTableData = [
+      ['ASSESSED BY:', 'DATE:'],
+      [safeText(data.assessor), context.assessment_date]
+    ];
+
+    autoTable(this.doc, {
+      startY: this.yPosition,
+      body: assessorTableData,
+      theme: 'grid',
+      tableWidth: this.pageWidth - (2 * this.MARGIN),
+      margin: { left: this.MARGIN, right: this.MARGIN },
+      columnStyles: {
+        0: { cellWidth: (this.pageWidth - (2 * this.MARGIN)) * 0.7 },
+        1: { cellWidth: (this.pageWidth - (2 * this.MARGIN)) * 0.3 }
+      },
+      headStyles: {
+        fillColor: [240, 240, 240],
+        textColor: [0, 0, 0],
+        fontStyle: 'bold',
+        fontSize: 10,
+        halign: 'left'
+      },
+      styles: { 
+        cellPadding: 3,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        fontSize: 9
+      }
+    });
+
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 20;
 
     // Professional purpose statement
     const purposeHeight = 50;
