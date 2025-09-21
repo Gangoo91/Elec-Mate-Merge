@@ -338,6 +338,7 @@ class ProfessionalRAMSPDFGenerator {
     this.checkPageBreak(20);
     this.addTOCEntry("3. Work Activities");
 
+    this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
@@ -373,6 +374,7 @@ class ProfessionalRAMSPDFGenerator {
     this.checkPageBreak(80);
     this.addTOCEntry("4. Risk Summary");
 
+    this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
@@ -417,6 +419,7 @@ class ProfessionalRAMSPDFGenerator {
     this.addDocumentHeader();
     this.addTOCEntry("2. Risk Assessment Matrix");
 
+    this.yPosition += 16;
     // Section title
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
@@ -609,6 +612,7 @@ class ProfessionalRAMSPDFGenerator {
     this.checkPageBreak(45);
     this.addTOCEntry("5. Detailed Risk Assessment");
 
+    this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
@@ -698,6 +702,7 @@ class ProfessionalRAMSPDFGenerator {
     this.checkPageBreak(50);
     this.addTOCEntry("6. Method Statement");
 
+    this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
@@ -764,6 +769,7 @@ class ProfessionalRAMSPDFGenerator {
     this.checkPageBreak(60);
     this.addTOCEntry("7. Critical Safety Requirements");
 
+    this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
@@ -837,6 +843,7 @@ class ProfessionalRAMSPDFGenerator {
     this.yPosition = this.MARGIN + 20;
     this.addTOCEntry("8. Authorisation & Sign-off");
 
+    this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
