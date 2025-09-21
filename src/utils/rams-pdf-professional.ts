@@ -127,11 +127,14 @@ class ProfessionalRAMSPDFGenerator {
   private yPosition: number;
   private currentPage: number = 1;
   private toc: TOCItem[] = [];
-  private readonly MARGIN = 20;
-  private readonly HEADER_HEIGHT = 40;
-  private readonly FOOTER_HEIGHT = 20;
-  private readonly PRIMARY_COLOR: [number, number, number] = [41, 128, 185];
+  private readonly MARGIN = 10; // 1cm margins for corporate look
+  private readonly HEADER_HEIGHT = 30;
+  private readonly FOOTER_HEIGHT = 15;
+  private readonly PRIMARY_COLOR: [number, number, number] = [41, 128, 185]; // Professional blue #2980B9
   private readonly ACCENT_COLOR: [number, number, number] = [52, 152, 219];
+  private readonly SUCCESS_COLOR: [number, number, number] = [34, 197, 94]; // Green
+  private readonly WARNING_COLOR: [number, number, number] = [255, 193, 7]; // Yellow
+  private readonly DANGER_COLOR: [number, number, number] = [239, 68, 68]; // Red
 
   constructor() {
     this.doc = new jsPDF('portrait', 'mm', 'a4');
@@ -151,71 +154,78 @@ class ProfessionalRAMSPDFGenerator {
   }
 
   private addPageNumber(): void {
-    this.doc.setFontSize(9);
-    this.doc.setTextColor(100);
-    this.doc.text(`Page ${this.currentPage}`, this.pageWidth - this.MARGIN, this.pageHeight - 10, { align: "right" });
+    // Corporate footer with centered layout
+    this.doc.setFontSize(8);
+    this.doc.setTextColor(128, 128, 128);
+    
+    // Left side: Generated info
+    const generatedText = `Generated: ${formatDate(new Date(), "dd/MM/yyyy HH:mm")} CONFIDENTIAL`;
+    this.doc.text(generatedText, this.MARGIN, this.pageHeight - 8);
+    
+    // Right side: Page number
+    this.doc.text(`Page ${this.currentPage}`, this.pageWidth - this.MARGIN, this.pageHeight - 8, { align: "right" });
   }
 
-  private checkPageBreak(requiredSpace: number = 30): boolean {
+  private checkPageBreak(requiredSpace: number = 25): boolean {
     if (this.yPosition + requiredSpace > this.pageHeight - this.FOOTER_HEIGHT - this.MARGIN) {
       this.addPageNumber();
       this.doc.addPage();
       this.currentPage++;
-      this.yPosition = this.MARGIN + 20; // Leave space for page header
+      this.yPosition = this.MARGIN + 15; // Optimized spacing
       return true;
     }
     return false;
   }
 
-  // Enhanced Title Page with Dynamic Variables
+  // Corporate Title Page with Logo Integration
   private addTitlePage(data: RAMSData, options: PDFOptions, context: VariableContext): void {
-    // Professional blue header banner
-    this.doc.setFillColor(41, 128, 185); // Professional blue
-    this.doc.rect(0, 0, this.pageWidth, 65, 'F');
+    // Sleek blue header with proper proportions
+    this.doc.setFillColor(...this.PRIMARY_COLOR);
+    this.doc.rect(0, 0, this.pageWidth, 50, 'F');
     
-    // Company logo placeholder with better styling
+    // Professional logo placeholder - top-left positioning
     this.doc.setFillColor(255, 255, 255);
-    this.doc.rect(this.MARGIN, 12, 45, 35, 'F');
-    this.doc.setDrawColor(200, 200, 200);
-    this.doc.setLineWidth(1);
-    this.doc.rect(this.MARGIN, 12, 45, 35);
-    this.doc.setTextColor(100);
-    this.doc.setFontSize(8);
-    this.doc.text("{company_logo}", this.MARGIN + 22.5, 32, { align: "center" });
+    this.doc.rect(this.MARGIN, 8, 40, 25, 'F');
+    this.doc.setDrawColor(180, 180, 180);
+    this.doc.setLineWidth(0.5);
+    this.doc.rect(this.MARGIN, 8, 40, 25);
+    this.doc.setTextColor(120, 120, 120);
+    this.doc.setFontSize(7);
+    this.doc.text("COMPANY", this.MARGIN + 20, 19, { align: "center" });
+    this.doc.text("LOGO", this.MARGIN + 20, 24, { align: "center" });
 
-    // Main title with enhanced styling
+    // Bold, centered title - Arial Black style
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(26);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("HEALTH & SAFETY", this.pageWidth / 2, 25, { align: "center" });
-    this.doc.text("RISK ASSESSMENT", this.pageWidth / 2, 40, { align: "center" });
-    
-    // Enhanced subtitle with compliance info
-    this.doc.setFontSize(11);
-    this.doc.setFont("helvetica", "normal");
-    this.doc.text("BS 7671:2018+A2:2022 (18th Edition) Compliant", this.pageWidth / 2, 52, { align: "center" });
-
-    this.yPosition = 85;
-
-    // Company name with variable substitution
-    this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(18);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text(context.company_name, this.pageWidth / 2, this.yPosition, { align: "center" });
-    this.yPosition += 25;
+    this.doc.text("HEALTH & SAFETY RISK ASSESSMENT", this.pageWidth / 2, 22, { align: "center" });
+    
+    // BS 7671 compliance subtitle
+    this.doc.setFontSize(9);
+    this.doc.setFont("helvetica", "normal");
+    this.doc.text("BS 7671:2018+A2:2022 (18th Edition) Compliant", this.pageWidth / 2, 35, { align: "center" });
 
-    // Enhanced project information box with tighter spacing
-    this.doc.setDrawColor(41, 128, 185);
-    this.doc.setLineWidth(2);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 75);
+    this.yPosition = 65;
+
+    // Company name - sleek corporate styling
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(16);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text(context.company_name, this.pageWidth / 2, this.yPosition, { align: "center" });
+    this.yPosition += 20;
+
+    // Optimized project information box - tighter spacing
+    this.doc.setDrawColor(...this.PRIMARY_COLOR);
+    this.doc.setLineWidth(1.5);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 60);
     
     this.doc.setFillColor(248, 250, 252);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 75, 'F');
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 60, 'F');
     
-    this.doc.setDrawColor(41, 128, 185);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 75);
+    this.doc.setDrawColor(...this.PRIMARY_COLOR);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 60);
 
-    // Enhanced project details with dynamic variables
+    // Streamlined project details - optimized spacing
     const projectDetails = [
       { label: "Project Name:", value: context.project_name },
       { label: "Location:", value: context.location },
@@ -225,49 +235,50 @@ class ProfessionalRAMSPDFGenerator {
     ];
 
     this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(10);
+    this.doc.setFontSize(9);
     
     projectDetails.forEach((detail, index) => {
-      const y = this.yPosition + 12 + (index * 11);
+      const y = this.yPosition + 8 + (index * 9);
       this.doc.setFont("helvetica", "bold");
-      this.doc.text(detail.label, this.MARGIN + 8, y);
+      this.doc.text(detail.label, this.MARGIN + 6, y);
       this.doc.setFont("helvetica", "normal");
-      this.doc.text(detail.value, this.MARGIN + 55, y);
+      this.doc.text(detail.value, this.MARGIN + 50, y);
     });
 
-    this.yPosition += 90;
+    this.yPosition += 75;
 
-    // Enhanced purpose statement with professional styling
+    // Compact purpose statement
     this.doc.setFillColor(240, 248, 255);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 55, 'F');
-    this.doc.setDrawColor(52, 152, 219);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 55);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 45, 'F');
+    this.doc.setDrawColor(...this.ACCENT_COLOR);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 45);
 
-    this.doc.setTextColor(41, 128, 185);
-    this.doc.setFontSize(12);
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("PURPOSE & COMPLIANCE", this.pageWidth / 2, this.yPosition + 10, { align: "center" });
+    this.doc.text("PURPOSE & COMPLIANCE", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
     
     this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(9);
+    this.doc.setFontSize(8);
     this.doc.setFont("helvetica", "normal");
     const purposeText = "This Health & Safety Risk Assessment identifies hazards and risks associated with electrical work activities. It establishes control measures for safety, ensuring compliance with Health & Safety at Work Act 1974, CDM Regulations 2015, and BS 7671:2018+A2:2022 (18th Edition).";
     
-    const wrappedPurpose = this.doc.splitTextToSize(purposeText, this.pageWidth - (2 * this.MARGIN) - 20);
+    const wrappedPurpose = this.doc.splitTextToSize(purposeText, this.pageWidth - (2 * this.MARGIN) - 16);
     wrappedPurpose.forEach((line: string, index: number) => {
-      this.doc.text(line, this.pageWidth / 2, this.yPosition + 20 + (index * 4), { align: "center" });
+      this.doc.text(line, this.pageWidth / 2, this.yPosition + 16 + (index * 3.5), { align: "center" });
     });
 
-    this.doc.setFontSize(8);
+    this.doc.setFontSize(7);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("⚠️ BS 7671:2018+A2:2022 COMPLIANT ⚠️", this.pageWidth / 2, this.yPosition + 45, { align: "center" });
+    this.doc.text("⚠️ BS 7671:2018+A2:2022 COMPLIANT ⚠️", this.pageWidth / 2, this.yPosition + 38, { align: "center" });
 
-    // Enhanced footer with dynamic variables
-    this.yPosition = this.pageHeight - 35;
-    this.doc.setFontSize(8);
-    this.doc.setTextColor(100);
-    this.doc.text(`RAMS Document - ${context.project_name} - Generated ${context.document_generated}`, this.MARGIN, this.yPosition);
-    this.doc.text("v1.0 - CONFIDENTIAL", this.pageWidth - this.MARGIN, this.yPosition, { align: "right" });
+    // Corporate footer with document reference
+    this.yPosition = this.pageHeight - 25;
+    this.doc.setFontSize(7);
+    this.doc.setTextColor(100, 100, 100);
+    const docRef = `RAMS-${context.project_name.replace(/[^a-zA-Z0-9]/g, '_')}-${formatDate(new Date(), "ddMMyyyy")}`;
+    this.doc.text(`Document Reference: ${docRef}`, this.pageWidth / 2, this.yPosition, { align: "center" });
+    this.doc.text("v1.0 - CONFIDENTIAL", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
 
     this.addPageNumber();
   }
