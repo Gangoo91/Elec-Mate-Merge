@@ -672,15 +672,15 @@ class ProfessionalRAMSPDFGenerator {
       tableWidth: availableWidth,
       columnStyles: {
         0: { halign: "center", cellWidth: availableWidth * 0.05, fontStyle: "bold" }, // 5% - Ref
-        1: { cellWidth: availableWidth * 0.18, valign: "top" }, // 18% - Hazard
-        2: { cellWidth: availableWidth * 0.15, valign: "top" }, // 15% - Who might be harmed
+        1: { cellWidth: availableWidth * 0.17, valign: "top" }, // 17% - Hazard
+        2: { cellWidth: availableWidth * 0.14, valign: "top" }, // 14% - Who might be harmed
         3: { halign: "center", cellWidth: availableWidth * 0.04, fontStyle: "bold" }, // 4% - L
         4: { halign: "center", cellWidth: availableWidth * 0.04, fontStyle: "bold" }, // 4% - S
-        5: { halign: "center", cellWidth: availableWidth * 0.08, fontStyle: "bold" }, // 8% - Initial Risk
-        6: { halign: "center", cellWidth: availableWidth * 0.12, fontStyle: "bold" }, // 12% - Risk Level
+        5: { halign: "center", cellWidth: availableWidth * 0.07, fontStyle: "bold" }, // 7% - Initial Risk
+        6: { halign: "center", cellWidth: availableWidth * 0.11, fontStyle: "bold" }, // 11% - Risk Level
         7: { cellWidth: availableWidth * 0.26, valign: "top" }, // 26% - Control Measures
-        8: { halign: "center", cellWidth: availableWidth * 0.08, fontStyle: "bold" }, // 8% - Residual Risk
-        9: { halign: "center", cellWidth: availableWidth * 0.12, fontStyle: "bold" } // 12% - Final Level (adds up to ~100%)
+        8: { halign: "center", cellWidth: availableWidth * 0.07, fontStyle: "bold" }, // 7% - Residual Risk
+        9: { halign: "center", cellWidth: availableWidth * 0.11, fontStyle: "bold" } // 11% - Final Level (total: 100%)
       },
       margin: { left: this.MARGIN, right: this.MARGIN },
       didParseCell: (data: any) => {
