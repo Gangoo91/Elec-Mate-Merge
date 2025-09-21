@@ -628,21 +628,24 @@ class ProfessionalRAMSPDFGenerator {
       return;
     }
 
-    // Professional risk table with optimized landscape layout
+    // Professional risk table with optimized landscape layout that fits page width
     const riskTableData = deduplicatedRisks.map((risk, index) => [
       (index + 1).toString(),
-      truncateText(safeText(risk.hazard), 35),
-      truncateText(safeText(risk.risk), 40),
+      truncateText(safeText(risk.hazard), 30),
+      truncateText(safeText(risk.risk), 25),
       safeNumber(risk.likelihood).toString(),
       safeNumber(risk.severity).toString(),
       `${safeNumber(risk.riskRating)}`,
       getRiskLevel(risk.riskRating),
-      truncateText(safeText(risk.controls), 60),
+      truncateText(safeText(risk.controls), 50),
       `${safeNumber(risk.residualRisk)}`,
       getRiskLevel(risk.residualRisk)
     ]);
 
-    // Enhanced professional table for landscape format
+    // Calculate available table width (page width minus margins)
+    const availableWidth = this.pageWidth - (2 * this.MARGIN);
+    
+    // Enhanced professional table for landscape format with proper fit
     autoTable(this.doc, {
       startY: this.yPosition,
       head: [["Ref", "Hazard Identified", "Who Might Be Harmed", "L", "S", "Initial Risk", "Risk Level", "Control Measures / Precautions", "Residual Risk", "Final Level"]],
@@ -652,32 +655,32 @@ class ProfessionalRAMSPDFGenerator {
         fillColor: this.PRIMARY_COLOR,
         textColor: [255, 255, 255],
         fontStyle: "bold",
-        fontSize: 9,
+        fontSize: 8,
         halign: "center",
-        cellPadding: 5,
-        minCellHeight: 15
+        cellPadding: 3,
+        minCellHeight: 12
       },
       styles: {
-        fontSize: 8,
-        cellPadding: 5,
+        fontSize: 7,
+        cellPadding: 3,
         lineColor: [200, 200, 200],
         lineWidth: 0.5,
         valign: "middle",
-        minCellHeight: 12,
+        minCellHeight: 10,
         overflow: 'linebreak'
       },
-      tableWidth: 'wrap',
+      tableWidth: availableWidth,
       columnStyles: {
-        0: { halign: "center", cellWidth: 15, fontStyle: "bold" },
-        1: { cellWidth: 50, valign: "top" },
-        2: { cellWidth: 45, valign: "top" },
-        3: { halign: "center", cellWidth: 12, fontStyle: "bold" },
-        4: { halign: "center", cellWidth: 12, fontStyle: "bold" },
-        5: { halign: "center", cellWidth: 20, fontStyle: "bold" },
-        6: { halign: "center", cellWidth: 25, fontStyle: "bold" },
-        7: { cellWidth: 85, valign: "top" },
-        8: { halign: "center", cellWidth: 20, fontStyle: "bold" },
-        9: { halign: "center", cellWidth: 25, fontStyle: "bold" }
+        0: { halign: "center", cellWidth: availableWidth * 0.05, fontStyle: "bold" }, // 5% - Ref
+        1: { cellWidth: availableWidth * 0.18, valign: "top" }, // 18% - Hazard
+        2: { cellWidth: availableWidth * 0.15, valign: "top" }, // 15% - Who might be harmed
+        3: { halign: "center", cellWidth: availableWidth * 0.04, fontStyle: "bold" }, // 4% - L
+        4: { halign: "center", cellWidth: availableWidth * 0.04, fontStyle: "bold" }, // 4% - S
+        5: { halign: "center", cellWidth: availableWidth * 0.08, fontStyle: "bold" }, // 8% - Initial Risk
+        6: { halign: "center", cellWidth: availableWidth * 0.12, fontStyle: "bold" }, // 12% - Risk Level
+        7: { cellWidth: availableWidth * 0.26, valign: "top" }, // 26% - Control Measures
+        8: { halign: "center", cellWidth: availableWidth * 0.08, fontStyle: "bold" }, // 8% - Residual Risk
+        9: { halign: "center", cellWidth: availableWidth * 0.12, fontStyle: "bold" } // 12% - Final Level (adds up to ~100%)
       },
       margin: { left: this.MARGIN, right: this.MARGIN },
       didParseCell: (data: any) => {
