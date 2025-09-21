@@ -602,17 +602,18 @@ class ProfessionalRAMSPDFGenerator {
         lineWidth: 0.5,
         valign: "middle"
       },
+      tableWidth: 'auto',
       columnStyles: {
-        0: { halign: "center", cellWidth: 15 },
-        1: { cellWidth: 50 },
-        2: { cellWidth: 35 },
-        3: { halign: "center", cellWidth: 10 },
-        4: { halign: "center", cellWidth: 10 },
-        5: { halign: "center", cellWidth: 18 },
-        6: { halign: "center", cellWidth: 22 },
-        7: { cellWidth: 60 },
-        8: { halign: "center", cellWidth: 10 },
-        9: { halign: "center", cellWidth: 22 }
+        0: { halign: "center", cellWidth: 12 },
+        1: { cellWidth: 35 },
+        2: { cellWidth: 25 },
+        3: { halign: "center", cellWidth: 8 },
+        4: { halign: "center", cellWidth: 8 },
+        5: { halign: "center", cellWidth: 12 },
+        6: { halign: "center", cellWidth: 18 },
+        7: { cellWidth: 45 },
+        8: { halign: "center", cellWidth: 8 },
+        9: { halign: "center", cellWidth: 18 }
       },
       margin: { left: this.MARGIN, right: this.MARGIN },
       didParseCell: (data: any) => {
