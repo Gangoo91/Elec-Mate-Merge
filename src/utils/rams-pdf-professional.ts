@@ -450,13 +450,14 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("Risk Rating = Likelihood × Consequence (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 22, { align: "center" });
     this.yPosition += 45;
 
-    // Matrix dimensions - wider layout to match image exactly
+    // Matrix dimensions - wider layout to match image exactly with more left margin
     const cellWidth = 32;
     const cellHeight = 40;
     const headerHeight = 20;
     const rowHeaderWidth = 75;
     const matrixWidth = rowHeaderWidth + (cellWidth * 5);
-    const matrixStartX = (this.pageWidth - matrixWidth) / 2;
+    const leftMarginForText = 35; // Extra space for vertical LIKELIHOOD text
+    const matrixStartX = this.MARGIN + leftMarginForText;
     const matrixStartY = this.yPosition;
 
     // Top-left corner cell with "Risk Matrix" label
@@ -621,18 +622,19 @@ class ProfessionalRAMSPDFGenerator {
       }
     });
 
-    // Add vertical "LIKELIHOOD" text on the left
+    // Add vertical "LIKELIHOOD" text on the left with proper spacing
     this.doc.setTextColor(70, 130, 180);
     this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "bold");
     
-    // Simple vertical text spacing for "LIKELIHOOD"
+    // Simple vertical text spacing for "LIKELIHOOD" - positioned safely within margins
     const likelihoodText = "LIKELIHOOD";
     const letterSpacing = 12;
     const textStartY = matrixStartY + headerHeight + cellHeight + (cellHeight * 2.5) - (likelihoodText.length * letterSpacing / 2);
+    const textX = this.MARGIN + 15; // Safe distance from page edge
     
     for (let i = 0; i < likelihoodText.length; i++) {
-      this.doc.text(likelihoodText[i], matrixStartX - 20, textStartY + (i * letterSpacing), { align: "center" });
+      this.doc.text(likelihoodText[i], textX, textStartY + (i * letterSpacing), { align: "center" });
     }
 
     this.yPosition = matrixStartY + headerHeight + cellHeight + (cellHeight * 5) + 20;
