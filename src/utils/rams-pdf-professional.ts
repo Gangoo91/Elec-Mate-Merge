@@ -335,14 +335,14 @@ class ProfessionalRAMSPDFGenerator {
 
   // Work Activities Section  
   private addWorkActivities(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(45);
+    this.checkPageBreak(25);
     this.addTOCEntry("3. Work Activities");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("3. WORK ACTIVITIES", this.MARGIN, this.yPosition);
-    this.yPosition += 16;
+    this.yPosition += 12;
 
     const activities = safeArrayFilter(data.activities);
     if (activities.length === 0) {
