@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { RAMSData, RAMSReportOptions } from "@/types/rams";
+import { format as formatDate } from "date-fns";
+import { RAMSData, RAMSReportOptions, RAMSRisk } from "@/types/rams";
 import { 
   safeText, 
   safeNumber, 
@@ -14,6 +15,95 @@ import {
   truncateText
 } from "./rams-pdf-helpers";
 import { hazardCategories, riskConsequences } from "@/data/hazards";
+
+// Dynamic variable substitution system
+interface VariableContext {
+  project_name: string;
+  location: string;
+  company_name: string;
+  assessment_date: string;
+  assessor: string;
+  document_generated: string;
+  total_risks: number;
+  low_residual: number;
+  medium_residual: number;
+  high_residual: number;
+  very_high_residual: number;
+}
+
+function createVariableContext(data: RAMSData, options: PDFOptions): VariableContext {
+  const now = new Date();
+  const riskCounts = calculateRiskCounts(data.risks);
+  
+  return {
+    project_name: safeText(data.projectName) || "Not specified",
+    location: safeText(data.location) || "Not specified", 
+    company_name: safeText(options.companyName) || "Company Name",
+    assessment_date: safeDate(data.date),
+    assessor: safeText(data.assessor) || "Not specified",
+    document_generated: formatDate(now, "dd/MM/yyyy 'at' HH:mm 'IST'"),
+    total_risks: riskCounts.total,
+    low_residual: riskCounts.low,
+    medium_residual: riskCounts.medium,
+    high_residual: riskCounts.high,
+    very_high_residual: riskCounts.veryHigh
+  };
+}
+
+function calculateRiskCounts(risks: RAMSRisk[]) {
+  const counts = { total: 0, low: 0, medium: 0, high: 0, veryHigh: 0 };
+  
+  risks.forEach(risk => {
+    counts.total++;
+    const residualRisk = safeNumber(risk.residualRisk);
+    if (residualRisk <= 4) counts.low++;
+    else if (residualRisk <= 9) counts.medium++;
+    else if (residualRisk <= 16) counts.high++;
+    else counts.veryHigh++;
+  });
+  
+  return counts;
+}
+
+function substituteVariables(text: string, context: VariableContext): string {
+  return text.replace(/\{(\w+)\}/g, (match, key) => {
+    return context[key as keyof VariableContext]?.toString() || match;
+  });
+}
+
+// Enhanced deduplication system
+function deduplicateRisks(risks: RAMSRisk[]): RAMSRisk[] {
+  const uniqueRisks = new Map<string, RAMSRisk>();
+  
+  risks.forEach(risk => {
+    const key = `${safeText(risk.hazard)}-${safeText(risk.risk)}`.toLowerCase();
+    if (!uniqueRisks.has(key)) {
+      uniqueRisks.set(key, risk);
+    }
+  });
+  
+  return Array.from(uniqueRisks.values());
+}
+
+// Method statement extraction
+function extractMethodStatements(risks: RAMSRisk[]): string[] {
+  const methods = new Set<string>();
+  
+  risks.forEach(risk => {
+    const controls = safeText(risk.controls);
+    if (controls) {
+      // Extract key method statements from controls
+      if (controls.toLowerCase().includes('isolat')) methods.add('Isolate power supply and lock-off');
+      if (controls.toLowerCase().includes('ppe')) methods.add('Wear appropriate PPE including insulated gloves and safety boots');
+      if (controls.toLowerCase().includes('supervis')) methods.add('Work under competent person supervision');
+      if (controls.toLowerCase().includes('test')) methods.add('Test circuits before and after work');
+      if (controls.toLowerCase().includes('harness')) methods.add('Use safety harnesses and fall protection equipment');
+      if (controls.toLowerCase().includes('ventilat')) methods.add('Ensure adequate ventilation in work areas');
+    }
+  });
+  
+  return Array.from(methods);
+}
 
 interface SignOff {
   preparedBy?: { name: string; date: string; signatureDataUrl?: string };
@@ -40,8 +130,8 @@ class ProfessionalRAMSPDFGenerator {
   private readonly MARGIN = 20;
   private readonly HEADER_HEIGHT = 40;
   private readonly FOOTER_HEIGHT = 20;
-  private readonly PRIMARY_COLOR = [41, 128, 185] as [number, number, number];
-  private readonly ACCENT_COLOR = [52, 152, 219] as [number, number, number];
+  private readonly PRIMARY_COLOR: [number, number, number] = [41, 128, 185];
+  private readonly ACCENT_COLOR: [number, number, number] = [52, 152, 219];
 
   constructor() {
     this.doc = new jsPDF('portrait', 'mm', 'a4');
@@ -77,282 +167,188 @@ class ProfessionalRAMSPDFGenerator {
     return false;
   }
 
-  // Title Page
-  private addTitlePage(data: RAMSData, options: PDFOptions): void {
-    // Professional header banner
-    this.doc.setFillColor(...this.PRIMARY_COLOR);
-    this.doc.rect(0, 0, this.pageWidth, 60, 'F');
+  // Enhanced Title Page with Dynamic Variables
+  private addTitlePage(data: RAMSData, options: PDFOptions, context: VariableContext): void {
+    // Professional blue header banner
+    this.doc.setFillColor(41, 128, 185); // Professional blue
+    this.doc.rect(0, 0, this.pageWidth, 65, 'F');
     
-    // Company logo space (if provided)
-    if (options.logoUrl) {
-      // Logo would be placed here - placeholder for now
-      this.doc.setFillColor(255, 255, 255);
-      this.doc.rect(this.MARGIN, 15, 40, 30, 'F');
-      this.doc.setTextColor(100);
-      this.doc.setFontSize(8);
-      this.doc.text("LOGO", this.MARGIN + 20, 32, { align: "center" });
-    }
+    // Company logo placeholder with better styling
+    this.doc.setFillColor(255, 255, 255);
+    this.doc.rect(this.MARGIN, 12, 45, 35, 'F');
+    this.doc.setDrawColor(200, 200, 200);
+    this.doc.setLineWidth(1);
+    this.doc.rect(this.MARGIN, 12, 45, 35);
+    this.doc.setTextColor(100);
+    this.doc.setFontSize(8);
+    this.doc.text("{company_logo}", this.MARGIN + 22.5, 32, { align: "center" });
 
-    // Main title
+    // Main title with enhanced styling
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(24);
+    this.doc.setFontSize(26);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("HEALTH & SAFETY", this.pageWidth / 2, 25, { align: "center" });
-    this.doc.text("RISK ASSESSMENT", this.pageWidth / 2, 38, { align: "center" });
+    this.doc.text("RISK ASSESSMENT", this.pageWidth / 2, 40, { align: "center" });
     
-    // Subtitle
-    this.doc.setFontSize(12);
+    // Enhanced subtitle with compliance info
+    this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "normal");
-    this.doc.text("In accordance with BS 7671:2018+A2:2022 (18th Edition)", this.pageWidth / 2, 50, { align: "center" });
+    this.doc.text("BS 7671:2018+A2:2022 (18th Edition) Compliant", this.pageWidth / 2, 52, { align: "center" });
 
-    this.yPosition = 80;
+    this.yPosition = 85;
 
-    // Company name
-    if (options.companyName) {
-      this.doc.setTextColor(0, 0, 0);
-      this.doc.setFontSize(16);
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text(safeText(options.companyName), this.pageWidth / 2, this.yPosition, { align: "center" });
-      this.yPosition += 20;
-    }
+    // Company name with variable substitution
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(18);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text(context.company_name, this.pageWidth / 2, this.yPosition, { align: "center" });
+    this.yPosition += 25;
 
-    // Project information box
-    this.doc.setDrawColor(...this.PRIMARY_COLOR);
+    // Enhanced project information box with tighter spacing
+    this.doc.setDrawColor(41, 128, 185);
     this.doc.setLineWidth(2);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 80);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 75);
     
     this.doc.setFillColor(248, 250, 252);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 80, 'F');
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 75, 'F');
     
-    this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 80);
+    this.doc.setDrawColor(41, 128, 185);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 75);
 
-    // Project details
+    // Enhanced project details with dynamic variables
     const projectDetails = [
-      { label: "Project Name:", value: safeText(data.projectName) || "Not specified" },
-      { label: "Location:", value: safeText(data.location) || "Not specified" },
-      { label: "Assessment Date:", value: safeDate(data.date) },
-      { label: "Prepared By:", value: safeText(data.assessor) || "Not specified" },
-      { label: "Document Reference:", value: `RAMS-${safeFileName(data.projectName)}-${format(new Date(), 'yyyyMMdd')}` }
+      { label: "Project Name:", value: context.project_name },
+      { label: "Location:", value: context.location },
+      { label: "Assessment Date:", value: context.assessment_date },
+      { label: "Assessor:", value: context.assessor },
+      { label: "Document Generated:", value: context.document_generated }
     ];
 
     this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(11);
+    this.doc.setFontSize(10);
     
     projectDetails.forEach((detail, index) => {
-      const y = this.yPosition + 15 + (index * 12);
+      const y = this.yPosition + 12 + (index * 11);
       this.doc.setFont("helvetica", "bold");
-      this.doc.text(detail.label, this.MARGIN + 10, y);
+      this.doc.text(detail.label, this.MARGIN + 8, y);
       this.doc.setFont("helvetica", "normal");
-      this.doc.text(detail.value, this.MARGIN + 60, y);
+      this.doc.text(detail.value, this.MARGIN + 55, y);
     });
 
-    this.yPosition += 100;
+    this.yPosition += 90;
 
-    // Compliance statement
+    // Enhanced purpose statement with professional styling
     this.doc.setFillColor(240, 248, 255);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 40, 'F');
-    this.doc.setDrawColor(...this.ACCENT_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 40);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 55, 'F');
+    this.doc.setDrawColor(52, 152, 219);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 55);
 
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setTextColor(41, 128, 185);
     this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("Regulatory Compliance", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
+    this.doc.text("PURPOSE & COMPLIANCE", this.pageWidth / 2, this.yPosition + 10, { align: "center" });
     
     this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(9);
     this.doc.setFont("helvetica", "normal");
-    const complianceText = [
-      "This assessment complies with:",
-      "• Health and Safety at Work etc. Act 1974",
-      "• Construction (Design and Management) Regulations 2015",
-      "• BS 7671:2018+A2:2022 Requirements for Electrical Installations"
-    ];
+    const purposeText = "This Health & Safety Risk Assessment identifies hazards and risks associated with electrical work activities. It establishes control measures for safety, ensuring compliance with Health & Safety at Work Act 1974, CDM Regulations 2015, and BS 7671:2018+A2:2022 (18th Edition).";
     
-    complianceText.forEach((line, index) => {
+    const wrappedPurpose = this.doc.splitTextToSize(purposeText, this.pageWidth - (2 * this.MARGIN) - 20);
+    wrappedPurpose.forEach((line: string, index: number) => {
       this.doc.text(line, this.pageWidth / 2, this.yPosition + 20 + (index * 4), { align: "center" });
     });
 
-    // Document control footer
-    this.yPosition = this.pageHeight - 40;
+    this.doc.setFontSize(8);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("⚠️ BS 7671:2018+A2:2022 COMPLIANT ⚠️", this.pageWidth / 2, this.yPosition + 45, { align: "center" });
+
+    // Enhanced footer with dynamic variables
+    this.yPosition = this.pageHeight - 35;
     this.doc.setFontSize(8);
     this.doc.setTextColor(100);
-    this.doc.text(`Generated: ${safeDatetime(new Date())}`, this.MARGIN, this.yPosition);
-    this.doc.text("CONFIDENTIAL", this.pageWidth - this.MARGIN, this.yPosition, { align: "right" });
+    this.doc.text(`RAMS Document - ${context.project_name} - Generated ${context.document_generated}`, this.MARGIN, this.yPosition);
+    this.doc.text("v1.0 - CONFIDENTIAL", this.pageWidth - this.MARGIN, this.yPosition, { align: "right" });
 
     this.addPageNumber();
   }
 
-  // Table of Contents
-  private addTableOfContents(): void {
-    this.doc.addPage();
-    this.currentPage++;
-    this.yPosition = this.MARGIN + 20;
-
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(18);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("TABLE OF CONTENTS", this.pageWidth / 2, this.yPosition, { align: "center" });
-    this.yPosition += 20;
-
-    // Add a line under the title
-    this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.setLineWidth(1);
-    this.doc.line(this.MARGIN, this.yPosition, this.pageWidth - this.MARGIN, this.yPosition);
-    this.yPosition += 15;
-
-    const tocData = this.toc.map(item => [item.title, item.page.toString()]);
-
-    autoTable(this.doc, {
-      startY: this.yPosition,
-      body: tocData,
-      theme: "plain",
-      styles: {
-        fontSize: 11,
-        cellPadding: 6,
-        lineColor: [220, 220, 220],
-        lineWidth: 0.1
-      },
-      columnStyles: {
-        0: { fontStyle: "normal", cellWidth: this.pageWidth - 60 },
-        1: { halign: "right", fontStyle: "bold", cellWidth: 20 }
-      },
-      margin: { left: this.MARGIN, right: this.MARGIN },
-      didDrawCell: (data) => {
-        if (data.column.index === 0) {
-          // Add dots between title and page number
-          const startX = data.cell.x + data.cell.width - 10;
-          const endX = data.cell.x + data.cell.width;
-          const y = data.cell.y + data.cell.height / 2;
-          
-          this.doc.setTextColor(150);
-          this.doc.setFontSize(8);
-          for (let x = startX; x < endX; x += 3) {
-            this.doc.text(".", x, y);
-          }
-        }
-      }
-    });
-
-    this.addPageNumber();
-  }
-
-  // Introduction Section
-  private addIntroduction(data: RAMSData): void {
-    this.doc.addPage();
-    this.currentPage++;
-    this.yPosition = this.MARGIN + 20;
-    this.addTOCEntry("1. Introduction");
+  // Work Activities Section  
+  private addWorkActivities(data: RAMSData, context: VariableContext): void {
+    this.checkPageBreak(60);
+    this.addTOCEntry("3. Work Activities");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("1. INTRODUCTION", this.MARGIN, this.yPosition);
-    this.yPosition += 15;
+    this.doc.text("3. WORK ACTIVITIES", this.MARGIN, this.yPosition);
+    this.yPosition += 20;
 
-    // Purpose section
-    this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("1.1 Purpose", this.MARGIN, this.yPosition);
-    this.yPosition += 8;
-
-    this.doc.setFontSize(10);
-    this.doc.setFont("helvetica", "normal");
-    const purposeText = [
-      "This Health & Safety Risk Assessment has been prepared to identify and evaluate potential hazards and risks",
-      "associated with electrical installation and maintenance work. The assessment establishes appropriate control",
-      "measures to ensure the safety of all personnel, the public, and to protect property.",
-      "",
-      "This document ensures compliance with current UK legislation and industry best practices, including:",
-      "• Health and Safety at Work etc. Act 1974",
-      "• Management of Health and Safety at Work Regulations 1999",
-      "• Construction (Design and Management) Regulations 2015",
-      "• BS 7671:2018+A2:2022 Requirements for Electrical Installations (18th Edition)"
-    ];
-
-    purposeText.forEach(line => {
-      if (line === "") {
-        this.yPosition += 5;
-      } else {
-        const wrappedLines = this.doc.splitTextToSize(line, this.pageWidth - (2 * this.MARGIN));
-        wrappedLines.forEach((wrappedLine: string) => {
-          this.doc.text(wrappedLine, this.MARGIN, this.yPosition);
-          this.yPosition += 5;
+    const activities = safeArrayFilter(data.activities);
+    if (activities.length === 0) {
+      this.doc.setTextColor(0, 0, 0);
+      this.doc.setFontSize(10);
+      this.doc.text("No specific activities defined.", this.MARGIN, this.yPosition);
+      this.yPosition += 15;
+    } else {
+      activities.forEach((activity, index) => {
+        this.doc.setTextColor(0, 0, 0);
+        this.doc.setFontSize(11);
+        this.doc.setFont("helvetica", "bold");
+        this.doc.text(`${index + 1}.`, this.MARGIN, this.yPosition);
+        this.doc.setFont("helvetica", "normal");
+        const wrappedActivity = this.doc.splitTextToSize(safeText(activity), this.pageWidth - 2 * this.MARGIN - 15);
+        wrappedActivity.forEach((line: string, lineIndex: number) => {
+          this.doc.text(line, this.MARGIN + 15, this.yPosition + (lineIndex * 5));
         });
-      }
-    });
-
-    this.yPosition += 10;
-
-    // Scope section
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("1.2 Scope of Work", this.MARGIN, this.yPosition);
-    this.yPosition += 8;
-
-    this.doc.setFontSize(10);
-    this.doc.setFont("helvetica", "normal");
-    const scopeText = [
-      `Project: ${safeText(data.projectName)}`,
-      `Location: ${safeText(data.location)}`,
-      `Assessment Date: ${safeDate(data.date)}`,
-      "",
-      "This assessment covers all electrical work activities planned for this project, including associated",
-      "hazards and risks. The assessment will be reviewed and updated as work progresses and conditions change."
-    ];
-
-    scopeText.forEach(line => {
-      if (line === "") {
-        this.yPosition += 5;
-      } else {
-        const wrappedLines = this.doc.splitTextToSize(line, this.pageWidth - (2 * this.MARGIN));
-        wrappedLines.forEach((wrappedLine: string) => {
-          this.doc.text(wrappedLine, this.MARGIN, this.yPosition);
-          this.yPosition += 5;
-        });
-      }
-    });
-
-    this.yPosition += 10;
-
-    // Methodology section
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("1.3 Risk Assessment Methodology", this.MARGIN, this.yPosition);
-    this.yPosition += 8;
-
-    this.doc.setFontSize(10);
-    this.doc.setFont("helvetica", "normal");
-    const methodText = [
-      "This assessment uses a systematic 5×5 risk matrix approach in accordance with HSE guidance.",
-      "Risk ratings are calculated by multiplying Likelihood × Severity, both scored 1-5:",
-      "",
-      "• Low Risk (1-4): Monitor and review periodically",
-      "• Medium Risk (5-9): Implement controls and monitor regularly", 
-      "• High Risk (10-16): Immediate action required",
-      "• Very High Risk (17-25): Stop work until adequate controls implemented",
-      "",
-      "All risks follow the ALARP (As Low As Reasonably Practicable) principle."
-    ];
-
-    methodText.forEach(line => {
-      if (line === "") {
-        this.yPosition += 5;
-      } else {
-        const wrappedLines = this.doc.splitTextToSize(line, this.pageWidth - (2 * this.MARGIN));
-        wrappedLines.forEach((wrappedLine: string) => {
-          this.doc.text(wrappedLine, this.MARGIN, this.yPosition);
-          this.yPosition += 5;
-        });
-      }
-    });
+        this.yPosition += Math.max(15, wrappedActivity.length * 5 + 5);
+      });
+    }
 
     this.addPageNumber();
   }
 
-  // Risk Assessment Matrix (Full Page)
+  // Risk Summary Section
+  private addRiskSummary(data: RAMSData, context: VariableContext): void {
+    this.checkPageBreak(80);
+    this.addTOCEntry("4. Risk Summary");
+
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(16);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("4. RISK SUMMARY", this.MARGIN, this.yPosition);
+    this.yPosition += 20;
+
+    // Summary statistics box
+    this.doc.setFillColor(248, 250, 252);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 50, 'F');
+    this.doc.setDrawColor(...this.PRIMARY_COLOR);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 50);
+
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(12);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("RISK ASSESSMENT SUMMARY", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
+    
+    const summaryData = [
+      `Total Risks: ${context.total_risks}`,
+      `Low Residual: ${context.low_residual}`,
+      `Medium: ${context.medium_residual}`,
+      `High: ${context.high_residual}`,
+      `Very High: ${context.very_high_residual}`
+    ];
+
+    this.doc.setFontSize(10);
+    this.doc.setFont("helvetica", "normal");
+    summaryData.forEach((item, index) => {
+      const x = this.MARGIN + 20 + (index * 30);
+      this.doc.text(item, x, this.yPosition + 30);
+    });
+
+    this.yPosition += 65;
+    this.addPageNumber();
+  }
+
+  // Enhanced Risk Assessment Matrix
   private addRiskMatrix(): void {
     this.doc.addPage();
     this.currentPage++;
@@ -469,422 +465,325 @@ class ProfessionalRAMSPDFGenerator {
         1: { halign: "center", fontStyle: "bold", cellWidth: 35 },
         2: { cellWidth: this.pageWidth - 80 }
       },
-      margin: { left: this.MARGIN, right: this.MARGIN },
-      didDrawCell: (data) => {
-        if (data.column.index === 1 && data.section === 'body') {
-          const item = legendData[data.row.index];
-          this.doc.setFillColor(item.color[0], item.color[1], item.color[2]);
-          this.doc.rect(data.cell.x + 2, data.cell.y + 2, 8, data.cell.height - 4, 'F');
-        }
-      }
-    });
-
-    this.addPageNumber();
-  }
-
-  // Project Information Section
-  private addProjectInformation(data: RAMSData): void {
-    this.doc.addPage();
-    this.currentPage++;
-    this.yPosition = this.MARGIN + 20;
-    this.addTOCEntry("3. Project Information");
-
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(16);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("3. PROJECT INFORMATION", this.MARGIN, this.yPosition);
-    this.yPosition += 15;
-
-    const projectInfo = [
-      ["Project Name:", safeText(data.projectName) || "Not specified"],
-      ["Location:", safeText(data.location) || "Not specified"],
-      ["Assessment Date:", safeDate(data.date)],
-      ["Prepared By:", safeText(data.assessor) || "Not specified"],
-      ["Review Date:", safeDate(new Date(Date.now() + 365 * 24 * 60 * 60 * 1000))], // 1 year from now
-      ["Document Status:", "CONTROLLED COPY"],
-      ["Distribution:", "Site Management, Safety Officer, Project Team"]
-    ];
-
-    autoTable(this.doc, {
-      startY: this.yPosition,
-      body: projectInfo,
-      theme: "striped",
-      alternateRowStyles: { fillColor: [248, 250, 252] },
-      styles: {
-        fontSize: 11,
-        cellPadding: 6,
-        lineColor: [220, 220, 220],
-        lineWidth: 0.5
-      },
-      columnStyles: {
-        0: { fontStyle: "bold", cellWidth: 50, fillColor: [240, 248, 255] },
-        1: { cellWidth: this.pageWidth - 90 }
-      },
       margin: { left: this.MARGIN, right: this.MARGIN }
     });
 
-    this.yPosition = (this.doc as any).lastAutoTable.finalY + 20;
-
-    // Work Activities
-    const activities = safeArrayFilter(data.activities).filter(activity => safeText(activity));
-    
-    if (activities.length > 0) {
-      this.checkPageBreak(50);
-      
-      this.doc.setTextColor(...this.PRIMARY_COLOR);
-      this.doc.setFontSize(14);
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text("3.1 Planned Work Activities", this.MARGIN, this.yPosition);
-      this.yPosition += 10;
-
-      const activitiesData = activities.map((activity, index) => [
-        `${index + 1}.`, 
-        safeText(activity)
-      ]);
-
-      autoTable(this.doc, {
-        startY: this.yPosition,
-        body: activitiesData,
-        theme: "striped",
-        alternateRowStyles: { fillColor: [248, 250, 252] },
-        styles: {
-          fontSize: 10,
-          cellPadding: 5,
-          lineColor: [220, 220, 220],
-          lineWidth: 0.5
-        },
-        columnStyles: {
-          0: { cellWidth: 15, halign: "center", fontStyle: "bold", fillColor: [240, 248, 255] },
-          1: { cellWidth: this.pageWidth - 55 }
-        },
-        margin: { left: this.MARGIN, right: this.MARGIN }
-      });
-
-      this.yPosition = (this.doc as any).lastAutoTable.finalY + 15;
-    }
-
     this.addPageNumber();
   }
 
-  // Comprehensive Risk Assessment Table (Landscape)
-  private addDetailedRiskAssessment(data: RAMSData): void {
-    const risks = safeArrayFilter(data.risks);
-    if (risks.length === 0) return;
-
-    this.doc.addPage('a4', 'landscape');
-    this.updatePageMetrics();
-    this.currentPage++;
-    this.yPosition = this.MARGIN + 15;
-    this.addTOCEntry("4. Detailed Risk Assessment");
+  // Enhanced Detailed Risk Assessment
+  private addDetailedRiskAssessment(data: RAMSData, context: VariableContext): void {
+    this.checkPageBreak(60);
+    this.addTOCEntry("5. Detailed Risk Assessment");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("4. DETAILED RISK ASSESSMENT", this.MARGIN, this.yPosition);
-    this.yPosition += 15;
+    this.doc.text("5. DETAILED RISK ASSESSMENT", this.MARGIN, this.yPosition);
+    this.yPosition += 20;
 
-    const availableWidth = this.pageWidth - (2 * this.MARGIN);
+    const deduplicatedRisks = deduplicateRisks(data.risks);
     
-    const riskTableData = risks.map((risk, index) => {
-      const likelihood = safeNumber(risk.likelihood);
-      const severity = safeNumber(risk.severity);
-      const riskRating = calculateRiskRating(likelihood, severity);
-      const residualRisk = safeNumber(risk.residualRisk);
+    if (deduplicatedRisks.length === 0) {
+      this.doc.setTextColor(0, 0, 0);
+      this.doc.setFontSize(10);
+      this.doc.text("No risks have been identified for this assessment.", this.MARGIN, this.yPosition);
+      return;
+    }
 
-      return [
-        (index + 1).toString(),
-        safeText(risk.hazard),
-        safeText(risk.risk),
-        likelihood.toString(),
-        severity.toString(),
-        `${riskRating}\n(${getRiskLevel(riskRating)})`,
-        safeText(risk.controls) || "Standard safety procedures apply",
-        `${residualRisk}\n(${getRiskLevel(residualRisk)})`,
-        safeText(risk.furtherAction) || "Monitor effectiveness of controls",
-        `${safeText(risk.responsible) || "Site Supervisor"}\n${safeText(risk.actionBy) || "Ongoing"}`
-      ];
-    });
+    // Enhanced risk table with full borders
+    const riskTableData = deduplicatedRisks.map((risk, index) => [
+      (index + 1).toString(),
+      safeText(risk.hazard),
+      safeText(risk.risk),
+      safeNumber(risk.likelihood).toString(),
+      safeNumber(risk.severity).toString(),
+      `${safeNumber(risk.riskRating)} ${getRiskLevel(risk.riskRating)}`,
+      safeText(risk.controls),
+      `${safeNumber(risk.residualRisk)} ${getRiskLevel(risk.residualRisk)}`,
+      safeText(risk.furtherAction) || "None required",
+      safeText(risk.responsible) || "Site Supervisor"
+    ]);
 
     autoTable(this.doc, {
       startY: this.yPosition,
-      head: [["Ref", "Hazard Identified", "Potential Consequence", "L", "S", "Initial Risk", "Existing Control Measures", "Residual Risk", "Additional Actions Required", "Responsibility / Timescale"]],
+      head: [["Ref", "Hazard", "Risk/Harm", "L", "S", "Initial", "Controls", "Residual", "Action", "Responsible"]],
       body: riskTableData,
       theme: "grid",
       headStyles: {
         fillColor: this.PRIMARY_COLOR,
         textColor: [255, 255, 255],
         fontStyle: "bold",
-        fontSize: 9,
-        halign: "center",
-        valign: "middle",
-        lineWidth: 1,
-        lineColor: [255, 255, 255]
-      },
-      styles: {
         fontSize: 8,
-        cellPadding: 4,
-        lineColor: [200, 200, 200],
-        lineWidth: 0.5,
-        overflow: 'linebreak',
-        valign: 'top',
-        minCellHeight: 15
+        halign: "center",
+        cellPadding: 3
       },
-      columnStyles: {
-        0: { cellWidth: availableWidth * 0.04, halign: "center", fontStyle: "bold", fillColor: [245, 245, 245] },
-        1: { cellWidth: availableWidth * 0.16, fontStyle: "bold" },
-        2: { cellWidth: availableWidth * 0.18 },
-        3: { cellWidth: availableWidth * 0.03, halign: "center", fontStyle: "bold" },
-        4: { cellWidth: availableWidth * 0.03, halign: "center", fontStyle: "bold" },
-        5: { cellWidth: availableWidth * 0.08, halign: "center", fontSize: 7, fontStyle: "bold" },
-        6: { cellWidth: availableWidth * 0.24 },
-        7: { cellWidth: availableWidth * 0.08, halign: "center", fontSize: 7, fontStyle: "bold" },
-        8: { cellWidth: availableWidth * 0.08 },
-        9: { cellWidth: availableWidth * 0.08, fontSize: 7 }
-      },
-      margin: { left: this.MARGIN, right: this.MARGIN },
-      showHead: 'everyPage',
-      didDrawCell: (data) => {
-        if (data.column.index === 5 || data.column.index === 7) {
-          const cellText = data.cell.text[0];
-          if (cellText) {
-            const riskNumber = parseInt(cellText.split('\n')[0]);
-            if (!isNaN(riskNumber)) {
-              const [r, g, b] = getRiskColor(riskNumber);
-              this.doc.setFillColor(r + 40, g + 40, b + 40);
-              this.doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
-            }
-          }
-        }
-      }
-    });
-
-    this.addPageNumber();
-
-    // Switch back to portrait for subsequent pages
-    this.doc.addPage('a4', 'portrait');
-    this.updatePageMetrics();
-    this.currentPage++;
-  }
-
-  // Emergency Procedures & Additional Information
-  private addAdditionalSections(data: RAMSData): void {
-    this.yPosition = this.MARGIN + 20;
-    this.addTOCEntry("5. Emergency Procedures & Additional Information");
-
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(16);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("5. EMERGENCY PROCEDURES & ADDITIONAL INFORMATION", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
-
-    // Emergency contacts
-    this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("5.1 Emergency Contacts", this.MARGIN, this.yPosition);
-    this.yPosition += 8;
-
-    const emergencyData = [
-      ["Emergency Services", "999"],
-      ["Site Manager", "Contact details to be confirmed"],
-      ["Health & Safety Officer", "Contact details to be confirmed"],
-      ["First Aid", "Location and contact to be confirmed"],
-      ["Incident Reporting", "As per company procedures"]
-    ];
-
-    autoTable(this.doc, {
-      startY: this.yPosition,
-      body: emergencyData,
-      theme: "striped",
       styles: {
-        fontSize: 10,
-        cellPadding: 5
+        fontSize: 7,
+        cellPadding: 2,
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        valign: "top"
       },
       columnStyles: {
-        0: { fontStyle: "bold", cellWidth: 60, fillColor: [240, 248, 255] },
-        1: { cellWidth: this.pageWidth - 100 }
+        0: { halign: "center", cellWidth: 12 },
+        1: { cellWidth: 25 },
+        2: { cellWidth: 25 },
+        3: { halign: "center", cellWidth: 8 },
+        4: { halign: "center", cellWidth: 8 },
+        5: { halign: "center", cellWidth: 18 },
+        6: { cellWidth: 35 },
+        7: { halign: "center", cellWidth: 18 },
+        8: { cellWidth: 25 },
+        9: { cellWidth: 20 }
       },
       margin: { left: this.MARGIN, right: this.MARGIN }
     });
 
     this.yPosition = (this.doc as any).lastAutoTable.finalY + 20;
+    this.addPageNumber();
+  }
 
-    // Competency requirements
-    this.checkPageBreak(50);
-    this.doc.setFontSize(12);
+  // Method Statement Section
+  private addMethodStatement(data: RAMSData, context: VariableContext): void {
+    this.checkPageBreak(60);
+    this.addTOCEntry("6. Method Statement");
+
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("5.2 Competency Requirements", this.MARGIN, this.yPosition);
-    this.yPosition += 8;
+    this.doc.text("6. METHOD STATEMENT", this.MARGIN, this.yPosition);
+    this.yPosition += 20;
 
+    const methodStatements = extractMethodStatements(data.risks);
+
+    this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "normal");
-    const competencyText = [
-      "All personnel undertaking electrical work must:",
-      "• Hold appropriate electrical qualifications (18th Edition, AM2, etc.)",
-      "• Be competent and experienced in the type of work being undertaken",
-      "• Have received appropriate health and safety training",
-      "• Be familiar with this risk assessment and control measures",
-      "• Follow all company safety procedures and guidelines"
+    this.doc.text("Safe work procedures extracted from control measures:", this.MARGIN, this.yPosition);
+    this.yPosition += 15;
+
+    if (methodStatements.length === 0) {
+      this.doc.text("Standard electrical safety procedures apply.", this.MARGIN, this.yPosition);
+      this.yPosition += 10;
+    } else {
+      methodStatements.forEach((statement, index) => {
+        this.doc.setFont("helvetica", "bold");
+        this.doc.text(`${index + 1}.`, this.MARGIN, this.yPosition);
+        this.doc.setFont("helvetica", "normal");
+        const wrappedStatement = this.doc.splitTextToSize(statement, this.pageWidth - 2 * this.MARGIN - 15);
+        wrappedStatement.forEach((line: string, lineIndex: number) => {
+          this.doc.text(line, this.MARGIN + 15, this.yPosition + (lineIndex * 5));
+        });
+        this.yPosition += Math.max(15, wrappedStatement.length * 5 + 5);
+      });
+    }
+
+    this.addPageNumber();
+  }
+
+  // Safety Information Section
+  private addSafetyInformation(context: VariableContext): void {
+    this.checkPageBreak(100);
+    this.addTOCEntry("7. Safety Information");
+
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(16);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("7. SAFETY INFORMATION", this.MARGIN, this.yPosition);
+    this.yPosition += 20;
+
+    const safetyPoints = [
+      "⚠️  All personnel must be competent and trained for electrical work",
+      "⚠️  Isolate and lock-off power supplies before commencing work",
+      "⚠️  Use appropriate PPE including insulated gloves and safety boots",
+      "⚠️  Test circuits before and after work using approved test equipment",
+      "⚠️  Maintain safe working distances from live conductors",
+      "⚠️  Have emergency procedures and first aid readily available",
+      "⚠️  Report any unsafe conditions immediately to supervision",
+      "⚠️  Follow permit to work procedures where applicable"
     ];
 
-    competencyText.forEach(line => {
-      this.doc.text(line, this.MARGIN, this.yPosition);
-      this.yPosition += 6;
-    });
-
-    this.yPosition += 10;
-
-    // Review and monitoring
-    this.checkPageBreak(30);
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("5.3 Review and Monitoring", this.MARGIN, this.yPosition);
-    this.yPosition += 8;
-
+    this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "normal");
-    const reviewText = [
-      "This risk assessment will be reviewed:",
-      "• When work conditions change significantly",
-      "• Following any incidents or near misses",
-      "• At least annually or as required by legislation",
-      "• When new hazards are identified",
-      "",
-      "All personnel are responsible for monitoring the effectiveness of control measures",
-      "and reporting any concerns to site management."
-    ];
 
-    reviewText.forEach(line => {
-      if (line === "") {
-        this.yPosition += 3;
-      } else {
-        this.doc.text(line, this.MARGIN, this.yPosition);
-        this.yPosition += 6;
-      }
+    safetyPoints.forEach(point => {
+      const wrappedPoint = this.doc.splitTextToSize(point, this.pageWidth - 2 * this.MARGIN - 10);
+      wrappedPoint.forEach((line: string, lineIndex: number) => {
+        this.doc.text(line, this.MARGIN + 5, this.yPosition + (lineIndex * 5));
+      });
+      this.yPosition += Math.max(12, wrappedPoint.length * 5 + 3);
     });
 
     this.addPageNumber();
   }
 
-  // Signatures page
-  private addSignatures(signOff?: SignOff): void {
+  // Enhanced Approvals Section
+  private addEnhancedApprovals(signOff?: SignOff, context?: VariableContext): void {
     this.doc.addPage();
     this.currentPage++;
     this.yPosition = this.MARGIN + 20;
-    this.addTOCEntry("6. Authorisation & Sign-off");
+    this.addTOCEntry("8. Authorisation & Sign-off");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("6. AUTHORISATION & SIGN-OFF", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.doc.text("8. AUTHORISATION & SIGN-OFF", this.MARGIN, this.yPosition);
+    this.yPosition += 25;
 
-    const signatureBoxHeight = 50;
-    const signatureBoxWidth = (this.pageWidth - (3 * this.MARGIN)) / 2;
+    const signatureBoxHeight = 60;
+    const signatureBoxWidth = (this.pageWidth - (4 * this.MARGIN)) / 3;
 
-    // Prepared by
-    this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("PREPARED BY:", this.MARGIN, this.yPosition);
-    
-    this.doc.setDrawColor(100);
-    this.doc.rect(this.MARGIN, this.yPosition + 5, signatureBoxWidth, signatureBoxHeight);
-    
-    if (signOff?.preparedBy) {
-      this.doc.setFontSize(10);
-      this.doc.setFont("helvetica", "normal");
-      this.doc.text(`Name: ${signOff.preparedBy.name}`, this.MARGIN + 5, this.yPosition + signatureBoxHeight - 15);
-      this.doc.text(`Date: ${signOff.preparedBy.date}`, this.MARGIN + 5, this.yPosition + signatureBoxHeight - 5);
-    }
+    // Three-tier approval system
+    const approvals = [
+      { title: "PREPARED BY", data: signOff?.preparedBy, color: [34, 197, 94] as [number, number, number] },
+      { title: "REVIEWED BY", data: signOff?.reviewedBy, color: [255, 193, 7] as [number, number, number] },
+      { title: "APPROVED BY", data: signOff?.approvedBy, color: [239, 68, 68] as [number, number, number] }
+    ];
 
-    // Reviewed by
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("REVIEWED BY:", this.pageWidth / 2 + 10, this.yPosition);
-    
-    this.doc.rect(this.pageWidth / 2 + 10, this.yPosition + 5, signatureBoxWidth, signatureBoxHeight);
-    
-    if (signOff?.reviewedBy) {
-      this.doc.setFontSize(10);
-      this.doc.setFont("helvetica", "normal");
-      this.doc.text(`Name: ${signOff.reviewedBy.name}`, this.pageWidth / 2 + 15, this.yPosition + signatureBoxHeight - 15);
-      this.doc.text(`Date: ${signOff.reviewedBy.date}`, this.pageWidth / 2 + 15, this.yPosition + signatureBoxHeight - 5);
-    }
+    approvals.forEach((approval, index) => {
+      const x = this.MARGIN + (index * (signatureBoxWidth + this.MARGIN));
+      
+      this.doc.setTextColor(...approval.color);
+      this.doc.setFontSize(12);
+      this.doc.setFont("helvetica", "bold");
+      this.doc.text(approval.title, x, this.yPosition);
+      
+      this.doc.setDrawColor(...approval.color);
+      this.doc.setLineWidth(2);
+      this.doc.rect(x, this.yPosition + 5, signatureBoxWidth, signatureBoxHeight);
+      
+      if (approval.data) {
+        this.doc.setTextColor(0, 0, 0);
+        this.doc.setFontSize(9);
+        this.doc.setFont("helvetica", "normal");
+        this.doc.text(`Name: ${approval.data.name}`, x + 5, this.yPosition + signatureBoxHeight - 15);
+        this.doc.text(`Date: ${approval.data.date}`, x + 5, this.yPosition + signatureBoxHeight - 5);
+      }
+    });
 
     this.yPosition += signatureBoxHeight + 30;
 
-    // Approved by (full width)
+    // Document control information
+    this.doc.setFillColor(248, 250, 252);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 40, 'F');
+    this.doc.setDrawColor(...this.PRIMARY_COLOR);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 40);
+
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("APPROVED BY (AUTHORISED PERSON):", this.MARGIN, this.yPosition);
-    
-    this.doc.rect(this.MARGIN, this.yPosition + 5, this.pageWidth - (2 * this.MARGIN), signatureBoxHeight);
-    
-    if (signOff?.approvedBy) {
-      this.doc.setFontSize(10);
-      this.doc.setFont("helvetica", "normal");
-      this.doc.text(`Name: ${signOff.approvedBy.name}`, this.MARGIN + 5, this.yPosition + signatureBoxHeight - 15);
-      this.doc.text(`Date: ${signOff.approvedBy.date}`, this.MARGIN + 5, this.yPosition + signatureBoxHeight - 5);
-    }
+    this.doc.text("DOCUMENT CONTROL", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
+
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(9);
+    this.doc.setFont("helvetica", "normal");
+    const docInfo = [
+      `Document: RAMS-${context?.project_name || 'Document'}`,
+      `Version: v1.0`,
+      `Generated: ${context?.document_generated || safeDatetime(new Date())}`,
+      `Status: CONFIDENTIAL`
+    ];
+
+    docInfo.forEach((info, index) => {
+      this.doc.text(info, this.pageWidth / 2, this.yPosition + 20 + (index * 4), { align: "center" });
+    });
+
+    this.addPageNumber();
+  }
+
+  // Enhanced footer for all pages
+  private addEnhancedFooter(context: VariableContext, pageNum: number): void {
+    this.doc.setFontSize(8);
+    this.doc.setTextColor(100);
+    this.doc.text(
+      `RAMS Document - ${context.project_name} - Generated ${context.document_generated} Page ${pageNum}`,
+      this.pageWidth / 2,
+      this.pageHeight - 10,
+      { align: "center" }
+    );
+    this.doc.text("v1.0 - CONFIDENTIAL", this.pageWidth - this.MARGIN, this.pageHeight - 10, { align: "right" });
+  }
+
+  // Table of Contents
+  private addTableOfContents(): void {
+    this.doc.addPage();
+    this.currentPage++;
+    this.yPosition = this.MARGIN + 20;
+
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(18);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("TABLE OF CONTENTS", this.pageWidth / 2, this.yPosition, { align: "center" });
+    this.yPosition += 20;
+
+    // Add a line under the title
+    this.doc.setDrawColor(...this.PRIMARY_COLOR);
+    this.doc.setLineWidth(1);
+    this.doc.line(this.MARGIN, this.yPosition, this.pageWidth - this.MARGIN, this.yPosition);
+    this.yPosition += 15;
+
+    const tocData = this.toc.map(item => [item.title, item.page.toString()]);
+
+    autoTable(this.doc, {
+      startY: this.yPosition,
+      body: tocData,
+      theme: "plain",
+      styles: {
+        fontSize: 11,
+        cellPadding: 6,
+        lineColor: [220, 220, 220],
+        lineWidth: 0.1
+      },
+      columnStyles: {
+        0: { fontStyle: "normal", cellWidth: this.pageWidth - 60 },
+        1: { halign: "right", fontStyle: "bold", cellWidth: 20 }
+      },
+      margin: { left: this.MARGIN, right: this.MARGIN }
+    });
 
     this.addPageNumber();
   }
 
   // Main generation method
   public generatePDF(data: RAMSData, options: PDFOptions = {}): string {
+    // Create variable context for dynamic substitution
+    const context = createVariableContext(data, options);
+    
     // Add sections in order (TOC entries will be populated)
-    this.addTitlePage(data, options);
-    this.addIntroduction(data);
+    this.addTitlePage(data, options, context);
     this.addRiskMatrix();
-    this.addProjectInformation(data);
-    this.addDetailedRiskAssessment(data);
-    this.addAdditionalSections(data);
-    this.addSignatures(options.signOff);
+    this.addWorkActivities(data, context);
+    this.addRiskSummary(data, context);
+    this.addDetailedRiskAssessment(data, context);
+    this.addMethodStatement(data, context);
+    this.addSafetyInformation(context);
+    this.addEnhancedApprovals(options.signOff, context);
 
-    // Generate and insert TOC
+    // Add enhanced footer to all pages
+    for (let i = 1; i <= this.currentPage; i++) {
+      this.doc.setPage(i);
+      this.addEnhancedFooter(context, i);
+    }
+
+    // Generate table of contents after all sections are added
     this.addTableOfContents();
-
-    // Set metadata
-    this.doc.setProperties({
-      title: `Risk Assessment - ${safeText(data.projectName)}`,
-      subject: 'Health & Safety Risk Assessment',
-      author: safeText(data.assessor),
-      creator: 'Professional RAMS Generator',
-      keywords: 'risk assessment, health safety, electrical, BS7671'
-    });
 
     return this.doc.output('datauristring');
   }
 }
 
-// Export functions for compatibility
-export const generateRAMSPDF = (data: RAMSData, options: PDFOptions = {}): Blob => {
-  const generator = new ProfessionalRAMSPDFGenerator();
-  const pdfDataUri = generator.generatePDF(data, options);
-  const byteCharacters = atob(pdfDataUri.split(',')[1]);
-  const byteNumbers = new Array(byteCharacters.length);
-  
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-  
-  const byteArray = new Uint8Array(byteNumbers);
-  return new Blob([byteArray], { type: 'application/pdf' });
-};
-
-export const generateRAMSPDFPreview = (data: RAMSData, options: PDFOptions = {}): string => {
+// Export functions
+export function generateRAMSPDF(data: RAMSData, options: PDFOptions = {}): string {
   const generator = new ProfessionalRAMSPDFGenerator();
   return generator.generatePDF(data, options);
-};
+}
 
-function format(date: Date, formatStr: string): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  
-  return formatStr
-    .replace('yyyy', String(year))
-    .replace('MM', month)
-    .replace('dd', day);
+export function generateRAMSPDFPreview(data: RAMSData, options: PDFOptions = {}): Promise<string> {
+  return new Promise((resolve) => {
+    const generator = new ProfessionalRAMSPDFGenerator();
+    const pdfDataUri = generator.generatePDF(data, options);
+    resolve(pdfDataUri);
+  });
 }
