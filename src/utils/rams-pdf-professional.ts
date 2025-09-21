@@ -222,17 +222,17 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(18);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("RISK ASSESSMENT", this.pageWidth - 100, 15, { align: "center" });
+    this.doc.text("RISK ASSESSMENT", this.pageWidth - 95, 15, { align: "center" });
     
     // Reference number area
     this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "normal");
-    this.doc.text("Ref: SS-WHS-SAF-000", this.pageWidth - 100, 25, { align: "center" });
+    this.doc.text("Ref: SS-WHS-SAF-000", this.pageWidth - 95, 25, { align: "center" });
     
     // Authorization fields
     this.doc.setFontSize(10);
-    this.doc.text("Authorised By: _________________", this.pageWidth - 120, 35);
-    this.doc.text(`Rev: 1.0    Date: ${context.assessment_date}`, this.pageWidth - 60, 35);
+    this.doc.text("Authorised By: _________________", this.pageWidth - 115, 35);
+    this.doc.text(`Rev: 1.0    Date: ${context.assessment_date}`, this.pageWidth - 55, 35);
 
     this.yPosition = 50;
 
