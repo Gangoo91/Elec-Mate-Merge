@@ -595,7 +595,7 @@ class ProfessionalRAMSPDFGenerator {
 
   // Safety Information Section
   private addSafetyInformation(context: VariableContext): void {
-    this.checkPageBreak(100);
+    this.checkPageBreak(130);
     this.addTOCEntry("7. Safety Information");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
@@ -604,28 +604,52 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("7. SAFETY INFORMATION", this.MARGIN, this.yPosition);
     this.yPosition += 20;
 
+    // Professional background box for safety section
+    const sectionHeight = 90;
+    this.doc.setFillColor(255, 251, 245); // Light orange background for safety
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), sectionHeight, 'F');
+    this.doc.setDrawColor(255, 152, 0); // Orange border for safety
+    this.doc.setLineWidth(1.5);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), sectionHeight);
+
+    // Section header with proper styling
+    this.doc.setTextColor(255, 152, 0);
+    this.doc.setFontSize(11);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("CRITICAL SAFETY REQUIREMENTS", this.pageWidth / 2, this.yPosition + 10, { align: "center" });
+    
+    this.yPosition += 18;
+
     const safetyPoints = [
-      "⚠️  All personnel must be competent and trained for electrical work",
-      "⚠️  Isolate and lock-off power supplies before commencing work",
-      "⚠️  Use appropriate PPE including insulated gloves and safety boots",
-      "⚠️  Test circuits before and after work using approved test equipment",
-      "⚠️  Maintain safe working distances from live conductors",
-      "⚠️  Have emergency procedures and first aid readily available",
-      "⚠️  Report any unsafe conditions immediately to supervision",
-      "⚠️  Follow permit to work procedures where applicable"
+      "All personnel must be competent and trained for electrical work",
+      "Isolate and lock-off power supplies before commencing work",
+      "Use appropriate PPE including insulated gloves and safety boots",
+      "Test circuits before and after work using approved test equipment",
+      "Maintain safe working distances from live conductors",
+      "Have emergency procedures and first aid readily available",
+      "Report any unsafe conditions immediately to supervision",
+      "Follow permit to work procedures where applicable"
     ];
 
     this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(10);
+    this.doc.setFontSize(9);
     this.doc.setFont("helvetica", "normal");
 
-    safetyPoints.forEach(point => {
-      const wrappedPoint = this.doc.splitTextToSize(point, this.pageWidth - 2 * this.MARGIN - 10);
+    safetyPoints.forEach((point, index) => {
+      // Use proper bullet character instead of emoji
+      const bulletPoint = `• ${point}`;
+      const wrappedPoint = this.doc.splitTextToSize(bulletPoint, this.pageWidth - (2 * this.MARGIN) - 20);
+      
       wrappedPoint.forEach((line: string, lineIndex: number) => {
-        this.doc.text(line, this.MARGIN + 5, this.yPosition + (lineIndex * 5));
+        // Proper indentation for bullet points (15mm from left margin)
+        const xPosition = lineIndex === 0 ? this.MARGIN + 10 : this.MARGIN + 15;
+        this.doc.text(line, xPosition, this.yPosition + (lineIndex * 4));
       });
-      this.yPosition += Math.max(12, wrappedPoint.length * 5 + 3);
+      
+      this.yPosition += Math.max(8, wrappedPoint.length * 4 + 2);
     });
+
+    this.yPosition += 15; // Add space after section
 
     this.addPageNumber();
   }
