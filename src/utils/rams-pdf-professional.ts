@@ -628,66 +628,96 @@ class ProfessionalRAMSPDFGenerator {
       return;
     }
 
-    // Professional risk table with complete data
+    // Professional risk table with optimized landscape layout
     const riskTableData = deduplicatedRisks.map((risk, index) => [
       (index + 1).toString(),
-      truncateText(safeText(risk.hazard), 25),
-      truncateText(safeText(risk.risk), 30),
+      truncateText(safeText(risk.hazard), 35),
+      truncateText(safeText(risk.risk), 40),
       safeNumber(risk.likelihood).toString(),
       safeNumber(risk.severity).toString(),
       `${safeNumber(risk.riskRating)}`,
       getRiskLevel(risk.riskRating),
-      truncateText(safeText(risk.controls), 40),
+      truncateText(safeText(risk.controls), 60),
       `${safeNumber(risk.residualRisk)}`,
       getRiskLevel(risk.residualRisk)
     ]);
 
+    // Enhanced professional table for landscape format
     autoTable(this.doc, {
       startY: this.yPosition,
-      head: [["Ref", "Hazard", "Who Might Be Harmed", "L", "S", "Risk", "Level", "Control Measures", "L", "Level"]],
+      head: [["Ref", "Hazard Identified", "Who Might Be Harmed", "L", "S", "Initial Risk", "Risk Level", "Control Measures / Precautions", "Residual Risk", "Final Level"]],
       body: riskTableData,
       theme: "grid",
       headStyles: {
         fillColor: this.PRIMARY_COLOR,
         textColor: [255, 255, 255],
         fontStyle: "bold",
-        fontSize: 8,
+        fontSize: 9,
         halign: "center",
-        cellPadding: 4
+        cellPadding: 5,
+        minCellHeight: 15
       },
       styles: {
         fontSize: 8,
-        cellPadding: 4,
-        lineColor: [226, 232, 240],
+        cellPadding: 5,
+        lineColor: [200, 200, 200],
         lineWidth: 0.5,
-        valign: "middle"
+        valign: "middle",
+        minCellHeight: 12,
+        overflow: 'linebreak'
       },
-      tableWidth: 'auto',
+      tableWidth: 'wrap',
       columnStyles: {
-        0: { halign: "center", cellWidth: 12 },
-        1: { cellWidth: 35 },
-        2: { cellWidth: 25 },
-        3: { halign: "center", cellWidth: 8 },
-        4: { halign: "center", cellWidth: 8 },
-        5: { halign: "center", cellWidth: 12 },
-        6: { halign: "center", cellWidth: 18 },
-        7: { cellWidth: 45 },
-        8: { halign: "center", cellWidth: 8 },
-        9: { halign: "center", cellWidth: 18 }
+        0: { halign: "center", cellWidth: 15, fontStyle: "bold" },
+        1: { cellWidth: 50, valign: "top" },
+        2: { cellWidth: 45, valign: "top" },
+        3: { halign: "center", cellWidth: 12, fontStyle: "bold" },
+        4: { halign: "center", cellWidth: 12, fontStyle: "bold" },
+        5: { halign: "center", cellWidth: 20, fontStyle: "bold" },
+        6: { halign: "center", cellWidth: 25, fontStyle: "bold" },
+        7: { cellWidth: 85, valign: "top" },
+        8: { halign: "center", cellWidth: 20, fontStyle: "bold" },
+        9: { halign: "center", cellWidth: 25, fontStyle: "bold" }
       },
       margin: { left: this.MARGIN, right: this.MARGIN },
       didParseCell: (data: any) => {
-        // Color code risk levels
+        // Enhanced color coding for risk levels with better contrast
         if (data.column.index === 6 || data.column.index === 9) {
           const level = data.cell.text[0];
-          if (level === "Low") data.cell.styles.fillColor = [34, 197, 94];
-          else if (level === "Medium") data.cell.styles.fillColor = [245, 158, 11];
-          else if (level === "High") data.cell.styles.fillColor = [249, 115, 22];
-          else if (level === "Very High") data.cell.styles.fillColor = [220, 38, 127];
+          if (level === "Low") {
+            data.cell.styles.fillColor = [34, 197, 94];
+            data.cell.styles.textColor = [255, 255, 255];
+          } else if (level === "Medium") {
+            data.cell.styles.fillColor = [245, 158, 11];
+            data.cell.styles.textColor = [0, 0, 0];
+          } else if (level === "High") {
+            data.cell.styles.fillColor = [249, 115, 22];
+            data.cell.styles.textColor = [255, 255, 255];
+          } else if (level === "Very High") {
+            data.cell.styles.fillColor = [220, 38, 127];
+            data.cell.styles.textColor = [255, 255, 255];
+          }
           
           if (data.cell.styles.fillColor) {
-            data.cell.styles.textColor = [255, 255, 255];
             data.cell.styles.fontStyle = "bold";
+          }
+        }
+
+        // Highlight initial and residual risk numbers
+        if (data.column.index === 5 || data.column.index === 8) {
+          const riskValue = parseInt(data.cell.text[0]);
+          if (riskValue <= 4) {
+            data.cell.styles.fillColor = [34, 197, 94];
+            data.cell.styles.textColor = [255, 255, 255];
+          } else if (riskValue <= 9) {
+            data.cell.styles.fillColor = [245, 158, 11];
+            data.cell.styles.textColor = [0, 0, 0];
+          } else if (riskValue <= 16) {
+            data.cell.styles.fillColor = [249, 115, 22];
+            data.cell.styles.textColor = [255, 255, 255];
+          } else {
+            data.cell.styles.fillColor = [220, 38, 127];
+            data.cell.styles.textColor = [255, 255, 255];
           }
         }
       }
