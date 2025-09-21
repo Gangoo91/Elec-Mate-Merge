@@ -423,18 +423,18 @@ class ProfessionalRAMSPDFGenerator {
     this.addTOCEntry("2. Risk Assessment Matrix");
 
     // Ensure we have a new page for the matrix to prevent cropping
-    this.checkPageBreak(280); // Reserve space for full matrix and legend
+    this.checkPageBreak(200); // Reserve space for optimized matrix and legend
     
-    this.yPosition += 16;
+    this.yPosition += 12;
     // Section title
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("2. RISK ASSESSMENT MATRIX", this.MARGIN, this.yPosition);
-    this.yPosition += 25;
+    this.yPosition += 20;
 
-    // Professional explanation box
-    const boxHeight = 28;
+    // Compact explanation box
+    const boxHeight = 22;
     const boxWidth = this.pageWidth - (2 * this.MARGIN);
     this.doc.setFillColor(248, 250, 252);
     this.doc.rect(this.MARGIN, this.yPosition, boxWidth, boxHeight, 'F');
@@ -443,23 +443,23 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.rect(this.MARGIN, this.yPosition, boxWidth, boxHeight);
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(12);
+    this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("Risk Assessment Formula", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
+    this.doc.text("Risk Assessment Formula", this.pageWidth / 2, this.yPosition + 10, { align: "center" });
     
     this.doc.setTextColor(55, 65, 81);
-    this.doc.setFontSize(10);
+    this.doc.setFontSize(9);
     this.doc.setFont("helvetica", "normal");
-    this.doc.text("Risk Rating = Likelihood × Consequence (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 22, { align: "center" });
-    this.yPosition += 45;
+    this.doc.text("Risk Rating = Likelihood × Consequence (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 18, { align: "center" });
+    this.yPosition += 32;
 
-    // Matrix dimensions - optimized for page fit
-    const cellWidth = 28; // Slightly smaller to fit better
-    const cellHeight = 35; // Slightly smaller to fit better
-    const headerHeight = 18;
-    const rowHeaderWidth = 70;
+    // Matrix dimensions - significantly optimized to fit landscape A4
+    const cellWidth = 24; // Reduced to fit better
+    const cellHeight = 20; // Reduced to fit landscape page
+    const headerHeight = 16; // Reduced header height
+    const rowHeaderWidth = 65; // Slightly smaller
     const matrixWidth = rowHeaderWidth + (cellWidth * 5);
-    const leftMarginForText = 30; // Space for vertical LIKELIHOOD text
+    const leftMarginForText = 25; // Optimized space for vertical LIKELIHOOD text
     const matrixStartX = this.MARGIN + leftMarginForText;
     const matrixStartY = this.yPosition;
 
@@ -471,9 +471,9 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.rect(matrixStartX, matrixStartY, rowHeaderWidth, headerHeight);
     
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(10);
+    this.doc.setFontSize(9);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("Risk Matrix", matrixStartX + rowHeaderWidth/2, matrixStartY + 12, { align: "center" });
+    this.doc.text("Risk Matrix", matrixStartX + rowHeaderWidth/2, matrixStartY + 10, { align: "center" });
     
     // Top header - "CONSEQUENCES" 
     this.doc.setFillColor(70, 130, 180); // Dark blue
@@ -483,9 +483,9 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.rect(matrixStartX + rowHeaderWidth, matrixStartY, cellWidth * 5, headerHeight);
     
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(12);
+    this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("CONSEQUENCES", matrixStartX + rowHeaderWidth + (cellWidth * 2.5), matrixStartY + 12, { align: "center" });
+    this.doc.text("CONSEQUENCES", matrixStartX + rowHeaderWidth + (cellWidth * 2.5), matrixStartY + 10, { align: "center" });
 
     // Consequence headers with numbers and descriptions
     const consequenceData = [
@@ -506,16 +506,16 @@ class ProfessionalRAMSPDFGenerator {
       this.doc.rect(x, matrixStartY + headerHeight, cellWidth, cellHeight);
       
       this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(9);
+      this.doc.setFontSize(8);
       this.doc.setFont("helvetica", "bold");
-      this.doc.text(item.num, x + cellWidth/2, matrixStartY + headerHeight + 8, { align: "center" });
-      this.doc.text(item.name, x + cellWidth/2, matrixStartY + headerHeight + 16, { align: "center" });
+      this.doc.text(item.num, x + cellWidth/2, matrixStartY + headerHeight + 6, { align: "center" });
+      this.doc.text(item.name, x + cellWidth/2, matrixStartY + headerHeight + 12, { align: "center" });
       
-      this.doc.setFontSize(7);
+      this.doc.setFontSize(6);
       this.doc.setFont("helvetica", "normal");
-      // Simple text wrapping for descriptions
+      // Compact text wrapping for descriptions
       const words = item.desc.split(' ');
-      const maxWidth = cellWidth - 4;
+      const maxWidth = cellWidth - 2;
       let currentLine = '';
       let lines: string[] = [];
       
@@ -532,7 +532,7 @@ class ProfessionalRAMSPDFGenerator {
       if (currentLine) lines.push(currentLine);
       
       lines.forEach((line, lineIndex) => {
-        this.doc.text(line, x + cellWidth/2, matrixStartY + headerHeight + 24 + (lineIndex * 4), { align: "center" });
+        this.doc.text(line, x + cellWidth/2, matrixStartY + headerHeight + 16 + (lineIndex * 3), { align: "center" });
       });
     });
 
@@ -556,15 +556,15 @@ class ProfessionalRAMSPDFGenerator {
       this.doc.rect(matrixStartX, rowY, rowHeaderWidth, cellHeight);
       
       this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(9);
+      this.doc.setFontSize(8);
       this.doc.setFont("helvetica", "bold");
-      this.doc.text(`${item.num} ${item.name}`, matrixStartX + rowHeaderWidth/2, rowY + 8, { align: "center" });
+      this.doc.text(`${item.num} ${item.name}`, matrixStartX + rowHeaderWidth/2, rowY + 6, { align: "center" });
       
-      this.doc.setFontSize(7);
+      this.doc.setFontSize(6);
       this.doc.setFont("helvetica", "normal");
-      // Simple text wrapping for descriptions
+      // Compact text wrapping for descriptions
       const words = item.desc.split(' ');
-      const maxWidth = rowHeaderWidth - 4;
+      const maxWidth = rowHeaderWidth - 2;
       let currentLine = '';
       let lines: string[] = [];
       
@@ -581,7 +581,7 @@ class ProfessionalRAMSPDFGenerator {
       if (currentLine) lines.push(currentLine);
       
       lines.forEach((line, lineIndex) => {
-        this.doc.text(line, matrixStartX + rowHeaderWidth/2, rowY + 16 + (lineIndex * 4), { align: "center" });
+        this.doc.text(line, matrixStartX + rowHeaderWidth/2, rowY + 12 + (lineIndex * 3), { align: "center" });
       });
 
       // Risk cells for this row - exact match to reference image
@@ -616,34 +616,34 @@ class ProfessionalRAMSPDFGenerator {
         
         // Risk level text and number exactly matching reference
         this.doc.setTextColor(0, 0, 0);
-        this.doc.setFontSize(8);
+        this.doc.setFontSize(7);
         this.doc.setFont("helvetica", "bold");
-        this.doc.text(riskLevel, cellX + cellWidth/2, rowY + 15, { align: "center" });
+        this.doc.text(riskLevel, cellX + cellWidth/2, rowY + 10, { align: "center" });
         
-        this.doc.setFontSize(14);
-        this.doc.text(`(${riskRating})`, cellX + cellWidth/2, rowY + 26, { align: "center" });
+        this.doc.setFontSize(10);
+        this.doc.text(`(${riskRating})`, cellX + cellWidth/2, rowY + 16, { align: "center" });
       }
     });
 
     // Add vertical "LIKELIHOOD" text on the left with proper spacing
     this.doc.setTextColor(70, 130, 180);
-    this.doc.setFontSize(12);
+    this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "bold");
     
-    // Simple vertical text spacing for "LIKELIHOOD" - positioned safely within margins
+    // Compact vertical text spacing for "LIKELIHOOD" - positioned safely within margins
     const likelihoodText = "LIKELIHOOD";
-    const letterSpacing = 12;
+    const letterSpacing = 9;
     const textStartY = matrixStartY + headerHeight + cellHeight + (cellHeight * 2.5) - (likelihoodText.length * letterSpacing / 2);
-    const textX = this.MARGIN + 15; // Safe distance from page edge
+    const textX = this.MARGIN + 12; // Safe distance from page edge
     
     for (let i = 0; i < likelihoodText.length; i++) {
       this.doc.text(likelihoodText[i], textX, textStartY + (i * letterSpacing), { align: "center" });
     }
 
-    this.yPosition = matrixStartY + headerHeight + cellHeight + (cellHeight * 5) + 15;
+    this.yPosition = matrixStartY + headerHeight + cellHeight + (cellHeight * 5) + 12;
 
     // Check if we need a page break before the legend
-    this.checkPageBreak(120);
+    this.checkPageBreak(80);
     
     // Professional legend with complete data
     const legendY = this.yPosition;
