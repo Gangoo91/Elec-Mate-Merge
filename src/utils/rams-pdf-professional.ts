@@ -850,7 +850,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("8. AUTHORISATION & SIGN-OFF", this.MARGIN, this.yPosition);
     this.yPosition += 25;
 
-    const signatureBoxHeight = 40;
+    const signatureBoxHeight = 50;
     const signatureBoxWidth = (this.pageWidth - (4 * this.MARGIN)) / 3;
 
     // Three-tier approval system
@@ -876,8 +876,8 @@ class ProfessionalRAMSPDFGenerator {
         this.doc.setTextColor(0, 0, 0);
         this.doc.setFontSize(9);
         this.doc.setFont("helvetica", "normal");
-        this.doc.text(`Name: ${approval.data.name}`, x + 5, this.yPosition + signatureBoxHeight - 15);
-        this.doc.text(`Date: ${approval.data.date}`, x + 5, this.yPosition + signatureBoxHeight - 5);
+        this.doc.text(`Name: ${approval.data.name}`, x + 5, this.yPosition + signatureBoxHeight - 20);
+        this.doc.text(`Date: ${approval.data.date}`, x + 5, this.yPosition + signatureBoxHeight - 8);
         
         // Render actual signature if available
         if (approval.data.signatureDataUrl) {
