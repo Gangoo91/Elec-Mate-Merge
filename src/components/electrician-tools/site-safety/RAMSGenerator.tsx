@@ -605,7 +605,7 @@ const RAMSGenerator: React.FC = () => {
             Company Branding (Optional)
           </AccordionTrigger>
           <AccordionContent className="space-y-4 pt-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-2">
               <div>
                 <Label className="text-white">Company Name</Label>
                 <Input
