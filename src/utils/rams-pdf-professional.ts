@@ -444,10 +444,9 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("Risk Rating = Likelihood × Severity (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 22, { align: "center" });
     this.yPosition += 40;
 
-    // Calculate table dimensions for consistent padding
-    const tableWidth = 140; // Fixed table width for consistency
-    const cellSize = 22;
-    const headerWidth = 25;
+    // Calculate table dimensions - optimized for space efficiency
+    const cellSize = 20; // Reduced from 22 for better space usage
+    const headerWidth = 22; // Reduced from 25 for better proportion
     const totalTableWidth = headerWidth + (cellSize * 5);
     const tableStartX = (this.pageWidth - totalTableWidth) / 2; // Center the table
     const tableStartY = this.yPosition;
