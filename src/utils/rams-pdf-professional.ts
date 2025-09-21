@@ -127,7 +127,7 @@ class ProfessionalRAMSPDFGenerator {
   private yPosition: number;
   private currentPage: number = 1;
   private toc: TOCItem[] = [];
-  private readonly MARGIN = 10; // 10mm margins for optimized space usage
+  private readonly MARGIN = 8; // 8mm margins for optimized space usage
   private readonly HEADER_HEIGHT = 35;
   private readonly FOOTER_HEIGHT = 20;
   private readonly PRIMARY_COLOR: [number, number, number] = [30, 64, 175]; // Professional blue #1e40af
@@ -213,16 +213,16 @@ class ProfessionalRAMSPDFGenerator {
     
     // Company logo area - professional placement
     this.doc.setFillColor(255, 255, 255);
-    this.doc.rect(this.MARGIN, 10, 45, 30, 'F');
+    this.doc.rect(this.MARGIN, 10, 35, 20, 'F');
     this.doc.setDrawColor(...this.BORDER_GRAY);
     this.doc.setLineWidth(1);
-    this.doc.rect(this.MARGIN, 10, 45, 30);
+    this.doc.rect(this.MARGIN, 10, 35, 20);
     
     this.doc.setTextColor(100, 116, 139);
     this.doc.setFontSize(8);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("COMPANY", this.MARGIN + 22.5, 22, { align: "center" });
-    this.doc.text("LOGO", this.MARGIN + 22.5, 30, { align: "center" });
+    this.doc.text("COMPANY", this.MARGIN + 17.5, 18, { align: "center" });
+    this.doc.text("LOGO", this.MARGIN + 17.5, 24, { align: "center" });
 
     // Main title with professional typography
     this.doc.setTextColor(255, 255, 255);
@@ -246,7 +246,7 @@ class ProfessionalRAMSPDFGenerator {
     this.yPosition += 20;
 
     // Professional project information card
-    const cardHeight = 55;
+    const cardHeight = 40;
     this.doc.setFillColor(...this.LIGHT_GRAY);
     this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), cardHeight, 'F');
     
@@ -256,12 +256,12 @@ class ProfessionalRAMSPDFGenerator {
 
     // Card header
     this.doc.setFillColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 12, 'F');
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 10, 'F');
     
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(11);
+    this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("PROJECT INFORMATION", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
+    this.doc.text("PROJECT INFORMATION", this.pageWidth / 2, this.yPosition + 6.5, { align: "center" });
 
     // Project details with improved layout
     const projectDetails = [
@@ -275,17 +275,17 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(10);
     
     projectDetails.forEach((detail, index) => {
-      const y = this.yPosition + 20 + (index * 8);
+      const y = this.yPosition + 16 + (index * 6);
       this.doc.setFont("helvetica", "bold");
-      this.doc.text(detail.label, this.MARGIN + 8, y);
+      this.doc.text(detail.label, this.MARGIN + 6, y);
       this.doc.setFont("helvetica", "normal");
-      this.doc.text(detail.value, this.MARGIN + 45, y);
+      this.doc.text(detail.value, this.MARGIN + 40, y);
     });
 
-    this.yPosition += cardHeight + 10;
+    this.yPosition += cardHeight + 8;
 
     // Professional purpose statement
-    const purposeHeight = 50;
+    const purposeHeight = 35;
     this.doc.setFillColor(239, 246, 255);
     this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), purposeHeight, 'F');
     this.doc.setDrawColor(...this.ACCENT_COLOR);
@@ -335,14 +335,14 @@ class ProfessionalRAMSPDFGenerator {
 
   // Work Activities Section  
   private addWorkActivities(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(45);
+    this.checkPageBreak(35);
     this.addTOCEntry("3. Work Activities");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("3. WORK ACTIVITIES", this.MARGIN, this.yPosition);
-    this.yPosition += 16;
+    this.yPosition += 12;
 
     const activities = safeArrayFilter(data.activities);
     if (activities.length === 0) {
@@ -359,9 +359,9 @@ class ProfessionalRAMSPDFGenerator {
         this.doc.setFont("helvetica", "normal");
         const wrappedActivity = this.doc.splitTextToSize(safeText(activity), this.pageWidth - 2 * this.MARGIN - 15);
         wrappedActivity.forEach((line: string, lineIndex: number) => {
-          this.doc.text(line, this.MARGIN + 15, this.yPosition + (lineIndex * 5));
+          this.doc.text(line, this.MARGIN + 15, this.yPosition + (lineIndex * 4));
         });
-        this.yPosition += Math.max(15, wrappedActivity.length * 5 + 5);
+        this.yPosition += Math.max(10, wrappedActivity.length * 4 + 3);
       });
     }
 
@@ -370,42 +370,42 @@ class ProfessionalRAMSPDFGenerator {
 
   // Risk Summary Section
   private addRiskSummary(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(80);
+    this.checkPageBreak(60);
     this.addTOCEntry("4. Risk Summary");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("4. RISK SUMMARY", this.MARGIN, this.yPosition);
-    this.yPosition += 16;
+    this.yPosition += 12;
 
     // Summary statistics box
     this.doc.setFillColor(248, 250, 252);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 50, 'F');
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 35, 'F');
     this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 50);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 35);
 
     this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(12);
+    this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("RISK ASSESSMENT SUMMARY", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
+    this.doc.text("RISK ASSESSMENT SUMMARY", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
     
     const summaryData = [
-      `Total Risks: ${context.total_risks}`,
-      `Low Residual: ${context.low_residual}`,
+      `Total: ${context.total_risks}`,
+      `Low: ${context.low_residual}`,
       `Medium: ${context.medium_residual}`,
       `High: ${context.high_residual}`,
       `Very High: ${context.very_high_residual}`
     ];
 
-    this.doc.setFontSize(10);
+    this.doc.setFontSize(9);
     this.doc.setFont("helvetica", "normal");
     summaryData.forEach((item, index) => {
-      const x = this.MARGIN + 20 + (index * 30);
-      this.doc.text(item, x, this.yPosition + 30);
+      const x = this.MARGIN + 15 + (index * 25);
+      this.doc.text(item, x, this.yPosition + 22);
     });
 
-    this.yPosition += 65;
+    this.yPosition += 45;
     this.addPageNumber();
   }
 
@@ -446,8 +446,8 @@ class ProfessionalRAMSPDFGenerator {
 
     // Calculate table dimensions for consistent padding
     const tableWidth = 140; // Fixed table width for consistency
-    const cellSize = 18;
-    const headerWidth = 20;
+    const cellSize = 16;
+    const headerWidth = 18;
     const totalTableWidth = headerWidth + (cellSize * 5);
     const tableStartX = (this.pageWidth - totalTableWidth) / 2; // Center the table
     const tableStartY = this.yPosition;
@@ -604,14 +604,14 @@ class ProfessionalRAMSPDFGenerator {
 
   // Enhanced Detailed Risk Assessment
   private addDetailedRiskAssessment(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(45);
+    this.checkPageBreak(35);
     this.addTOCEntry("5. Detailed Risk Assessment");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("5. DETAILED RISK ASSESSMENT", this.MARGIN, this.yPosition);
-    this.yPosition += 16;
+    this.yPosition += 12;
 
     const deduplicatedRisks = deduplicateRisks(data.risks);
     
@@ -651,7 +651,7 @@ class ProfessionalRAMSPDFGenerator {
       },
       styles: {
         fontSize: 8,
-        cellPadding: 4,
+        cellPadding: 3,
         lineColor: [226, 232, 240],
         lineWidth: 0.5,
         valign: "middle"
@@ -687,29 +687,29 @@ class ProfessionalRAMSPDFGenerator {
       }
     });
 
-    this.yPosition = (this.doc as any).lastAutoTable.finalY + 20;
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 12;
     this.addPageNumber();
   }
 
   // Professional Method Statement Section
   private addMethodStatement(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(50);
+    this.checkPageBreak(40);
     this.addTOCEntry("6. Method Statement");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("6. METHOD STATEMENT", this.MARGIN, this.yPosition);
-    this.yPosition += 12;
+    this.yPosition += 10;
 
     // Professional section header
     this.doc.setFillColor(...this.LIGHT_GRAY);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 12, 'F');
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 10, 'F');
     this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(10);
+    this.doc.setFontSize(9);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("SAFE WORK PROCEDURES", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
-    this.yPosition += 18;
+    this.doc.text("SAFE WORK PROCEDURES", this.pageWidth / 2, this.yPosition + 6.5, { align: "center" });
+    this.yPosition += 14;
 
     const methodStatements = extractMethodStatements(data.risks);
 
@@ -733,9 +733,9 @@ class ProfessionalRAMSPDFGenerator {
         this.doc.setFont("helvetica", "normal");
         const wrappedMethod = this.doc.splitTextToSize(method, this.pageWidth - 2 * this.MARGIN - 20);
         wrappedMethod.forEach((line: string, lineIndex: number) => {
-          this.doc.text(line, this.MARGIN + 18, this.yPosition + (lineIndex * 5));
+          this.doc.text(line, this.MARGIN + 18, this.yPosition + (lineIndex * 4));
         });
-        this.yPosition += Math.max(6, wrappedMethod.length * 4 + 2);
+        this.yPosition += Math.max(4, wrappedMethod.length * 4 + 1);
       });
     } else {
       methodStatements.forEach((statement, index) => {
@@ -747,33 +747,33 @@ class ProfessionalRAMSPDFGenerator {
         this.doc.setFont("helvetica", "normal");
         const wrappedStatement = this.doc.splitTextToSize(statement, this.pageWidth - 2 * this.MARGIN - 20);
         wrappedStatement.forEach((line: string, lineIndex: number) => {
-          this.doc.text(line, this.MARGIN + 18, this.yPosition + (lineIndex * 5));
+          this.doc.text(line, this.MARGIN + 18, this.yPosition + (lineIndex * 4));
         });
-        this.yPosition += Math.max(6, wrappedStatement.length * 4 + 2);
+        this.yPosition += Math.max(4, wrappedStatement.length * 4 + 1);
       });
     }
 
-    this.yPosition += 4;
+    this.yPosition += 3;
     this.addPageNumber();
   }
 
   // Professional Safety Requirements Section  
   private addSafetyInformation(context: VariableContext): void {
-    this.checkPageBreak(60);
+    this.checkPageBreak(45);
     this.addTOCEntry("7. Critical Safety Requirements");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("7. CRITICAL SAFETY REQUIREMENTS", this.MARGIN, this.yPosition);
-    this.yPosition += 12;
+    this.yPosition += 10;
 
     // Professional warning box
     this.doc.setFillColor(254, 242, 242);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 35, 'F');
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 25, 'F');
     this.doc.setDrawColor(220, 38, 127);
     this.doc.setLineWidth(2);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 35);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 25);
 
     this.doc.setFillColor(220, 38, 127);
     this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 8, 'F');
@@ -792,7 +792,7 @@ class ProfessionalRAMSPDFGenerator {
       this.doc.text(line, this.pageWidth / 2, this.yPosition + 14 + (index * 4), { align: "center" });
     });
 
-    this.yPosition += 45;
+    this.yPosition += 32;
 
     const safetyPoints = [
       "All personnel must be competent and appropriately trained for electrical work",
@@ -817,13 +817,13 @@ class ProfessionalRAMSPDFGenerator {
       wrappedPoint.forEach((line: string, lineIndex: number) => {
         // Proper indentation with hanging indent for wrapped text
         const xPosition = lineIndex === 0 ? this.MARGIN + 8 : this.MARGIN + 12;
-        this.doc.text(line, xPosition, this.yPosition + (lineIndex * 4.5));
+        this.doc.text(line, xPosition, this.yPosition + (lineIndex * 3.5));
       });
       
-      this.yPosition += Math.max(8, wrappedPoint.length * 4 + 2);
+      this.yPosition += Math.max(5, wrappedPoint.length * 3.5 + 1);
     });
 
-    this.yPosition += 8; // Optimized section spacing
+    this.yPosition += 5; // Optimized section spacing
 
     this.addPageNumber();
   }
@@ -841,7 +841,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("8. AUTHORISATION & SIGN-OFF", this.MARGIN, this.yPosition);
     this.yPosition += 25;
 
-    const signatureBoxHeight = 40;
+    const signatureBoxHeight = 30;
     const signatureBoxWidth = (this.pageWidth - (4 * this.MARGIN)) / 3;
 
     // Three-tier approval system
@@ -900,27 +900,25 @@ class ProfessionalRAMSPDFGenerator {
 
     // Document control information
     this.doc.setFillColor(248, 250, 252);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 30, 'F');
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 20, 'F');
     this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 30);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 20);
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(12);
+    this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("DOCUMENT CONTROL", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
+    this.doc.text("DOCUMENT CONTROL", this.pageWidth / 2, this.yPosition + 6, { align: "center" });
 
     this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(9);
+    this.doc.setFontSize(8);
     this.doc.setFont("helvetica", "normal");
     const docInfo = [
       `Document: RAMS-${context?.project_name || 'Document'}`,
-      `Version: v1.0`,
-      `Generated: ${context?.document_generated || safeDatetime(new Date())}`,
-      `Status: CONFIDENTIAL`
+      `Version: v1.0 | Generated: ${context?.document_generated || safeDatetime(new Date())} | Status: CONFIDENTIAL`
     ];
 
     docInfo.forEach((info, index) => {
-      this.doc.text(info, this.pageWidth / 2, this.yPosition + 15 + (index * 3.5), { align: "center" });
+      this.doc.text(info, this.pageWidth / 2, this.yPosition + 12 + (index * 3), { align: "center" });
     });
 
     this.addPageNumber();
