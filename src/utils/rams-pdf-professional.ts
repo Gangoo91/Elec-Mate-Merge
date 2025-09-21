@@ -875,16 +875,7 @@ class ProfessionalRAMSPDFGenerator {
 
   // Enhanced footer for all pages
   private addEnhancedFooter(context: VariableContext, pageNum: number): void {
-    this.doc.setFontSize(8);
-    this.doc.setTextColor(100);
-    this.doc.text(
-      `RAMS Document - ${context.project_name} - Generated ${context.document_generated}`,
-      this.MARGIN,
-      this.pageHeight - 10,
-      { align: "left" }
-    );
-    this.doc.text(`Page ${pageNum}`, this.pageWidth / 2, this.pageHeight - 10, { align: "center" });
-    this.doc.text("v1.0 - CONFIDENTIAL", this.pageWidth - this.MARGIN, this.pageHeight - 10, { align: "right" });
+    // Footer is now removed as requested
   }
 
   // Table of Contents
