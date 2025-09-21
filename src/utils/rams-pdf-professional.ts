@@ -342,7 +342,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("3. WORK ACTIVITIES", this.MARGIN, this.yPosition);
-    this.yPosition += 10;
+    this.yPosition += 16;
 
     const activities = safeArrayFilter(data.activities);
     if (activities.length === 0) {
@@ -702,7 +702,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("6. METHOD STATEMENT", this.MARGIN, this.yPosition);
-    this.yPosition += 12;
+    this.yPosition += 16;
 
     // Professional section header
     this.doc.setFillColor(...this.LIGHT_GRAY);
@@ -768,7 +768,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("7. CRITICAL SAFETY REQUIREMENTS", this.MARGIN, this.yPosition);
-    this.yPosition += 12;
+    this.yPosition += 16;
 
     // Professional warning box
     this.doc.setFillColor(254, 242, 242);
