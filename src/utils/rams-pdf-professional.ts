@@ -447,100 +447,108 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("Risk Rating = Likelihood × Severity (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 22, { align: "center" });
     this.yPosition += 40;
 
-    // Calculate table dimensions for consistent padding
-    const tableWidth = 140; // Fixed table width for consistency
-    const cellSize = 18;
-    const headerWidth = 20;
+    // Calculate table dimensions optimized for landscape orientation
+    const cellSize = 22; // Larger cells for better visibility in landscape
+    const headerWidth = 35; // Wider header for better text spacing
     const totalTableWidth = headerWidth + (cellSize * 5);
     const tableStartX = (this.pageWidth - totalTableWidth) / 2; // Center the table
     const tableStartY = this.yPosition;
 
-    // Draw table border
+    // Draw enhanced table border with shadow effect
     this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.setLineWidth(2);
+    this.doc.setLineWidth(3);
     this.doc.rect(tableStartX, tableStartY, totalTableWidth, headerWidth + (cellSize * 5));
 
-    // Top header row (Severity)
+    // Enhanced top header row (Severity) with gradient effect
     this.doc.setFillColor(59, 130, 246);
     this.doc.rect(tableStartX, tableStartY, totalTableWidth, headerWidth, 'F');
     
+    // Add subtle border enhancement
+    this.doc.setDrawColor(30, 64, 175);
+    this.doc.setLineWidth(1);
+    this.doc.rect(tableStartX, tableStartY, totalTableWidth, headerWidth);
+    
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(11);
+    this.doc.setFontSize(12); // Larger font for landscape
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("SEVERITY →", tableStartX + totalTableWidth / 2, tableStartY + 6, { align: "center" });
+    this.doc.text("SEVERITY →", tableStartX + totalTableWidth / 2, tableStartY + 10, { align: "center" });
 
-    // Severity column headers
+    // Enhanced severity column headers with better typography
     const severityLabels = ["Negligible", "Minor", "Moderate", "Major", "Catastrophic"];
     severityLabels.forEach((label, index) => {
       const x = tableStartX + headerWidth + (index * cellSize);
       
-      // Header cell background
+      // Enhanced header cell background with subtle gradient
       this.doc.setFillColor(79, 70, 229);
       this.doc.rect(x, tableStartY + headerWidth, cellSize, cellSize, 'F');
       
-      // Border
+      // Enhanced border
       this.doc.setDrawColor(255, 255, 255);
-      this.doc.setLineWidth(0.5);
+      this.doc.setLineWidth(1);
       this.doc.rect(x, tableStartY + headerWidth, cellSize, cellSize);
       
-      // Number
+      // Larger, more visible number
       this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(12);
+      this.doc.setFontSize(16); // Increased font size
       this.doc.setFont("helvetica", "bold");
-      this.doc.text((index + 1).toString(), x + cellSize/2, tableStartY + headerWidth + 8, { align: "center" });
+      this.doc.text((index + 1).toString(), x + cellSize/2, tableStartY + headerWidth + 12, { align: "center" });
       
-      // Label
-      this.doc.setFontSize(7);
+      // Better positioned label with improved readability
+      this.doc.setFontSize(8); // Slightly larger for better readability
       this.doc.setFont("helvetica", "normal");
-      this.doc.text(label, x + cellSize/2, tableStartY + headerWidth + 17, { align: "center" });
+      this.doc.text(label, x + cellSize/2, tableStartY + headerWidth + 25, { align: "center" });
     });
 
-    // Likelihood rows
+    // Enhanced likelihood rows with improved spacing and typography
     const likelihoodLabels = ["Very Unlikely", "Unlikely", "Possible", "Likely", "Very Likely"];
     
     for (let likelihood = 5; likelihood >= 1; likelihood--) {
       const rowY = tableStartY + headerWidth + cellSize + ((5 - likelihood) * cellSize);
       
-      // Row header cell
+      // Enhanced row header cell with gradient effect
       this.doc.setFillColor(79, 70, 229);
       this.doc.rect(tableStartX, rowY, headerWidth, cellSize, 'F');
       
-      // Row header border
+      // Enhanced row header border
       this.doc.setDrawColor(255, 255, 255);
-      this.doc.setLineWidth(0.5);
+      this.doc.setLineWidth(1);
       this.doc.rect(tableStartX, rowY, headerWidth, cellSize);
       
-      // Likelihood number
+      // Larger, more prominent likelihood number
       this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(12);
+      this.doc.setFontSize(16); // Increased font size
       this.doc.setFont("helvetica", "bold");
-      this.doc.text(likelihood.toString(), tableStartX + 12, rowY + 8, { align: "center" });
+      this.doc.text(likelihood.toString(), tableStartX + 18, rowY + 12, { align: "center" });
       
-      // Likelihood label
-      this.doc.setFontSize(7);
+      // Better positioned likelihood label
+      this.doc.setFontSize(8); // Slightly larger
       this.doc.setFont("helvetica", "normal");
-      this.doc.text(likelihoodLabels[likelihood - 1], tableStartX + 12, rowY + 17, { align: "center" });
+      this.doc.text(likelihoodLabels[likelihood - 1], tableStartX + 18, rowY + 25, { align: "center" });
 
-      // Risk rating cells for this row
+      // Enhanced risk rating cells with better visual impact
       for (let severity = 1; severity <= 5; severity++) {
         const cellX = tableStartX + headerWidth + (severity - 1) * cellSize;
         const riskRating = likelihood * severity;
         const [r, g, b] = getRiskColor(riskRating);
         
-        // Cell background
+        // Enhanced cell background with subtle shadow effect
         this.doc.setFillColor(r, g, b);
         this.doc.rect(cellX, rowY, cellSize, cellSize, 'F');
         
-        // Cell border
+        // Enhanced cell border with better definition
         this.doc.setDrawColor(255, 255, 255);
-        this.doc.setLineWidth(0.5);
+        this.doc.setLineWidth(1.5);
         this.doc.rect(cellX, rowY, cellSize, cellSize);
         
-        // Risk rating number
+        // Larger, more prominent risk rating number
         this.doc.setTextColor(255, 255, 255);
-        this.doc.setFontSize(14);
+        this.doc.setFontSize(18); // Significantly larger for better visibility
         this.doc.setFont("helvetica", "bold");
-        this.doc.text(riskRating.toString(), cellX + cellSize/2, rowY + cellSize/2 + 2, { align: "center" });
+        this.doc.text(riskRating.toString(), cellX + cellSize/2, rowY + cellSize/2 + 3, { align: "center" });
+        
+        // Add subtle drop shadow effect for numbers
+        this.doc.setTextColor(0, 0, 0, 0.3);
+        this.doc.text(riskRating.toString(), cellX + cellSize/2 + 0.5, rowY + cellSize/2 + 3.5, { align: "center" });
       }
     }
 
@@ -585,21 +593,40 @@ class ProfessionalRAMSPDFGenerator {
         fillColor: this.PRIMARY_COLOR,
         textColor: [255, 255, 255],
         fontStyle: "bold",
-        fontSize: 10,
+        fontSize: 12, // Larger font for landscape
         halign: "center"
       },
       styles: {
-        fontSize: 9,
-        cellPadding: 5,
+        fontSize: 11, // Larger font for landscape
+        cellPadding: 8, // Increased padding for landscape
         valign: "middle"
       },
       tableWidth: 'auto',
       columnStyles: {
-        0: { halign: "center", fontStyle: "bold", cellWidth: 25 },
-        1: { halign: "center", fontStyle: "bold", cellWidth: 35 },
-        2: { cellWidth: 'auto' }
+        0: { halign: "center", fontStyle: "bold", cellWidth: 45 }, // Wider for landscape
+        1: { halign: "center", fontStyle: "bold", cellWidth: 60 }, // Wider for landscape
+        2: { cellWidth: 'auto', halign: "left" }
       },
-      margin: { left: this.MARGIN, right: this.MARGIN }
+      margin: { left: this.MARGIN, right: this.MARGIN },
+      // Enhanced styling for landscape with color coding
+      didParseCell: (data: any) => {
+        if (data.section === 'body' && data.column.index === 1) {
+          const riskLevel = data.cell.text[0];
+          if (riskLevel.includes("LOW")) {
+            data.cell.styles.fillColor = [34, 197, 94, 0.1];
+            data.cell.styles.textColor = [21, 128, 61];
+          } else if (riskLevel.includes("MEDIUM")) {
+            data.cell.styles.fillColor = [245, 158, 11, 0.1];
+            data.cell.styles.textColor = [161, 98, 7];
+          } else if (riskLevel.includes("HIGH") && !riskLevel.includes("VERY")) {
+            data.cell.styles.fillColor = [249, 115, 22, 0.1];
+            data.cell.styles.textColor = [194, 65, 12];
+          } else if (riskLevel.includes("VERY HIGH")) {
+            data.cell.styles.fillColor = [220, 38, 127, 0.1];
+            data.cell.styles.textColor = [190, 24, 93];
+          }
+        }
+      }
     });
 
     // Update position after the legend table to manage spacing
