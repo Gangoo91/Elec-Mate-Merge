@@ -357,16 +357,93 @@ class ProfessionalRAMSPDFGenerator {
     this.addPageNumber();
   }
 
-  // Work Activities Section  
-  private addWorkActivities(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(20);
-    this.addTOCEntry("3. Work Activities");
+  // Project Information Section (Section 1)
+  private addProjectInformation(data: RAMSData, context: VariableContext): void {
+    this.doc.addPage();
+    this.currentPage++;
+    this.yPosition = this.MARGIN + 10;
+    this.addDocumentHeader();
+    this.addTOCEntry("1. Project Information");
 
     this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("3. WORK ACTIVITIES", this.MARGIN, this.yPosition);
+    this.doc.text("1. PROJECT INFORMATION", this.MARGIN, this.yPosition);
+    this.yPosition += 20;
+
+    // Project details table
+    const projectData = [
+      ["Project Name", safeText(data.projectName) || "Office Electrical Retrofit"],
+      ["Client", context.company_name || "Client Name"],
+      ["Location", safeText(data.location) || context.location],
+      ["Assessment Date", safeDate(data.date)],
+      ["Assessor", safeText(data.assessor) || context.assessor],
+      ["Review Date", safeDate(data.date)],
+      ["Document Reference", `RAMS-${safeText(data.projectName)?.replace(/\s+/g, '_') || 'Project'}-${formatDate(new Date(), 'ddMMyyyy')}`]
+    ];
+
+    autoTable(this.doc, {
+      startY: this.yPosition,
+      head: [["Field", "Details"]],
+      body: projectData,
+      theme: "grid",
+      headStyles: {
+        fillColor: this.PRIMARY_COLOR,
+        textColor: [255, 255, 255],
+        fontStyle: "bold",
+        fontSize: 10,
+        halign: "center",
+        cellPadding: 6
+      },
+      styles: {
+        fontSize: 9,
+        cellPadding: 6,
+        lineColor: [200, 200, 200],
+        lineWidth: 0.5,
+        valign: "middle"
+      },
+      tableWidth: this.pageWidth - (2 * this.MARGIN),
+      margin: { left: this.MARGIN, right: this.MARGIN },
+      columnStyles: {
+        0: { halign: "left", cellWidth: (this.pageWidth - (2 * this.MARGIN)) * 0.3, fontStyle: "bold" },
+        1: { halign: "left", cellWidth: (this.pageWidth - (2 * this.MARGIN)) * 0.7 }
+      }
+    });
+
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 20;
+
+    // Scope of work
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(12);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("Scope of Work", this.MARGIN, this.yPosition);
+    this.yPosition += 12;
+
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(9);
+    this.doc.setFont("helvetica", "normal");
+    const scopeText = "This Risk Assessment and Method Statement (RAMS) covers electrical installation, testing, and certification work in compliance with BS 7671:2018+A2:2022 (18th Edition IET Wiring Regulations), Health & Safety at Work Act 1974, and CDM Regulations 2015.";
+    
+    const wrappedScope = this.doc.splitTextToSize(scopeText, this.pageWidth - (2 * this.MARGIN) - 12);
+    wrappedScope.forEach((line: string, index: number) => {
+      this.doc.text(line, this.MARGIN + 6, this.yPosition + (index * 4.5));
+    });
+    this.yPosition += wrappedScope.length * 4.5 + 10;
+
+    this.addPageNumber();
+  }
+
+  // Work Activities Section
+  private addWorkActivities(data: RAMSData, context: VariableContext): void {
+    this.checkPageBreak(20);
+    this.addTOCEntry("2. Work Activities");
+
+    this.yPosition += 16;
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(16);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("2. WORK ACTIVITIES", this.MARGIN, this.yPosition);
     this.yPosition += 16;
 
     const activities = safeArrayFilter(data.activities);
@@ -396,13 +473,13 @@ class ProfessionalRAMSPDFGenerator {
   // Risk Summary Section
   private addRiskSummary(data: RAMSData, context: VariableContext): void {
     this.checkPageBreak(80);
-    this.addTOCEntry("4. Risk Summary");
+    this.addTOCEntry("3. Risk Summary");
 
     this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("4. RISK SUMMARY", this.MARGIN, this.yPosition);
+    this.doc.text("3. RISK SUMMARY", this.MARGIN, this.yPosition);
     this.yPosition += 16;
 
     // Clean summary statistics without blue border
@@ -437,7 +514,7 @@ class ProfessionalRAMSPDFGenerator {
     this.currentPage++;
     this.yPosition = this.MARGIN + 10;
     this.addDocumentHeader();
-    this.addTOCEntry("2. Risk Assessment Matrix");
+    this.addTOCEntry("4. Risk Assessment Matrix");
 
     // Ensure we have a new page for the matrix to prevent cropping
     this.checkPageBreak(140); // Reserve space for dramatically optimized matrix and legend
@@ -447,7 +524,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("2. RISK ASSESSMENT MATRIX", this.MARGIN, this.yPosition);
+    this.doc.text("4. RISK ASSESSMENT MATRIX", this.MARGIN, this.yPosition);
     this.yPosition += 20;
 
     // Ultra-compact explanation box for landscape A4
@@ -1127,9 +1204,10 @@ class ProfessionalRAMSPDFGenerator {
     
     // Add sections in order (TOC entries will be populated)
     this.addTitlePage(data, options, context);
-    this.addRiskMatrix();
+    this.addProjectInformation(data, context);
     this.addWorkActivities(data, context);
     this.addRiskSummary(data, context);
+    this.addRiskMatrix();
     this.addDetailedRiskAssessment(data, context);
     this.addMethodStatement(data, context);
     this.addSafetyInformation(context);
