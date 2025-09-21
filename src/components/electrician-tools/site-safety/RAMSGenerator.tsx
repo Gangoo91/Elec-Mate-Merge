@@ -232,7 +232,7 @@ const RAMSGenerator: React.FC = () => {
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            RAMS Generator
+            Risk Assessment
           </CardTitle>
           <p className="text-sm text-muted-foreground">
             Create comprehensive Risk Assessment & Method Statement documents for safe electrical work

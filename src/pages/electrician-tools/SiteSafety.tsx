@@ -23,7 +23,7 @@ const SiteSafety = () => {
   const [activeTab, setActiveTab] = useState("rams");
 
   const tabOptions = [
-    { value: "rams", label: "RAMS Generator", icon: FileText },
+    { value: "rams", label: "Risk Assessment", icon: FileText },
     { value: "method-statement", label: "Method Statement", icon: ClipboardCheck },
     { value: "hazard-database", label: "Hazard Database", icon: Shield },
     { value: "photo-docs", label: "Photo Documentation", icon: Camera },
