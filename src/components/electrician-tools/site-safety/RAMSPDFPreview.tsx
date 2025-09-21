@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { generateRAMSPDFPreview } from '@/utils/rams-pdf';
+import { generateRAMSPDFPreview } from '@/utils/rams-pdf-professional';
 import { RAMSData, RAMSReportOptions } from '@/types/rams';
 import { Loader2, Download, X } from 'lucide-react';
 
@@ -47,10 +47,23 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
     setError('');
     
     try {
-      const blobUrl = await generateRAMSPDFPreview(ramsData, { 
+      const dataUri = await generateRAMSPDFPreview(ramsData, { 
         ...reportOptions, 
         signOff 
       });
+      
+      // Convert data URI to blob URL for preview
+      const byteCharacters = atob(dataUri.split(',')[1]);
+      const byteNumbers = new Array(byteCharacters.length);
+      
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
+      const blobUrl = URL.createObjectURL(blob);
+      
       setPdfUrl(blobUrl);
     } catch (err) {
       console.error('Error generating PDF preview:', err);
