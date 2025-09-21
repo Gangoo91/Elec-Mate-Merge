@@ -171,7 +171,7 @@ class ProfessionalRAMSPDFGenerator {
       this.addPageNumber();
       this.doc.addPage();
       this.currentPage++;
-      this.yPosition = this.MARGIN + 15; // Optimized spacing
+      this.yPosition = this.MARGIN + 10; // Optimized spacing
       return true;
     }
     return false;
@@ -205,14 +205,14 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFont("helvetica", "normal");
     this.doc.text("BS 7671:2018+A2:2022 (18th Edition) Compliant", this.pageWidth / 2, 35, { align: "center" });
 
-    this.yPosition = 65;
+    this.yPosition = 50;
 
     // Company name - sleek corporate styling
     this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text(context.company_name, this.pageWidth / 2, this.yPosition, { align: "center" });
-    this.yPosition += 20;
+    this.yPosition += 12;
 
     // Optimized project information box - tighter spacing
     this.doc.setDrawColor(...this.PRIMARY_COLOR);
@@ -245,7 +245,7 @@ class ProfessionalRAMSPDFGenerator {
       this.doc.text(detail.value, this.MARGIN + 50, y);
     });
 
-    this.yPosition += 75;
+    this.yPosition += 50;
 
     // Compact purpose statement
     this.doc.setFillColor(240, 248, 255);
@@ -285,14 +285,14 @@ class ProfessionalRAMSPDFGenerator {
 
   // Work Activities Section  
   private addWorkActivities(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(60);
+    this.checkPageBreak(45);
     this.addTOCEntry("3. Work Activities");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("3. WORK ACTIVITIES", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.yPosition += 14;
 
     const activities = safeArrayFilter(data.activities);
     if (activities.length === 0) {
@@ -484,14 +484,14 @@ class ProfessionalRAMSPDFGenerator {
 
   // Enhanced Detailed Risk Assessment
   private addDetailedRiskAssessment(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(60);
+    this.checkPageBreak(45);
     this.addTOCEntry("5. Detailed Risk Assessment");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("5. DETAILED RISK ASSESSMENT", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.yPosition += 14;
 
     const deduplicatedRisks = deduplicateRisks(data.risks);
     
@@ -557,14 +557,14 @@ class ProfessionalRAMSPDFGenerator {
 
   // Method Statement Section
   private addMethodStatement(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(60);
+    this.checkPageBreak(45);
     this.addTOCEntry("6. Method Statement");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("6. METHOD STATEMENT", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.yPosition += 14;
 
     const methodStatements = extractMethodStatements(data.risks);
 
@@ -633,7 +633,7 @@ class ProfessionalRAMSPDFGenerator {
       this.yPosition += Math.max(8, wrappedPoint.length * 4 + 2);
     });
 
-    this.yPosition += 15; // Add space after section
+    this.yPosition += 10; // Add space after section
 
     this.addPageNumber();
   }
