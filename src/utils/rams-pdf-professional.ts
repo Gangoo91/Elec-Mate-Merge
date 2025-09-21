@@ -464,125 +464,191 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("Risk Rating = Likelihood × Consequence (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 22, { align: "center" });
     this.yPosition += 45;
 
-    // Matrix dimensions - matching the screenshot
-    const cellSize = 25;
+    // Matrix dimensions - wider layout to match image exactly
+    const cellWidth = 32;
+    const cellHeight = 40;
     const headerHeight = 20;
-    const rowHeaderWidth = 60;
-    const matrixWidth = rowHeaderWidth + (cellSize * 5);
+    const rowHeaderWidth = 75;
+    const matrixWidth = rowHeaderWidth + (cellWidth * 5);
     const matrixStartX = (this.pageWidth - matrixWidth) / 2;
     const matrixStartY = this.yPosition;
 
-    // Draw main border
-    this.doc.setDrawColor(0, 0, 0);
-    this.doc.setLineWidth(2);
-    this.doc.rect(matrixStartX, matrixStartY, matrixWidth, headerHeight + (cellSize * 5));
-
-    // Top header - "CONSEQUENCE" 
-    this.doc.setFillColor(70, 130, 180); // Blue color matching screenshot
-    this.doc.rect(matrixStartX, matrixStartY, matrixWidth, headerHeight, 'F');
+    // Top-left corner cell with "Risk Matrix" label
+    this.doc.setFillColor(70, 130, 180); // Dark blue
+    this.doc.rect(matrixStartX, matrixStartY, rowHeaderWidth, headerHeight, 'F');
     this.doc.setDrawColor(0, 0, 0);
     this.doc.setLineWidth(1);
-    this.doc.rect(matrixStartX, matrixStartY, matrixWidth, headerHeight);
+    this.doc.rect(matrixStartX, matrixStartY, rowHeaderWidth, headerHeight);
     
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(14);
+    this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("CONSEQUENCE", matrixStartX + matrixWidth / 2, matrixStartY + 14, { align: "center" });
+    this.doc.text("Risk Matrix", matrixStartX + rowHeaderWidth/2, matrixStartY + 12, { align: "center" });
+    
+    // Top header - "CONSEQUENCES" 
+    this.doc.setFillColor(70, 130, 180); // Dark blue
+    this.doc.rect(matrixStartX + rowHeaderWidth, matrixStartY, cellWidth * 5, headerHeight, 'F');
+    this.doc.setDrawColor(0, 0, 0);
+    this.doc.setLineWidth(1);
+    this.doc.rect(matrixStartX + rowHeaderWidth, matrixStartY, cellWidth * 5, headerHeight);
+    
+    this.doc.setTextColor(255, 255, 255);
+    this.doc.setFontSize(12);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("CONSEQUENCES", matrixStartX + rowHeaderWidth + (cellWidth * 2.5), matrixStartY + 12, { align: "center" });
 
-    // Consequence headers with numbers and labels
-    const consequenceLabels = [
-      { num: 1, label: "NEGLIGIBLE" },
-      { num: 2, label: "MINOR" },
-      { num: 3, label: "MODERATE" },
-      { num: 4, label: "MAJOR" },
-      { num: 5, label: "CATASTROPHIC" }
+    // Consequence headers with numbers and descriptions
+    const consequenceData = [
+      { num: "1", name: "Negligible", desc: "Minimal injuries / no injuries" },
+      { num: "2", name: "Minor", desc: "Minor injuries / first aid" },
+      { num: "3", name: "Significant", desc: "Moderate injuries / medical treatment" },
+      { num: "4", name: "Severe", desc: "Serious injuries / hospitalisation" },
+      { num: "5", name: "Catastrophic", desc: "Death / permanent impairment" }
     ];
 
-    consequenceLabels.forEach((item, index) => {
-      const x = matrixStartX + rowHeaderWidth + (index * cellSize);
+    consequenceData.forEach((item, index) => {
+      const x = matrixStartX + rowHeaderWidth + (index * cellWidth);
       
-      this.doc.setFillColor(100, 149, 237); // Lighter blue matching likelihood headers
-      this.doc.rect(x, matrixStartY + headerHeight, cellSize, cellSize, 'F');
+      this.doc.setFillColor(100, 149, 237); // Lighter blue
+      this.doc.rect(x, matrixStartY + headerHeight, cellWidth, cellHeight, 'F');
       this.doc.setDrawColor(0, 0, 0);
       this.doc.setLineWidth(1);
-      this.doc.rect(x, matrixStartY + headerHeight, cellSize, cellSize);
+      this.doc.rect(x, matrixStartY + headerHeight, cellWidth, cellHeight);
       
       this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(10);
+      this.doc.setFontSize(9);
       this.doc.setFont("helvetica", "bold");
-      this.doc.text(`${item.num} - ${item.label}`, x + cellSize/2, matrixStartY + headerHeight + 17, { align: "center" });
+      this.doc.text(item.num, x + cellWidth/2, matrixStartY + headerHeight + 8, { align: "center" });
+      this.doc.text(item.name, x + cellWidth/2, matrixStartY + headerHeight + 16, { align: "center" });
+      
+      this.doc.setFontSize(7);
+      this.doc.setFont("helvetica", "normal");
+      // Simple text wrapping for descriptions
+      const words = item.desc.split(' ');
+      const maxWidth = cellWidth - 4;
+      let currentLine = '';
+      let lines: string[] = [];
+      
+      words.forEach(word => {
+        const testLine = currentLine + (currentLine ? ' ' : '') + word;
+        const testWidth = this.doc.getTextWidth(testLine);
+        if (testWidth > maxWidth && currentLine) {
+          lines.push(currentLine);
+          currentLine = word;
+        } else {
+          currentLine = testLine;
+        }
+      });
+      if (currentLine) lines.push(currentLine);
+      
+      lines.forEach((line, lineIndex) => {
+        this.doc.text(line, x + cellWidth/2, matrixStartY + headerHeight + 24 + (lineIndex * 4), { align: "center" });
+      });
     });
 
-    // Likelihood rows (5 down to 1)
+    // Likelihood rows with descriptions
     const likelihoodData = [
-      { num: 5, label: "CERTAIN" },
-      { num: 4, label: "LIKELY" },
-      { num: 3, label: "POSSIBLE" },
-      { num: 2, label: "UNLIKELY" },
-      { num: 1, label: "VERY UNLIKELY" }
+      { num: "5", name: "Certain", desc: "100% likely / almost 100% likely" },
+      { num: "4", name: "Likely", desc: "Will probably happen / is likely to happen" },
+      { num: "3", name: "Possible", desc: "Could happen or plausible" },
+      { num: "2", name: "Unlikely", desc: "Improbable but could happen / not expected" },
+      { num: "1", name: "Very Unlikely", desc: "Rare / not expected but remotely possible" }
     ];
 
     likelihoodData.forEach((item, index) => {
-      const rowY = matrixStartY + headerHeight + cellSize + (index * cellSize);
+      const rowY = matrixStartY + headerHeight + cellHeight + (index * cellHeight);
       
-      // Row header with likelihood level
-      this.doc.setFillColor(70, 130, 180); // Blue matching the header
-      this.doc.rect(matrixStartX, rowY, rowHeaderWidth, cellSize, 'F');
+      // Row header with likelihood level and description
+      this.doc.setFillColor(100, 149, 237); // Lighter blue
+      this.doc.rect(matrixStartX, rowY, rowHeaderWidth, cellHeight, 'F');
       this.doc.setDrawColor(0, 0, 0);
       this.doc.setLineWidth(1);
-      this.doc.rect(matrixStartX, rowY, rowHeaderWidth, cellSize);
+      this.doc.rect(matrixStartX, rowY, rowHeaderWidth, cellHeight);
       
       this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(12);
+      this.doc.setFontSize(9);
       this.doc.setFont("helvetica", "bold");
-      this.doc.text(`${item.num} - ${item.label}`, matrixStartX + rowHeaderWidth/2, rowY + 17, { align: "center" });
+      this.doc.text(`${item.num} ${item.name}`, matrixStartX + rowHeaderWidth/2, rowY + 8, { align: "center" });
+      
+      this.doc.setFontSize(7);
+      this.doc.setFont("helvetica", "normal");
+      // Simple text wrapping for descriptions
+      const words = item.desc.split(' ');
+      const maxWidth = rowHeaderWidth - 4;
+      let currentLine = '';
+      let lines: string[] = [];
+      
+      words.forEach(word => {
+        const testLine = currentLine + (currentLine ? ' ' : '') + word;
+        const testWidth = this.doc.getTextWidth(testLine);
+        if (testWidth > maxWidth && currentLine) {
+          lines.push(currentLine);
+          currentLine = word;
+        } else {
+          currentLine = testLine;
+        }
+      });
+      if (currentLine) lines.push(currentLine);
+      
+      lines.forEach((line, lineIndex) => {
+        this.doc.text(line, matrixStartX + rowHeaderWidth/2, rowY + 16 + (lineIndex * 4), { align: "center" });
+      });
 
       // Risk cells for this row
       for (let consequence = 1; consequence <= 5; consequence++) {
-        const cellX = matrixStartX + rowHeaderWidth + ((consequence - 1) * cellSize);
-        const riskRating = item.num * consequence;
+        const cellX = matrixStartX + rowHeaderWidth + ((consequence - 1) * cellWidth);
+        const riskRating = parseInt(item.num) * consequence;
         
-        // Color based on risk rating - matching screenshot colors
+        // Get risk level and color
+        let riskLevel: string;
         let cellColor: [number, number, number];
-        if (riskRating <= 4) {
+        
+        if (riskRating <= 3) {
+          riskLevel = "Low";
           cellColor = [76, 175, 80]; // Green
-        } else if (riskRating <= 9) {
+        } else if (riskRating <= 6) {
+          riskLevel = "Moderate";
           cellColor = [255, 235, 59]; // Yellow
-        } else if (riskRating <= 16) {
+        } else if (riskRating <= 12) {
+          riskLevel = "High";
           cellColor = [255, 152, 0]; // Orange
         } else {
+          riskLevel = "Catastrophic";
           cellColor = [244, 67, 54]; // Red
         }
         
         this.doc.setFillColor(...cellColor);
-        this.doc.rect(cellX, rowY, cellSize, cellSize, 'F');
+        this.doc.rect(cellX, rowY, cellWidth, cellHeight, 'F');
         this.doc.setDrawColor(0, 0, 0);
         this.doc.setLineWidth(1);
-        this.doc.rect(cellX, rowY, cellSize, cellSize);
+        this.doc.rect(cellX, rowY, cellWidth, cellHeight);
         
-        // Risk rating number
-        this.doc.setTextColor(255, 255, 255);
-        this.doc.setFontSize(16);
+        // Risk level text and number
+        this.doc.setTextColor(0, 0, 0);
+        this.doc.setFontSize(8);
         this.doc.setFont("helvetica", "bold");
-        this.doc.text(riskRating.toString(), cellX + cellSize/2, rowY + 17, { align: "center" });
+        this.doc.text(riskLevel, cellX + cellWidth/2, rowY + 15, { align: "center" });
+        
+        this.doc.setFontSize(14);
+        this.doc.text(`(${riskRating})`, cellX + cellWidth/2, rowY + 26, { align: "center" });
       }
     });
 
     // Add vertical "LIKELIHOOD" text on the left
     this.doc.setTextColor(70, 130, 180);
-    this.doc.setFontSize(14);
+    this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "bold");
     
-    // Calculate vertical spacing for "LIKELIHOOD"
+    // Simple vertical text spacing for "LIKELIHOOD"
     const likelihoodText = "LIKELIHOOD";
-    const letterSpacing = 14;
-    const textStartY = matrixStartY + headerHeight + cellSize + (cellSize * 2.5) - (likelihoodText.length * letterSpacing / 2);
+    const letterSpacing = 12;
+    const textStartY = matrixStartY + headerHeight + cellHeight + (cellHeight * 2.5) - (likelihoodText.length * letterSpacing / 2);
     
     for (let i = 0; i < likelihoodText.length; i++) {
       this.doc.text(likelihoodText[i], matrixStartX - 20, textStartY + (i * letterSpacing), { align: "center" });
     }
 
-    this.yPosition = matrixStartY + headerHeight + cellSize + (cellSize * 5) + 20;
+    this.yPosition = matrixStartY + headerHeight + cellHeight + (cellHeight * 5) + 20;
 
     // Professional legend with complete data
     const legendY = this.yPosition;
