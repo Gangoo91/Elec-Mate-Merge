@@ -10,7 +10,7 @@ import BackButton from "@/components/common/BackButton";
 import { RAMSProvider } from "@/components/electrician-tools/site-safety/rams/RAMSContext";
 import { RAMSQuickAdd } from "@/components/electrician-tools/site-safety/RAMSQuickAdd";
 import RAMSGenerator from "@/components/electrician-tools/site-safety/RAMSGenerator";
-import RiskAssessmentBuilder from "@/components/electrician-tools/site-safety/RiskAssessmentBuilder";
+
 import MethodStatementGenerator from "@/components/electrician-tools/site-safety/MethodStatementGenerator";
 import HazardDatabase from "@/components/electrician-tools/site-safety/HazardDatabase";
 import PhotoDocumentation from "@/components/electrician-tools/site-safety/PhotoDocumentation";
@@ -24,7 +24,6 @@ const SiteSafety = () => {
 
   const tabOptions = [
     { value: "rams", label: "RAMS Generator", icon: FileText },
-    { value: "risk-assessment", label: "Risk Assessment", icon: AlertTriangle },
     { value: "method-statement", label: "Method Statement", icon: ClipboardCheck },
     { value: "hazard-database", label: "Hazard Database", icon: Shield },
     { value: "photo-docs", label: "Photo Documentation", icon: Camera },
@@ -85,8 +84,8 @@ const SiteSafety = () => {
         </div>
 
         {/* Desktop Tabs */}
-        <TabsList className="hidden lg:grid w-full grid-cols-5 gap-2 h-auto p-1">
-          {tabOptions.slice(0, 5).map((tab) => {
+        <TabsList className="hidden lg:grid w-full grid-cols-4 gap-2 h-auto p-1">
+          {tabOptions.slice(0, 4).map((tab) => {
             const IconComponent = tab.icon;
             return (
               <TabsTrigger 
@@ -103,7 +102,7 @@ const SiteSafety = () => {
 
         {/* Second row for desktop */}
         <TabsList className="hidden lg:grid w-full grid-cols-4 gap-2 h-auto p-1 mt-2">
-          {tabOptions.slice(5).map((tab) => {
+          {tabOptions.slice(4).map((tab) => {
             const IconComponent = tab.icon;
             return (
               <TabsTrigger 
@@ -122,9 +121,6 @@ const SiteSafety = () => {
           <RAMSGenerator />
         </TabsContent>
 
-        <TabsContent value="risk-assessment" className="mt-6">
-          <RiskAssessmentBuilder />
-        </TabsContent>
 
         <TabsContent value="method-statement" className="mt-6">
           <MethodStatementGenerator />
