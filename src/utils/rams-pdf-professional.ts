@@ -139,7 +139,7 @@ class ProfessionalRAMSPDFGenerator {
   private readonly BORDER_GRAY: [number, number, number] = [226, 232, 240]; // Light border
 
   constructor() {
-    this.doc = new jsPDF('portrait', 'mm', 'a4');
+    this.doc = new jsPDF('landscape', 'mm', 'a4');
     this.pageWidth = this.doc.internal.pageSize.width;
     this.pageHeight = this.doc.internal.pageSize.height;
     this.yPosition = this.MARGIN;
