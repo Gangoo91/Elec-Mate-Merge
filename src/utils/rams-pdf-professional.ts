@@ -593,32 +593,16 @@ class ProfessionalRAMSPDFGenerator {
     this.addPageNumber();
   }
 
-  // Safety Information Section
+  // Critical Safety Requirements Section
   private addSafetyInformation(context: VariableContext): void {
-    this.checkPageBreak(130);
-    this.addTOCEntry("7. Safety Information");
+    this.checkPageBreak(100);
+    this.addTOCEntry("7. Critical Safety Requirements");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("7. SAFETY INFORMATION", this.MARGIN, this.yPosition);
+    this.doc.text("7. CRITICAL SAFETY REQUIREMENTS", this.MARGIN, this.yPosition);
     this.yPosition += 20;
-
-    // Professional background box for safety section
-    const sectionHeight = 90;
-    this.doc.setFillColor(255, 251, 245); // Light orange background for safety
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), sectionHeight, 'F');
-    this.doc.setDrawColor(255, 152, 0); // Orange border for safety
-    this.doc.setLineWidth(1.5);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), sectionHeight);
-
-    // Section header with proper styling
-    this.doc.setTextColor(255, 152, 0);
-    this.doc.setFontSize(11);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("CRITICAL SAFETY REQUIREMENTS", this.pageWidth / 2, this.yPosition + 10, { align: "center" });
-    
-    this.yPosition += 18;
 
     const safetyPoints = [
       "All personnel must be competent and trained for electrical work",
