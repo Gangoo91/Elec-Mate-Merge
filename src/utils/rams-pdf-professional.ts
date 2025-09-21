@@ -422,6 +422,9 @@ class ProfessionalRAMSPDFGenerator {
     this.addDocumentHeader();
     this.addTOCEntry("2. Risk Assessment Matrix");
 
+    // Ensure we have a new page for the matrix to prevent cropping
+    this.checkPageBreak(280); // Reserve space for full matrix and legend
+    
     this.yPosition += 16;
     // Section title
     this.doc.setTextColor(...this.PRIMARY_COLOR);
@@ -450,13 +453,13 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("Risk Rating = Likelihood × Consequence (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 22, { align: "center" });
     this.yPosition += 45;
 
-    // Matrix dimensions - wider layout to match image exactly with more left margin
-    const cellWidth = 32;
-    const cellHeight = 40;
-    const headerHeight = 20;
-    const rowHeaderWidth = 75;
+    // Matrix dimensions - optimized for page fit
+    const cellWidth = 28; // Slightly smaller to fit better
+    const cellHeight = 35; // Slightly smaller to fit better
+    const headerHeight = 18;
+    const rowHeaderWidth = 70;
     const matrixWidth = rowHeaderWidth + (cellWidth * 5);
-    const leftMarginForText = 35; // Extra space for vertical LIKELIHOOD text
+    const leftMarginForText = 30; // Space for vertical LIKELIHOOD text
     const matrixStartX = this.MARGIN + leftMarginForText;
     const matrixStartY = this.yPosition;
 
@@ -637,8 +640,11 @@ class ProfessionalRAMSPDFGenerator {
       this.doc.text(likelihoodText[i], textX, textStartY + (i * letterSpacing), { align: "center" });
     }
 
-    this.yPosition = matrixStartY + headerHeight + cellHeight + (cellHeight * 5) + 20;
+    this.yPosition = matrixStartY + headerHeight + cellHeight + (cellHeight * 5) + 15;
 
+    // Check if we need a page break before the legend
+    this.checkPageBreak(120);
+    
     // Professional legend with complete data
     const legendY = this.yPosition;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
