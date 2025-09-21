@@ -455,105 +455,89 @@ class ProfessionalRAMSPDFGenerator {
     // Draw table border
     this.doc.setDrawColor(...this.PRIMARY_COLOR);
     this.doc.setLineWidth(2);
-    this.doc.rect(tableStartX, tableStartY, totalTableWidth, (headerWidth * 2) + (cellSize * 5));
+    this.doc.rect(tableStartX, tableStartY, totalTableWidth, headerWidth + (cellSize * 5));
 
-    // Top header row with numbers only
-    this.doc.setFillColor(55, 65, 81); // Dark grey header
+    // Top header row (Severity)
+    this.doc.setFillColor(59, 130, 246);
     this.doc.rect(tableStartX, tableStartY, totalTableWidth, headerWidth, 'F');
     
-    // Severity numbers in top row
-    for (let i = 1; i <= 5; i++) {
-      const x = tableStartX + headerWidth + ((i - 1) * cellSize);
-      this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(14);
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text(i.toString(), x + cellSize/2, tableStartY + headerWidth/2 + 3, { align: "center" });
-    }
-    
-    // Second header row with L/S corner and severity labels
-    const secondHeaderY = tableStartY + headerWidth;
-    this.doc.setFillColor(55, 65, 81);
-    this.doc.rect(tableStartX, secondHeaderY, totalTableWidth, headerWidth, 'F');
-    
-    // L/S corner cell
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(10);
+    this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("L/S", tableStartX + headerWidth/2, secondHeaderY + headerWidth/2 + 2, { align: "center" });
+    this.doc.text("SEVERITY →", tableStartX + totalTableWidth / 2, tableStartY + 6, { align: "center" });
 
-    // Severity labels in second header row
+    // Severity column headers
     const severityLabels = ["Negligible", "Minor", "Moderate", "Major", "Catastrophic"];
     severityLabels.forEach((label, index) => {
       const x = tableStartX + headerWidth + (index * cellSize);
+      
+      // Header cell background
+      this.doc.setFillColor(79, 70, 229);
+      this.doc.rect(x, tableStartY + headerWidth, cellSize, cellSize, 'F');
+      
+      // Border
+      this.doc.setDrawColor(255, 255, 255);
+      this.doc.setLineWidth(0.5);
+      this.doc.rect(x, tableStartY + headerWidth, cellSize, cellSize);
+      
+      // Number
       this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(8);
+      this.doc.setFontSize(12);
+      this.doc.setFont("helvetica", "bold");
+      this.doc.text((index + 1).toString(), x + cellSize/2, tableStartY + headerWidth + 8, { align: "center" });
+      
+      // Label
+      this.doc.setFontSize(7);
       this.doc.setFont("helvetica", "normal");
-      this.doc.text(label, x + cellSize/2, secondHeaderY + headerWidth/2 + 2, { align: "center" });
+      this.doc.text(label, x + cellSize/2, tableStartY + headerWidth + 17, { align: "center" });
     });
 
     // Likelihood rows
-    const likelihoodLabels = ["Rare", "Unlikely", "Possible", "Likely", "Almost Certain"];
+    const likelihoodLabels = ["Very Unlikely", "Unlikely", "Possible", "Likely", "Very Likely"];
     
     for (let likelihood = 5; likelihood >= 1; likelihood--) {
-      const rowY = tableStartY + (headerWidth * 2) + ((5 - likelihood) * cellSize);
+      const rowY = tableStartY + headerWidth + cellSize + ((5 - likelihood) * cellSize);
       
       // Row header cell
-      this.doc.setFillColor(55, 65, 81); // Dark grey header
+      this.doc.setFillColor(79, 70, 229);
       this.doc.rect(tableStartX, rowY, headerWidth, cellSize, 'F');
       
       // Row header border
       this.doc.setDrawColor(255, 255, 255);
-      this.doc.setLineWidth(1);
+      this.doc.setLineWidth(0.5);
       this.doc.rect(tableStartX, rowY, headerWidth, cellSize);
       
       // Likelihood number
       this.doc.setTextColor(255, 255, 255);
       this.doc.setFontSize(12);
       this.doc.setFont("helvetica", "bold");
-      this.doc.text(likelihood.toString(), tableStartX + headerWidth/2, rowY + 8, { align: "center" });
+      this.doc.text(likelihood.toString(), tableStartX + 12, rowY + 8, { align: "center" });
       
       // Likelihood label
       this.doc.setFontSize(7);
       this.doc.setFont("helvetica", "normal");
-      this.doc.text(likelihoodLabels[likelihood - 1], tableStartX + headerWidth/2, rowY + 17, { align: "center" });
+      this.doc.text(likelihoodLabels[likelihood - 1], tableStartX + 12, rowY + 17, { align: "center" });
 
       // Risk rating cells for this row
       for (let severity = 1; severity <= 5; severity++) {
         const cellX = tableStartX + headerWidth + (severity - 1) * cellSize;
         const riskRating = likelihood * severity;
-        
-        // Updated color scheme to match reference image exactly
-        let color: [number, number, number];
-        if (riskRating <= 4) {
-          color = [76, 175, 80]; // Green for Low
-        } else if (riskRating <= 9) {
-          color = [255, 235, 59]; // Yellow for Medium  
-        } else if (riskRating <= 16) {
-          color = [255, 152, 0]; // Orange for High
-        } else {
-          color = [244, 67, 54]; // Red for Very High
-        }
+        const [r, g, b] = getRiskColor(riskRating);
         
         // Cell background
-        this.doc.setFillColor(color[0], color[1], color[2]);
+        this.doc.setFillColor(r, g, b);
         this.doc.rect(cellX, rowY, cellSize, cellSize, 'F');
         
         // Cell border
         this.doc.setDrawColor(255, 255, 255);
-        this.doc.setLineWidth(1);
+        this.doc.setLineWidth(0.5);
         this.doc.rect(cellX, rowY, cellSize, cellSize);
         
-        // Risk rating number (bold and larger)
-        this.doc.setTextColor(0, 0, 0); // Black text for better contrast
+        // Risk rating number
+        this.doc.setTextColor(255, 255, 255);
         this.doc.setFontSize(14);
         this.doc.setFont("helvetica", "bold");
-        this.doc.text(riskRating.toString(), cellX + cellSize/2, rowY + 8, { align: "center" });
-        
-        // Risk level text
-        const riskLevel = getRiskLevel(riskRating);
-        this.doc.setFontSize(6);
-        this.doc.setFont("helvetica", "normal");
-        this.doc.text(riskLevel, cellX + cellSize/2, rowY + 16, { align: "center" });
+        this.doc.text(riskRating.toString(), cellX + cellSize/2, rowY + cellSize/2 + 2, { align: "center" });
       }
     }
 
@@ -563,13 +547,13 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFont("helvetica", "bold");
     const likelihoodText = "LIKELIHOOD";
     const letterSpacing = 12;
-    const startY = tableStartY + (headerWidth * 2) + (cellSize * 2.5) - (likelihoodText.length * letterSpacing / 2);
+    const startY = tableStartY + headerWidth + cellSize + (cellSize * 2.5) - (likelihoodText.length * letterSpacing / 2);
     
     for (let i = 0; i < likelihoodText.length; i++) {
       this.doc.text(likelihoodText[i], tableStartX - 15, startY + (i * letterSpacing), { align: "center" });
     }
 
-    this.yPosition = tableStartY + (headerWidth * 2) + (cellSize * 5) + 12;
+    this.yPosition = tableStartY + headerWidth + (cellSize * 6) + 12;
 
     // Professional legend with complete data
     const legendY = this.yPosition;
@@ -579,10 +563,10 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("RISK LEVEL INTERPRETATION", this.pageWidth / 2, legendY, { align: "center" });
 
     const legendData = [
-      { range: "1-4", level: "LOW RISK", color: [76, 175, 80], action: "Monitor and review periodically. Standard precautions apply." },
-      { range: "5-9", level: "MEDIUM RISK", color: [255, 235, 59], action: "Implement specific controls and monitor regularly. Risk assessment required." },
-      { range: "10-16", level: "HIGH RISK", color: [255, 152, 0], action: "Immediate controls required. Work must not proceed without approval." },
-      { range: "17-25", level: "VERY HIGH RISK", color: [244, 67, 54], action: "Work prohibited. Alternative methods must be found." }
+      { range: "1-4", level: "LOW RISK", color: [34, 197, 94], action: "Monitor and review periodically. Standard precautions apply." },
+      { range: "5-9", level: "MEDIUM RISK", color: [245, 158, 11], action: "Implement specific controls and monitor regularly. Risk assessment required." },
+      { range: "10-16", level: "HIGH RISK", color: [249, 115, 22], action: "Immediate controls required. Work must not proceed without approval." },
+      { range: "17-25", level: "VERY HIGH RISK", color: [220, 38, 127], action: "Work prohibited. Alternative methods must be found." }
     ];
 
     autoTable(this.doc, {
