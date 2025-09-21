@@ -447,7 +447,7 @@ class ProfessionalRAMSPDFGenerator {
     // Calculate table dimensions for consistent padding
     const tableWidth = 140; // Fixed table width for consistency
     const cellSize = 22;
-    const headerWidth = 35;
+    const headerWidth = 25;
     const totalTableWidth = headerWidth + (cellSize * 5);
     const tableStartX = (this.pageWidth - totalTableWidth) / 2; // Center the table
     const tableStartY = this.yPosition;
