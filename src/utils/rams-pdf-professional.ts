@@ -202,33 +202,36 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFillColor(255, 255, 255);
     this.doc.rect(0, 0, this.pageWidth, 45, 'F');
     
-    // Company branding area (SPIRE SAFETY style)
+    // Dynamic company branding area - adjusts to company name length
+    const companyNameWidth = Math.max(90, Math.min(140, context.company_name.length * 8 + 20));
     this.doc.setFillColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, 8, 80, 25, 'F');
+    this.doc.rect(this.MARGIN, 8, companyNameWidth, 25, 'F');
     
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(16);
+    this.doc.setFontSize(14); // Reduced to ensure text fits
     this.doc.setFont("helvetica", "bold");
-    this.doc.text(context.company_name.toUpperCase(), this.MARGIN + 40, 18, { align: "center" });
-    this.doc.setFontSize(10);
-    this.doc.text("RISK ASSESSMENT", this.MARGIN + 40, 28, { align: "center" });
+    this.doc.text(context.company_name.toUpperCase(), this.MARGIN + (companyNameWidth / 2), 18, { align: "center" });
+    this.doc.setFontSize(9);
+    this.doc.text("RISK ASSESSMENT", this.MARGIN + (companyNameWidth / 2), 28, { align: "center" });
 
-    // Document title (center-right)
+    // Document title and info area - properly right-aligned
+    const rightAreaStartX = this.pageWidth - 150; // Fixed position from right margin
     this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(18);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("RISK ASSESSMENT", this.pageWidth - 95, 15, { align: "center" });
+    this.doc.text("RISK ASSESSMENT", rightAreaStartX + 75, 15, { align: "center" });
     
-    // Reference number area - standardized format
-    this.doc.setFontSize(12);
+    // Reference number area - properly aligned
+    this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "normal");
     const titleDocRef = `RAMS-Office_Electrical_Retrofit-21092025`;
-    this.doc.text(`Ref: ${titleDocRef}`, this.pageWidth - 95, 25, { align: "center" });
+    this.doc.text(`Ref: ${titleDocRef}`, rightAreaStartX + 75, 25, { align: "center" });
     
-    // Authorization fields
-    this.doc.setFontSize(10);
-    this.doc.text("Authorised By: _________________", this.pageWidth - 115, 35);
-    this.doc.text(`Rev: 1.0    Date: ${context.assessment_date}`, this.pageWidth - 55, 35);
+    // Authorization fields - properly right-aligned
+    this.doc.setFontSize(9);
+    this.doc.text("Authorised By: _______________", rightAreaStartX, 35);
+    this.doc.text(`Rev: 1.0`, rightAreaStartX + 105, 35);
+    this.doc.text(`Date: ${context.assessment_date}`, rightAreaStartX + 125, 35);
 
     this.yPosition = 50;
 
