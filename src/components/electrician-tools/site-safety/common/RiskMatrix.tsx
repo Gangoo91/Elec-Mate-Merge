@@ -60,7 +60,7 @@ export const RiskMatrix: React.FC<RiskMatrixProps> = ({
             
             {/* Matrix rows */}
             {[5, 4, 3, 2, 1].map((likelihood) => (
-              <React.Fragment key={likelihood}>
+              <div key={likelihood} className="contents">
                 {/* Row header */}
                 <div className="bg-elec-dark/50 p-2 text-center text-white text-xs font-bold border border-elec-yellow/20">
                   {likelihood}
@@ -88,7 +88,7 @@ export const RiskMatrix: React.FC<RiskMatrixProps> = ({
                     </div>
                   );
                 })}
-              </React.Fragment>
+              </div>
             ))}
           </div>
         </div>
