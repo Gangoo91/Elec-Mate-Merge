@@ -584,7 +584,7 @@ class ProfessionalRAMSPDFGenerator {
 
     autoTable(this.doc, {
       startY: this.yPosition,
-      head: [["Ref", "Hazard", "Risk/Harm", "L", "S", "Initial", "Level", "Controls", "Residual", "Level"]],
+      head: [["Ref", "Hazard", "Who Might Be Harmed", "L", "S", "Risk", "Level", "Control Measures", "L", "Level"]],
       body: riskTableData,
       theme: "grid",
       headStyles: {
@@ -597,22 +597,22 @@ class ProfessionalRAMSPDFGenerator {
       },
       styles: {
         fontSize: 8,
-        cellPadding: 3,
+        cellPadding: 4,
         lineColor: [226, 232, 240],
         lineWidth: 0.5,
         valign: "middle"
       },
       columnStyles: {
-        0: { halign: "center", cellWidth: 12 },
-        1: { cellWidth: 35 },
-        2: { cellWidth: 40 },
-        3: { halign: "center", cellWidth: 8 },
-        4: { halign: "center", cellWidth: 8 },
-        5: { halign: "center", cellWidth: 15 },
-        6: { halign: "center", cellWidth: 25 },
-        7: { cellWidth: 45 },
-        8: { halign: "center", cellWidth: 15 },
-        9: { halign: "center", cellWidth: 25 }
+        0: { halign: "center", cellWidth: 15 },
+        1: { cellWidth: 50 },
+        2: { cellWidth: 35 },
+        3: { halign: "center", cellWidth: 10 },
+        4: { halign: "center", cellWidth: 10 },
+        5: { halign: "center", cellWidth: 18 },
+        6: { halign: "center", cellWidth: 22 },
+        7: { cellWidth: 60 },
+        8: { halign: "center", cellWidth: 10 },
+        9: { halign: "center", cellWidth: 22 }
       },
       margin: { left: this.MARGIN, right: this.MARGIN },
       didParseCell: (data: any) => {
@@ -876,11 +876,12 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(8);
     this.doc.setTextColor(100);
     this.doc.text(
-      `RAMS Document - ${context.project_name} - Generated ${context.document_generated} Page ${pageNum}`,
-      this.pageWidth / 2,
+      `RAMS Document - ${context.project_name} - Generated ${context.document_generated}`,
+      this.MARGIN,
       this.pageHeight - 10,
-      { align: "center" }
+      { align: "left" }
     );
+    this.doc.text(`Page ${pageNum}`, this.pageWidth / 2, this.pageHeight - 10, { align: "center" });
     this.doc.text("v1.0 - CONFIDENTIAL", this.pageWidth - this.MARGIN, this.pageHeight - 10, { align: "right" });
   }
 

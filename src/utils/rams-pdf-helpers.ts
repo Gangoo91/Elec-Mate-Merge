@@ -5,7 +5,17 @@ import { format, isValid, parseISO } from "date-fns";
  */
 
 export const safeText = (text: string | undefined | null): string => {
-  return text?.toString().trim() || '';
+  if (!text) return '';
+  return text.toString()
+    .trim()
+    .replace(/&#x26;/g, '&')
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x22;/g, '"')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
 };
 
 export const safeNumber = (num: number | string | undefined | null): number => {
