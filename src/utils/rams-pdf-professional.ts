@@ -198,40 +198,54 @@ class ProfessionalRAMSPDFGenerator {
 
   // Professional Title Page matching reference template
   private addTitlePage(data: RAMSData, options: PDFOptions, context: VariableContext): void {
-    // Professional header matching template
+    // Professional header with proper spacing
     this.doc.setFillColor(255, 255, 255);
     this.doc.rect(0, 0, this.pageWidth, 45, 'F');
     
-    // Dynamic company branding area - adjusts to company name length
-    const companyNameWidth = Math.max(90, Math.min(140, context.company_name.length * 8 + 20));
+    // Calculate dynamic widths based on company name length
+    const companyNameLength = context.company_name.length;
+    const companyBoxWidth = Math.max(80, Math.min(120, companyNameLength * 2.5 + 40));
+    const rightSectionWidth = 140;
+    const spaceBetween = 20;
+    
+    // Ensure right section doesn't overlap by calculating proper positioning
+    const maxCompanyWidth = this.pageWidth - rightSectionWidth - spaceBetween - (2 * this.MARGIN);
+    const finalCompanyWidth = Math.min(companyBoxWidth, maxCompanyWidth);
+    
+    // Company branding box - left side
     this.doc.setFillColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, 8, companyNameWidth, 25, 'F');
+    this.doc.rect(this.MARGIN, 8, finalCompanyWidth, 25, 'F');
     
+    // Company name - centered in box with proper font sizing
     this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(14); // Reduced to ensure text fits
+    const fontSize = companyNameLength > 20 ? 10 : companyNameLength > 15 ? 12 : 14;
+    this.doc.setFontSize(fontSize);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text(context.company_name.toUpperCase(), this.MARGIN + (companyNameWidth / 2), 18, { align: "center" });
-    this.doc.setFontSize(9);
-    this.doc.text("RISK ASSESSMENT", this.MARGIN + (companyNameWidth / 2), 28, { align: "center" });
+    this.doc.text(context.company_name.toUpperCase(), this.MARGIN + (finalCompanyWidth / 2), 18, { align: "center" });
+    this.doc.setFontSize(8);
+    this.doc.text("RISK ASSESSMENT", this.MARGIN + (finalCompanyWidth / 2), 28, { align: "center" });
 
-    // Document title and info area - properly right-aligned
-    const rightAreaStartX = this.pageWidth - 150; // Fixed position from right margin
-    this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(18);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("RISK ASSESSMENT", rightAreaStartX + 75, 15, { align: "center" });
+    // Right section - properly positioned to avoid overlap
+    const rightAreaStartX = this.MARGIN + finalCompanyWidth + spaceBetween;
+    const rightAreaCenterX = rightAreaStartX + (rightSectionWidth / 2);
     
-    // Reference number area - properly aligned
-    this.doc.setFontSize(11);
+    // Document title
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(16);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("RISK ASSESSMENT", rightAreaCenterX, 15, { align: "center" });
+    
+    // Reference number
+    this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "normal");
     const titleDocRef = `RAMS-Office_Electrical_Retrofit-21092025`;
-    this.doc.text(`Ref: ${titleDocRef}`, rightAreaStartX + 75, 25, { align: "center" });
+    this.doc.text(`Ref: ${titleDocRef}`, rightAreaCenterX, 25, { align: "center" });
     
-    // Authorization fields - properly right-aligned
-    this.doc.setFontSize(9);
+    // Authorization fields - properly spaced in right area
+    this.doc.setFontSize(8);
     this.doc.text("Authorised By: _______________", rightAreaStartX, 35);
-    this.doc.text(`Rev: 1.0`, rightAreaStartX + 105, 35);
-    this.doc.text(`Date: ${context.assessment_date}`, rightAreaStartX + 125, 35);
+    this.doc.text(`Rev: 1.0`, rightAreaStartX + 90, 35);
+    this.doc.text(`Date: ${context.assessment_date}`, rightAreaStartX + 110, 35);
 
     this.yPosition = 50;
 
