@@ -580,27 +580,28 @@ class ProfessionalRAMSPDFGenerator {
         this.doc.text(line, matrixStartX + rowHeaderWidth/2, rowY + 16 + (lineIndex * 4), { align: "center" });
       });
 
-      // Risk cells for this row
+      // Risk cells for this row - exact match to reference image
       for (let consequence = 1; consequence <= 5; consequence++) {
         const cellX = matrixStartX + rowHeaderWidth + ((consequence - 1) * cellWidth);
         const riskRating = parseInt(item.num) * consequence;
         
-        // Get risk level and color
+        // Get risk level and color exactly matching the reference image
         let riskLevel: string;
         let cellColor: [number, number, number];
         
+        // Exact color matching from reference image
         if (riskRating <= 4) {
           riskLevel = "Low";
-          cellColor = [76, 175, 80]; // Green
+          cellColor = [123, 201, 111]; // Green from image
         } else if (riskRating <= 9) {
           riskLevel = "Moderate";
-          cellColor = [255, 235, 59]; // Yellow
-        } else if (riskRating <= 16) {
+          cellColor = [255, 235, 59]; // Yellow from image
+        } else if (riskRating <= 15) {
           riskLevel = "High";
-          cellColor = [255, 152, 0]; // Orange
+          cellColor = [255, 165, 0]; // Orange from image
         } else {
           riskLevel = "Catastrophic";
-          cellColor = [244, 67, 54]; // Red
+          cellColor = [244, 67, 54]; // Red from image
         }
         
         this.doc.setFillColor(...cellColor);
@@ -609,7 +610,7 @@ class ProfessionalRAMSPDFGenerator {
         this.doc.setLineWidth(1);
         this.doc.rect(cellX, rowY, cellWidth, cellHeight);
         
-        // Risk level text and number
+        // Risk level text and number exactly matching reference
         this.doc.setTextColor(0, 0, 0);
         this.doc.setFontSize(8);
         this.doc.setFont("helvetica", "bold");
