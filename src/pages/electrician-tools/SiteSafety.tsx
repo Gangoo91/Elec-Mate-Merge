@@ -68,17 +68,11 @@ const SiteSafety = () => {
               </div>
             </SelectTrigger>
             <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
-              {tabOptions.map((tab) => {
-                const IconComponent = tab.icon;
-                return (
-                  <SelectItem key={tab.value} value={tab.value} className="cursor-pointer">
-                    <div className="flex items-center gap-3">
-                      <IconComponent className="h-4 w-4" />
-                      <span>{tab.label}</span>
-                    </div>
-                  </SelectItem>
-                );
-              })}
+              {tabOptions.map((tab) => (
+                <SelectItem key={tab.value} value={tab.value} className="cursor-pointer">
+                  <span>{tab.label}</span>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
