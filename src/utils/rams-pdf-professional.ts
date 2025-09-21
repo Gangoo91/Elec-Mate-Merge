@@ -537,10 +537,11 @@ class ProfessionalRAMSPDFGenerator {
         cellPadding: 5,
         valign: "middle"
       },
+      tableWidth: 'auto',
       columnStyles: {
         0: { halign: "center", fontStyle: "bold", cellWidth: 25 },
         1: { halign: "center", fontStyle: "bold", cellWidth: 35 },
-        2: { cellWidth: this.pageWidth - 80 }
+        2: { cellWidth: 'auto' }
       },
       margin: { left: this.MARGIN, right: this.MARGIN }
     });
