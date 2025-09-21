@@ -746,7 +746,7 @@ class ProfessionalRAMSPDFGenerator {
       getRiskLevel(risk.residualRisk)
     ]);
 
-    // Calculate available table width (page width minus equal margins)
+    // Calculate available table width with equal margins
     const availableWidth = this.pageWidth - (2 * this.MARGIN);
     
     // Enhanced professional table for landscape format with improved dimensions
