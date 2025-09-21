@@ -534,7 +534,7 @@ class ProfessionalRAMSPDFGenerator {
       },
       styles: {
         fontSize: 9,
-        cellPadding: 5,
+        cellPadding: { top: 6, right: 10, bottom: 6, left: 10 },
         valign: "middle"
       },
       columnStyles: {
@@ -597,7 +597,7 @@ class ProfessionalRAMSPDFGenerator {
       },
       styles: {
         fontSize: 8,
-        cellPadding: 4,
+        cellPadding: { top: 5, right: 8, bottom: 5, left: 8 },
         lineColor: [226, 232, 240],
         lineWidth: 0.5,
         valign: "middle"
@@ -911,7 +911,7 @@ class ProfessionalRAMSPDFGenerator {
       theme: "plain",
       styles: {
         fontSize: 11,
-        cellPadding: 6,
+        cellPadding: { top: 8, right: 12, bottom: 8, left: 12 },
         lineColor: [220, 220, 220],
         lineWidth: 0.1
       },
