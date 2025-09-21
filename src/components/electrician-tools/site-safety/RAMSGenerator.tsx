@@ -418,7 +418,9 @@ const RAMSGenerator: React.FC = () => {
 
           {/* Risk List */}
             {/* Risk Matrix */}
-            <RiskMatrix className="mb-4" />
+            <div className="flex justify-center mb-4">
+              <RiskMatrix />
+            </div>
 
             {ramsData.risks.length > 0 && (
             <div className="space-y-3">
