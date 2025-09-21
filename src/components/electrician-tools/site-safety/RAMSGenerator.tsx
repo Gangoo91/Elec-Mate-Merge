@@ -18,12 +18,16 @@ import {
   Building, 
   Shield,
   Edit3,
-  Loader2
+  Loader2,
+  Grid3x3
 } from 'lucide-react';
 import { useRAMS } from './rams/RAMSContext';
 import { generateRAMSPDF } from '@/utils/rams-pdf';
 import { RAMSPDFPreview } from './RAMSPDFPreview';
 import { SignaturePad } from './common/SignaturePad';
+import { HazardSelect } from './common/HazardSelect';
+import { RiskSelect } from './common/RiskSelect';
+import { RiskMatrix } from './common/RiskMatrix';
 import { toast } from '@/hooks/use-toast';
 
 const RAMSGenerator: React.FC = () => {
@@ -62,6 +66,8 @@ const RAMSGenerator: React.FC = () => {
     severity: 1,
     controls: ''
   });
+  const [selectedHazard, setSelectedHazard] = useState('');
+  const [selectedRisk, setSelectedRisk] = useState('');
 
   const validation = validate();
 
@@ -98,6 +104,8 @@ const RAMSGenerator: React.FC = () => {
         severity: 1,
         controls: ''
       });
+      setSelectedHazard('');
+      setSelectedRisk('');
       setShowAddRisk(false);
       
       toast({
@@ -106,6 +114,23 @@ const RAMSGenerator: React.FC = () => {
         variant: 'success'
       });
     }
+  };
+
+  const handleHazardChange = (hazard: string) => {
+    setSelectedHazard(hazard);
+    setNewRisk(prev => ({ ...prev, hazard }));
+    // Reset risk when hazard changes
+    setSelectedRisk('');
+    setNewRisk(prev => ({ ...prev, risk: '' }));
+  };
+
+  const handleRiskChange = (risk: string) => {
+    setSelectedRisk(risk);
+    setNewRisk(prev => ({ ...prev, risk }));
+  };
+
+  const handleControlMeasuresChange = (measures: string[]) => {
+    setNewRisk(prev => ({ ...prev, controls: measures.join('\n• ') }));
   };
 
   const handleEditRisk = (risk: any) => {
@@ -392,7 +417,10 @@ const RAMSGenerator: React.FC = () => {
           </div>
 
           {/* Risk List */}
-          {ramsData.risks.length > 0 && (
+            {/* Risk Matrix */}
+            <RiskMatrix className="mb-4" />
+
+            {ramsData.risks.length > 0 && (
             <div className="space-y-3">
               <h4 className="font-medium text-white">Identified Risks ({ramsData.risks.length})</h4>
               {ramsData.risks.map((risk) => (

@@ -252,6 +252,121 @@ class RAMSPDFGenerator {
     this.yPosition = (this.doc as any).lastAutoTable.finalY + 15;
   }
 
+  private addRiskMatrix(): void {
+    this.checkPageBreak(120);
+    
+    this.doc.setFontSize(16);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.text("Risk Assessment Matrix", this.MARGIN, this.yPosition);
+    this.yPosition += 10;
+
+    // Add methodology explanation
+    this.doc.setFontSize(10);
+    this.doc.setFont("helvetica", "normal");
+    this.doc.text("This assessment uses a 5x5 risk matrix methodology in accordance with HSE guidelines.", this.MARGIN, this.yPosition);
+    this.yPosition += 6;
+    this.doc.text("Risk Rating = Likelihood × Severity (Both scored 1-5)", this.MARGIN, this.yPosition);
+    this.yPosition += 15;
+
+    // Draw the 5x5 matrix
+    const cellSize = 25;
+    const matrixStartX = this.MARGIN + 40;
+    const matrixStartY = this.yPosition;
+
+    // Draw matrix headers
+    this.doc.setFontSize(8);
+    this.doc.setFont("helvetica", "bold");
+    
+    // Severity header
+    this.doc.text("SEVERITY", matrixStartX + (cellSize * 2.5), matrixStartY - 15, { align: "center" });
+    
+    // Likelihood label (rotated effect with text)
+    this.doc.text("L", this.MARGIN + 10, matrixStartY + (cellSize * 2.5), { align: "center" });
+    this.doc.text("I", this.MARGIN + 10, matrixStartY + (cellSize * 2.5) + 5, { align: "center" });
+    this.doc.text("K", this.MARGIN + 10, matrixStartY + (cellSize * 2.5) + 10, { align: "center" });
+    this.doc.text("E", this.MARGIN + 10, matrixStartY + (cellSize * 2.5) + 15, { align: "center" });
+    this.doc.text("L", this.MARGIN + 10, matrixStartY + (cellSize * 2.5) + 20, { align: "center" });
+    this.doc.text("I", this.MARGIN + 10, matrixStartY + (cellSize * 2.5) + 25, { align: "center" });
+    this.doc.text("H", this.MARGIN + 10, matrixStartY + (cellSize * 2.5) + 30, { align: "center" });
+    this.doc.text("O", this.MARGIN + 10, matrixStartY + (cellSize * 2.5) + 35, { align: "center" });
+    this.doc.text("O", this.MARGIN + 10, matrixStartY + (cellSize * 2.5) + 40, { align: "center" });
+    this.doc.text("D", this.MARGIN + 10, matrixStartY + (cellSize * 2.5) + 45, { align: "center" });
+
+    // Draw matrix grid and cells
+    for (let likelihood = 1; likelihood <= 5; likelihood++) {
+      for (let severity = 1; severity <= 5; severity++) {
+        const x = matrixStartX + (severity - 1) * cellSize;
+        const y = matrixStartY + (5 - likelihood) * cellSize;
+        const riskRating = likelihood * severity;
+        const [r, g, b] = getRiskColor(riskRating);
+        
+        // Fill cell with risk color (lighter version)
+        this.doc.setFillColor(r + 50, g + 50, b + 50);
+        this.doc.rect(x, y, cellSize, cellSize, 'F');
+        
+        // Draw cell border
+        this.doc.setDrawColor(0, 0, 0);
+        this.doc.setLineWidth(0.5);
+        this.doc.rect(x, y, cellSize, cellSize);
+        
+        // Add risk rating number
+        this.doc.setTextColor(0, 0, 0);
+        this.doc.setFontSize(12);
+        this.doc.setFont("helvetica", "bold");
+        this.doc.text(riskRating.toString(), x + cellSize/2, y + cellSize/2 + 2, { align: "center" });
+      }
+    }
+
+    // Add axis labels
+    this.doc.setFontSize(10);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.setTextColor(0, 0, 0);
+    
+    // Severity numbers
+    for (let i = 1; i <= 5; i++) {
+      this.doc.text(i.toString(), matrixStartX + (i - 1) * cellSize + cellSize/2, matrixStartY - 5, { align: "center" });
+    }
+    
+    // Likelihood numbers
+    for (let i = 1; i <= 5; i++) {
+      this.doc.text(i.toString(), matrixStartX - 10, matrixStartY + (5 - i) * cellSize + cellSize/2 + 2, { align: "center" });
+    }
+
+    // Add legend
+    const legendY = matrixStartY + (cellSize * 5) + 20;
+    this.doc.setFontSize(12);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("Risk Level Legend:", this.MARGIN, legendY);
+    
+    const legendData = [
+      { range: "1-4", level: "Low Risk", color: [34, 197, 94], action: "Monitor and review periodically" },
+      { range: "5-9", level: "Medium Risk", color: [255, 193, 7], action: "Implement controls and monitor regularly" },
+      { range: "10-16", level: "High Risk", color: [255, 152, 0], action: "Immediate action required" },
+      { range: "17-25", level: "Very High Risk", color: [239, 68, 68], action: "Stop work until controls implemented" }
+    ];
+
+    legendData.forEach((item, index) => {
+      const y = legendY + 15 + (index * 15);
+      
+      // Color box
+      this.doc.setFillColor(item.color[0], item.color[1], item.color[2]);
+      this.doc.rect(this.MARGIN, y - 5, 10, 8, 'F');
+      this.doc.setDrawColor(0, 0, 0);
+      this.doc.rect(this.MARGIN, y - 5, 10, 8);
+      
+      // Text
+      this.doc.setTextColor(0, 0, 0);
+      this.doc.setFontSize(10);
+      this.doc.setFont("helvetica", "bold");
+      this.doc.text(`${item.range}: ${item.level}`, this.MARGIN + 15, y);
+      this.doc.setFont("helvetica", "normal");
+      this.doc.text(`- ${item.action}`, this.MARGIN + 80, y);
+    });
+
+    this.yPosition = legendY + 80;
+  }
+
   private addDetailedRisks(data: RAMSData): void {
     const risks = safeArrayFilter(data.risks);
     
@@ -522,6 +637,7 @@ class RAMSPDFGenerator {
       this.addHeader(data, options);
       this.addPurposeStatement();
       this.addProjectInfo(data);
+      this.addRiskMatrix();
       this.addActivities(data);
       this.addRiskSummary(data);
       this.addDetailedRisks(data);
