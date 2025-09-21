@@ -27,4 +27,7 @@ export interface RAMSReportOptions {
   includeSignatures?: boolean;
   companyName?: string;
   logoUrl?: string;
+  documentReference?: string;
+  reviewDate?: string;
+  distribution?: string[];
 }
