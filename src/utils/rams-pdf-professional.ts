@@ -425,7 +425,7 @@ class ProfessionalRAMSPDFGenerator {
     this.yPosition += 25;
 
     // Professional explanation box
-    const boxHeight = 35;
+    const boxHeight = 28;
     const boxWidth = this.pageWidth - (2 * this.MARGIN);
     this.doc.setFillColor(248, 250, 252);
     this.doc.rect(this.MARGIN, this.yPosition, boxWidth, boxHeight, 'F');
@@ -436,13 +436,13 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("Risk Assessment Formula", this.pageWidth / 2, this.yPosition + 15, { align: "center" });
+    this.doc.text("Risk Assessment Formula", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
     
     this.doc.setTextColor(55, 65, 81);
     this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "normal");
-    this.doc.text("Risk Rating = Likelihood × Severity (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 26, { align: "center" });
-    this.yPosition += 50;
+    this.doc.text("Risk Rating = Likelihood × Severity (Both factors scored from 1 to 5)", this.pageWidth / 2, this.yPosition + 22, { align: "center" });
+    this.yPosition += 40;
 
     // Calculate table dimensions for consistent padding
     const tableWidth = 140; // Fixed table width for consistency
