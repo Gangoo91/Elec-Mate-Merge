@@ -599,6 +599,8 @@ class ProfessionalRAMSPDFGenerator {
       margin: { left: this.MARGIN, right: this.MARGIN }
     });
 
+    // Update position after the legend table to manage spacing
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 15;
     this.addPageNumber();
   }
 
