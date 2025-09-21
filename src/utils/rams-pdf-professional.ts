@@ -778,14 +778,14 @@ class ProfessionalRAMSPDFGenerator {
       tableLineColor: [200, 200, 200],
       tableLineWidth: 0.5,
       columnStyles: {
-        0: { halign: "center", cellWidth: availableWidth * 0.05, fontStyle: "bold" }, // 5% - Ref
-        1: { cellWidth: availableWidth * 0.18, valign: "top" }, // 18% - Hazard (increased)
-        2: { cellWidth: availableWidth * 0.15, valign: "top" }, // 15% - Who might be harmed (increased)
+        0: { halign: "center", cellWidth: availableWidth * 0.04, fontStyle: "bold" }, // 4% - Ref
+        1: { cellWidth: availableWidth * 0.17, valign: "top" }, // 17% - Hazard
+        2: { cellWidth: availableWidth * 0.14, valign: "top" }, // 14% - Who might be harmed
         3: { halign: "center", cellWidth: availableWidth * 0.04, fontStyle: "bold" }, // 4% - L
         4: { halign: "center", cellWidth: availableWidth * 0.04, fontStyle: "bold" }, // 4% - S
         5: { halign: "center", cellWidth: availableWidth * 0.06, fontStyle: "bold" }, // 6% - Initial Risk
-        6: { halign: "center", cellWidth: availableWidth * 0.10, fontStyle: "bold" }, // 10% - Risk Level
-        7: { cellWidth: availableWidth * 0.28, valign: "top" }, // 28% - Control Measures (increased priority)
+        6: { halign: "center", cellWidth: availableWidth * 0.09, fontStyle: "bold" }, // 9% - Risk Level
+        7: { cellWidth: availableWidth * 0.26, valign: "top" }, // 26% - Control Measures
         8: { halign: "center", cellWidth: availableWidth * 0.06, fontStyle: "bold" }, // 6% - Residual Risk
         9: { halign: "center", cellWidth: availableWidth * 0.10, fontStyle: "bold" } // 10% - Final Level
       },
