@@ -879,7 +879,7 @@ class ProfessionalRAMSPDFGenerator {
               x + 5,
               this.yPosition + 15,
               40,
-              15
+              10
             );
           } catch (error) {
             // Fallback if signature fails to render
