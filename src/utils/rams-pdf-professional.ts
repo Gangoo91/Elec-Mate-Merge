@@ -189,14 +189,9 @@ class ProfessionalRAMSPDFGenerator {
   }
 
   private addDocumentHeader(): void {
-    // Add subtle header on continuation pages
+    // Only add subtle blue stripe without text header to keep pages clean
     this.doc.setFillColor(...this.PRIMARY_COLOR);
-    this.doc.rect(0, 0, this.pageWidth, 8, 'F');
-    
-    this.doc.setTextColor(255, 255, 255);
-    this.doc.setFontSize(8);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("HEALTH & SAFETY RISK ASSESSMENT", this.pageWidth / 2, 5, { align: "center" });
+    this.doc.rect(0, 0, this.pageWidth, 3, 'F');
     
     this.yPosition = this.MARGIN + 5;
   }
@@ -224,10 +219,11 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFont("helvetica", "bold");
     this.doc.text("RISK ASSESSMENT", this.pageWidth - 95, 15, { align: "center" });
     
-    // Reference number area
+    // Reference number area - standardized format
     this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "normal");
-    this.doc.text("Ref: SS-WHS-SAF-000", this.pageWidth - 95, 25, { align: "center" });
+    const titleDocRef = `RAMS-Office_Electrical_Retrofit-21092025`;
+    this.doc.text(`Ref: ${titleDocRef}`, this.pageWidth - 95, 25, { align: "center" });
     
     // Authorization fields
     this.doc.setFontSize(10);
@@ -301,34 +297,28 @@ class ProfessionalRAMSPDFGenerator {
 
     this.yPosition = (this.doc as any).lastAutoTable.finalY + 20;
 
-    // Professional purpose statement
+    // Clean purpose statement without colored background
     const purposeHeight = 50;
-    this.doc.setFillColor(239, 246, 255);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), purposeHeight, 'F');
-    this.doc.setDrawColor(...this.ACCENT_COLOR);
+    this.doc.setDrawColor(200, 200, 200);
     this.doc.setLineWidth(1);
     this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), purposeHeight);
 
-    // Header stripe
-    this.doc.setFillColor(...this.ACCENT_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 10, 'F');
-    
-    this.doc.setTextColor(255, 255, 255);
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("PURPOSE & COMPLIANCE", this.pageWidth / 2, this.yPosition + 7, { align: "center" });
+    this.doc.text("PURPOSE & COMPLIANCE", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
     
-    this.doc.setTextColor(51, 65, 85); // Dark slate
+    this.doc.setTextColor(51, 65, 85);
     this.doc.setFontSize(9);
     this.doc.setFont("helvetica", "normal");
     const purposeText = "This document identifies hazards and establishes control measures for electrical work activities, ensuring compliance with Health & Safety at Work Act 1974, CDM Regulations 2015, and BS 7671:2018+A2:2022.";
     
     const wrappedPurpose = this.doc.splitTextToSize(purposeText, this.pageWidth - (2 * this.MARGIN) - 12);
     wrappedPurpose.forEach((line: string, index: number) => {
-      this.doc.text(line, this.pageWidth / 2, this.yPosition + 18 + (index * 4), { align: "center" });
+      this.doc.text(line, this.pageWidth / 2, this.yPosition + 20 + (index * 4), { align: "center" });
     });
 
-    // Professional compliance indicator
+    // Clean compliance indicator with green bar only
     this.doc.setFillColor(...this.SUCCESS_COLOR);
     this.doc.rect(this.MARGIN + 10, this.yPosition + 38, this.pageWidth - (2 * this.MARGIN) - 20, 8, 'F');
     this.doc.setTextColor(255, 255, 255);
@@ -343,8 +333,8 @@ class ProfessionalRAMSPDFGenerator {
     
     this.doc.setFontSize(8);
     this.doc.setTextColor(100, 116, 139);
-    const docRef = `RAMS-${context.project_name.replace(/[^a-zA-Z0-9]/g, '_')}-${formatDate(new Date(), "ddMMyyyy")}`;
-    this.doc.text(`Document Reference: ${docRef}`, this.pageWidth / 2, this.yPosition + 6, { align: "center" });
+    const footerDocRef = `RAMS-Office_Electrical_Retrofit-21092025`;
+    this.doc.text(`Document Reference: ${footerDocRef}`, this.pageWidth / 2, this.yPosition + 6, { align: "center" });
     this.doc.text("Version 1.0 - CONFIDENTIAL", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
 
     this.addPageNumber();
@@ -398,16 +388,12 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("4. RISK SUMMARY", this.MARGIN, this.yPosition);
     this.yPosition += 16;
 
-    // Summary statistics box
-    this.doc.setFillColor(248, 250, 252);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 50, 'F');
-    this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 50);
-
+    // Clean summary statistics without blue border
     this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(12);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("RISK ASSESSMENT SUMMARY", this.pageWidth / 2, this.yPosition + 12, { align: "center" });
+    this.doc.text("RISK ASSESSMENT SUMMARY", this.MARGIN, this.yPosition);
+    this.yPosition += 10;
     
     const summaryData = [
       `Total Risks: ${context.total_risks}`,
@@ -420,11 +406,11 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(10);
     this.doc.setFont("helvetica", "normal");
     summaryData.forEach((item, index) => {
-      const x = this.MARGIN + 20 + (index * 30);
-      this.doc.text(item, x, this.yPosition + 30);
+      const x = this.MARGIN + (index * 45);
+      this.doc.text(item, x, this.yPosition);
     });
 
-    this.yPosition += 65;
+    this.yPosition += 25;
     this.addPageNumber();
   }
 
@@ -603,13 +589,13 @@ class ProfessionalRAMSPDFGenerator {
         let riskLevel: string;
         let cellColor: [number, number, number];
         
-        if (riskRating <= 3) {
+        if (riskRating <= 4) {
           riskLevel = "Low";
           cellColor = [76, 175, 80]; // Green
-        } else if (riskRating <= 6) {
+        } else if (riskRating <= 9) {
           riskLevel = "Moderate";
           cellColor = [255, 235, 59]; // Yellow
-        } else if (riskRating <= 12) {
+        } else if (riskRating <= 16) {
           riskLevel = "High";
           cellColor = [255, 152, 0]; // Orange
         } else {
@@ -990,13 +976,13 @@ class ProfessionalRAMSPDFGenerator {
     approvals.forEach((approval, index) => {
       const x = this.MARGIN + (index * (signatureBoxWidth + this.MARGIN));
       
-      this.doc.setTextColor(...approval.color);
+      this.doc.setTextColor(0, 0, 0);
       this.doc.setFontSize(12);
       this.doc.setFont("helvetica", "bold");
       this.doc.text(approval.title, x, this.yPosition);
       
-      this.doc.setDrawColor(...approval.color);
-      this.doc.setLineWidth(2);
+      this.doc.setDrawColor(0, 0, 0);
+      this.doc.setLineWidth(1);
       this.doc.rect(x, this.yPosition + 5, signatureBoxWidth, signatureBoxHeight);
       
       if (approval.data) {
@@ -1049,7 +1035,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(9);
     this.doc.setFont("helvetica", "normal");
     const docInfo = [
-      `Document: RAMS-${context?.project_name || 'Document'}`,
+      `Document: RAMS-Office_Electrical_Retrofit-21092025`,
       `Version: v1.0`,
       `Generated: ${context?.document_generated || safeDatetime(new Date())}`,
       `Status: CONFIDENTIAL`
@@ -1090,13 +1076,13 @@ class ProfessionalRAMSPDFGenerator {
     autoTable(this.doc, {
       startY: this.yPosition,
       body: tocData,
-      theme: "plain",
+      theme: "grid",
       tableWidth: 'auto',
       styles: {
         fontSize: 11,
         cellPadding: 6,
-        lineColor: [220, 220, 220],
-        lineWidth: 0.1
+        lineColor: [200, 200, 200],
+        lineWidth: 0.5
       },
       columnStyles: {
         0: { fontStyle: "normal", cellWidth: 'auto' },
