@@ -214,7 +214,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(255, 255, 255);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("SPIRE SAFETY", this.MARGIN + 40, 18, { align: "center" });
+    this.doc.text(context.company_name.toUpperCase(), this.MARGIN + 40, 18, { align: "center" });
     this.doc.setFontSize(10);
     this.doc.text("RISK ASSESSMENT", this.MARGIN + 40, 28, { align: "center" });
 
