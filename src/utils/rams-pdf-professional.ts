@@ -166,12 +166,12 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text(`Page ${this.currentPage}`, this.pageWidth - this.MARGIN, this.pageHeight - 8, { align: "right" });
   }
 
-  private checkPageBreak(requiredSpace: number = 25): boolean {
+  private checkPageBreak(requiredSpace: number = 45): boolean {
     if (this.yPosition + requiredSpace > this.pageHeight - this.FOOTER_HEIGHT - this.MARGIN) {
       this.addPageNumber();
       this.doc.addPage();
       this.currentPage++;
-      this.yPosition = this.MARGIN + 15; // Optimized spacing
+      this.yPosition = this.MARGIN + 10; // Better page utilization
       return true;
     }
     return false;
@@ -205,14 +205,14 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFont("helvetica", "normal");
     this.doc.text("BS 7671:2018+A2:2022 (18th Edition) Compliant", this.pageWidth / 2, 35, { align: "center" });
 
-    this.yPosition = 65;
+    this.yPosition = 45;
 
     // Company name - sleek corporate styling
     this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text(context.company_name, this.pageWidth / 2, this.yPosition, { align: "center" });
-    this.yPosition += 20;
+    this.yPosition += 14;
 
     // Optimized project information box - tighter spacing
     this.doc.setDrawColor(...this.PRIMARY_COLOR);
@@ -245,7 +245,7 @@ class ProfessionalRAMSPDFGenerator {
       this.doc.text(detail.value, this.MARGIN + 50, y);
     });
 
-    this.yPosition += 75;
+    this.yPosition += 50;
 
     // Compact purpose statement
     this.doc.setFillColor(240, 248, 255);
@@ -285,14 +285,14 @@ class ProfessionalRAMSPDFGenerator {
 
   // Work Activities Section  
   private addWorkActivities(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(60);
+    this.checkPageBreak(45);
     this.addTOCEntry("3. Work Activities");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("3. WORK ACTIVITIES", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.yPosition += 16;
 
     const activities = safeArrayFilter(data.activities);
     if (activities.length === 0) {
@@ -327,7 +327,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("4. RISK SUMMARY", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.yPosition += 16;
 
     // Summary statistics box
     this.doc.setFillColor(248, 250, 252);
@@ -370,7 +370,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("2. RISK ASSESSMENT MATRIX", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.yPosition += 16;
 
     // Matrix explanation
     this.doc.setTextColor(0, 0, 0);
@@ -484,14 +484,14 @@ class ProfessionalRAMSPDFGenerator {
 
   // Enhanced Detailed Risk Assessment
   private addDetailedRiskAssessment(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(60);
+    this.checkPageBreak(45);
     this.addTOCEntry("5. Detailed Risk Assessment");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("5. DETAILED RISK ASSESSMENT", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.yPosition += 16;
 
     const deduplicatedRisks = deduplicateRisks(data.risks);
     
@@ -530,8 +530,8 @@ class ProfessionalRAMSPDFGenerator {
         cellPadding: 3
       },
       styles: {
-        fontSize: 7,
-        cellPadding: 2,
+        fontSize: 9,
+        cellPadding: 5,
         lineColor: [0, 0, 0],
         lineWidth: 0.5,
         valign: "top"
@@ -557,14 +557,14 @@ class ProfessionalRAMSPDFGenerator {
 
   // Method Statement Section
   private addMethodStatement(data: RAMSData, context: VariableContext): void {
-    this.checkPageBreak(60);
+    this.checkPageBreak(45);
     this.addTOCEntry("6. Method Statement");
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("6. METHOD STATEMENT", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.yPosition += 16;
 
     const methodStatements = extractMethodStatements(data.risks);
 
@@ -602,7 +602,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("7. CRITICAL SAFETY REQUIREMENTS", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.yPosition += 16;
 
     const safetyPoints = [
       "All personnel must be competent and trained for electrical work",
@@ -620,20 +620,20 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFont("helvetica", "normal");
 
     safetyPoints.forEach((point, index) => {
-      // Use proper bullet character instead of emoji
+      // Use proper bullet character with consistent spacing
       const bulletPoint = `• ${point}`;
       const wrappedPoint = this.doc.splitTextToSize(bulletPoint, this.pageWidth - (2 * this.MARGIN) - 20);
       
       wrappedPoint.forEach((line: string, lineIndex: number) => {
-        // Proper indentation for bullet points (15mm from left margin)
-        const xPosition = lineIndex === 0 ? this.MARGIN + 10 : this.MARGIN + 15;
-        this.doc.text(line, xPosition, this.yPosition + (lineIndex * 4));
+        // Proper indentation with hanging indent for wrapped text
+        const xPosition = lineIndex === 0 ? this.MARGIN + 8 : this.MARGIN + 12;
+        this.doc.text(line, xPosition, this.yPosition + (lineIndex * 4.5));
       });
       
-      this.yPosition += Math.max(8, wrappedPoint.length * 4 + 2);
+      this.yPosition += Math.max(10, wrappedPoint.length * 4.5 + 3);
     });
 
-    this.yPosition += 15; // Add space after section
+    this.yPosition += 12; // Optimized section spacing
 
     this.addPageNumber();
   }
@@ -679,6 +679,30 @@ class ProfessionalRAMSPDFGenerator {
         this.doc.setFont("helvetica", "normal");
         this.doc.text(`Name: ${approval.data.name}`, x + 5, this.yPosition + signatureBoxHeight - 15);
         this.doc.text(`Date: ${approval.data.date}`, x + 5, this.yPosition + signatureBoxHeight - 5);
+        
+        // Render actual signature if available
+        if (approval.data.signatureDataUrl) {
+          try {
+            this.doc.addImage(
+              approval.data.signatureDataUrl,
+              'PNG',
+              x + 5,
+              this.yPosition + 15,
+              40,
+              15
+            );
+          } catch (error) {
+            // Fallback if signature fails to render
+            this.doc.setFontSize(8);
+            this.doc.setTextColor(100, 100, 100);
+            this.doc.text("Digital Signature", x + 5, this.yPosition + 25);
+          }
+        } else {
+          // Show placeholder text when no signature
+          this.doc.setFontSize(8);
+          this.doc.setTextColor(100, 100, 100);
+          this.doc.text("Awaiting Signature", x + 5, this.yPosition + 25);
+        }
       }
     });
 
