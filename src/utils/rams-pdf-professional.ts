@@ -447,7 +447,7 @@ class ProfessionalRAMSPDFGenerator {
     // Calculate table dimensions for consistent padding
     const tableWidth = 140; // Fixed table width for consistency
     const cellSize = 22;
-    const headerWidth = 35;
+    const headerWidth = 25;
     const totalTableWidth = headerWidth + (cellSize * 5);
     const tableStartX = (this.pageWidth - totalTableWidth) / 2; // Center the table
     const tableStartY = this.yPosition;
@@ -464,7 +464,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(255, 255, 255);
     this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("SEVERITY →", tableStartX + totalTableWidth / 2, tableStartY + 12, { align: "center" });
+    this.doc.text("SEVERITY →", tableStartX + totalTableWidth / 2, tableStartY + 8, { align: "center" });
 
     // Severity column headers
     const severityLabels = ["Negligible", "Minor", "Moderate", "Major", "Catastrophic"];
