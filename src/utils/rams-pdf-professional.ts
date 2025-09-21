@@ -876,7 +876,7 @@ class ProfessionalRAMSPDFGenerator {
         this.doc.setTextColor(0, 0, 0);
         this.doc.setFontSize(9);
         this.doc.setFont("helvetica", "normal");
-        this.doc.text(`Name: ${approval.data.name}`, x + 5, this.yPosition + signatureBoxHeight - 20);
+        this.doc.text(`Name: ${approval.data.name}`, x + 5, this.yPosition + signatureBoxHeight - 18);
         this.doc.text(`Date: ${approval.data.date}`, x + 5, this.yPosition + signatureBoxHeight - 8);
         
         // Render actual signature if available
