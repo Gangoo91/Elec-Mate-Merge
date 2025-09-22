@@ -51,41 +51,41 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
         </CardHeader>
       </Card>
 
-      {/* Search and Filters - Enhanced mobile spacing and touch targets */}
-      <Card className="border-elec-yellow/20 bg-elec-gray mobile-card">
-        <CardContent className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
-          {/* Mobile-optimized form layout with proper spacing */}
-          <div className="space-y-4 sm:space-y-0 sm:flex sm:flex-col sm:gap-4">
-            {/* Search Input - Enhanced mobile accessibility */}
-            <div className="relative">
+      {/* Search and Filters - Enhanced mobile-first responsive design */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/95 backdrop-blur-sm mobile-card shadow-sm">
+        <CardContent className="p-3 sm:p-4 lg:p-6">
+          {/* Mobile-optimized layout that prevents overflow */}
+          <div className="space-y-3 sm:space-y-4">
+            {/* Search Input - Full width with proper touch targets */}
+            <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground flex-shrink-0 z-10" />
               <Input
                 placeholder="Search templates..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-12 text-base border-2 border-elec-yellow/20 focus:border-elec-yellow/60 transition-colors duration-200 touch-manipulation"
+                className="w-full pl-10 pr-4 h-11 sm:h-12 text-sm sm:text-base border-2 border-elec-yellow/20 bg-background/80 backdrop-blur-sm focus:border-elec-yellow/60 focus:bg-background transition-all duration-200 touch-manipulation"
                 autoComplete="off"
                 autoCapitalize="none"
               />
             </div>
             
-            {/* Filters Row - Responsive flex layout with proper gaps */}
-            <div className="flex flex-col xs:flex-row gap-3 sm:gap-4">
-              {/* Category Filter - Responsive width */}
-              <div className="flex-1 min-w-0">
+            {/* Filters Row - Responsive flex layout that stacks properly */}
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              {/* Category Filter - Responsive width that doesn't overflow */}
+              <div className="flex-1 min-w-0 max-w-full sm:max-w-none">
                 <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value === "all" ? "" : value)}>
-                  <SelectTrigger className="w-full h-12 text-base border-2 border-elec-yellow/20 focus:border-elec-yellow/60 transition-colors duration-200">
-                    <div className="flex items-center gap-2 min-w-0">
+                  <SelectTrigger className="w-full h-11 sm:h-12 text-sm sm:text-base border-2 border-elec-yellow/20 bg-background/80 backdrop-blur-sm focus:border-elec-yellow/60 transition-all duration-200 shadow-sm">
+                    <div className="flex items-center gap-2 min-w-0 overflow-hidden">
                       <Filter className="h-4 w-4 flex-shrink-0 text-elec-yellow" />
                       <SelectValue placeholder="All Categories" className="truncate" />
                     </div>
                   </SelectTrigger>
-                  <SelectContent className="max-h-60 overflow-y-auto border-elec-yellow/20">
-                    <SelectItem value="all" className="text-base py-3">
+                  <SelectContent className="z-50 max-h-60 overflow-y-auto bg-background/95 backdrop-blur-md border-elec-yellow/20 shadow-lg">
+                    <SelectItem value="all" className="text-sm sm:text-base py-2.5 cursor-pointer">
                       All Categories
                     </SelectItem>
                     {categories.map(category => (
-                      <SelectItem key={category} value={category} className="text-base py-3">
+                      <SelectItem key={category} value={category} className="text-sm sm:text-base py-2.5 cursor-pointer">
                         <span className="break-words">{category}</span>
                       </SelectItem>
                     ))}
@@ -93,14 +93,15 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                 </Select>
               </div>
               
-              {/* Skip Template Button - Enhanced mobile design */}
+              {/* Skip Template Button - Consistent sizing and no overflow */}
               <Button
                 variant="outline"
                 onClick={onSkipTemplate}
-                className="flex items-center justify-center gap-2 h-12 px-4 sm:px-6 text-base whitespace-nowrap border-2 border-elec-yellow/20 hover:border-elec-yellow/60 hover:bg-elec-yellow/10 transition-all duration-200 touch-manipulation active:scale-[0.98] flex-shrink-0"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 h-11 sm:h-12 px-4 sm:px-6 text-sm sm:text-base whitespace-nowrap border-2 border-elec-yellow/20 bg-background/80 backdrop-blur-sm hover:border-elec-yellow/60 hover:bg-elec-yellow/10 transition-all duration-200 touch-manipulation active:scale-[0.98] flex-shrink-0 shadow-sm"
               >
                 <SkipForward className="h-4 w-4 flex-shrink-0" />
-                <span className="hidden sm:inline">Start from Scratch</span>
+                <span className="hidden xs:inline sm:hidden lg:inline">Start from Scratch</span>
+                <span className="xs:hidden sm:inline lg:hidden">Skip Template</span>
                 <span className="sm:hidden">Skip</span>
               </Button>
             </div>
