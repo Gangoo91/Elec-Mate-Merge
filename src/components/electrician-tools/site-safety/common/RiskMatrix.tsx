@@ -45,17 +45,16 @@ export const RiskMatrix: React.FC<RiskMatrixProps> = ({
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <div className="grid grid-cols-6 gap-1 min-w-[300px] sm:min-w-[380px] md:min-w-[450px] lg:min-w-[500px]">
+          <div className="grid grid-cols-6 gap-1 min-w-[320px] sm:min-w-[400px] lg:min-w-[500px]">
             {/* Header row */}
-            <div className="bg-elec-dark/50 p-1 sm:p-2 text-center text-white text-xs font-bold border border-elec-yellow/20 min-h-[40px] flex flex-col justify-center">
-              <span className="text-xs">L/S</span>
+            <div className="bg-elec-dark/50 p-1 sm:p-2 text-center text-white text-xs font-bold border border-elec-yellow/20">
+              L/S
             </div>
             {severityLabels.map((label, index) => (
-              <div key={label} className="bg-elec-dark/50 p-1 sm:p-2 text-center text-white text-xs font-bold border border-elec-yellow/20 min-h-[40px] flex flex-col justify-center">
-                <div className="text-xs">{index + 1}</div>
-                <span className="text-[7px] sm:text-[9px] md:text-[10px] break-words overflow-hidden line-clamp-2 leading-tight mt-1 hidden xs:block">
-                  {label}
-                </span>
+              <div key={label} className="bg-elec-dark/50 p-1 sm:p-2 text-center text-white text-xs font-bold border border-elec-yellow/20">
+                {index + 1}
+                <br />
+                <span className="text-[8px] sm:text-[10px] hidden xs:inline break-words overflow-hidden">{label}</span>
               </div>
             ))}
             
@@ -63,11 +62,10 @@ export const RiskMatrix: React.FC<RiskMatrixProps> = ({
             {[5, 4, 3, 2, 1].map((likelihood) => (
               <div key={likelihood} className="contents">
                 {/* Row header */}
-                <div className="bg-elec-dark/50 p-1 sm:p-2 text-center text-white text-xs font-bold border border-elec-yellow/20 min-h-[40px] sm:min-h-[48px] flex flex-col justify-center">
-                  <div className="text-xs">{likelihood}</div>
-                  <span className="text-[7px] sm:text-[9px] md:text-[10px] break-words overflow-hidden line-clamp-2 leading-tight mt-1 hidden xs:block">
-                    {likelihoodLabels[likelihood - 1]}
-                  </span>
+                <div className="bg-elec-dark/50 p-1 sm:p-2 text-center text-white text-xs font-bold border border-elec-yellow/20">
+                  {likelihood}
+                  <br />
+                  <span className="text-[8px] sm:text-[10px] hidden xs:inline">{likelihoodLabels[likelihood - 1]}</span>
                 </div>
                 
                 {/* Risk cells */}
