@@ -127,16 +127,20 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
           >
             {/* Card Header - Optimized spacing and alignment */}
             <CardHeader className="pt-0 px-0 flex-shrink-0">
-              <div className="flex items-start justify-between gap-3">
-                <CardTitle className="text-base sm:text-lg text-elec-yellow flex items-start gap-2 flex-1 min-w-0">
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    {template.isPopular && (
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 flex-shrink-0" />
+                    )}
+                  </div>
+                  <Badge className={`${getDifficultyColor(template.difficultyLevel)} text-xs flex-shrink-0 px-2 py-1`}>
+                    {template.difficultyLevel}
+                  </Badge>
+                </div>
+                <CardTitle className="text-base sm:text-lg text-elec-yellow">
                   <span className="break-words line-clamp-2 leading-tight">{template.name}</span>
-                  {template.isPopular && (
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 flex-shrink-0 mt-0.5" />
-                  )}
                 </CardTitle>
-                <Badge className={`${getDifficultyColor(template.difficultyLevel)} text-xs flex-shrink-0 px-2 py-1`}>
-                  {template.difficultyLevel}
-                </Badge>
               </div>
               <p className="text-xs sm:text-sm text-muted-foreground line-clamp-3 leading-relaxed mt-2">
                 {template.description}
