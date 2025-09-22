@@ -126,7 +126,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             onClick={() => setSelectedTemplate(template)}
           >
             {/* Card Header - Optimized spacing and alignment */}
-            <CardHeader className="flex-shrink-0">
+            <CardHeader className="pt-0 px-0 flex-shrink-0">
               <div className="flex items-start justify-between gap-3">
                 <CardTitle className="text-base sm:text-lg text-elec-yellow flex items-start gap-2 flex-1 min-w-0">
                   <span className="break-words line-clamp-2 leading-tight">{template.name}</span>
