@@ -37,7 +37,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
   };
 
   return (
-    <div className="mobile-container space-y-4 sm:space-y-6">
+    <div className="w-full max-w-full mx-auto space-y-4 sm:space-y-6">
       {/* Header - Enhanced mobile typography */}
       <Card className="border-blue-500/20 bg-blue-500/5 mobile-card">
         <CardHeader className="p-4 sm:p-6">
