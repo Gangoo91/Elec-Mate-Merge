@@ -40,7 +40,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
     <div className="w-full max-w-full mx-auto space-y-4 sm:space-y-6">
       {/* Header - Enhanced mobile typography */}
       <Card className="border-blue-500/20 bg-blue-500/5 mobile-card">
-        <CardHeader className="p-4 sm:p-6">
+        <CardHeader>
           <CardTitle className="text-blue-300 flex items-center gap-2 mobile-heading">
             <Zap className="h-5 w-5 flex-shrink-0" />
             <span className="break-words">Choose a Method Statement Template</span>
