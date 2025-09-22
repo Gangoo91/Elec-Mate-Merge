@@ -689,9 +689,8 @@ const RAMSGenerator: React.FC = () => {
         </AccordionItem>
       </Accordion>
 
-      {/* Action Bar - Sticky on Mobile */}
-      <div className="sticky bottom-0 z-10 bg-background/95 backdrop-blur-sm border-t border-elec-yellow/20 p-4 -mx-4">
-        <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
+      {/* Action Bar */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
           <CardContent className="p-3 sm:p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:gap-2">
               <Button
@@ -733,7 +732,6 @@ const RAMSGenerator: React.FC = () => {
             )}
           </CardContent>
         </Card>
-      </div>
 
       {/* PDF Preview Modal */}
       <RAMSPDFPreview
