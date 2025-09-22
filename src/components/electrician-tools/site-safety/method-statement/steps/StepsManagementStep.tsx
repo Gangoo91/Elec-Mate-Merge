@@ -681,8 +681,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </ul>
                               </div>
 
-                              {/* Equipment Card - Dark styling to match screenshot */}
-                              <div className="bg-slate-900/40 border border-slate-700/50 rounded-xl p-4 space-y-3">
+                              {/* Equipment Card - Lighter background and improved bullet alignment */}
+                              <div className="bg-slate-800/60 border border-slate-600/50 rounded-xl p-4 space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
                                   <Wrench className="h-4 w-4 text-blue-400 flex-shrink-0" />
                                   <h4 className="text-sm font-medium text-white">
@@ -691,9 +691,9 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </div>
                                 <ul className="space-y-2">
                                   {step.equipmentNeeded.slice(0, 3).map((equipment, index) => (
-                                    <li key={index} className="text-sm text-slate-200 flex items-start gap-2">
-                                      <span className="text-blue-400 mt-1 flex-shrink-0">•</span>
-                                      <span className="break-words">{equipment}</span>
+                                    <li key={index} className="text-sm text-slate-200 flex items-start gap-2 leading-relaxed">
+                                      <span className="text-blue-400 flex-shrink-0 leading-relaxed">•</span>
+                                      <span className="break-words flex-1">{equipment}</span>
                                     </li>
                                   ))}
                                   {step.equipmentNeeded.length > 3 && (
