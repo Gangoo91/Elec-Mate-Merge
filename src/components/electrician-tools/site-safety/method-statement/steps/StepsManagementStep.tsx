@@ -172,7 +172,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
   return (
     <div className="space-y-6">
       {/* Header */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-elec-yellow">
@@ -257,7 +257,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                       <Card
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        className={`border-elec-yellow/20 bg-elec-gray transition-all ${
+                        className={`transition-all ${
                           snapshot.isDragging ? 'scale-105 shadow-lg' : ''
                         } ${expandedStep === step.id ? 'border-elec-yellow' : ''}`}
                       >
@@ -385,368 +385,88 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                   </SelectContent>
                                 </Select>
                                </div>
-
-                              {/* Linked Hazards */}
-                              {step.linkedHazards && step.linkedHazards.length > 0 && (
-                                <div>
-                                  <Label className="flex items-center gap-2 text-foreground mb-2">
-                                    <Shield className="h-4 w-4" />
-                                    Linked Hazards ({step.linkedHazards.length})
-                                  </Label>
-                                  <div className="space-y-2">
-                                    {step.linkedHazards.map((hazardId) => {
-                                      const hazard = getHazardById(hazardId);
-                                      if (!hazard) return null;
-                                      return (
-                                        <div key={hazardId} className="flex items-center justify-between p-3 bg-orange-500/10 border border-orange-500/20 rounded-lg">
-                                          <div className="flex items-center gap-3">
-                                            <div className="p-1 rounded bg-orange-500/20">
-                                              <hazard.icon className="h-4 w-4 text-orange-400" />
-                                            </div>
-                                            <div>
-                                              <div className="font-medium text-white">{hazard.name}</div>
-                                              <div className="text-xs text-muted-foreground">{hazard.category}</div>
-                                            </div>
-                                          </div>
-                                          <Button
-                                            size="sm"
-                                            variant="ghost"
-                                            onClick={() => unlinkHazardFromStep(step.id, hazardId)}
-                                            className="text-red-400 hover:bg-red-500/10"
-                                          >
-                                            ×
-                                          </Button>
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              )}
-
-                               {/* Safety Requirements */}
-                               <div>
-                                <Label className="flex items-center gap-2 text-foreground mb-2">
-                                  <Shield className="h-4 w-4" />
-                                  Safety Requirements
-                                </Label>
-                                <div className="space-y-2">
-                                  <div className="flex gap-2">
-                                    <Input
-                                      placeholder="Add safety requirement"
-                                      onKeyPress={(e) => {
-                                        if (e.key === 'Enter') {
-                                          addArrayItem(step.id, 'safetyRequirements', e.currentTarget.value);
-                                          e.currentTarget.value = '';
-                                        }
-                                      }}
-                                    />
-                                    <Button
-                                      type="button"
-                                      size="sm"
-                                      onClick={(e) => {
-                                        const input = e.currentTarget.previousElementSibling as HTMLInputElement;
-                                        addArrayItem(step.id, 'safetyRequirements', input.value);
-                                        input.value = '';
-                                      }}
-                                    >
-                                      Add
-                                    </Button>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2">
-                                    {step.safetyRequirements.map((req, index) => (
-                                      <Badge
-                                        key={index}
-                                        variant="outline"
-                                        className="bg-red-500/10 border-red-500/30 text-red-300"
-                                      >
-                                        <Shield className="h-3 w-3 mr-1" />
-                                        {req}
-                                        <Button
-                                          size="sm"
-                                          variant="ghost"
-                                          className="h-auto p-0 ml-2"
-                                          onClick={() => removeArrayItem(step.id, 'safetyRequirements', index)}
-                                        >
-                                          ×
-                                        </Button>
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Equipment Needed */}
-                              <div>
-                                <Label className="flex items-center gap-2 text-foreground mb-2">
-                                  <Wrench className="h-4 w-4" />
-                                  Equipment Needed
-                                </Label>
-                                <div className="space-y-2">
-                                  <div className="flex gap-2">
-                                    <Input
-                                      placeholder="Add equipment"
-                                      onKeyPress={(e) => {
-                                        if (e.key === 'Enter') {
-                                          addArrayItem(step.id, 'equipmentNeeded', e.currentTarget.value);
-                                          e.currentTarget.value = '';
-                                        }
-                                      }}
-                                    />
-                                    <Button
-                                      type="button"
-                                      size="sm"
-                                      onClick={(e) => {
-                                        const input = e.currentTarget.previousElementSibling as HTMLInputElement;
-                                        addArrayItem(step.id, 'equipmentNeeded', input.value);
-                                        input.value = '';
-                                      }}
-                                    >
-                                      Add
-                                    </Button>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2">
-                                    {step.equipmentNeeded.map((equipment, index) => (
-                                      <Badge
-                                        key={index}
-                                        variant="outline"
-                                        className="bg-blue-500/10 border-blue-500/30 text-blue-300"
-                                      >
-                                        <Wrench className="h-3 w-3 mr-1" />
-                                        {equipment}
-                                        <Button
-                                          size="sm"
-                                          variant="ghost"
-                                          className="h-auto p-0 ml-2"
-                                          onClick={() => removeArrayItem(step.id, 'equipmentNeeded', index)}
-                                        >
-                                          ×
-                                        </Button>
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-
-                              {/* Qualifications */}
-                              <div>
-                                <Label className="flex items-center gap-2 text-foreground mb-2">
-                                  <GraduationCap className="h-4 w-4" />
-                                  Required Qualifications
-                                </Label>
-                                <div className="space-y-2">
-                                  <div className="flex gap-2">
-                                    <Input
-                                      placeholder="Add qualification"
-                                      onKeyPress={(e) => {
-                                        if (e.key === 'Enter') {
-                                          addArrayItem(step.id, 'qualifications', e.currentTarget.value);
-                                          e.currentTarget.value = '';
-                                        }
-                                      }}
-                                    />
-                                    <Button
-                                      type="button"
-                                      size="sm"
-                                      onClick={(e) => {
-                                        const input = e.currentTarget.previousElementSibling as HTMLInputElement;
-                                        addArrayItem(step.id, 'qualifications', input.value);
-                                        input.value = '';
-                                      }}
-                                    >
-                                      Add
-                                    </Button>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2">
-                                    {step.qualifications.map((qual, index) => (
-                                      <Badge
-                                        key={index}
-                                        variant="outline"
-                                        className="bg-green-500/10 border-green-500/30 text-green-300"
-                                      >
-                                        <GraduationCap className="h-3 w-3 mr-1" />
-                                        {qual}
-                                        <Button
-                                          size="sm"
-                                          variant="ghost"
-                                          className="h-auto p-0 ml-2"
-                                          onClick={() => removeArrayItem(step.id, 'qualifications', index)}
-                                        >
-                                          ×
-                                        </Button>
-                                      </Badge>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
                             </CardContent>
                           </>
                         ) : (
-                          // Collapsed Card View - Enhanced Mobile Layout
-                          <CardContent className="mobile-padding mobile-card-spacing">
-                            <div className="modern-step-header-grid animate-fade-in">
-                              {/* 
-                                Grid Layout Breakdown:
-                                - Mobile (320px-639px): Single column, stacked vertically 
-                                - Tablet (640px-1023px): Two columns, 70% content / 30% actions
-                                - Desktop (1024px+): Two columns, 75% content / 25% actions
-                                Uses CSS Grid with fractional and percentage units for flexibility
-                              */}
-                              {/* Grid Item 1: Main Content Area */}
-                              <div className="step-content-area">
-                                <div className="step-inner-content">
-                                  {/* Enhanced Drag Handle with Visual Feedback */}
-                                  <div
-                                    {...provided.dragHandleProps}
-                                    className="drag-handle-modern"
-                                  >
-                                    <GripVertical className="h-5 w-5" />
-                                  </div>
-                                  
-                                  {/* Modern Step Number Badge */}
-                                  <div className="step-number-modern">
-                                    <span className="step-number-text">{step.stepNumber}</span>
-                                    <div className="step-number-pulse"></div>
-                                  </div>
-                                  
-                                  {/* Enhanced Content Typography */}
-                                  <div className="step-text-content">
-                                    <h3 className="step-title-modern">
+                          // Simple Card View
+                          <CardContent className="p-6">
+                            <div className="flex items-start gap-4">
+                              {/* Step Number Badge */}
+                              <div className="flex-shrink-0">
+                                <div className="w-12 h-12 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center font-bold text-lg border-2 border-elec-yellow/30">
+                                  {step.stepNumber}
+                                </div>
+                              </div>
+
+                              {/* Content */}
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-start justify-between gap-4 mb-3">
+                                  <div className="flex-1">
+                                    <h3 className="text-xl font-semibold text-elec-yellow mb-2">
                                       {step.title || `Step ${step.stepNumber}`}
                                     </h3>
-                                    <p className="step-description-modern">
+                                    <p className="text-muted-foreground leading-relaxed">
                                       {step.description || 'No description provided'}
                                     </p>
+                                  </div>
+                                  
+                                  {/* Time and Edit Button */}
+                                  <div className="flex flex-col items-end gap-3">
+                                    {step.estimatedDuration && (
+                                      <div className="bg-muted/30 rounded-lg px-3 py-2 text-center border border-border">
+                                        <div className="flex items-center gap-1 text-sm text-muted-foreground mb-1">
+                                          <Clock className="h-4 w-4" />
+                                        </div>
+                                        <div className="text-lg font-semibold text-foreground">
+                                          {step.estimatedDuration}
+                                        </div>
+                                      </div>
+                                    )}
                                     
-                                    {/* Enhanced Visual Progress Indicator */}
-                                    <div className="step-progress-bar">
-                                      <div className="step-progress-fill"></div>
+                                    <Button
+                                      onClick={() => setExpandedStep(step.id)}
+                                      size="sm"
+                                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2"
+                                    >
+                                      <Edit3 className="h-4 w-4 mr-2" />
+                                      Edit
+                                    </Button>
+                                  </div>
+                                </div>
+
+                                {/* Risk Badge and Progress */}
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center gap-2">
+                                    <Badge className={getRiskColor(step.riskLevel)} variant="outline">
+                                      {step.riskLevel} risk
+                                    </Badge>
+                                    {step.linkedHazards && step.linkedHazards.length > 0 && (
+                                      <Badge variant="outline" className="border-orange-500/30 text-orange-400">
+                                        {step.linkedHazards.length} hazard{step.linkedHazards.length !== 1 ? 's' : ''}
+                                      </Badge>
+                                    )}
+                                  </div>
+
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-24 bg-muted/50 h-2 rounded-full overflow-hidden">
+                                      <div 
+                                        className="h-full bg-elec-yellow transition-all duration-300"
+                                        style={{ width: step.isCompleted ? '100%' : '25%' }}
+                                      />
                                     </div>
+                                    <span className="text-xs text-muted-foreground font-medium">
+                                      {step.isCompleted ? 'Complete' : 'In Progress'}
+                                    </span>
                                   </div>
                                 </div>
                               </div>
-                              
-                              {/* Grid Item 2: Modern Actions and Meta Area */}
-                              <div className="step-actions-modern">
-                                <div className="actions-container">
-                                  {/* Enhanced Risk Badge */}
-                                   <div className="risk-badge-modern">
-                                     <Badge className={`${getRiskColor(step.riskLevel)} modern-badge`} variant="outline">
-                                       {step.riskLevel} risk
-                                     </Badge>
-                                   </div>
-                                   
-                                   {/* Enhanced Duration Display */}
-                                   {step.estimatedDuration && (
-                                     <div className="duration-display-modern">
-                                       <Clock className="h-4 w-4" />
-                                       <span>{step.estimatedDuration}</span>
-                                     </div>
-                                   )}
-                                   
-                                   {/* Modern Action Button */}
-                                   <Button
-                                     onClick={() => setExpandedStep(step.id)}
-                                     size="sm"
-                                     className="action-button-modern hover-scale"
-                                   >
-                                     <Edit3 className="h-4 w-4 mr-2" />
-                                     Edit
-                                   </Button>
-                                 </div>
-                               </div>
-                             </div>
 
-                            {/* Responsive Three Column Layout - Fixed for All Screen Sizes */}
-                            <div className="responsive-method-grid">
-                              {/* 
-                                Grid Layout Breakdown:
-                                - Mobile (320px-639px): Single column, full width cards
-                                - Tablet (640px-1023px): Two columns, qualifications spans full width
-                                - Desktop (1024px+): Three columns, equal distribution
-                                Uses CSS Grid with fractional units for flexibility
-                              */}
-                              {/* Safety Requirements - Grid Item 1 */}
-                              <div className="method-card-item space-y-3">
-                                <div className="flex items-center gap-2 mb-3">
-                                  <Shield className="h-4 w-4 text-red-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-foreground mobile-text">
-                                    Safety Requirements ({step.safetyRequirements.length})
-                                  </h4>
-                                </div>
-                                <ul className="space-y-2">
-                                  {step.safetyRequirements.slice(0, 3).map((req, index) => (
-                                    <li key={index} className="text-sm text-foreground flex items-start gap-2 leading-relaxed">
-                                      <span className="text-red-400 mt-1 flex-shrink-0">•</span>
-                                      <span className="break-words">{req}</span>
-                                    </li>
-                                  ))}
-                                  {step.safetyRequirements.length > 3 && (
-                                    <li className="text-sm text-foreground/80 font-medium">
-                                      +{step.safetyRequirements.length - 3} more
-                                    </li>
-                                  )}
-                                  {step.safetyRequirements.length === 0 && (
-                                    <li className="text-sm text-foreground/60 italic">
-                                      No safety requirements added
-                                    </li>
-                                  )}
-                                </ul>
-                              </div>
-
-                              {/* Equipment - Grid Item 2 */}
-                              <div className="method-card-item space-y-3">
-                                <div className="flex items-center gap-2 mb-3">
-                                  <Wrench className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-foreground mobile-text">
-                                    Equipment ({step.equipmentNeeded.length})
-                                  </h4>
-                                </div>
-                                <ul className="space-y-2">
-                                  {step.equipmentNeeded.slice(0, 3).map((equipment, index) => (
-                                    <li key={index} className="text-sm text-foreground flex items-start gap-2 leading-relaxed">
-                                      <span className="text-blue-400 mt-1 flex-shrink-0">•</span>
-                                      <span className="break-words">{equipment}</span>
-                                    </li>
-                                  ))}
-                                  {step.equipmentNeeded.length > 3 && (
-                                    <li className="text-sm text-foreground/80 font-medium">
-                                      +{step.equipmentNeeded.length - 3} more
-                                    </li>
-                                  )}
-                                  {step.equipmentNeeded.length === 0 && (
-                                    <li className="text-sm text-foreground/60 italic">
-                                      No equipment specified
-                                    </li>
-                                  )}
-                                </ul>
-                              </div>
-
-                              {/* Qualifications - Responsive Grid Item */}
-                              <div className="qualifications-grid-item space-y-3">
-                                <div className="flex items-center gap-2 mb-3">
-                                  <GraduationCap className="h-4 w-4 text-green-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-foreground mobile-text">
-                                    Qualifications ({step.qualifications.length})
-                                  </h4>
-                                </div>
-                                <ul className="space-y-2">
-                                  {step.qualifications.slice(0, 3).map((qual, index) => (
-                                    <li key={index} className="text-sm text-foreground flex items-start gap-2 leading-relaxed">
-                                      <span className="text-green-400 mt-1 flex-shrink-0">•</span>
-                                      <span className="break-words">{qual}</span>
-                                    </li>
-                                  ))}
-                                  {step.qualifications.length > 3 && (
-                                    <li className="text-sm text-foreground/80 font-medium">
-                                      +{step.qualifications.length - 3} more
-                                    </li>
-                                  )}
-                                  {step.qualifications.length === 0 && (
-                                    <li className="text-sm text-foreground/60 italic">
-                                      No qualifications required
-                                    </li>
-                                  )}
-                                </ul>
+                              {/* Drag Handle */}
+                              <div
+                                {...provided.dragHandleProps}
+                                className="flex-shrink-0 text-muted-foreground hover:text-elec-yellow cursor-grab p-1"
+                              >
+                                <GripVertical className="h-5 w-5" />
                               </div>
                             </div>
                           </CardContent>
@@ -761,6 +481,16 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
           </Droppable>
         </DragDropContext>
        )}
+
+      {/* Navigation */}
+      <div className="flex justify-between pt-6">
+        <Button onClick={onBack} variant="outline">
+          Previous Step
+        </Button>
+        <Button onClick={onNext} disabled={steps.length === 0}>
+          Next Step
+        </Button>
+      </div>
 
       {/* Hazard Selector Modal */}
       <HazardSelector
