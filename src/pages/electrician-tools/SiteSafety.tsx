@@ -169,19 +169,19 @@ const SiteSafety = () => {
                 <ul className="space-y-3 text-muted-foreground">
                   <li className="flex items-start gap-3">
                     <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span>Complete risk assessment for each task</span>
+                    <span className="text-left">Complete risk assessment for each task</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span>Brief all team members on hazards</span>
+                    <span className="text-left">Brief all team members on hazards</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span>Check all safety equipment</span>
+                    <span className="text-left">Check all safety equipment</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span>Document site conditions</span>
+                    <span className="text-left">Document site conditions</span>
                   </li>
                 </ul>
               </div>
@@ -190,19 +190,19 @@ const SiteSafety = () => {
                 <ul className="space-y-3 text-muted-foreground">
                   <li className="flex items-start gap-3">
                     <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span>Follow method statements precisely</span>
+                    <span className="text-left">Follow method statements precisely</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span>Report near misses immediately</span>
+                    <span className="text-left">Report near misses immediately</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span>Take photos of safety concerns</span>
+                    <span className="text-left">Take photos of safety concerns</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span>Update risk assessments if conditions change</span>
+                    <span className="text-left">Update risk assessments if conditions change</span>
                   </li>
                 </ul>
               </div>
