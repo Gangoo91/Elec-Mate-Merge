@@ -69,40 +69,40 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
               />
             </div>
             
-            {/* Filters Row - Responsive flex layout that stacks properly */}
+            {/* Filters Row - Fixed width and text overflow issues */}
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-              {/* Category Filter - Responsive width that doesn't overflow */}
-              <div className="flex-1 min-w-0 max-w-full sm:max-w-none">
+              {/* Category Filter - Fixed width to prevent text truncation */}
+              <div className="flex-1 min-w-0 sm:min-w-[200px] lg:min-w-[240px]">
                 <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value === "all" ? "" : value)}>
                   <SelectTrigger className="w-full h-11 sm:h-12 text-sm sm:text-base border-2 border-elec-yellow/20 bg-background/80 backdrop-blur-sm focus:border-elec-yellow/60 transition-all duration-200 shadow-sm">
-                    <div className="flex items-center gap-2 min-w-0 overflow-hidden">
+                    <div className="flex items-center gap-2 min-w-0 overflow-hidden pr-1">
                       <Filter className="h-4 w-4 flex-shrink-0 text-elec-yellow" />
-                      <SelectValue placeholder="All Categories" className="truncate" />
+                      <SelectValue placeholder="All Categories" className="flex-1 text-left">
+                        {selectedCategory || "All Categories"}
+                      </SelectValue>
                     </div>
                   </SelectTrigger>
-                  <SelectContent className="z-50 max-h-60 overflow-y-auto bg-background/95 backdrop-blur-md border-elec-yellow/20 shadow-lg">
+                  <SelectContent className="z-50 max-h-60 overflow-y-auto bg-background/95 backdrop-blur-md border-elec-yellow/20 shadow-lg min-w-[200px]">
                     <SelectItem value="all" className="text-sm sm:text-base py-2.5 cursor-pointer">
                       All Categories
                     </SelectItem>
                     {categories.map(category => (
                       <SelectItem key={category} value={category} className="text-sm sm:text-base py-2.5 cursor-pointer">
-                        <span className="break-words">{category}</span>
+                        <span className="break-words whitespace-normal">{category}</span>
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               
-              {/* Skip Template Button - Consistent sizing and no overflow */}
+              {/* Skip Template Button - Improved responsive sizing */}
               <Button
                 variant="outline"
                 onClick={onSkipTemplate}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 h-11 sm:h-12 px-4 sm:px-6 text-sm sm:text-base whitespace-nowrap border-2 border-elec-yellow/20 bg-background/80 backdrop-blur-sm hover:border-elec-yellow/60 hover:bg-elec-yellow/10 transition-all duration-200 touch-manipulation active:scale-[0.98] flex-shrink-0 shadow-sm"
+                className="w-full sm:w-auto sm:min-w-[160px] lg:min-w-[180px] flex items-center justify-center gap-2 h-11 sm:h-12 px-4 sm:px-6 text-sm sm:text-base font-medium border-2 border-elec-yellow/20 bg-background/80 backdrop-blur-sm hover:border-elec-yellow/60 hover:bg-elec-yellow/10 transition-all duration-200 touch-manipulation active:scale-[0.98] flex-shrink-0 shadow-sm"
               >
                 <SkipForward className="h-4 w-4 flex-shrink-0" />
-                <span className="hidden xs:inline sm:hidden lg:inline">Start from Scratch</span>
-                <span className="xs:hidden sm:inline lg:hidden">Skip Template</span>
-                <span className="sm:hidden">Skip</span>
+                <span className="whitespace-nowrap">Skip Template</span>
               </Button>
             </div>
           </div>
