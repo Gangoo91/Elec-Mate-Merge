@@ -345,6 +345,75 @@
     background-color: rgb(15 23 42 / 0.5); /* slate-900/50 */
   }
 
+  
+  /* Responsive Step Header Grid - Replaces flex layout for better control */
+  .responsive-step-header-grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    
+    /* Mobile First: Single column, full-width stacking (320px - 639px) */
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "content"
+      "actions";
+    align-items: start;
+    
+    /* Tablet: Two columns with 70/30 split for optimal content/actions ratio (640px - 1023px) */
+    @media (min-width: 640px) and (max-width: 1023px) {
+      grid-template-columns: 70% 30%;
+      grid-template-areas: "content actions";
+      align-items: start;
+      gap: 1.5rem;
+      
+      /* Ensure actions align to end for visual balance */
+      .step-actions-area {
+        justify-self: end;
+      }
+    }
+    
+    /* Desktop: Two columns with 75/25 split for more content focus (1024px+) */
+    @media (min-width: 1024px) {
+      grid-template-columns: 75% 25%;
+      grid-template-areas: "content actions";
+      align-items: center; /* Center align on desktop for cleaner look */
+      gap: 2rem;
+      
+      /* Actions align to end with center vertical alignment */
+      .step-actions-area {
+        justify-self: end;
+        align-self: center;
+      }
+    }
+    
+    /* Large screens: Maintain proportions but increase spacing (1280px+) */
+    @media (min-width: 1280px) {
+      gap: 2.5rem;
+    }
+  }
+  
+  /* Grid area assignments for semantic layout */
+  .step-content-area {
+    grid-area: content;
+    min-width: 0; /* Prevent overflow */
+    overflow-wrap: break-word;
+  }
+  
+  .step-actions-area {
+    grid-area: actions;
+    min-width: fit-content; /* Prevent shrinking of action buttons */
+    
+    /* Mobile: Full width actions for better touch targets */
+    @media (max-width: 639px) {
+      width: 100%;
+    }
+    
+    /* Tablet and up: Constrain width for proper alignment */
+    @media (min-width: 640px) {
+      width: auto;
+    }
+  }
+
   /* Better focus states for mobile */
   .mobile-focus {
     @apply focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:outline-none;

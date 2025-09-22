@@ -582,8 +582,17 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                         ) : (
                           // Collapsed Card View - Enhanced Mobile Layout
                           <CardContent className="mobile-padding mobile-card-spacing">
-                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
-                              <div className="flex items-start gap-3 sm:gap-4 min-w-0 flex-1">
+                            <div className="responsive-step-header-grid">
+                              {/* 
+                                Grid Layout Breakdown:
+                                - Mobile (320px-639px): Single column, stacked vertically 
+                                - Tablet (640px-1023px): Two columns, 70% content / 30% actions
+                                - Desktop (1024px+): Two columns, 75% content / 25% actions
+                                Uses CSS Grid with fractional and percentage units for flexibility
+                              */}
+                              {/* Grid Item 1: Main Content Area */}
+                              <div className="step-content-area">
+                                <div className="flex items-start gap-3 sm:gap-4 min-w-0">{/* nested flex for internal layout */}
                                 <div
                                   {...provided.dragHandleProps}
                                   className="text-foreground/60 hover:text-elec-yellow cursor-grab touch-target flex-shrink-0 mt-1"
@@ -601,8 +610,12 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                     {step.description || 'No description provided'}
                                   </p>
                                 </div>
+                                </div>
                               </div>
-                              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 flex-shrink-0">
+                              
+                              {/* Grid Item 2: Actions and Meta Area */}
+                              <div className="step-actions-area">
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
                                 <Badge className={getRiskColor(step.riskLevel)} variant="outline">
                                   {step.riskLevel} risk
                                 </Badge>
@@ -620,6 +633,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 >
                                   Edit
                                 </Button>
+                                </div>
                               </div>
                             </div>
 
