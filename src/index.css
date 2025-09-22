@@ -43,6 +43,10 @@
     --elec-card: 0 0% 14%;
     --elec-grey: 0 0% 16%;
     
+    /* Mobile breakpoints */
+    --mobile-xs: 320px;
+    --mobile-sm: 375px;
+    
     /* Muted text colors for comfortable reading */
     --text-muted: 210 40% 82%;
     --text-subtle: 210 30% 75%;

@@ -40,10 +40,10 @@ const SiteSafety = () => {
 
   return (
     <RAMSProvider>
-      <div className="max-w-7xl mx-auto space-y-8 animate-fade-in flex flex-col items-center justify-center min-h-screen px-4">
-        <div className="flex flex-col items-center justify-center mb-6">
-          <h1 className="text-3xl font-bold tracking-tight mb-4">Site Safety & Risk Assessment</h1>
-          <p className="text-muted-foreground text-center max-w-2xl mb-4">
+      <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in px-4 py-4 sm:py-6">
+        <div className="text-center mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 sm:mb-4">Site Safety & Risk Assessment</h1>
+          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto mb-3 sm:mb-4 px-2">
             Comprehensive safety management tools for electrical contractors. Generate RAMS documents, 
             assess risks, and maintain safety compliance on all your projects.
           </p>
@@ -51,29 +51,29 @@ const SiteSafety = () => {
         </div>
         <Tabs defaultValue="rams" value={activeTab} onValueChange={setActiveTab} className="w-full">
         {/* Mobile Dropdown */}
-        <div className="lg:hidden mb-6">
+        <div className="lg:hidden mb-4">
           <Select value={activeTab} onValueChange={setActiveTab}>
-            <SelectTrigger className="w-full bg-background/80 backdrop-blur-sm border-elec-yellow/20 z-50">
+            <SelectTrigger className="w-full h-12 bg-background/80 backdrop-blur-sm border-elec-yellow/20 text-base">
               <div className="flex items-center gap-3">
                 {(() => {
                   const currentTab = tabOptions.find(tab => tab.value === activeTab);
                   const IconComponent = currentTab?.icon || FileText;
                   return (
                     <>
-                      <IconComponent className="h-4 w-4 text-elec-yellow" />
-                      <SelectValue placeholder="Select a safety tool" />
+                      <IconComponent className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                      <span className="truncate">{currentTab?.label || "Select a safety tool"}</span>
                     </>
                   );
                 })()}
               </div>
             </SelectTrigger>
-            <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+            <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20">
               {tabOptions.map((tab) => {
                 const IconComponent = tab.icon;
                 return (
-                  <SelectItem key={tab.value} value={tab.value} className="cursor-pointer">
+                  <SelectItem key={tab.value} value={tab.value} className="cursor-pointer h-12">
                     <div className="flex items-center gap-3">
-                      <IconComponent className="h-4 w-4" />
+                      <IconComponent className="h-4 w-4 flex-shrink-0" />
                       <span>{tab.label}</span>
                     </div>
                   </SelectItem>

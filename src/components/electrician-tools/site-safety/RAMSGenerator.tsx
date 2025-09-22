@@ -251,7 +251,7 @@ const RAMSGenerator: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
       <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
         <CardHeader>
@@ -284,7 +284,7 @@ const RAMSGenerator: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
               <Label htmlFor="projectName" className="text-white">Project Name *</Label>
               <Input
@@ -335,20 +335,20 @@ const RAMSGenerator: React.FC = () => {
           <CardTitle className="text-white">Work Activities ({ramsData.activities.length})</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-2">
             <Input
               value={newActivity}
               onChange={(e) => setNewActivity(e.target.value)}
               placeholder="Enter work activity"
-              className="bg-elec-dark/50 border-elec-yellow/20 text-white flex-1"
+              className="bg-elec-dark/50 border-elec-yellow/20 text-white flex-1 h-12 text-base"
               onKeyPress={(e) => e.key === 'Enter' && handleAddActivity()}
             />
             <Button
               onClick={handleAddActivity}
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 sm:px-4"
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 px-6 w-full sm:w-auto"
             >
-              <Plus className="h-4 w-4 sm:mr-2" />
-              <span className="hidden sm:inline">Add</span>
+              <Plus className="h-4 w-4 mr-2" />
+              Add Activity
             </Button>
           </div>
           
@@ -383,7 +383,7 @@ const RAMSGenerator: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 mb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 mb-4">
             <Card className="border-blue-500/30 bg-elec-gray/50">
               <CardContent className="p-2 sm:p-3 text-center">
                 <div className="text-base sm:text-lg font-bold text-blue-400">{riskStats.total}</div>
@@ -418,7 +418,7 @@ const RAMSGenerator: React.FC = () => {
 
           {/* Risk List */}
             {/* Risk Matrix */}
-            <div className="flex justify-center mb-4">
+            <div className="mb-4">
               <RiskMatrix />
             </div>
 
@@ -472,7 +472,7 @@ const RAMSGenerator: React.FC = () => {
                             />
                           </div>
                           
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="grid grid-cols-1 gap-3">
                             <div>
                               <Label className="text-white text-sm">Likelihood (1-5)</Label>
                               <Select
@@ -689,49 +689,51 @@ const RAMSGenerator: React.FC = () => {
         </AccordionItem>
       </Accordion>
 
-      {/* Action Bar */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
-        <CardContent className="p-4">
-          <div className="flex flex-col gap-3">
-            <Button
-              onClick={() => setShowPreview(true)}
-              variant="outline"
-              className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              disabled={!validation.isValid}
-            >
-              <Eye className="h-4 w-4 mr-2" />
-              Preview PDF
-            </Button>
-            
-            <Button
-              onClick={handleGeneratePDF}
-              className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-              disabled={!validation.isValid || isGenerating}
-            >
-              {isGenerating ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <Download className="h-4 w-4 mr-2" />
-              )}
-              {isGenerating ? 'Generating...' : 'Download PDF'}
-            </Button>
+      {/* Action Bar - Sticky on Mobile */}
+      <div className="sticky bottom-0 z-10 bg-background/95 backdrop-blur-sm border-t border-elec-yellow/20 p-4 -mx-4">
+        <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
+          <CardContent className="p-3 sm:p-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-2">
+              <Button
+                onClick={() => setShowPreview(true)}
+                variant="outline"
+                className="flex-1 h-12 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 text-base"
+                disabled={!validation.isValid}
+              >
+                <Eye className="h-5 w-5 mr-2" />
+                Preview PDF
+              </Button>
+              
+              <Button
+                onClick={handleGeneratePDF}
+                className="flex-1 h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-base font-medium"
+                disabled={!validation.isValid || isGenerating}
+              >
+                {isGenerating ? (
+                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                ) : (
+                  <Download className="h-5 w-5 mr-2" />
+                )}
+                {isGenerating ? 'Generating...' : 'Download PDF'}
+              </Button>
+            </div>
             
             <Button
               onClick={reset}
               variant="outline"
-              className="w-full border-red-500/30 text-red-400 hover:bg-red-500/10"
+              className="w-full mt-2 h-10 border-red-500/30 text-red-400 hover:bg-red-500/10 text-sm"
             >
               Reset All Data
             </Button>
-          </div>
-          
-          {!validation.isValid && (
-            <p className="text-xs text-red-400 mt-2 text-center">
-              Complete all required fields to generate PDF
-            </p>
-          )}
-        </CardContent>
-      </Card>
+            
+            {!validation.isValid && (
+              <p className="text-xs text-red-400 mt-2 text-center">
+                Complete all required fields to generate PDF
+              </p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
 
       {/* PDF Preview Modal */}
       <RAMSPDFPreview
