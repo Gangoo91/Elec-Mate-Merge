@@ -437,7 +437,7 @@ const RAMSGenerator: React.FC = () => {
               <RiskMatrix />
             </div>
 
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
               <h4 className="font-medium text-white">Risk Assessment</h4>
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button
