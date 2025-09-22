@@ -589,64 +589,64 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                               Tablet (640px-1024px): Horizontal layout with flex-wrap for overflow
                               Desktop (>= 1024px): Horizontal layout with optimal spacing
                             */}
-                            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
-                              {/* Left Section: Step Info */}
-                              <div className="flex items-start gap-3 sm:items-center">
-                                {/* Drag Handle */}
-                                <div
-                                  {...provided.dragHandleProps}
-                                  className="text-muted-foreground hover:text-elec-yellow cursor-grab transition-colors mt-1 sm:mt-0"
-                                >
-                                  <GripVertical className="h-5 w-5" />
-                                </div>
-                                
-                                {/* Step Number Badge */}
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-elec-yellow text-black flex items-center justify-center font-bold text-lg flex-shrink-0">
-                                  {step.stepNumber}
-                                </div>
-                                
-                                {/* Step Content */}
-                                <div className="flex-1 min-w-0">
-                                  <h3 className="font-semibold text-foreground text-base sm:text-lg mb-1 break-words">
-                                    {step.title || `Step ${step.stepNumber}`}
-                                  </h3>
-                                  <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
-                                    {step.description || 'No description provided'}
-                                  </p>
+                            {/* 
+                              CLEAN HEADER DESIGN - Better spacing and visual hierarchy
+                              Improved layout to reduce clutter and improve readability
+                            */}
+                            <div className="space-y-4">
+                              {/* Top Row: Step number and drag handle */}
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                  <div
+                                    {...provided.dragHandleProps}
+                                    className="text-muted-foreground hover:text-elec-yellow cursor-grab transition-colors p-1 rounded"
+                                  >
+                                    <GripVertical className="h-4 w-4" />
+                                  </div>
                                   
-                                  {/* Status badges */}
-                                  <div className="flex flex-wrap gap-2">
+                                  <div className="w-8 h-8 rounded-full bg-elec-yellow text-black flex items-center justify-center font-bold text-sm">
+                                    {step.stepNumber}
+                                  </div>
+                                  
+                                  <div className="flex items-center gap-2">
                                     <Badge className={getRiskColor(step.riskLevel)} variant="outline">
-                                      {step.riskLevel} risk
+                                      {step.riskLevel}
                                     </Badge>
                                     {step.linkedHazards && step.linkedHazards.length > 0 && (
-                                      <Badge variant="outline" className="border-orange-500/30 text-orange-400">
+                                      <Badge variant="outline" className="border-orange-500/30 text-orange-400 text-xs">
                                         {step.linkedHazards.length} hazard{step.linkedHazards.length !== 1 ? 's' : ''}
                                       </Badge>
                                     )}
                                   </div>
                                 </div>
-                              </div>
-                              
-                              {/* Right Section: Actions */}
-                              <div className="flex items-center gap-3 flex-shrink-0">
-                                {/* Duration */}
-                                {step.estimatedDuration && (
-                                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/20 px-3 py-1 rounded-full">
-                                    <Clock className="h-4 w-4" />
-                                    <span>{step.estimatedDuration}</span>
-                                  </div>
-                                )}
                                 
-                                {/* Edit Button */}
                                 <Button
                                   onClick={() => setExpandedStep(step.id)}
                                   size="sm"
-                                  className="flex items-center gap-2"
+                                  variant="outline"
+                                  className="text-xs"
                                 >
-                                  <Edit3 className="h-4 w-4" />
+                                  <Edit3 className="h-3 w-3 mr-1" />
                                   Edit
                                 </Button>
+                              </div>
+                              
+                              {/* Content Row: Title and description with better spacing */}
+                              <div className="pl-11">
+                                <h3 className="font-semibold text-foreground text-lg mb-2">
+                                  {step.title || `Step ${step.stepNumber}`}
+                                </h3>
+                                <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+                                  {step.description || 'No description provided'}
+                                </p>
+                                
+                                {/* Duration badge - cleaner placement */}
+                                {step.estimatedDuration && (
+                                  <div className="inline-flex items-center gap-1 text-xs text-muted-foreground bg-muted/30 px-2 py-1 rounded-full">
+                                    <Clock className="h-3 w-3" />
+                                    <span>{step.estimatedDuration}</span>
+                                  </div>
+                                )}
                               </div>
                             </div>
 
