@@ -174,11 +174,11 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
       {/* Header */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-elec-yellow">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <CardTitle className="text-elec-yellow text-lg sm:text-xl">
               Method Steps ({steps.length})
             </CardTitle>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2 w-full sm:w-auto justify-start sm:justify-end">
               <Button
                 onClick={() => setShowHazardSelector(true)}
                 variant="outline"
