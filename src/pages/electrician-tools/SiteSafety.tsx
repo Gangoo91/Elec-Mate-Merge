@@ -156,30 +156,54 @@ const SiteSafety = () => {
 
         {/* Safety Best Practices Card */}
         <Card className="border-green-500/50 bg-green-500/10">
-          <CardHeader>
-            <CardTitle className="text-green-300 flex items-center gap-2">
-              <Shield className="h-5 w-5" />
+          <CardHeader className="text-center">
+            <CardTitle className="text-green-300 flex items-center justify-center gap-2 text-xl">
+              <Shield className="h-6 w-6" />
               Safety Best Practices
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
-              <div>
-                <h4 className="font-medium text-green-300 mb-2">Before Starting Work:</h4>
-                <ul className="space-y-1">
-                  <li>• Complete risk assessment for each task</li>
-                  <li>• Brief all team members on hazards</li>
-                  <li>• Check all safety equipment</li>
-                  <li>• Document site conditions</li>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
+              <div className="space-y-4">
+                <h4 className="font-semibold text-green-300 text-center text-base mb-4">Before Starting Work:</h4>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
+                    <span>Complete risk assessment for each task</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
+                    <span>Brief all team members on hazards</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
+                    <span>Check all safety equipment</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
+                    <span>Document site conditions</span>
+                  </li>
                 </ul>
               </div>
-              <div>
-                <h4 className="font-medium text-green-300 mb-2">During Work:</h4>
-                <ul className="space-y-1">
-                  <li>• Follow method statements precisely</li>
-                  <li>• Report near misses immediately</li>
-                  <li>• Take photos of safety concerns</li>
-                  <li>• Update risk assessments if conditions change</li>
+              <div className="space-y-4">
+                <h4 className="font-semibold text-green-300 text-center text-base mb-4">During Work:</h4>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
+                    <span>Follow method statements precisely</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
+                    <span>Report near misses immediately</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
+                    <span>Take photos of safety concerns</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
+                    <span>Update risk assessments if conditions change</span>
+                  </li>
                 </ul>
               </div>
             </div>
