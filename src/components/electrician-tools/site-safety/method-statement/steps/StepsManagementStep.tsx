@@ -710,7 +710,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                               </div>
 
                               {/* Qualifications Card - Spans full width on tablet, dark styling */}
-                              <div className="bg-slate-900/40 border border-slate-700/50 rounded-xl p-4 space-y-3 sm:col-span-2 lg:col-span-1">
+                              <div className="border border-slate-700/50 rounded-xl space-y-3 sm:col-span-2 lg:col-span-1">
                                 <div className="flex items-center gap-2 mb-3">
                                   <GraduationCap className="h-4 w-4 text-green-400 flex-shrink-0" />
                                   <h4 className="text-sm font-medium text-white">
