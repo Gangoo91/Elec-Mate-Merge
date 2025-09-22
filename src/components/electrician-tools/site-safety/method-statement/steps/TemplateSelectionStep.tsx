@@ -205,7 +205,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
       {/* Selection Action - Mobile optimized */}
       {selectedTemplate && (
         <Card className="border-green-500/20 bg-green-500/5 mobile-card">
-          <CardContent className="p-4 sm:p-6">
+          <CardContent className="p-0">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-green-300 mobile-subheading break-words">
