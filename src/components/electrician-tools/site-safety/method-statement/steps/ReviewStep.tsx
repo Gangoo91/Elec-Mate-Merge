@@ -201,7 +201,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-left">
                       {step.safetyRequirements.length > 0 && (
                         <div>
-                          <div className="flex items-center gap-1 font-medium text-red-300 mb-1">
+                          <div className="flex items-start gap-1 font-medium text-red-300 mb-1 text-left">
                             <Shield className="h-3 w-3" />
                             Safety Requirements ({step.safetyRequirements.length})
                           </div>
