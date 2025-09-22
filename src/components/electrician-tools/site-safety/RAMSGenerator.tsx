@@ -439,7 +439,7 @@ const RAMSGenerator: React.FC = () => {
 
             <div className="flex items-center justify-between mb-4">
               <h4 className="font-medium text-white">Risk Assessment</h4>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Button
                   onClick={() => setShowHazardSelector(true)}
                   size="sm"
