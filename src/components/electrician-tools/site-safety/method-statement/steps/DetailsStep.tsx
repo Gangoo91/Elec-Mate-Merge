@@ -264,7 +264,7 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
             {data.workType === 'Installation Work' && (
               <div className="bg-blue-500/10 p-4 rounded-lg space-y-3">
                 <h4 className="font-medium text-blue-300">Installation Work Recommendations:</h4>
-            <ul className="text-sm space-y-1 text-left">
+                <ul className="text-sm space-y-1">
                   <li>• Ensure Part P notification requirements are met</li>
                   <li>• Consider 18th Edition compliance requirements</li>
                   <li>• Plan for installation testing and certification</li>
