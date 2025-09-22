@@ -140,7 +140,7 @@ const MethodStatementWizard = () => {
   const isLastStep = currentStepIndex === steps.length - 1;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
 
       {/* Step Content */}
       <div className="min-h-[500px]">
