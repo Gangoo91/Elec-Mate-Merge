@@ -57,4 +57,4 @@ export interface StepTemplate {
   commonlyUsedWith: string[]; // IDs of other step templates
 }
 
-export type WizardStep = 'template' | 'details' | 'steps' | 'review';
+export type WizardStep = 'template' | 'details' | 'steps' | 'hazards' | 'review';

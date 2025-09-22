@@ -8,9 +8,11 @@ import TemplateSelectionStep from './steps/TemplateSelectionStep';
 import DetailsStep from './steps/DetailsStep';
 import StepsManagementStep from './steps/StepsManagementStep';
 import ReviewStep from './steps/ReviewStep';
+import HazardIntegrationStep from './components/HazardIntegrationStep';
 
 const MethodStatementWizard = () => {
   const [currentStep, setCurrentStep] = useState<WizardStep>('template');
+  const [linkedHazards, setLinkedHazards] = useState<string[]>([]);
   const [methodStatementData, setMethodStatementData] = useState<MethodStatementData>({
     jobTitle: '',
     location: '',
@@ -29,6 +31,7 @@ const MethodStatementWizard = () => {
     { id: 'template', title: 'Template', description: 'Choose a template' },
     { id: 'details', title: 'Job Details', description: 'Basic information' },
     { id: 'steps', title: 'Method Steps', description: 'Build your process' },
+    { id: 'hazards', title: 'Hazards', description: 'Link hazards from database' },
     { id: 'review', title: 'Review', description: 'Generate document' }
   ];
 
@@ -51,6 +54,16 @@ const MethodStatementWizard = () => {
 
   const updateMethodStatement = (updates: Partial<MethodStatementData>) => {
     setMethodStatementData(prev => ({ ...prev, ...updates }));
+  };
+
+  const handleHazardLink = (hazardId: string) => {
+    if (!linkedHazards.includes(hazardId)) {
+      setLinkedHazards(prev => [...prev, hazardId]);
+    }
+  };
+
+  const handleHazardUnlink = (hazardId: string) => {
+    setLinkedHazards(prev => prev.filter(id => id !== hazardId));
   };
 
   const renderStepContent = () => {
@@ -96,6 +109,16 @@ const MethodStatementWizard = () => {
             onStepsChange={(steps) => updateMethodStatement({ steps })}
             onNext={handleNext}
             onBack={handlePrevious}
+          />
+        );
+      case 'hazards':
+        return (
+          <HazardIntegrationStep
+            data={methodStatementData}
+            onDataChange={updateMethodStatement}
+            linkedHazards={linkedHazards}
+            onHazardLink={handleHazardLink}
+            onHazardUnlink={handleHazardUnlink}
           />
         );
       case 'review':

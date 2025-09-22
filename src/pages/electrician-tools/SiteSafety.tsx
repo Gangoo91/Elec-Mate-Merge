@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone, ChevronDown, Zap } from "lucide-react";
+import { ArrowLeft, Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import BackButton from "@/components/common/BackButton";
 import { RAMSProvider } from "@/components/electrician-tools/site-safety/rams/RAMSContext";
@@ -18,13 +18,11 @@ import TeamBriefingTemplates from "@/components/electrician-tools/site-safety/Te
 import NearMissReporting from "@/components/electrician-tools/site-safety/NearMissReporting";
 import SafetyEquipmentTracker from "@/components/electrician-tools/site-safety/SafetyEquipmentTracker";
 import EmergencyProcedures from "@/components/electrician-tools/site-safety/EmergencyProcedures";
-import EnhancedSafetySystem from "@/components/electrician-tools/site-safety/EnhancedSafetySystem";
 
 const SiteSafety = () => {
   const [activeTab, setActiveTab] = useState("rams");
 
   const tabOptions = [
-    { value: "enhanced", label: "Enhanced RAMS", icon: Zap },
     { value: "rams", label: "Risk Assessment", icon: FileText },
     { value: "method-statement", label: "Method Statement", icon: ClipboardCheck },
     { value: "hazard-database", label: "Hazard Database", icon: Shield },
@@ -51,7 +49,7 @@ const SiteSafety = () => {
           </p>
           <BackButton customUrl="/electrician" label="Back to Electrical Hub" />
         </div>
-        <Tabs defaultValue="enhanced" value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs defaultValue="rams" value={activeTab} onValueChange={setActiveTab} className="w-full">
         {/* Mobile Dropdown */}
         <div className="lg:hidden mb-4">
           <Select value={activeTab} onValueChange={setActiveTab}>
@@ -118,10 +116,6 @@ const SiteSafety = () => {
             );
           })}
         </TabsList>
-
-        <TabsContent value="enhanced" className="mt-6">
-          <EnhancedSafetySystem />
-        </TabsContent>
 
         <TabsContent value="rams" className="mt-6">
           <RAMSGenerator />

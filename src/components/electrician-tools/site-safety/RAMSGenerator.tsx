@@ -29,12 +29,15 @@ import { HazardSelect } from './common/HazardSelect';
 import { RiskSelect } from './common/RiskSelect';
 import { RiskMatrix } from './common/RiskMatrix';
 import { toast } from '@/hooks/use-toast';
+import TaskManager from './components/TaskManager';
+import HazardSelector from './components/HazardSelector';
 
 const RAMSGenerator: React.FC = () => {
   const {
     ramsData,
     reportOptions,
     signOff,
+    tasks,
     updateProjectInfo,
     addActivity,
     removeActivity,
@@ -68,6 +71,8 @@ const RAMSGenerator: React.FC = () => {
   });
   const [selectedHazard, setSelectedHazard] = useState('');
   const [selectedRisk, setSelectedRisk] = useState('');
+  const [showHazardSelector, setShowHazardSelector] = useState(false);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
 
   const validation = validate();
 
@@ -329,50 +334,60 @@ const RAMSGenerator: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Work Activities */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/60">
-        <CardHeader>
-          <CardTitle className="text-white">Work Activities ({ramsData.activities.length})</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-col gap-3 sm:flex-row sm:gap-2">
-            <Input
-              value={newActivity}
-              onChange={(e) => setNewActivity(e.target.value)}
-              placeholder="Enter work activity"
-              className="bg-elec-dark/50 border-elec-yellow/20 text-white flex-1 h-12 text-base"
-              onKeyPress={(e) => e.key === 'Enter' && handleAddActivity()}
-            />
-            <Button
-              onClick={handleAddActivity}
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 px-6 w-full sm:w-auto"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Activity
-            </Button>
-          </div>
-          
-          {ramsData.activities.length > 0 && (
-            <div className="space-y-2">
-              {ramsData.activities.map((activity, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
-                  <span className="text-white text-sm leading-relaxed flex-1 break-words">
-                    {index + 1}. {activity}
-                  </span>
-                  <Button
-                    onClick={() => removeActivity(index)}
-                    size="sm"
-                    variant="outline"
-                    className="border-red-500/30 text-red-400 hover:bg-red-500/10 flex-shrink-0"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-              ))}
+      {/* Task Management */}
+      <TaskManager 
+        onLinkHazard={(taskId) => {
+          setSelectedTaskId(taskId);
+          setShowHazardSelector(true);
+        }}
+      />
+
+      {/* Legacy Work Activities - for backward compatibility */}
+      {ramsData.activities.length > 0 && (
+        <Card className="border-elec-yellow/20 bg-elec-gray/60">
+          <CardHeader>
+            <CardTitle className="text-white">Legacy Activities ({ramsData.activities.length})</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-2">
+              <Input
+                value={newActivity}
+                onChange={(e) => setNewActivity(e.target.value)}
+                placeholder="Enter work activity"
+                className="bg-elec-dark/50 border-elec-yellow/20 text-white flex-1 h-12 text-base"
+                onKeyPress={(e) => e.key === 'Enter' && handleAddActivity()}
+              />
+              <Button
+                onClick={handleAddActivity}
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 px-6 w-full sm:w-auto"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Activity
+              </Button>
             </div>
-          )}
-        </CardContent>
-      </Card>
+            
+            {ramsData.activities.length > 0 && (
+              <div className="space-y-2">
+                {ramsData.activities.map((activity, index) => (
+                  <div key={index} className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
+                    <span className="text-white text-sm leading-relaxed flex-1 break-words">
+                      {index + 1}. {activity}
+                    </span>
+                    <Button
+                      onClick={() => removeActivity(index)}
+                      size="sm"
+                      variant="outline"
+                      className="border-red-500/30 text-red-400 hover:bg-red-500/10 flex-shrink-0"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Risk Assessment Summary */}
       <Card className="border-elec-yellow/20 bg-elec-gray/60">
@@ -420,6 +435,28 @@ const RAMSGenerator: React.FC = () => {
             {/* Risk Matrix */}
             <div className="mb-4">
               <RiskMatrix />
+            </div>
+
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="font-medium text-white">Risk Assessment</h4>
+              <div className="flex gap-2">
+                <Button
+                  onClick={() => setShowHazardSelector(true)}
+                  size="sm"
+                  className="bg-orange-500 text-white hover:bg-orange-600"
+                >
+                  <Shield className="h-4 w-4 mr-2" />
+                  Add from Database
+                </Button>
+                <Button
+                  onClick={() => setShowAddRisk(true)}
+                  size="sm"
+                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Manual Risk
+                </Button>
+              </div>
             </div>
 
             {ramsData.risks.length > 0 && (
@@ -740,6 +777,17 @@ const RAMSGenerator: React.FC = () => {
         ramsData={ramsData}
         reportOptions={reportOptions}
         signOff={signOff}
+      />
+
+      {/* Hazard Selector Modal */}
+      <HazardSelector
+        open={showHazardSelector}
+        onOpenChange={setShowHazardSelector}
+        onHazardSelect={(hazard) => {
+          // Hazard is automatically added via the selector
+          setSelectedTaskId(null);
+        }}
+        selectedTaskId={selectedTaskId}
       />
     </div>
   );
