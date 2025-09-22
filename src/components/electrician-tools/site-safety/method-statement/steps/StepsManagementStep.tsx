@@ -171,42 +171,19 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
 
   return (
     <div className="space-y-6">
-      {/* Header - Fixed container with overflow protection */}
+      {/* Header */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="overflow-hidden">
-          <div className="flex items-center justify-between min-w-0 w-full">
-            {/* 
-              RESPONSIVE CONTAINER FIX:
-              - min-w-0: Allows flex items to shrink below content size
-              - w-full: Ensures container takes full available width
-              - overflow-hidden on parent prevents child escape
-              - Flexbox with responsive gap handling for all screen sizes
-            */}
+        <CardHeader>
+          <div className="flex items-center justify-between">
             <CardTitle className="text-elec-yellow">
               Method Steps ({steps.length})
             </CardTitle>
-            {/* 
-              RESPONSIVE BUTTON CONTAINER:
-              - Mobile (320px+): Stack buttons vertically with full width
-              - Tablet (768px+): Horizontal layout with proper spacing  
-              - Desktop (1024px+): Compact horizontal with optimal gaps
-              - flex-wrap prevents overflow on narrow screens
-            */}
-            <div className="flex flex-wrap gap-2 
-                          flex-col w-full
-                          sm:flex-row sm:w-auto
-                          md:gap-3 
-                          lg:gap-2">
-              {/* Responsive button sizing for different breakpoints */}
+            <div className="flex gap-2">
               <Button
                 onClick={() => setShowHazardSelector(true)}
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-2 
-                          w-full justify-center
-                          sm:w-auto sm:justify-start
-                          text-xs sm:text-sm
-                          px-2 py-1 sm:px-3 sm:py-2"
+                className="flex items-center gap-2"
               >
                 <Shield className="h-4 w-4" />
                 Link Hazards
@@ -215,24 +192,12 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                 onClick={() => setShowTemplates(!showTemplates)}
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-2
-                          w-full justify-center
-                          sm:w-auto sm:justify-start  
-                          text-xs sm:text-sm
-                          px-2 py-1 sm:px-3 sm:py-2"
+                className="flex items-center gap-2"
               >
                 <Lightbulb className="h-4 w-4" />
                 Step Templates
               </Button>
-              <Button 
-                onClick={addNewStep} 
-                size="sm" 
-                className="flex items-center gap-2
-                          w-full justify-center
-                          sm:w-auto sm:justify-start
-                          text-xs sm:text-sm  
-                          px-2 py-1 sm:px-3 sm:py-2"
-              >
+              <Button onClick={addNewStep} size="sm" className="flex items-center gap-2">
                 <Plus className="h-4 w-4" />
                 Add Step
               </Button>
