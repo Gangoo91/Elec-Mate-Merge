@@ -11,6 +11,7 @@ export interface MethodStep {
   dependencies?: string[]; // IDs of prerequisite steps
   isCompleted?: boolean;
   notes?: string;
+  linkedHazards?: string[]; // IDs of linked hazards
 }
 
 export interface MethodStatementData {

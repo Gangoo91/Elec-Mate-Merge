@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
-import { CalendarIcon, FileText, MapPin, Users, Clock } from 'lucide-react';
+import { CalendarIcon, FileText, MapPin, Users, Clock, Lightbulb } from 'lucide-react';
 import { MethodStatementData } from '@/types/method-statement';
 
 interface DetailsStepProps {
@@ -247,34 +247,80 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
         </CardContent>
       </Card>
 
-      {/* Smart Suggestions */}
+      {/* Enhanced Smart Suggestions */}
       <Card className="border-blue-500/20 bg-blue-500/5">
         <CardHeader>
-          <CardTitle className="text-blue-300">Smart Suggestions</CardTitle>
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <Lightbulb className="h-5 w-5" />
+            Smart Suggestions & Safety Integration
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
+          <div className="space-y-4">
             <p className="text-sm text-muted-foreground">
               Based on your work type, consider these recommendations:
             </p>
+            
             {data.workType === 'Installation Work' && (
-              <div className="bg-blue-500/10 p-3 rounded-lg">
+              <div className="bg-blue-500/10 p-4 rounded-lg space-y-3">
+                <h4 className="font-medium text-blue-300">Installation Work Recommendations:</h4>
                 <ul className="text-sm space-y-1">
                   <li>• Ensure Part P notification requirements are met</li>
                   <li>• Consider 18th Edition compliance requirements</li>
                   <li>• Plan for installation testing and certification</li>
+                  <li>• Verify supply disconnection procedures</li>
                 </ul>
+                <div className="mt-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded">
+                  <p className="text-sm text-orange-300 font-medium mb-2">Common Hazards for Installation Work:</p>
+                  <p className="text-xs text-muted-foreground">
+                    Electric shock, arc flash, manual handling, falls from height will be suggested in the hazards step.
+                  </p>
+                </div>
               </div>
             )}
+            
             {data.workType === 'Testing & Inspection' && (
-              <div className="bg-blue-500/10 p-3 rounded-lg">
+              <div className="bg-blue-500/10 p-4 rounded-lg space-y-3">
+                <h4 className="font-medium text-blue-300">Testing & Inspection Recommendations:</h4>
                 <ul className="text-sm space-y-1">
                   <li>• Ensure testing equipment is calibrated</li>
                   <li>• Plan for safe isolation procedures</li>
                   <li>• Consider EICR reporting requirements</li>
+                  <li>• Verify prove dead procedures</li>
                 </ul>
+                <div className="mt-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded">
+                  <p className="text-sm text-orange-300 font-medium mb-2">Common Hazards for Testing Work:</p>
+                  <p className="text-xs text-muted-foreground">
+                    Electric shock, faulty equipment, confined spaces will be suggested in the hazards step.
+                  </p>
+                </div>
               </div>
             )}
+            
+            {data.workType === 'Maintenance' && (
+              <div className="bg-blue-500/10 p-4 rounded-lg space-y-3">
+                <h4 className="font-medium text-blue-300">Maintenance Work Recommendations:</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Schedule appropriate downtime</li>
+                  <li>• Coordinate with facility management</li>
+                  <li>• Plan for equipment replacement parts</li>
+                  <li>• Consider environmental conditions</li>
+                </ul>
+                <div className="mt-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded">
+                  <p className="text-sm text-orange-300 font-medium mb-2">Common Hazards for Maintenance:</p>
+                  <p className="text-xs text-muted-foreground">
+                    Equipment failure, chemical exposure, manual handling will be suggested in the hazards step.
+                  </p>
+                </div>
+              </div>
+            )}
+            
+            <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+              <p className="text-sm text-green-300 font-medium">💡 Next Steps</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                After completing job details, you'll be able to create detailed method steps and link relevant hazards from our comprehensive database.
+              </p>
+            </div>
           </div>
         </CardContent>
       </Card>

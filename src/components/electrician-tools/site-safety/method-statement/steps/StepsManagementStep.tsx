@@ -21,17 +21,24 @@ import {
 } from 'lucide-react';
 import { MethodStep } from '@/types/method-statement';
 import { stepTemplates } from '@/data/method-statement-templates';
+import { useHazardDatabase } from '../../hooks/useHazardDatabase';
+import HazardSelector from '../../components/HazardSelector';
 
 interface StepsManagementStepProps {
   steps: MethodStep[];
   onStepsChange: (steps: MethodStep[]) => void;
   onNext: () => void;
   onBack: () => void;
+  linkedHazards?: string[];
+  onHazardLink?: (hazardId: string) => void;
 }
 
-const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsManagementStepProps) => {
+const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazards = [], onHazardLink }: StepsManagementStepProps) => {
   const [expandedStep, setExpandedStep] = useState<string | null>(null);
   const [showTemplates, setShowTemplates] = useState(false);
+  const [showHazardSelector, setShowHazardSelector] = useState(false);
+  const [selectedStep, setSelectedStep] = useState<string | null>(null);
+  const { getHazardById, getRiskColor: getHazardRiskColor } = useHazardDatabase();
 
   const addNewStep = () => {
     const newStep: MethodStep = {
@@ -44,7 +51,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
       qualifications: [],
       estimatedDuration: '',
       riskLevel: 'medium',
-      isCompleted: false
+      isCompleted: false,
+      linkedHazards: []
     };
     onStepsChange([...steps, newStep]);
     setExpandedStep(newStep.id);
@@ -61,7 +69,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
       qualifications: [...template.qualifications],
       estimatedDuration: template.estimatedDuration,
       riskLevel: template.riskLevel,
-      isCompleted: false
+      isCompleted: false,
+      linkedHazards: []
     };
     onStepsChange([...steps, newStep]);
     setShowTemplates(false);
@@ -84,7 +93,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
       ...step,
       id: `step-${Date.now()}`,
       stepNumber: steps.length + 1,
-      title: `${step.title} (Copy)`
+      title: `${step.title} (Copy)`,
+      linkedHazards: [...(step.linkedHazards || [])]
     };
     onStepsChange([...steps, newStep]);
   };
@@ -133,6 +143,31 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
     }
   };
 
+  const linkHazardToStep = (stepId: string, hazardId: string) => {
+    const step = steps.find(s => s.id === stepId);
+    if (step) {
+      const linkedHazards = step.linkedHazards || [];
+      if (!linkedHazards.includes(hazardId)) {
+        updateStep(stepId, {
+          linkedHazards: [...linkedHazards, hazardId]
+        });
+      }
+    }
+    if (onHazardLink) {
+      onHazardLink(hazardId);
+    }
+  };
+
+  const unlinkHazardFromStep = (stepId: string, hazardId: string) => {
+    const step = steps.find(s => s.id === stepId);
+    if (step) {
+      const linkedHazards = step.linkedHazards || [];
+      updateStep(stepId, {
+        linkedHazards: linkedHazards.filter(h => h !== hazardId)
+      });
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -143,6 +178,15 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
               Method Steps ({steps.length})
             </CardTitle>
             <div className="flex gap-2">
+              <Button
+                onClick={() => setShowHazardSelector(true)}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Shield className="h-4 w-4" />
+                Link Hazards
+              </Button>
               <Button
                 onClick={() => setShowTemplates(!showTemplates)}
                 variant="outline"
@@ -232,39 +276,57 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
                                     <div className="w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center font-bold">
                                       {step.stepNumber}
                                     </div>
-                                    <div>
-                                      <h4 className="font-semibold text-elec-yellow">
-                                        {step.title || `Step ${step.stepNumber}`}
-                                      </h4>
-                                      <Badge className={getRiskColor(step.riskLevel)} variant="outline">
-                                        {step.riskLevel} risk
-                                      </Badge>
-                                    </div>
+                                   <div>
+                                     <h4 className="font-semibold text-elec-yellow">
+                                       {step.title || `Step ${step.stepNumber}`}
+                                     </h4>
+                                     <div className="flex gap-2 mt-1">
+                                       <Badge className={getRiskColor(step.riskLevel)} variant="outline">
+                                         {step.riskLevel} risk
+                                       </Badge>
+                                       {step.linkedHazards && step.linkedHazards.length > 0 && (
+                                         <Badge variant="outline" className="border-orange-500/30 text-orange-400">
+                                           {step.linkedHazards.length} hazard{step.linkedHazards.length !== 1 ? 's' : ''}
+                                         </Badge>
+                                       )}
+                                     </div>
+                                   </div>
                                   </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                  <Button
-                                    onClick={() => duplicateStep(step)}
-                                    size="sm"
-                                    variant="outline"
-                                  >
-                                    <Copy className="h-4 w-4" />
-                                  </Button>
-                                  <Button
-                                    onClick={() => setExpandedStep(null)}
-                                    size="sm"
-                                    variant="outline"
-                                  >
-                                    Done
-                                  </Button>
-                                  <Button
-                                    onClick={() => removeStep(step.id)}
-                                    size="sm"
-                                    variant="outline"
-                                  >
-                                    <Trash2 className="h-4 w-4" />
-                                  </Button>
-                                </div>
+                                 <div className="flex items-center gap-2">
+                                   <Button
+                                     onClick={() => {
+                                       setSelectedStep(step.id);
+                                       setShowHazardSelector(true);
+                                     }}
+                                     size="sm"
+                                     variant="outline"
+                                     className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+                                   >
+                                     <Shield className="h-4 w-4" />
+                                   </Button>
+                                   <Button
+                                     onClick={() => duplicateStep(step)}
+                                     size="sm"
+                                     variant="outline"
+                                   >
+                                     <Copy className="h-4 w-4" />
+                                   </Button>
+                                   <Button
+                                     onClick={() => setExpandedStep(null)}
+                                     size="sm"
+                                     variant="outline"
+                                   >
+                                     Done
+                                   </Button>
+                                   <Button
+                                     onClick={() => removeStep(step.id)}
+                                     size="sm"
+                                     variant="outline"
+                                   >
+                                     <Trash2 className="h-4 w-4" />
+                                   </Button>
+                                 </div>
                               </div>
                             </CardHeader>
 
@@ -321,10 +383,47 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
                                     <SelectItem value="high">High Risk</SelectItem>
                                   </SelectContent>
                                 </Select>
-                              </div>
+                               </div>
 
-                              {/* Safety Requirements */}
-                              <div>
+                              {/* Linked Hazards */}
+                              {step.linkedHazards && step.linkedHazards.length > 0 && (
+                                <div>
+                                  <Label className="flex items-center gap-2 text-foreground mb-2">
+                                    <Shield className="h-4 w-4" />
+                                    Linked Hazards ({step.linkedHazards.length})
+                                  </Label>
+                                  <div className="space-y-2">
+                                    {step.linkedHazards.map((hazardId) => {
+                                      const hazard = getHazardById(hazardId);
+                                      if (!hazard) return null;
+                                      return (
+                                        <div key={hazardId} className="flex items-center justify-between p-3 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+                                          <div className="flex items-center gap-3">
+                                            <div className="p-1 rounded bg-orange-500/20">
+                                              <hazard.icon className="h-4 w-4 text-orange-400" />
+                                            </div>
+                                            <div>
+                                              <div className="font-medium text-white">{hazard.name}</div>
+                                              <div className="text-xs text-muted-foreground">{hazard.category}</div>
+                                            </div>
+                                          </div>
+                                          <Button
+                                            size="sm"
+                                            variant="ghost"
+                                            onClick={() => unlinkHazardFromStep(step.id, hazardId)}
+                                            className="text-red-400 hover:bg-red-500/10"
+                                          >
+                                            ×
+                                          </Button>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              )}
+
+                               {/* Safety Requirements */}
+                               <div>
                                 <Label className="flex items-center gap-2 text-foreground mb-2">
                                   <Shield className="h-4 w-4" />
                                   Safety Requirements
@@ -621,7 +720,20 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack }: StepsMana
             )}
           </Droppable>
         </DragDropContext>
-      )}
+       )}
+
+      {/* Hazard Selector Modal */}
+      <HazardSelector
+        open={showHazardSelector}
+        onOpenChange={setShowHazardSelector}
+        onHazardSelect={(hazard) => {
+          if (selectedStep) {
+            linkHazardToStep(selectedStep, hazard.id);
+          }
+          setSelectedStep(null);
+        }}
+        selectedTaskId={selectedStep}
+      />
     </div>
   );
 };

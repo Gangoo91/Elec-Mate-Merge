@@ -109,6 +109,8 @@ const MethodStatementWizard = () => {
             onStepsChange={(steps) => updateMethodStatement({ steps })}
             onNext={handleNext}
             onBack={handlePrevious}
+            linkedHazards={linkedHazards}
+            onHazardLink={handleHazardLink}
           />
         );
       case 'hazards':
