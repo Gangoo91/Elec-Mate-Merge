@@ -104,7 +104,7 @@ export const useEnhancedRAMS = () => {
 
       if (error) throw error;
 
-      setTasks(prev => [data, ...prev]);
+      setTasks(prev => [data as Task, ...prev]);
       
       // Track usage analytics
       await trackUsage('task', data.id, 'create', { category: taskData.category });
@@ -138,7 +138,7 @@ export const useEnhancedRAMS = () => {
 
       if (error) throw error;
 
-      setTasks(prev => prev.map(task => task.id === taskId ? data : task));
+      setTasks(prev => prev.map(task => task.id === taskId ? data as Task : task));
       
       // Track usage analytics
       await trackUsage('task', taskId, 'update', updates);
@@ -204,7 +204,7 @@ export const useEnhancedRAMS = () => {
 
       if (error) throw error;
 
-      setCustomHazards(prev => [data, ...prev]);
+      setCustomHazards(prev => [data as CustomHazard, ...prev]);
       
       toast({
         title: 'Custom Hazard Created',
@@ -286,7 +286,7 @@ export const useEnhancedRAMS = () => {
 
       if (error) throw error;
 
-      setRamsMethodLinks(prev => [data, ...prev]);
+      setRamsMethodLinks(prev => [data as RAMSMethodLink, ...prev]);
       
       toast({
         title: 'Documents Linked',
