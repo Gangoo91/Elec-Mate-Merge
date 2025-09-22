@@ -149,7 +149,7 @@ const MethodStatementWizard = () => {
 
       {/* Navigation */}
       {!isFirstStep && currentStep !== 'template' && (
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <Button
             onClick={handlePrevious}
             variant="outline"
@@ -168,7 +168,7 @@ const MethodStatementWizard = () => {
               <ArrowRight className="h-4 w-4" />
             </Button>
           ) : (
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button
                 variant="outline"
                 className="flex items-center gap-2"
