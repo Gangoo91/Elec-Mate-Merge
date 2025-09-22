@@ -654,7 +654,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
                               
                               {/* Safety Requirements Card - Dark styling to match screenshot */}
-                              <div className="bg-slate-900/40 border border-slate-700/50 rounded-xl p-4 space-y-3">
+                              <div className="bg-slate-900/40 border border-elec-yellow/20 rounded-xl p-4 space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
                                   <Shield className="h-4 w-4 text-red-400 flex-shrink-0" />
                                   <h4 className="text-sm font-medium text-white">
@@ -682,7 +682,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                               </div>
 
                               {/* Equipment Card - Lighter background and improved bullet alignment */}
-                              <div className="bg-slate-900/40 border border-slate-700/50 rounded-xl p-4 space-y-3">
+                              <div className="bg-slate-900/40 border border-elec-yellow/20 rounded-xl p-4 space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
                                   <Wrench className="h-4 w-4 text-blue-400 flex-shrink-0" />
                                   <h4 className="text-sm font-medium text-white">
