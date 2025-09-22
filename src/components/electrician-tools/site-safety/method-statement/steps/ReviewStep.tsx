@@ -118,28 +118,28 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                 <FileText className="h-4 w-4" />
                 Job Title
               </div>
-              <div className="text-sm">{data.jobTitle}</div>
+              <div className="text-sm text-left">{data.jobTitle}</div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
                 <MapPin className="h-4 w-4" />
                 Location
               </div>
-              <div className="text-sm">{data.location}</div>
+              <div className="text-sm text-left">{data.location}</div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
                 <Users className="h-4 w-4" />
                 Contractor
               </div>
-              <div className="text-sm">{data.contractor}</div>
+              <div className="text-sm text-left">{data.contractor}</div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
                 <Users className="h-4 w-4" />
                 Supervisor
               </div>
-              <div className="text-sm">{data.supervisor}</div>
+              <div className="text-sm text-left">{data.supervisor}</div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
