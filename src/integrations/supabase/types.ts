@@ -787,6 +787,78 @@ export type Database = {
           },
         ]
       }
+      custom_hazards: {
+        Row: {
+          category: string
+          created_at: string
+          default_controls: string[] | null
+          description: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          risk_level: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          default_controls?: string[] | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          risk_level?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          default_controls?: string[] | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          risk_level?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      document_relationships: {
+        Row: {
+          created_at: string
+          id: string
+          relationship_type: string
+          source_id: string
+          source_type: string
+          target_id: string
+          target_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          relationship_type: string
+          source_id: string
+          source_type: string
+          target_id: string
+          target_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          relationship_type?: string
+          source_id?: string
+          source_type?: string
+          target_id?: string
+          target_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       education_market_stats: {
         Row: {
           expires_at: string
@@ -814,6 +886,57 @@ export type Database = {
           source_url?: string | null
           stat_type?: string
           value?: string
+        }
+        Relationships: []
+      }
+      enhanced_hazards: {
+        Row: {
+          category: string
+          created_at: string
+          custom_controls: string[] | null
+          frequency: number | null
+          hazard_id: string
+          hazard_name: string
+          id: string
+          is_custom: boolean | null
+          last_used: string | null
+          linked_method_statements: string[] | null
+          linked_risks: string[] | null
+          linked_tasks: string[] | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          custom_controls?: string[] | null
+          frequency?: number | null
+          hazard_id: string
+          hazard_name: string
+          id?: string
+          is_custom?: boolean | null
+          last_used?: string | null
+          linked_method_statements?: string[] | null
+          linked_risks?: string[] | null
+          linked_tasks?: string[] | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          custom_controls?: string[] | null
+          frequency?: number | null
+          hazard_id?: string
+          hazard_name?: string
+          id?: string
+          is_custom?: boolean | null
+          last_used?: string | null
+          linked_method_statements?: string[] | null
+          linked_risks?: string[] | null
+          linked_tasks?: string[] | null
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -2616,6 +2739,39 @@ export type Database = {
         }
         Relationships: []
       }
+      rams_method_links: {
+        Row: {
+          created_at: string
+          hazard_ids: string[] | null
+          id: string
+          link_type: string
+          method_statement_id: string | null
+          rams_id: string | null
+          task_ids: string[] | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          hazard_ids?: string[] | null
+          id?: string
+          link_type?: string
+          method_statement_id?: string | null
+          rams_id?: string | null
+          task_ids?: string[] | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          hazard_ids?: string[] | null
+          id?: string
+          link_type?: string
+          method_statement_id?: string | null
+          rams_id?: string | null
+          task_ids?: string[] | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       regional_job_pricing: {
         Row: {
           average_price: number
@@ -3235,6 +3391,57 @@ export type Database = {
         }
         Relationships: []
       }
+      tasks: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          estimated_duration: string | null
+          id: string
+          linked_hazards: string[] | null
+          linked_method_steps: string[] | null
+          prerequisites: string[] | null
+          responsible_person: string | null
+          risk_level: string
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          estimated_duration?: string | null
+          id?: string
+          linked_hazards?: string[] | null
+          linked_method_steps?: string[] | null
+          prerequisites?: string[] | null
+          responsible_person?: string | null
+          risk_level: string
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          estimated_duration?: string | null
+          id?: string
+          linked_hazards?: string[] | null
+          linked_method_steps?: string[] | null
+          prerequisites?: string[] | null
+          responsible_person?: string | null
+          risk_level?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       team_briefings: {
         Row: {
           attendees: Json
@@ -3684,6 +3891,36 @@ export type Database = {
           population?: number | null
           region_name?: string
           region_type?: string
+        }
+        Relationships: []
+      }
+      usage_analytics: {
+        Row: {
+          action_type: string
+          context_data: Json | null
+          created_at: string
+          entity_id: string
+          entity_type: string
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          action_type: string
+          context_data?: Json | null
+          created_at?: string
+          entity_id: string
+          entity_type: string
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          action_type?: string
+          context_data?: Json | null
+          created_at?: string
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
