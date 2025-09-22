@@ -110,7 +110,8 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
       </Card>
 
       {/* Template Grid - Enhanced responsive design with consistent spacing */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 auto-rows-fr">
+      <div className="responsive-template-grid">
+        {/* Custom responsive grid with optimized breakpoints for template cards */}
         {/* auto-rows-fr ensures equal card heights */}
         {filteredTemplates.map((template) => (
           <Card

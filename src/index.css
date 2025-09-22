@@ -332,5 +332,55 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--elec-yellow) / 0.5);
   }
+  
+  /* Responsive Template Grid - Optimized for template cards */
+  .responsive-template-grid {
+    display: grid;
+    gap: 1rem; /* 16px base gap for mobile */
+    width: 100%;
+    grid-auto-rows: 1fr; /* Equal height cards */
+    
+    /* Mobile First: 320px - 479px (Single column with proper spacing) */
+    grid-template-columns: 1fr;
+    
+    /* Small Mobile: 480px - 639px (Still single column, larger gap) */
+    @media (min-width: 480px) {
+      gap: 1.25rem; /* 20px */
+    }
+    
+    /* Tablet Portrait: 640px - 767px (2 columns, balanced layout) */
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem; /* 24px */
+    }
+    
+    /* Tablet Landscape: 768px - 1023px (2-3 columns based on content width) */
+    @media (min-width: 768px) {
+      gap: 1.75rem; /* 28px */
+      /* Use minmax for flexible columns that don't break content */
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      max-width: 100%;
+    }
+    
+    /* Desktop: 1024px - 1279px (3 columns optimal) */
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem; /* 32px */
+    }
+    
+    /* Large Desktop: 1280px+ (3-4 columns with max width constraint) */
+    @media (min-width: 1280px) {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem; /* 40px */
+      max-width: 1400px; /* Prevent overly wide layouts */
+      margin: 0 auto;
+    }
+    
+    /* Ultra-wide: 1600px+ (Maximum 4 columns to maintain readability) */
+    @media (min-width: 1600px) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3rem; /* 48px */
+    }
+  }
 }
 
