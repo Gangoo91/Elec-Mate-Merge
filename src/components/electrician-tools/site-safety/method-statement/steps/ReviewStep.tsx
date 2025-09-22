@@ -179,7 +179,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                     {step.stepNumber}
                   </div>
                   <div className="flex-1 space-y-3">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
                       <h4 className="font-semibold text-elec-yellow">{step.title}</h4>
                       <div className="flex items-center gap-2">
                         <Badge className={getRiskColor(step.riskLevel)}>
