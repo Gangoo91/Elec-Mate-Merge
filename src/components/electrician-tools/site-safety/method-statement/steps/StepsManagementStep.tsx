@@ -581,168 +581,173 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                             </CardContent>
                           </>
                         ) : (
-                          // Collapsed Card View - Enhanced Mobile Layout
-                          <CardContent className="mobile-padding mobile-card-spacing">
-                            <div className="modern-step-header-grid animate-fade-in">
-                              {/* 
-                                Grid Layout Breakdown:
-                                - Mobile (320px-639px): Single column, stacked vertically 
-                                - Tablet (640px-1023px): Two columns, 70% content / 30% actions
-                                - Desktop (1024px+): Two columns, 75% content / 25% actions
-                                Uses CSS Grid with fractional and percentage units for flexibility
-                              */}
-                              {/* Grid Item 1: Main Content Area */}
-                              <div className="step-content-area">
-                                <div className="step-inner-content">
-                                  {/* Enhanced Drag Handle with Visual Feedback */}
-                                  <div
-                                    {...provided.dragHandleProps}
-                                    className="drag-handle-modern"
-                                  >
-                                    <GripVertical className="h-5 w-5" />
-                                  </div>
+                          // Collapsed Card View - Clean Responsive Layout
+                          <CardContent className="p-4 sm:p-6">
+                            {/* 
+                              HEADER SECTION - Responsive Flexbox Layout
+                              Mobile (< 640px): Vertical stack with full-width elements
+                              Tablet (640px-1024px): Horizontal layout with flex-wrap for overflow
+                              Desktop (>= 1024px): Horizontal layout with optimal spacing
+                            */}
+                            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+                              {/* Left Section: Step Info */}
+                              <div className="flex items-start gap-3 sm:items-center">
+                                {/* Drag Handle */}
+                                <div
+                                  {...provided.dragHandleProps}
+                                  className="text-muted-foreground hover:text-elec-yellow cursor-grab transition-colors mt-1 sm:mt-0"
+                                >
+                                  <GripVertical className="h-5 w-5" />
+                                </div>
+                                
+                                {/* Step Number Badge */}
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-elec-yellow text-black flex items-center justify-center font-bold text-lg flex-shrink-0">
+                                  {step.stepNumber}
+                                </div>
+                                
+                                {/* Step Content */}
+                                <div className="flex-1 min-w-0">
+                                  <h3 className="font-semibold text-foreground text-base sm:text-lg mb-1 break-words">
+                                    {step.title || `Step ${step.stepNumber}`}
+                                  </h3>
+                                  <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
+                                    {step.description || 'No description provided'}
+                                  </p>
                                   
-                                  {/* Modern Step Number Badge */}
-                                  <div className="step-number-modern">
-                                    <span className="step-number-text">{step.stepNumber}</span>
-                                    <div className="step-number-pulse"></div>
-                                  </div>
-                                  
-                                  {/* Enhanced Content Typography */}
-                                  <div className="step-text-content">
-                                    <h3 className="step-title-modern">
-                                      {step.title || `Step ${step.stepNumber}`}
-                                    </h3>
-                                    <p className="step-description-modern">
-                                      {step.description || 'No description provided'}
-                                    </p>
-                                    
-                                    {/* Enhanced Visual Progress Indicator */}
-                                    <div className="step-progress-bar">
-                                      <div className="step-progress-fill"></div>
-                                    </div>
+                                  {/* Status badges */}
+                                  <div className="flex flex-wrap gap-2">
+                                    <Badge className={getRiskColor(step.riskLevel)} variant="outline">
+                                      {step.riskLevel} risk
+                                    </Badge>
+                                    {step.linkedHazards && step.linkedHazards.length > 0 && (
+                                      <Badge variant="outline" className="border-orange-500/30 text-orange-400">
+                                        {step.linkedHazards.length} hazard{step.linkedHazards.length !== 1 ? 's' : ''}
+                                      </Badge>
+                                    )}
                                   </div>
                                 </div>
                               </div>
                               
-                              {/* Grid Item 2: Modern Actions and Meta Area */}
-                              <div className="step-actions-modern">
-                                <div className="actions-container">
-                                  {/* Enhanced Risk Badge */}
-                                   <div className="risk-badge-modern">
-                                     <Badge className={`${getRiskColor(step.riskLevel)} modern-badge`} variant="outline">
-                                       {step.riskLevel} risk
-                                     </Badge>
-                                   </div>
-                                   
-                                   {/* Enhanced Duration Display */}
-                                   {step.estimatedDuration && (
-                                     <div className="duration-display-modern">
-                                       <Clock className="h-4 w-4" />
-                                       <span>{step.estimatedDuration}</span>
-                                     </div>
-                                   )}
-                                   
-                                   {/* Modern Action Button */}
-                                   <Button
-                                     onClick={() => setExpandedStep(step.id)}
-                                     size="sm"
-                                     className="action-button-modern hover-scale"
-                                   >
-                                     <Edit3 className="h-4 w-4 mr-2" />
-                                     Edit
-                                   </Button>
-                                 </div>
-                               </div>
-                             </div>
+                              {/* Right Section: Actions */}
+                              <div className="flex items-center gap-3 flex-shrink-0">
+                                {/* Duration */}
+                                {step.estimatedDuration && (
+                                  <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/20 px-3 py-1 rounded-full">
+                                    <Clock className="h-4 w-4" />
+                                    <span>{step.estimatedDuration}</span>
+                                  </div>
+                                )}
+                                
+                                {/* Edit Button */}
+                                <Button
+                                  onClick={() => setExpandedStep(step.id)}
+                                  size="sm"
+                                  className="flex items-center gap-2"
+                                >
+                                  <Edit3 className="h-4 w-4" />
+                                  Edit
+                                </Button>
+                              </div>
+                            </div>
 
-                            {/* Responsive Three Column Layout - Fixed for All Screen Sizes */}
-                            <div className="responsive-method-grid">
-                              {/* 
-                                Grid Layout Breakdown:
-                                - Mobile (320px-639px): Single column, full width cards
-                                - Tablet (640px-1023px): Two columns, qualifications spans full width
-                                - Desktop (1024px+): Three columns, equal distribution
-                                Uses CSS Grid with fractional units for flexibility
-                              */}
-                              {/* Safety Requirements - Grid Item 1 */}
-                              <div className="method-card-item space-y-3">
+                            {/* 
+                              CONTENT GRID - Responsive Three Column Layout
+                              Mobile (< 640px): Single column, full-width cards for easy scrolling
+                              Tablet (640px-1024px): Two columns with qualifications spanning full width
+                              Desktop (>= 1024px): Three equal columns for optimal content distribution
+                              Uses CSS Grid with fr units and explicit breakpoints for reliability
+                            */}
+                            <div className="grid gap-4 
+                                          grid-cols-1 
+                                          sm:grid-cols-2 
+                                          lg:grid-cols-3">
+                              
+                              {/* Safety Requirements Card */}
+                              <div className="bg-card/50 border border-border/40 rounded-lg p-4 space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
                                   <Shield className="h-4 w-4 text-red-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-foreground mobile-text">
+                                  <h4 className="text-sm font-medium text-foreground">
                                     Safety Requirements ({step.safetyRequirements.length})
                                   </h4>
                                 </div>
                                 <ul className="space-y-2">
                                   {step.safetyRequirements.slice(0, 3).map((req, index) => (
-                                    <li key={index} className="text-sm text-foreground flex items-start gap-2 leading-relaxed">
+                                    <li key={index} className="text-sm text-foreground flex items-start gap-2">
                                       <span className="text-red-400 mt-1 flex-shrink-0">•</span>
                                       <span className="break-words">{req}</span>
                                     </li>
                                   ))}
                                   {step.safetyRequirements.length > 3 && (
-                                    <li className="text-sm text-foreground/80 font-medium">
+                                    <li className="text-sm text-muted-foreground font-medium">
                                       +{step.safetyRequirements.length - 3} more
                                     </li>
                                   )}
                                   {step.safetyRequirements.length === 0 && (
-                                    <li className="text-sm text-foreground/60 italic">
+                                    <li className="text-sm text-muted-foreground italic">
                                       No safety requirements added
                                     </li>
                                   )}
                                 </ul>
                               </div>
 
-                              {/* Equipment - Grid Item 2 */}
-                              <div className="method-card-item space-y-3">
+                              {/* Equipment Card */}
+                              <div className="bg-card/50 border border-border/40 rounded-lg p-4 space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
                                   <Wrench className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-foreground mobile-text">
+                                  <h4 className="text-sm font-medium text-foreground">
                                     Equipment ({step.equipmentNeeded.length})
                                   </h4>
                                 </div>
                                 <ul className="space-y-2">
                                   {step.equipmentNeeded.slice(0, 3).map((equipment, index) => (
-                                    <li key={index} className="text-sm text-foreground flex items-start gap-2 leading-relaxed">
+                                    <li key={index} className="text-sm text-foreground flex items-start gap-2">
                                       <span className="text-blue-400 mt-1 flex-shrink-0">•</span>
                                       <span className="break-words">{equipment}</span>
                                     </li>
                                   ))}
                                   {step.equipmentNeeded.length > 3 && (
-                                    <li className="text-sm text-foreground/80 font-medium">
+                                    <li className="text-sm text-muted-foreground font-medium">
                                       +{step.equipmentNeeded.length - 3} more
                                     </li>
                                   )}
                                   {step.equipmentNeeded.length === 0 && (
-                                    <li className="text-sm text-foreground/60 italic">
+                                    <li className="text-sm text-muted-foreground italic">
                                       No equipment specified
                                     </li>
                                   )}
                                 </ul>
                               </div>
 
-                              {/* Qualifications - Responsive Grid Item */}
-                              <div className="qualifications-grid-item space-y-3">
+                              {/* 
+                                Qualifications Card
+                                Responsive column spanning:
+                                - Mobile: Natural flow (1 column)
+                                - Tablet: Spans full width (2 columns) for better readability
+                                - Desktop: Natural flow (1 column) within 3-column layout
+                              */}
+                              <div className="bg-card/50 border border-border/40 rounded-lg p-4 space-y-3 
+                                            sm:col-span-2 
+                                            lg:col-span-1">
                                 <div className="flex items-center gap-2 mb-3">
                                   <GraduationCap className="h-4 w-4 text-green-400 flex-shrink-0" />
-                                  <h4 className="text-sm font-medium text-foreground mobile-text">
+                                  <h4 className="text-sm font-medium text-foreground">
                                     Qualifications ({step.qualifications.length})
                                   </h4>
                                 </div>
                                 <ul className="space-y-2">
                                   {step.qualifications.slice(0, 3).map((qual, index) => (
-                                    <li key={index} className="text-sm text-foreground flex items-start gap-2 leading-relaxed">
+                                    <li key={index} className="text-sm text-foreground flex items-start gap-2">
                                       <span className="text-green-400 mt-1 flex-shrink-0">•</span>
                                       <span className="break-words">{qual}</span>
                                     </li>
                                   ))}
                                   {step.qualifications.length > 3 && (
-                                    <li className="text-sm text-foreground/80 font-medium">
+                                    <li className="text-sm text-muted-foreground font-medium">
                                       +{step.qualifications.length - 3} more
                                     </li>
                                   )}
                                   {step.qualifications.length === 0 && (
-                                    <li className="text-sm text-foreground/60 italic">
+                                    <li className="text-sm text-muted-foreground italic">
                                       No qualifications required
                                     </li>
                                   )}
