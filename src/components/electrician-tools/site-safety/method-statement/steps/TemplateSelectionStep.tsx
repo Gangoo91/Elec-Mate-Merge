@@ -144,7 +144,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             </CardHeader>
             
             {/* Card Content - Flexible layout with proper spacing */}
-            <CardContent className="space-y-4 flex-1 flex flex-col">
+            <CardContent className="p-0 space-y-4 flex-1 flex flex-col">
               {/* Duration Info */}
               <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
                 <Clock className="h-4 w-4 flex-shrink-0 text-elec-yellow" />
