@@ -54,7 +54,7 @@ export const RiskMatrix: React.FC<RiskMatrixProps> = ({
               <div key={label} className="bg-elec-dark/50 p-1 sm:p-2 text-center text-white text-xs font-bold border border-elec-yellow/20">
                 {index + 1}
                 <br />
-                <span className="text-[8px] sm:text-[10px] hidden xs:inline">{label}</span>
+                <span className="text-[8px] sm:text-[10px] hidden xs:inline break-words overflow-hidden">{label}</span>
               </div>
             ))}
             
