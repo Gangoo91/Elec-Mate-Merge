@@ -583,78 +583,40 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                         ) : (
                           // Collapsed Card View - Enhanced Mobile Layout
                           <CardContent className="mobile-padding mobile-card-spacing">
-                            <div className="modern-step-header-grid animate-fade-in">
-                              {/* 
-                                Grid Layout Breakdown:
-                                - Mobile (320px-639px): Single column, stacked vertically 
-                                - Tablet (640px-1023px): Two columns, 70% content / 30% actions
-                                - Desktop (1024px+): Two columns, 75% content / 25% actions
-                                Uses CSS Grid with fractional and percentage units for flexibility
-                              */}
-                              {/* Grid Item 1: Main Content Area */}
-                              <div className="step-content-area">
-                                <div className="step-inner-content">
-                                  {/* Enhanced Drag Handle with Visual Feedback */}
-                                  <div
-                                    {...provided.dragHandleProps}
-                                    className="drag-handle-modern"
-                                  >
-                                    <GripVertical className="h-5 w-5" />
-                                  </div>
-                                  
-                                  {/* Modern Step Number Badge */}
-                                  <div className="step-number-modern">
-                                    <span className="step-number-text">{step.stepNumber}</span>
-                                    <div className="step-number-pulse"></div>
-                                  </div>
-                                  
-                                  {/* Enhanced Content Typography */}
-                                  <div className="step-text-content">
-                                    <h3 className="step-title-modern">
-                                      {step.title || `Step ${step.stepNumber}`}
-                                    </h3>
-                                    <p className="step-description-modern">
-                                      {step.description || 'No description provided'}
-                                    </p>
-                                    
-                                    {/* Enhanced Visual Progress Indicator */}
-                                    <div className="step-progress-bar">
-                                      <div className="step-progress-fill"></div>
-                                    </div>
-                                  </div>
-                                </div>
+                            <div className="flex items-center gap-3 w-full">
+                              {/* Drag Handle */}
+                              <div
+                                {...provided.dragHandleProps}
+                                className="text-muted-foreground hover:text-foreground transition-colors cursor-grab active:cursor-grabbing"
+                              >
+                                <GripVertical className="h-4 w-4" />
                               </div>
                               
-                              {/* Grid Item 2: Modern Actions and Meta Area */}
-                              <div className="step-actions-modern">
-                                <div className="actions-container">
-                                  {/* Enhanced Risk Badge */}
-                                   <div className="risk-badge-modern">
-                                     <Badge className={`${getRiskColor(step.riskLevel)} modern-badge`} variant="outline">
-                                       {step.riskLevel} risk
-                                     </Badge>
-                                   </div>
-                                   
-                                   {/* Enhanced Duration Display */}
-                                   {step.estimatedDuration && (
-                                     <div className="duration-display-modern">
-                                       <Clock className="h-4 w-4" />
-                                       <span>{step.estimatedDuration}</span>
-                                     </div>
-                                   )}
-                                   
-                                   {/* Modern Action Button */}
-                                   <Button
-                                     onClick={() => setExpandedStep(step.id)}
-                                     size="sm"
-                                     className="action-button-modern hover-scale"
-                                   >
-                                     <Edit3 className="h-4 w-4 mr-2" />
-                                     Edit
-                                   </Button>
-                                 </div>
-                               </div>
-                             </div>
+                              {/* Step Number */}
+                              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-medium">
+                                {step.stepNumber}
+                              </div>
+                              
+                              {/* Actions */}
+                              <div className="flex items-center gap-2">
+                                <Badge className={getRiskColor(step.riskLevel)} variant="outline">
+                                  {step.riskLevel}
+                                </Badge>
+                                {step.estimatedDuration && (
+                                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                    <Clock className="h-3 w-3" />
+                                    {step.estimatedDuration}
+                                  </div>
+                                )}
+                                <Button
+                                  onClick={() => setExpandedStep(step.id)}
+                                  size="sm"
+                                  variant="outline"
+                                >
+                                  <Edit3 className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            </div>
 
                             {/* Responsive Three Column Layout - Fixed for All Screen Sizes */}
                             <div className="responsive-method-grid">
