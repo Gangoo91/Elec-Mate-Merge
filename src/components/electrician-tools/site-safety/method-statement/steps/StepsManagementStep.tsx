@@ -664,8 +664,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 <ul className="space-y-2">
                                   {step.safetyRequirements.slice(0, 3).map((req, index) => (
                                     <li key={index} className="text-sm text-slate-200 flex items-start gap-2">
-                                      <span className="text-red-400 mt-1 flex-shrink-0">•</span>
-                                      <span className="break-words">{req}</span>
+                                      <span className="text-red-400 flex-shrink-0 w-2">•</span>
+                                      <span className="break-words text-left">{req}</span>
                                     </li>
                                   ))}
                                   {step.safetyRequirements.length > 3 && (
