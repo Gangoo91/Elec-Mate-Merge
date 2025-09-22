@@ -719,9 +719,9 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </div>
                                 <ul className="space-y-2">
                                   {step.qualifications.slice(0, 3).map((qual, index) => (
-                                    <li key={index} className="text-sm text-slate-200 flex items-start gap-2">
-                                      <span className="text-green-400 mt-1 flex-shrink-0">•</span>
-                                      <span className="break-words">{qual}</span>
+                                     <li key={index} className="text-sm text-slate-200 flex items-start gap-2">
+                                       <span className="text-green-400 w-2 flex-shrink-0">•</span>
+                                       <span className="break-words text-left">{qual}</span>
                                     </li>
                                   ))}
                                   {step.qualifications.length > 3 && (
