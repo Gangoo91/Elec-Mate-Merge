@@ -111,7 +111,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-6 text-left">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
@@ -145,7 +145,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
               <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
                 Work Type
               </div>
-              <div className="text-sm">{data.workType}</div>
+              <div className="text-sm text-left">{data.workType}</div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
@@ -159,7 +159,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
           {data.description && (
             <div className="space-y-2">
               <div className="text-sm font-medium text-elec-yellow">Description</div>
-              <div className="text-sm text-muted-foreground">{data.description}</div>
+              <div className="text-sm text-muted-foreground text-left">{data.description}</div>
             </div>
           )}
         </CardContent>
@@ -195,7 +195,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                     </div>
                     
                     {step.description && (
-                      <p className="text-sm text-muted-foreground">{step.description}</p>
+                      <p className="text-sm text-muted-foreground text-left">{step.description}</p>
                     )}
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
