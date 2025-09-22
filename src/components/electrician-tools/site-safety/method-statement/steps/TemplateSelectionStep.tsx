@@ -53,7 +53,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
 
       {/* Search and Filters - Mobile-first responsive design */}
       <Card className="border-elec-yellow/20 bg-elec-gray/95 backdrop-blur-sm mobile-card shadow-sm w-full overflow-hidden">
-        <CardContent className="w-full">
+        <CardContent className="p-0 w-full">
           {/* Mobile-optimized layout with proper containment */}
           <div className="w-full space-y-3 sm:space-y-4">
             {/* Search Input - Contained within parent */}
