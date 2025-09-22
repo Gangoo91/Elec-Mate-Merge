@@ -623,10 +623,17 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                               </div>
                             </div>
 
-                            {/* Enhanced Three Column Layout for Mobile */}
-                            <div className="mobile-grid-responsive grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                              {/* Safety Requirements */}
-                              <div className="mobile-card-compact space-y-3">
+                            {/* Responsive Three Column Layout - Fixed for All Screen Sizes */}
+                            <div className="responsive-method-grid">
+                              {/* 
+                                Grid Layout Breakdown:
+                                - Mobile (320px-639px): Single column, full width cards
+                                - Tablet (640px-1023px): Two columns, qualifications spans full width
+                                - Desktop (1024px+): Three columns, equal distribution
+                                Uses CSS Grid with fractional units for flexibility
+                              */}
+                              {/* Safety Requirements - Grid Item 1 */}
+                              <div className="method-card-item space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
                                   <Shield className="h-4 w-4 text-red-400 flex-shrink-0" />
                                   <h4 className="text-sm font-medium text-foreground mobile-text">
@@ -653,8 +660,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </ul>
                               </div>
 
-                              {/* Equipment */}
-                              <div className="mobile-card-compact space-y-3">
+                              {/* Equipment - Grid Item 2 */}
+                              <div className="method-card-item space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
                                   <Wrench className="h-4 w-4 text-blue-400 flex-shrink-0" />
                                   <h4 className="text-sm font-medium text-foreground mobile-text">
@@ -681,8 +688,8 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                                 </ul>
                               </div>
 
-                              {/* Qualifications */}
-                              <div className="mobile-card-compact space-y-3 sm:col-span-2 lg:col-span-1">
+                              {/* Qualifications - Responsive Grid Item */}
+                              <div className="qualifications-grid-item space-y-3">
                                 <div className="flex items-center gap-2 mb-3">
                                   <GraduationCap className="h-4 w-4 text-green-400 flex-shrink-0" />
                                   <h4 className="text-sm font-medium text-foreground mobile-text">

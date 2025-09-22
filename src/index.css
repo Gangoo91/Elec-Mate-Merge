@@ -275,12 +275,76 @@
   .mobile-grid-responsive {
     @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6;
   }
+
+  /* Enhanced Responsive Method Statement Grid */
+  .responsive-method-grid {
+    /* Mobile First: Single column layout for screens < 640px */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    
+    /* Tablet: Two columns with equal distribution for screens 640px - 1023px */
+    @media (min-width: 640px) and (max-width: 1023px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    
+    /* Desktop: Three columns with equal distribution for screens >= 1024px */
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    
+    /* Large screens: Maintain three columns but with better spacing */
+    @media (min-width: 1280px) {
+      gap: 2.5rem;
+    }
+  }
+
+  /* Qualifications grid item - spans appropriately on tablet */
+  .qualifications-grid-item {
+    /* Mobile: Single column, natural flow */
+    grid-column: 1;
+    
+    /* Tablet: Span full width on second row */
+    @media (min-width: 640px) and (max-width: 1023px) {
+      grid-column: 1 / -1;
+    }
+    
+    /* Desktop: Single column, natural flow */
+    @media (min-width: 1024px) {
+      grid-column: auto;
+    }
+  }
   
   /* Mobile form improvements */
   .mobile-input-spacing {
     @apply space-y-4 sm:space-y-3;
   }
   
+  /* Method statement card items - consistent styling */
+  .method-card-item {
+    /* Base styling for all method cards */
+    min-height: fit-content;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background-color: rgb(15 23 42 / 0.3); /* slate-900/30 */
+    border: 1px solid rgb(250 204 21 / 0.2); /* yellow-400/20 */
+    
+    /* Prevent content overflow and ensure text wrapping */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    
+    /* Smooth transitions */
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .method-card-item:hover {
+    border-color: rgb(250 204 21 / 0.4); /* yellow-400/40 */
+    background-color: rgb(15 23 42 / 0.5); /* slate-900/50 */
+  }
+
   /* Better focus states for mobile */
   .mobile-focus {
     @apply focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:outline-none;
