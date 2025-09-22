@@ -17,7 +17,8 @@ import {
   Wrench,
   GraduationCap,
   Copy,
-  Lightbulb
+  Lightbulb,
+  Edit3
 } from 'lucide-react';
 import { MethodStep } from '@/types/method-statement';
 import { stepTemplates } from '@/data/method-statement-templates';
@@ -582,7 +583,7 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                         ) : (
                           // Collapsed Card View - Enhanced Mobile Layout
                           <CardContent className="mobile-padding mobile-card-spacing">
-                            <div className="responsive-step-header-grid">
+                            <div className="modern-step-header-grid animate-fade-in">
                               {/* 
                                 Grid Layout Breakdown:
                                 - Mobile (320px-639px): Single column, stacked vertically 
@@ -592,50 +593,68 @@ const StepsManagementStep = ({ steps, onStepsChange, onNext, onBack, linkedHazar
                               */}
                               {/* Grid Item 1: Main Content Area */}
                               <div className="step-content-area">
-                                <div className="flex items-start gap-3 sm:gap-4 min-w-0">{/* nested flex for internal layout */}
-                                <div
-                                  {...provided.dragHandleProps}
-                                  className="text-foreground/60 hover:text-elec-yellow cursor-grab touch-target flex-shrink-0 mt-1"
-                                >
-                                  <GripVertical className="h-5 w-5" />
-                                </div>
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-elec-yellow text-black flex items-center justify-center font-bold text-lg sm:text-xl flex-shrink-0">
-                                  {step.stepNumber}
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                  <h3 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-2 leading-tight">
-                                    {step.title || `Step ${step.stepNumber}`}
-                                  </h3>
-                                  <p className="text-foreground text-sm sm:text-base leading-relaxed">
-                                    {step.description || 'No description provided'}
-                                  </p>
-                                </div>
+                                <div className="step-inner-content">
+                                  {/* Enhanced Drag Handle with Visual Feedback */}
+                                  <div
+                                    {...provided.dragHandleProps}
+                                    className="drag-handle-modern"
+                                  >
+                                    <GripVertical className="h-5 w-5" />
+                                  </div>
+                                  
+                                  {/* Modern Step Number Badge */}
+                                  <div className="step-number-modern">
+                                    <span className="step-number-text">{step.stepNumber}</span>
+                                    <div className="step-number-pulse"></div>
+                                  </div>
+                                  
+                                  {/* Enhanced Content Typography */}
+                                  <div className="step-text-content">
+                                    <h3 className="step-title-modern">
+                                      {step.title || `Step ${step.stepNumber}`}
+                                    </h3>
+                                    <p className="step-description-modern">
+                                      {step.description || 'No description provided'}
+                                    </p>
+                                    
+                                    {/* Enhanced Visual Progress Indicator */}
+                                    <div className="step-progress-bar">
+                                      <div className="step-progress-fill"></div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                               
-                              {/* Grid Item 2: Actions and Meta Area */}
-                              <div className="step-actions-area">
-                                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
-                                <Badge className={getRiskColor(step.riskLevel)} variant="outline">
-                                  {step.riskLevel} risk
-                                </Badge>
-                                {step.estimatedDuration && (
-                                  <div className="flex items-center gap-1 text-foreground text-sm">
-                                    <Clock className="h-4 w-4" />
-                                    {step.estimatedDuration}
-                                  </div>
-                                )}
-                                <Button
-                                  onClick={() => setExpandedStep(step.id)}
-                                  size="sm"
-                                  variant="outline"
-                                  className="mobile-button-secondary touch-target"
-                                >
-                                  Edit
-                                </Button>
-                                </div>
-                              </div>
-                            </div>
+                              {/* Grid Item 2: Modern Actions and Meta Area */}
+                              <div className="step-actions-modern">
+                                <div className="actions-container">
+                                  {/* Enhanced Risk Badge */}
+                                   <div className="risk-badge-modern">
+                                     <Badge className={`${getRiskColor(step.riskLevel)} modern-badge`} variant="outline">
+                                       {step.riskLevel} risk
+                                     </Badge>
+                                   </div>
+                                   
+                                   {/* Enhanced Duration Display */}
+                                   {step.estimatedDuration && (
+                                     <div className="duration-display-modern">
+                                       <Clock className="h-4 w-4" />
+                                       <span>{step.estimatedDuration}</span>
+                                     </div>
+                                   )}
+                                   
+                                   {/* Modern Action Button */}
+                                   <Button
+                                     onClick={() => setExpandedStep(step.id)}
+                                     size="sm"
+                                     className="action-button-modern hover-scale"
+                                   >
+                                     <Edit3 className="h-4 w-4 mr-2" />
+                                     Edit
+                                   </Button>
+                                 </div>
+                               </div>
+                             </div>
 
                             {/* Responsive Three Column Layout - Fixed for All Screen Sizes */}
                             <div className="responsive-method-grid">
