@@ -264,11 +264,23 @@ const DetailsStep = ({ data, onDataChange, onNext, onBack }: DetailsStepProps) =
             {data.workType === 'Installation Work' && (
               <div className="bg-blue-500/10 p-4 rounded-lg space-y-3">
                 <h4 className="font-medium text-blue-300">Installation Work Recommendations:</h4>
-            <ul className="text-sm space-y-1 text-left">
-                  <li>• Ensure Part P notification requirements are met</li>
-                  <li>• Consider 18th Edition compliance requirements</li>
-                  <li>• Plan for installation testing and certification</li>
-                  <li>• Verify supply disconnection procedures</li>
+            <ul className="text-sm space-y-2 text-left">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-0.5 font-bold">•</span>
+                    <span>Ensure Part P notification requirements are met</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-0.5 font-bold">•</span>
+                    <span>Consider 18th Edition compliance requirements</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-0.5 font-bold">•</span>
+                    <span>Plan for installation testing and certification</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-0.5 font-bold">•</span>
+                    <span>Verify supply disconnection procedures</span>
+                  </li>
                 </ul>
                 <div className="mt-3 p-3 bg-orange-500/10 border border-orange-500/20 rounded">
                   <p className="text-sm text-orange-300 font-medium mb-2">Common Hazards for Installation Work:</p>
