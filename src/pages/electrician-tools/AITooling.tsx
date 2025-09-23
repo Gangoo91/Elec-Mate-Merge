@@ -1,10 +1,9 @@
 
-import { Brain, ArrowLeft, Sparkles, ArrowRight } from "lucide-react";
+import { Brain, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { toolOptions } from "@/components/electrician-tools/ai-tools/constants";
-import DebugToolsButton from "@/components/electrician-tools/DebugToolsButton";
 
 const AITooling = () => {
 
@@ -15,7 +14,7 @@ const AITooling = () => {
         <div className="px-4 py-4 md:py-6">
           <div className="max-w-7xl mx-auto">
             {/* Navigation */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center mb-4">
               <Link to="/electrician">
                 <Button 
                   variant="outline" 
@@ -26,10 +25,6 @@ const AITooling = () => {
                   Back to Electrical Hub
                 </Button>
               </Link>
-              
-              <div className="flex gap-2">
-                <DebugToolsButton />
-              </div>
             </div>
 
             {/* Hero Section */}
