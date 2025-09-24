@@ -1,5 +1,9 @@
 import { useState, useMemo } from 'react';
-import { Zap, HardHat, Flame, Droplets, Wind } from 'lucide-react';
+import { 
+  Zap, HardHat, Flame, Droplets, Wind, Car, Sun, TestTube, 
+  ClipboardCheck, Search, Package, Wrench, Shield, Home,
+  Cable, Volume2, Beaker, ArrowUp
+} from 'lucide-react';
 
 export interface Hazard {
   id: string;
@@ -20,126 +24,276 @@ export const useHazardDatabase = () => {
     {
       id: "1",
       name: "Electric Shock",
-      category: "Electrical",
+      category: "Electrical Installation",
       description: "Contact with live electrical parts causing injury or death",
       riskLevel: "Very High",
       commonControls: [
-        "Isolation and lock-off procedures",
-        "Prove dead testing",
-        "Appropriate PPE",
-        "Safe systems of work"
+        "Prove dead testing using calibrated voltage detector",
+        "Lock-off/tag-out procedures with personal padlocks",
+        "Use appropriate PPE: insulated gloves (class 0 minimum)",
+        "Maintain safe working distances from live parts"
       ],
-      regulations: ["BS 7671", "CDM Regulations", "HASAWA"],
+      regulations: ["BS 7671:2018+A2:2022", "IET Code of Practice", "HSE GS38"],
       icon: Zap
     },
     {
       id: "2", 
       name: "Arc Flash",
-      category: "Electrical",
+      category: "Electrical Installation",
       description: "Explosive release of energy from electrical equipment",
       riskLevel: "Very High",
       commonControls: [
-        "Arc flash PPE",
+        "Arc flash PPE including face shields",
         "Remote operation where possible",
-        "De-energise equipment",
-        "Proper working distances"
+        "De-energise equipment before work",
+        "Maintain proper working distances"
       ],
-      regulations: ["BS 7671", "IEC 61482"],
+      regulations: ["BS 7671:2018+A2:2022", "IEC 61482"],
       icon: Flame
     },
     {
       id: "3",
-      name: "Falls from Height",
-      category: "Physical",
-      description: "Risk of falling when working at elevated positions",
+      name: "Consumer Unit Upgrades",
+      category: "Electrical Installation",
+      description: "Hazards during consumer unit replacement and electrical panel work",
       riskLevel: "High",
       commonControls: [
-        "Edge protection systems",
-        "Safety harnesses",
-        "Proper ladder use",
-        "Mobile elevated work platforms"
+        "Arrange DNO isolation or use appropriate isolation procedures",
+        "Verify earthing arrangements meet current standards", 
+        "Test all RCDs and MCBs before energisation",
+        "Use temporary supply arrangements if required"
       ],
-      regulations: ["Work at Height Regulations", "CDM Regulations"],
-      icon: HardHat
+      regulations: ["BS 7671:2018+A2:2022", "Part P Building Regulations", "IET Guidance Note 3"],
+      icon: Home
     },
     {
       id: "4",
-      name: "Chemical Exposure", 
-      category: "Chemical",
-      description: "Exposure to hazardous substances and chemicals",
-      riskLevel: "Medium",
+      name: "EV Charging Installation",
+      category: "EV Charging",
+      description: "High current electrical installation work for vehicle charging points",
+      riskLevel: "High",
       commonControls: [
-        "Appropriate PPE",
-        "Proper ventilation",
-        "COSHH assessments",
-        "Safe storage procedures"
+        "Calculate electrical load and supply capacity",
+        "Install Type A RCD protection (30mA)",
+        "Ensure adequate earthing and bonding",
+        "Use appropriate cable sizing for load"
       ],
-      regulations: ["COSHH Regulations", "REACH"],
-      icon: Droplets
+      regulations: ["BS 7671:2018+A2:2022", "IET Code of Practice for EV Charging", "OLEV Grant Scheme Requirements"],
+      icon: Car
     },
     {
       id: "5",
-      name: "Confined Spaces",
-      category: "Environmental",
-      description: "Working in spaces with restricted entry/exit",
+      name: "Solar PV Installation",
+      category: "Renewable Energy", 
+      description: "Roof work and DC electrical systems installation",
       riskLevel: "High",
       commonControls: [
-        "Atmospheric testing",
-        "Emergency rescue plans",
-        "Continuous monitoring",
-        "Permit to work systems"
+        "Use appropriate fall protection systems",
+        "Install DC isolators in accessible locations",
+        "Ensure proper earthing and bonding of metalwork",
+        "Use MC4 connectors for all DC connections"
       ],
-      regulations: ["Confined Spaces Regulations", "CDM Regulations"],
-      icon: Wind
+      regulations: ["BS 7671:2018+A2:2022", "MCS Installation Standards", "G99 Grid Code"],
+      icon: Sun
     },
     {
       id: "6",
-      name: "Manual Handling",
-      category: "Physical",
-      description: "Risk of injury from lifting, carrying or moving equipment",
-      riskLevel: "Medium",
+      name: "Working at Height",
+      category: "Working at Height",
+      description: "Risk of falling when working at elevated positions",
+      riskLevel: "Very High",
       commonControls: [
-        "Mechanical aids where possible",
-        "Team lifting procedures",
-        "Training on safe lifting techniques",
-        "Risk assessment of loads"
+        "Use appropriate access equipment (scaffolds, MEWPs, ladders)",
+        "Maintain three points of contact when using ladders",
+        "Use safety harnesses and fall arrest systems",
+        "Implement edge protection where required"
       ],
-      regulations: ["Manual Handling Operations Regulations"],
-      icon: HardHat
+      regulations: ["Work at Height Regulations 2005", "HSE Guidance HSG33", "IPAF guidance"],
+      icon: ArrowUp
     },
     {
       id: "7",
-      name: "Heat Burns",
-      category: "Physical",
-      description: "Burns from hot surfaces, equipment or electrical faults",
-      riskLevel: "High",
+      name: "PAT Testing",
+      category: "Testing & Inspection",
+      description: "Electrical testing of portable appliances and equipment",
+      riskLevel: "Medium",
       commonControls: [
-        "Heat-resistant PPE",
-        "Allow equipment to cool down",
-        "Warning signs and barriers",
-        "First aid training"
+        "Use calibrated PAT testing equipment",
+        "Follow IET Code of Practice testing procedures",
+        "Visual inspection before electrical testing",
+        "Apply appropriate test labels and documentation"
       ],
-      regulations: ["Personal Protective Equipment at Work Regulations"],
-      icon: Flame
+      regulations: ["IET Code of Practice for PAT", "Electricity at Work Regulations 1989"],
+      icon: TestTube
     },
     {
       id: "8",
-      name: "Noise Exposure",
-      category: "Environmental",
-      description: "Hearing damage from prolonged exposure to loud equipment",
+      name: "EICR Inspections",
+      category: "Testing & Inspection",
+      description: "Live testing and inspection work during condition reports",
+      riskLevel: "High",
+      commonControls: [
+        "Use appropriate test equipment (multifunction testers)",
+        "Follow safe testing procedures for live testing",
+        "Obtain permission before testing (commercial premises)",
+        "Document all observations and test results"
+      ],
+      regulations: ["BS 7671:2018+A2:2022", "IET Guidance Note 3", "Landlord & Tenant Act"],
+      icon: ClipboardCheck
+    },
+    {
+      id: "9",
+      name: "Electrical Fault Finding",
+      category: "Maintenance & Repair",
+      description: "Live fault finding and repair work on installations",
+      riskLevel: "Very High",
+      commonControls: [
+        "Use safe testing procedures and appropriate instruments",
+        "Isolate circuits where possible for repair work",
+        "Use insulated tools for live work",
+        "Have emergency procedures in place"
+      ],
+      regulations: ["Electricity at Work Regulations 1989", "HSE GS38", "BS 7671:2018+A2:2022"],
+      icon: Search
+    },
+    {
+      id: "10",
+      name: "Manual Handling",
+      category: "Manual Handling",
+      description: "Risk of injury from lifting, carrying or moving equipment",
       riskLevel: "Medium",
       commonControls: [
-        "Hearing protection",
-        "Noise level monitoring",
-        "Rotation of personnel",
-        "Regular hearing tests"
+        "Use mechanical lifting aids where possible (trolleys, hoists)",
+        "Team lifting for items over 25kg",
+        "Proper lifting techniques - bend knees, keep back straight",
+        "Use cut-resistant gloves for sharp materials"
       ],
-      regulations: ["Control of Noise at Work Regulations"],
+      regulations: ["Manual Handling Operations Regulations 1992", "HSE Guidance HSG115"],
+      icon: Package
+    },
+    {
+      id: "11",
+      name: "Cable Installation",
+      category: "Installation Work",
+      description: "Manual handling of cables and pulling operations",
+      riskLevel: "Medium",
+      commonControls: [
+        "Use cable pulling machines for long runs",
+        "Ensure adequate workforce for manual pulls",
+        "Use proper pulling lubricants to reduce friction",
+        "Install cable supports at appropriate intervals"
+      ],
+      regulations: ["Manual Handling Operations Regulations 1992", "BS 7671:2018+A2:2022"],
+      icon: Cable
+    },
+    {
+      id: "12",
+      name: "Hot Work Activities",
+      category: "Fire & Explosion",
+      description: "Hot work including soldering and thermal cutting",
+      riskLevel: "High",
+      commonControls: [
+        "Obtain hot work permits where required",
+        "Remove combustible materials from work area",
+        "Have appropriate fire extinguishers available",
+        "Maintain fire watch during and after hot work"
+      ],
+      regulations: ["HSE HSG140 Safe use of work equipment", "DSEAR Regulations"],
+      icon: Flame
+    },
+    {
+      id: "13",
+      name: "Chemical Exposure", 
+      category: "Hazardous Materials",
+      description: "Exposure to electrical installation chemicals and adhesives",
+      riskLevel: "Medium",
+      commonControls: [
+        "Read and understand safety data sheets",
+        "Use appropriate chemical-resistant gloves",
+        "Ensure adequate ventilation in work areas",
+        "Have eye wash facilities available"
+      ],
+      regulations: ["COSHH Regulations 2002", "HSE Guidance HSG97"],
+      icon: Beaker
+    },
+    {
+      id: "14",
+      name: "Noise Exposure",
+      category: "Environmental",
+      description: "Hearing damage from power tools and electrical equipment",
+      riskLevel: "Medium",
+      commonControls: [
+        "Use appropriate hearing protection (ear defenders/plugs)",
+        "Take regular breaks from noisy activities",
+        "Monitor noise levels with sound meter if required",
+        "Use low-noise tools where available"
+      ],
+      regulations: ["Control of Noise at Work Regulations 2005", "HSE Guidance L108"],
+      icon: Volume2
+    },
+    {
+      id: "15",
+      name: "Confined Spaces",
+      category: "Environmental",
+      description: "Working in restricted spaces like ducts, voids, and plant rooms",
+      riskLevel: "Very High",
+      commonControls: [
+        "Implement confined space entry procedures",
+        "Test atmosphere for oxygen, flammable gases, toxic substances",
+        "Establish emergency rescue procedures",
+        "Use communication systems (radios, attendant)"
+      ],
+      regulations: ["Confined Spaces Regulations 1997", "HSE ACOP L101"],
       icon: Wind
+    },
+    {
+      id: "16",
+      name: "Fire Alarm Systems",
+      category: "Specialised Systems",
+      description: "Installation and maintenance of fire detection systems",
+      riskLevel: "Medium",
+      commonControls: [
+        "Coordinate work with building fire safety officer",
+        "Implement temporary fire safety measures during installation",
+        "Follow BS 5839 design and installation standards",
+        "Commission system in stages to maintain protection"
+      ],
+      regulations: ["BS 5839-1:2017", "Regulatory Reform (Fire Safety) Order 2005"],
+      icon: Shield
+    },
+    {
+      id: "17",
+      name: "Tool and Equipment Safety",
+      category: "Tools & Equipment",
+      description: "Use and maintenance of electrical tools and equipment",
+      riskLevel: "Medium",
+      commonControls: [
+        "Conduct daily visual inspections of all tools",
+        "PAT test all portable electrical tools annually",
+        "Store tools properly in designated locations",
+        "Train personnel in correct tool usage"
+      ],
+      regulations: ["PUWER Regulations 1998", "Electricity at Work Regulations 1989"],
+      icon: Wrench
     }
   ];
 
-  const categories = ["All", "Electrical", "Physical", "Chemical", "Environmental"];
+  const categories = [
+    "All", 
+    "Electrical Installation", 
+    "EV Charging", 
+    "Renewable Energy", 
+    "Working at Height", 
+    "Testing & Inspection", 
+    "Maintenance & Repair", 
+    "Manual Handling", 
+    "Installation Work", 
+    "Fire & Explosion", 
+    "Hazardous Materials", 
+    "Environmental", 
+    "Specialised Systems", 
+    "Tools & Equipment"
+  ];
 
   const filteredHazards = useMemo(() => {
     return hazards.filter(hazard => {
