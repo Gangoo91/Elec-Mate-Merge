@@ -170,7 +170,7 @@ const SiteSafety = () => {
               <h2 className="text-2xl font-bold">Essential Safety Tools</h2>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               {primaryTools.map((tool) => {
                 const IconComponent = tool.icon;
                 return (
@@ -179,24 +179,16 @@ const SiteSafety = () => {
                     className="group relative overflow-hidden border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-card/80 hover:border-elec-yellow/40 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
                     onClick={() => setActiveView(tool.id)}
                   >
-                    <div className="absolute top-4 right-4">
-                      {tool.badge && (
-                        <div className="px-3 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-medium">
-                          {tool.badge}
-                        </div>
-                      )}
-                    </div>
-                    
-                    <CardHeader className="pb-4">
-                      <div className="flex items-start gap-4">
-                        <div className="p-3 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
-                          <IconComponent className="h-8 w-8 text-elec-yellow" />
+                    <CardHeader className="pb-3 sm:pb-4">
+                      <div className="flex items-start gap-3 sm:gap-4">
+                        <div className="p-2 sm:p-3 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
+                          <IconComponent className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
                         </div>
                         <div className="flex-1">
-                          <CardTitle className="text-xl mb-2 group-hover:text-elec-yellow transition-colors">
+                          <CardTitle className="text-lg sm:text-xl mb-2 group-hover:text-elec-yellow transition-colors">
                             {tool.title}
                           </CardTitle>
-                          <p className="text-muted-foreground text-sm leading-relaxed">
+                          <p className="text-foreground/90 text-sm leading-relaxed">
                             {tool.description}
                           </p>
                         </div>
@@ -205,7 +197,7 @@ const SiteSafety = () => {
                     
                     <CardContent className="pt-0">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs text-muted-foreground">Click to open</span>
+                        <span className="text-xs text-foreground/70">Click to open</span>
                         <ArrowRight className="h-4 w-4 text-elec-yellow group-hover:translate-x-1 transition-transform" />
                       </div>
                     </CardContent>
@@ -243,7 +235,7 @@ const SiteSafety = () => {
                     </CardHeader>
                     
                     <CardContent className="text-center">
-                      <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                      <p className="text-foreground/90 text-sm mb-4 leading-relaxed">
                         {tool.description}
                       </p>
                       <div className="flex items-center justify-center gap-2 text-xs text-elec-yellow/80">
@@ -281,7 +273,7 @@ const SiteSafety = () => {
                         <CardTitle className="text-lg group-hover:text-elec-yellow transition-colors">
                           {tool.title}
                         </CardTitle>
-                        <p className="text-muted-foreground text-sm">
+                        <p className="text-foreground/90 text-sm">
                           {tool.description}
                         </p>
                       </div>
