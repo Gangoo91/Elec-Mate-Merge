@@ -34,16 +34,24 @@ const RiskAssessmentBuilder = () => {
 
   const riskCategories = hazardCategories.map(cat => cat.name);
 
-  const hazardTemplates = [
-    { category: "Electrical Hazards", defaultLikelihood: 3, defaultSeverity: 4 },
-    { category: "Working at Height", defaultLikelihood: 2, defaultSeverity: 5 },
-    { category: "Asbestos & Hazardous Materials", defaultLikelihood: 2, defaultSeverity: 5 },
-    { category: "Manual Handling", defaultLikelihood: 3, defaultSeverity: 2 },
-    { category: "Fire & Explosion", defaultLikelihood: 2, defaultSeverity: 4 },
-    { category: "Environmental", defaultLikelihood: 3, defaultSeverity: 2 },
-    { category: "Tools & Equipment", defaultLikelihood: 3, defaultSeverity: 3 },
-    { category: "Human Factors", defaultLikelihood: 4, defaultSeverity: 3 }
-  ];
+  // Use realistic risk ratings from enhanced database
+  const hazardTemplates = hazardCategories.map(cat => ({
+    category: cat.name,
+    defaultLikelihood: cat.name === "Electrical Hazards" ? 3 :
+                      cat.name === "Working at Height" ? 3 :
+                      cat.name === "Asbestos & Hazardous Materials" ? 2 :
+                      cat.name === "Manual Handling" ? 4 :
+                      cat.name === "Fire & Explosion" ? 2 :
+                      cat.name === "Environmental" ? 3 :
+                      cat.name === "Tools & Equipment" ? 3 : 3,
+    defaultSeverity: cat.name === "Electrical Hazards" ? 4 :
+                    cat.name === "Working at Height" ? 5 :
+                    cat.name === "Asbestos & Hazardous Materials" ? 5 :
+                    cat.name === "Manual Handling" ? 3 :
+                    cat.name === "Fire & Explosion" ? 5 :
+                    cat.name === "Environmental" ? 3 :
+                    cat.name === "Tools & Equipment" ? 3 : 3
+  }));
 
   const calculateRiskLevel = (likelihood: number, severity: number) => {
     const score = likelihood * severity;

@@ -98,14 +98,14 @@ export const useHazardDatabase = () => {
     },
     {
       id: "6",
-      name: "Working at Height",
+      name: "Falls from ladders",
       category: "Working at Height",
-      description: "Risk of falling when working at elevated positions",
+      description: "Risk of falling when using ladder access equipment",
       riskLevel: "Very High",
       commonControls: [
-        "Use appropriate access equipment (scaffolds, MEWPs, ladders)",
-        "Maintain three points of contact when using ladders",
-        "Use safety harnesses and fall arrest systems",
+        "Use mobile elevated work platforms instead of ladders where possible",
+        "Ladder stabilisers and foot spreaders for stability",
+        "Full body harness with shock absorbing lanyard",
         "Implement edge protection where required"
       ],
       regulations: ["Work at Height Regulations 2005", "HSE Guidance HSG33", "IPAF guidance"],

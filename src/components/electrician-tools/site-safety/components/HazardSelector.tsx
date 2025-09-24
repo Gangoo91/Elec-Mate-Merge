@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Shield, Search, Plus, AlertTriangle, Zap, HardHat, Flame, Droplets, Wind } from 'lucide-react';
+import { Shield, Search, Plus, AlertTriangle } from 'lucide-react';
 import { useRAMS } from '../rams/RAMSContext';
 import { toast } from '@/hooks/use-toast';
+import { hazardCategories, enhancedRiskConsequences } from '@/data/hazards';
+import { getRiskLevel, getRiskColor } from '@/data/enhanced-hazard-database';
 
 interface HazardSelectorProps {
   open: boolean;
@@ -25,85 +27,33 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const hazards = [
-    {
-      id: "1",
-      name: "Electric Shock",
-      category: "Electrical",
-      description: "Contact with live electrical parts causing injury or death",
-      riskLevel: "Very High",
+  // Convert enhanced consequences to hazard format for compatibility
+  const hazards = enhancedRiskConsequences.map(risk => {
+    const category = hazardCategories.find(cat => 
+      cat.hazards.includes(risk.hazardId)
+    );
+    
+    return {
+      id: risk.id,
+      name: risk.hazardId,
+      category: category?.name || "Other",
+      description: risk.consequence,
+      riskLevel: getRiskLevel(risk.riskRating),
       commonControls: [
-        "Isolation and lock-off procedures",
-        "Prove dead testing",
-        "Appropriate PPE",
-        "Safe systems of work"
-      ],
-      regulations: ["BS 7671", "CDM Regulations", "HASAWA"],
-      icon: Zap
-    },
-    {
-      id: "2", 
-      name: "Arc Flash",
-      category: "Electrical",
-      description: "Explosive release of energy from electrical equipment",
-      riskLevel: "Very High",
-      commonControls: [
-        "Arc flash PPE",
-        "Remote operation where possible",
-        "De-energise equipment",
-        "Proper working distances"
-      ],
-      regulations: ["BS 7671", "IEC 61482"],
-      icon: Flame
-    },
-    {
-      id: "3",
-      name: "Falls from Height",
-      category: "Physical",
-      description: "Risk of falling when working at elevated positions",
-      riskLevel: "High",
-      commonControls: [
-        "Edge protection systems",
-        "Safety harnesses",
-        "Proper ladder use",
-        "Mobile elevated work platforms"
-      ],
-      regulations: ["Work at Height Regulations", "CDM Regulations"],
-      icon: HardHat
-    },
-    {
-      id: "4",
-      name: "Chemical Exposure", 
-      category: "Chemical",
-      description: "Exposure to hazardous substances and chemicals",
-      riskLevel: "Medium",
-      commonControls: [
-        "Appropriate PPE",
-        "Proper ventilation",
-        "COSHH assessments",
-        "Safe storage procedures"
-      ],
-      regulations: ["COSHH Regulations", "REACH"],
-      icon: Droplets
-    },
-    {
-      id: "5",
-      name: "Confined Spaces",
-      category: "Environmental",
-      description: "Working in spaces with restricted entry/exit",
-      riskLevel: "High",
-      commonControls: [
-        "Atmospheric testing",
-        "Emergency rescue plans",
-        "Continuous monitoring",
-        "Permit to work systems"
-      ],
-      regulations: ["Confined Spaces Regulations", "CDM Regulations"],
-      icon: Wind
-    }
-  ];
+        ...(risk.controlMeasures.elimination || []),
+        ...(risk.controlMeasures.engineering || []),
+        ...(risk.controlMeasures.administrative || []),
+        ...(risk.controlMeasures.ppe || [])
+      ].slice(0, 4),
+      regulations: risk.bs7671References || [],
+      icon: category?.icon || Shield,
+      severity: risk.severity,
+      likelihood: risk.likelihood,
+      riskRating: risk.riskRating
+    };
+  });
 
-  const categories = ["All", "Electrical", "Physical", "Chemical", "Environmental"];
+  const categories = ["All", ...hazardCategories.map(cat => cat.name)];
 
   const filteredHazards = hazards.filter(hazard => {
     const matchesSearch = hazard.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -112,9 +62,10 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
     return matchesSearch && matchesCategory;
   });
 
-  const getRiskColor = (level: string) => {
+  const getBadgeRiskColor = (level: string) => {
     switch (level) {
-      case "Low": return "bg-green-500";
+      case "Very Low": return "bg-green-500";
+      case "Low": return "bg-blue-500";
       case "Medium": return "bg-yellow-500";
       case "High": return "bg-orange-500";
       case "Very High": return "bg-red-500";
@@ -208,7 +159,7 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
                           <Badge variant="outline" className="text-xs">
                             {hazard.category}
                           </Badge>
-                          <Badge className={`${getRiskColor(hazard.riskLevel)} text-white text-xs`}>
+                          <Badge className={`${getBadgeRiskColor(hazard.riskLevel)} text-white text-xs`}>
                             {hazard.riskLevel} Risk
                           </Badge>
                         </div>

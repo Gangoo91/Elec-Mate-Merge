@@ -168,6 +168,26 @@ export const commonHazards = [
   "Vehicle movements on site"
 ];
 
+export interface EnhancedRiskConsequence {
+  id: string;
+  hazardId: string;
+  consequence: string;
+  severity: 1 | 2 | 3 | 4 | 5; // 1=Minor, 5=Catastrophic
+  likelihood: 1 | 2 | 3 | 4 | 5; // 1=Rare, 5=Almost Certain
+  riskRating: number; // severity × likelihood
+  controlMeasures: {
+    elimination?: string[];
+    substitution?: string[];
+    engineering?: string[];
+    administrative?: string[];
+    ppe?: string[];
+  };
+  bs7671References?: string[];
+  additionalGuidance?: string;
+  inspectionRequirements?: string[];
+}
+
+// Maintain backwards compatibility
 export interface RiskConsequence {
   id: string;
   hazardId: string;
@@ -175,207 +195,510 @@ export interface RiskConsequence {
   defaultControlMeasures: string[];
 }
 
-export const riskConsequences: RiskConsequence[] = [
-  // Electrical Hazards
+export const enhancedRiskConsequences: EnhancedRiskConsequence[] = [
+  // ============= ELECTRICAL HAZARDS =============
   {
-    id: "elec_shock",
+    id: "elec_shock_circuits",
     hazardId: "Live electrical circuits",
     consequence: "Electric shock leading to injury or death",
-    defaultControlMeasures: [
-      "Isolate electrical supply and lock off",
-      "Use voltage indicator to prove dead",
-      "Use appropriate PPE including insulated gloves",
-      "Follow permit to work procedures"
-    ]
+    severity: 5,
+    likelihood: 3,
+    riskRating: 15,
+    controlMeasures: {
+      elimination: ["Work on de-energised circuits wherever possible"],
+      engineering: [
+        "Install permanent isolation switches",
+        "Use voltage indicator to prove dead",
+        "Apply locks and tags to isolation points"
+      ],
+      administrative: [
+        "Follow permit to work procedures",
+        "Implement safe system of work",
+        "Ensure competent person supervision"
+      ],
+      ppe: [
+        "Insulated gloves rated for voltage",
+        "Arc flash protection suit",
+        "Safety footwear with electrical protection"
+      ]
+    },
+    bs7671References: ["Section 514 - Identification", "Section 537 - Isolation and switching"],
+    inspectionRequirements: ["Visual inspection of isolation", "Voltage testing before work"]
   },
   {
-    id: "elec_burn",
+    id: "elec_shock_exposed",
     hazardId: "Exposed electrical connections",
-    consequence: "Electrical burns from arc flash",
-    defaultControlMeasures: [
-      "Install appropriate barriers and guards",
-      "Use arc flash rated PPE",
-      "Maintain safe working distances",
-      "Ensure proper earthing arrangements"
-    ]
+    consequence: "Electrical burns from arc flash or direct contact",
+    severity: 4,
+    likelihood: 2,
+    riskRating: 8,
+    controlMeasures: {
+      engineering: [
+        "Install appropriate barriers and enclosures",
+        "Use IP-rated equipment for environment",
+        "Maintain minimum approach distances"
+      ],
+      administrative: [
+        "Regular inspection and maintenance",
+        "Warning signs and labels",
+        "Restricted access procedures"
+      ],
+      ppe: [
+        "Arc flash rated clothing",
+        "Face shields and safety glasses",
+        "Insulated tools rated for voltage"
+      ]
+    },
+    bs7671References: ["Section 416 - Provisions for basic protection", "Section 521 - Selection and erection of wiring systems"],
+    inspectionRequirements: ["Initial verification", "Periodic inspection every 5 years"]
   },
   {
-    id: "elec_fire",
+    id: "elec_overload",
     hazardId: "Overloaded circuits",
-    consequence: "Electrical fire causing property damage",
-    defaultControlMeasures: [
-      "Calculate load requirements before connection",
-      "Use appropriate cable ratings",
-      "Install proper protection devices",
-      "Regular inspection and testing"
-    ]
+    consequence: "Electrical fire causing property damage and potential injury",
+    severity: 4,
+    likelihood: 3,
+    riskRating: 12,
+    controlMeasures: {
+      elimination: ["Design circuits for maximum expected load plus 25% margin"],
+      engineering: [
+        "Install appropriate protective devices (MCBs/RCBOs)",
+        "Use correctly rated cables for load",
+        "Provide adequate ventilation for equipment"
+      ],
+      administrative: [
+        "Load calculations before installation",
+        "Regular thermal imaging inspections",
+        "Load monitoring systems"
+      ]
+    },
+    bs7671References: ["Section 433 - Protection against overcurrent", "Section 523 - Current-carrying capacity"],
+    inspectionRequirements: ["Thermal imaging annual", "Load testing during commissioning"]
   },
-  
-  // Working at Height
   {
-    id: "height_fall",
+    id: "elec_wet_conditions",
+    hazardId: "Working in wet conditions near electricity",
+    consequence: "Increased risk of electrocution due to reduced body resistance",
+    severity: 5,
+    likelihood: 2,
+    riskRating: 10,
+    controlMeasures: {
+      elimination: ["Postpone work until dry conditions where possible"],
+      engineering: [
+        "Use 110V or battery tools only",
+        "Install temporary weatherproof enclosures",
+        "Ensure all circuits have 30mA RCD protection"
+      ],
+      administrative: [
+        "Weather monitoring procedures",
+        "Stop work protocols for severe weather",
+        "Emergency procedures for electrical incidents"
+      ],
+      ppe: [
+        "Waterproof insulated gloves",
+        "Non-slip safety footwear",
+        "Waterproof arc flash protection"
+      ]
+    },
+    bs7671References: ["Section 704 - Construction and demolition sites", "Section 411.3.3 - Additional protection"],
+    inspectionRequirements: ["Daily RCD testing", "Equipment inspection before use"]
+  },
+
+  // ============= WORKING AT HEIGHT =============
+  {
+    id: "height_fall_ladder",
     hazardId: "Falls from ladders",
     consequence: "Fall from height causing serious injury or death",
-    defaultControlMeasures: [
-      "Use appropriate access equipment (scaffold/MEWP)",
-      "Wear full body harness with lanyard",
-      "Maintain 3 points of contact on ladders",
-      "Ensure competent person supervision"
-    ]
+    severity: 5,
+    likelihood: 3,
+    riskRating: 15,
+    controlMeasures: {
+      elimination: ["Use mobile elevated work platforms instead of ladders where possible"],
+      substitution: ["Use scaffold towers for extended work"],
+      engineering: [
+        "Ladder stabilisers and foot spreaders",
+        "Roof ladder hooks and crawling boards",
+        "Fall arrest systems for ladder work over 2m"
+      ],
+      administrative: [
+        "Pre-use ladder inspection checklist",
+        "3:1 angle ratio setup",
+        "Competent person supervision",
+        "Weather conditions assessment"
+      ],
+      ppe: [
+        "Full body harness with shock absorbing lanyard",
+        "Non-slip safety footwear",
+        "Hard hat with chin strap"
+      ]
+    },
+    bs7671References: ["HSE Working at Height Regulations 2005"],
+    additionalGuidance: "Ladder work should be limited to light work of short duration (30 minutes maximum)",
+    inspectionRequirements: ["Daily ladder inspection", "Weekly formal inspection", "Annual thorough examination"]
   },
   {
-    id: "height_object",
+    id: "height_fall_scaffold",
+    hazardId: "Falls from scaffolding",
+    consequence: "Severe injury or death from uncontrolled fall",
+    severity: 5,
+    likelihood: 2,
+    riskRating: 10,
+    controlMeasures: {
+      engineering: [
+        "Guardrails at 950mm height minimum",
+        "Intermediate rails and toe boards",
+        "Scaffold boarding to prevent gaps",
+        "Scaffold tags and inspection records"
+      ],
+      administrative: [
+        "Competent scaffolder erection/inspection",
+        "Daily scaffold inspection by competent person",
+        "Green tag system before use",
+        "Weather-related access restrictions"
+      ],
+      ppe: [
+        "Fall arrest harness when working near edges",
+        "Safety footwear with good grip",
+        "Hard hat protection"
+      ]
+    },
+    inspectionRequirements: ["Daily visual inspection", "Weekly competent person inspection", "After adverse weather"]
+  },
+  {
+    id: "height_objects",
     hazardId: "Equipment falling from height",
     consequence: "Injury to personnel below from falling objects",
-    defaultControlMeasures: [
-      "Use tool lanyards and secure containers",
-      "Establish exclusion zones below work area",
-      "Use debris netting where required",
-      "Coordinate with other trades"
-    ]
+    severity: 4,
+    likelihood: 3,
+    riskRating: 12,
+    controlMeasures: {
+      engineering: [
+        "Tool lanyards for all hand tools",
+        "Secure storage containers with lids",
+        "Debris netting installation",
+        "Exclusion zones marked below work"
+      ],
+      administrative: [
+        "Dropped object prevention procedures",
+        "Coordination with other trades",
+        "Regular housekeeping inspections",
+        "Emergency procedures for dropped objects"
+      ],
+      ppe: [
+        "Hard hats for all personnel in area",
+        "High visibility clothing",
+        "Safety footwear with metatarsal protection"
+      ]
+    },
+    inspectionRequirements: ["Daily tool and equipment inspection", "Exclusion zone monitoring"]
   },
-  
-  // Asbestos & Hazardous Materials
+
+  // ============= ASBESTOS & HAZARDOUS MATERIALS =============
   {
-    id: "asbestos_exposure",
+    id: "asbestos_disturbance",
     hazardId: "Disturbing asbestos-containing materials",
-    consequence: "Lung disease from asbestos fibre inhalation",
-    defaultControlMeasures: [
-      "Conduct asbestos survey before work starts",
-      "Use licensed asbestos removal contractors",
-      "Wear appropriate respiratory protection",
-      "Follow HSE guidance on asbestos work"
-    ]
+    consequence: "Lung disease from asbestos fibre inhalation (mesothelioma, asbestosis)",
+    severity: 5,
+    likelihood: 2,
+    riskRating: 10,
+    controlMeasures: {
+      elimination: ["Asbestos survey and register before work", "Use licensed contractors for removal"],
+      engineering: [
+        "Wet cutting methods to suppress fibres",
+        "Local exhaust ventilation",
+        "Controlled waste disposal procedures"
+      ],
+      administrative: [
+        "Asbestos awareness training for all staff",
+        "Work method statements for asbestos work",
+        "Health surveillance programme",
+        "Record keeping for exposure"
+      ],
+      ppe: [
+        "Type 5 disposable coveralls",
+        "P3 respiratory protection",
+        "Disposable gloves and overshoes"
+      ]
+    },
+    bs7671References: ["HSE Control of Asbestos Regulations 2012"],
+    additionalGuidance: "Stop work immediately if suspected asbestos discovered",
+    inspectionRequirements: ["Air monitoring during work", "Clearance testing after completion"]
   },
   {
-    id: "chemical_exposure",
+    id: "chemical_vapours",
     hazardId: "Chemical vapours",
     consequence: "Respiratory problems from chemical inhalation",
-    defaultControlMeasures: [
-      "Ensure adequate ventilation",
-      "Use appropriate respiratory protection",
-      "Check safety data sheets",
-      "Limit exposure time"
-    ]
+    severity: 3,
+    likelihood: 3,
+    riskRating: 9,
+    controlMeasures: {
+      substitution: ["Use water-based alternatives where possible"],
+      engineering: [
+        "Adequate natural or mechanical ventilation",
+        "Local exhaust ventilation for confined spaces",
+        "Gas detection equipment"
+      ],
+      administrative: [
+        "COSHH assessments for all chemicals",
+        "Safety data sheet review",
+        "Limited exposure time procedures",
+        "Emergency procedures for exposure"
+      ],
+      ppe: [
+        "Appropriate respiratory protection (A1P2 filters minimum)",
+        "Chemical resistant gloves",
+        "Eye protection"
+      ]
+    },
+    inspectionRequirements: ["Air quality monitoring", "PPE inspection before use"]
   },
-  
-  // Manual Handling
+
+  // ============= MANUAL HANDLING =============
   {
-    id: "manual_injury",
+    id: "manual_heavy_lifting",
     hazardId: "Heavy lifting of equipment",
     consequence: "Musculoskeletal injury from manual handling",
-    defaultControlMeasures: [
-      "Use mechanical lifting aids where possible",
-      "Conduct manual handling assessment",
-      "Train personnel in safe lifting techniques",
-      "Use team lifting for heavy items"
-    ]
+    severity: 3,
+    likelihood: 4,
+    riskRating: 12,
+    controlMeasures: {
+      elimination: ["Use mechanical lifting aids wherever possible"],
+      substitution: ["Break down loads into smaller components"],
+      engineering: [
+        "Trolleys, sack trucks, and lifting equipment",
+        "Height-adjustable work surfaces",
+        "Good lighting for lifting areas"
+      ],
+      administrative: [
+        "Manual handling assessments",
+        "Team lifting procedures for loads over 25kg",
+        "Training in safe lifting techniques",
+        "Job rotation to prevent repetitive strain"
+      ],
+      ppe: [
+        "Back support belts where assessed as necessary",
+        "Non-slip safety footwear",
+        "Cut-resistant gloves for sharp-edged loads"
+      ]
+    },
+    additionalGuidance: "Maximum individual lift 25kg, team lift for anything heavier",
+    inspectionRequirements: ["Regular review of lifting procedures", "Equipment inspection"]
   },
+
+  // ============= FIRE & EXPLOSION =============
   {
-    id: "awkward_posture",
-    hazardId: "Awkward lifting positions",
-    consequence: "Back injury from poor lifting posture",
-    defaultControlMeasures: [
-      "Plan lifting operations in advance",
-      "Clear access routes of obstacles",
-      "Use lifting aids and equipment",
-      "Rotate personnel for repetitive tasks"
-    ]
-  },
-  
-  // Fire & Explosion
-  {
-    id: "fire_ignition",
+    id: "fire_hot_work",
     hazardId: "Hot work near flammable materials",
-    consequence: "Fire or explosion causing injury and property damage",
-    defaultControlMeasures: [
-      "Obtain hot work permit before starting",
-      "Remove or protect flammable materials",
-      "Provide fire extinguishers and fire watch",
-      "Monitor area for 2 hours after completion"
-    ]
+    consequence: "Fire or explosion causing serious injury and property damage",
+    severity: 5,
+    likelihood: 2,
+    riskRating: 10,
+    controlMeasures: {
+      elimination: ["Remove all flammable materials from 10m radius"],
+      engineering: [
+        "Fire blankets and barriers",
+        "Spark arrestors on equipment",
+        "Automatic fire suppression systems"
+      ],
+      administrative: [
+        "Hot work permit system",
+        "Fire watch during and 2 hours after work",
+        "Emergency procedures and evacuation routes",
+        "Coordination with site fire marshal"
+      ],
+      ppe: [
+        "Fire-resistant clothing",
+        "Safety glasses or face shields",
+        "Heat-resistant gloves"
+      ]
+    },
+    inspectionRequirements: ["Pre-work fire risk assessment", "Continuous monitoring during work", "Post-work inspection"]
   },
+
+  // ============= ENVIRONMENTAL =============
   {
-    id: "gas_explosion",
-    hazardId: "Gas leaks in vicinity",
-    consequence: "Gas explosion causing serious injury",
-    defaultControlMeasures: [
-      "Use gas detection equipment",
-      "Ensure no ignition sources present",
-      "Ventilate confined spaces",
-      "Stop work and evacuate if gas detected"
-    ]
-  },
-  
-  // Environmental
-  {
-    id: "weather_exposure",
+    id: "env_weather",
     hazardId: "Adverse weather conditions",
-    consequence: "Exposure-related illness or injury",
-    defaultControlMeasures: [
-      "Monitor weather forecasts",
-      "Provide weather protection equipment",
-      "Suspend outdoor work in severe conditions",
-      "Ensure adequate breaks and hydration"
-    ]
+    consequence: "Exposure-related illness, hypothermia, heat stroke, or weather-related accidents",
+    severity: 3,
+    likelihood: 3,
+    riskRating: 9,
+    controlMeasures: {
+      administrative: [
+        "Weather monitoring and forecasting",
+        "Work suspension procedures for severe weather",
+        "Hydration and rest break schedules",
+        "Emergency procedures for weather incidents"
+      ],
+      ppe: [
+        "Weather-appropriate clothing layers",
+        "High-visibility waterproof clothing",
+        "Sun protection (hat, sunscreen, glasses)",
+        "Insulated gloves for cold conditions"
+      ]
+    },
+    additionalGuidance: "Stop outdoor work in winds over 39mph or lightning within 10 miles",
+    inspectionRequirements: ["Regular weather monitoring", "PPE condition checks"]
   },
   {
-    id: "slip_trip",
-    hazardId: "Slippery surfaces",
-    consequence: "Slip, trip or fall injury",
-    defaultControlMeasures: [
-      "Keep work areas clean and tidy",
-      "Use non-slip footwear",
-      "Provide adequate lighting",
-      "Mark or barrier hazardous areas"
-    ]
+    id: "env_confined_space",
+    hazardId: "Confined spaces",
+    consequence: "Asphyxiation, toxic gas exposure, or inability to escape in emergency",
+    severity: 5,
+    likelihood: 2,
+    riskRating: 10,
+    controlMeasures: {
+      elimination: ["Work from outside confined space where possible"],
+      engineering: [
+        "Continuous forced air ventilation",
+        "Gas detection and monitoring equipment",
+        "Emergency retrieval systems",
+        "Communication systems"
+      ],
+      administrative: [
+        "Confined space entry permits",
+        "Standby person at entrance at all times",
+        "Emergency rescue procedures",
+        "Regular atmospheric monitoring"
+      ],
+      ppe: [
+        "Self-contained breathing apparatus if required",
+        "Full body harness with retrieval line",
+        "Intrinsically safe equipment only"
+      ]
+    },
+    bs7671References: ["Section 729 - Operating and maintenance gangways"],
+    inspectionRequirements: ["Continuous atmospheric monitoring", "Equipment checks before entry"]
   },
-  
-  // Tools & Equipment
+
+  // ============= TOOLS & EQUIPMENT =============
   {
-    id: "tool_injury",
+    id: "tool_defective",
     hazardId: "Defective hand tools",
     consequence: "Injury from tool failure or misuse",
-    defaultControlMeasures: [
-      "Conduct daily tool inspections",
-      "Remove defective tools from service",
-      "Provide appropriate tool training",
-      "Use tools only for intended purpose"
-    ]
+    severity: 3,
+    likelihood: 3,
+    riskRating: 9,
+    controlMeasures: {
+      engineering: [
+        "Quality tools from reputable suppliers",
+        "Tool inspection tags and systems",
+        "Proper tool storage systems"
+      ],
+      administrative: [
+        "Daily tool inspection procedures",
+        "Tool maintenance schedules",
+        "Training on correct tool use",
+        "Defective tool removal procedures"
+      ],
+      ppe: [
+        "Cut-resistant gloves where appropriate",
+        "Safety glasses for cutting/drilling",
+        "Steel toe cap safety boots"
+      ]
+    },
+    inspectionRequirements: ["Daily visual inspection", "Weekly formal inspection", "Annual thorough examination"]
   },
   {
-    id: "power_tool_injury",
+    id: "tool_power_malfunction",
     hazardId: "Power tool malfunction",
-    consequence: "Serious injury from power tool accident",
-    defaultControlMeasures: [
-      "Regular PAT testing of electrical tools",
-      "Use RCD protection for all power tools",
-      "Ensure guards are in place and secure",
-      "Provide and use appropriate PPE"
-    ]
+    consequence: "Serious injury from electrical shock, cuts, or impact",
+    severity: 4,
+    likelihood: 2,
+    riskRating: 8,
+    controlMeasures: {
+      engineering: [
+        "110V or battery tools for construction sites",
+        "RCD protection for all 230V tools",
+        "Guards and safety devices maintained",
+        "PAT testing programme"
+      ],
+      administrative: [
+        "Tool inspection before each use",
+        "Competency training for power tool use",
+        "Maintenance schedules and records",
+        "Incident reporting procedures"
+      ],
+      ppe: [
+        "Hearing protection for noisy tools",
+        "Eye protection for cutting/grinding",
+        "Respiratory protection for dusty operations",
+        "Cut-resistant gloves where appropriate"
+      ]
+    },
+    bs7671References: ["BS 7909 - Code of practice for temporary electrical systems"],
+    inspectionRequirements: ["Daily visual inspection", "3-monthly PAT testing", "Annual formal inspection"]
   },
-  
-  // Human Factors
+
+  // ============= HUMAN FACTORS =============
   {
-    id: "human_error",
+    id: "human_training",
     hazardId: "Inadequate training",
-    consequence: "Injury due to lack of competence",
-    defaultControlMeasures: [
-      "Provide comprehensive training programme",
-      "Ensure competency assessments completed",
-      "Provide ongoing supervision and support",
-      "Maintain training records"
-    ]
+    consequence: "Injury due to lack of competence or knowledge",
+    severity: 4,
+    likelihood: 3,
+    riskRating: 12,
+    controlMeasures: {
+      administrative: [
+        "Comprehensive induction training programme",
+        "Competency assessments and records",
+        "Ongoing skills development and refresher training",
+        "Mentoring and supervision systems",
+        "Training needs analysis"
+      ]
+    },
+    additionalGuidance: "All electrical work must be carried out by competent persons",
+    inspectionRequirements: ["Regular competency assessments", "Training record reviews"]
   },
   {
-    id: "communication_failure",
+    id: "human_communication",
     hazardId: "Communication failures",
-    consequence: "Injury due to miscommunication",
-    defaultControlMeasures: [
-      "Establish clear communication protocols",
-      "Use standardised hand signals",
-      "Conduct regular toolbox talks",
-      "Ensure language barriers addressed"
-    ]
+    consequence: "Injury due to miscommunication or lack of coordination",
+    severity: 3,
+    likelihood: 3,
+    riskRating: 9,
+    controlMeasures: {
+      administrative: [
+        "Clear communication protocols and procedures",
+        "Regular toolbox talks and briefings",
+        "Standardised hand signals and terminology",
+        "Language barriers assessment and support",
+        "Emergency communication procedures"
+      ]
+    },
+    inspectionRequirements: ["Regular communication effectiveness reviews"]
+  },
+  {
+    id: "human_fatigue",
+    hazardId: "Fatigue and stress",
+    consequence: "Increased risk of accidents due to reduced concentration",
+    severity: 3,
+    likelihood: 4,
+    riskRating: 12,
+    controlMeasures: {
+      administrative: [
+        "Maximum working hours policies",
+        "Regular rest breaks and meal breaks",
+        "Workload monitoring and management",
+        "Employee assistance programmes",
+        "Stress risk assessments"
+      ]
+    },
+    additionalGuidance: "Maximum 10 hours work per day, minimum 11 hours rest between shifts",
+    inspectionRequirements: ["Regular welfare checks", "Working time monitoring"]
   }
 ];
+
+// Backwards compatibility - convert enhanced to simple format
+export const riskConsequences: RiskConsequence[] = enhancedRiskConsequences.map(enhanced => ({
+  id: enhanced.id,
+  hazardId: enhanced.hazardId,
+  consequence: enhanced.consequence,
+  defaultControlMeasures: [
+    ...(enhanced.controlMeasures.elimination || []),
+    ...(enhanced.controlMeasures.substitution || []),
+    ...(enhanced.controlMeasures.engineering || []),
+    ...(enhanced.controlMeasures.administrative || []),
+    ...(enhanced.controlMeasures.ppe || [])
+  ].slice(0, 4) // Limit to 4 most important controls
+}));

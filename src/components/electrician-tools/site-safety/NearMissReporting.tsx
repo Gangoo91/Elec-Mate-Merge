@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { hazardCategories } from "@/data/hazards";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -90,16 +91,8 @@ const NearMissReporting = () => {
     notes: ""
   });
 
-  const categories = [
-    "Electrical",
-    "Working at Height", 
-    "Manual Handling",
-    "Chemical/Hazardous Substances",
-    "Fire Safety",
-    "Equipment/Tools",
-    "Environmental",
-    "Human Factors"
-  ];
+  // Use standardized categories from hazard database
+  const categories = hazardCategories.map(cat => cat.name);
 
   const severityLevels = ["Low", "Medium", "High", "Critical"];
   const statusOptions = ["Reported", "Under Review", "Action Taken", "Closed"];
