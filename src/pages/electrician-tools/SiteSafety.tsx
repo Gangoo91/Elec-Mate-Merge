@@ -2,15 +2,11 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone, ChevronDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone, ArrowRight, Zap, Star } from "lucide-react";
 import BackButton from "@/components/common/BackButton";
 import { RAMSProvider } from "@/components/electrician-tools/site-safety/rams/RAMSContext";
 import { RAMSQuickAdd } from "@/components/electrician-tools/site-safety/RAMSQuickAdd";
 import RAMSGenerator from "@/components/electrician-tools/site-safety/RAMSGenerator";
-
 import MethodStatementGenerator from "@/components/electrician-tools/site-safety/MethodStatementGenerator";
 import HazardDatabase from "@/components/electrician-tools/site-safety/HazardDatabase";
 import PhotoDocumentation from "@/components/electrician-tools/site-safety/PhotoDocumentation";
@@ -20,195 +16,348 @@ import SafetyEquipmentTracker from "@/components/electrician-tools/site-safety/S
 import EmergencyProcedures from "@/components/electrician-tools/site-safety/EmergencyProcedures";
 
 const SiteSafety = () => {
-  const [activeTab, setActiveTab] = useState("rams");
+  const [activeView, setActiveView] = useState<string | null>(null);
 
-  const tabOptions = [
-    { value: "rams", label: "Risk Assessment", icon: FileText },
-    { value: "method-statement", label: "Method Statement", icon: ClipboardCheck },
-    { value: "hazard-database", label: "Hazard Database", icon: Shield },
-    { value: "photo-docs", label: "Photo Documentation", icon: Camera },
-    { value: "team-briefing", label: "Team Briefing", icon: Users },
-    { value: "near-miss", label: "Near Miss Reports", icon: AlertTriangle },
-    { value: "equipment", label: "Safety Equipment", icon: Wrench },
-    { value: "emergency", label: "Emergency Procedures", icon: Phone }
+  const primaryTools = [
+    { 
+      id: "rams", 
+      title: "Risk Assessment & Method Statements", 
+      description: "Generate comprehensive RAMS documents for electrical work",
+      icon: FileText,
+      featured: true,
+      badge: "Popular"
+    },
+    { 
+      id: "method-statement", 
+      title: "Method Statement Generator", 
+      description: "Create detailed step-by-step work procedures",
+      icon: ClipboardCheck,
+      featured: true,
+      badge: "Essential"
+    }
   ];
 
-  const getCurrentTabLabel = () => {
-    const currentTab = tabOptions.find(tab => tab.value === activeTab);
-    return currentTab ? currentTab.label : "Select Tool";
+  const safetyTools = [
+    { 
+      id: "hazard-database", 
+      title: "Hazard Database", 
+      description: "Access comprehensive electrical hazard information",
+      icon: Shield,
+      category: "Reference"
+    },
+    { 
+      id: "photo-docs", 
+      title: "Photo Documentation", 
+      description: "Document safety conditions and compliance",
+      icon: Camera,
+      category: "Documentation"
+    },
+    { 
+      id: "team-briefing", 
+      title: "Team Briefing", 
+      description: "Pre-work safety briefings and toolbox talks",
+      icon: Users,
+      category: "Communication"
+    },
+    { 
+      id: "near-miss", 
+      title: "Near Miss Reports", 
+      description: "Report and track safety incidents",
+      icon: AlertTriangle,
+      category: "Reporting"
+    }
+  ];
+
+  const managementTools = [
+    { 
+      id: "equipment", 
+      title: "Safety Equipment Tracker", 
+      description: "Track PPE and safety equipment inventory",
+      icon: Wrench,
+      category: "Management"
+    },
+    { 
+      id: "emergency", 
+      title: "Emergency Procedures", 
+      description: "Quick access to emergency protocols",
+      icon: Phone,
+      category: "Emergency"
+    }
+  ];
+
+  const renderToolContent = () => {
+    switch (activeView) {
+      case "rams":
+        return <RAMSGenerator />;
+      case "method-statement":
+        return <MethodStatementGenerator />;
+      case "hazard-database":
+        return <HazardDatabase />;
+      case "photo-docs":
+        return <PhotoDocumentation />;
+      case "team-briefing":
+        return <TeamBriefingTemplates />;
+      case "near-miss":
+        return <NearMissReporting />;
+      case "equipment":
+        return <SafetyEquipmentTracker />;
+      case "emergency":
+        return <EmergencyProcedures />;
+      default:
+        return null;
+    }
   };
+
+  if (activeView) {
+    return (
+      <RAMSProvider>
+        <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-dark to-elec-gray animate-fade-in">
+          <div className="max-w-7xl mx-auto px-4 py-6">
+            <div className="mb-6">
+              <Button 
+                onClick={() => setActiveView(null)}
+                variant="outline" 
+                className="mb-4 border-elec-yellow/30 hover:border-elec-yellow/60 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
+                Back to Safety Dashboard
+              </Button>
+            </div>
+            {renderToolContent()}
+          </div>
+        </div>
+      </RAMSProvider>
+    );
+  }
 
   return (
     <RAMSProvider>
-      <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in px-4 py-4 sm:py-6">
-        <div className="text-center mb-4 sm:mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 sm:mb-4">Site Safety & Risk Assessment</h1>
-          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto mb-3 sm:mb-4 px-2">
-            Comprehensive safety management tools for electrical contractors. Generate RAMS documents, 
-            assess risks, and maintain safety compliance on all your projects.
-          </p>
-          <BackButton customUrl="/electrician" label="Back to Electrical Hub" />
-        </div>
-        <Tabs defaultValue="rams" value={activeTab} onValueChange={setActiveTab} className="w-full">
-        {/* Mobile Dropdown */}
-        <div className="lg:hidden mb-4">
-          <Select value={activeTab} onValueChange={setActiveTab}>
-            <SelectTrigger className="w-full h-12 bg-background/80 backdrop-blur-sm border-elec-yellow/20 text-base">
-              <div className="flex items-center gap-3">
-                {(() => {
-                  const currentTab = tabOptions.find(tab => tab.value === activeTab);
-                  const IconComponent = currentTab?.icon || FileText;
-                  return (
-                    <>
-                      <IconComponent className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                      <span className="truncate">{currentTab?.label || "Select a safety tool"}</span>
-                    </>
-                  );
-                })()}
+      <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-dark to-elec-gray">
+        {/* Hero Section */}
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/5 to-transparent" />
+          <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12 relative">
+            <div className="text-center space-y-4">
+              <div className="flex justify-center mb-6">
+                <div className="p-4 rounded-full bg-elec-yellow/10 border border-elec-yellow/20">
+                  <Shield className="h-12 w-12 text-elec-yellow" />
+                </div>
               </div>
-            </SelectTrigger>
-            <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20">
-              {tabOptions.map((tab) => {
-                const IconComponent = tab.icon;
-                return (
-                  <SelectItem key={tab.value} value={tab.value} className="cursor-pointer h-12">
-                    <div className="flex items-center gap-3">
-                      <IconComponent className="h-4 w-4 flex-shrink-0" />
-                      <span>{tab.label}</span>
-                    </div>
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Desktop Tabs */}
-        <TabsList className="hidden lg:grid w-full grid-cols-4 gap-2 h-auto p-1">
-          {tabOptions.slice(0, 4).map((tab) => {
-            const IconComponent = tab.icon;
-            return (
-              <TabsTrigger 
-                key={tab.value} 
-                value={tab.value} 
-                className="flex items-center gap-2 py-3 px-4 text-sm"
-              >
-                <IconComponent className="h-4 w-4" />
-                <span>{tab.label}</span>
-              </TabsTrigger>
-            );
-          })}
-        </TabsList>
-
-        {/* Second row for desktop */}
-        <TabsList className="hidden lg:grid w-full grid-cols-4 gap-2 h-auto p-1 mt-2">
-          {tabOptions.slice(4).map((tab) => {
-            const IconComponent = tab.icon;
-            return (
-              <TabsTrigger 
-                key={tab.value} 
-                value={tab.value} 
-                className="flex items-center gap-2 py-3 px-4 text-sm"
-              >
-                <IconComponent className="h-4 w-4" />
-                <span>{tab.label}</span>
-              </TabsTrigger>
-            );
-          })}
-        </TabsList>
-
-        <TabsContent value="rams" className="mt-6">
-          <RAMSGenerator />
-        </TabsContent>
-
-
-        <TabsContent value="method-statement" className="mt-6">
-          <MethodStatementGenerator />
-        </TabsContent>
-
-        <TabsContent value="hazard-database" className="mt-6">
-          <HazardDatabase />
-        </TabsContent>
-
-        <TabsContent value="photo-docs" className="mt-6">
-          <PhotoDocumentation />
-        </TabsContent>
-
-        <TabsContent value="team-briefing" className="mt-6">
-          <TeamBriefingTemplates />
-        </TabsContent>
-
-        <TabsContent value="near-miss" className="mt-6">
-          <NearMissReporting />
-        </TabsContent>
-
-        <TabsContent value="equipment" className="mt-6">
-          <SafetyEquipmentTracker />
-        </TabsContent>
-
-        <TabsContent value="emergency" className="mt-6">
-          <EmergencyProcedures />
-        </TabsContent>
-        </Tabs>
-
-        {/* RAMS Quick Add Section */}
-        <RAMSQuickAdd />
-
-        {/* Safety Best Practices Card */}
-        <Card className="border-green-500/50 bg-green-500/10">
-          <CardHeader className="text-center">
-            <CardTitle className="text-green-300 flex items-center justify-center gap-2 text-xl">
-              <Shield className="h-6 w-6" />
-              Safety Best Practices
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
-              <div className="space-y-4">
-                <h4 className="font-semibold text-green-300 text-center text-base mb-4">Before Starting Work:</h4>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span className="text-left">Complete risk assessment for each task</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span className="text-left">Brief all team members on hazards</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span className="text-left">Check all safety equipment</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span className="text-left">Document site conditions</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="space-y-4">
-                <h4 className="font-semibold text-green-300 text-center text-base mb-4">During Work:</h4>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span className="text-left">Follow method statements precisely</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span className="text-left">Report near misses immediately</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span className="text-left">Take photos of safety concerns</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-400 text-lg leading-none mt-0.5">•</span>
-                    <span className="text-left">Update risk assessments if conditions change</span>
-                  </li>
-                </ul>
+              
+              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
+                Site Safety & Risk Assessment
+              </h1>
+              
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                Comprehensive safety management tools for electrical contractors. Generate RAMS documents, 
+                assess risks, and maintain safety compliance on all your projects.
+              </p>
+              
+              <div className="flex justify-center pt-4">
+                <BackButton customUrl="/electrician" label="Back to Electrical Hub" />
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="max-w-7xl mx-auto px-4 pb-12 space-y-12 animate-fade-in">
+          {/* Featured Tools */}
+          <section>
+            <div className="flex items-center gap-3 mb-8">
+              <Star className="h-6 w-6 text-elec-yellow" />
+              <h2 className="text-2xl font-bold">Essential Safety Tools</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {primaryTools.map((tool) => {
+                const IconComponent = tool.icon;
+                return (
+                  <Card 
+                    key={tool.id}
+                    className="group relative overflow-hidden border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-card/80 hover:border-elec-yellow/40 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                    onClick={() => setActiveView(tool.id)}
+                  >
+                    <div className="absolute top-4 right-4">
+                      {tool.badge && (
+                        <div className="px-3 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-medium">
+                          {tool.badge}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <CardHeader className="pb-4">
+                      <div className="flex items-start gap-4">
+                        <div className="p-3 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
+                          <IconComponent className="h-8 w-8 text-elec-yellow" />
+                        </div>
+                        <div className="flex-1">
+                          <CardTitle className="text-xl mb-2 group-hover:text-elec-yellow transition-colors">
+                            {tool.title}
+                          </CardTitle>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            {tool.description}
+                          </p>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    
+                    <CardContent className="pt-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-muted-foreground">Click to open</span>
+                        <ArrowRight className="h-4 w-4 text-elec-yellow group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Safety Tools Grid */}
+          <section>
+            <div className="flex items-center gap-3 mb-8">
+              <Zap className="h-6 w-6 text-elec-yellow" />
+              <h2 className="text-2xl font-bold">Safety Management Tools</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {safetyTools.map((tool) => {
+                const IconComponent = tool.icon;
+                return (
+                  <Card 
+                    key={tool.id}
+                    className="group border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-300 hover:scale-105 cursor-pointer"
+                    onClick={() => setActiveView(tool.id)}
+                  >
+                    <CardHeader className="text-center pb-2">
+                      <div className="flex justify-center mb-3">
+                        <div className="p-3 rounded-full bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
+                          <IconComponent className="h-6 w-6 text-elec-yellow" />
+                        </div>
+                      </div>
+                      <CardTitle className="text-lg group-hover:text-elec-yellow transition-colors">
+                        {tool.title}
+                      </CardTitle>
+                    </CardHeader>
+                    
+                    <CardContent className="text-center">
+                      <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                        {tool.description}
+                      </p>
+                      <div className="flex items-center justify-center gap-2 text-xs text-elec-yellow/80">
+                        <span>{tool.category}</span>
+                        <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Management Tools */}
+          <section>
+            <div className="flex items-center gap-3 mb-8">
+              <Wrench className="h-6 w-6 text-elec-yellow" />
+              <h2 className="text-2xl font-bold">Equipment & Emergency</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {managementTools.map((tool) => {
+                const IconComponent = tool.icon;
+                return (
+                  <Card 
+                    key={tool.id}
+                    className="group border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                    onClick={() => setActiveView(tool.id)}
+                  >
+                    <CardHeader className="flex-row items-center space-y-0 gap-4">
+                      <div className="p-3 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
+                        <IconComponent className="h-6 w-6 text-elec-yellow" />
+                      </div>
+                      <div className="flex-1">
+                        <CardTitle className="text-lg group-hover:text-elec-yellow transition-colors">
+                          {tool.title}
+                        </CardTitle>
+                        <p className="text-muted-foreground text-sm">
+                          {tool.description}
+                        </p>
+                      </div>
+                      <ArrowRight className="h-5 w-5 text-elec-yellow group-hover:translate-x-1 transition-transform" />
+                    </CardHeader>
+                  </Card>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Quick Add Section */}
+          <RAMSQuickAdd />
+
+          {/* Modern Safety Best Practices */}
+          <section>
+            <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 to-transparent">
+              <CardHeader className="text-center">
+                <div className="flex justify-center mb-4">
+                  <div className="p-3 rounded-full bg-elec-yellow/20">
+                    <Shield className="h-8 w-8 text-elec-yellow" />
+                  </div>
+                </div>
+                <CardTitle className="text-2xl text-elec-yellow">
+                  Safety Best Practices
+                </CardTitle>
+                <p className="text-muted-foreground">
+                  Essential guidelines for safe electrical work
+                </p>
+              </CardHeader>
+              
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <h4 className="font-semibold text-elec-yellow text-lg flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-sm">1</div>
+                      Before Starting Work
+                    </h4>
+                    <div className="space-y-4 pl-10">
+                      {[
+                        "Complete risk assessment for each task",
+                        "Brief all team members on hazards",
+                        "Check all safety equipment",
+                        "Document site conditions"
+                      ].map((item, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                          <span className="text-muted-foreground">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <h4 className="font-semibold text-elec-yellow text-lg flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-sm">2</div>
+                      During Work
+                    </h4>
+                    <div className="space-y-4 pl-10">
+                      {[
+                        "Follow method statements precisely",
+                        "Report near misses immediately", 
+                        "Take photos of safety concerns",
+                        "Update risk assessments if conditions change"
+                      ].map((item, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                          <span className="text-muted-foreground">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        </div>
       </div>
     </RAMSProvider>
   );
