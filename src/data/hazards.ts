@@ -170,11 +170,11 @@ export const commonHazards = [
 
 export interface EnhancedRiskConsequence {
   id: string;
-  hazardId: string;
+  hazard: string;
   consequence: string;
-  severity: 1 | 2 | 3 | 4 | 5; // 1=Minor, 5=Catastrophic
-  likelihood: 1 | 2 | 3 | 4 | 5; // 1=Rare, 5=Almost Certain
-  riskRating: number; // severity × likelihood
+  severity: 1 | 2 | 3 | 4 | 5;
+  likelihood: 1 | 2 | 3 | 4 | 5;
+  riskRating: number;
   controlMeasures: {
     elimination?: string[];
     substitution?: string[];
@@ -183,6 +183,9 @@ export interface EnhancedRiskConsequence {
     ppe?: string[];
   };
   bs7671References?: string[];
+  category: string;
+  workType: string[];
+  environment: string[];
   additionalGuidance?: string;
   inspectionRequirements?: string[];
 }
