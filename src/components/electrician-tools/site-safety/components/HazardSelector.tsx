@@ -8,7 +8,7 @@ import { Shield, Search, Plus, AlertTriangle } from 'lucide-react';
 import { useRAMS } from '../rams/RAMSContext';
 import { toast } from '@/hooks/use-toast';
 import { hazardCategories, enhancedRiskConsequences } from '@/data/hazards';
-import { getRiskLevel, getRiskColor } from '@/data/enhanced-hazard-database';
+import { riskAssessmentHelpers } from '@/data/enhanced-hazard-database';
 
 interface HazardSelectorProps {
   open: boolean;
@@ -30,15 +30,15 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
   // Convert enhanced consequences to hazard format for compatibility
   const hazards = enhancedRiskConsequences.map(risk => {
     const category = hazardCategories.find(cat => 
-      cat.hazards.includes(risk.hazardId)
+      cat.hazards.includes(risk.hazard)
     );
     
     return {
       id: risk.id,
-      name: risk.hazardId,
+      name: risk.hazard,
       category: category?.name || "Other",
       description: risk.consequence,
-      riskLevel: getRiskLevel(risk.riskRating),
+      riskLevel: riskAssessmentHelpers.getRiskLevel(risk.riskRating),
       commonControls: [
         ...(risk.controlMeasures.elimination || []),
         ...(risk.controlMeasures.engineering || []),
