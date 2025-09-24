@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import MobileOptimizedInput from "@/components/install-planner/MobileOptimizedInput";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
+import { calculateMotorStarting, MotorStartingInputs } from "@/lib/calculators/engines/motorStartingEngine";
 
 const MotorStartingCurrentCalculator = () => {
   const [power, setPower] = useState<string>("");
@@ -25,6 +26,8 @@ const MotorStartingCurrentCalculator = () => {
   const [cableSize, setCableSize] = useState<string>("2.5");
   const [breakerRating, setBreakerRating] = useState<string>("");
   const [supplyImpedance, setSupplyImpedance] = useState<string>("0.1");
+  const [installationMethod, setInstallationMethod] = useState<string>("clipped");
+  const [groupingFactor, setGroupingFactor] = useState<string>("1.0");
   const [result, setResult] = useState<{
     fullLoadCurrent: number;
     startingCurrent: number;
@@ -32,16 +35,19 @@ const MotorStartingCurrentCalculator = () => {
     startingKva: number;
     thermalStress: number;
     protectionRecommendation: string;
-    voltageDropEstimate: number;
-    efficiencyAtStart: number;
-    breakerSuitability: string;
+    voltageDropRunning: number;
+    voltageDropStarting: number;
     complianceStatus: string;
     recommendedCableSize: string;
+    minimumCableSize: number;
     cableAnalysis: string;
+    currentCapacityCheck: string;
+    protectionAnalysis: string;
     whatThisMeans: string[];
     practicalGuidance: string[];
     recommendations: string[];
     warnings: string[];
+    bs7671Compliant: boolean;
   } | null>(null);
 
   const calculateStartingCurrent = () => {
@@ -54,153 +60,97 @@ const MotorStartingCurrentCalculator = () => {
     const cableCsa = parseFloat(cableSize);
     const startTime = parseFloat(startingTime);
     const impedance = parseFloat(supplyImpedance);
+    const grouping = parseFloat(groupingFactor);
 
     if (P > 0 && V > 0 && eff > 0 && pf > 0) {
-      // Calculate full load current based on phases
-      const isThreePhase = phases === "3";
-      let fullLoadCurrent: number;
-      
-      if (ratedCurrent && parseFloat(ratedCurrent) > 0) {
-        fullLoadCurrent = parseFloat(ratedCurrent);
-      } else {
-        fullLoadCurrent = isThreePhase 
-          ? (P * 1000) / (Math.sqrt(3) * V * eff * pf)
-          : (P * 1000) / (V * eff * pf);
-      }
-      
-      // Enhanced starting current multipliers
-      const baseMultipliers = {
-        direct: 6.5,
-        'star-delta': 2.1,
-        'soft-starter': 3.2,
-        'vfd': 1.5,
-        'autotransformer': 4.0
+      // Prepare inputs for enhanced calculation engine
+      const inputs: MotorStartingInputs = {
+        powerKw: P,
+        voltage: V,
+        phases: phases === "3" ? 3 : 1,
+        efficiency: eff,
+        powerFactor: pf,
+        startingMethod: startingMethod as any,
+        loadType: loadType as any,
+        ambientTemp: temp,
+        cableLength: cableLen,
+        installationMethod: installationMethod as any,
+        groupingFactor: grouping,
+        ratedCurrent: ratedCurrent ? parseFloat(ratedCurrent) : undefined,
+        startingTime: startTime,
+        supplyImpedance: impedance
       };
 
-      // Load type factors
-      const loadFactors = {
-        standard: 1.0,
-        'high-torque': 1.2,
-        'low-torque': 0.9,
-        centrifugal: 0.85
-      };
+      // Use the enhanced calculation engine
+      const engineResult = calculateMotorStarting(inputs);
 
-      // Temperature correction
-      const tempFactor = temp > 40 ? 1 + (temp - 40) * 0.005 : 1;
+      // Map to UI state format
+      const fullLoadCurrent = engineResult.fullLoadCurrent;
+      const startingCurrent = engineResult.startingCurrent;
+      const startingMultiplier = engineResult.startingMultiplier;
+      const startingKva = engineResult.startingKva;
+      const thermalStress = engineResult.thermalStress;
+
+      // Enhanced cable analysis
+      const recommendedCableSize = `${engineResult.recommendedCableSize}mm²`;
+      const minimumCableSize = engineResult.minimumCableSize;
       
-      const baseMultiplier = baseMultipliers[startingMethod as keyof typeof baseMultipliers] || 6.5;
-      const loadFactor = loadFactors[loadType as keyof typeof loadFactors] || 1.0;
-      const startingMultiplier = baseMultiplier * loadFactor * tempFactor;
-      const startingCurrent = fullLoadCurrent * startingMultiplier;
-
-      // Calculate starting kVA
-      const startingKva = isThreePhase 
-        ? (Math.sqrt(3) * V * startingCurrent) / 1000
-        : (V * startingCurrent) / 1000;
-
-      // Enhanced I²t thermal stress calculation
-      const thermalStress = Math.pow(startingCurrent, 2) * startTime;
-
-      // Efficiency at starting
-      const efficiencyAtStart = eff * 0.3;
-
-      // Enhanced voltage drop calculation
-      const rCable = cableLen / (cableCsa * 58); // Copper resistivity
-      const totalImpedance = Math.sqrt(Math.pow(rCable + impedance, 2) + Math.pow(0.1, 2));
-      const voltageDropEstimate = (startingCurrent * totalImpedance * 100) / V;
-
-      // Cable size recommendation based on voltage drop
-      let recommendedCableSize = cableCsa.toString();
-      let cableAnalysis = "Current cable size is adequate";
-      
-      if (voltageDropEstimate > 3) {
-        // Calculate required cable size for 3% voltage drop
-        const requiredResistance = (3 * V) / (startingCurrent * 100) - impedance;
-        const requiredCsa = cableLen / (requiredResistance * 58);
-        
-        // Round up to next standard cable size
-        const standardSizes = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300];
-        const nextSize = standardSizes.find(size => size >= requiredCsa) || 300;
-        
-        recommendedCableSize = `${nextSize}mm²`;
-        cableAnalysis = `Upgrade to ${nextSize}mm² cable to achieve 3% voltage drop (currently ${voltageDropEstimate.toFixed(1)}%)`;
-      } else if (voltageDropEstimate < 1.5) {
-        // Check if cable can be downsized
-        const nextSmallerSize = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95].reverse().find(size => size < cableCsa);
-        if (nextSmallerSize) {
-          const smallerR = cableLen / (nextSmallerSize * 58);
-          const smallerVD = (startingCurrent * Math.sqrt(Math.pow(smallerR + impedance, 2) + Math.pow(0.1, 2)) * 100) / V;
-          if (smallerVD <= 3) {
-            recommendedCableSize = `${nextSmallerSize}mm² (optimised)`;
-            cableAnalysis = `Cable can be reduced to ${nextSmallerSize}mm² while maintaining compliance`;
-          }
-        }
+      let cableAnalysis = "Cable sizing meets BS 7671 requirements";
+      if (engineResult.recommendedCableSize > engineResult.minimumCableSize) {
+        cableAnalysis = `Upgrade from ${minimumCableSize}mm² to ${engineResult.recommendedCableSize}mm² required for voltage drop compliance`;
+      } else if (engineResult.voltageDropRunning < 1.5 && engineResult.minimumCableSize > 2.5) {
+        cableAnalysis = `Current cable size is adequate with ${engineResult.voltageDropRunning.toFixed(1)}% voltage drop`;
       }
 
-      // Breaker suitability assessment
-      let breakerSuitability = "No breaker specified";
-      if (breakerRating && parseFloat(breakerRating) > 0) {
-        const bRating = parseFloat(breakerRating);
-        if (bRating < fullLoadCurrent * 1.25) {
-          breakerSuitability = "Undersized - increase breaker rating";
-        } else if (bRating > fullLoadCurrent * 2.5) {
-          breakerSuitability = "Oversized - may not provide adequate protection";
-        } else {
-          breakerSuitability = "Suitable for motor protection";
-        }
-      }
+      // Current capacity check
+      const currentCapacityCheck = engineResult.currentCarryingCheck.suitable 
+        ? `Cable capacity: ${engineResult.currentCarryingCheck.capacity.toFixed(0)}A (Required: ${engineResult.currentCarryingCheck.required.toFixed(0)}A) ✓`
+        : `Cable capacity insufficient: ${engineResult.currentCarryingCheck.capacity.toFixed(0)}A < ${engineResult.currentCarryingCheck.required.toFixed(0)}A`;
+
+      // Protection analysis with standard ratings
+      const protectionAnalysis = engineResult.protectionSuitable 
+        ? `${engineResult.recommendedMcbRating}A ${engineResult.protectionType.toUpperCase()} suitable for motor protection`
+        : `${engineResult.recommendedMcbRating}A protection may be unsuitable - verify coordination`;
 
       // Compliance status
-      let complianceStatus = "Compliant";
-      if (voltageDropEstimate > 3) complianceStatus = "Non-compliant - voltage drop exceeds 3%";
-      if (startingMethod === "direct" && P > 15) complianceStatus = "Consider soft starting for >15kW";
+      let complianceStatus = "BS 7671 Compliant";
+      if (!engineResult.bs7671Compliant) {
+        if (!engineResult.voltageDropCompliant) {
+          complianceStatus = "Non-compliant - voltage drop exceeds limits";
+        } else if (!engineResult.currentCarryingCheck.suitable) {
+          complianceStatus = "Non-compliant - cable undersized";
+        } else {
+          complianceStatus = "Review required for full compliance";
+        }
+      }
+      
+      if (startingMethod === "direct" && P > 11) {
+        complianceStatus = "Consider reduced starting method (BS 7671 recommendation)";
+      }
 
-      // What this means explanations
+      // Enhanced explanations
       const whatThisMeans: string[] = [
-        `Full load current of ${fullLoadCurrent.toFixed(1)}A is the normal running current`,
-        `Starting current of ${startingCurrent.toFixed(0)}A is ${startingMultiplier.toFixed(1)} times higher than running current`,
-        `Motor will draw ${startingKva.toFixed(1)}kVA from supply during starting`,
-        voltageDropEstimate > 3 ? "Voltage drop may cause lights to dim and equipment issues" : "Voltage drop is within acceptable limits"
+        `Full load current: ${fullLoadCurrent.toFixed(1)}A (normal running current per BS 7671)`,
+        `Starting current: ${startingCurrent.toFixed(0)}A (${startingMultiplier.toFixed(1)}x full load current)`,
+        `Supply demand: ${startingKva.toFixed(1)}kVA during motor starting`,
+        `Running voltage drop: ${engineResult.voltageDropRunning.toFixed(1)}% (limit: 3%)`,
+        `Starting voltage drop: ${engineResult.voltageDropStarting.toFixed(1)}% (limit: 10%)`
       ];
 
       // Practical guidance
       const practicalGuidance: string[] = [
         "Install motor starter close to distribution board to minimise cable runs",
-        "Ensure adequate ventilation around motor and starter equipment",
-        startingMethod === "direct" ? "Direct starting creates maximum supply disturbance" : "Reduced starting method minimises supply impact",
-        "Regular maintenance of contacts and thermal elements is essential"
+        "Use thermally protected motor starter for overload protection",
+        startingMethod === "direct" ? "Direct starting suitable for motors <11kW only" : "Reduced starting method reduces supply impact",
+        "Regular testing of motor protection devices is required",
+        `Use ${engineResult.protectionType.includes('c') ? 'Type C' : 'Type D'} MCB for motor loads`
       ];
 
-      // Enhanced recommendations
-      const recommendations: string[] = [];
-      if (voltageDropEstimate > 3) {
-        recommendations.push(cableAnalysis);
-        recommendations.push("Consider soft starter to reduce starting current and voltage drop");
-      }
-      if (startingMethod === "direct" && P > 11) {
-        recommendations.push("BS 7671 recommends reduced starting for motors >11kW to limit supply disturbance");
-      }
-      if (temp > 50) {
-        recommendations.push("High ambient temperature requires derating - check manufacturer's temperature curves");
-      }
-      if (thermalStress > 50000) {
-        recommendations.push("High I²t stress - verify cable and contactor thermal capability");
-      }
-      if (voltageDropEstimate < 1.5 && cableAnalysis.includes("optimised")) {
-        recommendations.push(cableAnalysis);
-      }
-
-      // Warnings
-      const warnings: string[] = [];
-      if (voltageDropEstimate > 5) {
-        warnings.push("Excessive voltage drop - equipment may fail to start properly");
-      }
-      if (startingCurrent > 200) {
-        warnings.push("Very high starting current - check supply transformer capability");
-      }
-      if (startTime > 10) {
-        warnings.push("Extended starting time increases thermal stress on all equipment");
-      }
+      // Combine all recommendations
+      const allRecommendations = [
+        ...engineResult.recommendations,
+        ...engineResult.notes
+      ];
 
       setResult({
         fullLoadCurrent,
@@ -208,17 +158,20 @@ const MotorStartingCurrentCalculator = () => {
         startingMultiplier,
         startingKva,
         thermalStress,
-        protectionRecommendation: `${breakerRating ? parseFloat(breakerRating).toFixed(0) : fullLoadCurrent.toFixed(0)}A MCB with motor protection`,
-        voltageDropEstimate,
-        efficiencyAtStart,
-        breakerSuitability,
+        protectionRecommendation: protectionAnalysis,
+        voltageDropRunning: engineResult.voltageDropRunning,
+        voltageDropStarting: engineResult.voltageDropStarting,
         complianceStatus,
         recommendedCableSize,
+        minimumCableSize,
         cableAnalysis,
+        currentCapacityCheck,
+        protectionAnalysis,
         whatThisMeans,
         practicalGuidance,
-        recommendations: recommendations.length > 0 ? recommendations : ["Motor starting parameters within acceptable ranges"],
-        warnings
+        recommendations: allRecommendations.length > 0 ? allRecommendations : ["Motor installation meets BS 7671 requirements"],
+        warnings: engineResult.warnings,
+        bs7671Compliant: engineResult.bs7671Compliant
       });
     }
   };
@@ -238,6 +191,8 @@ const MotorStartingCurrentCalculator = () => {
     setCableSize("2.5");
     setBreakerRating("");
     setSupplyImpedance("0.1");
+    setInstallationMethod("clipped");
+    setGroupingFactor("1.0");
     setResult(null);
   };
 
@@ -457,6 +412,35 @@ const MotorStartingCurrentCalculator = () => {
             />
           </div>
 
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="text-base font-medium block mb-2">Installation Method</label>
+              <Select value={installationMethod} onValueChange={setInstallationMethod}>
+                <SelectTrigger className="bg-card border-elec-yellow/20 h-12">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-elec-yellow/20">
+                  <SelectItem value="clipped">Clipped Direct</SelectItem>
+                  <SelectItem value="conduit">In Conduit</SelectItem>
+                  <SelectItem value="trunking">In Trunking</SelectItem>
+                  <SelectItem value="underground">Underground</SelectItem>
+                  <SelectItem value="tray">Cable Tray</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <MobileOptimizedInput
+              id="groupingFactor"
+              label="Grouping Factor"
+              type="number"
+              inputMode="decimal"
+              value={groupingFactor}
+              onChange={setGroupingFactor}
+              placeholder="1.0"
+              description="Derating for grouped cables"
+            />
+          </div>
+
           <div className="flex gap-2 pt-4">
             <Button onClick={calculateStartingCurrent} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12">
               <Calculator className="h-4 w-4 mr-2" />
@@ -475,12 +459,12 @@ const MotorStartingCurrentCalculator = () => {
             
             {/* Compliance Status */}
             <div className="flex items-center gap-2">
-              {result.complianceStatus === "Compliant" ? (
+              {result.bs7671Compliant ? (
                 <CheckCircle2 className="h-5 w-5 text-green-400" />
               ) : (
                 <AlertTriangle className="h-5 w-5 text-amber-400" />
               )}
-              <span className={`font-medium ${result.complianceStatus === "Compliant" ? "text-green-400" : "text-amber-400"}`}>
+              <span className={`font-medium ${result.bs7671Compliant ? "text-green-400" : "text-amber-400"}`}>
                 {result.complianceStatus}
               </span>
             </div>
@@ -503,18 +487,27 @@ const MotorStartingCurrentCalculator = () => {
               </div>
               
               <div className="bg-card/50 p-3 sm:p-4 rounded-lg text-center">
-                <div className={`text-xl sm:text-2xl font-bold ${result.voltageDropEstimate > 3 ? 'text-red-400' : 'text-green-400'}`}>
-                  {result.voltageDropEstimate.toFixed(1)}%
+                <div className={`text-xl sm:text-2xl font-bold ${result.voltageDropRunning > 3 ? 'text-red-400' : 'text-green-400'}`}>
+                  {result.voltageDropRunning.toFixed(1)}%
                 </div>
-                <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Voltage<br className="sm:hidden" /> Drop</div>
+                <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Running VD</div>
               </div>
             </div>
 
             {/* Additional Parameters - Mobile Optimized */}
             <div className="space-y-3">
-              <div className="text-center bg-card/30 p-3 rounded-lg">
-                <div className="text-sm text-muted-foreground">Starting kVA</div>
-                <div className="font-mono text-xl font-bold text-elec-yellow">{result.startingKva.toFixed(1)} kVA</div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="text-center bg-card/30 p-3 rounded-lg">
+                  <div className="text-sm text-muted-foreground">Starting kVA</div>
+                  <div className="font-mono text-xl font-bold text-elec-yellow">{result.startingKva.toFixed(1)} kVA</div>
+                </div>
+                
+                <div className="text-center bg-card/30 p-3 rounded-lg">
+                  <div className="text-sm text-muted-foreground">Starting VD</div>
+                  <div className={`font-mono text-xl font-bold ${result.voltageDropStarting > 10 ? 'text-red-400' : 'text-green-400'}`}>
+                    {result.voltageDropStarting.toFixed(1)}%
+                  </div>
+                </div>
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -524,8 +517,8 @@ const MotorStartingCurrentCalculator = () => {
                 </div>
                 
                 <div className="bg-card/30 p-3 rounded-lg text-center">
-                  <div className="text-sm text-muted-foreground">Protection</div>
-                  <div className="text-sm text-foreground leading-tight">{result.protectionRecommendation}</div>
+                  <div className="text-sm text-muted-foreground">Minimum Cable</div>
+                  <div className="text-lg font-bold text-foreground">{result.minimumCableSize}mm²</div>
                 </div>
               </div>
             </div>
@@ -545,15 +538,21 @@ const MotorStartingCurrentCalculator = () => {
               </div>
             </div>
 
-            {/* Breaker Suitability */}
-            {result.breakerSuitability !== "No breaker specified" && (
-              <Alert className={`${result.breakerSuitability.includes('Suitable') ? 'border-green-500/20 bg-green-500/10' : 'border-amber-500/20 bg-amber-500/10'}`}>
-                <Info className={`h-4 w-4 ${result.breakerSuitability.includes('Suitable') ? 'text-green-400' : 'text-amber-400'}`} />
-                <AlertDescription className={result.breakerSuitability.includes('Suitable') ? 'text-green-200' : 'text-amber-200'}>
-                  <strong>Breaker Assessment:</strong> {result.breakerSuitability}
-                </AlertDescription>
-              </Alert>
-            )}
+            {/* Current Capacity Check */}
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-400" />
+              <AlertDescription className="text-blue-200">
+                <strong>Current Carrying Capacity:</strong> {result.currentCapacityCheck}
+              </AlertDescription>
+            </Alert>
+
+            {/* Protection Analysis */}
+            <Alert className="border-purple-500/20 bg-purple-500/10">
+              <Info className="h-4 w-4 text-purple-400" />
+              <AlertDescription className="text-purple-200">
+                <strong>Protection Device:</strong> {result.protectionAnalysis}
+              </AlertDescription>
+            </Alert>
 
             {/* Warnings */}
             {result.warnings.length > 0 && (
