@@ -341,7 +341,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(255, 255, 255);
     this.doc.setFontSize(8);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("BS 7671:2018+A3:2024 COMPLIANT", this.pageWidth / 2, this.yPosition + 43, { align: "center" });
+    this.doc.text("BS 7671:2018+A3:2024 COMPLIANT (Current as of September 2025)", this.pageWidth / 2, this.yPosition + 43, { align: "center" });
 
     // Document reference footer
     this.yPosition = this.pageHeight - 35;
