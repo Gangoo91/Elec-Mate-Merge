@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -7,10 +6,7 @@ import { generateRAMSPDFPreview } from '@/utils/rams-pdf-professional';
 import { RAMSData, RAMSReportOptions } from '@/types/rams';
 import { safeFileName } from '@/utils/rams-pdf-helpers';
 import { toast } from '@/hooks/use-toast';
-import { Loader2, Download, X, ZoomIn, ZoomOut, Printer, ExternalLink, RefreshCw, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
-
-// Configure PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+import { Loader2, Download, X, ZoomIn, ZoomOut, Printer, ExternalLink, RefreshCw, FileText } from 'lucide-react';
 
 interface RAMSPDFPreviewProps {
   isOpen: boolean;
@@ -34,10 +30,8 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
   const [progress, setProgress] = useState(0);
   const [zoom, setZoom] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
-  const [usePdfJs, setUsePdfJs] = useState(true);
-  const [numPages, setNumPages] = useState<number>(0);
-  const [pageNumber, setPageNumber] = useState<number>(1);
-  const [pdfFile, setPdfFile] = useState<ArrayBuffer | null>(null);
+  const [pdfSupported, setPdfSupported] = useState(true);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const progressInterval = useRef<NodeJS.Timeout>();
   
   // Cache key for PDF caching
@@ -54,19 +48,16 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Check PDF support and decide rendering method
+  // Check PDF support
   useEffect(() => {
     const checkPdfSupport = () => {
       const userAgent = navigator.userAgent.toLowerCase();
       const isIOS = /ipad|iphone|ipod/.test(userAgent);
       const isAndroid = /android/.test(userAgent);
-      const isChrome = /chrome/.test(userAgent);
-      
-      // Use PDF.js for Chrome and mobile devices to avoid blocking issues
-      setUsePdfJs(isChrome || isIOS || isAndroid || isMobile);
+      setPdfSupported(!isIOS && !isAndroid);
     };
     checkPdfSupport();
-  }, [isMobile]);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -124,9 +115,6 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
       const byteArray = new Uint8Array(byteNumbers);
       const blob = new Blob([byteArray], { type: 'application/pdf' });
       const blobUrl = URL.createObjectURL(blob);
-      
-      // Store both blob URL and ArrayBuffer for different rendering methods
-      setPdfFile(byteArray.buffer);
       
       // Cache the URL
       pdfCache.current.set(cacheKey, blobUrl);
@@ -197,32 +185,14 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
 
   const handleZoom = useCallback((direction: 'in' | 'out') => {
     setZoom(prev => {
-      return direction === 'in' ? Math.min(prev + 0.25, 3) : Math.max(prev - 0.25, 0.5);
+      const newZoom = direction === 'in' ? Math.min(prev + 0.25, 3) : Math.max(prev - 0.25, 0.5);
+      if (iframeRef.current) {
+        iframeRef.current.style.transform = `scale(${newZoom})`;
+        iframeRef.current.style.transformOrigin = 'top left';
+      }
+      return newZoom;
     });
   }, []);
-
-  const onDocumentLoadSuccess = useCallback(({ numPages }: { numPages: number }) => {
-    setNumPages(numPages);
-    setPageNumber(1);
-  }, []);
-
-  const onDocumentLoadError = useCallback((error: Error) => {
-    console.error('PDF.js load error:', error);
-    setUsePdfJs(false);
-    toast({
-      title: "PDF Rendering Issue",
-      description: "Switching to alternative viewing method.",
-      variant: "default",
-    });
-  }, []);
-
-  const goToPrevPage = useCallback(() => {
-    setPageNumber(prev => Math.max(prev - 1, 1));
-  }, []);
-
-  const goToNextPage = useCallback(() => {
-    setPageNumber(prev => Math.min(prev + 1, numPages));
-  }, [numPages]);
 
   const handleRefresh = useCallback(() => {
     // Clear cache and regenerate
@@ -231,9 +201,6 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
       URL.revokeObjectURL(pdfUrl);
       setPdfUrl('');
     }
-    setPdfFile(null);
-    setPageNumber(1);
-    setNumPages(0);
     setRetryCount(0);
     generatePreview();
   }, [cacheKey, pdfUrl, generatePreview]);
@@ -249,31 +216,6 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
           <div className="flex items-center gap-1 sm:gap-2">
             {pdfUrl && !isLoading && !isMobile && (
               <>
-                {usePdfJs && numPages > 1 && (
-                  <>
-                    <Button
-                      onClick={goToPrevPage}
-                      size="sm"
-                      variant="outline"
-                      className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 h-8 w-8 p-0"
-                      disabled={pageNumber <= 1}
-                    >
-                      <ChevronLeft className="h-3 w-3" />
-                    </Button>
-                    <span className="text-xs text-muted-foreground min-w-[4rem] text-center">
-                      {pageNumber}/{numPages}
-                    </span>
-                    <Button
-                      onClick={goToNextPage}
-                      size="sm"
-                      variant="outline"
-                      className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 h-8 w-8 p-0"
-                      disabled={pageNumber >= numPages}
-                    >
-                      <ChevronRight className="h-3 w-3" />
-                    </Button>
-                  </>
-                )}
                 <Button
                   onClick={() => handleZoom('out')}
                   size="sm"
@@ -387,71 +329,29 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
 
           {pdfUrl && !isLoading && !error && (
             <>
-              {usePdfJs && pdfFile ? (
-                <div className="w-full h-full flex flex-col">
-                  <div className="flex-1 flex items-center justify-center bg-white overflow-auto p-2">
-                    <div 
-                      style={{ 
-                        transform: `scale(${zoom})`,
-                        transformOrigin: 'center top',
-                        transition: 'transform 0.2s ease-in-out'
-                      }}
-                    >
-                      <Document
-                        file={pdfFile}
-                        onLoadSuccess={onDocumentLoadSuccess}
-                        onLoadError={onDocumentLoadError}
-                        loading={
-                          <div className="flex items-center justify-center p-8">
-                            <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-                          </div>
-                        }
-                        error={
-                          <div className="flex items-center justify-center p-8 text-red-500">
-                            <p>Failed to load PDF</p>
-                          </div>
-                        }
-                      >
-                        <Page
-                          pageNumber={pageNumber}
-                          width={isMobile ? Math.min(window.innerWidth * 0.85, 600) : 800}
-                          loading={
-                            <div className="flex items-center justify-center p-4">
-                              <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
-                            </div>
-                          }
-                        />
-                      </Document>
-                    </div>
-                  </div>
-                  
-                  {/* PDF.js Navigation for mobile */}
-                  {isMobile && numPages > 1 && (
-                    <div className="flex items-center justify-center gap-2 p-2 bg-elec-dark border-t border-elec-yellow/20">
-                      <Button
-                        onClick={goToPrevPage}
-                        size="sm"
-                        variant="outline"
-                        className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10"
-                        disabled={pageNumber <= 1}
-                      >
-                        <ChevronLeft className="h-4 w-4" />
-                      </Button>
-                      <span className="text-sm text-muted-foreground px-4">
-                        {pageNumber} / {numPages}
-                      </span>
-                      <Button
-                        onClick={goToNextPage}
-                        size="sm"
-                        variant="outline"
-                        className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10"
-                        disabled={pageNumber >= numPages}
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  )}
-                </div>
+              {pdfSupported ? (
+                <iframe
+                  ref={iframeRef}
+                  src={pdfUrl}
+                  className="w-full h-full border-0 bg-white"
+                  title="RAMS PDF Preview"
+                  style={{ 
+                    minHeight: isMobile ? '400px' : '500px',
+                    transform: `scale(${zoom})`,
+                    transformOrigin: 'top left',
+                    width: `${100 / zoom}%`,
+                    height: `${100 / zoom}%`
+                  }}
+                  onError={() => {
+                    setPdfSupported(false);
+                    toast({
+                      title: "PDF Preview Error",
+                      description: "Opening PDF in new tab instead.",
+                      variant: "destructive",
+                    });
+                    window.open(pdfUrl, '_blank');
+                  }}
+                />
               ) : (
                 <div className="flex items-center justify-center h-full bg-gradient-to-br from-elec-gray to-elec-dark">
                   <div className="text-center space-y-4 p-6 bg-elec-dark/90 rounded-lg border border-elec-yellow/20 max-w-md mx-4">
@@ -485,7 +385,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
               )}
               
               {/* Floating action buttons for mobile */}
-              {isMobile && usePdfJs && pdfFile && (
+              {isMobile && pdfSupported && (
                 <div className="absolute bottom-4 right-4 flex flex-col gap-2">
                   <Button
                     onClick={() => window.open(pdfUrl, '_blank')}
@@ -514,7 +414,7 @@ export const RAMSPDFPreview: React.FC<RAMSPDFPreviewProps> = ({
                   <Download className="h-4 w-4 mr-2" />
                   Download PDF
                 </Button>
-                {!isMobile && (usePdfJs || pdfUrl) && (
+                {!isMobile && pdfSupported && (
                   <Button
                     onClick={handlePrint}
                     variant="outline"
