@@ -100,13 +100,37 @@ export const RAMSQuickAdd: React.FC = () => {
             </Card>
           ))}
         </div>
-        
-        <div className="mt-4 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
-          <div className="flex items-start gap-2">
-            <span className="text-green-400 text-sm">💡</span>
-            <div className="text-xs text-green-300">
-              <p className="font-medium mb-1">Pro Tip:</p>
-              <p>These templates provide BS 7671 compliant baseline risk assessments. You can modify them after adding to suit your specific project requirements.</p>
+        <div className="mt-6 space-y-4">
+          {/* Risk Level Legend */}
+          <div className="p-4 bg-elec-card/50 rounded-lg border border-elec-yellow/20">
+            <h4 className="text-sm font-medium text-elec-yellow mb-3">Risk Rating Scale</h4>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+              <div className="flex items-center gap-2 p-2 rounded bg-green-500/10 border border-green-500/20">
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="text-xs font-medium text-green-300">1-4 Low</span>
+              </div>
+              <div className="flex items-center gap-2 p-2 rounded bg-yellow-500/10 border border-yellow-500/20">
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <span className="text-xs font-medium text-yellow-300">5-9 Medium</span>
+              </div>
+              <div className="flex items-center gap-2 p-2 rounded bg-orange-500/10 border border-orange-500/20">
+                <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+                <span className="text-xs font-medium text-orange-300">10-16 High</span>
+              </div>
+              <div className="flex items-center gap-2 p-2 rounded bg-red-500/10 border border-red-500/20">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <span className="text-xs font-medium text-red-300">17-25 Very High</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+            <div className="flex items-start gap-2">
+              <span className="text-green-400 text-sm">💡</span>
+              <div className="text-xs text-green-300">
+                <p className="font-medium mb-1">Pro Tip:</p>
+                <p>These templates provide BS 7671 compliant baseline risk assessments. You can modify them after adding to suit your specific project requirements.</p>
+              </div>
             </div>
           </div>
         </div>
