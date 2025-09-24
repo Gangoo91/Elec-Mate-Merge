@@ -1125,27 +1125,27 @@ class ProfessionalRAMSPDFGenerator {
 
     // Document control information
     this.doc.setFillColor(248, 250, 252);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 30, 'F');
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 32, 'F');
     this.doc.setDrawColor(...this.PRIMARY_COLOR);
-    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 30);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 32);
 
     this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(12);
+    this.doc.setFontSize(11);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("DOCUMENT CONTROL", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
+    this.doc.text("DOCUMENT CONTROL", this.pageWidth / 2, this.yPosition + 7, { align: "center" });
 
     this.doc.setTextColor(0, 0, 0);
-    this.doc.setFontSize(9);
+    this.doc.setFontSize(8);
     this.doc.setFont("helvetica", "normal");
     const docInfo = [
-      `Document: RAMS-Office_Electrical_Retrofit-21092025`,
+      `Document: RAMS-${safeText(context?.project_name).replace(/\s+/g, '_')}-${formatDate(new Date(), "ddMMyyyy")}`,
       `Version: v1.0`,
       `Generated: ${context?.document_generated || safeDatetime(new Date())}`,
       `Status: CONFIDENTIAL`
     ];
 
     docInfo.forEach((info, index) => {
-      this.doc.text(info, this.pageWidth / 2, this.yPosition + 15 + (index * 3.5), { align: "center" });
+      this.doc.text(info, this.pageWidth / 2, this.yPosition + 14 + (index * 4), { align: "center" });
     });
 
     this.addPageNumber();
