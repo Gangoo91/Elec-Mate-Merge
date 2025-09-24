@@ -1,8 +1,8 @@
 import { EnhancedRiskConsequence } from "./hazards";
 
-// Comprehensive enhanced risk database with realistic electrical hazards
+// 🚀 COMPREHENSIVE ENHANCED RISK DATABASE - ELECTRICAL SAFETY EXCELLENCE
 export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
-  // Critical Electrical Hazards
+  // ⚡ Critical Electrical Hazards
   {
     id: "elec-shock-001",
     hazard: "Electric shock from live conductors",
@@ -56,23 +56,6 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     environment: ["outdoor", "construction-site"]
   },
   {
-    id: "overhead-contact-001",
-    hazard: "Contact with overhead power lines",
-    consequence: "Fatal electric shock, arc flash burns, equipment damage",
-    likelihood: 2,
-    severity: 5,
-    riskRating: 10,
-    controlMeasures: {
-      elimination: ["Use underground routes where possible"],
-      engineering: ["Minimum 3m clearance from 11kV lines (6m for 33kV)", "Use of goal post barriers and warning signs"],
-      administrative: ["Coordination with DNO for line identification", "Banksman for crane and high access operations", "Emergency response procedures", "Staff training on overhead line hazards"]
-    },
-    bs7671References: ["Part 1 - Scope and fundamental principles"],
-    category: "overhead-lines",
-    workType: ["installation", "maintenance", "construction"],
-    environment: ["outdoor", "construction-site"]
-  },
-  {
     id: "arc-fault-001",
     hazard: "Arc fault in aging electrical installation",
     consequence: "Fire, property damage, injury from molten metal, toxic fumes",
@@ -87,72 +70,6 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     category: "electrical",
     workType: ["maintenance", "inspection", "upgrade"],
     environment: ["commercial", "industrial"]
-  },
-  {
-    id: "confined-space-001",
-    hazard: "Working in confined electrical spaces",
-    consequence: "Asphyxiation, electric shock, inability to escape, heat exhaustion",
-    likelihood: 3,
-    severity: 5,
-    riskRating: 15,
-    controlMeasures: {
-      engineering: ["Mechanical ventilation systems", "Emergency communication systems"],
-      administrative: ["Confined space risk assessment and permits", "Atmospheric monitoring (oxygen, toxic gases)", "Emergency rescue procedures and equipment", "Two-person minimum working team"]
-    },
-    bs7671References: ["Part 7 - Special installations", "706 - Conducting locations with restricted movement"],
-    category: "confined-space",
-    workType: ["maintenance", "installation", "inspection"],
-    environment: ["underground", "confined-space"]
-  },
-  {
-    id: "falls-height-001",
-    hazard: "Falls from height during electrical work",
-    consequence: "Fatal injuries, broken bones, permanent disability, head trauma",
-    likelihood: 4,
-    severity: 4,
-    riskRating: 16,
-    controlMeasures: {
-      engineering: ["Edge protection and guardrails to BS EN 13374", "Mobile elevated work platforms (MEWPs)", "Scaffolding designed by competent person"],
-      administrative: ["Emergency rescue procedures"],
-      ppe: ["Full body harness and fall arrest systems", "Tool tethering systems"]
-    },
-    bs7671References: ["Part 5 - Selection and erection"],
-    category: "height",
-    workType: ["installation", "maintenance", "lighting"],
-    environment: ["outdoor", "industrial", "construction-site"]
-  },
-  {
-    id: "manual-handling-001",
-    hazard: "Manual handling of heavy electrical equipment",
-    consequence: "Back injury, muscle strain, dropped equipment damage",
-    likelihood: 4,
-    severity: 2,
-    riskRating: 8,
-    controlMeasures: {
-      engineering: ["Mechanical lifting aids (cranes, hoists, trolleys)"],
-      administrative: ["Team lifting procedures for items >25kg", "Training in safe lifting techniques", "Route planning and obstacle removal", "Regular health surveillance"],
-      ppe: ["Personal protective equipment"]
-    },
-    bs7671References: [],
-    category: "manual-handling",
-    workType: ["installation", "maintenance"],
-    environment: ["indoor", "outdoor", "industrial"]
-  },
-  {
-    id: "fire-elec-001",
-    hazard: "Electrical fire from overloaded circuits",
-    consequence: "Building fire, smoke inhalation, property damage, business interruption",
-    likelihood: 3,
-    severity: 4,
-    riskRating: 12,
-    controlMeasures: {
-      engineering: ["Circuit protection devices sized to BS7671 Appendix 4", "Fire detection and suppression systems"],
-      administrative: ["Load calculations and circuit design review", "Regular thermal imaging inspections", "Emergency isolation procedures", "Staff fire safety training"]
-    },
-    bs7671References: ["433 - Protection against overcurrent", "Appendix 4 - Current-carrying capacity"],
-    category: "fire",
-    workType: ["installation", "design", "maintenance"],
-    environment: ["commercial", "domestic", "industrial"]
   },
   {
     id: "consumer-unit-001",
@@ -170,65 +87,231 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     workType: ["upgrade", "installation"],
     environment: ["domestic"]
   },
+  
+  // 🚀 NEW ENHANCED ELECTRICAL HAZARDS FOR COMPREHENSIVE SAFETY
   {
-    id: "bathroom-elec-001",
-    hazard: "Electrical work in bathroom environments",
-    consequence: "Fatal electric shock due to water and electricity combination",
+    id: "ev-charging-001",
+    hazard: "EV charging point installation hazards",
+    consequence: "High current electric shock, DC arc fault, fire from overloaded supply",
+    likelihood: 2,
+    severity: 4,
+    riskRating: 8,
+    controlMeasures: {
+      engineering: ["Type A RCD protection (30mA)", "DC isolation devices", "Surge protection devices", "Load monitoring systems"],
+      administrative: ["DNO notification for loads >7kW", "Electrical capacity calculations", "Installation certification", "User training on safe operation"],
+      ppe: ["Arc flash PPE for high-power installations", "Insulated tools", "Voltage detectors"]
+    },
+    bs7671References: ["722 - Electric vehicle charging installations", "411.3.3 - RCD protection"],
+    category: "electrical",
+    workType: ["installation", "commissioning"],
+    environment: ["domestic", "commercial", "outdoor"]
+  },
+  {
+    id: "smart-home-001",
+    hazard: "Smart home system integration risks",
+    consequence: "Cyber security vulnerabilities, electrical interference, system failures",
+    likelihood: 3,
+    severity: 2,
+    riskRating: 6,
+    controlMeasures: {
+      engineering: ["Network security protocols", "Isolated smart circuits", "Proper earthing for data systems"],
+      administrative: ["Cybersecurity training", "Regular software updates", "Network monitoring", "Data protection compliance"],
+      ppe: ["Anti-static equipment", "Network testing tools"]
+    },
+    bs7671References: ["Part 4 - Protection for safety", "Section 444 - Protection against electromagnetic disturbances"],
+    category: "electrical",
+    workType: ["installation", "commissioning", "maintenance"],
+    environment: ["domestic", "commercial"]
+  },
+  {
+    id: "solar-battery-001", 
+    hazard: "Solar PV and battery storage system risks",
+    consequence: "DC electric shock, fire from thermal runaway, toxic gas release",
+    likelihood: 2,
+    severity: 4,
+    riskRating: 8,
+    controlMeasures: {
+      elimination: ["Use inherently safe battery chemistries where possible"],
+      engineering: ["Battery management systems", "Fire suppression in battery areas", "DC isolation at multiple points", "Ventilation for battery rooms"],
+      administrative: ["Manufacturer training", "Emergency response procedures", "Regular thermal monitoring", "G99 grid connection compliance"],
+      ppe: ["Arc flash protection", "Breathing apparatus for battery areas", "Thermal monitoring equipment"]
+    },
+    bs7671References: ["712 - Solar photovoltaic power supply systems", "Section 534 - Devices for protection against overvoltage"],
+    category: "renewable-energy",
+    workType: ["installation", "maintenance", "commissioning"],
+    environment: ["domestic", "commercial", "outdoor"]
+  },
+  {
+    id: "data-centre-001",
+    hazard: "Data centre electrical maintenance",
+    consequence: "Critical system failure, electric shock from high-density power, business interruption",
     likelihood: 2,
     severity: 5,
     riskRating: 10,
     controlMeasures: {
-      engineering: ["Zone classification per BS7671 Section 701", "IPX4 minimum rating for Zone 1 equipment", "30mA RCD protection for all circuits", "Supplementary bonding of metalwork", "SELV systems where appropriate"],
-      administrative: ["No switches in Zones 0, 1, or 2"]
+      engineering: ["Redundant power systems", "UPS systems", "Environmental monitoring", "Hot-swappable components"],
+      administrative: ["Change control procedures", "24/7 monitoring", "Maintenance windows", "Business continuity planning"],
+      ppe: ["ESD protection", "High-voltage rated PPE", "Environmental suits"]
     },
-    bs7671References: ["701 - Locations containing a bath or shower", "701.415.2 - Supplementary bonding"],
-    category: "special-locations",
+    bs7671References: ["Section 560 - Safety services", "Part 4 - Protection for safety"],
+    category: "electrical",
+    workType: ["maintenance", "upgrade", "emergency-repair"],
+    environment: ["commercial", "industrial"]
+  },
+  {
+    id: "street-lighting-001",
+    hazard: "Street lighting and highway electrical work",
+    consequence: "Vehicle strike, electrocution from damaged cables, public safety risks",
+    likelihood: 3,
+    severity: 4,
+    riskRating: 12,
+    controlMeasures: {
+      engineering: ["Traffic management systems", "Crash barriers", "Underground cable protection", "LED conversion for safety"],
+      administrative: ["Highway authority coordination", "Public notifications", "Night working procedures", "Emergency contact systems"],
+      ppe: ["High-visibility clothing", "Traffic management equipment", "Fall protection for column work"]
+    },
+    bs7671References: ["714 - Outdoor lighting installations", "Part 7 - Special installations"],
+    category: "public-infrastructure",
+    workType: ["installation", "maintenance", "emergency-repair"],
+    environment: ["outdoor", "public-highway"]
+  },
+  {
+    id: "temporary-supply-001",
+    hazard: "Temporary electrical supplies and site power",
+    consequence: "Electrocution from damaged temporary cables, fire from overloading",
+    likelihood: 4,
+    severity: 4,
+    riskRating: 16,
+    controlMeasures: {
+      engineering: ["RCD protection on all temporary circuits", "Armoured cables", "Weather-resistant equipment", "Load monitoring"],
+      administrative: ["Daily visual inspections", "Competent person supervision", "Weather monitoring", "Load management"],
+      ppe: ["Waterproof PPE", "Non-slip footwear", "Portable RCD testers"]
+    },
+    bs7671References: ["704 - Construction and demolition site installations", "Section 411 - Protective measures"],
+    category: "temporary-installation", 
     workType: ["installation", "maintenance"],
-    environment: ["bathroom", "domestic"]
+    environment: ["construction-site", "outdoor", "temporary"]
+  },
+  {
+    id: "heritage-building-001",
+    hazard: "Electrical work in heritage/listed buildings",
+    consequence: "Structural damage, fire risk to irreplaceable heritage, regulatory prosecution",
+    likelihood: 2,
+    severity: 4,
+    riskRating: 8,
+    controlMeasures: {
+      engineering: ["Minimal intervention techniques", "Compatible materials", "Fire-resistant cable systems", "Discrete installation methods"],
+      administrative: ["Conservation officer approval", "Heritage impact assessments", "Specialist contractor requirements", "Planning permissions"],
+      ppe: ["Clean tools to avoid marking", "Dust protection", "Minimal impact equipment"]
+    },
+    bs7671References: ["Part 5 - Selection and erection", "522 - Selection and erection of wiring systems"],
+    category: "specialist-installation",
+    workType: ["installation", "maintenance", "upgrade"],
+    environment: ["heritage", "domestic", "commercial"]
+  },
+  {
+    id: "agricultural-001",
+    hazard: "Agricultural electrical installations", 
+    consequence: "Livestock electric shock, fire in agricultural buildings, equipment damage from harsh environments",
+    likelihood: 3,
+    severity: 4,
+    riskRating: 12,
+    controlMeasures: {
+      engineering: ["RCBO protection for each circuit", "IP65 rated equipment", "Corrosion-resistant materials", "Livestock-safe cable routes"],
+      administrative: ["Veterinary liaison", "Farmer training", "Regular inspection schedules", "Emergency isolation procedures"],
+      ppe: ["Waterproof equipment", "Respiratory protection", "Slip-resistant footwear"]
+    },
+    bs7671References: ["705 - Agricultural and horticultural premises", "Section 537 - Isolation and switching"],
+    category: "agricultural",
+    workType: ["installation", "maintenance"],
+    environment: ["rural", "outdoor", "harsh-environment"]
+  },
+  {
+    id: "marine-electrical-001",
+    hazard: "Marine and waterside electrical installations",
+    consequence: "Electrocution in water, galvanic corrosion, environmental damage",
+    likelihood: 2,
+    severity: 5,
+    riskRating: 10,
+    controlMeasures: {
+      engineering: ["Isolation transformers", "Galvanic isolation", "Marine-grade equipment", "30mA RCD protection"],
+      administrative: ["Marine electrical certification", "Environmental permits", "Tide monitoring", "Emergency marine procedures"],
+      ppe: ["Marine safety equipment", "Buoyancy aids", "Waterproof communications"]
+    },
+    bs7671References: ["709 - Marinas and similar locations", "Section 411 - Protective measures"],
+    category: "marine",
+    workType: ["installation", "maintenance"],
+    environment: ["marine", "waterside", "outdoor"]
   }
 ];
 
-// Workplace scenarios for contextual hazard suggestions
+// 🚀 ENHANCED WORKPLACE SCENARIOS - Comprehensive and Realistic
 export const workplaceScenarios = [
   {
     id: "domestic-rewire",
     name: "Domestic Property Rewire", 
-    description: "Full electrical installation in residential property",
+    description: "Full electrical installation in residential property including consumer unit upgrade",
     commonHazards: ["elec-shock-001", "consumer-unit-001", "manual-handling-001", "falls-height-001"],
     environment: "domestic",
     riskLevel: "medium",
     requiredCompetencies: ["Part P notification", "Building Control liaison", "Consumer unit installation"],
-    typicalDuration: "3-7 days"
+    typicalDuration: "3-7 days",
+    specialConsiderations: ["Asbestos survey for pre-1980 properties", "Temporary supply arrangements", "Customer liaison"]
   },
   {
-    id: "bathroom-installation",
-    name: "Bathroom Electrical Installation",
-    description: "Special location electrical work with water hazards",
-    commonHazards: ["bathroom-elec-001", "elec-shock-002", "elec-shock-001"],
-    environment: "bathroom",
-    riskLevel: "high",
-    requiredCompetencies: ["Section 701 compliance", "IP rating selection", "Zone classification"],
-    typicalDuration: "1-2 days"
-  },
-  {
-    id: "commercial-office-fitout",
-    name: "Commercial Office Fit-out",
-    description: "Electrical installation in occupied commercial building",
-    commonHazards: ["elec-shock-001", "fire-elec-001", "manual-handling-001", "cable-strike-001"],
+    id: "commercial-ev-charging",
+    name: "Commercial EV Charging Installation",
+    description: "High-power EV charging infrastructure for commercial premises",
+    commonHazards: ["ev-charging-001", "elec-shock-001", "three-phase-001", "cable-strike-001"],
     environment: "commercial",
-    riskLevel: "medium",
-    requiredCompetencies: ["Fire alarm integration", "Emergency lighting", "Data infrastructure"],
-    typicalDuration: "2-4 weeks"
+    riskLevel: "high",
+    requiredCompetencies: ["EV charging certification", "DNO applications", "Load calculations"],
+    typicalDuration: "2-5 days",
+    specialConsiderations: ["Grid capacity assessments", "Future expansion planning", "User training requirements"]
   },
   {
-    id: "underground-cable-installation",
-    name: "Underground Cable Installation",
-    description: "Installation of underground electrical supply cables",
-    commonHazards: ["cable-strike-001", "confined-space-001", "manual-handling-001", "overhead-contact-001"],
-    environment: "outdoor",
-    riskLevel: "high", 
-    requiredCompetencies: ["Cable jointing", "DNO liaison", "Excavation safety"],
-    typicalDuration: "1-2 weeks"
+    id: "heritage-building-upgrade",
+    name: "Heritage Building Electrical Upgrade",
+    description: "Sensitive electrical work in listed or heritage buildings",
+    commonHazards: ["heritage-building-001", "elec-shock-001", "confined-space-001", "manual-handling-001"],
+    environment: "heritage",
+    riskLevel: "high",
+    requiredCompetencies: ["Conservation training", "Heritage regulations", "Specialist techniques"],
+    typicalDuration: "2-6 weeks",
+    specialConsiderations: ["Planning permissions", "Conservation officer liaison", "Minimal intervention techniques"]
+  },
+  {
+    id: "agricultural-installation",
+    name: "Agricultural Electrical Installation",
+    description: "Electrical systems for farming and agricultural environments",
+    commonHazards: ["agricultural-001", "elec-shock-001", "manual-handling-001", "confined-space-001"],
+    environment: "agricultural",
+    riskLevel: "high",
+    requiredCompetencies: ["Agricultural regulations", "Livestock safety", "Environmental protection"],
+    typicalDuration: "1-3 weeks",
+    specialConsiderations: ["Livestock safety", "Environmental permits", "Weather dependency"]
+  },
+  {
+    id: "temporary-event-power",
+    name: "Temporary Event Power Supply",
+    description: "Temporary electrical installations for events and construction",
+    commonHazards: ["temporary-supply-001", "elec-shock-001", "manual-handling-001", "overhead-contact-001"],
+    environment: "temporary",
+    riskLevel: "very-high",
+    requiredCompetencies: ["Temporary installation expertise", "Event safety", "Emergency procedures"],
+    typicalDuration: "1-3 days",
+    specialConsiderations: ["Weather monitoring", "Public safety", "Rapid deployment/removal"]
+  },
+  {
+    id: "marine-electrical",
+    name: "Marine Electrical Installation",
+    description: "Electrical systems for marinas, boats, and waterside facilities",
+    commonHazards: ["marine-electrical-001", "elec-shock-001", "confined-space-001", "manual-handling-001"],
+    environment: "marine",
+    riskLevel: "very-high",
+    requiredCompetencies: ["Marine electrical certification", "Galvanic corrosion prevention", "Marine safety"],
+    typicalDuration: "3-10 days",
+    specialConsiderations: ["Tidal access", "Corrosion protection", "Environmental regulations"]
   }
 ];
 
@@ -297,68 +380,24 @@ export const bs7671RegulationLookup = {
     description: "Additional protection by 30mA RCD for socket outlets and mobile equipment",
     section: "Part 4 - Protection for safety"
   },
-  "544": {
-    title: "Protective bonding conductors", 
-    description: "Main and supplementary protective bonding requirements",
-    section: "Part 5 - Selection and erection of electrical equipment"
-  },
-  "701": {
-    title: "Locations containing a bath or shower",
-    description: "Special requirements for electrical installations in bathrooms",
+  "722": {
+    title: "Electric vehicle charging installations",
+    description: "Special requirements for EV charging equipment",
     section: "Part 7 - Requirements for special installations or locations"
   },
-  "701.415.2": {
-    title: "Supplementary protective bonding",
-    description: "Bonding of metalwork in locations containing baths or showers",
+  "712": {
+    title: "Solar photovoltaic power supply systems",
+    description: "Requirements for solar PV installations",
     section: "Part 7 - Requirements for special installations or locations"
   },
-  "433": {
-    title: "Protection against overcurrent",
-    description: "Requirements for overcurrent protective devices",
-    section: "Part 4 - Protection for safety"
+  "705": {
+    title: "Agricultural and horticultural premises",
+    description: "Special requirements for farming environments",
+    section: "Part 7 - Requirements for special installations or locations"
   },
-  "421.1.7": {
-    title: "Arc fault detection devices",
-    description: "Requirements for AFDDs in certain installations",
-    section: "Part 4 - Protection for safety"
-  },
-  "443.4": {
-    title: "Surge protective devices",
-    description: "Requirements for SPD installation",
-    section: "Part 4 - Protection for safety"
+  "709": {
+    title: "Marinas and similar locations",
+    description: "Requirements for marine electrical installations",
+    section: "Part 7 - Requirements for special installations or locations"
   }
-};
-
-// Emergency response procedures
-export const emergencyProcedures = {
-  electricShock: [
-    "Do not touch the casualty if still in contact with electricity",
-    "Switch off power at main supply if safe to do so",
-    "Use non-conductive material to separate casualty from source",
-    "Call 999 immediately",
-    "Check for breathing and pulse",
-    "Begin CPR if trained and necessary",
-    "Treat for shock and burns",
-    "Do not move casualty unless in immediate danger"
-  ],
-  electricalFire: [
-    "Raise the alarm immediately",
-    "Evacuate the area",
-    "Call 999 - specify electrical fire",
-    "Isolate electrical supply if safe to do so",
-    "Use CO2 or dry powder extinguisher only",
-    "Never use water on electrical fires",
-    "Evacuate and wait for fire service",
-    "Inform fire service of electrical hazards"
-  ],
-  arcFlash: [
-    "Call 999 immediately",
-    "Do not approach the casualty until power is isolated",
-    "Ensure breathing airway is clear",
-    "Cool burns with cold water for 20 minutes",
-    "Cover burns with cling film",
-    "Treat for shock",
-    "Monitor for breathing difficulties",
-    "Preserve burnt clothing for medical assessment"
-  ]
 };

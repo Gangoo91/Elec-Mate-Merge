@@ -38,7 +38,7 @@ export function RiskSelect({
 
   // Filter risks based on selected hazard
   const availableRisks = selectedHazard 
-    ? riskConsequences.filter(risk => risk.hazardId === selectedHazard)
+    ? riskConsequences.filter(risk => risk.applicableHazards?.includes(selectedHazard))
     : riskConsequences;
 
   const handleSelect = (selectedValue: string) => {
@@ -49,7 +49,7 @@ export function RiskSelect({
     if (onControlMeasuresChange) {
       const selectedRisk = riskConsequences.find(risk => risk.consequence === selectedValue);
       if (selectedRisk) {
-        onControlMeasuresChange(selectedRisk.defaultControlMeasures);
+        onControlMeasuresChange(selectedRisk.suggestedControls || []);
       }
     }
   };
@@ -107,7 +107,7 @@ export function RiskSelect({
                       <div className="flex-1">
                         <div className="text-sm font-medium">{risk.consequence}</div>
                         <div className="text-xs text-muted-foreground">
-                          {risk.defaultControlMeasures.length} suggested control measures
+                          {risk.suggestedControls?.length || 0} suggested control measures
                         </div>
                       </div>
                     </div>
@@ -132,7 +132,7 @@ export function RiskSelect({
                       <div className="flex-1">
                         <div className="text-sm font-medium">{risk.consequence}</div>
                         <div className="text-xs text-muted-foreground">
-                          Related to: {risk.hazardId}
+                          Risk Level: {risk.severity}x{risk.likelihood} = {risk.riskRating}
                         </div>
                       </div>
                     </div>
