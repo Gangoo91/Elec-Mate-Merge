@@ -1056,7 +1056,7 @@ class ProfessionalRAMSPDFGenerator {
   private addEnhancedApprovals(signOff?: SignOff, context?: VariableContext): void {
     this.doc.addPage();
     this.currentPage++;
-    this.yPosition = this.MARGIN + 20;
+    this.yPosition = this.MARGIN;
     this.addTOCEntry("8. Authorisation & Sign-off");
 
     this.yPosition += 16;
@@ -1201,7 +1201,7 @@ class ProfessionalRAMSPDFGenerator {
   private addSignOnSheet(context?: VariableContext): void {
     this.doc.addPage();
     this.currentPage++;
-    this.yPosition = this.MARGIN + 20;
+    this.yPosition = this.MARGIN;
     this.addTOCEntry("9. Worker Sign-On Sheet");
 
     this.yPosition += 16;
