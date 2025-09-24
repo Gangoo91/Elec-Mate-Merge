@@ -1197,6 +1197,85 @@ class ProfessionalRAMSPDFGenerator {
     this.addPageNumber();
   }
 
+  // Sign-On Sheet Section
+  private addSignOnSheet(context?: VariableContext): void {
+    this.doc.addPage();
+    this.currentPage++;
+    this.yPosition = this.MARGIN + 20;
+    this.addTOCEntry("9. Worker Sign-On Sheet");
+
+    this.yPosition += 16;
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(16);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("9. WORKER SIGN-ON SHEET", this.MARGIN, this.yPosition);
+
+    this.yPosition += 16;
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(11);
+    this.doc.setFont("helvetica", "normal");
+    
+    const instructionText = "All workers must sign below to confirm they have read and understood this risk assessment and method statement, and acknowledge the hazards identified.";
+    const wrappedInstruction = this.doc.splitTextToSize(instructionText, this.pageWidth - 2 * this.MARGIN);
+    this.doc.text(wrappedInstruction, this.MARGIN, this.yPosition);
+    this.yPosition += wrappedInstruction.length * 6 + 10;
+
+    // Create sign-on table
+    const signOnData = [];
+    
+    // Add 15 empty rows for manual sign-on
+    for (let i = 0; i < 15; i++) {
+      signOnData.push(['', '', '', '']);
+    }
+
+    autoTable(this.doc, {
+      startY: this.yPosition,
+      head: [['Name', 'Signature', 'Occupation', 'Date']],
+      body: signOnData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: this.PRIMARY_COLOR,
+        textColor: [255, 255, 255],
+        fontSize: 11,
+        fontStyle: 'bold',
+        halign: 'center',
+        valign: 'middle'
+      },
+      bodyStyles: {
+        fontSize: 10,
+        cellPadding: 4,
+        halign: 'left',
+        valign: 'middle',
+        minCellHeight: 16
+      },
+      columnStyles: {
+        0: { cellWidth: 50 }, // Name
+        1: { cellWidth: 50 }, // Signature  
+        2: { cellWidth: 40 }, // Occupation
+        3: { cellWidth: 30 }  // Date
+      },
+      styles: {
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5,
+        cellPadding: 4
+      },
+      margin: { left: this.MARGIN, right: this.MARGIN },
+      tableWidth: 'wrap'
+    });
+
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 16;
+
+    // Add note about record keeping
+    this.doc.setFontSize(9);
+    this.doc.setFont("helvetica", "italic");
+    this.doc.setTextColor(80, 80, 80);
+    const noteText = "Note: This sign-on sheet must be retained as part of the project safety records for audit purposes.";
+    const wrappedNote = this.doc.splitTextToSize(noteText, this.pageWidth - 2 * this.MARGIN);
+    this.doc.text(wrappedNote, this.MARGIN, this.yPosition);
+
+    this.addPageNumber();
+  }
+
   // Main generation method
   public generatePDF(data: RAMSData, options: PDFOptions = {}): string {
     // Create variable context for dynamic substitution
@@ -1212,6 +1291,7 @@ class ProfessionalRAMSPDFGenerator {
     this.addMethodStatement(data, context);
     this.addSafetyInformation(context);
     this.addEnhancedApprovals(options.signOff, context);
+    this.addSignOnSheet(context);
 
     // Add enhanced footer to all pages
     for (let i = 1; i <= this.currentPage; i++) {
