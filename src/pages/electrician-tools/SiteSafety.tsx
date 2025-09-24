@@ -137,24 +137,24 @@ const SiteSafety = () => {
         {/* Hero Section */}
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/5 to-transparent" />
-          <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12 relative">
-            <div className="text-center space-y-4">
-              <div className="flex justify-center mb-6">
-                <div className="p-4 rounded-full bg-elec-yellow/10 border border-elec-yellow/20">
-                  <Shield className="h-12 w-12 text-elec-yellow" />
+          <div className="max-w-7xl mx-auto px-4 py-6 sm:py-12 relative">
+            <div className="text-center space-y-3 sm:space-y-4">
+              <div className="flex justify-center mb-4 sm:mb-6">
+                <div className="p-3 sm:p-4 rounded-full bg-elec-yellow/10 border border-elec-yellow/20">
+                  <Shield className="h-8 w-8 sm:h-12 sm:w-12 text-elec-yellow" />
                 </div>
               </div>
               
-              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
                 Site Safety & Risk Assessment
               </h1>
               
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Comprehensive safety management tools for electrical contractors. Generate RAMS documents, 
-                assess risks, and maintain safety compliance on all your projects.
+              <p className="text-sm sm:text-xl text-muted-foreground max-w-2xl sm:max-w-3xl mx-auto leading-relaxed px-2">
+                <span className="hidden sm:inline">Comprehensive safety management tools for electrical contractors. Generate RAMS documents, assess risks, and maintain safety compliance on all your projects.</span>
+                <span className="sm:hidden">Essential safety tools for electrical contractors. Generate RAMS, assess risks, and maintain compliance.</span>
               </p>
               
-              <div className="flex justify-center pt-4">
+              <div className="flex justify-center pt-2 sm:pt-4">
                 <BackButton customUrl="/electrician" label="Back to Electrical Hub" />
               </div>
             </div>
