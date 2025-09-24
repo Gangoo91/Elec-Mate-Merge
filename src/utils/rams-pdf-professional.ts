@@ -1223,8 +1223,8 @@ class ProfessionalRAMSPDFGenerator {
     // Create sign-on table
     const signOnData = [];
     
-    // Add 15 empty rows for manual sign-on
-    for (let i = 0; i < 15; i++) {
+    // Add 6 empty rows for manual sign-on
+    for (let i = 0; i < 6; i++) {
       signOnData.push(['', '', '', '']);
     }
 
@@ -1249,10 +1249,10 @@ class ProfessionalRAMSPDFGenerator {
         minCellHeight: 16
       },
       columnStyles: {
-        0: { cellWidth: 50 }, // Name
-        1: { cellWidth: 50 }, // Signature  
-        2: { cellWidth: 40 }, // Occupation
-        3: { cellWidth: 30 }  // Date
+        0: { cellWidth: 'auto' }, // Name
+        1: { cellWidth: 'auto' }, // Signature  
+        2: { cellWidth: 'auto' }, // Occupation
+        3: { cellWidth: 'auto' }  // Date
       },
       styles: {
         lineColor: [0, 0, 0],
@@ -1260,7 +1260,7 @@ class ProfessionalRAMSPDFGenerator {
         cellPadding: 4
       },
       margin: { left: this.MARGIN, right: this.MARGIN },
-      tableWidth: 'wrap'
+      tableWidth: 'auto'
     });
 
     this.yPosition = (this.doc as any).lastAutoTable.finalY + 16;
