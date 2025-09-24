@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import { ramsTemplates, RAMSTemplate } from '@/data/site-safety/ramsTemplates';
-import { Plus, Zap, ChevronDown, ChevronUp, Filter } from 'lucide-react';
+import { Plus, Zap, ChevronDown, ChevronUp, Search } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { useRAMS } from './rams/RAMSContext';
 import { toast } from '@/hooks/use-toast';
 
 export const RAMSQuickAdd: React.FC = () => {
   const { addRiskFromTemplate } = useRAMS();
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
 
-  const categories = ['All', ...Array.from(new Set(ramsTemplates.map(t => t.category)))];
-
-  const filteredTemplates = selectedCategory === 'All' 
-    ? ramsTemplates 
-    : ramsTemplates.filter(t => t.category === selectedCategory);
+  const filteredTemplates = useMemo(() => {
+    if (!searchTerm.trim()) return ramsTemplates;
+    
+    const lowerSearchTerm = searchTerm.toLowerCase();
+    return ramsTemplates.filter(template => 
+      template.specificActivity.toLowerCase().includes(lowerSearchTerm) ||
+      template.hazard.toLowerCase().includes(lowerSearchTerm) ||
+      template.category.toLowerCase().includes(lowerSearchTerm) ||
+      template.detailedControls.some(control => control.toLowerCase().includes(lowerSearchTerm)) ||
+      template.ppe.some(ppe => ppe.toLowerCase().includes(lowerSearchTerm))
+    );
+  }, [searchTerm]);
 
   const handleAddTemplate = (template: RAMSTemplate) => {
     addRiskFromTemplate(template);
@@ -70,26 +77,18 @@ export const RAMSQuickAdd: React.FC = () => {
           Quick Add to RAMS
         </CardTitle>
         <CardDescription className="text-white/70 text-sm">
-          Select from realistic electrical hazards with detailed control measures
+          Search and select from realistic electrical hazards with detailed control measures
         </CardDescription>
         
-        {/* Category Filter */}
-        <div className="flex flex-wrap gap-2 mt-3">
-          {categories.map((category) => (
-            <Button
-              key={category}
-              size="sm"
-              variant={selectedCategory === category ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category)}
-              className={`text-xs px-3 py-1 h-8 ${
-                selectedCategory === category 
-                  ? 'bg-green-600 text-white hover:bg-green-700' 
-                  : 'text-white border-white/20 hover:bg-white/10'
-              }`}
-            >
-              {category}
-            </Button>
-          ))}
+        {/* Search Input */}
+        <div className="relative mt-3">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/50" />
+          <Input
+            placeholder="Search hazards, activities, or controls..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 bg-green-500/10 border-white/20 text-white placeholder:text-white/50 focus:border-green-500/50 h-10"
+          />
         </div>
         
         <Button 

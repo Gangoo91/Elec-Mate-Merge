@@ -19,7 +19,6 @@ interface Hazard {
 
 const HazardDatabase = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const hazards: Hazard[] = [
     {
@@ -99,13 +98,14 @@ const HazardDatabase = () => {
     }
   ];
 
-  const categories = ["All", "Electrical", "Physical", "Chemical", "Environmental"];
+  
 
   const filteredHazards = hazards.filter(hazard => {
     const matchesSearch = hazard.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         hazard.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "All" || hazard.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+                         hazard.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         hazard.commonControls.some(control => control.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                         hazard.regulations.some(reg => reg.toLowerCase().includes(searchTerm.toLowerCase()));
+    return matchesSearch;
   });
 
   const getRiskColor = (level: string) => {
@@ -136,30 +136,13 @@ const HazardDatabase = () => {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search hazards..."
+              placeholder="Search hazards, controls, or regulations..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50"
+              className="pl-10 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50 h-12"
             />
           </div>
           
-          {/* Category Filter Buttons - Mobile Optimized */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map(category => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(category)}
-                className={selectedCategory === category 
-                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                  : "border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 hover:text-elec-yellow"
-                }
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
         </CardContent>
       </Card>
 
