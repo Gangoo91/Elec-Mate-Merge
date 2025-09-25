@@ -273,28 +273,30 @@ const SafetyEquipmentTracker = () => {
                     )}
                   </div>
                   
-                  <div className="flex items-start gap-4">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/20 border-2 border-elec-yellow/30 flex-shrink-0">
-                      <Wrench className="h-6 w-6 text-elec-yellow" />
+                  <div className="space-y-4">
+                    {/* Equipment Name and Icon */}
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30 flex-shrink-0">
+                        <Wrench className="h-5 w-5 text-elec-yellow" />
+                      </div>
+                      <h3 className="font-bold text-lg text-white">{item.name}</h3>
                     </div>
                     
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-xl text-white mb-2 text-left">{item.name}</h3>
-                      
-                      <div className="flex items-center gap-3 mb-3 flex-wrap">
-                        <span className="px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm rounded-full border border-elec-yellow/20">
-                          {item.category}
-                        </span>
-                        <div className={`px-3 py-1 ${getStatusColor(item.status)}/20 text-sm rounded-full border flex items-center gap-2`}>
-                          {getStatusIcon(item.status)}
-                          <span>{item.status}</span>
-                        </div>
+                    {/* Status and Category */}
+                    <div className="flex items-center gap-3">
+                      <span className="px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm rounded-lg border border-elec-yellow/20">
+                        {item.category}
+                      </span>
+                      <div className={`px-3 py-1 ${getStatusColor(item.status)}/20 text-sm rounded-lg border flex items-center gap-2`}>
+                        {getStatusIcon(item.status)}
+                        <span>{item.status}</span>
                       </div>
+                    </div>
 
-                      <div className="text-left">
-                        <div className="text-muted-foreground text-sm">Serial Number</div>
-                        <div className="font-mono text-base text-white">{item.serialNumber}</div>
-                      </div>
+                    {/* Serial Number */}
+                    <div>
+                      <div className="text-muted-foreground text-xs mb-1">Serial Number</div>
+                      <div className="font-mono text-sm text-white/80">{item.serialNumber}</div>
                     </div>
                   </div>
                 </div>
