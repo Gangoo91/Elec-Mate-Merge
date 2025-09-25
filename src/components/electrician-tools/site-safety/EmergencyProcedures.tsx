@@ -180,13 +180,13 @@ const EmergencyProcedures = () => {
               <div className="space-y-4">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <h4 className="font-medium text-green-300 mb-3">First Aid Response Steps</h4>
-                  <ol className="space-y-2">
+                  <ol className="space-y-3">
                     {firstAidProcedures.map((step, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                           {index + 1}
                         </span>
-                        <span className="text-sm">{step}</span>
+                        <span className="text-sm leading-relaxed">{step}</span>
                       </li>
                     ))}
                   </ol>
