@@ -599,30 +599,56 @@ const TeamBriefingTemplates = () => {
         </Card>
 
         {/* Template Preview/Editor */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-white">
-                {selectedTemplate ? (isEditing ? 'Edit Template' : 'Template Preview') : 'Select Template'}
-              </CardTitle>
+        <Card className="border-elec-yellow/20 bg-elec-gray animate-fade-in">
+          <CardHeader className="border-b border-elec-yellow/10">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="space-y-1">
+                <CardTitle className="text-white flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-elec-yellow" />
+                  {selectedTemplate ? (isEditing ? 'Edit Template' : 'Template Preview') : 'Select Template'}
+                </CardTitle>
+                {selectedTemplate && (
+                  <p className="text-sm text-muted-foreground">
+                    {isEditing ? 'Modify the template details below' : 'Review template structure and content'}
+                  </p>
+                )}
+              </div>
               {selectedTemplate && (
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                   {isEditing ? (
                     <>
-                      <Button size="sm" onClick={() => setIsEditing(false)}>
+                      <Button 
+                        size="sm" 
+                        variant="ghost"
+                        onClick={() => setIsEditing(false)}
+                        className="w-full sm:w-auto"
+                      >
                         Cancel
                       </Button>
-                      <Button size="sm" variant="outline">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="bg-elec-yellow text-black hover:bg-elec-yellow/80 w-full sm:w-auto"
+                      >
                         Save Changes
                       </Button>
                     </>
                   ) : (
                     <>
-                      <Button size="sm" variant="outline" onClick={() => setIsEditing(true)}>
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        onClick={() => setIsEditing(true)}
+                        className="hover-scale w-full sm:w-auto"
+                      >
                         <Edit className="h-3 w-3 mr-1" />
                         Edit
                       </Button>
-                      <Button size="sm" variant="outline">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="hover-scale w-full sm:w-auto"
+                      >
                         <Download className="h-3 w-3 mr-1" />
                         Export
                       </Button>
@@ -632,75 +658,108 @@ const TeamBriefingTemplates = () => {
               )}
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 sm:p-6">
             {!selectedTemplate ? (
-              <div className="text-center py-8 text-muted-foreground">
-                Select a template from the list to preview or edit it.
+              <div className="text-center py-12">
+                <div className="max-w-sm mx-auto space-y-3">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-elec-yellow/10 flex items-center justify-center">
+                    <FileText className="h-8 w-8 text-elec-yellow" />
+                  </div>
+                  <h3 className="text-lg font-medium text-white">No Template Selected</h3>
+                  <p className="text-muted-foreground">
+                    Choose a template from the list to preview or edit its content.
+                  </p>
+                </div>
               </div>
             ) : (
-              <div className="space-y-6">
-                {/* Template Details */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-sm">Template Name</Label>
-                    {isEditing ? (
-                      <Input
-                        value={selectedTemplate.name}
-                        onChange={(e) => updateTemplate({
-                          ...selectedTemplate,
-                          name: e.target.value
-                        })}
-                      />
-                    ) : (
-                      <div className="p-2 bg-elec-dark rounded">{selectedTemplate.name}</div>
-                    )}
+              <div className="space-y-8">
+                {/* Template Overview Section */}
+                <div className="bg-elec-dark/50 rounded-lg p-4 space-y-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-2 h-2 rounded-full bg-elec-yellow"></div>
+                    <h3 className="text-sm font-medium text-elec-yellow uppercase tracking-wide">Template Overview</h3>
                   </div>
-                  <div>
-                    <Label className="text-sm">Category</Label>
-                    {isEditing ? (
-                      <select
-                        className="w-full p-2 border rounded-md bg-background"
-                        value={selectedTemplate.category}
-                        onChange={(e) => updateTemplate({
-                          ...selectedTemplate,
-                          category: e.target.value
-                        })}
-                      >
-                        {categories.map(category => (
-                          <option key={category} value={category}>{category}</option>
-                        ))}
-                      </select>
-                    ) : (
-                      <div className="p-2 bg-elec-dark rounded">{selectedTemplate.category}</div>
-                    )}
-                  </div>
-                  <div>
-                    <Label className="text-sm">Duration</Label>
-                    {isEditing ? (
-                      <Input
-                        value={selectedTemplate.duration}
-                        onChange={(e) => updateTemplate({
-                          ...selectedTemplate,
-                          duration: e.target.value
-                        })}
-                      />
-                    ) : (
-                      <div className="p-2 bg-elec-dark rounded">{selectedTemplate.duration}</div>
-                    )}
-                  </div>
-                  <div>
-                    <Label className="text-sm">Team Size</Label>
-                    {isEditing ? (
-                      <Input
-                        value={selectedTemplate.teamSize}
-                        onChange={(e) => updateTemplate({
-                          ...selectedTemplate,
-                          teamSize: e.target.value
-                        })}
-                      />
-                    ) : (
-                      <div className="p-2 bg-elec-dark rounded">{selectedTemplate.teamSize}</div>
-                    )}
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Template Name</Label>
+                      {isEditing ? (
+                        <Input
+                          value={selectedTemplate.name}
+                          onChange={(e) => updateTemplate({
+                            ...selectedTemplate,
+                            name: e.target.value
+                          })}
+                          className="bg-background border-border/50 focus:border-elec-yellow"
+                        />
+                      ) : (
+                        <div className="p-3 bg-elec-dark rounded-md border border-border/30">
+                          <span className="text-white font-medium">{selectedTemplate.name}</span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Category</Label>
+                      {isEditing ? (
+                        <select
+                          className="w-full p-3 border border-border/50 rounded-md bg-background focus:border-elec-yellow focus:outline-none"
+                          value={selectedTemplate.category}
+                          onChange={(e) => updateTemplate({
+                            ...selectedTemplate,
+                            category: e.target.value
+                          })}
+                        >
+                          {categories.map(category => (
+                            <option key={category} value={category}>{category}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <div className="p-3 bg-elec-dark rounded-md border border-border/30">
+                          <Badge className={`${getCategoryColor(selectedTemplate.category)} text-white text-xs`}>
+                            {selectedTemplate.category}
+                          </Badge>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Duration</Label>
+                      {isEditing ? (
+                        <Input
+                          value={selectedTemplate.duration}
+                          onChange={(e) => updateTemplate({
+                            ...selectedTemplate,
+                            duration: e.target.value
+                          })}
+                          className="bg-background border-border/50 focus:border-elec-yellow"
+                        />
+                      ) : (
+                        <div className="p-3 bg-elec-dark rounded-md border border-border/30 flex items-center gap-2">
+                          <Clock className="h-4 w-4 text-elec-yellow" />
+                          <span className="text-white">{selectedTemplate.duration}</span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Team Size</Label>
+                      {isEditing ? (
+                        <Input
+                          value={selectedTemplate.teamSize}
+                          onChange={(e) => updateTemplate({
+                            ...selectedTemplate,
+                            teamSize: e.target.value
+                          })}
+                          className="bg-background border-border/50 focus:border-elec-yellow"
+                        />
+                      ) : (
+                        <div className="p-3 bg-elec-dark rounded-md border border-border/30 flex items-center gap-2">
+                          <Users className="h-4 w-4 text-elec-yellow" />
+                          <span className="text-white">{selectedTemplate.teamSize}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
 
