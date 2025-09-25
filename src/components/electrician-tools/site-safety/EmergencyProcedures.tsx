@@ -145,7 +145,7 @@ const EmergencyProcedures = () => {
                   </h4>
                   <ol className="space-y-2">
                     {evacuationProcedures.map((step, index) => (
-                      <li key={index} className="flex items-start gap-3">
+                      <li key={index} className="flex items-start gap-3 text-left">
                         <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">
                           {index + 1}
                         </span>
