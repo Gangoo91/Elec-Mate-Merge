@@ -417,7 +417,7 @@ const SafetyEquipmentTracker = () => {
 
                 {/* Flowing Action Buttons */}
                 <div className="p-8 pt-0">
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex flex-col xs:flex-col sm:flex-row gap-2 xs:gap-3 sm:gap-3 md:gap-4">
                     <Button 
                       variant="outline" 
                       className="flex-1 h-11 bg-transparent border-elec-yellow/40 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200 rounded-xl"
