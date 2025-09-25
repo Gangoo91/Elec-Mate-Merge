@@ -500,97 +500,75 @@ const TeamBriefingTemplates = () => {
                   }`}
                   onClick={() => setSelectedTemplate(template)}
                 >
-                   <CardContent className="p-0">
-                     <div className="flex items-start justify-between p-4 pb-3">
-                       <div className="flex-1 min-w-0">
-                         <div className="flex items-center gap-2 mb-3">
-                           <Badge className={`${getCategoryColor(template.category)} text-white text-xs px-2 py-1`}>
-                             {template.category}
-                           </Badge>
-                         </div>
-                         <h4 className="font-semibold text-base text-foreground mb-2 leading-tight">{template.name}</h4>
-                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-muted-foreground">
-                           <div className="flex items-center gap-1">
-                             <Clock className="h-3 w-3" />
-                             <span>{template.duration}</span>
-                           </div>
-                           <div className="flex items-center gap-1">
-                             <Users className="h-3 w-3" />
-                             <span>{template.teamSize}</span>
-                           </div>
-                         </div>
-                       </div>
-                       <DropdownMenu>
-                         <DropdownMenuTrigger asChild>
-                           <Button
-                             size="sm"
-                             variant="ghost"
-                             className="min-h-[44px] min-w-[44px] touch-manipulation p-0 hover:bg-transparent shrink-0"
-                             onClick={(e) => e.stopPropagation()}
-                           >
-                             <MoreHorizontal className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
-                           </Button>
-                         </DropdownMenuTrigger>
-                         <DropdownMenuContent 
-                           align="end" 
-                           className="w-48"
-                         >
-                           <DropdownMenuItem
-                             className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                             onClick={(e) => {
-                               e.stopPropagation();
-                               duplicateTemplate(template);
-                             }}
-                           >
-                             <Copy className="h-4 w-4 mr-2" />
-                             Copy
-                           </DropdownMenuItem>
-                           <DropdownMenuItem
-                             className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                             onClick={(e) => {
-                               e.stopPropagation();
-                               setSelectedTemplate(template);
-                               setIsEditing(true);
-                             }}
-                           >
-                             <Edit className="h-4 w-4 mr-2" />
-                             Edit
-                           </DropdownMenuItem>
-                           <DropdownMenuItem
-                             className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                             onClick={(e) => {
-                               e.stopPropagation();
-                               setSelectedTemplate(template);
-                               setNewBriefing(prev => ({ ...prev, template_id: template.id }));
-                               setShowNewBriefingForm(true);
-                             }}
-                           >
-                             <Plus className="h-4 w-4 mr-2" />
-                             Use Template
-                           </DropdownMenuItem>
-                         </DropdownMenuContent>
-                       </DropdownMenu>
-                     </div>
-                     <div className="border-t border-border/50 px-4 py-3 bg-muted/30">
-                       <div className="flex items-center justify-between text-xs">
-                         <div className="flex items-center gap-4">
-                           <span className="flex items-center gap-1 text-blue-400">
-                             <FileText className="h-3 w-3" />
-                             {template.keyPoints.length} key points
-                           </span>
-                           <span className="flex items-center gap-1 text-red-400">
-                             ⚠ {template.safetyPoints.length} safety points
-                           </span>
-                         </div>
-                         {template.equipment && template.equipment.length > 0 && (
-                           <span className="text-muted-foreground">
-                             🔧 {template.equipment.length} equipment
-                           </span>
-                         )}
-                       </div>
-                     </div>
-                   </CardContent>
-                 </Card>
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge className={getCategoryColor(template.category)}>
+                            {template.category}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">
+                            {template.duration} • {template.teamSize}
+                          </span>
+                        </div>
+                        <h4 className="font-medium text-sm">{template.name}</h4>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {template.keyPoints.length} key points, {template.safetyPoints.length} safety points
+                        </p>
+                      </div>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="min-h-[44px] min-w-[44px] touch-manipulation p-0 hover:bg-transparent ml-auto"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <MoreHorizontal className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent 
+                          align="end" 
+                          className="w-48"
+                        >
+                          <DropdownMenuItem
+                            className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              duplicateTemplate(template);
+                            }}
+                          >
+                            <Copy className="h-4 w-4 mr-2" />
+                            Copy
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedTemplate(template);
+                              setIsEditing(true);
+                            }}
+                          >
+                            <Edit className="h-4 w-4 mr-2" />
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedTemplate(template);
+                              setNewBriefing(prev => ({ ...prev, template_id: template.id }));
+                              setShowNewBriefingForm(true);
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-2" />
+                            Use Template
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </CardContent>
