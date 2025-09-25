@@ -571,23 +571,25 @@ const TeamBriefingTemplates = () => {
                          </DropdownMenuContent>
                        </DropdownMenu>
                      </div>
-                     <div className="border-t border-border/50 px-4 py-3 bg-muted/30">
-                       <div className="flex items-center justify-between text-xs">
-                         <div className="flex items-center gap-4">
-                           <span className="flex items-center gap-1 text-blue-400">
-                             <FileText className="h-3 w-3" />
-                             {template.keyPoints.length} key points
-                           </span>
-                           <span className="flex items-center gap-1 text-red-400">
-                             ⚠ {template.safetyPoints.length} safety points
-                           </span>
-                         </div>
-                         {template.equipment && template.equipment.length > 0 && (
-                           <span className="text-muted-foreground">
-                             🔧 {template.equipment.length} equipment
-                           </span>
-                         )}
-                       </div>
+                      <div className="border-t border-border/50 px-3 sm:px-4 py-2 sm:py-3 bg-muted/30">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs sm:text-sm">
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                            <span className="flex items-center gap-1 text-blue-400 min-w-fit">
+                              <FileText className="h-3 w-3 flex-shrink-0" />
+                              <span className="whitespace-nowrap">{template.keyPoints.length} key points</span>
+                            </span>
+                            <span className="flex items-center gap-1 text-red-400 min-w-fit">
+                              <span className="text-xs">⚠</span>
+                              <span className="whitespace-nowrap">{template.safetyPoints.length} safety points</span>
+                            </span>
+                          </div>
+                          {template.equipment && template.equipment.length > 0 && (
+                            <span className="text-muted-foreground flex items-center gap-1 min-w-fit">
+                              <span className="text-xs">🔧</span>
+                              <span className="whitespace-nowrap">{template.equipment.length} equipment</span>
+                            </span>
+                          )}
+                        </div>
                      </div>
                    </CardContent>
                  </Card>
