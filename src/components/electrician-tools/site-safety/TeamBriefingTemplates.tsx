@@ -520,11 +520,11 @@ const TeamBriefingTemplates = () => {
                         <DropdownMenuTrigger asChild>
                           <Button
                             size="sm"
-                            variant="outline"
-                            className="min-h-[44px] min-w-[44px] touch-manipulation p-0"
+                            variant="ghost"
+                            className="min-h-[44px] min-w-[44px] touch-manipulation p-0 hover:bg-transparent ml-auto"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <MoreHorizontal className="h-4 w-4" />
+                            <MoreHorizontal className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent 
