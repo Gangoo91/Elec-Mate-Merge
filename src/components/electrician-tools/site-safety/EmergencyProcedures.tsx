@@ -48,216 +48,133 @@ const EmergencyProcedures = () => {
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="contacts" className="w-full">
-        <div className="flex flex-col sm:flex-row gap-2 mb-6">
-          <TabsList className="w-full h-auto p-1 bg-elec-gray/50 border border-elec-yellow/20">
-            <div className="grid grid-cols-2 sm:grid-cols-4 w-full gap-1">
-              <TabsTrigger 
-                value="contacts" 
-                className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark text-elec-light hover:text-elec-yellow transition-colors h-12 text-sm font-medium"
-              >
-                <div className="flex flex-col items-center gap-1">
-                  <Phone className="h-4 w-4" />
-                  <span className="hidden sm:inline">Emergency</span>
-                  <span className="sm:hidden">Contacts</span>
-                  <span className="hidden sm:inline">Contacts</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="evacuation" 
-                className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark text-elec-light hover:text-elec-yellow transition-colors h-12 text-sm font-medium"
-              >
-                <div className="flex flex-col items-center gap-1">
-                  <MapPin className="h-4 w-4" />
-                  <span>Evacuation</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="first-aid" 
-                className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark text-elec-light hover:text-elec-yellow transition-colors h-12 text-sm font-medium"
-              >
-                <div className="flex flex-col items-center gap-1">
-                  <Shield className="h-4 w-4" />
-                  <span>First Aid</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="procedures" 
-                className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark text-elec-light hover:text-elec-yellow transition-colors h-12 text-sm font-medium"
-              >
-                <div className="flex flex-col items-center gap-1">
-                  <FileText className="h-4 w-4" />
-                  <span className="hidden sm:inline">Site</span>
-                  <span>Procedures</span>
-                </div>
-              </TabsTrigger>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Emergency Contacts Card */}
+        <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all duration-200 cursor-pointer group">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg group-hover:text-elec-yellow/90">
+              <Phone className="h-5 w-5" />
+              Emergency Contacts
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-elec-light">Emergency Services</span>
+                <span className="font-bold text-elec-yellow">999</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-elec-light">Electrical Emergency</span>
+                <span className="font-bold text-elec-yellow">105</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-elec-light">HSE Emergency</span>
+                <span className="font-bold text-elec-yellow text-xs">0300 003 1747</span>
+              </div>
             </div>
-          </TabsList>
-        </div>
+            <Button variant="outline" size="sm" className="w-full border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10">
+              <Phone className="h-4 w-4 mr-2" />
+              View All Contacts
+            </Button>
+          </CardContent>
+        </Card>
 
-        <TabsContent value="contacts" className="mt-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <Phone className="h-5 w-5" />
-                Emergency Contact Numbers
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {emergencyContacts.map((contact, index) => (
-                  <div key={index} className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-white">{contact.service}</h4>
-                      <span className="text-xl font-bold text-elec-yellow">{contact.number}</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{contact.description}</p>
-                    <Button variant="outline" size="sm" className="mt-2 w-full">
-                      <Phone className="h-4 w-4 mr-2" />
-                      Call Now
-                    </Button>
-                  </div>
-                ))}
+        {/* Evacuation Card */}
+        <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all duration-200 cursor-pointer group">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg group-hover:text-elec-yellow/90">
+              <MapPin className="h-5 w-5" />
+              Evacuation
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">1</span>
+                <span className="text-sm text-elec-light">Stop work immediately</span>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+              <div className="flex items-center gap-2">
+                <span className="bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">2</span>
+                <span className="text-sm text-elec-light">Alert all personnel</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">3</span>
+                <span className="text-sm text-elec-light">Follow evacuation routes</span>
+              </div>
+            </div>
+            <Button variant="outline" size="sm" className="w-full border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10">
+              <AlertTriangle className="h-4 w-4 mr-2" />
+              View Full Procedure
+            </Button>
+          </CardContent>
+        </Card>
 
-        <TabsContent value="evacuation" className="mt-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <MapPin className="h-5 w-5" />
-                Evacuation Procedures
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                  <h4 className="font-medium text-red-300 mb-3 flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4" />
-                    Emergency Evacuation Steps
-                  </h4>
-                  <ol className="space-y-2">
-                    {evacuationProcedures.map((step, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">
-                          {index + 1}
-                        </span>
-                        <span className="text-sm">{step}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-                  <h4 className="font-medium text-elec-yellow mb-2">Important Reminders</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Never use lifts during evacuation</li>
-                    <li>• Assist those who need help</li>
-                    <li>• Do not re-enter building until given all-clear</li>
-                    <li>• Report missing persons immediately</li>
-                  </ul>
-                </div>
+        {/* First Aid Card */}
+        <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all duration-200 cursor-pointer group">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg group-hover:text-elec-yellow/90">
+              <Shield className="h-5 w-5" />
+              First Aid
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">1</span>
+                <span className="text-sm text-elec-light">Assess situation safety</span>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+              <div className="flex items-center gap-2">
+                <span className="bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">2</span>
+                <span className="text-sm text-elec-light">Call 999 for serious injuries</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">3</span>
+                <span className="text-sm text-elec-light">Locate first aid kit</span>
+              </div>
+            </div>
+            <Button variant="outline" size="sm" className="w-full border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10">
+              <Shield className="h-4 w-4 mr-2" />
+              View Full Guide
+            </Button>
+          </CardContent>
+        </Card>
 
-        <TabsContent value="first-aid" className="mt-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <Shield className="h-5 w-5" />
-                First Aid Procedures
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                  <h4 className="font-medium text-green-300 mb-3">First Aid Response Steps</h4>
-                  <ol className="space-y-2">
-                    {firstAidProcedures.map((step, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0">
-                          {index + 1}
-                        </span>
-                        <span className="text-sm">{step}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
-                    <h4 className="font-medium text-elec-yellow mb-2">Electrical Shock Response</h4>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
-                      <li>• Switch off power source immediately</li>
-                      <li>• Do not touch the casualty if still live</li>
-                      <li>• Use non-conductive material to separate</li>
-                      <li>• Check for breathing and pulse</li>
-                      <li>• Begin CPR if trained and necessary</li>
-                    </ul>
-                  </div>
-                  <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
-                    <h4 className="font-medium text-elec-yellow mb-2">Burns Treatment</h4>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
-                      <li>• Cool with cold running water for 20 minutes</li>
-                      <li>• Remove jewellery before swelling</li>
-                      <li>• Cover with cling film or clean cloth</li>
-                      <li>• Do not apply creams or ointments</li>
-                      <li>• Seek medical attention for all electrical burns</li>
-                    </ul>
-                  </div>
-                </div>
+        {/* Site Procedures Card */}
+        <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all duration-200 cursor-pointer group">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg group-hover:text-elec-yellow/90">
+              <FileText className="h-5 w-5" />
+              Site Procedures
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-elec-yellow" />
+                <span className="text-sm text-elec-light">Pre-work safety checks</span>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="procedures" className="mt-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Site-Specific Emergency Procedures
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
-                  <h4 className="font-medium text-white mb-3">Before Starting Work</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Identify location of nearest emergency exits</li>
-                    <li>• Locate fire extinguishers and first aid kits</li>
-                    <li>• Establish communication methods with team</li>
-                    <li>• Share emergency contact details with all personnel</li>
-                    <li>• Identify local emergency services and hospitals</li>
-                  </ul>
-                </div>
-                <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
-                  <h4 className="font-medium text-white mb-3">During Emergencies</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Maintain calm and think clearly</li>
-                    <li>• Communicate clearly and concisely</li>
-                    <li>• Follow established procedures</li>
-                    <li>• Account for all team members</li>
-                    <li>• Cooperate with emergency services</li>
-                  </ul>
-                </div>
-                <div className="flex gap-4">
-                  <Button className="flex-1">
-                    <Printer className="h-4 w-4 mr-2" />
-                    Print Emergency Card
-                  </Button>
-                  <Button variant="outline" className="flex-1">
-                    <Download className="h-4 w-4 mr-2" />
-                    Download Procedures
-                  </Button>
-                </div>
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-elec-yellow" />
+                <span className="text-sm text-elec-light">Team communication</span>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-elec-yellow" />
+                <span className="text-sm text-elec-light">Emergency protocols</span>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" className="flex-1 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10">
+                <Printer className="h-3 w-3 mr-1" />
+                Print
+              </Button>
+              <Button variant="outline" size="sm" className="flex-1 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10">
+                <Download className="h-3 w-3 mr-1" />
+                Download
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
