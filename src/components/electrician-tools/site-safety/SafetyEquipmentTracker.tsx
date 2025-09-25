@@ -260,76 +260,97 @@ const SafetyEquipmentTracker = () => {
           </Card>
         ) : (
           filteredEquipment.map((item) => (
-            <Card key={item.id} className="border-elec-yellow/30">
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-full bg-elec-yellow/20">
-                      <Wrench className="h-5 w-5 text-elec-yellow" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-lg">{item.name}</h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Badge variant="outline">{item.category}</Badge>
-                        <Badge className={getStatusColor(item.status)}>
-                          {getStatusIcon(item.status)}
-                          <span className="ml-1">{item.status}</span>
-                        </Badge>
-                      </div>
-                    </div>
+            <Card key={item.id} className="border-elec-yellow/30 bg-elec-gray">
+              <CardContent className="p-6">
+                {/* Header Section */}
+                <div className="flex flex-col items-center text-center space-y-4 mb-6">
+                  <div className="p-3 rounded-full bg-elec-yellow/20">
+                    <Wrench className="h-6 w-6 text-elec-yellow" />
                   </div>
                   
-                  {isInspectionDue(item.nextInspection) && (
-                    <Badge className="bg-orange-500">
-                      <Clock className="h-3 w-3 mr-1" />
-                      Inspection Due
+                  <div className="space-y-2">
+                    <h3 className="font-semibold text-xl text-white">{item.name}</h3>
+                    <Badge variant="outline" className="text-sm">{item.category}</Badge>
+                  </div>
+                  
+                  <div className="flex items-center gap-3">
+                    <Badge className={`${getStatusColor(item.status)} text-white`}>
+                      {getStatusIcon(item.status)}
+                      <span className="ml-1">{item.status}</span>
                     </Badge>
-                  )}
+                    {isInspectionDue(item.nextInspection) && (
+                      <Badge className="bg-orange-500 text-white">
+                        <Clock className="h-3 w-3 mr-1" />
+                        Inspection Due
+                      </Badge>
+                    )}
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                  <div>
-                    <div className="text-muted-foreground">Serial Number</div>
-                    <div className="font-medium">{item.serialNumber}</div>
+                {/* Details Section */}
+                <div className="space-y-6">
+                  <div className="text-center space-y-1">
+                    <div className="text-muted-foreground text-sm">Serial Number</div>
+                    <div className="font-medium text-lg text-white">{item.serialNumber}</div>
                   </div>
-                  <div>
-                    <div className="text-muted-foreground">Last Inspection</div>
-                    <div className="font-medium">{item.lastInspection}</div>
+
+                  <div className="text-center space-y-1">
+                    <div className="text-muted-foreground text-sm">Last Inspection</div>
+                    <div className="font-medium text-lg text-white">{item.lastInspection}</div>
                   </div>
-                  <div>
-                    <div className="text-muted-foreground">Next Inspection</div>
-                    <div className={`font-medium ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : ''}`}>
+
+                  <div className="text-center space-y-1">
+                    <div className="text-muted-foreground text-sm">Next Inspection</div>
+                    <div className={`font-medium text-lg ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : 'text-white'}`}>
                       {item.nextInspection}
                     </div>
                   </div>
-                  <div>
-                    <div className="text-muted-foreground">Location</div>
-                    <div className="font-medium">{item.location}</div>
+
+                  <div className="text-center space-y-1">
+                    <div className="text-muted-foreground text-sm">Location</div>
+                    <div className="font-medium text-lg text-white">{item.location}</div>
                   </div>
+
+                  <div className="text-center space-y-1">
+                    <div className="text-muted-foreground text-sm">Assigned To</div>
+                    <div className="font-medium text-lg text-white">{item.assignedTo}</div>
+                  </div>
+
+                  <div className="text-center space-y-1">
+                    <div className="text-muted-foreground text-sm">Purchase Date</div>
+                    <div className="font-medium text-lg text-white">{item.purchaseDate}</div>
+                  </div>
+
+                  {item.notes && (
+                    <div className="space-y-3">
+                      <div className="text-center text-muted-foreground text-sm">Notes</div>
+                      <div className="p-4 bg-elec-dark rounded-lg text-center">
+                        <div className="text-white">{item.notes}</div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-sm">
-                  <div>
-                    <div className="text-muted-foreground">Assigned To</div>
-                    <div className="font-medium">{item.assignedTo}</div>
-                  </div>
-                  <div>
-                    <div className="text-muted-foreground">Purchase Date</div>
-                    <div className="font-medium">{item.purchaseDate}</div>
-                  </div>
-                </div>
-
-                {item.notes && (
-                  <div className="mt-4 p-3 bg-elec-dark rounded-lg">
-                    <div className="text-muted-foreground text-sm mb-1">Notes</div>
-                    <div className="text-sm">{item.notes}</div>
-                  </div>
-                )}
-
-                <div className="flex gap-2 mt-4">
-                  <Button size="sm" variant="outline">Update Inspection</Button>
-                  <Button size="sm" variant="outline">Edit Details</Button>
-                  <Button size="sm" variant="outline">View History</Button>
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-2 mt-6">
+                  <Button 
+                    variant="outline" 
+                    className="w-full bg-elec-dark border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                  >
+                    Update Inspection
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full bg-elec-dark border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                  >
+                    Edit Details
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full bg-elec-dark border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                  >
+                    View History
+                  </Button>
                 </div>
               </CardContent>
             </Card>
