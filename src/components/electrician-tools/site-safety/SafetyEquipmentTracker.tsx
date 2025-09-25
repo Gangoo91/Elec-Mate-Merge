@@ -260,124 +260,65 @@ const SafetyEquipmentTracker = () => {
           </Card>
         ) : (
           filteredEquipment.map((item) => (
-            <Card key={item.id} className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray to-elec-gray/80 hover:border-elec-yellow/50 transition-all duration-300 animate-fade-in overflow-hidden">
-              <CardContent className="p-0">
-                {/* Flowing Header with Icon */}
-                <div className="relative p-8 text-center bg-gradient-to-r from-elec-yellow/5 to-transparent">
-                  <div className="absolute top-4 right-4 flex gap-2">
-                    {isInspectionDue(item.nextInspection) && (
-                      <div className="px-3 py-1 bg-orange-500/20 text-orange-400 text-sm rounded-full border border-orange-500/30 flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        Due
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/20 border-2 border-elec-yellow/30 mb-4">
-                    <Wrench className="h-8 w-8 text-elec-yellow" />
-                  </div>
-                  
-                  <h3 className="font-bold text-2xl text-white mb-2 leading-tight">{item.name}</h3>
-                  
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <span className="px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm rounded-full border border-elec-yellow/20">
-                      {item.category}
-                    </span>
-                    <div className={`px-3 py-1 ${getStatusColor(item.status)}/20 text-sm rounded-full border flex items-center gap-2`}>
-                      {getStatusIcon(item.status)}
-                      <span>{item.status}</span>
+            <Card key={item.id} className="border-elec-yellow/20 bg-elec-gray">
+              <CardContent className="p-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-lg text-white mb-2">{item.name}</h3>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge variant="outline" className="text-xs">{item.category}</Badge>
+                      <Badge className={`${getStatusColor(item.status)} text-white`}>
+                        {getStatusIcon(item.status)}
+                        <span className="ml-1">{item.status}</span>
+                      </Badge>
                     </div>
+                    <p className="text-sm text-muted-foreground">Serial: {item.serialNumber}</p>
                   </div>
-
-                  <div className="text-center">
-                    <div className="text-muted-foreground text-sm">Serial Number</div>
-                    <div className="font-mono text-lg text-white tracking-wider">{item.serialNumber}</div>
-                  </div>
-                </div>
-
-                {/* Flowing Information Layout */}
-                <div className="p-8 space-y-6">
-                  {/* Inspection Timeline */}
-                  <div className="space-y-4">
-                    <h4 className="text-elec-yellow font-medium text-lg border-b border-elec-yellow/20 pb-2">Inspection Timeline</h4>
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                      <div className="flex-1">
-                        <div className="text-muted-foreground text-sm mb-1">Last Inspection</div>
-                        <div className="text-white font-medium">{item.lastInspection}</div>
-                      </div>
-                      <div className="hidden sm:block w-16 h-px bg-gradient-to-r from-elec-yellow/50 to-transparent"></div>
-                      <div className="flex-1 sm:text-right">
-                        <div className="text-muted-foreground text-sm mb-1">Next Inspection</div>
-                        <div className={`font-medium ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : 'text-white'}`}>
-                          {item.nextInspection}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Location & Assignment */}
-                  <div className="space-y-4">
-                    <h4 className="text-elec-yellow font-medium text-lg border-b border-elec-yellow/20 pb-2">Assignment Details</h4>
-                    <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                          <span className="text-muted-foreground text-sm">Location</span>
-                        </div>
-                        <div className="text-white font-medium pl-4">{item.location}</div>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                          <span className="text-muted-foreground text-sm">Assigned To</span>
-                        </div>
-                        <div className="text-white font-medium pl-4">{item.assignedTo}</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Purchase Information */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                      <span>Purchased on {item.purchaseDate}</span>
-                    </div>
-                  </div>
-
-                  {/* Notes - Flowing Design */}
-                  {item.notes && (
-                    <div className="relative">
-                      <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-elec-yellow to-transparent rounded-full"></div>
-                      <div className="pl-6">
-                        <div className="text-muted-foreground text-sm mb-2">Notes</div>
-                        <div className="text-white/90 leading-relaxed italic">{item.notes}</div>
-                      </div>
-                    </div>
+                  {isInspectionDue(item.nextInspection) && (
+                    <Badge variant="outline" className="border-orange-500 text-orange-400">
+                      <Clock className="h-3 w-3 mr-1" />
+                      Due Soon
+                    </Badge>
                   )}
                 </div>
 
-                {/* Flowing Action Buttons */}
-                <div className="p-8 pt-0">
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <Button 
-                      variant="outline" 
-                      className="flex-1 h-11 bg-transparent border-elec-yellow/40 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200 rounded-xl"
-                    >
-                      Update Inspection
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      className="flex-1 h-11 bg-transparent border-elec-yellow/40 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200 rounded-xl"
-                    >
-                      Edit Details
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      className="flex-1 h-11 bg-transparent border-elec-yellow/40 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200 rounded-xl"
-                    >
-                      View History
-                    </Button>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 text-sm">
+                  <div>
+                    <span className="text-muted-foreground">Location:</span>
+                    <span className="ml-2 text-white">{item.location}</span>
                   </div>
+                  <div>
+                    <span className="text-muted-foreground">Assigned to:</span>
+                    <span className="ml-2 text-white">{item.assignedTo}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Last inspection:</span>
+                    <span className="ml-2 text-white">{item.lastInspection}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Next inspection:</span>
+                    <span className={`ml-2 ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : 'text-white'}`}>
+                      {item.nextInspection}
+                    </span>
+                  </div>
+                </div>
+
+                {item.notes && (
+                  <div className="mb-4 p-3 bg-elec-gray/50 rounded border-l-2 border-elec-yellow">
+                    <p className="text-sm text-muted-foreground">{item.notes}</p>
+                  </div>
+                )}
+
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <Button variant="outline" size="sm" className="flex-1">
+                    Update Inspection
+                  </Button>
+                  <Button variant="outline" size="sm" className="flex-1">
+                    Edit Details
+                  </Button>
+                  <Button variant="outline" size="sm" className="flex-1">
+                    View History
+                  </Button>
                 </div>
               </CardContent>
             </Card>
