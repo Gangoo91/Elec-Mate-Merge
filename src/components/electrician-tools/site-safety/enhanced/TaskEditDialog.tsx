@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -37,21 +37,36 @@ const taskCategories = [
   'Documentation'
 ];
 
-const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChange }) => {
+const TaskEditDialog: React.FC<TaskEditDialogProps> = React.memo(({ task, open, onOpenChange }) => {
   const { updateTask } = useEnhancedRAMS();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [formData, setFormData] = useState({
-    title: task.title,
-    description: task.description || '',
-    category: task.category,
-    estimated_duration: task.estimated_duration || '',
-    risk_level: task.risk_level,
-    responsible_person: task.responsible_person || '',
-    status: task.status
+    title: '',
+    description: '',
+    category: '',
+    estimated_duration: '',
+    risk_level: 'medium' as Task['risk_level'],
+    responsible_person: '',
+    status: 'pending' as Task['status']
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Update form data when task prop changes
+  useEffect(() => {
+    if (task && open) {
+      setFormData({
+        title: task.title,
+        description: task.description || '',
+        category: task.category,
+        estimated_duration: task.estimated_duration || '',
+        risk_level: task.risk_level,
+        responsible_person: task.responsible_person || '',
+        status: task.status
+      });
+    }
+  }, [task, open]);
+
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -63,7 +78,19 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChang
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [task.id, formData, updateTask, onOpenChange]);
+
+  const handleInputChange = useCallback((field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [field]: e.target.value }));
+  }, []);
+
+  const handleSelectChange = useCallback((field: string) => (value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    onOpenChange(false);
+  }, [onOpenChange]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -78,7 +105,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChang
             <Input
               id="title"
               value={formData.title}
-              onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+              onChange={handleInputChange('title')}
               required
             />
           </div>
@@ -88,7 +115,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChang
             <Textarea
               id="description"
               value={formData.description}
-              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+              onChange={handleInputChange('description')}
               rows={3}
             />
           </div>
@@ -98,7 +125,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChang
               <Label htmlFor="category">Category</Label>
               <Select
                 value={formData.category}
-                onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
+                onValueChange={handleSelectChange('category')}
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -117,9 +144,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChang
               <Label htmlFor="risk_level">Risk Level</Label>
               <Select
                 value={formData.risk_level}
-                onValueChange={(value: Task['risk_level']) => 
-                  setFormData(prev => ({ ...prev, risk_level: value }))
-                }
+                onValueChange={handleSelectChange('risk_level')}
               >
                 <SelectTrigger>
                   <SelectValue />
@@ -139,7 +164,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChang
               <Input
                 id="duration"
                 value={formData.estimated_duration}
-                onChange={(e) => setFormData(prev => ({ ...prev, estimated_duration: e.target.value }))}
+                onChange={handleInputChange('estimated_duration')}
                 placeholder="e.g., 2 hours, 1 day"
               />
             </div>
@@ -149,7 +174,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChang
               <Input
                 id="responsible"
                 value={formData.responsible_person}
-                onChange={(e) => setFormData(prev => ({ ...prev, responsible_person: e.target.value }))}
+                onChange={handleInputChange('responsible_person')}
                 placeholder="Enter name..."
               />
             </div>
@@ -159,9 +184,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChang
             <Label htmlFor="status">Status</Label>
             <Select
               value={formData.status}
-              onValueChange={(value: Task['status']) => 
-                setFormData(prev => ({ ...prev, status: value }))
-              }
+              onValueChange={handleSelectChange('status')}
             >
               <SelectTrigger>
                 <SelectValue />
@@ -178,7 +201,7 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChang
             <Button
               type="button"
               variant="outline"
-              onClick={() => onOpenChange(false)}
+              onClick={handleCancel}
               disabled={isSubmitting}
             >
               Cancel
@@ -201,6 +224,6 @@ const TaskEditDialog: React.FC<TaskEditDialogProps> = ({ task, open, onOpenChang
       </DialogContent>
     </Dialog>
   );
-};
+});
 
 export default TaskEditDialog;

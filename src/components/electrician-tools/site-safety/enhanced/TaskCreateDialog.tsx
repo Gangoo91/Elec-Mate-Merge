@@ -1,7 +1,7 @@
 // Task Creation Dialog Component
 // Provides comprehensive task creation with hazard linking
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -56,7 +56,7 @@ const riskLevels: Array<{ value: Task['risk_level']; label: string; color: strin
   { value: 'high', label: 'High Risk', color: 'bg-red-100 text-red-800' }
 ];
 
-const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange }) => {
+const TaskCreateDialog: React.FC<TaskCreateDialogProps> = React.memo(({ open, onOpenChange }) => {
   const { createTask, hazards, getHazardSuggestions } = useEnhancedRAMS();
 
   const [formData, setFormData] = useState({
@@ -86,7 +86,7 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange 
   }, [formData.category, formData.risk_level, getHazardSuggestions]);
 
   // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.title.trim() || !formData.category) {
@@ -127,23 +127,23 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange 
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [createTask, formData, onOpenChange]);
 
   // Handle hazard selection
-  const handleHazardToggle = (hazardId: string) => {
+  const handleHazardToggle = useCallback((hazardId: string) => {
     setFormData(prev => ({
       ...prev,
       linked_hazards: prev.linked_hazards.includes(hazardId)
         ? prev.linked_hazards.filter(id => id !== hazardId)
         : [...prev.linked_hazards, hazardId]
     }));
-  };
+  }, []);
 
   // Get hazard name by ID
-  const getHazardName = (hazardId: string) => {
+  const getHazardName = useCallback((hazardId: string) => {
     const hazard = hazards.find(h => h.hazard_id === hazardId);
     return hazard?.hazard_name || hazardId;
-  };
+  }, [hazards]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -163,7 +163,7 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange 
               <Input
                 id="title"
                 value={formData.title}
-                onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                onChange={useCallback((e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({ ...prev, title: e.target.value })), [])}
                 placeholder="Enter task title..."
                 required
               />
@@ -174,7 +174,7 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange 
               <Textarea
                 id="description"
                 value={formData.description}
-                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                onChange={useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData(prev => ({ ...prev, description: e.target.value })), [])}
                 placeholder="Describe the task in detail..."
                 rows={3}
               />
@@ -185,10 +185,10 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange 
                 <Label htmlFor="category">Category *</Label>
                 <Select
                   value={formData.category}
-                  onValueChange={(value) => {
+                  onValueChange={useCallback((value: string) => {
                     setFormData(prev => ({ ...prev, category: value }));
                     setShowSuggestions(true);
-                  }}
+                  }, [])}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select category..." />
@@ -207,9 +207,9 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange 
                 <Label htmlFor="risk_level">Risk Level</Label>
                 <Select
                   value={formData.risk_level}
-                  onValueChange={(value: Task['risk_level']) => 
+                  onValueChange={useCallback((value: Task['risk_level']) => 
                     setFormData(prev => ({ ...prev, risk_level: value }))
-                  }
+                  , [])}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -234,7 +234,7 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange 
                 <Input
                   id="duration"
                   value={formData.estimated_duration}
-                  onChange={(e) => setFormData(prev => ({ ...prev, estimated_duration: e.target.value }))}
+                  onChange={useCallback((e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({ ...prev, estimated_duration: e.target.value })), [])}
                   placeholder="e.g., 2 hours, 1 day"
                 />
               </div>
@@ -244,7 +244,7 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange 
                 <Input
                   id="responsible"
                   value={formData.responsible_person}
-                  onChange={(e) => setFormData(prev => ({ ...prev, responsible_person: e.target.value }))}
+                  onChange={useCallback((e: React.ChangeEvent<HTMLInputElement>) => setFormData(prev => ({ ...prev, responsible_person: e.target.value })), [])}
                   placeholder="Enter name..."
                 />
               </div>
@@ -323,7 +323,7 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange 
             <Button
               type="button"
               variant="outline"
-              onClick={() => onOpenChange(false)}
+              onClick={useCallback(() => onOpenChange(false), [onOpenChange])}
               disabled={isSubmitting}
             >
               Cancel
@@ -349,6 +349,6 @@ const TaskCreateDialog: React.FC<TaskCreateDialogProps> = ({ open, onOpenChange 
       </DialogContent>
     </Dialog>
   );
-};
+});
 
 export default TaskCreateDialog;
