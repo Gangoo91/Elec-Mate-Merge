@@ -156,7 +156,7 @@ const EmergencyProcedures = () => {
                 </div>
                 <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Important Reminders</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
+                  <ul className="text-sm space-y-1 text-muted-foreground text-left">
                     <li>• Never use lifts during evacuation</li>
                     <li>• Assist those who need help</li>
                     <li>• Do not re-enter building until given all-clear</li>
