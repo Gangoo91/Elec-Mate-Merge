@@ -110,11 +110,21 @@ const HazardDatabase = () => {
 
   const getRiskColor = (level: string) => {
     switch (level) {
-      case "Low": return "bg-green-500";
-      case "Medium": return "bg-yellow-500";
-      case "High": return "bg-orange-500";
-      case "Very High": return "bg-red-500";
-      default: return "bg-gray-500";
+      case "Low": return "bg-gradient-to-r from-green-500 to-green-400 text-white shadow-lg shadow-green-500/30";
+      case "Medium": return "bg-gradient-to-r from-yellow-500 to-yellow-400 text-white shadow-lg shadow-yellow-500/30";
+      case "High": return "bg-gradient-to-r from-orange-500 to-orange-400 text-white shadow-lg shadow-orange-500/30";
+      case "Very High": return "bg-gradient-to-r from-red-500 to-red-400 text-white shadow-lg shadow-red-500/30 animate-pulse";
+      default: return "bg-gradient-to-r from-gray-500 to-gray-400 text-white";
+    }
+  };
+
+  const getRiskGlowColor = (level: string) => {
+    switch (level) {
+      case "Low": return "shadow-green-400/20";
+      case "Medium": return "shadow-yellow-400/20";
+      case "High": return "shadow-orange-400/20";
+      case "Very High": return "shadow-red-400/30";
+      default: return "shadow-gray-400/20";
     }
   };
 
@@ -182,62 +192,97 @@ const HazardDatabase = () => {
         </Card>
       </div>
 
-      {/* Hazards List - Mobile Optimized */}
-      <div className="space-y-4">
+      {/* Hazards List - Enhanced Visual Design */}
+      <div className="space-y-6">
         {filteredHazards.map((hazard) => {
           const IconComponent = hazard.icon;
           return (
-            <Card key={hazard.id} className="border-elec-yellow/30 bg-elec-gray/60 hover:bg-elec-gray/80 transition-colors">
-              <CardContent className="p-4 sm:p-6">
-                {/* Header - Mobile Optimized */}
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
-                  <div className="flex items-start gap-3 flex-1">
-                    <div className="p-2 rounded-full bg-elec-yellow/20 flex-shrink-0">
-                      <IconComponent className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
+            <Card 
+              key={hazard.id} 
+              className={`group relative overflow-hidden border-elec-yellow/20 bg-gradient-to-br from-elec-card via-elec-gray/80 to-elec-gray/60 hover:border-elec-yellow/40 transition-all duration-300 hover:scale-[1.01] hover:shadow-xl ${getRiskGlowColor(hazard.riskLevel)} backdrop-blur-sm`}
+            >
+              {/* Gradient overlay based on risk level */}
+              <div className={`absolute inset-0 opacity-5 ${
+                hazard.riskLevel === "Very High" ? "bg-gradient-to-br from-red-500 to-red-600" :
+                hazard.riskLevel === "High" ? "bg-gradient-to-br from-orange-500 to-orange-600" :
+                hazard.riskLevel === "Medium" ? "bg-gradient-to-br from-yellow-500 to-yellow-600" :
+                "bg-gradient-to-br from-green-500 to-green-600"
+              }`} />
+              
+              <CardContent className="relative p-6 sm:p-8">
+                {/* Enhanced Header */}
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                  <div className="flex items-start gap-4 flex-1">
+                    {/* Icon with enhanced styling */}
+                    <div className={`p-3 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 border border-elec-yellow/30 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 ${
+                      hazard.riskLevel === "Very High" ? "shadow-lg shadow-red-500/20" :
+                      hazard.riskLevel === "High" ? "shadow-lg shadow-orange-500/20" :
+                      hazard.riskLevel === "Medium" ? "shadow-lg shadow-yellow-500/20" :
+                      "shadow-lg shadow-green-500/20"
+                    }`}>
+                      <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow group-hover:text-yellow-300 transition-colors duration-300" />
                     </div>
+                    
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-base sm:text-lg text-white">{hazard.name}</h3>
-                      <div className="flex flex-wrap items-center gap-2 mt-2">
-                        <Badge variant="outline" className="text-xs border-elec-yellow/30 text-muted-foreground">
+                      <h3 className="font-bold text-lg sm:text-xl text-white mb-3 group-hover:text-elec-yellow transition-colors duration-300">{hazard.name}</h3>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <Badge 
+                          variant="outline" 
+                          className="text-xs border-elec-yellow/40 text-elec-yellow/80 bg-elec-yellow/5 hover:bg-elec-yellow/10 transition-colors duration-200"
+                        >
                           {hazard.category}
                         </Badge>
-                        <Badge className={`${getRiskColor(hazard.riskLevel)} text-white text-xs`}>
+                        <Badge className={`${getRiskColor(hazard.riskLevel)} text-xs font-semibold px-3 py-1 border-0`}>
                           {hazard.riskLevel} Risk
                         </Badge>
                       </div>
                     </div>
                   </div>
-                  <AlertTriangle className={`h-5 w-5 flex-shrink-0 ${
-                    hazard.riskLevel === "Very High" ? "text-red-400" :
-                    hazard.riskLevel === "High" ? "text-orange-400" :
-                    hazard.riskLevel === "Medium" ? "text-yellow-400" : "text-green-400"
-                  }`} />
+                  
+                  {/* Enhanced risk indicator */}
+                  <div className={`p-2 rounded-full flex-shrink-0 ${
+                    hazard.riskLevel === "Very High" ? "bg-red-500/20 text-red-400 animate-pulse" :
+                    hazard.riskLevel === "High" ? "bg-orange-500/20 text-orange-400" :
+                    hazard.riskLevel === "Medium" ? "bg-yellow-500/20 text-yellow-400" :
+                    "bg-green-500/20 text-green-400"
+                  }`}>
+                    <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6" />
+                  </div>
                 </div>
 
-                <p className="text-muted-foreground mb-4 text-sm sm:text-base">{hazard.description}</p>
+                {/* Enhanced description */}
+                <div className="mb-6 p-4 rounded-lg bg-elec-dark/30 border-l-4 border-elec-yellow/50">
+                  <p className="text-elec-light/90 text-sm sm:text-base leading-relaxed">{hazard.description}</p>
+                </div>
 
-                {/* Content Grid - Enhanced Mobile-First Layout */}
-                <div className="space-y-6 lg:grid lg:grid-cols-2 lg:gap-8 lg:space-y-0"
-                     style={{ containerType: 'inline-size' }}>
-                  <div>
-                    <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Common Control Measures:</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
+                {/* Enhanced Content Grid */}
+                <div className="space-y-6 lg:grid lg:grid-cols-2 lg:gap-8 lg:space-y-0">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Shield className="h-4 w-4 text-elec-yellow" />
+                      <h4 className="font-semibold text-white text-sm sm:text-base">Control Measures</h4>
+                    </div>
+                    <div className="space-y-2">
                       {hazard.commonControls.map((control, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <span className="text-elec-yellow mt-1 flex-shrink-0">•</span>
-                          <span className="flex-1">{control}</span>
-                        </li>
+                        <div key={index} className="group flex items-start gap-3 p-3 rounded-lg bg-elec-dark/20 hover:bg-elec-dark/40 transition-colors duration-200">
+                          <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0 group-hover:scale-125 transition-transform duration-200" />
+                          <span className="flex-1 text-sm text-elec-light/80 group-hover:text-elec-light transition-colors duration-200">{control}</span>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Relevant Regulations:</h4>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-3">
+                      <HardHat className="h-4 w-4 text-elec-yellow" />
+                      <h4 className="font-semibold text-white text-sm sm:text-base">Regulations</h4>
+                    </div>
                     <div className="flex flex-wrap gap-2">
                       {hazard.regulations.map((regulation, index) => (
                         <Badge 
                           key={index} 
                           variant="outline" 
-                          className="text-xs border-elec-yellow/30 text-muted-foreground"
+                          className="text-xs border-elec-yellow/40 text-elec-yellow/90 bg-elec-yellow/5 hover:bg-elec-yellow/10 hover:border-elec-yellow/60 transition-all duration-200 px-3 py-1"
                         >
                           {regulation}
                         </Badge>
