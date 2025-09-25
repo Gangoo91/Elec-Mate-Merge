@@ -48,52 +48,37 @@ const EmergencyProcedures = () => {
         </CardContent>
       </Card>
 
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <Card className="cursor-pointer hover:bg-elec-gray/80 transition-colors border-elec-yellow/20 bg-elec-gray/50">
+          <CardContent className="p-4 text-center">
+            <Phone className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
+            <h3 className="font-medium text-sm">Emergency Contacts</h3>
+          </CardContent>
+        </Card>
+        
+        <Card className="cursor-pointer hover:bg-elec-gray/80 transition-colors border-elec-yellow/20 bg-elec-gray/50">
+          <CardContent className="p-4 text-center">
+            <MapPin className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
+            <h3 className="font-medium text-sm">Evacuation</h3>
+          </CardContent>
+        </Card>
+        
+        <Card className="cursor-pointer hover:bg-elec-gray/80 transition-colors border-elec-yellow/20 bg-elec-gray/50">
+          <CardContent className="p-4 text-center">
+            <Shield className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
+            <h3 className="font-medium text-sm">First Aid</h3>
+          </CardContent>
+        </Card>
+        
+        <Card className="cursor-pointer hover:bg-elec-gray/80 transition-colors border-elec-yellow/20 bg-elec-gray/50">
+          <CardContent className="p-4 text-center">
+            <FileText className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
+            <h3 className="font-medium text-sm">Procedures</h3>
+          </CardContent>
+        </Card>
+      </div>
+
       <Tabs defaultValue="contacts" className="w-full">
-        <div className="flex flex-col sm:flex-row gap-2 mb-6">
-          <TabsList className="w-full h-auto p-1 bg-elec-gray/50 border border-elec-yellow/20">
-            <div className="grid grid-cols-2 sm:grid-cols-4 w-full gap-1">
-              <TabsTrigger 
-                value="contacts" 
-                className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark text-elec-light hover:text-elec-yellow transition-colors h-12 text-sm font-medium"
-              >
-                <div className="flex flex-col items-center gap-1">
-                  <Phone className="h-4 w-4" />
-                  <span className="hidden sm:inline">Emergency</span>
-                  <span className="sm:hidden">Contacts</span>
-                  <span className="hidden sm:inline">Contacts</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="evacuation" 
-                className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark text-elec-light hover:text-elec-yellow transition-colors h-12 text-sm font-medium"
-              >
-                <div className="flex flex-col items-center gap-1">
-                  <MapPin className="h-4 w-4" />
-                  <span>Evacuation</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="first-aid" 
-                className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark text-elec-light hover:text-elec-yellow transition-colors h-12 text-sm font-medium"
-              >
-                <div className="flex flex-col items-center gap-1">
-                  <Shield className="h-4 w-4" />
-                  <span>First Aid</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="procedures" 
-                className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark text-elec-light hover:text-elec-yellow transition-colors h-12 text-sm font-medium"
-              >
-                <div className="flex flex-col items-center gap-1">
-                  <FileText className="h-4 w-4" />
-                  <span className="hidden sm:inline">Site</span>
-                  <span>Procedures</span>
-                </div>
-              </TabsTrigger>
-            </div>
-          </TabsList>
-        </div>
 
         <TabsContent value="contacts" className="mt-6">
           <Card className="border-elec-yellow/20 bg-elec-gray">
