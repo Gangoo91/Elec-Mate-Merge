@@ -161,86 +161,141 @@ const SafetyEquipmentTracker = () => {
       </div>
 
       {/* Search and Filters */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
+      <Card className="border-elec-yellow/20 bg-card">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg">
               <Wrench className="h-5 w-5" />
               Safety Equipment Tracker
             </CardTitle>
-            <Button onClick={() => setShowAddForm(!showAddForm)} variant="outline">
+            <Button 
+              onClick={() => setShowAddForm(!showAddForm)} 
+              variant="outline"
+              className="w-full sm:w-auto"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Add Equipment
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 relative">
+        
+        <CardContent className="space-y-6">
+          {/* Search and Filter Section */}
+          <div className="space-y-4">
+            <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search equipment..."
+                placeholder="Search equipment by name or serial number..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 h-12"
               />
             </div>
-            <Select value={filterCategory} onValueChange={setFilterCategory}>
-              <SelectTrigger className="w-full md:w-48">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map(category => (
-                  <SelectItem key={category} value={category}>{category}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select value={filterStatus} onValueChange={setFilterStatus}>
-              <SelectTrigger className="w-full md:w-48">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {statusOptions.map(status => (
-                  <SelectItem key={status} value={status}>{status}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Category</Label>
+                <Select value={filterCategory} onValueChange={setFilterCategory}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Filter by category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map(category => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Status</Label>
+                <Select value={filterStatus} onValueChange={setFilterStatus}>
+                  <SelectTrigger className="h-11">
+                    <SelectValue placeholder="Filter by status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {statusOptions.map(status => (
+                      <SelectItem key={status} value={status}>
+                        {status}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
 
+          {/* Add Equipment Form */}
           {showAddForm && (
-            <Card className="border-elec-yellow/30 mt-4">
-              <CardContent className="p-4 space-y-6">
-                <h4 className="font-medium text-elec-yellow">Add New Equipment</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="border-elec-yellow/30 bg-elec-gray/50">
+              <CardHeader className="pb-3">
+                <h4 className="font-semibold text-elec-yellow">Add New Equipment</h4>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="equipmentName">Equipment Name</Label>
-                    <Input id="equipmentName" placeholder="Enter equipment name" />
+                    <Label htmlFor="equipmentName" className="text-sm font-medium">
+                      Equipment Name
+                    </Label>
+                    <Input 
+                      id="equipmentName" 
+                      placeholder="Enter equipment name" 
+                      className="h-11"
+                    />
                   </div>
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="category">Category</Label>
+                    <Label htmlFor="category" className="text-sm font-medium">
+                      Category
+                    </Label>
                     <Select>
-                      <SelectTrigger>
+                      <SelectTrigger className="h-11">
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
                       <SelectContent>
                         {categories.slice(1).map(category => (
-                          <SelectItem key={category} value={category}>{category}</SelectItem>
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="serialNumber">Serial Number</Label>
-                    <Input id="serialNumber" placeholder="Enter serial number" />
+                    <Label htmlFor="serialNumber" className="text-sm font-medium">
+                      Serial Number
+                    </Label>
+                    <Input 
+                      id="serialNumber" 
+                      placeholder="Enter serial number" 
+                      className="h-11"
+                    />
                   </div>
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="purchaseDate">Purchase Date</Label>
-                    <Input id="purchaseDate" type="date" />
+                    <Label htmlFor="purchaseDate" className="text-sm font-medium">
+                      Purchase Date
+                    </Label>
+                    <Input 
+                      id="purchaseDate" 
+                      type="date" 
+                      className="h-11"
+                    />
                   </div>
                 </div>
-                <div className="flex gap-4">
-                  <Button size="sm">Add Equipment</Button>
-                  <Button size="sm" variant="outline" onClick={() => setShowAddForm(false)}>
+                
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <Button className="flex-1 h-11">
+                    Add Equipment
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setShowAddForm(false)}
+                    className="flex-1 h-11"
+                  >
                     Cancel
                   </Button>
                 </div>
