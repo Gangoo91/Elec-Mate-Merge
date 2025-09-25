@@ -209,14 +209,14 @@ const SafetyEquipmentTracker = () => {
 
           {showAddForm && (
             <Card className="border-elec-yellow/30 mt-4">
-              <CardContent className="p-4 space-y-4">
+              <CardContent className="p-4 space-y-6">
                 <h4 className="font-medium text-elec-yellow">Add New Equipment</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
                     <Label htmlFor="equipmentName">Equipment Name</Label>
                     <Input id="equipmentName" placeholder="Enter equipment name" />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="category">Category</Label>
                     <Select>
                       <SelectTrigger>
@@ -229,11 +229,11 @@ const SafetyEquipmentTracker = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="serialNumber">Serial Number</Label>
                     <Input id="serialNumber" placeholder="Enter serial number" />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <Label htmlFor="purchaseDate">Purchase Date</Label>
                     <Input id="purchaseDate" type="date" />
                   </div>
