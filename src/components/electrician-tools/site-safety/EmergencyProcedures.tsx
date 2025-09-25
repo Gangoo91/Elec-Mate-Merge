@@ -219,7 +219,7 @@ const EmergencyProcedures = () => {
                   </div>
                   <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
                     <h4 className="font-medium text-elec-yellow mb-2">Burns Treatment</h4>
-                    <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed">
+                    <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed text-left">
                       <li className="flex items-start gap-2">
                         <span className="text-elec-yellow mt-1">•</span>
                         <span>Cool with cold running water for 20 minutes</span>
