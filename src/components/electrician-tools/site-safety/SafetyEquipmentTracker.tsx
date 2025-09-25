@@ -260,10 +260,10 @@ const SafetyEquipmentTracker = () => {
           </Card>
         ) : (
           filteredEquipment.map((item) => (
-            <Card key={item.id} className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray to-elec-gray/80 hover:border-elec-yellow/50 transition-all duration-300 animate-fade-in overflow-hidden">
+            <Card key={item.id} className="border-elec-yellow/30 bg-elec-gray hover:border-elec-yellow/50 transition-all duration-300 animate-fade-in overflow-hidden">
               <CardContent className="p-0">
                 {/* Header */}
-                <div className="relative p-6 bg-gradient-to-r from-elec-yellow/5 to-transparent">
+                <div className="relative p-6 bg-elec-gray/50">
                   <div className="absolute top-4 right-4 flex gap-2">
                     {isInspectionDue(item.nextInspection) && (
                       <div className="px-3 py-1 bg-orange-500/20 text-orange-400 text-sm rounded-full border border-orange-500/30 flex items-center gap-1">
