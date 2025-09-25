@@ -1,7 +1,7 @@
 // Enhanced Task Manager Component
 // Provides comprehensive task management with hazard linking capabilities
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -45,11 +45,19 @@ const TaskManager: React.FC = () => {
   } = useEnhancedRAMS();
 
   const [searchTerm, setSearchTerm] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [linkingTask, setLinkingTask] = useState<Task | null>(null);
+
+  // Memoized search handler to prevent focus loss
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setSearchTerm(e.target.value);
+  }, []);
 
   // Filter tasks based on search and filters
   const filteredTasks = useMemo(() => {
@@ -290,10 +298,15 @@ const TaskManager: React.FC = () => {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
+                  ref={searchInputRef}
+                  key="task-search-input"
                   placeholder="Search tasks..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={handleSearchChange}
+                  onBlur={(e) => e.preventDefault()}
+                  onFocus={(e) => e.stopPropagation()}
                   className="pl-10"
+                  autoComplete="off"
                 />
               </div>
             </div>
@@ -426,4 +439,4 @@ const TaskManager: React.FC = () => {
   );
 };
 
-export default TaskManager;
+export default React.memo(TaskManager);
