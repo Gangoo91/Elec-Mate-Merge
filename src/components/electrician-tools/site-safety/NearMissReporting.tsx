@@ -325,9 +325,9 @@ const NearMissReporting = () => {
           </div>
         </CardHeader>
         {showForm && (
-          <CardContent className="space-y-4 border-t border-elec-yellow/20 pt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
+          <CardContent className="space-y-6 border-t border-elec-yellow/20 pt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
                 <Label htmlFor="date">Date</Label>
                 <Input
                   id="date"
@@ -336,7 +336,7 @@ const NearMissReporting = () => {
                   onChange={(e) => setNewReport(prev => ({ ...prev, incident_date: e.target.value }))}
                 />
               </div>
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="time">Time</Label>
                 <Input
                   id="time"
@@ -345,7 +345,7 @@ const NearMissReporting = () => {
                   onChange={(e) => setNewReport(prev => ({ ...prev, incident_time: e.target.value }))}
                 />
               </div>
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="location">Location *</Label>
                 <Input
                   id="location"
@@ -354,7 +354,7 @@ const NearMissReporting = () => {
                   placeholder="Where did this occur?"
                 />
               </div>
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="reporter">Reporter</Label>
                 <Input
                   id="reporter"
@@ -363,7 +363,7 @@ const NearMissReporting = () => {
                   placeholder="Your name"
                 />
               </div>
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="category">Category *</Label>
                 <Select 
                   value={newReport.category} 
@@ -379,7 +379,7 @@ const NearMissReporting = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="severity">Severity Level</Label>
                 <Select 
                   value={newReport.severity} 
@@ -397,7 +397,7 @@ const NearMissReporting = () => {
               </div>
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="description">Description of Near Miss *</Label>
               <Textarea
                 id="description"
@@ -408,7 +408,7 @@ const NearMissReporting = () => {
               />
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="consequences">Potential Consequences</Label>
               <Textarea
                 id="consequences"
@@ -419,7 +419,7 @@ const NearMissReporting = () => {
               />
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="immediateActions">Immediate Actions Taken</Label>
               <Textarea
                 id="immediateActions"
@@ -430,7 +430,7 @@ const NearMissReporting = () => {
               />
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="preventive">Suggested Preventive Measures</Label>
               <Textarea
                 id="preventive"
