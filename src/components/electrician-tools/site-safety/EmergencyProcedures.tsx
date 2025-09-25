@@ -194,22 +194,52 @@ const EmergencyProcedures = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
                     <h4 className="font-medium text-elec-yellow mb-2">Electrical Shock Response</h4>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
-                      <li>• Switch off power source immediately</li>
-                      <li>• Do not touch the casualty if still live</li>
-                      <li>• Use non-conductive material to separate</li>
-                      <li>• Check for breathing and pulse</li>
-                      <li>• Begin CPR if trained and necessary</li>
+                    <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed">
+                      <li className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Switch off power source immediately</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Do not touch the casualty if still live</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Use non-conductive material to separate</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Check for breathing and pulse</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Begin CPR if trained and necessary</span>
+                      </li>
                     </ul>
                   </div>
                   <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
                     <h4 className="font-medium text-elec-yellow mb-2">Burns Treatment</h4>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
-                      <li>• Cool with cold running water for 20 minutes</li>
-                      <li>• Remove jewellery before swelling</li>
-                      <li>• Cover with cling film or clean cloth</li>
-                      <li>• Do not apply creams or ointments</li>
-                      <li>• Seek medical attention for all electrical burns</li>
+                    <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed">
+                      <li className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Cool with cold running water for 20 minutes</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Remove jewellery before swelling</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Cover with cling film or clean cloth</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Do not apply creams or ointments</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-elec-yellow mt-1">•</span>
+                        <span>Seek medical attention for all electrical burns</span>
+                      </li>
                     </ul>
                   </div>
                 </div>
