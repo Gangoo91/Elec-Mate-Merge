@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useCallback, useMemo } from 'react';
 import { RAMSData, RAMSRisk, RAMSReportOptions } from '@/types/rams';
 
 interface Task {
@@ -94,27 +94,27 @@ export const RAMSProvider: React.FC<RAMSProviderProps> = ({ children }) => {
 
   const [signOff, setSignOffState] = useState<SignOff>({});
 
-  const updateProjectInfo = (info: Partial<Pick<RAMSData, 'projectName' | 'location' | 'date' | 'assessor'>>) => {
+  const updateProjectInfo = useCallback((info: Partial<Pick<RAMSData, 'projectName' | 'location' | 'date' | 'assessor'>>) => {
     setRAMSData(prev => ({ ...prev, ...info }));
-  };
+  }, []);
 
-  const addActivity = (activity: string) => {
+  const addActivity = useCallback((activity: string) => {
     if (activity.trim() && !ramsData.activities.includes(activity.trim())) {
       setRAMSData(prev => ({
         ...prev,
         activities: [...prev.activities, activity.trim()]
       }));
     }
-  };
+  }, [ramsData.activities]);
 
-  const removeActivity = (index: number) => {
+  const removeActivity = useCallback((index: number) => {
     setRAMSData(prev => ({
       ...prev,
       activities: prev.activities.filter((_, i) => i !== index)
     }));
-  };
+  }, []);
 
-  const addRisk = (risk: Omit<RAMSRisk, 'id'>) => {
+  const addRisk = useCallback((risk: Omit<RAMSRisk, 'id'>) => {
     const newRisk: RAMSRisk = {
       ...risk,
       id: Date.now().toString()
@@ -123,43 +123,43 @@ export const RAMSProvider: React.FC<RAMSProviderProps> = ({ children }) => {
       ...prev,
       risks: [...prev.risks, newRisk]
     }));
-  };
+  }, []);
 
-  const addTask = (task: Omit<Task, 'id'>) => {
+  const addTask = useCallback((task: Omit<Task, 'id'>) => {
     const newTask: Task = {
       ...task,
       id: Date.now().toString()
     };
     setTasks(prev => [...prev, newTask]);
-  };
+  }, []);
 
-  const updateTask = (id: string, updates: Partial<Task>) => {
+  const updateTask = useCallback((id: string, updates: Partial<Task>) => {
     setTasks(prev => prev.map(task => 
       task.id === id ? { ...task, ...updates } : task
     ));
-  };
+  }, []);
 
-  const removeTask = (id: string) => {
+  const removeTask = useCallback((id: string) => {
     setTasks(prev => prev.filter(task => task.id !== id));
-  };
+  }, []);
 
-  const linkHazardToTask = (taskId: string, hazardId: string) => {
+  const linkHazardToTask = useCallback((taskId: string, hazardId: string) => {
     setTasks(prev => prev.map(task => 
       task.id === taskId 
         ? { ...task, linkedHazards: [...task.linkedHazards.filter(h => h !== hazardId), hazardId] }
         : task
     ));
-  };
+  }, []);
 
-  const unlinkHazardFromTask = (taskId: string, hazardId: string) => {
+  const unlinkHazardFromTask = useCallback((taskId: string, hazardId: string) => {
     setTasks(prev => prev.map(task => 
       task.id === taskId 
         ? { ...task, linkedHazards: task.linkedHazards.filter(h => h !== hazardId) }
         : task
     ));
-  };
+  }, []);
 
-  const addRiskFromTemplate = (template: any) => {
+  const addRiskFromTemplate = useCallback((template: any) => {
     const newRisk: RAMSRisk = {
       id: Date.now().toString(),
       hazard: template.hazard,
@@ -174,9 +174,9 @@ export const RAMSProvider: React.FC<RAMSProviderProps> = ({ children }) => {
       ...prev,
       risks: [...prev.risks, newRisk]
     }));
-  };
+  }, []);
 
-  const addRiskFromHazard = (hazardData: any, taskId?: string) => {
+  const addRiskFromHazard = useCallback((hazardData: any, taskId?: string) => {
     const defaultLikelihood = 
       hazardData.riskLevel === 'Very High' ? 5 :
       hazardData.riskLevel === 'High' ? 4 :
@@ -202,9 +202,9 @@ export const RAMSProvider: React.FC<RAMSProviderProps> = ({ children }) => {
       ...prev,
       risks: [...prev.risks, newRisk]
     }));
-  };
+  }, []);
 
-  const updateRisk = (id: string, updates: Partial<RAMSRisk>) => {
+  const updateRisk = useCallback((id: string, updates: Partial<RAMSRisk>) => {
     setRAMSData(prev => ({
       ...prev,
       risks: prev.risks.map(risk => 
@@ -213,24 +213,24 @@ export const RAMSProvider: React.FC<RAMSProviderProps> = ({ children }) => {
           : risk
       )
     }));
-  };
+  }, []);
 
-  const removeRisk = (id: string) => {
+  const removeRisk = useCallback((id: string) => {
     setRAMSData(prev => ({
       ...prev,
       risks: prev.risks.filter(risk => risk.id !== id)
     }));
-  };
+  }, []);
 
-  const setBranding = (options: Partial<RAMSReportOptions>) => {
+  const setBranding = useCallback((options: Partial<RAMSReportOptions>) => {
     setReportOptions(prev => ({ ...prev, ...options }));
-  };
+  }, []);
 
-  const setSignatures = (newSignOff: Partial<SignOff>) => {
+  const setSignatures = useCallback((newSignOff: Partial<SignOff>) => {
     setSignOffState(prev => ({ ...prev, ...newSignOff }));
-  };
+  }, []);
 
-  const validate = (): { isValid: boolean; errors: string[] } => {
+  const validate = useCallback((): { isValid: boolean; errors: string[] } => {
     const errors: string[] = [];
     
     if (!ramsData.projectName.trim()) errors.push('Project name is required');
@@ -243,9 +243,9 @@ export const RAMSProvider: React.FC<RAMSProviderProps> = ({ children }) => {
       isValid: errors.length === 0,
       errors
     };
-  };
+  }, [ramsData.projectName, ramsData.location, ramsData.assessor, ramsData.activities.length, ramsData.risks.length, tasks.length]);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setRAMSData({
       projectName: '',
       location: '',
@@ -261,9 +261,9 @@ export const RAMSProvider: React.FC<RAMSProviderProps> = ({ children }) => {
       logoUrl: ''
     });
     setSignOffState({});
-  };
+  }, []);
 
-  const value: RAMSContextType = {
+  const value: RAMSContextType = useMemo(() => ({
     ramsData,
     reportOptions,
     signOff,
@@ -285,7 +285,29 @@ export const RAMSProvider: React.FC<RAMSProviderProps> = ({ children }) => {
     setSignatures,
     validate,
     reset
-  };
+  }), [
+    ramsData,
+    reportOptions,
+    signOff,
+    tasks,
+    updateProjectInfo,
+    addActivity,
+    removeActivity,
+    addTask,
+    updateTask,
+    removeTask,
+    linkHazardToTask,
+    unlinkHazardFromTask,
+    addRisk,
+    addRiskFromTemplate,
+    addRiskFromHazard,
+    updateRisk,
+    removeRisk,
+    setBranding,
+    setSignatures,
+    validate,
+    reset
+  ]);
 
   return (
     <RAMSContext.Provider value={value}>
