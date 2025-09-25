@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,6 +19,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
   const { tasks, addTask, updateTask, removeTask } = useRAMS();
   const [showAddTask, setShowAddTask] = useState(false);
   const [editingTask, setEditingTask] = useState<string | null>(null);
+  const titleInputRef = useRef<HTMLInputElement>(null);
   const [newTask, setNewTask] = useState({
     title: '',
     description: '',
@@ -99,6 +100,8 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
   }, []);
 
   const handleTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     setNewTask(prev => ({ ...prev, title: e.target.value }));
   }, []);
 
@@ -140,16 +143,31 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
     }
   };
 
+  // Focus management for title input
+  useEffect(() => {
+    if ((showAddTask || editingTask) && titleInputRef.current) {
+      const timeoutId = setTimeout(() => {
+        titleInputRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [showAddTask, editingTask]);
+
   const TaskForm = () => (
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <Label className="text-white">Task Title *</Label>
           <Input
+            ref={titleInputRef}
+            key={`title-input-${editingTask || 'new'}`}
             value={newTask.title}
             onChange={handleTitleChange}
+            onBlur={(e) => e.preventDefault()}
+            onFocus={(e) => e.stopPropagation()}
             placeholder="Enter task title"
             className="bg-elec-dark/50 border-elec-yellow/20 text-white"
+            autoComplete="off"
           />
         </div>
         <div>
