@@ -230,22 +230,52 @@ const EmergencyProcedures = () => {
               <div className="space-y-4">
                 <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
                   <h4 className="font-medium text-white mb-3">Before Starting Work</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Identify location of nearest emergency exits</li>
-                    <li>• Locate fire extinguishers and first aid kits</li>
-                    <li>• Establish communication methods with team</li>
-                    <li>• Share emergency contact details with all personnel</li>
-                    <li>• Identify local emergency services and hospitals</li>
+                  <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Identify location of nearest emergency exits</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Locate fire extinguishers and first aid kits</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Establish communication methods with team</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Share emergency contact details with all personnel</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Identify local emergency services and hospitals</span>
+                    </li>
                   </ul>
                 </div>
                 <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
                   <h4 className="font-medium text-white mb-3">During Emergencies</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Maintain calm and think clearly</li>
-                    <li>• Communicate clearly and concisely</li>
-                    <li>• Follow established procedures</li>
-                    <li>• Account for all team members</li>
-                    <li>• Cooperate with emergency services</li>
+                  <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Maintain calm and think clearly</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Communicate clearly and concisely</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Follow established procedures</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Account for all team members</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Cooperate with emergency services</span>
+                    </li>
                   </ul>
                 </div>
                 <div className="flex gap-4">
