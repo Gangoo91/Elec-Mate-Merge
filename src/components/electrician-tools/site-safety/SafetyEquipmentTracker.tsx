@@ -383,14 +383,14 @@ const SafetyEquipmentTracker = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           <span className="text-muted-foreground text-sm">Location</span>
                         </div>
                         <div className="text-white font-medium text-left pl-4">{item.location}</div>
                       </div>
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           <span className="text-muted-foreground text-sm">Assigned To</span>
                         </div>
                         <div className="text-white font-medium text-left pl-4">{item.assignedTo}</div>
@@ -401,7 +401,7 @@ const SafetyEquipmentTracker = () => {
                   {/* Purchase Information */}
                   <div>
                     <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                       <span>Purchased on {item.purchaseDate}</span>
                     </div>
                   </div>
