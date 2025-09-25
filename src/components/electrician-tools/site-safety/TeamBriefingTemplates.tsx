@@ -531,43 +531,44 @@ const TeamBriefingTemplates = () => {
                              <MoreHorizontal className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
                            </Button>
                          </DropdownMenuTrigger>
-                         <DropdownMenuContent 
-                           align="end" 
-                           className="w-48"
-                         >
-                           <DropdownMenuItem
-                             className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                             onClick={(e) => {
-                               e.stopPropagation();
-                               duplicateTemplate(template);
-                             }}
-                           >
-                             <Copy className="h-4 w-4 mr-2" />
-                             Copy
-                           </DropdownMenuItem>
-                           <DropdownMenuItem
-                             className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                             onClick={(e) => {
-                               e.stopPropagation();
-                               setSelectedTemplate(template);
-                               setIsEditing(true);
-                             }}
-                           >
-                             <Edit className="h-4 w-4 mr-2" />
-                             Edit
-                           </DropdownMenuItem>
-                           <DropdownMenuItem
-                             className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                             onClick={(e) => {
-                               e.stopPropagation();
-                               setSelectedTemplate(template);
-                               setNewBriefing(prev => ({ ...prev, template_id: template.id }));
-                               setShowNewBriefingForm(true);
-                             }}
-                           >
-                             <Plus className="h-4 w-4 mr-2" />
-                             Use Template
-                           </DropdownMenuItem>
+                          <DropdownMenuContent 
+                            align="end" 
+                            className="w-48 z-50 bg-popover border border-border shadow-lg"
+                            sideOffset={5}
+                          >
+                            <DropdownMenuItem
+                              className="cursor-pointer flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                duplicateTemplate(template);
+                              }}
+                            >
+                              <Copy className="h-4 w-4" />
+                              Copy
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="cursor-pointer flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedTemplate(template);
+                                setIsEditing(true);
+                              }}
+                            >
+                              <Edit className="h-4 w-4" />
+                              Edit
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="cursor-pointer flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedTemplate(template);
+                                setNewBriefing(prev => ({ ...prev, template_id: template.id }));
+                                setShowNewBriefingForm(true);
+                              }}
+                            >
+                              <Plus className="h-4 w-4" />
+                              Use Template
+                            </DropdownMenuItem>
                          </DropdownMenuContent>
                        </DropdownMenu>
                      </div>
