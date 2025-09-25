@@ -300,16 +300,27 @@ const NearMissReporting = () => {
       </div>
 
       {/* Header and Report Button */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
-              Near Miss Reporting
-            </CardTitle>
-            <Button onClick={() => setShowForm(!showForm)} variant="outline">
+      <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/30 transition-all duration-300 animate-fade-in">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="space-y-2">
+              <CardTitle className="text-elec-yellow flex items-center gap-3 text-xl">
+                <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                  <AlertTriangle className="h-5 w-5" />
+                </div>
+                Near Miss Reporting
+              </CardTitle>
+              <p className="text-muted-foreground text-sm max-w-md">
+                Report potential hazards to improve workplace safety. Help prevent future incidents by documenting near misses.
+              </p>
+            </div>
+            <Button 
+              onClick={() => setShowForm(!showForm)} 
+              variant="outline"
+              className="bg-elec-yellow/10 border-elec-yellow/30 hover:bg-elec-yellow/20 transition-all duration-200 shrink-0"
+            >
               <Plus className="h-4 w-4 mr-2" />
-              Report Near Miss
+              {showForm ? 'Cancel Report' : 'Report Near Miss'}
             </Button>
           </div>
         </CardHeader>
