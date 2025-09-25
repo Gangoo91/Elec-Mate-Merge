@@ -278,7 +278,7 @@ const EmergencyProcedures = () => {
                     </li>
                   </ul>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-4">
                   <Button className="flex-1">
                     <Printer className="h-4 w-4 mr-2" />
                     Print Emergency Card
