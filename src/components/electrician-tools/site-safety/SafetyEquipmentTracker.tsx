@@ -267,7 +267,7 @@ const SafetyEquipmentTracker = () => {
                   <div className="flex justify-between items-start gap-2 mb-4">
                     <div className="flex-1 min-w-0"></div>
                     {isInspectionDue(item.nextInspection) && (
-                      <div className="w-fit px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full border border-orange-500/30 flex items-center gap-1 flex-shrink-0">
+                      <div className="w-fit px-2 py-1 bg-destructive/20 text-destructive text-xs rounded-full border border-destructive/30 flex items-center gap-1 flex-shrink-0">
                         <Clock className="h-3 w-3" />
                         <span className="hidden sm:inline">Due</span>
                         <span className="sm:hidden">!</span>
