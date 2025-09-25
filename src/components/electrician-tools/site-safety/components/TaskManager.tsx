@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,7 +15,7 @@ interface TaskManagerProps {
   onLinkHazard?: (taskId: string) => void;
 }
 
-const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard }) => {
+const TaskManager: React.FC<TaskManagerProps> = React.memo(({ onTaskSelect, onLinkHazard }) => {
   const { tasks, addTask, updateTask, removeTask } = useRAMS();
   const [showAddTask, setShowAddTask] = useState(false);
   const [editingTask, setEditingTask] = useState<string | null>(null);
@@ -31,7 +31,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
     status: 'pending' as 'pending' | 'in-progress' | 'completed'
   });
 
-  const handleAddTask = () => {
+  const handleAddTask = useCallback(() => {
     if (newTask.title.trim() && newTask.category.trim()) {
       addTask(newTask);
       setNewTask({
@@ -52,14 +52,14 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         variant: 'success'
       });
     }
-  };
+  }, [addTask]);
 
-  const handleEditTask = (task: any) => {
+  const handleEditTask = useCallback((task: any) => {
     setEditingTask(task.id);
     setNewTask(task);
-  };
+  }, []);
 
-  const handleSaveEdit = () => {
+  const handleSaveEdit = useCallback(() => {
     if (editingTask && newTask.title.trim()) {
       updateTask(editingTask, newTask);
       setEditingTask(null);
@@ -80,9 +80,9 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         variant: 'success'
       });
     }
-  };
+  }, [editingTask, newTask, updateTask]);
 
-  const handleCancelEdit = () => {
+  const handleCancelEdit = useCallback(() => {
     setEditingTask(null);
     setShowAddTask(false);
     setNewTask({
@@ -96,7 +96,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
       prerequisites: [],
       status: 'pending'
     });
-  };
+  }, []);
 
   const getRiskLevelColor = (level: string) => {
     switch (level) {
@@ -123,14 +123,14 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
           <Label className="text-white">Task Title *</Label>
           <Input
             value={newTask.title}
-            onChange={(e) => setNewTask(prev => ({ ...prev, title: e.target.value }))}
+            onChange={useCallback((e) => setNewTask(prev => ({ ...prev, title: e.target.value })), [])}
             placeholder="Enter task title"
             className="bg-elec-dark/50 border-elec-yellow/20 text-white"
           />
         </div>
         <div>
           <Label className="text-white">Category *</Label>
-          <Select value={newTask.category} onValueChange={(value) => setNewTask(prev => ({ ...prev, category: value }))}>
+          <Select value={newTask.category} onValueChange={useCallback((value) => setNewTask(prev => ({ ...prev, category: value })), [])}>
             <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-white">
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
@@ -150,7 +150,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         <Label className="text-white">Description</Label>
         <Textarea
           value={newTask.description}
-          onChange={(e) => setNewTask(prev => ({ ...prev, description: e.target.value }))}
+          onChange={useCallback((e) => setNewTask(prev => ({ ...prev, description: e.target.value })), [])}
           placeholder="Enter task description"
           className="bg-elec-dark/50 border-elec-yellow/20 text-white"
         />
@@ -159,7 +159,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <Label className="text-white">Risk Level</Label>
-          <Select value={newTask.riskLevel} onValueChange={(value: any) => setNewTask(prev => ({ ...prev, riskLevel: value }))}>
+          <Select value={newTask.riskLevel} onValueChange={useCallback((value: any) => setNewTask(prev => ({ ...prev, riskLevel: value })), [])}>
             <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-white">
               <SelectValue />
             </SelectTrigger>
@@ -174,7 +174,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
           <Label className="text-white">Duration</Label>
           <Input
             value={newTask.estimatedDuration}
-            onChange={(e) => setNewTask(prev => ({ ...prev, estimatedDuration: e.target.value }))}
+            onChange={useCallback((e) => setNewTask(prev => ({ ...prev, estimatedDuration: e.target.value })), [])}
             placeholder="e.g. 2 hours"
             className="bg-elec-dark/50 border-elec-yellow/20 text-white"
           />
@@ -183,7 +183,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
           <Label className="text-white">Responsible Person</Label>
           <Input
             value={newTask.responsiblePerson}
-            onChange={(e) => setNewTask(prev => ({ ...prev, responsiblePerson: e.target.value }))}
+            onChange={useCallback((e) => setNewTask(prev => ({ ...prev, responsiblePerson: e.target.value })), [])}
             placeholder="Enter name"
             className="bg-elec-dark/50 border-elec-yellow/20 text-white"
           />
@@ -313,6 +313,6 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
       </CardContent>
     </Card>
   );
-};
+});
 
 export default TaskManager;
