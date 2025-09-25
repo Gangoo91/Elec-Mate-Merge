@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2 } from "lucide-react";
+import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -343,35 +344,35 @@ const TeamBriefingTemplates = () => {
   return (
     <div className="space-y-6">
       {/* Statistics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Card className="border-blue-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-400">{briefings.length}</div>
-            <div className="text-sm text-muted-foreground">Total Briefings</div>
+          <CardContent className="p-3 sm:p-4 text-center">
+            <div className="text-xl sm:text-2xl font-bold text-blue-400">{briefings.length}</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Total Briefings</div>
           </CardContent>
         </Card>
         <Card className="border-green-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-400">
+          <CardContent className="p-3 sm:p-4 text-center">
+            <div className="text-xl sm:text-2xl font-bold text-green-400">
               {briefings.filter(b => b.completed).length}
             </div>
-            <div className="text-sm text-muted-foreground">Completed</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Completed</div>
           </CardContent>
         </Card>
         <Card className="border-yellow-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-400">
+          <CardContent className="p-3 sm:p-4 text-center">
+            <div className="text-xl sm:text-2xl font-bold text-yellow-400">
               {briefings.reduce((total, b) => total + b.attendees.length, 0)}
             </div>
-            <div className="text-sm text-muted-foreground">Total Attendees</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Total Attendees</div>
           </CardContent>
         </Card>
         <Card className="border-purple-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-purple-400">
+          <CardContent className="p-3 sm:p-4 text-center">
+            <div className="text-xl sm:text-2xl font-bold text-purple-400">
               {briefings.filter(b => new Date(b.briefing_date) >= new Date()).length}
             </div>
-            <div className="text-sm text-muted-foreground">Upcoming</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Upcoming</div>
           </CardContent>
         </Card>
       </div>
@@ -393,50 +394,54 @@ const TeamBriefingTemplates = () => {
             <div className="space-y-4">
               {briefings.map((briefing) => (
                 <Card key={briefing.id} className="border-elec-yellow/30">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex gap-2">
-                        <Badge className={briefing.completed ? "bg-green-500" : "bg-blue-500"}>
-                          {briefing.completed ? "Completed" : "Scheduled"}
-                        </Badge>
-                        <span className="text-sm text-muted-foreground">
-                          {briefing.briefing_date} at {briefing.briefing_time}
-                        </span>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => {
-                            setSelectedBriefing(briefing);
-                            setShowAttendanceModal(true);
-                          }}
-                        >
-                          <UserCheck className="h-3 w-3 mr-1" />
-                          Attendance
-                        </Button>
-                        {!briefing.completed && (
+                  <CardContent className="p-3 sm:p-4">
+                    <div className="space-y-3">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
+                          <Badge className={briefing.completed ? "bg-green-500" : "bg-blue-500"}>
+                            {briefing.completed ? "Completed" : "Scheduled"}
+                          </Badge>
+                          <span className="text-xs sm:text-sm text-muted-foreground">
+                            {briefing.briefing_date} at {briefing.briefing_time}
+                          </span>
+                        </div>
+                        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                           <Button 
                             size="sm" 
                             variant="outline"
-                            onClick={() => markBriefingComplete(briefing.id)}
+                            className="min-h-[44px] w-full sm:w-auto touch-manipulation"
+                            onClick={() => {
+                              setSelectedBriefing(briefing);
+                              setShowAttendanceModal(true);
+                            }}
                           >
-                            Complete
+                            <UserCheck className="h-4 w-4 mr-2" />
+                            Attendance
                           </Button>
-                        )}
+                          {!briefing.completed && (
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              className="min-h-[44px] w-full sm:w-auto touch-manipulation"
+                              onClick={() => markBriefingComplete(briefing.id)}
+                            >
+                              Complete
+                            </Button>
+                          )}
+                        </div>
                       </div>
-                    </div>
                     
-                    <div className="space-y-2">
-                      <h4 className="font-medium">{briefing.briefing_name}</h4>
-                      <div className="text-sm text-muted-foreground">📍 {briefing.location}</div>
-                      <div className="text-sm">
-                        <span className="font-medium">{briefing.attendees.length}</span> attendees
-                        {briefing.attendees.length > 0 && (
-                          <span className="ml-2">
-                            ({briefing.attendees.map(a => a.name).join(', ')})
-                          </span>
-                        )}
+                      <div className="space-y-2">
+                        <h4 className="font-medium text-sm sm:text-base leading-tight">{briefing.briefing_name}</h4>
+                        <div className="text-xs sm:text-sm text-muted-foreground">📍 {briefing.location}</div>
+                        <div className="text-xs sm:text-sm">
+                          <span className="font-medium">{briefing.attendees.length}</span> attendees
+                          {briefing.attendees.length > 0 && (
+                            <div className="mt-1 text-xs text-muted-foreground break-words">
+                              {briefing.attendees.map(a => a.name).join(', ')}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -450,12 +455,16 @@ const TeamBriefingTemplates = () => {
       {/* Header and Actions */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg sm:text-xl">
               <Users className="h-5 w-5" />
               Team Briefing Templates
             </CardTitle>
-            <Button onClick={createNewTemplate} variant="outline">
+            <Button 
+              onClick={createNewTemplate} 
+              variant="outline"
+              className="min-h-[44px] w-full sm:w-auto touch-manipulation"
+            >
               <Plus className="h-4 w-4 mr-2" />
               New Template
             </Button>
@@ -469,7 +478,7 @@ const TeamBriefingTemplates = () => {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
         {/* Template List */}
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
@@ -501,31 +510,36 @@ const TeamBriefingTemplates = () => {
                           {template.keyPoints.length} key points, {template.safetyPoints.length} safety points
                         </p>
                       </div>
-                      <div className="flex gap-1 ml-2">
+                      <div className="flex flex-col sm:flex-row gap-1 ml-0 sm:ml-2 mt-2 sm:mt-0">
                         <Button
                           size="sm"
                           variant="outline"
+                          className="min-h-[44px] touch-manipulation"
                           onClick={(e) => {
                             e.stopPropagation();
                             duplicateTemplate(template);
                           }}
                         >
-                          <Copy className="h-3 w-3" />
+                          <Copy className="h-4 w-4 mr-1 sm:mr-0" />
+                          <span className="sm:hidden">Copy</span>
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
+                          className="min-h-[44px] touch-manipulation"
                           onClick={(e) => {
                             e.stopPropagation();
                             setSelectedTemplate(template);
                             setIsEditing(true);
                           }}
                         >
-                          <Edit className="h-3 w-3" />
+                          <Edit className="h-4 w-4 mr-1 sm:mr-0" />
+                          <span className="sm:hidden">Edit</span>
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
+                          className="min-h-[44px] touch-manipulation"
                           onClick={(e) => {
                             e.stopPropagation();
                             setSelectedTemplate(template);
@@ -533,7 +547,8 @@ const TeamBriefingTemplates = () => {
                             setShowNewBriefingForm(true);
                           }}
                         >
-                          <Plus className="h-3 w-3" />
+                          <Plus className="h-4 w-4 mr-1 sm:mr-0" />
+                          <span className="sm:hidden">Use Template</span>
                         </Button>
                       </div>
                     </div>
@@ -739,6 +754,141 @@ const TeamBriefingTemplates = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Attendance Modal */}
+      <Dialog open={showAttendanceModal} onOpenChange={setShowAttendanceModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Briefing Attendance</DialogTitle>
+          </DialogHeader>
+          {selectedBriefing && (
+            <div className="space-y-4">
+              <div className="text-sm">
+                <strong>{selectedBriefing.briefing_name}</strong>
+                <br />
+                {selectedBriefing.briefing_date} at {selectedBriefing.briefing_time}
+              </div>
+              
+              <div className="space-y-2">
+                <Label>Current Attendees ({selectedBriefing.attendees.length})</Label>
+                <div className="max-h-32 overflow-y-auto space-y-1">
+                  {selectedBriefing.attendees.map((attendee, index) => (
+                    <div key={index} className="flex items-center justify-between p-2 bg-muted rounded">
+                      <span className="text-sm">{attendee.name}</span>
+                      {attendee.timestamp && (
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(attendee.timestamp).toLocaleTimeString()}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Add attendee name..."
+                  value={newAttendee}
+                  onChange={(e) => setNewAttendee(e.target.value)}
+                  className="flex-1"
+                  onKeyDown={(e) => e.key === 'Enter' && addAttendee()}
+                />
+                <Button onClick={addAttendee} disabled={!newAttendee.trim()}>
+                  Add
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* New Briefing Form Modal */}
+      <Dialog open={showNewBriefingForm} onOpenChange={setShowNewBriefingForm}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Schedule New Briefing</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="briefing-name">Briefing Name *</Label>
+                <Input
+                  id="briefing-name"
+                  value={newBriefing.briefing_name}
+                  onChange={(e) => setNewBriefing(prev => ({ ...prev, briefing_name: e.target.value }))}
+                  placeholder="Enter briefing name"
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label htmlFor="location">Location *</Label>
+                <Input
+                  id="location"
+                  value={newBriefing.location}
+                  onChange={(e) => setNewBriefing(prev => ({ ...prev, location: e.target.value }))}
+                  placeholder="Enter location"
+                  className="mt-1"
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="briefing-date">Date</Label>
+                <Input
+                  id="briefing-date"
+                  type="date"
+                  value={newBriefing.briefing_date}
+                  onChange={(e) => setNewBriefing(prev => ({ ...prev, briefing_date: e.target.value }))}
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label htmlFor="briefing-time">Time</Label>
+                <Input
+                  id="briefing-time"
+                  type="time"
+                  value={newBriefing.briefing_time}
+                  onChange={(e) => setNewBriefing(prev => ({ ...prev, briefing_time: e.target.value }))}
+                  className="mt-1"
+                />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="notes">Additional Notes</Label>
+              <Textarea
+                id="notes"
+                value={newBriefing.notes}
+                onChange={(e) => setNewBriefing(prev => ({ ...prev, notes: e.target.value }))}
+                placeholder="Any additional notes for this briefing..."
+                rows={3}
+                className="mt-1"
+              />
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setShowNewBriefingForm(false)}
+                className="w-full sm:w-auto"
+              >
+                Cancel
+              </Button>
+              <Button 
+                onClick={() => {
+                  const template = templates.find(t => t.id === newBriefing.template_id);
+                  if (template) createBriefingFromTemplate(template);
+                }}
+                disabled={!newBriefing.briefing_name.trim() || !newBriefing.location.trim()}
+                className="w-full sm:w-auto"
+              >
+                Schedule Briefing
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
