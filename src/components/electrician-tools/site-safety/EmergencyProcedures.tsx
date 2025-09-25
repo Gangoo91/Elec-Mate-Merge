@@ -49,7 +49,7 @@ const EmergencyProcedures = () => {
       </Card>
 
       <Tabs defaultValue="contacts" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           <TabsTrigger value="contacts">Emergency Contacts</TabsTrigger>
           <TabsTrigger value="evacuation">Evacuation</TabsTrigger>
           <TabsTrigger value="first-aid">First Aid</TabsTrigger>
