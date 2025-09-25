@@ -264,11 +264,13 @@ const SafetyEquipmentTracker = () => {
               <CardContent className="p-0">
                 {/* Header */}
                 <div className="relative px-6 pt-6 pb-0 bg-elec-gray/50">
-                  <div className="absolute top-4 right-4 flex gap-2">
+                  <div className="flex justify-between items-start gap-2 mb-4">
+                    <div className="flex-1 min-w-0"></div>
                     {isInspectionDue(item.nextInspection) && (
-                      <div className="px-3 py-1 bg-orange-500/20 text-orange-400 text-sm rounded-full border border-orange-500/30 flex items-center gap-1">
+                      <div className="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full border border-orange-500/30 flex items-center gap-1 flex-shrink-0">
                         <Clock className="h-3 w-3" />
-                        Due
+                        <span className="hidden sm:inline">Due</span>
+                        <span className="sm:hidden">!</span>
                       </div>
                     )}
                   </div>
