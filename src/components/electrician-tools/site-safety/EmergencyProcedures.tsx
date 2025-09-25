@@ -156,11 +156,23 @@ const EmergencyProcedures = () => {
                 </div>
                 <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
                   <h4 className="font-medium text-elec-yellow mb-2">Important Reminders</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground text-left">
-                    <li>• Never use lifts during evacuation</li>
-                    <li>• Assist those who need help</li>
-                    <li>• Do not re-enter building until given all-clear</li>
-                    <li>• Report missing persons immediately</li>
+                  <ul className="text-sm space-y-2 text-muted-foreground leading-relaxed text-left">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Never use lifts during evacuation</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Assist those who need help</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Do not re-enter building until given all-clear</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>Report missing persons immediately</span>
+                    </li>
                   </ul>
                 </div>
               </div>
