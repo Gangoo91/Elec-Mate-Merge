@@ -260,94 +260,110 @@ const SafetyEquipmentTracker = () => {
           </Card>
         ) : (
           filteredEquipment.map((item) => (
-            <Card key={item.id} className="border-elec-yellow/30 bg-elec-gray">
-              <CardContent className="p-6">
-                {/* Header Section */}
-                <div className="flex flex-col items-center text-center space-y-4 mb-6">
-                  <div className="p-3 rounded-full bg-elec-yellow/20">
-                    <Wrench className="h-6 w-6 text-elec-yellow" />
+            <Card key={item.id} className="border-elec-yellow/30 bg-elec-gray hover:border-elec-yellow/50 transition-all duration-300 animate-fade-in">
+              <CardContent className="p-0">
+                {/* Header Section with Icon and Status */}
+                <div className="relative p-6 pb-4 text-center border-b border-elec-yellow/20">
+                  <div className="flex justify-center mb-4">
+                    <div className="p-4 rounded-full bg-elec-yellow/20 border border-elec-yellow/30">
+                      <Wrench className="h-8 w-8 text-elec-yellow" />
+                    </div>
                   </div>
                   
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-xl text-white">{item.name}</h3>
-                    <Badge variant="outline" className="text-sm">{item.category}</Badge>
+                  <h3 className="font-bold text-xl text-white mb-3 leading-tight">{item.name}</h3>
+                  
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-3">
+                    <Badge variant="outline" className="text-sm px-3 py-1 border-elec-yellow/30">
+                      {item.category}
+                    </Badge>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <Badge className={`${getStatusColor(item.status)} text-white`}>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2">
+                    <Badge className={`${getStatusColor(item.status)} text-white px-3 py-1`}>
                       {getStatusIcon(item.status)}
-                      <span className="ml-1">{item.status}</span>
+                      <span className="ml-2">{item.status}</span>
                     </Badge>
                     {isInspectionDue(item.nextInspection) && (
-                      <Badge className="bg-orange-500 text-white">
-                        <Clock className="h-3 w-3 mr-1" />
+                      <Badge className="bg-orange-500 text-white px-3 py-1">
+                        <Clock className="h-4 w-4 mr-2" />
                         Inspection Due
                       </Badge>
                     )}
                   </div>
                 </div>
 
-                {/* Details Section */}
-                <div className="space-y-6">
-                  <div className="text-center space-y-1">
-                    <div className="text-muted-foreground text-sm">Serial Number</div>
-                    <div className="font-medium text-lg text-white">{item.serialNumber}</div>
-                  </div>
+                {/* Equipment Details Grid */}
+                <div className="p-6 space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {/* Serial Number */}
+                    <div className="text-center p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
+                      <div className="text-muted-foreground text-sm mb-2">Serial Number</div>
+                      <div className="font-semibold text-lg text-white">{item.serialNumber}</div>
+                    </div>
 
-                  <div className="text-center space-y-1">
-                    <div className="text-muted-foreground text-sm">Last Inspection</div>
-                    <div className="font-medium text-lg text-white">{item.lastInspection}</div>
-                  </div>
+                    {/* Location */}
+                    <div className="text-center p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
+                      <div className="text-muted-foreground text-sm mb-2">Location</div>
+                      <div className="font-semibold text-lg text-white">{item.location}</div>
+                    </div>
 
-                  <div className="text-center space-y-1">
-                    <div className="text-muted-foreground text-sm">Next Inspection</div>
-                    <div className={`font-medium text-lg ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : 'text-white'}`}>
-                      {item.nextInspection}
+                    {/* Last Inspection */}
+                    <div className="text-center p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
+                      <div className="text-muted-foreground text-sm mb-2">Last Inspection</div>
+                      <div className="font-semibold text-lg text-white">{item.lastInspection}</div>
+                    </div>
+
+                    {/* Next Inspection */}
+                    <div className="text-center p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
+                      <div className="text-muted-foreground text-sm mb-2">Next Inspection</div>
+                      <div className={`font-semibold text-lg ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : 'text-white'}`}>
+                        {item.nextInspection}
+                      </div>
+                    </div>
+
+                    {/* Assigned To */}
+                    <div className="text-center p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
+                      <div className="text-muted-foreground text-sm mb-2">Assigned To</div>
+                      <div className="font-semibold text-lg text-white">{item.assignedTo}</div>
+                    </div>
+
+                    {/* Purchase Date */}
+                    <div className="text-center p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
+                      <div className="text-muted-foreground text-sm mb-2">Purchase Date</div>
+                      <div className="font-semibold text-lg text-white">{item.purchaseDate}</div>
                     </div>
                   </div>
 
-                  <div className="text-center space-y-1">
-                    <div className="text-muted-foreground text-sm">Location</div>
-                    <div className="font-medium text-lg text-white">{item.location}</div>
-                  </div>
-
-                  <div className="text-center space-y-1">
-                    <div className="text-muted-foreground text-sm">Assigned To</div>
-                    <div className="font-medium text-lg text-white">{item.assignedTo}</div>
-                  </div>
-
-                  <div className="text-center space-y-1">
-                    <div className="text-muted-foreground text-sm">Purchase Date</div>
-                    <div className="font-medium text-lg text-white">{item.purchaseDate}</div>
-                  </div>
-
+                  {/* Notes Section */}
                   {item.notes && (
                     <div className="space-y-3">
-                      <div className="text-center text-muted-foreground text-sm">Notes</div>
-                      <div className="p-4 bg-elec-dark rounded-lg text-center">
-                        <div className="text-white">{item.notes}</div>
+                      <div className="text-center">
+                        <div className="text-muted-foreground text-sm mb-3">Notes</div>
+                        <div className="p-4 bg-elec-dark rounded-lg border border-elec-yellow/20">
+                          <div className="text-white leading-relaxed">{item.notes}</div>
+                        </div>
                       </div>
                     </div>
                   )}
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col gap-2 mt-6">
+                <div className="p-6 pt-0 space-y-3">
                   <Button 
                     variant="outline" 
-                    className="w-full bg-elec-dark border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                    className="w-full h-12 bg-elec-dark border-elec-yellow/30 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200"
                   >
                     Update Inspection
                   </Button>
                   <Button 
                     variant="outline" 
-                    className="w-full bg-elec-dark border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                    className="w-full h-12 bg-elec-dark border-elec-yellow/30 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200"
                   >
                     Edit Details
                   </Button>
                   <Button 
                     variant="outline" 
-                    className="w-full bg-elec-dark border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
+                    className="w-full h-12 bg-elec-dark border-elec-yellow/30 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200"
                   >
                     View History
                   </Button>
