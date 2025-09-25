@@ -161,57 +161,64 @@ const SafetyEquipmentTracker = () => {
       </div>
 
       {/* Search and Filters */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
-              <Wrench className="h-5 w-5" />
+      <Card className="border-primary/20 bg-card">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <CardTitle className="text-primary flex items-center gap-2 text-xl font-bold">
+              <Wrench className="h-6 w-6" />
               Safety Equipment Tracker
             </CardTitle>
-            <Button onClick={() => setShowAddForm(!showAddForm)} variant="outline">
+            <Button 
+              onClick={() => setShowAddForm(!showAddForm)} 
+              className="bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Add Equipment
             </Button>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search equipment..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="md:col-span-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search equipment..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
             </div>
-            <Select value={filterCategory} onValueChange={setFilterCategory}>
-              <SelectTrigger className="w-full md:w-48">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map(category => (
-                  <SelectItem key={category} value={category}>{category}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select value={filterStatus} onValueChange={setFilterStatus}>
-              <SelectTrigger className="w-full md:w-48">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {statusOptions.map(status => (
-                  <SelectItem key={status} value={status}>{status}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="grid grid-cols-2 gap-2 md:col-span-2 md:gap-4">
+              <Select value={filterCategory} onValueChange={setFilterCategory}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All Categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map(category => (
+                    <SelectItem key={category} value={category}>{category}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={filterStatus} onValueChange={setFilterStatus}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  {statusOptions.map(status => (
+                    <SelectItem key={status} value={status}>{status}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {showAddForm && (
-            <Card className="border-elec-yellow/30 mt-4">
-              <CardContent className="p-4 space-y-6">
-                <h4 className="font-medium text-elec-yellow">Add New Equipment</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="border-primary/30 mt-4 bg-card">
+              <CardContent className="p-6">
+                <h4 className="font-semibold text-primary mb-6 text-lg">Add New Equipment</h4>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="equipmentName">Equipment Name</Label>
                     <Input id="equipmentName" placeholder="Enter equipment name" />
@@ -238,10 +245,20 @@ const SafetyEquipmentTracker = () => {
                     <Input id="purchaseDate" type="date" />
                   </div>
                 </div>
-                <div className="flex gap-4">
-                  <Button size="sm">Add Equipment</Button>
-                  <Button size="sm" variant="outline" onClick={() => setShowAddForm(false)}>
+                <div className="flex flex-col gap-2 mt-6 sm:flex-row sm:justify-end">
+                  <Button 
+                    size="sm" 
+                    onClick={() => setShowAddForm(false)}
+                    variant="outline" 
+                    className="order-2 sm:order-1"
+                  >
                     Cancel
+                  </Button>
+                  <Button 
+                    size="sm"
+                    className="order-1 sm:order-2 bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    Add Equipment
                   </Button>
                 </div>
               </CardContent>
@@ -260,127 +277,131 @@ const SafetyEquipmentTracker = () => {
           </Card>
         ) : (
           filteredEquipment.map((item) => (
-            <Card key={item.id} className="border-elec-yellow/30 bg-elec-gray hover:border-elec-yellow/50 transition-all duration-300 animate-fade-in overflow-hidden">
+            <Card key={item.id} className="border-primary/20 bg-card hover:border-primary/40 transition-all duration-300">
               <CardContent className="p-0">
-                {/* Header */}
-                <div className="relative px-6 pt-6 pb-0 bg-elec-gray/50">
-                  <div className="flex justify-between items-start gap-2 mb-4">
-                    <div className="flex-1 min-w-0"></div>
-                    {isInspectionDue(item.nextInspection) && (
-                      <div className="w-fit px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full border border-orange-500/30 flex items-center gap-1 flex-shrink-0">
-                        <Clock className="h-3 w-3" />
-                        <span className="hidden sm:inline">Due</span>
-                        <span className="sm:hidden">!</span>
+                {/* Equipment Header */}
+                <div className="relative p-4 sm:p-6">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex items-start gap-3 min-w-0 flex-1">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex-shrink-0">
+                        <Wrench className="h-6 w-6 text-primary" />
                       </div>
-                    )}
-                  </div>
-                  
-                  <div className="space-y-4">
-                    {/* Equipment Name and Icon */}
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30 flex-shrink-0">
-                        <Wrench className="h-5 w-5 text-elec-yellow" />
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-bold text-lg text-foreground truncate">{item.name}</h3>
+                        <p className="text-sm text-muted-foreground font-mono">{item.serialNumber}</p>
+                        <div className="flex flex-wrap items-center gap-2 mt-2">
+                          <Badge variant="secondary" className="text-xs">
+                            {item.category}
+                          </Badge>
+                          <Badge 
+                            variant={item.status === 'Good' ? 'default' : 'destructive'}
+                            className="text-xs flex items-center gap-1"
+                          >
+                            {getStatusIcon(item.status)}
+                            {item.status}
+                          </Badge>
+                        </div>
                       </div>
-                      <h3 className="font-bold text-lg text-white">{item.name}</h3>
                     </div>
                     
-                    {/* Status and Category */}
-                    <div className="flex items-center gap-3">
-                      <span className="px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm rounded-lg border border-elec-yellow/20">
-                        {item.category}
-                      </span>
-                      <div className={`px-3 py-1 ${getStatusColor(item.status)}/20 text-sm rounded-lg border flex items-center gap-2`}>
-                        {getStatusIcon(item.status)}
-                        <span>{item.status}</span>
-                      </div>
-                    </div>
-
-                    {/* Serial Number */}
-                    <div>
-                      <div className="text-muted-foreground text-xs mb-1">Serial Number</div>
-                      <div className="font-mono text-sm text-white/80">{item.serialNumber}</div>
-                    </div>
+                    {/* Inspection Due Alert - Mobile Optimized */}
+                    {isInspectionDue(item.nextInspection) && (
+                      <Badge variant="destructive" className="self-start flex-shrink-0">
+                        <Clock className="h-3 w-3 mr-1" />
+                        <span className="hidden sm:inline">Inspection Due</span>
+                        <span className="sm:hidden">Due</span>
+                      </Badge>
+                    )}
                   </div>
                 </div>
 
-                {/* Information Layout */}
-                <div className="p-6 space-y-6">
-                  {/* Inspection Timeline */}
-                  <div className="space-y-3">
-                    <h4 className="text-elec-yellow font-medium text-left border-b border-elec-yellow/20 pb-2">Inspection Timeline</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <div className="text-muted-foreground text-sm mb-1 text-left">Last Inspection</div>
-                        <div className="text-white font-medium text-left">{item.lastInspection}</div>
-                      </div>
-                      <div>
-                        <div className="text-muted-foreground text-sm mb-1 text-left">Next Inspection</div>
-                        <div className={`font-medium text-left ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : 'text-white'}`}>
-                          {item.nextInspection}
+                {/* Equipment Details Grid */}
+                <div className="px-4 pb-4 sm:px-6 sm:pb-6">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    
+                    {/* Inspection Details */}
+                    <div className="space-y-3 p-4 bg-muted/30 rounded-lg">
+                      <h4 className="font-medium text-sm text-primary flex items-center gap-2">
+                        <Clock className="h-4 w-4" />
+                        Inspection Timeline
+                      </h4>
+                      <div className="space-y-2">
+                        <div>
+                          <div className="text-xs text-muted-foreground">Last Inspection</div>
+                          <div className="text-sm font-medium">{item.lastInspection}</div>
                         </div>
+                        <div>
+                          <div className="text-xs text-muted-foreground">Next Inspection</div>
+                          <div className={`text-sm font-medium ${isInspectionDue(item.nextInspection) ? 'text-destructive' : ''}`}>
+                            {item.nextInspection}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Assignment Details */}
+                    <div className="space-y-3 p-4 bg-muted/30 rounded-lg">
+                      <h4 className="font-medium text-sm text-primary flex items-center gap-2">
+                        <div className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center">
+                          <div className="w-2 h-2 rounded-full bg-primary"></div>
+                        </div>
+                        Assignment
+                      </h4>
+                      <div className="space-y-2">
+                        <div>
+                          <div className="text-xs text-muted-foreground">Location</div>
+                          <div className="text-sm font-medium">{item.location}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-muted-foreground">Assigned To</div>
+                          <div className="text-sm font-medium">{item.assignedTo}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Purchase Info & Notes */}
+                    <div className="space-y-3 p-4 bg-muted/30 rounded-lg sm:col-span-2 lg:col-span-1">
+                      <h4 className="font-medium text-sm text-primary">Additional Info</h4>
+                      <div className="space-y-2">
+                        <div>
+                          <div className="text-xs text-muted-foreground">Purchase Date</div>
+                          <div className="text-sm font-medium">{item.purchaseDate}</div>
+                        </div>
+                        {item.notes && (
+                          <div>
+                            <div className="text-xs text-muted-foreground">Notes</div>
+                            <div className="text-sm text-muted-foreground">{item.notes}</div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                  {/* Location & Assignment */}
-                  <div className="space-y-3">
-                    <h4 className="text-elec-yellow font-medium text-left border-b border-elec-yellow/20 pb-2">Assignment Details</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                          <span className="text-muted-foreground text-sm">Location</span>
-                        </div>
-                        <div className="text-white font-medium text-left pl-4">{item.location}</div>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                          <span className="text-muted-foreground text-sm">Assigned To</span>
-                        </div>
-                        <div className="text-white font-medium text-left pl-4">{item.assignedTo}</div>
-                      </div>
+                  {/* Action Buttons */}
+                  <div className="mt-6 pt-4 border-t border-border">
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="w-full"
+                      >
+                        Update Inspection
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="w-full"
+                      >
+                        Edit Details
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="w-full"
+                      >
+                        View History
+                      </Button>
                     </div>
-                  </div>
-
-                  {/* Purchase Information */}
-                  <div>
-                    <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                      <span>Purchased on {item.purchaseDate}</span>
-                    </div>
-                  </div>
-
-                  {/* Notes */}
-                  {item.notes && (
-                    <div className="border-l-2 border-elec-yellow/30 pl-4">
-                      <div className="text-muted-foreground text-sm mb-1 text-left">Notes</div>
-                      <div className="text-white/90 text-left">{item.notes}</div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Flowing Action Buttons */}
-                <div className="p-8 pt-0">
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <Button 
-                      variant="outline" 
-                      className="flex-1 h-11 bg-transparent border-elec-yellow/40 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200 rounded-xl"
-                    >
-                      Update Inspection
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      className="flex-1 h-11 bg-transparent border-elec-yellow/40 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200 rounded-xl"
-                    >
-                      Edit Details
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      className="flex-1 h-11 bg-transparent border-elec-yellow/40 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200 rounded-xl"
-                    >
-                      View History
-                    </Button>
                   </div>
                 </div>
               </CardContent>
