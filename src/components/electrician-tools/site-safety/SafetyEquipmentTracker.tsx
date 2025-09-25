@@ -126,47 +126,39 @@ const SafetyEquipmentTracker = () => {
 
   return (
     <div className="space-y-6">
-      {/* Statistics Overview */}
-      <Card className="border-elec-yellow/20 bg-card">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-semibold text-elec-yellow">
-            Equipment Overview
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {/* Total Equipment */}
-            <div className="lg:col-span-1 bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 text-center hover:bg-blue-500/15 transition-colors">
-              <div className="text-2xl font-bold text-blue-400 mb-1">{stats.total}</div>
-              <div className="text-sm text-muted-foreground">Total Equipment</div>
-            </div>
-            
-            {/* Good Condition */}
-            <div className="lg:col-span-1 bg-green-500/10 border border-green-500/20 rounded-lg p-4 text-center hover:bg-green-500/15 transition-colors">
-              <div className="text-2xl font-bold text-green-400 mb-1">{stats.good}</div>
-              <div className="text-sm text-muted-foreground">Good Condition</div>
-            </div>
-            
-            {/* Needs Attention */}
-            <div className="lg:col-span-1 bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 text-center hover:bg-yellow-500/15 transition-colors">
-              <div className="text-2xl font-bold text-yellow-400 mb-1">{stats.needsAttention}</div>
-              <div className="text-sm text-muted-foreground">Needs Attention</div>
-            </div>
-            
-            {/* Overdue */}
-            <div className="lg:col-span-1 bg-orange-500/10 border border-orange-500/20 rounded-lg p-4 text-center hover:bg-orange-500/15 transition-colors">
-              <div className="text-2xl font-bold text-orange-400 mb-1">{stats.overdue}</div>
-              <div className="text-sm text-muted-foreground">Overdue</div>
-            </div>
-            
-            {/* Out of Service */}
-            <div className="lg:col-span-1 bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-center hover:bg-red-500/15 transition-colors">
-              <div className="text-2xl font-bold text-red-400 mb-1">{stats.outOfService}</div>
-              <div className="text-sm text-muted-foreground">Out of Service</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Statistics */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <Card className="border-blue-500/30">
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-blue-400">{stats.total}</div>
+            <div className="text-sm text-muted-foreground">Total Equipment</div>
+          </CardContent>
+        </Card>
+        <Card className="border-green-500/30">
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-green-400">{stats.good}</div>
+            <div className="text-sm text-muted-foreground">Good Condition</div>
+          </CardContent>
+        </Card>
+        <Card className="border-yellow-500/30">
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-yellow-400">{stats.needsAttention}</div>
+            <div className="text-sm text-muted-foreground">Needs Attention</div>
+          </CardContent>
+        </Card>
+        <Card className="border-orange-500/30">
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-orange-400">{stats.overdue}</div>
+            <div className="text-sm text-muted-foreground">Overdue</div>
+          </CardContent>
+        </Card>
+        <Card className="border-red-500/30">
+          <CardContent className="p-4 text-center">
+            <div className="text-2xl font-bold text-red-400">{stats.outOfService}</div>
+            <div className="text-sm text-muted-foreground">Out of Service</div>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Search and Filters */}
       <Card className="border-elec-yellow/20 bg-card">
