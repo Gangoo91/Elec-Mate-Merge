@@ -216,8 +216,9 @@ const HazardDatabase = () => {
 
                 <p className="text-muted-foreground mb-4 text-sm sm:text-base">{hazard.description}</p>
 
-                {/* Content Grid - Stacked on Mobile */}
-                <div className="space-y-4 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
+                {/* Content Grid - Enhanced Mobile-First Layout */}
+                <div className="space-y-6 lg:grid lg:grid-cols-2 lg:gap-8 lg:space-y-0"
+                     style={{ containerType: 'inline-size' }}>
                   <div>
                     <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Common Control Measures:</h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
