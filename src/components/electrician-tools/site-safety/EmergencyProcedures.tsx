@@ -1,11 +1,11 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AlertTriangle, Phone, MapPin, Clock, Users, FileText, Shield, Printer, Download } from "lucide-react";
 
 const EmergencyProcedures = () => {
+  const [activeTab, setActiveTab] = useState("contacts");
   const emergencyContacts = [
     { service: "Emergency Services", number: "999", description: "Fire, Police, Ambulance" },
     { service: "HSE Emergency", number: "0300 003 1747", description: "Health & Safety Executive" },
@@ -49,28 +49,48 @@ const EmergencyProcedures = () => {
       </Card>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <Card className="cursor-pointer hover:bg-elec-gray/80 transition-colors border-elec-yellow/20 bg-elec-gray/50">
+        <Card 
+          className={`cursor-pointer transition-colors border-elec-yellow/20 ${
+            activeTab === "contacts" ? "bg-elec-yellow/20" : "bg-elec-gray/50 hover:bg-elec-gray/80"
+          }`}
+          onClick={() => setActiveTab("contacts")}
+        >
           <CardContent className="p-4 text-center">
             <Phone className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
             <h3 className="font-medium text-sm">Emergency Contacts</h3>
           </CardContent>
         </Card>
         
-        <Card className="cursor-pointer hover:bg-elec-gray/80 transition-colors border-elec-yellow/20 bg-elec-gray/50">
+        <Card 
+          className={`cursor-pointer transition-colors border-elec-yellow/20 ${
+            activeTab === "evacuation" ? "bg-elec-yellow/20" : "bg-elec-gray/50 hover:bg-elec-gray/80"
+          }`}
+          onClick={() => setActiveTab("evacuation")}
+        >
           <CardContent className="p-4 text-center">
             <MapPin className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
             <h3 className="font-medium text-sm">Evacuation</h3>
           </CardContent>
         </Card>
         
-        <Card className="cursor-pointer hover:bg-elec-gray/80 transition-colors border-elec-yellow/20 bg-elec-gray/50">
+        <Card 
+          className={`cursor-pointer transition-colors border-elec-yellow/20 ${
+            activeTab === "first-aid" ? "bg-elec-yellow/20" : "bg-elec-gray/50 hover:bg-elec-gray/80"
+          }`}
+          onClick={() => setActiveTab("first-aid")}
+        >
           <CardContent className="p-4 text-center">
             <Shield className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
             <h3 className="font-medium text-sm">First Aid</h3>
           </CardContent>
         </Card>
         
-        <Card className="cursor-pointer hover:bg-elec-gray/80 transition-colors border-elec-yellow/20 bg-elec-gray/50">
+        <Card 
+          className={`cursor-pointer transition-colors border-elec-yellow/20 ${
+            activeTab === "procedures" ? "bg-elec-yellow/20" : "bg-elec-gray/50 hover:bg-elec-gray/80"
+          }`}
+          onClick={() => setActiveTab("procedures")}
+        >
           <CardContent className="p-4 text-center">
             <FileText className="h-6 w-6 text-elec-yellow mx-auto mb-2" />
             <h3 className="font-medium text-sm">Procedures</h3>
@@ -78,9 +98,9 @@ const EmergencyProcedures = () => {
         </Card>
       </div>
 
-      <Tabs defaultValue="contacts" className="w-full">
+      <div className="w-full">
 
-        <TabsContent value="contacts" className="mt-6">
+        {activeTab === "contacts" && (
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
               <CardTitle className="text-elec-yellow flex items-center gap-2">
@@ -106,9 +126,9 @@ const EmergencyProcedures = () => {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        )}
 
-        <TabsContent value="evacuation" className="mt-6">
+        {activeTab === "evacuation" && (
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
               <CardTitle className="text-elec-yellow flex items-center gap-2">
@@ -146,9 +166,9 @@ const EmergencyProcedures = () => {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        )}
 
-        <TabsContent value="first-aid" className="mt-6">
+        {activeTab === "first-aid" && (
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
               <CardTitle className="text-elec-yellow flex items-center gap-2">
@@ -196,9 +216,9 @@ const EmergencyProcedures = () => {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        )}
 
-        <TabsContent value="procedures" className="mt-6">
+        {activeTab === "procedures" && (
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
               <CardTitle className="text-elec-yellow flex items-center gap-2">
@@ -241,8 +261,8 @@ const EmergencyProcedures = () => {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-      </Tabs>
+        )}
+      </div>
     </div>
   );
 };
