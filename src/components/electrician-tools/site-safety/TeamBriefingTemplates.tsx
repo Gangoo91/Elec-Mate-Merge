@@ -5,8 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2, X } from "lucide-react";
+import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2, X, MoreHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -510,47 +516,56 @@ const TeamBriefingTemplates = () => {
                           {template.keyPoints.length} key points, {template.safetyPoints.length} safety points
                         </p>
                       </div>
-                      <div className="flex flex-col sm:flex-row gap-1 ml-0 sm:ml-2 mt-2 sm:mt-0">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="min-h-[44px] touch-manipulation"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            duplicateTemplate(template);
-                          }}
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="min-h-[44px] min-w-[44px] touch-manipulation p-0"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent 
+                          align="end" 
+                          className="w-48"
                         >
-                          <Copy className="h-4 w-4 mr-1 sm:mr-0" />
-                          <span className="sm:hidden">Copy</span>
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="min-h-[44px] touch-manipulation"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedTemplate(template);
-                            setIsEditing(true);
-                          }}
-                        >
-                          <Edit className="h-4 w-4 mr-1 sm:mr-0" />
-                          <span className="sm:hidden">Edit</span>
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="min-h-[44px] touch-manipulation"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedTemplate(template);
-                            setNewBriefing(prev => ({ ...prev, template_id: template.id }));
-                            setShowNewBriefingForm(true);
-                          }}
-                        >
-                          <Plus className="h-4 w-4 mr-1 sm:mr-0" />
-                          <span className="sm:hidden">Use Template</span>
-                        </Button>
-                      </div>
+                          <DropdownMenuItem
+                            className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              duplicateTemplate(template);
+                            }}
+                          >
+                            <Copy className="h-4 w-4 mr-2" />
+                            Copy
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedTemplate(template);
+                              setIsEditing(true);
+                            }}
+                          >
+                            <Edit className="h-4 w-4 mr-2" />
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedTemplate(template);
+                              setNewBriefing(prev => ({ ...prev, template_id: template.id }));
+                              setShowNewBriefingForm(true);
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-2" />
+                            Use Template
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                   </CardContent>
                 </Card>
