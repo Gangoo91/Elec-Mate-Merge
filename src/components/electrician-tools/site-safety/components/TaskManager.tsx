@@ -98,6 +98,30 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
     });
   }, []);
 
+  const handleTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTask(prev => ({ ...prev, title: e.target.value }));
+  }, []);
+
+  const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNewTask(prev => ({ ...prev, description: e.target.value }));
+  }, []);
+
+  const handleCategoryChange = useCallback((value: string) => {
+    setNewTask(prev => ({ ...prev, category: value }));
+  }, []);
+
+  const handleRiskLevelChange = useCallback((value: string) => {
+    setNewTask(prev => ({ ...prev, riskLevel: value as 'low' | 'medium' | 'high' }));
+  }, []);
+
+  const handleDurationChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTask(prev => ({ ...prev, estimatedDuration: e.target.value }));
+  }, []);
+
+  const handleResponsiblePersonChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTask(prev => ({ ...prev, responsiblePerson: e.target.value }));
+  }, []);
+
   const getRiskLevelColor = (level: string) => {
     switch (level) {
       case 'low': return 'bg-green-500';
@@ -123,14 +147,14 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
           <Label className="text-white">Task Title *</Label>
           <Input
             value={newTask.title}
-            onChange={useCallback((e) => setNewTask(prev => ({ ...prev, title: e.target.value })), [])}
+            onChange={handleTitleChange}
             placeholder="Enter task title"
             className="bg-elec-dark/50 border-elec-yellow/20 text-white"
           />
         </div>
         <div>
           <Label className="text-white">Category *</Label>
-          <Select value={newTask.category} onValueChange={useCallback((value) => setNewTask(prev => ({ ...prev, category: value })), [])}>
+          <Select value={newTask.category} onValueChange={handleCategoryChange}>
             <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-white">
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
@@ -150,7 +174,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         <Label className="text-white">Description</Label>
         <Textarea
           value={newTask.description}
-          onChange={useCallback((e) => setNewTask(prev => ({ ...prev, description: e.target.value })), [])}
+          onChange={handleDescriptionChange}
           placeholder="Enter task description"
           className="bg-elec-dark/50 border-elec-yellow/20 text-white"
         />
@@ -159,7 +183,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <Label className="text-white">Risk Level</Label>
-          <Select value={newTask.riskLevel} onValueChange={useCallback((value: any) => setNewTask(prev => ({ ...prev, riskLevel: value })), [])}>
+          <Select value={newTask.riskLevel} onValueChange={handleRiskLevelChange}>
             <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/20 text-white">
               <SelectValue />
             </SelectTrigger>
@@ -174,7 +198,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
           <Label className="text-white">Duration</Label>
           <Input
             value={newTask.estimatedDuration}
-            onChange={useCallback((e) => setNewTask(prev => ({ ...prev, estimatedDuration: e.target.value })), [])}
+            onChange={handleDurationChange}
             placeholder="e.g. 2 hours"
             className="bg-elec-dark/50 border-elec-yellow/20 text-white"
           />
@@ -183,7 +207,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
           <Label className="text-white">Responsible Person</Label>
           <Input
             value={newTask.responsiblePerson}
-            onChange={useCallback((e) => setNewTask(prev => ({ ...prev, responsiblePerson: e.target.value })), [])}
+            onChange={handleResponsiblePersonChange}
             placeholder="Enter name"
             className="bg-elec-dark/50 border-elec-yellow/20 text-white"
           />
