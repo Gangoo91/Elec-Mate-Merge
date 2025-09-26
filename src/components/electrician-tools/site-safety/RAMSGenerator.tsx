@@ -211,11 +211,19 @@ const RAMSGenerator: React.FC = () => {
 
     setIsGenerating(true);
     try {
-      await generateRAMSPDF(ramsData, { 
+      const pdfDataUri = generateRAMSPDF(ramsData, { 
         ...reportOptions, 
         signOff,
         includeSignatures: true 
       });
+      
+      // Create download link and trigger download
+      const link = document.createElement('a');
+      link.href = pdfDataUri;
+      link.download = `${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || 'RAMS_Document'}_${new Date().toISOString().split('T')[0].replace(/-/g, '')}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
       toast({
         title: 'PDF Generated Successfully',
         description: 'Professional RAMS document has been downloaded.',

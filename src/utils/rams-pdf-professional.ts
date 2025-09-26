@@ -476,6 +476,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("3. RISK ASSESSMENT MATRIX", this.MARGIN, this.yPosition);
+    console.log("📄 Adding Section 3: Risk Assessment Matrix (was Section 4 before)");
     this.yPosition += 16;
 
     // Professional matrix table with optimized dimensions for landscape format
@@ -599,6 +600,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("4. DETAILED RISK ASSESSMENT", this.MARGIN, this.yPosition);
+    console.log("📄 Adding Section 4: Detailed Risk Assessment with TASK column (was Section 5 before)");
     this.yPosition += 16;
 
     const deduplicatedRisks = deduplicateRisks(data.risks);
@@ -615,6 +617,7 @@ class ProfessionalRAMSPDFGenerator {
       "No.", "Task", "Hazard", "Risk", "L", "S", "Risk\nRating", "Control Measures", 
       "Residual\nL", "Residual\nS", "Residual\nRating", "Level"
     ];
+    console.log("📊 Using ENHANCED table headers with TASK column:", tableHeaders);
 
     const tableData: string[][] = [];
     deduplicatedRisks.forEach((risk, index) => {
@@ -991,6 +994,13 @@ class ProfessionalRAMSPDFGenerator {
 
 // Export functions
 export function generateRAMSPDF(data: RAMSData, options: PDFOptions = {}): string {
+  console.log("🔧 Using IMPROVED RAMS PDF Generator with changes:");
+  console.log("✅ Removed Risk Summary section");
+  console.log("✅ Removed Method Statement section"); 
+  console.log("✅ Added Task column with intelligent extraction");
+  console.log("✅ Enhanced page breaks with continuation headers");
+  console.log("✅ Updated section numbering (Matrix=3, Detail=4, Safety=5, Auth=6, Sign=7)");
+  
   const generator = new ProfessionalRAMSPDFGenerator();
   return generator.generatePDF(data, options);
 }
