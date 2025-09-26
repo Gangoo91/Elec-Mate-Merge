@@ -149,33 +149,34 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                   <CardContent className="p-4">
                     <div className="space-y-3">
                       {/* Header Section */}
-                      <div className="grid grid-cols-[auto_1fr_auto] gap-4 items-center">
-                        <div className="p-3 rounded-lg bg-primary/10 border border-primary/20">
-                          <IconComponent className="h-6 w-6 text-primary" />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-3">
-                            <h4 className="font-semibold text-white text-lg">{hazard.name}</h4>
-                            <AlertTriangle className={`h-5 w-5 ${
-                              hazard.riskLevel === "Very High" ? "text-red-500" :
-                              hazard.riskLevel === "High" ? "text-orange-500" :
-                              hazard.riskLevel === "Medium" ? "text-yellow-500" : "text-green-500"
-                            }`} />
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex items-start gap-4 flex-1">
+                          <div className="p-2 rounded-full bg-primary/20 flex-shrink-0 mt-1">
+                            <IconComponent className="h-5 w-5 text-primary" />
                           </div>
-                          <div className="flex items-center gap-3">
-                            <Badge variant="outline" className="text-xs border-primary/30 text-muted-foreground">
-                              {hazard.category}
-                            </Badge>
-                            <Badge className={`${getRiskColor(hazard.riskLevel)} text-white text-xs`}>
-                              {hazard.riskLevel}
-                            </Badge>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-white text-base mb-2">{hazard.name}</h4>
+                            <div className="flex flex-wrap gap-2">
+                              <Badge variant="outline" className="text-xs border-primary/30 text-muted-foreground">
+                                {hazard.category}
+                              </Badge>
+                              <Badge className={`${getRiskColor(hazard.riskLevel)} text-white text-xs`}>
+                                {hazard.riskLevel}
+                              </Badge>
+                            </div>
                           </div>
                         </div>
                         
-                        <Button size="lg" variant={isLinked ? "destructive" : "default"} className="h-12 w-12 rounded-full">
-                          {isLinked ? <X className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
-                        </Button>
+                        <div className="flex flex-col items-center gap-2 flex-shrink-0">
+                          <AlertTriangle className={`h-5 w-5 ${
+                            hazard.riskLevel === "Very High" ? "text-red-500" :
+                            hazard.riskLevel === "High" ? "text-orange-500" :
+                            hazard.riskLevel === "Medium" ? "text-yellow-500" : "text-green-500"
+                          }`} />
+                          <Button size="sm" variant={isLinked ? "destructive" : "default"}>
+                            {isLinked ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                          </Button>
+                        </div>
                       </div>
                       
                       {/* Description */}
