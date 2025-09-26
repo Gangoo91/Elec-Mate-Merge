@@ -149,14 +149,14 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                   <CardContent className="p-4">
                     <div className="space-y-3">
                       {/* Header Section */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 rounded-full bg-primary/20 flex-shrink-0">
-                            <IconComponent className="h-4 w-4 text-primary" />
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex items-start gap-4 flex-1">
+                          <div className="p-2 rounded-full bg-primary/20 flex-shrink-0 mt-1">
+                            <IconComponent className="h-5 w-5 text-primary" />
                           </div>
-                          <div>
-                            <h4 className="font-medium text-white leading-tight">{hazard.name}</h4>
-                            <div className="flex items-center gap-2 mt-1">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-white text-base mb-2">{hazard.name}</h4>
+                            <div className="flex flex-wrap gap-2">
                               <Badge variant="outline" className="text-xs border-primary/30 text-muted-foreground">
                                 {hazard.category}
                               </Badge>
@@ -167,8 +167,8 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                           </div>
                         </div>
                         
-                        <div className="flex items-center gap-2">
-                          <AlertTriangle className={`h-4 w-4 flex-shrink-0 ${
+                        <div className="flex flex-col items-center gap-2 flex-shrink-0">
+                          <AlertTriangle className={`h-5 w-5 ${
                             hazard.riskLevel === "Very High" ? "text-red-500" :
                             hazard.riskLevel === "High" ? "text-orange-500" :
                             hazard.riskLevel === "Medium" ? "text-yellow-500" : "text-green-500"
