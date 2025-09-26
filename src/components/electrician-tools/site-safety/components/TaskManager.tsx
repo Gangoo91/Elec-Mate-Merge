@@ -274,7 +274,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         {tasks.length > 0 && (
           <div className="space-y-3">
             {tasks.map((task) => (
-              <Card key={task.id} className="group border-elec-yellow/30 bg-elec-dark/20 hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/10 animate-fade-in">
+              <Card key={task.id} className="group border-elec-yellow/30 bg-elec-dark/20 hover:border-elec-yellow/50 transition-all duration-300 animate-fade-in">
                 <CardContent className="p-0">
                   {/* Header Section with Title and Actions */}
                   <div className="flex items-start justify-between p-4 pb-3 border-b border-elec-yellow/10">
