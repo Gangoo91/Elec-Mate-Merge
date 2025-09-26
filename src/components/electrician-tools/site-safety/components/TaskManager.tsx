@@ -282,7 +282,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                       <h4 className="font-semibold text-white text-lg mb-1 truncate group-hover:text-elec-yellow transition-colors">
                         {task.title}
                       </h4>
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-center gap-2 mb-2 pt-3">
                         <Badge 
                           variant="secondary" 
                           className="bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/25 text-xs font-medium px-2 py-1 rounded-full"
