@@ -116,6 +116,7 @@ const EmergencyProcedures = () => {
                       <h4 className="font-medium text-white">{contact.service}</h4>
                       <span className="text-xl font-bold text-elec-yellow">{contact.number}</span>
                     </div>
+                    <div className="text-sm text-elec-yellow/70 mb-2">#{index + 1}</div>
                     <p className="text-sm text-muted-foreground">{contact.description}</p>
                     <Button variant="outline" size="sm" className="mt-2 w-full">
                       <Phone className="h-4 w-4 mr-2" />
