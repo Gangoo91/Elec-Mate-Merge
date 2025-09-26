@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Cable, Zap, ArrowRight, CheckCircle, Info } from "lucide-react";
+import { Cable, Zap, ArrowRight, CheckCircle, Info, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { InstallPlanData } from "./types";
 
@@ -26,98 +26,198 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="text-center space-y-3">
-        <h2 className="text-xl sm:text-2xl font-bold">Choose Design Mode</h2>
-        <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
-          Select your installation type to get started with professional electrical design.
+    <div className="space-y-8">
+      <div className="text-center space-y-4">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-elec-yellow/10 border border-elec-yellow/20 rounded-full">
+          <Sparkles className="h-4 w-4 text-elec-yellow" />
+          <span className="text-xs font-medium text-elec-yellow">Step 1 of {currentMode === "multi" ? "5" : "6"}</span>
+        </div>
+        <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-elec-yellow to-yellow-400 bg-clip-text text-transparent">
+          Choose Design Mode
+        </h2>
+        <p className="text-white/80 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          Select your installation type to get started with professional electrical design and BS 7671 compliance.
         </p>
       </div>
 
-      {/* Mode Selector - Clean Toggle Style */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+      {/* Mode Selector - Enhanced with glassmorphism */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
         <Card 
-          className={`cursor-pointer border-2 transition-all active:scale-95 ${
+          className={`group cursor-pointer border-2 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${
             currentMode === "single" 
-              ? 'border-elec-yellow bg-elec-gray shadow-lg' 
-              : 'border-elec-yellow/20 hover:border-elec-yellow/40 bg-elec-gray'
+              ? 'border-elec-yellow bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 shadow-2xl shadow-elec-yellow/20' 
+              : 'border-elec-yellow/30 hover:border-elec-yellow/60 bg-elec-gray/80 hover:bg-gradient-to-br hover:from-elec-yellow/5 hover:to-transparent'
           }`}
           onClick={() => selectMode("single")}
         >
-          <CardContent className="p-4 sm:p-6 text-center space-y-3 sm:space-y-4">
-            <Cable className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow mx-auto" />
-            <div className="space-y-2">
-              <div className="flex items-center justify-center gap-2">
-                <h3 className="font-semibold text-base sm:text-lg text-elec-yellow">Single Circuit</h3>
-                {currentMode === "single" && <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />}
+          <CardContent className="p-6 sm:p-8 text-center space-y-4">
+            <div className={`relative transition-transform duration-300 ${currentMode === "single" ? 'animate-pulse' : 'group-hover:rotate-6'}`}>
+              <Cable className={`h-10 w-10 sm:h-12 sm:w-12 mx-auto transition-colors duration-300 ${
+                currentMode === "single" ? 'text-elec-yellow' : 'text-elec-yellow/80 group-hover:text-elec-yellow'
+              }`} />
+              {currentMode === "single" && (
+                <div className="absolute -top-1 -right-1">
+                  <CheckCircle className="h-6 w-6 text-green-400 bg-elec-gray rounded-full" />
+                </div>
+              )}
+            </div>
+            <div className="space-y-3">
+              <h3 className={`font-bold text-lg sm:text-xl transition-colors duration-300 ${
+                currentMode === "single" ? 'text-elec-yellow' : 'text-white group-hover:text-elec-yellow'
+              }`}>
+                Single Circuit
+              </h3>
+              <p className="text-sm sm:text-base text-white/70 leading-relaxed">
+                Individual appliance or circuit design
+              </p>
+              <div className={`text-xs px-3 py-1 rounded-full border inline-block transition-all duration-300 ${
+                currentMode === "single" 
+                  ? 'text-elec-yellow bg-elec-yellow/10 border-elec-yellow/30' 
+                  : 'text-white/60 border-white/20 group-hover:text-elec-yellow group-hover:border-elec-yellow/30'
+              }`}>
+                Fast & Simple
               </div>
-              <p className="text-xs sm:text-sm text-white">Individual appliance or circuit</p>
             </div>
           </CardContent>
         </Card>
 
         <Card 
-          className={`cursor-pointer border-2 transition-all active:scale-95 ${
+          className={`group cursor-pointer border-2 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${
             currentMode === "multi" 
-              ? 'border-elec-yellow bg-elec-gray shadow-lg' 
-              : 'border-elec-yellow/20 hover:border-elec-yellow/40 bg-elec-gray'
+              ? 'border-elec-yellow bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 shadow-2xl shadow-elec-yellow/20' 
+              : 'border-elec-yellow/30 hover:border-elec-yellow/60 bg-elec-gray/80 hover:bg-gradient-to-br hover:from-elec-yellow/5 hover:to-transparent'
           }`}
           onClick={() => selectMode("multi")}
         >
-          <CardContent className="p-4 sm:p-6 text-center space-y-3 sm:space-y-4">
-            <Zap className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow mx-auto" />
-            <div className="space-y-2">
-              <div className="flex items-center justify-center gap-2">
-                <h3 className="font-semibold text-base sm:text-lg text-elec-yellow">Multi-Circuit</h3>
-                {currentMode === "multi" && <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />}
+          <CardContent className="p-6 sm:p-8 text-center space-y-4">
+            <div className={`relative transition-transform duration-300 ${currentMode === "multi" ? 'animate-pulse' : 'group-hover:scale-110'}`}>
+              <Zap className={`h-10 w-10 sm:h-12 sm:w-12 mx-auto transition-colors duration-300 ${
+                currentMode === "multi" ? 'text-elec-yellow' : 'text-elec-yellow/80 group-hover:text-elec-yellow'
+              }`} />
+              {currentMode === "multi" && (
+                <div className="absolute -top-1 -right-1">
+                  <CheckCircle className="h-6 w-6 text-green-400 bg-elec-gray rounded-full" />
+                </div>
+              )}
+            </div>
+            <div className="space-y-3">
+              <h3 className={`font-bold text-lg sm:text-xl transition-colors duration-300 ${
+                currentMode === "multi" ? 'text-elec-yellow' : 'text-white group-hover:text-elec-yellow'
+              }`}>
+                Multi-Circuit
+              </h3>
+              <p className="text-sm sm:text-base text-white/70 leading-relaxed">
+                Complete installation system design
+              </p>
+              <div className={`text-xs px-3 py-1 rounded-full border inline-block transition-all duration-300 ${
+                currentMode === "multi" 
+                  ? 'text-elec-yellow bg-elec-yellow/10 border-elec-yellow/30' 
+                  : 'text-white/60 border-white/20 group-hover:text-elec-yellow group-hover:border-elec-yellow/30'
+              }`}>
+                Comprehensive
               </div>
-              <p className="text-xs sm:text-sm text-white">Complete installation system</p>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Contextual Information */}
+      {/* Enhanced Information Panel */}
       {currentMode && (
-        <Card className="border-elec-yellow/20 bg-elec-gray max-w-2xl mx-auto">
-          <CardContent className="p-4">
-            <div className="text-center space-y-4">
-              <h4 className="font-medium text-elec-yellow">
-                {currentMode === "single" ? "Single Circuit Design" : "Multi-Circuit Installation"}
-              </h4>
-              
-               <div className="space-y-3 text-sm text-white">
-                 {currentMode === "single" ? (
-                   <>
-                     <div>
-                       <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
-                       <p>Individual appliances, socket circuits, lighting circuits, or simple upgrades.</p>
-                     </div>
-                     <div>
-                       <p className="font-medium text-elec-yellow mb-2">Features:</p>
-                       <p>Fast cable sizing, protection calculations, and BS 7671 compliance checking.</p>
-                     </div>
-                   </>
-                 ) : (
-                   <>
-                     <div>
-                       <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
-                       <p>New builds, rewires, commercial installations, or complex multi-zone systems.</p>
-                     </div>
-                     <div>
-                       <p className="font-medium text-elec-yellow mb-2">Features:</p>
-                       <p>System-wide analysis, diversity calculations, supply sizing, and environmental zoning.</p>
-                     </div>
-                     <div>
-                       <p className="font-medium text-elec-yellow mb-2">Benefits:</p>
-                       <p>Optimised load balancing, consumer unit selection, and comprehensive compliance documentation.</p>
-                     </div>
-                   </>
-                 )}
+        <div className="max-w-4xl mx-auto">
+          <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray to-elec-gray/50 backdrop-blur-sm">
+            <CardContent className="p-6 sm:p-8">
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h4 className="font-bold text-xl text-elec-yellow mb-2">
+                    {currentMode === "single" ? "Single Circuit Design" : "Multi-Circuit Installation"}
+                  </h4>
+                  <div className="h-1 w-16 bg-gradient-to-r from-elec-yellow to-transparent mx-auto rounded-full"></div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {currentMode === "single" ? (
+                    <>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                          <p className="font-semibold text-elec-yellow">Ideal for:</p>
+                        </div>
+                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                          Individual appliances, socket circuits, lighting circuits, or simple upgrades.
+                        </p>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                          <p className="font-semibold text-elec-yellow">Features:</p>
+                        </div>
+                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                          Fast cable sizing, protection calculations, and BS 7671 compliance checking.
+                        </p>
+                      </div>
+                      <div className="space-y-3 md:col-span-2 lg:col-span-1">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                          <p className="font-semibold text-green-400">Time Estimate:</p>
+                        </div>
+                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                          Complete in 2-3 minutes
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                          <p className="font-semibold text-elec-yellow">Ideal for:</p>
+                        </div>
+                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                          New builds, rewires, commercial installations, or complex multi-zone systems.
+                        </p>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                          <p className="font-semibold text-elec-yellow">Features:</p>
+                        </div>
+                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                          System-wide analysis, diversity calculations, supply sizing, and environmental zoning.
+                        </p>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                          <p className="font-semibold text-elec-yellow">Benefits:</p>
+                        </div>
+                        <p className="text-white/80 text-sm leading-relaxed pl-4">
+                          Optimised load balancing, consumer unit selection, and comprehensive compliance documentation.
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* Continue Button */}
+                {currentMode && (
+                  <div className="text-center pt-4 border-t border-elec-yellow/20">
+                    <Button 
+                      className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 active:scale-95"
+                      onClick={() => {
+                        // This will be handled by the parent component's navigation
+                        const event = new CustomEvent('proceedToNext');
+                        window.dispatchEvent(event);
+                      }}
+                    >
+                      Get Started
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                )}
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   );
