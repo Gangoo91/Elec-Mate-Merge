@@ -78,7 +78,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
           </p>
           {!selectedTemplate && (
             <div className="mt-3 flex items-center gap-2 text-sm text-blue-300/80">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
               <span>Select a template below to continue</span>
             </div>
           )}
@@ -189,7 +189,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
               transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
               focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:ring-offset-2 focus:ring-offset-background
               ${selectedTemplate?.id === template.id
-                ? 'border-elec-yellow bg-elec-yellow/10 shadow-lg ring-2 ring-elec-yellow/20 animate-pulse'
+                ? 'border-elec-yellow bg-elec-yellow/10 shadow-lg ring-2 ring-elec-yellow/20'
                 : 'border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 hover:shadow-md hover:bg-elec-yellow/5'
               }
               ${template.isPopular ? 'relative overflow-hidden' : ''}
@@ -210,7 +210,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                   <div className="flex items-center gap-2">
                     {template.isPopular && (
                       <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 flex-shrink-0 animate-pulse" />
+                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 flex-shrink-0" />
                         <span className="text-xs text-yellow-400 font-medium">Popular</span>
                       </div>
                     )}
@@ -223,7 +223,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                       {template.difficultyLevel}
                     </Badge>
                     {focusedTemplate === template.id && (
-                      <div className="text-xs text-elec-yellow animate-pulse">
+                      <div className="text-xs text-elec-yellow">
                         Press Enter to select
                       </div>
                     )}
@@ -273,7 +273,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                   <span>Method Steps ({template.steps.length}):</span>
                   {selectedTemplate?.id === template.id && (
                     <div className="flex items-center gap-1 text-xs text-green-400">
-                      <ArrowRight className="h-3 w-3 animate-pulse" />
+                      <ArrowRight className="h-3 w-3" />
                       <span>Ready to use</span>
                     </div>
                   )}
