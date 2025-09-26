@@ -153,7 +153,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
     }
   }, [showAddTask, editingTask]);
 
-  const TaskForm = () => (
+  const TaskForm = React.useMemo(() => (
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
@@ -249,7 +249,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         </Button>
       </div>
     </div>
-  );
+  ), [newTask, editingTask, handleTitleChange, handleDescriptionChange, handleCategoryChange, handleRiskLevelChange, handleDurationChange, handleResponsiblePersonChange, handleAddTask, handleSaveEdit, handleCancelEdit]);
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray/60">
@@ -269,7 +269,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        {(showAddTask || editingTask) && <TaskForm />}
+        {(showAddTask || editingTask) && TaskForm}
         
         {tasks.length > 0 && (
           <div className="space-y-3">
