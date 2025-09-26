@@ -1,5 +1,6 @@
 import { InstallPlanData, CableRecommendation } from "./types";
-import { getTemperatureFactor } from "@/lib/calculators/bs7671-data";
+import { getTemperatureFactor, getGroupingFactor } from "@/lib/calculators/bs7671-data";
+import { getSimpleCableSpec, getAvailableSizes, SIMPLIFIED_CABLE_DATABASE } from "./SimplifiedCableDatabase";
 
 interface CableTypeProfile {
   temperatureRating: number;
@@ -192,22 +193,28 @@ export class IntelligentCableEngine {
       : planData.totalLoad / (planData.voltage * Math.sqrt(3) * (planData.powerFactor || 0.9));
     
     // Get available cable sizes for the selected type
-    const availableSizes = ["1.5", "2.5", "4.0", "6.0", "10.0", "16.0", "25.0", "35.0", "50.0", "70.0", "95.0", "120.0", "150.0", "185.0", "240.0"];
+    const availableSizes = getAvailableSizes(optimalCableType);
     
     const recommendations: CableRecommendation[] = [];
     
     availableSizes.forEach(size => {
-      // Get base cable capacity (simplified for MVP)
-      const baseCapacity = parseFloat(size) * 20; // Simplified calculation
+      // Get proper cable specification from BS 7671 compliant database
+      const cableSpec = getSimpleCableSpec(optimalCableType, size);
+      if (!cableSpec) return;
       
-      // Apply derating factors
-      const tempFactor = 0.9; // Simplified temp factor
-      const groupingFactor = planData.groupingFactor || 1.0;
+      // Get base capacity for the selected installation method
+      const baseCapacity = cableSpec.capacity[optimalInstallationMethod] || cableSpec.capacity["clipped-direct"];
+      
+      // Apply proper BS 7671 derating factors
+      const ambientTemp = planData.ambientTemperature || 30;
+      const temperatureRating = cableSpec.tempRating === 90 ? '90C' : '70C';
+      const tempFactor = getTemperatureFactor(ambientTemp, temperatureRating);
+      const groupingFactor = getGroupingFactor(planData.groupingFactor || 1);
       const deratedCapacity = baseCapacity * tempFactor * groupingFactor;
       
-      // Calculate voltage drop (simplified)
+      // Calculate voltage drop using proper resistance values
       const voltageDropPercentage = this.calculateVoltageDropPercentage(
-        planData.voltage, planData.cableLength, designCurrent, size, planData.phases
+        planData.voltage, planData.cableLength, designCurrent, cableSpec.resistance, planData.phases
       );
       
       // Determine suitability
@@ -220,27 +227,26 @@ export class IntelligentCableEngine {
         suitability = "marginal";
       }
       
-      // Calculate estimated cost
-      const cableProfile = CABLE_PROFILES[optimalCableType];
-      const baseCostPerMeter = this.getBaseCablePrice(parseFloat(size));
-      const estimatedCost = baseCostPerMeter * cableProfile.costMultiplier * planData.cableLength;
+        // Calculate estimated cost using database cost levels
+        const baseCostPerMeter = this.getBaseCablePriceFromSpec(cableSpec);
+        const estimatedCost = baseCostPerMeter * planData.cableLength;
       
-      recommendations.push({
-        size: `${size}mm²`,
-        type: optimalCableType,
-        currentCarryingCapacity: deratedCapacity,
-        voltageDropPercentage,
-        ratedCurrent: this.getRecommendedProtectionRating(deratedCapacity, designCurrent),
-        suitability,
-        notes: this.generateIntelligentNotes(enhancedPlanData, size, suitability),
-        cost: this.getCostCategory(estimatedCost),
-        availability: this.getAvailabilityStatus(optimalCableType, size),
-        installationComplexity: this.getInstallationComplexity(optimalInstallationMethod),
-        specialConsiderations: this.getSpecialConsiderations(enhancedPlanData, optimalCableType),
-        temperatureDerating: tempFactor,
-        groupingDerating: groupingFactor,
-        environmentalSuitability: `Optimal for ${planData.environmentalConditions?.replace('-', ' ')}`
-      });
+        recommendations.push({
+          size: `${size}mm²`,
+          type: optimalCableType,
+          currentCarryingCapacity: Math.round(deratedCapacity * 10) / 10,
+          voltageDropPercentage: Math.round(voltageDropPercentage * 100) / 100,
+          ratedCurrent: this.getRecommendedProtectionRating(deratedCapacity, designCurrent),
+          suitability,
+          notes: this.generateIntelligentNotes(enhancedPlanData, size, suitability, cableSpec),
+          cost: cableSpec.costLevel,
+          availability: this.getAvailabilityFromSpec(cableSpec, size),
+          installationComplexity: this.getInstallationComplexity(optimalInstallationMethod),
+          specialConsiderations: this.getSpecialConsiderations(enhancedPlanData, optimalCableType),
+          temperatureDerating: Math.round(tempFactor * 100) / 100,
+          groupingDerating: Math.round(groupingFactor * 100) / 100,
+          environmentalSuitability: `${cableSpec.description} - ${cableSpec.applications[0]}`
+        });
     });
     
     return recommendations
@@ -322,23 +328,25 @@ export class IntelligentCableEngine {
   }
   
   // Helper methods
-  private static calculateVoltageDropPercentage(voltage: number, length: number, current: number, size: string, phases: string): number {
-    // Simplified voltage drop calculation - BS 7671 Appendix 4
-    const resistancePerKm = this.getCableResistance(size);
+  private static calculateVoltageDropPercentage(voltage: number, length: number, current: number, resistanceMvPerAmpPerM: number, phases: string): number {
+    // Proper voltage drop calculation using BS 7671 Appendix 4
+    // Convert mV/A/m to voltage drop percentage
     const voltageDrop = phases === "single" 
-      ? current * resistancePerKm * length / 1000
-      : current * resistancePerKm * length / 1000 * Math.sqrt(3);
+      ? current * resistanceMvPerAmpPerM * length / 1000 // mV to V
+      : current * resistanceMvPerAmpPerM * length / 1000 * Math.sqrt(3);
     
     return (voltageDrop / voltage) * 100;
   }
   
-  private static getCableResistance(size: string): number {
-    const resistances: Record<string, number> = {
-      "1.5": 12.1, "2.5": 7.41, "4.0": 4.61, "6.0": 3.08, "10.0": 1.83,
-      "16.0": 1.15, "25.0": 0.727, "35.0": 0.524, "50.0": 0.387, "70.0": 0.268,
-      "95.0": 0.193, "120.0": 0.153, "150.0": 0.124, "185.0": 0.0991, "240.0": 0.0754
-    };
-    return resistances[size] || 1.0;
+  private static getBaseCablePriceFromSpec(cableSpec: any): number {
+    // Base prices per meter in £ based on cost level from database
+    switch (cableSpec.costLevel) {
+      case "low": return 2.50;
+      case "medium": return 4.20;
+      case "high": return 7.50;
+      case "very-high": return 12.00;
+      default: return 3.00;
+    }
   }
   
   private static getBaseCablePrice(size: number): number {
@@ -368,11 +376,12 @@ export class IntelligentCableEngine {
     return "very-high";
   }
   
-  private static getAvailabilityStatus(cableType: string, size: string): "common" | "limited" | "special-order" {
+  private static getAvailabilityFromSpec(cableSpec: any, size: string): "common" | "limited" | "special-order" {
     const sizeNum = parseFloat(size);
-    if (cableType === "pvc-twin-earth" && sizeNum <= 10) return "common";
-    if (cableType === "swa-xlpe" && sizeNum <= 25) return "common";
-    if (sizeNum > 95) return "special-order";
+    // Use database information for availability
+    if (cableSpec.costLevel === "low" && sizeNum <= 10) return "common";
+    if (cableSpec.costLevel === "medium" && sizeNum <= 25) return "common";
+    if (sizeNum > 50 || cableSpec.costLevel === "very-high") return "special-order";
     return "limited";
   }
   
@@ -406,7 +415,7 @@ export class IntelligentCableEngine {
     return considerations;
   }
   
-  private static generateIntelligentNotes(planData: InstallPlanData, size: string, suitability: string): string[] {
+  private static generateIntelligentNotes(planData: InstallPlanData, size: string, suitability: string, cableSpec: any): string[] {
     const notes: string[] = [];
     
     if (suitability === "suitable") {
@@ -420,8 +429,15 @@ export class IntelligentCableEngine {
       notes.push("Large cable - ensure adequate support and termination facilities");
     }
     
-    if (planData.cableLength > 50) {
+    if (planData.cableLength > cableSpec.maxLength) {
+      notes.push(`Cable run exceeds recommended maximum of ${cableSpec.maxLength}m`);
+    } else if (planData.cableLength > 50) {
       notes.push("Long cable run - voltage drop is critical factor");
+    }
+    
+    // Add application-specific notes from database
+    if (cableSpec.applications && cableSpec.applications.length > 0) {
+      notes.push(`Ideal for: ${cableSpec.applications.join(', ')}`);
     }
     
     return notes;
