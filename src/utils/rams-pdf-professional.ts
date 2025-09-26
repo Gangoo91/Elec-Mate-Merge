@@ -328,7 +328,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(51, 65, 85);
     this.doc.setFontSize(9);
     this.doc.setFont("helvetica", "normal");
-    const purposeText = "This document identifies hazards and establishes control measures for electrical work activities, ensuring compliance with Health & Safety at Work Act 1974, CDM Regulations 2015, and BS 7671:2018+A2:2022.";
+    const purposeText = "This document identifies hazards and establishes control measures for electrical work activities, ensuring compliance with Health & Safety at Work Act 1974, CDM Regulations 2015, and BS 7671:2018+A3:2024.";
     
     const wrappedPurpose = this.doc.splitTextToSize(purposeText, this.pageWidth - (2 * this.MARGIN) - 12);
     wrappedPurpose.forEach((line: string, index: number) => {
@@ -423,7 +423,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(0, 0, 0);
     this.doc.setFontSize(9);
     this.doc.setFont("helvetica", "normal");
-    const scopeText = "This Risk Assessment and Method Statement (RAMS) covers electrical installation, testing, and certification work in compliance with BS 7671:2018+A2:2022 (18th Edition IET Wiring Regulations), Health & Safety at Work Act 1974, and CDM Regulations 2015.";
+    const scopeText = "This Risk Assessment and Method Statement (RAMS) covers electrical installation, testing, and certification work in compliance with BS 7671:2018+A3:2024 (18th Edition IET Wiring Regulations), Health & Safety at Work Act 1974, and CDM Regulations 2015.";
     
     const wrappedScope = this.doc.splitTextToSize(scopeText, this.pageWidth - (2 * this.MARGIN) - 12);
     wrappedScope.forEach((line: string, index: number) => {
@@ -1053,7 +1053,7 @@ class ProfessionalRAMSPDFGenerator {
       "Isolate and securely lock-off all relevant power supplies before work commences",
       "Use appropriate PPE including insulated gloves, safety footwear, and eye protection",
       "Test all circuits dead using properly calibrated voltage detection equipment",
-      "Maintain safe working distances from live conductors as per BS 7671:2018+A2:2022",
+      "Maintain safe working distances from live conductors as per BS 7671:2018+A3:2024",
       "Have emergency procedures and first aid readily available",
       "Report any unsafe conditions immediately to supervision",
       "Follow permit to work procedures where applicable"
