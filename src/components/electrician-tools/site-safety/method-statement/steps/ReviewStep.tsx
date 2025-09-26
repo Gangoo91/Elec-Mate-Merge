@@ -270,7 +270,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
           <CardTitle className="text-green-300">Approval & Sign-off</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="gap-1">
+          <div className="gap-4">
             <Label htmlFor="approvedBy">Approved By</Label>
             <Input
               id="approvedBy"
