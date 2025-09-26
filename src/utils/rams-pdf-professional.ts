@@ -470,6 +470,43 @@ class ProfessionalRAMSPDFGenerator {
     this.addPageNumber();
   }
 
+  // Risk Summary Section
+  private addRiskSummary(data: RAMSData, context: VariableContext): void {
+    this.checkPageBreak(80);
+    this.addTOCEntry("3. Risk Summary");
+
+    this.yPosition += 16;
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(16);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("3. RISK SUMMARY", this.MARGIN, this.yPosition);
+    this.yPosition += 16;
+
+    // Clean summary statistics without blue border
+    this.doc.setTextColor(0, 0, 0);
+    this.doc.setFontSize(12);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("RISK ASSESSMENT SUMMARY", this.MARGIN, this.yPosition);
+    this.yPosition += 10;
+    
+    const summaryData = [
+      `Total Risks: ${context.total_risks}`,
+      `Low Residual: ${context.low_residual}`,
+      `Medium: ${context.medium_residual}`,
+      `High: ${context.high_residual}`,
+      `Very High: ${context.very_high_residual}`
+    ];
+
+    this.doc.setFontSize(10);
+    this.doc.setFont("helvetica", "normal");
+    summaryData.forEach((item, index) => {
+      const x = this.MARGIN + (index * 45);
+      this.doc.text(item, x, this.yPosition);
+    });
+
+    this.yPosition += 25;
+    this.addPageNumber();
+  }
 
   // Professional Risk Assessment Matrix
   private addRiskMatrix(): void {
@@ -477,7 +514,7 @@ class ProfessionalRAMSPDFGenerator {
     this.currentPage++;
     this.yPosition = this.MARGIN + 10;
     this.addDocumentHeader();
-    this.addTOCEntry("3. Risk Assessment Matrix");
+    this.addTOCEntry("4. Risk Assessment Matrix");
 
     // Ensure we have a new page for the matrix to prevent cropping
     this.checkPageBreak(140); // Reserve space for dramatically optimized matrix and legend
@@ -487,7 +524,7 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("3. RISK ASSESSMENT MATRIX", this.MARGIN, this.yPosition);
+    this.doc.text("4. RISK ASSESSMENT MATRIX", this.MARGIN, this.yPosition);
     this.yPosition += 20;
 
     // Ultra-compact explanation box for landscape A4
@@ -876,16 +913,83 @@ class ProfessionalRAMSPDFGenerator {
     this.addPageNumber();
   }
 
-  // Professional Safety Requirements Section  
-  private addSafetyInformation(context: VariableContext): void {
-    this.checkPageBreak(60);
-    this.addTOCEntry("4. Critical Safety Requirements");
+  // Professional Method Statement Section
+  private addMethodStatement(data: RAMSData, context: VariableContext): void {
+    this.checkPageBreak(50);
+    this.addTOCEntry("6. Method Statement");
 
     this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("4. CRITICAL SAFETY REQUIREMENTS", this.MARGIN, this.yPosition);
+    this.doc.text("6. METHOD STATEMENT", this.MARGIN, this.yPosition);
+    this.yPosition += 16;
+
+    // Professional section header
+    this.doc.setFillColor(...this.LIGHT_GRAY);
+    this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 12, 'F');
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(10);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("SAFE WORK PROCEDURES", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
+    this.yPosition += 18;
+
+    const methodStatements = extractMethodStatements(data.risks);
+
+    // Professional method list
+    if (methodStatements.length === 0) {
+      const defaultMethods = [
+        "Isolate and lock-off electrical supply before commencing work",
+        "Test circuits dead using approved voltage indicators",
+        "Wear appropriate PPE including insulated gloves and safety footwear",
+        "Maintain safe working distances from live conductors",
+        "Use properly rated tools and equipment for electrical work",
+        "Implement appropriate barriers and warning signs"
+      ];
+      
+      defaultMethods.forEach((method, index) => {
+        this.checkPageBreak(8);
+        this.doc.setTextColor(0, 0, 0);
+        this.doc.setFontSize(10);
+        this.doc.setFont("helvetica", "bold");
+        this.doc.text(`${index + 1}.`, this.MARGIN + 5, this.yPosition);
+        this.doc.setFont("helvetica", "normal");
+        const wrappedMethod = this.doc.splitTextToSize(method, this.pageWidth - 2 * this.MARGIN - 20);
+        wrappedMethod.forEach((line: string, lineIndex: number) => {
+          this.doc.text(line, this.MARGIN + 18, this.yPosition + (lineIndex * 5));
+        });
+        this.yPosition += Math.max(6, wrappedMethod.length * 4 + 2);
+      });
+    } else {
+      methodStatements.forEach((statement, index) => {
+        this.checkPageBreak(8);
+        this.doc.setTextColor(0, 0, 0);
+        this.doc.setFontSize(10);
+        this.doc.setFont("helvetica", "bold");
+        this.doc.text(`${index + 1}.`, this.MARGIN + 5, this.yPosition);
+        this.doc.setFont("helvetica", "normal");
+        const wrappedStatement = this.doc.splitTextToSize(statement, this.pageWidth - 2 * this.MARGIN - 20);
+        wrappedStatement.forEach((line: string, lineIndex: number) => {
+          this.doc.text(line, this.MARGIN + 18, this.yPosition + (lineIndex * 5));
+        });
+        this.yPosition += Math.max(6, wrappedStatement.length * 4 + 2);
+      });
+    }
+
+    this.yPosition += 4;
+    this.addPageNumber();
+  }
+
+  // Professional Safety Requirements Section  
+  private addSafetyInformation(context: VariableContext): void {
+    this.checkPageBreak(60);
+    this.addTOCEntry("7. Critical Safety Requirements");
+
+    this.yPosition += 16;
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(16);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("7. CRITICAL SAFETY REQUIREMENTS", this.MARGIN, this.yPosition);
     this.yPosition += 16;
 
     // Professional warning box
@@ -953,13 +1057,13 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.addPage();
     this.currentPage++;
     this.yPosition = this.MARGIN;
-    this.addTOCEntry("5. Authorisation & Sign-off");
+    this.addTOCEntry("8. Authorisation & Sign-off");
 
     this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("5. AUTHORISATION & SIGN-OFF", this.MARGIN, this.yPosition);
+    this.doc.text("8. AUTHORISATION & SIGN-OFF", this.MARGIN, this.yPosition);
     this.yPosition += 25;
 
     const signatureBoxHeight = 50;
@@ -1098,13 +1202,13 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.addPage();
     this.currentPage++;
     this.yPosition = this.MARGIN;
-    this.addTOCEntry("6. Worker Sign-On Sheet");
+    this.addTOCEntry("9. Worker Sign-On Sheet");
 
     this.yPosition += 16;
     this.doc.setTextColor(...this.PRIMARY_COLOR);
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("6. WORKER SIGN-ON SHEET", this.MARGIN, this.yPosition);
+    this.doc.text("9. WORKER SIGN-ON SHEET", this.MARGIN, this.yPosition);
 
     this.yPosition += 16;
     this.doc.setTextColor(0, 0, 0);
@@ -1181,8 +1285,10 @@ class ProfessionalRAMSPDFGenerator {
     this.addTitlePage(data, options, context);
     this.addProjectInformation(data, context);
     this.addWorkActivities(data, context);
+    this.addRiskSummary(data, context);
     this.addRiskMatrix();
     this.addDetailedRiskAssessment(data, context);
+    this.addMethodStatement(data, context);
     this.addSafetyInformation(context);
     this.addEnhancedApprovals(options.signOff, context);
     this.addSignOnSheet(context);
