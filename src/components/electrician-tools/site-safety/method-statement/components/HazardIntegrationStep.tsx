@@ -147,40 +147,47 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
                       }`}
                       onClick={() => isLinked ? onHazardUnlink(hazard.id) : onHazardLink(hazard.id)}>
                   <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-full bg-primary/20 flex-shrink-0">
-                        <IconComponent className="h-4 w-4 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between mb-2">
-                          <h4 className="font-medium text-white">{hazard.name}</h4>
-                          <div className="flex items-center gap-2 ml-2">
-                            <AlertTriangle className={`h-4 w-4 flex-shrink-0 ${
-                              hazard.riskLevel === "Very High" ? "text-red-500" :
-                              hazard.riskLevel === "High" ? "text-orange-500" :
-                              hazard.riskLevel === "Medium" ? "text-yellow-500" : "text-green-500"
-                            }`} />
-                            <Button size="sm" variant={isLinked ? "destructive" : "default"}>
-                              {isLinked ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                            </Button>
+                    <div className="space-y-3">
+                      {/* Header Section */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-full bg-primary/20 flex-shrink-0">
+                            <IconComponent className="h-4 w-4 text-primary" />
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-white leading-tight">{hazard.name}</h4>
+                            <div className="flex items-center gap-2 mt-1">
+                              <Badge variant="outline" className="text-xs border-primary/30 text-muted-foreground">
+                                {hazard.category}
+                              </Badge>
+                              <Badge className={`${getRiskColor(hazard.riskLevel)} text-white text-xs`}>
+                                {hazard.riskLevel}
+                              </Badge>
+                            </div>
                           </div>
                         </div>
                         
-                        <p className="text-sm text-muted-foreground mb-3">{hazard.description}</p>
-                        
-                        <div className="flex flex-wrap gap-2 mb-3">
-                          <Badge variant="outline" className="text-xs border-primary/30 text-muted-foreground">
-                            {hazard.category}
-                          </Badge>
-                          <Badge className={`${getRiskColor(hazard.riskLevel)} text-white text-xs`}>
-                            {hazard.riskLevel} Risk
-                          </Badge>
+                        <div className="flex items-center gap-2">
+                          <AlertTriangle className={`h-4 w-4 flex-shrink-0 ${
+                            hazard.riskLevel === "Very High" ? "text-red-500" :
+                            hazard.riskLevel === "High" ? "text-orange-500" :
+                            hazard.riskLevel === "Medium" ? "text-yellow-500" : "text-green-500"
+                          }`} />
+                          <Button size="sm" variant={isLinked ? "destructive" : "default"}>
+                            {isLinked ? <X className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                          </Button>
                         </div>
-                        
-                        <div className="text-xs text-muted-foreground">
-                          <strong>Control measures:</strong> {hazard.commonControls.slice(0, 2).join(', ')}
+                      </div>
+                      
+                      {/* Description */}
+                      <p className="text-sm text-muted-foreground leading-relaxed">{hazard.description}</p>
+                      
+                      {/* Control Measures */}
+                      <div className="pt-2 border-t border-border/20">
+                        <p className="text-xs text-muted-foreground">
+                          <span className="font-medium text-white">Control measures:</span> {hazard.commonControls.slice(0, 2).join(', ')}
                           {hazard.commonControls.length > 2 && '...'}
-                        </div>
+                        </p>
                       </div>
                     </div>
                   </CardContent>
