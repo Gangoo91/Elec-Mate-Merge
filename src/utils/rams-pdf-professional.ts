@@ -434,7 +434,7 @@ class ProfessionalRAMSPDFGenerator {
     this.addPageNumber();
   }
 
-  // Work Activities Section
+  // Work Activities Section with detailed task information
   private addWorkActivities(data: RAMSData, context: VariableContext): void {
     this.checkPageBreak(20);
     this.addTOCEntry("2. Work Activities");
@@ -448,26 +448,159 @@ class ProfessionalRAMSPDFGenerator {
 
     const activities = safeArrayFilter(data.activities);
     if (activities.length === 0) {
-      this.doc.setTextColor(0, 0, 0);
-      this.doc.setFontSize(10);
-      this.doc.text("No specific activities defined.", this.MARGIN, this.yPosition);
-      this.yPosition += 15;
+      // Default electrical work activities
+      const defaultActivities = [
+        {
+          title: "Electrical Installation Work",
+          description: "Installation of new electrical circuits, outlets, and fixtures in compliance with BS 7671:2018+A3:2024",
+          category: "Installation",
+          duration: "4-6 hours",
+          riskLevel: "Medium",
+          responsible: "Qualified Electrician"
+        },
+        {
+          title: "Testing and Commissioning",
+          description: "Electrical testing including continuity, insulation resistance, and RCD testing",
+          category: "Testing",
+          duration: "2-3 hours", 
+          riskLevel: "Low",
+          responsible: "Competent Person"
+        },
+        {
+          title: "Inspection and Certification",
+          description: "Visual inspection and issuing of electrical installation certificates",
+          category: "Inspection",
+          duration: "1-2 hours",
+          riskLevel: "Low", 
+          responsible: "Qualified Electrician"
+        }
+      ];
+
+      this.addTaskDetails(defaultActivities);
     } else {
-      activities.forEach((activity, index) => {
-        this.doc.setTextColor(0, 0, 0);
-        this.doc.setFontSize(11);
-        this.doc.setFont("helvetica", "bold");
-        this.doc.text(`${index + 1}.`, this.MARGIN, this.yPosition);
-        this.doc.setFont("helvetica", "normal");
-        const wrappedActivity = this.doc.splitTextToSize(safeText(activity), this.pageWidth - 2 * this.MARGIN - 15);
-        wrappedActivity.forEach((line: string, lineIndex: number) => {
-          this.doc.text(line, this.MARGIN + 15, this.yPosition + (lineIndex * 5));
-        });
-        this.yPosition += Math.max(15, wrappedActivity.length * 5 + 5);
-      });
+      // Enhanced activity display with task details
+      const enhancedActivities = activities.map((activity, index) => ({
+        title: `Task ${index + 1}: ${safeText(activity)}`,
+        description: this.extractTaskDescription(activity),
+        category: this.extractTaskCategory(activity),
+        duration: this.extractTaskDuration(activity),
+        riskLevel: this.extractTaskRiskLevel(activity),
+        responsible: "Qualified Electrician"
+      }));
+
+      this.addTaskDetails(enhancedActivities);
     }
 
     this.addPageNumber();
+  }
+
+  private addTaskDetails(tasks: Array<{title: string, description: string, category: string, duration: string, riskLevel: string, responsible: string}>): void {
+    tasks.forEach((task, index) => {
+      this.checkPageBreak(35);
+
+      // Task header with number and title
+      this.doc.setTextColor(...this.PRIMARY_COLOR);
+      this.doc.setFontSize(12);
+      this.doc.setFont("helvetica", "bold");
+      this.doc.text(`${index + 1}. ${task.title}`, this.MARGIN, this.yPosition);
+      this.yPosition += 8;
+
+      // Task details table
+      const taskData = [
+        ["Category", task.category],
+        ["Description", task.description],
+        ["Estimated Duration", task.duration],
+        ["Risk Level", task.riskLevel],
+        ["Responsible Person", task.responsible]
+      ];
+
+      autoTable(this.doc, {
+        startY: this.yPosition,
+        body: taskData,
+        theme: "grid",
+        tableWidth: this.pageWidth - (2 * this.MARGIN),
+        margin: { left: this.MARGIN, right: this.MARGIN },
+        columnStyles: {
+          0: { 
+            cellWidth: (this.pageWidth - (2 * this.MARGIN)) * 0.25,
+            fontStyle: "bold",
+            fillColor: [248, 250, 252],
+            halign: "left"
+          },
+          1: { 
+            cellWidth: (this.pageWidth - (2 * this.MARGIN)) * 0.75,
+            halign: "left"
+          }
+        },
+        styles: {
+          fontSize: 9,
+          cellPadding: 4,
+          lineColor: [200, 200, 200],
+          lineWidth: 0.5,
+          valign: "top"
+        },
+        didParseCell: function(data) {
+          // Color code risk levels
+          if (data.column.index === 1 && data.row.index === 3) {
+            const riskLevel = data.cell.text[0]?.toLowerCase();
+            if (riskLevel === 'high') {
+              data.cell.styles.textColor = [220, 38, 127];
+              data.cell.styles.fontStyle = 'bold';
+            } else if (riskLevel === 'medium') {
+              data.cell.styles.textColor = [245, 158, 11];
+              data.cell.styles.fontStyle = 'bold';
+            } else if (riskLevel === 'low') {
+              data.cell.styles.textColor = [34, 197, 94];
+              data.cell.styles.fontStyle = 'bold';
+            }
+          }
+        }
+      });
+
+      this.yPosition = (this.doc as any).lastAutoTable.finalY + 10;
+    });
+  }
+
+  private extractTaskDescription(activity: string): string {
+    const activityLower = activity.toLowerCase();
+    if (activityLower.includes('install')) {
+      return "Installation work including mounting, wiring, and connection of electrical components";
+    } else if (activityLower.includes('test')) {
+      return "Electrical testing and verification of circuits and equipment";
+    } else if (activityLower.includes('maintain')) {
+      return "Maintenance and inspection of existing electrical installations";
+    } else if (activityLower.includes('repair')) {
+      return "Repair and fault-finding on electrical systems";
+    }
+    return `${activity} - Electrical work performed in accordance with current regulations`;
+  }
+
+  private extractTaskCategory(activity: string): string {
+    const activityLower = activity.toLowerCase();
+    if (activityLower.includes('install')) return "Installation";
+    if (activityLower.includes('test')) return "Testing";
+    if (activityLower.includes('maintain')) return "Maintenance";
+    if (activityLower.includes('repair')) return "Repair";
+    if (activityLower.includes('inspect')) return "Inspection";
+    return "General Electrical";
+  }
+
+  private extractTaskDuration(activity: string): string {
+    const activityLower = activity.toLowerCase();
+    if (activityLower.includes('install')) return "4-8 hours";
+    if (activityLower.includes('test')) return "2-4 hours";
+    if (activityLower.includes('maintain')) return "2-3 hours";
+    if (activityLower.includes('repair')) return "1-6 hours";
+    if (activityLower.includes('inspect')) return "1-2 hours";
+    return "2-4 hours";
+  }
+
+  private extractTaskRiskLevel(activity: string): string {
+    const activityLower = activity.toLowerCase();
+    if (activityLower.includes('live') || activityLower.includes('energised')) return "High";
+    if (activityLower.includes('install') || activityLower.includes('wire')) return "Medium";
+    if (activityLower.includes('test') || activityLower.includes('inspect')) return "Low";
+    return "Medium";
   }
 
 
