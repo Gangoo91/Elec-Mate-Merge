@@ -20,6 +20,9 @@ import {
   Edit
 } from 'lucide-react';
 import { MethodStatementData } from '@/types/method-statement';
+import { downloadMethodStatementPDF, generateMethodStatementPDFPreview } from '@/utils/method-statement-pdf';
+import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
 
 interface ReviewStepProps {
   data: MethodStatementData;
@@ -28,6 +31,9 @@ interface ReviewStepProps {
 }
 
 const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
+  const { toast } = useToast();
+  const [isExporting, setIsExporting] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
   const getRiskColor = (risk: string) => {
     switch (risk) {
       case 'low': return 'bg-green-500/20 text-green-300 border-green-500/30';
@@ -48,14 +54,76 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
 
   const stats = getCompletionStats();
 
-  const exportToPDF = () => {
-    console.log('Exporting method statement to PDF:', data);
-    // Implementation for PDF export
+  const exportToPDF = async () => {
+    if (!data.jobTitle.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please provide a job title before exporting.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsExporting(true);
+    try {
+      downloadMethodStatementPDF(data, {
+        companyName: "Your Company", // This could come from user settings
+        includeSignatures: true
+      });
+      
+      toast({
+        title: "PDF Downloaded",
+        description: "Method statement PDF has been downloaded successfully.",
+        variant: "success"
+      });
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      toast({
+        title: "Export Failed",
+        description: "Failed to generate PDF. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsExporting(false);
+    }
   };
 
-  const generateDocument = () => {
-    console.log('Generating method statement document:', data);
-    // Implementation for document generation
+  const generateDocument = async () => {
+    if (!data.jobTitle.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please provide a job title before generating document.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      // Generate preview URL
+      const previewUrl = generateMethodStatementPDFPreview(data, {
+        companyName: "Your Company",
+        includeSignatures: true
+      });
+      
+      // Open in new tab for preview/printing
+      window.open(previewUrl, '_blank');
+      
+      toast({
+        title: "Document Generated",
+        description: "Method statement document has been generated and opened in a new tab.",
+        variant: "success"
+      });
+    } catch (error) {
+      console.error('Error generating document:', error);
+      toast({
+        title: "Generation Failed",
+        description: "Failed to generate document. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -316,16 +384,18 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
           onClick={exportToPDF}
           variant="outline"
           className="flex-1 flex items-center gap-2"
+          disabled={isExporting}
         >
           <Download className="h-4 w-4" />
-          Export PDF
+          {isExporting ? 'Exporting...' : 'Export PDF'}
         </Button>
         <Button
           onClick={generateDocument}
           className="flex-1 flex items-center gap-2"
+          disabled={isGenerating}
         >
           <Send className="h-4 w-4" />
-          Generate & Distribute
+          {isGenerating ? 'Generating...' : 'Generate Document'}
         </Button>
       </div>
     </div>
