@@ -109,21 +109,23 @@ const EmergencyProcedures = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {emergencyContacts.map((contact, index) => (
-                  <div key={index} className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4">
-                    <div className="text-center mb-3">
-                      <div className="text-sm text-elec-yellow/70 mb-1">#{index + 1}</div>
-                      <h4 className="font-medium text-white mb-2">{contact.service}</h4>
-                      <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3 mb-2">
-                        <span className="text-2xl font-bold text-elec-yellow">{contact.number}</span>
+                  <div key={index} className="bg-gradient-to-br from-elec-dark to-elec-card border border-elec-yellow/30 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-elec-yellow/50 group">
+                    <div className="text-center">
+                      <div className="inline-flex items-center justify-center w-8 h-8 bg-elec-yellow/20 rounded-full mb-3">
+                        <span className="text-sm font-bold text-elec-yellow">#{index + 1}</span>
                       </div>
-                      <p className="text-sm text-muted-foreground mb-3">{contact.description}</p>
+                      <h4 className="font-semibold text-white text-lg mb-4 group-hover:text-elec-yellow transition-colors">{contact.service}</h4>
+                      <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/40 rounded-xl p-4 mb-4 shadow-inner">
+                        <span className="text-3xl font-bold text-elec-yellow tracking-wider">{contact.number}</span>
+                      </div>
+                      <p className="text-sm text-elec-light/80 mb-5 leading-relaxed">{contact.description}</p>
+                      <Button variant="outline" size="sm" className="w-full bg-elec-yellow/5 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark transition-all duration-200 font-medium">
+                        <Phone className="h-4 w-4 mr-2" />
+                        Call Now
+                      </Button>
                     </div>
-                    <Button variant="outline" size="sm" className="w-full">
-                      <Phone className="h-4 w-4 mr-2" />
-                      Call Now
-                    </Button>
                   </div>
                 ))}
               </div>
