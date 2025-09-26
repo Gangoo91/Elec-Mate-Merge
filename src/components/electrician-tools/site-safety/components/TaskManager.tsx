@@ -274,36 +274,35 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
         {tasks.length > 0 && (
           <div className="space-y-3">
             {tasks.map((task) => (
-              <Card key={task.id} className="border-elec-yellow/30 bg-elec-dark/20">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h4 className="font-medium text-white mb-1">{task.title}</h4>
-                      <p className="text-sm text-muted-foreground mb-2">{task.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        <Badge variant="outline" className="border-elec-yellow/30 text-muted-foreground text-xs">
+              <Card key={task.id} className="group border-elec-yellow/30 bg-elec-dark/20 hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg hover:shadow-elec-yellow/10 animate-fade-in">
+                <CardContent className="p-0">
+                  {/* Header Section with Title and Actions */}
+                  <div className="flex items-start justify-between p-4 pb-3 border-b border-elec-yellow/10">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-white text-lg mb-1 truncate group-hover:text-elec-yellow transition-colors">
+                        {task.title}
+                      </h4>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow/80 text-xs font-medium">
                           {task.category}
                         </Badge>
-                        <Badge className={`${getRiskLevelColor(task.riskLevel)} text-white text-xs`}>
+                        <Badge className={`${getRiskLevelColor(task.riskLevel)} text-white text-xs font-medium shadow-sm`}>
                           {task.riskLevel} risk
                         </Badge>
-                        <Badge className={`${getStatusColor(task.status)} text-white text-xs`}>
+                        <Badge className={`${getStatusColor(task.status)} text-white text-xs font-medium shadow-sm`}>
                           {task.status}
                         </Badge>
-                        {task.linkedHazards.length > 0 && (
-                          <Badge variant="outline" className="border-orange-500/30 text-orange-400 text-xs">
-                            {task.linkedHazards.length} hazard{task.linkedHazards.length !== 1 ? 's' : ''}
-                          </Badge>
-                        )}
                       </div>
                     </div>
-                    <div className="flex gap-1 ml-3">
+                    
+                    {/* Action Buttons */}
+                    <div className="flex gap-1 ml-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                       {onLinkHazard && (
                         <Button
                           onClick={() => onLinkHazard(task.id)}
                           size="sm"
                           variant="outline"
-                          className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+                          className="border-orange-500/30 text-orange-400 hover:bg-orange-500/10 hover:border-orange-500/50 hover:scale-105 transition-all duration-200"
                         >
                           <Link2 className="h-4 w-4" />
                         </Button>
@@ -312,7 +311,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                         onClick={() => handleEditTask(task)}
                         size="sm"
                         variant="outline"
-                        className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                        className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 hover:scale-105 transition-all duration-200"
                       >
                         <Edit3 className="h-4 w-4" />
                       </Button>
@@ -320,26 +319,49 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                         onClick={() => removeTask(task.id)}
                         size="sm"
                         variant="outline"
-                        className="border-red-500/30 text-red-400 hover:bg-red-500/10"
+                        className="border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-500/50 hover:scale-105 transition-all duration-200"
                       >
                         <X className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
-                  
-                  {(task.estimatedDuration || task.responsiblePerson) && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-muted-foreground">
-                      {task.estimatedDuration && (
-                        <div>Duration: {task.estimatedDuration}</div>
-                      )}
-                      {task.responsiblePerson && (
-                        <div className="flex items-center gap-1">
-                          <Users className="h-3 w-3" />
-                          {task.responsiblePerson}
-                        </div>
-                      )}
+
+                  {/* Description Section */}
+                  {task.description && (
+                    <div className="px-4 py-3 border-b border-elec-yellow/10">
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {task.description}
+                      </p>
                     </div>
                   )}
+
+                  {/* Metadata Section */}
+                  <div className="px-4 py-3 bg-elec-dark/10">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                        {task.estimatedDuration && (
+                          <div className="flex items-center gap-1">
+                            <div className="w-2 h-2 rounded-full bg-blue-400"></div>
+                            <span>Duration: {task.estimatedDuration}</span>
+                          </div>
+                        )}
+                        {task.responsiblePerson && (
+                          <div className="flex items-center gap-1">
+                            <Users className="h-3 w-3 text-green-400" />
+                            <span>{task.responsiblePerson}</span>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Hazard Links Indicator */}
+                      {task.linkedHazards.length > 0 && (
+                        <Badge variant="outline" className="border-orange-500/30 text-orange-400 text-xs bg-orange-500/5 animate-pulse">
+                          <Link2 className="h-3 w-3 mr-1" />
+                          {task.linkedHazards.length} hazard{task.linkedHazards.length !== 1 ? 's' : ''}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
