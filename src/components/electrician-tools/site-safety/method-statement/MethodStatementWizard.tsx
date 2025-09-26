@@ -40,7 +40,9 @@ const MethodStatementWizard = () => {
 
   // Scroll to top when step changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }, [currentStep]);
 
   const handleNext = () => {
