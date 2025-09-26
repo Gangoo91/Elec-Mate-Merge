@@ -127,19 +127,19 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
 
   const getRiskLevelColor = (level: string) => {
     switch (level) {
-      case 'low': return 'bg-green-500';
-      case 'medium': return 'bg-yellow-500';
-      case 'high': return 'bg-red-500';
-      default: return 'bg-gray-500';
+      case 'low': return 'bg-gradient-to-r from-green-500 to-green-600';
+      case 'medium': return 'bg-gradient-to-r from-yellow-500 to-amber-500';
+      case 'high': return 'bg-gradient-to-r from-red-500 to-red-600';
+      default: return 'bg-gradient-to-r from-gray-500 to-gray-600';
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-gray-500';
-      case 'in-progress': return 'bg-blue-500';
-      case 'completed': return 'bg-green-500';
-      default: return 'bg-gray-500';
+      case 'pending': return 'bg-gradient-to-r from-slate-500 to-slate-600';
+      case 'in-progress': return 'bg-gradient-to-r from-blue-500 to-blue-600';
+      case 'completed': return 'bg-gradient-to-r from-green-500 to-emerald-600';
+      default: return 'bg-gradient-to-r from-gray-500 to-gray-600';
     }
   };
 
@@ -283,14 +283,19 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                         {task.title}
                       </h4>
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow/80 text-xs font-medium">
+                        <Badge 
+                          variant="secondary" 
+                          className="bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/25 text-xs font-medium px-2 py-1 rounded-full"
+                        >
                           {task.category}
                         </Badge>
-                        <Badge className={`${getRiskLevelColor(task.riskLevel)} text-white text-xs font-medium shadow-sm`}>
-                          {task.riskLevel} risk
+                        <Badge className={`${getRiskLevelColor(task.riskLevel)} text-white text-xs font-medium px-2 py-1 rounded-full border-0 shadow-sm`}>
+                          {task.riskLevel}
                         </Badge>
-                        <Badge className={`${getStatusColor(task.status)} text-white text-xs font-medium shadow-sm`}>
-                          {task.status}
+                        <Badge 
+                          className={`${getStatusColor(task.status)} text-white text-xs font-medium px-2 py-1 rounded-full border-0 shadow-sm capitalize`}
+                        >
+                          {task.status.replace('-', ' ')}
                         </Badge>
                       </div>
                     </div>
@@ -355,9 +360,11 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                       
                       {/* Hazard Links Indicator */}
                       {task.linkedHazards.length > 0 && (
-                        <Badge variant="outline" className="border-orange-500/30 text-orange-400 text-xs bg-orange-500/5 animate-pulse">
+                        <Badge 
+                          className="bg-orange-500/20 border border-orange-500/40 text-orange-300 text-xs font-medium px-2 py-1 rounded-full backdrop-blur-sm"
+                        >
                           <Link2 className="h-3 w-3 mr-1" />
-                          {task.linkedHazards.length} hazard{task.linkedHazards.length !== 1 ? 's' : ''}
+                          {task.linkedHazards.length} linked
                         </Badge>
                       )}
                     </div>
