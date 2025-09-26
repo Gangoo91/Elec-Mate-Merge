@@ -86,7 +86,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
       </Card>
 
       {/* Search and Filters - Mobile-first responsive design */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/95 backdrop-blur-sm mobile-card shadow-sm w-full overflow-hidden">
+      <Card className="border-elec-yellow/20 bg-elec-gray mobile-card shadow-sm w-full overflow-hidden">
         <CardContent className="p-0 w-full">
           {/* Mobile-optimized layout with proper containment */}
           <div className="w-full space-y-3 sm:space-y-4">
@@ -98,7 +98,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                 placeholder="Search templates by name or description..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 h-12 text-base border-2 border-elec-yellow/20 bg-background/80 backdrop-blur-sm focus:border-elec-yellow/60 focus:bg-background transition-all duration-200 touch-manipulation focus:ring-2 focus:ring-elec-yellow/20"
+                className="w-full pl-10 pr-4 h-12 text-base border-2 border-elec-yellow/20 bg-background focus:border-elec-yellow/60 focus:bg-background transition-all duration-200 touch-manipulation focus:ring-2 focus:ring-elec-yellow/20"
                 autoComplete="off"
                 autoCapitalize="none"
                 aria-label="Search method statement templates"
@@ -115,7 +115,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
               {/* Category Filter - Full width on mobile */}
               <div className="w-full">
                 <Select value={selectedCategory} onValueChange={(value) => setSelectedCategory(value === "all" ? "" : value)}>
-                  <SelectTrigger className="w-full h-12 text-base border-2 border-elec-yellow/20 bg-background/80 backdrop-blur-sm focus:border-elec-yellow/60 transition-all duration-200 shadow-sm">
+                  <SelectTrigger className="w-full h-12 text-base border-2 border-elec-yellow/20 bg-background focus:border-elec-yellow/60 transition-all duration-200 shadow-sm">
                     <div className="flex items-center gap-2 w-full overflow-hidden">
                       <Filter className="h-4 w-4 flex-shrink-0 text-elec-yellow" />
                       <span className="flex-1 text-left truncate">
@@ -123,7 +123,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                       </span>
                     </div>
                   </SelectTrigger>
-                  <SelectContent className="z-50 max-h-60 overflow-y-auto bg-background/95 backdrop-blur-md border-elec-yellow/20 shadow-lg w-full">
+                  <SelectContent className="z-50 max-h-60 overflow-y-auto bg-background border-elec-yellow/20 shadow-lg w-full">
                     <SelectItem value="all" className="text-base py-3 cursor-pointer w-full">
                       All Categories
                     </SelectItem>
@@ -140,7 +140,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
               <Button
                 variant="outline"
                 onClick={onSkipTemplate}
-                className="w-full flex items-center justify-center gap-2 h-12 px-4 text-base font-medium border-2 border-elec-yellow/20 bg-background/80 backdrop-blur-sm hover:border-elec-yellow/60 hover:bg-elec-yellow/10 transition-all duration-200 touch-manipulation active:scale-[0.98] shadow-sm"
+                className="w-full flex items-center justify-center gap-2 h-12 px-4 text-base font-medium border-2 border-elec-yellow/20 bg-background hover:border-elec-yellow/60 hover:bg-elec-yellow/10 transition-all duration-200 touch-manipulation active:scale-[0.98] shadow-sm"
               >
                 <SkipForward className="h-4 w-4 flex-shrink-0" />
                 <span>Skip Template</span>
