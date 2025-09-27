@@ -271,17 +271,6 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
                 value={formData.installationAddress || ""}
                 onChange={(value) => updateField('installationAddress', value)}
               />
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowSmartAssistant(showSmartAssistant === 'installationAddress' ? null : 'installationAddress')}
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                >
-                  <MapPin className="h-4 w-4 mr-2" />
-                  Location Help
-                </Button>
-              </div>
               {showSmartAssistant === 'installationAddress' && (
                 <SmartInputAssistant
                   fieldId="installationAddress"
