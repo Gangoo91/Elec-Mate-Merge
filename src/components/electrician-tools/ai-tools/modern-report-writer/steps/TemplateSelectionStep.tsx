@@ -185,9 +185,6 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
                         return <IconComponent className="h-4 w-4" />;
                       })()}
                       <span className="truncate">{selectedCategoryData.label}</span>
-                      <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
-                        {selectedCategoryData.count}
-                      </Badge>
                     </>
                   )}
                 </div>
@@ -217,18 +214,9 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
                         <IconComponent className="h-4 w-4" />
                         <span className="font-medium">{category.label}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Badge 
-                          className={`text-xs ${
-                            isSelected 
-                              ? 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30' 
-                              : 'bg-white/10 text-white/80 border-white/20'
-                          }`}
-                        >
-                          {category.count}
-                        </Badge>
-                        {isSelected && <CheckCircle2 className="h-4 w-4 text-elec-yellow" />}
-                      </div>
+                      {isSelected && (
+                        <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
+                      )}
                     </div>
                   </DropdownMenuItem>
                 );
