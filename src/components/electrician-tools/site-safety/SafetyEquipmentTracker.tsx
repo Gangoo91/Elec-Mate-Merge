@@ -370,7 +370,7 @@ const SafetyEquipmentTracker = () => {
 
       {/* Header with Actions */}
       <Card className="border-primary/20 bg-card">
-        <CardHeader className="pb-3">
+        <CardHeader className="pb-3 bg-elec-gray">
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <CardTitle className="text-primary flex items-center gap-2 text-lg">
