@@ -111,7 +111,7 @@ const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         {recommendations.map((rec, index) => (
-          <Card key={rec.type} className="border-elec-yellow/20 bg-elec-card/50 hover:border-elec-yellow/40 transition-colors">
+          <Card key={rec.type} className="border-elec-yellow/20 bg-card hover:border-elec-yellow/40 transition-colors">
             <CardHeader className="p-4 pb-3">
               <CardTitle className="text-sm flex items-center gap-2">
                 <div className={`p-1.5 rounded ${rec.color}`}>
