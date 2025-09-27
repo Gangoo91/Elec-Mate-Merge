@@ -155,7 +155,7 @@ const EnhancedHazardDatabase: React.FC = () => {
     const isExpanded = expandedHazards.has(hazard.id);
 
     return (
-      <Card className="border-border/50 bg-card hover:border-border transition-all duration-200">
+      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm transition-all duration-200">
         <CardContent className="p-4">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div className="flex items-start gap-3 flex-1">
@@ -276,7 +276,7 @@ const EnhancedHazardDatabase: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Header & Search */}
-      <Card className="border-primary/20 bg-card/80 backdrop-blur-sm">
+      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-primary flex items-center gap-2 text-lg">
             <Shield className="h-5 w-5" />
@@ -336,7 +336,7 @@ const EnhancedHazardDatabase: React.FC = () => {
           { label: 'Favorites', count: favorites.size, color: 'text-primary' },
           { label: 'Total', count: transformedHazards.length, color: 'text-foreground' }
         ].map((stat, index) => (
-          <Card key={index} className="border-border/30 bg-card/50">
+          <Card key={index} className="border-elec-yellow/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
             <CardContent className="p-3 text-center">
               <div className={`text-lg font-bold ${stat.color}`}>{stat.count}</div>
               <div className="text-xs text-muted-foreground">{stat.label}</div>
@@ -370,7 +370,7 @@ const EnhancedHazardDatabase: React.FC = () => {
               ))}
             </div>
           ) : (
-            <Card className="border-dashed border-border/50 bg-card/30">
+            <Card className="border-dashed border-elec-yellow/50 bg-elec-gray/30">
               <CardContent className="p-6 text-center">
                 <Shield className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground mb-1">No hazards found</p>
@@ -388,7 +388,7 @@ const EnhancedHazardDatabase: React.FC = () => {
               ))}
             </div>
           ) : (
-            <Card className="border-dashed border-border/50 bg-card/30">
+            <Card className="border-dashed border-elec-yellow/50 bg-elec-gray/30">
               <CardContent className="p-6 text-center">
                 <Star className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground mb-1">No favorites yet</p>
@@ -406,7 +406,7 @@ const EnhancedHazardDatabase: React.FC = () => {
               ))}
             </div>
           ) : (
-            <Card className="border-dashed border-border/50 bg-card/30">
+            <Card className="border-dashed border-elec-yellow/50 bg-elec-gray/30">
               <CardContent className="p-6 text-center">
                 <Clock className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground mb-1">No recent hazards</p>
