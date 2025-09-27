@@ -288,7 +288,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                     </div>
                   ))}
                   {template.steps.length > 3 && (
-                    <div className="text-xs text-muted-foreground pl-7 italic">
+                    <div className="text-xs text-muted-foreground pl-7 italic bg-elec-gray/10 rounded px-2 py-1">
                       +{template.steps.length - 3} more steps
                     </div>
                   )}
