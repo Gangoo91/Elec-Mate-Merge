@@ -199,10 +199,6 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             onFocus={() => setFocusedTemplate(template.id)}
             onBlur={() => setFocusedTemplate(null)}
           >
-            {/* Popular template subtle animation */}
-            {template.isPopular && (
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/5 via-transparent to-blue-400/5 animate-[shimmer_3s_ease-in-out_infinite] pointer-events-none"></div>
-            )}
             {/* Card Header - Optimized spacing and alignment */}
             <CardHeader className="pt-0 px-0 flex-shrink-0">
               <div className="flex flex-col gap-3">
