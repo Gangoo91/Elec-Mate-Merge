@@ -4,9 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Zap, Clock, Star, Search, Filter, SkipForward, ArrowRight, CheckCircle } from 'lucide-react';
+import { Zap, Clock, Star, Search, Filter, SkipForward, ArrowRight, CheckCircle, Eye, GitCompare, Bookmark, Heart, Info } from 'lucide-react';
 import { MethodTemplate } from '@/types/method-statement';
 import { methodTemplates, getTemplatesByCategory } from '@/data/method-statement-templates';
+import TemplatePreviewModal from './TemplatePreviewModal';
+import TemplateComparisonModal from './TemplateComparisonModal';
+import SmartRecommendations from './SmartRecommendations';
+import { RequiredFieldTooltip } from '@/components/ui/required-field-tooltip';
 
 interface TemplateSelectionStepProps {
   onTemplateSelect: (template: MethodTemplate) => void;
@@ -19,6 +23,14 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
   const [selectedTemplate, setSelectedTemplate] = useState<MethodTemplate | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [focusedTemplate, setFocusedTemplate] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewTemplate, setPreviewTemplate] = useState<MethodTemplate | null>(null);
+  const [showComparison, setShowComparison] = useState(false);
+  const [comparisonTemplates, setComparisonTemplates] = useState<MethodTemplate[]>([]);
+  const [favoriteTemplates, setFavoriteTemplates] = useState<Set<string>>(new Set());
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>('');
+  const [selectedDuration, setSelectedDuration] = useState<string>('');
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Debounced search to improve UX
@@ -50,9 +62,18 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
   
   const filteredTemplates = methodTemplates.filter(template => {
     const matchesSearch = template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         template.description.toLowerCase().includes(searchTerm.toLowerCase());
+                         template.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         template.requiredQualifications.some(qual => 
+                           qual.toLowerCase().includes(searchTerm.toLowerCase())
+                         );
     const matchesCategory = !selectedCategory || template.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    const matchesDifficulty = !selectedDifficulty || template.difficultyLevel === selectedDifficulty;
+    const matchesDuration = !selectedDuration || (
+      selectedDuration === 'quick' && parseInt(template.estimatedDuration.split('-')[0]) <= 2 ||
+      selectedDuration === 'medium' && parseInt(template.estimatedDuration.split('-')[0]) > 2 && parseInt(template.estimatedDuration.split('-')[0]) <= 6 ||
+      selectedDuration === 'long' && parseInt(template.estimatedDuration.split('-')[0]) > 6
+    );
+    return matchesSearch && matchesCategory && matchesDifficulty && matchesDuration;
   });
 
   const getDifficultyColor = (level: string) => {
@@ -64,6 +85,46 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
     }
   };
 
+  const handlePreviewTemplate = (template: MethodTemplate) => {
+    setPreviewTemplate(template);
+    setShowPreview(true);
+  };
+
+  const handleUseTemplate = (template: MethodTemplate) => {
+    setShowPreview(false);
+    setShowComparison(false);
+    onTemplateSelect(template);
+  };
+
+  const handleCompareTemplates = () => {
+    if (comparisonTemplates.length > 0) {
+      setShowComparison(true);
+    }
+  };
+
+  const toggleFavorite = (templateId: string) => {
+    const newFavorites = new Set(favoriteTemplates);
+    if (newFavorites.has(templateId)) {
+      newFavorites.delete(templateId);
+    } else {
+      newFavorites.add(templateId);
+    }
+    setFavoriteTemplates(newFavorites);
+  };
+
+  const toggleComparison = (template: MethodTemplate) => {
+    const newComparisons = [...comparisonTemplates];
+    const index = newComparisons.findIndex(t => t.id === template.id);
+    
+    if (index > -1) {
+      newComparisons.splice(index, 1);
+    } else if (newComparisons.length < 3) {
+      newComparisons.push(template);
+    }
+    
+    setComparisonTemplates(newComparisons);
+  };
+
   return (
     <div className="w-full max-w-full mx-auto space-y-4 sm:space-y-6">
       {/* Header - Enhanced mobile typography */}
@@ -72,14 +133,30 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
           <CardTitle className="text-blue-300 flex items-center gap-2 mobile-heading">
             <Zap className="h-5 w-5 flex-shrink-0" />
             <span className="break-words">Choose a Method Statement Template</span>
+            <RequiredFieldTooltip content="Templates are pre-built method statements that comply with BS7671:2018+A2:2022 regulations and include all necessary safety procedures" />
           </CardTitle>
           <p className="text-muted-foreground mobile-text">
-            Start with a proven template or build from scratch. Templates include BS7671-compliant safety requirements.
+            Start with a proven template or build from scratch. Templates include BS7671-compliant safety requirements and detailed step-by-step procedures.
           </p>
           {!selectedTemplate && (
             <div className="mt-3 flex items-center gap-2 text-sm text-blue-300/80">
               <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-              <span>Select a template below to continue</span>
+              <span>Select a template below or use smart recommendations</span>
+            </div>
+          )}
+          {comparisonTemplates.length > 0 && (
+            <div className="mt-3 flex items-center justify-between gap-4 p-3 bg-purple-500/10 border border-purple-500/20 rounded-lg">
+              <div className="flex items-center gap-2 text-sm text-purple-300">
+                <GitCompare className="h-4 w-4" />
+                <span>{comparisonTemplates.length} template{comparisonTemplates.length !== 1 ? 's' : ''} selected for comparison</span>
+              </div>
+              <Button
+                size="sm"
+                onClick={handleCompareTemplates}
+                className="h-8 px-3 bg-purple-600 hover:bg-purple-700 text-white"
+              >
+                Compare
+              </Button>
             </div>
           )}
         </CardHeader>
@@ -136,6 +213,16 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                 </Select>
               </div>
               
+              {/* Advanced Filters Toggle */}
+              <Button
+                variant="outline"
+                onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                className="w-full flex items-center justify-center gap-2 h-12 px-4 text-base font-medium border-2 border-elec-yellow/20 bg-background hover:border-elec-yellow/60 hover:bg-elec-yellow/10 transition-all duration-200 touch-manipulation active:scale-[0.98] shadow-sm"
+              >
+                <Filter className="h-4 w-4 flex-shrink-0" />
+                <span>{showAdvancedFilters ? 'Hide Filters' : 'More Filters'}</span>
+              </Button>
+
               {/* Skip Template Button - Full width on mobile */}
               <Button
                 variant="outline"
@@ -149,6 +236,64 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
           </div>
         </CardContent>
       </Card>
+
+      {/* Advanced Filters Panel */}
+      {showAdvancedFilters && (
+        <Card className="border-elec-yellow/20 bg-elec-card mobile-card">
+          <CardContent className="p-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Difficulty Filter */}
+              <div>
+                <label className="text-sm font-medium text-elec-yellow mb-2 block">Difficulty Level</label>
+                <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
+                  <SelectTrigger className="h-10 border-elec-yellow/20">
+                    <SelectValue placeholder="Any difficulty" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">Any difficulty</SelectItem>
+                    <SelectItem value="basic">Basic</SelectItem>
+                    <SelectItem value="intermediate">Intermediate</SelectItem>
+                    <SelectItem value="advanced">Advanced</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Duration Filter */}
+              <div>
+                <label className="text-sm font-medium text-elec-yellow mb-2 block">Project Duration</label>
+                <Select value={selectedDuration} onValueChange={setSelectedDuration}>
+                  <SelectTrigger className="h-10 border-elec-yellow/20">
+                    <SelectValue placeholder="Any duration" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">Any duration</SelectItem>
+                    <SelectItem value="quick">Quick (≤2 hours)</SelectItem>
+                    <SelectItem value="medium">Medium (2-6 hours)</SelectItem>
+                    <SelectItem value="long">Long (6+ hours)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Clear Filters */}
+            <div className="mt-4 flex justify-end">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setSelectedDifficulty('');
+                  setSelectedDuration('');
+                  setSelectedCategory('');
+                  setSearchTerm('');
+                }}
+                className="text-xs border-elec-yellow/20"
+              >
+                Clear All Filters
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Results Summary */}
       {searchTerm && !isSearching && (
@@ -171,6 +316,16 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             </Button>
           )}
         </div>
+      )}
+
+      {/* Smart Recommendations */}
+      {!searchTerm && filteredTemplates.length > 0 && (
+        <SmartRecommendations
+          templates={filteredTemplates}
+          searchTerm={searchTerm}
+          onSelectTemplate={onTemplateSelect}
+          onViewTemplate={handlePreviewTemplate}
+        />
       )}
 
       {/* Template Grid - Enhanced responsive design with consistent spacing */}
@@ -224,6 +379,51 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                       </div>
                     )}
                   </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="flex items-center gap-2 mt-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePreviewTemplate(template);
+                    }}
+                    className="h-6 px-2 text-xs border-elec-yellow/20 hover:border-elec-yellow/40 flex items-center gap-1"
+                  >
+                    <Eye className="h-3 w-3" />
+                    Preview
+                  </Button>
+
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(template.id);
+                    }}
+                    className={`h-6 px-2 text-xs border-elec-yellow/20 hover:border-elec-yellow/40 flex items-center gap-1 ${
+                      favoriteTemplates.has(template.id) ? 'bg-red-500/20 text-red-400' : ''
+                    }`}
+                  >
+                    <Heart className={`h-3 w-3 ${favoriteTemplates.has(template.id) ? 'fill-current' : ''}`} />
+                  </Button>
+
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleComparison(template);
+                    }}
+                    className={`h-6 px-2 text-xs border-elec-yellow/20 hover:border-elec-yellow/40 flex items-center gap-1 ${
+                      comparisonTemplates.some(t => t.id === template.id) ? 'bg-purple-500/20 text-purple-400' : ''
+                    }`}
+                    disabled={!comparisonTemplates.some(t => t.id === template.id) && comparisonTemplates.length >= 3}
+                  >
+                    <GitCompare className="h-3 w-3" />
+                  </Button>
                 </div>
                 <CardTitle className="text-base sm:text-lg text-elec-yellow">
                   <span className="break-words line-clamp-2 leading-tight">{template.name}</span>
@@ -320,6 +520,21 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
           </CardContent>
         </Card>
       )}
+
+      {/* Modals */}
+      <TemplatePreviewModal
+        template={previewTemplate}
+        isOpen={showPreview}
+        onClose={() => setShowPreview(false)}
+        onUseTemplate={handleUseTemplate}
+      />
+
+      <TemplateComparisonModal
+        templates={comparisonTemplates}
+        isOpen={showComparison}
+        onClose={() => setShowComparison(false)}
+        onSelectTemplate={handleUseTemplate}
+      />
 
       {/* No Results - Mobile optimized */}
       {filteredTemplates.length === 0 && (
