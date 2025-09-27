@@ -199,28 +199,6 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
                 value={formData.clientName || ""}
                 onChange={(value) => updateField('clientName', value)}
               />
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowSmartAssistant(showSmartAssistant === 'clientName' ? null : 'clientName')}
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-                >
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Suggestions
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setValidationFields(prev => 
-                    prev.includes('clientName') ? prev.filter(f => f !== 'clientName') : [...prev, 'clientName']
-                  )}
-                  className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
-                >
-                  <CheckCircle2 className="h-4 w-4 mr-2" />
-                  Validate
-                </Button>
-              </div>
               {showSmartAssistant === 'clientName' && (
                 <SmartInputAssistant
                   fieldId="clientName"
