@@ -176,40 +176,40 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
         </div>
       </Card>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* Template Summary */}
-        <Card className="bg-elec-gray border-elec-yellow/30 p-6 md:col-span-2">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-elec-yellow/20 rounded-lg">
-              <FileText className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <div>
-              <h3 className="text-lg font-medium text-white">Report Template</h3>
-              <p className="text-sm text-muted-foreground">Selected template and settings</p>
-            </div>
+      {/* Report Template Card - Moved above */}
+      <Card className="bg-elec-gray border-elec-yellow/30 p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2 bg-elec-yellow/20 rounded-lg">
+            <FileText className="h-5 w-5 text-elec-yellow" />
           </div>
-          
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Template:</span>
-              <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/50">
-                {wizardData.template?.name}
-              </Badge>
-            </div>
-            <div className="flex items-center justify-between text-right">
-              <span className="text-sm text-muted-foreground">Difficulty:</span>
-              <Badge variant="outline" className="text-xs text-right">
-                {wizardData.template?.difficulty}
-              </Badge>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Category:</span>
-              <span className="text-sm text-white capitalize">{wizardData.template?.category}</span>
-            </div>
+          <div>
+            <h3 className="text-lg font-medium text-white">Report Template</h3>
+            <p className="text-sm text-muted-foreground">Selected template and settings</p>
           </div>
-        </Card>
+        </div>
+        
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-muted-foreground">Template:</span>
+            <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/50">
+              {wizardData.template?.name}
+            </Badge>
+          </div>
+          <div className="flex items-center justify-between text-right">
+            <span className="text-sm text-muted-foreground">Difficulty:</span>
+            <Badge variant="outline" className="text-xs text-right">
+              {wizardData.template?.difficulty}
+            </Badge>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-muted-foreground">Category:</span>
+            <span className="text-sm text-white capitalize">{wizardData.template?.category}</span>
+          </div>
+        </div>
+      </Card>
 
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Client Summary */}
         <Card className="bg-elec-gray border-elec-yellow/30 p-4">
           <div className="flex items-center gap-2 mb-3">
