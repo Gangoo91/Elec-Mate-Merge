@@ -257,18 +257,25 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
             </div>
           </div>
           
-          <div className="space-y-3">
-            <div>
-              <span className="text-sm text-muted-foreground">Location:</span>
-              <p className="text-sm text-white font-medium">{summary.installation.address}</p>
+          <div className="space-y-4">
+            {/* Location Information */}
+            <div className="space-y-2">
+              <div>
+                <span className="text-sm text-muted-foreground">Installation Location:</span>
+                <p className="text-sm text-white font-medium">{summary.installation.address}</p>
+              </div>
+              <div>
+                <span className="text-sm text-muted-foreground">Installation Type:</span>
+                <p className="text-sm text-white font-medium">{summary.installation.description}</p>
+              </div>
             </div>
-            <div>
-              <span className="text-sm text-muted-foreground">Type:</span>
-              <p className="text-sm text-white">{summary.installation.description}</p>
-            </div>
-            <div>
-              <span className="text-sm text-muted-foreground">Age:</span>
-              <p className="text-sm text-white">{summary.installation.age}</p>
+            
+            {/* System Information */}
+            <div className="pt-2 border-t border-elec-yellow/10">
+              <div>
+                <span className="text-sm text-muted-foreground">Estimated Age:</span>
+                <p className="text-sm text-white leading-relaxed">{summary.installation.age}</p>
+              </div>
             </div>
           </div>
         </Card>
