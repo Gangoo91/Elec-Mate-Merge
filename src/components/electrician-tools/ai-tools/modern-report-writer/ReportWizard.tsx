@@ -289,67 +289,6 @@ const ReportWizard = () => {
               </div>
             </div>
 
-            {/* Enhanced Step Navigation */}
-            <div className="mt-6 flex flex-wrap gap-3">
-              {steps.map((step, index) => {
-                const stepIcon = index === 0 ? FileText : 
-                                index === 1 ? Eye : 
-                                index === 2 ? CheckCircle2 : 
-                                Sparkles;
-                
-                return (
-                  <button
-                    key={step.id}
-                    onClick={() => goToStep(step.id)}
-                    disabled={!step.isAccessible}
-                    className={`group relative w-full sm:w-1/2 md:w-1/3 lg:w-1/4 min-w-fit p-4 rounded-lg border transition-all duration-200 ${
-                      currentStep === step.id
-                        ? 'bg-elec-yellow/10 border-elec-yellow text-elec-yellow'
-                        : step.isCompleted
-                        ? 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20'
-                        : step.isAccessible
-                        ? 'bg-elec-dark border-elec-yellow/20 text-white hover:bg-elec-yellow/5 hover:border-elec-yellow/40'
-                        : 'bg-muted/5 border-muted/20 text-muted-foreground/50 cursor-not-allowed'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-full ${
-                        currentStep === step.id
-                          ? 'bg-elec-yellow/20'
-                          : step.isCompleted
-                          ? 'bg-green-500/20'
-                          : 'bg-muted/10'
-                      }`}>
-                        {React.createElement(stepIcon, { 
-                          className: `h-4 w-4 ${
-                            currentStep === step.id ? 'text-elec-yellow' :
-                            step.isCompleted ? 'text-green-400' : 'text-muted-foreground'
-                          }` 
-                        })}
-                      </div>
-                      <div className="text-left flex-1 min-w-0">
-                        <div className={`text-sm font-medium truncate ${
-                          currentStep === step.id ? 'text-elec-yellow' :
-                          step.isCompleted ? 'text-green-400' : 'text-current'
-                        }`}>
-                          {step.title}
-                        </div>
-                        <div className="text-xs text-muted-foreground truncate">
-                          {step.description}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Completion indicator */}
-                    {step.isCompleted && (
-                      <div className="absolute -top-1 -right-1">
-                        <CheckCircle2 className="h-5 w-5 text-green-400 bg-elec-dark rounded-full" />
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
           </Card>
 
           {/* Current Step Content */}
