@@ -185,11 +185,14 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             aria-label={`Select ${template.name} template`}
             aria-pressed={selectedTemplate?.id === template.id}
             className={`
-              cursor-pointer h-full flex flex-col
+              cursor-pointer mobile-interactive mobile-card-compact border-2 h-full flex flex-col group
+              transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
+              focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:ring-offset-2 focus:ring-offset-background
               ${selectedTemplate?.id === template.id
-                ? 'border-elec-yellow bg-elec-yellow/5'
-                : 'border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40'
+                ? 'border-elec-yellow bg-elec-yellow/10 shadow-lg ring-2 ring-elec-yellow/20'
+                : 'border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 hover:shadow-md hover:bg-elec-yellow/5'
               }
+              ${template.isPopular ? 'relative overflow-hidden' : ''}
             `}
             onClick={() => setSelectedTemplate(template)}
             onKeyDown={(e) => handleKeyDown(e, template)}
