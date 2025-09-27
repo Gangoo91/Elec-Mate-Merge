@@ -309,7 +309,7 @@ const R1R2Standards = () => {
           
           <div className="bg-gray-500/10 border border-gray-500/30 rounded p-3">
             <p className="text-gray-300 text-xs">
-              <strong>Note:</strong> This calculator and guidance is based on BS7671:2018+A2:2022. 
+              <strong>Note:</strong> This calculator and guidance is based on BS7671:2018+A3:2024. 
               Always refer to the latest edition of relevant standards and seek advice from 
               qualified persons for complex installations.
             </p>

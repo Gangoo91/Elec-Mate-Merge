@@ -133,7 +133,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
           <CardTitle className="text-blue-300 flex items-center gap-2 mobile-heading">
             <Zap className="h-5 w-5 flex-shrink-0" />
             <span className="break-words">Choose a Method Statement Template</span>
-            <RequiredFieldTooltip content="Templates are pre-built method statements that comply with BS7671:2018+A2:2022 regulations and include all necessary safety procedures" />
+            <RequiredFieldTooltip content="Templates are pre-built method statements that comply with BS7671:2018+A3:2024 regulations and include all necessary safety procedures" />
           </CardTitle>
           <p className="text-muted-foreground mobile-text">
             Start with a proven template or build from scratch. Templates include BS7671-compliant safety requirements and detailed step-by-step procedures.

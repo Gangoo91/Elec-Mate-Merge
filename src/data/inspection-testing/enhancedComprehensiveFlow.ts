@@ -6,7 +6,7 @@ import { comprehensiveTestingSequence } from './enhancedTestingSequence';
 export const enhancedComprehensiveFlow: TestFlow = {
   id: 'enhanced-comprehensive-inspection-testing',
   title: 'Enhanced Comprehensive Inspection & Testing',
-  description: 'Complete electrical installation inspection and testing following BS 7671:2018+A2:2022 requirements',
+  description: 'Complete electrical installation inspection and testing following BS 7671:2018+A3:2024 requirements',
   type: 'comprehensive',
   steps: [
     ...allVisualInspectionSteps,
@@ -22,7 +22,7 @@ export const enhancedComprehensiveFlow: TestFlow = {
     'Knowledge of visual inspection requirements'
   ],
   regulatoryStandards: [
-    'BS 7671:2018+A2:2022',
+    'BS 7671:2018+A3:2024',
     'IET Guidance Note 3: Inspection & Testing',
     'IET Code of Practice',
     'HSE GS38: Electrical Test Equipment for Use by Electricians'
@@ -48,7 +48,7 @@ export const visualInspectionOnlyFlow: TestFlow = {
     'Knowledge of electrical installation methods'
   ],
   regulatoryStandards: [
-    'BS 7671:2018+A2:2022 Chapter 61',
+    'BS 7671:2018+A3:2024 Chapter 61',
     'IET Guidance Note 3 Section 3'
   ],
   safetyRequirements: [

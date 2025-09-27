@@ -299,7 +299,7 @@ const CommercialReferenceGuide = () => {
             </CardHeader>
             <CardContent className="space-y-3">
               {[
-                { standard: "BS 7671:2018+A2:2022", description: "Requirements for Electrical Installations (18th Edition)" },
+                { standard: "BS 7671:2018+A3:2024", description: "Requirements for Electrical Installations (18th Edition)" },
                 { standard: "BS 5266-1:2016", description: "Emergency lighting - Code of practice for the emergency lighting of premises" },
                 { standard: "BS 5839-1:2017", description: "Fire detection and fire alarm systems for buildings" },
                 { standard: "BS 6387:2013", description: "Performance requirements for cables required to maintain circuit integrity under fire conditions" },

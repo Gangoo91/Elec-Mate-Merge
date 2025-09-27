@@ -219,7 +219,7 @@ const BS7671QuickReference = () => {
           </h1>
         </div>
         <p className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto mb-6">
-          Essential sections of the 18th Edition Wiring Regulations (BS 7671:2018+A2:2022). 
+          Essential sections of the 18th Edition Wiring Regulations (BS 7671:2018+A3:2024). 
           Quick reference guide for electrical installation requirements and compliance.
         </p>
         <BackButton customUrl="/apprentice/electrical-installation-guides" label="Back to Installation Guides" />

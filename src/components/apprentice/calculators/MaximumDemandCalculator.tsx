@@ -436,7 +436,7 @@ const MaximumDemandCalculator = () => {
         <Alert className="bg-blue-500/10 border-blue-500/30">
           <Info className="h-4 w-4" />
           <AlertDescription className="text-blue-300">
-            <strong>BS 7671 Diversity:</strong> Diversity factors account for the statistical probability that not all loads operate simultaneously at full capacity. This enables more economical sizing of cables, switchgear, and distribution equipment while maintaining safety standards per BS 7671:2018+A2:2022.
+            <strong>BS 7671 Diversity:</strong> Diversity factors account for the statistical probability that not all loads operate simultaneously at full capacity. This enables more economical sizing of cables, switchgear, and distribution equipment while maintaining safety standards per BS 7671:2018+A3:2024.
           </AlertDescription>
         </Alert>
       </CardContent>

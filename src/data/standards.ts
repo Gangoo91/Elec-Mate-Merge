@@ -11,7 +11,7 @@ export interface Standard {
 
 export const ukElectricalStandards: Standard[] = [
   {
-    code: "BS 7671:2018+A2:2022",
+    code: "BS 7671:2018+A3:2024",
     title: "Requirements for Electrical Installations",
     description: "IET Wiring Regulations - 18th Edition",
     scope: "Covers design, installation, inspection and testing of electrical installations in buildings up to 1000V AC",

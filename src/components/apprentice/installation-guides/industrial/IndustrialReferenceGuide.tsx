@@ -36,7 +36,7 @@ const IndustrialReferenceGuide = () => {
     {
       category: "Industrial Installations",
       standards: [
-        { code: "BS 7671:2018+A2:2022", title: "Requirements for Electrical Installations", scope: "General electrical requirements" },
+        { code: "BS 7671:2018+A3:2024", title: "Requirements for Electrical Installations", scope: "General electrical requirements" },
         { code: "BS 5266", title: "Emergency lighting", scope: "Industrial emergency systems" },
         { code: "BS 5839", title: "Fire detection and alarm systems", scope: "Industrial fire safety" },
         { code: "BS 6651", title: "Lightning protection systems", scope: "Industrial lightning protection" }

@@ -249,7 +249,7 @@ const ZsLookupStandards = () => {
           
           <div className="bg-gray-500/10 border border-gray-500/30 rounded p-3">
             <p className="text-gray-300 text-xs">
-              <strong>Note:</strong> This tool provides guidance based on BS7671:2018+A2:2022. 
+              <strong>Note:</strong> This tool provides guidance based on BS7671:2018+A3:2024. 
               Always refer to the latest edition of BS7671 and relevant standards for authoritative requirements.
             </p>
           </div>

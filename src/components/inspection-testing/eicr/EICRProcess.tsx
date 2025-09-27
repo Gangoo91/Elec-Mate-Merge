@@ -34,7 +34,7 @@ const EICRProcess = () => {
           <div>
             <h2 className="text-2xl font-bold tracking-tight">EICR Setup Wizard</h2>
             <p className="text-muted-foreground">
-              Step-by-step EICR process following BS 7671:2018+A2:2022
+              Step-by-step EICR process following BS 7671:2018+A3:2024
             </p>
           </div>
           <div className="flex gap-2">

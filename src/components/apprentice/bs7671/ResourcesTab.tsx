@@ -31,7 +31,7 @@ const resources: Resource[] = [
   // BS7671 Resources
   {
     id: "bs7671-18th-edition",
-    title: "BS 7671:2018+A2:2022 (18th Edition)",
+    title: "BS 7671:2018+A3:2024 (18th Edition)",
     description: "The complete IET Wiring Regulations standard for electrical installations",
     type: "standard",
     category: "BS7671",
@@ -49,7 +49,7 @@ const resources: Resource[] = [
   },
   {
     id: "on-site-guide",
-    title: "IET On-Site Guide (BS 7671:2018+A2:2022)",
+    title: "IET On-Site Guide (BS 7671:2018+A3:2024)",
     description: "Practical guide for electrical installation work on site",
     type: "guide",
     category: "BS7671",

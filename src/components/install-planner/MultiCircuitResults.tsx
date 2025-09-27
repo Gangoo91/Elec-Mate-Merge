@@ -223,7 +223,7 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
           <div className="space-y-2 text-center sm:text-left flex-1">
             <p className="font-medium text-amber-200 text-lg sm:text-base">Professional Verification Required</p>
             <p className="text-sm text-amber-200/80 leading-relaxed">
-              This analysis provides guidance based on BS7671:2018+A2:2022. All calculations assume standard conditions. 
+              This analysis provides guidance based on BS7671:2018+A3:2024. All calculations assume standard conditions. 
               Professional design verification, site-specific assessments, and comprehensive testing are required for all electrical installations.
             </p>
           </div>

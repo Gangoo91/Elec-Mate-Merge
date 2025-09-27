@@ -1,6 +1,6 @@
 
 // Official EICR Numbered Visual Inspection Data
-// Based on BS 7671:2018+A2:2022 Schedule of Inspections
+// Based on BS 7671:2018+A3:2024 Schedule of Inspections
 
 export type InspectionOutcome = 'acceptable' | 'c1' | 'c2' | 'c3' | 'not_verified' | 'limitation' | 'not_applicable';
 

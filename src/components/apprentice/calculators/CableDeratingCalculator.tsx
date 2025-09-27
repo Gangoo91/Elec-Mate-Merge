@@ -399,7 +399,7 @@ const CableDeratingCalculator = () => {
                   <div className="text-center">
                     <h3 className="text-lg font-semibold text-elec-yellow mb-2">Derating Results</h3>
                     <Badge variant="secondary" className="mb-4">
-                      BS 7671:2018+A2:2022
+                      BS 7671:2018+A3:2024
                     </Badge>
                   </div>
                   

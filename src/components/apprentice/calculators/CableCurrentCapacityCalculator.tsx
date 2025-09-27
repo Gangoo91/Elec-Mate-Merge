@@ -368,7 +368,7 @@ const CableCurrentCapacityCalculator = () => {
             soilCorrectionFactor: soilFactor,
             finalCapacity,
             voltageRating,
-            standard: "BS 7671:2018+A2:2022",
+             standard: "BS 7671:2018+A3:2024",
             compliance,
             warnings,
             actionableGuidance
@@ -383,7 +383,7 @@ const CableCurrentCapacityCalculator = () => {
             soilCorrectionFactor: 0,
             finalCapacity: 0,
             voltageRating: "",
-            standard: "BS 7671:2018+A2:2022",
+             standard: "BS 7671:2018+A3:2024",
             compliance: null,
             warnings: [`No capacity data for ${cableSize}mm² ${cableTypes.find(t => t.value === cableType)?.label} with ${installationMethods.find(m => m.value === installationMethod)?.label}`],
             actionableGuidance: {
@@ -406,7 +406,7 @@ const CableCurrentCapacityCalculator = () => {
           soilCorrectionFactor: 0,
           finalCapacity: 0,
           voltageRating: "",
-          standard: "BS 7671:2018+A2:2022",
+          standard: "BS 7671:2018+A3:2024",
           compliance: null,
           warnings: [`${cableSize}mm² not available for selected cable type`],
           actionableGuidance: {

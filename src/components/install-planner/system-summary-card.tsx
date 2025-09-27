@@ -69,7 +69,7 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
         {/* Compliance Status */}
         <div className="flex flex-wrap gap-2 justify-center pt-4 border-t border-elec-yellow/20">
           <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow">
-            BS7671:2018+A2:2022
+            BS7671:2018+A3:2024
           </Badge>
           <Badge variant="outline" className="border-blue-500/50 text-blue-400">
             Part P Compliant

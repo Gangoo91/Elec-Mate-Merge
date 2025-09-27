@@ -171,7 +171,7 @@ const CustomerExperienceTab = () => {
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
                 <h4 className="font-semibold text-emerald-400 mb-3">Technical Compliance Standards</h4>
                 <ul className="space-y-2 text-sm text-slate-200">
-                  <li>• BS7671:2018+A2:2022 (18th Edition Wiring Regulations) full compliance</li>
+                  <li>• BS7671:2018+A3:2024 (18th Edition Wiring Regulations) full compliance</li>
                   <li>• Proper testing and inspection procedures with calibrated equipment</li>
                   <li>• Electrical Installation Certificates completed accurately and promptly</li>
                   <li>• Part P Building Regulations compliance for all notifiable work</li>

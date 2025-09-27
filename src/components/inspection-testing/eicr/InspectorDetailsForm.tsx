@@ -32,7 +32,7 @@ const InspectorDetailsForm: React.FC<InspectorDetailsFormProps> = ({ onComplete,
   });
 
   const qualifications = [
-    '18th Edition BS 7671:2018+A2:2022',
+    '18th Edition BS 7671:2018+A3:2024',
     '17th Edition BS 7671:2008',
     'C&G 2391-52 Inspection & Testing',
     'C&G 2391-51 Initial Verification',

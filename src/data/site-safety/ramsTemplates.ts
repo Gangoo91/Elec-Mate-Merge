@@ -36,7 +36,7 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Ensure emergency procedures are communicated to all personnel'
     ],
     ppe: ['Insulated gloves (Class 0)', 'Safety boots', 'Arc flash protection', 'Safety glasses'],
-    regulations: ['BS 7671:2018+A2:2022', 'IET Code of Practice', 'HSE GS38'],
+    regulations: ['BS 7671:2018+A3:2024', 'IET Code of Practice', 'HSE GS38'],
     furtherActions: ['Annual PPE inspection', 'Voltage detector calibration', 'Emergency response training'],
     icon: 'Zap'
   },
@@ -59,7 +59,7 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Complete electrical installation certificate'
     ],
     ppe: ['Arc flash suit', 'Insulated tools', 'Safety helmet', 'Insulated gloves'],
-    regulations: ['BS 7671:2018+A2:2022', 'Part P Building Regulations', 'IET Guidance Note 3'],
+    regulations: ['BS 7671:2018+A3:2024', 'Part P Building Regulations', 'IET Guidance Note 3'],
     furtherActions: ['Schedule inspection and testing', 'Customer handover documentation'],
     icon: 'Home'
   },
@@ -82,7 +82,7 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Install emergency stop facility where required'
     ],
     ppe: ['Standard electrical PPE', 'Safety boots', 'Hard hat', 'High-vis vest'],
-    regulations: ['BS 7671:2018+A2:2022', 'IET Code of Practice for EV Charging', 'OLEV Grant Scheme Requirements'],
+    regulations: ['BS 7671:2018+A3:2024', 'IET Code of Practice for EV Charging', 'OLEV Grant Scheme Requirements'],
     furtherActions: ['Commission and test installation', 'Register with local authority'],
     icon: 'Car'
   },
@@ -128,7 +128,7 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Install generation meter and export limitation if required'
     ],
     ppe: ['Fall arrest harness', 'Hard hat', 'Cut-resistant gloves', 'Safety boots'],
-    regulations: ['BS 7671:2018+A2:2022', 'MCS Installation Standards', 'G99 Grid Code'],
+    regulations: ['BS 7671:2018+A3:2024', 'MCS Installation Standards', 'G99 Grid Code'],
     furtherActions: ['MCS certification', 'DNO notification', 'Insurance documentation'],
     icon: 'Sun'
   },
@@ -197,7 +197,7 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Provide clear recommendations for remedial work'
     ],
     ppe: ['Insulated gloves', 'Safety glasses', 'Arc flash protection'],
-    regulations: ['BS 7671:2018+A2:2022', 'IET Guidance Note 3', 'Landlord & Tenant Act'],
+    regulations: ['BS 7671:2018+A3:2024', 'IET Guidance Note 3', 'Landlord & Tenant Act'],
     furtherActions: ['Schedule remedial work', 'Certificate registration'],
     icon: 'ClipboardCheck'
   },
@@ -220,7 +220,7 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Work with competent assistant where required'
     ],
     ppe: ['Arc flash suit', 'Insulated gloves', 'Insulated tools', 'Safety glasses'],
-    regulations: ['Electricity at Work Regulations 1989', 'HSE GS38', 'BS 7671:2018+A2:2022'],
+    regulations: ['Electricity at Work Regulations 1989', 'HSE GS38', 'BS 7671:2018+A3:2024'],
     furtherActions: ['Update circuit documentation', 'Schedule follow-up testing'],
     icon: 'Search'
   },
@@ -289,7 +289,7 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Check cable integrity after installation'
     ],
     ppe: ['Work gloves', 'Safety boots', 'Hard hat', 'High-vis clothing'],
-    regulations: ['Manual Handling Operations Regulations 1992', 'BS 7671:2018+A2:2022'],
+    regulations: ['Manual Handling Operations Regulations 1992', 'BS 7671:2018+A3:2024'],
     furtherActions: ['Cable test certificates', 'Installation documentation'],
     icon: 'Cable'
   },

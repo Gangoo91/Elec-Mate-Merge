@@ -146,7 +146,7 @@ const resetCalculator = () => {
                 <CardHeader>
                   <CardTitle className="text-blue-300 text-lg flex items-center gap-2">
                     <BookOpen className="h-5 w-5" />
-                    BS 7671:2018+A2:2022 References
+                    BS 7671:2018+A3:2024 References
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">

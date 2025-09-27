@@ -13,7 +13,7 @@ const DigitalSkillsAnalyser = () => {
   const skillsQuestions = [
     {
       category: "Technical Knowledge",
-      question: "Understanding of BS 7671:2018+A2:2022 regulations",
+      question: "Understanding of BS 7671:2018+A3:2024 regulations",
       options: [
         { text: "Comprehensive understanding", score: 4 },
         { text: "Good working knowledge", score: 3 },

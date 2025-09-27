@@ -335,7 +335,7 @@ startxref
         </CardHeader>
         <CardContent>
           <div className="space-y-2 text-sm">
-            <p>• This report is generated using ElecMate digital EICR tools and complies with BS 7671:2018+A2:2022</p>
+            <p>• This report is generated using ElecMate digital EICR tools and complies with BS 7671:2018+A3:2024</p>
             <p>• All fault classifications follow IET Guidance Note 3 recommendations</p>
             <p>• The report should be reviewed and signed by a qualified electrician before issue</p>
             <p>• Keep a copy of this report for your records and provide a copy to the installation owner</p>

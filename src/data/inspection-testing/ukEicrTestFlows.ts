@@ -10,7 +10,7 @@ export const ukEicrTestFlows: TestFlow[] = [
     difficulty: 'intermediate',
     estimatedDuration: '4-6 hours',
     regulatoryStandards: [
-      'BS 7671:2018+A2:2022',
+      'BS 7671:2018+A3:2024',
       'IET Guidance Note 3'
     ],
     steps: [

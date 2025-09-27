@@ -299,7 +299,7 @@ export const enhancedRiskConsequences: EnhancedRiskConsequence[] = [
       administrative: ["Permit to work systems", "Competent person supervision", "Emergency procedures"],
       ppe: ["Insulated gloves", "Safety footwear", "Insulated tools"]
     },
-    bs7671References: ["BS 7671:2018+A2:2022 - Section 514"],
+    bs7671References: ["BS 7671:2018+A3:2024 - Section 514"],
     category: "electrical",
     workType: ["installation", "maintenance", "testing"],
     environment: ["indoor", "outdoor"]
@@ -354,7 +354,7 @@ export const enhancedRiskConsequences: EnhancedRiskConsequence[] = [
       administrative: ["Weather monitoring", "Risk assessment updates", "Emergency procedures"],
       ppe: ["Waterproof clothing", "Insulated gloves", "Non-slip footwear"]
     },
-    bs7671References: ["BS 7671:2018+A2:2022 - Section 704"],
+    bs7671References: ["BS 7671:2018+A3:2024 - Section 704"],
     category: "electrical",
     workType: ["installation", "maintenance"],
     environment: ["outdoor", "bathroom"]
@@ -440,7 +440,7 @@ export const enhancedRiskConsequences: EnhancedRiskConsequence[] = [
       administrative: ["Earth testing procedures", "Regular inspection", "Competent person verification"],
       ppe: ["Insulated tools", "Voltage detectors", "Insulated gloves"]
     },
-    bs7671References: ["BS 7671:2018+A2:2022 - Section 542"],
+    bs7671References: ["BS 7671:2018+A3:2024 - Section 542"],
     category: "electrical",
     workType: ["installation", "testing"],
     environment: ["indoor", "outdoor"]
@@ -475,7 +475,7 @@ export const enhancedRiskConsequences: EnhancedRiskConsequence[] = [
       administrative: ["Warning signs", "Restricted access", "Competent person supervision"],
       ppe: ["Insulated gloves", "Safety glasses", "Arc flash protection"]
     },
-    bs7671References: ["BS 7671:2018+A2:2022 - Section 416"],
+    bs7671References: ["BS 7671:2018+A3:2024 - Section 416"],
     category: "electrical",
     workType: ["installation", "maintenance"],
     environment: ["indoor", "outdoor"]
@@ -492,7 +492,7 @@ export const enhancedRiskConsequences: EnhancedRiskConsequence[] = [
       administrative: ["Regular thermal imaging", "Load assessments", "Circuit modifications"],
       ppe: ["Fire extinguishers", "Thermal imaging equipment", "Insulated tools"]
     },
-    bs7671References: ["BS 7671:2018+A2:2022 - Section 433"],
+    bs7671References: ["BS 7671:2018+A3:2024 - Section 433"],
     category: "electrical",
     workType: ["design", "installation", "maintenance"],
     environment: ["indoor", "commercial", "industrial"]

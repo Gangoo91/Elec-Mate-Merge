@@ -142,7 +142,7 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
         <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
           <h4 className="font-medium text-blue-400 mb-2">Professional Compliance</h4>
           <p className="text-sm text-blue-300">
-            All reports are generated in accordance with BS 7671:2018+A2:2022 requirements and 
+            All reports are generated in accordance with BS 7671:2018+A3:2024 requirements and 
             include proper certification documentation. Reports include detailed test results, 
             fault classifications, and professional recommendations.
           </p>

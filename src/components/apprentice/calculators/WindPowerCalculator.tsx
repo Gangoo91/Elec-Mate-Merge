@@ -646,7 +646,7 @@ export function WindPowerCalculator() {
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="bg-background/30 p-4 rounded-lg border border-border/10">
-                  <h4 className="font-semibold text-amber-400 mb-3">Electrical Installation (BS 7671:2018+A2:2022)</h4>
+                  <h4 className="font-semibold text-amber-400 mb-3">Electrical Installation (BS 7671:2018+A3:2024)</h4>
                   <ul className="list-disc ml-4 space-y-1 text-sm text-muted-foreground">
                     <li>Install appropriate DC and AC isolators as per Section 537</li>
                     <li>Earthing and bonding must comply with Chapter 54</li>
@@ -686,7 +686,7 @@ export function WindPowerCalculator() {
             <strong>Important:</strong> This calculator provides preliminary estimates only. Professional wind resource assessment 
             with anemometer data over 12+ months is essential for commercial viability. Consider local planning restrictions, 
             noise regulations, and grid connection requirements. All electrical work must be carried out by qualified electricians 
-            in accordance with BS 7671:2018+A2:2022.
+            in accordance with BS 7671:2018+A3:2024.
           </AlertDescription>
         </Alert>
       </CardContent>

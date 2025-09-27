@@ -241,7 +241,7 @@ export const RAMSQuickAdd: React.FC = () => {
           <div className="flex items-start gap-2">
             <span className="text-green-400 text-sm">💡</span>
             <div className="text-xs text-green-300">
-              <p className="font-medium mb-1">BS 7671:2018+A2:2022 Compliant:</p>
+              <p className="font-medium mb-1">BS 7671:2018+A3:2024 Compliant:</p>
               <p>These templates provide regulation-compliant baseline risk assessments. Expand each item to see detailed control measures, PPE requirements, and applicable regulations.</p>
             </div>
           </div>

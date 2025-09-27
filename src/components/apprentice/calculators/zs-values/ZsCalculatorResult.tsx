@@ -259,7 +259,7 @@ const ZsCalculatorResult = ({
             <h4 className="text-purple-300 font-semibold">Calculation Assumptions</h4>
           </div>
           <ul className="space-y-1 text-purple-200 text-sm">
-            <li>• Values based on BS 7671:2018+A2:2022 regulations</li>
+            <li>• Values based on BS 7671:2018+A3:2024 regulations</li>
             <li>• Assumes TN system earthing arrangement</li>
             <li>• Nominal voltage 230V (Uo) single-phase to earth</li>
             <li>• Temperature correction factor applied for PVC cables at 70°C</li>

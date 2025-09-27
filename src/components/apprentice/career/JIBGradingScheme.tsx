@@ -829,7 +829,7 @@ const JIBGradingScheme = () => {
                   <div className="rounded border border-elec-yellow/20 bg-elec-gray p-3">
                     <div className="text-base font-medium mb-1">BS 7671 Updates</div>
                     <div className="text-xs space-y-1">
-                      <div>• Keep current with 18th Edition (A2:2022) and amendments</div>
+                      <div>• Keep current with 18th Edition (A3:2024) and amendments</div>
                       <div>• CPD on changes and application</div>
                       <div className="text-[11px] text-white">Amendments typically every 2–3 years. Stay subscribed.</div>
                     </div>

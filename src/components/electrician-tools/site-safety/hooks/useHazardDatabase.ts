@@ -33,7 +33,7 @@ export const useHazardDatabase = () => {
         "Use appropriate PPE: insulated gloves (class 0 minimum)",
         "Maintain safe working distances from live parts"
       ],
-      regulations: ["BS 7671:2018+A2:2022", "IET Code of Practice", "HSE GS38"],
+      regulations: ["BS 7671:2018+A3:2024", "IET Code of Practice", "HSE GS38"],
       icon: Zap
     },
     {
@@ -48,7 +48,7 @@ export const useHazardDatabase = () => {
         "De-energise equipment before work",
         "Maintain proper working distances"
       ],
-      regulations: ["BS 7671:2018+A2:2022", "IEC 61482"],
+      regulations: ["BS 7671:2018+A3:2024", "IEC 61482"],
       icon: Flame
     },
     {
@@ -63,7 +63,7 @@ export const useHazardDatabase = () => {
         "Test all RCDs and MCBs before energisation",
         "Use temporary supply arrangements if required"
       ],
-      regulations: ["BS 7671:2018+A2:2022", "Part P Building Regulations", "IET Guidance Note 3"],
+      regulations: ["BS 7671:2018+A3:2024", "Part P Building Regulations", "IET Guidance Note 3"],
       icon: Home
     },
     {
@@ -78,7 +78,7 @@ export const useHazardDatabase = () => {
         "Ensure adequate earthing and bonding",
         "Use appropriate cable sizing for load"
       ],
-      regulations: ["BS 7671:2018+A2:2022", "IET Code of Practice for EV Charging", "OLEV Grant Scheme Requirements"],
+      regulations: ["BS 7671:2018+A3:2024", "IET Code of Practice for EV Charging", "OLEV Grant Scheme Requirements"],
       icon: Car
     },
     {
@@ -93,7 +93,7 @@ export const useHazardDatabase = () => {
         "Ensure proper earthing and bonding of metalwork",
         "Use MC4 connectors for all DC connections"
       ],
-      regulations: ["BS 7671:2018+A2:2022", "MCS Installation Standards", "G99 Grid Code"],
+      regulations: ["BS 7671:2018+A3:2024", "MCS Installation Standards", "G99 Grid Code"],
       icon: Sun
     },
     {
@@ -138,7 +138,7 @@ export const useHazardDatabase = () => {
         "Obtain permission before testing (commercial premises)",
         "Document all observations and test results"
       ],
-      regulations: ["BS 7671:2018+A2:2022", "IET Guidance Note 3", "Landlord & Tenant Act"],
+      regulations: ["BS 7671:2018+A3:2024", "IET Guidance Note 3", "Landlord & Tenant Act"],
       icon: ClipboardCheck
     },
     {
@@ -153,7 +153,7 @@ export const useHazardDatabase = () => {
         "Use insulated tools for live work",
         "Have emergency procedures in place"
       ],
-      regulations: ["Electricity at Work Regulations 1989", "HSE GS38", "BS 7671:2018+A2:2022"],
+      regulations: ["Electricity at Work Regulations 1989", "HSE GS38", "BS 7671:2018+A3:2024"],
       icon: Search
     },
     {
@@ -183,7 +183,7 @@ export const useHazardDatabase = () => {
         "Use proper pulling lubricants to reduce friction",
         "Install cable supports at appropriate intervals"
       ],
-      regulations: ["Manual Handling Operations Regulations 1992", "BS 7671:2018+A2:2022"],
+      regulations: ["Manual Handling Operations Regulations 1992", "BS 7671:2018+A3:2024"],
       icon: Cable
     },
     {

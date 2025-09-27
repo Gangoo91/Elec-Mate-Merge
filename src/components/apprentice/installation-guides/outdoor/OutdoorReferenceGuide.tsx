@@ -27,7 +27,7 @@ const OutdoorReferenceGuide = () => {
     {
       category: "Installation Standards",
       standards: [
-        { code: "BS 7671:2018+A2:2022", title: "Requirements for Electrical Installations", scope: "General electrical requirements" },
+        { code: "BS 7671:2018+A3:2024", title: "Requirements for Electrical Installations", scope: "General electrical requirements" },
         { code: "NRSWA 1991", title: "New Roads and Street Works Act", scope: "Legal framework for street works" },
         { code: "BS 5837", title: "Trees in relation to design and construction", scope: "Tree protection during works" },
         { code: "BS 7430", title: "Code of practice for protective earthing", scope: "Earthing and bonding systems" }

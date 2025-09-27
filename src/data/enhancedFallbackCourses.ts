@@ -30,9 +30,9 @@ export const enhancedFallbackElectricalCourses: EnhancedCareerCourse[] = [
   },
   {
     id: "fallback-enhanced-2",
-    title: "18th Edition IET Wiring Regulations (BS 7671:2018+A2:2022)",
+    title: "18th Edition IET Wiring Regulations (BS 7671:2018+A3:2024)",
     provider: "NICEIC Training Academy",
-    description: "Essential update training for the latest Amendment 2 to BS 7671:2018 wiring regulations, mandatory for all practicing electricians",
+    description: "Essential update training for the latest Amendment 3 to BS 7671:2018 wiring regulations, mandatory for all practicing electricians",
     duration: "3 days",
     level: "Professional Update",
     price: "£425",

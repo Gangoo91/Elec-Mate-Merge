@@ -131,7 +131,7 @@ const GuidedWorkflow = ({ currentStep, session, mode }: GuidedWorkflowProps) => 
         </CardHeader>
         <CardContent className="space-y-2">
           <div className="text-xs">
-            <div className="font-medium text-blue-200">BS 7671:2018+A2:2022</div>
+            <div className="font-medium text-blue-200">BS 7671:2018+A3:2024</div>
             <div className="text-blue-300">Requirements for Electrical Installations</div>
           </div>
           <div className="text-xs">
