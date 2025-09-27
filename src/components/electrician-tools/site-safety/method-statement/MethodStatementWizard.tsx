@@ -38,11 +38,20 @@ const MethodStatementWizard = () => {
   const currentStepIndex = steps.findIndex(step => step.id === currentStep);
   const progress = ((currentStepIndex + 1) / steps.length) * 100;
 
-  // Scroll to top when step changes
+  // Scroll to top when step changes - improved implementation
   useEffect(() => {
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    // Scroll to top immediately
+    window.scrollTo(0, 0);
+    
+    // Also smooth scroll as fallback
+    setTimeout(() => {
+      const container = document.querySelector('.method-statement-container') || window;
+      if (container instanceof Window) {
+        container.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        container.scrollTop = 0;
+      }
+    }, 100);
   }, [currentStep]);
 
   const handleNext = () => {
@@ -147,7 +156,30 @@ const MethodStatementWizard = () => {
   const isLastStep = currentStepIndex === steps.length - 1;
 
   return (
-    <div className="space-y-4 md:space-y-6">
+    <div className="space-y-4 md:space-y-6 method-statement-container">
+      {/* Progress Indicator */}
+      <Card className="border-blue-500/20 bg-blue-500/5">
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between mb-2">
+            <CardTitle className="text-lg text-blue-300">
+              {steps[currentStepIndex]?.title}
+            </CardTitle>
+            <span className="text-sm text-muted-foreground">
+              Step {currentStepIndex + 1} of {steps.length}
+            </span>
+          </div>
+          <p className="text-sm text-muted-foreground mb-3">
+            {steps[currentStepIndex]?.description}
+          </p>
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>Progress</span>
+              <span>{Math.round(progress)}%</span>
+            </div>
+            <Progress value={progress} className="h-2" />
+          </div>
+        </CardHeader>
+      </Card>
 
       {/* Step Content */}
       <div className="min-h-[500px]">
