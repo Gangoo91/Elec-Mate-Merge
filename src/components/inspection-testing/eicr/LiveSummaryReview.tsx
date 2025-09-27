@@ -271,7 +271,7 @@ const LiveSummaryReview = ({ reportType, formData }: LiveSummaryReviewProps) => 
         </CardHeader>
         <CardContent>
           <div className="space-y-2 text-sm">
-            <p><strong>Standards Applied:</strong> BS 7671:2018+A2:2022 (18th Edition)</p>
+            <p><strong>Standards Applied:</strong> BS 7671:2018+A3:2024 (18th Edition)</p>
             <p><strong>Guidance:</strong> IET Guidance Note 3: Inspection & Testing</p>
             <p><strong>Report Type:</strong> {reportType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
             <p><strong>Generated:</strong> {new Date().toLocaleString()}</p>

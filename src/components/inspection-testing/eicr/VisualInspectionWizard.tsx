@@ -45,7 +45,7 @@ const VisualInspectionWizard = ({ reportType, onComplete }: VisualInspectionWiza
             <div>
               <CardTitle className="text-2xl">Official EICR Numbered Visual Inspection</CardTitle>
               <p className="text-muted-foreground">
-                BS 7671:2018+A2:2022 compliant Schedule of Inspections
+                BS 7671:2018+A3:2024 compliant Schedule of Inspections
               </p>
             </div>
           </div>

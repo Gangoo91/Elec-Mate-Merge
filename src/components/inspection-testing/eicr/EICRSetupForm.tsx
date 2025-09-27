@@ -450,7 +450,7 @@ const EICRSetupForm: React.FC<EICRSetupFormProps> = ({ onStartSession }) => {
               <h4 className="font-medium text-blue-400 mb-2">Ready to Start</h4>
               <p className="text-blue-300 text-sm">
                 All required information has been collected. Click "Start EICR Process" to begin the 
-                visual inspection and testing procedures following BS 7671:2018+A2:2022.
+                visual inspection and testing procedures following BS 7671:2018+A3:2024.
               </p>
             </div>
           </div>

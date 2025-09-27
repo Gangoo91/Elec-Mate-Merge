@@ -159,7 +159,7 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
         <AlertCircle className="h-4 w-4 text-blue-400" />
         <AlertDescription className="text-blue-200">
           <strong>Official EICR Form:</strong> This inspection uses the exact numbered items from the official EICR Schedule of Inspections 
-          as per BS 7671:2018+A2:2022. Total items: {TOTAL_INSPECTION_ITEMS} across 10 sections.
+          as per BS 7671:2018+A3:2024. Total items: {TOTAL_INSPECTION_ITEMS} across 10 sections.
         </AlertDescription>
       </Alert>
 

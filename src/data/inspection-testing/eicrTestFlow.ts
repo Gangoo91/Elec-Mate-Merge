@@ -6,7 +6,7 @@ import { comprehensiveTestingSequence } from './enhancedTestingSequence';
 export const eicrTestFlow: TestFlow = {
   id: 'eicr-complete-process',
   title: 'EICR Complete Process',
-  description: 'Complete Electrical Installation Condition Report process following BS 7671:2018+A2:2022',
+  description: 'Complete Electrical Installation Condition Report process following BS 7671:2018+A3:2024',
   type: 'eicr',
   steps: [
     ...allVisualInspectionSteps,
@@ -22,7 +22,7 @@ export const eicrTestFlow: TestFlow = {
     'Understanding of fault classification (C1, C2, C3, FI)'
   ],
   regulatoryStandards: [
-    'BS 7671:2018+A2:2022',
+    'BS 7671:2018+A3:2024',
     'IET Guidance Note 3: Inspection & Testing',
     'IET Code of Practice for In-service Inspection & Testing',
     'HSE GS38: Electrical Test Equipment'
@@ -48,7 +48,7 @@ export const eicrVisualInspectionFlow: TestFlow = {
     'Knowledge of fault classification'
   ],
   regulatoryStandards: [
-    'BS 7671:2018+A2:2022 Chapter 61'
+    'BS 7671:2018+A3:2024 Chapter 61'
   ],
   safetyRequirements: [
     'No live working during visual inspection'
@@ -69,7 +69,7 @@ export const eicrTestingOnlyFlow: TestFlow = {
     'Safe isolation completed'
   ],
   regulatoryStandards: [
-    'BS 7671:2018+A2:2022 Chapter 64'
+    'BS 7671:2018+A3:2024 Chapter 64'
   ],
   safetyRequirements: [
     'Safe isolation verified',

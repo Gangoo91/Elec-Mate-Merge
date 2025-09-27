@@ -12,7 +12,7 @@ export const comprehensiveTestFlow: TestFlow = {
   difficulty: 'intermediate',
   isComprehensive: true,
   regulatoryStandards: [
-    'BS 7671:2018+A2:2022',
+    'BS 7671:2018+A3:2024',
     'IET Guidance Note 3',
     'IET Code of Practice'
   ],

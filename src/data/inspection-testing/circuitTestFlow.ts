@@ -11,7 +11,7 @@ export const comprehensiveCircuitTestFlow: CircuitTestFlow = {
   estimatedDuration: '2-3 hours',
   difficulty: 'intermediate',
   regulatoryStandards: [
-    'BS 7671:2018+A2:2022',
+    'BS 7671:2018+A3:2024',
     'IET Guidance Note 3'
   ],
   safetyRequirements: [

@@ -23,21 +23,21 @@ const ReportTypeSelector = ({ selectedType, onTypeSelect, formData, onFormDataCh
       title: 'EICR - Electrical Installation Condition Report',
       description: 'Periodic inspection and testing of existing electrical installations',
       duration: '2-4 hours',
-      requirements: ['BS 7671:2018+A2:2022', 'IET Guidance Note 3', '18th Edition compliance'],
+      requirements: ['BS 7671:2018+A3:2024', 'IET Guidance Note 3', '18th Edition compliance'],
     },
     {
       id: 'initial-verification' as ReportType,
       title: 'Initial Verification',
       description: 'Testing and inspection of new electrical installations before first use',
       duration: '3-6 hours',
-      requirements: ['BS 7671:2018+A2:2022', 'IET Guidance Note 3', 'Complete installation testing'],
+      requirements: ['BS 7671:2018+A3:2024', 'IET Guidance Note 3', 'Complete installation testing'],
     },
     {
       id: 'minor-works' as ReportType,
       title: 'Minor Electrical Installation Works Certificate',
       description: 'Simple additions or alterations to existing installations',
       duration: '30-60 minutes',
-      requirements: ['BS 7671:2018+A2:2022', 'Limited testing required'],
+      requirements: ['BS 7671:2018+A3:2024', 'Limited testing required'],
     },
   ];
 

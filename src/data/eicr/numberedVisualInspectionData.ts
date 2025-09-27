@@ -74,7 +74,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
     number: '1',
     title: 'EXTERNAL CONDITION OF INTAKE EQUIPMENT OR GENERATOR',
     description: 'Visual inspection of external electrical intake equipment',
-    regulation: 'BS 7671:2018+A2:2022 Section 514',
+    regulation: 'BS 7671:2018+A3:2024 Section 514',
     items: [
       {
         id: '1.1',
@@ -111,7 +111,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
     number: '2',
     title: 'PARALLEL OR SWITCHED ALTERNATIVE SOURCES OF SUPPLY',
     description: 'Inspection of alternative supply arrangements',
-    regulation: 'BS 7671:2018+A2:2022 Section 551',
+    regulation: 'BS 7671:2018+A3:2024 Section 551',
     items: [
       {
         id: '2.1',
@@ -127,7 +127,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
     number: '3',
     title: 'AUTOMATIC DISCONNECTION OF SUPPLY',
     description: 'Verification of protective measures',
-    regulation: 'BS 7671:2018+A2:2022 Section 411',
+    regulation: 'BS 7671:2018+A3:2024 Section 411',
     items: [
       {
         id: '3.1',
@@ -178,7 +178,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
     number: '4',
     title: 'OTHER PROTECTIVE MEASURES',
     description: 'Additional protective measures verification',
-    regulation: 'BS 7671:2018+A2:2022 Sections 412-418',
+    regulation: 'BS 7671:2018+A3:2024 Sections 412-418',
     items: [
       {
         id: '4.1',
@@ -222,7 +222,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
     number: '5',
     title: 'DISTRIBUTION EQUIPMENT',
     description: 'Consumer units, distribution boards and switchgear',
-    regulation: 'BS 7671:2018+A2:2022 Section 530',
+    regulation: 'BS 7671:2018+A3:2024 Section 530',
     items: [
       {
         id: '5.1',
@@ -399,7 +399,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
     number: '6',
     title: 'FINAL CIRCUITS',
     description: 'Final circuit wiring and accessories',
-    regulation: 'BS 7671:2018+A2:2022 Chapter 52',
+    regulation: 'BS 7671:2018+A3:2024 Chapter 52',
     items: [
       {
         id: '6.1',
@@ -478,7 +478,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
     number: '7',
     title: 'LOCATION(S) CONTAINING A BATH OR SHOWER',
     description: 'Special requirements for bathroom installations',
-    regulation: 'BS 7671:2018+A2:2022 Section 701',
+    regulation: 'BS 7671:2018+A3:2024 Section 701',
     items: [
       {
         id: '7.1',
@@ -508,7 +508,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
     number: '8',
     title: 'OTHER SPECIAL INSTALLATIONS OR LOCATIONS',
     description: 'Additional special location requirements',
-    regulation: 'BS 7671:2018+A2:2022 Part 7',
+    regulation: 'BS 7671:2018+A3:2024 Part 7',
     items: [
       {
         id: '8.1',
@@ -524,7 +524,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
     number: '9',
     title: 'GENERAL',
     description: 'General installation requirements',
-    regulation: 'BS 7671:2018+A2:2022 Various',
+    regulation: 'BS 7671:2018+A3:2024 Various',
     items: [
       {
         id: '9.1',
@@ -575,7 +575,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
     number: '10',
     title: 'CONDITION REPORT INSPECTION',
     description: 'Specific EICR inspection requirements',
-    regulation: 'BS 7671:2018+A2:2022 Appendix 6',
+    regulation: 'BS 7671:2018+A3:2024 Appendix 6',
     items: [
       {
         id: '10.1',

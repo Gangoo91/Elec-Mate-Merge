@@ -43,7 +43,7 @@ const ReportsTab = () => {
         <CardContent>
           <p className="text-muted-foreground mb-6">
             Generate professional electrical installation reports and certificates compliant with 
-            BS 7671:2018+A2:2022 requirements. All reports include proper formatting, fault codes, 
+            BS 7671:2018+A3:2024 requirements. All reports include proper formatting, fault codes, 
             and regulatory compliance documentation.
           </p>
 
@@ -158,7 +158,7 @@ const ReportsTab = () => {
             <div>
               <h4 className="font-medium mb-2">Regulatory Compliance</h4>
               <ul className="text-sm space-y-1 text-muted-foreground">
-                <li>• BS 7671:2018+A2:2022 compliant</li>
+                <li>• BS 7671:2018+A3:2024 compliant</li>
                 <li>• IET Guidance Note 3 formatted</li>
                 <li>• Professional fault code classification</li>
                 <li>• Digital signature capability</li>
