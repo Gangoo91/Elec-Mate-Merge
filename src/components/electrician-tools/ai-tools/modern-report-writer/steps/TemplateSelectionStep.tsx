@@ -123,27 +123,6 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
 
   return (
     <>
-      {/* EICR Notice */}
-      <Card className="bg-blue-500/10 border-blue-500/30 p-4 mb-6">
-        <div className="flex items-start gap-3">
-          <Info className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
-          <div className="flex-1">
-            <h3 className="font-semibold text-blue-400 mb-1">Need to create an EICR?</h3>
-            <p className="text-sm text-blue-200 mb-3">
-              Electrical Installation Condition Reports (EICRs) require specialised testing procedures and should be created using our dedicated Inspection & Testing system for full BS 7671:2018 compliance.
-            </p>
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
-              onClick={() => window.location.href = '/electrician-tools/inspection-testing'}
-            >
-              Go to Inspection & Testing
-              <ExternalLink className="h-4 w-4 ml-2" />
-            </Button>
-          </div>
-        </div>
-      </Card>
 
       {/* Header */}
       <Card className="bg-elec-gray border-elec-yellow/30 p-6 mb-6">
