@@ -328,7 +328,7 @@ const EnhancedHazardDatabase: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-border/50">
+              <div className="flex flex-wrap items-center justify-between pt-2 border-t border-border/50">
                 <div className="flex items-center gap-4 text-xs text-muted-foreground">
                   <span>Severity: {hazard.severity}/5</span>
                   <span>Likelihood: {hazard.likelihood}/5</span>
