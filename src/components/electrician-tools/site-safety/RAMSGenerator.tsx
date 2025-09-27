@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { 
   FileText, 
   Plus, 
@@ -778,6 +779,102 @@ const RAMSGenerator: React.FC = () => {
         reportOptions={reportOptions}
         signOff={signOff}
       />
+
+      {/* Add Manual Risk Modal */}
+      <Dialog open={showAddRisk} onOpenChange={setShowAddRisk}>
+        <DialogContent className="bg-elec-dark border-elec-yellow/20 max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-elec-yellow">Add Manual Risk Assessment</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-white mb-1">Hazard</label>
+                <Input
+                  value={newRisk.hazard}
+                  onChange={(e) => setNewRisk({ ...newRisk, hazard: e.target.value })}
+                  placeholder="e.g., Live electrical conductors"
+                  className="bg-elec-gray border-elec-yellow/20 text-white"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-white mb-1">Risk</label>
+                <Input
+                  value={newRisk.risk}
+                  onChange={(e) => setNewRisk({ ...newRisk, risk: e.target.value })}
+                  placeholder="e.g., Electric shock"
+                  className="bg-elec-gray border-elec-yellow/20 text-white"
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-white mb-1">Likelihood (1-5)</label>
+                <Select value={newRisk.likelihood.toString()} onValueChange={(value) => setNewRisk({ ...newRisk, likelihood: parseInt(value) })}>
+                  <SelectTrigger className="bg-elec-gray border-elec-yellow/20 text-white">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {[1, 2, 3, 4, 5].map((value) => (
+                      <SelectItem key={value} value={value.toString()} className="text-white hover:bg-elec-yellow/10">
+                        {value} - {['Very Unlikely', 'Unlikely', 'Possible', 'Likely', 'Very Likely'][value - 1]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-white mb-1">Severity (1-5)</label>
+                <Select value={newRisk.severity.toString()} onValueChange={(value) => setNewRisk({ ...newRisk, severity: parseInt(value) })}>
+                  <SelectTrigger className="bg-elec-gray border-elec-yellow/20 text-white">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {[1, 2, 3, 4, 5].map((value) => (
+                      <SelectItem key={value} value={value.toString()} className="text-white hover:bg-elec-yellow/10">
+                        {value} - {['Negligible', 'Minor', 'Moderate', 'Major', 'Catastrophic'][value - 1]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-white mb-1">Control Measures</label>
+              <textarea
+                value={newRisk.controls}
+                onChange={(e) => setNewRisk({ ...newRisk, controls: e.target.value })}
+                placeholder="Describe the control measures to mitigate this risk..."
+                className="w-full p-3 bg-elec-gray border border-elec-yellow/20 rounded-md text-white placeholder-gray-400 resize-none"
+                rows={3}
+              />
+            </div>
+            
+            <div className="flex justify-end gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setShowAddRisk(false)}
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                Cancel
+              </Button>
+              <Button 
+                onClick={() => addRisk({
+                  ...newRisk,
+                  riskRating: newRisk.likelihood * newRisk.severity,
+                  residualRisk: Math.max(1, newRisk.likelihood * newRisk.severity - 2) // Assume controls reduce risk by 2 points
+                })}
+                disabled={!newRisk.hazard || !newRisk.risk || !newRisk.controls}
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              >
+                Add Risk
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Hazard Selector Modal */}
       <HazardSelector
