@@ -1,14 +1,16 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Camera, Upload, Download, Trash2, Eye, MapPin, Loader2 } from "lucide-react";
+import { Camera, Upload, Download, Trash2, Eye, MapPin, Loader2, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import FileViewer from "@/components/shared/FileViewer";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface PhotoDoc {
   id: string;
@@ -29,6 +31,10 @@ const PhotoDocumentation = () => {
   const [photos, setPhotos] = useState<PhotoDoc[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
   const [newPhoto, setNewPhoto] = useState({
     description: "",
@@ -77,14 +83,47 @@ const PhotoDocumentation = () => {
     "General"
   ];
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const droppedFiles = Array.from(e.dataTransfer.files).filter(file => 
+        file.type.startsWith('image/')
+      );
+      setSelectedFiles(droppedFiles);
+    }
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const files = Array.from(event.target.files);
+      setSelectedFiles(files);
+    }
+  };
+
+  const removeSelectedFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleFileUpload = async (files: File[] = selectedFiles) => {
+    if (files.length === 0) return;
 
     if (!newPhoto.description.trim()) {
       toast({
         title: "Error",
-        description: "Please add a description for the photo",
+        description: "Please add a description for the photo(s)",
         variant: "destructive"
       });
       return;
@@ -116,48 +155,54 @@ const PhotoDocumentation = () => {
         }
       }
 
-      // Upload file to Supabase storage
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-      
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('safety-resources')
-        .upload(fileName, file);
+      const uploadedPhotos = [];
 
-      if (uploadError) throw uploadError;
+      // Upload each file
+      for (const file of files) {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${user.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+        
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('safety-resources')
+          .upload(fileName, file);
 
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('safety-resources')
-        .getPublicUrl(fileName);
+        if (uploadError) throw uploadError;
 
-      // Save photo metadata to database
-      const { data, error } = await supabase
-        .from('safety_photos')
-        .insert({
-          user_id: user.id,
-          filename: file.name,
-          file_url: publicUrl,
-          description: newPhoto.description,
-          category: newPhoto.category,
-          location: newPhoto.location,
-          tags: newPhoto.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
-          gps_latitude: gpsCoords?.latitude,
-          gps_longitude: gpsCoords?.longitude,
-          file_size: file.size,
-          mime_type: file.type
-        })
-        .select()
-        .single();
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('safety-resources')
+          .getPublicUrl(fileName);
 
-      if (error) throw error;
+        // Save photo metadata to database
+        const { data, error } = await supabase
+          .from('safety_photos')
+          .insert({
+            user_id: user.id,
+            filename: file.name,
+            file_url: publicUrl,
+            description: newPhoto.description,
+            category: newPhoto.category,
+            location: newPhoto.location,
+            tags: newPhoto.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+            gps_latitude: gpsCoords?.latitude,
+            gps_longitude: gpsCoords?.longitude,
+            file_size: file.size,
+            mime_type: file.type
+          })
+          .select()
+          .single();
 
-      setPhotos(prev => [data, ...prev]);
+        if (error) throw error;
+        uploadedPhotos.push(data);
+      }
+
+      setPhotos(prev => [...uploadedPhotos, ...prev]);
       setNewPhoto({ description: "", category: "General", location: "", tags: "", gpsEnabled: false });
+      setSelectedFiles([]);
       
       toast({
         title: "Success",
-        description: "Photo uploaded successfully",
+        description: `${files.length} photo(s) uploaded successfully`,
         variant: "success"
       });
 
@@ -291,32 +336,128 @@ const PhotoDocumentation = () => {
             </Label>
           </div>
           
-          <div className="border-2 border-dashed border-elec-yellow/50 rounded-lg p-6 text-center">
+          {/* File Upload Area */}
+          <div 
+            className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+              dragActive 
+                ? 'border-elec-yellow border-solid bg-elec-yellow/10' 
+                : 'border-elec-yellow/50'
+            }`}
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
+          >
             <input
+              ref={fileInputRef}
               type="file"
               accept="image/*"
-              onChange={handleFileUpload}
+              onChange={handleFileSelect}
               className="hidden"
-              id="photo-upload"
+              multiple
               disabled={uploading}
             />
-            <Label htmlFor="photo-upload" className={`cursor-pointer ${uploading ? 'opacity-50' : ''}`}>
-              <div className="flex flex-col items-center gap-2">
-                {uploading ? (
-                  <>
-                    <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
-                    <span className="text-sm font-medium">Uploading photo...</span>
-                  </>
-                ) : (
-                  <>
-                    <Upload className="h-8 w-8 text-elec-yellow" />
-                    <span className="text-sm font-medium">Click to upload photo</span>
-                    <span className="text-xs text-muted-foreground">JPG, PNG up to 10MB</span>
-                  </>
-                )}
-              </div>
-            </Label>
+            <input
+              ref={cameraInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleFileSelect}
+              className="hidden"
+              disabled={uploading}
+            />
+            
+            <div className="flex flex-col items-center gap-4">
+              {uploading ? (
+                <>
+                  <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
+                  <span className="text-sm font-medium">Uploading photos...</span>
+                </>
+              ) : (
+                <>
+                  <Upload className="h-8 w-8 text-elec-yellow" />
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium">Drop images here or click to select</p>
+                    <p className="text-xs text-muted-foreground">JPG, PNG up to 10MB each</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="border-elec-yellow/30 hover:border-elec-yellow/60"
+                    >
+                      <Upload className="h-4 w-4 mr-2" />
+                      Browse Files
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => cameraInputRef.current?.click()}
+                      className="border-elec-yellow/30 hover:border-elec-yellow/60"
+                    >
+                      <Camera className="h-4 w-4 mr-2" />
+                      Take Photo
+                    </Button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
+
+          {/* Selected Files Preview */}
+          {selectedFiles.length > 0 && (
+            <Card className="border-elec-yellow/30">
+              <CardHeader>
+                <CardTitle className="text-sm">Selected Files ({selectedFiles.length})</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {selectedFiles.map((file, index) => (
+                    <div key={index} className="relative group">
+                      <AspectRatio ratio={1} className="bg-muted rounded-lg overflow-hidden">
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt={file.name}
+                          className="w-full h-full object-cover"
+                        />
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="destructive"
+                          className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={() => removeSelectedFile(index)}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </AspectRatio>
+                      <p className="text-xs text-center mt-1 truncate">{file.name}</p>
+                    </div>
+                  ))}
+                </div>
+                <Button
+                  type="button"
+                  onClick={() => handleFileUpload()}
+                  disabled={uploading || selectedFiles.length === 0}
+                  className="w-full mt-4 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                >
+                  {uploading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="h-4 w-4 mr-2" />
+                      Upload {selectedFiles.length} Photo(s)
+                    </>
+                  )}
+                </Button>
+              </CardContent>
+            </Card>
+          )}
         </CardContent>
       </Card>
 
@@ -367,48 +508,72 @@ const PhotoDocumentation = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {photos.map((photo) => (
-                <Card key={photo.id} className="border-elec-yellow/30">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-3">
+                <Card key={photo.id} className="border-elec-yellow/30 overflow-hidden">
+                  <div className="relative">
+                    <AspectRatio ratio={4/3}>
+                      <img
+                        src={photo.file_url}
+                        alt={photo.description}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </AspectRatio>
+                    <div className="absolute top-2 left-2">
                       <Badge className={getCategoryColor(photo.category)}>
                         {photo.category}
                       </Badge>
-                      <div className="flex gap-1">
-                        <Button size="sm" variant="outline">
-                          <Eye className="h-3 w-3" />
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => removePhoto(photo.id)}
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </div>
                     </div>
-                    
+                    <div className="absolute top-2 right-2 flex gap-1">
+                      <FileViewer
+                        fileName={photo.filename}
+                        fileUrl={photo.file_url}
+                        fileType={photo.mime_type}
+                        trigger={
+                          <Button size="sm" variant="outline" className="h-6 w-6 p-0 bg-background/80 backdrop-blur-sm">
+                            <Eye className="h-3 w-3" />
+                          </Button>
+                        }
+                      />
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => removePhoto(photo.id)}
+                        className="h-6 w-6 p-0 bg-background/80 backdrop-blur-sm hover:bg-destructive/80"
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <CardContent className="p-4">
                     <div className="space-y-2">
-                      <div className="font-medium text-sm">{photo.filename}</div>
+                      <div className="font-medium text-sm truncate">{photo.description}</div>
                       <div className="text-xs text-muted-foreground">
                         {new Date(photo.created_at).toLocaleString()}
                       </div>
-                      <div className="text-sm">{photo.description}</div>
                       {photo.location && (
-                        <div className="text-xs text-muted-foreground">📍 {photo.location}</div>
+                        <div className="text-xs text-muted-foreground flex items-center gap-1">
+                          📍 {photo.location}
+                        </div>
                       )}
                       {(photo.gps_latitude && photo.gps_longitude) && (
                         <div className="text-xs text-muted-foreground flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
-                          GPS: {photo.gps_latitude.toFixed(6)}, {photo.gps_longitude.toFixed(6)}
+                          GPS: {photo.gps_latitude.toFixed(4)}, {photo.gps_longitude.toFixed(4)}
                         </div>
                       )}
                       {photo.tags && photo.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {photo.tags.map((tag, index) => (
+                        <div className="flex flex-wrap gap-1">
+                          {photo.tags.slice(0, 3).map((tag, index) => (
                             <Badge key={index} variant="outline" className="text-xs">
                               {tag}
                             </Badge>
                           ))}
+                          {photo.tags.length > 3 && (
+                            <Badge variant="outline" className="text-xs">
+                              +{photo.tags.length - 3}
+                            </Badge>
+                          )}
                         </div>
                       )}
                     </div>
