@@ -9,7 +9,7 @@ import { RAMSProvider } from "@/components/electrician-tools/site-safety/rams/RA
 import { RAMSQuickAdd } from "@/components/electrician-tools/site-safety/RAMSQuickAdd";
 import RAMSGenerator from "@/components/electrician-tools/site-safety/RAMSGenerator";
 import MethodStatementGenerator from "@/components/electrician-tools/site-safety/MethodStatementGenerator";
-import EnhancedHazardDatabase from "@/components/electrician-tools/site-safety/enhanced/EnhancedHazardDatabase";
+import HazardDatabase from "@/components/electrician-tools/site-safety/HazardDatabase";
 import PhotoDocumentation from "@/components/electrician-tools/site-safety/PhotoDocumentation";
 import TeamBriefingTemplates from "@/components/electrician-tools/site-safety/TeamBriefingTemplates";
 import NearMissReporting from "@/components/electrician-tools/site-safety/NearMissReporting";
@@ -93,7 +93,7 @@ const SiteSafety = () => {
       case "method-statement":
         return <MethodStatementGenerator />;
       case "hazard-database":
-        return <EnhancedHazardDatabase />;
+        return <HazardDatabase />;
       case "photo-docs":
         return <PhotoDocumentation />;
       case "team-briefing":
