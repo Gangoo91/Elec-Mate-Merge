@@ -8,11 +8,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { 
   Wrench, Plus, AlertTriangle, CheckCircle, Clock, Search, 
   Calendar, MapPin, User, Edit3, Trash2, Camera, Eye,
-  QrCode, TrendingUp, BarChart3, FileText, Filter
+  QrCode, TrendingUp, BarChart3, FileText, Filter, ChevronDown, ChevronUp
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import { toast } from "@/hooks/use-toast";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface SafetyEquipment {
   id: string;
@@ -126,6 +127,7 @@ const SafetyEquipmentTracker = () => {
     assignedTo: "",
     notes: ""
   });
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
 
   const categories = [
     "All", "Fall Protection", "Testing Equipment", "Access Equipment", 
@@ -193,6 +195,18 @@ const SafetyEquipmentTracker = () => {
     const inspectionDate = new Date(nextInspection);
     const daysUntilInspection = Math.ceil((inspectionDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
     return daysUntilInspection <= 30;
+  };
+
+  const toggleCardExpansion = (itemId: string) => {
+    setExpandedCards(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(itemId)) {
+        newSet.delete(itemId);
+      } else {
+        newSet.add(itemId);
+      }
+      return newSet;
+    });
   };
 
   const handleQuickInspection = (equipmentId: string) => {
@@ -547,129 +561,146 @@ const SafetyEquipmentTracker = () => {
         ) : (
           filteredEquipment.map((item) => (
             <Card key={item.id} className="border-elec-yellow/30 bg-elec-gray hover:border-elec-yellow/50 transition-all duration-300 animate-fade-in overflow-hidden">
-              <CardContent className="p-0">
-                {/* Header */}
-                <div className="relative px-6 pt-6 pb-0 bg-elec-gray/50">
-                  <div className="flex justify-between items-start gap-2 mb-4">
-                    <div className="flex-1 min-w-0"></div>
-                    {isInspectionDue(item.nextInspection) && (
-                      <div className="w-fit px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full border border-orange-500/30 flex items-center gap-1 flex-shrink-0">
-                        <Clock className="h-3 w-3" />
-                        <span className="hidden sm:inline">Due</span>
-                        <span className="sm:hidden">!</span>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="space-y-4">
-                    {/* Equipment Name and Icon */}
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30 flex-shrink-0">
-                        <Wrench className="h-5 w-5 text-elec-yellow" />
-                      </div>
-                      <h3 className="font-bold text-lg text-white">{item.name}</h3>
+              <Collapsible open={expandedCards.has(item.id)} onOpenChange={() => toggleCardExpansion(item.id)}>
+                <CardContent className="p-0">
+                  {/* Header */}
+                  <div className="relative px-6 pt-6 pb-4 bg-elec-gray/50">
+                    <div className="flex justify-between items-start gap-2 mb-4">
+                      <div className="flex-1 min-w-0"></div>
+                      {isInspectionDue(item.nextInspection) && (
+                        <div className="w-fit px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full border border-orange-500/30 flex items-center gap-1 flex-shrink-0">
+                          <Clock className="h-3 w-3" />
+                          <span className="hidden sm:inline">Due</span>
+                          <span className="sm:hidden">!</span>
+                        </div>
+                      )}
                     </div>
                     
-                    {/* Status and Category */}
-                    <div className="flex items-center gap-3">
-                      <span className="px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm rounded-lg border border-elec-yellow/20">
-                        {item.category}
-                      </span>
-                      <div className={`px-3 py-1 ${getStatusColor(item.status)}/20 text-sm rounded-lg border flex items-center gap-2`}>
-                        {getStatusIcon(item.status)}
-                        <span>{item.status}</span>
+                    <div className="space-y-4">
+                      {/* Equipment Name and Icon */}
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30 flex-shrink-0">
+                          <Wrench className="h-5 w-5 text-elec-yellow" />
+                        </div>
+                        <h3 className="font-bold text-lg text-white flex-1">{item.name}</h3>
+                        <CollapsibleTrigger asChild>
+                          <MobileButton 
+                            variant="ghost" 
+                            size="sm"
+                            className="text-elec-yellow hover:bg-elec-yellow/10 p-2"
+                          >
+                            {expandedCards.has(item.id) ? (
+                              <ChevronUp className="h-4 w-4" />
+                            ) : (
+                              <ChevronDown className="h-4 w-4" />
+                            )}
+                          </MobileButton>
+                        </CollapsibleTrigger>
                       </div>
-                    </div>
-
-                    {/* Serial Number */}
-                    <div>
-                      <div className="text-muted-foreground text-xs mb-1">Serial Number</div>
-                      <div className="font-mono text-sm text-white/80">{item.serialNumber}</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Information Layout */}
-                <div className="p-6 space-y-6">
-                  {/* Inspection Timeline */}
-                  <div className="space-y-3">
-                    <h4 className="text-elec-yellow font-medium text-left border-b border-elec-yellow/20 pb-2">Inspection Timeline</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <div className="text-muted-foreground text-sm mb-1 text-left">Last Inspection</div>
-                        <div className="text-white font-medium text-left">{item.lastInspection}</div>
-                      </div>
-                      <div>
-                        <div className="text-muted-foreground text-sm mb-1 text-left">Next Inspection</div>
-                        <div className={`font-medium text-left ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : 'text-white'}`}>
-                          {item.nextInspection}
+                      
+                      {/* Status and Category */}
+                      <div className="flex items-center gap-3">
+                        <span className="px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm rounded-lg border border-elec-yellow/20">
+                          {item.category}
+                        </span>
+                        <div className={`px-3 py-1 ${getStatusColor(item.status)}/20 text-sm rounded-lg border flex items-center gap-2`}>
+                          {getStatusIcon(item.status)}
+                          <span>{item.status}</span>
                         </div>
                       </div>
+
+                      {/* Serial Number */}
+                      <div>
+                        <div className="text-muted-foreground text-xs mb-1">Serial Number</div>
+                        <div className="font-mono text-sm text-white/80">{item.serialNumber}</div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Location & Assignment */}
-                  <div className="space-y-3">
-                    <h4 className="text-elec-yellow font-medium text-left border-b border-elec-yellow/20 pb-2">Assignment Details</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <CollapsibleContent className="animate-accordion-down">
+                    {/* Information Layout */}
+                    <div className="p-6 space-y-6">
+                      {/* Inspection Timeline */}
+                      <div className="space-y-3">
+                        <h4 className="text-elec-yellow font-medium text-left border-b border-elec-yellow/20 pb-2">Inspection Timeline</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <div className="text-muted-foreground text-sm mb-1 text-left">Last Inspection</div>
+                            <div className="text-white font-medium text-left">{item.lastInspection}</div>
+                          </div>
+                          <div>
+                            <div className="text-muted-foreground text-sm mb-1 text-left">Next Inspection</div>
+                            <div className={`font-medium text-left ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : 'text-white'}`}>
+                              {item.nextInspection}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Location & Assignment */}
+                      <div className="space-y-3">
+                        <h4 className="text-elec-yellow font-medium text-left border-b border-elec-yellow/20 pb-2">Assignment Details</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                              <span className="text-muted-foreground text-sm">Location</span>
+                            </div>
+                            <div className="text-white font-medium text-left pl-4">{item.location}</div>
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                              <span className="text-muted-foreground text-sm">Assigned To</span>
+                            </div>
+                            <div className="text-white font-medium text-left pl-4">{item.assignedTo}</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Purchase Information */}
                       <div>
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex items-center gap-2 text-muted-foreground text-sm">
                           <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                          <span className="text-muted-foreground text-sm">Location</span>
+                          <span>Purchased on {item.purchaseDate}</span>
                         </div>
-                        <div className="text-white font-medium text-left pl-4">{item.location}</div>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                          <span className="text-muted-foreground text-sm">Assigned To</span>
+
+                      {/* Notes */}
+                      {item.notes && (
+                        <div className="border-l-2 border-elec-yellow/30 pl-4">
+                          <div className="text-muted-foreground text-sm mb-1 text-left">Notes</div>
+                          <div className="text-white/90 text-left">{item.notes}</div>
                         </div>
-                        <div className="text-white font-medium text-left pl-4">{item.assignedTo}</div>
+                      )}
+                    </div>
+
+                    {/* Flowing Action Buttons */}
+                    <div className="p-8 pt-0">
+                      <div className="flex flex-col xs:flex-col sm:flex-col md:flex-row flex-wrap gap-2 xs:gap-3 sm:gap-3 md:gap-4 w-full">
+                        <MobileButton 
+                          variant="outline" 
+                          className="flex-1"
+                        >
+                          Update Inspection
+                        </MobileButton>
+                        <MobileButton 
+                          variant="outline" 
+                          className="flex-1"
+                        >
+                          Edit Details
+                        </MobileButton>
+                        <MobileButton 
+                          variant="outline" 
+                          className="flex-1"
+                        >
+                          View History
+                        </MobileButton>
                       </div>
                     </div>
-                  </div>
-
-                  {/* Purchase Information */}
-                  <div>
-                    <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                      <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                      <span>Purchased on {item.purchaseDate}</span>
-                    </div>
-                  </div>
-
-                  {/* Notes */}
-                  {item.notes && (
-                    <div className="border-l-2 border-elec-yellow/30 pl-4">
-                      <div className="text-muted-foreground text-sm mb-1 text-left">Notes</div>
-                      <div className="text-white/90 text-left">{item.notes}</div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Flowing Action Buttons */}
-                <div className="p-8 pt-0">
-                  <div className="flex flex-col xs:flex-col sm:flex-col md:flex-row flex-wrap gap-2 xs:gap-3 sm:gap-3 md:gap-4 w-full">
-                    <MobileButton 
-                      variant="outline" 
-                      className="flex-1"
-                    >
-                      Update Inspection
-                    </MobileButton>
-                    <MobileButton 
-                      variant="outline" 
-                      className="flex-1"
-                    >
-                      Edit Details
-                    </MobileButton>
-                    <MobileButton 
-                      variant="outline" 
-                      className="flex-1"
-                    >
-                      View History
-                    </MobileButton>
-                  </div>
-                </div>
-              </CardContent>
+                  </CollapsibleContent>
+                </CardContent>
+              </Collapsible>
             </Card>
           ))
         )}
