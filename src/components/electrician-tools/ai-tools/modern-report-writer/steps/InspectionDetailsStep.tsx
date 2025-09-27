@@ -15,12 +15,15 @@ import {
   FileWarning,
   Lightbulb,
   Plus,
-  X
+  X,
+  Sparkles
 } from "lucide-react";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { InspectionDetailsStepProps } from "../types";
 import { useToast } from "@/hooks/use-toast";
+import SmartInputAssistant from "../components/SmartInputAssistant";
+import FieldValidationHelper from "../components/FieldValidationHelper";
 
 interface FaultEntry {
   id: string;
@@ -42,6 +45,8 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
   const [faults, setFaults] = useState<FaultEntry[]>(data.faults || []);
   const [showingFaultForm, setShowingFaultForm] = useState(false);
   const [newFault, setNewFault] = useState<Partial<FaultEntry>>({});
+  const [showSmartAssistant, setShowSmartAssistant] = useState<string | null>(null);
+  const [validationFields, setValidationFields] = useState<string[]>([]);
 
   // Form validation based on template
   const getRequiredFields = () => {
@@ -366,13 +371,33 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <MobileSelectWrapper
-            label="Overall Assessment"
-            placeholder="Select assessment"
-            value={formData.overallAssessment || ""}
-            onValueChange={(value) => updateField('overallAssessment', value)}
-            options={assessmentOptions}
-          />
+          <div className="space-y-2">
+            <MobileSelectWrapper
+              label="Overall Assessment"
+              placeholder="Select assessment"
+              value={formData.overallAssessment || ""}
+              onValueChange={(value) => updateField('overallAssessment', value)}
+              options={assessmentOptions}
+            />
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setValidationFields(prev => 
+                prev.includes('overallAssessment') ? prev.filter(f => f !== 'overallAssessment') : [...prev, 'overallAssessment']
+              )}
+              className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
+            >
+              <CheckCircle2 className="h-4 w-4 mr-2" />
+              Check Compliance
+            </Button>
+            {validationFields.includes('overallAssessment') && (
+              <FieldValidationHelper
+                fieldId="overallAssessment"
+                value={formData.overallAssessment || ""}
+                showCompliance={true}
+              />
+            )}
+          </div>
 
           {template?.id === 'periodic-inspection' && (
             <MobileSelectWrapper
@@ -405,20 +430,63 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <MobileInputWrapper
-              label="Inspector Name"
-              placeholder="Enter inspector name"
-              value={formData.inspectorName || ""}
-              onChange={(value) => updateField('inspectorName', value)}
-            />
+            <div className="space-y-2">
+              <MobileInputWrapper
+                label="Inspector Name"
+                placeholder="Enter inspector name"
+                value={formData.inspectorName || ""}
+                onChange={(value) => updateField('inspectorName', value)}
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowSmartAssistant(showSmartAssistant === 'inspectorName' ? null : 'inspectorName')}
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                <Sparkles className="h-4 w-4 mr-2" />
+                Suggestions
+              </Button>
+              {showSmartAssistant === 'inspectorName' && (
+                <SmartInputAssistant
+                  fieldId="inspectorName"
+                  fieldLabel="Inspector Name"
+                  currentValue={formData.inspectorName || ""}
+                  onSuggestionApply={(value) => {
+                    updateField('inspectorName', value);
+                    setShowSmartAssistant(null);
+                  }}
+                  onDismiss={() => setShowSmartAssistant(null)}
+                />
+              )}
+            </div>
             
-            <MobileSelectWrapper
-              label="Inspector Qualification"
-              placeholder="Select qualification"
-              value={formData.inspectorQualification || ""}
-              onValueChange={(value) => updateField('inspectorQualification', value)}
-              options={qualificationOptions}
-            />
+            <div className="space-y-2">
+              <MobileSelectWrapper
+                label="Inspector Qualification"
+                placeholder="Select qualification"
+                value={formData.inspectorQualification || ""}
+                onValueChange={(value) => updateField('inspectorQualification', value)}
+                options={qualificationOptions}
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setValidationFields(prev => 
+                  prev.includes('inspectorQualification') ? prev.filter(f => f !== 'inspectorQualification') : [...prev, 'inspectorQualification']
+                )}
+                className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
+              >
+                <CheckCircle2 className="h-4 w-4 mr-2" />
+                Check Compliance
+              </Button>
+              {validationFields.includes('inspectorQualification') && (
+                <FieldValidationHelper
+                  fieldId="inspectorQualification"
+                  value={formData.inspectorQualification || ""}
+                  showCompliance={true}
+                />
+              )}
+            </div>
             
             <MobileInputWrapper
               label="Inspection Date"

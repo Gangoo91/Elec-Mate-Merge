@@ -206,70 +206,157 @@ const ReportWizard = () => {
             )}
           </div>
 
-          {/* Progress Bar */}
-          <div className="bg-elec-card/30 border border-elec-yellow/20 rounded-lg p-4 mb-8">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm text-muted-foreground">Step {currentStepIndex + 1} of {steps.length}</span>
-              <span className="text-xs text-elec-yellow">{Math.round(progress)}%</span>
-            </div>
-            <Progress value={progress} className="h-1.5 mb-4" />
-            
-            {/* Simple step indicators */}
-            <div className="flex justify-between">
-              {steps.map((step, index) => (
-                <button
-                  key={step.id}
-                  onClick={() => goToStep(step.id)}
-                  disabled={!step.isAccessible}
-                  className={`flex-1 text-center py-2 px-1 rounded transition-colors ${
-                    currentStep === step.id
-                      ? 'text-elec-yellow bg-elec-yellow/10'
-                      : step.isCompleted
-                      ? 'text-green-400'
-                      : step.isAccessible
-                      ? 'text-muted-foreground hover:text-white'
-                      : 'text-muted-foreground/50 cursor-not-allowed'
-                  }`}
+          {/* Enhanced Progress Section */}
+          <Card className="bg-elec-card border-elec-yellow/30 p-6 mb-8">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              {/* Progress Info */}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-white">Progress:</span>
+                  <Badge variant="outline" className="text-elec-yellow border-elec-yellow/50">
+                    Step {currentStepIndex + 1} of {steps.length}
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">{Math.round(progress)}% Complete</span>
+                  <Progress value={progress} className="w-24 h-2" />
+                </div>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setWizardData({
+                      template: null,
+                      clientDetails: {},
+                      inspectionDetails: {},
+                      additionalNotes: "",
+                      isAutoSaving: false,
+                      lastSaved: null
+                    });
+                    setCurrentStep('template');
+                  }}
+                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
                 >
-                  <div className={`w-2 h-2 rounded-full mx-auto mb-1 ${
-                    step.isCompleted
-                      ? 'bg-green-400'
-                      : currentStep === step.id
-                      ? 'bg-elec-yellow'
-                      : 'bg-muted-foreground/30'
-                  }`} />
-                  <span className="text-xs">{step.title.split(' ')[0]}</span>
-                </button>
-              ))}
+                  <Loader2 className="h-4 w-4 mr-2" />
+                  Start New
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => toast({ title: "Report saved", description: "Your progress has been saved automatically" })}
+                  className="border-green-500/30 text-green-400 hover:bg-green-500/10"
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Save Draft
+                </Button>
+              </div>
             </div>
-          </div>
+
+            {/* Enhanced Step Navigation */}
+            <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3">
+              {steps.map((step, index) => {
+                const stepIcon = index === 0 ? FileText : 
+                                index === 1 ? Eye : 
+                                index === 2 ? CheckCircle2 : 
+                                Sparkles;
+                
+                return (
+                  <button
+                    key={step.id}
+                    onClick={() => goToStep(step.id)}
+                    disabled={!step.isAccessible}
+                    className={`group relative p-4 rounded-lg border transition-all duration-200 ${
+                      currentStep === step.id
+                        ? 'bg-elec-yellow/10 border-elec-yellow text-elec-yellow'
+                        : step.isCompleted
+                        ? 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20'
+                        : step.isAccessible
+                        ? 'bg-elec-dark border-elec-yellow/20 text-white hover:bg-elec-yellow/5 hover:border-elec-yellow/40'
+                        : 'bg-muted/5 border-muted/20 text-muted-foreground/50 cursor-not-allowed'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-full ${
+                        currentStep === step.id
+                          ? 'bg-elec-yellow/20'
+                          : step.isCompleted
+                          ? 'bg-green-500/20'
+                          : 'bg-muted/10'
+                      }`}>
+                        {React.createElement(stepIcon, { 
+                          className: `h-4 w-4 ${
+                            currentStep === step.id ? 'text-elec-yellow' :
+                            step.isCompleted ? 'text-green-400' : 'text-muted-foreground'
+                          }` 
+                        })}
+                      </div>
+                      <div className="text-left flex-1 min-w-0">
+                        <div className={`text-sm font-medium truncate ${
+                          currentStep === step.id ? 'text-elec-yellow' :
+                          step.isCompleted ? 'text-green-400' : 'text-current'
+                        }`}>
+                          {step.title}
+                        </div>
+                        <div className="text-xs text-muted-foreground truncate">
+                          {step.description}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Completion indicator */}
+                    {step.isCompleted && (
+                      <div className="absolute -top-1 -right-1">
+                        <CheckCircle2 className="h-5 w-5 text-green-400 bg-elec-dark rounded-full" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </Card>
 
           {/* Current Step Content */}
           <div className="animate-fade-in">
             {renderCurrentStep()}
           </div>
 
-          {/* Quick Actions (Mobile Floating) */}
-          <div className="fixed bottom-6 right-6 lg:hidden">
-            {currentStepIndex > 0 && (
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={goToPreviousStep}
-                className="h-12 w-12 rounded-full bg-elec-gray border-elec-yellow/30 hover:bg-elec-yellow/10 mr-2"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
-            )}
-            {currentStepIndex < steps.length - 1 && steps[currentStepIndex + 1].isAccessible && (
-              <Button
-                size="icon"
-                onClick={goToNextStep}
-                className="h-12 w-12 rounded-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </Button>
-            )}
+          {/* Enhanced Mobile Floating Actions */}
+          <div className="fixed bottom-6 right-6 lg:hidden z-50">
+            <div className="flex flex-col gap-3">
+              {/* Progress Mini Indicator */}
+              <div className="bg-elec-gray/95 backdrop-blur-sm border border-elec-yellow/30 rounded-full px-3 py-2 text-center">
+                <span className="text-xs text-elec-yellow font-medium">
+                  {currentStepIndex + 1}/{steps.length}
+                </span>
+              </div>
+              
+              {/* Navigation Buttons */}
+              <div className="flex gap-2">
+                {currentStepIndex > 0 && (
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={goToPreviousStep}
+                    className="h-14 w-14 rounded-full bg-elec-gray/95 backdrop-blur-sm border-elec-yellow/30 hover:bg-elec-yellow/10 shadow-lg"
+                  >
+                    <ChevronLeft className="h-6 w-6" />
+                  </Button>
+                )}
+                {currentStepIndex < steps.length - 1 && steps[currentStepIndex + 1].isAccessible && (
+                  <Button
+                    size="icon"
+                    onClick={goToNextStep}
+                    className="h-14 w-14 rounded-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shadow-lg"
+                  >
+                    <ChevronRight className="h-6 w-6" />
+                  </Button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

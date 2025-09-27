@@ -12,12 +12,16 @@ import {
   Calendar,
   CheckCircle2,
   AlertCircle,
-  Lightbulb
+  Lightbulb,
+  Sparkles,
+  Wand2
 } from "lucide-react";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { ClientDetailsStepProps } from "../types";
 import { useToast } from "@/hooks/use-toast";
+import SmartInputAssistant from "../components/SmartInputAssistant";
+import FieldValidationHelper from "../components/FieldValidationHelper";
 
 // AI-powered suggestions for common values
 const getAISuggestions = (fieldId: string, currentValue: string) => {
@@ -50,6 +54,8 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
   const [formData, setFormData] = useState(data);
   const [showingSuggestions, setShowingSuggestions] = useState<string | null>(null);
   const [completedFields, setCompletedFields] = useState<Set<string>>(new Set());
+  const [showSmartAssistant, setShowSmartAssistant] = useState<string | null>(null);
+  const [validationFields, setValidationFields] = useState<string[]>([]);
 
   // Form validation
   const requiredFields = [
@@ -81,6 +87,20 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
       ...prev,
       [fieldId]: value
     }));
+    
+    // Auto-show validation for important fields
+    if (['clientName', 'installationAddress', 'installationDescription'].includes(fieldId) && value) {
+      setValidationFields(prev => [...new Set([...prev, fieldId])]);
+    }
+  };
+
+  const handleSmartSuggestion = (fieldId: string, value: string) => {
+    updateField(fieldId, value);
+    setShowSmartAssistant(null);
+    toast({
+      title: "Suggestion applied",
+      description: `${fieldId} has been updated with suggested value.`,
+    });
   };
 
   const applySuggestion = (fieldId: string, suggestion: string) => {
@@ -172,13 +192,51 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
           </div>
           
           <div className="space-y-4">
-            <div className="relative">
+            <div className="space-y-2">
               <MobileInputWrapper
                 label="Client Name"
                 placeholder="Enter client name"
                 value={formData.clientName || ""}
                 onChange={(value) => updateField('clientName', value)}
               />
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowSmartAssistant(showSmartAssistant === 'clientName' ? null : 'clientName')}
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                >
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  Suggestions
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setValidationFields(prev => 
+                    prev.includes('clientName') ? prev.filter(f => f !== 'clientName') : [...prev, 'clientName']
+                  )}
+                  className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
+                >
+                  <CheckCircle2 className="h-4 w-4 mr-2" />
+                  Validate
+                </Button>
+              </div>
+              {showSmartAssistant === 'clientName' && (
+                <SmartInputAssistant
+                  fieldId="clientName"
+                  fieldLabel="Client Name"
+                  currentValue={formData.clientName || ""}
+                  onSuggestionApply={(value) => handleSmartSuggestion('clientName', value)}
+                  onDismiss={() => setShowSmartAssistant(null)}
+                />
+              )}
+              {validationFields.includes('clientName') && (
+                <FieldValidationHelper
+                  fieldId="clientName"
+                  value={formData.clientName || ""}
+                  showCompliance={false}
+                />
+              )}
             </div>
 
             <MobileInputWrapper
@@ -206,12 +264,34 @@ const ClientDetailsStep: React.FC<ClientDetailsStepProps> = ({
           </div>
           
           <div className="space-y-4">
-            <MobileInputWrapper
-              label="Installation Address"
-              placeholder="Enter installation address"
-              value={formData.installationAddress || ""}
-              onChange={(value) => updateField('installationAddress', value)}
-            />
+            <div className="space-y-2">
+              <MobileInputWrapper
+                label="Installation Address"
+                placeholder="Enter installation address"
+                value={formData.installationAddress || ""}
+                onChange={(value) => updateField('installationAddress', value)}
+              />
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowSmartAssistant(showSmartAssistant === 'installationAddress' ? null : 'installationAddress')}
+                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                >
+                  <MapPin className="h-4 w-4 mr-2" />
+                  Location Help
+                </Button>
+              </div>
+              {showSmartAssistant === 'installationAddress' && (
+                <SmartInputAssistant
+                  fieldId="installationAddress"
+                  fieldLabel="Installation Address"
+                  currentValue={formData.installationAddress || ""}
+                  onSuggestionApply={(value) => handleSmartSuggestion('installationAddress', value)}
+                  onDismiss={() => setShowSmartAssistant(null)}
+                />
+              )}
+            </div>
 
             <MobileSelectWrapper
               label="Installation Description"
