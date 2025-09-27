@@ -159,6 +159,17 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
 
         {/* Search and Category Filter Row */}
         <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          {/* Search Input */}
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search templates..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 bg-elec-dark border border-primary/30 text-white"
+            />
+          </div>
+
           {/* Category Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -185,7 +196,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent 
               className="w-64 bg-elec-gray border-elec-yellow/30 z-50"
-              align="start"
+              align="end"
             >
               {categories.map((category) => {
                 const IconComponent = getCategoryIcon(category.id);
@@ -224,17 +235,6 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
               })}
             </DropdownMenuContent>
           </DropdownMenu>
-
-          {/* Search Input */}
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search templates..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-elec-dark border border-primary/30 text-white"
-            />
-          </div>
         </div>
       </Card>
 
