@@ -211,60 +211,38 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
         </Card>
 
         {/* Client Summary */}
-        <Card className="bg-gradient-to-br from-elec-gray to-elec-dark/50 border-elec-yellow/30 hover:border-elec-yellow/50 transition-all duration-200 overflow-hidden">
-          {/* Header Section */}
-          <div className="bg-blue-500/10 border-b border-blue-500/20 p-6 pb-4">
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <div className="p-3 bg-blue-500/20 rounded-xl">
-                  <User className="h-6 w-6 text-blue-400" />
-                </div>
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-400 rounded-full"></div>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold text-white mb-1">Client Information</h3>
-                <p className="text-sm text-blue-300/80">Customer and contact details</p>
-              </div>
+        <Card className="bg-elec-gray border-elec-yellow/30 p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-blue-500/20 rounded-lg">
+              <User className="h-5 w-5 text-blue-400" />
+            </div>
+            <div>
+              <h3 className="text-lg font-medium text-white">Client Information</h3>
+              <p className="text-sm text-muted-foreground">Customer and contact details</p>
             </div>
           </div>
           
-          {/* Content Section */}
-          <div className="p-6 space-y-4">
-            <div className="space-y-4">
-              <div className="group">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-sm font-medium text-blue-300">Client Name</span>
-                </div>
-                <p className="text-white font-semibold text-lg ml-4 group-hover:text-blue-100 transition-colors">
-                  {summary.client.name}
-                </p>
+          <div className="space-y-4">
+            {/* Primary Contact */}
+            <div className="space-y-2">
+              <div>
+                <span className="text-sm text-muted-foreground">Client Name:</span>
+                <p className="text-sm text-white font-medium">{summary.client.name}</p>
               </div>
-              
-              <div className="group">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-sm font-medium text-blue-300">Address</span>
-                </div>
-                <p className="text-white text-sm ml-4 leading-relaxed group-hover:text-blue-100 transition-colors">
-                  {summary.client.address}
-                </p>
+              <div>
+                <span className="text-sm text-muted-foreground">Contact Number:</span>
+                <p className="text-sm text-white font-medium">{summary.client.phone}</p>
               </div>
-              
-              <div className="group">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span className="text-sm font-medium text-blue-300">Contact Number</span>
-                </div>
-                <p className="text-white font-medium ml-4 group-hover:text-blue-100 transition-colors">
-                  {summary.client.phone}
-                </p>
+            </div>
+            
+            {/* Address Information */}
+            <div className="pt-2 border-t border-elec-yellow/10">
+              <div>
+                <span className="text-sm text-muted-foreground">Client Address:</span>
+                <p className="text-sm text-white leading-relaxed">{summary.client.address}</p>
               </div>
             </div>
           </div>
-          
-          {/* Footer Accent */}
-          <div className="h-1 bg-gradient-to-r from-blue-500/20 via-blue-400/40 to-blue-500/20"></div>
         </Card>
 
         {/* Installation Summary */}
