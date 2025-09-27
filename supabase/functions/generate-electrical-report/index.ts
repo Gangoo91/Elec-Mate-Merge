@@ -200,8 +200,7 @@ serve(async (req) => {
             content: prompt
           }
         ],
-        max_tokens: 4000,
-        temperature: 0.3
+        max_completion_tokens: 4000
       }),
     });
 
