@@ -2,11 +2,14 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2, X, MoreHorizontal } from "lucide-react";
+import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2, X, MoreHorizontal, Calendar, MapPin, Bell, QrCode, Camera } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -35,13 +39,15 @@ interface TeamBriefing {
   location: string;
   briefing_date: string;
   briefing_time: string;
-  attendees: Array<{ name: string; signature?: string; timestamp?: string }>;
+  attendees: Array<{ name: string; signature?: string; timestamp?: string; photo?: string }>;
   key_points: string[];
   safety_points: string[];
   equipment_required: string[];
   duration_minutes: number;
   notes: string;
   completed: boolean;
+  status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled' | 'postponed';
+  qr_code?: string;
   created_at: string;
 }
 
@@ -51,6 +57,9 @@ const TeamBriefingTemplates = () => {
   const [showAttendanceModal, setShowAttendanceModal] = useState(false);
   const [selectedBriefing, setSelectedBriefing] = useState<TeamBriefing | null>(null);
   const [newAttendee, setNewAttendee] = useState("");
+  const [attendanceView, setAttendanceView] = useState<'list' | 'qr' | 'camera'>('list');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   
   const [templates, setTemplates] = useState<BriefingTemplate[]>([
     {
@@ -134,12 +143,14 @@ const TeamBriefingTemplates = () => {
       if (error) throw error;
       setBriefings((data || []).map(item => ({
         ...item,
-        attendees: Array.isArray(item.attendees) ? item.attendees as Array<{ name: string; signature?: string; timestamp?: string }> : [],
+        attendees: Array.isArray(item.attendees) ? item.attendees as Array<{ name: string; signature?: string; timestamp?: string; photo?: string }> : [],
         key_points: item.key_points || [],
         safety_points: item.safety_points || [],
         equipment_required: item.equipment_required || [],
         duration_minutes: item.duration_minutes || 10,
-        notes: item.notes || ""
+        notes: item.notes || "",
+        status: (item as any).status || 'scheduled' as const,
+        qr_code: (item as any).qr_code || undefined
       })));
     } catch (error) {
       console.error('Error fetching briefings:', error);
@@ -188,14 +199,18 @@ const TeamBriefingTemplates = () => {
 
       if (error) throw error;
 
+      const qrCode = `briefing-${data.id}-${Date.now()}`;
+      
       setBriefings(prev => [{
         ...data,
-        attendees: Array.isArray(data.attendees) ? data.attendees as Array<{ name: string; signature?: string; timestamp?: string }> : [],
+        attendees: Array.isArray(data.attendees) ? data.attendees as Array<{ name: string; signature?: string; timestamp?: string; photo?: string }> : [],
         key_points: data.key_points || [],
         safety_points: data.safety_points || [],
         equipment_required: data.equipment_required || [],
         duration_minutes: data.duration_minutes || 10,
-        notes: data.notes || ""
+        notes: data.notes || "",
+        status: (data as any).status || 'scheduled' as const,
+        qr_code: qrCode
       }, ...prev]);
       setShowNewBriefingForm(false);
       setNewBriefing({
@@ -222,17 +237,20 @@ const TeamBriefingTemplates = () => {
     }
   };
 
-  const addAttendee = async () => {
+  const addAttendee = async (capturePhoto = false) => {
     if (!selectedBriefing || !newAttendee.trim()) return;
 
     try {
-      const updatedAttendees = [
-        ...selectedBriefing.attendees,
-        { 
-          name: newAttendee, 
-          timestamp: new Date().toISOString() 
-        }
-      ];
+      const attendeeData: { name: string; timestamp: string; photo?: string } = { 
+        name: newAttendee, 
+        timestamp: new Date().toISOString() 
+      };
+
+      if (capturePhoto) {
+        attendeeData.photo = `photo-${Date.now()}`; // Placeholder for actual photo capture
+      }
+
+      const updatedAttendees = [...selectedBriefing.attendees, attendeeData];
 
       const { error } = await supabase
         .from('team_briefings')
@@ -262,33 +280,53 @@ const TeamBriefingTemplates = () => {
     }
   };
 
-  const markBriefingComplete = async (briefingId: string) => {
+  const updateBriefingStatus = async (briefingId: string, status: TeamBriefing['status']) => {
     try {
       const { error } = await supabase
         .from('team_briefings')
-        .update({ completed: true })
+        .update({ 
+          completed: status === 'completed',
+          ...(status !== 'completed' ? {} : {})
+        })
         .eq('id', briefingId);
 
       if (error) throw error;
 
       setBriefings(prev => prev.map(b => 
-        b.id === briefingId ? { ...b, completed: true } : b
+        b.id === briefingId ? { ...b, status, completed: status === 'completed' } : b
       ));
 
       toast({
         title: "Success",
-        description: "Briefing marked as complete",
+        description: `Briefing ${status === 'completed' ? 'completed' : `marked as ${status}`}`,
         variant: "success"
       });
     } catch (error) {
-      console.error('Error completing briefing:', error);
+      console.error('Error updating briefing status:', error);
       toast({
         title: "Error",
-        description: "Failed to complete briefing",
+        description: "Failed to update briefing status",
         variant: "destructive"
       });
     }
   };
+
+  const getStatusColor = (status: TeamBriefing['status']) => {
+    switch (status) {
+      case 'completed': return 'bg-primary text-primary-foreground';
+      case 'in_progress': return 'bg-warning text-warning-foreground';
+      case 'cancelled': return 'bg-destructive text-destructive-foreground';
+      case 'postponed': return 'bg-muted text-muted-foreground';
+      default: return 'bg-secondary text-secondary-foreground';
+    }
+  };
+
+  const filteredBriefings = briefings.filter(briefing => {
+    if (filterStatus === 'all') return true;
+    if (filterStatus === 'upcoming') return new Date(briefing.briefing_date) >= new Date() && briefing.status === 'scheduled';
+    if (filterStatus === 'today') return briefing.briefing_date === new Date().toISOString().split('T')[0];
+    return briefing.status === filterStatus;
+  });
 
   const categories = ["Installation", "Maintenance", "Testing", "Safety", "Emergency", "General"];
 
@@ -349,109 +387,195 @@ const TeamBriefingTemplates = () => {
 
   return (
     <div className="space-y-6">
-      {/* Statistics */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <Card className="border-blue-500/30">
-          <CardContent className="p-3 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-blue-400">{briefings.length}</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Total Briefings</div>
-          </CardContent>
-        </Card>
-        <Card className="border-green-500/30">
-          <CardContent className="p-3 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-green-400">
-              {briefings.filter(b => b.completed).length}
-            </div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Completed</div>
-          </CardContent>
-        </Card>
-        <Card className="border-yellow-500/30">
-          <CardContent className="p-3 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-yellow-400">
-              {briefings.reduce((total, b) => total + b.attendees.length, 0)}
-            </div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Total Attendees</div>
-          </CardContent>
-        </Card>
-        <Card className="border-purple-500/30">
-          <CardContent className="p-3 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-purple-400">
-              {briefings.filter(b => new Date(b.briefing_date) >= new Date()).length}
-            </div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Upcoming</div>
-          </CardContent>
-        </Card>
+      {/* Enhanced Statistics with Touch Targets */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <MobileGestureHandler onTap={() => setFilterStatus('all')}>
+          <Card className="border-primary/30 cursor-pointer hover:bg-accent/50 transition-colors">
+            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
+              <div className="text-2xl lg:text-3xl font-bold text-primary">{briefings.length}</div>
+              <div className="text-sm text-muted-foreground">Total Briefings</div>
+            </CardContent>
+          </Card>
+        </MobileGestureHandler>
+        
+        <MobileGestureHandler onTap={() => setFilterStatus('completed')}>
+          <Card className="border-primary/30 cursor-pointer hover:bg-accent/50 transition-colors">
+            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
+              <div className="text-2xl lg:text-3xl font-bold text-primary">
+                {briefings.filter(b => b.status === 'completed').length}
+              </div>
+              <div className="text-sm text-muted-foreground">Completed</div>
+            </CardContent>
+          </Card>
+        </MobileGestureHandler>
+        
+        <MobileGestureHandler onTap={() => setFilterStatus('upcoming')}>
+          <Card className="border-secondary/30 cursor-pointer hover:bg-accent/50 transition-colors">
+            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
+              <div className="text-2xl lg:text-3xl font-bold text-secondary-foreground">
+                {briefings.reduce((total, b) => total + b.attendees.length, 0)}
+              </div>
+              <div className="text-sm text-muted-foreground">Total Attendees</div>
+            </CardContent>
+          </Card>
+        </MobileGestureHandler>
+        
+        <MobileGestureHandler onTap={() => setFilterStatus('today')}>
+          <Card className="border-accent/30 cursor-pointer hover:bg-accent/50 transition-colors">
+            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
+              <div className="text-2xl lg:text-3xl font-bold text-accent-foreground">
+                {briefings.filter(b => new Date(b.briefing_date) >= new Date() && b.status === 'scheduled').length}
+              </div>
+              <div className="text-sm text-muted-foreground">Upcoming</div>
+            </CardContent>
+          </Card>
+        </MobileGestureHandler>
       </div>
 
-      {/* Scheduled Briefings */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      {/* Filter and View Controls */}
+      <Card className="border-border bg-card">
+        <CardContent className="p-4">
+          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+            <div className="flex flex-wrap gap-2">
+              {['all', 'upcoming', 'today', 'completed', 'in_progress'].map((status) => (
+                <MobileButton
+                  key={status}
+                  size="sm"
+                  variant={filterStatus === status ? "elec" : "outline"}
+                  onClick={() => setFilterStatus(status)}
+                  className="capitalize"
+                >
+                  {status === 'all' ? 'All' : status.replace('_', ' ')}
+                </MobileButton>
+              ))}
+            </div>
+            
+            <div className="flex gap-2">
+              <MobileButton
+                size="sm"
+                variant={viewMode === 'list' ? "elec" : "outline"}
+                onClick={() => setViewMode('list')}
+                icon={<FileText className="h-4 w-4" />}
+              />
+              <MobileButton
+                size="sm"
+                variant={viewMode === 'grid' ? "elec" : "outline"}
+                onClick={() => setViewMode('grid')}
+                icon={<Users className="h-4 w-4" />}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Enhanced Scheduled Briefings */}
+      <Card className="border-border bg-card">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
+          <CardTitle className="text-foreground flex items-center gap-2">
             <Clock className="h-5 w-5" />
-            Scheduled Team Briefings
+            Scheduled Team Briefings ({filteredBriefings.length})
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {briefings.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              No briefings scheduled yet. Create one from a template below.
+          {filteredBriefings.length === 0 ? (
+            <div className="text-center py-12">
+              <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground mb-4">
+                {filterStatus === 'all' 
+                  ? "No briefings scheduled yet. Create one from a template below."
+                  : `No briefings found for filter: ${filterStatus.replace('_', ' ')}`
+                }
+              </p>
+              {filterStatus !== 'all' && (
+                <MobileButton 
+                  variant="outline" 
+                  onClick={() => setFilterStatus('all')}
+                >
+                  Show All Briefings
+                </MobileButton>
+              )}
             </div>
           ) : (
-            <div className="space-y-4">
-              {briefings.map((briefing) => (
-                <Card key={briefing.id} className="border-elec-yellow/30">
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="space-y-3">
-                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
-                        <div className="flex flex-col sm:flex-row gap-2">
-                          <Badge className={briefing.completed ? "bg-green-500" : "bg-blue-500"}>
-                            {briefing.completed ? "Completed" : "Scheduled"}
-                          </Badge>
-                          <span className="text-xs sm:text-sm text-muted-foreground">
-                            {briefing.briefing_date} at {briefing.briefing_time}
-                          </span>
+            <div className={viewMode === 'grid' ? "grid grid-cols-1 lg:grid-cols-2 gap-4" : "space-y-4"}>
+              {filteredBriefings.map((briefing) => (
+                <MobileGestureHandler
+                  key={briefing.id}
+                  onSwipeRight={() => updateBriefingStatus(briefing.id, 'completed')}
+                  onLongPress={() => {
+                    setSelectedBriefing(briefing);
+                    setShowAttendanceModal(true);
+                  }}
+                >
+                  <Card className="border-border hover:bg-accent/50 transition-colors">
+                    <CardContent className="p-4">
+                      <div className="space-y-3">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex flex-wrap gap-2">
+                            <Badge className={getStatusColor(briefing.status)}>
+                              {briefing.status.replace('_', ' ')}
+                            </Badge>
+                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                              <Calendar className="h-4 w-4" />
+                              {briefing.briefing_date} at {briefing.briefing_time}
+                            </div>
+                          </div>
+                          
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <MobileButton size="sm" variant="ghost" icon={<MoreHorizontal className="h-4 w-4" />} />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem onClick={() => updateBriefingStatus(briefing.id, 'in_progress')}>
+                                Start Briefing
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => updateBriefingStatus(briefing.id, 'completed')}>
+                                Mark Complete
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => updateBriefingStatus(briefing.id, 'postponed')}>
+                                Postpone
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => updateBriefingStatus(briefing.id, 'cancelled')}>
+                                Cancel
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
-                        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            className="min-h-[44px] w-full sm:w-auto touch-manipulation"
-                            onClick={() => {
-                              setSelectedBriefing(briefing);
-                              setShowAttendanceModal(true);
-                            }}
-                          >
-                            <UserCheck className="h-4 w-4 mr-2" />
-                            Attendance
-                          </Button>
-                          {!briefing.completed && (
-                            <Button 
-                              size="sm" 
-                              variant="outline"
-                              className="min-h-[44px] w-full sm:w-auto touch-manipulation"
-                              onClick={() => markBriefingComplete(briefing.id)}
-                            >
-                              Complete
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                    
-                      <div className="space-y-2">
-                        <h4 className="font-medium text-sm sm:text-base leading-tight">{briefing.briefing_name}</h4>
-                        <div className="text-xs sm:text-sm text-muted-foreground">📍 {briefing.location}</div>
-                        <div className="text-xs sm:text-sm">
-                          <span className="font-medium">{briefing.attendees.length}</span> attendees
+                      
+                        <div className="space-y-2">
+                          <h4 className="font-semibold leading-tight">{briefing.briefing_name}</h4>
+                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <MapPin className="h-4 w-4" />
+                            {briefing.location}
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div className="text-sm">
+                              <span className="font-medium">{briefing.attendees.length}</span> attendees
+                            </div>
+                            <div className="flex gap-2">
+                              <MobileButton 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => {
+                                  setSelectedBriefing(briefing);
+                                  setShowAttendanceModal(true);
+                                }}
+                                icon={<UserCheck className="h-4 w-4" />}
+                              >
+                                Attendance
+                              </MobileButton>
+                            </div>
+                          </div>
+                          
                           {briefing.attendees.length > 0 && (
-                            <div className="mt-1 text-xs text-muted-foreground break-words">
+                            <div className="text-xs text-muted-foreground truncate">
                               {briefing.attendees.map(a => a.name).join(', ')}
                             </div>
                           )}
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </MobileGestureHandler>
               ))}
             </div>
           )}
@@ -466,14 +590,14 @@ const TeamBriefingTemplates = () => {
               <Users className="h-5 w-5" />
               Team Briefing Templates
             </CardTitle>
-            <Button 
+            <MobileButton 
               onClick={createNewTemplate} 
-              variant="outline"
-              className="min-h-[44px] w-full sm:w-auto touch-manipulation"
+              variant="elec"
+              size="default"
+              icon={<Plus className="h-4 w-4" />}
             >
-              <Plus className="h-4 w-4 mr-2" />
               New Template
-            </Button>
+            </MobileButton>
           </div>
         </CardHeader>
         <CardContent>
@@ -854,52 +978,162 @@ const TeamBriefingTemplates = () => {
         </Card>
       </div>
 
-      {/* Attendance Modal */}
-      <Dialog open={showAttendanceModal} onOpenChange={setShowAttendanceModal}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Briefing Attendance</DialogTitle>
-          </DialogHeader>
+      {/* Enhanced Attendance Modal */}
+      <Drawer open={showAttendanceModal} onOpenChange={setShowAttendanceModal}>
+        <DrawerContent className="max-h-[90vh]">
+          <DrawerHeader>
+            <DrawerTitle className="text-center">Manage Attendance</DrawerTitle>
+          </DrawerHeader>
           {selectedBriefing && (
-            <div className="space-y-4">
-              <div className="text-sm">
-                <strong>{selectedBriefing.briefing_name}</strong>
-                <br />
-                {selectedBriefing.briefing_date} at {selectedBriefing.briefing_time}
-              </div>
-              
-              <div className="space-y-2">
-                <Label>Current Attendees ({selectedBriefing.attendees.length})</Label>
-                <div className="max-h-32 overflow-y-auto space-y-1">
-                  {selectedBriefing.attendees.map((attendee, index) => (
-                    <div key={index} className="flex items-center justify-between p-2 bg-muted rounded">
-                      <span className="text-sm">{attendee.name}</span>
-                      {attendee.timestamp && (
-                        <span className="text-xs text-muted-foreground">
-                          {new Date(attendee.timestamp).toLocaleTimeString()}
-                        </span>
-                      )}
-                    </div>
+            <div className="p-4 space-y-6">
+              {/* Briefing Info Card */}
+              <Card className="border-border">
+                <CardContent className="p-4 space-y-2">
+                  <h4 className="font-semibold">{selectedBriefing.briefing_name}</h4>
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    {selectedBriefing.briefing_date} at {selectedBriefing.briefing_time}
+                  </div>
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <MapPin className="h-4 w-4" />
+                    {selectedBriefing.location}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Attendance Method Toggle */}
+              <div className="flex justify-center">
+                <div className="flex bg-muted rounded-lg p-1">
+                  {['list', 'qr', 'camera'].map((mode) => (
+                    <MobileButton
+                      key={mode}
+                      size="sm"
+                      variant={attendanceView === mode ? "elec" : "ghost"}
+                      onClick={() => setAttendanceView(mode as any)}
+                      className="capitalize"
+                      icon={
+                        mode === 'list' ? <Users className="h-4 w-4" /> :
+                        mode === 'qr' ? <QrCode className="h-4 w-4" /> :
+                        <Camera className="h-4 w-4" />
+                      }
+                    >
+                      {mode === 'qr' ? 'QR Code' : mode}
+                    </MobileButton>
                   ))}
                 </div>
               </div>
 
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Add attendee name..."
-                  value={newAttendee}
-                  onChange={(e) => setNewAttendee(e.target.value)}
-                  className="flex-1"
-                  onKeyDown={(e) => e.key === 'Enter' && addAttendee()}
-                />
-                <Button onClick={addAttendee} disabled={!newAttendee.trim()}>
-                  Add
-                </Button>
-              </div>
+              {/* Attendance Content */}
+              {attendanceView === 'list' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-base font-semibold">
+                      Attendees ({selectedBriefing.attendees.length})
+                    </Label>
+                    <Badge variant="secondary">
+                      {selectedBriefing.attendees.length} present
+                    </Badge>
+                  </div>
+                  
+                  <div className="space-y-2 max-h-60 overflow-y-auto">
+                    {selectedBriefing.attendees.length === 0 ? (
+                      <div className="text-center py-8 text-muted-foreground">
+                        <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                        <p>No attendees yet</p>
+                      </div>
+                    ) : (
+                      selectedBriefing.attendees.map((attendee, index) => (
+                        <Card key={index} className="border-border">
+                          <CardContent className="p-3 flex justify-between items-center">
+                            <div className="flex-1">
+                              <span className="font-medium">{attendee.name}</span>
+                              {attendee.timestamp && (
+                                <div className="text-xs text-muted-foreground">
+                                  Signed in: {new Date(attendee.timestamp).toLocaleString()}
+                                </div>
+                              )}
+                            </div>
+                            {attendee.photo && (
+                              <Camera className="h-4 w-4 text-muted-foreground" />
+                            )}
+                          </CardContent>
+                        </Card>
+                      ))
+                    )}
+                  </div>
+
+                  {/* Add Attendee */}
+                  <div className="space-y-3">
+                    <MobileInput
+                      label="Add New Attendee"
+                      placeholder="Enter attendee name..."
+                      value={newAttendee}
+                      onChange={(e) => setNewAttendee(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && addAttendee()}
+                    />
+                    <div className="flex gap-2">
+                      <MobileButton
+                        onClick={() => addAttendee()}
+                        disabled={!newAttendee.trim()}
+                        variant="elec"
+                        size="wide"
+                        icon={<UserCheck className="h-4 w-4" />}
+                      >
+                        Add Attendee
+                      </MobileButton>
+                      <MobileButton
+                        onClick={() => addAttendee(true)}
+                        disabled={!newAttendee.trim()}
+                        variant="outline"
+                        icon={<Camera className="h-4 w-4" />}
+                      >
+                        With Photo
+                      </MobileButton>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {attendanceView === 'qr' && (
+                <div className="text-center space-y-4">
+                  <div className="w-48 h-48 mx-auto bg-muted rounded-lg flex items-center justify-center">
+                    <QrCode className="h-16 w-16 text-muted-foreground" />
+                  </div>
+                  <div className="space-y-2">
+                    <p className="font-medium">QR Code Check-in</p>
+                    <p className="text-sm text-muted-foreground">
+                      Team members can scan this code to sign in
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Code: {selectedBriefing.qr_code || 'Generating...'}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {attendanceView === 'camera' && (
+                <div className="text-center space-y-4">
+                  <div className="w-full h-48 bg-muted rounded-lg flex items-center justify-center">
+                    <Camera className="h-16 w-16 text-muted-foreground" />
+                  </div>
+                  <div className="space-y-2">
+                    <p className="font-medium">Photo Attendance</p>
+                    <p className="text-sm text-muted-foreground">
+                      Capture team photo for attendance record
+                    </p>
+                    <MobileButton 
+                      variant="elec" 
+                      icon={<Camera className="h-4 w-4" />}
+                    >
+                      Capture Group Photo
+                    </MobileButton>
+                  </div>
+                </div>
+              )}
             </div>
           )}
-        </DialogContent>
-      </Dialog>
+        </DrawerContent>
+      </Drawer>
 
       {/* New Briefing Form Modal */}
       <Dialog open={showNewBriefingForm} onOpenChange={setShowNewBriefingForm}>
