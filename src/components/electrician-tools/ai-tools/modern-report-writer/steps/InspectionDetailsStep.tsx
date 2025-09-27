@@ -426,27 +426,6 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
                 value={formData.inspectorName || ""}
                 onChange={(value) => updateField('inspectorName', value)}
               />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowSmartAssistant(showSmartAssistant === 'inspectorName' ? null : 'inspectorName')}
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              >
-                <Sparkles className="h-4 w-4 mr-2" />
-                Suggestions
-              </Button>
-              {showSmartAssistant === 'inspectorName' && (
-                <SmartInputAssistant
-                  fieldId="inspectorName"
-                  fieldLabel="Inspector Name"
-                  currentValue={formData.inspectorName || ""}
-                  onSuggestionApply={(value) => {
-                    updateField('inspectorName', value);
-                    setShowSmartAssistant(null);
-                  }}
-                  onDismiss={() => setShowSmartAssistant(null)}
-                />
-              )}
             </div>
             
             <div className="space-y-2">
