@@ -656,21 +656,21 @@ const SafetyEquipmentTracker = () => {
                         <MobileButton 
                           variant="outline" 
                           size="sm"
-                          className="flex-1 text-xs h-8 px-3 py-2"
+                          className="flex-1 text-xs h-10 px-3 py-2"
                         >
                           Update
                         </MobileButton>
                         <MobileButton 
                           variant="outline" 
                           size="sm"
-                          className="flex-1 text-xs h-8 px-3 py-2"
+                          className="flex-1 text-xs h-10 px-3 py-2"
                         >
                           Edit
                         </MobileButton>
                         <MobileButton 
                           variant="outline" 
                           size="sm"
-                          className="flex-1 text-xs h-8 px-3 py-2"
+                          className="flex-1 text-xs h-10 px-3 py-2"
                         >
                           History
                         </MobileButton>
