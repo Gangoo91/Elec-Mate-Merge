@@ -284,7 +284,7 @@ const EnhancedHazardDatabase: React.FC = () => {
               )}
             </div>
             
-            <div className="flex flex-wrap items-center gap-1 md:gap-1.5">
+            <div className="flex flex-wrap items-center gap-1 md:gap-1.5 pb-1">
               <Badge variant="outline" className="text-xs px-1 py-0.5 md:px-1.5">
                 {hazard.category}
               </Badge>
