@@ -411,8 +411,8 @@ const TeamBriefingTemplates = () => {
         
         <MobileGestureHandler onTap={() => setFilterStatus('upcoming')}>
           <Card className="border-secondary/30 cursor-pointer hover:bg-accent/50 transition-colors">
-            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center border border-primary/30 rounded-lg">
-              <div className="text-2xl lg:text-3xl font-bold text-secondary-foreground">
+            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
+              <div className="text-2xl lg:text-3xl font-bold text-secondary-foreground border border-primary/30 rounded-lg">
                 {briefings.reduce((total, b) => total + b.attendees.length, 0)}
               </div>
               <div className="text-sm text-muted-foreground">Total Attendees</div>
