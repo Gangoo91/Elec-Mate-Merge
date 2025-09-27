@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { MarkdownViewer } from '@/components/ui/MarkdownViewer';
 import { useToast } from '@/hooks/use-toast';
-import { generateElectricalReportPDF } from '@/utils/electricalMarkdownProcessor';
+import { generateProfessionalElectricalPDF } from '@/utils/professional-electrical-pdf';
 
 interface GeneratedReportDisplayProps {
   report: string;
@@ -116,23 +116,28 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     }
   };
 
-  // Simplified PDF generation using md-to-pdf
+  // Professional PDF generation with enhanced design
   const handleDownloadPDF = async () => {
     try {
       const reportTypeName = reportTypeMap[template] || 'Electrical Report';
       const filename = `${reportTypeName.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
       
-      await generateElectricalReportPDF(report, reportTypeName, filename);
+      await generateProfessionalElectricalPDF(report, reportTypeName, filename, {
+        reportType: reportTypeName,
+        companyName: "ElecConnect Professional",
+        includeSignatures: true,
+        watermark: "BS 7671:2018+A3:2024 COMPLIANT"
+      });
       
       toast({
-        title: "PDF Generated",
-        description: "Your electrical report PDF has been downloaded successfully.",
+        title: "Professional PDF Generated",
+        description: "Your enhanced electrical report PDF has been downloaded successfully.",
       });
     } catch (error) {
       console.error('PDF generation error:', error);
       toast({
         title: "PDF Generation Failed",
-        description: "There was an error generating the PDF. Please try again.",
+        description: "There was an error generating the professional PDF. Please try again.",
         variant: "destructive"
       });
     }

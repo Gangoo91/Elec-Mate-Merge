@@ -425,79 +425,68 @@ const VisualAnalysis = () => {
     if (!analysisResult) return;
     
     try {
-      const jsPDF = (await import('jspdf')).default;
-      const autoTable = (await import('jspdf-autotable')).default;
+      // Format analysis results for professional PDF
+      const reportContent = `
+# Visual Fault Analysis Report
+
+**Generated:** ${new Date().toLocaleDateString('en-GB')}  
+**Safety Rating:** ${analysisResult.compliance_summary.safety_rating}/10  
+**BS 7671:2018+A3:2024 Compliance Assessment**
+
+---
+
+## Executive Summary
+
+${analysisResult.summary}
+
+---
+
+## Identified Issues
+
+| Finding | EICR Code | Confidence | BS 7671 Clauses |
+|---------|-----------|------------|------------------|
+${analysisResult.findings.map(finding => 
+  `| ${finding.description} | ${finding.eicr_code} | ${Math.round(finding.confidence * 100)}% | ${finding.bs7671_clauses.join(', ') || 'N/A'} |`
+).join('\n')}
+
+---
+
+## Recommendations
+
+| Action | Priority | BS 7671 Reference | Cost Estimate |
+|--------|----------|-------------------|---------------|
+${analysisResult.recommendations.map(rec => 
+  `| ${rec.action} | ${rec.priority.charAt(0).toUpperCase() + rec.priority.slice(1)} | ${rec.bs7671_reference || 'N/A'} | ${rec.cost_estimate || 'TBC'} |`
+).join('\n')}
+
+---
+
+## Compliance Summary
+
+**Overall Assessment:** ${analysisResult.compliance_summary.overall_assessment}  
+**Safety Rating:** ${analysisResult.compliance_summary.safety_rating}/10  
+**C1 Issues:** ${analysisResult.compliance_summary.c1_count}  
+**C2 Issues:** ${analysisResult.compliance_summary.c2_count}  
+**C3 Issues:** ${analysisResult.compliance_summary.c3_count}
+      `;
+
+      const { generateProfessionalElectricalPDF } = await import('@/utils/professional-electrical-pdf');
       
-      const doc = new jsPDF();
-      
-      // Header
-      doc.setFontSize(20);
-      doc.text('Visual Fault Analysis Report', 20, 20);
-      doc.setFontSize(12);
-      doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')}`, 20, 30);
-      doc.text(`Safety Rating: ${analysisResult.compliance_summary.safety_rating}/10`, 20, 40);
-      doc.text(`BS 7671 18th Edition Compliance Assessment`, 20, 50);
-      
-      // Summary
-      doc.setFontSize(14);
-      doc.text('Executive Summary', 20, 65);
-      doc.setFontSize(10);
-      const splitSummary = doc.splitTextToSize(analysisResult.summary, 170);
-      doc.text(splitSummary, 20, 75);
-      
-      let yPosition = 75 + (splitSummary.length * 5) + 10;
-      
-      // Issues
-      doc.setFontSize(14);
-      doc.text('Identified Issues', 20, yPosition);
-      yPosition += 10;
-      
-      const issueData = analysisResult.findings.map(finding => [
-        finding.description,
-        finding.eicr_code,
-        `${Math.round(finding.confidence * 100)}%`,
-        finding.bs7671_clauses.join(', ') || 'N/A'
-      ]);
-      
-      autoTable(doc, {
-        head: [['Finding', 'EICR Code', 'Confidence', 'BS 7671 Clauses']],
-        body: issueData,
-        startY: yPosition,
-        margin: { left: 20 },
-        styles: { fontSize: 8 }
+      await generateProfessionalElectricalPDF(reportContent, "Visual Fault Analysis Report", `visual-analysis-report-${Date.now()}.pdf`, {
+        reportType: "Visual Fault Analysis Report",
+        companyName: "ElecConnect Professional",
+        includeSignatures: true,
+        watermark: "VISUAL ANALYSIS"
       });
-      
-      // Recommendations
-      yPosition = (doc as any).lastAutoTable.finalY + 10;
-      doc.setFontSize(14);
-      doc.text('Recommendations', 20, yPosition);
-      yPosition += 10;
-      
-      const recData = analysisResult.recommendations.map(rec => [
-        rec.action,
-        rec.priority.charAt(0).toUpperCase() + rec.priority.slice(1),
-        rec.bs7671_reference || 'N/A',
-        rec.cost_estimate || 'TBC'
-      ]);
-      
-      autoTable(doc, {
-        head: [['Action', 'Priority', 'BS 7671 Reference', 'Cost Estimate']],
-        body: recData,
-        startY: yPosition,
-        margin: { left: 20 },
-        styles: { fontSize: 8 }
-      });
-      
-      doc.save(`visual-analysis-report-${Date.now()}.pdf`);
       
       toast({
-        title: "Report Exported",
-        description: "PDF report has been downloaded.",
+        title: "Professional Report Exported",
+        description: "Enhanced PDF report has been downloaded.",
       });
     } catch (error) {
       toast({
         title: "Export Failed",
-        description: "Unable to generate PDF report.",
+        description: "Unable to generate professional PDF report.",
         variant: "destructive",
       });
     }
