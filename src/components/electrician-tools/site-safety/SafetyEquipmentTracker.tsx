@@ -562,139 +562,117 @@ const SafetyEquipmentTracker = () => {
           filteredEquipment.map((item) => (
             <Card key={item.id} className="border-elec-yellow/30 bg-elec-gray hover:border-elec-yellow/50 transition-all duration-300 animate-fade-in overflow-hidden">
               <Collapsible open={expandedCards.has(item.id)} onOpenChange={() => toggleCardExpansion(item.id)}>
-                <CardContent className="p-0">
-                  {/* Header */}
-                  <div className="relative px-6 pt-6 pb-4 bg-elec-gray/50">
-                    <div className="flex justify-between items-start gap-2 mb-4">
-                      <div className="flex-1 min-w-0"></div>
-                      {isInspectionDue(item.nextInspection) && (
-                        <div className="w-fit px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full border border-orange-500/30 flex items-center gap-1 flex-shrink-0">
-                          <Clock className="h-3 w-3" />
-                          <span className="hidden sm:inline">Due</span>
-                          <span className="sm:hidden">!</span>
-                        </div>
-                      )}
+                <CardContent className="p-3">
+                  {/* Compact Header */}
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30 flex-shrink-0">
+                        <Wrench className="h-4 w-4 text-elec-yellow" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-sm text-white truncate">{item.name}</h3>
+                        <div className="text-xs text-muted-foreground font-mono">{item.serialNumber}</div>
+                      </div>
                     </div>
                     
-                    <div className="space-y-4">
-                      {/* Equipment Name and Icon */}
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30 flex-shrink-0">
-                          <Wrench className="h-5 w-5 text-elec-yellow" />
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      {isInspectionDue(item.nextInspection) && (
+                        <div className="w-fit px-1.5 py-0.5 bg-orange-500/20 text-orange-400 text-xs rounded border border-orange-500/30 flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          <span className="hidden sm:inline">Due</span>
                         </div>
-                        <h3 className="font-bold text-lg text-white flex-1">{item.name}</h3>
-                        <CollapsibleTrigger asChild>
-                          <MobileButton 
-                            variant="ghost" 
-                            size="sm"
-                            className="text-elec-yellow hover:bg-elec-yellow/10 p-2"
-                          >
-                            {expandedCards.has(item.id) ? (
-                              <ChevronUp className="h-4 w-4" />
-                            ) : (
-                              <ChevronDown className="h-4 w-4" />
-                            )}
-                          </MobileButton>
-                        </CollapsibleTrigger>
-                      </div>
-                      
-                      {/* Status and Category */}
-                      <div className="flex items-center gap-3">
-                        <span className="px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm rounded-lg border border-elec-yellow/20">
-                          {item.category}
-                        </span>
-                        <div className={`px-3 py-1 ${getStatusColor(item.status)}/20 text-sm rounded-lg border flex items-center gap-2`}>
-                          {getStatusIcon(item.status)}
-                          <span>{item.status}</span>
-                        </div>
-                      </div>
-
-                      {/* Serial Number */}
-                      <div>
-                        <div className="text-muted-foreground text-xs mb-1">Serial Number</div>
-                        <div className="font-mono text-sm text-white/80">{item.serialNumber}</div>
-                      </div>
+                      )}
+                      <CollapsibleTrigger asChild>
+                        <MobileButton 
+                          variant="ghost" 
+                          size="sm"
+                          className="text-elec-yellow hover:bg-elec-yellow/10 p-1 h-6 w-6"
+                        >
+                          {expandedCards.has(item.id) ? (
+                            <ChevronUp className="h-3 w-3" />
+                          ) : (
+                            <ChevronDown className="h-3 w-3" />
+                          )}
+                        </MobileButton>
+                      </CollapsibleTrigger>
+                    </div>
+                  </div>
+                  
+                  {/* Compact Status Row */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2 py-0.5 bg-elec-yellow/10 text-elec-yellow text-xs rounded border border-elec-yellow/20">
+                      {item.category}
+                    </span>
+                    <div className={`px-2 py-0.5 ${getStatusColor(item.status)}/20 text-xs rounded border flex items-center gap-1`}>
+                      {getStatusIcon(item.status)}
+                      <span>{item.status}</span>
                     </div>
                   </div>
 
                   <CollapsibleContent className="animate-accordion-down">
-                    {/* Information Layout */}
-                    <div className="p-6 space-y-6">
-                      {/* Inspection Timeline */}
-                      <div className="space-y-3">
-                        <h4 className="text-elec-yellow font-medium text-left border-b border-elec-yellow/20 pb-2">Inspection Timeline</h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div>
-                            <div className="text-muted-foreground text-sm mb-1 text-left">Last Inspection</div>
-                            <div className="text-white font-medium text-left">{item.lastInspection}</div>
-                          </div>
-                          <div>
-                            <div className="text-muted-foreground text-sm mb-1 text-left">Next Inspection</div>
-                            <div className={`font-medium text-left ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : 'text-white'}`}>
-                              {item.nextInspection}
-                            </div>
+                    {/* Expanded Details */}
+                    <div className="pt-2 space-y-3 border-t border-elec-yellow/20">
+                      {/* Inspection Info */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-0.5">Last Inspection</div>
+                          <div className="text-sm text-white font-medium">{item.lastInspection}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-0.5">Next Inspection</div>
+                          <div className={`text-sm font-medium ${isInspectionDue(item.nextInspection) ? 'text-orange-400' : 'text-white'}`}>
+                            {item.nextInspection}
                           </div>
                         </div>
                       </div>
 
-                      {/* Location & Assignment */}
-                      <div className="space-y-3">
-                        <h4 className="text-elec-yellow font-medium text-left border-b border-elec-yellow/20 pb-2">Assignment Details</h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                              <span className="text-muted-foreground text-sm">Location</span>
-                            </div>
-                            <div className="text-white font-medium text-left pl-4">{item.location}</div>
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                              <span className="text-muted-foreground text-sm">Assigned To</span>
-                            </div>
-                            <div className="text-white font-medium text-left pl-4">{item.assignedTo}</div>
-                          </div>
+                      {/* Assignment Info */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-0.5">Location</div>
+                          <div className="text-sm text-white font-medium">{item.location}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-0.5">Assigned To</div>
+                          <div className="text-sm text-white font-medium">{item.assignedTo}</div>
                         </div>
                       </div>
 
-                      {/* Purchase Information */}
+                      {/* Purchase Date */}
                       <div>
-                        <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                          <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                          <span>Purchased on {item.purchaseDate}</span>
-                        </div>
+                        <div className="text-xs text-muted-foreground">Purchased: {item.purchaseDate}</div>
                       </div>
 
                       {/* Notes */}
                       {item.notes && (
-                        <div className="border-l-2 border-elec-yellow/30 pl-4">
-                          <div className="text-muted-foreground text-sm mb-1 text-left">Notes</div>
-                          <div className="text-white/90 text-left">{item.notes}</div>
+                        <div className="border-l-2 border-elec-yellow/30 pl-2">
+                          <div className="text-xs text-muted-foreground mb-0.5">Notes</div>
+                          <div className="text-sm text-white/90">{item.notes}</div>
                         </div>
                       )}
-                    </div>
 
-                    {/* Flowing Action Buttons */}
-                    <div className="p-8 pt-0">
-                      <div className="flex flex-col xs:flex-col sm:flex-col md:flex-row flex-wrap gap-2 xs:gap-3 sm:gap-3 md:gap-4 w-full">
+                      {/* Compact Action Buttons */}
+                      <div className="flex gap-2 pt-2">
                         <MobileButton 
                           variant="outline" 
-                          className="flex-1"
+                          size="sm"
+                          className="flex-1 text-xs h-7"
                         >
-                          Update Inspection
+                          Update
                         </MobileButton>
                         <MobileButton 
                           variant="outline" 
-                          className="flex-1"
+                          size="sm"
+                          className="flex-1 text-xs h-7"
                         >
-                          Edit Details
+                          Edit
                         </MobileButton>
                         <MobileButton 
                           variant="outline" 
-                          className="flex-1"
+                          size="sm"
+                          className="flex-1 text-xs h-7"
                         >
-                          View History
+                          History
                         </MobileButton>
                       </div>
                     </div>
