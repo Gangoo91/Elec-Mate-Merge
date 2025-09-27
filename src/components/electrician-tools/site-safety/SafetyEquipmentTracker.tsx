@@ -1,12 +1,18 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Wrench, Plus, AlertTriangle, CheckCircle, Clock, Search } from "lucide-react";
+import { 
+  Wrench, Plus, AlertTriangle, CheckCircle, Clock, Search, 
+  Calendar, MapPin, User, Edit3, Trash2, Camera, Eye,
+  QrCode, TrendingUp, BarChart3, FileText, Filter
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
+import { toast } from "@/hooks/use-toast";
 
 interface SafetyEquipment {
   id: string;
@@ -20,6 +26,26 @@ interface SafetyEquipment {
   location: string;
   assignedTo: string;
   notes: string;
+  photos?: string[];
+  maintenanceHistory?: MaintenanceEntry[];
+  qrCode?: string;
+  certificationExpiry?: string;
+}
+
+interface MaintenanceEntry {
+  id: string;
+  date: string;
+  type: string;
+  description: string;
+  performedBy: string;
+  photos?: string[];
+}
+
+interface QuickTemplate {
+  name: string;
+  category: string;
+  defaultLocation: string;
+  inspectionInterval: number; // days
 }
 
 const SafetyEquipmentTracker = () => {
@@ -35,7 +61,10 @@ const SafetyEquipmentTracker = () => {
       status: "Good",
       location: "Van 1",
       assignedTo: "John Smith",
-      notes: "All straps and buckles in good condition"
+      notes: "All straps and buckles in good condition",
+      photos: [],
+      qrCode: "SH-2023-001-QR",
+      certificationExpiry: "2025-06-15"
     },
     {
       id: "2",
@@ -48,7 +77,9 @@ const SafetyEquipmentTracker = () => {
       status: "Needs Attention",
       location: "Workshop",
       assignedTo: "Mike Johnson",
-      notes: "Battery compartment showing signs of corrosion"
+      notes: "Battery compartment showing signs of corrosion",
+      photos: [],
+      qrCode: "VT-F150-789-QR"
     },
     {
       id: "3",
@@ -61,14 +92,40 @@ const SafetyEquipmentTracker = () => {
       status: "Overdue",
       location: "Site Store",
       assignedTo: "Site Team",
-      notes: "Inspection overdue - requires immediate attention"
+      notes: "Inspection overdue - requires immediate attention",
+      photos: [],
+      qrCode: "EL-3M-456-QR"
     }
   ]);
+
+  const quickTemplates: QuickTemplate[] = [
+    { name: "Safety Harness", category: "Fall Protection", defaultLocation: "Van", inspectionInterval: 180 },
+    { name: "Voltage Tester", category: "Testing Equipment", defaultLocation: "Van", inspectionInterval: 90 },
+    { name: "Extension Ladder", category: "Access Equipment", defaultLocation: "Site Store", inspectionInterval: 90 },
+    { name: "Hard Hat", category: "PPE", defaultLocation: "Site", inspectionInterval: 365 },
+    { name: "Safety Boots", category: "PPE", defaultLocation: "Personal", inspectionInterval: 180 }
+  ];
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
   const [filterStatus, setFilterStatus] = useState("All");
+  const [filterLocation, setFilterLocation] = useState("All");
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showQuickAdd, setShowQuickAdd] = useState(false);
+  const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
+  const [showFilters, setShowFilters] = useState(false);
+
+  // Form states
+  const [newEquipment, setNewEquipment] = useState({
+    name: "",
+    category: "",
+    serialNumber: "",
+    purchaseDate: "",
+    location: "",
+    assignedTo: "",
+    notes: ""
+  });
 
   const categories = [
     "All", "Fall Protection", "Testing Equipment", "Access Equipment", 
@@ -76,14 +133,26 @@ const SafetyEquipmentTracker = () => {
   ];
 
   const statusOptions = ["All", "Good", "Needs Attention", "Out of Service", "Overdue"];
+  
+  const locations = ["All", ...Array.from(new Set(equipment.map(e => e.location)))];
+
+  const categoryIcons = {
+    "Fall Protection": "🦺",
+    "Testing Equipment": "⚡",
+    "Access Equipment": "🪜",
+    "PPE": "🥽",
+    "First Aid": "🏥",
+    "Fire Safety": "🧯",
+    "Electrical Safety": "⚡"
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Good": return "bg-green-500";
-      case "Needs Attention": return "bg-yellow-500";
-      case "Out of Service": return "bg-red-500";
-      case "Overdue": return "bg-orange-500";
-      default: return "bg-gray-500";
+      case "Good": return "border-green-500/30 bg-green-500/10 text-green-400";
+      case "Needs Attention": return "border-yellow-500/30 bg-yellow-500/10 text-yellow-400";
+      case "Out of Service": return "border-red-500/30 bg-red-500/10 text-red-400";
+      case "Overdue": return "border-orange-500/30 bg-orange-500/10 text-orange-400";
+      default: return "border-muted/30 bg-muted/10 text-muted-foreground";
     }
   };
 
@@ -99,10 +168,12 @@ const SafetyEquipmentTracker = () => {
 
   const filteredEquipment = equipment.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.serialNumber.toLowerCase().includes(searchTerm.toLowerCase());
+                         item.serialNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         item.assignedTo.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = filterCategory === "All" || item.category === filterCategory;
     const matchesStatus = filterStatus === "All" || item.status === filterStatus;
-    return matchesSearch && matchesCategory && matchesStatus;
+    const matchesLocation = filterLocation === "All" || item.location === filterLocation;
+    return matchesSearch && matchesCategory && matchesStatus && matchesLocation;
   });
 
   const getStats = () => {
@@ -124,186 +195,346 @@ const SafetyEquipmentTracker = () => {
     return daysUntilInspection <= 30;
   };
 
+  const handleQuickInspection = (equipmentId: string) => {
+    const today = new Date().toISOString().split('T')[0];
+    const nextInspectionDate = new Date();
+    nextInspectionDate.setDate(nextInspectionDate.getDate() + 90);
+    
+    setEquipment(prev => prev.map(item => 
+      item.id === equipmentId 
+        ? { 
+            ...item, 
+            lastInspection: today, 
+            nextInspection: nextInspectionDate.toISOString().split('T')[0],
+            status: "Good" as const
+          }
+        : item
+    ));
+    
+    toast({
+      title: "Inspection Complete",
+      description: "Equipment inspection has been updated",
+      variant: "success"
+    });
+  };
+
+  const handleAddFromTemplate = (template: QuickTemplate) => {
+    const today = new Date();
+    const nextInspection = new Date();
+    nextInspection.setDate(today.getDate() + template.inspectionInterval);
+    
+    const newItem: SafetyEquipment = {
+      id: Date.now().toString(),
+      name: template.name,
+      category: template.category,
+      serialNumber: `${template.name.toUpperCase().replace(/\s/g, '')}-${Date.now()}`,
+      purchaseDate: today.toISOString().split('T')[0],
+      lastInspection: today.toISOString().split('T')[0],
+      nextInspection: nextInspection.toISOString().split('T')[0],
+      status: "Good",
+      location: template.defaultLocation,
+      assignedTo: "Unassigned",
+      notes: `Added via quick template`,
+      photos: [],
+      qrCode: `${template.name}-${Date.now()}-QR`
+    };
+    
+    setEquipment(prev => [...prev, newItem]);
+    setShowQuickAdd(false);
+    
+    toast({
+      title: "Equipment Added",
+      description: `${template.name} has been added to your equipment list`,
+      variant: "success"
+    });
+  };
+
+  const handleDeleteEquipment = (equipmentId: string) => {
+    setEquipment(prev => prev.filter(item => item.id !== equipmentId));
+    toast({
+      title: "Equipment Removed",
+      description: "Equipment has been removed from your list",
+      variant: "default"
+    });
+  };
+
   return (
-    <div className="space-y-6">
-      {/* Statistics */}
-      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
-        <Card className="border-blue-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-400">{stats.total}</div>
-            <div className="text-sm text-muted-foreground">Total Equipment</div>
+    <div className="space-y-4 pb-6">
+      {/* Statistics Dashboard */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <Card className="border-primary/20 bg-card">
+          <CardContent className="p-3 text-center">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <BarChart3 className="h-4 w-4 text-primary" />
+              <div className="text-lg font-bold text-primary">{stats.total}</div>
+            </div>
+            <div className="text-xs text-muted-foreground">Total Equipment</div>
           </CardContent>
         </Card>
-        <Card className="border-green-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-400">{stats.good}</div>
-            <div className="text-sm text-muted-foreground">Good Condition</div>
+        
+        <Card className="border-green-500/20 bg-card">
+          <CardContent className="p-3 text-center">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <CheckCircle className="h-4 w-4 text-green-400" />
+              <div className="text-lg font-bold text-green-400">{stats.good}</div>
+            </div>
+            <div className="text-xs text-muted-foreground">Good</div>
           </CardContent>
         </Card>
-        <Card className="border-yellow-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-400">{stats.needsAttention}</div>
-            <div className="text-sm text-muted-foreground">Needs Attention</div>
+        
+        <Card className="border-yellow-500/20 bg-card">
+          <CardContent className="p-3 text-center">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <AlertTriangle className="h-4 w-4 text-yellow-400" />
+              <div className="text-lg font-bold text-yellow-400">{stats.needsAttention}</div>
+            </div>
+            <div className="text-xs text-muted-foreground">Attention</div>
           </CardContent>
         </Card>
-        <Card className="border-orange-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-orange-400">{stats.overdue}</div>
-            <div className="text-sm text-muted-foreground">Overdue</div>
-          </CardContent>
-        </Card>
-        <Card className="border-red-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-red-400">{stats.outOfService}</div>
-            <div className="text-sm text-muted-foreground">Out of Service</div>
+        
+        <Card className="border-orange-500/20 bg-card">
+          <CardContent className="p-3 text-center">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <Clock className="h-4 w-4 text-orange-400" />
+              <div className="text-lg font-bold text-orange-400">{stats.overdue}</div>
+            </div>
+            <div className="text-xs text-muted-foreground">Overdue</div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Search and Filters */}
-      <Card className="border-elec-yellow/20 bg-card">
-        <CardHeader className="pb-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg">
-              <Wrench className="h-5 w-5" />
-              Safety Equipment Tracker
-            </CardTitle>
-            <Button 
-              onClick={() => setShowAddForm(!showAddForm)} 
-              variant="outline"
-              className="w-full sm:w-auto"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Equipment
-            </Button>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="space-y-6">
-          {/* Search and Filter Section */}
-          <div className="space-y-4">
+      {/* Header with Actions */}
+      <Card className="border-primary/20 bg-card">
+        <CardHeader className="pb-3">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-primary flex items-center gap-2 text-lg">
+                <Wrench className="h-5 w-5" />
+                Equipment Tracker
+              </CardTitle>
+              <div className="flex gap-2">
+                <MobileButton
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="h-10 w-10"
+                >
+                  <Filter className="h-4 w-4" />
+                </MobileButton>
+                <MobileButton
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowQuickAdd(!showQuickAdd)}
+                  className="hidden sm:flex"
+                >
+                  <QrCode className="h-4 w-4 mr-2" />
+                  Quick Add
+                </MobileButton>
+                <MobileButton
+                  variant="elec"
+                  size="sm"
+                  onClick={() => setShowAddForm(!showAddForm)}
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Equipment
+                </MobileButton>
+              </div>
+            </div>
+
+            {/* Search Bar */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search equipment by name or serial number..."
+              <MobileInput
+                placeholder="Search by name, serial, or person..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-12"
+                className="pl-10"
               />
             </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+            {/* Filters */}
+            {showFilters && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-border">
+                <div className="space-y-1">
+                  <Label className="text-xs font-medium text-muted-foreground">Category</Label>
+                  <Select value={filterCategory} onValueChange={setFilterCategory}>
+                    <SelectTrigger className="h-10">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map(category => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-1">
+                  <Label className="text-xs font-medium text-muted-foreground">Status</Label>
+                  <Select value={filterStatus} onValueChange={setFilterStatus}>
+                    <SelectTrigger className="h-10">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {statusOptions.map(status => (
+                        <SelectItem key={status} value={status}>
+                          {status}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-1">
+                  <Label className="text-xs font-medium text-muted-foreground">Location</Label>
+                  <Select value={filterLocation} onValueChange={setFilterLocation}>
+                    <SelectTrigger className="h-10">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {locations.map(location => (
+                        <SelectItem key={location} value={location}>
+                          {location}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            )}
+          </div>
+        </CardHeader>
+      </Card>
+
+      {/* Quick Add Templates */}
+      {showQuickAdd && (
+        <Card className="border-primary/30 bg-card">
+          <CardHeader className="pb-3">
+            <h4 className="font-semibold text-primary flex items-center gap-2">
+              <QrCode className="h-4 w-4" />
+              Quick Add Templates
+            </h4>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {quickTemplates.map((template, index) => (
+                <MobileButton
+                  key={index}
+                  variant="outline"
+                  className="h-auto p-3 justify-start"
+                  onClick={() => handleAddFromTemplate(template)}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="text-lg">
+                      {categoryIcons[template.category as keyof typeof categoryIcons] || "📦"}
+                    </div>
+                    <div className="text-left">
+                      <div className="font-medium text-sm">{template.name}</div>
+                      <div className="text-xs text-muted-foreground">{template.category}</div>
+                    </div>
+                  </div>
+                </MobileButton>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Add Equipment Form */}
+      {showAddForm && (
+        <Card className="border-primary/30 bg-card">
+          <CardHeader className="pb-3">
+            <h4 className="font-semibold text-primary flex items-center gap-2">
+              <Plus className="h-4 w-4" />
+              Add New Equipment
+            </h4>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <MobileInput
+                label="Equipment Name"
+                placeholder="Enter equipment name"
+                value={newEquipment.name}
+                onChange={(e) => setNewEquipment(prev => ({ ...prev, name: e.target.value }))}
+              />
+              
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Category</Label>
-                <Select value={filterCategory} onValueChange={setFilterCategory}>
-                  <SelectTrigger className="h-11">
-                    <SelectValue placeholder="Filter by category" />
+                <Select
+                  value={newEquipment.category}
+                  onValueChange={(value) => setNewEquipment(prev => ({ ...prev, category: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map(category => (
+                    {categories.slice(1).map(category => (
                       <SelectItem key={category} value={category}>
-                        {category}
+                        <div className="flex items-center gap-2">
+                          <span>{categoryIcons[category as keyof typeof categoryIcons] || "📦"}</span>
+                          {category}
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Status</Label>
-                <Select value={filterStatus} onValueChange={setFilterStatus}>
-                  <SelectTrigger className="h-11">
-                    <SelectValue placeholder="Filter by status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {statusOptions.map(status => (
-                      <SelectItem key={status} value={status}>
-                        {status}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
+              <MobileInput
+                label="Serial Number"
+                placeholder="Enter serial number"
+                value={newEquipment.serialNumber}
+                onChange={(e) => setNewEquipment(prev => ({ ...prev, serialNumber: e.target.value }))}
+              />
+              
+              <MobileInput
+                label="Purchase Date"
+                type="date"
+                value={newEquipment.purchaseDate}
+                onChange={(e) => setNewEquipment(prev => ({ ...prev, purchaseDate: e.target.value }))}
+              />
 
-          {/* Add Equipment Form */}
-          {showAddForm && (
-            <Card className="border-elec-yellow/30 bg-elec-gray/50">
-              <CardHeader className="pb-3">
-                <h4 className="font-semibold text-elec-yellow">Add New Equipment</h4>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="equipmentName" className="text-sm font-medium">
-                      Equipment Name
-                    </Label>
-                    <Input 
-                      id="equipmentName" 
-                      placeholder="Enter equipment name" 
-                      className="h-11"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="category" className="text-sm font-medium">
-                      Category
-                    </Label>
-                    <Select>
-                      <SelectTrigger className="h-11">
-                        <SelectValue placeholder="Select category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {categories.slice(1).map(category => (
-                          <SelectItem key={category} value={category}>
-                            {category}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="serialNumber" className="text-sm font-medium">
-                      Serial Number
-                    </Label>
-                    <Input 
-                      id="serialNumber" 
-                      placeholder="Enter serial number" 
-                      className="h-11"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="purchaseDate" className="text-sm font-medium">
-                      Purchase Date
-                    </Label>
-                    <Input 
-                      id="purchaseDate" 
-                      type="date" 
-                      className="h-11"
-                    />
-                  </div>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <Button className="flex-1 h-11">
-                    Add Equipment
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    onClick={() => setShowAddForm(false)}
-                    className="flex-1 h-11"
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </CardContent>
-      </Card>
+              <MobileInput
+                label="Location"
+                placeholder="e.g., Van 1, Workshop"
+                value={newEquipment.location}
+                onChange={(e) => setNewEquipment(prev => ({ ...prev, location: e.target.value }))}
+              />
+
+              <MobileInput
+                label="Assigned To"
+                placeholder="Person responsible"
+                value={newEquipment.assignedTo}
+                onChange={(e) => setNewEquipment(prev => ({ ...prev, assignedTo: e.target.value }))}
+              />
+            </div>
+
+            <MobileInput
+              label="Notes"
+              placeholder="Additional notes or observations"
+              value={newEquipment.notes}
+              onChange={(e) => setNewEquipment(prev => ({ ...prev, notes: e.target.value }))}
+            />
+            
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <MobileButton variant="elec" size="wide" className="sm:flex-1">
+                <Plus className="h-4 w-4 mr-2" />
+                Add Equipment
+              </MobileButton>
+              <MobileButton 
+                variant="outline" 
+                size="wide"
+                onClick={() => setShowAddForm(false)}
+                className="sm:flex-1"
+              >
+                Cancel
+              </MobileButton>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Equipment List */}
       <div className="space-y-4">
@@ -418,24 +649,24 @@ const SafetyEquipmentTracker = () => {
                 {/* Flowing Action Buttons */}
                 <div className="p-8 pt-0">
                   <div className="flex flex-col xs:flex-col sm:flex-col md:flex-row flex-wrap gap-2 xs:gap-3 sm:gap-3 md:gap-4 w-full">
-                    <Button 
+                    <MobileButton 
                       variant="outline" 
-                      className="flex-1 h-11 bg-transparent border-elec-yellow/40 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200 rounded-xl"
+                      className="flex-1"
                     >
                       Update Inspection
-                    </Button>
-                    <Button 
+                    </MobileButton>
+                    <MobileButton 
                       variant="outline" 
-                      className="flex-1 h-11 bg-transparent border-elec-yellow/40 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200 rounded-xl"
+                      className="flex-1"
                     >
                       Edit Details
-                    </Button>
-                    <Button 
+                    </MobileButton>
+                    <MobileButton 
                       variant="outline" 
-                      className="flex-1 h-11 bg-transparent border-elec-yellow/40 hover:bg-elec-yellow/10 text-white font-medium transition-all duration-200 rounded-xl"
+                      className="flex-1"
                     >
                       View History
-                    </Button>
+                    </MobileButton>
                   </div>
                 </div>
               </CardContent>
