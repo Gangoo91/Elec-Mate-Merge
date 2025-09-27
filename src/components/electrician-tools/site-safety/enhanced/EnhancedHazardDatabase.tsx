@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { 
   Shield, Search, AlertTriangle, Star, Clock, Plus, 
   Filter, BookmarkPlus, Eye, ChevronDown, ChevronUp,
-  Zap, HardHat, Building2, FlameKindling, Wind, Users, Hammer
+  Zap, HardHat, Building2, FlameKindling, Wind, Users, Hammer, Check
 } from 'lucide-react';
 import { 
   MobileAccordion, 
@@ -17,6 +17,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { hazardCategories, enhancedRiskConsequences } from '@/data/hazards';
 import { MobileGestureHandler } from '@/components/ui/mobile-gesture-handler';
+import { useRAMS } from '../rams/RAMSContext';
+import { toast } from '@/hooks/use-toast';
 
 interface HazardItem {
   id: string;
@@ -36,6 +38,7 @@ interface HazardItem {
 }
 
 const EnhancedHazardDatabase: React.FC = () => {
+  const { addRiskFromTemplate } = useRAMS();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedRiskLevel, setSelectedRiskLevel] = useState<string>('all');
@@ -43,6 +46,7 @@ const EnhancedHazardDatabase: React.FC = () => {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
   const [expandedHazards, setExpandedHazards] = useState<Set<string>>(new Set());
+  const [addedHazards, setAddedHazards] = useState<Set<string>>(new Set());
 
   // Load favorites and recent items from localStorage on mount
   useEffect(() => {
@@ -182,6 +186,43 @@ const EnhancedHazardDatabase: React.FC = () => {
     setExpandedHazards(newExpanded);
   };
 
+  const handleAddToRAMS = (hazard: HazardItem) => {
+    // Convert hazard to RAMS template format
+    const ramsTemplate = {
+      id: hazard.id,
+      specificActivity: hazard.name,
+      hazard: hazard.description,
+      category: hazard.category,
+      likelihood: hazard.likelihood,
+      severity: hazard.severity,
+      riskLevel: hazard.likelihood * hazard.severity,
+      detailedControls: hazard.controlMeasures || [],
+      ppe: ['Safety helmet', 'Safety gloves', 'High-vis vest'], // Default PPE
+      regulations: hazard.regulations || [],
+      icon: 'AlertTriangle'
+    };
+
+    addRiskFromTemplate(ramsTemplate);
+    
+    // Add to added hazards set for visual feedback
+    setAddedHazards(prev => new Set([...prev, hazard.id]));
+    
+    // Remove from added state after 3 seconds
+    setTimeout(() => {
+      setAddedHazards(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(hazard.id);
+        return newSet;
+      });
+    }, 3000);
+
+    toast({
+      title: 'Added to RAMS',
+      description: `${hazard.name} has been added to your Risk Assessment.`,
+      variant: 'success'
+    });
+  };
+
   const HazardCard: React.FC<{ hazard: HazardItem; showQuickActions?: boolean }> = ({ 
     hazard, 
     showQuickActions = true 
@@ -292,13 +333,27 @@ const EnhancedHazardDatabase: React.FC = () => {
                   <span>Likelihood: {hazard.likelihood}/5</span>
                 </div>
                 <Button 
-                  variant="outline" 
+                  variant={addedHazards.has(hazard.id) ? "default" : "outline"}
                   size="sm" 
-                  className="h-6 text-xs px-2"
-                  onClick={() => {/* Add to RAMS functionality */}}
+                  className={`h-6 text-xs px-2 transition-all duration-300 hover-scale ${
+                    addedHazards.has(hazard.id) 
+                      ? 'bg-elec-yellow text-elec-dark border-elec-yellow animate-scale-in' 
+                      : 'border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark hover:border-elec-yellow'
+                  }`}
+                  onClick={() => handleAddToRAMS(hazard)}
+                  disabled={addedHazards.has(hazard.id)}
                 >
-                  <Plus className="h-3 w-3 mr-1" />
-                  Add to RAMS
+                  {addedHazards.has(hazard.id) ? (
+                    <>
+                      <Check className="h-3 w-3 mr-1 animate-scale-in" />
+                      Added
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="h-3 w-3 mr-1" />
+                      Add to RAMS
+                    </>
+                  )}
                 </Button>
               </div>
             </div>
