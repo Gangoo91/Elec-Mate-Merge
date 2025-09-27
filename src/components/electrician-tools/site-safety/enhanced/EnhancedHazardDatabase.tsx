@@ -285,13 +285,13 @@ const EnhancedHazardDatabase: React.FC = () => {
             </div>
             
             <div className="flex flex-wrap items-center gap-1 md:gap-1.5 pb-2 text-[10px]">
-              <Badge variant="outline" className="text-[10px] px-1 py-0.5 md:px-1.5">
+              <Badge variant="outline" className="text-[10px] px-2 py-1 mx-0.5 bg-muted/50 border-muted">
                 {hazard.category}
               </Badge>
-              <Badge className={`${getRiskColor(hazard.riskLevel)} text-[10px] px-1 py-0.5 md:px-1.5 border`}>
+              <Badge className={`${getRiskColor(hazard.riskLevel)} text-[10px] px-2 py-1 mx-0.5 bg-muted/50 border-muted`}>
                 {hazard.riskLevel}
               </Badge>
-              <span className="text-[10px] text-muted-foreground hidden sm:inline">
+              <span className="text-[10px] text-muted-foreground hidden sm:inline ml-1">
                 Risk: {hazard.riskRating}
               </span>
             </div>
