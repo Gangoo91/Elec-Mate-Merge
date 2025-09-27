@@ -116,12 +116,12 @@ const SiteSafety = () => {
           <div className="max-w-7xl mx-auto px-4 py-6">
             <div className="mb-6">
               <Button 
-                onClick={() => setActiveView(null)}
+                onClick={() => setActiveView('method-statement')}
                 variant="outline" 
                 className="mb-4 border-elec-yellow/30 hover:border-elec-yellow/60 text-elec-yellow hover:bg-elec-yellow/10"
               >
                 <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
-                Back to Safety Dashboard
+                Choose a Method Statement Template
               </Button>
             </div>
             {renderToolContent()}
