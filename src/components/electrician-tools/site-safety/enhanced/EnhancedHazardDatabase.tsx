@@ -6,7 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { 
   Shield, Search, AlertTriangle, Star, Clock, Plus, 
   Filter, BookmarkPlus, Eye, ChevronDown, ChevronUp,
-  Zap, HardHat, Building2, FlameKindling, Wind, Users, Hammer, Check
+  Zap, HardHat, Building2, FlameKindling, Wind, Users, Hammer, Check,
+  TrendingUp, Target, ArrowRight, Sparkles, CheckCircle2
 } from 'lucide-react';
 import { 
   MobileAccordion, 
@@ -364,135 +365,272 @@ const EnhancedHazardDatabase: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4">
-      {/* Header & Search */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-primary flex items-center gap-2 text-lg">
-            <Shield className="h-5 w-5" />
-            Enhanced Hazard Database
-          </CardTitle>
-          <p className="text-xs text-muted-foreground">
-            Comprehensive electrical and workplace hazards with risk assessments
-          </p>
+    <div className="space-y-6">
+      {/* Enhanced Header & Search */}
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray/90 to-elec-gray/70 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-elec-yellow/20 border border-elec-yellow/30">
+                <Shield className="h-6 w-6 text-elec-yellow" />
+              </div>
+              <div>
+                <CardTitle className="text-elec-yellow flex items-center gap-2 text-xl font-bold">
+                  Enhanced Hazard Database
+                  <Sparkles className="h-5 w-5 text-elec-yellow/70 animate-pulse" />
+                </CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Comprehensive safety database with intelligent risk assessments
+                </p>
+              </div>
+            </div>
+            <div className="hidden lg:flex items-center gap-2 text-xs text-muted-foreground">
+              <div className="flex items-center gap-1 px-2 py-1 bg-success/10 rounded-full border border-success/30">
+                <CheckCircle2 className="h-3 w-3 text-success" />
+                <span className="text-success font-medium">BS 7671:2018 Compliant</span>
+              </div>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {/* Enhanced Search */}
+          <div className="relative group">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-elec-yellow transition-colors" />
             <Input
-              placeholder="Search hazards, controls, regulations..."
+              placeholder="Search hazards, controls, regulations... (e.g. 'electrical shock', 'working at height')"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 h-10 bg-background/50"
+              className="pl-12 pr-4 h-12 bg-background/70 border-2 border-transparent focus:border-elec-yellow/50 focus:bg-background text-base placeholder:text-muted-foreground/70 rounded-xl transition-all duration-200"
             />
+            {searchTerm && (
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                <Badge variant="secondary" className="text-xs bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                  {filteredHazards.length} found
+                </Badge>
+              </div>
+            )}
           </div>
 
-          {/* Quick Filters */}
-          <div className="flex flex-wrap gap-2">
+          {/* Enhanced Quick Filters */}
+          <div className="flex flex-wrap gap-3">
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm font-medium text-foreground">Quick Filters:</span>
+            </div>
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="text-xs px-2 py-1 rounded border bg-background"
+              className="text-sm px-4 py-2 rounded-lg border-2 border-border/50 bg-background hover:border-elec-yellow/50 focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
             >
-              <option value="all">All Categories</option>
-              <option value="electrical">Electrical</option>
-              <option value="height">Height</option>
-              <option value="fire">Fire</option>
-              <option value="tools">Tools</option>
-              <option value="environmental">Environmental</option>
+              <option value="all">🔍 All Categories</option>
+              <option value="electrical">⚡ Electrical</option>
+              <option value="height">🏗️ Height</option>
+              <option value="fire">🔥 Fire</option>
+              <option value="tools">🔨 Tools</option>
+              <option value="environmental">🌪️ Environmental</option>
             </select>
 
             <select
               value={selectedRiskLevel}
               onChange={(e) => setSelectedRiskLevel(e.target.value)}
-              className="text-xs px-3 py-2 rounded border bg-background"
+              className="text-sm px-4 py-2 rounded-lg border-2 border-border/50 bg-background hover:border-elec-yellow/50 focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
             >
-              <option value="all">All Risk Levels</option>
-              <option value="Very High">Very High</option>
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
+              <option value="all">📊 All Risk Levels</option>
+              <option value="Very High">🔴 Very High Risk</option>
+              <option value="High">🟠 High Risk</option>
+              <option value="Medium">🟡 Medium Risk</option>
+              <option value="Low">🟢 Low Risk</option>
             </select>
+          </div>
+
+          {/* Quick Action Bar */}
+          <div className="flex items-center justify-between p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+            <div className="flex items-center gap-2 text-sm text-elec-yellow">
+              <Target className="h-4 w-4" />
+              <span className="font-medium">Quick Actions:</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setActiveTab('favorites')}
+                className="text-xs text-elec-yellow hover:bg-elec-yellow/20 hover:text-elec-yellow"
+              >
+                <Star className="h-3 w-3 mr-1" />
+                View Favorites ({favorites.size})
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setActiveTab('popular')}
+                className="text-xs text-elec-yellow hover:bg-elec-yellow/20 hover:text-elec-yellow"
+              >
+                <TrendingUp className="h-3 w-3 mr-1" />
+                Most Used
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+      {/* Enhanced Quick Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Very High', count: transformedHazards.filter(h => h.riskLevel === 'Very High').length, color: 'text-destructive' },
-          { label: 'High Risk', count: transformedHazards.filter(h => h.riskLevel === 'High').length, color: 'text-orange-400' },
-          { label: 'Favorites', count: favorites.size, color: 'text-primary' },
-          { label: 'Total', count: transformedHazards.length, color: 'text-foreground' }
-        ].map((stat, index) => (
-          <Card key={index} className="border-elec-yellow/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
-            <CardContent className="p-3 text-center">
-              <div className={`text-lg font-bold ${stat.color}`}>{stat.count}</div>
-              <div className="text-xs text-muted-foreground">{stat.label}</div>
-            </CardContent>
-          </Card>
-        ))}
+          { 
+            label: 'Critical Risks', 
+            count: transformedHazards.filter(h => h.riskLevel === 'Very High').length, 
+            color: 'text-red-400',
+            bgColor: 'bg-red-500/10',
+            borderColor: 'border-red-500/30',
+            icon: AlertTriangle
+          },
+          { 
+            label: 'High Priority', 
+            count: transformedHazards.filter(h => h.riskLevel === 'High').length, 
+            color: 'text-orange-400',
+            bgColor: 'bg-orange-500/10',
+            borderColor: 'border-orange-500/30',
+            icon: Target
+          },
+          { 
+            label: 'Your Favorites', 
+            count: favorites.size, 
+            color: 'text-elec-yellow',
+            bgColor: 'bg-elec-yellow/10',
+            borderColor: 'border-elec-yellow/30',
+            icon: Star
+          },
+          { 
+            label: 'Total Database', 
+            count: transformedHazards.length, 
+            color: 'text-primary',
+            bgColor: 'bg-primary/10',
+            borderColor: 'border-primary/30',
+            icon: Shield
+          }
+        ].map((stat, index) => {
+          const IconComponent = stat.icon;
+          return (
+            <Card key={index} className={`${stat.borderColor} ${stat.bgColor} hover:shadow-md transition-all duration-300 hover:scale-105 cursor-pointer group`}>
+              <CardContent className="p-4 text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <div className={`p-2 rounded-lg ${stat.bgColor} ${stat.borderColor} border group-hover:scale-110 transition-transform duration-200`}>
+                    <IconComponent className={`h-5 w-5 ${stat.color}`} />
+                  </div>
+                </div>
+                <div className={`text-2xl font-bold ${stat.color} mb-1`}>{stat.count}</div>
+                <div className="text-xs text-muted-foreground font-medium">{stat.label}</div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
-      {/* Tabbed Content */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm text-foreground flex items-center gap-2">
-            <Eye className="h-4 w-4" />
-            Hazard Explorer
-          </CardTitle>
+      {/* Enhanced Tabbed Content */}
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray/90 to-elec-gray/70 backdrop-blur-sm shadow-xl">
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg text-foreground flex items-center gap-2">
+              <Eye className="h-5 w-5 text-elec-yellow" />
+              Hazard Explorer
+            </CardTitle>
+            <Badge variant="outline" className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+              {filteredHazards.length} hazards available
+            </Badge>
+          </div>
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto p-1.5 bg-elec-gray/60 backdrop-blur-sm border border-elec-yellow/20 rounded-lg shadow-sm">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto p-2 bg-elec-gray/60 backdrop-blur-sm border border-elec-yellow/20 rounded-xl shadow-sm gap-1">
               <TabsTrigger 
                 value="browse" 
-                className="text-xs py-2 px-3 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+                className="text-sm py-3 px-4 rounded-lg font-medium transition-all duration-200 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-md hover:bg-elec-yellow/20"
               >
+                <Search className="h-4 w-4 mr-2" />
                 Browse All
               </TabsTrigger>
               <TabsTrigger 
                 value="favorites" 
-                className="text-xs py-2 px-3 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+                className="text-sm py-3 px-4 rounded-lg font-medium transition-all duration-200 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-md hover:bg-elec-yellow/20"
               >
-                <Star className="h-3 w-3 mr-1" />
-                Favorites ({favorites.size})
+                <Star className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">Favorites</span> ({favorites.size})
               </TabsTrigger>
               <TabsTrigger 
                 value="recent" 
-                className="text-xs py-2 px-3 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+                className="text-sm py-3 px-4 rounded-lg font-medium transition-all duration-200 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-md hover:bg-elec-yellow/20"
               >
-                <Clock className="h-3 w-3 mr-1" />
-                Recent
+                <Clock className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">Recent</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="popular" 
-                className="text-xs py-2 px-3 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+                className="text-sm py-3 px-4 rounded-lg font-medium transition-all duration-200 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-md hover:bg-elec-yellow/20"
               >
-                Popular
+                <TrendingUp className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">Popular</span>
               </TabsTrigger>
             </TabsList>
 
-        <TabsContent value="browse" className="space-y-3 mt-4">
-          {filteredHazards.length > 0 ? (
-            <div className="space-y-2">
-              {filteredHazards.map((hazard) => (
-                <MobileGestureHandler
-                  key={hazard.id}
-                  onTap={() => toggleHazardExpansion(hazard.id)}
-                  onLongPress={() => toggleFavorite(hazard.id)}
+        <TabsContent value="browse" className="space-y-4 mt-6">
+          {searchTerm && (
+            <div className="flex items-center gap-2 p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+              <Search className="h-4 w-4 text-elec-yellow" />
+              <span className="text-sm text-elec-yellow font-medium">
+                Showing {filteredHazards.length} results for "{searchTerm}"
+              </span>
+              {filteredHazards.length > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSearchTerm('')}
+                  className="ml-auto text-xs text-elec-yellow hover:bg-elec-yellow/20"
                 >
-                  <HazardCard hazard={hazard} />
-                </MobileGestureHandler>
+                  Clear search
+                </Button>
+              )}
+            </div>
+          )}
+          {filteredHazards.length > 0 ? (
+            <div className="space-y-3">
+              {filteredHazards.map((hazard, index) => (
+                <div key={hazard.id} className="animate-fade-in" style={{ animationDelay: `${index * 50}ms` }}>
+                  <MobileGestureHandler
+                    onTap={() => toggleHazardExpansion(hazard.id)}
+                    onLongPress={() => toggleFavorite(hazard.id)}
+                  >
+                    <HazardCard hazard={hazard} />
+                  </MobileGestureHandler>
+                </div>
               ))}
             </div>
           ) : (
-            <Card className="border-dashed border-elec-yellow/50 bg-elec-gray/30">
-              <CardContent className="p-6 text-center">
-                <Shield className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground mb-1">No hazards found</p>
-                <p className="text-xs text-muted-foreground">Try adjusting your search or filters</p>
+            <Card className="border-dashed border-elec-yellow/50 bg-elec-gray/30 hover:bg-elec-gray/40 transition-colors">
+              <CardContent className="p-8 text-center">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="p-4 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
+                    <Search className="h-8 w-8 text-elec-yellow" />
+                  </div>
+                  <div>
+                    <p className="text-lg font-medium text-foreground mb-2">No hazards found</p>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Try adjusting your search terms or filters to find relevant hazards
+                    </p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setSearchTerm('');
+                        setSelectedCategory('all');
+                        setSelectedRiskLevel('all');
+                      }}
+                      className="text-xs border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"
+                    >
+                      <ArrowRight className="h-3 w-3 mr-1" />
+                      Reset filters
+                    </Button>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           )}
