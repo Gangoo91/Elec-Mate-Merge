@@ -435,11 +435,11 @@ const EnhancedHazardDatabase: React.FC = () => {
               onChange={(e) => setSelectedRiskLevel(e.target.value)}
               className="text-sm px-4 py-2 rounded-lg border-2 border-border/50 bg-background hover:border-elec-yellow/50 focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
             >
-              <option value="all">📊 All Risk Levels</option>
-              <option value="Very High">🔴 Very High Risk</option>
-              <option value="High">🟠 High Risk</option>
-              <option value="Medium">🟡 Medium Risk</option>
-              <option value="Low">🟢 Low Risk</option>
+              <option value="all">All Risk Levels</option>
+              <option value="Very High">Very High Risk</option>
+              <option value="High">High Risk</option>
+              <option value="Medium">Medium Risk</option>
+              <option value="Low">Low Risk</option>
             </select>
           </div>
 
