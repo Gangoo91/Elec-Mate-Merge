@@ -487,7 +487,7 @@ const SafetyEquipmentTracker = () => {
                 <MobileButton
                   key={index}
                   variant="outline"
-                  className="h-auto p-3 justify-start"
+                  className="h-auto p-3 justify-start border-primary/30"
                   onClick={() => handleAddFromTemplate(template)}
                 >
                   <div className="flex items-center gap-3">
