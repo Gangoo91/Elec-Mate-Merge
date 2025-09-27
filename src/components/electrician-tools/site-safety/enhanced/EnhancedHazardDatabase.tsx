@@ -233,25 +233,25 @@ const EnhancedHazardDatabase: React.FC = () => {
 
     return (
       <Card className="border-elec-yellow/20 bg-card backdrop-blur-sm transition-all duration-200">
-        <CardContent className="p-4">
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <div className="flex items-start gap-3 flex-1">
-              <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 shrink-0">
-                <IconComponent className="h-4 w-4 text-elec-yellow" />
+        <CardContent className="p-3 md:p-4">
+          <div className="flex items-start justify-between gap-2 md:gap-3 mb-3">
+            <div className="flex items-start gap-2 md:gap-3 flex-1 min-w-0">
+              <div className="p-1.5 md:p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 shrink-0">
+                <IconComponent className="h-3.5 w-3.5 md:h-4 md:w-4 text-elec-yellow" />
               </div>
               
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-sm text-foreground mb-1 line-clamp-2">
+                <h3 className="font-semibold text-xs md:text-sm text-foreground mb-1 line-clamp-2">
                   {hazard.name}
                 </h3>
-                <div className="flex flex-wrap items-center gap-1.5 mb-2">
-                  <Badge variant="outline" className="text-xs px-1.5 py-0.5">
+                <div className="flex flex-wrap items-center gap-1 md:gap-1.5 mb-2">
+                  <Badge variant="outline" className="text-xs px-1 py-0.5 md:px-1.5">
                     {hazard.category}
                   </Badge>
-                  <Badge className={`${getRiskColor(hazard.riskLevel)} text-xs px-1.5 py-0.5 border`}>
+                  <Badge className={`${getRiskColor(hazard.riskLevel)} text-xs px-1 py-0.5 md:px-1.5 border`}>
                     {hazard.riskLevel}
                   </Badge>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-muted-foreground hidden sm:inline">
                     Risk: {hazard.riskRating}
                   </span>
                 </div>
@@ -259,7 +259,7 @@ const EnhancedHazardDatabase: React.FC = () => {
             </div>
 
             {showQuickActions && (
-              <div className="flex items-center gap-1 shrink-0">
+              <div className="flex items-center gap-0.5 md:gap-1 shrink-0">
                 <Button
                   variant="ghost"
                   size="sm"
