@@ -197,7 +197,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
                 {wizardData.template?.name}
               </Badge>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between text-right">
               <span className="text-sm text-muted-foreground">Difficulty:</span>
               <Badge variant="outline" className="text-xs">
                 {wizardData.template?.difficulty}
