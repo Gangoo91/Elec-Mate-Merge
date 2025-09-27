@@ -189,8 +189,8 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
               transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
               focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:ring-offset-2 focus:ring-offset-background
               ${selectedTemplate?.id === template.id
-                ? 'border-elec-yellow bg-elec-yellow/10 shadow-lg ring-2 ring-elec-yellow/20'
-                : 'border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 hover:shadow-md hover:bg-elec-yellow/5'
+                ? 'border-elec-yellow bg-elec-card shadow-lg ring-2 ring-elec-yellow/20'
+                : 'border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 hover:shadow-md'
               }
               ${template.isPopular ? 'relative overflow-hidden' : ''}
             `}
