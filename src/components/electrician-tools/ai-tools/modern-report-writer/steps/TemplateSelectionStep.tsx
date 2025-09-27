@@ -144,9 +144,9 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
   const selectedCategoryData = categories.find(cat => cat.id === selectedCategory);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <Card className="bg-elec-gray border-elec-yellow/30 p-6">
+    <>
+      {/* Header - Moved above main container */}
+      <Card className="bg-elec-gray border-elec-yellow/30 p-6 mb-6">
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
             <Sparkles className="h-6 w-6 text-elec-yellow" />
@@ -225,6 +225,8 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
           </DropdownMenu>
         </div>
       </Card>
+
+      <div className="space-y-6">
 
       {/* Template Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -375,7 +377,8 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
           </div>
         </Card>
       )}
-    </div>
+      </div>
+    </>
   );
 };
 
