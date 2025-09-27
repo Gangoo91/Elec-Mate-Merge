@@ -145,7 +145,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
               placeholder="Search templates..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-elec-dark border-elec-yellow/30 text-white"
+              className="pl-10 bg-elec-dark border border-primary/30 text-white"
             />
           </div>
 

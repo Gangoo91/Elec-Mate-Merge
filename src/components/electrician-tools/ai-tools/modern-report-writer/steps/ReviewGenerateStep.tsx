@@ -314,7 +314,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
         <div className="space-y-3">
           <Textarea
             placeholder="Add any additional notes, special requirements, or instructions for the AI report generator..."
-            className="min-h-[100px] bg-elec-dark border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[100px] bg-elec-dark border border-primary/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={wizardData.additionalNotes}
             onChange={(e) => onDataChange('additionalNotes', e.target.value)}
           />

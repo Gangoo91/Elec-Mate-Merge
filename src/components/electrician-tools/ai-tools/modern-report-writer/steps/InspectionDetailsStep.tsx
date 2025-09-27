@@ -215,7 +215,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
           <label className="text-sm font-medium text-white">Limitations</label>
           <Textarea
             placeholder="Enter any limitations encountered during inspection (e.g., areas not accessible, equipment not tested)"
-            className="min-h-[80px] bg-elec-dark border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-dark border border-primary/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={formData.limitations || ""}
             onChange={(e) => updateField('limitations', e.target.value)}
           />
@@ -325,7 +325,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
               <label className="text-sm font-medium text-white">Description</label>
               <Textarea
                 placeholder="Describe the fault or observation in detail"
-                className="bg-elec-gray border-elec-yellow/30 text-white"
+                className="bg-elec-gray border border-primary/30 text-white"
                 value={newFault.description || ""}
                 onChange={(e) => setNewFault(prev => ({ ...prev, description: e.target.value }))}
               />
@@ -335,7 +335,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
               <label className="text-sm font-medium text-white">Recommendation</label>
               <Textarea
                 placeholder="Recommended action to address this fault"
-                className="bg-elec-gray border-elec-yellow/30 text-white"
+                className="bg-elec-gray border border-primary/30 text-white"
                 value={newFault.recommendation || ""}
                 onChange={(e) => setNewFault(prev => ({ ...prev, recommendation: e.target.value }))}
               />
@@ -414,7 +414,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
           <label className="text-sm font-medium text-white">Recommended Actions</label>
           <Textarea
             placeholder="Enter any recommended actions or improvements"
-            className="min-h-[80px] bg-elec-dark border-elec-yellow/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
+            className="min-h-[80px] bg-elec-dark border border-primary/30 text-white placeholder:text-muted-foreground focus:border-elec-yellow/50"
             value={formData.recommendedActions || ""}
             onChange={(e) => updateField('recommendedActions', e.target.value)}
           />
