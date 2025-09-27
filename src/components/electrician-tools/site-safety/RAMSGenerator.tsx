@@ -867,6 +867,13 @@ const RAMSGenerator: React.FC = () => {
                     riskRating: newRisk.likelihood * newRisk.severity,
                     residualRisk: Math.max(1, newRisk.likelihood * newRisk.severity - 2) // Assume controls reduce risk by 2 points
                   });
+                  setNewRisk({
+                    hazard: '',
+                    risk: '',
+                    likelihood: 1,
+                    severity: 1,
+                    controls: ''
+                  });
                   setShowAddRisk(false);
                 }}
                 disabled={!newRisk.hazard || !newRisk.risk || !newRisk.controls}
