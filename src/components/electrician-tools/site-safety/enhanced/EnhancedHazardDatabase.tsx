@@ -236,8 +236,8 @@ const EnhancedHazardDatabase: React.FC = () => {
         <CardContent className="p-4">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div className="flex items-start gap-3 flex-1">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20 shrink-0">
-                <IconComponent className="h-4 w-4 text-primary" />
+              <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 shrink-0">
+                <IconComponent className="h-4 w-4 text-elec-yellow" />
               </div>
               
               <div className="flex-1 min-w-0">
@@ -285,9 +285,9 @@ const EnhancedHazardDatabase: React.FC = () => {
                   }}
                 >
                   {isExpanded ? (
-                    <ChevronUp className="h-3.5 w-3.5 text-muted-foreground" />
+                    <ChevronUp className="h-3.5 w-3.5 text-elec-yellow" />
                   ) : (
-                    <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+                    <ChevronDown className="h-3.5 w-3.5 text-elec-yellow" />
                   )}
                 </Button>
               </div>
@@ -395,7 +395,7 @@ const EnhancedHazardDatabase: React.FC = () => {
         <CardContent className="space-y-4">
           {/* Enhanced Search */}
           <div className="relative group">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-elec-yellow transition-colors" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-elec-yellow group-focus-within:text-elec-yellow transition-colors" />
             <Input
               placeholder="Search hazards, controls, regulations... (e.g. 'electrical shock', 'working at height')"
               value={searchTerm}
@@ -414,7 +414,7 @@ const EnhancedHazardDatabase: React.FC = () => {
           {/* Enhanced Quick Filters */}
           <div className="flex flex-wrap gap-3">
             <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-muted-foreground" />
+              <Filter className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm font-medium text-foreground">Quick Filters:</span>
             </div>
             <select
@@ -646,7 +646,7 @@ const EnhancedHazardDatabase: React.FC = () => {
           ) : (
             <Card className="border-dashed border-elec-yellow/50 bg-elec-gray/30">
               <CardContent className="p-6 text-center">
-                <Star className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                <Star className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground mb-1">No favorites yet</p>
                 <p className="text-xs text-muted-foreground">Star hazards to add them to favorites</p>
               </CardContent>
@@ -664,7 +664,7 @@ const EnhancedHazardDatabase: React.FC = () => {
           ) : (
             <Card className="border-dashed border-elec-yellow/50 bg-elec-gray/30">
               <CardContent className="p-6 text-center">
-                <Clock className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                <Clock className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground mb-1">No recent hazards</p>
                 <p className="text-xs text-muted-foreground">View hazards to see them here</p>
               </CardContent>
