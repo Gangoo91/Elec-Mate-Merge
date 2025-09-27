@@ -232,7 +232,7 @@ const EnhancedHazardDatabase: React.FC = () => {
     const isExpanded = expandedHazards.has(hazard.id);
 
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm transition-all duration-200">
+      <Card className="border-elec-yellow/20 bg-card backdrop-blur-sm transition-all duration-200">
         <CardContent className="p-4">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div className="flex items-start gap-3 flex-1">
