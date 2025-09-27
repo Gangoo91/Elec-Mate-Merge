@@ -302,7 +302,7 @@ const ReportWizard = () => {
                     key={step.id}
                     onClick={() => goToStep(step.id)}
                     disabled={!step.isAccessible}
-                    className={`group relative w-full p-4 rounded-lg border transition-all duration-200 ${
+                    className={`group relative w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 rounded-lg border transition-all duration-200 ${
                       currentStep === step.id
                         ? 'bg-elec-yellow/10 border-elec-yellow text-elec-yellow'
                         : step.isCompleted
