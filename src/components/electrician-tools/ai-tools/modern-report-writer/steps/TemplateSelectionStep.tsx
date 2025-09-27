@@ -150,29 +150,64 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
           </div>
 
           {/* Category filters */}
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             {categories.map((category) => (
-              <Button
+              <div
                 key={category.id}
-                variant={selectedCategory === category.id ? "default" : "outline"}
-                size="sm"
                 onClick={() => setSelectedCategory(category.id)}
-                className={selectedCategory === category.id 
-                  ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                  : "border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
-                }
+                className={`
+                  relative cursor-pointer group transition-all duration-200 p-4 rounded-lg border-2
+                  ${selectedCategory === category.id 
+                    ? 'bg-elec-yellow/10 border-elec-yellow ring-2 ring-elec-yellow/30 shadow-lg' 
+                    : 'bg-elec-dark/50 border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-elec-yellow/5'
+                  }
+                `}
               >
-                {category.label}
-                <Badge 
-                  className={`ml-2 text-xs font-medium px-2 py-0.5 rounded-full ${
+                {/* Selection indicator */}
+                {selectedCategory === category.id && (
+                  <div className="absolute -top-2 -right-2">
+                    <div className="bg-elec-yellow rounded-full p-1">
+                      <CheckCircle2 className="h-4 w-4 text-elec-dark" />
+                    </div>
+                  </div>
+                )}
+                
+                {/* Category icon based on type */}
+                <div className={`flex items-center justify-center mb-2 ${
+                  selectedCategory === category.id ? 'text-elec-yellow' : 'text-white'
+                }`}>
+                  {category.id === 'all' && <Sparkles className="h-5 w-5" />}
+                  {category.id === 'inspection' && <Shield className="h-5 w-5" />}
+                  {category.id === 'installation' && <Zap className="h-5 w-5" />}
+                  {category.id === 'testing' && <TestTube className="h-5 w-5" />}
+                  {category.id === 'certification' && <FileText className="h-5 w-5" />}
+                </div>
+                
+                {/* Category label */}
+                <div className="text-center">
+                  <h4 className={`font-medium text-sm leading-tight ${
+                    selectedCategory === category.id ? 'text-elec-yellow' : 'text-white'
+                  }`}>
+                    {category.label}
+                  </h4>
+                  
+                  {/* Count badge */}
+                  <div className={`mt-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                     selectedCategory === category.id 
-                      ? 'bg-elec-dark text-elec-yellow border border-elec-yellow/30' 
-                      : 'bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/30'
-                  }`}
-                >
-                  {category.count}
-                </Badge>
-              </Button>
+                      ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30' 
+                      : 'bg-white/10 text-white/80 border border-white/20'
+                  }`}>
+                    {category.count} template{category.count !== 1 ? 's' : ''}
+                  </div>
+                </div>
+                
+                {/* Hover effect */}
+                <div className={`absolute inset-0 rounded-lg transition-opacity duration-200 ${
+                  selectedCategory === category.id 
+                    ? 'opacity-0' 
+                    : 'opacity-0 group-hover:opacity-100 bg-elec-yellow/5'
+                }`} />
+              </div>
             ))}
           </div>
         </div>
