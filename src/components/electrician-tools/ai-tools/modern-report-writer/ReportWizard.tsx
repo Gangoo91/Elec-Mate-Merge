@@ -243,7 +243,7 @@ const ReportWizard = () => {
           <Card className="bg-elec-card border-elec-yellow/30 p-6 mb-8">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               {/* Progress Info */}
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-4">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium text-white">Progress:</span>
                   <Badge variant="outline" className="text-elec-yellow border-elec-yellow/50">
