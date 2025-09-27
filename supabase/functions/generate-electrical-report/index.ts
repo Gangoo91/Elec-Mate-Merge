@@ -15,7 +15,7 @@ interface ReportData {
 }
 
 const createPrompt = (template: string, formData: any, additionalNotes?: string) => {
-  const basePrompt = `You are a qualified electrical engineer with expertise in BS 7671:2018+A2:2022 regulations. Generate a comprehensive, professional electrical report based on the provided data.
+  const basePrompt = `You are a qualified electrical engineer with expertise in BS 7671:2018+A3:2024 regulations. Generate a comprehensive, professional electrical report based on the provided data.
 
 IMPORTANT REQUIREMENTS:
 - Use proper electrical terminology and BS 7671 regulation references
@@ -81,7 +81,7 @@ Format as a Periodic Inspection Report with:
 - Summary of inspection findings`;
 
     case 'client-explainer':
-      return `You are a qualified electrician with expertise in BS 7671:2018+A2:2022 (18th Edition) electrical regulations. You excel at explaining technical electrical work to clients in clear, accessible language whilst maintaining technical accuracy and UK compliance.
+      return `You are a qualified electrician with expertise in BS 7671:2018+A3:2024 (18th Edition) electrical regulations. You excel at explaining technical electrical work to clients in clear, accessible language whilst maintaining technical accuracy and UK compliance.
 
 Client Type: ${formData.clientType}
 Technical Findings to Explain:
@@ -193,7 +193,7 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: 'You are a qualified electrical engineer with extensive knowledge of BS 7671:2018+A2:2022 regulations and UK electrical standards. Generate professional, detailed electrical reports that comply with industry standards and regulations.'
+            content: 'You are a qualified electrical engineer with extensive knowledge of BS 7671:2018+A3:2024 regulations and UK electrical standards. Generate professional, detailed electrical reports that comply with industry standards and regulations.'
           },
           {
             role: 'user',
