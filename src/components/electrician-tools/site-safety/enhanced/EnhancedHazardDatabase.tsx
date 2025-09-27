@@ -232,11 +232,11 @@ const EnhancedHazardDatabase: React.FC = () => {
     const isExpanded = expandedHazards.has(hazard.id);
 
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm transition-all duration-200">
+      <Card className="border-elec-yellow/10 bg-elec-gray/80 backdrop-blur-sm transition-all duration-200">
         <CardContent className="p-4">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div className="flex items-start gap-3 flex-1">
-              <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 shrink-0">
+              <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/10 shrink-0">
                 <IconComponent className="h-4 w-4 text-elec-yellow" />
               </div>
               
@@ -367,11 +367,11 @@ const EnhancedHazardDatabase: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Enhanced Header & Search */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/90 to-elec-gray/70 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+      <Card className="border-elec-yellow/10 bg-gradient-to-br from-elec-gray/90 to-elec-gray/70 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-elec-yellow/20 border border-elec-yellow/30">
+              <div className="p-2 rounded-xl bg-elec-yellow/20 border border-elec-yellow/10">
                 <Shield className="h-6 w-6 text-elec-yellow" />
               </div>
               <div>
@@ -444,7 +444,7 @@ const EnhancedHazardDatabase: React.FC = () => {
           </div>
 
           {/* Quick Action Bar */}
-          <div className="flex items-center justify-between p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+          <div className="flex items-center justify-between p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/10">
             <div className="flex items-center gap-2 text-sm text-elec-yellow">
               <Target className="h-4 w-4" />
               <span className="font-medium">Quick Actions:</span>
@@ -527,7 +527,7 @@ const EnhancedHazardDatabase: React.FC = () => {
       </div>
 
       {/* Enhanced Tabbed Content */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/90 to-elec-gray/70 backdrop-blur-sm shadow-xl">
+      <Card className="border-elec-yellow/10 bg-gradient-to-br from-elec-gray/90 to-elec-gray/70 backdrop-blur-sm shadow-xl">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg text-foreground flex items-center gap-2">
@@ -541,7 +541,7 @@ const EnhancedHazardDatabase: React.FC = () => {
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto p-2 bg-elec-gray/60 backdrop-blur-sm border border-elec-yellow/20 rounded-xl shadow-sm gap-1">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto p-2 bg-elec-gray/60 backdrop-blur-sm border border-elec-yellow/10 rounded-xl shadow-sm gap-1">
               <TabsTrigger 
                 value="browse" 
                 className="text-sm py-3 px-4 rounded-lg font-medium transition-all duration-200 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-md hover:bg-elec-yellow/20"
@@ -574,7 +574,7 @@ const EnhancedHazardDatabase: React.FC = () => {
 
         <TabsContent value="browse" className="space-y-4 mt-6">
           {searchTerm && (
-            <div className="flex items-center gap-2 p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+            <div className="flex items-center gap-2 p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/10">
               <Search className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm text-elec-yellow font-medium">
                 Showing {filteredHazards.length} results for "{searchTerm}"
