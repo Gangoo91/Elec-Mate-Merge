@@ -263,7 +263,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         className="p-6 bg-card"
         style={{ fontSize: `${zoomLevel}%` }}
       >
-        <div className="bg-background/50 rounded-lg border border-border/20 p-6">
+        <div className="bg-white rounded-lg border border-border/20 p-6">
           <MarkdownViewer 
             content={report}
             className="[&>*]:text-left [&_h1]:text-center [&_h1]:mx-auto"
