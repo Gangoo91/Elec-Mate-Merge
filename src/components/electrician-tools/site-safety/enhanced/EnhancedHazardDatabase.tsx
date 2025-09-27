@@ -512,14 +512,16 @@ const EnhancedHazardDatabase: React.FC = () => {
           const IconComponent = stat.icon;
           return (
             <Card key={index} className={`${stat.borderColor} ${stat.bgColor} hover:shadow-md transition-all duration-300 hover:scale-105 cursor-pointer group`}>
-              <CardContent className="p-2 text-center">
-                <div className="flex items-center justify-center mb-1">
-                  <div className={`p-1.5 rounded-lg ${stat.bgColor} ${stat.borderColor} border group-hover:scale-110 transition-transform duration-200`}>
-                    <IconComponent className={`h-3 w-3 ${stat.color}`} />
+              <CardContent className="p-3">
+                <div className="flex items-center gap-3">
+                  <div className={`p-2 rounded-lg ${stat.bgColor} ${stat.borderColor} border group-hover:scale-110 transition-transform duration-200 shrink-0`}>
+                    <IconComponent className={`h-4 w-4 ${stat.color}`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className={`text-xl font-bold ${stat.color} leading-none`}>{stat.count}</div>
+                    <div className="text-xs text-muted-foreground font-medium mt-1">{stat.label}</div>
                   </div>
                 </div>
-                <div className={`text-lg font-bold ${stat.color} mb-0.5`}>{stat.count}</div>
-                <div className="text-xs text-muted-foreground font-medium leading-tight">{stat.label}</div>
               </CardContent>
             </Card>
           );
