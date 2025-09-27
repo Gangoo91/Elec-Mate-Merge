@@ -121,7 +121,7 @@ const SiteSafety = () => {
                 className="mb-4 border-elec-yellow/30 hover:border-elec-yellow/60 text-elec-yellow hover:bg-elec-yellow/10"
               >
                 <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
-                Choose a Method Statement Template
+                Back to Method Statement
               </Button>
             </div>
             {renderToolContent()}
