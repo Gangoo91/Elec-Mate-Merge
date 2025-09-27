@@ -58,7 +58,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
   const getDifficultyColor = (level: string) => {
     switch (level) {
       case 'basic': return 'bg-green-500/20 text-green-300';
-      case 'intermediate': return 'bg-yellow-500/20 text-yellow-300';
+      case 'intermediate': return 'bg-blue-500/20 text-blue-300';
       case 'advanced': return 'bg-red-500/20 text-red-300';
       default: return 'bg-gray-500/20 text-gray-300';
     }
@@ -201,7 +201,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
           >
             {/* Popular template subtle animation */}
             {template.isPopular && (
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/5 via-transparent to-yellow-400/5 animate-[shimmer_3s_ease-in-out_infinite] pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/5 via-transparent to-blue-400/5 animate-[shimmer_3s_ease-in-out_infinite] pointer-events-none"></div>
             )}
             {/* Card Header - Optimized spacing and alignment */}
             <CardHeader className="pt-0 px-0 flex-shrink-0">
@@ -210,8 +210,8 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                   <div className="flex items-center gap-2">
                     {template.isPopular && (
                       <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 flex-shrink-0" />
-                        <span className="text-xs text-yellow-400 font-medium">Popular</span>
+                        <Star className="h-4 w-4 fill-blue-400 text-blue-400 flex-shrink-0" />
+                        <span className="text-xs text-blue-400 font-medium">Popular</span>
                       </div>
                     )}
                     {selectedTemplate?.id === template.id && (
@@ -327,9 +327,9 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
 
       {/* No Results - Mobile optimized */}
       {filteredTemplates.length === 0 && (
-        <Card className="border-yellow-500/20 bg-yellow-500/5 mobile-card">
+        <Card className="border-gray-500/20 bg-gray-500/5 mobile-card">
           <CardContent className="p-6 sm:p-8 text-center">
-            <div className="text-yellow-300 mb-3 mobile-subheading">No templates found</div>
+            <div className="text-gray-300 mb-3 mobile-subheading">No templates found</div>
             <p className="text-muted-foreground mb-6 mobile-text max-w-md mx-auto">
               Try adjusting your search terms or create a method statement from scratch.
             </p>
