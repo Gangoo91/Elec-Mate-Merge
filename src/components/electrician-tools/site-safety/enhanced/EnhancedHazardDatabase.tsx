@@ -400,7 +400,7 @@ const EnhancedHazardDatabase: React.FC = () => {
               placeholder="Search hazards, controls, regulations... (e.g. 'electrical shock', 'working at height')"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-12 pr-4 h-12 bg-background/70 border-2 border-elec-yellow/30 focus:border-elec-yellow/50 focus:bg-background text-base placeholder:text-muted-foreground/70 rounded-xl transition-all duration-200"
+              className="pl-12 pr-4 h-12 bg-background/70 border border-elec-yellow focus:border-elec-yellow focus:bg-background text-base placeholder:text-muted-foreground/70 rounded-xl transition-all duration-200"
             />
             {searchTerm && (
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -420,7 +420,7 @@ const EnhancedHazardDatabase: React.FC = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="text-sm px-4 py-2 rounded-lg border-2 border-elec-yellow/30 bg-background hover:border-elec-yellow/50 focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
+              className="text-sm px-4 py-2 rounded-lg border border-elec-yellow bg-background hover:border-elec-yellow focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
             >
               <option value="all">All Categories</option>
               <option value="electrical">Electrical</option>
@@ -433,7 +433,7 @@ const EnhancedHazardDatabase: React.FC = () => {
             <select
               value={selectedRiskLevel}
               onChange={(e) => setSelectedRiskLevel(e.target.value)}
-              className="text-sm px-4 py-2 rounded-lg border-2 border-border/50 bg-background hover:border-elec-yellow/50 focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
+              className="text-sm px-4 py-2 rounded-lg border border-elec-yellow bg-background hover:border-elec-yellow focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
             >
               <option value="all">All Risk Levels</option>
               <option value="Very High">Very High Risk</option>
