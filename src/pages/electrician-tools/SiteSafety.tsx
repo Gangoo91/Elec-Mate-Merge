@@ -121,7 +121,7 @@ const SiteSafety = () => {
                 className="mb-4 border-elec-yellow/30 hover:border-elec-yellow/60 text-elec-yellow hover:bg-elec-yellow/10"
               >
                 <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
-                Back to Method Statement
+                Back to {[...primaryTools, ...safetyTools, ...managementTools].find(tool => tool.id === activeView)?.title || 'Site Safety'}
               </Button>
             </div>
             {renderToolContent()}
