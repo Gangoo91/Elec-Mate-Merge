@@ -367,7 +367,7 @@ const EnhancedHazardDatabase: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Enhanced Header & Search */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray/90 to-elec-gray/70 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/90 to-elec-gray/70 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -527,7 +527,7 @@ const EnhancedHazardDatabase: React.FC = () => {
       </div>
 
       {/* Enhanced Tabbed Content */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray/90 to-elec-gray/70 backdrop-blur-sm shadow-xl">
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/90 to-elec-gray/70 backdrop-blur-sm shadow-xl">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg text-foreground flex items-center gap-2">
