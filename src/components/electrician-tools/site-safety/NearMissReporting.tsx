@@ -1,16 +1,17 @@
-
 import { useState, useEffect } from "react";
-import { hazardCategories } from "@/data/hazards";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AlertTriangle, Plus, Eye, FileText, Camera, Upload, Loader2, Calendar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { AlertTriangle, Plus, Eye, Search, Filter, Clock, CheckCircle, ArrowLeft, ArrowRight, Camera, Upload, Loader2, Calendar, TrendingUp, BarChart3, AlertCircle, Zap, HardHat, Shield, X } from "lucide-react";
+import { MobileWizardStep } from "@/components/ui/mobile-wizard-step";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { hazardCategories } from "@/data/hazards";
 
 interface NearMissReport {
   id: string;
@@ -33,12 +34,73 @@ interface NearMissReport {
   created_at: string;
 }
 
+interface QuickTemplate {
+  id: string;
+  name: string;
+  icon: React.ElementType;
+  category: string;
+  severity: string;
+  description: string;
+  consequences: string;
+  actions: string;
+}
+
+const quickTemplates: QuickTemplate[] = [
+  {
+    id: "electrical-shock",
+    name: "Electrical Shock Risk",
+    icon: Zap,
+    category: "Electrical Hazards",
+    severity: "High",
+    description: "Potential exposure to live electrical components",
+    consequences: "Electrical shock, burns, or electrocution",
+    actions: "Isolated circuit, installed protective barriers"
+  },
+  {
+    id: "fall-hazard",
+    name: "Fall Hazard",
+    icon: AlertTriangle,
+    category: "Working at Height",
+    severity: "High", 
+    description: "Unprotected edge or unstable working surface",
+    consequences: "Falls resulting in serious injury or fatality",
+    actions: "Installed edge protection, secured work platform"
+  },
+  {
+    id: "equipment-malfunction",
+    name: "Equipment Malfunction",
+    icon: HardHat,
+    category: "Equipment & Tools",
+    severity: "Medium",
+    description: "Faulty or damaged equipment identified",
+    consequences: "Equipment failure leading to injury or damage",
+    actions: "Removed equipment from service, arranged maintenance"
+  },
+  {
+    id: "unsafe-practice",
+    name: "Unsafe Work Practice",
+    icon: Shield,
+    category: "Unsafe Acts",
+    severity: "Medium",
+    description: "Worker observed not following safety procedures",
+    consequences: "Increased risk of injury or incident",
+    actions: "Provided immediate coaching, arranged additional training"
+  }
+];
+
 const NearMissReporting = () => {
   const [reports, setReports] = useState<NearMissReport[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [filterSeverity, setFilterSeverity] = useState("all");
   const [uploading, setUploading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
 
-  const [newReport, setNewReport] = useState<Partial<NearMissReport>>({
+  const [formData, setFormData] = useState<Partial<NearMissReport>>({
     incident_date: new Date().toISOString().split('T')[0],
     incident_time: new Date().toTimeString().slice(0, 5),
     location: "",
@@ -52,6 +114,10 @@ const NearMissReporting = () => {
     follow_up_required: false,
     photos_attached: []
   });
+
+  const categories = hazardCategories.map(cat => cat.name);
+  const severityLevels = ["Low", "Medium", "High", "Critical"];
+  const statusOptions = ["Reported", "Under Review", "Action Taken", "Closed"];
 
   useEffect(() => {
     fetchReports();
@@ -81,21 +147,48 @@ const NearMissReporting = () => {
     }
   };
 
-  const [showForm, setShowForm] = useState(false);
-  const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
-  const [showFollowUpModal, setShowFollowUpModal] = useState(false);
-  const [selectedReport, setSelectedReport] = useState<NearMissReport | null>(null);
-  const [followUpData, setFollowUpData] = useState({
-    assigned_to: "",
-    due_date: "",
-    notes: ""
-  });
+  const validateStep = (step: number): boolean => {
+    const newErrors: Record<string, string> = {};
 
-  // Use standardized categories from hazard database
-  const categories = hazardCategories.map(cat => cat.name);
+    switch (step) {
+      case 0: // Basic Details
+        if (!formData.location?.trim()) newErrors.location = "Location is required";
+        if (!formData.incident_date) newErrors.incident_date = "Date is required";
+        if (!formData.incident_time) newErrors.incident_time = "Time is required";
+        break;
+      case 1: // Incident Description
+        if (!formData.description?.trim()) newErrors.description = "Description is required";
+        if (!formData.category) newErrors.category = "Category is required";
+        if (!formData.severity) newErrors.severity = "Severity is required";
+        break;
+      // Steps 2 and 3 are optional
+    }
 
-  const severityLevels = ["Low", "Medium", "High", "Critical"];
-  const statusOptions = ["Reported", "Under Review", "Action Taken", "Closed"];
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNext = () => {
+    if (validateStep(currentStep)) {
+      setCurrentStep(prev => Math.min(prev + 1, 3));
+    }
+  };
+
+  const handlePrevious = () => {
+    setCurrentStep(prev => Math.max(prev - 1, 0));
+  };
+
+  const applyQuickTemplate = (template: QuickTemplate) => {
+    setFormData(prev => ({
+      ...prev,
+      category: template.category,
+      severity: template.severity,
+      description: template.description,
+      potential_consequences: template.consequences,
+      immediate_actions: template.actions
+    }));
+    setCurrentStep(1);
+  };
 
   const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
@@ -115,10 +208,10 @@ const NearMissReporting = () => {
   };
 
   const submitReport = async () => {
-    if (!newReport.location || !newReport.description || !newReport.category) {
+    if (!validateStep(0) || !validateStep(1)) {
       toast({
         title: "Error",
-        description: "Please fill in all required fields",
+        description: "Please complete all required fields",
         variant: "destructive"
       });
       return;
@@ -153,17 +246,17 @@ const NearMissReporting = () => {
         .from('near_miss_reports')
         .insert({
           user_id: user.id,
-          incident_date: newReport.incident_date || new Date().toISOString().split('T')[0],
-          incident_time: newReport.incident_time || new Date().toTimeString().slice(0, 5),
-          location: newReport.location,
-          reporter_name: newReport.reporter_name || "Current User",
-          category: newReport.category,
-          severity: newReport.severity || "Medium",
-          description: newReport.description,
-          potential_consequences: newReport.potential_consequences || "",
-          immediate_actions: newReport.immediate_actions || "",
-          preventive_measures: newReport.preventive_measures || "",
-          follow_up_required: newReport.follow_up_required || false,
+          incident_date: formData.incident_date || new Date().toISOString().split('T')[0],
+          incident_time: formData.incident_time || new Date().toTimeString().slice(0, 5),
+          location: formData.location,
+          reporter_name: formData.reporter_name || "Current User",
+          category: formData.category,
+          severity: formData.severity || "Medium",
+          description: formData.description,
+          potential_consequences: formData.potential_consequences || "",
+          immediate_actions: formData.immediate_actions || "",
+          preventive_measures: formData.preventive_measures || "",
+          follow_up_required: formData.follow_up_required || false,
           photos_attached: photoUrls
         })
         .select()
@@ -172,22 +265,7 @@ const NearMissReporting = () => {
       if (error) throw error;
 
       setReports(prev => [data, ...prev]);
-      setNewReport({
-        incident_date: new Date().toISOString().split('T')[0],
-        incident_time: new Date().toTimeString().slice(0, 5),
-        location: "",
-        reporter_name: "",
-        category: "",
-        severity: "",
-        description: "",
-        potential_consequences: "",
-        immediate_actions: "",
-        preventive_measures: "",
-        follow_up_required: false,
-        photos_attached: []
-      });
-      setSelectedPhotos([]);
-      setShowForm(false);
+      resetForm();
 
       toast({
         title: "Success",
@@ -206,31 +284,32 @@ const NearMissReporting = () => {
     }
   };
 
-  const updateReportStatus = async (reportId: string, newStatus: string) => {
-    try {
-      const { error } = await supabase
-        .from('near_miss_reports')
-        .update({ status: newStatus })
-        .eq('id', reportId);
+  const resetForm = () => {
+    setFormData({
+      incident_date: new Date().toISOString().split('T')[0],
+      incident_time: new Date().toTimeString().slice(0, 5),
+      location: "",
+      reporter_name: "",
+      category: "",
+      severity: "",
+      description: "",
+      potential_consequences: "",
+      immediate_actions: "",
+      preventive_measures: "",
+      follow_up_required: false,
+      photos_attached: []
+    });
+    setSelectedPhotos([]);
+    setCurrentStep(0);
+    setShowForm(false);
+    setErrors({});
+  };
 
-      if (error) throw error;
-
-      setReports(prev => prev.map(r => 
-        r.id === reportId ? { ...r, status: newStatus } : r
-      ));
-
-      toast({
-        title: "Success",
-        description: "Report status updated",
-        variant: "success"
-      });
-    } catch (error) {
-      console.error('Error updating status:', error);
-      toast({
-        title: "Error",
-        description: "Failed to update status",
-        variant: "destructive"
-      });
+  const updateFieldValue = (field: string, value: any) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
     }
   };
 
@@ -240,7 +319,7 @@ const NearMissReporting = () => {
       case "Medium": return "bg-yellow-500";
       case "High": return "bg-orange-500";
       case "Critical": return "bg-red-500";
-      default: return "bg-gray-500";
+      default: return "bg-muted";
     }
   };
 
@@ -250,201 +329,132 @@ const NearMissReporting = () => {
       case "Under Review": return "bg-yellow-500";
       case "Action Taken": return "bg-purple-500";
       case "Closed": return "bg-green-500";
-      default: return "bg-gray-500";
+      default: return "bg-muted";
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-8">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-        <span className="ml-2 text-muted-foreground">Loading reports...</span>
-      </div>
-    );
-  }
+  const filteredReports = reports.filter(report => {
+    const matchesSearch = report.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         report.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         report.category.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = filterStatus === "all" || report.status === filterStatus;
+    const matchesSeverity = filterSeverity === "all" || report.severity === filterSeverity;
+    
+    return matchesSearch && matchesStatus && matchesSeverity;
+  });
 
-  return (
-    <div className="space-y-6">
-      {/* Statistics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="border-blue-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-400">{reports.length}</div>
-            <div className="text-sm text-muted-foreground">Total Reports</div>
-          </CardContent>
-        </Card>
-        <Card className="border-red-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-red-400">
-              {reports.filter(r => r.severity === "High" || r.severity === "Critical").length}
-            </div>
-            <div className="text-sm text-muted-foreground">High Risk</div>
-          </CardContent>
-        </Card>
-        <Card className="border-yellow-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-400">
-              {reports.filter(r => r.status === "Under Review").length}
-            </div>
-            <div className="text-sm text-muted-foreground">Under Review</div>
-          </CardContent>
-        </Card>
-        <Card className="border-green-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-400">
-              {reports.filter(r => r.follow_up_required).length}
-            </div>
-            <div className="text-sm text-muted-foreground">Follow-up Required</div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Header and Report Button */}
-      <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/30 transition-all duration-300 animate-fade-in">
-        <CardHeader className="pb-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="space-y-2">
-              <CardTitle className="text-elec-yellow flex items-center gap-3 text-xl">
-                <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                  <AlertTriangle className="h-5 w-5" />
-                </div>
-                Near Miss Reporting
-              </CardTitle>
-              <p className="text-muted-foreground text-sm max-w-md">
-                Report potential hazards to improve workplace safety. Help prevent future incidents by documenting near misses.
-              </p>
-            </div>
-            <Button 
-              onClick={() => setShowForm(!showForm)} 
-              variant="outline"
-              className="bg-elec-yellow/10 border-elec-yellow/30 hover:bg-elec-yellow/20 transition-all duration-200 shrink-0"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              {showForm ? 'Cancel Report' : 'Report Near Miss'}
-            </Button>
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 0:
+        return (
+          <div className="mobile-input-spacing">
+            <MobileInput
+              label="Date *"
+              type="date"
+              value={formData.incident_date || ""}
+              onChange={(e) => updateFieldValue("incident_date", e.target.value)}
+              error={errors.incident_date}
+            />
+            <MobileInput
+              label="Time *"
+              type="time"
+              value={formData.incident_time || ""}
+              onChange={(e) => updateFieldValue("incident_time", e.target.value)}
+              error={errors.incident_time}
+            />
+            <MobileInput
+              label="Location *"
+              value={formData.location || ""}
+              onChange={(e) => updateFieldValue("location", e.target.value)}
+              placeholder="Where did this occur?"
+              error={errors.location}
+              hint="Be specific about the exact location"
+            />
+            <MobileInput
+              label="Reporter Name"
+              value={formData.reporter_name || ""}
+              onChange={(e) => updateFieldValue("reporter_name", e.target.value)}
+              placeholder="Your name (optional)"
+              hint="Leave blank to use your profile name"
+            />
           </div>
-        </CardHeader>
-        {showForm && (
-          <CardContent className="space-y-6 border-t border-elec-yellow/20 pt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="date">Date</Label>
-                <Input
-                  id="date"
-                  type="date"
-                  value={newReport.incident_date}
-                  onChange={(e) => setNewReport(prev => ({ ...prev, incident_date: e.target.value }))}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="time">Time</Label>
-                <Input
-                  id="time"
-                  type="time"
-                  value={newReport.incident_time}
-                  onChange={(e) => setNewReport(prev => ({ ...prev, incident_time: e.target.value }))}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="location">Location *</Label>
-                <Input
-                  id="location"
-                  value={newReport.location}
-                  onChange={(e) => setNewReport(prev => ({ ...prev, location: e.target.value }))}
-                  placeholder="Where did this occur?"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="reporter">Reporter</Label>
-                <Input
-                  id="reporter"
-                  value={newReport.reporter_name}
-                  onChange={(e) => setNewReport(prev => ({ ...prev, reporter_name: e.target.value }))}
-                  placeholder="Your name"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="category">Category *</Label>
-                <Select 
-                  value={newReport.category} 
-                  onValueChange={(value) => setNewReport(prev => ({ ...prev, category: value }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map(category => (
-                      <SelectItem key={category} value={category}>{category}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="severity">Severity Level</Label>
-                <Select 
-                  value={newReport.severity} 
-                  onValueChange={(value) => setNewReport(prev => ({ ...prev, severity: value }))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select severity" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {severityLevels.map(level => (
-                      <SelectItem key={level} value={level}>{level}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+        );
 
-            <div className="space-y-2">
-              <Label htmlFor="description">Description of Near Miss *</Label>
-              <Textarea
-                id="description"
-                value={newReport.description}
-                onChange={(e) => setNewReport(prev => ({ ...prev, description: e.target.value }))}
-                placeholder="Describe what happened or could have happened"
-                rows={3}
-              />
-            </div>
+      case 1:
+        return (
+          <div className="mobile-input-spacing">
+            <MobileSelectWrapper
+              label="Category *"
+              value={formData.category || ""}
+              onValueChange={(value) => updateFieldValue("category", value)}
+              placeholder="Select hazard category"
+              options={categories.map(cat => ({ value: cat, label: cat }))}
+              error={errors.category}
+            />
+            <MobileSelectWrapper
+              label="Severity Level *"
+              value={formData.severity || ""}
+              onValueChange={(value) => updateFieldValue("severity", value)}
+              placeholder="How severe was this near miss?"
+              options={severityLevels.map(level => ({ 
+                value: level, 
+                label: level,
+                description: level === "Low" ? "Minor risk" : 
+                           level === "Medium" ? "Moderate risk" :
+                           level === "High" ? "Significant risk" : "Life threatening"
+              }))}
+              error={errors.severity}
+            />
+            <MobileInputWrapper
+              label="Description of Near Miss *"
+              value={formData.description || ""}
+              onChange={(value) => updateFieldValue("description", value)}
+              placeholder="Describe what happened or could have happened..."
+              type="textarea"
+              error={errors.description}
+              hint="Be detailed - include what you saw, heard, or experienced"
+            />
+          </div>
+        );
 
-            <div className="space-y-2">
-              <Label htmlFor="consequences">Potential Consequences</Label>
-              <Textarea
-                id="consequences"
-                value={newReport.potential_consequences}
-                onChange={(e) => setNewReport(prev => ({ ...prev, potential_consequences: e.target.value }))}
-                placeholder="What could have resulted from this near miss?"
-                rows={2}
-              />
-            </div>
+      case 2:
+        return (
+          <div className="mobile-input-spacing">
+            <MobileInputWrapper
+              label="Potential Consequences"
+              value={formData.potential_consequences || ""}
+              onChange={(value) => updateFieldValue("potential_consequences", value)}
+              placeholder="What could have resulted from this near miss?"
+              type="textarea"
+              hint="Consider injuries, damage, or other impacts that could have occurred"
+            />
+            <MobileInputWrapper
+              label="Immediate Actions Taken"
+              value={formData.immediate_actions || ""}
+              onChange={(value) => updateFieldValue("immediate_actions", value)}
+              placeholder="What immediate steps were taken?"
+              type="textarea"
+              hint="Describe any actions taken to address the immediate hazard"
+            />
+          </div>
+        );
 
-            <div className="space-y-2">
-              <Label htmlFor="immediateActions">Immediate Actions Taken</Label>
-              <Textarea
-                id="immediateActions"
-                value={newReport.immediate_actions}
-                onChange={(e) => setNewReport(prev => ({ ...prev, immediate_actions: e.target.value }))}
-                placeholder="What immediate steps were taken?"
-                rows={2}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="preventive">Suggested Preventive Measures</Label>
-              <Textarea
-                id="preventive"
-                value={newReport.preventive_measures}
-                onChange={(e) => setNewReport(prev => ({ ...prev, preventive_measures: e.target.value }))}
-                placeholder="How can this be prevented in future?"
-                rows={2}
-              />
-            </div>
-
+      case 3:
+        return (
+          <div className="mobile-input-spacing">
+            <MobileInputWrapper
+              label="Suggested Preventive Measures"
+              value={formData.preventive_measures || ""}
+              onChange={(value) => updateFieldValue("preventive_measures", value)}
+              placeholder="How can this be prevented in future?"
+              type="textarea"
+              hint="Your recommendations for preventing similar incidents"
+            />
+            
             {/* Photo Upload Section */}
             <div className="space-y-4">
-              <Label>Attach Photos (Optional - Max 5)</Label>
-              <div className="border-2 border-dashed border-muted-foreground/30 rounded-lg p-4">
+              <label className="text-sm font-medium">Attach Photos (Optional - Max 5)</label>
+              <div className="border-2 border-dashed border-border/40 rounded-lg p-6 text-center bg-card">
                 <input
                   type="file"
                   accept="image/*"
@@ -454,258 +464,347 @@ const NearMissReporting = () => {
                   id="photo-upload"
                   disabled={uploading}
                 />
-                <Label htmlFor="photo-upload" className="cursor-pointer flex flex-col items-center gap-2">
-                  <Camera className="h-8 w-8 text-muted-foreground" />
-                  <span className="text-sm">Click to add photos</span>
-                  <span className="text-xs text-muted-foreground">JPG, PNG up to 5MB each</span>
-                </Label>
+                <label htmlFor="photo-upload" className="cursor-pointer flex flex-col items-center gap-3">
+                  <div className="p-3 rounded-full bg-primary/10">
+                    <Camera className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <span className="text-sm font-medium">Click to add photos</span>
+                    <p className="text-xs text-muted-foreground mt-1">JPG, PNG up to 5MB each</p>
+                  </div>
+                </label>
               </div>
               
               {selectedPhotos.length > 0 && (
-                <div className="space-y-2">
-                  <Label>Selected Photos ({selectedPhotos.length}/5)</Label>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                <div className="space-y-3">
+                  <label className="text-sm font-medium">Selected Photos ({selectedPhotos.length}/5)</label>
+                  <div className="space-y-2">
                     {selectedPhotos.map((photo, index) => (
-                      <div key={index} className="relative p-2 bg-muted rounded border">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs truncate flex-1">{photo.name}</span>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => removePhoto(index)}
-                            className="ml-2 h-6 w-6 p-0"
-                          >
-                            ×
-                          </Button>
+                      <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <Camera className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm truncate flex-1">{photo.name}</span>
                         </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removePhoto(index)}
+                          className="h-6 w-6 p-0 hover:bg-destructive/20 hover:text-destructive"
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
             </div>
+          </div>
+        );
 
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="followUp"
-                checked={newReport.follow_up_required}
-                onChange={(e) => setNewReport(prev => ({ ...prev, follow_up_required: e.target.checked }))}
-              />
-              <Label htmlFor="followUp">Follow-up action required</Label>
-            </div>
+      default:
+        return null;
+    }
+  };
 
-            <div className="flex gap-4">
-              <Button onClick={submitReport} className="flex-1" disabled={uploading}>
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <span className="ml-2 text-muted-foreground">Loading reports...</span>
+      </div>
+    );
+  }
+
+  if (showForm) {
+    const stepTitles = [
+      "Basic Details",
+      "Incident Description", 
+      "Actions & Consequences",
+      "Prevention & Photos"
+    ];
+
+    const stepDescriptions = [
+      "When and where did this near miss occur?",
+      "What happened and how serious was it?",
+      "What actions were taken and what could have happened?",
+      "How can we prevent this and add any photos"
+    ];
+
+    return (
+      <div className="space-y-6">
+        {/* Quick Templates */}
+        {currentStep === 0 && (
+          <Card className="mobile-card border-primary/20">
+            <CardHeader className="pb-4">
+              <CardTitle className="mobile-heading text-primary">Quick Report Templates</CardTitle>
+              <p className="mobile-text text-muted-foreground">
+                Start with a common scenario to save time
+              </p>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {quickTemplates.map((template) => {
+                  const IconComponent = template.icon;
+                  return (
+                    <Button
+                      key={template.id}
+                      variant="outline"
+                      className="h-auto p-4 text-left hover:border-primary/40 hover:bg-primary/5"
+                      onClick={() => applyQuickTemplate(template)}
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <div className="p-2 rounded-lg bg-primary/10">
+                          <IconComponent className="h-4 w-4 text-primary" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium text-sm">{template.name}</div>
+                          <div className="text-xs text-muted-foreground truncate">
+                            {template.category} • {template.severity}
+                          </div>
+                        </div>
+                      </div>
+                    </Button>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Wizard Steps */}
+        <MobileWizardStep
+          title={stepTitles[currentStep]}
+          description={stepDescriptions[currentStep]}
+          currentStep={currentStep}
+          totalSteps={4}
+          onNext={currentStep < 3 ? handleNext : undefined}
+          onPrevious={currentStep > 0 ? handlePrevious : undefined}
+          nextLabel={currentStep === 3 ? undefined : "Continue"}
+          previousLabel="Back"
+          nextDisabled={uploading}
+        >
+          {renderStepContent()}
+          
+          {/* Submit button on final step */}
+          {currentStep === 3 && (
+            <div className="pt-6 border-t border-border/40 space-y-3">
+              <Button
+                onClick={submitReport}
+                disabled={uploading}
+                className="mobile-button-primary w-full"
+              >
                 {uploading ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Submitting...
+                    Submitting Report...
                   </>
                 ) : (
-                  "Submit Report"
+                  <>
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    Submit Near Miss Report
+                  </>
                 )}
               </Button>
-              <Button variant="outline" onClick={() => setShowForm(false)} disabled={uploading}>
-                Cancel
+              <Button
+                variant="outline"
+                onClick={resetForm}
+                className="w-full"
+                disabled={uploading}
+              >
+                Cancel & Start Over
               </Button>
             </div>
-          </CardContent>
-        )}
-      </Card>
-
-      {/* Reports List */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-white">Near Miss Reports ({reports.length})</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {reports.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              No near miss reports yet. Use the "Report Near Miss" button to submit your first report.
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {reports.map((report) => (
-                <Card key={report.id} className="border-elec-yellow/30">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex gap-2">
-                        <Badge className={getSeverityColor(report.severity)}>
-                          {report.severity}
-                        </Badge>
-                        <Badge className={getStatusColor(report.status)}>
-                          {report.status}
-                        </Badge>
-                        <Badge variant="outline">{report.category}</Badge>
-                        {report.follow_up_required && (
-                          <Badge variant="outline" className="text-amber-400">
-                            Follow-up Required
-                          </Badge>
-                        )}
-                        {report.photos_attached && report.photos_attached.length > 0 && (
-                          <Badge variant="outline" className="text-blue-400">
-                            {report.photos_attached.length} Photos
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="flex gap-1">
-                        <Button size="sm" variant="outline">
-                          <Eye className="h-3 w-3" />
-                        </Button>
-                        <Button size="sm" variant="outline">
-                          <FileText className="h-3 w-3" />
-                        </Button>
-                        {report.follow_up_required && (
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            onClick={() => {
-                              setSelectedReport(report);
-                              setShowFollowUpModal(true);
-                            }}
-                          >
-                            <Calendar className="h-3 w-3" />
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <div className="text-xs text-muted-foreground">Date & Time</div>
-                        <div className="text-sm">{report.incident_date} at {report.incident_time}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground">Location</div>
-                        <div className="text-sm">{report.location}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground">Reported By</div>
-                        <div className="text-sm">{report.reporter_name}</div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <div>
-                        <div className="text-xs text-muted-foreground font-medium">Description</div>
-                        <div className="text-sm">{report.description}</div>
-                      </div>
-                      
-                      {report.potential_consequences && (
-                        <div>
-                          <div className="text-xs text-muted-foreground font-medium">Potential Consequences</div>
-                          <div className="text-sm text-orange-300">{report.potential_consequences}</div>
-                        </div>
-                      )}
-                      
-                      {report.immediate_actions && (
-                        <div>
-                          <div className="text-xs text-muted-foreground font-medium">Immediate Actions</div>
-                          <div className="text-sm text-green-300">{report.immediate_actions}</div>
-                        </div>
-                      )}
-                      
-                      {report.preventive_measures && (
-                        <div>
-                          <div className="text-xs text-muted-foreground font-medium">Preventive Measures</div>
-                          <div className="text-sm text-blue-300">{report.preventive_measures}</div>
-                        </div>
-                      )}
-
-                      {report.photos_attached && report.photos_attached.length > 0 && (
-                        <div>
-                          <div className="text-xs text-muted-foreground font-medium">Attached Photos</div>
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-                            {report.photos_attached.map((photoUrl, index) => (
-                              <img
-                                key={index}
-                                src={photoUrl}
-                                alt={`Evidence ${index + 1}`}
-                                className="w-full h-20 object-cover rounded border"
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
           )}
+        </MobileWizardStep>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Statistics Dashboard */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card className="mobile-card border-primary/20">
+          <CardContent className="p-4 text-center">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <BarChart3 className="h-5 w-5 text-primary" />
+              <div className="text-2xl font-bold text-primary">{reports.length}</div>
+            </div>
+            <div className="mobile-small-text text-muted-foreground">Total Reports</div>
+          </CardContent>
+        </Card>
+        
+        <Card className="mobile-card border-orange-500/20">
+          <CardContent className="p-4 text-center">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <AlertCircle className="h-5 w-5 text-orange-400" />
+              <div className="text-2xl font-bold text-orange-400">
+                {reports.filter(r => r.severity === "High" || r.severity === "Critical").length}
+              </div>
+            </div>
+            <div className="mobile-small-text text-muted-foreground">High Risk</div>
+          </CardContent>
+        </Card>
+        
+        <Card className="mobile-card border-yellow-500/20">
+          <CardContent className="p-4 text-center">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Clock className="h-5 w-5 text-yellow-400" />
+              <div className="text-2xl font-bold text-yellow-400">
+                {reports.filter(r => r.status === "Under Review").length}
+              </div>
+            </div>
+            <div className="mobile-small-text text-muted-foreground">Under Review</div>
+          </CardContent>
+        </Card>
+        
+        <Card className="mobile-card border-green-500/20">
+          <CardContent className="p-4 text-center">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <TrendingUp className="h-5 w-5 text-green-400" />
+              <div className="text-2xl font-bold text-green-400">
+                {reports.filter(r => r.status === "Closed").length}
+              </div>
+            </div>
+            <div className="mobile-small-text text-muted-foreground">Resolved</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Header and Controls */}
+      <Card className="mobile-card border-primary/20">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="space-y-2">
+              <CardTitle className="mobile-heading text-primary flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                  <AlertTriangle className="h-5 w-5" />
+                </div>
+                Near Miss Reporting
+              </CardTitle>
+              <p className="mobile-text text-muted-foreground">
+                Report potential hazards to improve workplace safety. Help prevent future incidents.
+              </p>
+            </div>
+            <Button 
+              onClick={() => setShowForm(true)} 
+              className="mobile-button-primary shrink-0"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Report Near Miss
+            </Button>
+          </div>
+        </CardHeader>
+
+        {/* Search and Filters */}
+        <CardContent className="border-t border-border/40 pt-4">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search reports..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Select value={filterStatus} onValueChange={setFilterStatus}>
+                <SelectTrigger className="w-32">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  {statusOptions.map(status => (
+                    <SelectItem key={status} value={status}>{status}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={filterSeverity} onValueChange={setFilterSeverity}>
+                <SelectTrigger className="w-32">
+                  <SelectValue placeholder="Severity" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Severity</SelectItem>
+                  {severityLevels.map(level => (
+                    <SelectItem key={level} value={level}>{level}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
-      {/* Follow-up Modal */}
-      {showFollowUpModal && selectedReport && (
-        <Card className="border-purple-500/20 bg-purple-500/10">
-          <CardHeader>
-            <CardTitle className="text-purple-300">Follow-up Actions</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="font-medium">{selectedReport.description}</div>
-            <div className="text-sm text-muted-foreground">
-              Reported: {selectedReport.incident_date} at {selectedReport.incident_time}
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="assigned-to">Assign To</Label>
-                <Input
-                  id="assigned-to"
-                  value={followUpData.assigned_to}
-                  onChange={(e) => setFollowUpData(prev => ({ ...prev, assigned_to: e.target.value }))}
-                  placeholder="Person responsible"
-                />
-              </div>
-              <div>
-                <Label htmlFor="due-date">Due Date</Label>
-                <Input
-                  id="due-date"
-                  type="date"
-                  value={followUpData.due_date}
-                  onChange={(e) => setFollowUpData(prev => ({ ...prev, due_date: e.target.value }))}
-                />
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="follow-up-notes">Follow-up Notes</Label>
-              <Textarea
-                id="follow-up-notes"
-                value={followUpData.notes}
-                onChange={(e) => setFollowUpData(prev => ({ ...prev, notes: e.target.value }))}
-                placeholder="Additional notes for follow-up actions"
-                rows={3}
-              />
-            </div>
-
-            <div className="flex gap-4">
-              <Button 
-                onClick={() => {
-                  // Here you would update the report with follow-up data
-                  setShowFollowUpModal(false);
-                  toast({
-                    title: "Success",
-                    description: "Follow-up actions scheduled",
-                    variant: "success"
-                  });
-                }}
-                className="flex-1"
-              >
-                Schedule Follow-up
+      {/* Reports List */}
+      <div className="space-y-4">
+        {filteredReports.length === 0 ? (
+          <Card className="mobile-card text-center py-8">
+            <CardContent>
+              <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="mobile-subheading mb-2">No Near Miss Reports</h3>
+              <p className="mobile-text text-muted-foreground mb-4">
+                {searchTerm || filterStatus !== "all" || filterSeverity !== "all" 
+                  ? "No reports match your search criteria" 
+                  : "Start by reporting your first near miss to improve workplace safety"}
+              </p>
+              <Button onClick={() => setShowForm(true)} className="mobile-button-primary">
+                <Plus className="h-4 w-4 mr-2" />
+                Create First Report
               </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => setShowFollowUpModal(false)}
-              >
-                Cancel
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+            </CardContent>
+          </Card>
+        ) : (
+          filteredReports.map((report) => (
+            <Card key={report.id} className="mobile-card border-border/40 hover:border-primary/30 transition-colors">
+              <CardContent className="p-4">
+                <div className="space-y-4">
+                  {/* Header */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="outline" className={`${getSeverityColor(report.severity)} text-white border-0`}>
+                          {report.severity}
+                        </Badge>
+                        <Badge variant="outline" className={`${getStatusColor(report.status)} text-white border-0`}>
+                          {report.status}
+                        </Badge>
+                      </div>
+                      <h3 className="font-medium text-sm truncate">{report.category}</h3>
+                      <p className="text-xs text-muted-foreground">{report.location} • {report.incident_date}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {report.photos_attached?.length > 0 && (
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <Camera className="h-3 w-3" />
+                          {report.photos_attached.length}
+                        </div>
+                      )}
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {report.description}
+                  </p>
+
+                  {/* Footer */}
+                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border/40">
+                    <span>Reported by {report.reporter_name}</span>
+                    <span>{new Date(report.created_at).toLocaleDateString()}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
     </div>
   );
 };
