@@ -113,7 +113,7 @@ const SiteSafety = () => {
     return (
       <RAMSProvider>
         <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-dark to-elec-gray animate-fade-in">
-          <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="max-w-7xl mx-auto pl-4 pr-4 py-6">
             <div className="mb-6">
               <Button 
                 onClick={() => setActiveView(null)}
