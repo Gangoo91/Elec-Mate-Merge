@@ -187,10 +187,10 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             className={`
               cursor-pointer mobile-interactive mobile-card-compact border-2 h-full flex flex-col group
               transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
-              focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:ring-offset-2 focus:ring-offset-background
+              focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-background
               ${selectedTemplate?.id === template.id
-                ? 'border-elec-yellow bg-elec-card shadow-lg ring-2 ring-elec-yellow/20'
-                : 'border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 hover:shadow-md'
+                ? 'border-blue-500 bg-blue-500/10 shadow-lg ring-2 ring-blue-500/20'
+                : 'border-gray-600 bg-elec-card hover:border-gray-500 hover:shadow-md'
               }
               ${template.isPopular ? 'relative overflow-hidden' : ''}
             `}
@@ -229,7 +229,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                     )}
                   </div>
                 </div>
-                <CardTitle className="text-base sm:text-lg text-elec-yellow">
+                <CardTitle className="text-base sm:text-lg text-blue-300">
                   <span className="break-words line-clamp-2 leading-tight">{template.name}</span>
                 </CardTitle>
               </div>
@@ -242,25 +242,25 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
             <CardContent className="p-0 space-y-4 flex-1 flex flex-col">
               {/* Duration Info */}
               <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-                <Clock className="h-4 w-4 flex-shrink-0 text-elec-yellow group-hover:scale-110 transition-transform duration-200" />
+                <Clock className="h-4 w-4 flex-shrink-0 text-blue-400 group-hover:scale-110 transition-transform duration-200" />
                 <span className="break-words">{template.estimatedDuration}</span>
               </div>
               
               {/* Qualifications Section */}
               <div className="space-y-2 flex-shrink-0">
-                <div className="text-xs sm:text-sm font-medium text-elec-yellow">Required Qualifications:</div>
+                <div className="text-xs sm:text-sm font-medium text-blue-300">Required Qualifications:</div>
                 <div className="flex flex-wrap gap-1.5">
                   {template.requiredQualifications.slice(0, 2).map((qual, index) => (
                     <Badge 
                       key={index} 
                       variant="outline" 
-                      className="text-xs break-words max-w-full border-elec-yellow/30 text-elec-yellow/90 hover:bg-elec-yellow/10 transition-colors"
+                      className="text-xs break-words max-w-full border-gray-500 text-gray-300 hover:bg-gray-600/20 transition-colors"
                     >
                       <span className="truncate max-w-[120px]">{qual}</span>
                     </Badge>
                   ))}
                   {template.requiredQualifications.length > 2 && (
-                    <Badge variant="outline" className="text-xs flex-shrink-0 border-elec-yellow/30 text-elec-yellow/90">
+                    <Badge variant="outline" className="text-xs flex-shrink-0 border-gray-500 text-gray-300">
                       +{template.requiredQualifications.length - 2} more
                     </Badge>
                   )}
@@ -269,7 +269,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
 
               {/* Method Steps Section - Flexible height */}
               <div className="space-y-2 flex-1 min-h-0">
-                <div className="text-xs sm:text-sm font-medium text-elec-yellow flex items-center justify-between">
+                <div className="text-xs sm:text-sm font-medium text-blue-300 flex items-center justify-between">
                   <span>Method Steps ({template.steps.length}):</span>
                   {selectedTemplate?.id === template.id && (
                     <div className="flex items-center gap-1 text-xs text-green-400">
@@ -281,7 +281,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                 <div className="space-y-2 max-h-32 overflow-y-auto pr-1 custom-scrollbar">
                   {template.steps.slice(0, 3).map((step, index) => (
                     <div key={index} className="text-xs text-muted-foreground flex items-start gap-2">
-                      <div className="w-5 h-5 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-xs flex-shrink-0 mt-0.5 font-medium">
+                      <div className="w-5 h-5 rounded-full bg-blue-500/20 text-blue-300 flex items-center justify-center text-xs flex-shrink-0 mt-0.5 font-medium">
                         {index + 1}
                       </div>
                       <span className="break-words line-clamp-2 leading-relaxed">{step.title}</span>
