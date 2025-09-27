@@ -861,11 +861,14 @@ const RAMSGenerator: React.FC = () => {
                 Cancel
               </Button>
               <Button 
-                onClick={() => addRisk({
-                  ...newRisk,
-                  riskRating: newRisk.likelihood * newRisk.severity,
-                  residualRisk: Math.max(1, newRisk.likelihood * newRisk.severity - 2) // Assume controls reduce risk by 2 points
-                })}
+                onClick={() => {
+                  addRisk({
+                    ...newRisk,
+                    riskRating: newRisk.likelihood * newRisk.severity,
+                    residualRisk: Math.max(1, newRisk.likelihood * newRisk.severity - 2) // Assume controls reduce risk by 2 points
+                  });
+                  setShowAddRisk(false);
+                }}
                 disabled={!newRisk.hazard || !newRisk.risk || !newRisk.controls}
                 className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
               >
