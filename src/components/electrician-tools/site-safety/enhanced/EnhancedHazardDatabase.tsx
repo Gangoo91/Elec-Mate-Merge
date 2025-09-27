@@ -511,10 +511,10 @@ const EnhancedHazardDatabase: React.FC = () => {
         ].map((stat, index) => {
           const IconComponent = stat.icon;
           return (
-            <Card key={index} className={`${stat.borderColor} ${stat.bgColor} hover:shadow-md transition-all duration-300 hover:scale-105 cursor-pointer group`}>
+            <Card key={index} className={`${stat.borderColor} ${stat.bgColor} hover:shadow-md transition-all duration-300 hover:scale-102 cursor-pointer group`}>
               <CardContent className="p-3">
                 <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg ${stat.bgColor} ${stat.borderColor} border group-hover:scale-110 transition-transform duration-200 shrink-0`}>
+                  <div className={`p-2 rounded-lg ${stat.bgColor} ${stat.borderColor} border group-hover:scale-105 transition-transform duration-200 shrink-0`}>
                     <IconComponent className={`h-4 w-4 ${stat.color}`} />
                   </div>
                   <div className="flex-1 min-w-0">
