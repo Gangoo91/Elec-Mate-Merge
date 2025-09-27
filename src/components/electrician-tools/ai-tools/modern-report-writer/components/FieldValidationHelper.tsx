@@ -126,6 +126,23 @@ const FieldValidationHelper: React.FC<FieldValidationHelperProps> = ({
   const passCount = validationRules.filter(rule => rule.status === 'pass').length;
   const totalRules = validationRules.length;
 
+  // Return validation status for programmatic use, but no UI
+  if (validationRules.length === 0) {
+    return null;
+  }
+
+  // Simple validation feedback without the complex UI
+  const hasErrors = validationRules.some(rule => rule.status === 'error');
+  const hasWarnings = validationRules.some(rule => rule.status === 'warning');
+  
+  if (hasErrors || hasWarnings) {
+    return (
+      <div className="text-xs text-amber-400 mt-1">
+        {hasErrors ? 'Required field validation failed' : 'Validation warnings present'}
+      </div>
+    );
+  }
+
   return null;
 };
 

@@ -28,6 +28,21 @@ import { WizardData, WizardStep } from "./types";
 
 const STORAGE_KEY = "report-wizard-data";
 
+// Validation functions
+const validateClientDetails = (data: Record<string, any>) => {
+  const requiredFields = ['clientName', 'clientAddress', 'installationAddress', 'installationDescription'];
+  const isValid = requiredFields.every(field => data[field]?.trim());
+  console.log('Client validation:', { data, requiredFields, isValid });
+  return isValid;
+};
+
+const validateInspectionDetails = (data: Record<string, any>) => {
+  const requiredFields = ['extentOfInspection', 'overallAssessment'];
+  const isValid = requiredFields.every(field => data[field]?.trim());
+  console.log('Inspection validation:', { data, requiredFields, isValid });
+  return isValid;
+};
+
 const ReportWizard = () => {
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState<WizardStep>('template');
@@ -58,15 +73,15 @@ const ReportWizard = () => {
       id: 'client',
       title: 'Client & Installation',
       description: 'Basic information',
-      isCompleted: Object.keys(wizardData.clientDetails).length > 0,
+      isCompleted: validateClientDetails(wizardData.clientDetails),
       isAccessible: !!wizardData.template
     },
     {
       id: 'inspection',
       title: 'Inspection & Findings',
       description: 'Technical details',
-      isCompleted: Object.keys(wizardData.inspectionDetails).length > 0,
-      isAccessible: !!wizardData.template && Object.keys(wizardData.clientDetails).length > 0
+      isCompleted: validateInspectionDetails(wizardData.inspectionDetails),
+      isAccessible: !!wizardData.template && validateClientDetails(wizardData.clientDetails)
     },
     {
       id: 'review',
@@ -74,8 +89,8 @@ const ReportWizard = () => {
       description: 'Final review and generation',
       isCompleted: false,
       isAccessible: !!wizardData.template && 
-                   Object.keys(wizardData.clientDetails).length > 0 &&
-                   Object.keys(wizardData.inspectionDetails).length > 0
+                   validateClientDetails(wizardData.clientDetails) &&
+                   validateInspectionDetails(wizardData.inspectionDetails)
     }
   ];
 
@@ -97,11 +112,16 @@ const ReportWizard = () => {
   }, [wizardData, setWizardData]);
 
   const updateWizardData = (section: keyof WizardData, data: any) => {
-    setWizardData(prev => ({
-      ...prev,
-      [section]: data,
-      lastSaved: new Date().toISOString()
-    }));
+    console.log('Updating wizard data:', { section, data });
+    setWizardData(prev => {
+      const newData = {
+        ...prev,
+        [section]: data,
+        lastSaved: new Date().toISOString()
+      };
+      console.log('New wizard data state:', newData);
+      return newData;
+    });
   };
 
   const goToStep = (stepId: WizardStep) => {
