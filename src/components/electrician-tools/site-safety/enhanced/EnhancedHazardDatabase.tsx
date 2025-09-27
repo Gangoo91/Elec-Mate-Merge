@@ -400,7 +400,7 @@ const EnhancedHazardDatabase: React.FC = () => {
               placeholder="Search hazards, controls, regulations... (e.g. 'electrical shock', 'working at height')"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-12 pr-4 h-12 bg-background/70 border-2 border-transparent focus:border-elec-yellow/50 focus:bg-background text-base placeholder:text-muted-foreground/70 rounded-xl transition-all duration-200"
+              className="pl-12 pr-4 h-12 bg-background/70 border-2 border-elec-yellow/30 focus:border-elec-yellow/50 focus:bg-background text-base placeholder:text-muted-foreground/70 rounded-xl transition-all duration-200"
             />
             {searchTerm && (
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
