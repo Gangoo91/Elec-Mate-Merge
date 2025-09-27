@@ -20,6 +20,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 
 interface BriefingTemplate {
   id: string;
@@ -60,6 +61,8 @@ const TeamBriefingTemplates = () => {
   const [attendanceView, setAttendanceView] = useState<'list' | 'qr' | 'camera'>('list');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [templateToDelete, setTemplateToDelete] = useState<BriefingTemplate | null>(null);
   
   const [templates, setTemplates] = useState<BriefingTemplate[]>([
     {
@@ -362,6 +365,22 @@ const TeamBriefingTemplates = () => {
       )
     );
     setSelectedTemplate(updatedTemplate);
+  };
+
+  const deleteTemplate = (template: BriefingTemplate) => {
+    setTemplates(prev => prev.filter(t => t.id !== template.id));
+    setShowDeleteDialog(false);
+    setTemplateToDelete(null);
+    toast({
+      title: "Success",
+      description: "Template deleted successfully",
+      variant: "success"
+    });
+  };
+
+  const handleDeleteClick = (template: BriefingTemplate) => {
+    setTemplateToDelete(template);
+    setShowDeleteDialog(true);
   };
 
   const getCategoryColor = (category: string) => {
@@ -697,12 +716,7 @@ const TeamBriefingTemplates = () => {
                               className="cursor-pointer flex items-center gap-2 px-3 py-2 text-sm hover:bg-destructive hover:text-destructive-foreground focus:bg-destructive focus:text-destructive-foreground text-destructive"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                // Add confirmation dialog and delete functionality here
-                                const confirmed = window.confirm('Are you sure you want to delete this template? This action cannot be undone.');
-                                if (confirmed) {
-                                  // TODO: Implement template deletion
-                                  console.log('Delete template:', template.id);
-                                }
+                                handleDeleteClick(template);
                               }}
                             >
                               <Trash className="h-4 w-4" />
@@ -1237,6 +1251,17 @@ const TeamBriefingTemplates = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      <ConfirmationDialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        title="Delete Template"
+        description={`Are you sure you want to delete "${templateToDelete?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="destructive"
+        onConfirm={() => templateToDelete && deleteTemplate(templateToDelete)}
+      />
     </div>
   );
 };
