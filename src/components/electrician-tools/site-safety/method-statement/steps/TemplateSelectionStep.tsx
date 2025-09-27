@@ -67,8 +67,8 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                            qual.toLowerCase().includes(searchTerm.toLowerCase())
                          );
     const matchesCategory = !selectedCategory || template.category === selectedCategory;
-    const matchesDifficulty = !selectedDifficulty || template.difficultyLevel === selectedDifficulty;
-    const matchesDuration = !selectedDuration || (
+    const matchesDifficulty = !selectedDifficulty || selectedDifficulty === 'all-difficulty' || template.difficultyLevel === selectedDifficulty;
+    const matchesDuration = !selectedDuration || selectedDuration === 'all-duration' || (
       selectedDuration === 'quick' && parseInt(template.estimatedDuration.split('-')[0]) <= 2 ||
       selectedDuration === 'medium' && parseInt(template.estimatedDuration.split('-')[0]) > 2 && parseInt(template.estimatedDuration.split('-')[0]) <= 6 ||
       selectedDuration === 'long' && parseInt(template.estimatedDuration.split('-')[0]) > 6
@@ -250,7 +250,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                     <SelectValue placeholder="Any difficulty" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Any difficulty</SelectItem>
+                    <SelectItem value="all-difficulty">Any difficulty</SelectItem>
                     <SelectItem value="basic">Basic</SelectItem>
                     <SelectItem value="intermediate">Intermediate</SelectItem>
                     <SelectItem value="advanced">Advanced</SelectItem>
@@ -266,7 +266,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
                     <SelectValue placeholder="Any duration" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Any duration</SelectItem>
+                    <SelectItem value="all-duration">Any duration</SelectItem>
                     <SelectItem value="quick">Quick (≤2 hours)</SelectItem>
                     <SelectItem value="medium">Medium (2-6 hours)</SelectItem>
                     <SelectItem value="long">Long (6+ hours)</SelectItem>
