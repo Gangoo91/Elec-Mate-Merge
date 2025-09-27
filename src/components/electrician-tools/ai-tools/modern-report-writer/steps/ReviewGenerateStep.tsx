@@ -275,38 +275,42 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
         </Card>
 
         {/* Inspection Summary */}
-        <Card className="bg-elec-gray border-elec-yellow/30 p-6 md:col-span-2">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-purple-500/20 rounded-lg">
-              <Search className="h-5 w-5 text-purple-400" />
+        <Card className="bg-elec-gray border-elec-yellow/30 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="p-1.5 bg-purple-500/20 rounded">
+              <Search className="h-4 w-4 text-purple-400" />
             </div>
             <div>
-              <h3 className="text-lg font-medium text-white">Inspection Summary</h3>
-              <p className="text-sm text-muted-foreground">Inspection findings and assessment</p>
+              <h3 className="text-sm font-medium text-white">Inspection</h3>
             </div>
           </div>
           
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Assessment:</span>
-              <Badge 
-                className={summary.inspection.assessment === 'satisfactory' 
-                  ? 'bg-green-500/20 text-green-400 border-green-500/50' 
-                  : 'bg-red-500/20 text-red-400 border-red-500/50'
-                }
-              >
-                {summary.inspection.assessment}
-              </Badge>
+            <div className="space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Assessment:</span>
+                <Badge 
+                  className={`text-xs ${summary.inspection.assessment === 'satisfactory' 
+                    ? 'bg-green-500/20 text-green-400 border-green-500/50' 
+                    : 'bg-red-500/20 text-red-400 border-red-500/50'
+                  }`}
+                >
+                  {summary.inspection.assessment}
+                </Badge>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Faults:</span>
+                <span className="text-xs text-white font-medium">
+                  {summary.inspection.faultCount}
+                </span>
+              </div>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Faults Found:</span>
-              <span className="text-sm text-white font-medium">
-                {summary.inspection.faultCount}
-              </span>
-            </div>
-            <div>
-              <span className="text-sm text-muted-foreground">Inspector:</span>
-              <p className="text-sm text-white">{summary.inspection.inspector}</p>
+            
+            <div className="pt-2 border-t border-elec-yellow/10">
+              <div>
+                <span className="text-xs text-muted-foreground">Inspector:</span>
+                <p className="text-xs text-white">{summary.inspection.inspector}</p>
+              </div>
             </div>
           </div>
         </Card>
