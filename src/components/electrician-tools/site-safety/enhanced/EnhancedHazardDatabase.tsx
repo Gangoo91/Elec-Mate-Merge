@@ -335,7 +335,7 @@ const EnhancedHazardDatabase: React.FC = () => {
                 <Button 
                   variant={addedHazards.has(hazard.id) ? "default" : "outline"}
                   size="sm" 
-                  className={`h-6 text-xs px-2 transition-all duration-300 hover-scale ${
+                  className={`h-6 text-xs px-3 py-1.5 transition-all duration-300 hover-scale ${
                     addedHazards.has(hazard.id) 
                       ? 'bg-elec-yellow text-elec-dark border-elec-yellow animate-scale-in' 
                       : 'border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark hover:border-elec-yellow'
