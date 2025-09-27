@@ -447,33 +447,6 @@ const EnhancedHazardDatabase: React.FC = () => {
             </select>
           </div>
 
-          {/* Quick Action Bar */}
-          <div className="flex items-center justify-between p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
-            <div className="flex items-center gap-2 text-sm text-elec-yellow">
-              <Target className="h-4 w-4" />
-              <span className="font-medium">Quick Actions:</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setActiveTab('favorites')}
-                className="text-xs text-elec-yellow hover:bg-elec-yellow/20 hover:text-elec-yellow"
-              >
-                <Star className="h-3 w-3 mr-1" />
-                View Favorites ({favorites.size})
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setActiveTab('popular')}
-                className="text-xs text-elec-yellow hover:bg-elec-yellow/20 hover:text-elec-yellow"
-              >
-                <TrendingUp className="h-3 w-3 mr-1" />
-                Most Used
-              </Button>
-            </div>
-          </div>
         </CardContent>
       </Card>
 
