@@ -495,7 +495,7 @@ const SafetyEquipmentTracker = () => {
                       {categoryIcons[template.category as keyof typeof categoryIcons] || "📦"}
                     </div>
                     <div className="text-left">
-                      <div className="font-medium text-sm">{template.name}</div>
+                      <div className="font-medium text-sm text-wrap">{template.name}</div>
                       <div className="text-xs text-muted-foreground">{template.category}</div>
                     </div>
                   </div>
