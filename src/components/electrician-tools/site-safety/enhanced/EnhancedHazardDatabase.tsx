@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -43,6 +43,41 @@ const EnhancedHazardDatabase: React.FC = () => {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
   const [expandedHazards, setExpandedHazards] = useState<Set<string>>(new Set());
+
+  // Load favorites and recent items from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedFavorites = localStorage.getItem('hazard-favorites');
+      if (savedFavorites) {
+        setFavorites(new Set(JSON.parse(savedFavorites)));
+      }
+
+      const savedRecent = localStorage.getItem('hazard-recent');
+      if (savedRecent) {
+        setRecentlyViewed(JSON.parse(savedRecent));
+      }
+    } catch (error) {
+      console.warn('Failed to load saved hazard data:', error);
+    }
+  }, []);
+
+  // Save favorites to localStorage whenever favorites change
+  useEffect(() => {
+    try {
+      localStorage.setItem('hazard-favorites', JSON.stringify(Array.from(favorites)));
+    } catch (error) {
+      console.warn('Failed to save favorites:', error);
+    }
+  }, [favorites]);
+
+  // Save recent items to localStorage whenever recent items change
+  useEffect(() => {
+    try {
+      localStorage.setItem('hazard-recent', JSON.stringify(recentlyViewed));
+    } catch (error) {
+      console.warn('Failed to save recent items:', error);
+    }
+  }, [recentlyViewed]);
 
   // Transform enhanced data into UI-friendly format
   const transformedHazards: HazardItem[] = useMemo(() => {
