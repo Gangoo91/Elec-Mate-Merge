@@ -177,9 +177,9 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
       </Card>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Template Summary */}
-        <Card className="bg-elec-gray border-elec-yellow/30 p-6">
+        <Card className="bg-elec-gray border-elec-yellow/30 p-6 md:col-span-2">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-elec-yellow/20 rounded-lg">
               <FileText className="h-5 w-5 text-elec-yellow" />
@@ -211,77 +211,71 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
         </Card>
 
         {/* Client Summary */}
-        <Card className="bg-elec-gray border-elec-yellow/30 p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-blue-500/20 rounded-lg">
-              <User className="h-5 w-5 text-blue-400" />
+        <Card className="bg-elec-gray border-elec-yellow/30 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="p-1.5 bg-blue-500/20 rounded">
+              <User className="h-4 w-4 text-blue-400" />
             </div>
             <div>
-              <h3 className="text-lg font-medium text-white">Client Information</h3>
-              <p className="text-sm text-muted-foreground">Customer and contact details</p>
+              <h3 className="text-sm font-medium text-white">Client Info</h3>
             </div>
           </div>
           
-          <div className="space-y-4">
-            {/* Primary Contact */}
-            <div className="space-y-2">
+          <div className="space-y-3">
+            <div className="space-y-1">
               <div>
-                <span className="text-sm text-muted-foreground">Client Name:</span>
-                <p className="text-sm text-white font-medium">{summary.client.name}</p>
+                <span className="text-xs text-muted-foreground">Name:</span>
+                <p className="text-xs text-white font-medium">{summary.client.name}</p>
               </div>
               <div>
-                <span className="text-sm text-muted-foreground">Contact Number:</span>
-                <p className="text-sm text-white font-medium">{summary.client.phone}</p>
+                <span className="text-xs text-muted-foreground">Phone:</span>
+                <p className="text-xs text-white">{summary.client.phone}</p>
               </div>
             </div>
             
-            {/* Address Information */}
             <div className="pt-2 border-t border-elec-yellow/10">
               <div>
-                <span className="text-sm text-muted-foreground">Client Address:</span>
-                <p className="text-sm text-white leading-relaxed">{summary.client.address}</p>
+                <span className="text-xs text-muted-foreground">Address:</span>
+                <p className="text-xs text-white leading-relaxed">{summary.client.address}</p>
               </div>
             </div>
           </div>
         </Card>
 
         {/* Installation Summary */}
-        <Card className="bg-elec-gray border-elec-yellow/30 p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-green-500/20 rounded-lg">
-              <MapPin className="h-5 w-5 text-green-400" />
+        <Card className="bg-elec-gray border-elec-yellow/30 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="p-1.5 bg-green-500/20 rounded">
+              <MapPin className="h-4 w-4 text-green-400" />
             </div>
             <div>
-              <h3 className="text-lg font-medium text-white">Installation Details</h3>
-              <p className="text-sm text-muted-foreground">Property and installation information</p>
+              <h3 className="text-sm font-medium text-white">Installation</h3>
             </div>
           </div>
           
-          <div className="space-y-4">
-            {/* Location Information */}
-            <div className="space-y-2">
+          <div className="space-y-3">
+            <div className="space-y-1">
               <div>
-                <span className="text-sm text-muted-foreground">Installation Location:</span>
-                <p className="text-sm text-white font-medium">{summary.installation.address}</p>
+                <span className="text-xs text-muted-foreground">Location:</span>
+                <p className="text-xs text-white font-medium">{summary.installation.address}</p>
               </div>
               <div>
-                <span className="text-sm text-muted-foreground">Installation Type:</span>
-                <p className="text-sm text-white font-medium">{summary.installation.description}</p>
+                <span className="text-xs text-muted-foreground">Type:</span>
+                <p className="text-xs text-white">{summary.installation.description}</p>
               </div>
             </div>
             
-            {/* System Information */}
             <div className="pt-2 border-t border-elec-yellow/10">
               <div>
-                <span className="text-sm text-muted-foreground">Estimated Age:</span>
-                <p className="text-sm text-white leading-relaxed">{summary.installation.age}</p>
+                <span className="text-xs text-muted-foreground">Age:</span>
+                <p className="text-xs text-white">{summary.installation.age}</p>
               </div>
             </div>
           </div>
         </Card>
 
         {/* Inspection Summary */}
-        <Card className="bg-elec-gray border-elec-yellow/30 p-6">
+        <Card className="bg-elec-gray border-elec-yellow/30 p-6 md:col-span-2">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-purple-500/20 rounded-lg">
               <Search className="h-5 w-5 text-purple-400" />
