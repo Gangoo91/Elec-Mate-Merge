@@ -223,9 +223,9 @@ const ReportWizard = () => {
                 <FileText className="h-7 w-7 text-elec-yellow" />
               </div>
               <div className="text-center">
-                <h1 className="text-3xl font-bold text-white">AI Report Writer</h1>
+                <h1 className="text-3xl font-bold text-white">General Report Writer</h1>
                 <p className="text-muted-foreground">
-                  Generate professional electrical reports with guided assistance
+                  Generate professional electrical certificates and condition reports
                 </p>
               </div>
             </div>

@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { 
   FileText, 
   Zap, 
-  Shield, 
   Gauge, 
   Car, 
   TestTube, 
@@ -17,7 +16,9 @@ import {
   Sparkles,
   TrendingUp,
   CheckCircle2,
-  ChevronDown
+  ChevronDown,
+  Info,
+  ExternalLink
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -29,17 +30,6 @@ import { TemplateStepProps, ReportTemplate } from "../types";
 
 const REPORT_TEMPLATES: ReportTemplate[] = [
   {
-    id: "eicr",
-    name: "EICR (Electrical Installation Condition Report)",
-    description: "Comprehensive inspection report for existing electrical installations",
-    icon: FileText,
-    difficulty: 'advanced',
-    estimatedTime: '15-20 min',
-    features: ['Full BS 7671 compliance', 'Fault categorisation', 'Next inspection dates'],
-    category: 'inspection',
-    isPopular: true
-  },
-  {
     id: "minor-works",
     name: "Minor Electrical Works Certificate",
     description: "Certificate for small electrical works and additions",
@@ -49,16 +39,6 @@ const REPORT_TEMPLATES: ReportTemplate[] = [
     features: ['Quick completion', 'Circuit details', 'Test results'],
     category: 'certification',
     isPopular: true
-  },
-  {
-    id: "periodic-inspection",
-    name: "Periodic Inspection Report",
-    description: "Regular inspection report for ongoing electrical safety",
-    icon: Shield,
-    difficulty: 'intermediate',
-    estimatedTime: '10-15 min',
-    features: ['Safety assessment', 'Recommendations', 'Compliance tracking'],
-    category: 'inspection'
   },
   {
     id: "consumer-unit",
@@ -104,7 +84,6 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
 
   const categories = [
     { id: "all", label: "All Templates", count: REPORT_TEMPLATES.length },
-    { id: "inspection", label: "Inspection Reports", count: REPORT_TEMPLATES.filter(t => t.category === 'inspection').length },
     { id: "installation", label: "Installation Certificates", count: REPORT_TEMPLATES.filter(t => t.category === 'installation').length },
     { id: "testing", label: "Test Certificates", count: REPORT_TEMPLATES.filter(t => t.category === 'testing').length },
     { id: "certification", label: "General Certificates", count: REPORT_TEMPLATES.filter(t => t.category === 'certification').length }
@@ -133,7 +112,6 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
   const getCategoryIcon = (categoryId: string) => {
     switch (categoryId) {
       case 'all': return Sparkles;
-      case 'inspection': return Shield;
       case 'installation': return Zap;
       case 'testing': return TestTube;
       case 'certification': return FileText;
@@ -145,15 +123,37 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
 
   return (
     <>
-      {/* Header - Moved above main container */}
+      {/* EICR Notice */}
+      <Card className="bg-blue-500/10 border-blue-500/30 p-4 mb-6">
+        <div className="flex items-start gap-3">
+          <Info className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <h3 className="font-semibold text-blue-400 mb-1">Need to create an EICR?</h3>
+            <p className="text-sm text-blue-200 mb-3">
+              Electrical Installation Condition Reports (EICRs) require specialised testing procedures and should be created using our dedicated Inspection & Testing system for full BS 7671:2018 compliance.
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
+              onClick={() => window.location.href = '/electrician-tools/inspection-testing'}
+            >
+              Go to Inspection & Testing
+              <ExternalLink className="h-4 w-4 ml-2" />
+            </Button>
+          </div>
+        </div>
+      </Card>
+
+      {/* Header */}
       <Card className="bg-elec-gray border-elec-yellow/30 p-6 mb-6">
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
             <Sparkles className="h-6 w-6 text-elec-yellow" />
-            <h2 className="text-2xl font-bold text-white">Choose Your Report Template</h2>
+            <h2 className="text-2xl font-bold text-white">General Condition Reports</h2>
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Select from our collection of BS 7671:2018 compliant templates, designed to streamline your electrical reporting process.
+            Generate professional electrical certificates and condition reports for installations, testing, and minor works.
           </p>
         </div>
 
