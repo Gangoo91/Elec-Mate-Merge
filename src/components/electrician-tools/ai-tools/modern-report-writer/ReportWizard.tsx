@@ -326,37 +326,6 @@ const ReportWizard = () => {
 
           {/* Enhanced Mobile Floating Actions */}
           <div className="fixed bottom-6 right-6 lg:hidden z-50">
-            <div className="flex flex-col gap-3">
-              {/* Progress Mini Indicator */}
-              <div className="bg-elec-gray/95 backdrop-blur-sm border border-elec-yellow/30 rounded-full px-3 py-2 text-center">
-                <span className="text-xs text-elec-yellow font-medium">
-                  {currentStepIndex + 1}/{steps.length}
-                </span>
-              </div>
-              
-              {/* Navigation Buttons */}
-              <div className="flex gap-2">
-                {currentStepIndex > 0 && (
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={goToPreviousStep}
-                    className="h-14 w-14 rounded-full bg-elec-gray/95 backdrop-blur-sm border-elec-yellow/30 hover:bg-elec-yellow/10 shadow-lg"
-                  >
-                    <ChevronLeft className="h-6 w-6" />
-                  </Button>
-                )}
-                {currentStepIndex < steps.length - 1 && steps[currentStepIndex + 1].isAccessible && (
-                  <Button
-                    size="icon"
-                    onClick={goToNextStep}
-                    className="h-14 w-14 rounded-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shadow-lg"
-                  >
-                    <ChevronRight className="h-6 w-6" />
-                  </Button>
-                )}
-              </div>
-            </div>
           </div>
         </div>
       </div>
