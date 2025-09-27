@@ -60,7 +60,7 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
       case 'basic': return 'bg-green-500/20 text-green-300';
       case 'intermediate': return 'bg-blue-500/20 text-blue-300';
       case 'advanced': return 'bg-red-500/20 text-red-300';
-      default: return 'bg-gray-500/20 text-gray-300';
+      default: return 'bg-elec-gray/20 text-elec-gray';
     }
   };
 
@@ -327,9 +327,9 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
 
       {/* No Results - Mobile optimized */}
       {filteredTemplates.length === 0 && (
-        <Card className="border-gray-500/20 bg-gray-500/5 mobile-card">
+        <Card className="border-elec-gray/20 bg-elec-gray/5 mobile-card">
           <CardContent className="p-6 sm:p-8 text-center">
-            <div className="text-gray-300 mb-3 mobile-subheading">No templates found</div>
+            <div className="text-elec-gray mb-3 mobile-subheading">No templates found</div>
             <p className="text-muted-foreground mb-6 mobile-text max-w-md mx-auto">
               Try adjusting your search terms or create a method statement from scratch.
             </p>
