@@ -624,50 +624,50 @@ const NearMissReporting = () => {
   return (
     <div className="space-y-6">
       {/* Statistics Dashboard */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="mobile-card border-primary/20">
-          <CardContent className="p-4 text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <BarChart3 className="h-5 w-5 text-primary" />
-              <div className="text-2xl font-bold text-primary">{reports.length}</div>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <Card className="border-primary/20 bg-card rounded-lg">
+          <CardContent className="p-3 text-center">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <BarChart3 className="h-4 w-4 text-primary" />
+              <div className="text-lg font-bold text-primary">{reports.length}</div>
             </div>
-            <div className="mobile-small-text text-muted-foreground">Total Reports</div>
+            <div className="text-xs text-muted-foreground">Total Reports</div>
           </CardContent>
         </Card>
         
-        <Card className="mobile-card border-orange-500/20">
-          <CardContent className="p-4 text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <AlertCircle className="h-5 w-5 text-orange-400" />
-              <div className="text-2xl font-bold text-orange-400">
+        <Card className="border-orange-500/20 bg-card rounded-lg">
+          <CardContent className="p-3 text-center">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <AlertCircle className="h-4 w-4 text-orange-400" />
+              <div className="text-lg font-bold text-orange-400">
                 {reports.filter(r => r.severity === "High" || r.severity === "Critical").length}
               </div>
             </div>
-            <div className="mobile-small-text text-muted-foreground">High Risk</div>
+            <div className="text-xs text-muted-foreground">High Risk</div>
           </CardContent>
         </Card>
         
-        <Card className="mobile-card border-yellow-500/20">
-          <CardContent className="p-4 text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Clock className="h-5 w-5 text-yellow-400" />
-              <div className="text-2xl font-bold text-yellow-400">
+        <Card className="border-yellow-500/20 bg-card rounded-lg">
+          <CardContent className="p-3 text-center">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <Clock className="h-4 w-4 text-yellow-400" />
+              <div className="text-lg font-bold text-yellow-400">
                 {reports.filter(r => r.status === "Under Review").length}
               </div>
             </div>
-            <div className="mobile-small-text text-muted-foreground">Under Review</div>
+            <div className="text-xs text-muted-foreground">Under Review</div>
           </CardContent>
         </Card>
         
-        <Card className="mobile-card border-green-500/20">
-          <CardContent className="p-4 text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <TrendingUp className="h-5 w-5 text-green-400" />
-              <div className="text-2xl font-bold text-green-400">
+        <Card className="border-green-500/20 bg-card rounded-lg">
+          <CardContent className="p-3 text-center">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <TrendingUp className="h-4 w-4 text-green-400" />
+              <div className="text-lg font-bold text-green-400">
                 {reports.filter(r => r.status === "Closed").length}
               </div>
             </div>
-            <div className="mobile-small-text text-muted-foreground">Resolved</div>
+            <div className="text-xs text-muted-foreground">Resolved</div>
           </CardContent>
         </Card>
       </div>
