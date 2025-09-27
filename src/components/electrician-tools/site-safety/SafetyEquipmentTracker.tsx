@@ -100,11 +100,61 @@ const SafetyEquipmentTracker = () => {
   ]);
 
   const quickTemplates: QuickTemplate[] = [
+    // Fall Protection
     { name: "Safety Harness", category: "Fall Protection", defaultLocation: "Van", inspectionInterval: 180 },
+    { name: "Arc Flash Suit", category: "Fall Protection", defaultLocation: "Workshop", inspectionInterval: 365 },
+    { name: "Safety Platform", category: "Fall Protection", defaultLocation: "Site Store", inspectionInterval: 90 },
+    
+    // Testing & Measurement Equipment
     { name: "Voltage Tester", category: "Testing Equipment", defaultLocation: "Van", inspectionInterval: 90 },
-    { name: "Extension Ladder", category: "Access Equipment", defaultLocation: "Site Store", inspectionInterval: 90 },
+    { name: "Insulation Resistance Tester (Megger)", category: "Testing Equipment", defaultLocation: "Van", inspectionInterval: 365 },
+    { name: "Multifunction Tester (MFT)", category: "Testing Equipment", defaultLocation: "Van", inspectionInterval: 365 },
+    { name: "RCD Tester", category: "Testing Equipment", defaultLocation: "Van", inspectionInterval: 365 },
+    { name: "Phase Rotation Tester", category: "Testing Equipment", defaultLocation: "Van", inspectionInterval: 365 },
+    { name: "Earth Loop Impedance Tester", category: "Testing Equipment", defaultLocation: "Van", inspectionInterval: 365 },
+    { name: "PAT Tester (Portable Appliance)", category: "Testing Equipment", defaultLocation: "Workshop", inspectionInterval: 365 },
+    { name: "Clamp Meter", category: "Testing Equipment", defaultLocation: "Van", inspectionInterval: 180 },
+    { name: "Digital Multimeter", category: "Testing Equipment", defaultLocation: "Van", inspectionInterval: 180 },
+    
+    // Personal Protective Equipment (PPE)
     { name: "Hard Hat", category: "PPE", defaultLocation: "Site", inspectionInterval: 365 },
-    { name: "Safety Boots", category: "PPE", defaultLocation: "Personal", inspectionInterval: 180 }
+    { name: "Safety Boots", category: "PPE", defaultLocation: "Personal", inspectionInterval: 180 },
+    { name: "Insulated Gloves (Class 0)", category: "PPE", defaultLocation: "Van", inspectionInterval: 180 },
+    { name: "Insulated Gloves (Class 2)", category: "PPE", defaultLocation: "Van", inspectionInterval: 180 },
+    { name: "Insulated Gloves (Class 4)", category: "PPE", defaultLocation: "Van", inspectionInterval: 180 },
+    { name: "Safety Glasses/Goggles", category: "PPE", defaultLocation: "Van", inspectionInterval: 90 },
+    { name: "High-Vis Vest", category: "PPE", defaultLocation: "Personal", inspectionInterval: 180 },
+    { name: "Respirator/Face Mask", category: "PPE", defaultLocation: "Van", inspectionInterval: 90 },
+    { name: "Ear Defenders", category: "PPE", defaultLocation: "Van", inspectionInterval: 180 },
+    
+    // Access Equipment
+    { name: "Extension Ladder", category: "Access Equipment", defaultLocation: "Site Store", inspectionInterval: 90 },
+    { name: "Step Ladder (2m)", category: "Access Equipment", defaultLocation: "Van", inspectionInterval: 90 },
+    { name: "Step Ladder (3m)", category: "Access Equipment", defaultLocation: "Site Store", inspectionInterval: 90 },
+    { name: "Tower Scaffold", category: "Access Equipment", defaultLocation: "Site Store", inspectionInterval: 30 },
+    { name: "Mobile Scaffold", category: "Access Equipment", defaultLocation: "Site Store", inspectionInterval: 30 },
+    { name: "Trestle & Boards", category: "Access Equipment", defaultLocation: "Site Store", inspectionInterval: 90 },
+    
+    // First Aid & Emergency
+    { name: "First Aid Kit (Standard)", category: "First Aid", defaultLocation: "Van", inspectionInterval: 30 },
+    { name: "First Aid Kit (Burns/Electrical)", category: "First Aid", defaultLocation: "Van", inspectionInterval: 30 },
+    { name: "Eye Wash Station", category: "First Aid", defaultLocation: "Workshop", inspectionInterval: 30 },
+    { name: "Emergency Shower", category: "First Aid", defaultLocation: "Workshop", inspectionInterval: 90 },
+    { name: "Defibrillator (AED)", category: "First Aid", defaultLocation: "Workshop", inspectionInterval: 30 },
+    
+    // Fire Safety
+    { name: "CO2 Fire Extinguisher", category: "Fire Safety", defaultLocation: "Workshop", inspectionInterval: 365 },
+    { name: "Dry Powder Extinguisher", category: "Fire Safety", defaultLocation: "Van", inspectionInterval: 365 },
+    { name: "Fire Blanket", category: "Fire Safety", defaultLocation: "Workshop", inspectionInterval: 365 },
+    { name: "Smoke Detector", category: "Fire Safety", defaultLocation: "Workshop", inspectionInterval: 90 },
+    { name: "Emergency Lighting", category: "Fire Safety", defaultLocation: "Workshop", inspectionInterval: 90 },
+    
+    // Electrical Safety Devices
+    { name: "Lock-Out Tag-Out (LOTO) Kit", category: "Electrical Safety", defaultLocation: "Van", inspectionInterval: 180 },
+    { name: "Insulating Mats", category: "Electrical Safety", defaultLocation: "Van", inspectionInterval: 365 },
+    { name: "Warning Signs & Barriers", category: "Electrical Safety", defaultLocation: "Van", inspectionInterval: 180 },
+    { name: "Earthing Equipment", category: "Electrical Safety", defaultLocation: "Van", inspectionInterval: 365 },
+    { name: "Cable Covers & Protectors", category: "Electrical Safety", defaultLocation: "Site Store", inspectionInterval: 180 }
   ];
 
   const [searchTerm, setSearchTerm] = useState("");
