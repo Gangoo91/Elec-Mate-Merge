@@ -410,7 +410,7 @@ const TeamBriefingTemplates = () => {
         </MobileGestureHandler>
         
         <MobileGestureHandler onTap={() => setFilterStatus('upcoming')}>
-          <Card className="border-secondary/30 border-2 cursor-pointer hover:bg-accent/50 transition-colors">
+          <Card className="border-secondary/30 cursor-pointer hover:bg-accent/50 transition-colors">
             <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
               <div className="text-2xl lg:text-3xl font-bold text-secondary-foreground">
                 {briefings.reduce((total, b) => total + b.attendees.length, 0)}
@@ -422,7 +422,7 @@ const TeamBriefingTemplates = () => {
         
         <MobileGestureHandler onTap={() => setFilterStatus('today')}>
           <Card className="border-accent/30 cursor-pointer hover:bg-accent/50 transition-colors">
-            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center border border-primary/30 rounded-lg">
+            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
               <div className="text-2xl lg:text-3xl font-bold text-accent-foreground">
                 {briefings.filter(b => new Date(b.briefing_date) >= new Date() && b.status === 'scheduled').length}
               </div>
