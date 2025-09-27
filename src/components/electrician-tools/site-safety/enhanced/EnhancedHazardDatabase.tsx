@@ -420,7 +420,7 @@ const EnhancedHazardDatabase: React.FC = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="text-sm px-4 py-2 rounded-lg border-2 border-border/50 bg-background hover:border-elec-yellow/50 focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
+              className="text-sm px-4 py-2 rounded-lg border-2 border-elec-yellow/30 bg-background hover:border-elec-yellow/50 focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
             >
               <option value="all">🔍 All Categories</option>
               <option value="electrical">⚡ Electrical</option>
