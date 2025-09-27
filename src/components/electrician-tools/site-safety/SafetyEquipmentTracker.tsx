@@ -158,6 +158,7 @@ const SafetyEquipmentTracker = () => {
   ];
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [templateSearchTerm, setTemplateSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
   const [filterStatus, setFilterStatus] = useState("All");
   const [filterLocation, setFilterLocation] = useState("All");
@@ -480,10 +481,26 @@ const SafetyEquipmentTracker = () => {
               <QrCode className="h-4 w-4" />
               Quick Add Templates
             </h4>
+            {/* Template Search */}
+            <div className="relative mt-3">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground z-10 pointer-events-none" />
+              <MobileInput
+                placeholder="Search templates..."
+                value={templateSearchTerm}
+                onChange={(e) => setTemplateSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {quickTemplates.map((template, index) => (
+            <div className="max-h-96 overflow-y-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {quickTemplates
+                  .filter(template => 
+                    template.name.toLowerCase().includes(templateSearchTerm.toLowerCase()) ||
+                    template.category.toLowerCase().includes(templateSearchTerm.toLowerCase())
+                  )
+                  .map((template, index) => (
                 <MobileButton
                   key={index}
                   variant="outline"
@@ -500,7 +517,8 @@ const SafetyEquipmentTracker = () => {
                     </div>
                   </div>
                 </MobileButton>
-              ))}
+               ))}
+              </div>
             </div>
           </CardContent>
         </Card>
