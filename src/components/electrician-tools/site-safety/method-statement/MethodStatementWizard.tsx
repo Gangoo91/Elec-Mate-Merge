@@ -157,29 +157,6 @@ const MethodStatementWizard = () => {
 
   return (
     <div className="space-y-4 md:space-y-6 method-statement-container">
-      {/* Progress Indicator */}
-      <Card className="border-blue-500/20 bg-blue-500/5">
-        <CardHeader className="pb-4">
-          <div className="flex items-center justify-between mb-2">
-            <CardTitle className="text-lg text-blue-300">
-              {steps[currentStepIndex]?.title}
-            </CardTitle>
-            <span className="text-sm text-muted-foreground">
-              Step {currentStepIndex + 1} of {steps.length}
-            </span>
-          </div>
-          <p className="text-sm text-muted-foreground mb-3">
-            {steps[currentStepIndex]?.description}
-          </p>
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>Progress</span>
-              <span>{Math.round(progress)}%</span>
-            </div>
-            <Progress value={progress} className="h-2" />
-          </div>
-        </CardHeader>
-      </Card>
 
       {/* Step Content */}
       <div className="min-h-[500px]">
