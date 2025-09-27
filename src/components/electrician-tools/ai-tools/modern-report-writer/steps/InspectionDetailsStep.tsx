@@ -379,17 +379,6 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
               onValueChange={(value) => updateField('overallAssessment', value)}
               options={assessmentOptions}
             />
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setValidationFields(prev => 
-                prev.includes('overallAssessment') ? prev.filter(f => f !== 'overallAssessment') : [...prev, 'overallAssessment']
-              )}
-              className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
-            >
-              <CheckCircle2 className="h-4 w-4 mr-2" />
-              Check Compliance
-            </Button>
             {validationFields.includes('overallAssessment') && (
               <FieldValidationHelper
                 fieldId="overallAssessment"
