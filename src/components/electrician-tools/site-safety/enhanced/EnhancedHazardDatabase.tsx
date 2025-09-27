@@ -445,7 +445,7 @@ const EnhancedHazardDatabase: React.FC = () => {
         </CardHeader>
         <CardContent>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto p-1 bg-background/50">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto p-1.5 bg-elec-gray/60 backdrop-blur-sm border border-elec-yellow/20 rounded-lg shadow-sm">
               <TabsTrigger 
                 value="browse" 
                 className="text-xs py-2 px-3 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
