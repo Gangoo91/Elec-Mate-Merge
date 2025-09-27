@@ -436,15 +436,43 @@ const EnhancedHazardDatabase: React.FC = () => {
       </div>
 
       {/* Tabbed Content */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 h-9">
-          <TabsTrigger value="browse" className="text-xs">Browse</TabsTrigger>
-          <TabsTrigger value="favorites" className="text-xs">
-            Favorites ({favorites.size})
-          </TabsTrigger>
-          <TabsTrigger value="recent" className="text-xs">Recent</TabsTrigger>
-          <TabsTrigger value="popular" className="text-xs">Popular</TabsTrigger>
-        </TabsList>
+      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm text-foreground flex items-center gap-2">
+            <Eye className="h-4 w-4" />
+            Hazard Explorer
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 h-auto p-1 bg-background/50">
+              <TabsTrigger 
+                value="browse" 
+                className="text-xs py-2 px-3 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+              >
+                Browse All
+              </TabsTrigger>
+              <TabsTrigger 
+                value="favorites" 
+                className="text-xs py-2 px-3 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+              >
+                <Star className="h-3 w-3 mr-1" />
+                Favorites ({favorites.size})
+              </TabsTrigger>
+              <TabsTrigger 
+                value="recent" 
+                className="text-xs py-2 px-3 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+              >
+                <Clock className="h-3 w-3 mr-1" />
+                Recent
+              </TabsTrigger>
+              <TabsTrigger 
+                value="popular" 
+                className="text-xs py-2 px-3 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
+              >
+                Popular
+              </TabsTrigger>
+            </TabsList>
 
         <TabsContent value="browse" className="space-y-3 mt-4">
           {filteredHazards.length > 0 ? (
@@ -520,7 +548,9 @@ const EnhancedHazardDatabase: React.FC = () => {
             ))}
           </div>
         </TabsContent>
-      </Tabs>
+          </Tabs>
+        </CardContent>
+      </Card>
     </div>
   );
 };
