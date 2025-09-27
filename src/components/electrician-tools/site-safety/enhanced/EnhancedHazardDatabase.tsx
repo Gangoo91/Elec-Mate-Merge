@@ -474,7 +474,7 @@ const EnhancedHazardDatabase: React.FC = () => {
       </Card>
 
       {/* Enhanced Quick Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
         {[
           { 
             label: 'Critical Risks', 
@@ -512,14 +512,14 @@ const EnhancedHazardDatabase: React.FC = () => {
           const IconComponent = stat.icon;
           return (
             <Card key={index} className={`${stat.borderColor} ${stat.bgColor} hover:shadow-md transition-all duration-300 hover:scale-105 cursor-pointer group`}>
-              <CardContent className="p-4 text-center">
-                <div className="flex items-center justify-center mb-2">
-                  <div className={`p-2 rounded-lg ${stat.bgColor} ${stat.borderColor} border group-hover:scale-110 transition-transform duration-200`}>
-                    <IconComponent className={`h-5 w-5 ${stat.color}`} />
+              <CardContent className="p-2 text-center">
+                <div className="flex items-center justify-center mb-1">
+                  <div className={`p-1.5 rounded-lg ${stat.bgColor} ${stat.borderColor} border group-hover:scale-110 transition-transform duration-200`}>
+                    <IconComponent className={`h-3 w-3 ${stat.color}`} />
                   </div>
                 </div>
-                <div className={`text-2xl font-bold ${stat.color} mb-1`}>{stat.count}</div>
-                <div className="text-xs text-muted-foreground font-medium">{stat.label}</div>
+                <div className={`text-lg font-bold ${stat.color} mb-0.5`}>{stat.count}</div>
+                <div className="text-xs text-muted-foreground font-medium leading-tight">{stat.label}</div>
               </CardContent>
             </Card>
           );
