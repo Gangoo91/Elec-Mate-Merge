@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2, X, MoreHorizontal, Calendar, MapPin, Bell, QrCode, Camera } from "lucide-react";
+import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2, X, MoreHorizontal, Calendar, MapPin, Bell, QrCode, Camera, Trash } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import {
@@ -692,6 +692,21 @@ const TeamBriefingTemplates = () => {
                             >
                               <Plus className="h-4 w-4" />
                               Use Template
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="cursor-pointer flex items-center gap-2 px-3 py-2 text-sm hover:bg-destructive hover:text-destructive-foreground focus:bg-destructive focus:text-destructive-foreground text-destructive"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                // Add confirmation dialog and delete functionality here
+                                const confirmed = window.confirm('Are you sure you want to delete this template? This action cannot be undone.');
+                                if (confirmed) {
+                                  // TODO: Implement template deletion
+                                  console.log('Delete template:', template.id);
+                                }
+                              }}
+                            >
+                              <Trash className="h-4 w-4" />
+                              Delete Template
                             </DropdownMenuItem>
                          </DropdownMenuContent>
                        </DropdownMenu>
