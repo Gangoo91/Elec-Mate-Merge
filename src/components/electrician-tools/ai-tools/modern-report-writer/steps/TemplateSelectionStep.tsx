@@ -16,8 +16,15 @@ import {
   ArrowRight,
   Sparkles,
   TrendingUp,
-  CheckCircle2
+  CheckCircle2,
+  ChevronDown
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { TemplateStepProps, ReportTemplate } from "../types";
 
 const REPORT_TEMPLATES: ReportTemplate[] = [
@@ -123,6 +130,19 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
     }
   };
 
+  const getCategoryIcon = (categoryId: string) => {
+    switch (categoryId) {
+      case 'all': return Sparkles;
+      case 'inspection': return Shield;
+      case 'installation': return Zap;
+      case 'testing': return TestTube;
+      case 'certification': return FileText;
+      default: return FileText;
+    }
+  };
+
+  const selectedCategoryData = categories.find(cat => cat.id === selectedCategory);
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -137,9 +157,76 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
           </p>
         </div>
 
-        {/* Search and Filters */}
-        <div className="mt-6 space-y-4">
-          <div className="relative">
+        {/* Search and Category Filter Row */}
+        <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          {/* Category Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-full sm:w-64 justify-between bg-elec-dark border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+              >
+                <div className="flex items-center gap-2">
+                  {selectedCategoryData && (
+                    <>
+                      {(() => {
+                        const IconComponent = getCategoryIcon(selectedCategoryData.id);
+                        return <IconComponent className="h-4 w-4" />;
+                      })()}
+                      <span className="truncate">{selectedCategoryData.label}</span>
+                      <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
+                        {selectedCategoryData.count}
+                      </Badge>
+                    </>
+                  )}
+                </div>
+                <ChevronDown className="h-4 w-4 text-muted-foreground" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent 
+              className="w-64 bg-elec-gray border-elec-yellow/30 z-50"
+              align="start"
+            >
+              {categories.map((category) => {
+                const IconComponent = getCategoryIcon(category.id);
+                const isSelected = selectedCategory === category.id;
+                
+                return (
+                  <DropdownMenuItem
+                    key={category.id}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={`cursor-pointer transition-colors ${
+                      isSelected 
+                        ? 'bg-elec-yellow/10 text-elec-yellow focus:bg-elec-yellow/20 focus:text-elec-yellow' 
+                        : 'text-white hover:bg-elec-yellow/5 hover:text-white focus:bg-elec-yellow/5 focus:text-white'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-3">
+                        <IconComponent className="h-4 w-4" />
+                        <span className="font-medium">{category.label}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge 
+                          className={`text-xs ${
+                            isSelected 
+                              ? 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30' 
+                              : 'bg-white/10 text-white/80 border-white/20'
+                          }`}
+                        >
+                          {category.count}
+                        </Badge>
+                        {isSelected && <CheckCircle2 className="h-4 w-4 text-elec-yellow" />}
+                      </div>
+                    </div>
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Search Input */}
+          <div className="relative flex-1">
             <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search templates..."
@@ -147,68 +234,6 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 bg-elec-dark border border-primary/30 text-white"
             />
-          </div>
-
-          {/* Category filters */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-            {categories.map((category) => (
-              <div
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`
-                  relative cursor-pointer group transition-all duration-200 p-4 rounded-lg border-2
-                  ${selectedCategory === category.id 
-                    ? 'bg-elec-yellow/10 border-elec-yellow ring-2 ring-elec-yellow/30 shadow-lg' 
-                    : 'bg-elec-dark/50 border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-elec-yellow/5'
-                  }
-                `}
-              >
-                {/* Selection indicator */}
-                {selectedCategory === category.id && (
-                  <div className="absolute -top-2 -right-2">
-                    <div className="bg-elec-yellow rounded-full p-1">
-                      <CheckCircle2 className="h-4 w-4 text-elec-dark" />
-                    </div>
-                  </div>
-                )}
-                
-                {/* Category icon based on type */}
-                <div className={`flex items-center justify-center mb-2 ${
-                  selectedCategory === category.id ? 'text-elec-yellow' : 'text-white'
-                }`}>
-                  {category.id === 'all' && <Sparkles className="h-5 w-5" />}
-                  {category.id === 'inspection' && <Shield className="h-5 w-5" />}
-                  {category.id === 'installation' && <Zap className="h-5 w-5" />}
-                  {category.id === 'testing' && <TestTube className="h-5 w-5" />}
-                  {category.id === 'certification' && <FileText className="h-5 w-5" />}
-                </div>
-                
-                {/* Category label */}
-                <div className="text-center">
-                  <h4 className={`font-medium text-sm leading-tight ${
-                    selectedCategory === category.id ? 'text-elec-yellow' : 'text-white'
-                  }`}>
-                    {category.label}
-                  </h4>
-                  
-                  {/* Count badge */}
-                  <div className={`mt-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                    selectedCategory === category.id 
-                      ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30' 
-                      : 'bg-white/10 text-white/80 border border-white/20'
-                  }`}>
-                    {category.count} template{category.count !== 1 ? 's' : ''}
-                  </div>
-                </div>
-                
-                {/* Hover effect */}
-                <div className={`absolute inset-0 rounded-lg transition-opacity duration-200 ${
-                  selectedCategory === category.id 
-                    ? 'opacity-0' 
-                    : 'opacity-0 group-hover:opacity-100 bg-elec-yellow/5'
-                }`} />
-              </div>
-            ))}
           </div>
         </div>
       </Card>
