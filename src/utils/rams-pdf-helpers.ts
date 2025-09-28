@@ -6,16 +6,59 @@ import { format, isValid, parseISO } from "date-fns";
 
 export const safeText = (text: string | undefined | null): string => {
   if (!text) return '';
-  return text.toString()
-    .trim()
-    .replace(/&#x26;/g, '&')
-    .replace(/&#x27;/g, "'")
-    .replace(/&#x22;/g, '"')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'");
+  
+  let cleanText = text.toString().trim();
+  
+  // Comprehensive HTML entity decoding
+  const entityMap: Record<string, string> = {
+    '&#x26;': '&',
+    '&#x27;': "'",
+    '&#x22;': '"',
+    '&#x2A;': '*',
+    '&#x2B;': '+',
+    '&#x2D;': '-',
+    '&#x2F;': '/',
+    '&#x3A;': ':',
+    '&#x3B;': ';',
+    '&#x3C;': '<',
+    '&#x3D;': '=',
+    '&#x3E;': '>',
+    '&#x3F;': '?',
+    '&#x40;': '@',
+    '&#39;': "'",
+    '&#34;': '"',
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&apos;': "'",
+    '&nbsp;': ' ',
+    '&copy;': '©',
+    '&reg;': '®',
+    '&trade;': '™',
+    '&pound;': '£',
+    '&deg;': '°',
+    '&plusmn;': '±',
+    '&times;': '×',
+    '&divide;': '÷'
+  };
+  
+  // Apply all entity replacements
+  Object.entries(entityMap).forEach(([entity, replacement]) => {
+    cleanText = cleanText.replace(new RegExp(entity, 'g'), replacement);
+  });
+  
+  // Handle numeric character references
+  cleanText = cleanText.replace(/&#(\d+);/g, (match, dec) => {
+    return String.fromCharCode(parseInt(dec, 10));
+  });
+  
+  // Handle hexadecimal character references  
+  cleanText = cleanText.replace(/&#x([0-9A-Fa-f]+);/g, (match, hex) => {
+    return String.fromCharCode(parseInt(hex, 16));
+  });
+  
+  return cleanText;
 };
 
 export const safeNumber = (num: number | string | undefined | null): number => {
