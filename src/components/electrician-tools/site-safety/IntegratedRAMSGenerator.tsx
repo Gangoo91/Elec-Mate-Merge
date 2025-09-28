@@ -126,8 +126,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
       
       toast({
         title: 'Risk Added',
-        description: 'Risk assessment has been added successfully.',
-        variant: 'success'
+        description: 'Risk assessment has been added successfully.'
       });
     }
   };
@@ -164,8 +163,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
 
       toast({
         title: 'Method Step Added',
-        description: 'Work step has been added to the method statement.',
-        variant: 'success'
+        description: 'Work step has been added to the method statement.'
       });
     }
   };
@@ -211,8 +209,7 @@ const IntegratedRAMSGenerator: React.FC = () => {
 
       toast({
         title: 'RAMS Document Generated',
-        description: 'Professional integrated RAMS document has been downloaded.',
-        variant: 'success'
+        description: 'Professional integrated RAMS document has been downloaded.'
       });
     } catch (error) {
       console.error('Error generating PDF:', error);
