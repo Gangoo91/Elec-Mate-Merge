@@ -161,7 +161,7 @@ function processReedJobs(jobs: any[], regionName: string, jobType: string) {
     'electrical technician': 'Maintenance & Testing'
   };
 
-  const mappedJobType = jobTypeMapping[jobType] || 'General Electrical Work';
+  const mappedJobType = (jobTypeMapping as Record<string, string>)[jobType] || 'General Electrical Work';
 
   processedJobs.push({
     region: regionName,

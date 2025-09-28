@@ -9,6 +9,7 @@ import { RAMSProvider } from "@/components/electrician-tools/site-safety/rams/RA
 import { RAMSQuickAdd } from "@/components/electrician-tools/site-safety/RAMSQuickAdd";
 import RAMSGenerator from "@/components/electrician-tools/site-safety/RAMSGenerator";
 import MethodStatementGenerator from "@/components/electrician-tools/site-safety/MethodStatementGenerator";
+import IntegratedRAMSGenerator from "@/components/electrician-tools/site-safety/IntegratedRAMSGenerator";
 import EnhancedHazardDatabase from "@/components/electrician-tools/site-safety/enhanced/EnhancedHazardDatabase";
 import PhotoDocumentation from "@/components/electrician-tools/site-safety/PhotoDocumentation";
 import TeamBriefingTemplates from "@/components/electrician-tools/site-safety/TeamBriefingTemplates";
@@ -21,20 +22,12 @@ const SiteSafety = () => {
 
   const primaryTools = [
     { 
-      id: "rams", 
-      title: "Risk Assessment & Method Statements", 
-      description: "Generate comprehensive RAMS documents for electrical work",
+      id: "integrated-rams", 
+      title: "Professional RAMS Generator", 
+      description: "Complete integrated risk assessment and method statement workflow",
       icon: FileText,
       featured: true,
-      badge: "Popular"
-    },
-    { 
-      id: "method-statement", 
-      title: "Method Statement Generator", 
-      description: "Create detailed step-by-step work procedures",
-      icon: ClipboardCheck,
-      featured: true,
-      badge: "Essential"
+      badge: "Professional"
     }
   ];
 
@@ -88,6 +81,8 @@ const SiteSafety = () => {
 
   const renderToolContent = () => {
     switch (activeView) {
+      case "integrated-rams":
+        return <IntegratedRAMSGenerator />;
       case "rams":
         return <RAMSGenerator />;
       case "method-statement":
