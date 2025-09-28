@@ -9,8 +9,9 @@ export const safeText = (text: string | undefined | null): string => {
   
   let cleanText = text.toString().trim();
   
-  // Comprehensive HTML entity decoding
+  // Comprehensive HTML entity decoding with enhanced electrical symbols
   const entityMap: Record<string, string> = {
+    // Standard HTML entities
     '&#x26;': '&',
     '&#x27;': "'",
     '&#x22;': '"',
@@ -40,7 +41,44 @@ export const safeText = (text: string | undefined | null): string => {
     '&deg;': '°',
     '&plusmn;': '±',
     '&times;': '×',
-    '&divide;': '÷'
+    '&divide;': '÷',
+    // Enhanced electrical and technical symbols for BS 7671 compliance
+    '&Omega;': 'Ω',
+    '&omega;': 'ω',
+    '&mu;': 'μ',
+    '&alpha;': 'α',
+    '&beta;': 'β',
+    '&gamma;': 'γ',
+    '&delta;': 'δ',
+    '&theta;': 'θ',
+    '&phi;': 'φ',
+    '&ge;': '≥',
+    '&le;': '≤',
+    '&ne;': '≠',
+    '&approx;': '≈',
+    '&infin;': '∞',
+    '&radic;': '√',
+    '&sup2;': '²',
+    '&sup3;': '³',
+    '&frac12;': '½',
+    '&frac14;': '¼',
+    '&frac34;': '¾',
+    // Common electrical unicode codes
+    '&#8486;': 'Ω',  // Ohm symbol
+    '&#8804;': '≤',  // Less than or equal
+    '&#8805;': '≥',  // Greater than or equal
+    '&#177;': '±',   // Plus-minus
+    '&#181;': 'μ',   // Micro
+    '&#8730;': '√',  // Square root
+    '&#8734;': '∞',  // Infinity
+    '&#8776;': '≈',  // Approximately equal
+    // Broken encoding fixes
+    'Î©': 'Ω',
+    'âˆž': '∞',
+    'â‰¥': '≥',
+    'â‰¤': '≤',
+    'Â±': '±',
+    'Âµ': 'μ'
   };
   
   // Apply all entity replacements
