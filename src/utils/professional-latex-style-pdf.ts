@@ -48,7 +48,7 @@ export const generateLaTeXStylePDF = async (
       includeTableOfContents = true,
       fontFamily = 'serif',
       fontSize = 11,
-      margins = { top: 25, right: 20, bottom: 25, left: 20 }
+      margins = { top: 20, right: 15, bottom: 20, left: 15 }
     } = options;
     
     // Clean and preprocess content
@@ -71,7 +71,7 @@ export const generateLaTeXStylePDF = async (
     let currentPage = 1;
     const sectionsForTOC: DocumentSection[] = [];
     
-    // Enhanced font configuration
+    // Enhanced font configuration with proper line height
     const getFontConfig = (weight: 'normal' | 'bold' = 'normal', style: 'normal' | 'italic' = 'normal') => {
       const baseFont = fontFamily === 'serif' ? 'times' : fontFamily === 'monospace' ? 'courier' : 'helvetica';
       let fontName = baseFont;
@@ -85,6 +85,57 @@ export const generateLaTeXStylePDF = async (
       }
       
       return fontName;
+    };
+    
+    // Optimized line height calculations (1.3x font size for better readability)
+    const getLineHeight = (fontSizeValue: number) => Math.round(fontSizeValue * 1.3);
+    
+    // Smart text measurement using canvas for accurate wrapping
+    const measureText = (text: string, fontSizeValue: number, fontName: string): number => {
+      // Create temporary canvas context for accurate measurement
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      if (context) {
+        context.font = `${fontSizeValue}px ${fontName}`;
+        return context.measureText(text).width * 0.352778; // Convert px to mm
+      }
+      return pdf.getTextWidth(text); // Fallback to jsPDF measurement
+    };
+    
+    // Intelligent word wrapping with hyphenation support
+    const wrapText = (text: string, maxWidth: number, fontSizeValue: number, fontName: string): string[] => {
+      const words = text.split(' ');
+      const lines: string[] = [];
+      let currentLine = '';
+      
+      for (const word of words) {
+        const testLine = currentLine ? `${currentLine} ${word}` : word;
+        const testWidth = measureText(testLine, fontSizeValue, fontName);
+        
+        if (testWidth <= maxWidth) {
+          currentLine = testLine;
+        } else {
+          if (currentLine) {
+            lines.push(currentLine);
+            currentLine = word;
+          } else {
+            // Word is too long, try to hyphenate
+            if (word.length > 10) {
+              const hyphenPoint = Math.floor(word.length * 0.7);
+              lines.push(word.substring(0, hyphenPoint) + '-');
+              currentLine = word.substring(hyphenPoint);
+            } else {
+              lines.push(word);
+            }
+          }
+        }
+      }
+      
+      if (currentLine) {
+        lines.push(currentLine);
+      }
+      
+      return lines.length > 0 ? lines : [''];
     };
     
     // Professional page setup
@@ -277,12 +328,21 @@ export const generateLaTeXStylePDF = async (
       currentPage = pdf.getNumberOfPages() + 1;
     };
     
-    // Check if new page is needed
-    const checkPageBreak = (requiredSpace: number) => {
-      if (yPosition + requiredSpace > pageHeight - margins.bottom) {
-        pdf.addPage();
-        yPosition = margins.top;
-        return true;
+    // Intelligent page break with content awareness
+    const checkPageBreak = (requiredSpace: number, preventOrphans: boolean = true) => {
+      const spaceRemaining = pageHeight - margins.bottom - yPosition;
+      
+      if (spaceRemaining < requiredSpace) {
+        // Prevent orphan lines (less than 2 lines remaining)
+        if (preventOrphans && spaceRemaining < getLineHeight(fontSize) * 2) {
+          pdf.addPage();
+          yPosition = margins.top;
+          return true;
+        } else if (spaceRemaining < requiredSpace) {
+          pdf.addPage();
+          yPosition = margins.top;
+          return true;
+        }
       }
       return false;
     };
@@ -303,13 +363,13 @@ export const generateLaTeXStylePDF = async (
           pdf.setFontSize(headerSize);
           pdf.setTextColor(30, 30, 30);
           
-          // Add spacing before headers (except first)
+          // Optimized spacing before headers
           if (index > 0) {
-            yPosition += section.level === 1 ? 20 : section.level === 2 ? 15 : 10;
+            yPosition += section.level === 1 ? 12 : section.level === 2 ? 8 : 6;
           }
           
           pdf.text(section.title, margins.left, yPosition);
-          yPosition += headerSize * 0.5;
+          yPosition += getLineHeight(headerSize) * 0.4;
           
           // Underline for main headers
           if (section.level <= 2) {
@@ -318,7 +378,7 @@ export const generateLaTeXStylePDF = async (
             pdf.line(margins.left, yPosition + 2, margins.left + pdf.getTextWidth(section.title), yPosition + 2);
           }
           
-          yPosition += 10;
+          yPosition += 6;
         }
         
         // Section content
@@ -338,7 +398,7 @@ export const generateLaTeXStylePDF = async (
         const trimmed = line.trim();
         
         if (!trimmed) {
-          yPosition += 4;
+          yPosition += getLineHeight(fontSize) * 0.3; // Reduced empty line spacing
           continue;
         }
         
@@ -368,10 +428,10 @@ export const generateLaTeXStylePDF = async (
           continue;
         }
         
-        // Lists
+        // Enhanced list formatting with proper spacing
         if (trimmed.match(/^[-\*\+]\s/)) {
           if (!inList) {
-            yPosition += 3;
+            yPosition += 2;
             inList = true;
           }
           
@@ -382,10 +442,14 @@ export const generateLaTeXStylePDF = async (
           const listText = trimmed.replace(/^[-\*\+]\s/, '• ');
           const processedText = processInlineFormatting(listText);
           
-          const lines = pdf.splitTextToSize(processedText, pageWidth - margins.left - margins.right - 10);
-          lines.forEach((textLine: string, index: number) => {
-            pdf.text(textLine, margins.left + (index === 0 ? 5 : 15), yPosition);
-            yPosition += 5;
+          // Use enhanced text wrapping
+          const availableWidth = pageWidth - margins.left - margins.right - 10;
+          const wrappedLines = wrapText(processedText, availableWidth, fontSize, getFontConfig());
+          
+          wrappedLines.forEach((textLine: string, index: number) => {
+            checkPageBreak(getLineHeight(fontSize));
+            pdf.text(textLine, margins.left + (index === 0 ? 8 : 18), yPosition);
+            yPosition += getLineHeight(fontSize) * 0.85; // Tighter line spacing for lists
           });
           
           continue;
@@ -415,31 +479,40 @@ export const generateLaTeXStylePDF = async (
           continue;
         }
         
-        // Regular paragraphs
+        // Enhanced paragraph rendering with smart text wrapping
         pdf.setFont(getFontConfig(), 'normal');
         pdf.setFontSize(fontSize);
         pdf.setTextColor(40, 40, 40);
         
         const processedText = processInlineFormatting(trimmed);
-        const textLines = pdf.splitTextToSize(processedText, pageWidth - margins.left - margins.right);
+        const availableWidth = pageWidth - margins.left - margins.right;
+        const wrappedLines = wrapText(processedText, availableWidth, fontSize, getFontConfig());
         
-        textLines.forEach((textLine: string) => {
-          checkPageBreak(8);
+        wrappedLines.forEach((textLine: string, lineIndex: number) => {
+          checkPageBreak(getLineHeight(fontSize), true);
           pdf.text(textLine, margins.left, yPosition);
-          yPosition += fontSize * 0.5;
+          yPosition += getLineHeight(fontSize) * 0.95; // Optimized line spacing
         });
         
-        yPosition += 3; // Paragraph spacing
+        yPosition += getLineHeight(fontSize) * 0.4; // Reduced paragraph spacing
       }
     };
     
-    // Process inline formatting (bold, italic, code)
+    // Enhanced inline formatting processor with better markdown support
     const processInlineFormatting = (text: string): string => {
-      // Remove markdown formatting for now - jsPDF doesn't support mixed formatting easily
-      return text
-        .replace(/\*\*(.*?)\*\*/g, '$1')  // Bold
-        .replace(/\*(.*?)\*/g, '$1')      // Italic
-        .replace(/`(.*?)`/g, '$1');       // Code
+      // Clean up excessive whitespace first
+      text = text.replace(/\s+/g, ' ').trim();
+      
+      // Handle code spans by replacing with monospace indicators
+      text = text.replace(/`([^`]+)`/g, '[CODE]$1[/CODE]');
+      
+      // Remove other markdown formatting but preserve structure
+      text = text
+        .replace(/\*\*(.*?)\*\*/g, '$1')  // Bold - could be enhanced with font switching
+        .replace(/\*(.*?)\*/g, '$1')      // Italic - could be enhanced with font switching
+        .replace(/\[CODE\](.*?)\[\/CODE\]/g, '$1'); // Restore code content
+      
+      return text;
     };
     
     // Simple table rendering
