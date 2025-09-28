@@ -88,7 +88,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error fetching Indeed jobs:', error);
     return new Response(JSON.stringify({ 
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       jobs: [],
       total: 0,
       page: 1,

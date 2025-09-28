@@ -64,21 +64,21 @@ serve(async (req) => {
     try {
       const basicResponse = await firecrawl.scrapeUrl(urlToTest, {
         formats: ['markdown', 'html']
-      });
+      }) as any;
       
       results.push({
         method: 'basic_scraping',
         success: !!basicResponse.success,
-        contentLength: basicResponse.data?.markdown?.length || 0,
-        htmlLength: basicResponse.data?.html?.length || 0,
-        preview: basicResponse.data?.markdown?.substring(0, 500) || 'No content',
-        error: basicResponse.success ? null : basicResponse.error
+        contentLength: basicResponse.success ? (basicResponse.data?.markdown?.length || 0) : 0,
+        htmlLength: basicResponse.success ? (basicResponse.data?.html?.length || 0) : 0,
+        preview: basicResponse.success ? (basicResponse.data?.markdown?.substring(0, 500) || 'No content') : 'No content',
+        error: basicResponse.success ? null : (basicResponse.error || 'Unknown error')
       });
     } catch (error) {
       results.push({
         method: 'basic_scraping',
         success: false,
-        error: error.message
+        error: error instanceof Error ? error.message : 'Unknown error occurred'
       });
     }
 
@@ -88,23 +88,23 @@ serve(async (req) => {
       const extractResponse = await firecrawl.scrapeUrl(urlToTest, {
         formats: ['extract'],
         extract: {
-          schema: simpleProductSchema,
+          schema: simpleProductSchema as any,
           prompt: "Extract all product listings from this page. Look for product names, prices, and links. Products might be in cards, lists, or grid layouts."
         }
-      });
+      }) as any;
       
       results.push({
         method: 'structured_extraction',
         success: !!extractResponse.success,
-        extractedData: extractResponse.data?.extract || null,
-        productsFound: extractResponse.data?.extract?.products?.length || 0,
-        error: extractResponse.success ? null : extractResponse.error
+        extractedData: extractResponse.success ? (extractResponse.data?.extract || null) : null,
+        productsFound: extractResponse.success ? (extractResponse.data?.extract?.products?.length || 0) : 0,
+        error: extractResponse.success ? null : (extractResponse.error || 'Unknown error')
       });
     } catch (error) {
       results.push({
         method: 'structured_extraction',
         success: false,
-        error: error.message
+        error: error instanceof Error ? error.message : 'Unknown error occurred'
       });
     }
 
@@ -113,20 +113,20 @@ serve(async (req) => {
     try {
       const screenshotResponse = await firecrawl.scrapeUrl(urlToTest, {
         formats: ['screenshot', 'markdown']
-      });
+      }) as any;
       
       results.push({
         method: 'screenshot_test',
         success: !!screenshotResponse.success,
-        hasScreenshot: !!screenshotResponse.data?.screenshot,
-        contentLength: screenshotResponse.data?.markdown?.length || 0,
-        error: screenshotResponse.success ? null : screenshotResponse.error
+        hasScreenshot: screenshotResponse.success ? !!screenshotResponse.data?.screenshot : false,
+        contentLength: screenshotResponse.success ? (screenshotResponse.data?.markdown?.length || 0) : 0,
+        error: screenshotResponse.success ? null : (screenshotResponse.error || 'Unknown error')
       });
     } catch (error) {
       results.push({
         method: 'screenshot_test',
         success: false,
-        error: error.message
+        error: error instanceof Error ? error.message : 'Unknown error occurred'
       });
     }
 
@@ -137,7 +137,7 @@ serve(async (req) => {
       overallSuccess: successfulMethods > 0,
       successfulMethods: successfulMethods,
       totalMethods: results.length,
-      recommendations: []
+      recommendations: [] as string[]
     };
 
     // Generate recommendations
@@ -171,7 +171,7 @@ serve(async (req) => {
     console.error('❌ Debug test failed:', error);
     return new Response(JSON.stringify({
       success: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       timestamp: new Date().toISOString()
     }), {
       status: 500,

@@ -140,13 +140,13 @@ serve(async (req) => {
             "https://www.electricaltimes.co.uk/category/electrical-safety/": { category: "Safety", source: "Electrical Times" }
           };
 
-          for (const result of status.data) {
+            for (const result of status.data) {
             if (result.json && Array.isArray(result.json)) {
-              const sourceInfo = sourceMap[result.url] || { category: "General", source: "Unknown" };
+              const sourceInfo = sourceMap[result.url as keyof typeof sourceMap] || { category: "General", source: "Unknown" };
               
               const processedArticles = result.json
-                .filter(article => article.title && article.title.length > 10)
-                .map(article => ({
+                .filter((article: any) => article.title && article.title.length > 10)
+                .map((article: any) => ({
                   title: article.title,
                   description: article.description,
                   url: article.visit_link || article.url,
@@ -296,7 +296,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: error.message,
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
         articlesProcessed: 0 
       }),
       { 

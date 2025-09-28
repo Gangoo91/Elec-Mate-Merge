@@ -37,7 +37,7 @@ serve(async (req) => {
         sources.push('Reed');
         console.log(`✅ Reed: Found ${reedJobs.length} jobs`);
       } catch (error) {
-        console.error('❌ Reed search failed:', error.message);
+        console.error('❌ Reed search failed:', error instanceof Error ? error.message : 'Unknown error');
         console.error('Reed error details:', error);
       }
     } else {
@@ -53,7 +53,7 @@ serve(async (req) => {
         sources.push('Adzuna');
         console.log(`✅ Adzuna: Found ${adzunaJobs.length} jobs`);
       } catch (error) {
-        console.error('❌ Adzuna search failed:', error.message);
+        console.error('❌ Adzuna search failed:', error instanceof Error ? error.message : 'Unknown error');
         console.error('Adzuna error details:', error);
       }
     } else {

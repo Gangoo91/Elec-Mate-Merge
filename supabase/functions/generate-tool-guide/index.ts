@@ -208,7 +208,7 @@ serve(async (req) => {
     console.error('Error generating guide:', error);
     
     return new Response(JSON.stringify({ 
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       guide: {
         title: 'Guide Generation Error',
         summary: 'Unable to generate guide at this time',

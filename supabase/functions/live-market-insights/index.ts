@@ -226,7 +226,7 @@ serve(async (req) => {
     const fallbackData = getFallbackMarketData();
     return new Response(JSON.stringify({
       success: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       data: fallbackData,
       lastUpdated: new Date().toISOString(),
       source: 'error_fallback',

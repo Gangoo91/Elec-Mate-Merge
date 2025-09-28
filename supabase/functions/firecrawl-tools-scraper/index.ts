@@ -97,7 +97,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         error: 'Failed to scrape tools', 
-        details: error.message 
+        details: error instanceof Error ? error.message : 'Unknown error occurred'
       }),
       {
         status: 500,

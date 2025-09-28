@@ -299,7 +299,7 @@ serve(async (req) => {
     if (data.error) {
       console.error('OpenAI API Error:', data.error);
       return new Response(
-        JSON.stringify({ error: "Error from OpenAI API: " + data.error.message }),
+        JSON.stringify({ error: "Error from OpenAI API: " + (data.error.message || 'Unknown API error') }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }

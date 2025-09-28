@@ -49,7 +49,7 @@ Deno.serve(async (req) => {
       }
       
       // Step 2: Search for mental health services near the coordinates
-      const { services, error: searchError, status } = await searchMentalHealthServices(latitude, longitude);
+      const { services, error: searchError, status } = await searchMentalHealthServices(latitude || 0, longitude || 0);
       if (searchError) {
         throw new Error(searchError);
       }
@@ -73,7 +73,7 @@ Deno.serve(async (req) => {
     }
   } catch (error) {
     console.error("General error in mental-health-services function:", error);
-    return createErrorResponse(error.message, 500);
+    return createErrorResponse(error instanceof Error ? error.message : 'Unknown error occurred', 500);
   }
 });
 
@@ -121,7 +121,7 @@ async function getCoordinatesFromPostcode(postcode: string): Promise<{latitude?:
     
     return { latitude, longitude };
   } catch (error) {
-    return { error: `Failed to get coordinates: ${error.message}` };
+    return { error: `Failed to get coordinates: ${error instanceof Error ? error.message : 'Unknown error'}` };
   }
 }
 
@@ -166,7 +166,7 @@ async function searchMentalHealthServices(latitude: number, longitude: number): 
 
     return { services };
   } catch (error) {
-    return { error: `Error searching for services: ${error.message}` };
+    return { error: `Error searching for services: ${error instanceof Error ? error.message : 'Unknown error'}` };
   }
 }
 

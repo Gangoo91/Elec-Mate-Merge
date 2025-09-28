@@ -189,7 +189,7 @@ serve(async (req) => {
     console.error('Error in live-courses-scraper:', error);
     return new Response(JSON.stringify({
       success: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       cached: false
     }), {
       status: 500,

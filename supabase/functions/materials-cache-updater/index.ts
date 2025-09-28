@@ -147,7 +147,7 @@ serve(async (req) => {
       JSON.stringify({ 
         success: false, 
         error: 'Failed to update materials cache', 
-        details: error.message 
+        details: error instanceof Error ? error.message : 'Unknown error occurred' 
       }),
       {
         status: 500,

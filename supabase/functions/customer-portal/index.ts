@@ -68,7 +68,7 @@ serve(async (req) => {
       });
     } catch (portalError: any) {
       // If this is a configuration error, try direct subscription cancellation
-      if (portalError.message && portalError.message.includes("configuration")) {
+      if (portalError?.message && portalError.message.includes("configuration")) {
         logStep("Portal configuration error, attempting direct subscription management", { error: portalError.message });
         
         // Get customer's active subscriptions

@@ -79,7 +79,7 @@ serve(async (req) => {
       console.log('📡 Fetching courses from Reed using Firecrawl v2 API...');
       
       const sourceResults = [];
-      let uniqueCourses = [];
+      let uniqueCourses: any[] = [];
       let originalCount = 0;
       let duplicatesRemoved = 0;
       
@@ -108,7 +108,7 @@ serve(async (req) => {
             
           } catch (error) {
             lastError = error;
-            console.log(`⚠️ API call attempt ${attempt} failed: ${error.message}`);
+            console.log(`⚠️ API call attempt ${attempt} failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
             
             if (attempt < maxRetries) {
               const delay = Math.min(1000 * Math.pow(2, attempt - 1), 5000); // Exponential backoff, max 5s
@@ -118,7 +118,7 @@ serve(async (req) => {
           }
         }
         
-        throw new Error(`Firecrawl API failed after ${maxRetries} attempts: ${lastError.message}`);
+        throw new Error(`Firecrawl API failed after ${maxRetries} attempts: ${lastError instanceof Error ? lastError.message : 'Unknown error'}`);
       };
       
       try {
@@ -228,7 +228,7 @@ serve(async (req) => {
             if (searchData.success && searchData.data?.json) {
               const providerCourses = Array.isArray(searchData.data.json) ? searchData.data.json : [searchData.data.json];
               // Add provider source to each course
-              const coursesWithSource = providerCourses.map(course => ({
+              const coursesWithSource = providerCourses.map((course: any) => ({
                 ...course,
                 sourceProvider: provider.name
               }));
@@ -236,12 +236,12 @@ serve(async (req) => {
             }
             
           } catch (error) {
-            console.error(`❌ Error searching ${provider.name}:`, error.message);
+            console.error(`❌ Error searching ${provider.name}:`, error instanceof Error ? error.message : 'Unknown error');
             sourceResults.push({
               source: provider.name,
               courseCount: 0,
               success: false,
-              error: error.message,
+              error: error instanceof Error ? error.message : 'Unknown error occurred',
               lastUpdated: new Date().toISOString()
             });
           }
@@ -433,19 +433,19 @@ serve(async (req) => {
           // Merge basic and detailed information
           const enhancedCourse = {
             ...course,
-            prerequisites: detailedInfo.prerequisites || [],
-            courseOutline: detailedInfo.courseOutline || [],
-            assessmentMethod: detailedInfo.assessmentMethod || [],
-            continuousAssessment: detailedInfo.continuousAssessment || false,
-            accreditations: detailedInfo.accreditations || [],
-            careerOutcomes: detailedInfo.careerOutcomes || [],
-            upcomingDates: detailedInfo.upcomingDates || [],
-            locations: detailedInfo.locations || [],
-            employerSupport: detailedInfo.employerSupport || false,
-            futureScope: detailedInfo.futureScope || '',
-            industryDemand: detailedInfo.industryDemand || 'Not specified',
-            description: detailedInfo.detailedDescription || course.description || '',
-            hasDetailedInfo: Object.keys(detailedInfo).length > 0
+            prerequisites: (detailedInfo as any)?.prerequisites || [],
+            courseOutline: (detailedInfo as any)?.courseOutline || [],
+            assessmentMethod: (detailedInfo as any)?.assessmentMethod || [],
+            continuousAssessment: (detailedInfo as any)?.continuousAssessment || false,
+            accreditations: (detailedInfo as any)?.accreditations || [],
+            careerOutcomes: (detailedInfo as any)?.careerOutcomes || [],
+            upcomingDates: (detailedInfo as any)?.upcomingDates || [],
+            locations: (detailedInfo as any)?.locations || [],
+            employerSupport: (detailedInfo as any)?.employerSupport || false,
+            futureScope: (detailedInfo as any)?.futureScope || '',
+            industryDemand: (detailedInfo as any)?.industryDemand || 'Not specified',
+            description: (detailedInfo as any)?.detailedDescription || course.description || '',
+            hasDetailedInfo: Object.keys(detailedInfo || {}).length > 0
           };
 
           detailedCourses.push(enhancedCourse);
@@ -455,7 +455,7 @@ serve(async (req) => {
           
         } catch (error) {
           failureCount++;
-          console.error(`❌ Error scraping details for ${course.courseTitle}:`, error.message);
+          console.error(`❌ Error scraping details for ${course.courseTitle}:`, error instanceof Error ? error.message : 'Unknown error');
           // Add course with basic info only if detail scraping fails
           detailedCourses.push({
             ...course,
@@ -534,12 +534,12 @@ serve(async (req) => {
           lastUpdated: new Date().toISOString(),
           // Ensure UK-specific data validation
           isUKProvider: true,
-          locationType: course.locations?.some(loc => loc.toLowerCase().includes('online')) ? 'online' : 'classroom'
+          locationType: course.locations?.some((loc: any) => loc.toLowerCase().includes('online')) ? 'online' : 'classroom'
         }));
 
         // Filter to ensure courses are UK-based
         const ukCourses = allCourses.filter(course => {
-          const hasUKLocation = course.locations.some(loc => 
+          const hasUKLocation = course.locations.some((loc: any) => 
             loc.toLowerCase().includes('uk') || 
             loc.toLowerCase().includes('united kingdom') ||
             loc.toLowerCase().includes('london') ||
@@ -580,12 +580,12 @@ serve(async (req) => {
         console.log(`✅ Enhanced UK course aggregation: ${uniqueCourses.length} courses from ${successfulSources.length} providers`);
 
       } catch (error) {
-        console.error('❌ Error in enhanced course aggregation:', error.message);
+        console.error('❌ Error in enhanced course aggregation:', error instanceof Error ? error.message : 'Unknown error');
         sourceResults.push({
           source: 'Enhanced UK Course Search',
           courseCount: 0,
           success: false,
-          error: error.message,
+          error: error instanceof Error ? error.message : 'Unknown error occurred',
           lastUpdated: new Date().toISOString()
         });
       }
@@ -619,29 +619,30 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Error in live course aggregator:', error.message);
+    console.error('❌ Error in live course aggregator:', error instanceof Error ? error.message : 'Unknown error');
     
     // Provide more specific error messages
     let errorMessage = 'An unexpected error occurred while searching for courses';
     let errorCode = 500;
     
-    if (error.message.includes('timeout') || error.message.includes('timed out')) {
+    const errorMsg = error instanceof Error ? error.message : '';
+    if (errorMsg.includes('timeout') || errorMsg.includes('timed out')) {
       errorMessage = 'The search took too long to complete. Please try again with more specific search terms.';
       errorCode = 408;
-    } else if (error.message.includes('API key') || error.message.includes('configuration')) {
+    } else if (errorMsg.includes('API key') || errorMsg.includes('configuration')) {
       errorMessage = 'Service configuration error. Please try again later.';
       errorCode = 503;
-    } else if (error.message.includes('Firecrawl') || error.message.includes('API')) {
+    } else if (errorMsg.includes('Firecrawl') || errorMsg.includes('API')) {
       errorMessage = 'External service temporarily unavailable. Please try again in a few minutes.';
       errorCode = 503;
-    } else if (error.message.includes('Network') || error.message.includes('fetch')) {
+    } else if (errorMsg.includes('Network') || errorMsg.includes('fetch')) {
       errorMessage = 'Network connection error. Please check your connection and try again.';
       errorCode = 503;
     }
     
     return new Response(JSON.stringify({ 
       error: errorMessage,
-      technical_error: error.message,
+      technical_error: error instanceof Error ? error.message : 'Unknown error',
       courses: [],
       total: 0,
       summary: null,

@@ -282,7 +282,7 @@ serve(async (req) => {
       }
     }
 
-        rawMaterials = liveData?.materials || [];
+        rawMaterials = [];
         console.log(`📊 Serving ${rawMaterials.length} materials from live scraper`);
       
       // Store the fresh data in cache for future requests
@@ -428,7 +428,7 @@ serve(async (req) => {
       data: defaultCategoryData,
       rawMaterials: [],
       fromCache: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       timestamp: new Date().toISOString(),
       totalMaterials: 0
     };
