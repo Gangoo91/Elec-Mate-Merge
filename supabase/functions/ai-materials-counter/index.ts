@@ -63,7 +63,7 @@ serve(async (req) => {
 
     // Use OpenAI to analyze and refine categorization
     const allProducts = categoryResults.flatMap(result => 
-      result.products.map(product => ({
+      result.products.map((product: any) => ({
         ...product,
         suggestedCategory: result.category
       }))
@@ -113,27 +113,27 @@ serve(async (req) => {
       } catch (error) {
         console.error('AI analysis failed, using basic counts:', error);
         // Fallback to basic counts
-        refinedCounts = categoryResults.reduce((acc, result) => {
+        refinedCounts = categoryResults.reduce((acc: Record<string, number>, result) => {
           acc[result.category] = result.count;
           return acc;
-        }, {});
+        }, {} as Record<string, number>);
       }
     } else {
       // Fallback when no OpenAI key or products
-      refinedCounts = categoryResults.reduce((acc, result) => {
+      refinedCounts = categoryResults.reduce((acc: Record<string, number>, result) => {
         acc[result.category] = result.count;
         return acc;
-      }, {});
+      }, {} as Record<string, number>);
     }
 
     // Ensure all categories have values
     const finalCounts = {
-      cables: refinedCounts.cables || 324,
-      components: refinedCounts.components || 186,
-      protection: refinedCounts.protection || 95,
-      accessories: refinedCounts.accessories || 412,
-      lighting: refinedCounts.lighting || 278,
-      tools: refinedCounts.tools || 156
+      cables: (refinedCounts as any).cables || 324,
+      components: (refinedCounts as any).components || 186,
+      protection: (refinedCounts as any).protection || 95,
+      accessories: (refinedCounts as any).accessories || 412,
+      lighting: (refinedCounts as any).lighting || 278,
+      tools: (refinedCounts as any).tools || 156
     };
 
     console.log('Final material counts:', finalCounts);
@@ -164,7 +164,7 @@ serve(async (req) => {
       JSON.stringify({ 
         success: false, 
         counts: fallbackCounts,
-        error: error.message 
+        error: error instanceof Error ? error.message : 'Unknown error occurred' 
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

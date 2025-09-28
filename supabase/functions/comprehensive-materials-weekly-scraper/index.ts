@@ -242,7 +242,7 @@ async function saveMaterialsToCache(materials: any[]) {
   const cacheEntries = Object.entries(groupedMaterials).map(([category, categoryMaterials]) => ({
     category: getCategoryId(category),
     materials_data: categoryMaterials,
-    total_products: categoryMaterials.length,
+    total_products: (categoryMaterials as any[]).length,
     last_updated: new Date().toISOString(),
     expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
     update_status: 'completed'

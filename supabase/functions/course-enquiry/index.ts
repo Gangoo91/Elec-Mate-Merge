@@ -84,7 +84,7 @@ serve(async (req) => {
     console.error('Error in course enquiry function:', error);
     return new Response(JSON.stringify({ 
       success: false,
-      error: error.message || 'Failed to submit enquiry'
+      error: error instanceof Error ? error.message : 'Failed to submit enquiry'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

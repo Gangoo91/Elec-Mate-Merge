@@ -106,7 +106,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('❌ Error in AI material recommendations:', error);
     return new Response(JSON.stringify({ 
-      error: error.message || 'Failed to generate AI recommendations' 
+      error: error instanceof Error ? error.message : 'Failed to generate AI recommendations' 
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

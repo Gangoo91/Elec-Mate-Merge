@@ -187,7 +187,7 @@ Make this quote unique and different from previous quotes with varied pricing an
       // Ensure UK pricing standards with more variation
       const baseVariation = (Math.random() - 0.5) * 0.3; // ±15% base variation
       
-      parsedQuote.materials = parsedQuote.materials.map(item => ({
+      parsedQuote.materials = parsedQuote.materials.map((item: any) => ({
         ...item,
         unitPrice: Math.max(0.50, parseFloat(item.unitPrice) * (1 + baseVariation) || 0),
         quantity: Math.max(1, parseInt(item.quantity) || 1)
@@ -208,7 +208,7 @@ Make this quote unique and different from previous quotes with varied pricing an
         JSON.stringify({ 
           raw: aiResponse,
           error: "Could not parse AI response as valid quote structure",
-          details: error.message
+          details: error instanceof Error ? error.message : 'Unknown parsing error'
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -229,7 +229,7 @@ Make this quote unique and different from previous quotes with varied pricing an
     console.error('Error in ai-quote-generator function:', error);
     return new Response(
       JSON.stringify({ 
-        error: error.message,
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
         timestamp: new Date().toISOString()
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

@@ -37,7 +37,7 @@ serve(async (req) => {
       throw new Error('Failed to fetch cached tool data');
     }
 
-    let allTools = [];
+    let allTools: any[] = [];
 
     if (cacheData?.materials_data && Array.isArray(cacheData.materials_data)) {
       allTools = cacheData.materials_data.map((item, index) => ({
@@ -107,7 +107,7 @@ serve(async (req) => {
         
         // Search in highlights array
         if (tool.highlights && Array.isArray(tool.highlights)) {
-          if (tool.highlights.some(highlight => 
+          if (tool.highlights.some((highlight: any) => 
             typeof highlight === 'string' && highlight.toLowerCase().includes(searchLower)
           )) return true;
         }
@@ -150,7 +150,7 @@ serve(async (req) => {
     console.error('❌ Error in comprehensive-tools-scraper:', error);
     return new Response(JSON.stringify({
       success: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       tools: []
     }), {
       status: 500,

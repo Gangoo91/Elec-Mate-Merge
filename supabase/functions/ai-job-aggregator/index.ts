@@ -105,11 +105,11 @@ Return enhanced jobs as valid JSON array only.`
     
     // Generate market insights
     const insights = {
-      averageRelevance: enhancedJobs.reduce((sum, job) => sum + (job.relevanceScore || 75), 0) / enhancedJobs.length,
-      topCategories: [...new Set(enhancedJobs.flatMap(job => job.aiTags || []))].slice(0, 6),
+      averageRelevance: enhancedJobs.reduce((sum: number, job: any) => sum + (job.relevanceScore || 75), 0) / enhancedJobs.length,
+      topCategories: [...new Set(enhancedJobs.flatMap((job: any) => job.aiTags || []))].slice(0, 6),
       salaryRange: {
-        min: Math.min(...enhancedJobs.filter(j => j.estimatedSalaryMin).map(j => j.estimatedSalaryMin)) || 25000,
-        max: Math.max(...enhancedJobs.filter(j => j.estimatedSalaryMax).map(j => j.estimatedSalaryMax)) || 65000
+        min: Math.min(...enhancedJobs.filter((j: any) => j.estimatedSalaryMin).map((j: any) => j.estimatedSalaryMin)) || 25000,
+        max: Math.max(...enhancedJobs.filter((j: any) => j.estimatedSalaryMax).map((j: any) => j.estimatedSalaryMax)) || 65000
       },
       totalProcessed: jobs.length,
       marketTrends: [
@@ -133,7 +133,7 @@ Return enhanced jobs as valid JSON array only.`
     console.error('Error in AI job aggregator:', error);
     return new Response(
       JSON.stringify({ 
-        error: error.message,
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
         enhancedJobs: [],
         aiInsights: null
       }),

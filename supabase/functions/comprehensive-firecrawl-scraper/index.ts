@@ -126,13 +126,13 @@ const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: s
         continue; // Skip this URL
       }
       
-      console.log(`✅ Basic access successful, content length: ${basicTest.data?.markdown?.length || 0}`);
+      console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
       
       // Now attempt structured extraction with improved prompt
       const crawlResponse = await firecrawl.scrapeUrl(url, {
         formats: ['extract'],
         extract: {
-          schema: productSchema,
+          schema: productSchema as any,
           prompt: `You are extracting product information from a ${supplier} search results page. 
 
 WHAT TO LOOK FOR:
@@ -159,8 +159,8 @@ Focus on quantity over perfect accuracy - we want to see what products are avail
         timeout: 30000
       });
 
-      if (crawlResponse.success && crawlResponse.data?.extract) {
-        const extractedData = crawlResponse.data.extract;
+      if (crawlResponse.success && (crawlResponse as any).data?.extract) {
+        const extractedData = (crawlResponse as any).data.extract;
         console.log(`📋 Raw extraction result:`, JSON.stringify(extractedData, null, 2).substring(0, 500));
         
         if (extractedData.products && Array.isArray(extractedData.products)) {
@@ -310,7 +310,7 @@ serve(async (req) => {
     console.error('❌ Error in comprehensive-firecrawl-scraper:', error);
     return new Response(JSON.stringify({
       success: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       tools: []
     }), {
       status: 500,

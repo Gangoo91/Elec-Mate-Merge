@@ -206,10 +206,10 @@ function filterJobsByLocation(jobs: any[], searchLocation: string): any[] {
 
     // Broader word matching for partial matches
     const searchWords = normalizedSearch.split(' ').filter(word => word.length > 2);
-    const jobWords = jobLocation.split(' ').filter(word => word.length > 2);
+    const jobWords = jobLocation.split(' ').filter((word: string) => word.length > 2);
     
     const hasCommonWord = searchWords.some(searchWord => 
-      jobWords.some(jobWord => 
+      jobWords.some((jobWord: string) => 
         jobWord.includes(searchWord) || searchWord.includes(jobWord)
       )
     );

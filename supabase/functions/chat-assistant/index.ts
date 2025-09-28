@@ -105,7 +105,7 @@ Context: ${context || 'general electrical apprenticeship support'}`;
     console.error('Error in chat-assistant function:', error);
     return new Response(JSON.stringify({ 
       error: 'I apologise, but I encountered an issue processing your question. Please try again in a moment.',
-      details: error.message 
+      details: error instanceof Error ? error.message : 'Unknown error occurred' 
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
