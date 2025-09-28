@@ -66,9 +66,9 @@ async function generateFallbackPDF(
   options: LaTeXPDFOptions
 ): Promise<void> {
   // Import the existing PDF generator as fallback
-  const { generateEnhancedElectricalPDF } = await import('./professional-electrical-pdf-enhanced');
+  const { generateProfessionalElectricalPDF } = await import('./professional-electrical-pdf');
   
-  await generateEnhancedElectricalPDF(
+  await generateProfessionalElectricalPDF(
     markdown,
     options.reportType || "Professional Report",
     filename,
