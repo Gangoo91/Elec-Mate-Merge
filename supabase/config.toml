@@ -1,6 +1,9 @@
 
 project_id = "jtwygbeceundfgnkirof"
 
+[functions.latex-pdf-generator]
+verify_jwt = false
+
 [functions.firecrawl-education-scraper]
 verify_jwt = false
 

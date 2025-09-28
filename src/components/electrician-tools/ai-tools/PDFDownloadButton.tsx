@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { generateEnhancedElectricalPDF } from '@/utils/professional-electrical-pdf-enhanced';
+import { generateLatexPDF } from '@/utils/latex-pdf-generator';
 
 interface PDFDownloadButtonProps {
   report: string;
@@ -32,11 +32,12 @@ const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({
     try {
       const filename = `${reportTypeName.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
       
-      await generateEnhancedElectricalPDF(
+      await generateLatexPDF(
         report,
-        reportTypeName,
         filename,
         {
+          title: reportTypeName,
+          author: "Electrical Inspector",
           reportType: reportTypeName,
           includeSignatures: true,
           watermark: "Generated using AI Technology - BS 7671:2018+A3:2024 Compliant"
@@ -44,8 +45,8 @@ const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({
       );
       
       toast({
-        title: "Professional PDF Generated",
-        description: `${reportTypeName} has been downloaded with enhanced electrical industry formatting.`,
+        title: "Professional LaTeX PDF Generated", 
+        description: `${reportTypeName} has been generated with professional LaTeX formatting. Both LaTeX source and fallback PDF have been downloaded.`,
       });
     } catch (error) {
       console.error('Enhanced PDF generation error:', error);
