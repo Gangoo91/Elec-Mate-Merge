@@ -17,15 +17,32 @@ interface ReportData {
 const createPrompt = (template: string, formData: any, additionalNotes?: string) => {
   const basePrompt = `You are a qualified electrical engineer with expertise in BS 7671:2018+A3:2024 regulations. Generate a comprehensive, professional electrical report based on the provided data.
 
-IMPORTANT REQUIREMENTS:
-- Use proper electrical terminology and BS 7671 regulation references
-- Include specific code references where applicable (e.g., Regulation 134.1.1)
-- Provide clear recommendations and actions
-- Format as a professional document with proper headings
-- Include safety classifications (C1, C2, C3) where relevant
-- Be thorough and detailed in your analysis
+CRITICAL FORMATTING REQUIREMENTS FOR PROFESSIONAL PDFs:
+- Use proper markdown formatting with clear hierarchical headings (# ## ###)
+- Create well-structured tables using markdown table syntax for test results and measurements
+- Use **bold** for important safety classifications (C1, C2, C3) and critical findings
+- Include bullet points for lists using proper markdown (-) syntax
+- Ensure consistent spacing between sections
+- Use blockquotes (>) for important safety notices or regulatory warnings
+- Format technical data in structured tables with clear headers
+- Use code blocks (\`\`\`) for regulation references and specific measurements
+
+CONTENT REQUIREMENTS:
+- Use proper UK electrical terminology and BS 7671:2018+A3:2024 regulation references
+- Include specific code references where applicable (e.g., Regulation 134.1.1, 411.3.3)
+- Provide clear recommendations and actions with priority classifications
+- Include safety classifications (C1, C2, C3, FI) where relevant with proper explanations
+- Be thorough and detailed in technical analysis
 - Include proper conclusions and next steps
-- Ensure compliance with UK electrical standards
+- Ensure full compliance with UK electrical standards
+
+PROFESSIONAL STRUCTURE:
+- Start with a clear executive summary
+- Include installation details and scope of work
+- Present findings in structured tables where appropriate
+- Provide detailed technical measurements and test results
+- Include clear recommendations with timescales
+- End with compliance statements and certifications
 
 Template Type: ${template}
 
@@ -34,24 +51,54 @@ ${JSON.stringify(formData, null, 2)}
 
 ${additionalNotes ? `Additional Notes: ${additionalNotes}` : ''}
 
-Generate a complete, professional electrical report that would be suitable for submission to Building Control or for insurance purposes. Include all necessary sections, technical details, and recommendations.`;
+Generate a complete, professional electrical report that would be suitable for submission to Building Control or for insurance purposes. Use proper markdown formatting to ensure excellent PDF conversion. Include all necessary sections, technical details, and recommendations in a structured, professional format.`;
 
   switch (template) {
     case 'eicr':
       return basePrompt + `
 
-Format as an EICR (Electrical Installation Condition Report) with:
-- Executive Summary with overall condition assessment
-- Installation details and supply characteristics  
-- Extent and limitations of inspection and testing
-- Schedule of Items Inspected with detailed findings
-- Schedule of Test Results with actual measurements
-- Fault classification (C1/C2/C3/FI) with specific regulation references
-- Recommendations for remedial work
-- Next inspection interval recommendation
-- Conclusion and declaration of compliance
+## EICR SPECIFIC FORMATTING REQUIREMENTS:
 
-Include specific ohm readings, RCD trip times, and insulation resistance values where applicable.`;
+Structure the EICR with the following sections using proper markdown:
+
+# ELECTRICAL INSTALLATION CONDITION REPORT (EICR)
+
+## Executive Summary
+- Overall condition assessment with clear rating
+- Key findings summary in bullet points
+- Immediate safety concerns highlighted
+
+## Installation Details
+| Detail | Value |
+|--------|-------|
+| Supply Type | [TN-S/TN-C-S/TT] |
+| Supply Voltage | [230V/400V] |
+| Main Earthing | [Details] |
+| RCD Protection | [Type and ratings] |
+
+## Schedule of Items Inspected
+Create a detailed table with:
+| Item | Regulation | Condition | Comments |
+|------|------------|-----------|----------|
+| Consumer Unit | 421.1.201 | [Satisfactory/Unsatisfactory] | [Details] |
+| Main Earthing | 542.1.2 | [Satisfactory/Unsatisfactory] | [Details] |
+
+## Test Results
+| Circuit | Description | R1+R2 (Ω) | Insulation (MΩ) | RCD (ms) | Result |
+|---------|-------------|------------|-----------------|----------|--------|
+| [Number] | [Description] | [Value] | [Value] | [Value] | **PASS/FAIL** |
+
+## Observations and Recommendations
+### **C1 - Danger Present (Immediate Action Required)**
+- [List any C1 items with regulation references]
+
+### **C2 - Potentially Dangerous (Urgent Action Required)**  
+- [List any C2 items with regulation references]
+
+### **C3 - Improvement Recommended**
+- [List any C3 items with regulation references]
+
+Include specific ohm readings, RCD trip times, and insulation resistance values in properly formatted tables.`;
 
     case 'minor-works':
       return basePrompt + `

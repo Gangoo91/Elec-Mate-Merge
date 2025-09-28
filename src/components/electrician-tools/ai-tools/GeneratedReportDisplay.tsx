@@ -17,6 +17,7 @@ import {
 import { MarkdownViewer } from '@/components/ui/MarkdownViewer';
 import { useToast } from '@/hooks/use-toast';
 import html2pdf from 'html2pdf.js';
+import PDFDownloadButton from './PDFDownloadButton';
 
 interface GeneratedReportDisplayProps {
   report: string;
@@ -61,111 +62,165 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     }
   };
 
-  const handlePrint = () => {
-    const printWindow = window.open('', '_blank');
-    if (printWindow) {
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>${reportTypeMap[template] || 'Electrical Report'}</title>
-            <style>
-              body { 
-                font-family: system-ui, -apple-system, sans-serif; 
-                line-height: 1.6; 
-                max-width: 210mm; 
-                margin: 0 auto; 
-                padding: 20mm; 
-                color: #000;
-                background: #fff;
-              }
-              h1, h2, h3 { color: #000; margin-top: 2em; margin-bottom: 1em; }
-              h1 { font-size: 24px; border-bottom: 2px solid #000; padding-bottom: 0.5em; }
-              h2 { font-size: 20px; }
-              h3 { font-size: 16px; }
-              table { width: 100%; border-collapse: collapse; margin: 1em 0; }
-              th, td { border: 1px solid #000; padding: 8px; text-align: left; }
-              th { background-color: #f5f5f5; font-weight: bold; }
-              .badge { 
-                display: inline-block; 
-                padding: 2px 8px; 
-                background: #f0f0f0; 
-                border: 1px solid #ccc; 
-                border-radius: 4px; 
-                font-size: 12px; 
-                font-weight: bold; 
-              }
-              .danger { background: #ffebee; color: #c62828; }
-              .pass { background: #e8f5e8; color: #2e7d2e; }
-              .fail { background: #ffebee; color: #c62828; }
-              @media print {
-                body { margin: 0; }
-                .no-print { display: none; }
-              }
-            </style>
-          </head>
-          <body>
-            <h1>${reportTypeMap[template] || 'Electrical Report'}</h1>
-            <p><strong>Generated:</strong> ${new Date().toLocaleDateString('en-GB')}</p>
-            <hr>
-            ${report.replace(/\n/g, '<br>')}
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
-      printWindow.print();
+  const handlePrint = async () => {
+    try {
+      const { EnhancedMarkdownProcessor } = await import('@/utils/enhanced-markdown-processor');
+      const processedHTML = EnhancedMarkdownProcessor.processMarkdownToHTML(report);
+      const reportCSS = EnhancedMarkdownProcessor.getReportCSS();
+      
+      const printWindow = window.open('', '_blank');
+      if (printWindow) {
+        printWindow.document.write(`
+          <!DOCTYPE html>
+          <html lang="en-GB">
+            <head>
+              <meta charset="UTF-8">
+              <title>${reportTypeMap[template] || 'Electrical Report'}</title>
+              ${reportCSS}
+              <style>
+                @media print {
+                  body { margin: 0; padding: 0; }
+                  .electrical-report { margin: 0; padding: 15mm; }
+                  .no-print { display: none; }
+                  h1, h2, h3 { page-break-after: avoid; }
+                  .electrical-table { page-break-inside: avoid; }
+                  .safety-notice { page-break-inside: avoid; }
+                }
+              </style>
+            </head>
+            <body>
+              <div class="electrical-report">
+                <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #f59e0b; padding-bottom: 20px;">
+                  <h1 style="color: #1a365d; margin-bottom: 10px;">${reportTypeMap[template] || 'Electrical Report'}</h1>
+                  <p style="color: #4a5568; margin: 5px 0; font-weight: bold;">
+                    Generated: ${new Date().toLocaleDateString('en-GB', { 
+                      weekday: 'long', 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}
+                  </p>
+                  <p style="color: #2d3748; margin: 5px 0; font-size: 14px;">
+                    <span class="bs-ref">BS 7671:2018+A3:2024 COMPLIANT</span>
+                  </p>
+                </div>
+                ${processedHTML}
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e2e8f0; text-align: center;">
+                  <p style="color: #718096; font-size: 12px;">
+                    Professional Electrical Installation Report - Generated using AI Technology
+                  </p>
+                </div>
+              </div>
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+      }
+    } catch (error) {
+      console.error('Print preparation error:', error);
+      toast({
+        title: "Print Preparation Failed",
+        description: "There was an error preparing the document for printing.",
+        variant: "destructive"
+      });
     }
   };
 
-  // Markdown to PDF conversion using html2pdf
+  // Enhanced markdown to PDF conversion
   const handleDownload = async () => {
     try {
       const reportTypeName = reportTypeMap[template] || 'Electrical Report';
       const filename = `${reportTypeName.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
       
-      // Convert markdown to HTML
-      const markdownContent = report
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-        .replace(/^\- (.*$)/gim, '<li>$1</li>')
-        .replace(/\n/g, '<br>');
+      // Use enhanced markdown processor
+      const { EnhancedMarkdownProcessor } = await import('@/utils/enhanced-markdown-processor');
+      const processedHTML = EnhancedMarkdownProcessor.processMarkdownToHTML(report);
+      const reportCSS = EnhancedMarkdownProcessor.getReportCSS();
 
-      // Create HTML content with styling
+      // Create comprehensive HTML content with professional styling
       const htmlContent = `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;">
-          <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #f0f0f0; padding-bottom: 20px;">
-            <h1 style="color: #2c3e50; margin-bottom: 10px;">${reportTypeName}</h1>
-            <p style="color: #7f8c8d; margin: 0;">Generated: ${new Date().toLocaleDateString('en-GB')}</p>
-            <p style="color: #7f8c8d; margin: 0; font-size: 12px;">BS 7671:2018+A3:2024 COMPLIANT</p>
+        <!DOCTYPE html>
+        <html lang="en-GB">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>${reportTypeName}</title>
+          ${reportCSS}
+        </head>
+        <body>
+          <div class="electrical-report">
+            <div style="text-align: center; margin-bottom: 40px; border-bottom: 3px solid #f59e0b; padding-bottom: 25px;">
+              <h1 style="color: #1a365d; margin-bottom: 15px; font-size: 32px;">${reportTypeName}</h1>
+              <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <p style="color: #4a5568; margin: 5px 0; font-weight: bold;">Generated: ${new Date().toLocaleDateString('en-GB', { 
+                  weekday: 'long', 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}</p>
+                <p style="color: #2d3748; margin: 5px 0; font-size: 14px; font-weight: bold;">
+                  <span class="bs-ref">BS 7671:2018+A3:2024 COMPLIANT</span>
+                </p>
+                <p style="color: #718096; margin: 5px 0; font-size: 12px;">
+                  Professional Electrical Installation Report
+                </p>
+              </div>
+            </div>
+            <div class="report-content">
+              ${processedHTML}
+            </div>
+            <div style="margin-top: 40px; padding-top: 25px; border-top: 2px solid #e2e8f0; text-align: center;">
+              <p style="color: #718096; font-size: 12px; margin: 5px 0;">
+                This report has been generated using AI technology in compliance with BS 7671:2018+A3:2024
+              </p>
+              <p style="color: #718096; font-size: 12px; margin: 5px 0;">
+                Report ID: ${Date.now().toString(36).toUpperCase()}
+              </p>
+            </div>
           </div>
-          <div style="font-size: 14px;">
-            ${markdownContent}
-          </div>
-        </div>
+        </body>
+        </html>
       `;
 
-      // Generate PDF using html2pdf
+      // Enhanced PDF generation options
       const opt = {
-        margin: 1,
+        margin: [0.8, 0.6, 0.8, 0.6], // top, left, bottom, right in inches
         filename: filename,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        image: { 
+          type: 'jpeg', 
+          quality: 0.95 
+        },
+        html2canvas: { 
+          scale: 2,
+          useCORS: true,
+          letterRendering: true,
+          logging: false
+        },
+        jsPDF: { 
+          unit: 'in', 
+          format: 'a4', 
+          orientation: 'portrait',
+          compress: true
+        },
+        pagebreak: { 
+          mode: ['avoid-all', 'css', 'legacy'],
+          before: '.report-h1, .report-h2',
+          after: '.electrical-table'
+        }
       };
 
       await html2pdf().set(opt).from(htmlContent).save();
       
       toast({
-        title: "PDF Generated",
-        description: "Your electrical report has been downloaded successfully."
+        title: "Professional PDF Generated",
+        description: `${reportTypeName} has been downloaded with enhanced formatting and BS 7671 compliance styling.`
       });
     } catch (error) {
-      console.error('PDF generation error:', error);
+      console.error('Enhanced PDF generation error:', error);
       toast({
         title: "PDF Generation Failed",
-        description: "There was an error generating the PDF. Please try again.",
+        description: "There was an error generating the professional PDF. Please try again.",
         variant: "destructive"
       });
     }
@@ -263,15 +318,11 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
                     </>
                   )}
                 </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleDownload}
-                  className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 shadow-sm"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  <span>Download</span>
-                </Button>
+                <PDFDownloadButton
+                  report={report}
+                  template={template}
+                  reportTypeName={reportTypeMap[template] || 'Electrical Report'}
+                />
                 <Button
                   variant="outline"
                   size="sm"
