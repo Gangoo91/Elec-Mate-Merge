@@ -474,14 +474,14 @@ const IntegratedRAMSGenerator: React.FC = () => {
 
   const renderMethodStatement = () => (
     <div className="space-y-6">
-      <Card className="border-primary/30 bg-card/60">
-        <CardHeader>
-          <CardTitle className="text-foreground flex items-center gap-2">
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <h3 className="text-foreground flex items-center gap-2 text-xl font-semibold">
             <Plus className="h-5 w-5" />
             Add Method Step
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
+          </h3>
+        </div>
+        <div className="space-y-4">
           <div>
             <Label className="text-foreground">Step Title *</Label>
             <Input
@@ -535,41 +535,37 @@ const IntegratedRAMSGenerator: React.FC = () => {
             <Plus className="h-4 w-4 mr-2" />
             Add Step
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {methodData.steps && methodData.steps.length > 0 && (
-        <Card className="border-primary/30 bg-card/60">
-          <CardHeader>
-            <CardTitle className="text-foreground">Method Steps ({methodData.steps.length})</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {methodData.steps.map((step, index) => (
-                <div key={step.id} className="p-4 border border-primary/20 rounded-lg bg-card/40">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-medium text-primary">
-                      {index + 1}
-                    </div>
-                    <div className="flex-1">
-                      <h5 className="font-medium text-foreground">{step.title}</h5>
-                      <p className="text-sm text-muted-foreground mt-1">{step.description}</p>
-                      <div className="flex items-center gap-4 mt-2">
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          {step.estimatedDuration}
-                        </span>
-                        <Badge variant={step.riskLevel === 'high' ? 'destructive' : step.riskLevel === 'medium' ? 'secondary' : 'default'}>
-                          {step.riskLevel} risk
-                        </Badge>
-                      </div>
+        <div className="space-y-4">
+          <h4 className="text-foreground text-lg font-semibold">Method Steps ({methodData.steps.length})</h4>
+          <div className="space-y-3">
+            {methodData.steps.map((step, index) => (
+              <div key={step.id} className="p-4 border border-primary/20 rounded-lg bg-card/40">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-medium text-primary">
+                    {index + 1}
+                  </div>
+                  <div className="flex-1">
+                    <h5 className="font-medium text-foreground">{step.title}</h5>
+                    <p className="text-sm text-muted-foreground mt-1">{step.description}</p>
+                    <div className="flex items-center gap-4 mt-2">
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {step.estimatedDuration}
+                      </span>
+                      <Badge variant={step.riskLevel === 'high' ? 'destructive' : step.riskLevel === 'medium' ? 'secondary' : 'default'}>
+                        {step.riskLevel} risk
+                      </Badge>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );
