@@ -35,24 +35,8 @@ export async function generateLatexPDF(
       throw new Error(`LaTeX generation failed: ${data.error || 'Unknown error'}`);
     }
 
-    // For now, download the LaTeX source file
-    // In production, this would be the compiled PDF
-    const latexBlob = new Blob([data.latexSource], { type: 'text/plain' });
-    const url = URL.createObjectURL(latexBlob);
-    
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename.replace('.pdf', '.tex');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
-    console.log('LaTeX source downloaded successfully');
-
-    // Also create a simple fallback PDF using current system
-    // This is temporary until we have full LaTeX compilation
-    await generateFallbackPDF(markdown, filename.replace('.tex', '.pdf'), options);
+    // Generate PDF using the fallback system
+    await generateFallbackPDF(markdown, filename, options);
 
   } catch (error) {
     console.error('LaTeX PDF generation error:', error);
