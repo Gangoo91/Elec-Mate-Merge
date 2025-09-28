@@ -1,5 +1,5 @@
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import 'jspdf-autotable';
 import { format as formatDate } from "date-fns";
 
 // Extend jsPDF with autoTable
@@ -184,6 +184,19 @@ export class ProfessionalElectricalPDFGenerator {
         ["Installation Date", formatDate(new Date(), "dd/MM/yyyy")],
         ["Test Date", formatDate(new Date(), "dd/MM/yyyy")]
       ];
+
+      // Check if autoTable is available
+      if (typeof this.doc.autoTable !== 'function') {
+        console.error('autoTable not available, rendering simple text instead');
+        tableData.forEach(([label, value]) => {
+          this.doc.setFont("helvetica", "bold");
+          this.doc.text(label + ':', this.MARGIN, this.yPosition);
+          this.doc.setFont("helvetica", "normal");
+          this.doc.text(value, this.MARGIN + 60, this.yPosition);
+          this.yPosition += 8;
+        });
+        return;
+      }
 
       this.doc.autoTable({
         startY: this.yPosition,
@@ -436,6 +449,13 @@ export class ProfessionalElectricalPDFGenerator {
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
+        // Check if jsPDF autoTable is available
+        if (typeof this.doc.autoTable !== 'function') {
+          console.error('jsPDF autoTable plugin not available');
+          reject(new Error('PDF table generation not available. Please check jsPDF autoTable plugin.'));
+          return;
+        }
+
         // Add professional header
         this.addProfessionalHeader(options);
         
@@ -472,7 +492,8 @@ export class ProfessionalElectricalPDFGenerator {
         
       } catch (error) {
         console.error('Professional PDF generation failed:', error);
-        reject(error);
+        console.error('Error details:', error);
+        reject(new Error(`PDF generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`));
       }
     });
   }
