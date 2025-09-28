@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { MarkdownViewer } from '@/components/ui/MarkdownViewer';
 import { useToast } from '@/hooks/use-toast';
-import pdf from 'md-to-pdf';
+import html2pdf from 'html2pdf.js';
 
 interface GeneratedReportDisplayProps {
   report: string;
@@ -116,35 +116,46 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     }
   };
 
-  // Markdown to PDF conversion
+  // Markdown to PDF conversion using html2pdf
   const handleDownload = async () => {
     try {
       const reportTypeName = reportTypeMap[template] || 'Electrical Report';
       const filename = `${reportTypeName.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
       
-      // Convert markdown to PDF
-      const pdfResult = await pdf({ content: report }, {
-        pdf_options: {
-          format: 'A4',
-          margin: {
-            top: '20mm',
-            right: '20mm',
-            bottom: '20mm',
-            left: '20mm'
-          }
-        }
-      });
+      // Convert markdown to HTML
+      const markdownContent = report
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^\- (.*$)/gim, '<li>$1</li>')
+        .replace(/\n/g, '<br>');
 
-      // Create blob and download
-      const blob = new Blob([pdfResult.content], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      // Create HTML content with styling
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;">
+          <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #f0f0f0; padding-bottom: 20px;">
+            <h1 style="color: #2c3e50; margin-bottom: 10px;">${reportTypeName}</h1>
+            <p style="color: #7f8c8d; margin: 0;">Generated: ${new Date().toLocaleDateString('en-GB')}</p>
+            <p style="color: #7f8c8d; margin: 0; font-size: 12px;">BS 7671:2018+A3:2024 COMPLIANT</p>
+          </div>
+          <div style="font-size: 14px;">
+            ${markdownContent}
+          </div>
+        </div>
+      `;
+
+      // Generate PDF using html2pdf
+      const opt = {
+        margin: 1,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+
+      await html2pdf().set(opt).from(htmlContent).save();
       
       toast({
         title: "PDF Generated",
