@@ -17,15 +17,27 @@ interface ReportData {
 const createPrompt = (template: string, formData: any, additionalNotes?: string) => {
   const basePrompt = `You are a qualified electrical engineer with expertise in BS 7671:2018+A3:2024 regulations. Generate a comprehensive, professional electrical report based on the provided data.
 
+CRITICAL FORMAT REQUIREMENT: Generate the report as properly structured HTML with embedded CSS styling.
+
 IMPORTANT REQUIREMENTS:
 - Use proper electrical terminology and BS 7671 regulation references
 - Include specific code references where applicable (e.g., Regulation 134.1.1)
 - Provide clear recommendations and actions
-- Format as a professional document with proper headings
+- Format as professional HTML document with proper headings and styling
 - Include safety classifications (C1, C2, C3) where relevant
 - Be thorough and detailed in your analysis
 - Include proper conclusions and next steps
 - Ensure compliance with UK electrical standards
+
+HTML FORMATTING REQUIREMENTS:
+- Start with a complete HTML document structure
+- Include embedded CSS for professional styling
+- Use semantic HTML elements (header, main, section, table, etc.)
+- Style tables with borders and proper formatting
+- Use appropriate colours for safety classifications (red for C1, orange for C2, yellow for C3)
+- Make it print-friendly and professional
+- Use British English throughout
+- Include proper typography and spacing
 
 Template Type: ${template}
 
@@ -34,24 +46,25 @@ ${JSON.stringify(formData, null, 2)}
 
 ${additionalNotes ? `Additional Notes: ${additionalNotes}` : ''}
 
-Generate a complete, professional electrical report that would be suitable for submission to Building Control or for insurance purposes. Include all necessary sections, technical details, and recommendations.`;
+Generate a complete, professional electrical report as HTML that would be suitable for submission to Building Control or for insurance purposes. Include all necessary sections, technical details, and recommendations with proper HTML structure and professional CSS styling.`;
 
   switch (template) {
     case 'eicr':
       return basePrompt + `
 
-Format as an EICR (Electrical Installation Condition Report) with:
+Format as an EICR (Electrical Installation Condition Report) HTML document with:
+- Professional header with report title and date
 - Executive Summary with overall condition assessment
-- Installation details and supply characteristics  
+- Installation details and supply characteristics in structured tables
 - Extent and limitations of inspection and testing
-- Schedule of Items Inspected with detailed findings
-- Schedule of Test Results with actual measurements
-- Fault classification (C1/C2/C3/FI) with specific regulation references
-- Recommendations for remedial work
+- Schedule of Items Inspected with detailed findings in table format
+- Schedule of Test Results with actual measurements in tables
+- Fault classification (C1/C2/C3/FI) with specific regulation references and colour coding
+- Recommendations for remedial work in prioritised list
 - Next inspection interval recommendation
 - Conclusion and declaration of compliance
 
-Include specific ohm readings, RCD trip times, and insulation resistance values where applicable.`;
+Include specific ohm readings, RCD trip times, and insulation resistance values in properly formatted tables. Use colour coding for safety classifications: red for C1 (danger), orange for C2 (potentially dangerous), yellow for C3 (improvement recommended).`;
 
     case 'minor-works':
       return basePrompt + `

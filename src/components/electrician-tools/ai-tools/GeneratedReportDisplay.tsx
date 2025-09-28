@@ -14,7 +14,7 @@ import {
   ZoomIn,
   ZoomOut
 } from 'lucide-react';
-import { MarkdownViewer } from '@/components/ui/MarkdownViewer';
+// Removed MarkdownViewer as we now display HTML directly
 import { useToast } from '@/hooks/use-toast';
 import html2pdf from 'html2pdf.js';
 
@@ -104,10 +104,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
             </style>
           </head>
           <body>
-            <h1>${reportTypeMap[template] || 'Electrical Report'}</h1>
-            <p><strong>Generated:</strong> ${new Date().toLocaleDateString('en-GB')}</p>
-            <hr>
-            ${report.replace(/\n/g, '<br>')}
+            ${report}
           </body>
         </html>
       `);
@@ -116,37 +113,44 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     }
   };
 
-  // Markdown to PDF conversion using html2pdf
+  // Download as HTML file
+  const handleDownloadHTML = async () => {
+    try {
+      const reportTypeName = reportTypeMap[template] || 'Electrical Report';
+      const filename = `${reportTypeName.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.html`;
+      
+      // Create blob with HTML content
+      const blob = new Blob([report], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+      toast({
+        title: "HTML Downloaded",
+        description: "Your electrical report has been downloaded as an HTML file."
+      });
+    } catch (error) {
+      console.error('HTML download error:', error);
+      toast({
+        title: "Download Failed",
+        description: "There was an error downloading the HTML file. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // HTML to PDF conversion using html2pdf
   const handleDownload = async () => {
     try {
       const reportTypeName = reportTypeMap[template] || 'Electrical Report';
       const filename = `${reportTypeName.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
       
-      // Convert markdown to HTML
-      const markdownContent = report
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-        .replace(/^\- (.*$)/gim, '<li>$1</li>')
-        .replace(/\n/g, '<br>');
-
-      // Create HTML content with styling
-      const htmlContent = `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;">
-          <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #f0f0f0; padding-bottom: 20px;">
-            <h1 style="color: #2c3e50; margin-bottom: 10px;">${reportTypeName}</h1>
-            <p style="color: #7f8c8d; margin: 0;">Generated: ${new Date().toLocaleDateString('en-GB')}</p>
-            <p style="color: #7f8c8d; margin: 0; font-size: 12px;">BS 7671:2018+A3:2024 COMPLIANT</p>
-          </div>
-          <div style="font-size: 14px;">
-            ${markdownContent}
-          </div>
-        </div>
-      `;
-
-      // Generate PDF using html2pdf
+      // Generate PDF directly from HTML content
       const opt = {
         margin: 1,
         filename: filename,
@@ -155,7 +159,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
       };
 
-      await html2pdf().set(opt).from(htmlContent).save();
+      await html2pdf().set(opt).from(report).save();
       
       toast({
         title: "PDF Generated",
@@ -266,11 +270,20 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
                 <Button
                   variant="outline"
                   size="sm"
+                  onClick={handleDownloadHTML}
+                  className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 shadow-sm"
+                >
+                  <FileText className="h-4 w-4 mr-2" />
+                  <span>HTML</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={handleDownload}
                   className="border-primary/30 text-primary hover:bg-primary/10 hover:border-primary/50 shadow-sm"
                 >
                   <Download className="h-4 w-4 mr-2" />
-                  <span>Download</span>
+                  <span>PDF</span>
                 </Button>
                 <Button
                   variant="outline"
@@ -293,9 +306,9 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
         style={{ fontSize: `${zoomLevel}%` }}
       >
         <div className="bg-background rounded-lg border border-border/20 p-6">
-          <MarkdownViewer 
-            content={report}
-            className="[&>*]:text-left [&_h1]:text-center [&_h1]:mx-auto"
+          <div 
+            className="prose prose-invert max-w-none [&>*]:text-left [&_h1]:text-center [&_h1]:mx-auto"
+            dangerouslySetInnerHTML={{ __html: report }}
           />
         </div>
       </div>
