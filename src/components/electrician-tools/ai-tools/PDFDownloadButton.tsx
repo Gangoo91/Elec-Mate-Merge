@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { generateMdToPDF } from '@/utils/md-to-pdf-generator';
+import { generateLaTeXStylePDF } from '@/utils/professional-latex-style-pdf';
 
 interface PDFDownloadButtonProps {
   report: string;
@@ -32,7 +32,7 @@ const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({
     try {
       const filename = `${reportTypeName.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
       
-      await generateMdToPDF(
+      await generateLaTeXStylePDF(
         report,
         filename,
         {
@@ -43,8 +43,7 @@ const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({
           includeTableOfContents: true,
           fontFamily: 'serif',
           fontSize: 11,
-          companyName: "Professional Electrical Services",
-          companyAddress: "Certified BS 7671:2018+A3:2024 Compliant"
+          companyName: "Professional Electrical Services"
         }
       );
       
