@@ -113,7 +113,7 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: error.message || 'Unknown error occurred',
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
         message: 'Failed to fetch job listings'
       }),
       { 

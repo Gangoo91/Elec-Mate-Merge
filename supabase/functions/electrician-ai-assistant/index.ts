@@ -15,7 +15,7 @@ serve(async (req) => {
   try {
     // Debug log for API key
     console.log('OpenAI API key available:', !!openAIApiKey);
-    console.log('Secret names available:', Deno.env.keys ? [...Deno.env.keys()].join(', ') : 'Cannot list keys');
+    console.log('Secret names available: Cannot list keys in Deno environment');
     
     // Check if OpenAI API key is available
     if (!openAIApiKey) {
@@ -242,7 +242,7 @@ serve(async (req) => {
     console.log(`Sending request to OpenAI API with prompt type: ${type}`);
     
     // Prepare messages based on type
-    let messages = [{ role: 'system', content: systemMessage }];
+    let messages: any[] = [{ role: 'system', content: systemMessage }];
     
     if (type === "visual_analysis_advanced" && primary_image) {
       // Vision analysis with image input
@@ -349,7 +349,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in electrician-ai-assistant function:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error occurred' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

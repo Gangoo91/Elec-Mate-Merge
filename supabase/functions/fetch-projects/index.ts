@@ -106,7 +106,7 @@ Deno.serve(async (req) => {
     console.error('Error in fetch-projects function:', error);
     
     return new Response(
-      JSON.stringify({ error: 'Failed to fetch projects', details: error.message }),
+      JSON.stringify({ error: 'Failed to fetch projects', details: error instanceof Error ? error.message : 'Unknown error occurred' }),
       {
         headers: {
           ...corsHeaders,

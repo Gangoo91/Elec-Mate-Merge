@@ -251,7 +251,7 @@ serve(async (req) => {
         throw new Error('No valid data from MetalPriceAPI')
       }
     } catch (apiError) {
-      liveAttemptError = apiError.message;
+      liveAttemptError = apiError instanceof Error ? apiError.message : 'Unknown API error';
       console.error('MetalPriceAPI failed, falling back to database:', apiError)
       
       // Fallback to database if API fails
@@ -319,7 +319,7 @@ serve(async (req) => {
       
       if (metalType.includes('copper')) {
         console.log(`Adding copper grades for ${item.metal_type} at £${baseValue}`);
-        basePrice.subItems = [
+        (basePrice as any).subItems = [
           {
             id: `${index + 1}-bright`,
             name: 'Bright Copper Wire',
@@ -344,7 +344,7 @@ serve(async (req) => {
         ];
       } else if (metalType.includes('aluminium') || metalType.includes('aluminum')) {
         console.log(`Adding aluminum grades for ${item.metal_type} at £${baseValue}`);
-        basePrice.subItems = [
+        (basePrice as any).subItems = [
           {
             id: `${index + 1}-clean`,
             name: 'Clean Aluminum Wire',
@@ -369,7 +369,7 @@ serve(async (req) => {
         ];
       } else if (metalType.includes('steel')) {
         console.log(`Adding steel grades for ${item.metal_type} at £${baseValue}`);
-        basePrice.subItems = [
+        (basePrice as any).subItems = [
           {
             id: `${index + 1}-clean`,
             name: 'Clean Steel',
@@ -394,7 +394,7 @@ serve(async (req) => {
         ];
       } else if (metalType.includes('brass')) {
         console.log(`Adding brass grades for ${item.metal_type} at £${baseValue}`);
-        basePrice.subItems = [
+        (basePrice as any).subItems = [
           {
             id: `${index + 1}-clean`,
             name: 'Clean Brass Fittings',
@@ -419,7 +419,7 @@ serve(async (req) => {
         ];
       } else if (metalType.includes('lead')) {
         console.log(`Adding lead grades for ${item.metal_type} at £${baseValue}`);
-        basePrice.subItems = [
+        (basePrice as any).subItems = [
           {
             id: `${index + 1}-clean`,
             name: 'Clean Lead',
@@ -759,7 +759,7 @@ serve(async (req) => {
       dataSource,
       lastUpdated: formattedLastUpdated,
       // Debug: Show which metal prices have subItems
-      metalPricesWithSubItems: metalPrices.filter(p => p.subItems).map(p => ({ name: p.name, subItemsCount: p.subItems?.length }))
+      metalPricesWithSubItems: metalPrices.filter((p: any) => p.subItems).map((p: any) => ({ name: p.name, subItemsCount: p.subItems?.length }))
     });
 
     return new Response(
@@ -780,7 +780,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         error: 'Failed to fetch UK pricing data',
-        details: error.message 
+        details: error instanceof Error ? error.message : 'Unknown error occurred' 
       }),
       {
         status: 500,
