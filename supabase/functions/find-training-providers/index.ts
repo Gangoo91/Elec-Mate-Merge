@@ -264,8 +264,8 @@ serve(async (req) => {
       const types = place.types || [];
       
       // Higher score for educational institution types
-      if (types.some(t => ['university', 'school'].some(et => t.includes(et)))) score += 50;
-      if (types.some(t => ['establishment', 'point_of_interest'].some(et => t.includes(et)))) score += 30;
+      if (types.some((t: string) => ['university', 'school'].some(et => t.includes(et)))) score += 50;
+      if (types.some((t: string) => ['establishment', 'point_of_interest'].some(et => t.includes(et)))) score += 30;
       
       // Higher score for educational keywords in name
       const premiumKeywords = ['college', 'university', 'training center', 'training centre', 'institute'];
@@ -337,7 +337,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in find-training-providers:', error);
     return new Response(
-      JSON.stringify({ error: "Internal server error", details: error.message }),
+      JSON.stringify({ error: "Internal server error", details: error instanceof Error ? error.message : 'Unknown error occurred' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

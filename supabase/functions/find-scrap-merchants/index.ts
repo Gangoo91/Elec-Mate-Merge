@@ -138,7 +138,7 @@ serve(async (req) => {
     }
     
     // Process the results into our format
-    const merchants = placesData.results.map((place, index) => {
+    const merchants = placesData.results.map((place: any, index: number) => {
       // Calculate distance (would be more accurate with proper route calculation)
       const distance = calculateDistance(lat, lng, place.geometry.location.lat, place.geometry.location.lng);
       
@@ -171,14 +171,14 @@ serve(async (req) => {
     console.error("[FIND-SCRAP-MERCHANTS] Error searching for scrap merchants:", error);
     
     return new Response(
-      JSON.stringify({ error: 'Error searching for scrap merchants', details: error.message }),
+      JSON.stringify({ error: 'Error searching for scrap merchants', details: error instanceof Error ? error.message : 'Unknown error occurred' }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });
 
 // Calculate distance between two points in miles using Haversine formula
-function calculateDistance(lat1, lon1, lat2, lon2) {
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 3958.8; // Earth's radius in miles
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;

@@ -455,7 +455,7 @@ serve(async (req) => {
     
     if (!hasCopper) {
       console.log('No copper found in database, adding fallback copper data');
-      metalPrices.unshift({
+      metalPrices.unshift(({
         id: 999,
         name: 'Copper (kg)',
         value: '£8.45',
@@ -484,12 +484,12 @@ serve(async (req) => {
             trend: 'up' as const
           }
         ]
-      });
+      }) as any);
     }
     
     if (!hasAluminum) {
       console.log('No aluminum found in database, adding fallback aluminum data');
-      metalPrices.push({
+      metalPrices.push(({
         id: 998,
         name: 'Aluminium (kg)',
         value: '£1.85',
@@ -518,12 +518,12 @@ serve(async (req) => {
             trend: 'up' as const
           }
         ]
-      });
+      }) as any);
     }
     
     if (!hasSteel) {
       console.log('No steel found in database, adding fallback steel data');
-      metalPrices.push({
+      metalPrices.push(({
         id: 997,
         name: 'Steel (kg)',
         value: '£0.15',
@@ -552,12 +552,12 @@ serve(async (req) => {
             trend: 'down' as const
           }
         ]
-      });
+      }) as any);
     }
     
     if (!hasBrass) {
       console.log('No brass found in database, adding fallback brass data');
-      metalPrices.push({
+      metalPrices.push(({
         id: 996,
         name: 'Brass (kg)',
         value: '£5.20',
@@ -586,7 +586,7 @@ serve(async (req) => {
             trend: 'up' as const
           }
         ]
-      });
+      }) as any);
     }
 
     // Enhanced cable data with normalized pricing and variants

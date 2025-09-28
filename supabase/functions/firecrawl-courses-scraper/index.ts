@@ -321,7 +321,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in firecrawl-courses-scraper:', error);
     return new Response(JSON.stringify({
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       courses: [],
       total: 0,
       source: 'firecrawl'
