@@ -18,7 +18,48 @@ interface ProfessionalElectricalPDFOptions {
   watermark?: string;
 }
 
-// Enhanced markdown processing with proper formatting and text measurement
+// Enhanced HTML entity decoder
+const decodeHtmlEntities = (text: string): string => {
+  const entityMap: { [key: string]: string } = {
+    '&#x26;': '&',
+    '&#x3C;': '<',
+    '&#x3E;': '>',
+    '&#x22;': '"',
+    '&#x27;': "'",
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&apos;': "'",
+    '&nbsp;': ' ',
+    '&#8230;': '...',
+    '&#8211;': '–',
+    '&#8212;': '—',
+    '&#8216;': '\u2018',
+    '&#8217;': '\u2019',
+    '&#8220;': '"',
+    '&#8221;': '"'
+  };
+  
+  let decoded = text;
+  Object.entries(entityMap).forEach(([entity, char]) => {
+    decoded = decoded.replace(new RegExp(entity, 'g'), char);
+  });
+  
+  // Handle numeric HTML entities
+  decoded = decoded.replace(/&#(\d+);/g, (match, dec) => {
+    return String.fromCharCode(parseInt(dec, 10));
+  });
+  
+  // Handle hex HTML entities
+  decoded = decoded.replace(/&#x([0-9A-Fa-f]+);/g, (match, hex) => {
+    return String.fromCharCode(parseInt(hex, 16));
+  });
+  
+  return decoded;
+};
+
+// Enhanced markdown processing with comprehensive formatting and content deduplication
 const processMarkdownText = (text: string, doc: jsPDF): { 
   content: string; 
   isHeader: boolean; 
@@ -28,57 +69,107 @@ const processMarkdownText = (text: string, doc: jsPDF): {
   fontSize: number;
   fontWeight: string;
   fontStyle: string;
+  skip: boolean;
 } => {
-  let processedText = text.trim();
+  let processedText = decodeHtmlEntities(text.trim());
   let isHeader = false;
   let level = 0;
   let isList = false;
   let isCode = false;
-  let fontSize = 10;
+  let fontSize = 11;
   let fontWeight = 'normal';
   let fontStyle = 'normal';
+  let skip = false;
 
-  // Headers with proper font sizing
+  // Skip duplicate headers and template placeholders
+  if (processedText.includes('*[INSERT') || 
+      processedText.includes('[INSERT') ||
+      processedText === 'Minor Electrical Installation Works Certificate' ||
+      processedText === 'MINOR ELECTRICAL INSTALLATION WORKS CERTIFICATE') {
+    skip = true;
+    return { content: '', isHeader: false, level: 0, isList: false, isCode: false, fontSize: 11, fontWeight: 'normal', fontStyle: 'normal', skip };
+  }
+
+  // Process template variables first
+  processedText = processedText.replace(/\*\[INSERT\s+([^\]]+)\]\*/g, (match, placeholder) => {
+    const today = new Date();
+    switch (placeholder.toUpperCase()) {
+      case 'DATE': return today.toLocaleDateString('en-GB');
+      case 'TIME': return today.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      case 'INSPECTOR NAME': return '_________________';
+      case 'CLIENT NAME': return '_________________';
+      default: return `[${placeholder}]`;
+    }
+  });
+
+  // Headers with professional font hierarchy
   const headerMatch = processedText.match(/^(#{1,6})\s*(.+)$/);
   if (headerMatch) {
     isHeader = true;
     level = headerMatch[1].length;
     processedText = headerMatch[2];
-    fontSize = Math.max(16 - (level * 2), 10); // H1=14, H2=12, H3=10, etc.
-    fontWeight = 'bold';
+    
+    // Professional font hierarchy
+    switch (level) {
+      case 1: fontSize = 18; fontWeight = 'bold'; break;
+      case 2: fontSize = 14; fontWeight = 'bold'; break;
+      case 3: fontSize = 12; fontWeight = 'bold'; break;
+      case 4: fontSize = 11; fontWeight = 'bold'; break;
+      default: fontSize = 10; fontWeight = 'bold'; break;
+    }
   }
 
-  // Lists
+  // Enhanced list processing
   if (processedText.match(/^[-*+]\s+/)) {
     isList = true;
     processedText = processedText.replace(/^[-*+]\s+/, '• ');
-    fontSize = 9;
+    fontSize = 10;
   }
 
-  // Code blocks
+  // Numbered lists
+  if (processedText.match(/^\d+\.\s+/)) {
+    isList = true;
+    fontSize = 10;
+  }
+
+  // Code blocks and technical content
   if (processedText.includes('```') || processedText.match(/^    /)) {
     isCode = true;
-    fontSize = 8;
+    fontSize = 9;
+    fontWeight = 'normal';
+    fontStyle = 'normal';
     processedText = processedText.replace(/```/g, '').replace(/^    /gm, '');
   }
 
-  // Process bold and italic formatting
-  const boldMatches = processedText.match(/\*\*(.*?)\*\*/g);
-  const italicMatches = processedText.match(/(?<!\*)\*([^*]+)\*(?!\*)/g);
-  
-  if (boldMatches && !italicMatches) {
-    fontWeight = 'bold';
+  // Enhanced markdown formatting with nested support
+  let hasBold = false;
+  let hasItalic = false;
+
+  // Process bold first
+  if (processedText.includes('**')) {
+    hasBold = true;
     processedText = processedText.replace(/\*\*(.*?)\*\*/g, '$1');
-  } else if (italicMatches && !boldMatches) {
-    fontStyle = 'italic';
-    processedText = processedText.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '$1');
-  } else {
-    // Remove markdown syntax but preserve formatting info
-    processedText = processedText.replace(/\*\*(.*?)\*\*/g, '$1');
+  }
+
+  // Process italic
+  if (processedText.match(/(?<!\*)\*([^*]+)\*(?!\*)/)) {
+    hasItalic = true;
     processedText = processedText.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '$1');
   }
 
-  return { content: processedText, isHeader, level, isList, isCode, fontSize, fontWeight, fontStyle };
+  // Apply formatting
+  if (hasBold && !isHeader) fontWeight = 'bold';
+  if (hasItalic) fontStyle = 'italic';
+
+  // Remove any remaining markdown artifacts
+  processedText = processedText
+    .replace(/^\s*[-*+]\s*/, '') // Remove list markers if still present
+    .replace(/^\s*\d+\.\s*/, '') // Remove numbered list markers if still present
+    .replace(/`([^`]+)`/g, '$1') // Remove inline code markers
+    .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Convert links to just text
+    .trim();
+
+  return { content: processedText, isHeader, level, isList, isCode, fontSize, fontWeight, fontStyle, skip };
 };
 
 // Advanced text measurement and wrapping
@@ -313,9 +404,31 @@ export const generateEnhancedElectricalPDF = async (
   try {
     console.log('Starting enhanced electrical PDF generation...');
     
-    // Clean and preprocess content
-    const cleanContent = safeText(markdownContent);
-    console.log('Content cleaned and entities decoded');
+    // Enhanced content preprocessing with deduplication
+    let cleanContent = safeText(markdownContent);
+    
+    // Remove duplicate headers and clean up formatting
+    const contentLines = cleanContent.split('\n');
+    const dedupedLines: string[] = [];
+    const seenHeaders = new Set<string>();
+    
+    for (let i = 0; i < contentLines.length; i++) {
+      const line = contentLines[i].trim();
+      const isHeaderLine = line.match(/^#{1,6}\s+/);
+      
+      if (isHeaderLine) {
+        const headerText = line.replace(/^#{1,6}\s+/, '').trim().toLowerCase();
+        if (!seenHeaders.has(headerText)) {
+          seenHeaders.add(headerText);
+          dedupedLines.push(line);
+        }
+      } else if (line) {
+        dedupedLines.push(line);
+      }
+    }
+    
+    cleanContent = dedupedLines.join('\n');
+    console.log('Content cleaned, entities decoded, and duplicates removed');
     
     const doc = new jsPDF('p', 'mm', 'a4');
     const pageWidth = doc.internal.pageSize.getWidth();
@@ -384,7 +497,7 @@ export const generateEnhancedElectricalPDF = async (
     };
 
     // Split content into lines and process with enhanced formatting
-    const lines = cleanContent.split('\n');
+    const processedLines = cleanContent.split('\n');
     let currentLine = 0;
     const maxWidth = pageWidth - 36; // 18mm margins on each side
     const bottomMargin = 30; // Space for footer
@@ -393,8 +506,8 @@ export const generateEnhancedElectricalPDF = async (
     addHeader();
 
     // Process each line with enhanced formatting and smart layout
-    while (currentLine < lines.length) {
-      const line = lines[currentLine].trim();
+    while (currentLine < processedLines.length) {
+      const line = processedLines[currentLine].trim();
       
       if (!line) {
         yPosition += 3;
@@ -403,6 +516,12 @@ export const generateEnhancedElectricalPDF = async (
       }
 
       const processed = processMarkdownText(line, doc);
+      
+      // Skip processed lines or duplicates
+      if (processed.skip || !processed.content) {
+        currentLine++;
+        continue;
+      }
       
       // Set font based on content type with proper styling
       doc.setFont('helvetica', processed.fontWeight);
@@ -424,10 +543,10 @@ export const generateEnhancedElectricalPDF = async (
       
       // Handle tables separately
       if (line.includes('|') && line.split('|').length > 2) {
-        yPosition = addEnhancedTable(line, lines, currentLine, yPosition, doc, maxWidth, pageHeight, bottomMargin, options);
+        yPosition = addEnhancedTable(line, processedLines, currentLine, yPosition, doc, maxWidth, pageHeight, bottomMargin, options);
         
         // Skip processed table lines
-        while (currentLine < lines.length && lines[currentLine].includes('|')) {
+        while (currentLine < processedLines.length && processedLines[currentLine].includes('|')) {
           currentLine++;
         }
         continue;
@@ -457,13 +576,20 @@ export const generateEnhancedElectricalPDF = async (
           doc.setTextColor(0, 0, 0); // Black
         }
 
-        // Handle special formatting for electrical symbols
+        // Enhanced electrical symbol processing with proper Unicode
         const symbolProcessedLine = wrappedLine
-          .replace(/Ω/g, 'Ω')
-          .replace(/≥/g, '≥')
-          .replace(/±/g, '±')
-          .replace(/°/g, '°')
-          .replace(/µ/g, 'µ');
+          .replace(/©/g, 'Ω')  // Common encoding issue
+          .replace(/â‰¥/g, '≥')  // UTF-8 encoding fix
+          .replace(/Â±/g, '±')   // UTF-8 encoding fix
+          .replace(/Â°/g, '°')   // UTF-8 encoding fix
+          .replace(/Âµ/g, 'µ')   // UTF-8 encoding fix
+          .replace(/&Omega;/g, 'Ω')
+          .replace(/&ge;/g, '≥')
+          .replace(/&plusmn;/g, '±')
+          .replace(/&deg;/g, '°')
+          .replace(/&micro;/g, 'µ')
+          .replace(/ohm/gi, 'Ω')
+          .replace(/ohms/gi, 'Ω');
 
         doc.text(symbolProcessedLine, 18, yPosition);
         yPosition += lineHeight;
