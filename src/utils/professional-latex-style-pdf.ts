@@ -175,7 +175,11 @@ export const generateLaTeXStylePDF = async (
           pdf.setFontSize(8);
           pdf.setTextColor(120, 120, 120);
           pdf.text(safeText(title), margins.left, margins.top - 8);
-          pdf.text(formatDate(new Date(), 'MMMM yyyy'), pageWidth - margins.right, margins.top - 8, { align: 'right' });
+          try {
+            pdf.text(formatDate(new Date(), 'MMMM yyyy'), pageWidth - margins.right, margins.top - 8, { align: 'right' });
+          } catch (dateError) {
+            pdf.text(new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long' }), pageWidth - margins.right, margins.top - 8, { align: 'right' });
+          }
         }
       }
     };
@@ -225,8 +229,13 @@ export const generateLaTeXStylePDF = async (
         pdf.text(`Certificate No: ${documentId}`, margins.left + 5, yPos + 8);
       }
       
-      const dateStr = formatDate(new Date(), 'dd/MM/yyyy');
-      pdf.text(`Date: ${dateStr}`, pageWidth - margins.right - 40, yPos + 8);
+      try {
+        const dateStr = formatDate(new Date(), 'dd/MM/yyyy');
+        pdf.text(`Date: ${dateStr}`, pageWidth - margins.right - 40, yPos + 8);
+      } catch (dateError) {
+        const dateStr = new Date().toLocaleDateString('en-GB');
+        pdf.text(`Date: ${dateStr}`, pageWidth - margins.right - 40, yPos + 8);
+      }
       
       if (watermark) {
         pdf.setFont(getFontConfig('bold'), 'bold');
@@ -636,38 +645,66 @@ export const generateLaTeXStylePDF = async (
       checkPageBreak(30);
       
       // Use autoTable for professional table formatting
-      pdf.autoTable({
-        head: [headers],
-        body: dataRows,
-        startY: yPosition,
-        margin: { left: margins.left, right: margins.right },
-        styles: {
-          fontSize: 9,
-          cellPadding: 3,
-          lineColor: [0, 0, 0],
-          lineWidth: 0.5,
-          textColor: [0, 0, 0],
-          font: 'helvetica'
-        },
-        headStyles: {
-          fillColor: [240, 240, 240],
-          fontStyle: 'bold',
-          halign: 'left'
-        },
-        bodyStyles: {
-          fillColor: [255, 255, 255],
-          halign: 'left'
-        },
-        alternateRowStyles: {
-          fillColor: [248, 248, 248]
-        },
-        columnStyles: {
-          0: { cellWidth: 'auto' },
-          1: { cellWidth: 'auto' }
+      try {
+        pdf.autoTable({
+          head: [headers],
+          body: dataRows,
+          startY: yPosition,
+          margin: { left: margins.left, right: margins.right },
+          styles: {
+            fontSize: 9,
+            cellPadding: 3,
+            lineColor: [0, 0, 0],
+            lineWidth: 0.5,
+            textColor: [0, 0, 0],
+            font: 'helvetica'
+          },
+          headStyles: {
+            fillColor: [240, 240, 240],
+            fontStyle: 'bold',
+            halign: 'left'
+          },
+          bodyStyles: {
+            fillColor: [255, 255, 255],
+            halign: 'left'
+          },
+          alternateRowStyles: {
+            fillColor: [248, 248, 248]
+          },
+          columnStyles: {
+            0: { cellWidth: 'auto' },
+            1: { cellWidth: 'auto' }
+          }
+        });
+        
+        // Safely access the final Y position
+        const autoTableElement = pdf as any;
+        if (autoTableElement.lastAutoTable && autoTableElement.lastAutoTable.finalY) {
+          yPosition = autoTableElement.lastAutoTable.finalY + 10;
+        } else {
+          yPosition += 40; // Fallback spacing
         }
-      });
-      
-      yPosition = (pdf as any).lastAutoTable.finalY + 10;
+      } catch (tableError) {
+        console.warn('AutoTable failed, using fallback table rendering:', tableError);
+        // Fallback to simple table rendering
+        yPosition += 10;
+        headers.forEach((header, index) => {
+          pdf.setFont(getFontConfig('bold'), 'bold');
+          pdf.setFontSize(9);
+          pdf.text(header, margins.left + (index * 40), yPosition);
+        });
+        yPosition += 8;
+        
+        dataRows.forEach(row => {
+          row.forEach((cell, index) => {
+            pdf.setFont(getFontConfig(), 'normal');
+            pdf.setFontSize(9);
+            pdf.text(cell, margins.left + (index * 40), yPosition);
+          });
+          yPosition += 6;
+        });
+        yPosition += 10;
+      }
     };
     
     // Generate the professional electrical certificate
@@ -688,7 +725,13 @@ export const generateLaTeXStylePDF = async (
     
     // Generate filename
     const safeTitle = safeText(title).toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const finalFilename = filename || `${safeTitle}-${formatDate(new Date(), 'yyyy-MM-dd')}.pdf`;
+    let finalFilename: string;
+    try {
+      finalFilename = filename || `${safeTitle}-${formatDate(new Date(), 'yyyy-MM-dd')}.pdf`;
+    } catch (dateError) {
+      const dateStr = new Date().toISOString().split('T')[0];
+      finalFilename = filename || `${safeTitle}-${dateStr}.pdf`;
+    }
     
     // Save the PDF
     pdf.save(finalFilename);
