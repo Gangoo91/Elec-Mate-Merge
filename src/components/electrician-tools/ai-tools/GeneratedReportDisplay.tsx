@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { MarkdownViewer } from '@/components/ui/MarkdownViewer';
 import { useToast } from '@/hooks/use-toast';
-import { generateProfessionalElectricalPDF } from '@/utils/professional-electrical-pdf';
+import pdf from 'md-to-pdf';
 
 interface GeneratedReportDisplayProps {
   report: string;
@@ -116,35 +116,48 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
     }
   };
 
-  // Professional PDF generation with enhanced design
-  const handleDownloadPDF = async () => {
+  // Markdown to PDF conversion
+  const handleDownload = async () => {
     try {
       const reportTypeName = reportTypeMap[template] || 'Electrical Report';
       const filename = `${reportTypeName.toLowerCase().replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
       
-      await generateProfessionalElectricalPDF(report, reportTypeName, filename, {
-        reportType: reportTypeName,
-        companyName: "ElecConnect Professional",
-        includeSignatures: true,
-        watermark: "BS 7671:2018+A3:2024 COMPLIANT"
+      // Convert markdown to PDF
+      const pdfResult = await pdf({ content: report }, {
+        pdf_options: {
+          format: 'A4',
+          margin: {
+            top: '20mm',
+            right: '20mm',
+            bottom: '20mm',
+            left: '20mm'
+          }
+        }
       });
+
+      // Create blob and download
+      const blob = new Blob([pdfResult.content], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
       
       toast({
-        title: "Professional PDF Generated",
-        description: "Your enhanced electrical report PDF has been downloaded successfully.",
+        title: "PDF Generated",
+        description: "Your electrical report has been downloaded successfully."
       });
     } catch (error) {
       console.error('PDF generation error:', error);
       toast({
         title: "PDF Generation Failed",
-        description: "There was an error generating the professional PDF. Please try again.",
+        description: "There was an error generating the PDF. Please try again.",
         variant: "destructive"
       });
     }
-  };
-
-  const handleDownload = async () => {
-    await handleDownloadPDF();
   };
 
   const adjustZoom = (direction: 'in' | 'out') => {
