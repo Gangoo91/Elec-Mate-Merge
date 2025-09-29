@@ -280,9 +280,16 @@ const VisualAnalysis = () => {
   };
 
   const uploadImageToSupabase = async (file: File): Promise<string> => {
+    // Get authenticated user ID
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    
+    if (authError || !user) {
+      throw new Error('You must be logged in to upload images');
+    }
+
     const fileExt = file.name.split('.').pop();
     const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
-    const filePath = `visual-analysis/${fileName}`;
+    const filePath = `${user.id}/visual-analysis/${fileName}`;
 
     const { error: uploadError } = await supabase.storage
       .from('visual-uploads')
