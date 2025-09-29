@@ -216,89 +216,57 @@ const ReportWizard = () => {
     <div className="min-h-screen bg-elec-dark">
       <div className="px-4 py-6">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="mb-4 sm:mb-6 md:mb-8">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="p-3 bg-elec-yellow/10 rounded-xl">
-                <FileText className="h-7 w-7 text-elec-yellow" />
+          {/* Modern Header */}
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="p-2 bg-elec-yellow/10 rounded-lg">
+                <FileText className="h-6 w-6 text-elec-yellow" />
               </div>
-              <div className="text-center">
-                <h1 className="text-3xl font-bold text-white">General Report Writer</h1>
-                <p className="text-muted-foreground">
-                  Generate professional electrical certificates and condition reports
-                </p>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white">Report Writer</h1>
               </div>
             </div>
-
-            {/* Auto-save indicator */}
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Generate professional electrical certificates and condition reports with our intelligent wizard
+            </p>
+            
+            {/* Subtle Auto-save indicator */}
             {wizardData.lastSaved && (
-              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                <Save className="h-4 w-4" />
-                <span>Last saved: {new Date(wizardData.lastSaved).toLocaleTimeString()}</span>
+              <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground/70 mt-4">
+                <CheckCircle2 className="h-3 w-3" />
+                <span>Auto-saved at {new Date(wizardData.lastSaved).toLocaleTimeString()}</span>
               </div>
             )}
           </div>
-
-          {/* Enhanced Progress Section */}
-          <Card className="bg-elec-card border-elec-yellow/30 p-6 mb-8">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-              {/* Progress Info */}
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-white">Progress:</span>
-                  <Badge variant="outline" className="text-elec-yellow border-elec-yellow/50">
-                    Step {currentStepIndex + 1} of {steps.length}
-                  </Badge>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-muted-foreground">{Math.round(progress)}% Complete</span>
-                  <Progress value={progress} className="w-24 h-2" />
-                </div>
-              </div>
-
-              {/* Quick Actions */}
-            <div className="flex flex-wrap items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setWizardData({
-                      template: null,
-                      clientDetails: {},
-                      inspectionDetails: {},
-                      additionalNotes: "",
-                      isAutoSaving: false,
-                      lastSaved: null
-                    });
-                    setCurrentStep('template');
-                  }}
-                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10"
-                >
-                  <Loader2 className="h-4 w-4 mr-2" />
-                  Start New
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => toast({ title: "Report saved", description: "Your progress has been saved automatically" })}
-                  className="border-green-500/30 text-green-400 hover:bg-green-500/10"
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  Save Draft
-                </Button>
-              </div>
-            </div>
-
-          </Card>
 
           {/* Current Step Content */}
           <div className="animate-fade-in">
             {renderCurrentStep()}
           </div>
 
-          {/* Enhanced Mobile Floating Actions */}
-          <div className="fixed bottom-6 right-6 lg:hidden z-50">
-          </div>
+          {/* Quick Action Floating Button (Mobile) */}
+          {wizardData.template && (
+            <div className="fixed bottom-6 right-6 lg:hidden z-50">
+              <Button
+                size="sm"
+                onClick={() => {
+                  setWizardData({
+                    template: null,
+                    clientDetails: {},
+                    inspectionDetails: {},
+                    additionalNotes: "",
+                    isAutoSaving: false,
+                    lastSaved: null
+                  });
+                  setCurrentStep('template');
+                }}
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shadow-lg"
+              >
+                <Sparkles className="h-4 w-4 mr-2" />
+                New
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>
