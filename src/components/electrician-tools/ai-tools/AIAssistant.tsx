@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
+import ChatMessageRenderer from "@/components/apprentice/ojt/enhanced/ChatMessageRenderer";
 
 const AIAssistant = () => {
   const [prompt, setPrompt] = useState("");
@@ -223,25 +224,10 @@ const AIAssistant = () => {
                 </CardHeader>
                 <CardContent className="p-3 sm:p-4 pt-0">
                   <div className="prose prose-invert max-w-none">
-                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
-                      {String(analysisResult || '').split('\n').map((line, index) => (
-                        <p 
-                          key={index}
-                          className={
-                            line.match(/^(CALCULATION|SIZING|ASSESSMENT|ANALYSIS|RECOMMENDATION):/) ?
-                            'text-blue-400 font-semibold text-sm sm:text-base mt-3 sm:mt-4 mb-1 sm:mb-2 first:mt-0' :
-                            line.endsWith(':') && line.length < 50 ?
-                            'font-medium text-blue-300 mt-2 sm:mt-3 mb-1' :
-                            line.startsWith('•') || line.startsWith('-') ?
-                            'text-gray-300 ml-3 sm:ml-4 my-1' :
-                            line.trim() === '' ? 'my-1 sm:my-2' :
-                            'my-1'
-                          }
-                        >
-                          {line}
-                        </p>
-                      ))}
-                    </div>
+                    <ChatMessageRenderer 
+                      content={String(analysisResult || '')} 
+                      isUser={false} 
+                    />
                   </div>
                 </CardContent>
               </Card>
@@ -260,27 +246,10 @@ const AIAssistant = () => {
                 </CardHeader>
                 <CardContent className="p-3 sm:p-4 pt-0">
                   <div className="prose prose-invert max-w-none">
-                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
-                      {String(regulationsResult || '').split('\n').map((line, index) => (
-                        <p 
-                          key={index}
-                          className={
-                            line.match(/^(Regulation|BS 7671|IET|Section)/i) ?
-                            'text-purple-400 font-semibold text-sm sm:text-base mt-3 sm:mt-4 mb-1 sm:mb-2 first:mt-0' :
-                            line.match(/^\d{3}\.\d/) ?
-                            'text-purple-400 font-medium mt-2 sm:mt-3 mb-1' :
-                            line.endsWith(':') && line.length < 50 ?
-                            'font-medium text-purple-300 mt-2 sm:mt-3 mb-1' :
-                            line.startsWith('•') || line.startsWith('-') ?
-                            'text-gray-300 ml-3 sm:ml-4 my-1' :
-                            line.trim() === '' ? 'my-1 sm:my-2' :
-                            'my-1'
-                          }
-                        >
-                          {line}
-                        </p>
-                      ))}
-                    </div>
+                    <ChatMessageRenderer 
+                      content={String(regulationsResult || '')} 
+                      isUser={false} 
+                    />
                   </div>
                 </CardContent>
               </Card>
