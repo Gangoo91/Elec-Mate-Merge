@@ -515,7 +515,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                 <CardContent className="p-6 pt-0">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div className="space-y-4">
-                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-elec-yellow/10">
+                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-elec-yellow/10 min-w-fit">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-10 h-10 bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/20 rounded-xl flex items-center justify-center border border-elec-yellow/40 flex-shrink-0">
                             <Calculator className="h-5 w-5 text-elec-yellow" />
