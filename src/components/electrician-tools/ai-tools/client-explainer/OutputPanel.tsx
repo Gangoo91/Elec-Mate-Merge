@@ -248,7 +248,7 @@ Thank you for choosing our electrical services.`;
             {/* Output formats */}
             <Tabs defaultValue="standard" className="w-full">
               <TabsList className="mobile-grid-responsive grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
-                <TabsTrigger value="standard" className="mobile-tap-highlight touch-target text-xs sm:text-sm">
+                <TabsTrigger value="standard" className="mobile-tap-highlight touch-target text-xs sm:text-sm px-2">
                   Explanation
                 </TabsTrigger>
                 <TabsTrigger value="email" className="mobile-tap-highlight touch-target text-xs sm:text-sm">
