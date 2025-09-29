@@ -124,17 +124,17 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
           
           // Custom list styling
           ul: ({ children }) => (
-            <ul className="list-disc list-inside space-y-2 ml-4 my-4">
+            <ul className="list-disc pl-6 space-y-2 my-4">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="list-decimal list-inside space-y-2 ml-4 my-4">
+            <ol className="list-decimal pl-6 space-y-2 my-4">
               {children}
             </ol>
           ),
           li: ({ children }) => (
-            <li className="text-[hsl(var(--text-muted))] font-normal ml-2 pl-1">
+            <li className="text-[hsl(var(--text-muted))] font-normal">
               {processElectricalContent(children)}
             </li>
           ),
