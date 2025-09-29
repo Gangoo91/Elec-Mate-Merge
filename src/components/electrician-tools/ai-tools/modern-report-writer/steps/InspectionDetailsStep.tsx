@@ -224,7 +224,7 @@ const InspectionDetailsStep: React.FC<InspectionDetailsStepProps> = ({
 
       {/* Faults and Observations */}
       <Card className="bg-elec-gray border-elec-yellow/30 p-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between flex-wrap mb-4">
           <div className="flex items-center gap-2">
             <FileWarning className="h-5 w-5 text-elec-yellow" />
             <h3 className="text-lg font-medium text-white">Faults & Observations</h3>
