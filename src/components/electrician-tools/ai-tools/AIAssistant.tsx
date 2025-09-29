@@ -46,9 +46,17 @@ const AIAssistant = () => {
       
       // Handle both structured and regular responses
       if (data.analysis && data.regulations) {
-        // Structured response
-        setAnalysisResult(data.analysis);
-        setRegulationsResult(data.regulations);
+        // Structured response - handle both string and object formats
+        const analysisText = typeof data.analysis === 'string' ? data.analysis : 
+          typeof data.analysis === 'object' ? Object.values(data.analysis).join('\n\n') : 
+          String(data.analysis);
+        
+        const regulationsText = typeof data.regulations === 'string' ? data.regulations :
+          typeof data.regulations === 'object' ? Object.values(data.regulations).join('\n\n') :
+          String(data.regulations);
+          
+        setAnalysisResult(analysisText);
+        setRegulationsResult(regulationsText);
       } else if (data.response) {
         // Fallback to regular response - split into sections
         const response = data.response;

@@ -216,14 +216,16 @@ serve(async (req) => {
           - Related standards (IET guidelines, Part P, Building Regs)
           - Professional certification requirements
 
-          You must respond with valid JSON in this exact format:
+          CRITICAL: You must respond with valid JSON where both "analysis" and "regulations" are plain text strings (NOT objects or arrays).
+
+          Format requirements:
           {
-            "analysis": "Your detailed technical analysis here with calculations, safety considerations, and practical guidance...",
-            "regulations": "Your specific BS 7671 regulation references here with exact clause numbers and compliance requirements..."
+            "analysis": "Write your complete technical analysis as a single plain text string with line breaks (\\n) for formatting. Include calculations, safety considerations, and practical guidance in readable paragraph format.",
+            "regulations": "Write your complete regulation references as a single plain text string with line breaks (\\n) for formatting. Include specific BS 7671 clause numbers and compliance requirements in readable paragraph format."
           }
 
           Always use British English spelling and UK electrical terminology (earth, consumer unit, etc.).
-          Ensure both sections are comprehensive and directly address the user's query.
+          Ensure both sections are comprehensive, formatted as readable text strings, and directly address the user's query.
         `;
         break;
         
