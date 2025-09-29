@@ -45,7 +45,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
       if (trimmed.match(/^[-•]\s+/)) {
         return (
           <p key={index} className="mb-2 ml-4 leading-relaxed text-gray-100 flex items-start gap-3">
-            <span className="text-elec-yellow mt-2">•</span>
+            <span className="text-elec-yellow">•</span>
             <span>{trimmed.replace(/^[-•]\s+/, '')}</span>
           </p>
         );
