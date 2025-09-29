@@ -79,7 +79,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
   };
 
   return (
-    <div className={`max-w-[85%] rounded-xl p-5 ${
+    <div className={`w-full max-w-[85%] rounded-xl p-5 ${
       isUser 
         ? 'bg-elec-yellow text-elec-gray ml-4 shadow-lg' 
         : 'bg-gradient-to-br from-elec-gray to-gray-800 border border-gray-600 mr-4 shadow-xl'
