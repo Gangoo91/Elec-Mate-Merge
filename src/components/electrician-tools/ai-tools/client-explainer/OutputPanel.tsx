@@ -242,7 +242,7 @@ Thank you for choosing our electrical services.`;
           )}
         </div>
       </CardHeader>
-      <CardContent className="mobile-padding space-y-4">
+      <CardContent className="p-0 space-y-4">
         {content ? (
           <>
             {/* Output formats */}
