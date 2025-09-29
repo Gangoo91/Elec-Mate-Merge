@@ -418,7 +418,7 @@ Please provide exhaustive detail for materials - include everything from the sma
           <div className="max-w-5xl mx-auto px-2 sm:px-0">
             <Card className="bg-gradient-to-br from-elec-grey/90 to-elec-grey/70 border border-elec-yellow/20 backdrop-blur-sm shadow-2xl">
               <CardHeader className="p-4 sm:p-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-4">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-green-500/30 to-green-600/20 rounded-xl flex items-center justify-center border border-green-500/40">
                       <CheckCircle2 className="h-6 w-6 text-green-400" />
