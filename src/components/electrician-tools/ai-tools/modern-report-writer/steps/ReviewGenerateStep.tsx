@@ -123,7 +123,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
       <div className="space-y-6">
         {/* Header with back to wizard option */}
         <Card className="bg-elec-gray border-elec-yellow/30 p-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 flex-wrap">
             <div>
               <h2 className="text-2xl font-bold text-white mb-2">Generated Report</h2>
               <p className="text-muted-foreground">
