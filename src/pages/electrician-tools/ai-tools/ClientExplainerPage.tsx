@@ -137,7 +137,7 @@ const ClientExplainerPage = () => {
               {/* Smart Input Section */}
               <Card className="mobile-card border-border/50 bg-card/50">
                 <CardHeader className="mobile-padding">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3">
                     <div className="flex items-center space-x-2">
                       <Brain className="h-5 w-5 text-elec-yellow" />
                       <CardTitle className="mobile-heading">Client Explanation Tool</CardTitle>
