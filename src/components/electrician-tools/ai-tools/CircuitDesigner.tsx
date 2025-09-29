@@ -388,7 +388,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                             <scenario.icon className="h-5 w-5 text-elec-yellow" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h5 className="font-medium text-white text-sm mb-1 group-hover:text-elec-yellow transition-colors">{scenario.title}</h5>
+                            <h5 className="font-medium text-white text-sm mb-1 group-hover:text-elec-yellow transition-colors break-words">{scenario.title}</h5>
                             <p className="text-gray-400 text-xs leading-relaxed text-wrap">{scenario.description}</p>
                           </div>
                         </div>
