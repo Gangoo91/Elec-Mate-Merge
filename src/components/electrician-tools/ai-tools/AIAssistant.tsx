@@ -196,7 +196,7 @@ const AIAssistant = () => {
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="border-neutral-600/50 text-gray-300 hover:bg-neutral-700/50 hover:border-neutral-500 h-auto py-2 sm:py-3 px-3 sm:px-4 text-left justify-start text-xs sm:text-sm"
+                    className="border-neutral-600/50 text-gray-300 hover:bg-neutral-700/50 hover:border-neutral-500 h-auto py-2 sm:py-3 px-3 sm:px-4 text-left justify-start text-xs sm:text-sm whitespace-normal"
                     onClick={() => setPrompt(query)}
                   >
                     {query}
