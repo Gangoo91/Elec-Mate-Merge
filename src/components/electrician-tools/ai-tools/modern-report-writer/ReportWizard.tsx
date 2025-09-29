@@ -227,7 +227,7 @@ const ReportWizard = () => {
               </div>
             </div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Create BS 7671:2018 compliant electrical certificates and condition reports
+              Create BS7671 18th Edition compliant electrical certificates and condition reports
             </p>
             
             {/* Subtle Auto-save indicator */}
