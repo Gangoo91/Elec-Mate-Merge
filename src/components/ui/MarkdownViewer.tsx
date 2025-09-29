@@ -151,7 +151,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
             // Inline code
             if (!className) {
               return (
-                <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-[hsl(var(--text-muted))]">
+                <code className="px-1.5 py-0.5 rounded text-sm font-mono text-[hsl(var(--text-muted))]">
                   {children}
                 </code>
               );
