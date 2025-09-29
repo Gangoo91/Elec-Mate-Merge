@@ -470,7 +470,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                         </h2>
                       ),
                       h3: ({children}) => <h3 className="text-elec-yellow/90 font-semibold text-lg mb-2 mt-4">{children}</h3>,
-                      p: ({children}) => <p className="text-gray-300 mb-3 leading-relaxed">{children}</p>,
+                      p: ({children}) => <p className="text-muted-foreground mb-3 leading-relaxed text-base">{children}</p>,
                       ul: ({children}) => <ul className="text-gray-300 mb-4 ml-6 space-y-1">{children}</ul>,
                       ol: ({children}) => <ol className="text-gray-300 mb-4 ml-6 space-y-1">{children}</ol>,
                       li: ({children}) => <li className="leading-relaxed">{children}</li>,
