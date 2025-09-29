@@ -135,7 +135,7 @@ const ClientExplainerPage = () => {
             {/* Input Panel - Full width on mobile, 2 cols on xl */}
             <div className="xl:col-span-2 space-y-4 mobile-section-spacing">
               {/* Smart Input Section */}
-              <Card className="mobile-card border-border/50 bg-card/50">
+              <Card className="mobile-card border-border/50 bg-card/50 p-0">
                 <CardHeader className="mobile-padding">
                   <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3">
                     <div className="flex items-center space-x-2">
