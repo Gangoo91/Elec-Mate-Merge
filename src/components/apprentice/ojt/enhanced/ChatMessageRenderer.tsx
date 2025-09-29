@@ -23,48 +23,40 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
       // Detect section headers with emojis (like "⚡ Key Points:")
       if (trimmed.match(/^[⚡🔧⚠️📋💡🎯📖🔍✅❓🚨📊🎓💪🛠️⭐]\s+[A-Z][^:]*:/)) {
         return (
-          <div key={index} className="mb-4 mt-6 first:mt-0">
-            <h4 className="text-elec-yellow font-semibold text-lg mb-3 flex items-center gap-2">
-              {trimmed}
-            </h4>
-          </div>
+          <h4 key={index} className="mb-4 mt-6 first:mt-0 text-elec-yellow font-semibold text-lg flex items-center gap-2">
+            {trimmed}
+          </h4>
         );
       }
       
       // Detect numbered steps (1. 2. 3. etc.)
       if (trimmed.match(/^\d+\.\s+/)) {
         return (
-          <div key={index} className="mb-3 ml-4">
-            <p className="leading-relaxed text-gray-100 flex items-start gap-3">
-              <span className="text-elec-yellow font-semibold min-w-fit">
-                {trimmed.match(/^\d+\./)?.[0]}
-              </span>
-              <span>{trimmed.replace(/^\d+\.\s+/, '')}</span>
-            </p>
-          </div>
+          <p key={index} className="mb-3 ml-4 leading-relaxed text-gray-100 flex items-start gap-3">
+            <span className="text-elec-yellow font-semibold min-w-fit">
+              {trimmed.match(/^\d+\./)?.[0]}
+            </span>
+            <span>{trimmed.replace(/^\d+\.\s+/, '')}</span>
+          </p>
         );
       }
       
       // Detect bullet points (- or • )
       if (trimmed.match(/^[-•]\s+/)) {
         return (
-          <div key={index} className="mb-2 ml-4">
-            <p className="leading-relaxed text-gray-100 flex items-start gap-3">
-              <span className="text-elec-yellow mt-2">•</span>
-              <span>{trimmed.replace(/^[-•]\s+/, '')}</span>
-            </p>
-          </div>
+          <p key={index} className="mb-2 ml-4 leading-relaxed text-gray-100 flex items-start gap-3">
+            <span className="text-elec-yellow mt-2">•</span>
+            <span>{trimmed.replace(/^[-•]\s+/, '')}</span>
+          </p>
         );
       }
       
       // Detect safety warnings (lines with ⚠️ but not headers)
       if (trimmed.includes('⚠️') && !trimmed.match(/^⚠️\s+[A-Z][^:]*:/)) {
         return (
-          <div key={index} className="mb-4 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg">
-            <p className="leading-relaxed text-orange-100 font-medium">
-              {trimmed}
-            </p>
-          </div>
+          <p key={index} className="mb-4 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg leading-relaxed text-orange-100 font-medium">
+            {trimmed}
+          </p>
         );
       }
       
