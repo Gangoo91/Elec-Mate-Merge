@@ -107,7 +107,9 @@ const FixPack: React.FC<FixPackProps> = ({
     }
   };
 
-  const completionPercentage = (completedSteps.length / fixPack.steps.length) * 100;
+  const completionPercentage = fixPack.steps?.length 
+    ? (completedSteps.length / fixPack.steps.length) * 100 
+    : 0;
 
   return (
     <Card className="border-border bg-card">
@@ -164,7 +166,7 @@ const FixPack: React.FC<FixPackProps> = ({
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium">Progress</span>
               <span className="text-sm text-muted-foreground">
-                {completedSteps.length}/{fixPack.steps.length} steps
+                {completedSteps.length}/{fixPack.steps?.length || 0} steps
               </span>
             </div>
             <Progress value={completionPercentage} />
@@ -208,7 +210,7 @@ const FixPack: React.FC<FixPackProps> = ({
             </Button>
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-3 mt-3">
-            {fixPack.steps.map((step, index) => {
+            {fixPack.steps?.map((step, index) => {
               const isCompleted = completedSteps.includes(step.id);
               const isCurrent = index === currentStep && !isCompleted;
               
