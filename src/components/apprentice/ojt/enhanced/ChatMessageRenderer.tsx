@@ -71,7 +71,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
       
       // Regular paragraphs
       return (
-        <p key={index} className="mb-4 last:mb-0 leading-relaxed text-gray-100">
+        <p key={index} className="mb-4 last:mb-0 leading-relaxed text-gray-100 bg-red-500">
           {trimmed}
         </p>
       );
