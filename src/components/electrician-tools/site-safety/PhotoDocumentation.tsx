@@ -2,13 +2,16 @@
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Camera, Upload, Download, Trash2, Eye, MapPin, Loader2, X } from "lucide-react";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
+import { Camera, Upload, Download, Trash2, Eye, MapPin, Loader2, X, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 import FileViewer from "@/components/shared/FileViewer";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
@@ -28,11 +31,13 @@ interface PhotoDoc {
 }
 
 const PhotoDocumentation = () => {
+  const { isMobile, touchSupport } = useMobileEnhanced();
   const [photos, setPhotos] = useState<PhotoDoc[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [viewingPhoto, setViewingPhoto] = useState<PhotoDoc | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
@@ -82,6 +87,26 @@ const PhotoDocumentation = () => {
     "Damage/Issues",
     "General"
   ];
+
+  const categoryOptions = categories.map(cat => ({
+    value: cat,
+    label: cat,
+    description: getCategoryDescription(cat)
+  }));
+
+  function getCategoryDescription(category: string): string {
+    const descriptions: { [key: string]: string } = {
+      "Before Work": "Photos taken before starting work",
+      "After Work": "Completion and cleanup photos",
+      "Safety Procedure": "Safety protocols in action",
+      "Hazard Identification": "Potential safety concerns",
+      "Equipment Setup": "Tool and equipment placement",
+      "Testing Results": "Test results and measurements",
+      "Damage/Issues": "Problems or damage found",
+      "General": "Miscellaneous documentation"
+    };
+    return descriptions[category] || "";
+  }
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -277,77 +302,84 @@ const PhotoDocumentation = () => {
             Photo Documentation
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="description">Photo Description</Label>
-              <Textarea
-                id="description"
-                value={newPhoto.description}
-                onChange={(e) => setNewPhoto(prev => ({ ...prev, description: e.target.value }))}
-                placeholder="Describe what this photo shows"
-                rows={2}
-              />
-            </div>
-            <div>
-              <Label htmlFor="location">Location/Area</Label>
-              <Input
-                id="location"
-                value={newPhoto.location}
-                onChange={(e) => setNewPhoto(prev => ({ ...prev, location: e.target.value }))}
-                placeholder="Where was this photo taken?"
-              />
-            </div>
-            <div>
-              <Label htmlFor="category">Category</Label>
-              <select
-                className="w-full p-2 border rounded-md bg-background"
-                value={newPhoto.category}
-                onChange={(e) => setNewPhoto(prev => ({ ...prev, category: e.target.value }))}
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <Label htmlFor="tags">Tags (comma-separated)</Label>
-              <Input
-                id="tags"
-                value={newPhoto.tags}
-                onChange={(e) => setNewPhoto(prev => ({ ...prev, tags: e.target.value }))}
-                placeholder="safety, equipment, testing"
-              />
-            </div>
+        <CardContent className="space-y-6">
+          <div className="space-y-6">
+            <MobileInputWrapper
+              label="Photo Description"
+              placeholder="Describe what this photo shows (required)"
+              value={newPhoto.description}
+              onChange={(value) => setNewPhoto(prev => ({ ...prev, description: value }))}
+              hint="Be specific about what the photo documents"
+              icon={<Camera className="h-5 w-5" />}
+              className="w-full"
+            />
+
+            <MobileInputWrapper
+              label="Location/Area"
+              placeholder="Where was this photo taken?"
+              value={newPhoto.location}
+              onChange={(value) => setNewPhoto(prev => ({ ...prev, location: value }))}
+              hint="Specific room, panel, or area name"
+              icon={<MapPin className="h-5 w-5" />}
+              className="w-full"
+            />
+
+            <MobileSelectWrapper
+              label="Category"
+              value={newPhoto.category}
+              onValueChange={(value) => setNewPhoto(prev => ({ ...prev, category: value }))}
+              options={categoryOptions}
+              placeholder="Select photo category"
+              icon={<Zap className="h-5 w-5" />}
+            />
+
+            <MobileInputWrapper
+              label="Tags"
+              placeholder="safety, equipment, testing"
+              value={newPhoto.tags}
+              onChange={(value) => setNewPhoto(prev => ({ ...prev, tags: value }))}
+              hint="Comma-separated keywords for easy searching"
+              className="w-full"
+            />
           </div>
 
           {/* GPS Location Toggle */}
-          <div className="flex items-center gap-2 p-4 bg-background/50 rounded-lg">
-            <input
-              type="checkbox"
-              id="gps-enabled"
-              checked={newPhoto.gpsEnabled}
-              onChange={(e) => setNewPhoto(prev => ({ ...prev, gpsEnabled: e.target.checked }))}
-              className="rounded border-elec-yellow/30"
-            />
-            <Label htmlFor="gps-enabled" className="flex items-center gap-2 cursor-pointer">
-              <MapPin className="h-4 w-4 text-elec-yellow" />
-              Enable GPS location tagging
-            </Label>
+          <div className="flex items-center gap-4 p-6 bg-card/50 rounded-xl border border-primary/20">
+            <div className="flex items-center gap-3">
+              <div 
+                className={`w-6 h-6 rounded-md border-2 flex items-center justify-center cursor-pointer transition-all touch-target ${
+                  newPhoto.gpsEnabled 
+                    ? 'bg-elec-yellow border-elec-yellow' 
+                    : 'border-primary/30 hover:border-elec-yellow/50'
+                }`}
+                onClick={() => setNewPhoto(prev => ({ ...prev, gpsEnabled: !prev.gpsEnabled }))}
+              >
+                {newPhoto.gpsEnabled && <div className="w-3 h-3 bg-black rounded-sm"></div>}
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className={`h-5 w-5 ${newPhoto.gpsEnabled ? 'text-elec-yellow' : 'text-muted-foreground'}`} />
+                <span className="font-medium text-base">Enable GPS location tagging</span>
+              </div>
+            </div>
           </div>
           
           {/* File Upload Area */}
-          <div 
-            className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
-              dragActive 
-                ? 'border-elec-yellow border-solid bg-elec-yellow/10' 
-                : 'border-elec-yellow/50'
-            }`}
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
-            onDragOver={handleDrag}
-            onDrop={handleDrop}
+          <MobileGestureHandler
+            onTap={() => !uploading && fileInputRef.current?.click()}
+            onLongPress={() => !uploading && cameraInputRef.current?.click()}
+            disabled={uploading}
           >
+            <div 
+              className={`border-2 border-dashed rounded-xl p-8 text-center transition-all touch-manipulation ${
+                dragActive 
+                  ? 'border-elec-yellow border-solid bg-elec-yellow/10 scale-[1.02]' 
+                  : 'border-elec-yellow/50 hover:border-elec-yellow/70'
+              } ${uploading ? 'opacity-50' : 'active:scale-[0.98]'}`}
+              onDragEnter={handleDrag}
+              onDragLeave={handleDrag}
+              onDragOver={handleDrag}
+              onDrop={handleDrop}
+            >
             <input
               ref={fileInputRef}
               type="file"
@@ -374,87 +406,108 @@ const PhotoDocumentation = () => {
                   <span className="text-sm font-medium">Uploading photos...</span>
                 </>
               ) : (
-                <>
-                  <Upload className="h-8 w-8 text-elec-yellow" />
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium">Drop images here or click to select</p>
-                    <p className="text-xs text-muted-foreground">JPG, PNG up to 10MB each</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="border-elec-yellow/30 hover:border-elec-yellow/60"
-                    >
-                      <Upload className="h-4 w-4 mr-2" />
-                      Browse Files
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => cameraInputRef.current?.click()}
-                      className="border-elec-yellow/30 hover:border-elec-yellow/60"
-                    >
-                      <Camera className="h-4 w-4 mr-2" />
-                      Take Photo
-                    </Button>
-                  </div>
-                </>
-              )}
+                  <>
+                    <Upload className="h-12 w-12 text-elec-yellow mb-4" />
+                    <div className="space-y-3">
+                      <p className="text-lg font-semibold">
+                        {isMobile ? "Tap to select photos" : "Drop images here or click to select"}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {isMobile ? "Hold to open camera • " : ""}JPG, PNG up to 10MB each
+                      </p>
+                    </div>
+                    <div className={`flex gap-3 mt-6 ${isMobile ? 'flex-col w-full' : 'flex-row'}`}>
+                      <MobileButton
+                        variant="elec-outline"
+                        size={isMobile ? "wide" : "default"}
+                        onClick={() => fileInputRef.current?.click()}
+                        className="touch-target"
+                      >
+                        <Upload className="h-5 w-5 mr-2" />
+                        Browse Files
+                      </MobileButton>
+                      <MobileButton
+                        variant="elec"
+                        size={isMobile ? "wide" : "default"}
+                        onClick={() => cameraInputRef.current?.click()}
+                        className="touch-target"
+                      >
+                        <Camera className="h-5 w-5 mr-2" />
+                        Take Photo
+                      </MobileButton>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
+          </MobileGestureHandler>
 
           {/* Selected Files Preview */}
           {selectedFiles.length > 0 && (
-            <Card className="border-elec-yellow/30">
-              <CardHeader>
-                <CardTitle className="text-sm">Selected Files ({selectedFiles.length})</CardTitle>
+            <Card className="border-elec-yellow/30 bg-card/50">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+                  Selected Files ({selectedFiles.length})
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <CardContent className="space-y-4">
+                <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2 md:grid-cols-4'}`}>
                   {selectedFiles.map((file, index) => (
-                    <div key={index} className="relative group">
-                      <AspectRatio ratio={1} className="bg-muted rounded-lg overflow-hidden">
-                        <img
-                          src={URL.createObjectURL(file)}
-                          alt={file.name}
-                          className="w-full h-full object-cover"
-                        />
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="destructive"
-                          className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => removeSelectedFile(index)}
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </AspectRatio>
-                      <p className="text-xs text-center mt-1 truncate">{file.name}</p>
-                    </div>
+                    <MobileGestureHandler
+                      key={index}
+                      onTap={() => removeSelectedFile(index)}
+                      onLongPress={() => {
+                        // Show file details on long press
+                        toast({
+                          title: file.name,
+                          description: `Size: ${(file.size / 1024 / 1024).toFixed(2)}MB`,
+                          variant: "default"
+                        });
+                      }}
+                    >
+                      <div className="relative group bg-background/50 rounded-xl overflow-hidden border border-primary/20">
+                        <AspectRatio ratio={isMobile ? 16/9 : 1} className="bg-muted">
+                          <img
+                            src={URL.createObjectURL(file)}
+                            alt={file.name}
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                            <MobileButton
+                              size="icon"
+                              variant="destructive"
+                              className={`${isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} transition-opacity touch-target`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeSelectedFile(index);
+                              }}
+                            >
+                              <X className="h-4 w-4" />
+                            </MobileButton>
+                          </div>
+                        </AspectRatio>
+                        <div className="p-3">
+                          <p className="text-sm font-medium truncate">{file.name}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {(file.size / 1024 / 1024).toFixed(2)}MB
+                          </p>
+                        </div>
+                      </div>
+                    </MobileGestureHandler>
                   ))}
                 </div>
-                <Button
-                  type="button"
+                <MobileButton
                   onClick={() => handleFileUpload()}
                   disabled={uploading || selectedFiles.length === 0}
-                  className="w-full mt-4 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  size="wide"
+                  variant="elec"
+                  loading={uploading}
+                  className="w-full touch-target"
                 >
-                  {uploading ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Uploading...
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload {selectedFiles.length} Photo(s)
-                    </>
-                  )}
-                </Button>
+                  <Upload className="h-5 w-5 mr-2" />
+                  Upload {selectedFiles.length} Photo{selectedFiles.length !== 1 ? 's' : ''}
+                </MobileButton>
               </CardContent>
             </Card>
           )}
@@ -462,149 +515,233 @@ const PhotoDocumentation = () => {
       </Card>
 
       {/* Photo Statistics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="border-blue-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-400">{photos.length}</div>
-            <div className="text-sm text-muted-foreground">Total Photos</div>
+      <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 md:grid-cols-4'}`}>
+        <Card className="border-primary/30 bg-card/50 hover:bg-card/70 transition-colors">
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-elec-yellow mb-2">{photos.length}</div>
+            <div className="text-sm font-medium text-muted-foreground">Total Photos</div>
           </CardContent>
         </Card>
-        <Card className="border-green-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-400">
+        <Card className="border-primary/30 bg-card/50 hover:bg-card/70 transition-colors">
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-elec-yellow mb-2">
               {photos.filter(p => p.category === "Safety Procedure").length}
             </div>
-            <div className="text-sm text-muted-foreground">Safety Photos</div>
+            <div className="text-sm font-medium text-muted-foreground">Safety Photos</div>
           </CardContent>
         </Card>
-        <Card className="border-yellow-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-400">
+        <Card className="border-primary/30 bg-card/50 hover:bg-card/70 transition-colors">
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-elec-yellow mb-2">
               {photos.filter(p => p.category === "Before Work").length}
             </div>
-            <div className="text-sm text-muted-foreground">Before Photos</div>
+            <div className="text-sm font-medium text-muted-foreground">Before Photos</div>
           </CardContent>
         </Card>
-        <Card className="border-purple-500/30">
-          <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-purple-400">
+        <Card className="border-primary/30 bg-card/50 hover:bg-card/70 transition-colors">
+          <CardContent className="p-6 text-center">
+            <div className="text-3xl font-bold text-elec-yellow mb-2">
               {photos.filter(p => p.category === "After Work").length}
             </div>
-            <div className="text-sm text-muted-foreground">After Photos</div>
+            <div className="text-sm font-medium text-muted-foreground">After Photos</div>
           </CardContent>
         </Card>
       </div>
 
       {/* Photo Gallery */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-white">Photo Gallery ({photos.length})</CardTitle>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-white flex items-center gap-2 text-lg">
+            <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+            Photo Gallery ({photos.length})
+          </CardTitle>
         </CardHeader>
         <CardContent>
           {photos.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              No photos uploaded yet. Start documenting your work with the upload tool above.
+            <div className="text-center py-12 text-muted-foreground">
+              <Camera className="h-12 w-12 mx-auto mb-4 opacity-50" />
+              <p className="text-lg font-medium mb-2">No photos uploaded yet</p>
+              <p className="text-sm">Start documenting your work with the upload tool above</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {photos.map((photo) => (
-                <Card key={photo.id} className="border-elec-yellow/30 overflow-hidden">
-                  <div className="relative">
-                    <AspectRatio ratio={4/3}>
-                      <img
-                        src={photo.file_url}
-                        alt={photo.description}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </AspectRatio>
-                    <div className="absolute top-2 left-2">
-                      <Badge className={getCategoryColor(photo.category)}>
-                        {photo.category}
-                      </Badge>
-                    </div>
-                    <div className="absolute top-2 right-2 flex gap-1">
-                      <FileViewer
-                        fileName={photo.filename}
-                        fileUrl={photo.file_url}
-                        fileType={photo.mime_type}
-                        trigger={
-                          <Button size="sm" variant="outline" className="h-6 w-6 p-0 bg-background/80 backdrop-blur-sm">
-                            <Eye className="h-3 w-3" />
-                          </Button>
-                        }
-                      />
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={() => removePhoto(photo.id)}
-                        className="h-6 w-6 p-0 bg-background/80 backdrop-blur-sm hover:bg-destructive/80"
-                      >
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <CardContent className="p-4">
-                    <div className="space-y-2">
-                      <div className="font-medium text-sm truncate">{photo.description}</div>
-                      <div className="text-xs text-muted-foreground">
-                        {new Date(photo.created_at).toLocaleString()}
+            <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+              {photos.map((photo, index) => (
+                <MobileGestureHandler
+                  key={photo.id}
+                  onTap={() => setViewingPhoto(photo)}
+                  onLongPress={() => {
+                    toast({
+                      title: "Photo Options",
+                      description: "Tap to view, swipe actions available",
+                      variant: "default"
+                    });
+                  }}
+                  onSwipeLeft={() => removePhoto(photo.id)}
+                >
+                  <Card className="border-elec-yellow/30 overflow-hidden bg-card/50 hover:bg-card/70 transition-all active:scale-[0.98]">
+                    <div className="relative">
+                      <AspectRatio ratio={isMobile ? 16/9 : 4/3}>
+                        <img
+                          src={photo.file_url}
+                          alt={photo.description}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </AspectRatio>
+                      <div className="absolute top-3 left-3">
+                        <Badge 
+                          className={`${getCategoryColor(photo.category)} text-white text-xs font-medium px-2 py-1`}
+                        >
+                          {photo.category}
+                        </Badge>
                       </div>
-                      {photo.location && (
-                        <div className="text-xs text-muted-foreground flex items-center gap-1">
-                          📍 {photo.location}
+                      <div className="absolute top-3 right-3 flex gap-2">
+                        <MobileButton
+                          size="icon"
+                          variant="outline"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setViewingPhoto(photo);
+                          }}
+                          className="h-10 w-10 bg-background/80 backdrop-blur-sm border-primary/30 touch-target"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </MobileButton>
+                        <MobileButton
+                          size="icon"
+                          variant="outline"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removePhoto(photo.id);
+                          }}
+                          className="h-10 w-10 bg-background/80 backdrop-blur-sm border-destructive/30 hover:bg-destructive/80 touch-target"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </MobileButton>
+                      </div>
+                      {isMobile && (
+                        <div className="absolute bottom-3 left-3 right-3">
+                          <div className="bg-black/50 backdrop-blur-sm rounded-lg px-3 py-2">
+                            <p className="text-white text-sm font-medium truncate">
+                              {photo.description}
+                            </p>
+                          </div>
                         </div>
                       )}
-                      {(photo.gps_latitude && photo.gps_longitude) && (
-                        <div className="text-xs text-muted-foreground flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          GPS: {photo.gps_latitude.toFixed(4)}, {photo.gps_longitude.toFixed(4)}
-                        </div>
-                      )}
-                      {photo.tags && photo.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1">
-                          {photo.tags.slice(0, 3).map((tag, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
-                              {tag}
-                            </Badge>
-                          ))}
-                          {photo.tags.length > 3 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{photo.tags.length - 3}
-                            </Badge>
+                    </div>
+                    
+                    {!isMobile && (
+                      <CardContent className="p-4">
+                        <div className="space-y-3">
+                          <div className="font-medium text-base truncate">{photo.description}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {new Date(photo.created_at).toLocaleDateString('en-GB', {
+                              day: '2-digit',
+                              month: '2-digit', 
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </div>
+                          {photo.location && (
+                            <div className="text-sm text-muted-foreground flex items-center gap-2">
+                              <MapPin className="h-4 w-4 text-elec-yellow" />
+                              {photo.location}
+                            </div>
+                          )}
+                          {(photo.gps_latitude && photo.gps_longitude) && (
+                            <div className="text-xs text-muted-foreground flex items-center gap-2">
+                              <div className="w-1 h-1 bg-elec-yellow rounded-full"></div>
+                              GPS: {photo.gps_latitude.toFixed(4)}, {photo.gps_longitude.toFixed(4)}
+                            </div>
+                          )}
+                          {photo.tags && photo.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {photo.tags.slice(0, 3).map((tag, index) => (
+                                <Badge key={index} variant="outline" className="text-xs">
+                                  {tag}
+                                </Badge>
+                              ))}
+                              {photo.tags.length > 3 && (
+                                <Badge variant="outline" className="text-xs">
+                                  +{photo.tags.length - 3}
+                                </Badge>
+                              )}
+                            </div>
                           )}
                         </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                      </CardContent>
+                    )}
+                  </Card>
+                </MobileGestureHandler>
               ))}
             </div>
           )}
         </CardContent>
       </Card>
 
+      {/* Photo Viewing Modal */}
+      {viewingPhoto && (
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setViewingPhoto(null)}
+        >
+          <div className="relative max-w-4xl max-h-full w-full bg-card rounded-xl overflow-hidden">
+            <div className="absolute top-4 right-4 z-10">
+              <MobileButton
+                size="icon"
+                variant="outline"
+                onClick={() => setViewingPhoto(null)}
+                className="bg-background/80 backdrop-blur-sm touch-target"
+              >
+                <X className="h-5 w-5" />
+              </MobileButton>
+            </div>
+            <img
+              src={viewingPhoto.file_url}
+              alt={viewingPhoto.description}
+              className="w-full h-auto max-h-[70vh] object-contain"
+            />
+            <div className="p-6 bg-background/95 backdrop-blur-sm">
+              <h3 className="font-semibold text-lg mb-2">{viewingPhoto.description}</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-muted-foreground">
+                <div>Category: {viewingPhoto.category}</div>
+                <div>Date: {new Date(viewingPhoto.created_at).toLocaleDateString()}</div>
+                {viewingPhoto.location && <div>Location: {viewingPhoto.location}</div>}
+                {viewingPhoto.tags.length > 0 && (
+                  <div className="sm:col-span-2">
+                    Tags: {viewingPhoto.tags.join(', ')}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Export Options */}
       {photos.length > 0 && (
-        <Card className="border-green-500/20 bg-green-500/10">
+        <Card className="border-primary/30 bg-card/50">
           <CardHeader>
-            <CardTitle className="text-green-300">Export Documentation</CardTitle>
+            <CardTitle className="text-elec-yellow flex items-center gap-2">
+              <Download className="h-5 w-5" />
+              Export Documentation
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap gap-4">
-              <Button variant="outline">
+            <div className={`grid gap-3 ${isMobile ? 'grid-cols-1' : 'grid-cols-3'}`}>
+              <MobileButton variant="elec-outline" size={isMobile ? "wide" : "default"}>
                 <Download className="h-4 w-4 mr-2" />
                 Export All Photos
-              </Button>
-              <Button variant="outline">
+              </MobileButton>
+              <MobileButton variant="elec-outline" size={isMobile ? "wide" : "default"}>
                 <Download className="h-4 w-4 mr-2" />
                 Generate Photo Report
-              </Button>
-              <Button variant="outline">
+              </MobileButton>
+              <MobileButton variant="elec-outline" size={isMobile ? "wide" : "default"}>
                 <Download className="h-4 w-4 mr-2" />
                 Export by Category
-              </Button>
+              </MobileButton>
             </div>
           </CardContent>
         </Card>
