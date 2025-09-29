@@ -134,7 +134,7 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
             </ol>
           ),
           li: ({ children }) => (
-            <li className="text-[hsl(var(--text-muted))] font-normal">
+            <li className="text-[hsl(var(--text-muted))] font-normal ml-2 pl-1">
               {processElectricalContent(children)}
             </li>
           ),
