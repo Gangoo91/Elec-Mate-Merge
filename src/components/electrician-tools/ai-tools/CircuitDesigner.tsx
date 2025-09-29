@@ -217,10 +217,10 @@ Please provide exhaustive detail for materials - include everything from the sma
           </div>
           
           <div className="space-y-4">
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-elec-yellow">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-elec-yellow break-words text-center">
               Circuit Design AI
             </h1>
-            <p className="text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed px-2">
+            <p className="text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed px-2 text-center break-words">
               Professional circuit design with comprehensive materials lists, BS 7671 compliance, and practical installation guidance
             </p>
           </div>
@@ -250,8 +250,8 @@ Please provide exhaustive detail for materials - include everything from the sma
                   <Zap className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg sm:text-xl lg:text-2xl text-white font-semibold">Design Your Circuit</CardTitle>
-                  <CardDescription className="text-gray-400 mt-1">
+                  <CardTitle className="text-lg sm:text-xl lg:text-2xl text-white font-semibold break-words">Design Your Circuit</CardTitle>
+                  <CardDescription className="text-gray-400 mt-1 break-words">
                     Describe your electrical requirements and get comprehensive design documentation
                   </CardDescription>
                 </div>
@@ -378,7 +378,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                   >
                     <div className="flex items-center gap-3">
                       <Lightbulb className="h-5 w-5 text-elec-yellow" />
-                      <h4 className="font-medium text-white">Quick Start Examples</h4>
+                      <h4 className="font-medium text-white break-words">Quick Start Examples</h4>
                     </div>
                     {expandedSections.examples ? 
                       <ChevronUp className="h-4 w-4 text-gray-400" /> : 
@@ -399,9 +399,9 @@ Please provide exhaustive detail for materials - include everything from the sma
                           <div className="w-10 h-10 bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 rounded-xl flex items-center justify-center flex-shrink-0 border border-elec-yellow/30 group-hover:border-elec-yellow/50 transition-colors">
                             <scenario.icon className="h-5 w-5 text-elec-yellow" />
                           </div>
-                          <div className="flex-1 min-w-0">
+                          <div className="flex-1 min-w-0 overflow-hidden">
                             <h5 className="font-medium text-white text-sm mb-1 group-hover:text-elec-yellow transition-colors break-words">{scenario.title}</h5>
-                            <p className="text-gray-400 text-xs leading-relaxed text-wrap">{scenario.description}</p>
+                            <p className="text-gray-400 text-xs leading-relaxed break-words">{scenario.description}</p>
                           </div>
                         </div>
                       </Button>
@@ -424,7 +424,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                       <CheckCircle2 className="h-6 w-6 text-green-400" />
                     </div>
                     <div>
-                      <CardTitle className="text-lg sm:text-xl text-white flex items-center gap-2">
+                      <CardTitle className="text-lg sm:text-xl text-white flex items-center gap-2 break-words">
                         Circuit Design Report
                         <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30">
                           Complete
@@ -513,7 +513,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                       <div className="w-10 h-10 bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/20 rounded-xl flex items-center justify-center border border-elec-yellow/40">
                         <FileText className="h-5 w-5 text-elec-yellow" />
                       </div>
-                      <CardTitle className="text-lg sm:text-xl text-white">What You'll Receive</CardTitle>
+                      <CardTitle className="text-lg sm:text-xl text-white break-words">What You'll Receive</CardTitle>
                     </div>
                     {expandedSections.guidance ? 
                       <ChevronUp className="h-5 w-5 text-gray-400" /> : 
@@ -527,74 +527,74 @@ Please provide exhaustive detail for materials - include everything from the sma
                 <CardContent className="p-4 sm:p-6 pt-0">
                   <div className="grid grid-cols-1 gap-4 sm:gap-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-elec-yellow/10">
+                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-elec-yellow/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/20 rounded-xl flex items-center justify-center border border-elec-yellow/40 flex-shrink-0">
                             <Calculator className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
                           </div>
-                          <h3 className="font-semibold text-white text-sm sm:text-base">Precise Calculations</h3>
+                          <h3 className="font-semibold text-white text-sm sm:text-base break-words min-w-0">Precise Calculations</h3>
                         </div>
-                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
                           Cable sizing, voltage drop, protection ratings, earth fault loop impedance, and derating factors
                         </p>
                       </div>
                       
-                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-blue-500/10">
+                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-blue-500/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500/30 to-blue-600/20 rounded-xl flex items-center justify-center border border-blue-500/40 flex-shrink-0">
                             <Building2 className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
                           </div>
-                          <h3 className="font-semibold text-white text-sm sm:text-base">Comprehensive Materials</h3>
+                          <h3 className="font-semibold text-white text-sm sm:text-base break-words min-w-0">Comprehensive Materials</h3>
                         </div>
-                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
                           Complete materials checklist with quantities, specifications, and part numbers for cables, protection, and hardware
                         </p>
                       </div>
                     
-                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-green-500/10">
+                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-green-500/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-500/30 to-green-600/20 rounded-xl flex items-center justify-center border border-green-500/40 flex-shrink-0">
                             <Home className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
                           </div>
-                          <h3 className="font-semibold text-white text-sm sm:text-base">Installation Guidance</h3>
+                          <h3 className="font-semibold text-white text-sm sm:text-base break-words min-w-0">Installation Guidance</h3>
                         </div>
-                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
                           Step-by-step installation procedures, safety considerations, testing requirements, and commissioning
                         </p>
                       </div>
                       
-                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-purple-500/10">
+                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-purple-500/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500/30 to-purple-600/20 rounded-xl flex items-center justify-center border border-purple-500/40 flex-shrink-0">
                             <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
                           </div>
-                          <h3 className="font-semibold text-white text-sm sm:text-base">BS 7671 Compliance</h3>
+                          <h3 className="font-semibold text-white text-sm sm:text-base break-words min-w-0">BS 7671 Compliance</h3>
                         </div>
-                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
                           Regulation references, special location requirements, and complete documentation for certification
                         </p>
                       </div>
                     
-                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-orange-500/10">
+                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-orange-500/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-500/30 to-orange-600/20 rounded-xl flex items-center justify-center border border-orange-500/40 flex-shrink-0">
                             <Lightbulb className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400" />
                           </div>
-                          <h3 className="font-semibold text-white text-sm sm:text-base">Expert Recommendations</h3>
+                          <h3 className="font-semibold text-white text-sm sm:text-base break-words min-w-0">Expert Recommendations</h3>
                         </div>
-                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
                           Professional insights, alternative solutions, cost optimisation tips, and industry best practices
                         </p>
                       </div>
                       
-                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-cyan-500/10">
+                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-cyan-500/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-cyan-500/30 to-cyan-600/20 rounded-xl flex items-center justify-center border border-cyan-500/40 flex-shrink-0">
                             <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
                           </div>
-                          <h3 className="font-semibold text-white text-sm sm:text-base">Documentation Ready</h3>
+                          <h3 className="font-semibold text-white text-sm sm:text-base break-words min-w-0">Documentation Ready</h3>
                         </div>
-                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed break-words">
                           Export-ready formats for quotes, client reports, and certification documentation with professional formatting
                         </p>
                       </div>
