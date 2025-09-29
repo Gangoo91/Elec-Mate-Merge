@@ -217,7 +217,7 @@ Please provide exhaustive detail for materials - include everything from the sma
           </div>
           
           <div className="space-y-4">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-white via-elec-yellow to-white bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-elec-yellow">
               Circuit Design AI
             </h1>
             <p className="text-gray-300 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
