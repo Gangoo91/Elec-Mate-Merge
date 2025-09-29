@@ -36,6 +36,13 @@ CONTENT REQUIREMENTS:
 - Include proper conclusions and next steps
 - Ensure full compliance with UK electrical standards
 
+CRITICAL DATA USAGE REQUIREMENTS:
+- ALWAYS use the actual data provided in the Form Data section below
+- NEVER use placeholder text like "[Insert Name]", "[Insert Date]", "[Insert Company Name]"
+- If specific data is not provided, use professional generic descriptions
+- Use the client name, installer name, dates, and addresses exactly as provided
+- Fill in all certificate sections with the actual form data provided
+
 PROFESSIONAL STRUCTURE:
 - Start with a clear executive summary
 - Include installation details and scope of work
@@ -51,7 +58,7 @@ ${JSON.stringify(formData, null, 2)}
 
 ${additionalNotes ? `Additional Notes: ${additionalNotes}` : ''}
 
-Generate a complete, professional electrical report that would be suitable for submission to Building Control or for insurance purposes. Use proper markdown formatting to ensure excellent PDF conversion. Include all necessary sections, technical details, and recommendations in a structured, professional format.`;
+Generate a complete, professional electrical report using the EXACT data provided above. Do not use any placeholder text - use the actual client details, installer information, dates, and technical data provided. Use proper markdown formatting to ensure excellent PDF conversion. Include all necessary sections, technical details, and recommendations in a structured, professional format.`;
 
   switch (template) {
     case 'eicr':
