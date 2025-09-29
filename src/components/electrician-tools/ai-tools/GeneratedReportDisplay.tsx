@@ -354,7 +354,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
       {/* Footer */}
       <div className="border-t border-border/20 p-4 bg-muted/30">
         <div className="flex items-center justify-between flex-wrap text-xs text-muted-foreground">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <span>Report generated using AI technology</span>
             <Badge variant="outline" className="text-xs">
               BS7671 18th Edition Compliant
