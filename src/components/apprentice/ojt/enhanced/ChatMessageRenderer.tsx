@@ -71,11 +71,9 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
       // Detect regulations/code references
       if (trimmed.match(/BS\s*7671|regulation|clause|IET/i)) {
         return (
-          <div key={index} className="mb-3 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-            <p className="leading-relaxed text-blue-100 text-sm">
-              📖 {trimmed}
-            </p>
-          </div>
+          <p key={index} className="mb-3 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg leading-relaxed text-blue-100 text-sm">
+            📖 {trimmed}
+          </p>
         );
       }
       
