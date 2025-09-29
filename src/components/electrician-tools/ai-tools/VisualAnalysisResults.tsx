@@ -122,7 +122,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
             <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
             <CardTitle className="text-lg sm:text-xl text-foreground">Visual Analysis Results</CardTitle>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <Button
               variant="outline"
               size="sm"
