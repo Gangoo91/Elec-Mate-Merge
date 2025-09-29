@@ -73,7 +73,7 @@ serve(async (req) => {
     console.error('❌ Error in price-history-alerts:', error);
     return new Response(JSON.stringify({ 
       error: 'Failed to process request', 
-      details: error.message 
+      details: error instanceof Error ? error.message : 'Unknown error occurred'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -120,7 +120,7 @@ async function getPriceHistory(supabase: any, { productName, days = 30 }: any) {
       if (currentData && currentData.length > 0) {
         // Use current prices to simulate recent history
         const today = new Date().toISOString().split('T')[0];
-        history = currentData.map(item => ({
+        history = currentData.map((item: any) => ({
           date: today,
           price: parseFloat(item.price.toString()),
           supplier: item.supplier,
@@ -129,7 +129,7 @@ async function getPriceHistory(supabase: any, { productName, days = 30 }: any) {
       }
     } else {
       // Transform historical data to expected format
-      history = historicalData.map(item => ({
+      history = historicalData.map((item: any) => ({
         date: new Date(item.date_scraped).toISOString().split('T')[0],
         price: parseFloat(item.price.toString()),
         supplier: item.supplier,
@@ -177,7 +177,7 @@ async function getPriceHistory(supabase: any, { productName, days = 30 }: any) {
     console.error('❌ Error in getPriceHistory:', error);
     return new Response(JSON.stringify({
       error: 'Failed to fetch price history',
-      details: error.message
+      details: error instanceof Error ? error.message : 'Unknown error occurred'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -271,7 +271,7 @@ async function getUserAlerts(supabase: any, { userId }: any) {
     console.error('❌ Error in getUserAlerts:', error);
     return new Response(JSON.stringify({
       error: 'Failed to fetch user alerts',
-      details: error.message
+      details: error instanceof Error ? error.message : 'Unknown error occurred'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

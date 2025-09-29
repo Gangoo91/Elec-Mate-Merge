@@ -155,7 +155,7 @@ serve(async (req) => {
       JSON.stringify({ 
         success: false,
         error: 'Failed to refresh tools cache', 
-        details: error.message 
+        details: error instanceof Error ? error.message : 'Unknown error occurred' 
       }),
       {
         status: 500,

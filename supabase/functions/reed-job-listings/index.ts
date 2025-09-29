@@ -72,7 +72,7 @@ serve(async (req) => {
     console.log(`Retrieved ${data.totalResults} jobs from API`);
     
     // Don't do server-side location filtering - let Reed API handle it and return all results
-    const jobs = data.results.map(job => ({
+    const jobs = data.results.map((job: any) => ({
       id: job.jobId.toString(),
       title: job.jobTitle,
       company: job.employerName,
@@ -105,7 +105,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in job-listings function:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error occurred' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

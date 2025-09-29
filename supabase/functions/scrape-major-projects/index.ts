@@ -91,7 +91,7 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: error.message 
+        error: error instanceof Error ? error.message : 'Unknown error occurred' 
       }),
       { 
         status: 500, 
@@ -163,7 +163,7 @@ async function scrapeSource(source: ScrapingSource) {
     
   } catch (error) {
     console.error(`Error scraping ${source.name}:`, error);
-    errorMessage = error.message;
+    errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
   }
   
   const executionTime = Date.now() - startTime;

@@ -274,7 +274,7 @@ async function fetchLightingSolutions(): Promise<MaterialItem[]> {
       return [];
     }
   } catch (error) {
-    console.error(`⚠️ Error fetching Lighting Solutions:`, error.message);
+    console.error(`⚠️ Error fetching Lighting Solutions:`, error instanceof Error ? error.message : 'Unknown error occurred');
     return [];
   }
 }
@@ -358,7 +358,7 @@ async function fetchInstallationAccessories(): Promise<MaterialItem[]> {
       return [];
     }
   } catch (error) {
-    console.error(`⚠️ Error fetching Installation Accessories:`, error.message);
+    console.error(`⚠️ Error fetching Installation Accessories:`, error instanceof Error ? error.message : 'Unknown error occurred');
     return [];
   }
 }
@@ -508,7 +508,7 @@ async function scrapeProtectionWithFirecrawl(): Promise<MaterialItem[]> {
       return [];
     }
   } catch (error) {
-    console.error(`⚠️ Error fetching Protection Equipment:`, error.message);
+    console.error(`⚠️ Error fetching Protection Equipment:`, error instanceof Error ? error.message : 'Unknown error occurred');
     return [];
   }
 }
@@ -928,8 +928,7 @@ serve(async (req) => {
             supplier: supplierName,
             image: "/placeholder.svg",
             stockStatus: "In Stock",
-            productUrl: searchUrl,
-            highlights: ["CAT III 600V Safety", "Digital Display", "Auto-ranging"]
+            productUrl: searchUrl
           },
           {
             id: 20002,
@@ -939,8 +938,7 @@ serve(async (req) => {
             supplier: supplierName,
             image: "/placeholder.svg",
             stockStatus: "In Stock",
-            productUrl: searchUrl,
-            highlights: ["13A Socket Testing", "RCD Testing", "BS 7671 Compliant"]
+            productUrl: searchUrl
           },
           {
             id: 20003,
@@ -950,8 +948,7 @@ serve(async (req) => {
             supplier: supplierName,
             image: "/placeholder.svg",
             stockStatus: "In Stock",
-            productUrl: searchUrl,
-            highlights: ["Non-contact Detection", "Visual & Audio Alert", "12V-1000V Range"]
+            productUrl: searchUrl
           },
           {
             id: 20004,
@@ -960,9 +957,8 @@ serve(async (req) => {
             price: "£45.99",
             supplier: supplierName,
             image: "/placeholder.svg",
-            stockStatus: "In Stock",
-            productUrl: searchUrl,
-            highlights: ["Live Cable Detection", "Depth Indication", "Metal Detection"]
+            stockStatus: "In Stock", 
+            productUrl: searchUrl
           },
           {
             id: 20005,
@@ -972,8 +968,7 @@ serve(async (req) => {
             supplier: supplierName,
             image: "/placeholder.svg",
             stockStatus: "In Stock",
-            productUrl: searchUrl,
-            highlights: ["Circuit Identification", "RCD Testing", "Socket Tester Built-in"]
+            productUrl: searchUrl
           },
           {
             id: 20006,
@@ -983,8 +978,7 @@ serve(async (req) => {
             supplier: supplierName,
             image: "/placeholder.svg",
             stockStatus: "In Stock",
-            productUrl: searchUrl,
-            highlights: ["500V-1000V Testing", "PI & DAR Functions", "BS 7671 Compliant"]
+            productUrl: searchUrl
           },
           {
             id: 20007,
@@ -994,8 +988,7 @@ serve(async (req) => {
             supplier: supplierName,
             image: "/placeholder.svg",
             stockStatus: "In Stock",
-            productUrl: searchUrl,
-            highlights: ["400A AC/DC Current", "True RMS", "CAT III Safety"]
+            productUrl: searchUrl
           },
           {
             id: 20008,
@@ -1005,8 +998,7 @@ serve(async (req) => {
             supplier: supplierName,
             image: "/placeholder.svg",
             stockStatus: "In Stock",
-            productUrl: searchUrl,
-            highlights: ["Complete PAT Testing", "Earth Bond Testing", "Insulation Testing"]
+            productUrl: searchUrl
           },
         ];
       } else if (isGeneralProtectionSearch) {

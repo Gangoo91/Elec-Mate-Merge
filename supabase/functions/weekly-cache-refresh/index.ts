@@ -93,7 +93,7 @@ serve(async (req) => {
 
       } catch (error) {
         console.error(`❌ Error refreshing ${guide.guide_type}:`, error);
-        errors.push({ guide: guide.guide_type, error: error.message });
+        errors.push({ guide: guide.guide_type, error: error instanceof Error ? error.message : 'Unknown error occurred' });
         
         // Mark as failed
         await supabase
@@ -127,7 +127,7 @@ serve(async (req) => {
     
     return new Response(JSON.stringify({ 
       success: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       timestamp: new Date().toISOString()
     }), {
       status: 500,

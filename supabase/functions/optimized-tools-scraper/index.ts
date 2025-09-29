@@ -264,7 +264,7 @@ serve(async (req) => {
       JSON.stringify({ 
         success: false,
         error: 'Failed to scrape tools', 
-        details: error.message 
+        details: error instanceof Error ? error.message : 'Unknown error occurred' 
       }),
       {
         status: 500,

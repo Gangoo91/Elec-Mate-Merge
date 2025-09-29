@@ -88,7 +88,7 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in reed-courses-hybrid:', error);
     return new Response(JSON.stringify({
-      error: error.message,
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
       courses: [],
       total: 0,
       source: 'reed-hybrid'
