@@ -820,7 +820,7 @@ const VisualAnalysisRedesigned = () => {
                       BS 7671 compliance findings and recommendations
                     </CardDescription>
                   </div>
-                  <div className="flex gap-2">
+                      <div className="flex gap-2 flex-wrap">
                     <Button variant="outline" size="sm" onClick={exportReport}>
                       <Download className="h-4 w-4 mr-2" />
                       Export PDF
