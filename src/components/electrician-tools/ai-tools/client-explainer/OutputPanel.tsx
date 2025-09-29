@@ -211,7 +211,7 @@ Thank you for choosing our electrical services.`;
 
   return (
     <Card className="mobile-card border-border/50 bg-card/50">
-      <CardHeader className="p-0">
+      <CardHeader className="p-0 pb-3">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center space-x-2">
             <MessageSquare className="h-5 w-5 text-elec-yellow" />
