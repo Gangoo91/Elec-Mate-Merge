@@ -89,21 +89,19 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
   };
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-6`}>
-      <div className={`max-w-[85%] rounded-xl p-5 ${
-        isUser 
-          ? 'bg-elec-yellow text-elec-gray ml-4 shadow-lg' 
-          : 'bg-gradient-to-br from-elec-gray to-gray-800 border border-gray-600 mr-4 shadow-xl'
-      }`}>
-        <div className={`${isUser ? 'text-elec-gray' : 'text-white'}`}>
-          {isUser ? (
-            <p className="leading-relaxed font-medium">{content}</p>
-          ) : (
-            <div className="space-y-1">
-              {formatContent(content)}
-            </div>
-          )}
-        </div>
+    <div className={`max-w-[85%] rounded-xl p-5 ${
+      isUser 
+        ? 'bg-elec-yellow text-elec-gray ml-4 shadow-lg' 
+        : 'bg-gradient-to-br from-elec-gray to-gray-800 border border-gray-600 mr-4 shadow-xl'
+    }`}>
+      <div className={`${isUser ? 'text-elec-gray' : 'text-white'}`}>
+        {isUser ? (
+          <p className="leading-relaxed font-medium">{content}</p>
+        ) : (
+          <div className="space-y-1">
+            {formatContent(content)}
+          </div>
+        )}
       </div>
     </div>
   );
