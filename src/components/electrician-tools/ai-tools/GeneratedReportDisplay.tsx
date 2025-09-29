@@ -299,7 +299,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
               </div>
               
               {/* Action Buttons */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <Button
                   variant="outline"
                   size="sm"
