@@ -813,7 +813,7 @@ const VisualAnalysisRedesigned = () => {
             {/* Summary Card */}
             <Card className="bg-card border-border">
               <CardHeader className="gap-2">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between flex-wrap">
                   <div>
                     <CardTitle className="text-foreground">3. Analysis Results</CardTitle>
                     <CardDescription>
