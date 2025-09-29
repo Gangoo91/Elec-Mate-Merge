@@ -15,7 +15,7 @@ interface ReportData {
 }
 
 const createPrompt = (template: string, formData: any, additionalNotes?: string) => {
-  const basePrompt = `You are a qualified electrical engineer with expertise in BS 7671:2018+A3:2024 regulations. Generate a comprehensive, professional electrical report based on the provided data.
+  const basePrompt = `You are a qualified electrical engineer with expertise in BS7671 18th Edition regulations. Generate a comprehensive, professional electrical report based on the provided data.
 
 CRITICAL FORMATTING REQUIREMENTS FOR PROFESSIONAL PDFs:
 - Use proper markdown formatting with clear hierarchical headings (# ## ###)
@@ -28,7 +28,7 @@ CRITICAL FORMATTING REQUIREMENTS FOR PROFESSIONAL PDFs:
 - Use code blocks (\`\`\`) for regulation references and specific measurements
 
 CONTENT REQUIREMENTS:
-- Use proper UK electrical terminology and BS 7671:2018+A3:2024 regulation references
+- Use proper UK electrical terminology and BS7671 18th Edition regulation references
 - Include specific code references where applicable (e.g., Regulation 134.1.1, 411.3.3)
 - Provide clear recommendations and actions with priority classifications
 - Include safety classifications (C1, C2, C3, FI) where relevant with proper explanations
@@ -117,8 +117,8 @@ Format as a Minor Works Certificate with:
 - Test results including continuity, insulation resistance, and polarity
 - RCD operation test results if applicable
 - Earth fault loop impedance measurements
-- Compliance statement with BS 7671
-- Any departures from BS 7671 (if applicable)
+- Compliance statement with BS7671 18th Edition
+- Any departures from BS7671 18th Edition (if applicable)
 - Installation schedule and circuit particulars`;
 
     case 'periodic-inspection':
@@ -135,7 +135,7 @@ Format as a Periodic Inspection Report with:
 - Summary of inspection findings`;
 
     case 'client-explainer':
-      return `You are a qualified electrician with expertise in BS 7671:2018+A3:2024 (18th Edition) electrical regulations. You excel at explaining technical electrical work to clients in clear, accessible language whilst maintaining technical accuracy and UK compliance.
+      return `You are a qualified electrician with expertise in BS7671 18th Edition electrical regulations. You excel at explaining technical electrical work to clients in clear, accessible language whilst maintaining technical accuracy and UK compliance.
 
 Client Type: ${formData.clientType}
 Technical Findings to Explain:
@@ -147,12 +147,12 @@ Communication Preferences:
 - Include Analogies: ${formData.includeAnalogy ? 'Yes - use everyday comparisons' : 'No - keep explanations direct'}
 - Include Cost Information: ${formData.includeCostInfo ? 'Yes - mention cost implications' : 'No - focus on technical aspects'}
 - Emphasize Safety: ${formData.emphasizeSafety ? 'Yes - highlight safety importance' : 'No - balanced approach'}
-- Include BS 7671 References: ${formData.includeBS7671 ? 'Yes - include UK regulation references' : 'No - avoid technical references'}
+- Include BS7671 References: ${formData.includeBS7671 ? 'Yes - include UK regulation references' : 'No - avoid technical references'}
 
 CRITICAL REQUIREMENTS:
 1. Use British English spelling and terminology throughout (colour not color, earthing not grounding, etc.)
 2. Reference UK electrical standards and regulations where appropriate
-3. ${formData.includeBS7671 ? 'Include specific BS 7671 regulation numbers (e.g., 411.3.3, 134.1.1) and safety classifications (C1, C2, C3, FI)' : 'Avoid technical regulation references but maintain accuracy'}
+3. ${formData.includeBS7671 ? 'Include specific BS7671 18th Edition regulation numbers (e.g., 411.3.3, 134.1.1) and safety classifications (C1, C2, C3, FI)' : 'Avoid technical regulation references but maintain accuracy'}
 4. Use appropriate ${formData.tone} tone whilst remaining professional
 5. Write at ${formData.readingLevel} complexity level appropriate for a ${formData.clientType}
 6. ${formData.includeAnalogy ? 'Include helpful analogies using British everyday examples (like car MOTs, home insurance, etc.)' : 'Use direct, clear explanations without analogies'}
@@ -247,7 +247,7 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: 'You are a qualified electrical engineer with extensive knowledge of BS 7671:2018+A3:2024 regulations and UK electrical standards. Generate professional, detailed electrical reports that comply with industry standards and regulations.'
+            content: 'You are a qualified electrical engineer with extensive knowledge of BS7671 18th Edition regulations and UK electrical standards. Generate professional, detailed electrical reports that comply with industry standards and regulations.'
           },
           {
             role: 'user',
