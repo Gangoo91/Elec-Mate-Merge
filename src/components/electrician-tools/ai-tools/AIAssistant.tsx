@@ -216,7 +216,7 @@ const AIAssistant = () => {
                 <CardContent className="p-3 sm:p-4 pt-0">
                   <div className="prose prose-invert max-w-none">
                     <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
-                      {analysisResult.split('\n').map((line, index) => (
+                      {String(analysisResult || '').split('\n').map((line, index) => (
                         <p 
                           key={index}
                           className={
@@ -253,7 +253,7 @@ const AIAssistant = () => {
                 <CardContent className="p-3 sm:p-4 pt-0">
                   <div className="prose prose-invert max-w-none">
                     <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
-                      {regulationsResult.split('\n').map((line, index) => (
+                      {String(regulationsResult || '').split('\n').map((line, index) => (
                         <p 
                           key={index}
                           className={
