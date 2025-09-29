@@ -657,7 +657,7 @@ const VisualAnalysisRedesigned = () => {
         {currentStep === 'analyse' && (
           <Card className="bg-card border-border">
             <CardHeader>
-              <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between flex-wrap">
                 <div>
                   <CardTitle className="text-foreground">2. Review & Analyse</CardTitle>
                   <CardDescription>
