@@ -117,7 +117,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
   return (
     <Card className="bg-card border-border max-w-5xl mx-auto">
       <CardHeader className="p-4 sm:p-6 flex flex-wrap">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap">
           <div className="flex items-center gap-2 sm:gap-3">
             <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
             <CardTitle className="text-lg sm:text-xl text-foreground">Visual Analysis Results</CardTitle>
