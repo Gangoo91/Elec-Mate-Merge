@@ -527,68 +527,68 @@ Please provide exhaustive detail for materials - include everything from the sma
                         </p>
                       </div>
                       
-                      <div className="flex items-start gap-4 p-4 bg-elec-dark/30 rounded-xl border border-blue-500/10">
-                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500/30 to-blue-600/20 rounded-xl flex items-center justify-center border border-blue-500/40 flex-shrink-0">
-                          <Building2 className="h-5 w-5 text-blue-400" />
+                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-blue-500/10">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-blue-500/30 to-blue-600/20 rounded-xl flex items-center justify-center border border-blue-500/40 flex-shrink-0">
+                            <Building2 className="h-5 w-5 text-blue-400" />
+                          </div>
+                          <h3 className="font-semibold text-white">Comprehensive Materials</h3>
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-white mb-2">Comprehensive Materials</h3>
-                          <p className="text-gray-300 text-sm leading-relaxed">
-                            Complete materials checklist with quantities, specifications, and part numbers for cables, protection, and hardware
-                          </p>
-                        </div>
+                        <p className="text-gray-300 text-sm leading-relaxed">
+                          Complete materials checklist with quantities, specifications, and part numbers for cables, protection, and hardware
+                        </p>
                       </div>
                     </div>
                     
                     <div className="space-y-4">
-                      <div className="flex items-start gap-4 p-4 bg-elec-dark/30 rounded-xl border border-green-500/10">
-                        <div className="w-10 h-10 bg-gradient-to-br from-green-500/30 to-green-600/20 rounded-xl flex items-center justify-center border border-green-500/40 flex-shrink-0">
-                          <Home className="h-5 w-5 text-green-400" />
+                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-green-500/10">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-green-500/30 to-green-600/20 rounded-xl flex items-center justify-center border border-green-500/40 flex-shrink-0">
+                            <Home className="h-5 w-5 text-green-400" />
+                          </div>
+                          <h3 className="font-semibold text-white">Installation Guidance</h3>
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-white mb-2">Installation Guidance</h3>
-                          <p className="text-gray-300 text-sm leading-relaxed">
-                            Step-by-step installation procedures, safety considerations, testing requirements, and commissioning
-                          </p>
-                        </div>
+                        <p className="text-gray-300 text-sm leading-relaxed">
+                          Step-by-step installation procedures, safety considerations, testing requirements, and commissioning
+                        </p>
                       </div>
                       
-                      <div className="flex items-start gap-4 p-4 bg-elec-dark/30 rounded-xl border border-purple-500/10">
-                        <div className="w-10 h-10 bg-gradient-to-br from-purple-500/30 to-purple-600/20 rounded-xl flex items-center justify-center border border-purple-500/40 flex-shrink-0">
-                          <CheckCircle2 className="h-5 w-5 text-purple-400" />
+                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-purple-500/10">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-purple-500/30 to-purple-600/20 rounded-xl flex items-center justify-center border border-purple-500/40 flex-shrink-0">
+                            <CheckCircle2 className="h-5 w-5 text-purple-400" />
+                          </div>
+                          <h3 className="font-semibold text-white">BS 7671 Compliance</h3>
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-white mb-2">BS 7671 Compliance</h3>
-                          <p className="text-gray-300 text-sm leading-relaxed">
-                            Regulation references, special location requirements, and complete documentation for certification
-                          </p>
-                        </div>
+                        <p className="text-gray-300 text-sm leading-relaxed">
+                          Regulation references, special location requirements, and complete documentation for certification
+                        </p>
                       </div>
                     </div>
                     
                     <div className="space-y-4">
-                      <div className="flex items-start gap-4 p-4 bg-elec-dark/30 rounded-xl border border-orange-500/10">
-                        <div className="w-10 h-10 bg-gradient-to-br from-orange-500/30 to-orange-600/20 rounded-xl flex items-center justify-center border border-orange-500/40 flex-shrink-0">
-                          <Lightbulb className="h-5 w-5 text-orange-400" />
+                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-orange-500/10">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-orange-500/30 to-orange-600/20 rounded-xl flex items-center justify-center border border-orange-500/40 flex-shrink-0">
+                            <Lightbulb className="h-5 w-5 text-orange-400" />
+                          </div>
+                          <h3 className="font-semibold text-white">Expert Recommendations</h3>
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-white mb-2">Expert Recommendations</h3>
-                          <p className="text-gray-300 text-sm leading-relaxed">
-                            Professional insights, alternative solutions, cost optimisation tips, and industry best practices
-                          </p>
-                        </div>
+                        <p className="text-gray-300 text-sm leading-relaxed">
+                          Professional insights, alternative solutions, cost optimisation tips, and industry best practices
+                        </p>
                       </div>
                       
-                      <div className="flex items-start gap-4 p-4 bg-elec-dark/30 rounded-xl border border-cyan-500/10">
-                        <div className="w-10 h-10 bg-gradient-to-br from-cyan-500/30 to-cyan-600/20 rounded-xl flex items-center justify-center border border-cyan-500/40 flex-shrink-0">
-                          <FileText className="h-5 w-5 text-cyan-400" />
+                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-cyan-500/10">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-cyan-500/30 to-cyan-600/20 rounded-xl flex items-center justify-center border border-cyan-500/40 flex-shrink-0">
+                            <FileText className="h-5 w-5 text-cyan-400" />
+                          </div>
+                          <h3 className="font-semibold text-white">Documentation Ready</h3>
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-white mb-2">Documentation Ready</h3>
-                          <p className="text-gray-300 text-sm leading-relaxed">
-                            Export-ready formats for quotes, client reports, and certification documentation with professional formatting
-                          </p>
-                        </div>
+                        <p className="text-gray-300 text-sm leading-relaxed">
+                          Export-ready formats for quotes, client reports, and certification documentation with professional formatting
+                        </p>
                       </div>
                     </div>
                   </div>
