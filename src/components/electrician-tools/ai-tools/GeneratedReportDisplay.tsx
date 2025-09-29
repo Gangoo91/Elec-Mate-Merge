@@ -357,7 +357,7 @@ const GeneratedReportDisplay: React.FC<GeneratedReportDisplayProps> = ({
           <div className="flex items-center gap-4">
             <span>Report generated using AI technology</span>
             <Badge variant="outline" className="text-xs">
-              BS 7671:2018 Compliant
+              BS7671 18th Edition Compliant
             </Badge>
           </div>
           <div className="flex items-center gap-1">
