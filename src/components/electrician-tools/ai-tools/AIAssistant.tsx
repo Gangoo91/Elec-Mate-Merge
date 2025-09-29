@@ -223,24 +223,75 @@ const AIAssistant = () => {
                 </CardHeader>
                 <CardContent className="p-3 sm:p-4 pt-0">
                   <div className="prose prose-invert max-w-none">
-                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
-                      {String(analysisResult || '').split('\n').map((line, index) => (
-                        <p 
-                          key={index}
-                          className={
-                            line.match(/^(CALCULATION|SIZING|ASSESSMENT|ANALYSIS|RECOMMENDATION):/) ?
-                            'text-blue-400 font-semibold text-sm sm:text-base mt-3 sm:mt-4 mb-1 sm:mb-2 first:mt-0' :
-                            line.endsWith(':') && line.length < 50 ?
-                            'font-medium text-blue-300 mt-2 sm:mt-3 mb-1' :
-                            line.startsWith('•') || line.startsWith('-') ?
-                            'text-gray-300 ml-3 sm:ml-4 my-1' :
-                            line.trim() === '' ? 'my-1 sm:my-2' :
-                            'my-1'
-                          }
-                        >
-                          {line}
-                        </p>
-                      ))}
+                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed space-y-3">
+                      {String(analysisResult || '').split('\n').map((line, index) => {
+                        const trimmed = line.trim();
+                        if (!trimmed) return null;
+                        
+                        // Enhanced formatting with technical term highlighting
+                        const technicalTerms = /\b(RCD|RCBO|MCB|MCCB|RCM|AFDD|SPD|CU|DB|EICR|PIR|EIC|PAT|Zs|Ze|Zdb|PFC|PSCC|TN-S|TN-C-S|TT|IT|IP\d{2}|CSA|CPC|PME|SWA|MICC|FP200|XLPE|PVC|LSZH|BS\s*7671|IET|Part\s*P)\b/gi;
+                        const measurements = /\b(\d+(?:\.\d+)?)\s*(A|mA|V|kV|W|kW|VA|kVA|Ω|mΩ|mm²?|m|cm|Hz|°C|lx|lm|cd)\b/g;
+                        const regulationNumbers = /\b(\d{3}\.\d+(?:\.\d+)?)\b/g;
+                        
+                        // Process text with highlighting
+                        let processedText = trimmed
+                          .replace(technicalTerms, '<span class="px-1.5 py-0.5 bg-blue-500/25 text-blue-200 rounded font-medium text-xs">$&</span>')
+                          .replace(measurements, '<span class="px-1 py-0.5 bg-green-500/25 text-green-200 rounded font-mono text-xs">$&</span>')
+                          .replace(regulationNumbers, '<span class="px-1.5 py-0.5 bg-purple-500/25 text-purple-200 rounded font-semibold text-xs">$&</span>');
+                        
+                        // Section headers
+                        if (trimmed.match(/^(CALCULATION|SIZING|ASSESSMENT|ANALYSIS|RECOMMENDATION):?$/i)) {
+                          return (
+                            <div key={index} className="mt-4 mb-3 first:mt-0 pb-2 border-b border-blue-400/20">
+                              <h4 className="text-blue-400 font-bold text-sm sm:text-base flex items-center gap-2">
+                                {trimmed.includes('CALCULATION') && '🧮'}
+                                {trimmed.includes('SIZING') && '📏'}
+                                {trimmed.includes('ASSESSMENT') && '🎯'}
+                                {trimmed.includes('ANALYSIS') && '🔍'}
+                                {trimmed.includes('RECOMMENDATION') && '💡'}
+                                <span>{trimmed}</span>
+                              </h4>
+                            </div>
+                          );
+                        }
+                        
+                        // Subsection headers (ending with :)
+                        if (trimmed.endsWith(':') && trimmed.length < 60 && !trimmed.match(/^[\d\w\s]{1,3}:/)) {
+                          return (
+                            <div key={index} className="mt-3 mb-2">
+                              <h5 className="font-semibold text-blue-300 text-sm" dangerouslySetInnerHTML={{ __html: processedText }} />
+                            </div>
+                          );
+                        }
+                        
+                        // Bullet points
+                        if (trimmed.match(/^[-•]\s+/)) {
+                          const bulletText = processedText.replace(/^[-•]\s+/, '');
+                          return (
+                            <div key={index} className="ml-4 mb-2 flex items-start gap-2">
+                              <span className="text-blue-400 text-sm mt-1">•</span>
+                              <span className="text-gray-300 text-xs sm:text-sm" dangerouslySetInnerHTML={{ __html: bulletText }} />
+                            </div>
+                          );
+                        }
+                        
+                        // Calculations and formulas
+                        if (trimmed.match(/[=×÷+\-]\s*\d+|formula|equation|calculate/i) || trimmed.includes('=')) {
+                          return (
+                            <div key={index} className="my-3 p-3 bg-green-500/15 border border-green-500/25 rounded-lg">
+                              <div className="flex items-start gap-2">
+                                <span className="text-green-400 text-sm">🧮</span>
+                                <span className="text-green-200 font-mono text-xs sm:text-sm" dangerouslySetInnerHTML={{ __html: processedText }} />
+                              </div>
+                            </div>
+                          );
+                        }
+                        
+                        // Regular paragraphs
+                        return (
+                          <p key={index} className="text-gray-300 text-xs sm:text-sm my-2" dangerouslySetInnerHTML={{ __html: processedText }} />
+                        );
+                      }).filter(Boolean)}
                     </div>
                   </div>
                 </CardContent>
@@ -260,26 +311,82 @@ const AIAssistant = () => {
                 </CardHeader>
                 <CardContent className="p-3 sm:p-4 pt-0">
                   <div className="prose prose-invert max-w-none">
-                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed">
-                      {String(regulationsResult || '').split('\n').map((line, index) => (
-                        <p 
-                          key={index}
-                          className={
-                            line.match(/^(Regulation|BS 7671|IET|Section)/i) ?
-                            'text-purple-400 font-semibold text-sm sm:text-base mt-3 sm:mt-4 mb-1 sm:mb-2 first:mt-0' :
-                            line.match(/^\d{3}\.\d/) ?
-                            'text-purple-400 font-medium mt-2 sm:mt-3 mb-1' :
-                            line.endsWith(':') && line.length < 50 ?
-                            'font-medium text-purple-300 mt-2 sm:mt-3 mb-1' :
-                            line.startsWith('•') || line.startsWith('-') ?
-                            'text-gray-300 ml-3 sm:ml-4 my-1' :
-                            line.trim() === '' ? 'my-1 sm:my-2' :
-                            'my-1'
-                          }
-                        >
-                          {line}
-                        </p>
-                      ))}
+                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed space-y-3">
+                      {String(regulationsResult || '').split('\n').map((line, index) => {
+                        const trimmed = line.trim();
+                        if (!trimmed) return null;
+                        
+                        // Enhanced formatting for regulations
+                        const regulationNumbers = /\b(\d{3}\.\d+(?:\.\d+)?)\b/g;
+                        const partNumbers = /(Part|Chapter|Section|Appendix)\s*(\d+)/gi;
+                        const bsNumbers = /(BS\s*7671|IET)/gi;
+                        
+                        let processedText = trimmed
+                          .replace(regulationNumbers, '<span class="px-2 py-1 bg-purple-500/30 text-purple-200 rounded font-bold text-xs">$&</span>')
+                          .replace(partNumbers, '<span class="px-1.5 py-0.5 bg-indigo-500/25 text-indigo-200 rounded font-semibold text-xs">$&</span>')
+                          .replace(bsNumbers, '<span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded font-bold text-xs">$&</span>');
+                        
+                        // Main regulation headers
+                        if (trimmed.match(/^(Regulation|BS 7671|IET|REGULATIONS?):?$/i)) {
+                          return (
+                            <div key={index} className="mt-4 mb-3 first:mt-0 pb-2 border-b border-purple-400/20">
+                              <h4 className="text-purple-400 font-bold text-sm sm:text-base flex items-center gap-2">
+                                <span className="text-lg">📖</span>
+                                <span>{trimmed}</span>
+                              </h4>
+                            </div>
+                          );
+                        }
+                        
+                        // Regulation numbers as standalone headers
+                        if (trimmed.match(/^\d{3}\.\d+(?:\.\d+)?:?\s*$/)) {
+                          return (
+                            <div key={index} className="mt-3 mb-2 p-2 bg-purple-500/10 rounded border border-purple-500/20">
+                              <h5 className="font-bold text-purple-300 text-sm flex items-center gap-2">
+                                <span className="text-xs">📋</span>
+                                <span dangerouslySetInnerHTML={{ __html: processedText }} />
+                              </h5>
+                            </div>
+                          );
+                        }
+                        
+                        // Section/Part headers (ending with :)
+                        if (trimmed.endsWith(':') && trimmed.length < 60) {
+                          return (
+                            <div key={index} className="mt-3 mb-2">
+                              <h5 className="font-semibold text-purple-300 text-sm" dangerouslySetInnerHTML={{ __html: processedText }} />
+                            </div>
+                          );
+                        }
+                        
+                        // Bullet points
+                        if (trimmed.match(/^[-•]\s+/)) {
+                          const bulletText = processedText.replace(/^[-•]\s+/, '');
+                          return (
+                            <div key={index} className="ml-4 mb-2 flex items-start gap-2">
+                              <span className="text-purple-400 text-sm mt-1">•</span>
+                              <span className="text-gray-300 text-xs sm:text-sm" dangerouslySetInnerHTML={{ __html: bulletText }} />
+                            </div>
+                          );
+                        }
+                        
+                        // Compliance requirements (containing "must", "shall", "required")
+                        if (trimmed.match(/\b(must|shall|required|mandatory|compliance)\b/gi)) {
+                          return (
+                            <div key={index} className="my-3 p-3 bg-amber-500/15 border border-amber-500/25 rounded-lg">
+                              <div className="flex items-start gap-2">
+                                <span className="text-amber-400 text-sm">⚖️</span>
+                                <span className="text-amber-200 text-xs sm:text-sm font-medium" dangerouslySetInnerHTML={{ __html: processedText }} />
+                              </div>
+                            </div>
+                          );
+                        }
+                        
+                        // Regular regulation text
+                        return (
+                          <p key={index} className="text-gray-300 text-xs sm:text-sm my-2" dangerouslySetInnerHTML={{ __html: processedText }} />
+                        );
+                      }).filter(Boolean)}
                     </div>
                   </div>
                 </CardContent>
