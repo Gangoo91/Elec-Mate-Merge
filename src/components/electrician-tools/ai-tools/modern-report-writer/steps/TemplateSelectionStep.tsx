@@ -132,7 +132,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
             <h2 className="text-2xl font-bold text-white">General Condition Reports</h2>
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Generate professional electrical certificates and condition reports for installations, testing, and minor works.
+            Select from our collection of BS 7671:2018 compliant electrical certificates and condition reports.
           </p>
         </div>
 

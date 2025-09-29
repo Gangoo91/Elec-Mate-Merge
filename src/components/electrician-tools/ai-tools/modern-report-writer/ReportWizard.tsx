@@ -227,7 +227,7 @@ const ReportWizard = () => {
               </div>
             </div>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Generate professional electrical certificates and condition reports with our intelligent wizard
+              Create BS 7671:2018 compliant electrical certificates and condition reports
             </p>
             
             {/* Subtle Auto-save indicator */}
