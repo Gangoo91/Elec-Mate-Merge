@@ -527,7 +527,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                         </p>
                       </div>
                       
-                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-blue-500/10">
+                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-blue-500/10 min-w-fit">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-10 h-10 bg-gradient-to-br from-blue-500/30 to-blue-600/20 rounded-xl flex items-center justify-center border border-blue-500/40 flex-shrink-0">
                             <Building2 className="h-5 w-5 text-blue-400" />
@@ -541,7 +541,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                     </div>
                     
                     <div className="space-y-4">
-                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-green-500/10">
+                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-green-500/10 min-w-fit">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-10 h-10 bg-gradient-to-br from-green-500/30 to-green-600/20 rounded-xl flex items-center justify-center border border-green-500/40 flex-shrink-0">
                             <Home className="h-5 w-5 text-green-400" />
@@ -553,7 +553,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                         </p>
                       </div>
                       
-                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-purple-500/10">
+                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-purple-500/10 min-w-fit">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-10 h-10 bg-gradient-to-br from-purple-500/30 to-purple-600/20 rounded-xl flex items-center justify-center border border-purple-500/40 flex-shrink-0">
                             <CheckCircle2 className="h-5 w-5 text-purple-400" />
@@ -567,7 +567,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                     </div>
                     
                     <div className="space-y-4">
-                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-orange-500/10">
+                      <div className="p-4 bg-elec-dark/30 rounded-xl border border-orange-500/10 min-w-fit">
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-10 h-10 bg-gradient-to-br from-orange-500/30 to-orange-600/20 rounded-xl flex items-center justify-center border border-orange-500/40 flex-shrink-0">
                             <Lightbulb className="h-5 w-5 text-orange-400" />
