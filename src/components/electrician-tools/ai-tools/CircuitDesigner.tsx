@@ -389,7 +389,7 @@ Please provide exhaustive detail for materials - include everything from the sma
                           </div>
                           <div className="flex-1 min-w-0">
                             <h5 className="font-medium text-white text-sm mb-1 group-hover:text-elec-yellow transition-colors">{scenario.title}</h5>
-                            <p className="text-gray-400 text-xs leading-relaxed">{scenario.description}</p>
+                            <p className="text-gray-400 text-xs leading-relaxed break-words">{scenario.description}</p>
                           </div>
                         </div>
                       </Button>
