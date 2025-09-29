@@ -131,7 +131,7 @@ const ReviewGenerateStep: React.FC<ReviewGenerateStepProps> = ({
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full">
               <Button
                 variant="outline"
                 onClick={() => setShowPreview(false)}
