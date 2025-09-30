@@ -107,34 +107,23 @@ export const InvoiceItemsStep = ({
       {/* Add New Item Form */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Add New Item</CardTitle>
+          <CardTitle className="text-lg flex items-center gap-2">
+            <Plus className="h-5 w-5" />
+            Add New Item
+          </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Description Section */}
-          <div className="space-y-4">
-            <MobileInputWrapper
-              label="Description"
-              placeholder="e.g., Additional socket installation"
-              value={newItem.description}
-              onChange={(e: any) => setNewItem({ ...newItem, description: e.target.value })}
-              hint="Brief description of the work or material"
-            />
-          </div>
-
-          {/* Category & Type Section */}
+        <CardContent className="space-y-4">
+          {/* Category Selection */}
           <div className="space-y-2">
-            <Label htmlFor="category" className="text-sm font-semibold text-elec-light flex items-center gap-2">
-              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-              Category
-            </Label>
+            <Label htmlFor="category" className="text-sm font-medium">Category</Label>
             <Select
               value={newItem.category}
               onValueChange={(value: any) => setNewItem({ ...newItem, category: value })}
             >
-              <SelectTrigger>
+              <SelectTrigger className="h-12">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="z-50 bg-background border shadow-lg">
                 <SelectItem value="labour">Labour</SelectItem>
                 <SelectItem value="materials">Materials</SelectItem>
                 <SelectItem value="equipment">Equipment</SelectItem>
@@ -142,85 +131,78 @@ export const InvoiceItemsStep = ({
             </Select>
           </div>
 
-          {/* Pricing Section */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Calculator className="h-4 w-4 text-elec-yellow" />
-              <h3 className="text-sm font-semibold text-elec-light">Pricing Details</h3>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <MobileInputWrapper
-                label="Quantity"
-                type="number"
-                inputMode="decimal"
-                step="0.01"
-                min="0.01"
-                value={newItem.quantity.toString()}
-                onChange={(e: any) => setNewItem({ ...newItem, quantity: parseFloat(e.target.value) || 0 })}
-              />
-              
-              <div className="space-y-2">
-                <Label htmlFor="unit" className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                  Unit
-                </Label>
-                <Select
-                  value={newItem.unit}
-                  onValueChange={(value) => setNewItem({ ...newItem, unit: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="each">Each</SelectItem>
-                    <SelectItem value="hours">Hours</SelectItem>
-                    <SelectItem value="metres">Metres</SelectItem>
-                    <SelectItem value="days">Days</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+          {/* Description */}
+          <MobileInputWrapper
+            label="Description"
+            placeholder="e.g., Additional socket installation"
+            value={newItem.description}
+            onChange={(e: any) => setNewItem({ ...newItem, description: e.target.value })}
+            hint="Brief description of the work or material"
+          />
 
-            <div className="grid grid-cols-2 gap-4">
-              <MobileInputWrapper
-                label="Unit Price"
-                type="number"
-                inputMode="decimal"
-                step="0.01"
-                min="0"
-                value={newItem.unitPrice.toString()}
-                onChange={(e: any) => setNewItem({ ...newItem, unitPrice: parseFloat(e.target.value) || 0 })}
-                unit="£"
-              />
-              
-              <div className="space-y-2">
-                <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                  Total
-                </Label>
-                <div className="h-14 flex items-center justify-center rounded-xl border border-elec-yellow/30 bg-elec-yellow/5">
-                  <span className="text-xl font-bold text-elec-yellow">
-                    {formatCurrency(currentTotal)}
-                  </span>
-                </div>
+          {/* Quantity and Unit Row */}
+          <div className="grid grid-cols-2 gap-4">
+            <MobileInputWrapper
+              label="Quantity"
+              type="number"
+              inputMode="decimal"
+              step="0.01"
+              min="0.01"
+              value={newItem.quantity.toString()}
+              onChange={(e: any) => setNewItem({ ...newItem, quantity: parseFloat(e.target.value) || 0 })}
+            />
+            
+            <div className="space-y-2">
+              <Label htmlFor="unit" className="text-sm font-medium">Unit</Label>
+              <Select
+                value={newItem.unit}
+                onValueChange={(value) => setNewItem({ ...newItem, unit: value })}
+              >
+                <SelectTrigger className="h-12">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="z-50 bg-background border shadow-lg">
+                  <SelectItem value="each">Each</SelectItem>
+                  <SelectItem value="hours">Hours</SelectItem>
+                  <SelectItem value="metres">Metres</SelectItem>
+                  <SelectItem value="days">Days</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Unit Price and Total Row */}
+          <div className="grid grid-cols-2 gap-4">
+            <MobileInputWrapper
+              label="Unit Price"
+              type="number"
+              inputMode="decimal"
+              step="0.01"
+              min="0"
+              value={newItem.unitPrice.toString()}
+              onChange={(e: any) => setNewItem({ ...newItem, unitPrice: parseFloat(e.target.value) || 0 })}
+              unit="£"
+            />
+            
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Total</Label>
+              <div className="h-12 rounded-lg border border-primary/30 bg-primary/5 flex items-center justify-center">
+                <span className="text-lg font-bold text-primary">
+                  {formatCurrency(currentTotal)}
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Notes Section */}
+          {/* Notes */}
           <div className="space-y-2">
-            <Label htmlFor="notes" className="text-sm font-semibold text-elec-light flex items-center gap-2">
-              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-              Notes (Optional)
-            </Label>
+            <Label htmlFor="notes" className="text-sm font-medium">Notes (Optional)</Label>
             <Textarea
               id="notes"
               value={newItem.notes}
               onChange={(e) => setNewItem({ ...newItem, notes: e.target.value })}
               placeholder="Additional details about this item"
-              rows={3}
-              className="rounded-xl border-primary/30 hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200"
+              rows={2}
             />
           </div>
 
