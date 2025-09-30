@@ -534,10 +534,10 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    navigator.clipboard.writeText(JSON.stringify(quote, null, 2));
+                    navigator.clipboard.writeText(JSON.stringify({ quote, companyProfile }, null, 2));
                     toast({
                       title: "Copied to Clipboard",
-                      description: "Quote JSON data copied successfully",
+                      description: "Quote and company data copied successfully",
                     });
                   }}
                   className="h-7 px-2"
@@ -548,7 +548,7 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
               </div>
               <div className="relative">
                 <pre className="bg-background border rounded-lg p-4 overflow-x-auto text-xs font-mono max-h-96 overflow-y-auto">
-                  {JSON.stringify(quote, null, 2)}
+                  {JSON.stringify({ quote, companyProfile }, null, 2)}
                 </pre>
               </div>
             </div>
