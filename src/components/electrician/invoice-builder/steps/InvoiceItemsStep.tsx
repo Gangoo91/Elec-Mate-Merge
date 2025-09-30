@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { InvoiceItem } from '@/types/invoice';
 import { MobileButton } from '@/components/ui/mobile-button';
-import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, Trash2, Calculator, AlertCircle } from 'lucide-react';
+import { Plus, Trash2, Calculator, AlertCircle, Wrench, Package, Zap } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -105,116 +106,138 @@ export const InvoiceItemsStep = ({
       )}
 
       {/* Add New Item Form */}
-      <Card>
+      <Card className="bg-card border-primary/20">
         <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <Plus className="h-5 w-5" />
-            Add New Item
+            Manual Item Entry
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Category Selection */}
-          <div className="space-y-2">
-            <Label htmlFor="category" className="text-sm font-medium">Category</Label>
-            <Select
-              value={newItem.category}
-              onValueChange={(value: any) => setNewItem({ ...newItem, category: value })}
-            >
-              <SelectTrigger className="h-12">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="z-50 bg-background border shadow-lg">
-                <SelectItem value="labour">Labour</SelectItem>
-                <SelectItem value="materials">Materials</SelectItem>
-                <SelectItem value="equipment">Equipment</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        <CardContent className="space-y-6">
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="description" className="text-sm font-medium">Description</Label>
+                <Input
+                  value={newItem.description}
+                  onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+                  placeholder="Item description"
+                  className="h-12"
+                />
+              </div>
 
-          {/* Description */}
-          <MobileInputWrapper
-            label="Description"
-            placeholder="e.g., Additional socket installation"
-            value={newItem.description}
-            onChange={(e: any) => setNewItem({ ...newItem, description: e.target.value })}
-            hint="Brief description of the work or material"
-          />
+              <div className="space-y-2">
+                <Label htmlFor="category-manual" className="text-sm font-medium">Category</Label>
+                <Select value={newItem.category} onValueChange={(value: any) => setNewItem({ ...newItem, category: value })}>
+                  <SelectTrigger className="h-12">
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent className="z-50 bg-background border shadow-lg">
+                    <SelectItem value="labour">
+                      <div className="flex items-center gap-2">
+                        <Wrench className="h-4 w-4" />
+                        Labour
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="materials">
+                      <div className="flex items-center gap-2">
+                        <Package className="h-4 w-4" />
+                        Materials
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="equipment">
+                      <div className="flex items-center gap-2">
+                        <Zap className="h-4 w-4" />
+                        Equipment
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-          {/* Quantity and Unit Row */}
-          <div className="grid grid-cols-2 gap-4">
-            <MobileInputWrapper
-              label="Quantity"
-              type="number"
-              inputMode="decimal"
-              step="0.01"
-              min="0.01"
-              value={newItem.quantity.toString()}
-              onChange={(e: any) => setNewItem({ ...newItem, quantity: parseFloat(e.target.value) || 0 })}
-            />
-            
-            <div className="space-y-2">
-              <Label htmlFor="unit" className="text-sm font-medium">Unit</Label>
-              <Select
-                value={newItem.unit}
-                onValueChange={(value) => setNewItem({ ...newItem, unit: value })}
-              >
-                <SelectTrigger className="h-12">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="z-50 bg-background border shadow-lg">
-                  <SelectItem value="each">Each</SelectItem>
-                  <SelectItem value="hours">Hours</SelectItem>
-                  <SelectItem value="metres">Metres</SelectItem>
-                  <SelectItem value="days">Days</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="quantity" className="text-sm font-medium">Quantity</Label>
+                <Input
+                  type="number"
+                  value={newItem.quantity === 0 ? "" : newItem.quantity}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '') {
+                      setNewItem(prev => ({ ...prev, quantity: 0 }));
+                    } else {
+                      const parsed = parseFloat(value);
+                      if (!isNaN(parsed) && parsed >= 0) {
+                        setNewItem(prev => ({ ...prev, quantity: parsed }));
+                      }
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const value = parseFloat(e.target.value);
+                    if (isNaN(value) || value <= 0) {
+                      setNewItem(prev => ({ ...prev, quantity: 1 }));
+                    }
+                  }}
+                  min="0.1"
+                  step="0.1"
+                  className="h-12"
+                  placeholder="Enter quantity"
+                />
+              </div>
 
-          {/* Unit Price and Total Row */}
-          <div className="grid grid-cols-2 gap-4">
-            <MobileInputWrapper
-              label="Unit Price"
-              type="number"
-              inputMode="decimal"
-              step="0.01"
-              min="0"
-              value={newItem.unitPrice.toString()}
-              onChange={(e: any) => setNewItem({ ...newItem, unitPrice: parseFloat(e.target.value) || 0 })}
-              unit="£"
-            />
-            
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Total</Label>
-              <div className="h-12 rounded-lg border border-primary/30 bg-primary/5 flex items-center justify-center">
-                <span className="text-lg font-bold text-primary">
-                  {formatCurrency(currentTotal)}
-                </span>
+              <div className="space-y-2">
+                <Label htmlFor="unit-price" className="text-sm font-medium">Unit Price (£)</Label>
+                <Input
+                  type="number"
+                  value={newItem.unitPrice}
+                  onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
+                  min="0"
+                  step="0.01"
+                  className="h-12"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="unit" className="text-sm font-medium">Unit</Label>
+                <Select value={newItem.unit} onValueChange={(value) => setNewItem(prev => ({ ...prev, unit: value }))}>
+                  <SelectTrigger className="h-12">
+                    <SelectValue placeholder="Select unit" />
+                  </SelectTrigger>
+                  <SelectContent className="z-50 bg-background border shadow-lg">
+                    <SelectItem value="each">Each</SelectItem>
+                    <SelectItem value="hour">Hour</SelectItem>
+                    <SelectItem value="day">Day</SelectItem>
+                    <SelectItem value="metre">Metre</SelectItem>
+                    <SelectItem value="linear metre">Linear Metre</SelectItem>
+                    <SelectItem value="m²">Square Metre</SelectItem>
+                    <SelectItem value="point">Point</SelectItem>
+                    <SelectItem value="circuit">Circuit</SelectItem>
+                    <SelectItem value="way">Way</SelectItem>
+                    <SelectItem value="core">Core</SelectItem>
+                    <SelectItem value="pack">Pack</SelectItem>
+                    <SelectItem value="roll">Roll</SelectItem>
+                    <SelectItem value="box">Box</SelectItem>
+                    <SelectItem value="installation">Installation</SelectItem>
+                    <SelectItem value="system">System</SelectItem>
+                    <SelectItem value="panel">Panel</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="notes" className="text-sm font-medium">Notes (Optional)</Label>
+                <Textarea
+                  value={newItem.notes}
+                  onChange={(e) => setNewItem(prev => ({ ...prev, notes: e.target.value }))}
+                  placeholder="Additional notes"
+                  rows={2}
+                />
               </div>
             </div>
-          </div>
 
-          {/* Notes */}
-          <div className="space-y-2">
-            <Label htmlFor="notes" className="text-sm font-medium">Notes (Optional)</Label>
-            <Textarea
-              id="notes"
-              value={newItem.notes}
-              onChange={(e) => setNewItem({ ...newItem, notes: e.target.value })}
-              placeholder="Additional details about this item"
-              rows={2}
-            />
+            <Button onClick={handleAddItem} className="w-full">
+              Add Item to Invoice
+            </Button>
           </div>
-
-          {/* Add Button */}
-          <MobileButton
-            onClick={handleAddItem}
-            icon={<Plus className="h-4 w-4" />}
-            size="wide"
-            className="w-full"
-          >
-            Add Item to Invoice
-          </MobileButton>
         </CardContent>
       </Card>
 
