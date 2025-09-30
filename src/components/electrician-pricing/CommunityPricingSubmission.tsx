@@ -254,7 +254,7 @@ const CommunityPricingSubmission = ({ onSubmissionSuccess }: CommunityPricingSub
           </Button>
         </form>
 
-        <div className="mt-6 flex items-center justify-center gap-4 text-sm text-white/60">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-sm text-white/60">
           <div className="flex items-center gap-1">
             <CheckCircle className="h-4 w-4" />
             <span>Anonymous</span>
