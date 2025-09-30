@@ -1,27 +1,62 @@
-import html2pdf from 'html2pdf.js';
 import { Invoice } from '@/types/invoice';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 
 export const generateInvoicePDF = async (invoice: Partial<Invoice>, companyProfile?: any) => {
-  const element = document.createElement('div');
-  element.innerHTML = generateInvoiceHTML(invoice, companyProfile);
-
-  const options = {
-    margin: 10,
-    filename: `Invoice-${invoice.invoice_number}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-  };
-
   try {
-    await html2pdf().set(options).from(element).save();
-    return true;
+    // Call the PDF Monkey edge function
+    const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
+      body: {
+        quote: {
+          ...invoice,
+          // Transform invoice data to match quote format for PDF generation
+          invoice_mode: true,
+          invoice_number: invoice.invoice_number,
+          invoice_date: invoice.invoice_date,
+          invoice_due_date: invoice.invoice_due_date,
+          invoice_status: invoice.invoice_status,
+          work_completion_date: invoice.work_completion_date,
+          additional_invoice_items: invoice.additional_invoice_items,
+          invoice_notes: invoice.invoice_notes,
+        },
+        companyProfile,
+      },
+    });
+
+    if (error) {
+      console.error('Error generating invoice PDF:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to generate invoice PDF. Please try again.',
+        variant: 'destructive',
+      });
+      return false;
+    }
+
+    if (data?.download_url) {
+      // Download the PDF
+      window.open(data.download_url, '_blank');
+      toast({
+        title: 'Success',
+        description: 'Invoice PDF generated successfully',
+      });
+      return true;
+    }
+
+    return false;
   } catch (error) {
     console.error('Error generating invoice PDF:', error);
+    toast({
+      title: 'Error',
+      description: 'Failed to generate invoice PDF. Please try again.',
+      variant: 'destructive',
+    });
     return false;
   }
 };
 
+
+// Keep the HTML generation function for potential future use or preview
 const generateInvoiceHTML = (invoice: Partial<Invoice>, companyProfile?: any): string => {
   const formatCurrency = (amount: number) => 
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { FileText, Download } from 'lucide-react';
 import { generateInvoicePDF } from '@/utils/invoice-pdf';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 interface InvoiceGenerationStepProps {
   invoice: Partial<Invoice>;
@@ -16,6 +17,8 @@ export const InvoiceGenerationStep = ({
   onGenerate,
   isGenerating,
 }: InvoiceGenerationStepProps) => {
+  const { companyProfile } = useCompanyProfile();
+  
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
@@ -27,7 +30,7 @@ export const InvoiceGenerationStep = ({
   const allItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
 
   const handlePreviewPDF = async () => {
-    await generateInvoicePDF(invoice);
+    await generateInvoicePDF(invoice, companyProfile);
   };
 
   return (
