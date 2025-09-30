@@ -28,7 +28,7 @@ const LivePricing = () => {
   }, [data, isLoading]);
   
   return (
-    <div className="w-full bg-elec-dark text-foreground">
+    <div className="min-h-screen bg-elec-dark text-foreground">
       <div className="p-4 space-y-4">
         <div className="space-y-6 animate-fade-in">
           {/* Compact Header */}
