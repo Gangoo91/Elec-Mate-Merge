@@ -32,7 +32,7 @@ export const SearchForm = ({ postcode, setPostcode, handleSearch, isLoading }: S
         placeholder="Enter your UK postcode" 
         value={postcode}
         onChange={(e) => setPostcode(e.target.value)}
-        className="max-w-xs"
+        className="flex-1"
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             onSubmit();
