@@ -15,14 +15,15 @@ export const MerchantCard = ({ merchant, openDirections }: MerchantCardProps) =>
       key={merchant.id} 
       className="border border-elec-yellow/20 rounded-lg p-4 bg-black/10"
     >
-      <div className="flex justify-between items-start">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+        <div className="flex-1 min-w-0">
           <h3 className="font-medium text-lg">{merchant.name}</h3>
-          <p className="text-sm text-muted-foreground flex items-center gap-1">
-            <MapPin className="h-3 w-3 flex-shrink-0" /> {merchant.address} ({merchant.distance})
+          <p className="text-sm text-muted-foreground flex items-start gap-1 mt-1">
+            <MapPin className="h-3 w-3 flex-shrink-0 mt-0.5" /> 
+            <span className="break-words">{merchant.address} ({merchant.distance})</span>
           </p>
         </div>
-        <span className={`min-w-fit px-2 py-0.5 text-xs rounded-full ${
+        <span className={`min-w-fit px-2 py-0.5 text-xs rounded-full self-start ${
           merchant.openNow ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
         }`}>
           {merchant.openNow ? "Open Now" : "Closed"}
