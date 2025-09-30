@@ -4,6 +4,40 @@ import { Quote } from '@/types/quote';
 import { toast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 
+const generateInvoiceNumber = (): string => {
+  const year = new Date().getFullYear();
+  const timestamp = Date.now().toString().slice(-6);
+  return `INV-${year}-${timestamp}`;
+};
+
+const createInvoiceFromQuote = (quote: Quote): Partial<Invoice> => {
+  const invoiceDate = new Date();
+  const dueDate = new Date();
+  dueDate.setDate(dueDate.getDate() + 30); // 30 days payment terms
+
+  return {
+    ...quote,
+    originalQuoteId: quote.id,
+    invoice_raised: false,
+    invoice_number: generateInvoiceNumber(),
+    invoice_date: invoiceDate,
+    invoice_due_date: dueDate,
+    invoice_status: 'draft',
+    additional_invoice_items: [],
+    work_completion_date: new Date(),
+    items: quote.items.map(item => ({
+      ...item,
+      completionStatus: 'completed' as const,
+      actualQuantity: item.quantity,
+    })),
+    settings: {
+      ...quote.settings,
+      paymentTerms: '30 days',
+      dueDate: dueDate,
+    },
+  };
+};
+
 export const useInvoiceBuilder = (sourceQuote?: Quote) => {
   const [invoice, setInvoice] = useState<Partial<Invoice>>(() => {
     if (sourceQuote) {
@@ -11,34 +45,6 @@ export const useInvoiceBuilder = (sourceQuote?: Quote) => {
     }
     return {};
   });
-
-  const createInvoiceFromQuote = useCallback((quote: Quote): Partial<Invoice> => {
-    const invoiceDate = new Date();
-    const dueDate = new Date();
-    dueDate.setDate(dueDate.getDate() + 30); // 30 days payment terms
-
-    return {
-      ...quote,
-      originalQuoteId: quote.id,
-      invoice_raised: false,
-      invoice_number: generateInvoiceNumber(),
-      invoice_date: invoiceDate,
-      invoice_due_date: dueDate,
-      invoice_status: 'draft',
-      additional_invoice_items: [],
-      work_completion_date: new Date(),
-      items: quote.items.map(item => ({
-        ...item,
-        completionStatus: 'completed' as const,
-        actualQuantity: item.quantity,
-      })),
-      settings: {
-        ...quote.settings,
-        paymentTerms: '30 days',
-        dueDate: dueDate,
-      },
-    };
-  }, []);
 
   const addInvoiceItem = useCallback((item: Omit<InvoiceItem, 'id' | 'totalPrice'>) => {
     const newItem: InvoiceItem = {
@@ -137,8 +143,3 @@ export const useInvoiceBuilder = (sourceQuote?: Quote) => {
   };
 };
 
-const generateInvoiceNumber = (): string => {
-  const year = new Date().getFullYear();
-  const timestamp = Date.now().toString().slice(-6);
-  return `INV-${year}-${timestamp}`;
-};
