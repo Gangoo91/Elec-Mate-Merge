@@ -24,7 +24,7 @@ const MobileAccordionTrigger = React.forwardRef<
     icon?: React.ReactNode;
   }
 >(({ className, children, icon, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
+  <AccordionPrimitive.Header className="flex gap-2">
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
