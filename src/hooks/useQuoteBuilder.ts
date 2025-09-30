@@ -1,12 +1,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Quote, QuoteItem, QuoteClient, QuoteSettings, JobDetails } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
-import { generateQuotePDF } from '@/components/electrician/quote-builder/QuotePDFGenerator';
-import { generateProfessionalQuotePDF } from '@/utils/quote-pdf-professional';
 import { toast } from '@/hooks/use-toast';
 import { useQuoteStorage } from './useQuoteStorage';
 import { useCompanyProfile } from './useCompanyProfile';
 import { generateSequentialQuoteNumber } from '@/utils/quote-number-generator';
+import { supabase } from '@/integrations/supabase/client';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   const { saveQuote } = useQuoteStorage();
@@ -170,27 +169,39 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
 
       setQuote(updatedQuote);
 
-      // Generate and download PDF using professional generator
-      let pdfGenerated = false;
+      // Generate PDF using PDF Monkey
       try {
-        console.log('PDF Generation - Starting PDF generation');
-        pdfGenerated = generateProfessionalQuotePDF({
-          quote: updatedQuote,
-          companyProfile
+        console.log('PDF Generation - Calling PDF Monkey edge function');
+        const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
+          body: { 
+            quote: updatedQuote,
+            companyProfile 
+          }
         });
-        console.log('PDF Generation - Professional PDF result:', pdfGenerated);
-      } catch (pdfError) {
-        console.error('PDF Generation - Error with professional generator:', pdfError);
-      }
 
-      if (!pdfGenerated) {
-        try {
-          console.log('PDF Generation - Falling back to basic generator');
-          generateQuotePDF(updatedQuote, companyProfile);
-          console.log('PDF Generation - Basic generator completed');
-        } catch (fallbackError) {
-          console.error('PDF Generation - Fallback generator also failed:', fallbackError);
+        if (error) {
+          console.error('PDF Generation - Error:', error);
+          throw error;
         }
+
+        if (data?.downloadUrl) {
+          console.log('PDF Generation - Success, opening PDF');
+          window.open(data.downloadUrl, '_blank');
+        } else if (data?.documentId) {
+          console.log('PDF Generation - Document created but still processing:', data.documentId);
+          toast({
+            title: "PDF Processing",
+            description: "Your PDF is being generated. It will open shortly.",
+            variant: "default"
+          });
+        }
+      } catch (pdfError) {
+        console.error('PDF Generation - Failed:', pdfError);
+        toast({
+          title: "PDF Generation Failed",
+          description: "Could not generate PDF. The quote has been saved.",
+          variant: "destructive"
+        });
       }
 
       // Save quote to Supabase
