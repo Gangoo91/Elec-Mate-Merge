@@ -144,7 +144,51 @@ const ModernSubmitPage = () => {
   ];
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="min-h-screen bg-background">
+      {/* Mobile-optimized Hero Section */}
+      <div className="bg-gradient-to-br from-primary/5 via-background to-accent/5 border-b">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="flex justify-center mb-4">
+              <div className="p-2 sm:p-3 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10">
+                <Heart className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+              </div>
+            </div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-3 sm:mb-4 px-2">
+              Share Pricing, Help Community
+            </h1>
+            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed px-4">
+              {stats.registeredUsers > 1 
+                ? `Join ${stats.registeredUsers} UK electricians building an accurate regional pricing database.`
+                : "Be among the first UK electricians to build an accurate regional pricing database."
+              } Your contributions help fellow professionals stay competitive and informed.
+            </p>
+          </div>
+
+          {/* Mobile-responsive Community Stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+            {communityStats.map((stat, index) => (
+              <Card key={index} className="text-center border-primary/20 hover:border-primary/40 transition-all duration-300">
+                <CardContent className="p-3 sm:p-4">
+                  <div className="flex justify-center mb-2">
+                    <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10">
+                      <stat.icon className="h-3 w-3 sm:h-4 sm:w-4 text-primary" />
+                    </div>
+                  </div>
+                  <div className="text-lg sm:text-xl font-bold text-foreground leading-tight">
+                    {isLoadingStats ? "..." : stat.number}
+                  </div>
+                  <div className="text-xs text-muted-foreground leading-tight mt-1">
+                    {stat.label}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
         {/* Mobile-optimized Benefits Section */}
         <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {benefits.map((benefit, index) => (
@@ -282,6 +326,7 @@ const ModernSubmitPage = () => {
             </div>
           </CardContent>
         </Card>
+      </div>
     </div>
   );
 };
