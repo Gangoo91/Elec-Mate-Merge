@@ -102,9 +102,15 @@ export interface Quote {
   docusign_envelope_id?: string;
   docusign_status?: string;
   public_token?: string;
+  invoice_raised?: boolean;
+  invoice_number?: string;
+  invoice_date?: Date;
+  invoice_due_date?: Date;
+  invoice_status?: 'draft' | 'sent' | 'paid' | 'overdue';
+  work_completion_date?: Date;
 }
 
-export type QuoteTag = 'awaiting_payment' | 'job_not_complete' | 'on_hold' | 'disputed';
+export type QuoteTag = 'awaiting_payment' | 'job_not_complete' | 'on_hold' | 'disputed' | 'work_done';
 
 export interface JobTemplate {
   id: string;

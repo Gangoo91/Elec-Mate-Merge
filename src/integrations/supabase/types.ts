@@ -2652,12 +2652,19 @@ export type Database = {
           accepted_by_name: string | null
           accepted_ip: string | null
           accepted_user_agent: string | null
+          additional_invoice_items: Json | null
           client_data: Json
           created_at: string
           docusign_envelope_id: string | null
           docusign_status: string | null
           expiry_date: string
           id: string
+          invoice_date: string | null
+          invoice_due_date: string | null
+          invoice_notes: string | null
+          invoice_number: string | null
+          invoice_raised: boolean | null
+          invoice_status: string | null
           items: Json
           last_reminder_sent_at: string | null
           notes: string | null
@@ -2674,6 +2681,7 @@ export type Database = {
           updated_at: string
           user_id: string
           vat_amount: number
+          work_completion_date: string | null
         }
         Insert: {
           acceptance_method?: string | null
@@ -2683,12 +2691,19 @@ export type Database = {
           accepted_by_name?: string | null
           accepted_ip?: string | null
           accepted_user_agent?: string | null
+          additional_invoice_items?: Json | null
           client_data: Json
           created_at?: string
           docusign_envelope_id?: string | null
           docusign_status?: string | null
           expiry_date: string
           id?: string
+          invoice_date?: string | null
+          invoice_due_date?: string | null
+          invoice_notes?: string | null
+          invoice_number?: string | null
+          invoice_raised?: boolean | null
+          invoice_status?: string | null
           items?: Json
           last_reminder_sent_at?: string | null
           notes?: string | null
@@ -2705,6 +2720,7 @@ export type Database = {
           updated_at?: string
           user_id: string
           vat_amount?: number
+          work_completion_date?: string | null
         }
         Update: {
           acceptance_method?: string | null
@@ -2714,12 +2730,19 @@ export type Database = {
           accepted_by_name?: string | null
           accepted_ip?: string | null
           accepted_user_agent?: string | null
+          additional_invoice_items?: Json | null
           client_data?: Json
           created_at?: string
           docusign_envelope_id?: string | null
           docusign_status?: string | null
           expiry_date?: string
           id?: string
+          invoice_date?: string | null
+          invoice_due_date?: string | null
+          invoice_notes?: string | null
+          invoice_number?: string | null
+          invoice_raised?: boolean | null
+          invoice_status?: string | null
           items?: Json
           last_reminder_sent_at?: string | null
           notes?: string | null
@@ -2736,6 +2759,7 @@ export type Database = {
           updated_at?: string
           user_id?: string
           vat_amount?: number
+          work_completion_date?: string | null
         }
         Relationships: []
       }

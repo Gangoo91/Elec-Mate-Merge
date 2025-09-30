@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { Badge } from '@/components/ui/badge';
-import { FileText, Download, Trash2, Eye, Calendar, Check, Mail, Tag, Clock, X } from 'lucide-react';
+import { FileText, Download, Trash2, Eye, Calendar, Check, Mail, Tag, Clock, X, Receipt } from 'lucide-react';
 import { Quote, QuoteTag } from '@/types/quote';
 import { generateProfessionalQuotePDF } from '@/utils/quote-pdf-professional';
 import { generateAIEnhancedQuotePDF } from '@/utils/ai-enhanced-quote-pdf';
@@ -34,11 +35,16 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   onSendPaymentReminder,
   showAll = false
 }) => {
+  const navigate = useNavigate();
   const { companyProfile } = useCompanyProfile();
   const [loadingAction, setLoadingAction] = useState<string>('');
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
   const [confirmAction, setConfirmAction] = useState<'accept' | 'reject' | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  const canRaiseInvoice = (quote: Quote) => {
+    return quote.status === 'approved' && quote.tags?.includes('work_done') && !quote.invoice_raised;
+  };
   
   const handleRegeneratePDF = async (quote: Quote) => {
     setLoadingAction(`pdf-${quote.id}`);
