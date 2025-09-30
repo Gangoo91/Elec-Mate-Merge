@@ -349,7 +349,7 @@ const ModernRegionalPricing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="w-full">
       {/* Hero Search Section */}
       <div className="bg-gradient-to-br from-primary/5 via-background to-accent/5 border-b">
         <div className="mobile-container py-8 sm:py-12">
@@ -664,7 +664,7 @@ const ModernRegionalPricing = () => {
               </TabsTrigger>
               <TabsTrigger value="contribute">
                 <Users className="h-4 w-4 mr-2" />
-                Contribute Data
+                Submit Tab
               </TabsTrigger>
             </TabsList>
             
