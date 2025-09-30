@@ -18,9 +18,9 @@ import {
 } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 import { JobTemplates } from '@/components/electrician/quote-builder/JobTemplates';
-import { LiveMaterialPricing } from '@/components/electrician/quote-builder/steps/LiveMaterialPricing';
+
 import { JobTemplate } from '@/types/quote';
-import { useQuoteMaterialIntegration, MaterialToQuoteItem } from '@/hooks/useQuoteMaterialIntegration';
+
 import { 
   workerTypes, 
   materialCategories, 
@@ -64,7 +64,6 @@ export const InvoiceItemsStep = ({
     return basePrice * (1 + priceAdjustment / 100);
   };
 
-  const { addMaterialToQuote, addMultipleMaterialsToQuote } = useQuoteMaterialIntegration(onAddItem);
 
   const handleTemplateSelect = (template: JobTemplate) => {
     template.items.forEach(item => {
@@ -664,12 +663,6 @@ export const InvoiceItemsStep = ({
             label: "Job Templates",
             icon: FileText,
             content: <JobTemplates onSelectTemplate={handleTemplateSelect} />
-          },
-          {
-            value: "live-pricing",
-            label: "Live Pricing",
-            icon: TrendingUp,
-            content: <LiveMaterialPricing onAddToQuote={addMaterialToQuote} onAddMultipleToQuote={addMultipleMaterialsToQuote} />
           }
         ]}
         defaultValue="quick"
