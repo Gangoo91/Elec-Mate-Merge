@@ -402,6 +402,19 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                   {loadingAction === `pdf-${quote.id}` ? 'Generating...' : 'PDF'}
                 </Button>
                 
+                {/* Raise Invoice Button - shows for approved quotes with work_done tag */}
+                {canRaiseInvoice(quote) && (
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={() => navigate(`/electrician/invoice-builder/${quote.id}`)}
+                    className="bg-green-600 hover:bg-green-700"
+                  >
+                    <Receipt className="h-4 w-4 mr-1" />
+                    Raise Invoice
+                  </Button>
+                )}
+                
                 {/* Status Management Dropdown - hidden when status is 'sent' */}
                 {onUpdateQuoteStatus && quote.status !== 'sent' && (
                   <DropdownMenu>
@@ -435,6 +448,12 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                             Mark as Disputed
                           </DropdownMenuItem>
                         </>
+                      )}
+                      {quote.status === 'approved' && !quote.tags?.includes('work_done') && (
+                        <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved', ['work_done'])}>
+                          <Check className="h-4 w-4 mr-2" />
+                          Mark Work Complete
+                        </DropdownMenuItem>
                       )}
                       {quote.status === 'approved' && quote.tags?.includes('awaiting_payment') && (
                         <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved', [])}>
