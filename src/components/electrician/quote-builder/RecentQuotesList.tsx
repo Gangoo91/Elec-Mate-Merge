@@ -310,194 +310,221 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   return (
     <div className="space-y-4">
       {displayQuotes.map((quote) => (
-        <Card key={quote.id} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors">
-          <CardContent className="p-6">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              {/* Quote Details */}
-              <div className="flex-1 space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 flex-wrap">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-elec-yellow/10">
-                      <FileText className="h-4 w-4 text-elec-yellow" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-lg">{quote.quoteNumber}</h3>
-                      <p className="text-sm text-muted-foreground">{quote.client.name}</p>
-                    </div>
+        <Card key={quote.id} className="border-elec-yellow/20 bg-elec-gray hover:shadow-lg transition-all duration-200">
+          <CardContent className="p-0">
+            {/* Header Section */}
+            <div className="p-4 sm:p-6 border-b border-border/50">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                <div className="flex items-start gap-3 flex-1">
+                  <div className="p-3 rounded-xl bg-elec-yellow/10 shrink-0">
+                    <FileText className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  <Badge variant={getStatusVariant(quote.status)} className="w-fit">
-                    {quote.status.charAt(0).toUpperCase() + quote.status.slice(1)}
-                  </Badge>
-                  {quote.tags && quote.tags.length > 0 && (
-                    <div className="flex gap-1 flex-wrap">
-                      {quote.tags.map((tag) => (
-                        <Badge key={tag} variant={getTagVariant(tag)} className="text-xs">
-                          <Tag className="h-3 w-3 mr-1" />
-                          {getTagLabel(tag)}
-                        </Badge>
-                      ))}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      <h3 className="font-bold text-lg">{quote.quoteNumber}</h3>
+                      <Badge variant={getStatusVariant(quote.status)} className="text-xs">
+                        {quote.status.charAt(0).toUpperCase() + quote.status.slice(1)}
+                      </Badge>
                     </div>
-                  )}
+                    <p className="text-muted-foreground mb-2">{quote.client.name}</p>
+                    {quote.tags && quote.tags.length > 0 && (
+                      <div className="flex gap-1.5 flex-wrap">
+                        {quote.tags.map((tag) => (
+                          <Badge key={tag} variant={getTagVariant(tag)} className="text-xs">
+                            <Tag className="h-3 w-3 mr-1" />
+                            {getTagLabel(tag)}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{formatCurrency(quote.total)}</span>
+                <div className="text-right shrink-0">
+                  <div className="text-2xl font-bold text-elec-yellow">
+                    {formatCurrency(quote.total)}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
-                    <span>{format(quote.createdAt, 'dd MMM yyyy')}</span>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    Total Amount
                   </div>
-                  <div className="flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-muted-foreground" />
-                    <span>{quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
-                  </div>
-                  {quote.lastReminderSentAt && (
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-xs">Last reminder: {quote.lastReminderSentAt.toLocaleDateString()}</span>
-                    </div>
-                  )}
                 </div>
               </div>
+            </div>
 
-              {/* Actions */}
-              <div className="flex items-center gap-2 flex-wrap">
-                {/* Inline Accept/Reject for sent quotes */}
-                {quote.status === 'sent' && onUpdateQuoteStatus && (
+            {/* Info Section */}
+            <div className="px-4 sm:px-6 py-4 bg-muted/30">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-muted-foreground shrink-0" />
+                  <div>
+                    <div className="text-xs text-muted-foreground">Created</div>
+                    <div className="font-medium">{format(quote.createdAt, 'dd MMM yyyy')}</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
+                  <div>
+                    <div className="text-xs text-muted-foreground">Items</div>
+                    <div className="font-medium">{quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</div>
+                  </div>
+                </div>
+                {quote.lastReminderSentAt && (
                   <div className="flex items-center gap-2">
-                    <MobileButton
-                      size="sm"
-                      variant="elec"
-                      onClick={() => handleActionClick(quote, 'accept')}
-                      disabled={loadingAction.startsWith(`action-${quote.id}`)}
-                      loading={loadingAction === `action-${quote.id}`}
-                      aria-label={`Accept quote ${quote.quoteNumber}`}
-                      icon={<Check className="h-4 w-4" />}
-                    >
-                      Accept
-                    </MobileButton>
-                    <MobileButton
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => handleActionClick(quote, 'reject')}
-                      disabled={loadingAction.startsWith(`action-${quote.id}`)}
-                      loading={loadingAction === `action-${quote.id}`}
-                      aria-label={`Reject quote ${quote.quoteNumber}`}
-                      icon={<X className="h-4 w-4" />}
-                    >
-                      Reject
-                    </MobileButton>
+                    <Clock className="h-4 w-4 text-muted-foreground shrink-0" />
+                    <div>
+                      <div className="text-xs text-muted-foreground">Last Reminder</div>
+                      <div className="font-medium text-xs">{quote.lastReminderSentAt.toLocaleDateString()}</div>
+                    </div>
                   </div>
                 )}
+              </div>
+            </div>
 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleRegeneratePDF(quote)}
-                  disabled={loadingAction === `pdf-${quote.id}`}
-                  className="hover:bg-elec-yellow/10"
-                >
-                  <Download className="h-4 w-4 mr-1" />
-                  {loadingAction === `pdf-${quote.id}` ? 'Generating...' : 'PDF'}
-                </Button>
-                
-                {/* Raise Invoice Button - shows for approved quotes with work_done tag */}
-                {canRaiseInvoice(quote) && (
+            {/* Actions Section */}
+            <div className="p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                {/* Primary Actions */}
+                <div className="flex items-center gap-2 flex-wrap flex-1">
+                  {/* Accept/Reject for sent quotes */}
+                  {quote.status === 'sent' && onUpdateQuoteStatus && (
+                    <>
+                      <Button
+                        size="sm"
+                        variant="default"
+                        onClick={() => handleActionClick(quote, 'accept')}
+                        disabled={loadingAction.startsWith(`action-${quote.id}`)}
+                        className="bg-green-600 hover:bg-green-700 flex-1 sm:flex-initial"
+                      >
+                        <Check className="h-4 w-4 mr-2" />
+                        Accept Quote
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => handleActionClick(quote, 'reject')}
+                        disabled={loadingAction.startsWith(`action-${quote.id}`)}
+                        className="flex-1 sm:flex-initial"
+                      >
+                        <X className="h-4 w-4 mr-2" />
+                        Reject
+                      </Button>
+                    </>
+                  )}
+
+                  {/* Raise Invoice - prominent when available */}
+                  {canRaiseInvoice(quote) && (
+                    <Button
+                      size="sm"
+                      variant="default"
+                      onClick={() => navigate(`/electrician/invoice-builder/${quote.id}`)}
+                      className="bg-green-600 hover:bg-green-700 flex-1 sm:flex-initial"
+                    >
+                      <Receipt className="h-4 w-4 mr-2" />
+                      Raise Invoice
+                    </Button>
+                  )}
+
+                  {/* PDF Download */}
                   <Button
-                    variant="default"
+                    variant="outline"
                     size="sm"
-                    onClick={() => navigate(`/electrician/invoice-builder/${quote.id}`)}
-                    className="bg-green-600 hover:bg-green-700"
+                    onClick={() => handleRegeneratePDF(quote)}
+                    disabled={loadingAction === `pdf-${quote.id}`}
+                    className="hover:bg-elec-yellow/10"
                   >
-                    <Receipt className="h-4 w-4 mr-1" />
-                    Raise Invoice
+                    <Download className="h-4 w-4 mr-2" />
+                    {loadingAction === `pdf-${quote.id}` ? 'Generating...' : 'Download PDF'}
                   </Button>
-                )}
-                
-                {/* Status Management Dropdown - hidden when status is 'sent' */}
-                {onUpdateQuoteStatus && quote.status !== 'sent' && (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="hover:bg-elec-yellow/10"
-                        disabled={loadingAction.startsWith(`status-${quote.id}`)}
-                      >
-                        <Check className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      {quote.status === 'pending' && (
-                        <>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['job_not_complete'])}>
-                            Mark as Job Not Complete
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['awaiting_payment'])}>
-                            Mark as Awaiting Payment
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved')}>
-                            Mark as Approved
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['on_hold'])}>
-                            Put On Hold
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['disputed'])}>
-                            Mark as Disputed
-                          </DropdownMenuItem>
-                        </>
-                      )}
-                      {quote.status === 'approved' && !quote.tags?.includes('work_done') && (
-                        <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved', ['work_done'])}>
-                          Mark Work Complete
-                        </DropdownMenuItem>
-                      )}
-                      {quote.status === 'approved' && quote.tags?.includes('awaiting_payment') && (
-                        <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved', [])}>
-                          Mark as Paid
-                        </DropdownMenuItem>
-                      )}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                )}
+                </div>
 
-                {/* Payment Reminder Dropdown */}
-                {onSendPaymentReminder && quote.tags?.includes('awaiting_payment') && (
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="hover:bg-elec-yellow/10"
-                        disabled={loadingAction.startsWith(`reminder-${quote.id}`)}
-                      >
-                        <Mail className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => handleSendReminder(quote.id, 'gentle')}>
-                        Send Gentle Reminder
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleSendReminder(quote.id, 'firm')}>
-                        Send Firm Reminder
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleSendReminder(quote.id, 'final')}>
-                        Send Final Notice
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                )}
-                
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleDeleteQuote(quote)}
-                  className="hover:bg-red-500/10 text-red-500 border-red-500/20"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+                {/* Secondary Actions */}
+                <div className="flex items-center gap-2 justify-end">
+                  {/* Status Management */}
+                  {onUpdateQuoteStatus && quote.status !== 'sent' && (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="hover:bg-elec-yellow/10"
+                          disabled={loadingAction.startsWith(`status-${quote.id}`)}
+                        >
+                          <Check className="h-4 w-4 mr-2" />
+                          Update Status
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-56 bg-popover z-50">
+                        {quote.status === 'pending' && (
+                          <>
+                            <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['job_not_complete'])}>
+                              Mark as Job Not Complete
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['awaiting_payment'])}>
+                              Mark as Awaiting Payment
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved')}>
+                              Mark as Approved
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['on_hold'])}>
+                              Put On Hold
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['disputed'])}>
+                              Mark as Disputed
+                            </DropdownMenuItem>
+                          </>
+                        )}
+                        {quote.status === 'approved' && !quote.tags?.includes('work_done') && (
+                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved', ['work_done'])}>
+                            Mark Work Complete
+                          </DropdownMenuItem>
+                        )}
+                        {quote.status === 'approved' && quote.tags?.includes('awaiting_payment') && (
+                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved', [])}>
+                            Mark as Paid
+                          </DropdownMenuItem>
+                        )}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  )}
+
+                  {/* Payment Reminders */}
+                  {onSendPaymentReminder && quote.tags?.includes('awaiting_payment') && (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="hover:bg-elec-yellow/10"
+                          disabled={loadingAction.startsWith(`reminder-${quote.id}`)}
+                        >
+                          <Mail className="h-4 w-4 mr-2" />
+                          Send Reminder
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-52 bg-popover z-50">
+                        <DropdownMenuItem onClick={() => handleSendReminder(quote.id, 'gentle')}>
+                          Send Gentle Reminder
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleSendReminder(quote.id, 'firm')}>
+                          Send Firm Reminder
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleSendReminder(quote.id, 'final')}>
+                          Send Final Notice
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  )}
+
+                  {/* Delete */}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDeleteQuote(quote)}
+                    className="hover:bg-red-500/10 text-red-500 border-red-500/20"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </CardContent>
