@@ -27,6 +27,8 @@ interface PhotoDoc {
   gps_longitude?: number;
   file_size?: number;
   mime_type?: string;
+  folder_name?: string;
+  project_reference?: string;
   created_at: string;
 }
 
@@ -38,6 +40,12 @@ const PhotoDocumentation = () => {
   const [dragActive, setDragActive] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [viewingPhoto, setViewingPhoto] = useState<PhotoDoc | null>(null);
+  const [selectedFolder, setSelectedFolder] = useState("General");
+  const [availableFolders, setAvailableFolders] = useState<string[]>(["General"]);
+  const [isCreatingFolder, setIsCreatingFolder] = useState(false);
+  const [newFolderName, setNewFolderName] = useState("");
+  const [newFolderReference, setNewFolderReference] = useState("");
+  const [selectedFolderFilter, setSelectedFolderFilter] = useState("All Folders");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
@@ -65,6 +73,14 @@ const PhotoDocumentation = () => {
 
       if (error) throw error;
       setPhotos(data || []);
+      
+      // Extract unique folders from photos
+      const folders = ["General", ...Array.from(new Set(
+        (data || [])
+          .map(photo => photo.folder_name)
+          .filter(folder => folder && folder !== "General")
+      ))];
+      setAvailableFolders(folders);
     } catch (error) {
       console.error('Error fetching photos:', error);
       toast({
@@ -212,7 +228,9 @@ const PhotoDocumentation = () => {
             gps_latitude: gpsCoords?.latitude,
             gps_longitude: gpsCoords?.longitude,
             file_size: file.size,
-            mime_type: file.type
+            mime_type: file.type,
+            folder_name: selectedFolder,
+            project_reference: newFolderReference || null
           })
           .select()
           .single();
@@ -224,6 +242,9 @@ const PhotoDocumentation = () => {
       setPhotos(prev => [...uploadedPhotos, ...prev]);
       setNewPhoto({ description: "", category: "General", location: "", tags: "", gpsEnabled: false });
       setSelectedFiles([]);
+      setIsCreatingFolder(false);
+      setNewFolderName("");
+      setNewFolderReference("");
       
       toast({
         title: "Success",
@@ -283,6 +304,22 @@ const PhotoDocumentation = () => {
     return colors[category] || "bg-gray-500";
   };
 
+  const handleCreateFolder = () => {
+    if (newFolderName.trim()) {
+      const folderName = newFolderName.trim();
+      if (!availableFolders.includes(folderName)) {
+        setAvailableFolders([...availableFolders, folderName]);
+      }
+      setSelectedFolder(folderName);
+      setIsCreatingFolder(false);
+      setNewFolderName("");
+    }
+  };
+
+  const filteredPhotos = selectedFolderFilter === "All Folders" 
+    ? photos 
+    : photos.filter(photo => photo.folder_name === selectedFolderFilter);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-8">
@@ -304,6 +341,66 @@ const PhotoDocumentation = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-6">
+            {/* Folder Selection */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">
+                Folder Organisation
+              </label>
+              <MobileSelectWrapper
+                value={selectedFolder}
+                onValueChange={(value) => {
+                  if (value === "CREATE_NEW") {
+                    setIsCreatingFolder(true);
+                  } else {
+                    setSelectedFolder(value);
+                  }
+                }}
+                options={[
+                  ...availableFolders.map(folder => ({ value: folder, label: folder })),
+                  { value: "CREATE_NEW", label: "+ Create New Folder" }
+                ]}
+                placeholder="Select folder"
+              />
+            </div>
+
+            {isCreatingFolder && (
+              <div className="space-y-3 p-4 bg-secondary/20 rounded-lg border">
+                <h4 className="font-medium text-sm">Create New Folder</h4>
+                <MobileInputWrapper
+                  label="Folder Name"
+                  placeholder="e.g., Smith House - Kitchen Rewire"
+                  value={newFolderName}
+                  onChange={(value) => setNewFolderName(value)}
+                />
+                <MobileInputWrapper
+                  label="Project Reference (Optional)"
+                  placeholder="Job number, client reference, etc."
+                  value={newFolderReference}
+                  onChange={(value) => setNewFolderReference(value)}
+                />
+                <div className="flex gap-2">
+                  <MobileButton 
+                    onClick={handleCreateFolder}
+                    disabled={!newFolderName.trim()}
+                    className="flex-1"
+                  >
+                    Create Folder
+                  </MobileButton>
+                  <MobileButton 
+                    variant="outline" 
+                    onClick={() => {
+                      setIsCreatingFolder(false);
+                      setNewFolderName("");
+                      setNewFolderReference("");
+                    }}
+                    className="flex-1"
+                  >
+                    Cancel
+                  </MobileButton>
+                </div>
+              </div>
+            )}
+
             <MobileInputWrapper
               label="Photo Description"
               placeholder="Describe what this photo shows (required)"
@@ -551,21 +648,45 @@ const PhotoDocumentation = () => {
       {/* Photo Gallery */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="pb-4">
-          <CardTitle className="text-white flex items-center gap-2 text-lg">
-            <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-            Photo Gallery ({photos.length})
-          </CardTitle>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <CardTitle className="text-white flex items-center gap-2 text-lg">
+              <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
+              Photo Gallery
+            </CardTitle>
+            
+            <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+              <MobileSelectWrapper
+                value={selectedFolderFilter}
+                onValueChange={setSelectedFolderFilter}
+                options={[
+                  { value: "All Folders", label: "All Folders" },
+                  ...availableFolders.map(folder => ({ value: folder, label: folder }))
+                ]}
+              />
+              <div className="text-sm text-muted-foreground whitespace-nowrap">
+                {filteredPhotos.length} photo{filteredPhotos.length !== 1 ? 's' : ''}
+                {selectedFolderFilter !== "All Folders" && ` in ${selectedFolderFilter}`}
+              </div>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
-          {photos.length === 0 ? (
+          {filteredPhotos.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
               <Camera className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p className="text-lg font-medium mb-2">No photos uploaded yet</p>
-              <p className="text-sm">Start documenting your work with the upload tool above</p>
+              <p className="text-lg font-medium mb-2">
+                {selectedFolderFilter === "All Folders" ? "No photos uploaded yet" : `No photos in ${selectedFolderFilter}`}
+              </p>
+              <p className="text-sm">
+                {selectedFolderFilter === "All Folders" 
+                  ? "Start documenting your work with the upload tool above"
+                  : `No photos have been uploaded to the ${selectedFolderFilter} folder yet`
+                }
+              </p>
             </div>
           ) : (
             <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
-              {photos.map((photo, index) => (
+              {filteredPhotos.map((photo, index) => (
                 <MobileGestureHandler
                   key={photo.id}
                   onTap={() => setViewingPhoto(photo)}
@@ -643,12 +764,18 @@ const PhotoDocumentation = () => {
                               minute: '2-digit'
                             })}
                           </div>
-                          {photo.location && (
-                            <div className="text-sm text-muted-foreground flex items-center gap-2">
-                              <MapPin className="h-4 w-4 text-elec-yellow" />
-                              {photo.location}
-                            </div>
-                          )}
+                           {photo.location && (
+                             <div className="text-sm text-muted-foreground flex items-center gap-2">
+                               <MapPin className="h-4 w-4 text-elec-yellow" />
+                               {photo.location}
+                             </div>
+                           )}
+                           {photo.folder_name && (
+                             <div className="text-sm text-muted-foreground flex items-center gap-2">
+                               <span>📁</span>
+                               {photo.folder_name}
+                             </div>
+                           )}
                           {(photo.gps_latitude && photo.gps_longitude) && (
                             <div className="text-xs text-muted-foreground flex items-center gap-2">
                               <div className="w-1 h-1 bg-elec-yellow rounded-full"></div>

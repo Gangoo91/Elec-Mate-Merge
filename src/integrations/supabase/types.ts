@@ -3047,11 +3047,13 @@ export type Database = {
           file_size: number | null
           file_url: string
           filename: string
+          folder_name: string | null
           gps_latitude: number | null
           gps_longitude: number | null
           id: string
           location: string | null
           mime_type: string | null
+          project_reference: string | null
           tags: string[] | null
           updated_at: string
           user_id: string
@@ -3063,11 +3065,13 @@ export type Database = {
           file_size?: number | null
           file_url: string
           filename: string
+          folder_name?: string | null
           gps_latitude?: number | null
           gps_longitude?: number | null
           id?: string
           location?: string | null
           mime_type?: string | null
+          project_reference?: string | null
           tags?: string[] | null
           updated_at?: string
           user_id: string
@@ -3079,11 +3083,13 @@ export type Database = {
           file_size?: number | null
           file_url?: string
           filename?: string
+          folder_name?: string | null
           gps_latitude?: number | null
           gps_longitude?: number | null
           id?: string
           location?: string | null
           mime_type?: string | null
+          project_reference?: string | null
           tags?: string[] | null
           updated_at?: string
           user_id?: string
