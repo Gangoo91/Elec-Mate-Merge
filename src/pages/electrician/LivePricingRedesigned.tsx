@@ -200,7 +200,7 @@ const LivePricingRedesigned = () => {
 
         {/* Tabbed Interface */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-elec-gray border border-elec-yellow/20 h-auto p-1">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-elec-gray border border-elec-yellow/20 h-auto p-1 gap-1">
             <TabsTrigger 
               value="regional" 
               className="flex flex-col sm:flex-row items-center gap-1 py-3 text-xs sm:text-sm data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark"
