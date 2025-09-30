@@ -323,6 +323,10 @@ const LivePricingRedesigned = () => {
             </div>
           </TabsContent>
 
+          <TabsContent value="submit" className="space-y-6 animate-fade-in">
+            <ModernSubmitPage />
+          </TabsContent>
+
           <TabsContent value="scrap" className="space-y-6 animate-fade-in">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
