@@ -22,7 +22,7 @@ export const MerchantCard = ({ merchant, openDirections }: MerchantCardProps) =>
             <MapPin className="h-3 w-3 flex-shrink-0" /> {merchant.address} ({merchant.distance})
           </p>
         </div>
-        <span className={`px-2 py-0.5 text-xs rounded-full ${
+        <span className={`min-w-fit px-2 py-0.5 text-xs rounded-full ${
           merchant.openNow ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
         }`}>
           {merchant.openNow ? "Open Now" : "Closed"}
