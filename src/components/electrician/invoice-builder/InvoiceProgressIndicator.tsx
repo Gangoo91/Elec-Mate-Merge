@@ -1,40 +1,17 @@
-import { Progress } from '@/components/ui/progress';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface InvoiceProgressIndicatorProps {
   currentStep: number;
-  totalSteps: number;
   steps: Array<{ title: string; description: string }>;
 }
 
 export const InvoiceProgressIndicator = ({
   currentStep,
-  totalSteps,
   steps,
 }: InvoiceProgressIndicatorProps) => {
-  const progressPercentage = ((currentStep + 1) / totalSteps) * 100;
-
   return (
     <div className="space-y-4 mb-6">
-      {/* Mobile Progress Bar */}
-      <div className="lg:hidden space-y-2">
-        <div className="flex justify-between items-center">
-          <div className="space-y-1">
-            <span className="text-sm font-medium">
-              Step {currentStep + 1} of {totalSteps}
-            </span>
-            <p className="text-xs text-muted-foreground">
-              {steps[currentStep]?.title}
-            </p>
-          </div>
-          <span className="text-xs font-medium text-muted-foreground">
-            {Math.round(progressPercentage)}%
-          </span>
-        </div>
-        <Progress value={progressPercentage} className="h-2" />
-      </div>
-
       {/* Desktop Step Indicator */}
       <div className="hidden lg:flex items-center justify-between gap-2">
         {steps.map((step, index) => (

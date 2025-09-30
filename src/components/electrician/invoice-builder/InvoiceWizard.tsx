@@ -124,7 +124,6 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
 
         <InvoiceProgressIndicator
           currentStep={currentStep}
-          totalSteps={steps.length}
           steps={steps}
         />
       </div>
