@@ -4,8 +4,6 @@ import { Separator } from "@/components/ui/separator";
 import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail, Briefcase, Loader2, Code, Copy, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Quote } from "@/types/quote";
-import { generateProfessionalQuotePDF } from "@/utils/quote-pdf-professional";
-import { generateAIEnhancedQuotePDF } from "@/utils/ai-enhanced-quote-pdf";
 import { useToast } from "@/hooks/use-toast";
 import { useCompanyProfile } from "@/hooks/useCompanyProfile";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,11 +18,15 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [showTestData, setShowTestData] = useState(false);
-  const [isGeneratingPDFMonkey, setIsGeneratingPDFMonkey] = useState(false);
 
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
     try {
+      toast({
+        title: "Generating Professional PDF",
+        description: "Creating your quote PDF, this may take a moment...",
+      });
+
       // Create a default company profile if none exists
       const effectiveCompanyProfile = companyProfile || {
         id: 'default',
@@ -62,100 +64,6 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         }
       };
 
-      let success = false;
-      
-      if (effectiveQuote.settings?.aiEnhancedPDF) {
-        toast({
-          title: "Generating AI-Enhanced PDF",
-          description: "Please wait while we create your professional quote...",
-        });
-        
-        success = await generateAIEnhancedQuotePDF({
-          quote: effectiveQuote,
-          companyProfile: effectiveCompanyProfile,
-          aiEnhancements: {
-            enhancedDescriptions: true,
-            executiveSummary: true,
-            smartTerms: true,
-            recommendations: true
-          }
-        });
-      } else {
-        success = generateProfessionalQuotePDF({
-          quote: effectiveQuote,
-          companyProfile: effectiveCompanyProfile
-        });
-      }
-
-      if (success) {
-        toast({
-          title: "Success",
-          description: effectiveQuote.settings?.aiEnhancedPDF ? 
-            "AI-Enhanced Quote PDF downloaded successfully" : 
-            "Quote PDF downloaded successfully",
-        });
-      } else {
-        toast({
-          title: "Error", 
-          description: "Failed to generate PDF",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error('PDF generation error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to generate PDF. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsDownloading(false);
-    }
-  };
-
-  const handlePDFMonkeyDownload = async () => {
-    setIsGeneratingPDFMonkey(true);
-    try {
-      toast({
-        title: "Generating Professional PDF",
-        description: "Using PDF Monkey template, this may take a moment...",
-      });
-
-      const effectiveCompanyProfile = companyProfile || {
-        id: 'default',
-        user_id: 'default',
-        company_name: "Your Electrical Company",
-        company_email: "contact@yourcompany.com",
-        company_phone: "0123 456 7890",
-        company_address: "123 Business Street, London",
-        primary_color: "#1e40af",
-        secondary_color: "#3b82f6",
-        currency: "GBP",
-        locale: "en-GB",
-        vat_number: "GB123456789",
-        payment_terms: "Payment due within 30 days",
-        created_at: new Date(),
-        updated_at: new Date()
-      };
-
-      const effectiveQuote = {
-        ...quote,
-        quoteNumber: quote.quoteNumber || `Q${Date.now()}`,
-        createdAt: quote.createdAt || new Date(),
-        expiryDate: quote.expiryDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        status: quote.status || 'draft',
-        subtotal: quote.subtotal || 0,
-        total: quote.total || 0,
-        vatAmount: quote.vatAmount || 0,
-        client: quote.client || {
-          name: "Client Name",
-          email: "client@example.com",
-          phone: "0123 456 7890",
-          address: "Client Address",
-          postcode: "AB1 2CD"
-        }
-      };
-
       const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: {
           quote: effectiveQuote,
@@ -173,25 +81,25 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         
         toast({
           title: "Success",
-          description: "Professional PDF generated successfully!",
+          description: "Quote PDF generated successfully!",
         });
       } else if (data.documentId) {
         toast({
           title: "PDF Generation In Progress",
-          description: "Your PDF is being generated. Check your PDF Monkey dashboard for the document.",
+          description: "Your PDF is being generated. Check back in a moment.",
         });
       } else {
         throw new Error(data.error || 'Failed to generate PDF');
       }
     } catch (error) {
-      console.error('PDF Monkey error:', error);
+      console.error('PDF generation error:', error);
       toast({
         title: "Error",
         description: error.message || "Failed to generate PDF. Please try again.",
         variant: "destructive",
       });
     } finally {
-      setIsGeneratingPDFMonkey(false);
+      setIsDownloading(false);
     }
   };
 
@@ -534,7 +442,7 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
       </Card>
 
       {/* Quote Actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Button 
           onClick={handleDownloadPDF} 
           disabled={isDownloading}
@@ -546,19 +454,6 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
             <Download className="h-4 w-4" />
           )}
           {isDownloading ? "Generating..." : "Download PDF"}
-        </Button>
-
-        <Button 
-          onClick={handlePDFMonkeyDownload} 
-          disabled={isGeneratingPDFMonkey}
-          className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
-        >
-          {isGeneratingPDFMonkey ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <FileText className="h-4 w-4" />
-          )}
-          {isGeneratingPDFMonkey ? "Generating..." : "Pro PDF Template"}
         </Button>
         
         <Button 
