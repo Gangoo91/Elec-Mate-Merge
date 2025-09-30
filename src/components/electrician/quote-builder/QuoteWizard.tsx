@@ -42,6 +42,7 @@ const {
     prevStep,
     generateQuote,
     resetQuote,
+    isGenerating,
   } = useQuoteBuilder(onQuoteGenerated);
 
   const canProceed = () => {
@@ -136,6 +137,7 @@ const {
                   nextStepTitle={steps[currentStep + 1]?.title}
                   onNext={nextStep}
                   onGenerate={generateQuote}
+                  isGenerating={isGenerating}
                 />
               </div>
             </div>

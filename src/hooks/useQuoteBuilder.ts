@@ -22,6 +22,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [priceAdjustment, setPriceAdjustment] = useState(0); // Percentage adjustment (0-20)
+  const [isGenerating, setIsGenerating] = useState(false);
 
   // Generate quote number when quote is first created
   useEffect(() => {
@@ -125,6 +126,9 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   }, []);
 
   const generateQuote = useCallback(async () => {
+    if (isGenerating) return; // Prevent multiple clicks
+    
+    setIsGenerating(true);
     try {
       const finalQuote = calculateTotals();
       
@@ -240,8 +244,10 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
         description: "There was an error generating the quote. Please try again.",
         variant: "destructive"
       });
+    } finally {
+      setIsGenerating(false);
     }
-  }, [quote, currentStep]);
+  }, [quote, currentStep, isGenerating]);
 
   const resetQuote = useCallback(async () => {
     try {
@@ -289,5 +295,6 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
     prevStep,
     generateQuote,
     resetQuote,
+    isGenerating,
   };
 };

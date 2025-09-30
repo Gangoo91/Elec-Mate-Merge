@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calculator } from "lucide-react";
+import { ArrowRight, Calculator, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SmartContinueButtonProps {
@@ -10,6 +10,7 @@ interface SmartContinueButtonProps {
   onNext: () => void;
   onGenerate: () => void;
   className?: string;
+  isGenerating?: boolean;
 }
 
 export const SmartContinueButton = ({
@@ -18,21 +19,31 @@ export const SmartContinueButton = ({
   nextStepTitle,
   onNext,
   onGenerate,
-  className
+  className,
+  isGenerating = false
 }: SmartContinueButtonProps) => {
   if (isLastStep) {
     return (
       <Button
         onClick={onGenerate}
-        disabled={!canProceed}
+        disabled={!canProceed || isGenerating}
         size="lg"
         className={cn(
           "w-full sm:w-auto sm:min-w-40 max-w-full",
           className
         )}
       >
-        <Calculator className="mr-2 h-4 w-4" />
-        Generate Quote
+        {isGenerating ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Generating...
+          </>
+        ) : (
+          <>
+            <Calculator className="mr-2 h-4 w-4" />
+            Generate Quote
+          </>
+        )}
       </Button>
     );
   }
