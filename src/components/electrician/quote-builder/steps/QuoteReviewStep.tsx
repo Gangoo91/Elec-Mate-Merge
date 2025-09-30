@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail, Briefcase, Loader2 } from "lucide-react";
+import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail, Briefcase, Loader2, Code, Copy, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Quote } from "@/types/quote";
 import { generateProfessionalQuotePDF } from "@/utils/quote-pdf-professional";
@@ -19,6 +19,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const { companyProfile } = useCompanyProfile();
   const [isDownloading, setIsDownloading] = useState(false);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [showTestData, setShowTestData] = useState(false);
 
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
@@ -493,6 +494,67 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
           Amend Quote
         </Button>
       </div>
+
+      {/* Test Data Display (Developer Feature) */}
+      <Card className="bg-muted/30 border-dashed border-2">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+              <Code className="h-4 w-4" />
+              Developer Test Data
+            </CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowTestData(!showTestData)}
+              className="h-8 px-3"
+            >
+              {showTestData ? (
+                <>
+                  <ChevronUp className="h-4 w-4 mr-1" />
+                  Hide JSON
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="h-4 w-4 mr-1" />
+                  View JSON
+                </>
+              )}
+            </Button>
+          </div>
+        </CardHeader>
+        {showTestData && (
+          <CardContent className="pt-0">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-muted-foreground">
+                  Complete quote object data (for testing and debugging)
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    navigator.clipboard.writeText(JSON.stringify(quote, null, 2));
+                    toast({
+                      title: "Copied to Clipboard",
+                      description: "Quote JSON data copied successfully",
+                    });
+                  }}
+                  className="h-7 px-2"
+                >
+                  <Copy className="h-3 w-3 mr-1" />
+                  Copy
+                </Button>
+              </div>
+              <div className="relative">
+                <pre className="bg-background border rounded-lg p-4 overflow-x-auto text-xs font-mono max-h-96 overflow-y-auto">
+                  {JSON.stringify(quote, null, 2)}
+                </pre>
+              </div>
+            </div>
+          </CardContent>
+        )}
+      </Card>
     </div>
   );
 };
