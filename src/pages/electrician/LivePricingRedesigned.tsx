@@ -333,7 +333,7 @@ const LivePricingRedesigned = () => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-semibold">Scrap Metal Prices</h2>
-                  <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
+                  <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30 hover:bg-orange-500/20 hover:text-orange-400">
                     <Recycle className="h-3 w-3 mr-1" />
                     Recycling Rates
                   </Badge>
