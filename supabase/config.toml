@@ -159,3 +159,6 @@ verify_jwt = false
 
 [functions.fetch-job-listings]
 verify_jwt = false
+
+[functions.generate-pdf-monkey]
+# Requires JWT authentication for security
