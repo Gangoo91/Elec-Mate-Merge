@@ -451,7 +451,6 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                       )}
                       {quote.status === 'approved' && !quote.tags?.includes('work_done') && (
                         <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved', ['work_done'])}>
-                          <Check className="h-4 w-4 mr-2" />
                           Mark Work Complete
                         </DropdownMenuItem>
                       )}
