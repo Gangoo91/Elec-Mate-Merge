@@ -194,7 +194,7 @@ const LivePricingRedesigned = () => {
         </div>
       </div>
 
-      <div className="p-4 space-y-6 mb-12">
+      <div className="p-4 space-y-6">
 
 
         {/* Tabbed Interface */}

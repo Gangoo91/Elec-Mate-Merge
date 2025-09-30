@@ -23,7 +23,7 @@ const Layout = () => {
   }, [isMobile, sidebarOpen]);
 
   return (
-    <div className="flex h-screen bg-elec-dark text-slate-50 overflow-hidden">
+    <div className="flex h-screen bg-elec-dark text-slate-50 overflow-x-hidden">
       {/* Sidebar navigation - mobile-ready */}
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
@@ -32,7 +32,7 @@ const Layout = () => {
         <Header toggleSidebar={toggleSidebar} />
         
         <main 
-          className="h-screen flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8"
+          className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8"
           style={{ paddingTop: 'var(--header-height, 64px)' }}
         >
           <div className={cn("mobile-container mobile-safe-area p-0 max-w-7xl min-w-0")}>
