@@ -486,66 +486,6 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
         </Button>
       </div>
 
-      {/* Test Data Display (Developer Feature) */}
-      <Card className="bg-muted/30 border-dashed border-2">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <Code className="h-4 w-4" />
-              Developer Test Data
-            </CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowTestData(!showTestData)}
-              className="h-8 px-3"
-            >
-              {showTestData ? (
-                <>
-                  <ChevronUp className="h-4 w-4 mr-1" />
-                  Hide JSON
-                </>
-              ) : (
-                <>
-                  <ChevronDown className="h-4 w-4 mr-1" />
-                  View JSON
-                </>
-              )}
-            </Button>
-          </div>
-        </CardHeader>
-        {showTestData && (
-          <CardContent className="pt-0">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-muted-foreground">
-                  Complete quote object data (for testing and debugging)
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    navigator.clipboard.writeText(JSON.stringify({ quote, companyProfile }, null, 2));
-                    toast({
-                      title: "Copied to Clipboard",
-                      description: "Quote and company data copied successfully",
-                    });
-                  }}
-                  className="h-7 px-2"
-                >
-                  <Copy className="h-3 w-3 mr-1" />
-                  Copy
-                </Button>
-              </div>
-              <div className="relative">
-                <pre className="bg-background border rounded-lg p-4 overflow-x-auto text-xs font-mono max-h-96 overflow-y-auto">
-                  {JSON.stringify({ quote, companyProfile }, null, 2)}
-                </pre>
-              </div>
-            </div>
-          </CardContent>
-        )}
-      </Card>
     </div>
   );
 };
