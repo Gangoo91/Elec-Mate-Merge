@@ -24,10 +24,11 @@ import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
 import { useToast } from "@/hooks/use-toast";
 
 // Import existing components
-import MaterialPriceComparison from "@/components/electrician-materials/MaterialPriceComparison";
 import EnhancedRegionalPricing from "@/components/electrician-pricing/EnhancedRegionalPricing";
 import ModernSubmitPage from "@/components/electrician-pricing/ModernSubmitPage";
 import CompactPricingGrid from "@/components/electrician-pricing/CompactPricingGrid";
+import ScrapMerchantFinder from "@/components/electrician-pricing/ScrapMerchantFinder";
+import WhyThisMatters from "@/components/common/WhyThisMatters";
 
 // Loading skeleton component
 const PricingSkeleton = () => (
@@ -324,38 +325,59 @@ const LivePricingRedesigned = () => {
           </TabsContent>
 
           <TabsContent value="scrap" className="space-y-6 animate-fade-in">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">Scrap Metal Prices</h2>
-                <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
-                  <Recycle className="h-3 w-3 mr-1" />
-                  Recycling Rates
-                </Badge>
+            <div className="space-y-6">
+              {/* Postcode Finder for Local Scrap Merchants */}
+              <ScrapMerchantFinder />
+              
+              {/* Scrap Metal Prices Section */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-semibold">Scrap Metal Prices</h2>
+                  <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
+                    <Recycle className="h-3 w-3 mr-1" />
+                    Recycling Rates
+                  </Badge>
+                </div>
+                
+                {isLoading ? (
+                  <PricingSkeleton />
+                ) : data ? (
+                  <CompactPricingGrid
+                    metalPrices={data.metalPrices}
+                    lastUpdated={data.lastUpdated}
+                    isLive={data.isLive}
+                    dataSource={data.dataSource}
+                  />
+                ) : (
+                  <Card className="p-8 text-center border-elec-yellow/20 bg-elec-gray">
+                    <AlertTriangle className="h-12 w-12 text-orange-400 mx-auto mb-4" />
+                    <h3 className="font-medium mb-2">Data Temporarily Unavailable</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Unable to fetch scrap metal pricing data. Please try refreshing.
+                    </p>
+                    <Button onClick={() => refreshPrices(true)} size="sm">
+                      Try Again
+                    </Button>
+                  </Card>
+                )}
               </div>
-              
-              {isLoading ? (
-                <PricingSkeleton />
-              ) : data ? (
-                <CompactPricingGrid
-                  metalPrices={data.metalPrices}
-                  lastUpdated={data.lastUpdated}
-                  isLive={data.isLive}
-                  dataSource={data.dataSource}
-                />
-              ) : (
-                <Card className="p-8 text-center border-elec-yellow/20 bg-elec-gray">
-                  <AlertTriangle className="h-12 w-12 text-orange-400 mx-auto mb-4" />
-                  <h3 className="font-medium mb-2">Data Temporarily Unavailable</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Unable to fetch scrap metal pricing data. Please try refreshing.
-                  </p>
-                  <Button onClick={() => refreshPrices(true)} size="sm">
-                    Try Again
-                  </Button>
-                </Card>
-              )}
-              
-              <MaterialPriceComparison />
+
+              {/* UK Scrap Metal Recycling Information */}
+              <WhyThisMatters
+                title="UK Scrap Metal Recycling Guide"
+                points={[
+                  "Electrical cables (copper, aluminium) - Strip insulation for better rates. Clean copper fetches premium prices.",
+                  "Transformers and motors contain valuable copper windings - Must be drained of oil before scrapping per environmental regulations.",
+                  "Cable offcuts and wire - Sort by type (singles, twin & earth, SWA) as prices vary significantly.",
+                  "Consumer units and metalwork - Separate ferrous and non-ferrous metals for maximum value.",
+                  "Legal requirement: All scrap dealers must verify your identity under the Scrap Metal Dealers Act 2013 - Bring photo ID and proof of address.",
+                  "Payment regulations: Cash payments over £500 are illegal. Expect bank transfer or cheque payments for larger amounts.",
+                  "VAT and invoices: Keep records of all scrap sales - HMRC may require documentation for tax purposes.",
+                  "Environmental benefit: Recycling one tonne of copper saves 100 tonnes of CO₂ compared to mining new copper.",
+                  "BS7671 compliance: Ensure any equipment being scrapped has been properly isolated and made safe before removal.",
+                  "Top tip: Build relationships with local merchants for better rates on regular scrapping - Consistent quality helps negotiate better prices."
+                ]}
+              />
             </div>
           </TabsContent>
         </Tabs>
