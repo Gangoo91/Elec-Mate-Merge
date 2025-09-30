@@ -107,10 +107,10 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
   };
 
   return (
-    <div className="min-h-screen pb-6 space-y-6">
+    <div className="container mx-auto px-4 py-6 max-w-6xl space-y-6">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b pb-4">
-        <div className="flex items-center justify-between mb-4">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
           <MobileButton
             variant="ghost"
             onClick={() => navigate('/electrician/quotes')}
@@ -141,7 +141,7 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
       </MobileGestureHandler>
 
       {/* Navigation Footer */}
-      <div className="sticky bottom-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t pt-4">
+      <div className="flex flex-col gap-3">
         <div className="flex justify-between gap-3">
           <MobileButton
             variant="outline"
@@ -175,7 +175,7 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
         </div>
         
         {/* Swipe Hint for Mobile */}
-        <p className="text-xs text-center text-muted-foreground mt-2 md:hidden">
+        <p className="text-xs text-center text-muted-foreground md:hidden">
           Swipe left/right to navigate between steps
         </p>
       </div>
