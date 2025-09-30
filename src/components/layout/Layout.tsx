@@ -23,7 +23,7 @@ const Layout = () => {
   }, [isMobile, sidebarOpen]);
 
   return (
-    <div className="flex h-screen bg-elec-dark text-slate-50 overflow-x-hidden">
+    <div className="flex h-screen bg-elec-dark text-slate-50 overflow-hidden">
       {/* Sidebar navigation - mobile-ready */}
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
