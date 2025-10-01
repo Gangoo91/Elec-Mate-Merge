@@ -257,119 +257,164 @@ export const InvoiceItemsStep = ({
 
       {/* Original Quote Items */}
       {originalItems.length > 0 && (
-        <Card>
+        <Card className="bg-card border-primary/20">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5" />
-              Original Quote Items
+            <CardTitle className="flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                Original Quote Items ({originalItems.length})
+              </span>
+              <span className="text-xl font-bold text-primary">
+                Total: {formatCurrency(originalTotal)}
+              </span>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="overflow-x-auto">
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-3">
+              {originalItems.map((item) => (
+                <Card key={item.id} className="border-muted">
+                  <CardContent className="p-4 space-y-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-start gap-2 flex-1 min-w-0">
+                        <div className="flex-shrink-0 mt-1">
+                          {getCategoryIcon(item.category)}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm break-words">{item.description}</p>
+                          {item.notes && (
+                            <p className="text-xs text-muted-foreground mt-1 break-words">{item.notes}</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3 pt-2 border-t">
+                      <div>
+                        <label className="text-xs text-muted-foreground">Quantity</label>
+                        <Input
+                          type="number"
+                          value={item.quantity}
+                          onChange={(e) => {
+                            const quantity = parseFloat(e.target.value) || 0;
+                            onUpdateItem(item.id, { 
+                              quantity,
+                              totalPrice: quantity * item.unitPrice 
+                            });
+                          }}
+                          className="h-8 mt-1"
+                          min="0.1"
+                          step="0.1"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-muted-foreground">Unit</label>
+                        <div className="h-8 flex items-center mt-1 px-3 bg-muted rounded-md text-sm">
+                          {item.unit}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-xs text-muted-foreground">Unit Price</label>
+                        <Input
+                          type="number"
+                          value={item.unitPrice}
+                          onChange={(e) => {
+                            const unitPrice = parseFloat(e.target.value) || 0;
+                            onUpdateItem(item.id, { 
+                              unitPrice,
+                              totalPrice: item.quantity * unitPrice 
+                            });
+                          }}
+                          className="h-8 mt-1"
+                          min="0"
+                          step="0.01"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-muted-foreground">Total</label>
+                        <div className="h-8 flex items-center justify-end mt-1 px-3 bg-primary/10 rounded-md font-semibold text-sm">
+                          {formatCurrency(item.totalPrice)}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow>
+                  <TableRow className="border-muted">
+                    <TableHead className="w-[40px]">Type</TableHead>
                     <TableHead className="min-w-[300px]">Description</TableHead>
-                    <TableHead className="text-right">Quantity</TableHead>
-                    <TableHead className="text-right">Unit Price</TableHead>
-                    <TableHead className="text-right">Total</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead className="text-center w-[80px]">Qty</TableHead>
+                    <TableHead className="text-center w-[80px]">Unit</TableHead>
+                    <TableHead className="text-right w-[100px]">Unit Price</TableHead>
+                    <TableHead className="text-right w-[100px]">Total</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {originalItems.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell className="font-medium">
-                        {editingItemId === item.id ? (
-                          <Input
-                            value={item.description}
-                            onChange={(e) => onUpdateItem(item.id, { description: e.target.value })}
-                            className="min-w-[200px] h-8"
-                          />
-                        ) : (
-                          <div>
-                            <div>{item.description}</div>
-                            {item.category && (
-                              <div className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-                                {getCategoryIcon(item.category)}
-                                {item.category}
-                              </div>
-                            )}
-                          </div>
-                        )}
+                    <TableRow key={item.id} className="border-muted">
+                      <TableCell className="py-3">
+                        <div className="flex items-center justify-center">
+                          {getCategoryIcon(item.category)}
+                        </div>
                       </TableCell>
-                      <TableCell className="text-right">
-                        {editingItemId === item.id ? (
-                          <Input
-                            type="number"
-                            value={item.quantity}
-                            onChange={(e) => {
-                              const quantity = parseFloat(e.target.value) || 0;
-                              onUpdateItem(item.id, { 
-                                quantity,
-                                totalPrice: quantity * item.unitPrice 
-                              });
-                            }}
-                            className="w-20 text-right h-8"
-                            min="0"
-                            step="0.1"
-                          />
-                        ) : (
-                          <span>{item.quantity} {item.unit}</span>
-                        )}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        {editingItemId === item.id ? (
-                          <Input
-                            type="number"
-                            value={item.unitPrice}
-                            onChange={(e) => {
-                              const unitPrice = parseFloat(e.target.value) || 0;
-                              onUpdateItem(item.id, { 
-                                unitPrice,
-                                totalPrice: item.quantity * unitPrice 
-                              });
-                            }}
-                            className="w-24 text-right h-8"
-                            min="0"
-                            step="0.01"
-                          />
-                        ) : (
-                          formatCurrency(item.unitPrice)
-                        )}
-                      </TableCell>
-                      <TableCell className="text-right font-semibold">
-                        {formatCurrency(item.totalPrice)}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex gap-1 justify-end">
-                          {editingItemId === item.id ? (
-                            <Button
-                              size="sm"
-                              onClick={() => setEditingItemId(null)}
-                              variant="ghost"
-                            >
-                              Done
-                            </Button>
-                          ) : (
-                            <Button
-                              size="sm"
-                              onClick={() => setEditingItemId(item.id)}
-                              variant="ghost"
-                            >
-                              Edit
-                            </Button>
+                      <TableCell className="py-3">
+                        <div>
+                          <p className="font-medium">{item.description}</p>
+                          {item.notes && (
+                            <p className="text-xs text-muted-foreground mt-1">{item.notes}</p>
                           )}
                         </div>
+                      </TableCell>
+                      <TableCell className="text-center py-3">
+                        <Input
+                          type="number"
+                          value={item.quantity}
+                          onChange={(e) => {
+                            const quantity = parseFloat(e.target.value) || 0;
+                            onUpdateItem(item.id, { 
+                              quantity,
+                              totalPrice: quantity * item.unitPrice 
+                            });
+                          }}
+                          className="w-20 text-center h-8"
+                          min="0.1"
+                          step="0.1"
+                        />
+                      </TableCell>
+                      <TableCell className="text-center py-3">
+                        <span className="text-sm text-muted-foreground">{item.unit}</span>
+                      </TableCell>
+                      <TableCell className="text-right py-3">
+                        <Input
+                          type="number"
+                          value={item.unitPrice}
+                          onChange={(e) => {
+                            const unitPrice = parseFloat(e.target.value) || 0;
+                            onUpdateItem(item.id, { 
+                              unitPrice,
+                              totalPrice: item.quantity * unitPrice 
+                            });
+                          }}
+                          className="w-24 text-right ml-auto h-8"
+                          min="0"
+                          step="0.01"
+                        />
+                      </TableCell>
+                      <TableCell className="text-right py-3">
+                        <span className="font-semibold text-primary">
+                          {formatCurrency(item.totalPrice)}
+                        </span>
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
-            </div>
-            <div className="mt-4 pt-4 border-t flex justify-between items-center">
-              <span className="font-medium">Original Quote Total</span>
-              <span className="text-xl font-bold">{formatCurrency(originalTotal)}</span>
             </div>
           </CardContent>
         </Card>
