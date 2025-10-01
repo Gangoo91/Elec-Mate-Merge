@@ -258,10 +258,6 @@ const ToolCard: React.FC<ToolCardProps> = ({
             <div className="w-2 h-2 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
             <span className="font-medium text-foreground text-[10px]">{item.supplier}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <Star className="w-2.5 h-2.5 fill-yellow-400 text-yellow-400" />
-            <span className="text-foreground text-[10px]">{reviewData?.rating || '4.5'}</span>
-          </div>
         </div>
 
         {/* Product title */}
