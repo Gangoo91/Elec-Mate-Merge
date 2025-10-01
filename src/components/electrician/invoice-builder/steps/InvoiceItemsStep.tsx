@@ -927,7 +927,7 @@ export const InvoiceItemsStep = ({
                 <TableHeader>
                   <TableRow className="border-muted">
                     <TableHead className="w-[40px]">Type</TableHead>
-                    <TableHead>Description</TableHead>
+                    <TableHead className="min-w-[300px]">Description</TableHead>
                     <TableHead className="text-center w-[80px]">Qty</TableHead>
                     <TableHead className="text-center w-[80px]">Unit</TableHead>
                     <TableHead className="text-right w-[100px]">Unit Price</TableHead>
