@@ -35,10 +35,26 @@ const ElectricalTools = () => {
 
       if (error) throw error;
 
-      toast({
-        title: "Success",
-        description: "Tools data has been updated successfully",
-      });
+      // Check if the response indicates success
+      if (data && data.success === false) {
+        throw new Error(data.message || 'Failed to fetch tools data');
+      }
+
+      // Check if we got any tools
+      const toolsCount = data?.totalFound || data?.tools?.length || 0;
+      
+      if (toolsCount === 0) {
+        toast({
+          title: "Warning",
+          description: "No products found. The suppliers may be unavailable or the data is being collected. Please try again later.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: `Tools data updated successfully! Found ${toolsCount} products.`,
+        });
+      }
 
       // Invalidate queries to refresh data without page reload
       await queryClient.invalidateQueries({ queryKey: ['toolCategories'] });
@@ -47,7 +63,7 @@ const ElectricalTools = () => {
       console.error('Error refreshing tools:', error);
       toast({
         title: "Error",
-        description: "Failed to update tools data. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to update tools data. Please try again.",
         variant: "destructive",
       });
     } finally {
