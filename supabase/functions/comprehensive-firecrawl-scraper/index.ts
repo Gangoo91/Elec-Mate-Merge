@@ -83,7 +83,15 @@ const productSchema = {
           supplier: { 
             type: "string", 
             description: "Always set this based on the website domain: 'Screwfix' for screwfix.com, 'Toolstation' for toolstation.com" 
-          }
+          },
+          category: {
+            type: "string",
+            description: "Product category (e.g., Drills, Screwdrivers, Power Tools)",
+          },
+          brand: {
+            type: "string",
+            description: "Brand/manufacturer name (e.g., Makita, DeWalt, Bosch, Hilti, Bahco, Wiha, Wera)",
+          },
         },
         required: ["name", "price"]
       }
@@ -105,99 +113,164 @@ const getSupplierFromUrl = (url: string): string => {
   return 'Unknown';
 };
 
-const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: string[]) => {
-  console.log(`🔍 Scraping category: ${category}`);
-  const allProducts = [];
+// Retry helper with different strategies
+const retryWithBackoff = async <T>(
+  fn: () => Promise<T>,
+  maxRetries: number = 2,
+  baseDelay: number = 1000
+): Promise<T> => {
+  let lastError: Error | null = null;
   
-  for (const url of urls) {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
-      console.log(`📡 Scraping URL: ${url}`);
-      const supplier = getSupplierFromUrl(url);
+      return await fn();
+    } catch (error) {
+      lastError = error as Error;
       
-      // First try to get basic content to verify the page loads
-      console.log(`🔍 Testing basic page access for ${url}...`);
-      const basicTest = await firecrawl.scrapeUrl(url, {
-        formats: ['markdown'],
-        timeout: 15000
-      });
-      
-      if (!basicTest.success) {
-        console.error(`❌ Basic page access failed for ${url}:`, basicTest.error);
-        continue; // Skip this URL
+      if (attempt < maxRetries) {
+        const delay = baseDelay * Math.pow(2, attempt); // Exponential backoff
+        console.log(`⏳ Retry attempt ${attempt + 1}/${maxRetries} after ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
       }
-      
-      console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
-      
-      // Now attempt structured extraction with improved prompt
-      const crawlResponse = await firecrawl.scrapeUrl(url, {
-        formats: ['extract'],
-        extract: {
+    }
+  }
+  
+  throw lastError;
+};
+
+const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string) => {
+  const supplier = getSupplierFromUrl(url);
+  console.log(`📡 Scraping URL: ${url}`);
+  
+  try {
+    // Test basic page access with retry and increased timeout
+    const basicTest = await retryWithBackoff(
+      () => firecrawl.scrapeUrl(url, {
+        formats: ['markdown'],
+        timeout: 12000 // Increased from 8s to 12s
+      }),
+      3, // Increased to 3 retries
+      1500
+    );
+    
+    if (!basicTest.success) {
+      console.error(`❌ Basic page access failed for ${url}`);
+      return [];
+    }
+    
+    console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
+    
+    // Now attempt structured extraction with increased timeout
+    const crawlResponse = await retryWithBackoff(
+      () => firecrawl.scrapeUrl(url, {
+        formats: [{
           schema: productSchema as any,
           prompt: `You are extracting product information from a ${supplier} search results page. 
+            
+            WHAT TO LOOK FOR:
+              - Full product names, including model numbers  
+              - Brand names (prioritize: Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK)  
+              - Exact prices in GBP  
+              - Product codes or SKUs  
+              - Stock availability (in stock or not)  
+              - Product categories and specific types (e.g. Hand Tools, Power Tools, Test Equipment, PPE, Safety Tools, Access Tools & Equipment, Tool Storage, Specialist Tools)  
+              - Voltage ratings for power tools (e.g., 18V, 240V)  
+              - Key features or highlights if available  
+              - Direct URLs to product pages  
+              - Product images  
+    
+            ELECTRICAL TOOLS INCLUDE:
+              - Wire strippers, crimpers, electrical pliers
+              - Multimeters, voltage testers, electrical testing equipment  
+              - Electrical drills, SDS drills, SDS, impact drivers
+              - Cable strippers, fish tapes, conduit benders
+              - Electrical safety equipment, insulated tools
+              - Electrical screwdrivers, nut drivers
+              - Cable management tools and accessories
 
-WHAT TO LOOK FOR:
-- Product cards, tiles, or listings
-- Product names/titles (often in headings or link text)
-- Prices (look for £ symbol, "Price:", cost displays)
-- Any electrical tools, equipment, or supplies
+            TOOLS
+              - Hand Tools → screwdrivers, pliers, spanners, electrical work
+              - Power Tools → electric, cordless, drilling, cutting, installation
+              - Test Equipment → testing, measurement, electrical safety, compliance
+              - PPE → personal protective equipment, safe working practices
+              - Safety Tools → hazard identification, protection, safety equipment
+              - Access Tools & Equipment → ladders, scaffolding, access, working at height
+              - Tool Storage → tool bags, boxes, storage solutions, organisation
+              - Specialist Tools → specialist electrical tools, installation tasks
+            
+            Extract every product visible on the page, capturing all the details above. 
+            Set the supplier field to "${supplier}" for all products.
+            
+            If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".`
+        }],
+        timeout: 18000 // Increased from 12s to 18s
+      }),
+      3, // Increased to 3 retries
+      2000
+    );
 
-ELECTRICAL TOOLS INCLUDE:
-- Wire strippers, crimpers, electrical pliers
-- Multimeters, voltage testers, electrical testing equipment  
-- Electrical drills, SDS drills, impact drivers
-- Cable strippers, fish tapes, conduit benders
-- Electrical safety equipment, insulated tools
-- Electrical screwdrivers, nut drivers
-- Cable management tools and accessories
-
-EXTRACT ALL PRODUCTS YOU FIND, even if not strictly electrical tools. 
-Set the supplier field to "${supplier}" for all products.
-If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".
-
-Focus on quantity over perfect accuracy - we want to see what products are available.`
-        },
-        timeout: 30000
-      });
-
-      if (crawlResponse.success && (crawlResponse as any).data?.extract) {
-        const extractedData = (crawlResponse as any).data.extract;
-        console.log(`📋 Raw extraction result:`, JSON.stringify(extractedData, null, 2).substring(0, 500));
+    if (crawlResponse.success && (crawlResponse as any).data?.extract) {
+      const extractedData = (crawlResponse as any).data.extract;
+      
+      if (extractedData.products && Array.isArray(extractedData.products)) {
+        const products = extractedData.products.map((product: any) => ({
+          ...product,
+          category,
+          supplier: supplier,
+          lastUpdated: new Date().toISOString(),
+          availability: product.availability || 'Check Availability',
+          image: product.image || '/placeholder.svg',
+          description: product.description || '',
+          features: product.features || [],
+          specifications: product.specifications || {}
+        }));
         
-        if (extractedData.products && Array.isArray(extractedData.products)) {
-          const products = extractedData.products.map((product: any) => ({
-            ...product,
-            category,
-            supplier: supplier,
-            lastUpdated: new Date().toISOString(),
-            // Ensure we have required fields
-            availability: product.availability || 'Check Availability',
-            image: product.image || '/placeholder.svg',
-            description: product.description || '',
-            features: product.features || [],
-            specifications: product.specifications || {}
-          }));
-          
-          allProducts.push(...products);
-          console.log(`✅ Successfully extracted ${products.length} products from ${supplier}`);
-          
-          // Log a sample product for debugging
-          if (products.length > 0) {
-            console.log(`📦 Sample product:`, JSON.stringify(products[0], null, 2));
-          }
-        } else {
-          console.warn(`⚠️ No products array found in extraction result for ${url}`);
-          console.log(`🔍 Available keys in extraction:`, Object.keys(extractedData));
+        console.log(`✅ Successfully extracted ${products.length} products from ${supplier}`);
+        
+        if (products.length > 0) {
+          console.log(`📦 Sample product:`, JSON.stringify(products[0], null, 2));
         }
         
-        // Rate limiting between requests
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        return products;
       } else {
-        console.error(`❌ Extraction failed for ${url}:`, crawlResponse.error || 'Unknown error');
-        console.log(`🔍 Response structure:`, JSON.stringify(crawlResponse, null, 2).substring(0, 300));
+        console.warn(`⚠️ No products array found in extraction result for ${url}`);
+        return [];
       }
-    } catch (error) {
-      console.error(`❌ Error scraping ${url}:`, error);
-      // Continue with next URL even if one fails
+    } else {
+      console.error(`❌ Extraction failed for ${url}`);
+      return [];
+    }
+  } catch (error) {
+    console.error(`❌ Error scraping ${url}:`, error);
+    return [];
+  }
+};
+
+const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: string[]) => {
+  console.log(`🔍 Scraping category: ${category}`);
+  
+  // Process URLs in parallel with controlled concurrency (max 3 at a time)
+  const maxConcurrency = 3;
+  const allProducts = [];
+  
+  for (let i = 0; i < urls.length; i += maxConcurrency) {
+    const batch = urls.slice(i, i + maxConcurrency);
+    console.log(`📦 Processing batch ${Math.floor(i / maxConcurrency) + 1}/${Math.ceil(urls.length / maxConcurrency)}`);
+    
+    const batchPromises = batch.map(url => scrapeUrl(firecrawl, url, category));
+    const batchResults = await Promise.allSettled(batchPromises);
+    
+    batchResults.forEach((result, index) => {
+      if (result.status === 'fulfilled') {
+        allProducts.push(...result.value);
+      } else {
+        console.error(`❌ Failed to scrape URL in batch:`, batch[index], result.reason);
+      }
+    });
+    
+    // Rate limiting between batches
+    if (i + maxConcurrency < urls.length) {
+      await new Promise(resolve => setTimeout(resolve, 2000));
     }
   }
   

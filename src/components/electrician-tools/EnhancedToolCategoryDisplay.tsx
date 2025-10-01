@@ -1,10 +1,12 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { Wrench, ArrowLeft, RefreshCw, Loader2, Scale } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Wrench, ArrowLeft, Filter, RefreshCw, Loader2, Search, Scale, TrendingUp, Calculator, AlertTriangle, Brain, ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import ToolCard from "@/components/electrician-tools/ToolCard";
@@ -12,7 +14,6 @@ import AIEnhancedToolPriceComparison from "@/components/electrician-tools/AIEnha
 import BulkToolPricingCalculator from "@/components/electrician-tools/BulkToolPricingCalculator";
 import ToolPriceHistoryAlerts from "@/components/electrician-tools/ToolPriceHistoryAlerts";
 import { ToolAIInsights } from "./ToolAIInsights";
-import ToolCategorySkeleton from "./ToolCategorySkeleton";
 
 import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
 
@@ -86,13 +87,8 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
   const categoryKey = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
   const meta = CATEGORY_META[categoryKey] || { title: categoryName, description: "Browse curated tools by category" };
   
-  // Use comprehensive tools data with optimized loading
+  // Use comprehensive tools data
   const { data: allTools, isLoading, error, refetch } = useToolsData();
-  
-  // Show skeleton during initial load only
-  if (isLoading && !allTools) {
-    return <ToolCategorySkeleton />;
-  }
 
   // Enhanced state management
   const [searchTerm, setSearchTerm] = useState("");

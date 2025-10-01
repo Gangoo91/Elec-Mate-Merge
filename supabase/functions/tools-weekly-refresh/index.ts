@@ -61,17 +61,46 @@ serve(async (req) => {
     }
 
     if (forceRefresh) {
-      console.log('🔄 Force refresh requested, bypassing cache expiry checks...');
+      console.log('🔄 Force refresh requested - deleting existing cache to guarantee fresh data...');
+      
+      // Delete all existing cache entries when force refresh is requested
+      const { error: deleteError } = await supabase
+        .from('tools_weekly_cache')
+        .delete()
+        .not('id', 'is', null); // Delete all rows where id is not null
+        
+      if (deleteError) {
+        console.error('⚠️ Error deleting cache for force refresh:', deleteError);
+      } else {
+        console.log('✅ Existing cache cleared for force refresh');
+      }
     }
 
     console.log('🔄 Cache expired or missing, triggering refresh...');
 
-    // Call the comprehensive firecrawl scraper to get fresh electrical tools data
-    console.log('🔄 Invoking comprehensive-firecrawl-scraper...');
-    const { data: refreshResult, error: refreshError } = await supabase.functions.invoke(
+    // Call the comprehensive firecrawl scraper with extended timeout
+    console.log('🔄 Invoking comprehensive-firecrawl-scraper with 60s timeout...');
+    
+    const scraperPromise = supabase.functions.invoke(
       'comprehensive-firecrawl-scraper',
       { body: { forceRefresh } }
     );
+
+    // Set a 60-second timeout for the scraper call (increased from 40s)
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Scraper timeout after 60 seconds')), 60000);
+    });
+
+    let refreshResult, refreshError;
+    
+    try {
+      const result = await Promise.race([scraperPromise, timeoutPromise]);
+      refreshResult = (result as any).data;
+      refreshError = (result as any).error;
+    } catch (timeoutError) {
+      console.warn('⏱️ Scraper timed out');
+      refreshError = timeoutError;
+    }
     
     console.log('📊 Scraper result:', refreshResult);
     console.log('⚠️ Scraper error:', refreshError);
@@ -79,9 +108,15 @@ serve(async (req) => {
     if (refreshError) {
       console.error('❌ Error calling comprehensive-firecrawl-scraper:', refreshError);
       
-      // If we have existing cache, return it instead of failing
+      // IMPORTANT: If force refresh is requested, we MUST NOT return cached data
+      if (forceRefresh) {
+        console.error('🚫 Force refresh failed - cannot return cached data');
+        throw new Error('Force refresh failed: Unable to fetch fresh data. Please try again.');
+      }
+      
+      // Only use existing cache if NOT a force refresh
       if (existingCache && existingCache.tools_data) {
-        console.log('✅ Using existing cached data due to scraper error');
+        console.log('✅ Using existing cached data due to scraper error (not a force refresh)');
         return new Response(
           JSON.stringify({ 
             success: true, 
@@ -89,7 +124,7 @@ serve(async (req) => {
             tools: existingCache.tools_data,
             totalFound: existingCache.tools_data.length,
             cached: true,
-            error: refreshError.message
+            cacheAge: Math.floor((now.getTime() - new Date(existingCache.created_at).getTime()) / 1000 / 60 / 60) + ' hours'
           }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
