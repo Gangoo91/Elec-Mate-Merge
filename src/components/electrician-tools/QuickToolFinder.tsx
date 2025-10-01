@@ -233,20 +233,6 @@ const QuickToolFinder = () => {
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Progress */}
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm text-white/80">
-            <span>Question {currentStep + 1} of {questions.length}</span>
-            <span>{Math.round(((currentStep + 1) / questions.length) * 100)}% Complete</span>
-          </div>
-          <div className="w-full bg-white/10 rounded-full h-2">
-            <div 
-              className="bg-green-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${((currentStep + 1) / questions.length) * 100}%` }}
-            />
-          </div>
-        </div>
-
         {/* Question */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
