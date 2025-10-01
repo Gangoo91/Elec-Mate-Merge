@@ -45,26 +45,13 @@ serve(async (req) => {
       );
     }
 
-    // Prepare payload for PDF Monkey with flattened company details
+    // Prepare payload for PDF Monkey
     const payload = {
-      quote: {
-        ...quote,
-        company: {
-          name: companyProfile?.company_name || 'Your Company',
-          address: companyProfile?.company_address || '',
-          postcode: companyProfile?.company_postcode || '',
-          phone: companyProfile?.company_phone || '',
-          email: companyProfile?.company_email || '',
-          website: companyProfile?.company_website || '',
-          registration: companyProfile?.company_registration || '',
-          vat_number: companyProfile?.vat_number || '',
-          logo_url: companyProfile?.logo_url || '',
-          logo_data_url: companyProfile?.logo_data_url || ''
-        }
-      }
+      quote,
+      companyProfile
     };
-    
-    console.log('[PDF-MONKEY] Payload prepared with company:', payload.quote.company.name);
+
+    console.log('[PDF-MONKEY] Payload includes company:', companyProfile?.company_name);
 
     console.log('[PDF-MONKEY] Calling PDF Monkey API with template:', TEMPLATE_ID);
 
