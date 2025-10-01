@@ -269,40 +269,6 @@ const ToolCard: React.FC<ToolCardProps> = ({
           {item.name}
         </h3>
 
-        {/* 2x2 Information grid */}
-        <div className="grid grid-cols-2 gap-2 mb-4">
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
-            <Zap className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div className="flex flex-col text-left">
-              <span className="text-xs font-medium text-foreground text-left">Specifications</span>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
-            <Shield className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div className="flex flex-col text-left">
-              <span className="text-xs font-medium text-foreground text-left">Standard</span>
-              <span className="text-xs text-muted-foreground text-left">BS7671 18th</span>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
-            <Star className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div className="flex flex-col text-left">
-              <span className="text-xs font-medium text-foreground text-left">Rating</span>
-              <span className="text-xs text-muted-foreground text-left">4.5/5</span>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
-            <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <div className="flex flex-col text-left">
-              <span className="text-xs font-medium text-foreground text-left">Stock</span>
-              <span className="text-xs text-muted-foreground text-left">In Stock</span>
-            </div>
-          </div>
-        </div>
-
         {/* Features list */}
         <div className="space-y-1 mb-4">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
