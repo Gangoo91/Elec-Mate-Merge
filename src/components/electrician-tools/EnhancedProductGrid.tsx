@@ -191,38 +191,38 @@ const EnhancedProductGrid = ({
 
           {/* Sort Options */}
           <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-            <SelectTrigger className="w-48 bg-elec-card/50 border-elec-yellow/20 text-elec-light">
+            <SelectTrigger className="w-48 h-9 bg-elec-card/50 border-elec-yellow/20 text-elec-light">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="z-50 bg-elec-card border-elec-yellow/20 shadow-lg">
-              <SelectItem value="relevance">
+              <SelectItem value="relevance" className="py-1.5">
                 <div className="flex items-center gap-2">
-                  <SortAsc className="h-4 w-4" />
-                  Relevance
+                  <SortAsc className="h-3.5 w-3.5" />
+                  <span className="text-sm">Relevance</span>
                 </div>
               </SelectItem>
-              <SelectItem value="price-low">
+              <SelectItem value="price-low" className="py-1.5">
                 <div className="flex items-center gap-2">
-                  <SortAsc className="h-4 w-4" />
-                  Price: Low to High
+                  <SortAsc className="h-3.5 w-3.5" />
+                  <span className="text-sm">Price: Low to High</span>
                 </div>
               </SelectItem>
-              <SelectItem value="price-high">
+              <SelectItem value="price-high" className="py-1.5">
                 <div className="flex items-center gap-2">
-                  <SortDesc className="h-4 w-4" />
-                  Price: High to Low
+                  <SortDesc className="h-3.5 w-3.5" />
+                  <span className="text-sm">Price: High to Low</span>
                 </div>
               </SelectItem>
-              <SelectItem value="name">
+              <SelectItem value="name" className="py-1.5">
                 <div className="flex items-center gap-2">
-                  <SortAsc className="h-4 w-4" />
-                  Name A-Z
+                  <SortAsc className="h-3.5 w-3.5" />
+                  <span className="text-sm">Name A-Z</span>
                 </div>
               </SelectItem>
-              <SelectItem value="supplier">
+              <SelectItem value="supplier" className="py-1.5">
                 <div className="flex items-center gap-2">
-                  <SortAsc className="h-4 w-4" />
-                  Supplier
+                  <SortAsc className="h-3.5 w-3.5" />
+                  <span className="text-sm">Supplier</span>
                 </div>
               </SelectItem>
             </SelectContent>
