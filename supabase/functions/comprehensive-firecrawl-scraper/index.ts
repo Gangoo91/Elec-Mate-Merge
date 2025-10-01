@@ -143,14 +143,14 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
   console.log(`📡 Scraping URL: ${url}`);
   
   try {
-    // Test basic page access with retry and increased timeout
+    // Test basic page access with retry and reduced timeout
     const basicTest = await retryWithBackoff(
       () => firecrawl.scrapeUrl(url, {
         formats: ['markdown'],
-        timeout: 12000 // Increased from 8s to 12s
+        timeout: 8000 // Reduced from 15s to 8s
       }),
-      3, // Increased to 3 retries
-      1500
+      2, // 2 retries
+      1000
     );
     
     if (!basicTest.success) {
@@ -160,10 +160,11 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
     
     console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
     
-    // Now attempt structured extraction with increased timeout
+    // Now attempt structured extraction with reduced timeout
     const crawlResponse = await retryWithBackoff(
       () => firecrawl.scrapeUrl(url, {
-        formats: [{
+        formats: ['extract'],
+        extract: {
           schema: productSchema as any,
           prompt: `You are extracting product information from a ${supplier} search results page. 
             
@@ -202,10 +203,10 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
             Set the supplier field to "${supplier}" for all products.
             
             If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".`
-        }],
-        timeout: 18000 // Increased from 12s to 18s
+        },
+        timeout: 12000 // Reduced from 30s to 12s
       }),
-      3, // Increased to 3 retries
+      2, // 2 retries
       2000
     );
 

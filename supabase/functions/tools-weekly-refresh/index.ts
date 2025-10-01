@@ -67,7 +67,7 @@ serve(async (req) => {
       const { error: deleteError } = await supabase
         .from('tools_weekly_cache')
         .delete()
-        .not('id', 'is', null); // Delete all rows where id is not null
+        .neq('id', 0); // Delete all
         
       if (deleteError) {
         console.error('⚠️ Error deleting cache for force refresh:', deleteError);
@@ -79,16 +79,16 @@ serve(async (req) => {
     console.log('🔄 Cache expired or missing, triggering refresh...');
 
     // Call the comprehensive firecrawl scraper with extended timeout
-    console.log('🔄 Invoking comprehensive-firecrawl-scraper with 60s timeout...');
+    console.log('🔄 Invoking comprehensive-firecrawl-scraper with 40s timeout...');
     
     const scraperPromise = supabase.functions.invoke(
       'comprehensive-firecrawl-scraper',
       { body: { forceRefresh } }
     );
 
-    // Set a 60-second timeout for the scraper call (increased from 40s)
+    // Set a 40-second timeout for the scraper call (increased from 25s)
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Scraper timeout after 60 seconds')), 60000);
+      setTimeout(() => reject(new Error('Scraper timeout after 40 seconds')), 40000);
     });
 
     let refreshResult, refreshError;
