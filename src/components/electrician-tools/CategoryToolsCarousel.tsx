@@ -132,18 +132,6 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
                     {tool.name || 'Unknown Tool'}
                   </h3>
 
-                  {/* Compact single-row info */}
-                  <div className="flex items-center gap-1 mb-2">
-                    <div className="flex items-center gap-1 px-1.5 py-1 rounded bg-white/5 border border-white/10 flex-1">
-                      <CheckCircle className="h-2.5 w-2.5 text-elec-yellow flex-shrink-0" />
-                      <span className="text-[9px] text-muted-foreground">{tool.stockStatus || 'In Stock'}</span>
-                    </div>
-                    <div className="flex items-center gap-1 px-1.5 py-1 rounded bg-white/5 border border-white/10 flex-1">
-                      <Star className="h-2.5 w-2.5 text-elec-yellow flex-shrink-0" />
-                      <span className="text-[9px] text-muted-foreground">4.5/5</span>
-                    </div>
-                  </div>
-
                   {/* Compact price section */}
                   <div className="pt-2 border-t border-white/10 mt-auto">
                     <div className="flex items-center justify-between mb-2">
