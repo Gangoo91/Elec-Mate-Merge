@@ -6,10 +6,9 @@ import { MobileButton } from '@/components/ui/mobile-button';
 import { Badge } from '@/components/ui/badge';
 import { FileText, Download, Trash2, Eye, Calendar, Check, Mail, Tag, Clock, X, Receipt } from 'lucide-react';
 import { Quote, QuoteTag } from '@/types/quote';
-import { generateProfessionalQuotePDF } from '@/utils/quote-pdf-professional';
-import { generateAIEnhancedQuotePDF } from '@/utils/ai-enhanced-quote-pdf';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import {
   DropdownMenu,
@@ -67,43 +66,41 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         updated_at: new Date()
       };
 
-      // Ensure quote has basic required data
-      const effectiveQuote = {
-        ...quote,
-        quoteNumber: quote.quoteNumber || `Q${Date.now()}`,
-        createdAt: quote.createdAt || new Date(),
-        expiryDate: quote.expiryDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        status: quote.status || 'draft',
-        subtotal: quote.subtotal || 0,
-        total: quote.total || 0,
-        vatAmount: quote.vatAmount || 0,
-        client: quote.client || {
-          name: "Client Name",
-          email: "client@example.com",
-          phone: "0123 456 7890",
-          address: "Client Address",
-          postcode: "AB1 2CD"
-        }
-      };
-
-      // Always use the regular professional PDF generator
-      const success = generateProfessionalQuotePDF({
-        quote: effectiveQuote,
-        companyProfile: effectiveCompanyProfile
+      toast({
+        title: "Generating PDF",
+        description: "Please wait whilst your professional quote PDF is being generated...",
       });
 
-      if (success) {
+      // Call PDF Monkey edge function
+      const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: {
+          quote,
+          companyProfile: effectiveCompanyProfile
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.success && data.downloadUrl) {
+        // Download the PDF
+        const response = await fetch(data.downloadUrl);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `quote-${quote.quoteNumber}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
         toast({
           title: "PDF Generated",
-          description: `Quote ${quote.quoteNumber} has been downloaded.`,
+          description: `Quote ${quote.quoteNumber} has been downloaded successfully.`,
           variant: "success"
         });
       } else {
-        toast({
-          title: "Error",
-          description: "Failed to generate PDF. Please try again.",
-          variant: "destructive"
-        });
+        throw new Error(data.message || 'PDF generation failed');
       }
     } catch (error) {
       console.error('PDF generation error:', error);
