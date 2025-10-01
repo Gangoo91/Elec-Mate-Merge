@@ -1,7 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ExternalLink, TrendingDown } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { ExternalLink, TrendingDown, Star } from "lucide-react";
 
 interface MaterialDeal {
   id: string | number;
@@ -40,70 +47,110 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
   };
 
   return (
-    <Card className="border-elec-yellow/20">
-      <CardContent className="p-4">
-        <div className="flex items-center gap-2 mb-4">
+    <section className="space-y-4">
+      {/* Section Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
           <TrendingDown className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-lg font-semibold text-elec-light">Top Discounts</h3>
-          <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-            Save up to {deals[0]?.discount}%
-          </Badge>
+          <h2 className="text-xl font-semibold text-elec-light">
+            Top Discounts
+          </h2>
         </div>
-        
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-track-elec-gray scrollbar-thumb-elec-yellow/30">
+        <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
+          Save up to {deals[0]?.discount}%
+        </Badge>
+      </div>
+
+      {/* Carousel */}
+      <Carousel className="w-full">
+        <CarouselContent className="-ml-2 md:-ml-4">
           {deals.map((deal, index) => (
-            <div key={deal.id} className="flex-shrink-0 w-64">
-              <Card className="h-full bg-elec-gray/50 border-elec-yellow/10 hover:border-elec-yellow/30 transition-all duration-200">
-                <CardContent className="p-3">
-                  <div className="flex gap-3">
-                    {/* Image */}
-                    <div className="w-16 h-16 bg-elec-gray/30 rounded flex items-center justify-center overflow-hidden flex-shrink-0">
-                      <img
-                        src={deal.image || "/placeholder.svg"}
-                        alt={deal.name}
-                        className="object-cover w-full h-full"
-                        onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
-                      />
+            <CarouselItem key={deal.id} className="pl-2 md:pl-4 basis-[200px] md:basis-[220px] overflow-y-visible">
+              <Card className="h-full bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/5 hover:scale-[1.02] transition-all duration-300 rounded-lg group">
+                {/* Compact Image section */}
+                <div className="relative overflow-hidden rounded-t-lg">
+                  <div className="h-32 overflow-hidden">
+                    <img
+                      src={deal.image || '/placeholder.svg'}
+                      alt={deal.name}
+                      className="object-cover w-full h-full transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.src = '/placeholder.svg';
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Compact badges */}
+                  <div className="absolute top-1.5 left-1.5 right-1.5 flex items-start justify-between">
+                    <Badge className="bg-background/90 text-foreground border-border text-[10px] px-1.5 py-0.5">
+                      {deal.category || 'Materials'}
+                    </Badge>
+                    {deal.isOnSale && (
+                      <Badge className="bg-destructive text-destructive-foreground text-[10px] px-1.5 py-0.5 font-bold">
+                        {deal.discount}% OFF
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+
+                <CardContent className="p-2.5 flex-grow flex flex-col">
+                  {/* Compact supplier and stock */}
+                  <div className="flex items-center justify-between text-xs mb-2">
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
+                      <span className="font-medium text-foreground text-[10px]">{deal.supplier || 'Supplier'}</span>
                     </div>
-                    
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1 mb-1">
-                        <Badge variant="destructive" className="text-xs font-bold">
-                          {deal.discount}% OFF
-                        </Badge>
+                    {deal.stockStatus && (
+                      <span className="text-green-400 text-[10px]">{deal.stockStatus}</span>
+                    )}
+                  </div>
+
+                  {/* Compact title */}
+                  <h3 className="text-xs font-semibold line-clamp-2 mb-2 text-foreground leading-tight">
+                    {deal.name}
+                  </h3>
+
+                  {/* Compact price section */}
+                  <div className="pt-2 border-t border-white/10 mt-auto">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex flex-col">
+                        {deal.salePrice ? (
+                          <>
+                            <span className="text-sm font-bold text-elec-yellow leading-none">
+                              {deal.salePrice}
+                            </span>
+                            <span className="text-[9px] text-muted-foreground line-through">
+                              {deal.price}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-sm font-bold text-elec-yellow leading-none">
+                            {deal.price}
+                          </span>
+                        )}
+                        <span className="text-[9px] text-muted-foreground">inc. VAT</span>
                       </div>
-                      
-                      <h4 className="font-medium text-sm text-elec-light leading-tight mb-2 truncate">
-                        {deal.name}
-                      </h4>
-                      
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-lg font-bold text-elec-yellow">{deal.salePrice}</span>
-                        <span className="line-through text-muted-foreground text-xs">{deal.price}</span>
-                      </div>
-                      
-                      <div className="flex items-center gap-1 mb-2">
-                        <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-[10px]">
-                          {deal.supplier}
-                        </Badge>
-                      </div>
-                      
-                      <a href={getProductUrl(deal)} target="_blank" rel="noopener noreferrer">
-                        <Button size="sm" variant="gold" className="w-full text-xs">
-                          View Deal
-                          <ExternalLink className="h-3 w-3 ml-1" />
-                        </Button>
-                      </a>
                     </div>
+
+                    {/* Compact button */}
+                    <Button 
+                      size="sm" 
+                      onClick={() => window.open(getProductUrl(deal), '_blank')}
+                      className="w-full h-7 text-[10px] border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors px-2"
+                    >
+                      <ExternalLink className="w-2.5 h-2.5 mr-1" />
+                      View
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </CarouselItem>
           ))}
-        </div>
-      </CardContent>
-    </Card>
+        </CarouselContent>
+        <CarouselPrevious className="hidden md:flex -left-4 bg-elec-card/80 border-white/10 text-elec-light hover:bg-elec-yellow/10 hover:text-elec-yellow" />
+        <CarouselNext className="hidden md:flex -right-4 bg-elec-card/80 border-white/10 text-elec-light hover:bg-elec-yellow/10 hover:text-elec-yellow" />
+      </Carousel>
+    </section>
   );
 };
 
