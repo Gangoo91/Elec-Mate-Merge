@@ -103,11 +103,12 @@ export const InvoiceSettingsStep = ({
             label="Account Name"
             placeholder="e.g., Smith Electrical Ltd"
             value={settings?.bankDetails?.accountName || ''}
-            onChange={(e: any) =>
+            onChange={(value) =>
               onUpdateSettings({
                 bankDetails: {
-                  ...settings?.bankDetails!,
-                  accountName: e.target.value,
+                  accountName: value,
+                  accountNumber: settings?.bankDetails?.accountNumber || '',
+                  sortCode: settings?.bankDetails?.sortCode || '',
                 },
               })
             }
@@ -119,12 +120,13 @@ export const InvoiceSettingsStep = ({
               label="Account Number"
               placeholder="12345678"
               value={settings?.bankDetails?.accountNumber || ''}
-              onChange={(e: any) => {
-                const value = e.target.value.replace(/\D/g, '').slice(0, 8);
+              onChange={(value) => {
+                const numericValue = value.replace(/\D/g, '').slice(0, 8);
                 onUpdateSettings({
                   bankDetails: {
-                    ...settings?.bankDetails!,
-                    accountNumber: value,
+                    accountName: settings?.bankDetails?.accountName || '',
+                    accountNumber: numericValue,
+                    sortCode: settings?.bankDetails?.sortCode || '',
                   },
                 });
               }}
@@ -135,16 +137,17 @@ export const InvoiceSettingsStep = ({
               label="Sort Code"
               placeholder="12-34-56"
               value={settings?.bankDetails?.sortCode || ''}
-              onChange={(e: any) => {
-                let value = e.target.value.replace(/\D/g, '');
-                if (value.length > 6) value = value.slice(0, 6);
-                if (value.length > 4) value = `${value.slice(0, 2)}-${value.slice(2, 4)}-${value.slice(4)}`;
-                else if (value.length > 2) value = `${value.slice(0, 2)}-${value.slice(2)}`;
+              onChange={(value) => {
+                let formattedValue = value.replace(/\D/g, '');
+                if (formattedValue.length > 6) formattedValue = formattedValue.slice(0, 6);
+                if (formattedValue.length > 4) formattedValue = `${formattedValue.slice(0, 2)}-${formattedValue.slice(2, 4)}-${formattedValue.slice(4)}`;
+                else if (formattedValue.length > 2) formattedValue = `${formattedValue.slice(0, 2)}-${formattedValue.slice(2)}`;
                 
                 onUpdateSettings({
                   bankDetails: {
-                    ...settings?.bankDetails!,
-                    sortCode: value,
+                    accountName: settings?.bankDetails?.accountName || '',
+                    accountNumber: settings?.bankDetails?.accountNumber || '',
+                    sortCode: formattedValue,
                   },
                 });
               }}
