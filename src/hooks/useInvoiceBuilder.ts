@@ -155,10 +155,32 @@ export const useInvoiceBuilder = (sourceQuote?: Quote) => {
   }, []);
 
   const updateInvoiceSettings = useCallback((settings: Partial<InvoiceSettings>) => {
-    setInvoice(prev => ({
-      ...prev,
-      settings: { ...prev.settings!, ...settings },
-    }));
+    setInvoice(prev => {
+      const updatedInvoice = {
+        ...prev,
+        settings: { ...prev.settings!, ...settings },
+      };
+
+      // Recalculate totals with updated settings
+      const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
+      const subtotal = allItems.reduce((sum, item) => sum + item.totalPrice, 0);
+      const updatedSettings = updatedInvoice.settings!;
+      const overhead = subtotal * ((updatedSettings.overheadPercentage || 0) / 100);
+      const profit = (subtotal + overhead) * ((updatedSettings.profitMargin || 0) / 100);
+      const vatAmount = updatedSettings.vatRegistered 
+        ? (subtotal + overhead + profit) * ((updatedSettings.vatRate || 0) / 100)
+        : 0;
+      const total = subtotal + overhead + profit + vatAmount;
+
+      return {
+        ...updatedInvoice,
+        subtotal,
+        overhead,
+        profit,
+        vatAmount,
+        total,
+      };
+    });
   }, []);
 
   const recalculateTotals = useCallback(() => {
