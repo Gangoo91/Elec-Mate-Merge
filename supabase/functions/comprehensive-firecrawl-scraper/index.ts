@@ -129,10 +129,11 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
   console.log(`📡 Scraping: ${category} from ${supplier}`);
   
   try {
-    const crawlResponse = await firecrawl.scrapeUrl(url, {
-      formats: [{
+    const crawlResponse = await firecrawl.scrape(url, {
+      formats: ['extract'],
+      extract: {
         schema: productSchema,
-        prompt: `Extract ALL products from this ${supplier} search page for ${category}.
+        systemPrompt: `Extract ALL products from this ${supplier} search page for ${category}.
           
           Extract:
           - Product name with model number
@@ -143,7 +144,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
           
           Set supplier to "${supplier}" for all products.
           Extract EVERY product visible on the page - aim for 20-50 products.`
-      }],
+      },
       timeout: timeout,
       waitFor: 1500
     });
