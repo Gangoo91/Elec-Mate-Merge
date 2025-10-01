@@ -12,37 +12,56 @@ const corsHeaders = {
 const TOOL_CATEGORIES = {
   'Electrical Hand Tools': {
     urls: [
-      'https://www.screwfix.com/search?search=wire+strippers+crimpers+electrical&page_size=50',
-      'https://www.screwfix.com/search?search=electrical+pliers+side+cutters&page_size=50',
-      'https://www.toolstation.com/search?q=electrical+hand+tools+wire+strippers'
+      'https://www.screwfix.com/search?search=screwdrivers+pliers+spanners+electrical+work&page_size=50',
+      'https://www.toolstation.com/search?q=screwdrivers+pliers+spanners+electrical+work'
     ]
   },
   'Test Equipment': {
     urls: [
-      'https://www.screwfix.com/search?search=multimeter+voltage+tester+electrical&page_size=50',
-      'https://www.screwfix.com/search?search=electrical+testing+equipment&page_size=50',
-      'https://www.toolstation.com/search?q=multimeter+voltage+tester+electrical'
+      'https://www.screwfix.com/search?search=testing+measurement+electrical safety+compliance&page_size=50',
+      'https://www.toolstation.com/search?q=testing+measurement+electrical safety+compliance'
+    ]
+  },
+  'PPE': {
+    urls: [
+      'https://www.screwfix.com/search?search=personal protective equipment+safe working practices&page_size=50',
+      'https://www.toolstation.com/search?q=personal protective equipment+safe working practices'
     ]
   },
   'Power Tools': {
     urls: [
-      'https://www.screwfix.com/search?search=electrical+drill+sds+hammer&page_size=50',
-      'https://www.screwfix.com/search?search=angle+grinder+reciprocating+saw&page_size=50',
-      'https://www.toolstation.com/search?q=electrical+power+tools+drill'
+      'https://www.screwfix.com/search?search=electric+cordless+drilling+cutting+installation&page_size=50',
+      'https://www.toolstation.com/search?q=electric+cordless+drilling+cutting+installation'
     ]
   },
   'Cable Installation': {
     urls: [
       'https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50',
-      'https://www.screwfix.com/search?search=conduit+bender+cable+pulling&page_size=50',
       'https://www.toolstation.com/search?q=cable+management+electrical+tools'
     ]
   },
   'Electrical Safety': {
     urls: [
-      'https://www.screwfix.com/search?search=electrical+safety+equipment+gloves&page_size=50',
-      'https://www.screwfix.com/search?search=lockout+tagout+electrical+safety&page_size=50',
-      'https://www.toolstation.com/search?q=electrical+safety+equipment'
+      'https://www.screwfix.com/search?search=hazard identification+protection+safety equipment&page_size=50',
+      'https://www.toolstation.com/search?q=hazard identification+protection+safety equipment'
+    ]
+  },
+  'Access Tools': {
+    urls: [
+      'https://www.screwfix.com/search?search=Equipment+ladders+scaffolding+access+working at height&page_size=50',
+      'https://www.toolstation.com/search?q=Equipment+ladders+scaffolding+access+working at height'
+    ]
+  },
+  'Tool Storage': {
+    urls: [
+      'https://www.screwfix.com/search?search=tool bags+boxes+storage solutions+organisation&page_size=50',
+      'https://www.toolstation.com/search?q=tool bags+boxes+storage solutions+organisation'
+    ]
+  },
+  'Specialist Tools': {
+    urls: [
+      'https://www.screwfix.com/search?search=specialist electrical tools+installation tasks&page_size=50',
+      'https://www.toolstation.com/search?q=specialist electrical tools+installation tasks'
     ]
   }
 };
@@ -143,14 +162,14 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
   console.log(`📡 Scraping URL: ${url}`);
   
   try {
-    // Test basic page access with retry and increased timeout
+    // Test basic page access with retry and reduced timeout
     const basicTest = await retryWithBackoff(
       () => firecrawl.scrapeUrl(url, {
         formats: ['markdown'],
-        timeout: 12000 // Increased from 8s to 12s
+        timeout: 8000 // Reduced from 15s to 8s
       }),
-      3, // Increased to 3 retries
-      1500
+      2, // 2 retries
+      1000
     );
     
     if (!basicTest.success) {
@@ -160,7 +179,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
     
     console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
     
-    // Now attempt structured extraction with increased timeout
+    // Now attempt structured extraction with reduced timeout
     const crawlResponse = await retryWithBackoff(
       () => firecrawl.scrapeUrl(url, {
         formats: [{
@@ -203,9 +222,9 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
             
             If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".`
         }],
-        timeout: 18000 // Increased from 12s to 18s
+        timeout: 12000 // Reduced from 30s to 12s
       }),
-      3, // Increased to 3 retries
+      2, // 2 retries
       2000
     );
 
@@ -335,38 +354,7 @@ serve(async (req) => {
     // If no tools found, return fallback sample data instead of failing
     if (totalProductsFound === 0) {
       console.warn('⚠️ No tools found during scraping - using fallback sample data');
-      const fallbackTools = [
-        {
-          name: "Fluke T6-1000 Electrical Tester",
-          price: "£179.99",
-          category: "Test Equipment",
-          supplier: "Screwfix",
-          availability: "Check Availability",
-          image: "/placeholder.svg",
-          description: "Non-contact voltage tester with FieldSense technology",
-          lastUpdated: new Date().toISOString()
-        },
-        {
-          name: "Stanley FatMax Tool Bag 18\"",
-          price: "£24.98",
-          category: "Electrical Hand Tools",
-          supplier: "Toolstation",
-          availability: "Check Availability",
-          image: "/placeholder.svg",
-          description: "Durable tool bag with multiple pockets",
-          lastUpdated: new Date().toISOString()
-        },
-        {
-          name: "DeWalt DCD796 Combi Drill 18V",
-          price: "£169.99",
-          category: "Power Tools",
-          supplier: "Screwfix",
-          availability: "Check Availability",
-          image: "/placeholder.svg",
-          description: "Brushless combi drill with high performance",
-          lastUpdated: new Date().toISOString()
-        }
-      ];
+      const fallbackTools = [];
       
       // Store fallback data with a note
       const expiresAt = new Date();
