@@ -212,7 +212,7 @@ const CategoryMaterials = () => {
       </Helmet>
 
       <header className="mobile-card-spacing">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 pt-4">
           <Link to="/electrician/materials">
             <Button variant="outline" size="sm" className="flex items-center gap-1.5">
               <ArrowLeft className="h-4 w-4" /> Back to Materials
