@@ -77,7 +77,24 @@ serve(async (req) => {
     console.log('⚠️ Scraper error:', refreshError);
 
     if (refreshError) {
-      console.error('❌ Error calling comprehensive-materials-scraper:', refreshError);
+      console.error('❌ Error calling comprehensive-firecrawl-scraper:', refreshError);
+      
+      // If we have existing cache, return it instead of failing
+      if (existingCache && existingCache.tools_data) {
+        console.log('✅ Using existing cached data due to scraper error');
+        return new Response(
+          JSON.stringify({ 
+            success: true, 
+            message: 'Using cached data - refresh failed but existing data is available',
+            tools: existingCache.tools_data,
+            totalFound: existingCache.tools_data.length,
+            cached: true,
+            error: refreshError.message
+          }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
       throw refreshError;
     }
 
