@@ -83,24 +83,23 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
   try {
     console.log(`🔑 Using Firecrawl v4 extract API...`);
     
-    // Firecrawl v4 uses the extract method for structured data
-    const extractResult = await firecrawl.scrape("https://www.screwfix.com/search?search=screwdrivers+pliers+spanners+electrical+work&page_size=50", 
-    {
-      formats: [{
-        type: "json",
-        schema: productSchema,
-        prompt: `Extract ALL products from this ${supplier} search page for ${category}.
-          
-          Extract:
-          - Product name with model number
-          - Price in GBP (£)
-          - Brand (Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK, etc.)
-          - Availability status
-          - Product URL and image
-          
-          Set supplier to "${supplier}" for all products.
-          Extract EVERY product visible on the page - aim for 20-50 products.`
-      }]
+    const extractionPrompt = `Extract ALL products from this ${supplier} search page for ${category}.
+      
+      Extract:
+      - Product name with model number
+      - Price in GBP (£)
+      - Brand (Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK, etc.)
+      - Availability status
+      - Product URL and image
+      
+      Set supplier to "${supplier}" for all products.
+      Extract EVERY product visible on the page - aim for 20-50 products.`;
+
+    // Firecrawl v4 extract API format
+    const extractResult = await firecrawl.extract({
+      urls: [url],
+      schema: productSchema,
+      prompt: extractionPrompt
     });
 
     console.log(`📊 Extract response for ${category}:`, JSON.stringify(extractResult, null, 2));
