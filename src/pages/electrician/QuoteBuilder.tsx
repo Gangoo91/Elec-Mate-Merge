@@ -134,14 +134,15 @@ const QuoteBuilder = () => {
 
         {/* Prominent Create Quote Section */}
         <section className="text-center space-y-4">
-          <Button 
-            onClick={() => navigate('/electrician/quote-builder/create')}
-            size="lg"
-            className="mobile-button-primary px-12 py-6 text-xl font-bold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-2xl hover:shadow-3xl transition-all duration-300 group transform hover:scale-105"
-          >
-            <Plus className="mr-3 h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
-            Create New Quote
-          </Button>
+          <Link to="/electrician/quote-builder/create">
+            <Button 
+              size="lg"
+              className="mobile-button-primary px-12 py-6 text-xl font-bold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-2xl hover:shadow-3xl transition-all duration-300 group transform hover:scale-105"
+            >
+              <Plus className="mr-3 h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
+              Create New Quote
+            </Button>
+          </Link>
           <p className="text-lg text-muted-foreground">
             Professional electrical quotes in minutes
           </p>
@@ -188,14 +189,15 @@ const QuoteBuilder = () => {
 
             {/* Create Quote Call-to-Action */}
             <div className="mt-6 text-center">
-              <Button 
-                onClick={() => navigate('/electrician/quote-builder/create')}
-                size="lg"
-                className="mobile-button-primary w-full sm:w-auto px-8 py-4 text-lg font-semibold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-lg hover:shadow-xl transition-all duration-300 group"
-              >
-                <Plus className="mr-2 h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
-                Create New Quote
-              </Button>
+              <Link to="/electrician/quote-builder/create">
+                <Button 
+                  size="lg"
+                  className="mobile-button-primary w-full sm:w-auto px-8 py-4 text-lg font-semibold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-lg hover:shadow-xl transition-all duration-300 group"
+                >
+                  <Plus className="mr-2 h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
+                  Create New Quote
+                </Button>
+              </Link>
               <p className="mt-2 text-sm text-muted-foreground">
                 Professional electrical quotes in minutes
               </p>
