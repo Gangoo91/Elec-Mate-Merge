@@ -39,12 +39,12 @@ const ToolComparison = ({ tools }: ToolComparisonProps) => {
     return (
       <Card className="bg-gradient-to-br from-elec-yellow/5 via-transparent to-blue-500/5 border-elec-yellow/20">
         <CardContent className="p-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <h3 className="text-xl font-semibold text-white mb-2">Compare Tools</h3>
               <p className="text-white/80">Select up to 3 tools to compare features, prices, and specifications side by side</p>
             </div>
-            <Button 
+            <Button
               onClick={() => setIsExpanded(true)}
               className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
             >
