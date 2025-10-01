@@ -278,19 +278,6 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
       </CardHeader>
       
       <CardContent className="space-y-4 pt-0">
-        {/* Key Metrics Grid */}
-        <div className="grid grid-cols-2 gap-2">
-          {keyMetrics.map((metric, index) => (
-            <div key={index} className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
-              <div className="text-elec-yellow">{metric.icon}</div>
-              <div>
-                <div className="text-xs text-muted-foreground">{metric.label}</div>
-                <div className="text-xs font-medium text-white">{metric.value}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
         {/* Feature Highlights */}
         <div className="space-y-2">
           {features.map((feature, index) => (
