@@ -27,42 +27,6 @@ const TOOL_CATEGORIES = {
       'https://www.screwfix.com/search?search=electric+cordless+drilling+cutting+installation&page_size=50'
     ],
     priority: 1
-  },
-  'PPE': {
-    urls: [
-      'https://www.screwfix.com/search?search=personal+protective+equipment+safe+working+practices&page_size=50'
-    ],
-    priority: 2
-  },
-  'Cable Installation': {
-    urls: [
-      'https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50'
-    ],
-    priority: 2
-  },
-  'Electrical Safety': {
-    urls: [
-      'https://www.screwfix.com/search?search=hazard+identification+protection+safety+equipment&page_size=50'
-    ],
-    priority: 2
-  },
-  'Access Tools': {
-    urls: [
-      'https://www.screwfix.com/search?search=Equipment+ladders+scaffolding+access+working+at+height&page_size=50'
-    ],
-    priority: 3
-  },
-  'Tool Storage': {
-    urls: [
-      'https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation&page_size=50'
-    ],
-    priority: 3
-  },
-  'Specialist Tools': {
-    urls: [
-      'https://www.screwfix.com/search?search=specialist+electrical+tools+installation+tasks&page_size=50'
-    ],
-    priority: 3
   }
 };
 
@@ -131,11 +95,11 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
   try {
     console.log(`🔑 Attempting scrape with Firecrawl v4 API...`);
     
-    const crawlResponse = await firecrawl.scrape(url, {
-      formats: ['extract'],
-      extract: {
+    const crawlResponse = await firecrawl.scrape("https://firecrawl.dev", {
+      formats: [{
+        type: "json",
         schema: productSchema,
-        systemPrompt: `Extract ALL products from this ${supplier} search page for ${category}.
+        prompt: `Extract ALL products from this ${supplier} search page for ${category}.
           
           Extract:
           - Product name with model number
@@ -146,9 +110,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
           
           Set supplier to "${supplier}" for all products.
           Extract EVERY product visible on the page - aim for 20-50 products.`
-      },
-      timeout: timeout,
-      waitFor: 1500
+      }],
     });
 
     console.log(`📊 Scrape response for ${category}:`, JSON.stringify(crawlResponse, null, 2));
