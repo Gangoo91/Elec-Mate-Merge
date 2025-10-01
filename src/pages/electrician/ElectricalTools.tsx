@@ -9,14 +9,14 @@ import {
   Loader2,
   RefreshCw
 } from "lucide-react";
-import { useNavigate, Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
 import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { queryClient } from "@/lib/queryClient";
 
 const ElectricalTools = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -34,13 +34,14 @@ const ElectricalTools = () => {
 
       if (error) throw error;
 
+      // Invalidate queries to refetch fresh data
+      await queryClient.invalidateQueries({ queryKey: ['tools'] });
+      await queryClient.invalidateQueries({ queryKey: ['materials'] });
+      
       toast({
         title: "Success",
         description: "Tools data has been updated successfully",
       });
-
-      // Reload the page to show fresh data
-      window.location.reload();
     } catch (error) {
       console.error('Error refreshing tools:', error);
       toast({
@@ -102,40 +103,42 @@ const ElectricalTools = () => {
         {filteredCategories.map((category) => {
           const IconComponent = category.icon;
           return (
-            <Card 
+            <Link 
               key={category.name}
-              className="border-elec-yellow/20 bg-elec-gray backdrop-blur cursor-pointer hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg group"
-              onClick={() => navigate(`/electrician/tools?category=${encodeURIComponent(category.name)}`)}
+              to={`/electrician/tools?category=${encodeURIComponent(category.name)}`}
+              className="block"
             >
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center justify-center gap-3 text-lg text-center text-white group-hover:text-white/90 transition-colors">
-                  <IconComponent className="h-6 w-6 text-elec-yellow group-hover:text-elec-yellow/90 transition-colors" />
-                  {category.name}
-                </CardTitle>
-                <CardDescription className="text-sm text-center leading-relaxed">
-                  {category.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-xs text-elec-yellow/80 flex items-center justify-center gap-2 font-medium">
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="h-3 w-3 animate-spin" />
-                      Loading...
-                    </>
-                  ) : category.count > 0 ? (
-                    <>
-                      <Wrench className="h-3 w-3" />
-                      {category.count} tools available
-                    </>
-                  ) : (
-                    <span className="text-muted-foreground italic">
-                      Data being collected
-                    </span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+              <Card className="border-elec-yellow/20 bg-elec-gray backdrop-blur cursor-pointer hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg group h-full">
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center justify-center gap-3 text-lg text-center text-white group-hover:text-white/90 transition-colors">
+                    <IconComponent className="h-6 w-6 text-elec-yellow group-hover:text-elec-yellow/90 transition-colors" />
+                    {category.name}
+                  </CardTitle>
+                  <CardDescription className="text-sm text-center leading-relaxed">
+                    {category.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-xs text-elec-yellow/80 flex items-center justify-center gap-2 font-medium">
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                        Loading...
+                      </>
+                    ) : category.count > 0 ? (
+                      <>
+                        <Wrench className="h-3 w-3" />
+                        {category.count} tools available
+                      </>
+                    ) : (
+                      <span className="text-muted-foreground italic">
+                        Data being collected
+                      </span>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           );
         })}
       </div>
