@@ -30,6 +30,7 @@ import {
 } from '@/data/electrician/presetData';
 
 interface InvoiceItemsStepProps {
+  originalItems: InvoiceItem[];
   additionalItems: InvoiceItem[];
   onAddItem: (item: Omit<InvoiceItem, 'id' | 'totalPrice'>) => void;
   onUpdateItem: (itemId: string, updates: Partial<InvoiceItem>) => void;
@@ -37,11 +38,13 @@ interface InvoiceItemsStepProps {
 }
 
 export const InvoiceItemsStep = ({
+  originalItems,
   additionalItems,
   onAddItem,
   onUpdateItem,
   onRemoveItem,
 }: InvoiceItemsStepProps) => {
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [newItem, setNewItem] = useState({
     description: '',
     quantity: 1,
@@ -239,29 +242,165 @@ export const InvoiceItemsStep = ({
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
+  const originalTotal = originalItems.reduce((sum, item) => sum + item.totalPrice, 0);
   const additionalTotal = additionalItems.reduce((sum, item) => sum + item.totalPrice, 0);
+  const grandTotal = originalTotal + additionalTotal;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold mb-2">Additional Items</h2>
+        <h2 className="text-xl font-bold mb-2">Review & Edit Items</h2>
         <p className="text-sm text-muted-foreground">
-          Add any extra work or materials not included in the original quote.
+          Edit quantities and prices of original quote items, or add additional items.
         </p>
       </div>
 
+      {/* Original Quote Items */}
+      {originalItems.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Original Quote Items
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Description</TableHead>
+                    <TableHead className="text-right">Quantity</TableHead>
+                    <TableHead className="text-right">Unit Price</TableHead>
+                    <TableHead className="text-right">Total</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {originalItems.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium">
+                        {editingItemId === item.id ? (
+                          <Input
+                            value={item.description}
+                            onChange={(e) => onUpdateItem(item.id, { description: e.target.value })}
+                            className="min-w-[200px]"
+                          />
+                        ) : (
+                          <div>
+                            <div>{item.description}</div>
+                            {item.category && (
+                              <div className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                                {getCategoryIcon(item.category)}
+                                {item.category}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {editingItemId === item.id ? (
+                          <Input
+                            type="number"
+                            value={item.quantity}
+                            onChange={(e) => {
+                              const quantity = parseFloat(e.target.value) || 0;
+                              onUpdateItem(item.id, { 
+                                quantity,
+                                totalPrice: quantity * item.unitPrice 
+                              });
+                            }}
+                            className="w-20 text-right"
+                            min="0"
+                            step="0.1"
+                          />
+                        ) : (
+                          <span>{item.quantity} {item.unit}</span>
+                        )}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {editingItemId === item.id ? (
+                          <Input
+                            type="number"
+                            value={item.unitPrice}
+                            onChange={(e) => {
+                              const unitPrice = parseFloat(e.target.value) || 0;
+                              onUpdateItem(item.id, { 
+                                unitPrice,
+                                totalPrice: item.quantity * unitPrice 
+                              });
+                            }}
+                            className="w-24 text-right"
+                            min="0"
+                            step="0.01"
+                          />
+                        ) : (
+                          formatCurrency(item.unitPrice)
+                        )}
+                      </TableCell>
+                      <TableCell className="text-right font-semibold">
+                        {formatCurrency(item.totalPrice)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex gap-1 justify-end">
+                          {editingItemId === item.id ? (
+                            <Button
+                              size="sm"
+                              onClick={() => setEditingItemId(null)}
+                              variant="ghost"
+                            >
+                              Done
+                            </Button>
+                          ) : (
+                            <Button
+                              size="sm"
+                              onClick={() => setEditingItemId(item.id)}
+                              variant="ghost"
+                            >
+                              Edit
+                            </Button>
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+            <div className="mt-4 pt-4 border-t flex justify-between items-center">
+              <span className="font-medium">Original Quote Total</span>
+              <span className="text-xl font-bold">{formatCurrency(originalTotal)}</span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Running Total Card */}
-      {additionalItems.length > 0 && (
+      {(originalItems.length > 0 || additionalItems.length > 0) && (
         <Card className="bg-primary/5 border-primary/20">
           <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Calculator className="h-5 w-5 text-primary" />
-                <span className="font-medium">Additional Items Total</span>
+            <div className="space-y-2">
+              {originalItems.length > 0 && (
+                <div className="flex items-center justify-between text-sm">
+                  <span>Original Quote Total</span>
+                  <span className="font-semibold">{formatCurrency(originalTotal)}</span>
+                </div>
+              )}
+              {additionalItems.length > 0 && (
+                <div className="flex items-center justify-between text-sm">
+                  <span>Additional Items Total</span>
+                  <span className="font-semibold">{formatCurrency(additionalTotal)}</span>
+                </div>
+              )}
+              <div className="pt-2 border-t flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Calculator className="h-5 w-5 text-primary" />
+                  <span className="font-medium">Grand Total</span>
+                </div>
+                <span className="text-xl font-bold text-primary">
+                  {formatCurrency(grandTotal)}
+                </span>
               </div>
-              <span className="text-xl font-bold text-primary">
-                {formatCurrency(additionalTotal)}
-              </span>
             </div>
           </CardContent>
         </Card>

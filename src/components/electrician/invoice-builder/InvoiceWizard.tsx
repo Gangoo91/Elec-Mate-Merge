@@ -20,7 +20,7 @@ interface InvoiceWizardProps {
 
 const steps = [
   { title: 'Review Quote', description: 'Verify quote details' },
-  { title: 'Additional Items', description: 'Add extra charges' },
+  { title: 'Review & Edit Items', description: 'Adjust costs and quantities' },
   { title: 'Invoice Settings', description: 'Configure payment terms' },
   { title: 'Generate Invoice', description: 'Preview and save' },
 ];
@@ -78,6 +78,7 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
       case 1:
         return (
           <InvoiceItemsStep
+            originalItems={invoiceBuilder.invoice.items || []}
             additionalItems={invoiceBuilder.invoice.additional_invoice_items || []}
             onAddItem={invoiceBuilder.addInvoiceItem}
             onUpdateItem={invoiceBuilder.updateInvoiceItem}
