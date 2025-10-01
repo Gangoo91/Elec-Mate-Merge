@@ -83,26 +83,39 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
   try {
     console.log(`🔑 Using Firecrawl v4 extract API...`);
     
-    const extractionPrompt = `Extract ALL products from this ${supplier} search page for ${category}.
-      
-      Extract:
-      - Product name with model number
-      - Price in GBP (£)
-      - Brand (Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK, etc.)
-      - Availability status
-      - Product URL and image
-      
-      Set supplier to "${supplier}" for all products.
-      Extract EVERY product visible on the page - aim for 20-50 products.`;
+    console.log(`🔄 Starting extract for ${category}...`);
+    
+    let extractResult;
+    try {
+      extractResult = await firecrawl.extract({
+        url: url,
+        schema: productSchema,
+        prompt: `Extract all electrical tools and products from this ${supplier} page. For each product: name, price (£), brand, stock status, product URL, image URL, and description. Extract every visible product on the page.`
+      });
+    } catch (apiError) {
+      console.error(`❌ Firecrawl API error for ${category}:`, apiError);
+      console.error(`❌ Error message:`, apiError.message);
+      console.error(`❌ Error details:`, JSON.stringify(apiError, null, 2));
+      throw apiError;
+    }
 
     // Firecrawl v4 extract API format - use 'url' (string) not 'urls' (array) when providing schema
+    console.log(`🔄 Calling Firecrawl extract API...`);
+    
     const extractResult = await firecrawl.extract({
       url: url,
       schema: productSchema,
       prompt: `Extract all electrical tools and products from this ${supplier} page. For each product: name, price (£), brand, stock status, product URL, image URL, and description. Extract every visible product on the page.`
     });
 
-    console.log(`📊 Extract response for ${category}:`, JSON.stringify(extractResult, null, 2));
+    console.log(`📊 Extract result status:`, extractResult?.success);
+    console.log(`📊 Extract result keys:`, Object.keys(extractResult || {}));
+    
+    if (extractResult?.data) {
+      console.log(`📊 Extract data type:`, typeof extractResult.data);
+      console.log(`📊 Extract data keys:`, Object.keys(extractResult.data));
+      console.log(`📊 Extract data sample:`, JSON.stringify(extractResult.data).substring(0, 500));
+    }
 
     if (extractResult.success && extractResult.data) {
       const extractedData = extractResult.data;
@@ -127,7 +140,8 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
         console.log(`📋 Available data keys:`, Object.keys(extractedData));
       }
     } else {
-      console.warn(`⚠️ ${category}: Extract unsuccessful or no data. Response:`, extractResult);
+      console.error(`❌ ${category}: Extract failed or unsuccessful`);
+      console.error(`❌ Full response:`, JSON.stringify(extractResult, null, 2));
     }
     
     console.warn(`⚠️ ${category}: No products found`);
