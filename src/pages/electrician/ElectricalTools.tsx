@@ -40,12 +40,12 @@ const ElectricalTools = () => {
     try {
       toast({
         title: "Refreshing Tools",
-        description: "Fetching latest data from all suppliers using Firecrawl...",
+        description: "Fetching latest data from suppliers...",
         duration: 3000,
       });
 
-      // Trigger the comprehensive firecrawl scraper
-      const { data, error } = await supabase.functions.invoke('comprehensive-firecrawl-scraper', {
+      // Trigger the tools weekly refresh which has proper error handling
+      const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
         body: { forceRefresh: true }
       });
       
