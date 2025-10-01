@@ -86,11 +86,11 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
       <Carousel className="w-full">
         <CarouselContent className="-ml-2 md:-ml-4">
           {top6Tools.map((tool, index) => (
-            <CarouselItem key={tool.id || index} className="pl-2 md:pl-4 basis-[280px] md:basis-[320px]">
-              <Card className="h-full bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden group">
-                {/* Image section */}
+            <CarouselItem key={tool.id || index} className="pl-2 md:pl-4 basis-[200px] md:basis-[220px]">
+              <Card className="h-full bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/5 hover:scale-[1.02] transition-all duration-300 rounded-lg overflow-hidden group">
+                {/* Compact Image section */}
                 <div className="relative">
-                  <div className="h-48 overflow-hidden">
+                  <div className="h-32 overflow-hidden">
                     <img
                       src={tool.image || '/placeholder.svg'}
                       alt={tool.name || 'Tool'}
@@ -101,103 +101,79 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
                     />
                   </div>
                   
-                  {/* Simple badges overlaid on image */}
-                  <div className="absolute top-2 left-2 right-2 flex items-start justify-between">
-                    <Badge className="bg-background/90 text-foreground border-border text-xs">
+                  {/* Compact badges */}
+                  <div className="absolute top-1.5 left-1.5 right-1.5 flex items-start justify-between">
+                    <Badge className="bg-background/90 text-foreground border-border text-[10px] px-1.5 py-0.5">
                       {tool.category || 'Tools'}
                     </Badge>
                     {tool.isOnSale && (
-                      <Badge className="bg-destructive text-destructive-foreground text-xs font-bold">
+                      <Badge className="bg-destructive text-destructive-foreground text-[10px] px-1.5 py-0.5 font-bold">
                         SALE
                       </Badge>
                     )}
                   </div>
                 </div>
 
-                <CardContent className="p-4 flex-grow flex flex-col">
-                  {/* Supplier and rating section */}
-                  <div className="flex items-center justify-between text-sm mb-3">
+                <CardContent className="p-2.5 flex-grow flex flex-col">
+                  {/* Compact supplier and rating */}
+                  <div className="flex items-center justify-between text-xs mb-2">
                     <div className="flex items-center gap-1">
-                      <div className="w-3 h-3 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
-                      <span className="font-medium text-foreground">{tool.supplier || 'Screwfix'}</span>
+                      <div className="w-2 h-2 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
+                      <span className="font-medium text-foreground text-[10px]">{tool.supplier || 'Screwfix'}</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                      <span className="text-foreground">4.5</span>
+                    <div className="flex items-center gap-0.5">
+                      <Star className="w-2.5 h-2.5 fill-yellow-400 text-yellow-400" />
+                      <span className="text-foreground text-[10px]">4.5</span>
                     </div>
                   </div>
 
-                  {/* Product title */}
-                  <h3 className="text-lg font-semibold line-clamp-2 mb-4 text-foreground">
+                  {/* Compact title */}
+                  <h3 className="text-xs font-semibold line-clamp-2 mb-2 text-foreground leading-tight">
                     {tool.name || 'Unknown Tool'}
                   </h3>
 
-                  {/* 2x2 Information grid */}
-                  <div className="grid grid-cols-2 gap-2 mb-4">
-                    <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
-                      <Star className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                      <div className="flex flex-col text-left">
-                        <span className="text-xs font-medium text-foreground text-left">Rating</span>
-                        <span className="text-xs text-muted-foreground text-left">4.5/5</span>
-                      </div>
+                  {/* Compact single-row info */}
+                  <div className="flex items-center gap-1 mb-2">
+                    <div className="flex items-center gap-1 px-1.5 py-1 rounded bg-white/5 border border-white/10 flex-1">
+                      <CheckCircle className="h-2.5 w-2.5 text-elec-yellow flex-shrink-0" />
+                      <span className="text-[9px] text-muted-foreground">{tool.stockStatus || 'In Stock'}</span>
                     </div>
-                    
-                    <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                      <div className="flex flex-col text-left">
-                        <span className="text-xs font-medium text-foreground text-left">Stock</span>
-                        <span className="text-xs text-muted-foreground text-left">{tool.stockStatus || 'In Stock'}</span>
-                      </div>
+                    <div className="flex items-center gap-1 px-1.5 py-1 rounded bg-white/5 border border-white/10 flex-1">
+                      <Star className="h-2.5 w-2.5 text-elec-yellow flex-shrink-0" />
+                      <span className="text-[9px] text-muted-foreground">4.5/5</span>
                     </div>
                   </div>
 
-                  {/* Features list */}
-                  {tool.highlights && tool.highlights.length > 0 && (
-                    <div className="space-y-1 mb-4">
-                      {tool.highlights.slice(0, 2).map((highlight, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <Check className="h-3 w-3 text-green-400" />
-                          <span className="line-clamp-1">{highlight}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Price and stock section */}
-                  <div className="space-y-3 pt-2 border-t border-white/10 mt-auto">
-                    <div className="flex items-center justify-between">
+                  {/* Compact price section */}
+                  <div className="pt-2 border-t border-white/10 mt-auto">
+                    <div className="flex items-center justify-between mb-2">
                       <div className="flex flex-col">
                         {tool.isOnSale && tool.salePrice ? (
                           <>
-                            <span className="text-lg font-bold text-elec-yellow">
+                            <span className="text-sm font-bold text-elec-yellow leading-none">
                               {tool.salePrice}
                             </span>
-                            <span className="text-xs text-muted-foreground line-through">
+                            <span className="text-[9px] text-muted-foreground line-through">
                               {tool.price}
                             </span>
                           </>
                         ) : (
-                          <span className="text-lg font-bold text-elec-yellow">
+                          <span className="text-sm font-bold text-elec-yellow leading-none">
                             {tool.price}
                           </span>
                         )}
-                        <span className="text-xs text-muted-foreground">inc. VAT</span>
+                        <span className="text-[9px] text-muted-foreground">inc. VAT</span>
                       </div>
-                      <Badge variant="success" className="text-xs">
-                        {tool.stockStatus || 'In Stock'}
-                      </Badge>
                     </div>
-                  </div>
 
-                  {/* Button section */}
-                  <div className="flex gap-2 mt-3">
+                    {/* Compact button */}
                     <Button 
                       size="sm" 
                       onClick={() => window.open(getProductUrl(tool), '_blank')}
-                      className="flex-1 border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors"
+                      className="w-full h-7 text-[10px] border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors px-2"
                     >
-                      <ExternalLink className="w-3 h-3 mr-1" />
-                      View Product
+                      <ExternalLink className="w-2.5 h-2.5 mr-1" />
+                      View
                     </Button>
                   </div>
                 </CardContent>
