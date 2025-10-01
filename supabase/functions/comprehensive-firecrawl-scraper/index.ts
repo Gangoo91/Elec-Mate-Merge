@@ -163,8 +163,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
     // Now attempt structured extraction with increased timeout
     const crawlResponse = await retryWithBackoff(
       () => firecrawl.scrapeUrl(url, {
-        formats: ['extract'],
-        extract: {
+        formats: [{
           schema: productSchema as any,
           prompt: `You are extracting product information from a ${supplier} search results page. 
             
@@ -203,7 +202,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
             Set the supplier field to "${supplier}" for all products.
             
             If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".`
-        },
+        }],
         timeout: 18000 // Increased from 12s to 18s
       }),
       3, // Increased to 3 retries
