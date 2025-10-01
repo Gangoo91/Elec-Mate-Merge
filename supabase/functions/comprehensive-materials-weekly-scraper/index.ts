@@ -185,20 +185,39 @@ async function getMaterials(FIRECRAWL_API_KEY: string) {
   console.log('🚀 Starting comprehensive materials weekly scraping...');
   
   const jobs = [];
+  const BATCH_SIZE = 5; // Process 5 items at a time to avoid timeouts
   
+  // Select only top items per category to reduce load
   for (const categoryGroup of materialCategories) {
-    for (const material of categoryGroup.items) {
-      for (const supplier of suppliers) {
+    const topItems = categoryGroup.items.slice(0, 3); // Only take first 3 items per category
+    for (const material of topItems) {
+      for (const supplier of suppliers.slice(0, 2)) { // Only use first 2 suppliers (Screwfix, Toolstation)
         jobs.push(fetchMaterialsFromSupplier(supplier, material, categoryGroup.category, FIRECRAWL_API_KEY));
       }
     }
   }
 
-  console.log(`📋 Processing ${jobs.length} scraping jobs...`);
-  const results = await Promise.allSettled(jobs);
-  const materials = results
-    .map((material) => (material.status === "fulfilled" ? material.value : []))
-    .flat();
+  console.log(`📋 Processing ${jobs.length} scraping jobs in batches of ${BATCH_SIZE}...`);
+  
+  const materials: any[] = [];
+  
+  // Process jobs in batches
+  for (let i = 0; i < jobs.length; i += BATCH_SIZE) {
+    const batch = jobs.slice(i, i + BATCH_SIZE);
+    console.log(`🔄 Processing batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(jobs.length / BATCH_SIZE)}`);
+    
+    const results = await Promise.allSettled(batch);
+    const batchMaterials = results
+      .map((material) => (material.status === "fulfilled" ? material.value : []))
+      .flat();
+    
+    materials.push(...batchMaterials);
+    
+    // Small delay between batches to avoid rate limiting
+    if (i + BATCH_SIZE < jobs.length) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
   
   console.log(`✅ Successfully fetched ${materials.length} products`);
   return materials;
@@ -314,21 +333,29 @@ Deno.serve(async (req) => {
       );
     }
 
-    const materials = await getMaterials(FIRECRAWL_API_KEY);
-    const cacheEntries = await saveMaterialsToCache(materials);
-    await savePricesToHistory(materials);
-
-    const response = {
-      success: true,
-      count: materials.length,
-      categories_updated: cacheEntries.length,
-      materials: materials,
-      cache_entries: cacheEntries,
-      timestamp: new Date().toISOString()
+    // Start the background task for scraping
+    const scrapeTask = async () => {
+      try {
+        console.log('🔄 Starting background scraping task...');
+        const materials = await getMaterials(FIRECRAWL_API_KEY);
+        const cacheEntries = await saveMaterialsToCache(materials);
+        await savePricesToHistory(materials);
+        console.log(`✅ Background task completed: ${materials.length} materials, ${cacheEntries.length} categories`);
+      } catch (error) {
+        console.error('❌ Background scraping error:', error);
+      }
     };
 
+    // Return immediate response and continue scraping in background
+    EdgeRuntime.waitUntil(scrapeTask());
+
     return new Response(
-      JSON.stringify(response),
+      JSON.stringify({
+        success: true,
+        message: 'Materials scraping started in background',
+        status: 'processing',
+        timestamp: new Date().toISOString()
+      }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
       }
