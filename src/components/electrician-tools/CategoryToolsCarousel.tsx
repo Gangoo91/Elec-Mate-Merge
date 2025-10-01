@@ -86,11 +86,11 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
       <Carousel className="w-full">
         <CarouselContent className="-ml-2 md:-ml-4">
           {top6Tools.map((tool, index) => (
-            <CarouselItem key={tool.id || index} className="pl-2 md:pl-4 basis-[280px] md:basis-[320px]">
+            <CarouselItem key={tool.id || index} className="pl-2 md:pl-4 basis-[220px] md:basis-[260px]">
               <Card className="h-full mobile-card bg-elec-card/40 border-white/10 hover:border-elec-yellow/30 transition-all duration-300 group">
-                <CardContent className="p-4 h-full flex flex-col">
+                <CardContent className="p-3 h-full flex flex-col">
                   {/* Image and badges */}
-                  <div className="relative mb-3">
+                  <div className="relative mb-2">
                     <div className="aspect-square rounded-lg overflow-hidden bg-white/5 flex items-center justify-center">
                       <img
                         src={tool.image || '/placeholder.svg'}
@@ -125,8 +125,8 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
                   </div>
 
                   {/* Tool info */}
-                  <div className="flex-1 space-y-3">
-                    <h3 className="font-semibold text-elec-light text-sm leading-tight line-clamp-2">
+                  <div className="flex-1 space-y-2">
+                    <h3 className="font-semibold text-elec-light text-xs leading-tight line-clamp-2">
                       {tool.name || 'Unknown Tool'}
                     </h3>
                     
@@ -146,12 +146,12 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
                   </div>
 
                   {/* Price section with separator */}
-                  <div className="space-y-3 pt-3 border-t border-white/10">
+                  <div className="space-y-2 pt-2 border-t border-white/10">
                     <div className="flex items-center justify-between">
                       <div className="flex flex-col">
                         {tool.isOnSale && tool.salePrice ? (
                           <>
-                            <span className="text-lg font-bold text-elec-yellow">
+                            <span className="text-base font-bold text-elec-yellow">
                               {tool.salePrice}
                             </span>
                             <span className="text-xs text-muted-foreground line-through">
@@ -159,7 +159,7 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
                             </span>
                           </>
                         ) : (
-                          <span className="text-lg font-bold text-elec-yellow">
+                          <span className="text-base font-bold text-elec-yellow">
                             {tool.price}
                           </span>
                         )}
