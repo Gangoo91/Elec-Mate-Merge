@@ -95,11 +95,11 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
       Set supplier to "${supplier}" for all products.
       Extract EVERY product visible on the page - aim for 20-50 products.`;
 
-    // Firecrawl v4 extract API format
+    // Firecrawl v4 extract API format - use 'url' (string) not 'urls' (array) when providing schema
     const extractResult = await firecrawl.extract({
-      urls: [url],
+      url: url,
       schema: productSchema,
-      prompt: extractionPrompt
+      prompt: `Extract all electrical tools and products from this ${supplier} page. For each product: name, price (£), brand, stock status, product URL, image URL, and description. Extract every visible product on the page.`
     });
 
     console.log(`📊 Extract response for ${category}:`, JSON.stringify(extractResult, null, 2));
