@@ -227,7 +227,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
     <Card className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full relative group">
       {/* Image section */}
       <div className="relative">
-        <div className="h-48 overflow-hidden">
+        <div className="h-32 overflow-hidden">
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
@@ -238,12 +238,12 @@ const ToolCard: React.FC<ToolCardProps> = ({
         </div>
         
         {/* Simple badges overlaid on image */}
-        <div className="absolute top-2 left-2 right-2 flex items-start justify-between">
-          <Badge className="bg-background/90 text-foreground border-border text-xs">
+        <div className="absolute top-1.5 left-1.5 right-1.5 flex items-start justify-between">
+          <Badge className="bg-background/90 text-foreground border-border text-[10px] px-1.5 py-0.5">
             {item.category}
           </Badge>
           {discount && (
-            <Badge className="bg-destructive text-destructive-foreground text-xs font-bold">
+            <Badge className="bg-destructive text-destructive-foreground text-[10px] font-bold px-1.5 py-0.5">
               -{discount}%
             </Badge>
           )}
@@ -251,63 +251,63 @@ const ToolCard: React.FC<ToolCardProps> = ({
         
       </div>
 
-      <CardContent className="p-4 flex-grow flex flex-col">
+      <CardContent className="p-2.5 flex-grow flex flex-col">
         {/* Supplier and rating section */}
-        <div className="flex items-center justify-between text-sm mb-3">
+        <div className="flex items-center justify-between text-xs mb-2">
           <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
-            <span className="font-medium text-foreground">{item.supplier}</span>
+            <div className="w-2 h-2 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
+            <span className="font-medium text-foreground text-[10px]">{item.supplier}</span>
           </div>
           <div className="flex items-center gap-1">
-            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-            <span className="text-foreground">{reviewData?.rating || '4.5'}</span>
+            <Star className="w-2.5 h-2.5 fill-yellow-400 text-yellow-400" />
+            <span className="text-foreground text-[10px]">{reviewData?.rating || '4.5'}</span>
           </div>
         </div>
 
         {/* Product title */}
-        <h3 className="text-lg font-semibold line-clamp-2 mb-4 text-foreground">
+        <h3 className="text-xs font-semibold line-clamp-2 mb-2 text-foreground">
           {item.name}
         </h3>
 
         {/* Features list */}
-        <div className="space-y-1 mb-4">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Check className="h-3 w-3 text-green-400" />
+        <div className="space-y-0.5 mb-2">
+          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+            <Check className="h-2.5 w-2.5 text-green-400 flex-shrink-0" />
             <span>Professional quality construction</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Check className="h-3 w-3 text-green-400" />
+          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+            <Check className="h-2.5 w-2.5 text-green-400 flex-shrink-0" />
             <span>BS7671 18th edition compliant</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Check className="h-3 w-3 text-green-400" />
+          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+            <Check className="h-2.5 w-2.5 text-green-400 flex-shrink-0" />
             <span>Suitable for commercial use</span>
           </div>
         </div>
 
         {/* Price and stock section */}
-        <div className="space-y-3 pt-2 border-t border-white/10">
+        <div className="space-y-2 pt-2 border-t border-white/10">
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
-              <span className="text-lg font-bold text-elec-yellow">
+              <span className="text-base font-bold text-elec-yellow">
                 {item.salePrice || item.price}
               </span>
-              <span className="text-xs text-muted-foreground">inc. VAT</span>
+              <span className="text-[9px] text-muted-foreground">inc. VAT</span>
             </div>
-            <Badge variant="success" className="text-xs">
+            <Badge variant="success" className="text-[10px] px-1.5 py-0.5">
               In Stock
             </Badge>
           </div>
         </div>
 
         {/* Button section */}
-        <div className="flex gap-2 mt-auto">
+        <div className="flex gap-1.5 mt-auto">
           <Button 
             size="sm" 
             onClick={() => window.open(getProductUrl(), '_blank')}
-            className="flex-1 border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors"
+            className="flex-1 border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors h-7 text-[10px] px-2"
           >
-            <ExternalLink className="w-3 h-3 mr-1" />
+            <ExternalLink className="w-2.5 h-2.5 mr-1" />
             View Product
           </Button>
           <Button 
@@ -321,9 +321,9 @@ const ToolCard: React.FC<ToolCardProps> = ({
               }
             }}
             disabled={isCompareDisabled && !isSelected}
-            className="px-3"
+            className="px-2 h-7"
           >
-            {isSelected ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+            {isSelected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
           </Button>
         </div>
       </CardContent>
