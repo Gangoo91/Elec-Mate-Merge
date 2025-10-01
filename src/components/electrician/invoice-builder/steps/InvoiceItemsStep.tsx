@@ -284,7 +284,7 @@ export const InvoiceItemsStep = ({
                           <Input
                             value={item.description}
                             onChange={(e) => onUpdateItem(item.id, { description: e.target.value })}
-                            className="min-w-[200px]"
+                            className="min-w-[200px] h-8"
                           />
                         ) : (
                           <div>
@@ -310,7 +310,7 @@ export const InvoiceItemsStep = ({
                                 totalPrice: quantity * item.unitPrice 
                               });
                             }}
-                            className="w-20 text-right"
+                            className="w-20 text-right h-8"
                             min="0"
                             step="0.1"
                           />
@@ -330,7 +330,7 @@ export const InvoiceItemsStep = ({
                                 totalPrice: item.quantity * unitPrice 
                               });
                             }}
-                            className="w-24 text-right"
+                            className="w-24 text-right h-8"
                             min="0"
                             step="0.01"
                           />
