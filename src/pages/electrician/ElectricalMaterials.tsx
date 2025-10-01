@@ -80,7 +80,7 @@ const ElectricalMaterials = () => {
   const handleForceUpdate = async () => {
     setIsForceUpdating(true);
     try {
-      const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
+      const { data, error } = await supabase.functions.invoke('comprehensive-materials-weekly-scraper', {
         body: { forceRefresh: true, bypassCache: true }
       });
       
