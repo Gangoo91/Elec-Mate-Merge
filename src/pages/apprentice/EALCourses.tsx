@@ -6,7 +6,7 @@ import { ArrowLeft, BookOpen, Award, FileText, Lightbulb, Loader2 } from "lucide
 import { useQualifications } from "@/hooks/qualification/useQualifications";
 
 const EALCourses = () => {
-  const { awardingBodies, loading, error } = useQualifications();
+  const { awardingBodies, loading, error, refreshData } = useQualifications();
   
   // Get EAL courses from the awarding bodies data
   const ealCourses = awardingBodies?.['EAL'] || [];
@@ -55,7 +55,7 @@ const EALCourses = () => {
       ) : error ? (
         <div className="text-center py-12">
           <p className="text-destructive mb-4">Error loading courses: {error}</p>
-          <Button variant="outline" onClick={() => window.location.reload()}>
+          <Button variant="outline" onClick={refreshData}>
             Try Again
           </Button>
         </div>

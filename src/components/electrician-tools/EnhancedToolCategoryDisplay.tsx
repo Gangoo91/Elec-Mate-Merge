@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -84,6 +84,7 @@ interface EnhancedToolCategoryDisplayProps {
 }
 
 const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDisplayProps) => {
+  const navigate = useNavigate();
   const categoryKey = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
   const meta = CATEGORY_META[categoryKey] || { title: categoryName, description: "Browse curated tools by category" };
   
@@ -427,7 +428,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
                             size="sm"
                             onClick={() => {
                               setSearchTerm("");
-                              window.location.href = "/electrician/tools?category=Hand Tools";
+                              navigate("/electrician/tools?category=Hand Tools");
                             }}
                             className="touch-target mobile-interactive bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
                           >

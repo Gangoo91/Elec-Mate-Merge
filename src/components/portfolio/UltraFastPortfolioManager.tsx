@@ -194,10 +194,7 @@ const PortfolioManager = () => {
         </Button>
         <PortfolioExportDialog entries={entries} />
         <Button 
-          onClick={() => {
-            refresh();
-            window.location.reload();
-          }}
+          onClick={refresh}
           variant="outline"
           className="flex items-center gap-1.5 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10 text-sm"
           size="sm"
