@@ -14,6 +14,7 @@ import { useToolCategories } from "@/hooks/useToolCategories";
 import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { queryClient } from "@/lib/queryClient";
 
 const ElectricalTools = () => {
   const navigate = useNavigate();
@@ -39,8 +40,9 @@ const ElectricalTools = () => {
         description: "Tools data has been updated successfully",
       });
 
-      // Reload the page to show fresh data
-      window.location.reload();
+      // Invalidate queries to refresh data without page reload
+      await queryClient.invalidateQueries({ queryKey: ['toolCategories'] });
+      await queryClient.invalidateQueries({ queryKey: ['toolsData'] });
     } catch (error) {
       console.error('Error refreshing tools:', error);
       toast({
