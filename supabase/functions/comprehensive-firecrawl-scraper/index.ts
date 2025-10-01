@@ -1,7 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@1.29.3';
+import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@4.3.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -126,9 +126,11 @@ const getSupplierFromUrl = (url: string): string => {
 
 const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string, timeout: number = 20000) => {
   const supplier = getSupplierFromUrl(url);
-  console.log(`📡 Scraping: ${category} from ${supplier}`);
+  console.log(`📡 Scraping: ${category} from ${supplier} - URL: ${url}`);
   
   try {
+    console.log(`🔑 Attempting scrape with Firecrawl v4 API...`);
+    
     const crawlResponse = await firecrawl.scrape(url, {
       formats: ['extract'],
       extract: {
@@ -149,6 +151,8 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
       waitFor: 1500
     });
 
+    console.log(`📊 Scrape response for ${category}:`, JSON.stringify(crawlResponse, null, 2));
+
     if (crawlResponse.success && (crawlResponse as any).data?.extract) {
       const extractedData = (crawlResponse as any).data.extract;
       
@@ -167,14 +171,19 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
         
         console.log(`✅ ${category}: ${products.length} products from ${supplier}`);
         return products;
+      } else {
+        console.warn(`⚠️ ${category}: No products array in extracted data`);
       }
+    } else {
+      console.warn(`⚠️ ${category}: Scrape unsuccessful or no data. Response:`, crawlResponse);
     }
     
     console.warn(`⚠️ ${category}: No products found`);
     return [];
     
   } catch (error) {
-    console.error(`❌ ${category} failed:`, error.message);
+    console.error(`❌ ${category} failed:`, error);
+    console.error(`❌ Error details:`, error.message, error.stack);
     return [];
   }
 };
@@ -192,16 +201,23 @@ serve(async (req) => {
       batch: null 
     }));
     
+    console.log('🔑 Checking for FIRECRAWL_API_KEY...');
     const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
     if (!firecrawlApiKey) {
-      throw new Error('FIRECRAWL_API_KEY missing');
+      console.error('❌ FIRECRAWL_API_KEY is missing!');
+      throw new Error('FIRECRAWL_API_KEY missing - please add it in Supabase Edge Function Secrets');
     }
+    console.log('✅ FIRECRAWL_API_KEY found');
 
+    console.log('🔧 Initializing Firecrawl client...');
     const firecrawl = new FirecrawlApp({ apiKey: firecrawlApiKey });
+    console.log('✅ Firecrawl client initialized');
 
+    console.log('🔧 Initializing Supabase client...');
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
+    console.log('✅ Supabase client initialized');
 
     // Determine which categories to scrape
     let categoriesToScrape = Object.entries(TOOL_CATEGORIES);
