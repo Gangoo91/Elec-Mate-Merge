@@ -6,22 +6,17 @@ import {
   Wrench, 
   Search,
   ArrowLeft,
-  Loader2,
-  RefreshCw
+  Loader2
 } from "lucide-react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
 import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 
 const ElectricalTools = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const { categories: toolCategories, isLoading, refetch } = useToolCategories();
-  const { toast } = useToast();
+  const { categories: toolCategories, isLoading } = useToolCategories();
   
   const selectedCategory = searchParams.get('category');
   
@@ -35,53 +30,6 @@ const ElectricalTools = () => {
     category.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleToolsRefresh = async () => {
-    setIsRefreshing(true);
-    try {
-      toast({
-        title: "Refreshing Tools",
-        description: "Fetching latest data from suppliers...",
-        duration: 3000,
-      });
-
-      // Trigger the tools weekly refresh which has proper error handling
-      const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
-        body: { forceRefresh: true }
-      });
-      
-      if (error) {
-        console.error('❌ Tools refresh error:', error);
-        toast({
-          title: "Refresh Failed",
-          description: "Could not refresh tools data. Please try again.",
-          variant: "destructive",
-          duration: 5000,
-        });
-      } else {
-        console.log('✅ Tools refreshed:', data);
-        
-        // Call refetch to update local state with fresh data
-        refetch();
-        
-        toast({
-          title: "Tools Updated",
-          description: data?.message || "Successfully refreshed tools data from all suppliers!",
-          duration: 4000,
-        });
-      }
-    } catch (error) {
-      console.error('❌ Tools refresh error:', error);
-      toast({
-        title: "Refresh Failed",
-        description: "An error occurred while refreshing.",
-        variant: "destructive",
-        duration: 5000,
-      });
-    } finally {
-      setIsRefreshing(false);
-    }
-  };
-
   return (
     <div className="space-y-6 animate-fade-in p-0">
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -89,26 +37,11 @@ const ElectricalTools = () => {
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Tools</h1>
           <p className="text-muted-foreground text-sm md:text-base">Browse electrical tools for your projects</p>
         </div>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Button 
-            variant="outline" 
-            onClick={handleToolsRefresh}
-            disabled={isRefreshing}
-            className="flex items-center gap-2"
-          >
-            {isRefreshing ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <RefreshCw className="h-4 w-4" />
-            )}
-            {isRefreshing ? "Updating..." : "Update Tools Data"}
+        <Link to="/electrician/business">
+          <Button variant="outline" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Business Hub
           </Button>
-          <Link to="/electrician/business">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Back to Business Hub
-            </Button>
-          </Link>
-        </div>
+        </Link>
       </header>
 
       <div className="relative max-w-md">
