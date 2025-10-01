@@ -197,7 +197,7 @@ const EnhancedMaterialsGrid = ({
 
           {/* Sort Options */}
           <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-            <SelectTrigger className="w-48 border-elec-yellow/20 text-elec-light">
+            <SelectTrigger className="w-48 h-[42px] rounded-md border-elec-yellow/20 text-elec-light">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="z-50 border-elec-yellow/20 shadow-lg">
