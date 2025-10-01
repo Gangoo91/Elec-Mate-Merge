@@ -167,11 +167,7 @@ const FlashcardSession = ({ setTitle, cards, onExit }: FlashcardSessionProps) =>
           </Button>
           <Button 
             variant="outline" 
-            onClick={() => {
-              setCurrentCardIndex(0);
-              setShowAnswer(false);
-              setSessionStats({ correct: 0, incorrect: 0, skipped: 0 });
-            }}
+            onClick={() => window.location.reload()}
             className="border-elec-yellow/30"
           >
             <RotateCcw className="mr-2 h-4 w-4" />

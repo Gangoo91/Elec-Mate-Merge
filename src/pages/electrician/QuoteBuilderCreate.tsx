@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -33,13 +33,19 @@ const QuoteBuilderCreate = () => {
         <div className="relative px-4 py-6 space-y-4">
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/electrician/business" className="hover:text-foreground transition-colors">
+            <button 
+              onClick={() => navigate('/electrician/business')} 
+              className="hover:text-foreground transition-colors"
+            >
               Business Hub
-            </Link>
+            </button>
             <span>/</span>
-            <Link to="/electrician/quote-builder" className="hover:text-foreground transition-colors">
+            <button 
+              onClick={() => navigate('/electrician/quote-builder')} 
+              className="hover:text-foreground transition-colors"
+            >
               Quote Builder
-            </Link>
+            </button>
             <span>/</span>
             <span>Create Quote</span>
           </nav>
@@ -54,15 +60,14 @@ const QuoteBuilderCreate = () => {
                 Follow our guided process to create professional electrical quotes
               </p>
             </div>
-            <Link to="/electrician/quote-builder">
-              <Button 
-                variant="secondary" 
-                size="lg" 
-                className="w-full sm:w-auto shadow-lg"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quote Builder
-              </Button>
-            </Link>
+            <Button 
+              onClick={() => navigate('/electrician/quote-builder')}
+              variant="secondary" 
+              size="lg" 
+              className="w-full sm:w-auto shadow-lg"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quote Builder
+            </Button>
           </div>
         </div>
       </header>

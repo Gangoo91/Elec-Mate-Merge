@@ -66,52 +66,18 @@ serve(async (req) => {
 
     console.log('🔄 Cache expired or missing, triggering refresh...');
 
-    // Call the comprehensive firecrawl scraper with timeout
-    console.log('🔄 Invoking comprehensive-firecrawl-scraper with timeout...');
-    
-    const scraperPromise = supabase.functions.invoke(
+    // Call the comprehensive firecrawl scraper to get fresh electrical tools data
+    console.log('🔄 Invoking comprehensive-firecrawl-scraper...');
+    const { data: refreshResult, error: refreshError } = await supabase.functions.invoke(
       'comprehensive-firecrawl-scraper',
       { body: { forceRefresh } }
     );
-
-    // Set a 25-second timeout for the scraper call
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Scraper timeout after 25 seconds')), 25000);
-    });
-
-    let refreshResult, refreshError;
-    
-    try {
-      const result = await Promise.race([scraperPromise, timeoutPromise]);
-      refreshResult = (result as any).data;
-      refreshError = (result as any).error;
-    } catch (timeoutError) {
-      console.warn('⏱️ Scraper timed out, using cached data');
-      refreshError = timeoutError;
-    }
     
     console.log('📊 Scraper result:', refreshResult);
     console.log('⚠️ Scraper error:', refreshError);
 
     if (refreshError) {
-      console.error('❌ Error calling comprehensive-firecrawl-scraper:', refreshError);
-      
-      // If we have existing cache, return it instead of failing
-      if (existingCache && existingCache.tools_data) {
-        console.log('✅ Using existing cached data due to scraper error');
-        return new Response(
-          JSON.stringify({ 
-            success: true, 
-            message: 'Using cached data - refresh failed but existing data is available',
-            tools: existingCache.tools_data,
-            totalFound: existingCache.tools_data.length,
-            cached: true,
-            cacheAge: Math.floor((now.getTime() - new Date(existingCache.created_at).getTime()) / 1000 / 60 / 60) + ' hours'
-          }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-      
+      console.error('❌ Error calling comprehensive-materials-scraper:', refreshError);
       throw refreshError;
     }
 

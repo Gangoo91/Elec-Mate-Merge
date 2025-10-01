@@ -8,7 +8,7 @@ import { useQualifications } from "@/hooks/qualification/useQualifications";
 
 const CityGuildsCourses = () => {
   const isMobile = useIsMobile();
-  const { awardingBodies, loading, error, refreshData } = useQualifications();
+  const { awardingBodies, loading, error } = useQualifications();
   
   // Get City & Guilds courses from the awarding bodies data
   const cityGuildsCourses = awardingBodies?.['City & Guilds'] || [];
@@ -43,7 +43,7 @@ const CityGuildsCourses = () => {
       ) : error ? (
         <div className="text-center py-12">
           <p className="text-destructive mb-4">Error loading courses: {error}</p>
-          <Button variant="outline" onClick={refreshData}>
+          <Button variant="outline" onClick={() => window.location.reload()}>
             Try Again
           </Button>
         </div>

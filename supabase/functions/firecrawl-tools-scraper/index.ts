@@ -84,11 +84,12 @@ async function fetchElectricalTools() {
       url: "https://www.screwfix.com/search?search=testers%2C+hand+tools+and+power+tools&page_size=100",
       onlyMainContent: true,
       maxAge: 0,
-      timeout: 45000,
+      parsers: [],
       formats: [
         {
           type: "json",
           schema: productSchema,
+          timeout: 45000,
           prompt: `Extract all tool products visible on this page. For each product, include:  
                       - Full product names, including model numbers  
                       - Brand names (prioritize: Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK for hand tools)  

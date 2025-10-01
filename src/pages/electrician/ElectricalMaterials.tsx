@@ -22,7 +22,7 @@ import {
   Wrench,
   RefreshCw
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useMaterialsData } from "@/hooks/useMaterialsData";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const ElectricalMaterials = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
   const [isForceUpdating, setIsForceUpdating] = useState(false);
@@ -280,42 +281,40 @@ const ElectricalMaterials = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {filteredMaterials.map((material) => (
-          <Link 
+          <Card 
             key={material.id}
-            to={material.path}
-            className="block"
+            className="border-elec-yellow/20 bg-elec-gray cursor-pointer hover:border-elec-yellow/50 transition-colors"
+            onClick={() => navigate(material.path)}
           >
-            <Card className="border-elec-yellow/20 bg-elec-gray cursor-pointer hover:border-elec-yellow/50 transition-colors h-full">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center justify-center gap-3 text-lg text-center">
-                  {material.icon}
-                  {material.title}
-                </CardTitle>
-                <CardDescription className="text-sm">
-                  {material.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-xs text-elec-yellow/80 flex items-center justify-center gap-2 font-medium">
-                  {isLoadingCounts ? (
-                    <>
-                      <Loader2 className="h-3 w-3 animate-spin" />
-                      Loading...
-                    </>
-                  ) : material.productCount > 0 ? (
-                    <>
-                      <Package className="h-3 w-3" />
-                      {material.productCount} products available
-                    </>
-                  ) : (
-                    <span className="text-muted-foreground italic">
-                      Data being collected
-                    </span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center justify-center gap-3 text-lg text-center">
+                {material.icon}
+                {material.title}
+              </CardTitle>
+              <CardDescription className="text-sm">
+                {material.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-xs text-elec-yellow/80 flex items-center justify-center gap-2 font-medium">
+                {isLoadingCounts ? (
+                  <>
+                    <Loader2 className="h-3 w-3 animate-spin" />
+                    Loading...
+                  </>
+                ) : material.productCount > 0 ? (
+                  <>
+                    <Package className="h-3 w-3" />
+                    {material.productCount} products available
+                  </>
+                ) : (
+                  <span className="text-muted-foreground italic">
+                    Data being collected
+                  </span>
+                )}
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
 

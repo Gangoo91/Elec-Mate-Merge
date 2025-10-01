@@ -1,6 +1,5 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,6 @@ interface MaterialSearchProps {
 }
 
 const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
-  const navigate = useNavigate();
   const initialSupplier = (supplierSlug?.toLowerCase() as SupplierSlug) || "electricaldirect";
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSupplier, setSelectedSupplier] = useState<SupplierSlug>(initialSupplier);
@@ -100,7 +98,7 @@ const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
         <Button 
           className="flex-1" 
           variant="outline"
-          onClick={() => navigate(`/materials/compare?q=${encodeURIComponent(searchQuery)}`)}
+          onClick={() => window.location.href = `/materials/compare?q=${encodeURIComponent(searchQuery)}`}
           disabled={!searchQuery.trim()}
         >
           Compare Prices

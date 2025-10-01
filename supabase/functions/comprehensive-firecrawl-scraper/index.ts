@@ -83,15 +83,7 @@ const productSchema = {
           supplier: { 
             type: "string", 
             description: "Always set this based on the website domain: 'Screwfix' for screwfix.com, 'Toolstation' for toolstation.com" 
-          },
-          category: {
-            type: "string",
-            description: "Product category (e.g., Drills, Screwdrivers, Power Tools)",
-          },
-          brand: {
-            type: "string",
-            description: "Brand/manufacturer name (e.g., Makita, DeWalt, Bosch, Hilti, Bahco, Wiha, Wera)",
-          },
+          }
         },
         required: ["name", "price"]
       }
@@ -142,42 +134,27 @@ const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: s
         extract: {
           schema: productSchema as any,
           prompt: `You are extracting product information from a ${supplier} search results page. 
-            
-            WHAT TO LOOK FOR:
-              - Full product names, including model numbers  
-              - Brand names (prioritize: Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK)  
-              - Exact prices in GBP  
-              - Product codes or SKUs  
-              - Stock availability (in stock or not)  
-              - Product categories and specific types (e.g. Hand Tools, Power Tools, Test Equipment, PPE, Safety Tools, Access Tools & Equipment, Tool Storage, Specialist Tools)  
-              - Voltage ratings for power tools (e.g., 18V, 240V)  
-              - Key features or highlights if available  
-              - Direct URLs to product pages  
-              - Product images  
-    
-            ELECTRICAL TOOLS INCLUDE:
-              - Wire strippers, crimpers, electrical pliers
-              - Multimeters, voltage testers, electrical testing equipment  
-              - Electrical drills, SDS drills, SDS, impact drivers
-              - Cable strippers, fish tapes, conduit benders
-              - Electrical safety equipment, insulated tools
-              - Electrical screwdrivers, nut drivers
-              - Cable management tools and accessories
 
-            TOOLS
-              - Hand Tools → screwdrivers, pliers, spanners, electrical work
-              - Power Tools → electric, cordless, drilling, cutting, installation
-              - Test Equipment → testing, measurement, electrical safety, compliance
-              - PPE → personal protective equipment, safe working practices
-              - Safety Tools → hazard identification, protection, safety equipment
-              - Access Tools & Equipment → ladders, scaffolding, access, working at height
-              - Tool Storage → tool bags, boxes, storage solutions, organisation
-              - Specialist Tools → specialist electrical tools, installation tasks
-            
-            Extract every product visible on the page, capturing all the details above. 
-            Set the supplier field to "${supplier}" for all products.
-            
-            If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".`
+WHAT TO LOOK FOR:
+- Product cards, tiles, or listings
+- Product names/titles (often in headings or link text)
+- Prices (look for £ symbol, "Price:", cost displays)
+- Any electrical tools, equipment, or supplies
+
+ELECTRICAL TOOLS INCLUDE:
+- Wire strippers, crimpers, electrical pliers
+- Multimeters, voltage testers, electrical testing equipment  
+- Electrical drills, SDS drills, impact drivers
+- Cable strippers, fish tapes, conduit benders
+- Electrical safety equipment, insulated tools
+- Electrical screwdrivers, nut drivers
+- Cable management tools and accessories
+
+EXTRACT ALL PRODUCTS YOU FIND, even if not strictly electrical tools. 
+Set the supplier field to "${supplier}" for all products.
+If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".
+
+Focus on quantity over perfect accuracy - we want to see what products are available.`
         },
         timeout: 30000
       });
@@ -282,68 +259,18 @@ serve(async (req) => {
 
     console.log(`🎉 Scraping completed! Total products found: ${totalProductsFound}`);
 
-    // If no tools found, return fallback sample data instead of failing
+    // Treat 0 tools found as a failure since this indicates scraping issues
     if (totalProductsFound === 0) {
-      console.warn('⚠️ No tools found during scraping - using fallback sample data');
-      const fallbackTools = [
-        {
-          name: "Fluke T6-1000 Electrical Tester",
-          price: "£179.99",
-          category: "Test Equipment",
-          supplier: "Screwfix",
-          availability: "Check Availability",
-          image: "/placeholder.svg",
-          description: "Non-contact voltage tester with FieldSense technology",
-          lastUpdated: new Date().toISOString()
-        },
-        {
-          name: "Stanley FatMax Tool Bag 18\"",
-          price: "£24.98",
-          category: "Electrical Hand Tools",
-          supplier: "Toolstation",
-          availability: "Check Availability",
-          image: "/placeholder.svg",
-          description: "Durable tool bag with multiple pockets",
-          lastUpdated: new Date().toISOString()
-        },
-        {
-          name: "DeWalt DCD796 Combi Drill 18V",
-          price: "£169.99",
-          category: "Power Tools",
-          supplier: "Screwfix",
-          availability: "Check Availability",
-          image: "/placeholder.svg",
-          description: "Brushless combi drill with high performance",
-          lastUpdated: new Date().toISOString()
-        }
-      ];
-      
-      // Store fallback data with a note
-      const expiresAt = new Date();
-      expiresAt.setHours(expiresAt.getHours() + 1); // Short expiry for fallback data
-      
-      const { error: storeError } = await supabase
-        .from('tools_weekly_cache')
-        .insert({
-          tools_data: fallbackTools,
-          total_products: fallbackTools.length,
-          category: 'fallback_data',
-          expires_at: expiresAt.toISOString(),
-          update_status: 'completed_with_fallback'
-        });
-        
-      if (storeError) {
-        console.error('❌ Error storing fallback data:', storeError);
-      }
-      
+      console.error('❌ No tools found during scraping - this indicates a scraping failure');
       return new Response(JSON.stringify({
-        success: true,
-        tools: fallbackTools,
-        totalFound: fallbackTools.length,
-        categoriesScraped: [],
-        message: 'Using fallback sample data - scraping may be temporarily unavailable',
-        isFallback: true
+        success: false,
+        error: 'No tools found during scraping. This may be due to website structure changes, anti-bot protection, or network issues.',
+        categoriesScraped: categoriesToScrape.length,
+        totalProducts: 0,
+        details: 'All supplier websites returned 0 products',
+        tools: []
       }), {
+        status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }

@@ -33,13 +33,11 @@ const SupportSection = () => {
       description: "Checking your current subscription status...",
     });
     
-    // Check subscription status - this will update the context
+    // First check subscription status
     await checkSubscriptionStatus();
     
-    toast({
-      title: "Status Refreshed",
-      description: "Your subscription status has been updated.",
-    });
+    // Then refresh the page after a short delay
+    setTimeout(() => window.location.reload(), 1000);
   };
 
   const handleOpenInNewWindow = () => {
