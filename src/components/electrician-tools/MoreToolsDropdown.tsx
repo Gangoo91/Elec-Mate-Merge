@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { MoreHorizontal, Scale, Calculator, TrendingUp, Brain, ChevronDown } from "lucide-react";
+import { MoreVertical, Scale, Calculator, TrendingUp, Brain, ChevronDown, ChevronUp } from "lucide-react";
 
 interface MoreToolsDropdownProps {
   onTabChange: (tab: string) => void;
@@ -16,26 +16,26 @@ const MoreToolsDropdown = ({ onTabChange, selectedItemsCount }: MoreToolsDropdow
     {
       id: "compare",
       title: "Compare Tools",
-      description: "Compare up to 3 tools side by side",
+      description: "Side-by-side comparison",
       icon: Scale,
       badge: selectedItemsCount > 0 ? selectedItemsCount.toString() : undefined
     },
     {
       id: "bulk",
       title: "Bulk Pricing",
-      description: "Calculate bulk purchase pricing",
+      description: "Calculate bulk discounts",
       icon: Calculator
     },
     {
       id: "alerts",
       title: "Price Alerts",
-      description: "Set up price drop notifications",
+      description: "Track price changes",
       icon: TrendingUp
     },
     {
       id: "ai",
       title: "AI Insights",
-      description: "Get AI-powered tool recommendations",
+      description: "Smart recommendations",
       icon: Brain
     }
   ];
@@ -52,45 +52,51 @@ const MoreToolsDropdown = ({ onTabChange, selectedItemsCount }: MoreToolsDropdow
           <Button
             variant="outline"
             size="sm"
-            className="bg-elec-card/50 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10 relative"
+            className="h-[42px] px-4 bg-elec-card/50 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 relative rounded-md"
           >
-            <MoreHorizontal className="h-4 w-4 mr-2" />
-            More Tools
+            <MoreVertical className="h-4 w-4 mr-2" />
+            <span className="font-medium">More Tools</span>
             {selectedItemsCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-elec-yellow text-elec-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute -top-1.5 -right-1.5 bg-elec-yellow text-elec-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {selectedItemsCount}
               </span>
             )}
-            <ChevronDown className={`h-4 w-4 ml-2 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+            {isOpen ? (
+              <ChevronUp className="h-4 w-4 ml-2" />
+            ) : (
+              <ChevronDown className="h-4 w-4 ml-2" />
+            )}
           </Button>
         </CollapsibleTrigger>
 
-        <CollapsibleContent className="fixed top-auto left-4 right-4 md:left-auto md:right-4 md:w-80 z-[9999] mt-2 max-h-[80vh] overflow-auto">
-          <Card className="bg-elec-card/95 border-elec-yellow/20 shadow-xl backdrop-blur-md">
-            <CardContent className="p-0">
-              <div className="divide-y divide-elec-yellow/10">
+        <CollapsibleContent className="absolute top-full right-0 z-[9999] mt-2 w-80">
+          <Card className="bg-elec-card/95 backdrop-blur-md border-2 border-elec-yellow/40 shadow-2xl shadow-elec-yellow/10">
+            <CardContent className="p-2">
+              <div className="space-y-1">
                 {tools.map((tool) => {
                   const IconComponent = tool.icon;
                   return (
                     <button
                       key={tool.id}
                       onClick={() => handleToolClick(tool.id)}
-                      className="w-full text-left p-4 hover:bg-elec-yellow/10 transition-colors duration-150 first:rounded-t-lg last:rounded-b-lg"
+                      className="w-full text-left px-4 py-3.5 hover:bg-elec-yellow/10 transition-all duration-200 rounded-md group"
                     >
-                      <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 mt-0.5">
-                          <IconComponent className="h-5 w-5 text-elec-yellow" />
+                      <div className="flex items-center gap-4">
+                        <div className="flex-shrink-0">
+                          <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center group-hover:bg-elec-yellow/20 transition-colors">
+                            <IconComponent className="h-5 w-5 text-elec-yellow" />
+                          </div>
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <h4 className="font-medium text-elec-light">{tool.title}</h4>
+                            <h4 className="font-semibold text-white">{tool.title}</h4>
                             {tool.badge && (
-                              <span className="bg-elec-yellow text-elec-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                              <span className="bg-elec-yellow text-elec-dark text-xs font-bold rounded-full h-5 min-w-[20px] px-1.5 flex items-center justify-center">
                                 {tool.badge}
                               </span>
                             )}
                           </div>
-                          <p className="text-sm text-text-muted mt-1">{tool.description}</p>
+                          <p className="text-sm text-white/60 mt-0.5">{tool.description}</p>
                         </div>
                       </div>
                     </button>
