@@ -6,19 +6,52 @@ import {
   Wrench, 
   Search,
   ArrowLeft,
-  Loader2
+  Loader2,
+  RefreshCw
 } from "lucide-react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
 import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const ElectricalTools = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const { categories: toolCategories, isLoading } = useToolCategories();
+  const { toast } = useToast();
   
   const selectedCategory = searchParams.get('category');
+
+  const handleRefreshTools = async () => {
+    setIsRefreshing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
+        body: { forceRefresh: true }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Tools data has been updated successfully",
+      });
+
+      // Reload the page to show fresh data
+      window.location.reload();
+    } catch (error) {
+      console.error('Error refreshing tools:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update tools data. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
   
   // If a category is selected, show the enhanced category display
   if (selectedCategory) {
@@ -37,11 +70,22 @@ const ElectricalTools = () => {
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Tools</h1>
           <p className="text-muted-foreground text-sm md:text-base">Browse electrical tools for your projects</p>
         </div>
-        <Link to="/electrician/business">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Business Hub
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            onClick={handleRefreshTools}
+            disabled={isRefreshing}
+            className="flex items-center gap-2"
+          >
+            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+            {isRefreshing ? 'Updating...' : 'Update Tools Data'}
           </Button>
-        </Link>
+          <Link to="/electrician/business">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" /> Back to Business Hub
+            </Button>
+          </Link>
+        </div>
       </header>
 
       <div className="relative max-w-md">
