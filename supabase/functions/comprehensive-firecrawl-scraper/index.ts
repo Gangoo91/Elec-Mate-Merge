@@ -12,56 +12,37 @@ const corsHeaders = {
 const TOOL_CATEGORIES = {
   'Electrical Hand Tools': {
     urls: [
-      'https://www.screwfix.com/search?search=screwdrivers+pliers+spanners+electrical+work&page_size=50',
-      'https://www.toolstation.com/search?q=screwdrivers+pliers+spanners+electrical+work'
+      'https://www.screwfix.com/search?search=wire+strippers+crimpers+electrical&page_size=50',
+      'https://www.screwfix.com/search?search=electrical+pliers+side+cutters&page_size=50',
+      'https://www.toolstation.com/search?q=electrical+hand+tools+wire+strippers'
     ]
   },
   'Test Equipment': {
     urls: [
-      'https://www.screwfix.com/search?search=testing+measurement+electrical safety+compliance&page_size=50',
-      'https://www.toolstation.com/search?q=testing+measurement+electrical safety+compliance'
-    ]
-  },
-  'PPE': {
-    urls: [
-      'https://www.screwfix.com/search?search=personal protective equipment+safe working practices&page_size=50',
-      'https://www.toolstation.com/search?q=personal protective equipment+safe working practices'
+      'https://www.screwfix.com/search?search=multimeter+voltage+tester+electrical&page_size=50',
+      'https://www.screwfix.com/search?search=electrical+testing+equipment&page_size=50',
+      'https://www.toolstation.com/search?q=multimeter+voltage+tester+electrical'
     ]
   },
   'Power Tools': {
     urls: [
-      'https://www.screwfix.com/search?search=electric+cordless+drilling+cutting+installation&page_size=50',
-      'https://www.toolstation.com/search?q=electric+cordless+drilling+cutting+installation'
+      'https://www.screwfix.com/search?search=electrical+drill+sds+hammer&page_size=50',
+      'https://www.screwfix.com/search?search=angle+grinder+reciprocating+saw&page_size=50',
+      'https://www.toolstation.com/search?q=electrical+power+tools+drill'
     ]
   },
   'Cable Installation': {
     urls: [
       'https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50',
+      'https://www.screwfix.com/search?search=conduit+bender+cable+pulling&page_size=50',
       'https://www.toolstation.com/search?q=cable+management+electrical+tools'
     ]
   },
   'Electrical Safety': {
     urls: [
-      'https://www.screwfix.com/search?search=hazard identification+protection+safety equipment&page_size=50',
-      'https://www.toolstation.com/search?q=hazard identification+protection+safety equipment'
-    ]
-  },
-  'Access Tools': {
-    urls: [
-      'https://www.screwfix.com/search?search=Equipment+ladders+scaffolding+access+working at height&page_size=50',
-      'https://www.toolstation.com/search?q=Equipment+ladders+scaffolding+access+working at height'
-    ]
-  },
-  'Tool Storage': {
-    urls: [
-      'https://www.screwfix.com/search?search=tool bags+boxes+storage solutions+organisation&page_size=50',
-      'https://www.toolstation.com/search?q=tool bags+boxes+storage solutions+organisation'
-    ]
-  },
-  'Specialist Tools': {
-    urls: [
-      'https://www.screwfix.com/search?search=specialist electrical tools+installation tasks&page_size=50',
-      'https://www.toolstation.com/search?q=specialist electrical tools+installation tasks'
+      'https://www.screwfix.com/search?search=electrical+safety+equipment+gloves&page_size=50',
+      'https://www.screwfix.com/search?search=lockout+tagout+electrical+safety&page_size=50',
+      'https://www.toolstation.com/search?q=electrical+safety+equipment'
     ]
   }
 };
@@ -132,57 +113,33 @@ const getSupplierFromUrl = (url: string): string => {
   return 'Unknown';
 };
 
-// Retry helper with different strategies
-const retryWithBackoff = async <T>(
-  fn: () => Promise<T>,
-  maxRetries: number = 2,
-  baseDelay: number = 1000
-): Promise<T> => {
-  let lastError: Error | null = null;
+const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: string[]) => {
+  console.log(`🔍 Scraping category: ${category}`);
+  const allProducts = [];
   
-  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+  for (const url of urls) {
     try {
-      return await fn();
-    } catch (error) {
-      lastError = error as Error;
+      console.log(`📡 Scraping URL: ${url}`);
+      const supplier = getSupplierFromUrl(url);
       
-      if (attempt < maxRetries) {
-        const delay = baseDelay * Math.pow(2, attempt); // Exponential backoff
-        console.log(`⏳ Retry attempt ${attempt + 1}/${maxRetries} after ${delay}ms...`);
-        await new Promise(resolve => setTimeout(resolve, delay));
-      }
-    }
-  }
-  
-  throw lastError;
-};
-
-const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string) => {
-  const supplier = getSupplierFromUrl(url);
-  console.log(`📡 Scraping URL: ${url}`);
-  
-  try {
-    // Test basic page access with retry and reduced timeout
-    const basicTest = await retryWithBackoff(
-      () => firecrawl.scrapeUrl(url, {
+      // First try to get basic content to verify the page loads
+      console.log(`🔍 Testing basic page access for ${url}...`);
+      const basicTest = await firecrawl.scrapeUrl(url, {
         formats: ['markdown'],
-        timeout: 8000 // Reduced from 15s to 8s
-      }),
-      2, // 2 retries
-      1000
-    );
-    
-    if (!basicTest.success) {
-      console.error(`❌ Basic page access failed for ${url}`);
-      return [];
-    }
-    
-    console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
-    
-    // Now attempt structured extraction with reduced timeout
-    const crawlResponse = await retryWithBackoff(
-      () => firecrawl.scrapeUrl(url, {
-        formats: [{
+        timeout: 15000
+      });
+      
+      if (!basicTest.success) {
+        console.error(`❌ Basic page access failed for ${url}:`, basicTest.error);
+        continue; // Skip this URL
+      }
+      
+      console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
+      
+      // Now attempt structured extraction with improved prompt
+      const crawlResponse = await firecrawl.scrapeUrl(url, {
+        formats: ['extract'],
+        extract: {
           schema: productSchema as any,
           prompt: `You are extracting product information from a ${supplier} search results page. 
             
@@ -221,75 +178,49 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
             Set the supplier field to "${supplier}" for all products.
             
             If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".`
-        }],
-        timeout: 12000 // Reduced from 30s to 12s
-      }),
-      2, // 2 retries
-      2000
-    );
+        },
+        timeout: 30000
+      });
 
-    if (crawlResponse.success && (crawlResponse as any).data?.extract) {
-      const extractedData = (crawlResponse as any).data.extract;
-      
-      if (extractedData.products && Array.isArray(extractedData.products)) {
-        const products = extractedData.products.map((product: any) => ({
-          ...product,
-          category,
-          supplier: supplier,
-          lastUpdated: new Date().toISOString(),
-          availability: product.availability || 'Check Availability',
-          image: product.image || '/placeholder.svg',
-          description: product.description || '',
-          features: product.features || [],
-          specifications: product.specifications || {}
-        }));
+      if (crawlResponse.success && (crawlResponse as any).data?.extract) {
+        const extractedData = (crawlResponse as any).data.extract;
+        console.log(`📋 Raw extraction result:`, JSON.stringify(extractedData, null, 2).substring(0, 500));
         
-        console.log(`✅ Successfully extracted ${products.length} products from ${supplier}`);
-        
-        if (products.length > 0) {
-          console.log(`📦 Sample product:`, JSON.stringify(products[0], null, 2));
+        if (extractedData.products && Array.isArray(extractedData.products)) {
+          const products = extractedData.products.map((product: any) => ({
+            ...product,
+            category,
+            supplier: supplier,
+            lastUpdated: new Date().toISOString(),
+            // Ensure we have required fields
+            availability: product.availability || 'Check Availability',
+            image: product.image || '/placeholder.svg',
+            description: product.description || '',
+            features: product.features || [],
+            specifications: product.specifications || {}
+          }));
+          
+          allProducts.push(...products);
+          console.log(`✅ Successfully extracted ${products.length} products from ${supplier}`);
+          
+          // Log a sample product for debugging
+          if (products.length > 0) {
+            console.log(`📦 Sample product:`, JSON.stringify(products[0], null, 2));
+          }
+        } else {
+          console.warn(`⚠️ No products array found in extraction result for ${url}`);
+          console.log(`🔍 Available keys in extraction:`, Object.keys(extractedData));
         }
         
-        return products;
+        // Rate limiting between requests
+        await new Promise(resolve => setTimeout(resolve, 3000));
       } else {
-        console.warn(`⚠️ No products array found in extraction result for ${url}`);
-        return [];
+        console.error(`❌ Extraction failed for ${url}:`, crawlResponse.error || 'Unknown error');
+        console.log(`🔍 Response structure:`, JSON.stringify(crawlResponse, null, 2).substring(0, 300));
       }
-    } else {
-      console.error(`❌ Extraction failed for ${url}`);
-      return [];
-    }
-  } catch (error) {
-    console.error(`❌ Error scraping ${url}:`, error);
-    return [];
-  }
-};
-
-const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: string[]) => {
-  console.log(`🔍 Scraping category: ${category}`);
-  
-  // Process URLs in parallel with controlled concurrency (max 3 at a time)
-  const maxConcurrency = 3;
-  const allProducts = [];
-  
-  for (let i = 0; i < urls.length; i += maxConcurrency) {
-    const batch = urls.slice(i, i + maxConcurrency);
-    console.log(`📦 Processing batch ${Math.floor(i / maxConcurrency) + 1}/${Math.ceil(urls.length / maxConcurrency)}`);
-    
-    const batchPromises = batch.map(url => scrapeUrl(firecrawl, url, category));
-    const batchResults = await Promise.allSettled(batchPromises);
-    
-    batchResults.forEach((result, index) => {
-      if (result.status === 'fulfilled') {
-        allProducts.push(...result.value);
-      } else {
-        console.error(`❌ Failed to scrape URL in batch:`, batch[index], result.reason);
-      }
-    });
-    
-    // Rate limiting between batches
-    if (i + maxConcurrency < urls.length) {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+    } catch (error) {
+      console.error(`❌ Error scraping ${url}:`, error);
+      // Continue with next URL even if one fails
     }
   }
   
@@ -354,7 +285,38 @@ serve(async (req) => {
     // If no tools found, return fallback sample data instead of failing
     if (totalProductsFound === 0) {
       console.warn('⚠️ No tools found during scraping - using fallback sample data');
-      const fallbackTools = [];
+      const fallbackTools = [
+        {
+          name: "Fluke T6-1000 Electrical Tester",
+          price: "£179.99",
+          category: "Test Equipment",
+          supplier: "Screwfix",
+          availability: "Check Availability",
+          image: "/placeholder.svg",
+          description: "Non-contact voltage tester with FieldSense technology",
+          lastUpdated: new Date().toISOString()
+        },
+        {
+          name: "Stanley FatMax Tool Bag 18\"",
+          price: "£24.98",
+          category: "Electrical Hand Tools",
+          supplier: "Toolstation",
+          availability: "Check Availability",
+          image: "/placeholder.svg",
+          description: "Durable tool bag with multiple pockets",
+          lastUpdated: new Date().toISOString()
+        },
+        {
+          name: "DeWalt DCD796 Combi Drill 18V",
+          price: "£169.99",
+          category: "Power Tools",
+          supplier: "Screwfix",
+          availability: "Check Availability",
+          image: "/placeholder.svg",
+          description: "Brushless combi drill with high performance",
+          lastUpdated: new Date().toISOString()
+        }
+      ];
       
       // Store fallback data with a note
       const expiresAt = new Date();
