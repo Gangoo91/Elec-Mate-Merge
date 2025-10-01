@@ -46,20 +46,8 @@ serve(async (req) => {
     }
 
     // Prepare payload for PDF Monkey
-    // Merge company profile data into the quote object for easier template access
     const payload = {
-      ...quote,
-      company: {
-        name: companyProfile?.company_name || 'Your Electrical Company',
-        address: companyProfile?.company_address || '',
-        postcode: companyProfile?.company_postcode || '',
-        phone: companyProfile?.company_phone || '',
-        email: companyProfile?.company_email || '',
-        website: companyProfile?.company_website || '',
-        registration: companyProfile?.company_registration || '',
-        vat_number: companyProfile?.vat_number || '',
-        logo_url: companyProfile?.logo_url || companyProfile?.logo_data_url || ''
-      },
+      quote,
       companyProfile
     };
 
