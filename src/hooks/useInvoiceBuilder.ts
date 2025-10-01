@@ -55,35 +55,103 @@ export const useInvoiceBuilder = (sourceQuote?: Quote) => {
       actualQuantity: item.quantity,
     };
 
-    setInvoice(prev => ({
-      ...prev,
-      additional_invoice_items: [...(prev.additional_invoice_items || []), newItem],
-    }));
+    setInvoice(prev => {
+      const updatedInvoice = {
+        ...prev,
+        additional_invoice_items: [...(prev.additional_invoice_items || []), newItem],
+      };
+      
+      // Recalculate totals with updated items
+      const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
+      const subtotal = allItems.reduce((sum, item) => sum + item.totalPrice, 0);
+      const settings = updatedInvoice.settings!;
+      const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
+      const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
+      const vatAmount = settings.vatRegistered 
+        ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
+        : 0;
+      const total = subtotal + overhead + profit + vatAmount;
 
-    recalculateTotals();
+      return {
+        ...updatedInvoice,
+        subtotal,
+        overhead,
+        profit,
+        vatAmount,
+        total,
+      };
+    });
   }, []);
 
   const updateInvoiceItem = useCallback((itemId: string, updates: Partial<InvoiceItem>) => {
-    setInvoice(prev => ({
-      ...prev,
-      items: prev.items?.map(item =>
-        item.id === itemId ? { ...item, ...updates } : item
-      ),
-      additional_invoice_items: prev.additional_invoice_items?.map(item =>
-        item.id === itemId ? { ...item, ...updates } : item
-      ),
-    }));
+    setInvoice(prev => {
+      const updatedInvoice = {
+        ...prev,
+        items: prev.items?.map(item =>
+          item.id === itemId ? { 
+            ...item, 
+            ...updates,
+            totalPrice: (updates.quantity ?? item.quantity) * (updates.unitPrice ?? item.unitPrice)
+          } : item
+        ),
+        additional_invoice_items: prev.additional_invoice_items?.map(item =>
+          item.id === itemId ? { 
+            ...item, 
+            ...updates,
+            totalPrice: (updates.quantity ?? item.quantity) * (updates.unitPrice ?? item.unitPrice)
+          } : item
+        ),
+      };
 
-    recalculateTotals();
+      // Recalculate totals with updated items
+      const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
+      const subtotal = allItems.reduce((sum, item) => sum + item.totalPrice, 0);
+      const settings = updatedInvoice.settings!;
+      const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
+      const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
+      const vatAmount = settings.vatRegistered 
+        ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
+        : 0;
+      const total = subtotal + overhead + profit + vatAmount;
+
+      return {
+        ...updatedInvoice,
+        subtotal,
+        overhead,
+        profit,
+        vatAmount,
+        total,
+      };
+    });
   }, []);
 
   const removeInvoiceItem = useCallback((itemId: string) => {
-    setInvoice(prev => ({
-      ...prev,
-      additional_invoice_items: prev.additional_invoice_items?.filter(item => item.id !== itemId),
-    }));
+    setInvoice(prev => {
+      const updatedInvoice = {
+        ...prev,
+        additional_invoice_items: prev.additional_invoice_items?.filter(item => item.id !== itemId),
+      };
 
-    recalculateTotals();
+      // Recalculate totals with updated items
+      const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
+      const subtotal = allItems.reduce((sum, item) => sum + item.totalPrice, 0);
+      const settings = updatedInvoice.settings!;
+      const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
+      const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
+      const vatAmount = settings.vatRegistered 
+        ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
+        : 0;
+      const total = subtotal + overhead + profit + vatAmount;
+
+      return {
+        ...updatedInvoice,
+        subtotal,
+        overhead,
+        profit,
+        vatAmount,
+        total,
+      };
+    });
   }, []);
 
   const updateInvoiceSettings = useCallback((settings: Partial<InvoiceSettings>) => {
