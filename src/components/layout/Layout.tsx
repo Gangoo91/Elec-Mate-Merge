@@ -32,7 +32,7 @@ const Layout = () => {
         <Header toggleSidebar={toggleSidebar} />
         
         <main 
-          className="flex-1 overflow-y-auto overflow-x-hidden mt-6 pt-6 p-3 sm:p-4 md:p-5 lg:p-6 xl:p-8"
+          className="flex-1 overflow-y-auto overflow-x-hidden mt-6 pt-6 px-[1.25rem] py-3 sm:py-4 md:py-5 lg:py-6 xl:py-8"
           style={{ paddingTop: 'var(--header-height, 64px)' }}
         >
           <div className={cn("mobile-container mobile-safe-area p-0 max-w-7xl min-w-0")}>
