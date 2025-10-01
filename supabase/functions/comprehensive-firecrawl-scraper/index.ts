@@ -93,30 +93,28 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
   console.log(`📡 Scraping: ${category} from ${supplier} - URL: ${url}`);
   
   try {
-    console.log(`🔑 Attempting scrape with Firecrawl v4 API...`);
+    console.log(`🔑 Using Firecrawl v4 extract API...`);
     
-    const crawlResponse = await firecrawl.scrape("https://firecrawl.dev", {
-      formats: [{
-        type: "json",
-        schema: productSchema,
-        prompt: `Extract ALL products from this ${supplier} search page for ${category}.
-          
-          Extract:
-          - Product name with model number
-          - Price in GBP (£)
-          - Brand (Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK, etc.)
-          - Availability status
-          - Product URL and image
-          
-          Set supplier to "${supplier}" for all products.
-          Extract EVERY product visible on the page - aim for 20-50 products.`
-      }],
+    // Firecrawl v4 uses the extract method for structured data
+    const extractResult = await firecrawl.extract(url, {
+      schema: productSchema,
+      prompt: `Extract ALL products from this ${supplier} search page for ${category}.
+        
+        Extract:
+        - Product name with model number
+        - Price in GBP (£)
+        - Brand (Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK, etc.)
+        - Availability status
+        - Product URL and image
+        
+        Set supplier to "${supplier}" for all products.
+        Extract EVERY product visible on the page - aim for 20-50 products.`
     });
 
-    console.log(`📊 Scrape response for ${category}:`, JSON.stringify(crawlResponse, null, 2));
+    console.log(`📊 Extract response for ${category}:`, JSON.stringify(extractResult, null, 2));
 
-    if (crawlResponse.success && (crawlResponse as any).data?.extract) {
-      const extractedData = (crawlResponse as any).data.extract;
+    if (extractResult.success && extractResult.data) {
+      const extractedData = extractResult.data;
       
       if (extractedData.products && Array.isArray(extractedData.products)) {
         const products = extractedData.products.map((product: any) => ({
@@ -135,9 +133,10 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
         return products;
       } else {
         console.warn(`⚠️ ${category}: No products array in extracted data`);
+        console.log(`📋 Available data keys:`, Object.keys(extractedData));
       }
     } else {
-      console.warn(`⚠️ ${category}: Scrape unsuccessful or no data. Response:`, crawlResponse);
+      console.warn(`⚠️ ${category}: Extract unsuccessful or no data. Response:`, extractResult);
     }
     
     console.warn(`⚠️ ${category}: No products found`);
@@ -145,7 +144,10 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
     
   } catch (error) {
     console.error(`❌ ${category} failed:`, error);
-    console.error(`❌ Error details:`, error.message, error.stack);
+    console.error(`❌ Error message:`, error.message);
+    if (error.stack) {
+      console.error(`❌ Error stack:`, error.stack);
+    }
     return [];
   }
 };
