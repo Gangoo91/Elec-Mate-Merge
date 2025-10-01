@@ -9,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { ExternalLink, Star, TrendingUp } from "lucide-react";
+import { ExternalLink, Star, TrendingUp, Check, CheckCircle } from "lucide-react";
 import { type ToolItem } from "@/hooks/useToolsData";
 
 interface CategoryToolsCarouselProps {
@@ -86,72 +86,90 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
       <Carousel className="w-full">
         <CarouselContent className="-ml-2 md:-ml-4">
           {top6Tools.map((tool, index) => (
-            <CarouselItem key={tool.id || index} className="pl-2 md:pl-4 basis-[220px] md:basis-[260px]">
-              <Card className="h-full mobile-card bg-elec-card/40 border-white/10 hover:border-elec-yellow/30 transition-all duration-300 group">
-                <CardContent className="p-3 h-full flex flex-col">
-                  {/* Image and badges */}
-                  <div className="relative mb-2">
-                    <div className="aspect-square rounded-lg overflow-hidden bg-white/5 flex items-center justify-center">
-                      <img
-                        src={tool.image || '/placeholder.svg'}
-                        alt={tool.name || 'Tool'}
-                        className="w-full h-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110"
-                        onError={(e) => {
-                          e.currentTarget.src = '/placeholder.svg';
-                        }}
-                      />
-                    </div>
-                    
-                    {/* Badges */}
-                    <div className="absolute top-2 left-2 flex flex-col gap-1">
-                      {tool.isOnSale && (
-                        <Badge variant="destructive" className="text-xs font-semibold">
-                          SALE
-                        </Badge>
-                      )}
-                      <Badge variant="secondary" className="text-xs">
-                        {tool.category || 'Tools'}
-                      </Badge>
-                    </div>
-                    
-                    {tool.stockStatus && (
-                      <Badge 
-                        variant={tool.stockStatus === 'In Stock' ? 'success' : 'destructive'} 
-                        className="absolute top-2 right-2 text-xs"
-                      >
-                        {tool.stockStatus}
+            <CarouselItem key={tool.id || index} className="pl-2 md:pl-4 basis-[280px] md:basis-[320px]">
+              <Card className="h-full bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden group">
+                {/* Image section */}
+                <div className="relative">
+                  <div className="h-48 overflow-hidden">
+                    <img
+                      src={tool.image || '/placeholder.svg'}
+                      alt={tool.name || 'Tool'}
+                      className="object-cover w-full h-full transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.src = '/placeholder.svg';
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Simple badges overlaid on image */}
+                  <div className="absolute top-2 left-2 right-2 flex items-start justify-between">
+                    <Badge className="bg-background/90 text-foreground border-border text-xs">
+                      {tool.category || 'Tools'}
+                    </Badge>
+                    {tool.isOnSale && (
+                      <Badge className="bg-destructive text-destructive-foreground text-xs font-bold">
+                        SALE
                       </Badge>
                     )}
                   </div>
+                </div>
 
-                  {/* Tool info */}
-                  <div className="flex-1 space-y-2">
-                    <h3 className="font-semibold text-elec-light text-xs leading-tight line-clamp-2">
-                      {tool.name || 'Unknown Tool'}
-                    </h3>
-                    
-                    <p className="text-xs text-text-muted line-clamp-1">
-                      {tool.supplier || 'Screwfix'}
-                    </p>
+                <CardContent className="p-4 flex-grow flex flex-col">
+                  {/* Supplier and rating section */}
+                  <div className="flex items-center justify-between text-sm mb-3">
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
+                      <span className="font-medium text-foreground">{tool.supplier || 'Screwfix'}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                      <span className="text-foreground">4.5</span>
+                    </div>
+                  </div>
 
-                    {/* Highlights */}
-                    {tool.highlights && tool.highlights.length > 0 && (
-                      <div className="flex items-center gap-1">
-                        <Star className="h-3 w-3 text-elec-yellow" />
-                        <span className="text-xs text-text-muted line-clamp-1">
-                          {tool.highlights[0]}
-                        </span>
+                  {/* Product title */}
+                  <h3 className="text-lg font-semibold line-clamp-2 mb-4 text-foreground">
+                    {tool.name || 'Unknown Tool'}
+                  </h3>
+
+                  {/* 2x2 Information grid */}
+                  <div className="grid grid-cols-2 gap-2 mb-4">
+                    <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
+                      <Star className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                      <div className="flex flex-col text-left">
+                        <span className="text-xs font-medium text-foreground text-left">Rating</span>
+                        <span className="text-xs text-muted-foreground text-left">4.5/5</span>
                       </div>
-                    )}
+                    </div>
+                    
+                    <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
+                      <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                      <div className="flex flex-col text-left">
+                        <span className="text-xs font-medium text-foreground text-left">Stock</span>
+                        <span className="text-xs text-muted-foreground text-left">{tool.stockStatus || 'In Stock'}</span>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Price section with separator */}
-                  <div className="space-y-2 pt-2 border-t border-white/10">
+                  {/* Features list */}
+                  {tool.highlights && tool.highlights.length > 0 && (
+                    <div className="space-y-1 mb-4">
+                      {tool.highlights.slice(0, 2).map((highlight, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Check className="h-3 w-3 text-green-400" />
+                          <span className="line-clamp-1">{highlight}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Price and stock section */}
+                  <div className="space-y-3 pt-2 border-t border-white/10 mt-auto">
                     <div className="flex items-center justify-between">
                       <div className="flex flex-col">
                         {tool.isOnSale && tool.salePrice ? (
                           <>
-                            <span className="text-base font-bold text-elec-yellow">
+                            <span className="text-lg font-bold text-elec-yellow">
                               {tool.salePrice}
                             </span>
                             <span className="text-xs text-muted-foreground line-through">
@@ -159,30 +177,27 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
                             </span>
                           </>
                         ) : (
-                          <span className="text-base font-bold text-elec-yellow">
+                          <span className="text-lg font-bold text-elec-yellow">
                             {tool.price}
                           </span>
                         )}
                         <span className="text-xs text-muted-foreground">inc. VAT</span>
                       </div>
+                      <Badge variant="success" className="text-xs">
+                        {tool.stockStatus || 'In Stock'}
+                      </Badge>
                     </div>
-                    
-                    {/* Action button */}
+                  </div>
+
+                  {/* Button section */}
+                  <div className="flex gap-2 mt-3">
                     <Button 
                       size="sm" 
-                      variant="gold"
-                      className="w-full touch-target mobile-interactive group-hover:scale-105 transition-transform duration-200"
-                      asChild
+                      onClick={() => window.open(getProductUrl(tool), '_blank')}
+                      className="flex-1 border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors"
                     >
-                      <a 
-                        href={getProductUrl(tool)} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2"
-                      >
-                        <span>Buy Now</span>
-                        <ExternalLink className="h-3 w-3" />
-                      </a>
+                      <ExternalLink className="w-3 h-3 mr-1" />
+                      View Product
                     </Button>
                   </div>
                 </CardContent>
