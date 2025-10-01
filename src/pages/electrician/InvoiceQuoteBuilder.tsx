@@ -1,0 +1,147 @@
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { supabase } from '@/integrations/supabase/client';
+import { Quote, QuoteClient, QuoteItem, QuoteSettings, QuoteTag } from '@/types/quote';
+import { Loader2 } from 'lucide-react';
+import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
+import { toast } from '@/hooks/use-toast';
+
+export default function InvoiceQuoteBuilder() {
+  const { quoteId } = useParams<{ quoteId: string }>();
+  const navigate = useNavigate();
+  const [quote, setQuote] = useState<Quote | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchQuote = async () => {
+      if (!quoteId) {
+        toast({
+          title: 'Error',
+          description: 'No quote ID provided',
+          variant: 'destructive',
+        });
+        navigate('/electrician/quotes');
+        return;
+      }
+
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          toast({
+            title: 'Authentication required',
+            description: 'Please sign in to continue',
+            variant: 'destructive',
+          });
+          navigate('/auth/signin');
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from('quotes')
+          .select('*')
+          .eq('id', quoteId)
+          .eq('user_id', user.id)
+          .single();
+
+        if (error) {
+          console.error('Error fetching quote:', error);
+          toast({
+            title: 'Error',
+            description: 'Failed to load quote',
+            variant: 'destructive',
+          });
+          navigate('/electrician/quotes');
+          return;
+        }
+
+        if (!data) {
+          toast({
+            title: 'Quote not found',
+            description: 'The requested quote could not be found',
+            variant: 'destructive',
+          });
+          navigate('/electrician/quotes');
+          return;
+        }
+
+        // Transform database row to Quote object
+        const quoteData: Quote = {
+          id: data.id,
+          quoteNumber: data.quote_number,
+          client: data.client_data as unknown as QuoteClient,
+          items: data.items as unknown as QuoteItem[],
+          settings: data.settings as unknown as QuoteSettings,
+          subtotal: parseFloat(String(data.subtotal)),
+          overhead: parseFloat(String(data.overhead)),
+          profit: parseFloat(String(data.profit)),
+          vatAmount: parseFloat(String(data.vat_amount)),
+          total: parseFloat(String(data.total)),
+          status: data.status as Quote['status'],
+          tags: (data.tags || []) as unknown as QuoteTag[],
+          createdAt: new Date(data.created_at),
+          updatedAt: new Date(data.updated_at),
+          expiryDate: new Date(data.expiry_date),
+          notes: data.notes,
+          acceptance_status: data.acceptance_status as Quote['acceptance_status'],
+          accepted_at: data.accepted_at ? new Date(data.accepted_at) : undefined,
+          public_token: data.public_token,
+        };
+
+        setQuote(quoteData);
+      } catch (error) {
+        console.error('Unexpected error:', error);
+        toast({
+          title: 'Error',
+          description: 'An unexpected error occurred',
+          variant: 'destructive',
+        });
+        navigate('/electrician/quotes');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchQuote();
+  }, [quoteId, navigate]);
+
+  const handleQuoteGenerated = () => {
+    toast({
+      title: 'Invoice created',
+      description: 'Your invoice has been generated successfully',
+      variant: 'success',
+    });
+    navigate('/electrician/quotes');
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <Helmet>
+        <title>Adjust Invoice Costs - Electrical Hub</title>
+        <meta name="description" content="Adjust costs and items before generating your invoice" />
+      </Helmet>
+      
+      <div className="container mx-auto px-4 py-6">
+        <div className="mb-6">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">Adjust Invoice Costs</h1>
+          <p className="text-muted-foreground">
+            Review and modify the quote items before generating the final invoice
+          </p>
+        </div>
+        
+        {quote && (
+          <InvoiceWizard sourceQuote={quote} />
+        )}
+      </div>
+    </>
+  );
+}

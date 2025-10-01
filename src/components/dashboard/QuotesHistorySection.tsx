@@ -25,11 +25,17 @@ import {
   Clock,
   Send,
   FileText,
-  Eye
+  Eye,
+  Receipt,
+  CheckCheck
 } from "lucide-react";
 import { Quote } from "@/types/quote";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import { InvoiceDecisionDialog } from "@/components/electrician/invoice-builder/InvoiceDecisionDialog";
+import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
+import { toast } from "sonner";
 
 interface QuotesHistorySectionProps {
   quotes: Quote[];
@@ -39,7 +45,12 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
+  const [showWorkCompleteDialog, setShowWorkCompleteDialog] = useState(false);
+  const [showInvoiceDecisionDialog, setShowInvoiceDecisionDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { markWorkComplete, saveInvoice } = useInvoiceStorage();
 
   const filteredQuotes = useMemo(() => {
     return quotes.filter((quote) => {
@@ -139,6 +150,89 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
   };
 
   const stats = getQuoteStats();
+
+  const handleMarkWorkComplete = async () => {
+    if (!selectedQuote) return;
+
+    setLoading(true);
+    try {
+      const success = await markWorkComplete(selectedQuote.id);
+      
+      if (success) {
+        toast.success('Work marked as complete');
+        setShowWorkCompleteDialog(false);
+        setSelectedQuote(null);
+      } else {
+        toast.error('Failed to mark work as complete');
+      }
+    } catch (error) {
+      console.error('Error marking work complete:', error);
+      toast.error('Failed to mark work as complete');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRaiseInvoiceNoChanges = async () => {
+    if (!selectedQuote) return;
+
+    setLoading(true);
+    try {
+      // Generate invoice directly from quote data
+      const invoiceData = {
+        ...selectedQuote,
+        originalQuoteId: selectedQuote.id,
+        invoice_raised: true,
+        invoice_number: `INV-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`,
+        invoice_date: new Date(),
+        invoice_due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+        invoice_status: 'draft' as const,
+        additional_invoice_items: [],
+        work_completion_date: new Date(),
+        items: selectedQuote.items.map(item => ({
+          ...item,
+          completionStatus: 'completed' as const,
+          actualQuantity: item.quantity,
+        })),
+        settings: {
+          ...selectedQuote.settings,
+          paymentTerms: '30 days',
+          dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        },
+      };
+
+      const success = await saveInvoice(invoiceData);
+      
+      if (success) {
+        toast.success('Invoice generated successfully');
+        setShowInvoiceDecisionDialog(false);
+        setSelectedQuote(null);
+        navigate('/electrician/quotes');
+      } else {
+        toast.error('Failed to generate invoice');
+      }
+    } catch (error) {
+      console.error('Error generating invoice:', error);
+      toast.error('Failed to generate invoice');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRaiseInvoiceWithChanges = () => {
+    if (!selectedQuote) return;
+    
+    setShowInvoiceDecisionDialog(false);
+    navigate(`/electrician/invoice-quote-builder/${selectedQuote.id}`);
+  };
+
+  const isWorkComplete = (quote: Quote) => {
+    return quote.tags?.includes('work_done');
+  };
+
+  const hasInvoiceRaised = (quote: Quote) => {
+    return quote.invoice_raised === true;
+  };
 
   return (
     <Card>
@@ -251,7 +345,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                       </div>
                     </div>
                     
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       <Button
                         size="sm"
                         variant="outline"
@@ -261,6 +355,38 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                         <Eye className="h-4 w-4" />
                         View Details
                       </Button>
+                      
+                      {/* Show Mark Work Complete button for accepted quotes */}
+                      {quote.acceptance_status === 'accepted' && !isWorkComplete(quote) && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            setSelectedQuote(quote);
+                            setShowWorkCompleteDialog(true);
+                          }}
+                          className="flex items-center gap-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200"
+                        >
+                          <CheckCheck className="h-4 w-4" />
+                          Mark Work Complete
+                        </Button>
+                      )}
+                      
+                      {/* Show Raise Invoice button for completed work */}
+                      {quote.acceptance_status === 'accepted' && isWorkComplete(quote) && !hasInvoiceRaised(quote) && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            setSelectedQuote(quote);
+                            setShowInvoiceDecisionDialog(true);
+                          }}
+                          className="flex items-center gap-1 bg-green-50 hover:bg-green-100 text-green-700 border-green-200"
+                        >
+                          <Receipt className="h-4 w-4" />
+                          Raise Invoice
+                        </Button>
+                      )}
                     </div>
                   </div>
                 ))
@@ -283,6 +409,30 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
           </CardContent>
         </CollapsibleContent>
       </Collapsible>
+
+      {/* Work Complete Confirmation Dialog */}
+      <ConfirmationDialog
+        open={showWorkCompleteDialog}
+        onOpenChange={setShowWorkCompleteDialog}
+        title="Mark Work Complete"
+        description={
+          selectedQuote
+            ? `Confirm that all work for quote #${selectedQuote.quoteNumber} has been completed. This will allow you to raise an invoice.`
+            : ""
+        }
+        confirmText="Mark Complete"
+        onConfirm={handleMarkWorkComplete}
+        loading={loading}
+      />
+
+      {/* Invoice Decision Dialog */}
+      <InvoiceDecisionDialog
+        open={showInvoiceDecisionDialog}
+        onOpenChange={setShowInvoiceDecisionDialog}
+        onNoChanges={handleRaiseInvoiceNoChanges}
+        onHasChanges={handleRaiseInvoiceWithChanges}
+        loading={loading}
+      />
     </Card>
   );
 };
