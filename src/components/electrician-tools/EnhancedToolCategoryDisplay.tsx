@@ -237,7 +237,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
   }
 
   return (
-    <main className="mobile-container mobile-safe-area">
+    <main className="mobile-container mobile-safe-area pt-6">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
