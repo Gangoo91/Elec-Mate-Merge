@@ -83,7 +83,15 @@ const productSchema = {
           supplier: { 
             type: "string", 
             description: "Always set this based on the website domain: 'Screwfix' for screwfix.com, 'Toolstation' for toolstation.com" 
-          }
+          },
+          category: {
+            type: "string",
+            description: "Product category (e.g., Drills, Screwdrivers, Power Tools)",
+          },
+          brand: {
+            type: "string",
+            description: "Brand/manufacturer name (e.g., Makita, DeWalt, Bosch, Hilti, Bahco, Wiha, Wera)",
+          },
         },
         required: ["name", "price"]
       }
@@ -134,27 +142,42 @@ const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: s
         extract: {
           schema: productSchema as any,
           prompt: `You are extracting product information from a ${supplier} search results page. 
+            
+            WHAT TO LOOK FOR:
+              - Full product names, including model numbers  
+              - Brand names (prioritize: Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK)  
+              - Exact prices in GBP  
+              - Product codes or SKUs  
+              - Stock availability (in stock or not)  
+              - Product categories and specific types (e.g. Hand Tools, Power Tools, Test Equipment, PPE, Safety Tools, Access Tools & Equipment, Tool Storage, Specialist Tools)  
+              - Voltage ratings for power tools (e.g., 18V, 240V)  
+              - Key features or highlights if available  
+              - Direct URLs to product pages  
+              - Product images  
+    
+            ELECTRICAL TOOLS INCLUDE:
+              - Wire strippers, crimpers, electrical pliers
+              - Multimeters, voltage testers, electrical testing equipment  
+              - Electrical drills, SDS drills, SDS, impact drivers
+              - Cable strippers, fish tapes, conduit benders
+              - Electrical safety equipment, insulated tools
+              - Electrical screwdrivers, nut drivers
+              - Cable management tools and accessories
 
-WHAT TO LOOK FOR:
-- Product cards, tiles, or listings
-- Product names/titles (often in headings or link text)
-- Prices (look for £ symbol, "Price:", cost displays)
-- Any electrical tools, equipment, or supplies
-
-ELECTRICAL TOOLS INCLUDE:
-- Wire strippers, crimpers, electrical pliers
-- Multimeters, voltage testers, electrical testing equipment  
-- Electrical drills, SDS drills, impact drivers
-- Cable strippers, fish tapes, conduit benders
-- Electrical safety equipment, insulated tools
-- Electrical screwdrivers, nut drivers
-- Cable management tools and accessories
-
-EXTRACT ALL PRODUCTS YOU FIND, even if not strictly electrical tools. 
-Set the supplier field to "${supplier}" for all products.
-If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".
-
-Focus on quantity over perfect accuracy - we want to see what products are available.`
+            TOOLS
+              - Hand Tools → screwdrivers, pliers, spanners, electrical work
+              - Power Tools → electric, cordless, drilling, cutting, installation
+              - Test Equipment → testing, measurement, electrical safety, compliance
+              - PPE → personal protective equipment, safe working practices
+              - Safety Tools → hazard identification, protection, safety equipment
+              - Access Tools & Equipment → ladders, scaffolding, access, working at height
+              - Tool Storage → tool bags, boxes, storage solutions, organisation
+              - Specialist Tools → specialist electrical tools, installation tasks
+            
+            Extract every product visible on the page, capturing all the details above. 
+            Set the supplier field to "${supplier}" for all products.
+            
+            If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".`
         },
         timeout: 30000
       });
