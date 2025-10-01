@@ -113,31 +113,56 @@ const getSupplierFromUrl = (url: string): string => {
   return 'Unknown';
 };
 
-const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: string[]) => {
-  console.log(`🔍 Scraping category: ${category}`);
-  const allProducts = [];
+// Retry helper with different strategies
+const retryWithBackoff = async <T>(
+  fn: () => Promise<T>,
+  maxRetries: number = 2,
+  baseDelay: number = 1000
+): Promise<T> => {
+  let lastError: Error | null = null;
   
-  for (const url of urls) {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
-      console.log(`📡 Scraping URL: ${url}`);
-      const supplier = getSupplierFromUrl(url);
+      return await fn();
+    } catch (error) {
+      lastError = error as Error;
       
-      // First try to get basic content to verify the page loads
-      console.log(`🔍 Testing basic page access for ${url}...`);
-      const basicTest = await firecrawl.scrapeUrl(url, {
-        formats: ['markdown'],
-        timeout: 15000
-      });
-      
-      if (!basicTest.success) {
-        console.error(`❌ Basic page access failed for ${url}:`, basicTest.error);
-        continue; // Skip this URL
+      if (attempt < maxRetries) {
+        const delay = baseDelay * Math.pow(2, attempt); // Exponential backoff
+        console.log(`⏳ Retry attempt ${attempt + 1}/${maxRetries} after ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
       }
-      
-      console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
-      
-      // Now attempt structured extraction with improved prompt
-      const crawlResponse = await firecrawl.scrapeUrl(url, {
+    }
+  }
+  
+  throw lastError;
+};
+
+const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string) => {
+  const supplier = getSupplierFromUrl(url);
+  console.log(`📡 Scraping URL: ${url}`);
+  
+  try {
+    // Test basic page access with retry and reduced timeout
+    const basicTest = await retryWithBackoff(
+      () => firecrawl.scrapeUrl(url, {
+        formats: ['markdown'],
+        timeout: 8000 // Reduced from 15s to 8s
+      }),
+      2, // 2 retries
+      1000
+    );
+    
+    if (!basicTest.success) {
+      console.error(`❌ Basic page access failed for ${url}`);
+      return [];
+    }
+    
+    console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
+    
+    // Now attempt structured extraction with reduced timeout
+    const crawlResponse = await retryWithBackoff(
+      () => firecrawl.scrapeUrl(url, {
         formats: ['extract'],
         extract: {
           schema: productSchema as any,
@@ -179,48 +204,74 @@ const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: s
             
             If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".`
         },
-        timeout: 30000
-      });
+        timeout: 12000 // Reduced from 30s to 12s
+      }),
+      2, // 2 retries
+      2000
+    );
 
-      if (crawlResponse.success && (crawlResponse as any).data?.extract) {
-        const extractedData = (crawlResponse as any).data.extract;
-        console.log(`📋 Raw extraction result:`, JSON.stringify(extractedData, null, 2).substring(0, 500));
+    if (crawlResponse.success && (crawlResponse as any).data?.extract) {
+      const extractedData = (crawlResponse as any).data.extract;
+      
+      if (extractedData.products && Array.isArray(extractedData.products)) {
+        const products = extractedData.products.map((product: any) => ({
+          ...product,
+          category,
+          supplier: supplier,
+          lastUpdated: new Date().toISOString(),
+          availability: product.availability || 'Check Availability',
+          image: product.image || '/placeholder.svg',
+          description: product.description || '',
+          features: product.features || [],
+          specifications: product.specifications || {}
+        }));
         
-        if (extractedData.products && Array.isArray(extractedData.products)) {
-          const products = extractedData.products.map((product: any) => ({
-            ...product,
-            category,
-            supplier: supplier,
-            lastUpdated: new Date().toISOString(),
-            // Ensure we have required fields
-            availability: product.availability || 'Check Availability',
-            image: product.image || '/placeholder.svg',
-            description: product.description || '',
-            features: product.features || [],
-            specifications: product.specifications || {}
-          }));
-          
-          allProducts.push(...products);
-          console.log(`✅ Successfully extracted ${products.length} products from ${supplier}`);
-          
-          // Log a sample product for debugging
-          if (products.length > 0) {
-            console.log(`📦 Sample product:`, JSON.stringify(products[0], null, 2));
-          }
-        } else {
-          console.warn(`⚠️ No products array found in extraction result for ${url}`);
-          console.log(`🔍 Available keys in extraction:`, Object.keys(extractedData));
+        console.log(`✅ Successfully extracted ${products.length} products from ${supplier}`);
+        
+        if (products.length > 0) {
+          console.log(`📦 Sample product:`, JSON.stringify(products[0], null, 2));
         }
         
-        // Rate limiting between requests
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        return products;
       } else {
-        console.error(`❌ Extraction failed for ${url}:`, crawlResponse.error || 'Unknown error');
-        console.log(`🔍 Response structure:`, JSON.stringify(crawlResponse, null, 2).substring(0, 300));
+        console.warn(`⚠️ No products array found in extraction result for ${url}`);
+        return [];
       }
-    } catch (error) {
-      console.error(`❌ Error scraping ${url}:`, error);
-      // Continue with next URL even if one fails
+    } else {
+      console.error(`❌ Extraction failed for ${url}`);
+      return [];
+    }
+  } catch (error) {
+    console.error(`❌ Error scraping ${url}:`, error);
+    return [];
+  }
+};
+
+const scrapeCategory = async (firecrawl: FirecrawlApp, category: string, urls: string[]) => {
+  console.log(`🔍 Scraping category: ${category}`);
+  
+  // Process URLs in parallel with controlled concurrency (max 3 at a time)
+  const maxConcurrency = 3;
+  const allProducts = [];
+  
+  for (let i = 0; i < urls.length; i += maxConcurrency) {
+    const batch = urls.slice(i, i + maxConcurrency);
+    console.log(`📦 Processing batch ${Math.floor(i / maxConcurrency) + 1}/${Math.ceil(urls.length / maxConcurrency)}`);
+    
+    const batchPromises = batch.map(url => scrapeUrl(firecrawl, url, category));
+    const batchResults = await Promise.allSettled(batchPromises);
+    
+    batchResults.forEach((result, index) => {
+      if (result.status === 'fulfilled') {
+        allProducts.push(...result.value);
+      } else {
+        console.error(`❌ Failed to scrape URL in batch:`, batch[index], result.reason);
+      }
+    });
+    
+    // Rate limiting between batches
+    if (i + maxConcurrency < urls.length) {
+      await new Promise(resolve => setTimeout(resolve, 2000));
     }
   }
   
