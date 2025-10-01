@@ -143,14 +143,14 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
   console.log(`📡 Scraping URL: ${url}`);
   
   try {
-    // Test basic page access with retry and reduced timeout
+    // Test basic page access with retry and increased timeout
     const basicTest = await retryWithBackoff(
       () => firecrawl.scrapeUrl(url, {
         formats: ['markdown'],
-        timeout: 8000 // Reduced from 15s to 8s
+        timeout: 12000 // Increased from 8s to 12s
       }),
-      2, // 2 retries
-      1000
+      3, // Increased to 3 retries
+      1500
     );
     
     if (!basicTest.success) {
@@ -160,7 +160,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
     
     console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
     
-    // Now attempt structured extraction with reduced timeout
+    // Now attempt structured extraction with increased timeout
     const crawlResponse = await retryWithBackoff(
       () => firecrawl.scrapeUrl(url, {
         formats: ['extract'],
@@ -204,9 +204,9 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
             
             If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".`
         },
-        timeout: 12000 // Reduced from 30s to 12s
+        timeout: 18000 // Increased from 12s to 18s
       }),
-      2, // 2 retries
+      3, // Increased to 3 retries
       2000
     );
 
