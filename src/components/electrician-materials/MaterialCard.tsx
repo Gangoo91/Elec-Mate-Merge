@@ -229,7 +229,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Product Image Section */}
-      <div className="relative h-32 sm:h-36 bg-gradient-to-br from-elec-gray/50 to-elec-dark/30 overflow-hidden">
+      <div className="relative h-24 sm:h-28 bg-gradient-to-br from-elec-gray/50 to-elec-dark/30 overflow-hidden">
         <img 
           src={item.image || '/placeholder.svg'} 
           alt={item.name}
@@ -258,7 +258,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         ))}
       </div>
 
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-2 pt-3 px-4">
         {/* Header with supplier branding */}
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
@@ -277,9 +277,9 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="space-y-4 pt-0">
+      <CardContent className="space-y-3 pt-0 px-4 pb-4">
         {/* Feature Highlights */}
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           {features.map((feature, index) => (
             <div key={index} className="flex items-center gap-2">
               <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
@@ -289,7 +289,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         </div>
 
         {/* Enhanced Footer */}
-        <div className="space-y-3 pt-2 border-t border-white/10">
+        <div className="space-y-2 pt-2 border-t border-white/10">
           {/* Pricing Display */}
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
