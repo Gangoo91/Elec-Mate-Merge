@@ -191,7 +191,7 @@ const EnhancedProductGrid = ({
 
           {/* Sort Options */}
           <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-            <SelectTrigger className="w-48 h-9 bg-elec-card/50 border-elec-yellow/20 text-elec-light">
+            <SelectTrigger className="w-48 h-8 bg-elec-card/50 border-elec-yellow/20 text-elec-light">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="z-50 bg-elec-card border-elec-yellow/20 shadow-lg">
