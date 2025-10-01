@@ -83,7 +83,7 @@ const ElectricalTools = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in p-0">
+    <div className="space-y-6 animate-fade-in p-0 pt-6">
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="space-y-2">
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Tools</h1>
