@@ -10,6 +10,8 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { InvoiceDecisionDialog } from '@/components/electrician/invoice-builder/InvoiceDecisionDialog';
+import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,10 +38,13 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
 }) => {
   const navigate = useNavigate();
   const { companyProfile } = useCompanyProfile();
+  const { saveInvoice } = useInvoiceStorage();
   const [loadingAction, setLoadingAction] = useState<string>('');
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
   const [confirmAction, setConfirmAction] = useState<'accept' | 'reject' | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [showInvoiceDecision, setShowInvoiceDecision] = useState(false);
+  const [quoteForInvoice, setQuoteForInvoice] = useState<Quote | null>(null);
 
   const canRaiseInvoice = (quote: Quote) => {
     return quote.status === 'approved' && quote.tags?.includes('work_done') && !quote.invoice_raised;
@@ -184,6 +189,54 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
     setSelectedQuote(quote);
     setConfirmAction(action);
     setShowConfirmDialog(true);
+  };
+
+  const handleNoChanges = async () => {
+    if (!quoteForInvoice) return;
+
+    setLoadingAction(`invoice-${quoteForInvoice.id}`);
+    try {
+      const invoiceData = {
+        id: quoteForInvoice.id,
+        invoice_number: `INV-${Date.now()}`,
+        invoice_date: new Date(),
+        invoice_due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        invoice_status: 'draft' as const,
+        invoice_raised: true,
+      };
+
+      const success = await saveInvoice(invoiceData);
+      
+      if (success) {
+        toast({
+          title: "Invoice Created",
+          description: "Invoice has been generated successfully from quote data",
+        });
+        setShowInvoiceDecision(false);
+        setQuoteForInvoice(null);
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to create invoice",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error creating invoice:', error);
+      toast({
+        title: "Error",
+        description: "Failed to create invoice",
+        variant: "destructive",
+      });
+    } finally {
+      setLoadingAction('');
+    }
+  };
+
+  const handleHasChanges = () => {
+    if (!quoteForInvoice) return;
+    setShowInvoiceDecision(false);
+    navigate(`/electrician/invoice-quote-builder/${quoteForInvoice.id}`);
   };
 
   const handleConfirmAction = async () => {
@@ -412,7 +465,10 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     <Button
                       size="sm"
                       variant="default"
-                      onClick={() => navigate(`/electrician/invoice-builder/${quote.id}`)}
+                      onClick={() => {
+                        setQuoteForInvoice(quote);
+                        setShowInvoiceDecision(true);
+                      }}
                       className="bg-green-600 hover:bg-green-700 flex-1 sm:flex-initial"
                     >
                       <Receipt className="h-4 w-4 mr-2" />
@@ -555,6 +611,15 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
         variant={confirmAction === 'reject' ? 'destructive' : 'default'}
         onConfirm={handleConfirmAction}
         loading={loadingAction.startsWith('action-')}
+      />
+
+      {/* Invoice Decision Dialog */}
+      <InvoiceDecisionDialog
+        open={showInvoiceDecision}
+        onOpenChange={setShowInvoiceDecision}
+        onNoChanges={handleNoChanges}
+        onHasChanges={handleHasChanges}
+        loading={loadingAction.startsWith('invoice-')}
       />
     </div>
   );
