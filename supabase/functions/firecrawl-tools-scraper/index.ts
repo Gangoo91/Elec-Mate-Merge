@@ -10,16 +10,58 @@ const productSchema = {
   items: {
     type: "object",
     required: ["name", "price", "view_product_url"],
-    properties: {
-      name: { type: "string", description: "The name or title of the product" },
-      category: { type: "string", description: "The category or cable type of the product" },
-      highlights: { type: "array", description: "The highlight or cable highlight of the product" },
-      price: { type: "string", description: "The price of the product, including currency and VAT info" },
-      description: { type: "string", description: "Key features or details of the product" },
-      reviews: { type: "string", description: "The number of reviews or rating summary" },
-      image: { type: "string", format: "uri", description: "URL of the product image" },
-      view_product_url: { type: "string", format: "uri", description: "Direct URL to the product page" },
-    },
+       properties: {
+          name: {
+            type: "string",
+            description: "Full product name or title, including model number if applicable",
+          },
+          brand: {
+            type: "string",
+            description: "Brand or manufacturer name (e.g., Makita, DeWalt, Bosch, Hilti, Bahco, Wiha, Wera)",
+          },
+          category: {
+            type: "string",
+            description: "The product category (e.g., Drills, Screwdrivers, Power Tools, Cables) or type of cable",
+          },
+          productType: {
+            type: "string",
+            description: "Specific product type (e.g., SDS Drill, Combi Drill, Cordless, Corded)",
+          },
+          voltage: {
+            type: "string",
+            description: "Voltage rating if applicable (e.g., 18V, 240V)",
+          },
+          price: {
+            type: "string",
+            description: "The price of the product, including numeric value, currency, and VAT info if applicable",
+          },
+          inStock: {
+            type: "boolean",
+            description: "Whether the product is currently in stock",
+          },
+          description: {
+            type: "string",
+            description: "Key features, description, or important details of the product",
+          },
+          highlights: {
+            type: "array",
+            description: "Array of product highlights or key features",
+          },
+          reviews: {
+            type: "string",
+            description: "Number of reviews or rating summary",
+          },
+          image: {
+            type: "string",
+            format: "uri",
+            description: "URL of the product image",
+          },
+          view_product_url: {
+            type: "string",
+            format: "uri",
+            description: "Direct URL to the product page",
+          }
+      }
   },
 };
 
@@ -46,8 +88,21 @@ async function fetchElectricalTools() {
       formats: [
         {
           type: "json",
-          prompt: "Extract the name and description from the page.",
           schema: productSchema,
+          timeout: 45000,
+          prompt: `Extract all tool products visible on this page. For each product, include:  
+                      - Full product names, including model numbers  
+                      - Brand names (prioritize: Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK for hand tools)  
+                      - Exact prices in GBP  
+                      - Product codes or SKUs  
+                      - Stock availability (in stock or not)  
+                      - Product categories and specific types (e.g., SDS Drill, Combi Drill, Cordless, Corded, Screwdriver)  
+                      - Voltage ratings for power tools (e.g., 18V, 240V)  
+                      - Key features or highlights if available  
+                      - Direct URLs to product pages  
+                      - Product images  
+    
+                      Extract every product visible on the page, capturing all the details above.`
         },
       ],
     }),
