@@ -179,12 +179,13 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
     
     console.log(`✅ Basic access successful, content length: ${(basicTest as any).data?.markdown?.length || 0}`);
     
-    // Now attempt structured extraction with reduced timeout
+    // Now attempt structured extraction with Firecrawl v2 format
     const crawlResponse = await retryWithBackoff(
       () => firecrawl.scrapeUrl(url, {
-        formats: [{
-          schema: productSchema as any,
-          prompt: `You are extracting product information from a ${supplier} search results page. 
+        formats: ['extract'],
+        extract: {
+          schema: productSchema,
+          systemPrompt: `You are extracting product information from a ${supplier} search results page. 
             
             WHAT TO LOOK FOR:
               - Full product names, including model numbers  
@@ -221,17 +222,18 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
             Set the supplier field to "${supplier}" for all products.
             
             If you find products but no clear prices, still extract them with price as "Contact for Price" or "See Website".`
-        }],
-        timeout: 12000 // Reduced from 30s to 12s
+        },
+        timeout: 15000
       }),
-      2, // 2 retries
+      2,
       2000
     );
 
-    if (crawlResponse.success && (crawlResponse as any).data?.extract) {
-      const extractedData = (crawlResponse as any).data.extract;
+    if (crawlResponse.success) {
+      // Firecrawl v2 returns extracted data directly in the data property
+      const extractedData = (crawlResponse as any).data || (crawlResponse as any).extract;
       
-      if (extractedData.products && Array.isArray(extractedData.products)) {
+      if (extractedData?.products && Array.isArray(extractedData.products)) {
         const products = extractedData.products.map((product: any) => ({
           ...product,
           category,
@@ -253,6 +255,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
         return products;
       } else {
         console.warn(`⚠️ No products array found in extraction result for ${url}`);
+        console.log(`📊 Extraction data structure:`, JSON.stringify(extractedData, null, 2));
         return [];
       }
     } else {

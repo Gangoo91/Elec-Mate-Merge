@@ -66,11 +66,11 @@ export const useToolsData = () => {
   const query = useQuery({
     queryKey: ['tools', 'cache-data'],
     queryFn: fetchToolsData,
-    staleTime: 5 * 60 * 1000, // 5 minutes - allow more frequent updates
+    staleTime: 2 * 60 * 1000, // 2 minutes
     gcTime: 30 * 60 * 1000, // 30 minutes cache time
     retry: 2,
-    refetchOnWindowFocus: false, // Prevent refetch on window focus
-    refetchOnReconnect: false, // Prevent refetch on network reconnect
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   const dealsData = useToolsDeals(query.data || []);

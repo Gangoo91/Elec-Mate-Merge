@@ -86,9 +86,9 @@ serve(async (req) => {
       { body: { forceRefresh } }
     );
 
-    // Set a 60-second timeout for the scraper call (increased from 40s)
+    // Set a 45-second timeout for the scraper call
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Scraper timeout after 60 seconds')), 60000);
+      setTimeout(() => reject(new Error('Scraper timeout after 45 seconds')), 45000);
     });
 
     let refreshResult, refreshError;
