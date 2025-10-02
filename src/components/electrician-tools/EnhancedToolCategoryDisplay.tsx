@@ -136,49 +136,28 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
     return keywordMap[category] || [category.toLowerCase()];
   };
 
-  // Filter and search the tools with fallback logic
+  // Filter and search the tools by exact category match
   const filteredTools = useMemo(() => {
     if (!allTools) return [];
     
-    // Filter by category first with improved matching
-    const possibleMatches = getCategoryMappings(categoryName);
-    let categoryFiltered = allTools.filter(tool => {
+    // Direct category match based on intelligent categorization from edge function
+    const categoryFiltered = allTools.filter(tool => {
       const toolCategory = tool.category;
-      const toolName = tool.name?.toLowerCase() || '';
-      const toolDescription = tool.description?.toLowerCase() || '';
       
-      // Try exact and partial category matches
-      const categoryMatch = possibleMatches.some(match => 
-        toolCategory === match || 
-        toolCategory?.toLowerCase().includes(match.toLowerCase()) ||
-        match.toLowerCase().includes(toolCategory?.toLowerCase() || '')
-      );
+      // Exact match with the category name
+      if (toolCategory === categoryName) return true;
       
-      if (categoryMatch) return true;
+      // Handle variations in category naming
+      if (categoryName === 'Hand Tools' && toolCategory === 'Hand Tools') return true;
+      if (categoryName === 'Power Tools' && toolCategory === 'Power Tools') return true;
+      if (categoryName === 'Test Equipment' && toolCategory === 'Test Equipment') return true;
+      if (categoryName === 'Tool Storage' && toolCategory === 'Tool Storage') return true;
+      if (categoryName === 'Safety Tools' && toolCategory === 'Safety Tools') return true;
+      if (categoryName === 'Access Tools & Equipment' && toolCategory === 'Access Tools & Equipment') return true;
+      if (categoryName === 'Specialist Tools' && toolCategory === 'Specialist Tools') return true;
       
-      // Fallback: search by keywords in name/description for Power Tools
-      if (categoryName === 'Power Tools') {
-        const powerToolKeywords = ['drill', 'cordless', '18v', '12v', 'angle grinder', 'circular saw', 'impact driver', 'reciprocating saw', 'sds', 'battery'];
-        return powerToolKeywords.some(keyword => 
-          toolName.includes(keyword) || toolDescription.includes(keyword)
-        );
-      }
-      
-      // Fallback: search by keywords for other categories
-      const categoryKeywords = getCategoryKeywords(categoryName);
-      return categoryKeywords.some(keyword => 
-        toolName.includes(keyword) || toolDescription.includes(keyword)
-      );
+      return false;
     });
-    
-    // If no category-specific tools found, show related tools from Hand Tools for Power Tools
-    if (categoryFiltered.length === 0 && categoryName === 'Power Tools') {
-      categoryFiltered = allTools.filter(tool => {
-        const toolName = tool.name?.toLowerCase() || '';
-        const relatedKeywords = ['drill', 'driver', 'bit', 'battery', 'charger', 'grinder'];
-        return relatedKeywords.some(keyword => toolName.includes(keyword));
-      });
-    }
     
     return categoryFiltered;
   }, [allTools, categoryName]);
