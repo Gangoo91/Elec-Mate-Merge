@@ -176,52 +176,53 @@ serve(async (req) => {
         urls: urls.map(u => u.url),
         formats: ['extract'],
         extract: {
+          prompt: "Extract all tools and equipment products from this page with their names, brands, prices, and product URLs.",
           schema: {
-            type: 'object',
+            type: "object",
             properties: {
               products: {
-                type: 'array',
+                type: "array",
                 items: {
-                  type: 'object',
+                  type: "object",
                   properties: {
                     name: {
                       type: "string",
-                      description: "Full product name including model number",
+                      description: "Full product name including model number"
                     },
                     brand: {
                       type: "string",
-                      description: "Brand/manufacturer name (e.g., Makita, DeWalt, Bosch, Hilti, Bahco, Wiha, Wera)",
+                      description: "Brand/manufacturer name"
                     },
                     price: {
                       type: "string",
-                      description: "Current price in GBP",
+                      description: "Current price in GBP"
                     },
                     description: {
                       type: "string",
-                      description: "Brief product description or key features",
+                      description: "Brief product description or key features"
                     },
                     category: {
                       type: "string",
-                      description: "Product category (e.g., Drills, Screwdrivers, Power Tools)",
+                      description: "Product category"
                     },
                     productType: {
                       type: "string",
-                      description: "Specific type (e.g., SDS Drill, Combi Drill, Cordless, Corded)",
+                      description: "Specific product type"
                     },
                     image: {
                       type: "string",
-                      format: "uri",
-                      description: "URL of the product image",
+                      description: "URL of the product image"
                     },
                     view_product_url: {
                       type: "string",
-                      format: "uri",
-                      description: "Direct URL to the product page",
-                    },
-                  }
+                      description: "Direct URL to the product page"
+                    }
+                  },
+                  required: ["name", "price", "view_product_url"]
                 }
               }
-            }
+            },
+            required: ["products"]
           }
         }
       })
