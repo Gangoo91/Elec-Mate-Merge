@@ -50,7 +50,7 @@ const fetchToolsData = async (): Promise<ToolItem[]> => {
       const transformedTools = categoryCache.tools_data.map((tool: any, index: number) => ({
         id: tool.id || index + 1000,
         name: tool.name || 'Unknown Tool',
-        category: categoryCache.category || tool.category || 'Tools',
+        category: tool.category || categoryCache.category || 'Tools',
         price: tool.price || '£0.00',
         supplier: tool.supplier || 'Screwfix',
         image: tool.image || '/placeholder.svg',

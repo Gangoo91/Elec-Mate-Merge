@@ -25,23 +25,11 @@ const BatchToolsRefreshButton: React.FC<BatchToolsRefreshButtonProps> = ({
   const handleRefresh = async () => {
     setIsRefreshing(true);
     setRefreshStatus('idle');
-    setProgress('Clearing old data...');
+    setProgress('Starting batch system...');
     setToolsFound(0);
     setCurrentBatch(1);
     
     try {
-      // First, clear the old cache
-      const { error: deleteError } = await supabase
-        .from('tools_weekly_cache')
-        .delete()
-        .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all rows
-      
-      if (deleteError) {
-        console.error('Error clearing cache:', deleteError);
-        // Continue anyway - don't block the refresh
-      }
-
-      setProgress('Starting batch system...');
       
       toast({
         title: "Multi-Batch Scraping Started",
