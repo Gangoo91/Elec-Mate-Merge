@@ -13,28 +13,28 @@ const corsHeaders = {
 // Define 3 batches of 6 URLs each (18 total)
 const BATCH_URLS = {
   1: [
-    { url: 'https://www.screwfix.com/c/tools/hand-tools/cat830019', name: 'Hand Tools - Screwfix' },
-    { url: 'https://www.toolstation.com/hand-tools/c350', name: 'Hand Tools - Toolstation' },
-    { url: 'https://www.screwfix.com/c/tools-electrical-plumbing/electrical-test-equipment/cat850007', name: 'Test Equipment - Screwfix' },
-    { url: 'https://www.toolstation.com/electrical-testing/c359', name: 'Test Equipment - Toolstation' },
-    { url: 'https://www.screwfix.com/c/tools/power-tools/cat830012', name: 'Power Tools - Screwfix' },
-    { url: 'https://www.toolstation.com/power-tools/c351', name: 'Power Tools - Toolstation' },
+    { url: 'https://www.screwfix.com/search?search=screwdrivers+pliers+spanners+electrical+work&page_size=50', name: 'Hand Tools - Screwfix' },
+    { url: 'https://www.toolstation.com/search?q=screwdrivers+pliers+spanners+electrical+work', name: 'Hand Tools - Toolstation' },
+    { url: 'https://www.screwfix.com/search?search=testing+measurement+electrical+safety+compliance&page_size=50', name: 'Test Equipment - Screwfix' },
+    { url: 'https://www.toolstation.com/search?q=testing+measurement+electrical+safety+compliance', name: 'Test Equipment - Toolstation' },
+    { url: 'https://www.screwfix.com/search?search=electric+cordless+drilling+cutting+installation&page_size=50', name: 'Power Tools - Screwfix' },
+    { url: 'https://www.toolstation.com/search?q=electric+cordless+drilling+cutting+installation', name: 'Power Tools - Toolstation' },
   ],
   2: [
-    { url: 'https://www.screwfix.com/c/safety-workwear/ppe/cat840003', name: 'PPE - Screwfix' },
-    { url: 'https://www.toolstation.com/ppe/c408', name: 'PPE - Toolstation' },
-    { url: 'https://www.screwfix.com/c/tools-electrical-plumbing/specialist-tools/cat850018', name: 'Specialist Tools - Screwfix' },
-    { url: 'https://www.toolstation.com/specialist-tools/c357', name: 'Specialist Tools - Toolstation' },
-    { url: 'https://www.screwfix.com/c/tools/tool-storage/cat830003', name: 'Tool Storage - Screwfix' },
-    { url: 'https://www.toolstation.com/tool-storage/c358', name: 'Tool Storage - Toolstation' },
+    { url: 'https://www.screwfix.com/search?search=personal+protective+equipment+safe+working+practices&page_size=50', name: 'PPE - Screwfix' },
+    { url: 'https://www.toolstation.com/search?q=personal+protective+equipment+safe+working+practices', name: 'PPE - Toolstation' },
+    { url: 'https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50', name: 'Specialist Tools - Screwfix' },
+    { url: 'https://www.toolstation.com/search?q=cable+stripper+fish+tape+electrical', name: 'Specialist Tools - Toolstation' },
+    { url: 'https://www.toolstation.com/search?q=tool+bags+boxes+storage+solutions+organisation&page_size=50', name: 'Tool Storage - Screwfix' },
+    { url: 'https://www.screwfix.com/search?search=hazard+identification+protection+safety+equipment', name: 'Tool Storage - Toolstation' },
   ],
   3: [
-    { url: 'https://www.screwfix.com/c/safety-workwear/safety-equipment/cat840005', name: 'Safety Tools - Screwfix' },
-    { url: 'https://www.toolstation.com/safety-equipment/c407', name: 'Safety Tools - Toolstation' },
-    { url: 'https://www.screwfix.com/c/tools/access-equipment/cat830028', name: 'Access Tools & Equipment - Screwfix' },
-    { url: 'https://www.toolstation.com/access-equipment/c361', name: 'Access Tools & Equipment - Toolstation' },
-    { url: 'https://www.toolstation.com/specialist-tools/c357?pagesize=50', name: 'Specialist Tools - Toolstation' },
-    { url: 'https://www.toolstation.com/safety-equipment/c407?pagesize=50', name: 'Safety Tools - Toolstation' },
+    { url: 'https://www.screwfix.com/search?search=Equipment+ladders+scaffolding+access+working+at+height&page_size=50', name: 'Safety Tools - Screwfix' },
+    { url: 'https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation', name: 'Safety Tools - Toolstation' },
+    { url: 'https://www.screwfix.com/search?search=specialist+electrical+tools+installation+tasks&page_size=50', name: 'Access Tools & Equipment - Screwfix' },
+    { url: 'https://www.toolstation.com/search?q=hazard+identification+protection+safety+equipment', name: 'Access Tools & Equipment - Toolstation' },
+    { url: 'https://www.toolstation.com/search?q=Equipment+ladders+scaffolding+access+working+at+height&page_size=50', name: 'Specialist Tools - Toolstation' },
+    { url: 'https://www.toolstation.com/search?q=specialist+electrical+tools+installation+tasks', name: 'Safety Tools - Toolstation' },
   ]
 };
 
