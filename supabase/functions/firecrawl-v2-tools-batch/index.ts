@@ -168,6 +168,19 @@ serve(async (req) => {
         urls: urls.map(u => u.url),
         formats: ['extract'],
         extract: {
+          prompt: `Extract all tool products visible on this page. For each product, include:  
+                - Full product names, including model numbers  
+                - Brand names (prioritize: Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK)  
+                - Exact prices in GBP  
+                - Product codes or SKUs  
+                - Stock availability (in stock or not)  
+                - Product categories and specific types (e.g. Hand Tools, Power Tools, Test Equipment, PPE, Safety Tools, Access Tools & Equipment, Tool Storage, Specialist Tools)  
+                - Voltage ratings for power tools (e.g., 18V, 240V)  
+                - Key features or highlights if available  
+                - Direct URLs to product pages  
+                - Product images  
+    
+                      Extract every product visible on the page, capturing all the details above.`,
           schema: {
             type: 'object',
             properties: {
