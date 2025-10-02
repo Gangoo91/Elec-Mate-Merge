@@ -120,53 +120,32 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
     try {
       console.log(`📡 [${category}] Attempt ${attempt}/${maxAttempts} - Scraping from ${supplier}...`);
       
+      // Try markdown format first (faster and more reliable than extract)
       const crawlResponse = await firecrawl.scrapeUrl(url, {
-        formats: ['extract'],
-        timeout: 90000,
-        extract: {
-          schema: productSchema,
-          prompt: `Extract products from this ${supplier} search page for ${category}.
-          
-          IMPORTANT - Extract products you see:
-          - Full product name with model number
-          - Exact price in GBP (£)
-          - Brand name (Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK, Milwaukee, Ryobi, etc.)
-          - Stock availability status
-          - Complete product URL
-          - Product image URL
-          - Brief description if available
-          
-          Set supplier field to "${supplier}" for ALL products.
-          Extract 15-20 products from this page.`
-        }
+        formats: ['markdown'],
+        timeout: 60000,
+        onlyMainContent: true
       });
 
-      if (crawlResponse.success && (crawlResponse as any).data?.extract) {
-        const extractedData = (crawlResponse as any).data.extract;
+      if (crawlResponse.success && (crawlResponse as any).data?.markdown) {
+        const markdown = (crawlResponse as any).data.markdown;
+        console.log(`✅ [${category}] Got markdown content (${markdown.length} chars)`);
         
-        if (extractedData.products && Array.isArray(extractedData.products)) {
-          const products = extractedData.products.map((product: any) => ({
-            ...product,
-            category,
-            supplier: supplier,
-            lastUpdated: new Date().toISOString(),
-            availability: product.availability || 'Check Availability',
-            image: product.image || '/placeholder.svg',
-            description: product.description || '',
-            features: product.features || [],
-            specifications: product.specifications || {}
-          }));
-          
-          console.log(`✅ [${category}] Extracted ${products.length} products`);
+        // Parse markdown to extract product information
+        const products = parseProductsFromMarkdown(markdown, category, supplier);
+        
+        if (products.length > 0) {
+          console.log(`✅ [${category}] Extracted ${products.length} products from markdown`);
           return { category, products, success: true };
         }
+        
+        console.warn(`⚠️ [${category}] Attempt ${attempt}: No products parsed from markdown`);
       }
       
-      console.warn(`⚠️ [${category}] Attempt ${attempt}: No products found`);
-      lastError = new Error('No products found');
+      lastError = new Error('No products found in markdown');
       
       if (attempt < maxAttempts) {
-        const delay = 3000 * attempt;
+        const delay = 2000 * attempt;
         console.log(`⏳ [${category}] Retrying in ${delay}ms...`);
         await new Promise(resolve => setTimeout(resolve, delay));
       }
@@ -176,7 +155,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
       console.error(`❌ [${category}] Attempt ${attempt} failed:`, error.message);
       
       if (attempt < maxAttempts) {
-        const delay = 3000 * attempt;
+        const delay = 2000 * attempt;
         console.log(`⏳ [${category}] Retrying in ${delay}ms...`);
         await new Promise(resolve => setTimeout(resolve, delay));
       }
@@ -186,6 +165,71 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
   console.error(`❌ [${category}] All ${maxAttempts} attempts failed`);
   return { category, products: [], success: false, error: lastError?.message };
 };
+
+// Parse products from markdown content
+function parseProductsFromMarkdown(markdown: string, category: string, supplier: string): any[] {
+  const products = [];
+  const lines = markdown.split('\n');
+  
+  let currentProduct: any = null;
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    
+    // Look for product titles (usually in headers or bold text)
+    if (line.startsWith('###') || line.startsWith('##')) {
+      if (currentProduct && currentProduct.name && currentProduct.price) {
+        products.push(currentProduct);
+      }
+      currentProduct = {
+        name: line.replace(/^#+\s*/, '').trim(),
+        category,
+        supplier,
+        lastUpdated: new Date().toISOString(),
+        availability: 'Check Availability',
+        image: '/placeholder.svg',
+        description: '',
+        features: [],
+        specifications: {}
+      };
+    }
+    
+    // Look for prices (£ symbol followed by numbers)
+    const priceMatch = line.match(/£\s*(\d+\.?\d*)/);
+    if (priceMatch && currentProduct) {
+      currentProduct.price = `£${priceMatch[1]}`;
+    }
+    
+    // Look for URLs
+    const urlMatch = line.match(/https:\/\/www\.screwfix\.com[^\s)"]*/);
+    if (urlMatch && currentProduct) {
+      currentProduct.productUrl = urlMatch[0];
+    }
+    
+    // Look for image URLs
+    const imgMatch = line.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/);
+    if (imgMatch && currentProduct) {
+      currentProduct.image = imgMatch[1];
+    }
+    
+    // Collect description text
+    if (currentProduct && line && !line.startsWith('#') && !line.startsWith('!') && !line.startsWith('[')) {
+      if (currentProduct.description) {
+        currentProduct.description += ' ' + line;
+      } else {
+        currentProduct.description = line;
+      }
+    }
+  }
+  
+  // Add last product
+  if (currentProduct && currentProduct.name && currentProduct.price) {
+    products.push(currentProduct);
+  }
+  
+  // Limit to 15 products
+  return products.slice(0, 15);
+}
 
 const checkExistingBatch = async (supabase: any, batchNumber: number) => {
   const { data, error } = await supabase
