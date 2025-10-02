@@ -270,7 +270,7 @@ serve(async (req) => {
 });
 
 async function pollAndStoreResults(jobId: string, batchNumber: number, urls: any[], supabase: any) {
-  const maxPolls = 24; // 2 minutes max  
+  const maxPolls = 36; // 2 minutes max  
   let pollCount = 0;
 
   const pollInterval = setInterval(async () => {
