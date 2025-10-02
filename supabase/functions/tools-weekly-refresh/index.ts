@@ -78,9 +78,36 @@ serve(async (req) => {
 
     console.log('🔄 Cache expired or missing, triggering refresh...');
 
-    // Call the batch scraper with mergeAll flag to combine all batches
-    console.log('🔄 Invoking batch scraper with mergeAll flag...');
+    // First, trigger all 3 batch scrapes in parallel
+    console.log('🔄 Starting batch scrapes for batches 1, 2, and 3...');
     
+    const batchPromises = [
+      supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+        body: { batch: 1, forceRefresh: true } 
+      }),
+      supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+        body: { batch: 2, forceRefresh: true } 
+      }),
+      supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+        body: { batch: 3, forceRefresh: true } 
+      })
+    ];
+
+    // Wait for all batches to complete (with 45s timeout per batch)
+    console.log('⏳ Waiting for batch scrapes to complete...');
+    const batchResults = await Promise.allSettled(batchPromises);
+    
+    // Log results of each batch
+    batchResults.forEach((result, index) => {
+      if (result.status === 'fulfilled') {
+        console.log(`✅ Batch ${index + 1} completed:`, result.value.data);
+      } else {
+        console.error(`❌ Batch ${index + 1} failed:`, result.reason);
+      }
+    });
+
+    // Now merge all batches together
+    console.log('🔄 Merging all batches...');
     const { data: refreshResult, error: refreshError } = await supabase.functions.invoke(
       'comprehensive-firecrawl-scraper',
       { body: { mergeAll: true, forceRefresh } }
