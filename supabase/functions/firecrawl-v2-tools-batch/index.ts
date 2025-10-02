@@ -65,7 +65,7 @@ function intelligentlyCategorize(toolName: string, toolDescription: string, cate
   // Test Equipment keywords
   if (name.includes('multimeter') || name.includes('tester') || name.includes('test lead') || 
       name.includes('meter') || name.includes('clamp meter') || name.includes('voltage') ||
-      name.includes('socket tester') || name.includes('proving unit') || name.includes('test lamp')) || cat.includes("test") {
+      name.includes('socket tester') || name.includes('proving unit') || name.includes('test lamp') || cat.includes("test")) {
     return 'Test Equipment';
   }
   
@@ -73,7 +73,7 @@ function intelligentlyCategorize(toolName: string, toolDescription: string, cate
   if (name.includes('plier') || name.includes('screwdriver') || name.includes('wire stripper') ||
       name.includes('cable cutter') || name.includes('spanner') || name.includes('wrench') ||
       name.includes('crimper') || name.includes('vde') || name.includes('side cutter') ||
-      name.includes('stripping') || name.includes('snips') || name.includes('knife')) || cat.includes("hand") {
+      name.includes('stripping') || name.includes('snips') || name.includes('knife') || cat.includes("hand")) {
     return 'Hand Tools';
   }
   
@@ -81,7 +81,7 @@ function intelligentlyCategorize(toolName: string, toolDescription: string, cate
   if (name.includes('drill') || name.includes('cordless') || name.includes('18v') || 
       name.includes('impact driver') || name.includes('grinder') || name.includes('saw') ||
       name.includes('sds') || name.includes('battery pack') || name.includes('combi') ||
-      name.includes('makita') || name.includes('dewalt') || name.includes('brushless')) || cat.includes("power") {
+      name.includes('makita') || name.includes('dewalt') || name.includes('brushless') || cat.includes("power")) {
     return 'Power Tools';
   }
   
@@ -89,33 +89,33 @@ function intelligentlyCategorize(toolName: string, toolDescription: string, cate
   if (name.includes('tool bag') || name.includes('tool box') || name.includes('case') ||
       name.includes('storage') || name.includes('organiser') || name.includes('toughsystem') ||
       name.includes('key safe') || name.includes('with wheels') || name.includes('toolbox') ||
-      name.includes('tote') || name.includes('organizer')) || cat.includes("storage") {
+      name.includes('tote') || name.includes('organizer') || cat.includes("storage")) {
     return 'Tool Storage';
   }
   
   // Safety Tools
   if (name.includes('helmet') || name.includes('gloves') || name.includes('safety') ||
       name.includes('protective') || name.includes('harness') || name.includes('glasses') ||
-      name.includes('boots') || name.includes('hi-vis') || name.includes('vest')) || cat.includes("safety") {
+      name.includes('boots') || name.includes('hi-vis') || name.includes('vest') || cat.includes("safety")) {
     return 'Safety Tools';
   }
 
   // PPE keywords
   if (name.includes('helmet') || name.includes('gloves') || name.includes('workwear') ||
       name.includes('glasses') ||
-      name.includes('boots') || name.includes('vest')) || name.includes('personal protective equipment')) || cat.includes("PPE") {
+      name.includes('boots') || name.includes('vest') || name.includes('personal protective equipment') || cat.includes("PPE")) {
     return 'Safety Tools';
   }
   
   // Access Tools keywords
   if (name.includes('ladder') || name.includes('steps') || name.includes('platform') ||
-      name.includes('scaffold') || name.includes('stepladder') || name.includes('extension ladder')) || cat.includes("access") {
+      name.includes('scaffold') || name.includes('stepladder') || name.includes('extension ladder') || cat.includes("access")) {
     return 'Access Tools & Equipment';
   }
   
   // Specialist Tools keywords
   if (name.includes('cable puller') || name.includes('fish tape') || name.includes('bender') ||
-      name.includes('cable rod') || name.includes('conduit') || name.includes('knockout')) || cat.includes("specialist") {
+      name.includes('cable rod') || name.includes('conduit') || name.includes('knockout') || cat.includes("specialist")) {
     return 'Specialist Tools';
   }
   
