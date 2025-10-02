@@ -18,12 +18,14 @@ import {
   TrendingUp,
   FileText,
   Layers,
-  Eye
+  Eye,
+  ArrowLeft
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import EvidenceViewer from "./EvidenceViewer";
 import CaptureWizard from "./CaptureWizard";
 import FixPack from "./FixPack";
+import ModeSelector, { AnalysisMode } from "./ModeSelector";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -136,6 +138,7 @@ const STEPS = [
 ];
 
 const VisualAnalysisRedesigned = () => {
+  const [selectedMode, setSelectedMode] = useState<AnalysisMode | null>(null);
   const [images, setImages] = useState<File[]>([]);
   const [primaryImageIndex, setPrimaryImageIndex] = useState(0);
   const [removeBackground, setRemoveBackground] = useState(false);
@@ -364,6 +367,7 @@ const VisualAnalysisRedesigned = () => {
           primary_image: primaryImageUrl,
           additional_images: additionalImageUrls,
           analysis_settings: {
+            mode: selectedMode || 'fault_diagnosis',
             confidence_threshold: confidenceThreshold[0],
             enable_bounding_boxes: showBoundingBoxes,
             focus_areas: selectedPreset.settings.focus_areas,
@@ -528,6 +532,54 @@ const VisualAnalysisRedesigned = () => {
     setCurrentStep('capture');
     setCompletedSteps([]);
     setPrimaryImageIndex(0);
+    setSelectedMode(null);
+  };
+
+  const handleModeSelect = (mode: AnalysisMode) => {
+    setSelectedMode(mode);
+  };
+
+  const handleBackToModeSelection = () => {
+    resetAnalysis();
+  };
+
+  // If no mode selected, show mode selector
+  if (!selectedMode) {
+    return (
+      <TooltipProvider>
+        <div className="space-y-6 min-h-screen bg-elec-grey p-6">
+          <ModeSelector onSelectMode={handleModeSelect} />
+        </div>
+      </TooltipProvider>
+    );
+  }
+
+  const getModeTitle = () => {
+    switch (selectedMode) {
+      case 'component_identify':
+        return 'Component Identification';
+      case 'wiring_instruction':
+        return 'Wiring Instructions';
+      case 'installation_verify':
+        return 'Installation Verification';
+      case 'fault_diagnosis':
+      default:
+        return 'Fault Diagnosis';
+    }
+  };
+
+  const getModeDescription = () => {
+    switch (selectedMode) {
+      case 'component_identify':
+        return 'AI-powered component identification with specifications and BS 7671 requirements';
+      case 'wiring_instruction':
+        return 'Step-by-step UK wiring instructions with terminal diagrams and safety guidance';
+      case 'installation_verify':
+        return 'BS 7671 compliance verification with pass/fail assessment';
+      case 'fault_diagnosis':
+      default:
+        return 'AI-powered BS 7671 compliance analysis using advanced computer vision';
+    }
   };
 
   return (
@@ -537,21 +589,32 @@ const VisualAnalysisRedesigned = () => {
         <Card className="bg-card border-border">
           <CardHeader className="pb-4">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-              <div>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleBackToModeSelection}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <ArrowLeft className="h-4 w-4 mr-1" />
+                    Change Mode
+                  </Button>
+                </div>
                 <CardTitle className="flex items-center gap-2 text-foreground">
                   <Sparkles className="h-6 w-6 text-primary" />
-                  Visual Installation Analyser
+                  {getModeTitle()}
                 </CardTitle>
                 <CardDescription>
-                  AI-powered BS 7671 compliance analysis using advanced computer vision
+                  {getModeDescription()}
                 </CardDescription>
               </div>
               {analysisResult && (
                 <Badge 
-                  variant={analysisResult.compliance_summary.overall_assessment === 'satisfactory' ? 'default' : 'destructive'}
+                  variant={analysisResult.compliance_summary?.overall_assessment === 'satisfactory' ? 'default' : 'destructive'}
                   className="text-sm"
                 >
-                  {analysisResult.compliance_summary.overall_assessment === 'satisfactory' ? 'Satisfactory' : 'Unsatisfactory'}
+                  {analysisResult.compliance_summary?.overall_assessment === 'satisfactory' ? 'Satisfactory' : 'Unsatisfactory'}
                 </Badge>
               )}
             </div>
