@@ -1,73 +1,23 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { 
   Camera, 
   Upload, 
   X, 
   Loader, 
-  AlertTriangle, 
-  CheckCircle, 
   Download,
   RefreshCw,
   Sparkles,
-  Zap,
-  Target,
-  Settings,
-  Save,
-  Image as ImageIcon,
-  History,
-  TrendingUp,
-  FileText,
-  Layers,
-  Eye,
-  ArrowLeft
+  ArrowLeft,
+  Plus,
+  CheckCircle2
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
-import EvidenceViewer from "./EvidenceViewer";
-import CaptureWizard from "./CaptureWizard";
-import FixPack from "./FixPack";
 import ModeSelector, { AnalysisMode } from "./ModeSelector";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Slider } from "@/components/ui/slider";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Stepper } from "@/components/ui/stepper";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-
-
-// Lazy load background removal for performance
-const loadBackgroundRemoval = async () => {
-  const { removeBackground, loadImage } = await import("@/lib/background-removal");
-  return { removeBackground, loadImage };
-};
-
-interface BoundingBox {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  confidence: number;
-  label: string;
-}
 
 interface AnalysisResult {
   findings: Array<{
@@ -77,7 +27,6 @@ interface AnalysisResult {
     bs7671_clauses: string[];
     location?: string;
     fix_guidance: string;
-    bounding_box?: BoundingBox;
   }>;
   recommendations: Array<{
     action: string;
@@ -97,60 +46,12 @@ interface AnalysisResult {
   summary: string;
 }
 
-interface AnalysisPreset {
-  name: string;
-  description: string;
-  icon: typeof Eye;
-  settings: {
-    focus_areas: string[];
-    confidence_threshold: number;
-    enable_bounding_boxes: boolean;
-  };
-}
-
-const ANALYSIS_PRESETS: AnalysisPreset[] = [
-  {
-    name: "Consumer Unit Inspection",
-    description: "Distribution boards and consumer units",
-    icon: Zap,
-    settings: {
-      focus_areas: ["consumer_unit", "mcb", "rcd", "main_switch", "labelling"],
-      confidence_threshold: 0.8,
-      enable_bounding_boxes: true
-    }
-  },
-  {
-    name: "Socket & Accessory Check",
-    description: "Socket outlets and accessories",
-    icon: Target,
-    settings: {
-      focus_areas: ["sockets", "switches", "accessories", "cables", "earthing"],
-      confidence_threshold: 0.75,
-      enable_bounding_boxes: true
-    }
-  }
-];
-
-const STEPS = [
-  { id: 'capture', title: 'Capture', description: 'Upload images' },
-  { id: 'analyse', title: 'Analyse', description: 'Review & run' },
-  { id: 'results', title: 'Results', description: 'View findings' }
-];
-
 const VisualAnalysisRedesigned = () => {
   const [selectedMode, setSelectedMode] = useState<AnalysisMode | null>(null);
   const [images, setImages] = useState<File[]>([]);
   const [primaryImageIndex, setPrimaryImageIndex] = useState(0);
-  const [removeBackground, setRemoveBackground] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysisHistory, setAnalysisHistory] = useState<Array<{ id: string; images: string[]; result: AnalysisResult; timestamp: Date }>>([]);
-  const [selectedPreset, setSelectedPreset] = useState<AnalysisPreset>(ANALYSIS_PRESETS[0]);
-  const [confidenceThreshold, setConfidenceThreshold] = useState([0.8]);
-  const [showBoundingBoxes, setShowBoundingBoxes] = useState(true);
-  const [currentStep, setCurrentStep] = useState<'capture' | 'analyse' | 'results'>('capture');
-  const [completedSteps, setCompletedSteps] = useState<string[]>([]);
-  const [fixPacks, setFixPacks] = useState<any[]>([]);
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -158,17 +59,6 @@ const VisualAnalysisRedesigned = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
 
-  
-
-  // Auto-advance to analyse step when images are present
-  useEffect(() => {
-    if (images.length > 0 && currentStep === 'capture') {
-      setCurrentStep('analyse');
-      setCompletedSteps(prev => [...prev, 'capture']);
-    }
-  }, [images.length, currentStep]);
-
-  // Compress image before upload for better performance
   const compressImage = (file: File, maxWidth = 1920, quality = 0.85): Promise<File> => {
     return new Promise((resolve) => {
       const canvas = document.createElement('canvas');
@@ -218,15 +108,16 @@ const VisualAnalysisRedesigned = () => {
       return;
     }
 
-    // Compress images for better performance
     const compressedImages = await Promise.all(
       imageFiles.map(file => compressImage(file))
     );
 
     setImages(prev => [...prev, ...compressedImages]);
+    
     toast({
       title: "Images added",
-      description: `${compressedImages.length} image(s) added for analysis.`,
+      description: `${compressedImages.length} image(s) ready for analysis`,
+      variant: "success"
     });
   }, []);
 
@@ -280,10 +171,11 @@ const VisualAnalysisRedesigned = () => {
         const file = new File([blob], `capture-${Date.now()}.jpg`, { type: 'image/jpeg' });
         const compressedFile = await compressImage(file);
         setImages(prev => [...prev, compressedFile]);
-        stopCamera();
+        
         toast({
-          title: "Image captured",
-          description: "Image added for analysis.",
+          title: "Photo captured",
+          description: "Image added to gallery",
+          variant: "success"
         });
       }
     });
@@ -297,7 +189,6 @@ const VisualAnalysisRedesigned = () => {
   };
 
   const uploadImageToSupabase = async (file: File): Promise<string> => {
-    // Get authenticated user ID
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     
     if (authError || !user) {
@@ -323,22 +214,6 @@ const VisualAnalysisRedesigned = () => {
     return urlData.publicUrl;
   };
 
-  const processImageForAnalysis = async (file: File): Promise<string> => {
-    if (removeBackground) {
-      try {
-        const { removeBackground: removeBg, loadImage } = await loadBackgroundRemoval();
-        const image = await loadImage(file);
-        const processedBlob = await removeBg(image);
-        const processedFile = new File([processedBlob], file.name, { type: 'image/png' });
-        return uploadImageToSupabase(processedFile);
-      } catch (error) {
-        console.warn('Background removal failed, using original image:', error);
-        return uploadImageToSupabase(file);
-      }
-    }
-    return uploadImageToSupabase(file);
-  };
-
   const handleAnalysis = async () => {
     if (images.length === 0) {
       toast({
@@ -353,13 +228,11 @@ const VisualAnalysisRedesigned = () => {
     setAnalysisResult(null);
 
     try {
-      // Upload primary image
-      const primaryImageUrl = await processImageForAnalysis(images[primaryImageIndex]);
+      const primaryImageUrl = await uploadImageToSupabase(images[primaryImageIndex]);
       
-      // Upload additional images if any
       const additionalImageUrls = await Promise.all(
         images.filter((_, index) => index !== primaryImageIndex)
-          .map(image => processImageForAnalysis(image))
+          .map(image => uploadImageToSupabase(image))
       );
 
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
@@ -368,10 +241,8 @@ const VisualAnalysisRedesigned = () => {
           additional_images: additionalImageUrls,
           analysis_settings: {
             mode: selectedMode || 'fault_diagnosis',
-            confidence_threshold: confidenceThreshold[0],
-            enable_bounding_boxes: showBoundingBoxes,
-            focus_areas: selectedPreset.settings.focus_areas,
-            remove_background: removeBackground,
+            confidence_threshold: 0.75,
+            enable_bounding_boxes: true,
             bs7671_compliance: true
           }
         },
@@ -389,50 +260,15 @@ const VisualAnalysisRedesigned = () => {
       setAnalysisResult(result);
       setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
       
-      // Generate fix packs for findings
-      const generatedFixPacks = result.findings.map(finding => ({
-        eicr_code: finding.eicr_code,
-        finding: finding.description,
-        urgency: finding.eicr_code === 'C1' ? 'immediate' : finding.eicr_code === 'C2' ? 'urgent' : 'recommended',
-        estimated_time: finding.eicr_code === 'C1' ? '30-60 mins' : '1-2 hours',
-        estimated_cost: finding.eicr_code === 'C1' ? '£50-200' : '£100-500',
-        difficulty: 'electrician' as const,
-        safety_priority: finding.eicr_code === 'C1' ? 'critical' : 'high' as const,
-        steps: [{
-          id: `step-${finding.eicr_code}-1`,
-          title: 'Safe Isolation',
-          description: 'Safely isolate the circuit before commencing work',
-          duration: '10 mins',
-          safety_notes: ['Use approved voltage tester', 'Apply lock-off procedure'],
-          tools_required: ['Voltage tester', 'Lock-off kit'],
-          materials_needed: [],
-          regulation_reference: 'BS 7671 Regulation 537.2'
-        }],
-        materials_list: [],
-        verification_steps: ['Test installation', 'Visual inspection', 'Complete certification'],
-        compliance_notes: [`Repair must comply with ${finding.bs7671_clauses.join(', ')}`]
-      }));
-      setFixPacks(generatedFixPacks);
-      
-      // Save to history
-      const historyEntry = {
-        id: Date.now().toString(),
-        images: [primaryImageUrl, ...additionalImageUrls],
-        result,
-        timestamp: new Date()
-      };
-      setAnalysisHistory(prev => [historyEntry, ...prev.slice(0, 4)]);
-      setCurrentStep('results');
-      setCompletedSteps(prev => [...prev, 'analyse']);
-      
       toast({
-        title: "Analysis Complete",
-        description: "Visual analysis has been completed successfully.",
+        title: "Analysis complete",
+        description: "BS 7671 compliance check finished",
+        variant: "success"
       });
     } catch (error) {
       console.error('Analysis Error:', error);
       toast({
-        title: "Analysis Failed",
+        title: "Analysis failed",
         description: error instanceof Error ? error.message : "Failed to analyse images",
         variant: "destructive",
       });
@@ -450,26 +286,22 @@ const VisualAnalysisRedesigned = () => {
       
       const doc = new jsPDF();
       
-      // Header
       doc.setFontSize(20);
       doc.text('Visual Fault Analysis Report', 20, 20);
       doc.setFontSize(12);
       doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')}`, 20, 30);
       doc.text(`Safety Rating: ${analysisResult.compliance_summary.safety_rating}/10`, 20, 40);
-      doc.text(`BS 7671 18th Edition Compliance Assessment`, 20, 50);
       
-      // Summary
       doc.setFontSize(14);
-      doc.text('Executive Summary', 20, 65);
+      doc.text('Summary', 20, 55);
       doc.setFontSize(10);
       const splitSummary = doc.splitTextToSize(analysisResult.summary, 170);
-      doc.text(splitSummary, 20, 75);
+      doc.text(splitSummary, 20, 65);
       
-      let yPosition = 75 + (splitSummary.length * 5) + 10;
+      let yPosition = 65 + (splitSummary.length * 5) + 10;
       
-      // Issues
       doc.setFontSize(14);
-      doc.text('Identified Issues', 20, yPosition);
+      doc.text('Findings', 20, yPosition);
       yPosition += 10;
       
       const issueData = analysisResult.findings.map(finding => [
@@ -487,50 +319,26 @@ const VisualAnalysisRedesigned = () => {
         styles: { fontSize: 8 }
       });
       
-      // Recommendations
-      yPosition = (doc as any).lastAutoTable.finalY + 10;
-      doc.setFontSize(14);
-      doc.text('Recommendations', 20, yPosition);
-      yPosition += 10;
-      
-      const recData = analysisResult.recommendations.map(rec => [
-        rec.action,
-        rec.priority.charAt(0).toUpperCase() + rec.priority.slice(1),
-        rec.bs7671_reference || 'N/A',
-        rec.cost_estimate || 'TBC'
-      ]);
-      
-      autoTable(doc, {
-        head: [['Action', 'Priority', 'BS 7671 Reference', 'Cost Estimate']],
-        body: recData,
-        startY: yPosition,
-        margin: { left: 20 },
-        styles: { fontSize: 8 }
-      });
-      
-      doc.save(`visual-analysis-report-${Date.now()}.pdf`);
+      doc.save(`visual-analysis-${Date.now()}.pdf`);
       
       toast({
-        title: "Report Exported",
-        description: "PDF report has been downloaded.",
+        title: "Report exported",
+        description: "PDF saved to downloads",
+        variant: "success"
       });
     } catch (error) {
       toast({
-        title: "Export Failed",
-        description: "Unable to generate PDF report.",
+        title: "Export failed",
+        description: "Unable to generate PDF report",
         variant: "destructive",
       });
     }
   };
 
-
   const resetAnalysis = () => {
     setImages([]);
     setAnalysisResult(null);
     setUploadedImageUrls([]);
-    setFixPacks([]);
-    setCurrentStep('capture');
-    setCompletedSteps([]);
     setPrimaryImageIndex(0);
     setSelectedMode(null);
   };
@@ -543,495 +351,276 @@ const VisualAnalysisRedesigned = () => {
     resetAnalysis();
   };
 
-  // If no mode selected, show mode selector
+  // Show mode selector if no mode selected
   if (!selectedMode) {
     return (
-      <TooltipProvider>
-        <div className="space-y-6 min-h-screen bg-elec-grey p-6">
-          <ModeSelector onSelectMode={handleModeSelect} />
-        </div>
-      </TooltipProvider>
+      <div className="space-y-6">
+        <ModeSelector onSelectMode={handleModeSelect} />
+      </div>
     );
   }
 
   const getModeTitle = () => {
     switch (selectedMode) {
-      case 'component_identify':
-        return 'Component Identification';
-      case 'wiring_instruction':
-        return 'Wiring Instructions';
-      case 'installation_verify':
-        return 'Installation Verification';
+      case 'component_identify': return 'Component Identification';
+      case 'wiring_instruction': return 'Wiring Instructions';
+      case 'installation_verify': return 'Installation Verification';
       case 'fault_diagnosis':
-      default:
-        return 'Fault Diagnosis';
+      default: return 'Fault Diagnosis';
     }
   };
 
   const getModeDescription = () => {
     switch (selectedMode) {
-      case 'component_identify':
-        return 'AI-powered component identification with specifications and BS 7671 requirements';
-      case 'wiring_instruction':
-        return 'Step-by-step UK wiring instructions with terminal diagrams and safety guidance';
-      case 'installation_verify':
-        return 'BS 7671 compliance verification with pass/fail assessment';
+      case 'component_identify': 
+        return 'Identify electrical components with specifications';
+      case 'wiring_instruction': 
+        return 'Step-by-step UK wiring guidance';
+      case 'installation_verify': 
+        return 'BS 7671 compliance verification';
       case 'fault_diagnosis':
-      default:
-        return 'AI-powered BS 7671 compliance analysis using advanced computer vision';
+      default: 
+        return 'AI-powered fault detection and analysis';
     }
   };
 
   return (
-    <TooltipProvider>
-      <div className="space-y-6 min-h-screen bg-elec-grey">
-        {/* Header with Stepper */}
-        <Card className="bg-card border-border">
-          <CardHeader className="pb-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleBackToModeSelection}
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    <ArrowLeft className="h-4 w-4 mr-1" />
-                    Change Mode
-                  </Button>
-                </div>
+    <div className="space-y-4 sm:space-y-6">
+      {/* Header */}
+      <Card className="bg-card border-border">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleBackToModeSelection}
+                  className="text-muted-foreground hover:text-foreground mb-2 -ml-2"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-1" />
+                  Change Mode
+                </Button>
                 <CardTitle className="flex items-center gap-2 text-foreground">
-                  <Sparkles className="h-6 w-6 text-primary" />
-                  {getModeTitle()}
+                  <Sparkles className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                  <span className="truncate">{getModeTitle()}</span>
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="mt-1">
                   {getModeDescription()}
                 </CardDescription>
               </div>
               {analysisResult && (
                 <Badge 
                   variant={analysisResult.compliance_summary?.overall_assessment === 'satisfactory' ? 'default' : 'destructive'}
-                  className="text-sm"
+                  className="text-xs sm:text-sm flex-shrink-0"
                 >
                   {analysisResult.compliance_summary?.overall_assessment === 'satisfactory' ? 'Satisfactory' : 'Unsatisfactory'}
                 </Badge>
               )}
             </div>
-            <Stepper 
-              steps={STEPS} 
-              currentStep={currentStep} 
-              completedSteps={completedSteps}
-            />
+          </div>
+        </CardHeader>
+      </Card>
+
+      {/* Main Content */}
+      {!analysisResult ? (
+        <Card className="bg-card border-border">
+          <CardHeader>
+            <CardTitle className="text-foreground">Upload Images</CardTitle>
+            <CardDescription>
+              Add photos of the installation for AI analysis
+            </CardDescription>
           </CardHeader>
-        </Card>
-
-        {/* Main Content */}
-        {currentStep === 'capture' && (
-          <Card className="bg-card border-border">
-            <CardHeader>
-              <CardTitle className="text-foreground">1. Capture & Upload Images</CardTitle>
-              <CardDescription>
-                Upload or capture images of electrical installations for analysis
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Simple file upload area */}
-              <div 
-                className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary/50 transition-colors"
-                onDrop={handleDrop}
-                onDragOver={(e) => e.preventDefault()}
-                onClick={() => fileInputRef.current?.click()}
+          <CardContent className="space-y-6">
+            {/* Upload Zone */}
+            <div 
+              className="relative border-2 border-dashed border-border rounded-xl p-8 sm:p-12 text-center hover:border-elec-yellow/60 hover:bg-elec-yellow/5 transition-all duration-300 cursor-pointer group"
+              onDrop={handleDrop}
+              onDragOver={(e) => e.preventDefault()}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => handleFileSelect(e.target.files)}
+                className="hidden"
+              />
+              <Upload className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-4 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
+              <p className="text-base sm:text-lg font-semibold text-foreground mb-2">
+                Drag & drop images here
+              </p>
+              <p className="text-sm text-muted-foreground mb-6">
+                or click to browse files
+              </p>
+              <Button variant="outline" type="button" className="pointer-events-none">
+                <Upload className="h-4 w-4 mr-2" />
+                Choose Files
+              </Button>
+            </div>
+            
+            {/* Camera Button */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button 
+                variant="outline" 
+                onClick={isCameraActive ? captureImage : startCamera}
+                className="w-full sm:w-auto"
+                size="lg"
               >
-                <Upload className="h-8 w-8 mx-auto mb-4 text-muted-foreground" />
-                <p className="text-foreground font-medium mb-2">Upload Images for Analysis</p>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Drag and drop images here, or click to select files
-                </p>
-                <Button variant="outline">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Choose Files
-                </Button>
-              </div>
-              
-              {/* Camera capture */}
-              <div className="flex justify-center">
-                <Button 
-                  variant="outline" 
-                  onClick={isCameraActive ? captureImage : startCamera}
-                  className="flex items-center gap-2"
-                >
-                  <Camera className="h-4 w-4" />
-                  {isCameraActive ? 'Capture Photo' : 'Use Camera'}
-                </Button>
-              </div>
-              
-              {/* Camera view */}
+                <Camera className="h-5 w-5 mr-2" />
+                {isCameraActive ? 'Capture Photo' : 'Use Camera'}
+              </Button>
               {isCameraActive && (
-                <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
-                  <video 
-                    ref={videoRef}
-                    autoPlay 
-                    playsInline 
-                    muted
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 right-4">
-                    <Button size="sm" variant="destructive" onClick={stopCamera}>
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
+                <Button 
+                  variant="destructive" 
+                  onClick={stopCamera}
+                  className="w-full sm:w-auto"
+                  size="lg"
+                >
+                  <X className="h-5 w-5 mr-2" />
+                  Close Camera
+                </Button>
               )}
-              
-              {/* Image Gallery */}
-              {images.length > 0 && (
-                <div className="space-y-4">
-                  <h3 className="font-medium text-foreground">Uploaded Images ({images.length})</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    {images.map((image, index) => (
-                      <div key={index} className="relative group">
-                        <img
-                          src={URL.createObjectURL(image)}
-                          alt={`Upload ${index + 1}`}
-                          className="w-full h-24 object-cover rounded-lg border border-border"
-                        />
-                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
-                          <Button
-                            size="sm"
-                            variant="destructive"
-                            onClick={() => removeImage(index)}
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        </div>
-                        {index === primaryImageIndex && (
-                          <Badge className="absolute -top-2 -left-2">Primary</Badge>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+            </div>
+            
+            {/* Camera View */}
+            {isCameraActive && (
+              <div className="relative aspect-video bg-muted rounded-xl overflow-hidden border border-border">
+                <video 
+                  ref={videoRef}
+                  autoPlay 
+                  playsInline 
+                  muted
+                  className="w-full h-full object-cover"
+                />
+                <canvas ref={canvasRef} className="hidden" />
+              </div>
+            )}
+            
+            {/* Image Gallery */}
+            {images.length > 0 && (
+              <div className="space-y-4 animate-fade-in">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-foreground">
+                    Selected Images ({images.length})
+                  </h3>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <Plus className="h-4 w-4 mr-1" />
+                    Add More
+                  </Button>
                 </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
-
-        {currentStep === 'analyse' && (
-          <Card className="bg-card border-border">
-            <CardHeader>
-                      <div className="flex items-center justify-between flex-wrap gap-2">
-                <div>
-                  <CardTitle className="text-foreground">2. Review & Analyse</CardTitle>
-                  <CardDescription>
-                    Configure analysis settings and run the inspection
-                  </CardDescription>
-                </div>
-                <div className="flex gap-2">
-                  <Drawer>
-                    <DrawerTrigger asChild>
-                      <Button variant="outline" size="sm">
-                        <Settings className="h-4 w-4 mr-2" />
-                        Advanced Settings
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                  {images.map((image, index) => (
+                    <div 
+                      key={index} 
+                      className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-200 hover:scale-105 ${
+                        index === primaryImageIndex 
+                          ? 'border-elec-yellow shadow-lg shadow-elec-yellow/20' 
+                          : 'border-border hover:border-elec-yellow/50'
+                      }`}
+                      onClick={() => setPrimaryImageIndex(index)}
+                    >
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt={`Upload ${index + 1}`}
+                        className="w-full aspect-square object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <Button
+                        size="icon"
+                        variant="destructive"
+                        className="absolute top-2 right-2 h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeImage(index);
+                        }}
+                      >
+                        <X className="h-4 w-4" />
                       </Button>
-                    </DrawerTrigger>
-                    <DrawerContent>
-                      <DrawerHeader>
-                        <DrawerTitle>Analysis Settings</DrawerTitle>
-                        <DrawerDescription>
-                          Customise the analysis parameters for optimal results
-                        </DrawerDescription>
-                      </DrawerHeader>
-                      <div className="p-4 space-y-6">
-                        {/* Preset Selection */}
-                        <div className="space-y-3">
-                          <h4 className="font-medium text-foreground">Analysis Preset</h4>
-                          <div className="grid grid-cols-1 gap-3">
-                            {ANALYSIS_PRESETS.map((preset) => (
-                              <Card 
-                                key={preset.name}
-                                className={`cursor-pointer transition-colors ${
-                                  selectedPreset.name === preset.name 
-                                    ? 'border-primary bg-primary/5' 
-                                    : 'border-border hover:border-muted-foreground'
-                                }`}
-                                onClick={() => setSelectedPreset(preset)}
-                              >
-                                <CardContent className="p-3">
-                                  <div className="flex items-center gap-3">
-                                    <preset.icon className="h-5 w-5 text-primary" />
-                                    <div>
-                                      <p className="font-medium text-sm text-foreground">{preset.name}</p>
-                                      <p className="text-xs text-muted-foreground">{preset.description}</p>
-                                    </div>
-                                  </div>
-                                </CardContent>
-                              </Card>
-                            ))}
-                          </div>
+                      {index === primaryImageIndex && (
+                        <div className="absolute bottom-2 left-2">
+                          <Badge className="bg-elec-yellow text-black font-semibold gap-1">
+                            <CheckCircle2 className="h-3 w-3" />
+                            Primary
+                          </Badge>
                         </div>
-
-                        {/* Confidence Threshold */}
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between">
-                            <h4 className="font-medium text-foreground">Confidence Threshold</h4>
-                            <Badge variant="secondary">{Math.round(confidenceThreshold[0] * 100)}%</Badge>
-                          </div>
-                          <Slider
-                            value={confidenceThreshold}
-                            onValueChange={setConfidenceThreshold}
-                            max={1}
-                            min={0.1}
-                            step={0.05}
-                            className="w-full"
-                          />
-                        </div>
-
-                        {/* Toggle Options */}
-                        <div className="space-y-4">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="font-medium text-foreground">Show Bounding Boxes</p>
-                              <p className="text-sm text-muted-foreground">Display visual markers on detected issues</p>
-                            </div>
-                            <Switch 
-                              checked={showBoundingBoxes} 
-                              onCheckedChange={setShowBoundingBoxes}
-                            />
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="font-medium text-foreground">Remove Background</p>
-                              <p className="text-sm text-muted-foreground">Enhance focus on electrical components</p>
-                            </div>
-                            <Switch 
-                              checked={removeBackground} 
-                              onCheckedChange={setRemoveBackground}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <DrawerFooter>
-                        <DrawerClose asChild>
-                          <Button variant="outline">Close</Button>
-                        </DrawerClose>
-                      </DrawerFooter>
-                    </DrawerContent>
-                  </Drawer>
+                      )}
+                    </div>
+                  ))}
                 </div>
+                <p className="text-sm text-muted-foreground text-center">
+                  Click an image to set as primary
+                </p>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Quick Summary */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center p-3 bg-muted/50 rounded-lg">
-                  <ImageIcon className="h-6 w-6 mx-auto mb-2 text-primary" />
-                  <p className="text-sm font-medium text-foreground">{images.length}</p>
-                  <p className="text-xs text-muted-foreground">Images</p>
-                </div>
-                <div className="text-center p-3 bg-muted/50 rounded-lg">
-                  <Target className="h-6 w-6 mx-auto mb-2 text-primary" />
-                  <p className="text-sm font-medium text-foreground">{selectedPreset.name}</p>
-                  <p className="text-xs text-muted-foreground">Preset</p>
-                </div>
-                <div className="text-center p-3 bg-muted/50 rounded-lg">
-                  <TrendingUp className="h-6 w-6 mx-auto mb-2 text-primary" />
-                  <p className="text-sm font-medium text-foreground">{Math.round(confidenceThreshold[0] * 100)}%</p>
-                  <p className="text-xs text-muted-foreground">Threshold</p>
-                </div>
-                <div className="text-center p-3 bg-muted/50 rounded-lg">
-                  <Layers className="h-6 w-6 mx-auto mb-2 text-primary" />
-                  <p className="text-sm font-medium text-foreground">{showBoundingBoxes ? 'On' : 'Off'}</p>
-                  <p className="text-xs text-muted-foreground">Overlays</p>
-                </div>
-              </div>
+            )}
 
-              {/* Action Button */}
-              <div className="flex justify-center">
+            {/* Analyse Button */}
+            {images.length > 0 && (
+              <div className="flex justify-center pt-4">
                 <Button 
                   onClick={handleAnalysis}
-                  disabled={isAnalyzing || images.length === 0}
+                  disabled={isAnalyzing}
                   size="lg"
-                  className="min-w-48"
+                  className="w-full sm:w-auto sm:min-w-64 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base h-14"
                 >
                   {isAnalyzing ? (
                     <>
                       <Loader className="h-5 w-5 mr-2 animate-spin" />
-                      Analysing...
+                      Analysing Installation...
                     </>
                   ) : (
                     <>
                       <Sparkles className="h-5 w-5 mr-2" />
-                      Start Analysis
+                      Analyse Installation
                     </>
                   )}
                 </Button>
               </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {currentStep === 'results' && analysisResult && (
-          <div className="space-y-6">
-            {/* Summary Card */}
-            <Card className="bg-card border-border">
-              <CardHeader className="gap-2">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <div>
-                    <CardTitle className="text-foreground">3. Analysis Results</CardTitle>
-                    <CardDescription>
-                      BS 7671 compliance findings and recommendations
-                    </CardDescription>
-                  </div>
-                      <div className="flex gap-2 flex-wrap">
-                    <Button variant="outline" size="sm" onClick={exportReport}>
-                      <Download className="h-4 w-4 mr-2" />
-                      Export PDF
-                    </Button>
-                    <Button variant="outline" size="sm" onClick={resetAnalysis}>
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      New Analysis
-                    </Button>
-                    <Drawer>
-                      <DrawerTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          <History className="h-4 w-4 mr-2" />
-                          History
-                        </Button>
-                      </DrawerTrigger>
-                      <DrawerContent>
-                        <DrawerHeader>
-                          <DrawerTitle>Analysis History</DrawerTitle>
-                          <DrawerDescription>
-                            Previous analysis results and comparisons
-                          </DrawerDescription>
-                        </DrawerHeader>
-                        <div className="p-4">
-                          {analysisHistory.length === 0 ? (
-                            <p className="text-center text-muted-foreground py-8">No previous analyses</p>
-                          ) : (
-                            <div className="space-y-4">
-                              {analysisHistory.map((entry) => (
-                                <Card key={entry.id} className="border-border">
-                                  <CardContent className="p-4">
-                                    <div className="flex items-center justify-between">
-                                      <div>
-                                        <p className="font-medium text-foreground">
-                                          {entry.result.findings.length} findings
-                                        </p>
-                                        <p className="text-sm text-muted-foreground">
-                                          {entry.timestamp.toLocaleDateString()}
-                                        </p>
-                                      </div>
-                                      <Badge variant={entry.result.compliance_summary.overall_assessment === 'satisfactory' ? 'default' : 'destructive'}>
-                                        {entry.result.compliance_summary.overall_assessment}
-                                      </Badge>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                        <DrawerFooter>
-                          <DrawerClose asChild>
-                            <Button variant="outline">Close</Button>
-                          </DrawerClose>
-                        </DrawerFooter>
-                      </DrawerContent>
-                    </Drawer>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {/* Key Metrics */}
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-                  <div className="text-center p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
-                    <p className="text-lg font-bold text-destructive">{analysisResult.compliance_summary.c1_count}</p>
-                    <p className="text-xs text-muted-foreground">C1 Issues</p>
-                  </div>
-                  <div className="text-center p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
-                    <p className="text-lg font-bold text-yellow-600">{analysisResult.compliance_summary.c2_count}</p>
-                    <p className="text-xs text-muted-foreground">C2 Issues</p>
-                  </div>
-                  <div className="text-center p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                    <p className="text-lg font-bold text-blue-600">{analysisResult.compliance_summary.c3_count}</p>
-                    <p className="text-xs text-muted-foreground">C3 Issues</p>
-                  </div>
-                  <div className="text-center p-3 bg-muted/50 rounded-lg">
-                    <p className="text-lg font-bold text-foreground">{analysisResult.compliance_summary.fi_count}</p>
-                    <p className="text-xs text-muted-foreground">FI Items</p>
-                  </div>
-                  <div className="text-center p-3 bg-primary/10 border border-primary/20 rounded-lg">
-                    <p className="text-lg font-bold text-primary">{analysisResult.compliance_summary.safety_rating}/10</p>
-                    <p className="text-xs text-muted-foreground">Safety Rating</p>
-                  </div>
-                </div>
-
-                {/* Summary */}
-                <div className="mb-6">
-                  <h4 className="font-medium text-foreground mb-2">Executive Summary</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{analysisResult.summary}</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Evidence Viewer */}
-            {uploadedImageUrls.length > 0 && (
-              <Card className="bg-card border-border">
-                <CardHeader>
-                  <CardTitle className="text-foreground">Evidence & Annotations</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <EvidenceViewer
-                    imageUrl={uploadedImageUrls[0]}
-                    findings={analysisResult.findings}
-                    showOverlays={showBoundingBoxes}
-                  />
-                </CardContent>
-              </Card>
             )}
-
-            {/* Detailed Results */}
-            <VisualAnalysisResults 
-              analysisResult={analysisResult}
-              onExportReport={exportReport}
-            />
-
-            {/* Fix Packs */}
-            {fixPacks.length > 0 && (
-              <Card className="bg-card border-border">
-                <CardHeader>
-                  <CardTitle className="text-foreground">Repair Guidance</CardTitle>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="space-y-6">
+          {/* Results Header Card */}
+          <Card className="bg-card border-border">
+            <CardHeader>
+              <div className="flex items-center justify-between flex-wrap gap-3">
+                <div>
+                  <CardTitle className="text-foreground">Analysis Results</CardTitle>
                   <CardDescription>
-                    Step-by-step repair instructions for identified issues
+                    BS 7671 compliance findings
                   </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {fixPacks.map((fixPack, index) => (
-                      <FixPack key={index} {...fixPack} />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        )}
+                </div>
+                <div className="flex gap-2 flex-wrap">
+                  <Button variant="outline" size="sm" onClick={exportReport}>
+                    <Download className="h-4 w-4 mr-2" />
+                    Export PDF
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={resetAnalysis}>
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    New Analysis
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
 
-        {/* Hidden elements for camera capture */}
-        <video ref={videoRef} autoPlay playsInline muted className="hidden" />
-        <canvas ref={canvasRef} className="hidden" />
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={(e) => handleFileSelect(e.target.files)}
-          className="hidden"
-        />
-      </div>
-    </TooltipProvider>
+          {/* Results Component */}
+          <VisualAnalysisResults 
+            analysisResult={analysisResult}
+            onExportReport={exportReport}
+          />
+        </div>
+      )}
+
+      {/* Hidden canvas for camera */}
+      <canvas ref={canvasRef} className="hidden" />
+    </div>
   );
 };
 
