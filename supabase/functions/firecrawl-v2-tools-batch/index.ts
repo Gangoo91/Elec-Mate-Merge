@@ -10,7 +10,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Define 4 batches of 4-5 URLs each (18 total)
+// Define 3 batches of 6 URLs each (18 total)
 const BATCH_URLS = {
   1: [
     { url: 'https://www.screwfix.com/search?search=screwdrivers+pliers+spanners+electrical+work&page_size=50', name: 'Hand Tools - Screwfix' },
@@ -18,21 +18,19 @@ const BATCH_URLS = {
     { url: 'https://www.screwfix.com/search?search=testing+measurement+electrical+safety+compliance&page_size=50', name: 'Test Equipment - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=testing+measurement+electrical+safety+compliance', name: 'Test Equipment - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=electric+cordless+drilling+cutting+installation&page_size=50', name: 'Power Tools - Screwfix' },
+    { url: 'https://www.toolstation.com/search?q=electric+cordless+drilling+cutting+installation', name: 'Power Tools - Toolstation' },
   ],
   2: [
-    { url: 'https://www.toolstation.com/search?q=electric+cordless+drilling+cutting+installation', name: 'Power Tools - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=personal protective equipment&page_size=50', name: 'PPE - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=personal protective equipment', name: 'PPE - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50', name: 'Specialist Tools - Screwfix' },
-  ],
-  3: [
     { url: 'https://www.toolstation.com/search?q=cable+stripper+fish+tape+electrical', name: 'Specialist Tools - Toolstation' },
     { url: 'https://www.toolstation.com/search?q=tool+bags+boxes+storage+solutions+organisation&page_size=50', name: 'Tool Storage - Screwfix' },
     { url: 'https://www.screwfix.com/search?search=hazard+identification+protection+safety+equipment', name: 'Tool Storage - Toolstation' },
+  ],
+  3: [
     { url: 'https://www.screwfix.com/search?search=Equipment+ladders+scaffolding+access+working+at+height&page_size=50', name: 'Safety Tools - Screwfix' },
     { url: 'https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation', name: 'Safety Tools - Toolstation' },
-  ],
-  4: [
     { url: 'https://www.screwfix.com/search?search=specialist+electrical+tools+installation+tasks&page_size=50', name: 'Access Tools & Equipment - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=hazard+identification+protection+safety+equipment', name: 'Access Tools & Equipment - Toolstation' },
     { url: 'https://www.toolstation.com/search?q=Equipment+ladders+scaffolding+access+working+at+height&page_size=50', name: 'Specialist Tools - Toolstation' },
@@ -151,7 +149,7 @@ serve(async (req) => {
           success: true,
           status: 'in_progress',
           currentBatch: processingBatch.batch_number,
-          message: `Batch ${processingBatch.batch_number}/4 is processing...`
+          message: `Batch ${processingBatch.batch_number}/3 is processing...`
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -167,7 +165,7 @@ serve(async (req) => {
 
     console.log(`📋 Processing batch ${targetBatch} with ${urls.length} URLs`);
 
-    // Create Firecrawl batch job with simplified schema
+    // Create Firecrawl batch job
     const batchResponse = await fetch('https://api.firecrawl.dev/v1/batch/scrape', {
       method: 'POST',
       headers: {
@@ -178,7 +176,7 @@ serve(async (req) => {
         urls: urls.map(u => u.url),
         formats: ['extract'],
         extract: {
-          prompt: "Extract all electrician tools and equipment with their product name, price in GBP, and direct product page URL. Focus on hand tools, power tools, test equipment, and safety gear.",
+          prompt: "Extract all tools and equipment products from this page with their names, brands, prices, and product URLs.",
           schema: {
             type: "object",
             properties: {
@@ -188,13 +186,36 @@ serve(async (req) => {
                   type: "object",
                   properties: {
                     name: {
-                      type: "string"
+                      type: "string",
+                      description: "Full product name including model number"
+                    },
+                    brand: {
+                      type: "string",
+                      description: "Brand/manufacturer name"
                     },
                     price: {
-                      type: "string"
+                      type: "string",
+                      description: "Current price in GBP"
+                    },
+                    description: {
+                      type: "string",
+                      description: "Brief product description or key features"
+                    },
+                    category: {
+                      type: "string",
+                      description: "Product category"
+                    },
+                    productType: {
+                      type: "string",
+                      description: "Specific product type"
+                    },
+                    image: {
+                      type: "string",
+                      description: "URL of the product image"
                     },
                     view_product_url: {
-                      type: "string"
+                      type: "string",
+                      description: "Direct URL to the product page"
                     }
                   },
                   required: ["name", "price", "view_product_url"]
@@ -208,8 +229,6 @@ serve(async (req) => {
     });
 
     if (!batchResponse.ok) {
-      const errorText = await batchResponse.text();
-      console.error(`❌ Firecrawl API error: ${batchResponse.status} - ${errorText}`);
       throw new Error(`Firecrawl API error: ${batchResponse.statusText}`);
     }
 
@@ -234,8 +253,8 @@ serve(async (req) => {
         success: true,
         status: 'in_progress',
         batchNumber: targetBatch,
-        totalBatches: 4,
-        message: `Batch ${targetBatch}/4 started. Results will be available in 2-3 minutes.`,
+        totalBatches: 3,
+        message: `Batch ${targetBatch}/3 started. Results will be available in 2-3 minutes.`,
         firecrawlJobId: batchData.id
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -264,9 +283,7 @@ async function pollAndStoreResults(jobId: string, batchNumber: number, urls: any
       });
 
       if (!statusResponse.ok) {
-        const errorText = await statusResponse.text();
-        console.error(`❌ Status check failed: ${statusResponse.status} - ${errorText}`);
-        throw new Error(`Failed to check Firecrawl status: ${statusResponse.statusText}`);
+        throw new Error('Failed to check Firecrawl status');
       }
 
       const statusData = await statusResponse.json();
@@ -359,7 +376,7 @@ async function pollAndStoreResults(jobId: string, batchNumber: number, urls: any
         console.log(`✅ Batch ${batchNumber} complete: ${totalTools} tools stored`);
 
         // Auto-trigger next batch if not the last one
-        if (batchNumber < 4) {
+        if (batchNumber < 3) {
           console.log(`🚀 Auto-triggering batch ${batchNumber + 1}...`);
           
           fetch(`${SUPABASE_URL}/functions/v1/firecrawl-v2-tools-batch`, {
