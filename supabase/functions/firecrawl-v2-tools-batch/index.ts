@@ -7,31 +7,22 @@ const corsHeaders = {
 };
 
 const SEARCH_URLS = [
-  // Hand Tools (both suppliers)
   "https://www.screwfix.com/search?search=screwdrivers+pliers+spanners+electrical+work&page_size=50",
   "https://www.toolstation.com/search?q=screwdrivers+pliers+spanners+electrical+work&page_size=50",
-  // Test Equipment
   "https://www.screwfix.com/search?search=testing+measurement+electrical+safety+compliance&page_size=50",
   "https://www.toolstation.com/search?q=testing+measurement+electrical+safety+compliance&page_size=50",
-  // Power Tools
   "https://www.screwfix.com/search?search=electric+cordless+drilling+cutting+installation&page_size=50",
   "https://www.toolstation.com/search?q=electric+cordless+drilling+cutting+installation&page_size=50",
-  // PPE
   "https://www.screwfix.com/search?search=personal+protective+equipment+safe+working+practices&page_size=50",
   "https://www.toolstation.com/search?q=personal+protective+equipment+safe+working+practices&page_size=50",
-  // Specialist Tools
   "https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50",
   "https://www.toolstation.com/search?q=cable+stripper+fish+tape+electrical&page_size=50",
-  // Tool Storage
   "https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation&page_size=50",
   "https://www.toolstation.com/search?q=tool+bags+boxes+storage+solutions+organisation&page_size=50",
-  // Safety Tools
   "https://www.screwfix.com/search?search=hazard+identification+protection+safety+equipment&page_size=50",
   "https://www.toolstation.com/search?q=hazard+identification+protection+safety+equipment&page_size=50",
-  // Access Tools & Equipment
   "https://www.screwfix.com/search?search=Equipment+ladders+scaffolding+access+working+at+height&page_size=50",
   "https://www.toolstation.com/search?q=Equipment+ladders+scaffolding+access+working+at+height&page_size=50",
-  // Specialist Electrical Tools
   "https://www.screwfix.com/search?search=specialist+electrical+tools+installation+tasks&page_size=50",
   "https://www.toolstation.com/search?q=specialist+electrical+tools+installation+tasks&page_size=50",
 ];
@@ -44,57 +35,18 @@ const schema = {
       items: {
         type: "object",
         properties: {
-          name: {
-            type: "string",
-            description: "Full product name including model number",
-          },
-          brand: {
-            type: "string",
-            description: "Brand/manufacturer name (e.g., Makita, DeWalt, Bosch, Hilti, Bahco, Wiha, Wera)",
-          },
-          price: {
-            type: "string",
-            description: "Current price in GBP",
-          },
-          description: {
-            type: "string",
-            description: "Brief product description or key features",
-          },
-          category: {
-            type: "string",
-            description: "Product category (e.g., Drills, Screwdrivers, Power Tools)",
-          },
-          productType: {
-            type: "string",
-            description: "Specific type (e.g., SDS Drill, Combi Drill, Cordless, Corded)",
-          },
-          image: {
-            type: "string",
-            format: "uri",
-            description: "URL of the product image",
-          },
-          view_product_url: {
-            type: "string",
-            format: "uri",
-            description: "Direct URL to the product page",
-          },
-          stockStatus: {
-            type: "string",
-            description: "Stock availability (In Stock, Out of Stock, Low Stock)",
-          },
-          productCode: {
-            type: "string",
-            description: "SKU or product code",
-          },
-          voltage: {
-            type: "string",
-            description: "Voltage rating for power tools (e.g., 18V, 240V)",
-          },
-          keyFeatures: {
-            type: "array",
-            items: { type: "string" },
-            description: "Key features or highlights",
-          },
+          name: { type: "string", description: "Full product name including model number" },
+          brand: { type: "string", description: "Brand/manufacturer name" },
+          price: { type: "string", description: "Current price in GBP" },
+          description: { type: "string", description: "Brief product description" },
+          category: { type: "string", description: "Product category" },
+          productType: { type: "string", description: "Specific type" },
+          image: { type: "string", format: "uri", description: "Product image URL" },
+          view_product_url: { type: "string", format: "uri", description: "Product page URL" },
+          stockStatus: { type: "string", description: "Stock availability" },
+          productCode: { type: "string", description: "SKU or product code" },
+          voltage: { type: "string", description: "Voltage rating for power tools" },
+          keyFeatures: { type: "array", items: { type: "string" }, description: "Key features" },
         },
         required: ["name", "brand", "price"],
       },
@@ -122,112 +74,6 @@ function extractSupplier(url: string): string {
   return 'Unknown';
 }
 
-async function getToolsWithBatchAPI(apiKey: string) {
-  const url = "https://api.firecrawl.dev/v2/batch/scrape";
-  
-  console.log('🚀 Starting batch scrape job with Firecrawl V2...');
-  console.log(`📋 Scraping ${SEARCH_URLS.length} URLs across 8 categories from 2 suppliers`);
-  
-  const options = {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      urls: SEARCH_URLS,
-      onlyMainContent: true,
-      maxAge: 0,
-      formats: [
-        {
-          type: "json",
-          prompt: `Extract all tool products visible on this page. For each product, include:  
-                - Full product names, including model numbers  
-                - Brand names (prioritize: Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK)  
-                - Exact prices in GBP  
-                - Product codes or SKUs  
-                - Stock availability (in stock or not)  
-                - Product categories and specific types (e.g. Hand Tools, Power Tools, Test Equipment, PPE, Safety Tools, Access Tools & Equipment, Tool Storage, Specialist Tools)  
-                - Voltage ratings for power tools (e.g., 18V, 240V)  
-                - Key features or highlights if available  
-                - Direct URLs to product pages  
-                - Product images  
-    
-                Extract every product visible on the page, capturing all the details above.`,
-          schema: schema,
-        },
-      ],
-    }),
-  };
-
-  const response = await fetch(url, options);
-  const job = await response.json();
-  
-  if (!job.success || !job.url) {
-    throw new Error(`Failed to create batch job: ${JSON.stringify(job)}`);
-  }
-  
-  console.log(`✅ Batch job created with ID: ${job.id}`);
-  console.log(`🔗 Status URL: ${job.url}`);
-
-  let status: any;
-  let pollCount = 0;
-  const maxPolls = 120; // 10 minutes max (5s * 120)
-
-  do {
-    await new Promise((r) => setTimeout(r, 5000)); // Poll every 5 seconds
-    pollCount++;
-    
-    const statusResponse = await fetch(job.url, {
-      headers: { Authorization: `Bearer ${apiKey}` },
-    });
-    status = await statusResponse.json();
-    
-    console.log(`⏳ Poll ${pollCount}: Status = ${status.status}, Completed = ${status.completed || 0}/${status.total || 0}`);
-    
-    if (pollCount >= maxPolls) {
-      throw new Error('Batch job timeout - exceeded maximum polling time');
-    }
-  } while (status.status !== "completed" && status.status !== "failed");
-
-  if (status.status === "failed") {
-    throw new Error(`Batch job failed: ${JSON.stringify(status)}`);
-  }
-
-  console.log(`✅ Batch job completed! Processing ${status.data?.length || 0} results...`);
-
-  // Extract and flatten all products from all URLs
-  const allProducts = status.data
-    ?.map((item: any, urlIndex: number) => {
-      const url = SEARCH_URLS[urlIndex];
-      const category = mapUrlToCategory(url);
-      const supplier = extractSupplier(url);
-      
-      const products = item?.json?.products || [];
-      console.log(`📦 URL ${urlIndex + 1} (${category} - ${supplier}): ${products.length} products`);
-      
-      return products.map((product: any, idx: number) => ({
-        id: Date.now() + urlIndex * 1000 + idx,
-        name: product.name || 'Unknown Product',
-        brand: product.brand || 'Generic',
-        price: product.price || '£0.00',
-        supplier: supplier,
-        category: category,
-        image: product.image || '/placeholder.svg',
-        productUrl: product.view_product_url || url,
-        stockStatus: product.stockStatus || 'In Stock',
-        description: product.description || '',
-        productCode: product.productCode || '',
-        voltage: product.voltage || '',
-        keyFeatures: product.keyFeatures || [],
-        productType: product.productType || ''
-      }));
-    })
-    .flat() || [];
-
-  return allProducts;
-}
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -245,31 +91,133 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Get all tools using batch API
-    const allTools = await getToolsWithBatchAPI(apiKey);
-    
-    console.log(`\n📊 TOTAL TOOLS FOUND: ${allTools.length}`);
+    console.log('📋 Starting batch scrape with Firecrawl V2...');
+    console.log(`🔍 Scraping ${SEARCH_URLS.length} URLs`);
 
-    // Group tools by category for storage
+    // Create batch job
+    const batchResponse = await fetch('https://api.firecrawl.dev/v2/batch/scrape', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        urls: SEARCH_URLS,
+        onlyMainContent: true,
+        maxAge: 0,
+        formats: [{
+          type: 'json',
+          prompt: `Extract all tool products visible on this page. For each product, include: full product names with model numbers, brand names (prioritize: Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK), exact prices in GBP, product codes/SKUs, stock availability, categories, voltage ratings for power tools, key features, direct URLs to product pages, and product images. Extract every product visible.`,
+          schema: schema,
+        }],
+      }),
+    });
+
+    const job = await batchResponse.json();
+
+    if (!job.success || !job.url) {
+      throw new Error(`Failed to create batch job: ${JSON.stringify(job)}`);
+    }
+
+    console.log(`✅ Batch job created: ${job.id}`);
+
+    // Poll with timeout protection (max 2 minutes)
+    let status: any;
+    let pollCount = 0;
+    const maxPolls = 20; // 100 seconds (5s * 20)
+
+    do {
+      await new Promise((r) => setTimeout(r, 5000));
+      pollCount++;
+
+      const statusRes = await fetch(job.url, {
+        headers: { Authorization: `Bearer ${apiKey}` },
+      });
+      status = await statusRes.json();
+
+      console.log(`⏳ Poll ${pollCount}: ${status.status} - ${status.completed || 0}/${status.total || 0}`);
+
+      // If job is still running after timeout, return early with job info
+      if (pollCount >= maxPolls && status.status === 'scraping') {
+        console.log('⚠️ Job timeout - returning job info for manual check');
+        
+        return new Response(
+          JSON.stringify({
+            success: false,
+            status: 'timeout',
+            message: 'Batch job is taking longer than expected. The scraping will continue in the background. Please try refreshing in a few minutes, or reduce the number of URLs.',
+            jobId: job.id,
+            jobUrl: job.url,
+            progress: `${status.completed || 0}/${status.total || 0}`,
+          }),
+          {
+            status: 202, // Accepted but not completed
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+
+    } while (status.status !== 'completed' && status.status !== 'failed' && pollCount < maxPolls);
+
+    if (status.status === 'failed') {
+      throw new Error(`Batch job failed: ${JSON.stringify(status)}`);
+    }
+
+    if (status.status !== 'completed') {
+      throw new Error('Batch job timeout');
+    }
+
+    console.log(`✅ Job completed! Processing ${status.data?.length || 0} results...`);
+
+    // Process results
+    const allProducts = status.data
+      ?.map((item: any, urlIndex: number) => {
+        const url = SEARCH_URLS[urlIndex];
+        const category = mapUrlToCategory(url);
+        const supplier = extractSupplier(url);
+
+        const products = item?.json?.products || [];
+        console.log(`📦 URL ${urlIndex + 1} (${category} - ${supplier}): ${products.length} products`);
+
+        return products.map((product: any, idx: number) => ({
+          id: Date.now() + urlIndex * 1000 + idx,
+          name: product.name || 'Unknown Product',
+          brand: product.brand || 'Generic',
+          price: product.price || '£0.00',
+          supplier: supplier,
+          category: category,
+          image: product.image || '/placeholder.svg',
+          productUrl: product.view_product_url || url,
+          stockStatus: product.stockStatus || 'In Stock',
+          description: product.description || '',
+          productCode: product.productCode || '',
+          voltage: product.voltage || '',
+          keyFeatures: product.keyFeatures || [],
+          productType: product.productType || ''
+        }));
+      })
+      .flat() || [];
+
+    console.log(`📊 TOTAL: ${allProducts.length} tools`);
+
+    // Group by category
     const toolsByCategory: Record<string, any[]> = {};
-    
-    allTools.forEach(tool => {
+    allProducts.forEach(tool => {
       if (!toolsByCategory[tool.category]) {
         toolsByCategory[tool.category] = [];
       }
       toolsByCategory[tool.category].push(tool);
     });
 
-    // Store each category in database
+    // Store in database
     const categoryResults = [];
-    
-    for (const [category, tools] of Object.entries(toolsByCategory)) {
-      console.log(`💾 Storing ${tools.length} tools for ${category}...`);
-      
-      const expiresAt = new Date();
-      expiresAt.setDate(expiresAt.getDate() + 7); // 7 day expiry
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7);
 
-      const { error: storeError } = await supabase
+    for (const [category, tools] of Object.entries(toolsByCategory)) {
+      console.log(`💾 Storing ${tools.length} tools for ${category}`);
+
+      const { error } = await supabase
         .from('tools_weekly_cache')
         .insert({
           category: category,
@@ -280,53 +228,32 @@ serve(async (req) => {
           update_status: 'completed'
         });
 
-      if (storeError) {
-        console.error(`⚠️ [${category}] Error storing in cache:`, storeError);
-        categoryResults.push({
-          category,
-          success: false,
-          toolsFound: tools.length,
-          error: storeError.message
-        });
-      } else {
-        console.log(`✅ [${category}] Stored ${tools.length} tools in cache`);
-        categoryResults.push({
-          category,
-          success: true,
-          toolsFound: tools.length
-        });
-      }
+      categoryResults.push({
+        category,
+        success: !error,
+        toolsFound: tools.length,
+        error: error?.message
+      });
     }
-
-    console.log('\n✅ Batch scraping completed successfully');
-    console.log(`📊 Summary: ${allTools.length} total tools across ${Object.keys(toolsByCategory).length} categories`);
 
     return new Response(
       JSON.stringify({
         success: true,
-        totalToolsFound: allTools.length,
+        totalToolsFound: allProducts.length,
         categoriesProcessed: Object.keys(toolsByCategory).length,
         categoriesSuccessful: categoryResults.filter(r => r.success).length,
         breakdown: categoryResults,
-        summary: categoryResults.map(r => ({
-          category: r.category,
-          success: r.success,
-          toolsFound: r.toolsFound,
-          error: r.error
-        }))
       }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
-    console.error('❌ Batch scraper error:', error);
-    
+    console.error('❌ Error:', error);
+
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
+        error: error instanceof Error ? error.message : 'Unknown error',
         details: error instanceof Error ? error.stack : undefined
       }),
       {
