@@ -74,6 +74,114 @@ function extractSupplier(url: string): string {
   return 'Unknown';
 }
 
+// Background task to poll Firecrawl and store results
+async function pollAndStoreResults(jobUrl: string, jobId: string, apiKey: string) {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+  console.log(`🔄 [Background] Starting polling for job ${jobId}`);
+
+  let status: any;
+  let pollCount = 0;
+  const maxPolls = 120; // 10 minutes max
+
+  try {
+    do {
+      await new Promise((r) => setTimeout(r, 5000));
+      pollCount++;
+
+      const statusRes = await fetch(jobUrl, {
+        headers: { Authorization: `Bearer ${apiKey}` },
+      });
+      status = await statusRes.json();
+
+      console.log(`🔄 [Background] Poll ${pollCount}: ${status.status} - ${status.completed || 0}/${status.total || 0}`);
+
+      if (pollCount >= maxPolls) {
+        console.error('❌ [Background] Job timeout after 10 minutes');
+        return;
+      }
+    } while (status.status !== 'completed' && status.status !== 'failed');
+
+    if (status.status === 'failed') {
+      console.error('❌ [Background] Job failed:', status);
+      return;
+    }
+
+    console.log(`✅ [Background] Job completed! Processing ${status.data?.length || 0} results...`);
+
+    // Process results
+    const allProducts = status.data
+      ?.map((item: any, urlIndex: number) => {
+        const url = SEARCH_URLS[urlIndex];
+        const category = mapUrlToCategory(url);
+        const supplier = extractSupplier(url);
+
+        const products = item?.json?.products || [];
+        console.log(`📦 [Background] URL ${urlIndex + 1} (${category} - ${supplier}): ${products.length} products`);
+
+        return products.map((product: any, idx: number) => ({
+          id: Date.now() + urlIndex * 1000 + idx,
+          name: product.name || 'Unknown Product',
+          brand: product.brand || 'Generic',
+          price: product.price || '£0.00',
+          supplier: supplier,
+          category: category,
+          image: product.image || '/placeholder.svg',
+          productUrl: product.view_product_url || url,
+          stockStatus: product.stockStatus || 'In Stock',
+          description: product.description || '',
+          productCode: product.productCode || '',
+          voltage: product.voltage || '',
+          keyFeatures: product.keyFeatures || [],
+          productType: product.productType || ''
+        }));
+      })
+      .flat() || [];
+
+    console.log(`📊 [Background] TOTAL: ${allProducts.length} tools`);
+
+    // Group by category
+    const toolsByCategory: Record<string, any[]> = {};
+    allProducts.forEach(tool => {
+      if (!toolsByCategory[tool.category]) {
+        toolsByCategory[tool.category] = [];
+      }
+      toolsByCategory[tool.category].push(tool);
+    });
+
+    // Store in database
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7);
+
+    for (const [category, tools] of Object.entries(toolsByCategory)) {
+      console.log(`💾 [Background] Storing ${tools.length} tools for ${category}`);
+
+      const { error } = await supabase
+        .from('tools_weekly_cache')
+        .insert({
+          category: category,
+          tools_data: tools,
+          total_products: tools.length,
+          expires_at: expiresAt.toISOString(),
+          created_at: new Date().toISOString(),
+          update_status: 'completed'
+        });
+
+      if (error) {
+        console.error(`⚠️ [Background] Error storing ${category}:`, error);
+      } else {
+        console.log(`✅ [Background] Stored ${category} successfully`);
+      }
+    }
+
+    console.log('✅ [Background] All results stored successfully!');
+  } catch (error) {
+    console.error('❌ [Background] Error:', error);
+  }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -87,12 +195,8 @@ serve(async (req) => {
       throw new Error('FIRECRAWL_API_KEY not configured');
     }
 
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
-    console.log('📋 Starting batch scrape with Firecrawl V2...');
-    console.log(`🔍 Scraping ${SEARCH_URLS.length} URLs`);
+    console.log('📋 Starting batch scrape job...');
+    console.log(`🔍 Scraping ${SEARCH_URLS.length} URLs across 8 categories from 2 suppliers`);
 
     // Create batch job
     const batchResponse = await fetch('https://api.firecrawl.dev/v2/batch/scrape', {
@@ -120,131 +224,25 @@ serve(async (req) => {
     }
 
     console.log(`✅ Batch job created: ${job.id}`);
+    console.log(`🔗 Job URL: ${job.url}`);
 
-    // Poll with timeout protection (max 2 minutes)
-    let status: any;
-    let pollCount = 0;
-    const maxPolls = 20; // 100 seconds (5s * 20)
+    // Start background polling task (won't block response)
+    EdgeRuntime.waitUntil(pollAndStoreResults(job.url, job.id, apiKey));
 
-    do {
-      await new Promise((r) => setTimeout(r, 5000));
-      pollCount++;
-
-      const statusRes = await fetch(job.url, {
-        headers: { Authorization: `Bearer ${apiKey}` },
-      });
-      status = await statusRes.json();
-
-      console.log(`⏳ Poll ${pollCount}: ${status.status} - ${status.completed || 0}/${status.total || 0}`);
-
-      // If job is still running after timeout, return early with job info
-      if (pollCount >= maxPolls && status.status === 'scraping') {
-        console.log('⚠️ Job timeout - returning job info for manual check');
-        
-        return new Response(
-          JSON.stringify({
-            success: false,
-            status: 'timeout',
-            message: 'Batch job is taking longer than expected. The scraping will continue in the background. Please try refreshing in a few minutes, or reduce the number of URLs.',
-            jobId: job.id,
-            jobUrl: job.url,
-            progress: `${status.completed || 0}/${status.total || 0}`,
-          }),
-          {
-            status: 202, // Accepted but not completed
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          }
-        );
-      }
-
-    } while (status.status !== 'completed' && status.status !== 'failed' && pollCount < maxPolls);
-
-    if (status.status === 'failed') {
-      throw new Error(`Batch job failed: ${JSON.stringify(status)}`);
-    }
-
-    if (status.status !== 'completed') {
-      throw new Error('Batch job timeout');
-    }
-
-    console.log(`✅ Job completed! Processing ${status.data?.length || 0} results...`);
-
-    // Process results
-    const allProducts = status.data
-      ?.map((item: any, urlIndex: number) => {
-        const url = SEARCH_URLS[urlIndex];
-        const category = mapUrlToCategory(url);
-        const supplier = extractSupplier(url);
-
-        const products = item?.json?.products || [];
-        console.log(`📦 URL ${urlIndex + 1} (${category} - ${supplier}): ${products.length} products`);
-
-        return products.map((product: any, idx: number) => ({
-          id: Date.now() + urlIndex * 1000 + idx,
-          name: product.name || 'Unknown Product',
-          brand: product.brand || 'Generic',
-          price: product.price || '£0.00',
-          supplier: supplier,
-          category: category,
-          image: product.image || '/placeholder.svg',
-          productUrl: product.view_product_url || url,
-          stockStatus: product.stockStatus || 'In Stock',
-          description: product.description || '',
-          productCode: product.productCode || '',
-          voltage: product.voltage || '',
-          keyFeatures: product.keyFeatures || [],
-          productType: product.productType || ''
-        }));
-      })
-      .flat() || [];
-
-    console.log(`📊 TOTAL: ${allProducts.length} tools`);
-
-    // Group by category
-    const toolsByCategory: Record<string, any[]> = {};
-    allProducts.forEach(tool => {
-      if (!toolsByCategory[tool.category]) {
-        toolsByCategory[tool.category] = [];
-      }
-      toolsByCategory[tool.category].push(tool);
-    });
-
-    // Store in database
-    const categoryResults = [];
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7);
-
-    for (const [category, tools] of Object.entries(toolsByCategory)) {
-      console.log(`💾 Storing ${tools.length} tools for ${category}`);
-
-      const { error } = await supabase
-        .from('tools_weekly_cache')
-        .insert({
-          category: category,
-          tools_data: tools,
-          total_products: tools.length,
-          expires_at: expiresAt.toISOString(),
-          created_at: new Date().toISOString(),
-          update_status: 'completed'
-        });
-
-      categoryResults.push({
-        category,
-        success: !error,
-        toolsFound: tools.length,
-        error: error?.message
-      });
-    }
-
+    // Return immediately
     return new Response(
       JSON.stringify({
         success: true,
-        totalToolsFound: allProducts.length,
-        categoriesProcessed: Object.keys(toolsByCategory).length,
-        categoriesSuccessful: categoryResults.filter(r => r.success).length,
-        breakdown: categoryResults,
+        status: 'started',
+        message: 'Batch scraping job started successfully! Results will be available in 3-5 minutes. The page will auto-refresh to show new tools.',
+        jobId: job.id,
+        estimatedTime: '3-5 minutes',
+        urls: SEARCH_URLS.length,
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
     );
 
   } catch (error) {
