@@ -12,6 +12,7 @@ import {
   CheckCircle2
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
+import ComponentIdentificationResults from "./ComponentIdentificationResults";
 import ModeSelector, { AnalysisMode } from "./ModeSelector";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -593,14 +594,10 @@ const VisualAnalysisRedesigned = () => {
                 <div>
                   <CardTitle className="text-foreground">Analysis Results</CardTitle>
                   <CardDescription>
-                    BS 7671 compliance findings
+                    {selectedMode === 'component_identify' ? 'Component identification' : 'BS 7671 compliance findings'}
                   </CardDescription>
                 </div>
                 <div className="flex gap-2 flex-wrap">
-                  <Button variant="outline" size="sm" onClick={exportReport}>
-                    <Download className="h-4 w-4 mr-2" />
-                    Export PDF
-                  </Button>
                   <Button variant="outline" size="sm" onClick={resetAnalysis}>
                     <RefreshCw className="h-4 w-4 mr-2" />
                     New Analysis
@@ -610,11 +607,15 @@ const VisualAnalysisRedesigned = () => {
             </CardHeader>
           </Card>
 
-          {/* Results Component */}
-          <VisualAnalysisResults 
-            analysisResult={analysisResult}
-            onExportReport={exportReport}
-          />
+          {/* Results Component - Conditional based on mode */}
+          {selectedMode === 'component_identify' ? (
+            <ComponentIdentificationResults analysisResult={analysisResult} />
+          ) : (
+            <VisualAnalysisResults 
+              analysisResult={analysisResult}
+              onExportReport={exportReport}
+            />
+          )}
         </div>
       )}
 
