@@ -25,15 +25,15 @@ const BATCH_URLS = {
     { url: 'https://www.toolstation.com/search?q=personal+protective+equipment+safe+working+practices', name: 'PPE - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50', name: 'Specialist Tools - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=cable+stripper+fish+tape+electrical', name: 'Specialist Tools - Toolstation' },
-    { url: 'https://www.toolstation.com/search?q=tool+bags+boxes+storage+solutions+organisation&page_size=50', name: 'Tool Storage - Screwfix' },
+    { url: 'https://www.toolstation.com/search?q=tool+bags+boxes+storage+solutions+organisation', name: 'Tool Storage - Screwfix' },
     { url: 'https://www.screwfix.com/search?search=hazard+identification+protection+safety+equipment', name: 'Tool Storage - Toolstation' },
   ],
   3: [
     { url: 'https://www.screwfix.com/search?search=Equipment+ladders+scaffolding+access+working+at+height&page_size=50', name: 'Safety Tools - Screwfix' },
-    { url: 'https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation', name: 'Safety Tools - Toolstation' },
+    { url: 'https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation&page_size=50', name: 'Safety Tools - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=specialist+electrical+tools+installation+tasks&page_size=50', name: 'Access Tools & Equipment - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=hazard+identification+protection+safety+equipment', name: 'Access Tools & Equipment - Toolstation' },
-    { url: 'https://www.toolstation.com/search?q=Equipment+ladders+scaffolding+access+working+at+height&page_size=50', name: 'Specialist Tools - Toolstation' },
+    { url: 'https://www.toolstation.com/search?q=Equipment+ladders+scaffolding+access+working+at+height', name: 'Specialist Tools - Toolstation' },
     { url: 'https://www.toolstation.com/search?q=specialist+electrical+tools+installation+tasks', name: 'Safety Tools - Toolstation' },
   ]
 };
@@ -118,13 +118,40 @@ serve(async (req) => {
                 items: {
                   type: 'object',
                   properties: {
-                    name: { type: 'string' },
-                    price: { type: 'string' },
-                    image: { type: 'string' },
-                    productUrl: { type: 'string' },
-                    isOnSale: { type: 'boolean' },
-                    salePrice: { type: 'string' },
-                    stockStatus: { type: 'string' }
+                    name: {
+                      type: "string",
+                      description: "Full product name including model number",
+                    },
+                    brand: {
+                      type: "string",
+                      description: "Brand/manufacturer name (e.g., Makita, DeWalt, Bosch, Hilti, Bahco, Wiha, Wera)",
+                    },
+                    price: {
+                      type: "string",
+                      description: "Current price in GBP",
+                    },
+                    description: {
+                      type: "string",
+                      description: "Brief product description or key features",
+                    },
+                    category: {
+                      type: "string",
+                      description: "Product category (e.g., Drills, Screwdrivers, Power Tools)",
+                    },
+                    productType: {
+                      type: "string",
+                      description: "Specific type (e.g., SDS Drill, Combi Drill, Cordless, Corded)",
+                    },
+                    image: {
+                      type: "string",
+                      format: "uri",
+                      description: "URL of the product image",
+                    },
+                    view_product_url: {
+                      type: "string",
+                      format: "uri",
+                      description: "Direct URL to the product page",
+                    },
                   }
                 }
               }
