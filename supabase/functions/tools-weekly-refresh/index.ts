@@ -78,32 +78,19 @@ serve(async (req) => {
 
     console.log('🔄 Cache expired or missing, triggering refresh...');
 
-    // Call the comprehensive firecrawl scraper with extended timeout
-    console.log('🔄 Invoking comprehensive-firecrawl-scraper with 60s timeout...');
+    // Call the batch scraper with mergeAll flag to combine all batches
+    console.log('🔄 Invoking batch scraper with mergeAll flag...');
     
-    const scraperPromise = supabase.functions.invoke(
+    const { data: refreshResult, error: refreshError } = await supabase.functions.invoke(
       'comprehensive-firecrawl-scraper',
-      { body: { forceRefresh } }
+      { body: { mergeAll: true, forceRefresh } }
     );
-
-    // Set a 45-second timeout for the scraper call
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Scraper timeout after 45 seconds')), 45000);
-    });
-
-    let refreshResult, refreshError;
     
-    try {
-      const result = await Promise.race([scraperPromise, timeoutPromise]);
-      refreshResult = (result as any).data;
-      refreshError = (result as any).error;
-    } catch (timeoutError) {
-      console.warn('⏱️ Scraper timed out');
-      refreshError = timeoutError;
+    console.log('📊 Batch merge result:', refreshResult);
+    
+    if (refreshError) {
+      console.error('⚠️ Batch merge error:', refreshError);
     }
-    
-    console.log('📊 Scraper result:', refreshResult);
-    console.log('⚠️ Scraper error:', refreshError);
 
     if (refreshError) {
       console.error('❌ Error calling comprehensive-firecrawl-scraper:', refreshError);
