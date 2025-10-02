@@ -12,6 +12,7 @@ interface ToolCardProps {
   onRemoveFromCompare?: (itemId: string) => void;
   isSelected?: boolean;
   isCompareDisabled?: boolean;
+  onCardClick?: (item: ToolItem) => void;
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ 
@@ -19,7 +20,8 @@ const ToolCard: React.FC<ToolCardProps> = ({
   onAddToCompare, 
   onRemoveFromCompare, 
   isSelected = false, 
-  isCompareDisabled = false 
+  isCompareDisabled = false,
+  onCardClick
 }) => {
   const isMobile = useIsMobile();
   const [isHovered, setIsHovered] = useState(false);
@@ -224,7 +226,10 @@ const ToolCard: React.FC<ToolCardProps> = ({
   const discount = getDiscountPercentage();
 
   return (
-    <Card className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full relative group">
+    <Card 
+      className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full relative group cursor-pointer"
+      onClick={() => onCardClick?.(item)}
+    >
       {/* Image section */}
       <div className="relative">
         <div className="h-32 overflow-hidden">
@@ -300,7 +305,10 @@ const ToolCard: React.FC<ToolCardProps> = ({
         <div className="flex gap-1.5 mt-auto">
           <Button 
             size="sm" 
-            onClick={() => window.open(getProductUrl(), '_blank')}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(getProductUrl(), '_blank');
+            }}
             className="flex-1 border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors h-7 text-[10px] px-2"
           >
             <ExternalLink className="w-2.5 h-2.5 mr-1" />
@@ -309,7 +317,8 @@ const ToolCard: React.FC<ToolCardProps> = ({
           <Button 
             size="sm" 
             variant="outline"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               if (isSelected && onRemoveFromCompare) {
                 onRemoveFromCompare(item.id.toString());
               } else if (onAddToCompare) {

@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SortAsc, SortDesc, Grid, List, Loader2 } from "lucide-react";
 import { ToolItem } from "@/hooks/useToolsData";
 import ToolCard from "./ToolCard";
+import ToolDetailModal from "./ToolDetailModal";
 import { FilterState } from "./ProductFilters";
 import { usePagination } from "@/hooks/usePagination";
 import ProductPagination from "@/components/ui/product-pagination";
@@ -35,6 +36,18 @@ const EnhancedProductGrid = ({
 }: EnhancedProductGridProps) => {
   const [sortBy, setSortBy] = useState<SortOption>("relevance");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [selectedTool, setSelectedTool] = useState<ToolItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCardClick = (tool: ToolItem) => {
+    setSelectedTool(tool);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedTool(null);
+  };
 
   // Apply filters and search
   const filteredTools = useMemo(() => {
@@ -252,6 +265,7 @@ const EnhancedProductGrid = ({
                 onRemoveFromCompare={onRemoveFromCompare}
                 isSelected={selectedItems.some(item => item.id === tool.id)}
                 isCompareDisabled={isCompareDisabled}
+                onCardClick={handleCardClick}
               />
             ))}
           </div>
@@ -267,6 +281,17 @@ const EnhancedProductGrid = ({
             onPageChange={setCurrentPage}
             onItemsPerPageChange={setItemsPerPage}
             itemType="tools"
+          />
+
+          {/* Tool Detail Modal */}
+          <ToolDetailModal
+            tool={selectedTool}
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            onAddToCompare={onAddToCompare}
+            onRemoveFromCompare={onRemoveFromCompare}
+            isSelected={selectedTool ? selectedItems.some(item => item.id === selectedTool.id) : false}
+            isCompareDisabled={isCompareDisabled}
           />
         </>
       )}
