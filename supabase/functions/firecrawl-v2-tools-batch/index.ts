@@ -324,22 +324,43 @@ async function pollAndStoreResults(jobId: string, batchNumber: number, urls: any
           });
         });
 
-        // Store each category in tools_weekly_cache
+        // Store each category in tools_weekly_cache (merge with existing)
         let totalTools = 0;
         const expiresAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
 
         for (const [category, tools] of Object.entries(toolsByCategory)) {
+          // Fetch existing tools for this category
+          const { data: existing } = await supabase
+            .from('tools_weekly_cache')
+            .select('tools_data')
+            .eq('category', category)
+            .single();
+
+          // Merge new tools with existing ones
+          const existingTools = existing?.tools_data || [];
+          const mergedTools = [...existingTools, ...tools];
+
+          // Remove duplicates based on view_product_url
+          const uniqueTools = mergedTools.reduce((acc: any[], tool: any) => {
+            const exists = acc.find((t: any) => t.view_product_url === tool.view_product_url);
+            if (!exists) {
+              acc.push(tool);
+            }
+            return acc;
+          }, []);
+
+          // Upsert the merged, unique set
           await supabase.from('tools_weekly_cache').upsert({
             category,
-            tools_data: tools,
-            total_products: tools.length,
+            tools_data: uniqueTools,
+            total_products: uniqueTools.length,
             expires_at: expiresAt,
             update_status: 'completed',
             last_updated: new Date().toISOString()
           }, { onConflict: 'category' });
 
           totalTools += tools.length;
-          console.log(`💾 Stored ${tools.length} tools for ${category}`);
+          console.log(`💾 Stored ${tools.length} tools for ${category} (Total: ${uniqueTools.length} unique)`);
         }
 
         // Update queue status
