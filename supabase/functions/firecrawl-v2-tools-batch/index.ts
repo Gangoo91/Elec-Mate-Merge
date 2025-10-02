@@ -167,7 +167,7 @@ serve(async (req) => {
 
     console.log(`📋 Processing batch ${targetBatch} with ${urls.length} URLs`);
 
-    // Create Firecrawl batch job
+    // Create Firecrawl batch job with simplified schema
     const batchResponse = await fetch('https://api.firecrawl.dev/v1/batch/scrape', {
       method: 'POST',
       headers: {
@@ -178,7 +178,7 @@ serve(async (req) => {
         urls: urls.map(u => u.url),
         formats: ['extract'],
         extract: {
-          prompt: "Extract all tools and equipment products from this page with their names, brands, prices, and product URLs.",
+          prompt: "Extract all electrician tools and equipment with their product name, price in GBP, and direct product page URL. Focus on hand tools, power tools, test equipment, and safety gear.",
           schema: {
             type: "object",
             properties: {
@@ -188,36 +188,13 @@ serve(async (req) => {
                   type: "object",
                   properties: {
                     name: {
-                      type: "string",
-                      description: "Full product name including model number"
-                    },
-                    brand: {
-                      type: "string",
-                      description: "Brand/manufacturer name"
+                      type: "string"
                     },
                     price: {
-                      type: "string",
-                      description: "Current price in GBP"
-                    },
-                    description: {
-                      type: "string",
-                      description: "Brief product description or key features"
-                    },
-                    category: {
-                      type: "string",
-                      description: "Product category"
-                    },
-                    productType: {
-                      type: "string",
-                      description: "Specific product type"
-                    },
-                    image: {
-                      type: "string",
-                      description: "URL of the product image"
+                      type: "string"
                     },
                     view_product_url: {
-                      type: "string",
-                      description: "Direct URL to the product page"
+                      type: "string"
                     }
                   },
                   required: ["name", "price", "view_product_url"]
@@ -231,6 +208,8 @@ serve(async (req) => {
     });
 
     if (!batchResponse.ok) {
+      const errorText = await batchResponse.text();
+      console.error(`❌ Firecrawl API error: ${batchResponse.status} - ${errorText}`);
       throw new Error(`Firecrawl API error: ${batchResponse.statusText}`);
     }
 
@@ -285,7 +264,9 @@ async function pollAndStoreResults(jobId: string, batchNumber: number, urls: any
       });
 
       if (!statusResponse.ok) {
-        throw new Error('Failed to check Firecrawl status');
+        const errorText = await statusResponse.text();
+        console.error(`❌ Status check failed: ${statusResponse.status} - ${errorText}`);
+        throw new Error(`Failed to check Firecrawl status: ${statusResponse.statusText}`);
       }
 
       const statusData = await statusResponse.json();
