@@ -3741,6 +3741,48 @@ export type Database = {
         }
         Relationships: []
       }
+      tools_scrape_queue: {
+        Row: {
+          batch_number: number
+          completed_at: string | null
+          created_at: string
+          error_message: string | null
+          firecrawl_job_id: string | null
+          firecrawl_job_url: string | null
+          id: string
+          started_at: string | null
+          status: string
+          tools_found: number | null
+          urls: Json
+        }
+        Insert: {
+          batch_number: number
+          completed_at?: string | null
+          created_at?: string
+          error_message?: string | null
+          firecrawl_job_id?: string | null
+          firecrawl_job_url?: string | null
+          id?: string
+          started_at?: string | null
+          status?: string
+          tools_found?: number | null
+          urls?: Json
+        }
+        Update: {
+          batch_number?: number
+          completed_at?: string | null
+          created_at?: string
+          error_message?: string | null
+          firecrawl_job_id?: string | null
+          firecrawl_job_url?: string | null
+          id?: string
+          started_at?: string | null
+          status?: string
+          tools_found?: number | null
+          urls?: Json
+        }
+        Relationships: []
+      }
       tools_weekly_cache: {
         Row: {
           category: string

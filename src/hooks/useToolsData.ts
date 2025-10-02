@@ -22,44 +22,53 @@ export interface ToolItem {
 }
 
 const fetchToolsData = async (): Promise<ToolItem[]> => {
-  console.log('🔧 Fetching tools data from tools cache...');
+  console.log('🔧 Fetching tools data from all category caches...');
   
+  // Fetch ALL categories from the cache
   const { data, error } = await supabase
     .from('tools_weekly_cache' as any)
     .select('tools_data, total_products, category, update_status, created_at, expires_at')
-    .order('created_at', { ascending: false })
-    .limit(1)
-    .single();
+    .order('created_at', { ascending: false });
   
   if (error) {
     console.error('❌ Error fetching cached tools:', error);
     throw new Error(error.message || 'Failed to fetch cached tools data');
   }
 
-  if ((data as any)?.tools_data && Array.isArray((data as any).tools_data)) {
-    // Transform the cached data to ensure consistent interface
-    const transformedTools = (data as any).tools_data.map((tool: any, index: number) => ({
-      id: tool.id || index + 1000,
-      name: tool.name || 'Unknown Tool',
-      category: tool.category || 'Tools',
-      price: tool.price || '£0.00',
-      supplier: tool.supplier || 'Screwfix',
-      image: tool.image || '/placeholder.svg',
-      stockStatus: tool.stockStatus || 'In Stock' as const,
-      isOnSale: tool.isOnSale || false,
-      salePrice: tool.salePrice,
-      highlights: tool.highlights || [],
-      productUrl: tool.view_product_url || tool.productUrl,
-      description: tool.description,
-      reviews: tool.reviews
-    }));
-
-    console.log(`✅ Loaded ${transformedTools.length} tools from cache`);
-    return transformedTools;
+  if (!data || data.length === 0) {
+    console.log('📊 No cached tools data found');
+    return [];
   }
 
-  console.log('📊 No cached tools data found');
-  return [];
+  console.log(`✅ Found ${data.length} category caches`);
+
+  // Merge all tools from all categories
+  const allTools: ToolItem[] = [];
+  
+  data.forEach((categoryCache: any) => {
+    if (categoryCache?.tools_data && Array.isArray(categoryCache.tools_data)) {
+      const transformedTools = categoryCache.tools_data.map((tool: any, index: number) => ({
+        id: tool.id || index + 1000,
+        name: tool.name || 'Unknown Tool',
+        category: categoryCache.category || tool.category || 'Tools',
+        price: tool.price || '£0.00',
+        supplier: tool.supplier || 'Screwfix',
+        image: tool.image || '/placeholder.svg',
+        stockStatus: tool.stockStatus || 'In Stock' as const,
+        isOnSale: tool.isOnSale || false,
+        salePrice: tool.salePrice,
+        highlights: tool.highlights || [],
+        productUrl: tool.view_product_url || tool.productUrl,
+        description: tool.description,
+        reviews: tool.reviews
+      }));
+
+      allTools.push(...transformedTools);
+    }
+  });
+
+  console.log(`✅ Total tools loaded: ${allTools.length}`);
+  return allTools;
 };
 
 export const useToolsData = () => {
