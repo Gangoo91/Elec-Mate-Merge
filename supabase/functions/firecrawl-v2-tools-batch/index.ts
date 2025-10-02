@@ -115,29 +115,53 @@ serve(async (req) => {
       console.log(`\n🔍 [${categoryName}] Scraping from: ${categoryData.url}`);
 
       try {
-        // Use scrapeUrl with markdown format for better reliability
+        // Use extract format with schema for better structured data
         const scrapeResult = await firecrawl.scrapeUrl(categoryData.url, {
-          formats: ['markdown'],
+          formats: ['extract'],
+          extract: {
+            schema: productSchema,
+            systemPrompt: `Extract ALL electrical tools/products from this Screwfix category page. 
+            For each product, capture: name (including brand and model), price (with £ symbol), 
+            product URL, image URL, stock status. Extract every single product visible on the page.`
+          },
           onlyMainContent: true,
-          timeout: 90000 // 90 seconds
+          timeout: 90000
         });
 
         console.log(`📄 [${categoryName}] Scrape response received`);
 
-        if (!scrapeResult.success || !scrapeResult.markdown) {
-          console.error(`❌ [${categoryName}] Scrape failed or no markdown returned`);
+        if (!scrapeResult.success) {
+          console.error(`❌ [${categoryName}] Scrape failed:`, scrapeResult);
           categoryResults.push({
             category: categoryName,
             success: false,
             toolsFound: 0,
             tools: [],
-            error: 'No markdown content returned'
+            error: 'Scrape failed'
           });
           continue;
         }
 
-        // Parse tools from markdown
-        const tools = parseToolsFromMarkdown(scrapeResult.markdown, categoryName, categoryData.url);
+
+        // Extract tools from the structured data
+        const extractedData = scrapeResult.extract;
+        let tools: any[] = [];
+
+        if (extractedData && extractedData.tools && Array.isArray(extractedData.tools)) {
+          tools = extractedData.tools.map((tool: any, index: number) => ({
+            id: Date.now() + index,
+            name: tool.name || 'Unknown Product',
+            price: tool.price || '£0.00',
+            brand: tool.brand || extractBrand(tool.name || ''),
+            supplier: 'Screwfix',
+            category: categoryName,
+            image: tool.image || '/placeholder.svg',
+            productUrl: tool.productUrl || categoryData.url,
+            stockStatus: tool.stockStatus || 'In Stock',
+            description: tool.description || '',
+            specifications: tool.specifications || {}
+          }));
+        }
         
         console.log(`✅ [${categoryName}] Found ${tools.length} tools`);
         totalToolsFound += tools.length;
@@ -224,83 +248,9 @@ serve(async (req) => {
   }
 });
 
-// Parse tools from markdown content
-function parseToolsFromMarkdown(markdown: string, category: string, baseUrl: string): any[] {
-  const tools: any[] = [];
-  const lines = markdown.split('\n');
-  
-  let currentTool: any = null;
-  
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    
-    // Look for product names (usually in headings or bold)
-    const productMatch = line.match(/^#{1,4}\s+(.+)$|^\*\*(.+)\*\*$/);
-    if (productMatch) {
-      // Save previous tool if exists
-      if (currentTool && currentTool.name && currentTool.price) {
-        tools.push({ ...currentTool, category });
-      }
-      
-      // Start new tool
-      currentTool = {
-        name: (productMatch[1] || productMatch[2]).trim(),
-        category: category,
-        supplier: 'Screwfix'
-      };
-    }
-    
-    // Look for prices (£XX.XX format)
-    const priceMatch = line.match(/£(\d+\.?\d*)/);
-    if (priceMatch && currentTool) {
-      currentTool.price = `£${priceMatch[1]}`;
-    }
-    
-    // Look for URLs
-    const urlMatch = line.match(/\[.+?\]\((https?:\/\/.+?)\)/);
-    if (urlMatch && currentTool) {
-      const url = urlMatch[1];
-      if (url.includes('screwfix.com') && url.includes('/p/')) {
-        currentTool.productUrl = url;
-      } else if (url.match(/\.(jpg|jpeg|png|webp)/i)) {
-        currentTool.image = url;
-      }
-    }
-    
-    // Look for stock status
-    if (line.toLowerCase().includes('in stock')) {
-      if (currentTool) currentTool.stockStatus = 'In Stock';
-    } else if (line.toLowerCase().includes('low stock')) {
-      if (currentTool) currentTool.stockStatus = 'Low Stock';
-    } else if (line.toLowerCase().includes('out of stock')) {
-      if (currentTool) currentTool.stockStatus = 'Out of Stock';
-    }
-  }
-  
-  // Don't forget the last tool
-  if (currentTool && currentTool.name && currentTool.price) {
-    tools.push({ ...currentTool, category });
-  }
-  
-  // Add default values for missing fields
-  return tools.map((tool, index) => ({
-    id: index + 1,
-    name: tool.name,
-    price: tool.price,
-    supplier: 'Screwfix',
-    category: category,
-    image: tool.image || '/placeholder.svg',
-    productUrl: tool.productUrl || baseUrl,
-    stockStatus: tool.stockStatus || 'In Stock',
-    description: tool.description || '',
-    brand: tool.brand || extractBrand(tool.name),
-    specifications: tool.specifications || {}
-  }));
-}
-
 // Extract brand from product name
 function extractBrand(name: string): string {
-  const commonBrands = ['DeWalt', 'Makita', 'Milwaukee', 'Bosch', 'Stanley', 'Draper', 'Fluke', 'Megger', 'Kewtech', 'Klein'];
+  const commonBrands = ['DeWalt', 'Makita', 'Milwaukee', 'Bosch', 'Stanley', 'Draper', 'Fluke', 'Megger', 'Kewtech', 'Klein', 'Prysmian', 'Time'];
   for (const brand of commonBrands) {
     if (name.toLowerCase().includes(brand.toLowerCase())) {
       return brand;
