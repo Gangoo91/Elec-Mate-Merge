@@ -25,7 +25,7 @@ const BATCH_URLS = {
     { url: 'https://www.toolstation.com/search?q=personal+protective+equipment+safe+working+practices', name: 'PPE - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50', name: 'Specialist Tools - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=cable+stripper+fish+tape+electrical', name: 'Specialist Tools - Toolstation' },
-    { url: 'https://www.toolstation.com/search?q=tool+bags+boxes+storage+solutions+organisation&page_size=50', name: 'Tool Storage - Screwfix' },
+    { url: 'https://www.toolstation.com/search?q=tool+bags+boxes+storage+solutions+organisation', name: 'Tool Storage - Screwfix' },
     { url: 'https://www.screwfix.com/search?search=hazard+identification+protection+safety+equipment', name: 'Tool Storage - Toolstation' },
   ],
   3: [
@@ -33,7 +33,7 @@ const BATCH_URLS = {
     { url: 'https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation', name: 'Safety Tools - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=specialist+electrical+tools+installation+tasks&page_size=50', name: 'Access Tools & Equipment - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=hazard+identification+protection+safety+equipment', name: 'Access Tools & Equipment - Toolstation' },
-    { url: 'https://www.toolstation.com/search?q=Equipment+ladders+scaffolding+access+working+at+height&page_size=50', name: 'Specialist Tools - Toolstation' },
+    { url: 'https://www.toolstation.com/search?q=Equipment+ladders+scaffolding+access+working+at+height', name: 'Specialist Tools - Toolstation' },
     { url: 'https://www.toolstation.com/search?q=specialist+electrical+tools+installation+tasks', name: 'Safety Tools - Toolstation' },
   ]
 };
