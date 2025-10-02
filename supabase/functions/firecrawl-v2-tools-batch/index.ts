@@ -57,6 +57,64 @@ const CATEGORY_MAPPING: Record<string, string> = {
   'Access Tools & Equipment - Toolstation': 'Access Tools & Equipment',
 };
 
+function intelligentlyCategorize(toolName: string, toolDescription: string, batchCategory: string): string {
+  const name = toolName.toLowerCase();
+  const desc = (toolDescription || '').toLowerCase();
+  
+  // Test Equipment keywords
+  if (name.includes('multimeter') || name.includes('tester') || name.includes('test lead') || 
+      name.includes('meter') || name.includes('clamp meter') || name.includes('voltage') ||
+      name.includes('socket tester') || name.includes('proving unit') || name.includes('test lamp')) {
+    return 'Test Equipment';
+  }
+  
+  // Hand Tools keywords
+  if (name.includes('plier') || name.includes('screwdriver') || name.includes('wire stripper') ||
+      name.includes('cable cutter') || name.includes('spanner') || name.includes('wrench') ||
+      name.includes('crimper') || name.includes('vde') || name.includes('side cutter') ||
+      name.includes('stripping') || name.includes('snips') || name.includes('knife')) {
+    return 'Hand Tools';
+  }
+  
+  // Power Tools keywords
+  if (name.includes('drill') || name.includes('cordless') || name.includes('18v') || 
+      name.includes('impact driver') || name.includes('grinder') || name.includes('saw') ||
+      name.includes('sds') || name.includes('battery pack') || name.includes('combi') ||
+      name.includes('makita') || name.includes('dewalt') || name.includes('brushless')) {
+    return 'Power Tools';
+  }
+  
+  // Tool Storage keywords
+  if (name.includes('tool bag') || name.includes('tool box') || name.includes('case') ||
+      name.includes('storage') || name.includes('organiser') || name.includes('toughsystem') ||
+      name.includes('key safe') || name.includes('with wheels') || name.includes('toolbox') ||
+      name.includes('tote') || name.includes('organizer')) {
+    return 'Tool Storage';
+  }
+  
+  // Safety Tools / PPE keywords
+  if (name.includes('helmet') || name.includes('gloves') || name.includes('safety') ||
+      name.includes('protective') || name.includes('harness') || name.includes('glasses') ||
+      name.includes('boots') || name.includes('hi-vis') || name.includes('vest')) {
+    return 'Safety Tools';
+  }
+  
+  // Access Tools keywords
+  if (name.includes('ladder') || name.includes('steps') || name.includes('platform') ||
+      name.includes('scaffold') || name.includes('stepladder') || name.includes('extension ladder')) {
+    return 'Access Tools & Equipment';
+  }
+  
+  // Specialist Tools keywords
+  if (name.includes('cable puller') || name.includes('fish tape') || name.includes('bender') ||
+      name.includes('cable rod') || name.includes('conduit') || name.includes('knockout')) {
+    return 'Specialist Tools';
+  }
+  
+  // If no match found, use the batch category as fallback
+  return batchCategory;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -198,24 +256,31 @@ async function pollAndStoreResults(jobId: string, batchNumber: number, urls: any
         clearInterval(pollInterval);
         console.log(`✅ Batch ${batchNumber} completed!`);
 
-        // Group tools by category
+        // Group tools by intelligently categorized categories
         const toolsByCategory: Record<string, any[]> = {};
         
         statusData.data?.forEach((result: any, index: number) => {
           const urlName = urls[index]?.name || 'Unknown';
-          const category = CATEGORY_MAPPING[urlName] || urlName;
+          const batchCategory = CATEGORY_MAPPING[urlName] || urlName;
           const products = result.extract?.products || [];
 
           console.log(`📦 URL ${index + 1} (${urlName}): ${products.length} products`);
 
-          if (!toolsByCategory[category]) {
-            toolsByCategory[category] = [];
-          }
-
           products.forEach((product: any) => {
-            toolsByCategory[category].push({
+            // Intelligently categorize each product based on its name and description
+            const intelligentCategory = intelligentlyCategorize(
+              product.name || '', 
+              product.description || '', 
+              batchCategory
+            );
+
+            if (!toolsByCategory[intelligentCategory]) {
+              toolsByCategory[intelligentCategory] = [];
+            }
+
+            toolsByCategory[intelligentCategory].push({
               ...product,
-              category,
+              category: intelligentCategory,
               supplier: urlName.includes('Screwfix') ? 'Screwfix' : 'Toolstation',
               view_product_url: product.productUrl,
               id: Math.floor(Math.random() * 1000000)
