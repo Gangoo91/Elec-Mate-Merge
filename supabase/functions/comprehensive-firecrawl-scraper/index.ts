@@ -118,8 +118,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
   
   try {
     const crawlResponse = await firecrawl.scrapeUrl(url, {
-      formats: ['extract'],
-      extract: {
+      formats: [{
         schema: productSchema,
         prompt: `Extract ALL products from this ${supplier} search page for ${category}.
           
@@ -134,7 +133,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
           
           Set supplier field to "${supplier}" for ALL products.
           Aim to extract 30-50 products from this page.`
-      },
+      }],
       timeout: 20000,
       waitFor: 2000
     });
