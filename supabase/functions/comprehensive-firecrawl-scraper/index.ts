@@ -1,7 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@1.29.3';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@1.9.1';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -119,6 +119,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
   try {
     const crawlResponse = await firecrawl.scrapeUrl(url, {
       formats: ['extract'],
+      timeout: 45000,
       extract: {
         schema: productSchema,
         prompt: `Extract ALL products from this ${supplier} search page for ${category}.
