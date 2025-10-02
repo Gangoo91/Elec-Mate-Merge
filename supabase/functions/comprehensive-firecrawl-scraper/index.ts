@@ -112,19 +112,22 @@ const getBatchCategories = (batchNumber: number) => {
   }
 };
 
-const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string) => {
+const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string, maxAttempts = 2) => {
   const supplier = getSupplierFromUrl(url);
-  console.log(`📡 [${category}] Scraping from ${supplier}...`);
+  let lastError;
   
-  try {
-    const crawlResponse = await firecrawl.scrapeUrl(url, {
-      formats: ['extract'],
-      timeout: 45000,
-      extract: {
-        schema: productSchema,
-        prompt: `Extract ALL products from this ${supplier} search page for ${category}.
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      console.log(`📡 [${category}] Attempt ${attempt}/${maxAttempts} - Scraping from ${supplier}...`);
+      
+      const crawlResponse = await firecrawl.scrapeUrl(url, {
+        formats: ['extract'],
+        timeout: 90000,
+        extract: {
+          schema: productSchema,
+          prompt: `Extract products from this ${supplier} search page for ${category}.
           
-          IMPORTANT - Extract EVERY product you see:
+          IMPORTANT - Extract products you see:
           - Full product name with model number
           - Exact price in GBP (£)
           - Brand name (Makita, Hilti, DeWalt, Bosch, Bahco, Wiha, Wera, MK, CK, Milwaukee, Ryobi, etc.)
@@ -134,38 +137,54 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string)
           - Brief description if available
           
           Set supplier field to "${supplier}" for ALL products.
-          Aim to extract 30-50 products from this page.`
-      }
-    });
+          Extract 15-20 products from this page.`
+        }
+      });
 
-    if (crawlResponse.success && (crawlResponse as any).data?.extract) {
-      const extractedData = (crawlResponse as any).data.extract;
-      
-      if (extractedData.products && Array.isArray(extractedData.products)) {
-        const products = extractedData.products.map((product: any) => ({
-          ...product,
-          category,
-          supplier: supplier,
-          lastUpdated: new Date().toISOString(),
-          availability: product.availability || 'Check Availability',
-          image: product.image || '/placeholder.svg',
-          description: product.description || '',
-          features: product.features || [],
-          specifications: product.specifications || {}
-        }));
+      if (crawlResponse.success && (crawlResponse as any).data?.extract) {
+        const extractedData = (crawlResponse as any).data.extract;
         
-        console.log(`✅ [${category}] Extracted ${products.length} products`);
-        return { category, products, success: true };
+        if (extractedData.products && Array.isArray(extractedData.products)) {
+          const products = extractedData.products.map((product: any) => ({
+            ...product,
+            category,
+            supplier: supplier,
+            lastUpdated: new Date().toISOString(),
+            availability: product.availability || 'Check Availability',
+            image: product.image || '/placeholder.svg',
+            description: product.description || '',
+            features: product.features || [],
+            specifications: product.specifications || {}
+          }));
+          
+          console.log(`✅ [${category}] Extracted ${products.length} products`);
+          return { category, products, success: true };
+        }
+      }
+      
+      console.warn(`⚠️ [${category}] Attempt ${attempt}: No products found`);
+      lastError = new Error('No products found');
+      
+      if (attempt < maxAttempts) {
+        const delay = 3000 * attempt;
+        console.log(`⏳ [${category}] Retrying in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+      
+    } catch (error) {
+      lastError = error;
+      console.error(`❌ [${category}] Attempt ${attempt} failed:`, error.message);
+      
+      if (attempt < maxAttempts) {
+        const delay = 3000 * attempt;
+        console.log(`⏳ [${category}] Retrying in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
       }
     }
-    
-    console.warn(`⚠️ [${category}] No products found`);
-    return { category, products: [], success: false };
-    
-  } catch (error) {
-    console.error(`❌ [${category}] Failed:`, error.message);
-    return { category, products: [], success: false, error: error.message };
   }
+  
+  console.error(`❌ [${category}] All ${maxAttempts} attempts failed`);
+  return { category, products: [], success: false, error: lastError?.message };
 };
 
 const checkExistingBatch = async (supabase: any, batchNumber: number) => {
