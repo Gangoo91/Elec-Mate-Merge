@@ -145,7 +145,7 @@ const EnhancedProductGrid = ({
     setItemsPerPage
   } = usePagination<ToolItem>({
     items: sortedTools,
-    itemsPerPage: 12
+    itemsPerPage: 48
   });
 
   if (isLoading) {
