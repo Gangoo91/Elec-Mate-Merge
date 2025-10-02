@@ -154,6 +154,9 @@ verify_jwt = false
 [functions.firecrawl-v2-tools-batch]
 verify_jwt = false
 
+[functions.firecrawl-tools-webhook]
+verify_jwt = false
+
 [functions.firecrawl-news-scraper]
 verify_jwt = false
 

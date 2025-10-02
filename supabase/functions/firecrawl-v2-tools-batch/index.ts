@@ -10,7 +10,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Define 3 batches of 6 URLs each (18 total)
+// Define 4 batches of 4-5 URLs each
 const BATCH_URLS = {
   1: [
     { url: 'https://www.screwfix.com/search?search=screwdrivers+pliers+spanners+electrical+work&page_size=50', name: 'Hand Tools - Screwfix' },
@@ -18,18 +18,20 @@ const BATCH_URLS = {
     { url: 'https://www.screwfix.com/search?search=testing+measurement+electrical+safety+compliance&page_size=50', name: 'Test Equipment - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=testing+measurement+electrical+safety+compliance', name: 'Test Equipment - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=electric+cordless+drilling+cutting+installation&page_size=50', name: 'Power Tools - Screwfix' },
-    { url: 'https://www.toolstation.com/search?q=electric+cordless+drilling+cutting+installation', name: 'Power Tools - Toolstation' },
   ],
   2: [
+    { url: 'https://www.toolstation.com/search?q=electric+cordless+drilling+cutting+installation', name: 'Power Tools - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=personal protective equipment&page_size=50', name: 'PPE - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=personal protective equipment', name: 'PPE - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50', name: 'Specialist Tools - Screwfix' },
+  ],
+  3: [
     { url: 'https://www.toolstation.com/search?q=cable+stripper+fish+tape+electrical', name: 'Specialist Tools - Toolstation' },
     { url: 'https://www.toolstation.com/search?q=tool+bags+boxes+storage+solutions+organisation&page_size=50', name: 'Tool Storage - Screwfix' },
     { url: 'https://www.screwfix.com/search?search=hazard+identification+protection+safety+equipment', name: 'Tool Storage - Toolstation' },
-  ],
-  3: [
     { url: 'https://www.screwfix.com/search?search=Equipment+ladders+scaffolding+access+working+at+height&page_size=50', name: 'Safety Tools - Screwfix' },
+  ],
+  4: [
     { url: 'https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation', name: 'Safety Tools - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=specialist+electrical+tools+installation+tasks&page_size=50', name: 'Access Tools & Equipment - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=hazard+identification+protection+safety+equipment', name: 'Access Tools & Equipment - Toolstation' },
@@ -165,7 +167,9 @@ serve(async (req) => {
 
     console.log(`📋 Processing batch ${targetBatch} with ${urls.length} URLs`);
 
-    // Create Firecrawl batch job
+    // Create Firecrawl batch job with webhook
+    const webhookUrl = `${SUPABASE_URL}/functions/v1/firecrawl-tools-webhook`;
+    
     const batchResponse = await fetch('https://api.firecrawl.dev/v1/batch/scrape', {
       method: 'POST',
       headers: {
@@ -175,6 +179,7 @@ serve(async (req) => {
       body: JSON.stringify({
         urls: urls.map(u => u.url),
         formats: ['extract'],
+        webhook: webhookUrl,
         extract: {
           prompt: "Extract all tools and equipment products from this page with their names, brands, prices, and product URLs.",
           schema: {
@@ -233,7 +238,7 @@ serve(async (req) => {
     }
 
     const batchData = await batchResponse.json();
-    console.log(`✅ Firecrawl batch job created:`, batchData.id);
+    console.log(`✅ Firecrawl batch job created with webhook:`, batchData.id);
 
     // Store in queue
     await supabase.from('tools_scrape_queue').insert({
@@ -245,16 +250,14 @@ serve(async (req) => {
       started_at: new Date().toISOString()
     });
 
-    // Start polling and storing results (max 2 minutes = 24 polls)
-    pollAndStoreResults(batchData.id, targetBatch, urls, supabase);
-
+    // Return immediately - webhook will handle completion
     return new Response(
       JSON.stringify({
         success: true,
-        status: 'in_progress',
+        status: 'processing',
         batchNumber: targetBatch,
-        totalBatches: 3,
-        message: `Batch ${targetBatch}/3 started. Results will be available in 2-3 minutes.`,
+        totalBatches: 4,
+        message: `Batch ${targetBatch}/4 started. Webhook will process results when complete.`,
         firecrawlJobId: batchData.id
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -268,153 +271,3 @@ serve(async (req) => {
     );
   }
 });
-
-async function pollAndStoreResults(jobId: string, batchNumber: number, urls: any[], supabase: any) {
-  const maxPolls = 36; // 2 minutes max  
-  let pollCount = 0;
-
-  const pollInterval = setInterval(async () => {
-    pollCount++;
-    console.log(`🔄 Poll ${pollCount}: Checking batch ${batchNumber} status...`);
-
-    try {
-      const statusResponse = await fetch(`https://api.firecrawl.dev/v1/batch/scrape/${jobId}`, {
-        headers: { 'Authorization': `Bearer ${FIRECRAWL_API_KEY}` }
-      });
-
-      if (!statusResponse.ok) {
-        throw new Error('Failed to check Firecrawl status');
-      }
-
-      const statusData = await statusResponse.json();
-
-      if (statusData.status === 'completed') {
-        clearInterval(pollInterval);
-        console.log(`✅ Batch ${batchNumber} completed!`);
-
-        // Group tools by intelligently categorized categories
-        const toolsByCategory: Record<string, any[]> = {};
-        
-        statusData.data?.forEach((result: any, index: number) => {
-          const urlName = urls[index]?.name || 'Unknown';
-          const batchCategory = CATEGORY_MAPPING[urlName] || urlName;
-          const products = result.extract?.products || [];
-
-          console.log(`📦 URL ${index + 1} (${urlName}): ${products.length} products`);
-
-          products.forEach((product: any) => {
-            // Intelligently categorize each product based on its name and description
-            const intelligentCategory = intelligentlyCategorize(
-              product.name || '', 
-              product.description || '',
-              product.category || '',
-              batchCategory
-            );
-
-            if (!toolsByCategory[intelligentCategory]) {
-              toolsByCategory[intelligentCategory] = [];
-            }
-
-            toolsByCategory[intelligentCategory].push({
-              ...product,
-              category: intelligentCategory,
-              supplier: urlName.includes('Screwfix') ? 'Screwfix' : 'Toolstation',
-              view_product_url: product.productUrl,
-              id: Math.floor(Math.random() * 1000000)
-            });
-          });
-        });
-
-        // Store each category in tools_weekly_cache (merge with existing)
-        let totalTools = 0;
-        const expiresAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
-
-        for (const [category, tools] of Object.entries(toolsByCategory)) {
-          // Fetch existing tools for this category
-          const { data: existing } = await supabase
-            .from('tools_weekly_cache')
-            .select('tools_data')
-            .eq('category', category)
-            .single();
-
-          // Merge new tools with existing ones
-          const existingTools = existing?.tools_data || [];
-          const mergedTools = [...existingTools, ...tools];
-
-          // Remove duplicates based on view_product_url
-          const uniqueTools = mergedTools.reduce((acc: any[], tool: any) => {
-            const exists = acc.find((t: any) => t.view_product_url === tool.view_product_url);
-            if (!exists) {
-              acc.push(tool);
-            }
-            return acc;
-          }, []);
-
-          // Upsert the merged, unique set
-          await supabase.from('tools_weekly_cache').upsert({
-            category,
-            tools_data: uniqueTools,
-            total_products: uniqueTools.length,
-            expires_at: expiresAt,
-            update_status: 'completed',
-            last_updated: new Date().toISOString()
-          }, { onConflict: 'category' });
-
-          totalTools += tools.length;
-          console.log(`💾 Stored ${tools.length} tools for ${category} (Total: ${uniqueTools.length} unique)`);
-        }
-
-        // Update queue status
-        await supabase.from('tools_scrape_queue')
-          .update({
-            status: 'completed',
-            tools_found: totalTools,
-            completed_at: new Date().toISOString()
-          })
-          .eq('firecrawl_job_id', jobId);
-
-        console.log(`✅ Batch ${batchNumber} complete: ${totalTools} tools stored`);
-
-        // Auto-trigger next batch if not the last one
-        if (batchNumber < 3) {
-          console.log(`🚀 Auto-triggering batch ${batchNumber + 1}...`);
-          
-          fetch(`${SUPABASE_URL}/functions/v1/firecrawl-v2-tools-batch`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ batchNumber: batchNumber + 1 })
-          });
-        }
-
-      } else if (pollCount >= maxPolls) {
-        clearInterval(pollInterval);
-        console.error(`⏱️ Batch ${batchNumber} timeout after ${maxPolls} polls`);
-        
-        await supabase.from('tools_scrape_queue')
-          .update({
-            status: 'failed',
-            error_message: 'Timeout: exceeded maximum polling time',
-            completed_at: new Date().toISOString()
-          })
-          .eq('firecrawl_job_id', jobId);
-      } else {
-        console.log(`⏳ Batch ${batchNumber} status: ${statusData.status} - ${statusData.completed}/${statusData.total}`);
-      }
-
-    } catch (error) {
-      clearInterval(pollInterval);
-      console.error(`❌ Error polling batch ${batchNumber}:`, error);
-      
-      await supabase.from('tools_scrape_queue')
-        .update({
-          status: 'failed',
-          error_message: error.message,
-          completed_at: new Date().toISOString()
-        })
-        .eq('firecrawl_job_id', jobId);
-    }
-  }, 5000); // Poll every 5 seconds
-}
