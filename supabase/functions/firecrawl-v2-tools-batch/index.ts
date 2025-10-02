@@ -30,7 +30,7 @@ const BATCH_URLS = {
   ],
   3: [
     { url: 'https://www.screwfix.com/search?search=Equipment+ladders+scaffolding+access+working+at+height&page_size=50', name: 'Safety Tools - Screwfix' },
-    { url: 'https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation&page_size=50', name: 'Safety Tools - Toolstation' },
+    { url: 'https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation', name: 'Safety Tools - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=specialist+electrical+tools+installation+tasks&page_size=50', name: 'Access Tools & Equipment - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=hazard+identification+protection+safety+equipment', name: 'Access Tools & Equipment - Toolstation' },
     { url: 'https://www.toolstation.com/search?q=Equipment+ladders+scaffolding+access+working+at+height', name: 'Specialist Tools - Toolstation' },
