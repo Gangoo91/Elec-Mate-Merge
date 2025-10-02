@@ -12,6 +12,7 @@ import {
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
 import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
+import BatchToolsRefreshButton from "@/components/electrician-tools/BatchToolsRefreshButton";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { queryClient } from "@/lib/queryClient";
@@ -88,7 +89,13 @@ const ElectricalTools = () => {
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Tools</h1>
           <p className="text-muted-foreground text-sm md:text-base">Browse electrical tools for your projects</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
+          <BatchToolsRefreshButton
+            onSuccess={() => {
+              queryClient.invalidateQueries({ queryKey: ['toolCategories'] });
+              queryClient.invalidateQueries({ queryKey: ['toolsData'] });
+            }}
+          />
           <Button 
             variant="outline" 
             onClick={handleRefreshTools}
