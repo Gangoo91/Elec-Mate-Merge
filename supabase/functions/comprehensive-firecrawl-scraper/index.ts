@@ -117,33 +117,56 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
       console.log(`📡 [${category}] Attempt ${attempt}/${maxAttempts} - Scraping from ${supplier}...`);
+      console.log(`🔍 [${category}] Using Extract format with AI-powered schema extraction`);
       
-      // Try markdown format first (faster and more reliable than extract)
+      // Use extract format with product schema for AI-powered structured data extraction
       const crawlResponse = await firecrawl.scrapeUrl(url, {
-        formats: ['markdown'],
-        timeout: 60000,
+        formats: ['extract'],
+        extract: {
+          schema: productSchema,
+          prompt: `Extract all electrical tools/products from this page. For each product include: name, price, availability/stock status, image URL, product page URL, description, supplier name, category, and brand if available.`
+        },
+        timeout: 90000,
         onlyMainContent: true
       });
 
-      if (crawlResponse.success && (crawlResponse as any).data?.markdown) {
-        const markdown = (crawlResponse as any).data.markdown;
-        console.log(`✅ [${category}] Got markdown content (${markdown.length} chars)`);
+      console.log(`📋 [${category}] Response:`, JSON.stringify(crawlResponse).substring(0, 200));
+
+      if (crawlResponse.success && (crawlResponse as any).data?.extract?.products) {
+        const extractedProducts = (crawlResponse as any).data.extract.products;
+        console.log(`✅ [${category}] Extracted ${extractedProducts.length} products using AI schema`);
         
-        // Parse markdown to extract product information
-        const products = parseProductsFromMarkdown(markdown, category, supplier);
+        // Transform extracted products to match our format
+        const products = extractedProducts.map((p: any, idx: number) => ({
+          id: Date.now() + idx,
+          name: p.name || 'Unknown Product',
+          price: p.price || '£0.00',
+          category: category,
+          supplier: p.supplier || supplier,
+          image: p.image || '/placeholder.svg',
+          stockStatus: p.availability || p.stockStatus || 'Check Availability',
+          productUrl: p.productUrl || url,
+          description: p.description || '',
+          brand: p.brand || supplier,
+          isOnSale: false,
+          salePrice: '',
+          view_product_url: p.productUrl || url
+        })).slice(0, 15); // Limit to 15 products per category
         
         if (products.length > 0) {
-          console.log(`✅ [${category}] Extracted ${products.length} products from markdown`);
+          console.log(`✅ [${category}] Successfully processed ${products.length} products`);
           return { category, products, success: true };
         }
         
-        console.warn(`⚠️ [${category}] Attempt ${attempt}: No products parsed from markdown`);
+        console.warn(`⚠️ [${category}] Attempt ${attempt}: Products extracted but none valid`);
+      } else {
+        console.warn(`⚠️ [${category}] Attempt ${attempt}: No products in extract response`);
       }
       
-      lastError = new Error('No products found in markdown');
+      lastError = new Error('No products found in extract response');
       
       if (attempt < maxAttempts) {
-        const delay = 2000 * attempt;
+        const delay = 3000 * attempt;
         console.log(`⏳ [${category}] Retrying in ${delay}ms...`);
         await new Promise(resolve => setTimeout(resolve, delay));
       }
@@ -153,7 +176,7 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
       console.error(`❌ [${category}] Attempt ${attempt} failed:`, error.message);
       
       if (attempt < maxAttempts) {
-        const delay = 2000 * attempt;
+        const delay = 3000 * attempt;
         console.log(`⏳ [${category}] Retrying in ${delay}ms...`);
         await new Promise(resolve => setTimeout(resolve, delay));
       }
@@ -164,70 +187,8 @@ const scrapeUrl = async (firecrawl: FirecrawlApp, url: string, category: string,
   return { category, products: [], success: false, error: lastError?.message };
 };
 
-// Parse products from markdown content
-function parseProductsFromMarkdown(markdown: string, category: string, supplier: string): any[] {
-  const products = [];
-  const lines = markdown.split('\n');
-  
-  let currentProduct: any = null;
-  
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    
-    // Look for product titles (usually in headers or bold text)
-    if (line.startsWith('###') || line.startsWith('##')) {
-      if (currentProduct && currentProduct.name && currentProduct.price) {
-        products.push(currentProduct);
-      }
-      currentProduct = {
-        name: line.replace(/^#+\s*/, '').trim(),
-        category,
-        supplier,
-        lastUpdated: new Date().toISOString(),
-        availability: 'Check Availability',
-        image: '/placeholder.svg',
-        description: '',
-        features: [],
-        specifications: {}
-      };
-    }
-    
-    // Look for prices (£ symbol followed by numbers)
-    const priceMatch = line.match(/£\s*(\d+\.?\d*)/);
-    if (priceMatch && currentProduct) {
-      currentProduct.price = `£${priceMatch[1]}`;
-    }
-    
-    // Look for URLs
-    const urlMatch = line.match(/https:\/\/www\.screwfix\.com[^\s)"]*/);
-    if (urlMatch && currentProduct) {
-      currentProduct.productUrl = urlMatch[0];
-    }
-    
-    // Look for image URLs
-    const imgMatch = line.match(/!\[.*?\]\((https?:\/\/[^\s)]+)\)/);
-    if (imgMatch && currentProduct) {
-      currentProduct.image = imgMatch[1];
-    }
-    
-    // Collect description text
-    if (currentProduct && line && !line.startsWith('#') && !line.startsWith('!') && !line.startsWith('[')) {
-      if (currentProduct.description) {
-        currentProduct.description += ' ' + line;
-      } else {
-        currentProduct.description = line;
-      }
-    }
-  }
-  
-  // Add last product
-  if (currentProduct && currentProduct.name && currentProduct.price) {
-    products.push(currentProduct);
-  }
-  
-  // Limit to 15 products
-  return products.slice(0, 15);
-}
+// Legacy markdown parser - no longer used with extract format
+// Kept for reference only
 
 const checkExistingBatch = async (supabase: any, batchNumber: number) => {
   const { data, error } = await supabase
