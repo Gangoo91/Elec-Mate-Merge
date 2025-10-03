@@ -280,7 +280,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
   return (
     <Card 
-      className="group relative h-full overflow-hidden rounded-xl border border-border/50 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1 cursor-pointer"
+      className="group relative h-full overflow-hidden rounded-xl border border-border/50 bg-elec-gray backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1 cursor-pointer"
       onClick={() => onCardClick?.(item)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
