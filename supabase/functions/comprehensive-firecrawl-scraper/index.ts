@@ -193,7 +193,7 @@ async function batchScrapeProducts(
           id: Date.now() + index,
           name: product.name || 'Unknown Product',
           brand: product.brand,
-          category: product.category || category,
+          category: category, // Always use configured category (e.g., "Hand Tools") not scraped subcategory
           price: product.price || '£0.00',
           supplier: product.supplier || 'Unknown',
           image: product.image || '/placeholder.svg',
