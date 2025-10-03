@@ -397,7 +397,7 @@ const VisualAnalysisRedesigned = () => {
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
               <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />
               <div className="min-w-0 flex-1">
-                <CardTitle className="text-lg sm:text-xl text-foreground truncate">
+                <CardTitle className="text-base sm:text-lg text-foreground leading-tight break-words">
                   {getModeTitle()}
                 </CardTitle>
                 <CardDescription className="text-xs sm:text-sm mt-0.5">
