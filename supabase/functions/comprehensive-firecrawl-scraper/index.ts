@@ -192,6 +192,7 @@ async function batchScrapeProducts(
         urls: categoryUrls,
         formats: [{
           type: 'json',
+          prompt: `Extract ALL products from this search/listing page. For each product, extract: name, price, category, supplier, image URL, description, stock status, sale information, highlights, and product URL. Return an array of all products found on the page.`,
           schema: {
             type: "object",
             properties: {
@@ -201,7 +202,6 @@ async function batchScrapeProducts(
               }
             }
           },
-          systemPrompt: `Extract ALL products from this search/listing page. For each product, extract: name, price, category, supplier, image URL, description, stock status, sale information, highlights, and product URL. Return an array of all products found on the page.`
         }]
       }),
     });
