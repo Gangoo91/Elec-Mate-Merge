@@ -25,6 +25,7 @@ import { MaterialItem as BaseMaterialItem } from "@/data/electrician/productData
 
 interface MaterialItem extends BaseMaterialItem {
   productUrl?: string;
+  brand?: string;
 }
 
 interface MaterialCardProps {
@@ -222,159 +223,152 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
     return buildSearch(item.name);
   };
 
+  const discount = item.isOnSale && item.salePrice ? 
+    Math.round(((parseFloat(item.price.replace(/[£,]/g, '')) - parseFloat(item.salePrice.replace(/[£,]/g, ''))) / parseFloat(item.price.replace(/[£,]/g, ''))) * 100) : 
+    null;
+
+  // Normalise image paths
+  const imageSrc = (() => {
+    const src = item.image;
+    if (!src) return "/placeholder.svg";
+    
+    let finalSrc = src;
+    
+    // If it's not already an absolute URL, make it one
+    if (!/^https?:\/\//i.test(src) && !src.startsWith("/")) {
+      finalSrc = `/${src}`;
+    }
+    
+    return finalSrc;
+  })();
+
   return (
     <Card 
-      className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full relative group"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className="group relative h-full overflow-hidden rounded-xl border border-border/50 bg-transparent bg-gradient-to-br from-white/15 via-white/8 to-transparent backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-0.5 cursor-pointer"
     >
-      {/* Product Image Section */}
-      <div className="relative h-24 sm:h-28 bg-gradient-to-br from-elec-gray/50 to-elec-dark/30 overflow-hidden">
-        <img 
-          src={item.image || '/placeholder.svg'} 
-          alt={item.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          onError={(e) => {
-            e.currentTarget.src = '/placeholder.svg';
-          }}
-        />
+      {/* Image section with gradient overlay */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-muted/50 to-background/50">
+        <div className="aspect-square w-full max-h-32 flex items-center justify-center bg-white">
+          <img
+            src={imageSrc}
+            alt={`${item.name} from ${item.supplier}`}
+            loading="lazy"
+            className="max-h-full max-w-full object-contain transition-all duration-500 group-hover:scale-110"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
+          />
+        </div>
         
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+        {/* Gradient overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         
-        {/* Dynamic Badges */}
-        {badges.map((badge, index) => (
-          <div
-            key={index}
-            className={`absolute ${
-              badge.position === 'top-right' ? 'top-2 right-2' :
-              badge.position === 'top-left' ? 'top-2 left-2' :
-              badge.position === 'bottom-left' ? 'bottom-2 left-2' :
-              'bottom-2 right-2'
-            } ${badge.className} animate-fade-in`}
-          >
-            {badge.text}
+        {/* Top badges */}
+        <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-1.5">
+          <Badge className="rounded-full bg-background/95 text-foreground backdrop-blur-sm border-border/50 text-[10px] font-medium px-2 py-0.5 shadow-md">
+            {item.category}
+          </Badge>
+          {discount && (
+            <Badge className="rounded-full bg-destructive/95 text-destructive-foreground backdrop-blur-sm border-destructive/50 text-[10px] font-bold px-2 py-0.5 shadow-md">
+              -{discount}%
+            </Badge>
+          )}
+        </div>
+        
+        {/* Brand badge */}
+        {item.brand && (
+          <div className="absolute bottom-2 right-2">
+            <Badge variant="secondary" className="rounded-full backdrop-blur-sm text-[9px] font-medium px-2 py-0.5 shadow-md flex items-center gap-1">
+              <Award className="h-2.5 w-2.5" />
+              {item.brand}
+            </Badge>
           </div>
-        ))}
+        )}
       </div>
 
-      <CardHeader className="pb-2 pt-3 px-4">
-        {/* Header with supplier branding */}
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <Package className="h-4 w-4 text-elec-yellow" />
-            <span className="text-xs text-muted-foreground">{item.supplier}</span>
+      <CardContent className="flex flex-col gap-2.5 p-3">
+        {/* Supplier */}
+        <div className="flex items-center gap-1.5">
+          <div className="flex h-4 w-4 items-center justify-center rounded-full bg-primary/10">
+            <Package className="h-2.5 w-2.5 text-primary" />
           </div>
-          <div className="flex items-center gap-1">
-            <Star className="h-3 w-3 text-yellow-400 fill-current" />
-            <span className="text-xs text-muted-foreground">{socialProof.rating}</span>
-            <span className="text-xs text-muted-foreground/60">({socialProof.reviews})</span>
-          </div>
-        </div>
-        
-        <CardTitle className="text-white text-sm leading-tight line-clamp-2">
-          {item.name}
-        </CardTitle>
-      </CardHeader>
-      
-      <CardContent className="space-y-3 pt-0 px-4 pb-4">
-        {/* Feature Highlights */}
-        <div className="space-y-1.5">
-          {features.map((feature, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-              <span className="text-xs text-muted-foreground">{feature}</span>
-            </div>
-          ))}
+          <span className="text-[10px] font-medium text-muted-foreground">{item.supplier}</span>
         </div>
 
-        {/* Enhanced Footer */}
-        <div className="space-y-2 pt-2 border-t border-white/10">
-          {/* Pricing Display */}
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                {item.isOnSale ? (
-                  <>
-                    <span className="text-lg font-bold text-elec-yellow">{item.salePrice}</span>
-                    <span className="text-sm text-muted-foreground line-through">{item.price}</span>
-                  </>
-                ) : (
-                  <span className="text-lg font-bold text-elec-yellow">{item.price}</span>
-                )}
-              </div>
-              {item.stockStatus === 'Low Stock' && (
-                <div className="flex items-center gap-1 mt-1">
-                  <Timer className="h-3 w-3 text-amber-400" />
-                  <span className="text-xs text-amber-400">Only few left</span>
-                </div>
-              )}
+        {/* Product title */}
+        <h3 className="text-xs font-bold leading-tight text-foreground line-clamp-2 min-h-[2rem]">
+          {item.name}
+        </h3>
+
+        {/* Features with icons */}
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+            <div className="flex h-4 w-4 items-center justify-center rounded-full bg-success/10">
+              <Shield className="h-2.5 w-2.5 text-success" />
             </div>
-            
-            {/* Stock Status Badge */}
-            <Badge 
-              variant="outline" 
-              className={
-                item.stockStatus === 'In Stock' ? 'border-green-500/30 text-green-400 bg-green-500/10' :
-                item.stockStatus === 'Low Stock' ? 'border-amber-500/30 text-amber-400 bg-amber-500/10' :
-                'border-red-500/30 text-red-400 bg-red-500/10'
-              }
-            >
-              {item.stockStatus || 'Available'}
+            <span>BS7671</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+            <div className="flex h-4 w-4 items-center justify-center rounded-full bg-primary/10">
+              <Zap className="h-2.5 w-2.5 text-primary" />
+            </div>
+            <span>Pro Grade</span>
+          </div>
+        </div>
+
+        {/* Spacer */}
+        <div className="flex-grow" />
+
+        {/* Price section with divider */}
+        <div className="space-y-2 border-t border-border/50 pt-2.5">
+          <div className="flex items-end justify-between">
+            <div className="flex flex-col gap-0.5">
+              {item.isOnSale && item.salePrice && (
+                <span className="text-[9px] text-muted-foreground line-through">
+                  {item.price}
+                </span>
+              )}
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-lg font-bold text-primary">
+                  {item.salePrice || item.price}
+                </span>
+                <span className="text-[9px] text-muted-foreground">VAT</span>
+              </div>
+            </div>
+            <Badge variant="success" className="rounded-full text-[9px] font-semibold px-2 py-0.5">
+              <CheckCircle className="mr-0.5 h-2.5 w-2.5" />
+              Stock
             </Badge>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2">
+          {/* Action buttons */}
+          <div className="flex gap-1.5">
             <Button 
-              variant="outline" 
-              size="sm" 
-              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 flex-1 transition-all duration-200"
-              onClick={() => window.open(getProductUrl(), '_blank')}
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(getProductUrl(), '_blank');
+              }}
+              className="flex-1 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-sm hover:shadow-md transition-all h-7 text-[10px]"
             >
-              <ExternalLink className="h-4 w-4 mr-2" />
-              View Product
+              <ShoppingCart className="mr-1 h-3 w-3" />
+              View
             </Button>
-            
-            {onAddToCompare && (
-              <Button
-                onClick={() => {
-                  if (isSelected && onRemoveFromCompare) {
-                    onRemoveFromCompare(String(item.id || item.name));
-                  } else if (!isCompareDisabled) {
-                    onAddToCompare(item);
-                  }
-                }}
-                disabled={isCompareDisabled && !isSelected}
-                variant={isSelected ? "default" : "ghost"}
-                size="sm"
-                className={`p-2 transition-all duration-200 ${
-                  isSelected 
-                    ? 'bg-green-500/20 text-green-400 border-green-500/30 hover:bg-green-500/30' 
-                    : 'hover:bg-elec-yellow/10 hover:text-elec-yellow'
-                }`}
-              >
-                {isSelected ? (
-                  <Check className="h-4 w-4" />
-                ) : (
-                  <Plus className="h-4 w-4" />
-                )}
-              </Button>
-            )}
+            <Button 
+              size="sm"
+              variant="outline"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (isSelected && onRemoveFromCompare) {
+                  onRemoveFromCompare(String(item.id || item.name));
+                } else if (onAddToCompare) {
+                  onAddToCompare(item);
+                }
+              }}
+              disabled={isCompareDisabled && !isSelected}
+              className="rounded-lg px-2 border-border/50 hover:bg-accent transition-all h-7"
+            >
+              {isSelected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
+            </Button>
           </div>
-
-          {/* Mobile Quick Action Overlay */}
-          {isMobile && isHovered && (
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-4 transform transition-transform duration-300">
-              <Button 
-                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
-                onClick={() => window.open(getProductUrl(), '_blank')}
-              >
-                <ShoppingCart className="h-4 w-4 mr-2" />
-                Quick Buy
-              </Button>
-            </div>
-          )}
         </div>
       </CardContent>
     </Card>
