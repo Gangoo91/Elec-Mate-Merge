@@ -227,109 +227,132 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
   return (
     <Card 
-      className="bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] transition-all duration-300 rounded-xl overflow-hidden h-full relative group cursor-pointer"
+      className="group relative h-full overflow-hidden rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-1 cursor-pointer"
       onClick={() => onCardClick?.(item)}
     >
-      {/* Image section */}
-      <div className="relative">
-        <div className="h-32 overflow-hidden">
+      {/* Image section with gradient overlay */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-muted/50 to-background/50">
+        <div className="aspect-square w-full">
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
             loading="lazy"
-            className="object-cover w-full h-full transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105"
+            className="h-full w-full object-contain p-4 transition-all duration-500 group-hover:scale-110 group-hover:rotate-2"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
           />
         </div>
         
-        {/* Simple badges overlaid on image */}
-        <div className="absolute top-1.5 left-1.5 right-1.5 flex items-start justify-between">
-          <Badge className="bg-background/90 text-foreground border-border text-[10px] px-1.5 py-0.5">
+        {/* Gradient overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        
+        {/* Top badges */}
+        <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
+          <Badge className="rounded-full bg-background/95 text-foreground backdrop-blur-sm border-border/50 text-xs font-medium px-3 py-1 shadow-lg">
             {item.category}
           </Badge>
           {discount && (
-            <Badge className="bg-destructive text-destructive-foreground text-[10px] font-bold px-1.5 py-0.5">
-              -{discount}%
+            <Badge className="rounded-full bg-destructive/95 text-destructive-foreground backdrop-blur-sm border-destructive/50 text-xs font-bold px-3 py-1 shadow-lg animate-pulse">
+              -{discount}% OFF
             </Badge>
           )}
         </div>
         
+        {/* Brand badge */}
+        {item.brand && (
+          <div className="absolute bottom-3 right-3">
+            <Badge variant="secondary" className="rounded-full backdrop-blur-sm text-xs font-medium px-3 py-1 shadow-lg flex items-center gap-1.5">
+              <Award className="h-3 w-3" />
+              {item.brand}
+            </Badge>
+          </div>
+        )}
       </div>
 
-      <CardContent className="p-2.5 flex-grow flex flex-col">
-        {/* Supplier and rating section */}
-        <div className="flex items-center justify-between text-xs mb-2">
-          <div className="flex items-center gap-1">
-            <div className="w-2 h-2 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
-            <span className="font-medium text-foreground text-[10px]">{item.supplier}</span>
+      <CardContent className="flex flex-col gap-4 p-5">
+        {/* Supplier */}
+        <div className="flex items-center gap-2">
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10">
+            <Package className="h-3.5 w-3.5 text-primary" />
           </div>
+          <span className="text-sm font-medium text-muted-foreground">{item.supplier}</span>
         </div>
 
         {/* Product title */}
-        <h3 className="text-xs font-semibold line-clamp-2 mb-2 text-foreground">
+        <h3 className="text-sm font-bold leading-tight text-foreground line-clamp-2 min-h-[2.5rem]">
           {item.name}
         </h3>
 
-        {/* Features list */}
-        <div className="space-y-0.5 mb-2">
-          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-            <Check className="h-2.5 w-2.5 text-green-400 flex-shrink-0" />
-            <span>Professional quality construction</span>
+        {/* Features with icons */}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-success/10">
+              <Shield className="h-3 w-3 text-success" />
+            </div>
+            <span>BS7671 Compliant</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-            <Check className="h-2.5 w-2.5 text-green-400 flex-shrink-0" />
-            <span>BS7671 18th edition compliant</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-            <Check className="h-2.5 w-2.5 text-green-400 flex-shrink-0" />
-            <span>Suitable for commercial use</span>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10">
+              <Zap className="h-3 w-3 text-primary" />
+            </div>
+            <span>Professional Grade</span>
           </div>
         </div>
 
-        {/* Price and stock section */}
-        <div className="space-y-2 pt-2 border-t border-white/10">
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col">
-              <span className="text-base font-bold text-elec-yellow">
-                {item.salePrice || item.price}
-              </span>
-              <span className="text-[9px] text-muted-foreground">inc. VAT</span>
+        {/* Spacer */}
+        <div className="flex-grow" />
+
+        {/* Price section with divider */}
+        <div className="space-y-3 border-t border-border/50 pt-4">
+          <div className="flex items-end justify-between">
+            <div className="flex flex-col gap-1">
+              {item.isOnSale && item.salePrice && (
+                <span className="text-xs text-muted-foreground line-through">
+                  {item.price}
+                </span>
+              )}
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-primary">
+                  {item.salePrice || item.price}
+                </span>
+                <span className="text-xs text-muted-foreground">inc. VAT</span>
+              </div>
             </div>
-            <Badge variant="success" className="text-[10px] px-1.5 py-0.5">
+            <Badge variant="success" className="rounded-full text-xs font-semibold px-3 py-1">
+              <CheckCircle className="mr-1 h-3 w-3" />
               In Stock
             </Badge>
           </div>
-        </div>
 
-        {/* Button section */}
-        <div className="flex gap-1.5 mt-auto">
-          <Button 
-            size="sm" 
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(getProductUrl(), '_blank');
-            }}
-            className="flex-1 border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors h-7 text-[10px] px-2"
-          >
-            <ExternalLink className="w-2.5 h-2.5 mr-1" />
-            View Product
-          </Button>
-          <Button 
-            size="sm" 
-            variant="outline"
-            onClick={(e) => {
-              e.stopPropagation();
-              if (isSelected && onRemoveFromCompare) {
-                onRemoveFromCompare(item.id.toString());
-              } else if (onAddToCompare) {
-                onAddToCompare(item);
-              }
-            }}
-            disabled={isCompareDisabled && !isSelected}
-            className="px-2 h-7"
-          >
-            {isSelected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
-          </Button>
+          {/* Action buttons */}
+          <div className="flex gap-2">
+            <Button 
+              size="default"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(getProductUrl(), '_blank');
+              }}
+              className="flex-1 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-md hover:shadow-lg transition-all"
+            >
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              View Product
+            </Button>
+            <Button 
+              size="default"
+              variant="outline"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (isSelected && onRemoveFromCompare) {
+                  onRemoveFromCompare(item.id.toString());
+                } else if (onAddToCompare) {
+                  onAddToCompare(item);
+                }
+              }}
+              disabled={isCompareDisabled && !isSelected}
+              className="rounded-xl px-4 border-border/50 hover:bg-accent transition-all"
+            >
+              {isSelected ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>
