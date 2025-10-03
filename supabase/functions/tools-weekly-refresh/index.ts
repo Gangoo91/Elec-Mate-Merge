@@ -186,55 +186,23 @@ serve(async (req) => {
       }
     }
 
-    // Store the scraped data in tools_weekly_cache
-    if (refreshResult && refreshResult.tools && Array.isArray(refreshResult.tools)) {
-      console.log(`📊 Storing ${refreshResult.tools.length} tools in cache...`);
-      
-      const expiresAt = new Date();
-      expiresAt.setDate(expiresAt.getDate() + 7);
-      
-      const { error: storeError } = await supabase
-        .from('tools_weekly_cache')
-        .insert({
-          tools_data: refreshResult.tools,
-          total_products: refreshResult.totalFound || refreshResult.tools.length,
-          category: 'weekly_refresh',
-          expires_at: expiresAt.toISOString(),
-          created_at: now.toISOString(),
-          update_status: 'completed'
-        });
-      
-      if (storeError) {
-        console.error('❌ Error storing tools data:', storeError);
-      } else {
-        console.log('✅ Tools data stored in cache successfully');
-      }
-    }
+    // Don't store the merged data - individual categories are already stored by the batch scrapers
+    console.log(`✅ All batches complete - data already stored by category in individual scrapers`);
 
     console.log('✅ Tools refresh completed:', refreshResult);
 
-    // Clean up old cache entries (keep only the latest 3)
-    console.log('🧹 Cleaning up old cache entries...');
+    // Clean up old "weekly_refresh" merged entries (legacy from old system)
+    console.log('🧹 Cleaning up old merged cache entries...');
     
-    const { data: allCacheEntries } = await supabase
+    const { error: deleteError } = await supabase
       .from('tools_weekly_cache')
-      .select('id, created_at')
-      .order('created_at', { ascending: false });
+      .delete()
+      .eq('category', 'weekly_refresh');
 
-    if (allCacheEntries && allCacheEntries.length > 3) {
-      const entriesToDelete = allCacheEntries.slice(3);
-      const idsToDelete = entriesToDelete.map(entry => entry.id);
-      
-      const { error: deleteError } = await supabase
-        .from('tools_weekly_cache')
-        .delete()
-        .in('id', idsToDelete);
-
-      if (deleteError) {
-        console.error('⚠️ Error cleaning up old cache entries:', deleteError);
-      } else {
-        console.log(`🗑️ Cleaned up ${entriesToDelete.length} old cache entries`);
-      }
+    if (deleteError) {
+      console.error('⚠️ Error cleaning up merged cache entries:', deleteError);
+    } else {
+      console.log(`🗑️ Cleaned up old "weekly_refresh" merged entries`);
     }
 
     // Determine overall success based on merge result
