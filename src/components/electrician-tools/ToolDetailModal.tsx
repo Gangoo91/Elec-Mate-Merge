@@ -114,7 +114,7 @@ const ToolDetailModal = ({
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="max-h-[calc(90vh-120px)] pr-4 overflow-hidden">
+        <ScrollArea className="max-h-[calc(90vh-120px)] pr-4 overflow-hidden mb-4">
           <div className="space-y-6">
             {/* Image and basic info */}
             <div className="grid md:grid-cols-2 gap-6">
