@@ -292,7 +292,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
             loading="lazy"
-            className="max-h-full max-w-full object-contain transition-all duration-500 group-hover:scale-105 drop-shadow-md"
+            className="max-h-full max-w-full object-contain transition-all duration-500 group-hover:scale-105"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
           />
         </div>
