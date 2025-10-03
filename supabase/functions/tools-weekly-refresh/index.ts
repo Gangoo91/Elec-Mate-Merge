@@ -92,6 +92,12 @@ serve(async (req) => {
           body: { batch: 3, forceRefresh: true } 
         }),
         createTimeoutPromise(BATCH_TIMEOUT_MS)
+      ]),
+      Promise.race([
+        supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+          body: { batch: 4, forceRefresh: true } 
+        }),
+        createTimeoutPromise(BATCH_TIMEOUT_MS)
       ])
     ];
 

@@ -10,34 +10,62 @@ const corsHeaders = {
 // Category configuration with Toolstation URLs (simpler HTML, more reliable)
 const BATCH_1_CATEGORIES = {
   'Hand Tools': {
-    urls: ['https://www.toolstation.com/hand-tools/c306']
-  },
-  'Test Equipment': {
-    urls: ['https://www.toolstation.com/electrical-testers/c309']
+    urls: [
+      'https://www.screwfix.com/search?search=Screwdrivers%2C+pliers%2C+strippers+and+manual+tools&page_size=100',
+      'https://www.toolstation.com/search?q=Screwdrivers%2C+pliers%2C+strippers+and+manual+tools'
+    ]
   },
   'Power Tools': {
-    urls: ['https://www.toolstation.com/power-tools/c307']
+    urls: [
+      'https://www.screwfix.com/search?search=Drills%2C+saws%2C+grinders+and+cordless+tool+systems&page_size=100',
+      'https://www.toolstation.com/search?q=Drills%2C+saws%2C+grinders+and+cordless+tool+systems'
+    ]
   }
 };
 
 const BATCH_2_CATEGORIES = {
   'PPE': {
-    urls: ['https://www.toolstation.com/workwear-ppe/c252']
+    urls: [
+      'https://www.screwfix.com/search?search=ppe&page_size=100',
+      'https://www.toolstation.com/search?q=ppe'
+    ]
   },
   'Specialist Tools': {
-    urls: ['https://www.toolstation.com/specialist-tools/c311']
-  },
-  'Safety Tools': {
-    urls: ['https://www.toolstation.com/safety-equipment/c310']
+    urls: [
+      'https://www.screwfix.com/search?search=Cable+tools%2C+crimpers%2C+benders+and+specialised+equipment',
+      'https://www.toolstation.com/search?q=Cable+tools%2C+crimpers%2C+benders+and+specialised+equipment'
+    ]
   }
 };
 
 const BATCH_3_CATEGORIES = {
+  'Test Equipment': {
+    urls: [
+      'https://www.screwfix.com/search?search=Multimeters%2C+socket+testers%2C+insulation+testers+and+PAT+equipment&sort_by=-brand',
+      'https://www.toolstation.com/search?q=Multimeters%2C+socket+testers%2C+insulation+testers+and+PAT+equipment'
+    ]
+  },
+  'Safety Tools': {
+    urls: [
+      'https://www.screwfix.com/search?search=safety+equipment+and+protective+devices&page_size=100',
+      'https://www.toolstation.com/search?q=safety+equipment+and+protective+devices'
+    ]
+  }
+};
+
+
+const BATCH_4_CATEGORIES = {
   'Access Tools & Equipment': {
-    urls: ['https://www.toolstation.com/access-equipment/c253']
+    urls: [
+      'https://www.screwfix.com/search?search=Ladders%2C+scaffolding+and+access+equipment+for+working+at+height&page_size=100',
+      'https://www.toolstation.com/search?q=Ladders%2C+scaffolding+and+access+equipment+for+working+at+height'
+    ]
   },
   'Tool Storage': {
-    urls: ['https://www.toolstation.com/tool-storage/c308']
+    urls: [
+      'https://www.screwfix.com/search?search=Tool+bags%2C+boxes+and+storage+solutions+for+organisation&page_size=100',
+      'https://www.toolstation.com/search?q=ool+bags%2C+boxes+and+storage+solutions+for+organisation'
+    ]
   }
 };
 
@@ -74,6 +102,7 @@ const getBatchCategories = (batchNumber: number) => {
     case 1: return BATCH_1_CATEGORIES;
     case 2: return BATCH_2_CATEGORIES;
     case 3: return BATCH_3_CATEGORIES;
+    case 4: return BATCH_4_CATEGORIES;
     default: return BATCH_1_CATEGORIES;
   }
 };
@@ -138,7 +167,7 @@ async function batchScrapeProducts(
   
   try {
     // Start batch scrape job
-    const batchResponse = await fetch('https://api.firecrawl.dev/v1/batch/scrape', {
+    const batchResponse = await fetch('https://api.firecrawl.dev/v2/batch/scrape', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${firecrawlApiKey}`,
@@ -275,7 +304,8 @@ const mergeAllBatches = async (supabase: any) => {
   const allCategoryNames = [
     ...Object.keys(BATCH_1_CATEGORIES),
     ...Object.keys(BATCH_2_CATEGORIES),
-    ...Object.keys(BATCH_3_CATEGORIES)
+    ...Object.keys(BATCH_3_CATEGORIES),
+    ...Object.keys(BATCH_4_CATEGORIES)
   ];
   
   console.log(`📦 [MERGE] Looking for ${allCategoryNames.length} categories:`, allCategoryNames);
@@ -369,8 +399,8 @@ serve(async (req) => {
 
     // Validate batch number
     const batchNumber = batch || 1;
-    if (![1, 2, 3].includes(batchNumber)) {
-      throw new Error('Batch must be 1, 2, or 3');
+    if (![1, 2, 3, 4].includes(batchNumber)) {
+      throw new Error('Batch must be 1, 2, 3 or 4');
     }
 
     console.log(`📊 Processing Batch ${batchNumber}`);
