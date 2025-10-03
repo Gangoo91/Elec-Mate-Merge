@@ -182,7 +182,7 @@ serve(async (req) => {
         webhook: {
         url: `${webhookUrl}`,
         },
-        events: ["page"]
+        events: ["page"],
         extract: {
           prompt: "Extract all tools and equipment products from this page with their names, brands, prices, and product URLs.",
           schema: {
