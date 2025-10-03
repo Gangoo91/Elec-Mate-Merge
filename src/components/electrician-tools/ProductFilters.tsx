@@ -87,23 +87,28 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
   const activeFilterCount = Object.values(filters).reduce((sum, arr) => sum + arr.length, 0);
 
   const FilterSection = ({ title, items, category }: { title: string; items: string[]; category: keyof FilterState }) => (
-    <div className="space-y-2">
-      <h4 className="font-medium text-elec-light text-sm">{title}</h4>
-      <div className="flex flex-wrap gap-2">
+    <div className="space-y-3">
+      <h4 className="font-semibold text-foreground text-sm tracking-wide flex items-center gap-2">
+        {title}
+        {filters[category].length > 0 && (
+          <span className="text-xs text-elec-yellow">({filters[category].length})</span>
+        )}
+      </h4>
+      <div className="flex flex-wrap gap-2.5">
         {items.map(item => (
           <Badge
             key={item}
             variant={filters[category].includes(item) ? "gold" : "outline"}
-            className={`cursor-pointer transition-all duration-200 ${
+            className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
               filters[category].includes(item)
-                ? "bg-elec-yellow text-elec-dark shadow-sm"
-                : "bg-elec-card/50 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/40"
+                ? "bg-elec-yellow text-elec-dark shadow-md shadow-elec-yellow/20 border-elec-yellow"
+                : "bg-transparent border-border/40 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
             }`}
             onClick={() => toggleFilter(category, item)}
           >
             {item}
             {filters[category].includes(item) && (
-              <X className="h-3 w-3 ml-1" />
+              <X className="h-3 w-3 ml-1.5" />
             )}
           </Badge>
         ))}
@@ -113,83 +118,112 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
 
   return (
     <div className="space-y-4">
-      {/* Quick Filters Bar */}
-      <div className="flex items-center gap-3 flex-wrap">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="bg-elec-card/50 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10"
-        >
-          <Filter className="h-4 w-4 mr-2" />
-          Filters
-          {activeFilterCount > 0 && (
-            <Badge variant="gold" className="ml-2 h-5 w-5 p-0 text-xs">
-              {activeFilterCount}
+      {/* Quick Filters Bar with Enhanced Design */}
+      <div className="relative p-4 rounded-xl bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm border border-border/50">
+        <div className="flex items-center gap-3 flex-wrap">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="bg-transparent border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50 transition-all duration-300"
+          >
+            <Filter className="h-4 w-4 mr-2" />
+            <span className="font-medium">Filters</span>
+            {activeFilterCount > 0 && (
+              <Badge variant="gold" className="ml-2 h-5 min-w-[20px] px-1.5 text-xs font-semibold">
+                {activeFilterCount}
+              </Badge>
+            )}
+            <ChevronDown className={`h-4 w-4 ml-2 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+          </Button>
+
+          {/* Quick filter chips with enhanced styling */}
+          {availability.includes("In Stock") && (
+            <Badge
+              variant={filters.availability.includes("In Stock") ? "gold" : "outline"}
+              className={`cursor-pointer transition-all duration-300 ${
+                filters.availability.includes("In Stock")
+                  ? "shadow-md shadow-elec-yellow/20 scale-105"
+                  : "hover:scale-105 hover:border-elec-yellow/50"
+              }`}
+              onClick={() => toggleFilter("availability", "In Stock")}
+            >
+              In Stock
+              {filters.availability.includes("In Stock") && (
+                <X className="h-3 w-3 ml-1.5" />
+              )}
             </Badge>
           )}
-          <ChevronDown className={`h-4 w-4 ml-2 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
-        </Button>
 
-        {/* Quick filter chips for popular options */}
-        {availability.includes("In Stock") && (
+          {suppliers.includes("Screwfix") && (
+            <Badge
+              variant={filters.suppliers.includes("Screwfix") ? "gold" : "outline"}
+              className={`cursor-pointer transition-all duration-300 ${
+                filters.suppliers.includes("Screwfix")
+                  ? "shadow-md shadow-elec-yellow/20 scale-105"
+                  : "hover:scale-105 hover:border-elec-yellow/50"
+              }`}
+              onClick={() => toggleFilter("suppliers", "Screwfix")}
+            >
+              Screwfix
+              {filters.suppliers.includes("Screwfix") && (
+                <X className="h-3 w-3 ml-1.5" />
+              )}
+            </Badge>
+          )}
+
           <Badge
-            variant={filters.availability.includes("In Stock") ? "gold" : "outline"}
-            className="cursor-pointer"
-            onClick={() => toggleFilter("availability", "In Stock")}
+            variant={filters.priceRanges.includes("Under £25") ? "gold" : "outline"}
+            className={`cursor-pointer transition-all duration-300 ${
+              filters.priceRanges.includes("Under £25")
+                ? "shadow-md shadow-elec-yellow/20 scale-105"
+                : "hover:scale-105 hover:border-elec-yellow/50"
+            }`}
+            onClick={() => toggleFilter("priceRanges", "Under £25")}
           >
-            In Stock
+            Under £25
+            {filters.priceRanges.includes("Under £25") && (
+              <X className="h-3 w-3 ml-1.5" />
+            )}
           </Badge>
-        )}
 
-        {suppliers.includes("Screwfix") && (
-          <Badge
-            variant={filters.suppliers.includes("Screwfix") ? "gold" : "outline"}
-            className="cursor-pointer"
-            onClick={() => toggleFilter("suppliers", "Screwfix")}
-          >
-            Screwfix
-          </Badge>
-        )}
-
-        <Badge
-          variant={filters.priceRanges.includes("Under £25") ? "gold" : "outline"}
-          className="cursor-pointer"
-          onClick={() => toggleFilter("priceRanges", "Under £25")}
-        >
-          Under £25
-        </Badge>
-
-        {hasActiveFilters && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={clearAllFilters}
-            className="text-elec-yellow hover:bg-elec-yellow/10"
-          >
-            Clear All
-            <X className="h-4 w-4 ml-1" />
-          </Button>
-        )}
+          {hasActiveFilters && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={clearAllFilters}
+              className="text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-300 ml-auto"
+            >
+              <span className="font-medium">Clear All</span>
+              <X className="h-4 w-4 ml-1.5" />
+            </Button>
+          )}
+        </div>
       </div>
 
-      {/* Expanded Filters */}
+      {/* Expanded Filters with Enhanced Design */}
       <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
         <CollapsibleContent>
-          <Card className="bg-elec-card/30 border-elec-yellow/20">
-            <CardContent className="p-4 space-y-6">
+          <Card className="overflow-hidden rounded-xl border border-border/50 bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm">
+            <CardContent className="p-6 space-y-8">
               <FilterSection title="Price Range" items={priceRanges} category="priceRanges" />
               
               {availability.length > 0 && (
-                <FilterSection title="Availability" items={availability} category="availability" />
+                <div className="border-t border-border/30 pt-6">
+                  <FilterSection title="Availability" items={availability} category="availability" />
+                </div>
               )}
               
               {suppliers.length > 0 && (
-                <FilterSection title="Supplier" items={suppliers} category="suppliers" />
+                <div className="border-t border-border/30 pt-6">
+                  <FilterSection title="Supplier" items={suppliers} category="suppliers" />
+                </div>
               )}
               
               {brands.length > 0 && (
-                <FilterSection title="Brand" items={brands} category="brands" />
+                <div className="border-t border-border/30 pt-6">
+                  <FilterSection title="Brand" items={brands} category="brands" />
+                </div>
               )}
             </CardContent>
           </Card>
