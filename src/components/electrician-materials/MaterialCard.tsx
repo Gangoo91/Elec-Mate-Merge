@@ -301,17 +301,10 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         <div className="space-y-3 border-t border-primary/10 pt-2">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-col gap-1">
-              {item.isOnSale && item.salePrice && (
-                <>
-                  <span className="text-xs text-muted-foreground line-through">
-                    {item.price}
-                  </span>
-                  {discount && (
-                    <span className="text-xs font-semibold text-success">
-                      Save {(parseFloat(item.price.replace(/[£,]/g, '')) - parseFloat(item.salePrice.replace(/[£,]/g, ''))).toFixed(2)}
-                    </span>
-                  )}
-                </>
+              {item.isOnSale && item.salePrice && discount && (
+                <span className="text-xs font-semibold text-success">
+                  Save {(parseFloat(item.price.replace(/[£,]/g, '')) - parseFloat(item.salePrice.replace(/[£,]/g, ''))).toFixed(2)}
+                </span>
               )}
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-bold text-primary">
