@@ -326,7 +326,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
         )}
       </div>
 
-      <CardContent className="flex flex-col gap-3 p-5">
+      <CardContent className="flex flex-col gap-3 p-5 bg-elec-grey">
         {/* Product title - larger and more prominent */}
         <h3 className="text-sm font-bold leading-tight text-foreground line-clamp-2 min-h-[2.5rem] group-hover:text-primary transition-colors">
           {item.name}
