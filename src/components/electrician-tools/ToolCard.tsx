@@ -368,7 +368,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
         <div className="flex-grow" />
 
         {/* Enhanced price section */}
-        <div className="space-y-3 border-t border-primary/10 pt-4">
+        <div className="space-y-3 border-t border-primary/10 pt-2">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-col gap-1">
               {item.isOnSale && item.salePrice && (
