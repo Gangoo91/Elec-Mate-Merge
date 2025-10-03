@@ -170,7 +170,7 @@ serve(async (req) => {
     // Create Firecrawl batch job with webhook
     const webhookUrl = `${SUPABASE_URL}/functions/v1/firecrawl-tools-webhook`;
     
-    const batchResponse = await fetch('https://api.firecrawl.dev/v1/batch/scrape', {
+    const batchResponse = await fetch('https://api.firecrawl.dev/v2/batch/scrape', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${FIRECRAWL_API_KEY}`,
@@ -179,7 +179,10 @@ serve(async (req) => {
       body: JSON.stringify({
         urls: urls.map(u => u.url),
         formats: ['extract'],
-        webhook: webhookUrl,
+        webhook: {
+        url: `${webhookUrl}`,
+        },
+        events: ["page"]
         extract: {
           prompt: "Extract all tools and equipment products from this page with their names, brands, prices, and product URLs.",
           schema: {
