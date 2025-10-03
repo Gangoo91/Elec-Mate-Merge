@@ -7,67 +7,82 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Category configuration with Toolstation URLs (simpler HTML, more reliable)
-const BATCH_1_CATEGORIES = {
-  'Hand Tools': {
+// Category configuration with search URLs
+const BATCH_1_CATEGORIES = [
+  {
+    name: 'Hand Tools',
+    searchTerm: 'Screwdrivers, pliers, strippers and manual tools',
     urls: [
       'https://www.screwfix.com/search?search=Screwdrivers%2C+pliers%2C+strippers+and+manual+tools&page_size=100',
       'https://www.toolstation.com/search?q=Screwdrivers%2C+pliers%2C+strippers+and+manual+tools'
     ]
   },
-  'Power Tools': {
+  {
+    name: 'Power Tools',
+    searchTerm: 'Drills, saws, grinders and cordless tool systems',
     urls: [
       'https://www.screwfix.com/search?search=Drills%2C+saws%2C+grinders+and+cordless+tool+systems&page_size=100',
       'https://www.toolstation.com/search?q=Drills%2C+saws%2C+grinders+and+cordless+tool+systems'
     ]
   }
-};
+];
 
-const BATCH_2_CATEGORIES = {
-  'PPE': {
+const BATCH_2_CATEGORIES = [
+  {
+    name: 'PPE',
+    searchTerm: 'Personal Protective Equipment',
     urls: [
       'https://www.screwfix.com/search?search=ppe&page_size=100',
       'https://www.toolstation.com/search?q=ppe'
     ]
   },
-  'Specialist Tools': {
+  {
+    name: 'Specialist Tools',
+    searchTerm: 'Cable tools, crimpers, benders and specialised equipment',
     urls: [
       'https://www.screwfix.com/search?search=Cable+tools%2C+crimpers%2C+benders+and+specialised+equipment',
       'https://www.toolstation.com/search?q=Cable+tools%2C+crimpers%2C+benders+and+specialised+equipment'
     ]
   }
-};
+];
 
-const BATCH_3_CATEGORIES = {
-  'Test Equipment': {
+const BATCH_3_CATEGORIES = [
+  {
+    name: 'Test Equipment',
+    searchTerm: 'Multimeters, socket testers, insulation testers and PAT equipment',
     urls: [
       'https://www.screwfix.com/search?search=Multimeters%2C+socket+testers%2C+insulation+testers+and+PAT+equipment&sort_by=-brand',
       'https://www.toolstation.com/search?q=Multimeters%2C+socket+testers%2C+insulation+testers+and+PAT+equipment'
     ]
   },
-  'Safety Tools': {
+  {
+    name: 'Safety Tools',
+    searchTerm: 'Safety equipment and protective devices',
     urls: [
       'https://www.screwfix.com/search?search=safety+equipment+and+protective+devices&page_size=100',
       'https://www.toolstation.com/search?q=safety+equipment+and+protective+devices'
     ]
   }
-};
+];
 
-
-const BATCH_4_CATEGORIES = {
-  'Access Tools & Equipment': {
+const BATCH_4_CATEGORIES = [
+  {
+    name: 'Access Tools & Equipment',
+    searchTerm: 'Ladders, scaffolding and access equipment for working at height',
     urls: [
       'https://www.screwfix.com/search?search=Ladders%2C+scaffolding+and+access+equipment+for+working+at+height&page_size=100',
       'https://www.toolstation.com/search?q=Ladders%2C+scaffolding+and+access+equipment+for+working+at+height'
     ]
   },
-  'Tool Storage': {
+  {
+    name: 'Tool Storage',
+    searchTerm: 'Tool bags, boxes and storage solutions for organisation',
     urls: [
       'https://www.screwfix.com/search?search=Tool+bags%2C+boxes+and+storage+solutions+for+organisation&page_size=100',
       'https://www.toolstation.com/search?q=ool+bags%2C+boxes+and+storage+solutions+for+organisation'
     ]
   }
-};
+];
 
 // No longer using extraction schema - using markdown + regex instead
 
@@ -152,18 +167,18 @@ async function extractProductUrls(
   }
 }
 
-// Phase 2: Batch scrape product details from individual product pages
+// Batch scrape products directly from category search URLs
 async function batchScrapeProducts(
-  urls: string[],
+  categoryUrls: string[],
   category: string,
   firecrawlApiKey: string
 ): Promise<any[]> {
-  if (!urls || urls.length === 0) {
-    console.log(`⚠️ No URLs to scrape for ${category}`);
+  if (!categoryUrls || categoryUrls.length === 0) {
+    console.log(`⚠️ No category URLs to scrape for ${category}`);
     return [];
   }
 
-  console.log(`🚀 Starting batch scrape for ${urls.length} products in ${category}`);
+  console.log(`🚀 Starting batch scrape for ${category} from ${categoryUrls.length} search URLs`);
   
   try {
     // Start batch scrape job
@@ -174,14 +189,19 @@ async function batchScrapeProducts(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        urls: urls,
+        urls: categoryUrls,
         formats: ['extract'],
         extract: {
-          schema: productDetailSchema,
-          prompt: `Extract all product details from this product page. 
-                   Include the name, price, category, description, stock status, and any highlights or features.
-                   If there's a sale price, mark isOnSale as true.
-                   Make sure to capture the product image URL and product page URL.`
+          schema: {
+            type: "object",
+            properties: {
+              products: {
+                type: "array",
+                items: productDetailSchema
+              }
+            }
+          },
+          prompt: `Extract ALL products from this search/listing page. For each product, extract: name, price, category, supplier, image URL, description, stock status, sale information, highlights, and product URL. Return an array of all products found on the page.`
         }
       }),
     });
@@ -215,30 +235,32 @@ async function batchScrapeProducts(
       if (statusData.status === 'completed') {
         console.log(`✅ Batch scrape completed for ${category}`);
         
-        // Transform results
-        const products = statusData.data
-          .filter((item: any) => item.extract && item.extract.name)
-          .map((item: any, index: number) => {
-            const extract = item.extract;
-            return {
-              id: Date.now() + index,
-              name: extract.name || 'Unknown Product',
-              category: extract.category || category,
-              price: extract.price || '£0.00',
-              supplier: extract.supplier || (item.url?.includes('screwfix') ? 'Screwfix' : 'Toolstation'),
-              image: extract.image || '/placeholder.svg',
-              stockStatus: extract.stockStatus || 'In Stock',
-              isOnSale: extract.isOnSale || false,
-              salePrice: extract.salePrice,
-              highlights: extract.highlights || [],
-              productUrl: extract.productUrl || item.url,
-              description: extract.description,
-              view_product_url: extract.productUrl || item.url
-            };
-          });
+        // Transform results - flatten products from multiple search pages
+        const allProducts: any[] = [];
+        
+        statusData.data.forEach((item: any) => {
+          if (item.extract && item.extract.products && Array.isArray(item.extract.products)) {
+            const pageProducts = item.extract.products.map((product: any, index: number) => ({
+              id: Date.now() + index + allProducts.length,
+              name: product.name || 'Unknown Product',
+              category: product.category || category,
+              price: product.price || '£0.00',
+              supplier: product.supplier || (item.url?.includes('screwfix') ? 'Screwfix' : 'Toolstation'),
+              image: product.image || '/placeholder.svg',
+              stockStatus: product.stockStatus || 'In Stock',
+              isOnSale: product.isOnSale || false,
+              salePrice: product.salePrice,
+              highlights: product.highlights || [],
+              productUrl: product.productUrl || item.url,
+              description: product.description,
+              view_product_url: product.productUrl || item.url
+            }));
+            allProducts.push(...pageProducts);
+          }
+        });
 
-        console.log(`📦 Transformed ${products.length} products for ${category}`);
-        return products;
+        console.log(`📦 Extracted ${allProducts.length} total products from ${statusData.data.length} search pages for ${category}`);
+        return allProducts;
       }
 
       if (statusData.status === 'failed') {
@@ -257,27 +279,19 @@ async function batchScrapeProducts(
   }
 }
 
-// Scrape tools from a specific category using two-phase batch approach
+// Scrape tools from category search URLs directly
 async function scrapeCategory(
-  category: string,
-  url: string,
+  categoryConfig: { name: string; searchTerm: string; urls: string[] },
   firecrawlApiKey: string
 ): Promise<{ category: string; products: any[]; success: boolean }> {
-  console.log(`\n🎯 Starting category: ${category}`);
+  console.log(`\n🎯 Starting category: ${categoryConfig.name}`);
+  console.log(`🔗 Using ${categoryConfig.urls.length} search URLs`);
   
-  // Phase 1: Extract product URLs
-  // const productUrls = await extractProductUrls(url, firecrawlApiKey);
+  // Direct batch scrape from category search URLs
+  const products = await batchScrapeProducts(categoryConfig.urls, categoryConfig.name, firecrawlApiKey);
   
-  // if (productUrls.length === 0) {
-  //   console.log(`⚠️ No product URLs found for ${category}`);
-  //   return { category, products: [], success: false };
-  // }
-
-  // Phase 2: Batch scrape product details
-  const products = await batchScrapeProducts(productUrls, category, firecrawlApiKey);
-  
-  console.log(`✅ ${category}: ${products.length} products scraped`);
-  return { category, products, success: products.length > 0 };
+  console.log(`✅ ${categoryConfig.name}: ${products.length} products scraped`);
+  return { category: categoryConfig.name, products, success: products.length > 0 };
 }
 
 const checkExistingBatch = async (supabase: any, batchNumber: number) => {
@@ -302,10 +316,10 @@ const mergeAllBatches = async (supabase: any) => {
   console.log('🔄 [MERGE] Starting merge of all category batches...');
   
   const allCategoryNames = [
-    ...Object.keys(BATCH_1_CATEGORIES),
-    ...Object.keys(BATCH_2_CATEGORIES),
-    ...Object.keys(BATCH_3_CATEGORIES),
-    ...Object.keys(BATCH_4_CATEGORIES)
+    ...BATCH_1_CATEGORIES.map(c => c.name),
+    ...BATCH_2_CATEGORIES.map(c => c.name),
+    ...BATCH_3_CATEGORIES.map(c => c.name),
+    ...BATCH_4_CATEGORIES.map(c => c.name)
   ];
   
   console.log(`📦 [MERGE] Looking for ${allCategoryNames.length} categories:`, allCategoryNames);
@@ -429,18 +443,18 @@ serve(async (req) => {
     console.log(`🚀 Scraping ${Object.keys(batchCategories).length} categories using batch scrape...`);
     const startTime = Date.now();
 
-    // Process each category sequentially (batch scrape handles parallelism internally)
+    // Process each category sequentially
     const allProducts = [];
     const categoryStats = {};
     
-    for (const [categoryName, config] of Object.entries(batchCategories)) {
-      const result = await scrapeCategory(categoryName, config.urls[0], firecrawlApiKey);
+    for (const config of batchCategories) {
+      const result = await scrapeCategory(config, firecrawlApiKey);
       
       if (result.success && result.products.length > 0) {
         allProducts.push(...result.products);
-        categoryStats[categoryName] = result.products.length;
+        categoryStats[config.name] = result.products.length;
       } else {
-        categoryStats[categoryName] = 0;
+        categoryStats[config.name] = 0;
       }
     }
 
@@ -472,7 +486,7 @@ serve(async (req) => {
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 7);
     
-    const categoryNames = Object.keys(batchCategories);
+    const categoryNames = batchCategories.map(c => c.name);
     
     console.log(`💾 [BATCH-${batchNumber}] Storing products by category...`);
     
