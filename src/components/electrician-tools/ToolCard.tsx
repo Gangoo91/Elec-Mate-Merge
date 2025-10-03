@@ -243,7 +243,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
         </div>
         
         {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         
         {/* Top badges */}
         <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-1.5">
