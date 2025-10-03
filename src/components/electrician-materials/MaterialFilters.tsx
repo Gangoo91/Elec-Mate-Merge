@@ -28,16 +28,16 @@ const MaterialFilters = ({ filters, isExpanded, setIsExpanded }: MaterialFilters
       variant="outline"
       size="sm"
       onClick={() => setIsExpanded(!isExpanded)}
-      className="border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10"
+      className="bg-elec-card/50 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/40 transition-all duration-300 h-12 px-4 shrink-0 rounded-lg"
     >
       <Filter className="h-4 w-4 mr-2" />
-      Filters
+      <span className="font-medium">Filters</span>
       {activeFilterCount > 0 && (
-        <Badge variant="default" className="ml-2 h-5 w-5 p-0 text-xs bg-elec-yellow text-elec-dark">
+        <Badge variant="gold" className="ml-2 h-5 min-w-[20px] px-1.5 text-xs font-semibold">
           {activeFilterCount}
         </Badge>
       )}
-      <ChevronDown className={`h-4 w-4 ml-2 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+      <ChevronDown className={`h-4 w-4 ml-2 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
     </Button>
   );
 };
@@ -104,24 +104,44 @@ export const MaterialFiltersContent = ({ materials, filters, onFiltersChange }: 
     });
   };
 
+  const clearAllFilters = () => {
+    onFiltersChange({
+      brands: [],
+      priceRanges: [],
+      availability: [],
+      suppliers: []
+    });
+  };
+
+  const hasActiveFilters = Object.values(filters).some(arr => arr.length > 0);
+
   const FilterSection = ({ title, items, category }: { title: string; items: string[]; category: keyof MaterialFilterState }) => (
-    <div className="space-y-2">
-      <h4 className="font-medium text-elec-light text-sm">{title}</h4>
+    <div className="space-y-3 p-4 rounded-lg bg-background/40 border border-primary/20">
+      <div className="flex items-center justify-between">
+        <h4 className="font-semibold text-foreground text-base tracking-wide flex items-center gap-2">
+          {title}
+        </h4>
+        {filters[category].length > 0 && (
+          <Badge variant="gold" className="text-xs px-2 py-0.5">
+            {filters[category].length} selected
+          </Badge>
+        )}
+      </div>
       <div className="flex flex-wrap gap-2">
         {items.map(item => (
           <Badge
             key={item}
             variant={filters[category].includes(item) ? "default" : "outline"}
-            className={`cursor-pointer transition-all duration-200 ${
+            className={`cursor-pointer transition-all duration-200 text-sm py-1.5 px-3 ${
               filters[category].includes(item)
-                ? "bg-elec-yellow text-elec-dark shadow-sm"
-                : "border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/40"
+                ? "bg-elec-yellow text-black hover:bg-elec-yellow/90 shadow-sm"
+                : "bg-background/60 border-border/50 text-foreground hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
             }`}
             onClick={() => toggleFilter(category, item)}
           >
             {item}
             {filters[category].includes(item) && (
-              <X className="h-3 w-3 ml-1" />
+              <X className="h-3.5 w-3.5 ml-1.5" />
             )}
           </Badge>
         ))}
@@ -130,8 +150,12 @@ export const MaterialFiltersContent = ({ materials, filters, onFiltersChange }: 
   );
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-card/50">
-      <CardContent className="p-4 space-y-6">
+    <Card className="border-elec-yellow/20 bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm">
+      <CardContent className="p-6 space-y-6">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-lg font-semibold text-foreground">Refine Your Search</h3>
+        </div>
+        
         <FilterSection title="Price Range" items={priceRanges} category="priceRanges" />
         
         {availability.length > 0 && (
