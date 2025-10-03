@@ -75,25 +75,25 @@ serve(async (req) => {
       );
     
     const batchPromises = [
-      Promise.race([
+      Promise.allSettled([
         supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
           body: { batch: 1, forceRefresh: true } 
         }),
         createTimeoutPromise(BATCH_TIMEOUT_MS)
       ]),
-      Promise.race([
+      Promise.allSettled([
         supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
           body: { batch: 2, forceRefresh: true } 
         }),
         createTimeoutPromise(BATCH_TIMEOUT_MS)
       ]),
-      Promise.race([
+      Promise.allSettled([
         supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
           body: { batch: 3, forceRefresh: true } 
         }),
         createTimeoutPromise(BATCH_TIMEOUT_MS)
       ]),
-      Promise.race([
+      Promise.allSettled([
         supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
           body: { batch: 4, forceRefresh: true } 
         }),
@@ -127,7 +127,7 @@ serve(async (req) => {
       }
     });
 
-    console.log(`📊 Batch Summary: ${successfulBatches.length}/3 succeeded, ${failedBatches.length}/3 failed`);
+    console.log(`📊 Batch Summary: ${successfulBatches.length}/4 succeeded, ${failedBatches.length}/4 failed`);
 
     // Validate: Don't proceed with merge if all batches failed
     if (successfulBatches.length === 0) {
