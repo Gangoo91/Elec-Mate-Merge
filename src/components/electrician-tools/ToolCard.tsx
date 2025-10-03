@@ -354,7 +354,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
           <div className="space-y-2">
             <h4 className="text-xs font-semibold text-muted-foreground">Key Features:</h4>
             <ul className="space-y-1.5 text-left">
-              {item.highlights.slice(0, 3).map((highlight, idx) => (
+              {item.highlights.slice(0, 2).map((highlight, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-foreground">
                   <Check className="h-3.5 w-3.5 text-success shrink-0 mt-0.5" />
                   <span className="line-clamp-1">{highlight}</span>
