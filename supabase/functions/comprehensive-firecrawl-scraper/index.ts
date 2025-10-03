@@ -80,7 +80,7 @@ const BATCH_6_CATEGORIES = [
 
 const BATCH_7_CATEGORIES = [
   {
-    name: 'Access Tools & Equipment',
+    name: 'Tool Storage',
     urls: [
       'https://www.screwfix.com/search?search=Tool+bags%2C+boxes+and+storage+solutions+for+organisation',
       'https://www.toolstation.com/search?q=Tool+bags%2C+boxes+and+storage+solutions+for+organisation',
@@ -90,7 +90,7 @@ const BATCH_7_CATEGORIES = [
 
 const BATCH_8_CATEGORIES = [
   {
-    name: 'Access Tools & Equipment',
+    name: 'Cable Tools',
     urls: [
       'https://www.screwfix.com/search?search=Cable+tools%2C+crimpers%2C+benders+and+specialised+equipment',
       'https://www.toolstation.com/search?q=Cable+tools%2C+crimpers%2C+benders+and+specialised+equipment',
