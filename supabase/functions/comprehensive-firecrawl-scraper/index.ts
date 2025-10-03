@@ -218,7 +218,7 @@ async function batchScrapeProducts(
 
     // Poll for results (max 60 seconds)
     let attempts = 0;
-    const maxAttempts = 20;
+    const maxAttempts = 40;
     
     while (attempts < maxAttempts) {
       await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds
