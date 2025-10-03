@@ -266,12 +266,12 @@ async function scrapeCategory(
   console.log(`\n🎯 Starting category: ${category}`);
   
   // Phase 1: Extract product URLs
-  const productUrls = await extractProductUrls(url, firecrawlApiKey);
+  // const productUrls = await extractProductUrls(url, firecrawlApiKey);
   
-  if (productUrls.length === 0) {
-    console.log(`⚠️ No product URLs found for ${category}`);
-    return { category, products: [], success: false };
-  }
+  // if (productUrls.length === 0) {
+  //   console.log(`⚠️ No product URLs found for ${category}`);
+  //   return { category, products: [], success: false };
+  // }
 
   // Phase 2: Batch scrape product details
   const products = await batchScrapeProducts(productUrls, category, firecrawlApiKey);
