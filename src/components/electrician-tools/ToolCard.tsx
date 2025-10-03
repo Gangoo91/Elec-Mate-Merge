@@ -315,6 +315,15 @@ const ToolCard: React.FC<ToolCardProps> = ({
           </div>
         )}
         
+        {/* Brand chip */}
+        {item.brand && (
+          <div className="absolute bottom-3 right-3">
+            <Badge variant="secondary" className="rounded-lg text-xs font-semibold px-3 py-1 flex items-center gap-1.5 backdrop-blur-md shadow-lg">
+              <Award className="h-3 w-3" />
+              {item.brand}
+            </Badge>
+          </div>
+        )}
       </div>
 
       <CardContent className="flex flex-col gap-3 p-5">
