@@ -390,15 +390,6 @@ const ToolCard: React.FC<ToolCardProps> = ({
                 <span className="text-xs text-muted-foreground">inc. VAT</span>
               </div>
             </div>
-            
-            {/* Enhanced stock badge */}
-            <Badge 
-              variant={stockInfo.variant}
-              className="rounded-lg text-xs font-semibold px-3 py-1.5 shadow-sm flex items-center gap-1.5"
-            >
-              <StockIcon className="h-3.5 w-3.5" />
-              {stockInfo.text}
-            </Badge>
           </div>
 
           {/* Enhanced action buttons */}
