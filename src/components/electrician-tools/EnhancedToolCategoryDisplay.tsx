@@ -21,7 +21,7 @@ import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
 import DealsOfTheDayBanner from "./DealsOfTheDayBanner";
 import TopDiscountsStrip from "./TopDiscountsStrip";
 import SmartSearchBar from "./SmartSearchBar";
-import ProductFilters, { FilterState } from "./ProductFilters";
+import ProductFilters, { FilterState, ProductFiltersContent } from "./ProductFilters";
 import MoreToolsDropdown from "./MoreToolsDropdown";
 import EnhancedProductGrid from "./EnhancedProductGrid";
 import CategoryToolsCarousel from "./CategoryToolsCarousel";
@@ -100,6 +100,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
     availability: [],
     suppliers: []
   });
+  const [isFiltersExpanded, setIsFiltersExpanded] = useState(false);
   const isMobile = useIsMobile();
   
   // Comprehensive category mapping function
@@ -260,7 +261,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
           />
 
           {/* Smart Search Bar with Filter Button */}
-          <div className="relative space-y-4">
+          <div className="space-y-4">
             <div className="flex gap-3 items-center">
               <div className="flex-1">
                 <SmartSearchBar
@@ -276,8 +277,19 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
                 tools={filteredTools}
                 filters={filters}
                 onFiltersChange={setFilters}
+                isExpanded={isFiltersExpanded}
+                setIsExpanded={setIsFiltersExpanded}
               />
             </div>
+
+            {/* Expanded Filter Section */}
+            {isFiltersExpanded && (
+              <ProductFiltersContent
+                tools={filteredTools}
+                filters={filters}
+                onFiltersChange={setFilters}
+              />
+            )}
           </div>
 
           {/* SECTION B: BROWSE & FILTER */}
