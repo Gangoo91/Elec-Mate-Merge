@@ -9,7 +9,10 @@ import {
   Sparkles,
   ArrowLeft,
   Plus,
-  CheckCircle2
+  CheckCircle2,
+  Zap,
+  Eye,
+  Lightbulb
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import ComponentIdentificationResults from "./ComponentIdentificationResults";
@@ -387,38 +390,30 @@ const VisualAnalysisRedesigned = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Header */}
-      <Card className="bg-card border-border">
-        <CardHeader className="pb-4">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1 min-w-0">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleBackToModeSelection}
-                  className="text-muted-foreground hover:text-foreground mb-2 -ml-2"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-1" />
-                  Change Mode
-                </Button>
-                <CardTitle className="flex items-center gap-2 text-foreground">
-                  <Sparkles className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                  <span className="truncate">{getModeTitle()}</span>
+      {/* Compact Header */}
+      <Card className="bg-gradient-to-br from-elec-card to-elec-grey/50 border-border">
+        <CardHeader className="p-4 sm:p-6 pb-3 sm:pb-4">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+              <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />
+              <div className="min-w-0 flex-1">
+                <CardTitle className="text-lg sm:text-xl text-foreground truncate">
+                  {getModeTitle()}
                 </CardTitle>
-                <CardDescription className="mt-1">
+                <CardDescription className="text-xs sm:text-sm mt-0.5">
                   {getModeDescription()}
                 </CardDescription>
               </div>
-              {analysisResult && (
-                <Badge 
-                  variant={analysisResult.compliance_summary?.overall_assessment === 'satisfactory' ? 'default' : 'destructive'}
-                  className="text-xs sm:text-sm flex-shrink-0"
-                >
-                  {analysisResult.compliance_summary?.overall_assessment === 'satisfactory' ? 'Satisfactory' : 'Unsatisfactory'}
-                </Badge>
-              )}
             </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleBackToModeSelection}
+              className="text-muted-foreground hover:text-foreground flex-shrink-0 h-9 px-3"
+            >
+              <ArrowLeft className="h-4 w-4 sm:mr-1" />
+              <span className="hidden sm:inline">Change</span>
+            </Button>
           </div>
         </CardHeader>
       </Card>
@@ -426,16 +421,53 @@ const VisualAnalysisRedesigned = () => {
       {/* Main Content */}
       {!analysisResult ? (
         <Card className="bg-card border-border">
-          <CardHeader>
-            <CardTitle className="text-foreground">Upload Images</CardTitle>
-            <CardDescription>
-              Add photos of the installation for AI analysis
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Upload Zone */}
+          <CardContent className="p-4 sm:p-6 space-y-4">
+            {/* Camera Button - Prominent on mobile */}
+            <Button 
+              onClick={isCameraActive ? captureImage : startCamera}
+              className="w-full h-12 sm:h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base shadow-lg shadow-elec-yellow/20"
+              size="lg"
+            >
+              <Camera className="h-5 w-5 mr-2" />
+              {isCameraActive ? 'Capture Photo' : 'Use Camera'}
+            </Button>
+
+            {isCameraActive && (
+              <Button 
+                variant="outline" 
+                onClick={stopCamera}
+                className="w-full h-11"
+              >
+                <X className="h-4 w-4 mr-2" />
+                Close Camera
+              </Button>
+            )}
+            
+            {/* Camera View */}
+            {isCameraActive && (
+              <div className="relative aspect-video bg-muted rounded-lg overflow-hidden border border-border animate-fade-in">
+                <video 
+                  ref={videoRef}
+                  autoPlay 
+                  playsInline 
+                  muted
+                  className="w-full h-full object-cover"
+                />
+                {/* Grid overlay for better framing */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className="w-full h-full grid grid-cols-3 grid-rows-3">
+                    {[...Array(9)].map((_, i) => (
+                      <div key={i} className="border border-white/20" />
+                    ))}
+                  </div>
+                </div>
+                <canvas ref={canvasRef} className="hidden" />
+              </div>
+            )}
+            
+            {/* Upload Zone - Compact & Inviting */}
             <div 
-              className="relative border-2 border-dashed border-border rounded-xl p-8 sm:p-12 text-center hover:border-elec-yellow/60 hover:bg-elec-yellow/5 transition-all duration-300 cursor-pointer group"
+              className="relative border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center hover:border-elec-yellow/60 transition-all duration-300 cursor-pointer group bg-gradient-to-br from-elec-yellow/5 to-transparent"
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
               onClick={() => fileInputRef.current?.click()}
@@ -448,104 +480,87 @@ const VisualAnalysisRedesigned = () => {
                 onChange={(e) => handleFileSelect(e.target.files)}
                 className="hidden"
               />
-              <Upload className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-4 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
-              <p className="text-base sm:text-lg font-semibold text-foreground mb-2">
+              <Upload className="h-8 w-8 mx-auto mb-3 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
+              <p className="text-sm sm:text-base font-semibold text-foreground mb-1">
                 Drag & drop images here
               </p>
-              <p className="text-sm text-muted-foreground mb-6">
-                or click to browse files
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                or tap to browse files
               </p>
-              <Button variant="outline" type="button" className="pointer-events-none">
-                <Upload className="h-4 w-4 mr-2" />
-                Choose Files
-              </Button>
             </div>
             
-            {/* Camera Button */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button 
-                variant="outline" 
-                onClick={isCameraActive ? captureImage : startCamera}
-                className="w-full sm:w-auto"
-                size="lg"
-              >
-                <Camera className="h-5 w-5 mr-2" />
-                {isCameraActive ? 'Capture Photo' : 'Use Camera'}
-              </Button>
-              {isCameraActive && (
-                <Button 
-                  variant="destructive" 
-                  onClick={stopCamera}
-                  className="w-full sm:w-auto"
-                  size="lg"
-                >
-                  <X className="h-5 w-5 mr-2" />
-                  Close Camera
-                </Button>
-              )}
-            </div>
-            
-            {/* Camera View */}
-            {isCameraActive && (
-              <div className="relative aspect-video bg-muted rounded-xl overflow-hidden border border-border">
-                <video 
-                  ref={videoRef}
-                  autoPlay 
-                  playsInline 
-                  muted
-                  className="w-full h-full object-cover"
-                />
-                <canvas ref={canvasRef} className="hidden" />
+            {/* Tips Section */}
+            <div className="bg-elec-yellow/5 border-l-4 border-elec-yellow rounded-lg p-3 sm:p-4">
+              <div className="flex items-start gap-2 mb-2">
+                <Lightbulb className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <h4 className="text-xs sm:text-sm font-semibold text-foreground">Tips for Best Results</h4>
               </div>
-            )}
+              <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground ml-6">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Good lighting improves accuracy</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Get close to components for detail</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Multiple angles recommended</span>
+                </li>
+              </ul>
+            </div>
             
-            {/* Image Gallery */}
+            {/* Image Gallery - Mobile Optimized */}
             {images.length > 0 && (
-              <div className="space-y-4 animate-fade-in">
+              <div className="space-y-3 sm:space-y-4 animate-fade-in">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-foreground">
+                  <h3 className="text-sm sm:text-base font-semibold text-foreground">
                     Selected Images ({images.length})
                   </h3>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => fileInputRef.current?.click()}
+                    className="h-8 sm:h-9"
                   >
-                    <Plus className="h-4 w-4 mr-1" />
-                    Add More
+                    <Plus className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                    <span className="text-xs sm:text-sm">Add More</span>
                   </Button>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
                   {images.map((image, index) => (
                     <div 
                       key={index} 
-                      className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-200 hover:scale-105 ${
+                      className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-200 active:scale-95 sm:hover:scale-105 ${
                         index === primaryImageIndex 
-                          ? 'border-elec-yellow shadow-lg shadow-elec-yellow/20' 
+                          ? 'border-elec-yellow shadow-lg shadow-elec-yellow/20 animate-pulse-glow' 
                           : 'border-border hover:border-elec-yellow/50'
                       }`}
                       onClick={() => setPrimaryImageIndex(index)}
                     >
-                      <img
-                        src={URL.createObjectURL(image)}
-                        alt={`Upload ${index + 1}`}
-                        className="w-full aspect-square object-cover"
-                      />
+                      <div className="aspect-video w-full">
+                        <img
+                          src={URL.createObjectURL(image)}
+                          alt={`Upload ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                       <Button
                         size="icon"
                         variant="destructive"
-                        className="absolute top-2 right-2 h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-1.5 right-1.5 h-7 w-7 sm:h-8 sm:w-8 opacity-0 group-hover:opacity-100 transition-opacity"
                         onClick={(e) => {
                           e.stopPropagation();
                           removeImage(index);
                         }}
                       >
-                        <X className="h-4 w-4" />
+                        <X className="h-3 w-3 sm:h-4 sm:w-4" />
                       </Button>
                       {index === primaryImageIndex && (
-                        <div className="absolute bottom-2 left-2">
-                          <Badge className="bg-elec-yellow text-black font-semibold gap-1">
+                        <div className="absolute bottom-1.5 left-1.5 sm:bottom-2 sm:left-2">
+                          <Badge className="bg-elec-yellow text-black font-semibold gap-1 text-xs px-2 py-0.5">
                             <CheckCircle2 className="h-3 w-3" />
                             Primary
                           </Badge>
@@ -554,30 +569,30 @@ const VisualAnalysisRedesigned = () => {
                     </div>
                   ))}
                 </div>
-                <p className="text-sm text-muted-foreground text-center">
-                  Click an image to set as primary
+                <p className="text-xs sm:text-sm text-muted-foreground text-center">
+                  Tap an image to set as primary
                 </p>
               </div>
             )}
 
-            {/* Analyse Button */}
+            {/* Analyse Button - Sticky on mobile */}
             {images.length > 0 && (
-              <div className="flex justify-center pt-4">
+              <div className="flex justify-center pt-2 sm:pt-4">
                 <Button 
                   onClick={handleAnalysis}
                   disabled={isAnalyzing}
                   size="lg"
-                  className="w-full sm:w-auto sm:min-w-64 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base h-14"
+                  className="w-full h-14 sm:h-16 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm sm:text-base shadow-lg shadow-elec-yellow/20 transition-all"
                 >
                   {isAnalyzing ? (
                     <>
                       <Loader className="h-5 w-5 mr-2 animate-spin" />
-                      Analysing Installation...
+                      <span className="truncate">Analysing Installation...</span>
                     </>
                   ) : (
                     <>
-                      <Sparkles className="h-5 w-5 mr-2" />
-                      Analyse Installation
+                      <Sparkles className="h-5 w-5 mr-2 flex-shrink-0" />
+                      <span>Analyse Installation</span>
                     </>
                   )}
                 </Button>
