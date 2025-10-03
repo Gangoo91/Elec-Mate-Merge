@@ -169,9 +169,9 @@ async function batchScrapeProducts(
     const batchId = batchData.id;
     console.log(`📊 Batch job started: ${batchId}`);
 
-    // Poll results (max 120 seconds)
+    // Poll results (max 180 seconds for slower batches)
     let attempts = 0;
-    const maxAttempts = 40;
+    const maxAttempts = 60;
     while (attempts < maxAttempts) {
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -437,18 +437,18 @@ serve(async (req) => {
     
     console.log(`💾 [BATCH-${batchNumber}] Storing products by category...`);
     
-    // Group products by category
-    const productsByCategory = {};
-    allProducts.forEach(product => {
-      if (!productsByCategory[product.category]) {
-        productsByCategory[product.category] = [];
+    // Group products by their configured category name (not extracted category)
+    const productsByConfigCategory = {};
+    
+    results.forEach(result => {
+      if (result.success && result.products.length > 0) {
+        productsByConfigCategory[result.category] = result.products;
       }
-      productsByCategory[product.category].push(product);
     });
     
     // Store each category separately
     for (const categoryName of categoryNames) {
-      const categoryProducts = productsByCategory[categoryName] || [];
+      const categoryProducts = productsByConfigCategory[categoryName] || [];
       
       if (categoryProducts.length === 0) {
         console.warn(`⚠️ [BATCH-${batchNumber}] No products found for category: ${categoryName}`);
@@ -485,8 +485,8 @@ serve(async (req) => {
       totalFound: totalProducts,
       batch: batchNumber,
       categoryStats,
-      categoriesScraped: Object.keys(batchCategories),
-      productsByCategory,
+      categoriesScraped: categoryNames,
+      productsByCategory: productsByConfigCategory,
       message: `Batch ${batchNumber}: ${totalProducts} products scraped and stored by category using batch scrape method`,
       elapsedTime: `${elapsedTime}s`,
       cached: false
