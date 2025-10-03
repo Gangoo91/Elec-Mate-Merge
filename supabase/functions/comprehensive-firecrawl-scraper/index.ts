@@ -7,41 +7,28 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Category configuration with search URLs
+// Category configuration with specific category listing pages
 const BATCH_1_CATEGORIES = [
   {
     name: 'Hand Tools',
-    searchTerm: 'Screwdrivers, pliers, strippers and manual tools',
     urls: [
-      'https://www.screwfix.com/search?search=Screwdrivers%2C+pliers%2C+strippers+and+manual+tools&page_size=100',
-      'https://www.toolstation.com/search?q=Screwdrivers%2C+pliers%2C+strippers+and+manual+tools'
-    ]
-  },
-  {
-    name: 'Power Tools',
-    searchTerm: 'Drills, saws, grinders and cordless tool systems',
-    urls: [
-      'https://www.screwfix.com/search?search=Drills%2C+saws%2C+grinders+and+cordless+tool+systems&page_size=100',
-      'https://www.toolstation.com/search?q=Drills%2C+saws%2C+grinders+and+cordless+tool+systems'
+      'https://www.screwfix.com/c/tools/screwdrivers/cat9780002?page_size=100',
+      'https://www.screwfix.com/c/tools/pliers-cutters/cat831008?page_size=100',
+      'https://www.toolstation.com/hand-tools/screwdrivers/c675',
+      'https://www.toolstation.com/hand-tools/pliers-cutters/c670',
+      'https://www.toolstation.com/hand-tools/electrical-tools/c39',
     ]
   }
 ];
 
 const BATCH_2_CATEGORIES = [
   {
-    name: 'PPE',
-    searchTerm: 'Personal Protective Equipment',
+    name: 'Power Tools',
     urls: [
-      'https://www.screwfix.com/search?search=ppe&page_size=100',
-      'https://www.toolstation.com/search?q=ppe'
-    ]
-  },
-  {
-    name: 'Specialist Tools',
-    searchTerm: 'Cable tools, crimpers, benders and specialised equipment',
-    urls: [
-      'https://www.screwfix.com/search?search=Cable+tools%2C+crimpers%2C+benders+and+specialised+equipment',
-      'https://www.toolstation.com/search?q=Cable+tools%2C+crimpers%2C+benders+and+specialised+equipment'
+      'https://www.screwfix.com/c/tools/power-drills/cat830003?page_size=100',
+      'https://www.screwfix.com/c/tools/circular-saws/cat9780026?page_size=100',
+      'https://www.toolstation.com/power-tools/drills/c46',
+      'https://www.toolstation.com/power-tools/saws/c48',
     ]
   }
 ];
@@ -49,67 +36,73 @@ const BATCH_2_CATEGORIES = [
 const BATCH_3_CATEGORIES = [
   {
     name: 'Test Equipment',
-    searchTerm: 'Multimeters, socket testers, insulation testers and PAT equipment',
     urls: [
-      'https://www.screwfix.com/search?search=Multimeters%2C+socket+testers%2C+insulation+testers+and+PAT+equipment&sort_by=-brand',
-      'https://www.toolstation.com/search?q=Multimeters%2C+socket+testers%2C+insulation+testers+and+PAT+equipment'
-    ]
-  },
-  {
-    name: 'Safety Tools',
-    searchTerm: 'Safety equipment and protective devices',
-    urls: [
-      'https://www.screwfix.com/search?search=safety+equipment+and+protective+devices&page_size=100',
-      'https://www.toolstation.com/search?q=safety+equipment+and+protective+devices'
+      'https://www.screwfix.com/c/electrical-lighting/electrical-testers/cat831075?page_size=100',
+      'https://www.toolstation.com/electrical/testers-detectors/c662',
     ]
   }
 ];
 
 const BATCH_4_CATEGORIES = [
   {
-    name: 'Access Tools & Equipment',
-    searchTerm: 'Ladders, scaffolding and access equipment for working at height',
+    name: 'PPE',
     urls: [
-      'https://www.screwfix.com/search?search=Ladders%2C+scaffolding+and+access+equipment+for+working+at+height&page_size=100',
-      'https://www.toolstation.com/search?q=Ladders%2C+scaffolding+and+access+equipment+for+working+at+height'
-    ]
-  },
-  {
-    name: 'Tool Storage',
-    searchTerm: 'Tool bags, boxes and storage solutions for organisation',
-    urls: [
-      'https://www.screwfix.com/search?search=Tool+bags%2C+boxes+and+storage+solutions+for+organisation&page_size=100',
-      'https://www.toolstation.com/search?q=ool+bags%2C+boxes+and+storage+solutions+for+organisation'
+      'https://www.screwfix.com/c/safety-workwear/ppe/cat5610001?page_size=100',
+      'https://www.toolstation.com/safety-workwear/ppe/c577',
     ]
   }
 ];
 
 // No longer using extraction schema - using markdown + regex instead
 
-// Schema for extracting product details from individual product pages
+// Schema for product details (for Firecrawl batch)
 const productDetailSchema = {
   type: "object",
   properties: {
-    name: { type: "string", description: "Product name or title" },
-    price: { type: "string", description: "Current price (e.g., £29.99)" },
-    category: { type: "string", description: "Product category" },
-    supplier: { type: "string", description: "Supplier name (Screwfix or Toolstation)" },
-    image: { type: "string", description: "Main product image URL" },
-    description: { type: "string", description: "Product description" },
-    stockStatus: { 
-      type: "string", 
-      enum: ["In Stock", "Low Stock", "Out of Stock"],
-      description: "Stock availability status"
+    name: {
+      type: "string",
     },
-    isOnSale: { type: "boolean", description: "Whether product is on sale" },
-    salePrice: { type: "string", description: "Sale price if applicable" },
-    highlights: { 
-      type: "array", 
+    brand: {
+      type: "string",
+      description: "Brand/manufacturer name (e.g., Makita, DeWalt, Bosch, Hilti, Bahco, Wiha, Wera)",
+    },
+    price: {
+      type: "string",
+      description: "Current price in GBP",
+    },
+    description: {
+      type: "string",
+    },
+    category: {
+      type: "string",
+      description: "Product category (e.g., Hand Tools, Power Tools, PPE etc...)",
+    },
+    supplier: {
+      type: "string",
+      description: "Supplier name (Screwfix or Toolstation)",
+    },
+    productType: {
+      type: "string",
+    },
+    image: {
+      type: "string",
+      description: "URL of the product image",
+    },
+    view_product_url: {
+      type: "string",
+      description: "Direct URL to the product page",
+    },
+    highlights: {
+      type: "array",
       items: { type: "string" },
-      description: "Key features or highlights"
+      description: "Key features or highlights",
     },
-    productUrl: { type: "string", description: "Product detail page URL" }
-  }
+    stockStatus: {
+      type: "string",
+      enum: ["In Stock", "Low Stock", "Out of Stock"],
+      description: "Stock availability status",
+    },
+  },
 };
 
 const getBatchCategories = (batchNumber: number) => {
@@ -167,7 +160,7 @@ async function extractProductUrls(
   }
 }
 
-// Batch scrape products directly from category search URLs
+// Batch scrape products from category listing URLs
 async function batchScrapeProducts(
   categoryUrls: string[],
   category: string,
@@ -178,92 +171,85 @@ async function batchScrapeProducts(
     return [];
   }
 
-  console.log(`🚀 Starting batch scrape for ${category} from ${categoryUrls.length} search URLs`);
-  
+  console.log(`🚀 Starting batch scrape for ${category} from ${categoryUrls.length} listing URLs`);
+
   try {
-    // Start batch scrape job
-    const batchResponse = await fetch('https://api.firecrawl.dev/v2/batch/scrape', {
-      method: 'POST',
+    const batchResponse = await fetch("https://api.firecrawl.dev/v2/batch/scrape", {
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${firecrawlApiKey}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${firecrawlApiKey}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         urls: categoryUrls,
-        formats: [{
-          type: 'json',
-          prompt: `Extract ALL products from this search/listing page. For each product, extract: name, price, category, supplier, image URL, description, stock status, sale information, highlights, and product URL. Return an array of all products found on the page.`,
-          schema: {
-            type: "object",
-            properties: {
-              products: {
-                type: "array",
-                items: productDetailSchema
-              }
-            }
+        formats: [
+          {
+            type: "json",
+            schema: {
+              type: "object",
+              properties: {
+                products: {
+                  type: "array",
+                  items: productDetailSchema,
+                },
+              },
+            },
           },
-        }]
+        ],
       }),
     });
 
     const batchData = await batchResponse.json();
-    
+
     if (!batchData.success || !batchData.id) {
-      console.error(`❌ Failed to start batch job:`, batchData);
+      console.error("❌ Failed to start batch job:", batchData);
       return [];
     }
 
     const batchId = batchData.id;
     console.log(`📊 Batch job started: ${batchId}`);
 
-    // Poll for results (max 60 seconds)
+    // Poll results (max 120 seconds)
     let attempts = 0;
     const maxAttempts = 40;
-    
     while (attempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds
-      
-      const statusResponse = await fetch(`https://api.firecrawl.dev/v1/batch/scrape/${batchId}`, {
-        headers: {
-          'Authorization': `Bearer ${firecrawlApiKey}`,
-        },
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      const statusResponse = await fetch(`https://api.firecrawl.dev/v2/batch/scrape/${batchId}`, { 
+        headers: { Authorization: `Bearer ${firecrawlApiKey}` } 
       });
-
       const statusData = await statusResponse.json();
-      console.log(`📈 Batch status: ${statusData.status} (${statusData.completed}/${statusData.total})`);
 
-      if (statusData.status === 'completed') {
+      console.log(`📈 Batch status: ${statusData.status} (${statusData.completed || 0}/${statusData.total || 0})`);
+
+      if (statusData.status === "completed") {
         console.log(`✅ Batch scrape completed for ${category}`);
         
-        // Transform results - flatten products from multiple search pages
-        const allProducts: any[] = [];
+        // Extract products from v2 API response format
+        const allProducts = statusData.data?.map((item: any) => item.json?.products || []).flat() || [];
         
-        statusData.data.forEach((item: any) => {
-          if (item.extract && item.extract.products && Array.isArray(item.extract.products)) {
-            const pageProducts = item.extract.products.map((product: any, index: number) => ({
-              id: Date.now() + index + allProducts.length,
-              name: product.name || 'Unknown Product',
-              category: product.category || category,
-              price: product.price || '£0.00',
-              supplier: product.supplier || (item.url?.includes('screwfix') ? 'Screwfix' : 'Toolstation'),
-              image: product.image || '/placeholder.svg',
-              stockStatus: product.stockStatus || 'In Stock',
-              isOnSale: product.isOnSale || false,
-              salePrice: product.salePrice,
-              highlights: product.highlights || [],
-              productUrl: product.productUrl || item.url,
-              description: product.description,
-              view_product_url: product.productUrl || item.url
-            }));
-            allProducts.push(...pageProducts);
-          }
-        });
+        // Transform products to match expected format
+        const transformedProducts = allProducts.map((product: any, index: number) => ({
+          id: Date.now() + index,
+          name: product.name || 'Unknown Product',
+          brand: product.brand,
+          category: product.category || category,
+          price: product.price || '£0.00',
+          supplier: product.supplier || 'Unknown',
+          image: product.image || '/placeholder.svg',
+          stockStatus: product.stockStatus || 'In Stock',
+          highlights: product.highlights || [],
+          productUrl: product.view_product_url,
+          view_product_url: product.view_product_url,
+          description: product.description,
+          productType: product.productType
+        }));
 
-        console.log(`📦 Extracted ${allProducts.length} total products from ${statusData.data.length} search pages for ${category}`);
-        return allProducts;
+        console.log(`📦 Extracted ${transformedProducts.length} total products for ${category}`);
+        return transformedProducts;
       }
 
-      if (statusData.status === 'failed') {
+      if (statusData.status === "failed") {
         console.error(`❌ Batch job failed for ${category}`);
         return [];
       }
@@ -274,24 +260,23 @@ async function batchScrapeProducts(
     console.log(`⏱️ Batch job timed out for ${category}`);
     return [];
   } catch (error) {
-    console.error(`❌ Error in batch scrape:`, error);
+    console.error("❌ Error in batch scrape:", error);
     return [];
   }
 }
 
-// Scrape tools from category search URLs directly
+// Scrape one category
 async function scrapeCategory(
-  categoryConfig: { name: string; searchTerm: string; urls: string[] },
+  categoryConfig: { name: string; urls: string[] },
   firecrawlApiKey: string
 ): Promise<{ category: string; products: any[]; success: boolean }> {
   console.log(`\n🎯 Starting category: ${categoryConfig.name}`);
-  console.log(`🔗 Using ${categoryConfig.urls.length} search URLs`);
-  
-  // Direct batch scrape from category search URLs
+  console.log(`🔗 Using ${categoryConfig.urls.length} listing URLs`);
+
   const products = await batchScrapeProducts(categoryConfig.urls, categoryConfig.name, firecrawlApiKey);
-  
+
   console.log(`✅ ${categoryConfig.name}: ${products.length} products scraped`);
-  return { category: categoryConfig.name, products, success: products.length > 0 };
+  return { category: categoryConfig.name, products: products || [], success: products.length > 0 };
 }
 
 const checkExistingBatch = async (supabase: any, batchNumber: number) => {
