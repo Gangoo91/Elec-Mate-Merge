@@ -204,7 +204,7 @@ const CategoryMaterials = () => {
   }
 
   return (
-    <main className="p-2 animate-fade-in">
+    <main className="p-4 animate-fade-in">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
