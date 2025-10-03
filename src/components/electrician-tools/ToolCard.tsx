@@ -232,7 +232,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
     >
       {/* Image section with gradient overlay */}
       <div className="relative overflow-hidden bg-gradient-to-br from-muted/50 to-background/50">
-        <div className="aspect-square w-full max-h-32 flex items-center justify-center">
+        <div className="aspect-square w-full max-h-32 flex items-center justify-center bg-white">
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
