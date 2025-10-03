@@ -121,10 +121,6 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
                       <div className="w-2 h-2 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
                       <span className="font-medium text-foreground text-[10px]">{tool.supplier || 'Screwfix'}</span>
                     </div>
-                    <div className="flex items-center gap-0.5">
-                      <Star className="w-2.5 h-2.5 fill-yellow-400 text-yellow-400" />
-                      <span className="text-foreground text-[10px]">4.5</span>
-                    </div>
                   </div>
 
                   {/* Compact title */}
