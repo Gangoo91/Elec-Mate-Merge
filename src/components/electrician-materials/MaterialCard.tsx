@@ -304,7 +304,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
               {item.isOnSale && item.salePrice && (
                 <>
                   <span className="text-xs text-muted-foreground line-through">
-                    Was {item.price}
+                    {item.price}
                   </span>
                   {discount && (
                     <span className="text-xs font-semibold text-success">
