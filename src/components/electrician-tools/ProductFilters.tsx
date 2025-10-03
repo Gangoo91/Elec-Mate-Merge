@@ -87,28 +87,32 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
   const activeFilterCount = Object.values(filters).reduce((sum, arr) => sum + arr.length, 0);
 
   const FilterSection = ({ title, items, category }: { title: string; items: string[]; category: keyof FilterState }) => (
-    <div className="space-y-3">
-      <h4 className="font-semibold text-foreground text-sm tracking-wide flex items-center gap-2">
-        {title}
+    <div className="space-y-3 p-4 rounded-lg bg-background/40 border border-border/20">
+      <div className="flex items-center justify-between">
+        <h4 className="font-semibold text-foreground text-base tracking-wide flex items-center gap-2">
+          {title}
+        </h4>
         {filters[category].length > 0 && (
-          <span className="text-xs text-elec-yellow">({filters[category].length})</span>
+          <Badge variant="gold" className="text-xs px-2 py-0.5">
+            {filters[category].length} selected
+          </Badge>
         )}
-      </h4>
-      <div className="flex flex-wrap gap-2.5">
+      </div>
+      <div className="flex flex-wrap gap-2">
         {items.map(item => (
           <Badge
             key={item}
-            variant={filters[category].includes(item) ? "gold" : "outline"}
-            className={`cursor-pointer transition-all duration-300 hover:scale-105 ${
+            variant={filters[category].includes(item) ? "default" : "outline"}
+            className={`cursor-pointer transition-all duration-200 text-sm py-1.5 px-3 ${
               filters[category].includes(item)
-                ? "bg-elec-yellow text-elec-dark shadow-md shadow-elec-yellow/20 border-elec-yellow"
-                : "bg-transparent border-border/40 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+                ? "bg-elec-yellow text-black hover:bg-elec-yellow/90 shadow-sm"
+                : "bg-background/60 border-border/50 text-foreground hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
             }`}
             onClick={() => toggleFilter(category, item)}
           >
             {item}
             {filters[category].includes(item) && (
-              <X className="h-3 w-3 ml-1.5" />
+              <X className="h-3.5 w-3.5 ml-1.5" />
             )}
           </Badge>
         ))}
@@ -204,26 +208,35 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
       {/* Expanded Filters with Enhanced Design */}
       <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
         <CollapsibleContent>
-          <Card className="overflow-hidden rounded-xl border border-border/50 bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm">
-            <CardContent className="p-6 space-y-8">
+          <Card className="overflow-hidden rounded-xl border border-border/50 bg-elec-gray/80 backdrop-blur-sm shadow-lg">
+            <CardContent className="p-5 space-y-4">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg font-semibold text-foreground">Refine Your Search</h3>
+                {hasActiveFilters && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearAllFilters}
+                    className="text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-300"
+                  >
+                    <span className="text-sm font-medium">Clear All</span>
+                    <X className="h-4 w-4 ml-1.5" />
+                  </Button>
+                )}
+              </div>
+              
               <FilterSection title="Price Range" items={priceRanges} category="priceRanges" />
               
               {availability.length > 0 && (
-                <div className="border-t border-border/30 pt-6">
-                  <FilterSection title="Availability" items={availability} category="availability" />
-                </div>
+                <FilterSection title="Availability" items={availability} category="availability" />
               )}
               
               {suppliers.length > 0 && (
-                <div className="border-t border-border/30 pt-6">
-                  <FilterSection title="Supplier" items={suppliers} category="suppliers" />
-                </div>
+                <FilterSection title="Supplier" items={suppliers} category="suppliers" />
               )}
               
               {brands.length > 0 && (
-                <div className="border-t border-border/30 pt-6">
-                  <FilterSection title="Brand" items={brands} category="brands" />
-                </div>
+                <FilterSection title="Brand" items={brands} category="brands" />
               )}
             </CardContent>
           </Card>
