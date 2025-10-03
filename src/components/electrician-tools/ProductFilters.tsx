@@ -121,7 +121,7 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
   );
 
   return (
-    <div className="space-y-4 p-4 rounded-xl border border-primary/20 bg-background/20">
+    <>
       {/* Quick Filters Bar with Enhanced Design */}
       <div className="relative p-4 rounded-xl bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm border border-primary/20">
         <div className="flex items-center gap-3 flex-wrap">
@@ -242,7 +242,7 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
           </Card>
         </CollapsibleContent>
       </Collapsible>
-    </div>
+    </>
   );
 };
 
