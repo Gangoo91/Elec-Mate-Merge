@@ -318,16 +318,6 @@ const ToolCard: React.FC<ToolCardProps> = ({
       </div>
 
       <CardContent className="flex flex-col gap-3 p-5">
-        {/* Brand chip */}
-        {item.brand && (
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary" className="rounded-lg text-xs font-semibold px-3 py-1 flex items-center gap-1.5">
-              <Award className="h-3 w-3" />
-              {item.brand}
-            </Badge>
-          </div>
-        )}
-
         {/* Product title - larger and more prominent */}
         <h3 className="text-sm font-bold leading-tight text-foreground line-clamp-2 min-h-[2.5rem] group-hover:text-primary transition-colors">
           {item.name}
