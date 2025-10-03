@@ -22,6 +22,34 @@ const BatchToolsRefreshButton: React.FC<BatchToolsRefreshButtonProps> = ({
   const [totalBatches] = useState<number>(3);
   const { toast } = useToast();
 
+  const pollForCacheUpdate = async (expectedCount: number, maxAttempts = 5): Promise<boolean> => {
+    console.log(`🔍 [UPDATE-FLOW] Polling for cache update (expecting ${expectedCount} products)...`);
+    
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second between polls
+      
+      const { data, error } = await supabase
+        .from('tools_weekly_cache')
+        .select('total_products, created_at')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+      
+      if (!error && data) {
+        const totalInCache = (data as any).total_products || 0;
+        console.log(`📊 [UPDATE-FLOW] Poll ${attempt}/${maxAttempts}: ${totalInCache} products in cache`);
+        
+        if (totalInCache >= expectedCount) {
+          console.log(`✅ [UPDATE-FLOW] Cache verified with ${totalInCache} products!`);
+          return true;
+        }
+      }
+    }
+    
+    console.warn(`⚠️ [UPDATE-FLOW] Cache verification timeout after ${maxAttempts} attempts`);
+    return false;
+  };
+
   const handleRefresh = async () => {
     setIsRefreshing(true);
     setRefreshStatus('idle');
@@ -96,7 +124,6 @@ const BatchToolsRefreshButton: React.FC<BatchToolsRefreshButtonProps> = ({
       } else {
         console.log(`✅ [UPDATE-FLOW] Success: ${toolsCount} products found`);
         setRefreshStatus('success');
-        setProgress(`${toolsCount} products`);
         
         // Show detailed breakdown if available
         const categoriesInfo = data?.categoriesFound 
@@ -110,15 +137,20 @@ const BatchToolsRefreshButton: React.FC<BatchToolsRefreshButtonProps> = ({
           duration: 5000,
         });
         
-        // Wait 2 seconds before invalidating to allow cache to settle
-        console.log('⏳ [UPDATE-FLOW] Waiting 2s before invalidating queries...');
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // Poll for cache update before invalidating queries
+        setProgress('Verifying cache...');
+        const cacheVerified = await pollForCacheUpdate(toolsCount);
         
-        // Trigger parent refresh
-        console.log('🔄 [UPDATE-FLOW] Invalidating queries...');
-        onSuccess();
-        
-        console.log('✅ [UPDATE-FLOW] Complete!');
+        if (cacheVerified) {
+          setProgress(`${toolsCount} products verified`);
+          console.log('🔄 [UPDATE-FLOW] Cache verified - invalidating queries...');
+          onSuccess();
+          console.log('✅ [UPDATE-FLOW] Complete!');
+        } else {
+          setProgress(`${toolsCount} products (verifying...)`);
+          console.log('⚠️ [UPDATE-FLOW] Cache verification incomplete - invalidating anyway...');
+          onSuccess();
+        }
       }
       
       setIsRefreshing(false);
