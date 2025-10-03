@@ -308,10 +308,10 @@ const mergeAllBatches = async (supabase: any) => {
     ...BATCH_1_CATEGORIES.map(c => c.name),
     ...BATCH_2_CATEGORIES.map(c => c.name),
     ...BATCH_3_CATEGORIES.map(c => c.name),
-    ...BATCH_4_CATEGORIES.map(c => c.name)
-    ...BATCH_5_CATEGORIES.map(c => c.name)
-    ...BATCH_6_CATEGORIES.map(c => c.name)
-    ...BATCH_7_CATEGORIES.map(c => c.name)
+    ...BATCH_4_CATEGORIES.map(c => c.name),
+    ...BATCH_5_CATEGORIES.map(c => c.name),
+    ...BATCH_6_CATEGORIES.map(c => c.name),
+    ...BATCH_7_CATEGORIES.map(c => c.name),
     ...BATCH_8_CATEGORIES.map(c => c.name)
   ];
   
