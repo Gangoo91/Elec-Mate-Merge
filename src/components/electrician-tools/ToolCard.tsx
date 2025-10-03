@@ -232,12 +232,12 @@ const ToolCard: React.FC<ToolCardProps> = ({
     >
       {/* Image section with gradient overlay */}
       <div className="relative overflow-hidden bg-gradient-to-br from-muted/50 to-background/50">
-        <div className="aspect-square w-full max-h-32">
+        <div className="aspect-square w-full max-h-32 flex items-center justify-center">
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
             loading="lazy"
-            className="h-full w-full object-cover transition-all duration-500 group-hover:scale-110"
+            className="max-h-full max-w-full object-contain transition-all duration-500 group-hover:scale-110"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
           />
         </div>
