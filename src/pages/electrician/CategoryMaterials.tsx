@@ -14,7 +14,7 @@ import PriceHistoryAlerts from "@/components/electrician-materials/PriceHistoryA
 import RefreshButton from "@/components/electrician-materials/RefreshButton";
 import EnhancedMaterialsGrid from "@/components/electrician-materials/EnhancedMaterialsGrid";
 import MaterialSmartSearch from "@/components/electrician-materials/MaterialSmartSearch";
-import MaterialFilters, { MaterialFilterState } from "@/components/electrician-materials/MaterialFilters";
+import MaterialFilters, { MaterialFiltersContent, MaterialFilterState } from "@/components/electrician-materials/MaterialFilters";
 import MaterialsMoreTools from "@/components/electrician-materials/MaterialsMoreTools";
 import MaterialDealsOfTheDay from "@/components/electrician-materials/MaterialDealsOfTheDay";
 import MaterialTopDiscounts from "@/components/electrician-materials/MaterialTopDiscounts";
@@ -71,6 +71,7 @@ const CategoryMaterials = () => {
   });
   const [selectedMaterials, setSelectedMaterials] = useState<any[]>([]);
   const [currentView, setCurrentView] = useState<'browse' | 'compare' | 'bulk' | 'alerts' | 'ai'>('browse');
+  const [isFiltersExpanded, setIsFiltersExpanded] = useState(false);
   const isMobile = useIsMobile();
   
   // Get deals data
@@ -248,21 +249,34 @@ const CategoryMaterials = () => {
             <MaterialTopDiscounts deals={topDiscounts} />
           )}
 
-          {/* Smart Search Bar */}
-          <MaterialSmartSearch
-            value={searchTerm}
-            onChange={setSearchTerm}
-            materials={materials || []}
-            placeholder="Search materials, suppliers, categories..."
-          />
-
           {/* SECTION B: BROWSE & FILTER */}
-          {/* Material Filters */}
-          <MaterialFilters
-            materials={materials || []}
-            filters={filters}
-            onFiltersChange={setFilters}
-          />
+          {/* Search and Filters Row */}
+          <div className="flex gap-3 items-center">
+            <div className="flex-1">
+              <MaterialSmartSearch
+                value={searchTerm}
+                onChange={setSearchTerm}
+                materials={materials || []}
+                placeholder="Search materials, suppliers, categories..."
+              />
+            </div>
+            <MaterialFilters
+              materials={materials || []}
+              filters={filters}
+              onFiltersChange={setFilters}
+              isExpanded={isFiltersExpanded}
+              setIsExpanded={setIsFiltersExpanded}
+            />
+          </div>
+
+          {/* Expanded Filter Content */}
+          {isFiltersExpanded && (
+            <MaterialFiltersContent
+              materials={materials || []}
+              filters={filters}
+              onFiltersChange={setFilters}
+            />
+          )}
 
           {/* Quick Compare Bar */}
           {selectedMaterials.length > 0 && (
