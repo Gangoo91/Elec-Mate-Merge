@@ -287,7 +287,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
     >
       {/* Image section with enhanced sizing */}
       <div className="relative overflow-hidden bg-gradient-to-br from-muted/30 to-background/30">
-        <div className="aspect-square w-full max-h-48 flex items-center justify-center bg-white p-4">
+        <div className="w-full h-[150px] flex items-center justify-center bg-white p-4">
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
