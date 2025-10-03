@@ -225,116 +225,185 @@ const ToolCard: React.FC<ToolCardProps> = ({
   const urgencyIndicator = getUrgencyIndicator();
   const discount = getDiscountPercentage();
 
+  // Get stock status info with colors
+  const getStockStatusInfo = () => {
+    switch (item.stockStatus) {
+      case "In Stock":
+        return { 
+          text: "In Stock", 
+          variant: "success" as const, 
+          icon: CheckCircle,
+          color: "text-success"
+        };
+      case "Low Stock":
+        return { 
+          text: "Low Stock", 
+          variant: "warning" as const, 
+          icon: Timer,
+          color: "text-warning"
+        };
+      case "Out of Stock":
+        return { 
+          text: "Out of Stock", 
+          variant: "destructive" as const, 
+          icon: Package,
+          color: "text-destructive"
+        };
+      default:
+        return { 
+          text: "In Stock", 
+          variant: "success" as const, 
+          icon: CheckCircle,
+          color: "text-success"
+        };
+    }
+  };
+
+  const stockInfo = getStockStatusInfo();
+  const StockIcon = stockInfo.icon;
+
+  // Calculate savings amount
+  const getSavingsAmount = () => {
+    if (!item.isOnSale || !item.salePrice || !item.price) return null;
+    
+    const originalPrice = parseFloat(item.price.replace(/[£,]/g, ''));
+    const salePrice = parseFloat(item.salePrice.replace(/[£,]/g, ''));
+    
+    if (originalPrice > salePrice) {
+      const savings = originalPrice - salePrice;
+      return `£${savings.toFixed(2)}`;
+    }
+    return null;
+  };
+
+  const savingsAmount = getSavingsAmount();
+
   return (
     <Card 
-      className="group relative h-full overflow-hidden rounded-xl border border-border/50 bg-transparent bg-gradient-to-br from-white/15 via-white/8 to-transparent backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-0.5 cursor-pointer"
+      className="group relative h-full overflow-hidden rounded-xl border border-border/50 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1 cursor-pointer"
       onClick={() => onCardClick?.(item)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image section with gradient overlay */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-muted/50 to-background/50">
-        <div className="aspect-square w-full max-h-32 flex items-center justify-center bg-white">
+      {/* Image section with enhanced sizing */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-muted/30 to-background/30">
+        <div className="aspect-square w-full max-h-48 flex items-center justify-center bg-white p-4">
           <img
             src={imageSrc}
             alt={`${item.name} from ${item.supplier}`}
             loading="lazy"
-            className="max-h-full max-w-full object-contain transition-all duration-500 group-hover:scale-110"
+            className="max-h-full max-w-full object-contain transition-all duration-500 group-hover:scale-105 drop-shadow-md"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/placeholder.svg"; }}
           />
         </div>
         
         {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         
-        {/* Top badges */}
-        <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-1.5">
-          <Badge className="rounded-full bg-background/95 text-foreground backdrop-blur-sm border-border/50 text-[10px] font-medium px-2 py-0.5 shadow-md">
-            {item.category}
-          </Badge>
-          {discount && (
-            <Badge className="rounded-full bg-destructive/95 text-destructive-foreground backdrop-blur-sm border-destructive/50 text-[10px] font-bold px-2 py-0.5 shadow-md">
-              -{discount}%
-            </Badge>
-          )}
-        </div>
-        
-        {/* Brand badge */}
-        {item.brand && (
-          <div className="absolute bottom-2 right-2">
-            <Badge variant="secondary" className="rounded-full backdrop-blur-sm text-[9px] font-medium px-2 py-0.5 shadow-md flex items-center gap-1">
-              <Award className="h-2.5 w-2.5" />
-              {item.brand}
-            </Badge>
+        {/* Dynamic badges - only show relevant ones */}
+        {dynamicBadges.length > 0 && (
+          <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 flex-wrap">
+            {dynamicBadges.map((badge, idx) => (
+              <Badge 
+                key={idx}
+                variant={badge.variant as any}
+                className={`rounded-full backdrop-blur-md text-xs font-bold px-3 py-1 shadow-lg ${badge.animate ? 'animate-pulse' : ''}`}
+              >
+                {badge.label}
+              </Badge>
+            ))}
           </div>
         )}
+        
+        {/* Supplier badge - more prominent */}
+        <div className="absolute top-3 right-3">
+          <Badge className="rounded-full bg-background/95 text-foreground backdrop-blur-sm border-border/50 text-xs font-semibold px-3 py-1 shadow-lg flex items-center gap-1.5">
+            <Package className="h-3 w-3" />
+            {item.supplier}
+          </Badge>
+        </div>
       </div>
 
-      <CardContent className="flex flex-col gap-2.5 p-3">
-        {/* Supplier */}
-        <div className="flex items-center gap-1.5">
-          <div className="flex h-4 w-4 items-center justify-center rounded-full bg-primary/10">
-            <Package className="h-2.5 w-2.5 text-primary" />
-          </div>
-          <span className="text-[10px] font-medium text-muted-foreground">{item.supplier}</span>
-        </div>
-
-        {/* Product title */}
-        <h3 className="text-xs font-bold leading-tight text-foreground line-clamp-2 min-h-[2rem]">
+      <CardContent className="flex flex-col gap-3 p-5">
+        {/* Product title - larger and more prominent */}
+        <h3 className="text-sm font-bold leading-tight text-foreground line-clamp-2 min-h-[2.5rem] group-hover:text-primary transition-colors">
           {item.name}
         </h3>
 
-        {/* Features with icons */}
-        <div className="flex flex-col gap-1.5">
-          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-            <div className="flex h-4 w-4 items-center justify-center rounded-full bg-success/10">
-              <Shield className="h-2.5 w-2.5 text-success" />
+        {/* Reviews/Rating if available */}
+        {reviewData && (
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
+              {reviewData.rating && (
+                <>
+                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <span className="text-sm font-semibold text-foreground">{reviewData.rating}</span>
+                </>
+              )}
             </div>
-            <span>BS7671</span>
+            {reviewData.count && (
+              <span className="text-xs text-muted-foreground">({reviewData.count} reviews)</span>
+            )}
           </div>
-          <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-            <div className="flex h-4 w-4 items-center justify-center rounded-full bg-primary/10">
-              <Zap className="h-2.5 w-2.5 text-primary" />
-            </div>
-            <span>Pro Grade</span>
+        )}
+
+        {/* Urgency indicator */}
+        {urgencyIndicator && (
+          <div className={`flex items-center gap-1.5 text-xs font-medium ${urgencyIndicator.color}`}>
+            <urgencyIndicator.icon className="h-3.5 w-3.5" />
+            <span>{urgencyIndicator.text}</span>
           </div>
-        </div>
+        )}
 
         {/* Spacer */}
         <div className="flex-grow" />
 
-        {/* Price section with divider */}
-        <div className="space-y-2 border-t border-border/50 pt-2.5">
-          <div className="flex items-end justify-between">
-            <div className="flex flex-col gap-0.5">
+        {/* Enhanced price section */}
+        <div className="space-y-3 border-t border-border/50 pt-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex flex-col gap-1">
               {item.isOnSale && item.salePrice && (
-                <span className="text-[9px] text-muted-foreground line-through">
-                  {item.price}
-                </span>
+                <>
+                  <span className="text-xs text-muted-foreground line-through">
+                    Was {item.price}
+                  </span>
+                  {savingsAmount && (
+                    <span className="text-xs font-semibold text-success">
+                      Save {savingsAmount}
+                    </span>
+                  )}
+                </>
               )}
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-lg font-bold text-primary">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-primary">
                   {item.salePrice || item.price}
                 </span>
-                <span className="text-[9px] text-muted-foreground">VAT</span>
+                <span className="text-xs text-muted-foreground">inc. VAT</span>
               </div>
             </div>
-            <Badge variant="success" className="rounded-full text-[9px] font-semibold px-2 py-0.5">
-              <CheckCircle className="mr-0.5 h-2.5 w-2.5" />
-              Stock
+            
+            {/* Enhanced stock badge */}
+            <Badge 
+              variant={stockInfo.variant}
+              className="rounded-lg text-xs font-semibold px-3 py-1.5 shadow-sm flex items-center gap-1.5"
+            >
+              <StockIcon className="h-3.5 w-3.5" />
+              {stockInfo.text}
             </Badge>
           </div>
 
-          {/* Action buttons */}
-          <div className="flex gap-1.5">
+          {/* Enhanced action buttons */}
+          <div className="flex gap-2">
             <Button 
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
                 window.open(getProductUrl(), '_blank');
               }}
-              className="flex-1 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-sm hover:shadow-md transition-all h-7 text-[10px]"
+              className="flex-1 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all h-10 text-sm"
             >
-              <ShoppingCart className="mr-1 h-3 w-3" />
-              View
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              Buy Now
             </Button>
             <Button 
               size="sm"
@@ -348,9 +417,9 @@ const ToolCard: React.FC<ToolCardProps> = ({
                 }
               }}
               disabled={isCompareDisabled && !isSelected}
-              className="rounded-lg px-2 border-border/50 hover:bg-accent transition-all h-7"
+              className="rounded-xl px-3 border-border/50 hover:bg-accent hover:scale-105 transition-all h-10"
             >
-              {isSelected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
+              {isSelected ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
             </Button>
           </div>
         </div>
