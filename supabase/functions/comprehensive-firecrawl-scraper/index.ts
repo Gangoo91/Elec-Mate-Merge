@@ -7,51 +7,41 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Category configuration with direct category URLs (easier to scrape than search)
+// Category configuration with Toolstation URLs (simpler HTML, more reliable)
 const BATCH_1_CATEGORIES = {
   'Hand Tools': {
-    urls: ['https://www.screwfix.com/c/tools/hand-tools/cat830030']
+    urls: ['https://www.toolstation.com/hand-tools/c306']
   },
   'Test Equipment': {
-    urls: ['https://www.screwfix.com/c/electrical-lighting/testers-detectors/cat840012']
+    urls: ['https://www.toolstation.com/electrical-testers/c309']
   },
   'Power Tools': {
-    urls: ['https://www.screwfix.com/c/tools/power-tools/cat831247']
+    urls: ['https://www.toolstation.com/power-tools/c307']
   }
 };
 
 const BATCH_2_CATEGORIES = {
   'PPE': {
-    urls: ['https://www.screwfix.com/c/safety-workwear/safety-workwear/cat840007']
+    urls: ['https://www.toolstation.com/workwear-ppe/c252']
   },
   'Specialist Tools': {
-    urls: ['https://www.screwfix.com/c/electrical-lighting/electrical-tools/cat840011']
+    urls: ['https://www.toolstation.com/specialist-tools/c311']
   },
   'Safety Tools': {
-    urls: ['https://www.screwfix.com/c/safety-workwear/safety-signs-equipment/cat840008']
+    urls: ['https://www.toolstation.com/safety-equipment/c310']
   }
 };
 
 const BATCH_3_CATEGORIES = {
   'Access Tools & Equipment': {
-    urls: ['https://www.screwfix.com/c/ladders-steps/ladders-steps/cat850005']
+    urls: ['https://www.toolstation.com/access-equipment/c253']
   },
   'Tool Storage': {
-    urls: ['https://www.screwfix.com/c/tools/tool-storage/cat830032']
+    urls: ['https://www.toolstation.com/tool-storage/c308']
   }
 };
 
-// Schema for extracting product URLs from category pages
-const urlExtractionSchema = {
-  type: "object",
-  properties: {
-    product_urls: {
-      type: "array",
-      items: { type: "string" },
-      description: "Array of full product detail page URLs found on this page"
-    }
-  }
-};
+// No longer using extraction schema - using markdown + regex instead
 
 // Schema for extracting product details from individual product pages
 const productDetailSchema = {
@@ -88,7 +78,7 @@ const getBatchCategories = (batchNumber: number) => {
   }
 };
 
-// Phase 1: Extract product URLs from category page
+// Phase 1: Extract product URLs from category page using markdown + regex
 async function extractProductUrls(
   url: string,
   firecrawlApiKey: string
@@ -96,6 +86,7 @@ async function extractProductUrls(
   console.log(`📋 Extracting product URLs from: ${url}`);
   
   try {
+    // Use markdown format to get raw HTML content
     const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
       method: 'POST',
       headers: {
@@ -104,31 +95,28 @@ async function extractProductUrls(
       },
       body: JSON.stringify({
         url: url,
-        formats: ['extract'],
-        extract: {
-          schema: urlExtractionSchema,
-          prompt: `Extract all product detail page URLs from this category page. 
-                   Look for links to individual product pages (not category pages, not filters).
-                   Return only the full URLs to product detail pages.
-                   Product URLs typically contain '/p/' in the path.`
-        },
-        timeout: 45000
+        formats: ['markdown'],
+        timeout: 30000
       }),
     });
 
     const data = await response.json();
     
-    if (!data.success || !data.extract?.product_urls) {
-      console.log(`⚠️ No URLs extracted from ${url}`);
+    if (!data.success || !data.markdown) {
+      console.log(`⚠️ No content extracted from ${url}`);
       return [];
     }
 
-    const urls = data.extract.product_urls.filter((url: string) => 
-      url && (url.includes('/p/') || url.includes('/product/'))
-    );
+    // Extract Toolstation product URLs using regex
+    // Toolstation product URLs: https://www.toolstation.com/product-name/pXXXXX
+    const urlRegex = /https:\/\/www\.toolstation\.com\/[^\/\s"']+\/p\d+/g;
+    const urls = data.markdown.match(urlRegex) || [];
     
-    console.log(`✅ Found ${urls.length} product URLs`);
-    return urls.slice(0, 20); // Limit to 20 products per category
+    // Remove duplicates
+    const uniqueUrls = [...new Set(urls)];
+    
+    console.log(`✅ Found ${uniqueUrls.length} unique product URLs`);
+    return uniqueUrls.slice(0, 20); // Limit to 20 products per category
   } catch (error) {
     console.error(`❌ Error extracting URLs:`, error);
     return [];
