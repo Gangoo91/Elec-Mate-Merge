@@ -52,7 +52,7 @@ const MoreToolsDropdown = ({ onTabChange, selectedItemsCount }: MoreToolsDropdow
         <Button
           variant="outline"
           size="sm"
-          className="relative border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50 data-[state=open]:bg-elec-yellow/10"
+          className="touch-target mobile-interactive bg-elec-gray/50 border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 data-[state=open]:bg-elec-yellow/10"
         >
           <MoreHorizontal className="h-4 w-4 mr-2" />
           More Tools
