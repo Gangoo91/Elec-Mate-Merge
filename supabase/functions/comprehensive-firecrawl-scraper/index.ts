@@ -9,9 +9,10 @@ const corsHeaders = {
 };
 
 // Split into 3 batches - each batch will be scraped in a separate function call
+// IMPORTANT: Category names MUST match frontend categories in useToolCategories.ts
 const BATCH_1_CATEGORIES = {
-  'Electrical Hand Tools': {
-    urls: ['https://www.screwfix.com/search?search=screwdrivers+pliers+spanners+electrical+work&page_size=50']
+  'Hand Tools': {
+    urls: ['https://www.screwfix.com/search?search=screwdrivers+pliers+spanners+electrical+hand+tools&page_size=50']
   },
   'Test Equipment': {
     urls: ['https://www.screwfix.com/search?search=testing+measurement+electrical+safety+compliance&page_size=50']
@@ -25,23 +26,20 @@ const BATCH_2_CATEGORIES = {
   'PPE': {
     urls: ['https://www.screwfix.com/search?search=personal+protective+equipment+safe+working+practices&page_size=50']
   },
-  'Cable Installation': {
-    urls: ['https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50']
+  'Specialist Tools': {
+    urls: ['https://www.screwfix.com/search?search=cable+stripper+fish+tape+wire+tools+electrical&page_size=50']
   },
-  'Electrical Safety': {
-    urls: ['https://www.screwfix.com/search?search=hazard+identification+protection+safety+equipment&page_size=50']
+  'Safety Tools': {
+    urls: ['https://www.screwfix.com/search?search=safety+equipment+lockout+signs+barriers+electrical&page_size=50']
   }
 };
 
 const BATCH_3_CATEGORIES = {
-  'Access Tools': {
-    urls: ['https://www.screwfix.com/search?search=Equipment+ladders+scaffolding+access+working+at+height&page_size=50']
+  'Access Tools & Equipment': {
+    urls: ['https://www.screwfix.com/search?search=ladders+scaffolding+access+working+height&page_size=50']
   },
   'Tool Storage': {
     urls: ['https://www.screwfix.com/search?search=tool+bags+boxes+storage+solutions+organisation&page_size=50']
-  },
-  'Specialist Tools': {
-    urls: ['https://www.screwfix.com/search?search=specialist+electrical+tools+installation+tasks&page_size=50']
   }
 };
 
@@ -437,6 +435,7 @@ serve(async (req) => {
     const categoryNames = Object.keys(batchCategories);
     
     console.log(`💾 [BATCH-${batchNumber}] Storing products by category...`);
+    console.log(`📋 [BATCH-${batchNumber}] Expected categories:`, categoryNames);
     
     // Group products by category
     const productsByCategory = {};
@@ -447,12 +446,16 @@ serve(async (req) => {
       productsByCategory[product.category].push(product);
     });
     
+    console.log(`📦 [BATCH-${batchNumber}] Products grouped by:`, Object.keys(productsByCategory));
+    
     // Store each category separately
     for (const categoryName of categoryNames) {
       const categoryProducts = productsByCategory[categoryName] || [];
       
       if (categoryProducts.length === 0) {
-        console.warn(`⚠️ [BATCH-${batchNumber}] No products for category: ${categoryName}`);
+        console.warn(`⚠️ [BATCH-${batchNumber}] No products found for category: ${categoryName}`);
+        console.warn(`   Searched for products with category="${categoryName}"`);
+        console.warn(`   Available categories in scraped data:`, Object.keys(productsByCategory));
         continue;
       }
       

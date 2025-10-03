@@ -60,41 +60,43 @@ serve(async (req) => {
       );
     }
 
-    if (forceRefresh) {
-      console.log('🔄 Force refresh requested - deleting existing cache to guarantee fresh data...');
-      
-      // Delete all existing cache entries when force refresh is requested
-      const { error: deleteError } = await supabase
-        .from('tools_weekly_cache')
-        .delete()
-        .not('id', 'is', null); // Delete all rows where id is not null
-        
-      if (deleteError) {
-        console.error('⚠️ Error deleting cache for force refresh:', deleteError);
-      } else {
-        console.log('✅ Existing cache cleared for force refresh');
-      }
-    }
+    // NOTE: We'll delete cache AFTER successful scraping to avoid data loss
 
     console.log('🔄 Cache expired or missing, triggering refresh...');
 
-    // First, trigger all 3 batch scrapes in parallel
+    // First, trigger all 3 batch scrapes in parallel with timeout protection
     console.log('🔄 Starting batch scrapes for batches 1, 2, and 3...');
     
+    const BATCH_TIMEOUT_MS = 120000; // 2 minutes per batch
+    
+    const createTimeoutPromise = (ms: number) => 
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Batch scrape timeout')), ms)
+      );
+    
     const batchPromises = [
-      supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
-        body: { batch: 1, forceRefresh: true } 
-      }),
-      supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
-        body: { batch: 2, forceRefresh: true } 
-      }),
-      supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
-        body: { batch: 3, forceRefresh: true } 
-      })
+      Promise.race([
+        supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+          body: { batch: 1, forceRefresh: true } 
+        }),
+        createTimeoutPromise(BATCH_TIMEOUT_MS)
+      ]),
+      Promise.race([
+        supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+          body: { batch: 2, forceRefresh: true } 
+        }),
+        createTimeoutPromise(BATCH_TIMEOUT_MS)
+      ]),
+      Promise.race([
+        supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+          body: { batch: 3, forceRefresh: true } 
+        }),
+        createTimeoutPromise(BATCH_TIMEOUT_MS)
+      ])
     ];
 
-    // Wait for all batches to complete (with 45s timeout per batch)
-    console.log('⏳ Waiting for batch scrapes to complete...');
+    // Wait for all batches to complete
+    console.log('⏳ Waiting for batch scrapes to complete (2min timeout per batch)...');
     const batchResults = await Promise.allSettled(batchPromises);
     
     // Log results of each batch
@@ -120,6 +122,12 @@ serve(async (req) => {
     });
 
     console.log(`📊 Batch Summary: ${successfulBatches.length}/3 succeeded, ${failedBatches.length}/3 failed`);
+
+    // Validate: Don't proceed with merge if all batches failed
+    if (successfulBatches.length === 0) {
+      console.error('❌ All batches failed - cannot proceed with merge');
+      throw new Error('All scraping batches failed. Please check network connection and try again.');
+    }
 
     // Now merge all batches together
     console.log('🔄 Merging all category batches...');
@@ -160,6 +168,22 @@ serve(async (req) => {
       }
       
       throw refreshError;
+    }
+
+    // If force refresh and successful, NOW delete old cache before storing new data
+    if (forceRefresh && refreshResult?.success && refreshResult.totalFound > 0) {
+      console.log('🔄 Force refresh successful - clearing old cache before storing new data...');
+      
+      const { error: deleteError } = await supabase
+        .from('tools_weekly_cache')
+        .delete()
+        .eq('category', 'weekly_refresh');
+        
+      if (deleteError) {
+        console.error('⚠️ Error deleting old cache:', deleteError);
+      } else {
+        console.log('✅ Old cache cleared after successful scrape');
+      }
     }
 
     // Store the scraped data in tools_weekly_cache
