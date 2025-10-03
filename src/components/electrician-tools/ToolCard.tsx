@@ -298,7 +298,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
         </div>
         
         {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 h-[150px] bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         
         {/* Dynamic badges - only show relevant ones */}
         {dynamicBadges.length > 0 && (
