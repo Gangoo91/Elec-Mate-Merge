@@ -65,7 +65,7 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
       <Carousel className="w-full overflow-visible">
         <CarouselContent className="-ml-2 md:-ml-4 overflow-visible">
           {deals.map((deal, index) => (
-            <CarouselItem key={deal.id} className="pl-2 md:pl-4 basis-[200px] md:basis-[220px]">
+            <CarouselItem key={deal.id} className="p-2 basis-[200px] md:basis-[220px]">
               <Card className="h-full bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/5 hover:scale-[1.02] transition-all duration-300 rounded-lg group">
                 {/* Compact Image section */}
                 <div className="relative overflow-hidden rounded-t-lg">
