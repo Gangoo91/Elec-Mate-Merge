@@ -208,7 +208,7 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
       {/* Expanded Filters with Enhanced Design */}
       <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
         <CollapsibleContent>
-          <Card className="overflow-hidden rounded-xl border border-border/50 bg-elec-gray/80 backdrop-blur-sm shadow-lg">
+          <Card className="overflow-hidden rounded-xl border border-primary/30 bg-elec-gray/80 backdrop-blur-sm shadow-lg">
             <CardContent className="p-5 space-y-4">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-lg font-semibold text-foreground">Refine Your Search</h3>
