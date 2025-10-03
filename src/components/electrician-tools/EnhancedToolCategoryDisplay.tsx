@@ -260,22 +260,24 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
           />
 
           {/* Smart Search Bar with Filter Button */}
-          <div className="flex gap-3 items-center">
-            <div className="flex-1">
-              <SmartSearchBar
-                value={searchTerm}
-                onChange={setSearchTerm}
+          <div className="relative space-y-4">
+            <div className="flex gap-3 items-center">
+              <div className="flex-1">
+                <SmartSearchBar
+                  value={searchTerm}
+                  onChange={setSearchTerm}
+                  tools={filteredTools}
+                  placeholder="Search tools, brands, suppliers..."
+                />
+              </div>
+              
+              {/* Filter Button */}
+              <ProductFilters
                 tools={filteredTools}
-                placeholder="Search tools, brands, suppliers..."
+                filters={filters}
+                onFiltersChange={setFilters}
               />
             </div>
-            
-            {/* Filter Button */}
-            <ProductFilters
-              tools={filteredTools}
-              filters={filters}
-              onFiltersChange={setFilters}
-            />
           </div>
 
           {/* SECTION B: BROWSE & FILTER */}

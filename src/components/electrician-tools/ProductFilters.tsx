@@ -121,7 +121,7 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
   );
 
   return (
-    <>
+    <div className="contents">
       {/* Compact Filter Toggle Button */}
       <Button
         variant="outline"
@@ -140,8 +140,8 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
       </Button>
 
       {/* Expanded Filters */}
-      <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
-        <CollapsibleContent className="mt-4">
+      {isExpanded && (
+        <div className="absolute left-0 right-0 mt-4 z-50">
           <Card className="border-elec-yellow/20 bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm">
             <CardContent className="p-6 space-y-6">
               {/* Quick filter chips with enhanced styling */}
@@ -227,9 +227,9 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
               )}
             </CardContent>
           </Card>
-        </CollapsibleContent>
-      </Collapsible>
-    </>
+        </div>
+      )}
+    </div>
   );
 };
 
