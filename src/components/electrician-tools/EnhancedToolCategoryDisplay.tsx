@@ -260,7 +260,7 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
           />
 
           {/* Smart Search Bar with Filter Button */}
-          <div className="flex gap-2 items-start">
+          <div className="flex gap-3 items-center">
             <div className="flex-1">
               <SmartSearchBar
                 value={searchTerm}
