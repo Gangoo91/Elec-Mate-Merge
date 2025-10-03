@@ -47,7 +47,7 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
   };
 
   return (
-    <section className="space-y-4">
+    <section className="p-4">
       {/* Section Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
