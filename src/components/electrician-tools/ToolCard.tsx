@@ -300,20 +300,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
         {/* Gradient overlay on hover */}
         <div className="absolute inset-0 h-[150px] bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         
-        {/* Dynamic badges - only show relevant ones */}
-        {dynamicBadges.length > 0 && (
-          <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 flex-wrap">
-            {dynamicBadges.map((badge, idx) => (
-              <Badge 
-                key={idx}
-                variant={badge.variant as any}
-                className={`rounded-full backdrop-blur-md text-xs font-bold px-3 py-1 shadow-lg ${badge.animate ? 'animate-pulse' : ''}`}
-              >
-                {badge.label}
-              </Badge>
-            ))}
-          </div>
-        )}
+        
         
         {/* Brand chip */}
         {item.brand && (
