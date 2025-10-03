@@ -259,21 +259,26 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
             className="mobile-section-spacing"
           />
 
-          {/* Smart Search Bar */}
-          <SmartSearchBar
-            value={searchTerm}
-            onChange={setSearchTerm}
-            tools={filteredTools}
-            placeholder="Search tools, brands, suppliers..."
-          />
+          {/* Smart Search Bar with Filter Button */}
+          <div className="flex gap-2 items-start">
+            <div className="flex-1">
+              <SmartSearchBar
+                value={searchTerm}
+                onChange={setSearchTerm}
+                tools={filteredTools}
+                placeholder="Search tools, brands, suppliers..."
+              />
+            </div>
+            
+            {/* Filter Button */}
+            <ProductFilters
+              tools={filteredTools}
+              filters={filters}
+              onFiltersChange={setFilters}
+            />
+          </div>
 
           {/* SECTION B: BROWSE & FILTER */}
-          {/* Product Filters */}
-          <ProductFilters
-            tools={filteredTools}
-            filters={filters}
-            onFiltersChange={setFilters}
-          />
 
           {/* Enhanced Product Grid */}
           <EnhancedProductGrid

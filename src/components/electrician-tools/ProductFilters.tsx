@@ -122,107 +122,94 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
 
   return (
     <>
-      {/* Quick Filters Bar with Enhanced Design */}
-      <div className="relative p-4 rounded-xl bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm border border-primary/20">
-        <div className="flex items-center gap-3 flex-wrap">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="bg-transparent border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50 transition-all duration-300"
-          >
-            <Filter className="h-4 w-4 mr-2" />
-            <span className="font-medium">Filters</span>
-            {activeFilterCount > 0 && (
-              <Badge variant="gold" className="ml-2 h-5 min-w-[20px] px-1.5 text-xs font-semibold">
-                {activeFilterCount}
-              </Badge>
-            )}
-            <ChevronDown className={`h-4 w-4 ml-2 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
-          </Button>
-
-          {/* Quick filter chips with enhanced styling */}
-          {availability.includes("In Stock") && (
-            <Badge
-              variant={filters.availability.includes("In Stock") ? "gold" : "outline"}
-              className={`cursor-pointer transition-all duration-300 ${
-                filters.availability.includes("In Stock")
-                  ? "shadow-md shadow-elec-yellow/20 scale-105"
-                  : "hover:scale-105 hover:border-elec-yellow/50"
-              }`}
-              onClick={() => toggleFilter("availability", "In Stock")}
-            >
-              In Stock
-              {filters.availability.includes("In Stock") && (
-                <X className="h-3 w-3 ml-1.5" />
-              )}
-            </Badge>
-          )}
-
-          {suppliers.includes("Screwfix") && (
-            <Badge
-              variant={filters.suppliers.includes("Screwfix") ? "gold" : "outline"}
-              className={`cursor-pointer transition-all duration-300 ${
-                filters.suppliers.includes("Screwfix")
-                  ? "shadow-md shadow-elec-yellow/20 scale-105"
-                  : "hover:scale-105 hover:border-elec-yellow/50"
-              }`}
-              onClick={() => toggleFilter("suppliers", "Screwfix")}
-            >
-              Screwfix
-              {filters.suppliers.includes("Screwfix") && (
-                <X className="h-3 w-3 ml-1.5" />
-              )}
-            </Badge>
-          )}
-
-          <Badge
-            variant={filters.priceRanges.includes("Under £25") ? "gold" : "outline"}
-            className={`cursor-pointer transition-all duration-300 ${
-              filters.priceRanges.includes("Under £25")
-                ? "shadow-md shadow-elec-yellow/20 scale-105"
-                : "hover:scale-105 hover:border-elec-yellow/50"
-            }`}
-            onClick={() => toggleFilter("priceRanges", "Under £25")}
-          >
-            Under £25
-            {filters.priceRanges.includes("Under £25") && (
-              <X className="h-3 w-3 ml-1.5" />
-            )}
+      {/* Compact Filter Toggle Button */}
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="bg-transparent border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50 transition-all duration-300 h-12 px-4 shrink-0"
+      >
+        <Filter className="h-4 w-4 mr-2" />
+        <span className="font-medium">Filters</span>
+        {activeFilterCount > 0 && (
+          <Badge variant="gold" className="ml-2 h-5 min-w-[20px] px-1.5 text-xs font-semibold">
+            {activeFilterCount}
           </Badge>
+        )}
+        <ChevronDown className={`h-4 w-4 ml-2 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+      </Button>
 
-          {hasActiveFilters && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearAllFilters}
-              className="text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-300 ml-auto"
-            >
-              <span className="font-medium">Clear All</span>
-              <X className="h-4 w-4 ml-1.5" />
-            </Button>
-          )}
-        </div>
-      </div>
-
-      {/* Expanded Filters with Enhanced Design */}
+      {/* Expanded Filters */}
       <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
-        <CollapsibleContent>
-          <Card className="overflow-hidden rounded-xl border border-primary/20 bg-elec-gray/80 backdrop-blur-sm shadow-lg">
-            <CardContent className="p-5 space-y-4">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-lg font-semibold text-foreground">Refine Your Search</h3>
+        <CollapsibleContent className="mt-4">
+          <Card className="border-elec-yellow/20 bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm">
+            <CardContent className="p-6 space-y-6">
+              {/* Quick filter chips with enhanced styling */}
+              <div className="flex items-center gap-3 flex-wrap">
+                {availability.includes("In Stock") && (
+                  <Badge
+                    variant={filters.availability.includes("In Stock") ? "gold" : "outline"}
+                    className={`cursor-pointer transition-all duration-300 ${
+                      filters.availability.includes("In Stock")
+                        ? "shadow-md shadow-elec-yellow/20 scale-105"
+                        : "hover:scale-105 hover:border-elec-yellow/50"
+                    }`}
+                    onClick={() => toggleFilter("availability", "In Stock")}
+                  >
+                    In Stock
+                    {filters.availability.includes("In Stock") && (
+                      <X className="h-3 w-3 ml-1.5" />
+                    )}
+                  </Badge>
+                )}
+
+                {suppliers.includes("Screwfix") && (
+                  <Badge
+                    variant={filters.suppliers.includes("Screwfix") ? "gold" : "outline"}
+                    className={`cursor-pointer transition-all duration-300 ${
+                      filters.suppliers.includes("Screwfix")
+                        ? "shadow-md shadow-elec-yellow/20 scale-105"
+                        : "hover:scale-105 hover:border-elec-yellow/50"
+                    }`}
+                    onClick={() => toggleFilter("suppliers", "Screwfix")}
+                  >
+                    Screwfix
+                    {filters.suppliers.includes("Screwfix") && (
+                      <X className="h-3 w-3 ml-1.5" />
+                    )}
+                  </Badge>
+                )}
+
+                <Badge
+                  variant={filters.priceRanges.includes("Under £25") ? "gold" : "outline"}
+                  className={`cursor-pointer transition-all duration-300 ${
+                    filters.priceRanges.includes("Under £25")
+                      ? "shadow-md shadow-elec-yellow/20 scale-105"
+                      : "hover:scale-105 hover:border-elec-yellow/50"
+                  }`}
+                  onClick={() => toggleFilter("priceRanges", "Under £25")}
+                >
+                  Under £25
+                  {filters.priceRanges.includes("Under £25") && (
+                    <X className="h-3 w-3 ml-1.5" />
+                  )}
+                </Badge>
+
                 {hasActiveFilters && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={clearAllFilters}
-                    className="text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-300"
+                    className="text-elec-yellow hover:bg-elec-yellow/10 transition-all duration-300 ml-auto"
                   >
-                    <span className="text-sm font-medium">Clear All</span>
+                    <span className="font-medium">Clear All</span>
                     <X className="h-4 w-4 ml-1.5" />
                   </Button>
                 )}
+              </div>
+              
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg font-semibold text-foreground">Refine Your Search</h3>
               </div>
               
               <FilterSection title="Price Range" items={priceRanges} category="priceRanges" />
