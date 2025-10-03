@@ -140,23 +140,15 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
   const filteredTools = useMemo(() => {
     if (!allTools) return [];
     
+    // Get valid category mappings for this frontend category
+    const validCategories = getCategoryMappings(categoryName);
+    
     // Direct category match based on intelligent categorization from edge function
     const categoryFiltered = allTools.filter(tool => {
       const toolCategory = tool.category;
       
-      // Exact match with the category name
-      if (toolCategory === categoryName) return true;
-      
-      // Handle variations in category naming
-      if (categoryName === 'Hand Tools' && toolCategory === 'Hand Tools') return true;
-      if (categoryName === 'Power Tools' && toolCategory === 'Power Tools') return true;
-      if (categoryName === 'Test Equipment' && toolCategory === 'Test Equipment') return true;
-      if (categoryName === 'Tool Storage' && toolCategory === 'Tool Storage') return true;
-      if (categoryName === 'Safety Tools' && toolCategory === 'Safety Tools') return true;
-      if (categoryName === 'Access Tools & Equipment' && toolCategory === 'Access Tools & Equipment') return true;
-      if (categoryName === 'Specialist Tools' && toolCategory === 'Specialist Tools') return true;
-      
-      return false;
+      // Check if tool's category matches any of the valid mapped categories
+      return validCategories.includes(toolCategory);
     });
     
     return categoryFiltered;
