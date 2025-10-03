@@ -12,11 +12,12 @@ const BATCH_1_CATEGORIES = [
   {
     name: 'Hand Tools',
     urls: [
-      'https://www.screwfix.com/c/tools/screwdrivers/cat9780002?page_size=100',
-      'https://www.screwfix.com/c/tools/pliers-cutters/cat831008?page_size=100',
-      'https://www.toolstation.com/hand-tools/screwdrivers/c675',
-      'https://www.toolstation.com/hand-tools/pliers-cutters/c670',
-      'https://www.toolstation.com/hand-tools/electrical-tools/c39',
+      "https://www.screwfix.com/c/tools/screwdrivers/cat9780002?page_size=100",
+      "https://www.screwfix.com/c/tools/pliers-cutters/cat831008?page_size=100",
+      "https://www.screwfix.com/c/painting-decorating/wallpaper-strippers/cat830806",
+      "https://www.toolstation.com/hand-tools/screwdrivers/c675",
+      "https://www.toolstation.com/hand-tools/pliers-cutters/c670",
+      "https://www.toolstation.com/hand-tools/electrical-tools/c39",
     ]
   }
 ];
@@ -25,10 +26,14 @@ const BATCH_2_CATEGORIES = [
   {
     name: 'Power Tools',
     urls: [
-      'https://www.screwfix.com/c/tools/power-drills/cat830003?page_size=100',
-      'https://www.screwfix.com/c/tools/circular-saws/cat9780026?page_size=100',
-      'https://www.toolstation.com/power-tools/drills/c46',
-      'https://www.toolstation.com/power-tools/saws/c48',
+      'https://www.screwfix.com/c/tools/drills/cat830704?page_size=100',
+      'https://www.screwfix.com/c/tools/saws/cat830716?page_size=100',
+      'https://www.screwfix.com/c/tools/angle-grinders/cat830694',
+      'https://www.screwfix.com/c/tools/die-grinders/cat14970002',
+      'https://www.screwfix.com/c/tools/drills/cat830704?powersupply=cordless',
+      'https://www.toolstation.com/power-tools/drills/c719',
+      'https://www.toolstation.com/power-tools/saws/c722',
+      'https://www.toolstation.com/power-tools/angle-grinders/c378'
     ]
   }
 ];
@@ -37,8 +42,8 @@ const BATCH_3_CATEGORIES = [
   {
     name: 'Test Equipment',
     urls: [
-      'https://www.screwfix.com/c/electrical-lighting/electrical-testers/cat831075?page_size=100',
-      'https://www.toolstation.com/electrical/testers-detectors/c662',
+      'https://www.screwfix.com/c/tools/electrical-testers/cat7910001',
+      'https://www.toolstation.com/electrical-supplies-accessories/electrical-test-equipment/c1024',
     ]
   }
 ];
@@ -47,8 +52,8 @@ const BATCH_4_CATEGORIES = [
   {
     name: 'PPE',
     urls: [
-      'https://www.screwfix.com/c/safety-workwear/ppe/cat5610001?page_size=100',
-      'https://www.toolstation.com/safety-workwear/ppe/c577',
+      'https://www.screwfix.com/search?search=ppe&page_size=100',
+      'https://www.toolstation.com/workwear-safety/ppe/c735',
     ]
   }
 ];
@@ -114,51 +119,6 @@ const getBatchCategories = (batchNumber: number) => {
     default: return BATCH_1_CATEGORIES;
   }
 };
-
-// Phase 1: Extract product URLs from category page using markdown + regex
-async function extractProductUrls(
-  url: string,
-  firecrawlApiKey: string
-): Promise<string[]> {
-  console.log(`📋 Extracting product URLs from: ${url}`);
-  
-  try {
-    // Use markdown format to get raw HTML content
-    const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${firecrawlApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        url: url,
-        formats: ['markdown'],
-        timeout: 30000
-      }),
-    });
-
-    const data = await response.json();
-    
-    if (!data.success || !data.markdown) {
-      console.log(`⚠️ No content extracted from ${url}`);
-      return [];
-    }
-
-    // Extract Toolstation product URLs using regex
-    // Toolstation product URLs: https://www.toolstation.com/product-name/pXXXXX
-    const urlRegex = /https:\/\/www\.toolstation\.com\/[^\/\s"']+\/p\d+/g;
-    const urls = data.markdown.match(urlRegex) || [];
-    
-    // Remove duplicates
-    const uniqueUrls = [...new Set(urls)];
-    
-    console.log(`✅ Found ${uniqueUrls.length} unique product URLs`);
-    return uniqueUrls.slice(0, 20); // Limit to 20 products per category
-  } catch (error) {
-    console.error(`❌ Error extracting URLs:`, error);
-    return [];
-  }
-}
 
 // Batch scrape products from category listing URLs
 async function batchScrapeProducts(
