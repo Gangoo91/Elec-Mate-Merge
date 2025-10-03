@@ -127,7 +127,7 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
         variant="outline"
         size="sm"
         onClick={() => setIsExpanded(!isExpanded)}
-        className="bg-transparent border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/50 transition-all duration-300 h-12 px-4 shrink-0"
+        className="bg-elec-card/50 border-elec-yellow/20 text-elec-light hover:bg-elec-yellow/10 hover:border-elec-yellow/40 transition-all duration-300 h-12 px-4 shrink-0 rounded-lg"
       >
         <Filter className="h-4 w-4 mr-2" />
         <span className="font-medium">Filters</span>
