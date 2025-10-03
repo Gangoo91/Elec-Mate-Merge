@@ -227,7 +227,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
   return (
     <Card 
-      className="group relative h-full overflow-hidden rounded-xl border border-border/50 bg-muted/20 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-0.5 cursor-pointer"
+      className="group relative h-full overflow-hidden rounded-xl border border-border/50 bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-0.5 cursor-pointer"
       onClick={() => onCardClick?.(item)}
     >
       {/* Image section with gradient overlay */}
