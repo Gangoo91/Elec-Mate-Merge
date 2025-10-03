@@ -168,21 +168,20 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
     const features = [];
     
     if (item.highlights && item.highlights.length > 0) {
-      features.push(...item.highlights.slice(0, 3));
+      features.push(...item.highlights.slice(0, 2));
     } else {
       if (isCable) {
         features.push("Professional grade installation cable");
         if (cableInfo.type === 'Twin & Earth') features.push("Suitable for domestic wiring");
-        if (cableInfo.type === 'SWA Armoured') features.push("External & underground use");
-        if (cableInfo.standard) features.push(`${cableInfo.standard} compliant`);
+        else if (cableInfo.type === 'SWA Armoured') features.push("External & underground use");
+        else features.push(`${cableInfo.standard} compliant`);
       } else {
         features.push("High quality electrical component");
-        features.push("Professional contractor grade");
         features.push("BS7671 18th edition compliant");
       }
     }
     
-    return features.slice(0, 3);
+    return features.slice(0, 2);
   };
 
   const features = getFeatures();
@@ -281,14 +280,14 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
         </h3>
 
         {/* Product highlights/features */}
-        {item.highlights && item.highlights.length > 0 && (
+        {features && features.length > 0 && (
           <div className="space-y-2">
             <h4 className="text-xs font-semibold text-muted-foreground">Key Features:</h4>
             <ul className="space-y-1.5 text-left">
-              {item.highlights.slice(0, 2).map((highlight, idx) => (
+              {features.map((feature, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-xs text-foreground">
                   <Check className="h-3.5 w-3.5 text-success shrink-0 mt-0.5" />
-                  <span className="line-clamp-1">{highlight}</span>
+                  <span className="line-clamp-1">{feature}</span>
                 </li>
               ))}
             </ul>
