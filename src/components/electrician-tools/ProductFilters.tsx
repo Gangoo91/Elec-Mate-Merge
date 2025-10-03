@@ -87,7 +87,7 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
   const activeFilterCount = Object.values(filters).reduce((sum, arr) => sum + arr.length, 0);
 
   const FilterSection = ({ title, items, category }: { title: string; items: string[]; category: keyof FilterState }) => (
-    <div className="space-y-3 p-4 rounded-lg bg-background/40 border border-primary/30">
+    <div className="space-y-3 p-4 rounded-lg bg-background/40 border border-primary/20">
       <div className="flex items-center justify-between">
         <h4 className="font-semibold text-foreground text-base tracking-wide flex items-center gap-2">
           {title}
@@ -121,9 +121,9 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
   );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 p-4 rounded-xl border border-primary/20 bg-background/20">
       {/* Quick Filters Bar with Enhanced Design */}
-      <div className="relative p-4 rounded-xl bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm border border-border/50">
+      <div className="relative p-4 rounded-xl bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm border border-primary/20">
         <div className="flex items-center gap-3 flex-wrap">
           <Button
             variant="outline"
@@ -208,7 +208,7 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
       {/* Expanded Filters with Enhanced Design */}
       <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
         <CollapsibleContent>
-          <Card className="overflow-hidden rounded-xl border border-primary/30 bg-elec-gray/80 backdrop-blur-sm shadow-lg">
+          <Card className="overflow-hidden rounded-xl border border-primary/20 bg-elec-gray/80 backdrop-blur-sm shadow-lg">
             <CardContent className="p-5 space-y-4">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-lg font-semibold text-foreground">Refine Your Search</h3>
