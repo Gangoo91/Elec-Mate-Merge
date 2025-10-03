@@ -315,13 +315,6 @@ const ToolCard: React.FC<ToolCardProps> = ({
           </div>
         )}
         
-        {/* Supplier badge - more prominent */}
-        <div className="absolute top-3 right-3">
-          <Badge className="rounded-full bg-background/95 text-foreground backdrop-blur-sm border-border/50 text-xs font-semibold px-3 py-1 shadow-lg flex items-center gap-1.5">
-            <Package className="h-3 w-3" />
-            {item.supplier}
-          </Badge>
-        </div>
       </div>
 
       <CardContent className="flex flex-col gap-3 p-5">
