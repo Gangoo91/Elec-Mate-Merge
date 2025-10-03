@@ -443,20 +443,22 @@ serve(async (req) => {
     console.log(`🚀 Scraping ${Object.keys(batchCategories).length} categories using batch scrape...`);
     const startTime = Date.now();
 
-    // Process each category sequentially
+    // Process all categories in parallel for faster execution
     const allProducts = [];
     const categoryStats = {};
     
-    for (const config of batchCategories) {
-      const result = await scrapeCategory(config, firecrawlApiKey);
-      
+    const results = await Promise.all(
+      batchCategories.map(config => scrapeCategory(config, firecrawlApiKey))
+    );
+    
+    results.forEach(result => {
       if (result.success && result.products.length > 0) {
         allProducts.push(...result.products);
-        categoryStats[config.name] = result.products.length;
+        categoryStats[result.category] = result.products.length;
       } else {
-        categoryStats[config.name] = 0;
+        categoryStats[result.category] = 0;
       }
-    }
+    });
 
     const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
     console.log(`⏱️ Batch ${batchNumber} completed in ${elapsedTime}s`);
