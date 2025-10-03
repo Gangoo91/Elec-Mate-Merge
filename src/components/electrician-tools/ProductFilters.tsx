@@ -87,7 +87,7 @@ const ProductFilters = ({ tools, filters, onFiltersChange }: ProductFiltersProps
   const activeFilterCount = Object.values(filters).reduce((sum, arr) => sum + arr.length, 0);
 
   const FilterSection = ({ title, items, category }: { title: string; items: string[]; category: keyof FilterState }) => (
-    <div className="space-y-3 p-4 rounded-lg bg-background/40 border border-border/20">
+    <div className="space-y-3 p-4 rounded-lg bg-background/40 border border-primary/30">
       <div className="flex items-center justify-between">
         <h4 className="font-semibold text-foreground text-base tracking-wide flex items-center gap-2">
           {title}
