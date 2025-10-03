@@ -431,7 +431,6 @@ serve(async (req) => {
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 7);
     
-    const batchCategories = getBatchCategories(batchNumber);
     const categoryNames = Object.keys(batchCategories);
     
     console.log(`💾 [BATCH-${batchNumber}] Storing products by category...`);
