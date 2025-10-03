@@ -104,7 +104,7 @@ const ToolDetailModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[90vh] bg-elec-card border-elec-yellow/20">
+      <DialogContent className="max-w-3xl max-h-[90vh] bg-elec-card border-elec-yellow/20 overflow-hidden">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-elec-light pr-8">
             {tool.name}
