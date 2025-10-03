@@ -10,7 +10,8 @@ import {
   Star,
   Package,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  Wrench
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
@@ -172,11 +173,19 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                     </Badge>
                   )}
                 </div>
-                {tool.supplier && (
-                  <Badge variant="outline" className="w-fit text-xs">
-                    {tool.supplier}
-                  </Badge>
-                )}
+                <div className="flex flex-col gap-1.5">
+                  {tool.supplier && (
+                    <Badge variant="outline" className="w-fit text-xs">
+                      {tool.supplier}
+                    </Badge>
+                  )}
+                  {tool.brand && (
+                    <Badge variant="secondary" className="w-fit text-xs gap-1">
+                      <Wrench className="h-3 w-3" />
+                      {tool.brand}
+                    </Badge>
+                  )}
+                </div>
               </CardHeader>
               
               <CardContent className="space-y-3">

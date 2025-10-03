@@ -8,6 +8,7 @@ export interface ToolItem {
   category?: string;
   price: string;
   supplier?: string;
+  brand?: string;
   image?: string;
   stockStatus?: 'In Stock' | 'Out of Stock' | 'Low Stock';
   isOnSale?: boolean;
@@ -53,6 +54,7 @@ const fetchToolsData = async (): Promise<ToolItem[]> => {
         category: tool.category || categoryCache.category || 'Tools',
         price: tool.price || '£0.00',
         supplier: tool.supplier || 'Screwfix',
+        brand: tool.brand,
         image: tool.image || '/placeholder.svg',
         stockStatus: tool.stockStatus || 'In Stock' as const,
         isOnSale: tool.isOnSale || false,
