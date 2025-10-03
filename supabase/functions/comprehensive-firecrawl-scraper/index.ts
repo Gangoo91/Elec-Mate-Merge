@@ -58,6 +58,46 @@ const BATCH_4_CATEGORIES = [
   }
 ];
 
+const BATCH_5_CATEGORIES = [
+  {
+    name: 'Safety Tools',
+    urls: [
+      'https://www.screwfix.com/search?search=safety+equipment+and+protective+devices&page_size=100',
+      'https://www.toolstation.com/search?q=safety+equipment+and+protective+devices',
+    ]
+  }
+];
+
+const BATCH_6_CATEGORIES = [
+  {
+    name: 'Access Tools & Equipment',
+    urls: [
+      'https://www.screwfix.com/search?search=Ladders%2C+scaffolding+and+access+equipment+for+working+at+height&page_size=100',
+      'https://www.toolstation.com/search?q=Ladders%2C+scaffolding+and+access+equipment+for+working+at+height',
+    ]
+  }
+];
+
+const BATCH_7_CATEGORIES = [
+  {
+    name: 'Access Tools & Equipment',
+    urls: [
+      'https://www.screwfix.com/search?search=Tool+bags%2C+boxes+and+storage+solutions+for+organisation',
+      'https://www.toolstation.com/search?q=Tool+bags%2C+boxes+and+storage+solutions+for+organisation',
+    ]
+  }
+];
+
+const BATCH_8_CATEGORIES = [
+  {
+    name: 'Access Tools & Equipment',
+    urls: [
+      'https://www.screwfix.com/search?search=Cable+tools%2C+crimpers%2C+benders+and+specialised+equipment',
+      'https://www.toolstation.com/search?q=Cable+tools%2C+crimpers%2C+benders+and+specialised+equipment',
+    ]
+  }
+];
+
 // No longer using extraction schema - using markdown + regex instead
 
 // Schema for product details (for Firecrawl batch)
@@ -116,6 +156,10 @@ const getBatchCategories = (batchNumber: number) => {
     case 2: return BATCH_2_CATEGORIES;
     case 3: return BATCH_3_CATEGORIES;
     case 4: return BATCH_4_CATEGORIES;
+    case 5: return BATCH_5_CATEGORIES;
+    case 6: return BATCH_6_CATEGORIES;
+    case 7: return BATCH_7_CATEGORIES;
+    case 8: return BATCH_8_CATEGORIES;
     default: return BATCH_1_CATEGORIES;
   }
 };
@@ -265,6 +309,10 @@ const mergeAllBatches = async (supabase: any) => {
     ...BATCH_2_CATEGORIES.map(c => c.name),
     ...BATCH_3_CATEGORIES.map(c => c.name),
     ...BATCH_4_CATEGORIES.map(c => c.name)
+    ...BATCH_5_CATEGORIES.map(c => c.name)
+    ...BATCH_6_CATEGORIES.map(c => c.name)
+    ...BATCH_7_CATEGORIES.map(c => c.name)
+    ...BATCH_8_CATEGORIES.map(c => c.name)
   ];
   
   console.log(`📦 [MERGE] Looking for ${allCategoryNames.length} categories:`, allCategoryNames);
@@ -358,8 +406,8 @@ serve(async (req) => {
 
     // Validate batch number
     const batchNumber = batch || 1;
-    if (![1, 2, 3, 4].includes(batchNumber)) {
-      throw new Error('Batch must be 1, 2, 3 or 4');
+    if (![1, 2, 3, 4, 5, 6, 7, 8].includes(batchNumber)) {
+      throw new Error('Batch must be 1, 2, 3, 4, 5, 6, 7 or 8');
     }
 
     console.log(`📊 Processing Batch ${batchNumber}`);

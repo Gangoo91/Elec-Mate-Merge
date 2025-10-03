@@ -98,6 +98,30 @@ serve(async (req) => {
           body: { batch: 4, forceRefresh: true } 
         }),
         createTimeoutPromise(BATCH_TIMEOUT_MS)
+      ]),
+      Promise.allSettled([
+        supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+          body: { batch: 5, forceRefresh: true } 
+        }),
+        createTimeoutPromise(BATCH_TIMEOUT_MS)
+      ]),
+      Promise.allSettled([
+        supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+          body: { batch: 6, forceRefresh: true } 
+        }),
+        createTimeoutPromise(BATCH_TIMEOUT_MS)
+      ]),
+      Promise.allSettled([
+        supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+          body: { batch: 7, forceRefresh: true } 
+        }),
+        createTimeoutPromise(BATCH_TIMEOUT_MS)
+      ]),
+      Promise.allSettled([
+        supabase.functions.invoke('comprehensive-firecrawl-scraper', { 
+          body: { batch: 8, forceRefresh: true } 
+        }),
+        createTimeoutPromise(BATCH_TIMEOUT_MS)
       ])
     ];
 
