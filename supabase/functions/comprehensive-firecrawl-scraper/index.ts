@@ -191,7 +191,7 @@ async function batchScrapeProducts(
       body: JSON.stringify({
         urls: categoryUrls,
         formats: [{
-          type: 'json',
+          type: 'extract',
           extract: {
             schema: {
               type: "object",
