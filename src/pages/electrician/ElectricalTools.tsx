@@ -6,71 +6,21 @@ import {
   Wrench, 
   Search,
   ArrowLeft,
-  Loader2,
-  RefreshCw
+  Loader2
 } from "lucide-react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
 import EnhancedToolCategoryDisplay from "@/components/electrician-tools/EnhancedToolCategoryDisplay";
 import BatchToolsRefreshButton from "@/components/electrician-tools/BatchToolsRefreshButton";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 import { queryClient } from "@/lib/queryClient";
 
 const ElectricalTools = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const { categories: toolCategories, isLoading } = useToolCategories();
-  const { toast } = useToast();
   
   const selectedCategory = searchParams.get('category');
-
-  const handleRefreshTools = async () => {
-    setIsRefreshing(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
-        body: { forceRefresh: true }
-      });
-
-      if (error) throw error;
-
-      // Check if the response indicates success
-      if (data && data.success === false) {
-        throw new Error(data.message || 'Failed to fetch tools data');
-      }
-
-      // Check if we got any tools
-      const toolsCount = data?.totalFound || data?.tools?.length || 0;
-      
-      if (toolsCount === 0) {
-        toast({
-          title: "Warning",
-          description: "No products found. The suppliers may be unavailable or the data is being collected. Please try again later.",
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Success",
-          description: `Tools data updated successfully! Found ${toolsCount} products.`,
-        });
-      }
-
-      // Invalidate queries to refresh data without page reload
-      await queryClient.invalidateQueries({ queryKey: ['toolCategories'] });
-      await queryClient.invalidateQueries({ queryKey: ['toolsData'] });
-    } catch (error) {
-      console.error('Error refreshing tools:', error);
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to update tools data. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsRefreshing(false);
-    }
-  };
   
   // If a category is selected, show the enhanced category display
   if (selectedCategory) {
@@ -96,15 +46,6 @@ const ElectricalTools = () => {
               queryClient.invalidateQueries({ queryKey: ['toolsData'] });
             }}
           />
-          <Button 
-            variant="outline" 
-            onClick={handleRefreshTools}
-            disabled={isRefreshing}
-            className="flex items-center gap-2"
-          >
-            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-            {isRefreshing ? 'Updating...' : 'Update Tools Data'}
-          </Button>
           <Link to="/electrician/business">
             <Button variant="outline" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" /> Back to Business Hub

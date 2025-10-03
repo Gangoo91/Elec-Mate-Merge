@@ -98,25 +98,40 @@ serve(async (req) => {
     const batchResults = await Promise.allSettled(batchPromises);
     
     // Log results of each batch
+    const successfulBatches = [];
+    const failedBatches = [];
+    
     batchResults.forEach((result, index) => {
       if (result.status === 'fulfilled') {
-        console.log(`✅ Batch ${index + 1} completed:`, result.value.data);
+        const batchData = result.value.data;
+        console.log(`✅ Batch ${index + 1} completed:`, batchData);
+        successfulBatches.push({
+          batch: index + 1,
+          products: batchData?.totalFound || 0,
+          categories: batchData?.categoriesScraped || []
+        });
       } else {
         console.error(`❌ Batch ${index + 1} failed:`, result.reason);
+        failedBatches.push({
+          batch: index + 1,
+          error: result.reason?.message || 'Unknown error'
+        });
       }
     });
 
+    console.log(`📊 Batch Summary: ${successfulBatches.length}/3 succeeded, ${failedBatches.length}/3 failed`);
+
     // Now merge all batches together
-    console.log('🔄 Merging all batches...');
+    console.log('🔄 Merging all category batches...');
     const { data: refreshResult, error: refreshError } = await supabase.functions.invoke(
       'comprehensive-firecrawl-scraper',
       { body: { mergeAll: true, forceRefresh } }
     );
     
-    console.log('📊 Batch merge result:', refreshResult);
+    console.log('📊 Merge result:', refreshResult);
     
     if (refreshError) {
-      console.error('⚠️ Batch merge error:', refreshError);
+      console.error('⚠️ Merge error:', refreshError);
     }
 
     if (refreshError) {
@@ -198,14 +213,23 @@ serve(async (req) => {
       }
     }
 
+    // Determine overall success based on merge result
+    const overallSuccess = refreshResult?.success && refreshResult.totalFound > 0;
+    
     const responseData = {
-      success: true,
-      message: 'Tools weekly refresh completed successfully',
+      success: overallSuccess,
+      message: overallSuccess 
+        ? `Successfully updated ${refreshResult.categoriesFound}/${refreshResult.totalCategories} categories with ${refreshResult.totalFound} products`
+        : refreshResult?.message || 'Refresh completed but no products found',
       refreshedAt: now.toISOString(),
+      batchResults: {
+        successful: successfulBatches,
+        failed: failedBatches
+      },
       ...refreshResult
     };
 
-    console.log('🎉 Tools weekly refresh completed successfully');
+    console.log(overallSuccess ? '🎉 Tools weekly refresh completed successfully' : '⚠️ Tools refresh completed with issues');
 
     return new Response(
       JSON.stringify(responseData),

@@ -25,69 +25,118 @@ const BatchToolsRefreshButton: React.FC<BatchToolsRefreshButtonProps> = ({
   const handleRefresh = async () => {
     setIsRefreshing(true);
     setRefreshStatus('idle');
-    setProgress('Starting batch system...');
+    setProgress('Starting update...');
     setToolsFound(0);
-    setCurrentBatch(1);
+    setCurrentBatch(0);
     
     try {
+      console.log('🔧 [UPDATE-FLOW] Button clicked - starting tools refresh');
       
       toast({
-        title: "Multi-Batch Scraping Started",
-        description: "Fetching all 18 URLs across 3 batches...",
+        title: "Tools Update Started",
+        description: "Scraping and merging all tool categories. This may take 1-2 minutes...",
         duration: 3000,
       });
 
-      // Start batch 1
-      const { data, error } = await supabase.functions.invoke('firecrawl-v2-tools-batch', {
-        body: {}
+      setProgress('Scraping batches...');
+      
+      // Call the weekly refresh function which handles batches + merge
+      const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
+        body: { forceRefresh: true }
       });
 
       if (error) {
-        console.error('❌ Batch refresh error:', error);
+        console.error('❌ [UPDATE-FLOW] Refresh error:', error);
         setRefreshStatus('error');
         setProgress('Failed');
         
         toast({
-          title: "Refresh Failed",
-          description: error.message || "Failed to start batch scraping.",
+          title: "Update Failed",
+          description: error.message || "Failed to update tools data. Please try again.",
           variant: "destructive",
           duration: 5000,
         });
+        setIsRefreshing(false);
         return;
       }
 
-      if (data?.success) {
-        console.log('✅ Batch system started:', data);
-        setCurrentBatch(data.batchNumber || 1);
-        setProgress(`Batch ${data.batchNumber}/3 in progress...`);
-        
-        toast({
-          title: "Batch Scraping In Progress",
-          description: `Batch ${data.batchNumber}/3 started. Auto-refreshing results...`,
-          duration: 4000,
-        });
+      console.log('📊 [UPDATE-FLOW] Refresh response:', data);
 
-        // Start polling for queue status
-        startQueuePolling();
-      } else {
-        console.error('❌ Batch scraping returned no data:', data);
+      // Check if the response indicates failure
+      if (data && data.success === false) {
+        console.warn('⚠️ [UPDATE-FLOW] Refresh returned success=false:', data.message);
         setRefreshStatus('error');
-        setProgress('No data returned');
+        setProgress('No products found');
         
         toast({
-          title: "Update Failed",
-          description: "Unable to start batch scraping.",
+          title: "Update Issue",
+          description: data.message || "No products found. Data may still be collecting.",
           variant: "destructive",
           duration: 5000,
         });
+        setIsRefreshing(false);
+        return;
       }
+
+      // Extract product count
+      const toolsCount = data?.totalFound || data?.tools?.length || 0;
+      setToolsFound(toolsCount);
+      
+      if (toolsCount === 0) {
+        console.warn('⚠️ [UPDATE-FLOW] No products in response');
+        setRefreshStatus('error');
+        setProgress('No products found');
+        
+        toast({
+          title: "Warning",
+          description: "No products found. The data is being collected. Please try again in a few minutes.",
+          variant: "destructive",
+          duration: 5000,
+        });
+      } else {
+        console.log(`✅ [UPDATE-FLOW] Success: ${toolsCount} products found`);
+        setRefreshStatus('success');
+        setProgress(`${toolsCount} products`);
+        
+        // Show detailed breakdown if available
+        const categoriesInfo = data?.categoriesFound 
+          ? ` (${data.categoriesFound}/${data.totalCategories} categories)`
+          : '';
+        
+        toast({
+          title: "Tools Updated Successfully!",
+          description: `Found ${toolsCount} products${categoriesInfo}`,
+          variant: "success",
+          duration: 5000,
+        });
+        
+        // Wait 2 seconds before invalidating to allow cache to settle
+        console.log('⏳ [UPDATE-FLOW] Waiting 2s before invalidating queries...');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Trigger parent refresh
+        console.log('🔄 [UPDATE-FLOW] Invalidating queries...');
+        onSuccess();
+        
+        console.log('✅ [UPDATE-FLOW] Complete!');
+      }
+      
+      setIsRefreshing(false);
+      
+      // Reset status after 5 seconds
+      setTimeout(() => {
+        setRefreshStatus('idle');
+        setProgress('');
+      }, 5000);
+      
     } catch (error) {
-      console.error('❌ Batch refresh error:', error);
+      console.error('❌ [UPDATE-FLOW] Unexpected error:', error);
       setRefreshStatus('error');
       setProgress('Error occurred');
+      setIsRefreshing(false);
       
       toast({
-        title: "Refresh Failed", 
+        title: "Update Failed", 
         description: error instanceof Error ? error.message : "An unexpected error occurred.",
         variant: "destructive",
         duration: 5000,
@@ -95,91 +144,6 @@ const BatchToolsRefreshButton: React.FC<BatchToolsRefreshButtonProps> = ({
     }
   };
 
-  const startQueuePolling = () => {
-    let pollCount = 0;
-    const maxPolls = 60; // 5 minutes max
-
-    const pollInterval = setInterval(async () => {
-      pollCount++;
-      
-      try {
-        const { data: queueData, error } = await supabase
-          .from('tools_scrape_queue')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .limit(3);
-
-        if (error) {
-          console.error('Error polling queue:', error);
-          return;
-        }
-
-        if (!queueData || queueData.length === 0) {
-          return;
-        }
-
-        // Calculate total tools found across all batches
-        const totalTools = queueData.reduce((sum, batch) => sum + (batch.tools_found || 0), 0);
-        setToolsFound(totalTools);
-
-        // Find current processing batch
-        const processingBatch = queueData.find(q => q.status === 'processing');
-        if (processingBatch) {
-          setCurrentBatch(processingBatch.batch_number);
-          setProgress(`Batch ${processingBatch.batch_number}/3 in progress...`);
-        }
-
-        // Check if all batches are complete
-        const completedBatches = queueData.filter(q => q.status === 'completed').length;
-        if (completedBatches >= 3) {
-          clearInterval(pollInterval);
-          setIsRefreshing(false);
-          setRefreshStatus('success');
-          setProgress(`All batches complete!`);
-          
-          onSuccess(); // Refresh the tools data
-          
-          toast({
-            title: "All Batches Complete!",
-            description: `Successfully scraped ${totalTools} tools across all 18 URLs.`,
-            duration: 5000,
-          });
-
-          setTimeout(() => {
-            setRefreshStatus('idle');
-            setProgress('');
-            setCurrentBatch(0);
-          }, 5000);
-        }
-
-        // Check for failures
-        const failedBatch = queueData.find(q => q.status === 'failed');
-        if (failedBatch) {
-          clearInterval(pollInterval);
-          setIsRefreshing(false);
-          setRefreshStatus('error');
-          setProgress(`Batch ${failedBatch.batch_number} failed`);
-          
-          toast({
-            title: "Batch Failed",
-            description: failedBatch.error_message || "A batch failed to complete.",
-            variant: "destructive",
-            duration: 5000,
-          });
-        }
-
-        if (pollCount >= maxPolls) {
-          clearInterval(pollInterval);
-          setIsRefreshing(false);
-          setRefreshStatus('error');
-          setProgress('Polling timeout');
-        }
-
-      } catch (error) {
-        console.error('Polling error:', error);
-      }
-    }, 5000); // Poll every 5 seconds
-  };
 
   const getIcon = () => {
     if (isRefreshing) {
@@ -195,11 +159,10 @@ const BatchToolsRefreshButton: React.FC<BatchToolsRefreshButtonProps> = ({
   };
 
   const getButtonText = () => {
-    if (isRefreshing && currentBatch > 0) return `Batch ${currentBatch}/${totalBatches}`;
-    if (isRefreshing) return progress || "Starting...";
-    if (refreshStatus === 'success') return `✓ ${toolsFound} tools`;
+    if (isRefreshing) return "Updating...";
+    if (refreshStatus === 'success' && toolsFound > 0) return `✓ ${toolsFound} tools`;
     if (refreshStatus === 'error') return "⚠ Failed";
-    return "Fetch All Tools (18 URLs)";
+    return "Update Tools Data";
   };
 
   return (
@@ -219,9 +182,9 @@ const BatchToolsRefreshButton: React.FC<BatchToolsRefreshButtonProps> = ({
         {getIcon()}
         <span className="ml-2">{getButtonText()}</span>
       </Button>
-      {isRefreshing && (
+      {(isRefreshing || progress) && (
         <div className="text-xs text-muted-foreground">
-          {currentBatch > 0 ? `Processing batch ${currentBatch}/3` : 'Initializing...'} {toolsFound > 0 && `• ${toolsFound} tools found`}
+          {progress}
         </div>
       )}
     </div>

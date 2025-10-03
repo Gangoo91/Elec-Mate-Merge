@@ -21,36 +21,61 @@ import MaterialCategoryBrowser from "@/components/electrician-materials/Material
 const Materials = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isForceUpdating, setIsForceUpdating] = useState(false);
+  const [updateProgress, setUpdateProgress] = useState<string>('');
   const { toast } = useToast();
 
   const handleUpdateProducts = async () => {
     setIsUpdating(true);
+    setUpdateProgress('Starting update...');
+    
     try {
+      console.log('🔄 [UPDATE-FLOW] Button clicked - starting materials update');
+      
+      toast({
+        title: "Update Started",
+        description: "Refreshing all materials data...",
+      });
+      
+      setUpdateProgress('Triggering refresh...');
       const { error } = await supabase.rpc('trigger_materials_weekly_refresh');
       
       if (error) {
-        console.error('Error triggering materials refresh:', error);
+        console.error('❌ [UPDATE-FLOW] RPC error:', error);
+        setUpdateProgress('');
         toast({
           title: "Update Failed",
           description: "Failed to trigger materials update. Please try again.",
           variant: "destructive",
         });
-      } else {
-        toast({
-          title: "Update Started",
-          description: "Materials refresh has been triggered. This may take a few minutes to complete.",
-          variant: "success",
-        });
+        return;
       }
+      
+      setUpdateProgress('Refresh triggered successfully');
+      console.log('✅ [UPDATE-FLOW] Materials refresh triggered');
+      
+      toast({
+        title: "Update Started",
+        description: "Materials refresh has been triggered. Check back in a few minutes.",
+        variant: "success",
+      });
+      
+      // Reset after 3 seconds
+      setTimeout(() => {
+        setUpdateProgress('');
+      }, 3000);
+      
     } catch (error) {
-      console.error('Error:', error);
+      console.error('❌ [UPDATE-FLOW] Error:', error);
+      setUpdateProgress('');
       toast({
         title: "Update Failed",
         description: "An error occurred while updating materials.",
         variant: "destructive",
       });
     } finally {
-      setIsUpdating(false);
+      setTimeout(() => {
+        setIsUpdating(false);
+      }, 3000);
     }
   };
 
@@ -104,15 +129,20 @@ const Materials = () => {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button
-              onClick={handleUpdateProducts}
-              disabled={isUpdating || isForceUpdating}
-              variant="outline"
-              className="shrink-0"
-            >
-              <RefreshCw className={`w-4 h-4 mr-2 ${isUpdating ? 'animate-spin' : ''}`} />
-              {isUpdating ? 'Updating...' : 'Update Products'}
-            </Button>
+            <div className="flex flex-col items-end gap-1">
+              <Button
+                onClick={handleUpdateProducts}
+                disabled={isUpdating || isForceUpdating}
+                variant="outline"
+                className="shrink-0"
+              >
+                <RefreshCw className={`w-4 h-4 mr-2 ${isUpdating ? 'animate-spin' : ''}`} />
+                {isUpdating ? 'Updating...' : 'Update Products'}
+              </Button>
+              {updateProgress && (
+                <span className="text-xs text-muted-foreground">{updateProgress}</span>
+              )}
+            </div>
             
             <AlertDialog>
               <AlertDialogTrigger asChild>

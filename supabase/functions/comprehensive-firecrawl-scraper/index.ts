@@ -250,50 +250,59 @@ const checkExistingBatch = async (supabase: any, batchNumber: number) => {
 };
 
 const mergeAllBatches = async (supabase: any) => {
-  console.log('🔄 Merging all batches...');
+  console.log('🔄 [MERGE] Starting merge of all category batches...');
   
-  const batches = await Promise.all([
-    supabase.from('tools_weekly_cache')
-      .select('*')
-      .eq('category', 'batch_1')
-      .gt('expires_at', new Date().toISOString())
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single(),
-    supabase.from('tools_weekly_cache')
-      .select('*')
-      .eq('category', 'batch_2')
-      .gt('expires_at', new Date().toISOString())
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single(),
-    supabase.from('tools_weekly_cache')
-      .select('*')
-      .eq('category', 'batch_3')
-      .gt('expires_at', new Date().toISOString())
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single()
-  ]);
-
+  // Get all category names from all batches
+  const allCategoryNames = [
+    ...Object.keys(BATCH_1_CATEGORIES),
+    ...Object.keys(BATCH_2_CATEGORIES),
+    ...Object.keys(BATCH_3_CATEGORIES)
+  ];
+  
+  console.log(`📦 [MERGE] Looking for ${allCategoryNames.length} categories:`, allCategoryNames);
+  
   const allTools = [];
-  let batchesFound = 0;
-
-  batches.forEach((result, index) => {
-    if (!result.error && result.data) {
-      allTools.push(...(result.data.tools_data || []));
-      batchesFound++;
-      console.log(`✅ Batch ${index + 1}: ${result.data.total_products} products`);
+  const successfulCategories = [];
+  const failedCategories = [];
+  
+  // Query each category individually
+  for (const categoryName of allCategoryNames) {
+    const { data, error } = await supabase
+      .from('tools_weekly_cache')
+      .select('*')
+      .eq('category', categoryName)
+      .gt('expires_at', new Date().toISOString())
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+    
+    if (!error && data && data.tools_data) {
+      const productCount = data.tools_data.length;
+      allTools.push(...data.tools_data);
+      successfulCategories.push(categoryName);
+      console.log(`✅ [MERGE] ${categoryName}: ${productCount} products`);
     } else {
-      console.log(`⚠️ Batch ${index + 1}: Not found or expired`);
+      failedCategories.push(categoryName);
+      console.warn(`⚠️ [MERGE] ${categoryName}: Not found or expired`);
     }
-  });
+  }
+
+  const totalProducts = allTools.length;
+  console.log(`📊 [MERGE] Complete: ${totalProducts} total products from ${successfulCategories.length}/${allCategoryNames.length} categories`);
+  
+  if (failedCategories.length > 0) {
+    console.warn(`⚠️ [MERGE] Missing categories:`, failedCategories);
+  }
 
   return {
+    success: successfulCategories.length > 0,
     tools: allTools,
-    totalProducts: allTools.length,
-    batchesFound,
-    allBatchesComplete: batchesFound === 3
+    totalProducts,
+    categoriesFound: successfulCategories.length,
+    totalCategories: allCategoryNames.length,
+    successfulCategories,
+    failedCategories,
+    allCategoriesComplete: failedCategories.length === 0
   };
 };
 
@@ -319,16 +328,21 @@ serve(async (req) => {
 
     // Handle merge request
     if (mergeAll) {
-      console.log('📦 Merge request - combining all batches...');
+      console.log('📦 [MERGE-REQUEST] Combining all category batches...');
       const merged = await mergeAllBatches(supabase);
       
       return new Response(JSON.stringify({
-        success: true,
+        success: merged.success,
         tools: merged.tools,
         totalFound: merged.totalProducts,
-        batchesFound: merged.batchesFound,
-        allBatchesComplete: merged.allBatchesComplete,
-        message: `Merged ${merged.batchesFound}/3 batches (${merged.totalProducts} total products)`,
+        categoriesFound: merged.categoriesFound,
+        totalCategories: merged.totalCategories,
+        successfulCategories: merged.successfulCategories,
+        failedCategories: merged.failedCategories,
+        allCategoriesComplete: merged.allCategoriesComplete,
+        message: merged.success 
+          ? `Merged ${merged.categoriesFound}/${merged.totalCategories} categories (${merged.totalProducts} total products)`
+          : 'No categories found - data may not be scraped yet',
         mode: 'merge'
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -415,30 +429,55 @@ serve(async (req) => {
       });
     }
 
-    // Store batch results
+    // Store batch results by category name instead of batch number
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 7);
-
-    // Delete old batch data first
-    await supabase
-      .from('tools_weekly_cache')
-      .delete()
-      .eq('category', `batch_${batchNumber}`);
-
-    const { error: storeError } = await supabase
-      .from('tools_weekly_cache')
-      .insert({
-        tools_data: allProducts,
-        total_products: totalProducts,
-        category: `batch_${batchNumber}`,
-        expires_at: expiresAt.toISOString(),
-        update_status: 'completed'
-      });
-
-    if (storeError) {
-      console.error('❌ Storage error:', storeError);
-    } else {
-      console.log(`✅ Batch ${batchNumber} cached successfully`);
+    
+    const batchCategories = getBatchCategories(batchNumber);
+    const categoryNames = Object.keys(batchCategories);
+    
+    console.log(`💾 [BATCH-${batchNumber}] Storing products by category...`);
+    
+    // Group products by category
+    const productsByCategory = {};
+    allProducts.forEach(product => {
+      if (!productsByCategory[product.category]) {
+        productsByCategory[product.category] = [];
+      }
+      productsByCategory[product.category].push(product);
+    });
+    
+    // Store each category separately
+    for (const categoryName of categoryNames) {
+      const categoryProducts = productsByCategory[categoryName] || [];
+      
+      if (categoryProducts.length === 0) {
+        console.warn(`⚠️ [BATCH-${batchNumber}] No products for category: ${categoryName}`);
+        continue;
+      }
+      
+      // Delete old category data
+      await supabase
+        .from('tools_weekly_cache')
+        .delete()
+        .eq('category', categoryName);
+      
+      // Insert new category data
+      const { error: storeError } = await supabase
+        .from('tools_weekly_cache')
+        .insert({
+          tools_data: categoryProducts,
+          total_products: categoryProducts.length,
+          category: categoryName,
+          expires_at: expiresAt.toISOString(),
+          update_status: 'completed'
+        });
+      
+      if (storeError) {
+        console.error(`❌ [BATCH-${batchNumber}] Storage error for ${categoryName}:`, storeError);
+      } else {
+        console.log(`✅ [BATCH-${batchNumber}] Stored ${categoryProducts.length} products in category: ${categoryName}`);
+      }
     }
 
     return new Response(JSON.stringify({
@@ -448,7 +487,8 @@ serve(async (req) => {
       batch: batchNumber,
       categoryStats,
       categoriesScraped: Object.keys(batchCategories),
-      message: `Batch ${batchNumber}: ${totalProducts} products scraped`,
+      productsByCategory,
+      message: `Batch ${batchNumber}: ${totalProducts} products scraped and stored by category`,
       elapsedTime: `${elapsedTime}s`,
       cached: false
     }), {
