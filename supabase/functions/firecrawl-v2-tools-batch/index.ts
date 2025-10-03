@@ -17,10 +17,10 @@ const BATCH_URLS = {
     { url: 'https://www.toolstation.com/search?q=screwdrivers+pliers+spanners+electrical+work', name: 'Hand Tools - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=testing+measurement+electrical+safety+compliance&page_size=50', name: 'Test Equipment - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=testing+measurement+electrical+safety+compliance', name: 'Test Equipment - Toolstation' },
-    { url: 'https://www.screwfix.com/search?search=electric+cordless+drilling+cutting+installation&page_size=50', name: 'Power Tools - Screwfix' },
+    { url: 'https://www.screwfix.com/search?search=Drills, saws, grinders and cordless tool systems', name: 'Power Tools - Screwfix' },
   ],
   2: [
-    { url: 'https://www.toolstation.com/search?q=electric+cordless+drilling+cutting+installation', name: 'Power Tools - Toolstation' },
+    { url: 'https://www.toolstation.com/search?q=Drills, saws, grinders and cordless tool systems', name: 'Power Tools - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=personal protective equipment&page_size=50', name: 'PPE - Screwfix' },
     { url: 'https://www.toolstation.com/search?q=personal protective equipment', name: 'PPE - Toolstation' },
     { url: 'https://www.screwfix.com/search?search=cable+stripper+fish+tape+electrical&page_size=50', name: 'Specialist Tools - Screwfix' },
@@ -65,59 +65,42 @@ function intelligentlyCategorize(toolName: string, toolDescription: string, cate
   const desc = (toolDescription || '').toLowerCase();
   
   // Test Equipment keywords
-  if (name.includes('multimeter') || name.includes('tester') || name.includes('test lead') || 
-      name.includes('meter') || name.includes('clamp meter') || name.includes('voltage') ||
-      name.includes('socket tester') || name.includes('proving unit') || name.includes('test lamp') || cat.includes("test")) {
+  if (cat.includes("test")) {
     return 'Test Equipment';
   }
   
   // Hand Tools keywords
-  if (name.includes('plier') || name.includes('screwdriver') || name.includes('wire stripper') ||
-      name.includes('cable cutter') || name.includes('spanner') || name.includes('wrench') ||
-      name.includes('crimper') || name.includes('vde') || name.includes('side cutter') ||
-      name.includes('stripping') || name.includes('snips') || name.includes('knife') || cat.includes("hand")) {
+  if (cat.includes("hand")) {
     return 'Hand Tools';
   }
   
   // Power Tools keywords
-  if (name.includes('drill') || name.includes('cordless') || name.includes('18v') || 
-      name.includes('impact driver') || name.includes('grinder') || name.includes('saw') ||
-      name.includes('sds') || name.includes('battery pack') || name.includes('combi') ||
-      name.includes('makita') || name.includes('dewalt') || name.includes('brushless') || cat.includes("power")) {
+  if (cat.includes("power")) {
     return 'Power Tools';
   }
   
   // Tool Storage keywords
-  if (name.includes('tool bag') || name.includes('tool box') || name.includes('case') ||
-      name.includes('storage') || name.includes('organiser') || name.includes('toughsystem') ||
-      name.includes('key safe') || name.includes('with wheels') || name.includes('toolbox') ||
-      name.includes('tote') || name.includes('organizer') || cat.includes("storage")) {
+  if (cat.includes("storage")) {
     return 'Tool Storage';
   }
   
   // Safety Tools
-  if (name.includes('helmet') || name.includes('gloves') || name.includes('safety') ||
-      name.includes('protective') || name.includes('harness') || name.includes('glasses') ||
-      name.includes('boots') || name.includes('hi-vis') || name.includes('vest') || cat.includes("safety")) {
+  if (cat.includes("safety")) {
     return 'Safety Tools';
   }
 
   // PPE keywords
-  if (name.includes('helmet') || name.includes('gloves') || name.includes('workwear') ||
-      name.includes('glasses') ||
-      name.includes('boots') || name.includes('vest') || name.includes('personal protective equipment') || cat.includes("PPE")) {
+  if (cat.includes("PPE")) {
     return 'Safety Tools';
   }
   
   // Access Tools keywords
-  if (name.includes('ladder') || name.includes('steps') || name.includes('platform') ||
-      name.includes('scaffold') || name.includes('stepladder') || name.includes('extension ladder') || cat.includes("access")) {
+  if (cat.includes("access")) {
     return 'Access Tools & Equipment';
   }
   
   // Specialist Tools keywords
-  if (name.includes('cable puller') || name.includes('fish tape') || name.includes('bender') ||
-      name.includes('cable rod') || name.includes('conduit') || name.includes('knockout') || cat.includes("specialist")) {
+  if (cat.includes("specialist")) {
     return 'Specialist Tools';
   }
   
@@ -180,7 +163,7 @@ serve(async (req) => {
         urls: urls.map(u => u.url),
         formats: ['extract'],
         webhook: {
-        url: `${webhookUrl}`,
+          url: `${webhookUrl}`,
         },
         events: ["page"],
         extract: {
