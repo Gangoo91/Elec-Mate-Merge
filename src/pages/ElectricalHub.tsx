@@ -61,12 +61,6 @@ const ElectricalHub = () => {
     },
     {
       id: 9,
-      title: "Mental Health Hub",
-      icon: Heart,
-      link: "/electrician/mental-health"
-    },
-    {
-      id: 10,
       title: "Career Progression", 
       icon: GraduationCap,
       link: "/electrician/career-progression"
