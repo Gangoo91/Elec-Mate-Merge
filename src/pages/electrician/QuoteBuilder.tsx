@@ -130,7 +130,7 @@ const QuoteBuilder = () => {
         </div>
       </header>
 
-      <div className="px-4 md:px-6 py-6 md:py-8 space-y-6 md:space-y-8 animate-fade-in">
+      <div className="p-0 md:px-6 md:py-8 space-y-6 md:space-y-8 animate-fade-in">
 
         {/* Prominent Create Quote Section */}
         <section className="text-center space-y-4">
