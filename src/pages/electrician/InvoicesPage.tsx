@@ -69,7 +69,15 @@ const InvoicesPage = () => {
   };
 
   const handleInvoiceAction = (invoice: Quote) => {
-    navigate(`/electrician/invoice-quote-builder/${invoice.id}`);
+    const status = invoice.invoice_status;
+    
+    if (status === 'draft') {
+      // Edit draft invoice
+      navigate(`/electrician/invoice-quote-builder/${invoice.id}`);
+    } else {
+      // View sent/paid/overdue invoice
+      navigate(`/electrician/invoices/${invoice.id}/view`);
+    }
   };
 
   const getActionButton = (invoice: Quote) => {

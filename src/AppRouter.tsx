@@ -21,6 +21,7 @@ import NotificationsPage from "@/pages/NotificationsPage";
 import PublicQuote from "@/pages/PublicQuote";
 import LaTeXPDFGeneratorPage from "@/pages/LaTeXPDFGeneratorPage";
 import InvoiceQuoteBuilder from "@/pages/electrician/InvoiceQuoteBuilder";
+import InvoiceViewPage from "@/pages/electrician/InvoiceViewPage";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -72,6 +73,7 @@ const AppRouter = () => {
         <Route path="electrical-hub/*" element={<LegacyRedirect from="/electrical-hub" to="/electrician" />} />
         {/* Canonical Electrician Hub */}
         <Route path="electrician/invoice-quote-builder/:quoteId" element={<InvoiceQuoteBuilder />} />
+        <Route path="electrician/invoices/:id/view" element={<InvoiceViewPage />} />
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
         {/* Apprentice Routes */}
