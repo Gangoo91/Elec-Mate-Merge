@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Invoice } from '@/types/invoice';
 import { Quote } from '@/types/quote';
@@ -7,6 +7,44 @@ import { toast } from '@/hooks/use-toast';
 export const useInvoiceStorage = () => {
   const [invoices, setInvoices] = useState<Quote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Convert database row to Quote object with invoice data
+  const convertDbRowToQuote = useCallback((row: any): Quote => ({
+    id: row.id,
+    quoteNumber: row.quote_number,
+    client: row.client_data,
+    items: row.items,
+    settings: row.settings,
+    subtotal: parseFloat(row.subtotal),
+    overhead: parseFloat(row.overhead),
+    profit: parseFloat(row.profit),
+    vatAmount: parseFloat(row.vat_amount),
+    total: parseFloat(row.total),
+    status: row.status,
+    tags: row.tags || [],
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+    expiryDate: new Date(row.expiry_date),
+    notes: row.notes,
+    acceptance_status: row.acceptance_status,
+    acceptance_method: row.acceptance_method,
+    accepted_at: row.accepted_at ? new Date(row.accepted_at) : undefined,
+    accepted_by_name: row.accepted_by_name,
+    accepted_by_email: row.accepted_by_email,
+    accepted_ip: row.accepted_ip,
+    accepted_user_agent: row.accepted_user_agent,
+    signature_url: row.signature_url,
+    docusign_envelope_id: row.docusign_envelope_id,
+    docusign_status: row.docusign_status,
+    public_token: row.public_token,
+    invoice_raised: row.invoice_raised,
+    invoice_number: row.invoice_number,
+    invoice_date: row.invoice_date ? new Date(row.invoice_date) : undefined,
+    invoice_due_date: row.invoice_due_date ? new Date(row.invoice_due_date) : undefined,
+    invoice_status: row.invoice_status,
+    work_completion_date: row.work_completion_date ? new Date(row.work_completion_date) : undefined,
+  }), []);
+
 
   useEffect(() => {
     fetchInvoices();
@@ -35,7 +73,8 @@ export const useInvoiceStorage = () => {
 
       if (error) throw error;
 
-      setInvoices((data || []) as unknown as Quote[]);
+      const convertedInvoices = (data || []).map(convertDbRowToQuote);
+      setInvoices(convertedInvoices);
     } catch (error) {
       console.error('Error fetching invoices:', error);
       toast({
