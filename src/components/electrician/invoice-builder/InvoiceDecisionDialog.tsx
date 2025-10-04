@@ -44,7 +44,7 @@ export const InvoiceDecisionDialog = ({
               <FileText className="h-5 w-5 mt-0.5 shrink-0" />
               <div className="text-left flex-1">
                 <div className="font-semibold mb-1">No Changes</div>
-                <div className="text-sm text-muted-foreground font-normal">
+                <div className="text-sm text-muted-foreground font-normal whitespace-normal break-words">
                   Use the exact quote amounts to generate the invoice
                 </div>
               </div>
@@ -61,7 +61,7 @@ export const InvoiceDecisionDialog = ({
               <Edit className="h-5 w-5 mt-0.5 shrink-0" />
               <div className="text-left flex-1">
                 <div className="font-semibold mb-1">Yes, There Are Changes</div>
-                <div className="text-sm text-muted-foreground font-normal">
+                <div className="text-sm text-muted-foreground font-normal whitespace-normal break-words">
                   Adjust costs, add or remove items before generating
                 </div>
               </div>
