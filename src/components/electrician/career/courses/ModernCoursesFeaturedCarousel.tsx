@@ -148,7 +148,7 @@ const ModernCoursesFeaturedCarousel = ({ courses, className, onCourseClick }: Mo
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {featuredCourses.map((course, index) => (
-            <CarouselItem key={course.id} className="pl-2 md:pl-4 basis-[85%] sm:basis-[60%] md:basis-[45%] lg:basis-[33%]">
+            <CarouselItem key={course.id} className="py-2 pl-2 md:pl-4 basis-[85%] sm:basis-[60%] md:basis-[45%] lg:basis-[33%]">
               <div className="bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-xl border border-white/10 overflow-hidden group hover:border-elec-yellow/30 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] h-full cursor-pointer"
                    onClick={() => onCourseClick?.(course)}>
                 {/* Image */}
