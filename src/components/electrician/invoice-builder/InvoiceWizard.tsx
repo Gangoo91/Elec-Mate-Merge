@@ -119,7 +119,7 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
           >
             Back
           </MobileButton>
-          <h1 className="text-xl md:text-2xl font-bold">Create Invoice</h1>
+          <h1 className="text-xl md:text-2xl font-bold w-full">Create Invoice</h1>
           <div className="w-20" />
         </div>
 
