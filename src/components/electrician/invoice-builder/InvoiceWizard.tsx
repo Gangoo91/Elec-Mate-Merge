@@ -114,7 +114,7 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
         <div className="flex items-center justify-between">
           <MobileButton
             variant="ghost"
-            onClick={() => navigate('/electrician/quotes')}
+            onClick={() => navigate(-1)}
             icon={<ArrowLeft className="h-4 w-4" />}
           >
             Back
