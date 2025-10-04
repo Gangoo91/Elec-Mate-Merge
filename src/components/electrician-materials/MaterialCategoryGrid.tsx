@@ -1,67 +1,62 @@
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { productsBySupplier } from "@/data/electrician/productData";
 import { supplierData } from "@/data/electrician/supplierData";
-import { Folder, ArrowRight } from "lucide-react";
+import { Package } from "lucide-react";
 
 const MaterialCategoryGrid = () => {
-  // Get unique categories for each supplier
-  const supplierCategories = {} as Record<string, string[]>;
-  
-  Object.keys(productsBySupplier).forEach(supplier => {
-    const products = productsBySupplier[supplier];
-    supplierCategories[supplier] = [...new Set(products.map(item => item.category))];
-  });
-
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {Object.keys(supplierData).map(supplierKey => {
           const supplier = supplierData[supplierKey];
-          const categories = supplierCategories[supplierKey] || [];
+          const productCount = productsBySupplier[supplierKey]?.length || 0;
           
           return (
-            <Card key={supplierKey} className="border-elec-yellow/20 bg-elec-gray h-full transition-all hover:border-elec-yellow/50">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl">{supplier.name}</CardTitle>
-                <p className="text-sm text-muted-foreground">
-                  {productsBySupplier[supplierKey]?.length || 0} products available
-                </p>
-              </CardHeader>
-              
-              <CardContent>
-                <div className="h-32 rounded-md flex items-center justify-center mb-4">
-                  <span className="text-elec-yellow/70 text-lg">{supplier.name} Logo</span>
-                </div>
+            <Link 
+              key={supplierKey}
+              to={`/electrician/suppliers/${supplierKey}`}
+            >
+              <Card 
+                className="relative border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-card backdrop-blur cursor-pointer hover:border-elec-yellow/60 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] group overflow-hidden h-full"
+              >
+                {/* Background Pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 
-                <div className="space-y-2">
-                  <h3 className="text-sm font-medium mb-1">Available Categories:</h3>
-                  <div className="flex flex-wrap gap-1">
-                    {categories.map(category => (
-                      <Link 
-                        key={category}
-                        to={`/electrician/suppliers/${supplierKey}?category=${encodeURIComponent(category)}`}
-                        className="hover:bg-primary/10 text-xs rounded-full px-2 py-1 transition-colors"
-                      >
-                        {category}
-                      </Link>
-                    ))}
+                <CardHeader className="relative text-center pb-3">
+                  {/* Icon */}
+                  <div className="mx-auto mb-3 w-16 h-16 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Package className="h-8 w-8 text-elec-yellow" />
                   </div>
-                </div>
-              </CardContent>
-              
-              <CardFooter className="pt-0">
-                <Link to={`/electrician/suppliers/${supplierKey}`} className="w-full">
-                  <Button className="w-full flex justify-between">
-                    Browse Products
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
+                  
+                  {/* Title */}
+                  <CardTitle className="text-xl font-semibold group-hover:text-elec-yellow transition-colors duration-300">
+                    {supplier.name}
+                  </CardTitle>
+                </CardHeader>
+                
+                <CardContent className="relative text-center space-y-3 pb-6">
+                  {/* Product Count */}
+                  <div className="flex justify-center">
+                    <Badge 
+                      variant="outline" 
+                      className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+                    >
+                      {productCount} available
+                    </Badge>
+                  </div>
+                  
+                  {/* Browse Link */}
+                  <div className="pt-2">
+                    <span className="text-sm text-muted-foreground group-hover:text-elec-yellow transition-colors duration-300">
+                      Browse products →
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           );
         })}
       </div>
