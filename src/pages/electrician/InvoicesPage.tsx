@@ -277,7 +277,7 @@ const InvoicesPage = () => {
           </Link>
           <Link to="/electrician/business-hub" className="flex-1 sm:flex-initial">
             <Button variant="outline" className="w-full sm:w-auto">
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Hub
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Business
             </Button>
           </Link>
         </div>
