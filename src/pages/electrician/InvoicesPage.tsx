@@ -4,17 +4,32 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { ArrowLeft, FileText, Send, Edit, Eye, Bell, AlertCircle, Plus, Filter } from "lucide-react";
+import { ArrowLeft, FileText, Send, Edit, Eye, Bell, AlertCircle, Plus, Filter, Download, CheckCircle, Mail } from "lucide-react";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { useNavigate } from "react-router-dom";
 import { format, isPast } from "date-fns";
 import { Quote } from "@/types/quote";
 import { useState } from "react";
+import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const InvoicesPage = () => {
-  const { invoices, isLoading } = useInvoiceStorage();
+  const { invoices, isLoading, fetchInvoices } = useInvoiceStorage();
   const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'sent' | 'overdue' | 'paid'>('all');
+  const [sendingInvoiceId, setSendingInvoiceId] = useState<string | null>(null);
+  const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
 
   const canonical = `${window.location.origin}/electrician/invoices`;
 
@@ -77,6 +92,77 @@ const InvoicesPage = () => {
     } else {
       // View sent/paid/overdue invoice
       navigate(`/electrician/invoices/${invoice.id}/view`);
+    }
+  };
+
+  const handleDownloadPDF = async (invoice: Quote) => {
+    toast({
+      title: 'Generating PDF',
+      description: `Generating PDF for invoice ${invoice.invoice_number}...`,
+    });
+    // TODO: Implement PDF generation
+  };
+
+  const handleSendInvoice = async (invoice: Quote) => {
+    try {
+      setSendingInvoiceId(invoice.id);
+      
+      const { error } = await supabase.functions.invoke('send-invoice', {
+        body: { invoiceId: invoice.id }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: 'Invoice sent',
+        description: `Invoice ${invoice.invoice_number} sent to ${invoice.client?.email}`,
+      });
+
+      // Update status to sent
+      await supabase
+        .from('quotes')
+        .update({ invoice_status: 'sent' })
+        .eq('id', invoice.id);
+      
+      await fetchInvoices();
+    } catch (error) {
+      console.error('Error sending invoice:', error);
+      toast({
+        title: 'Error sending invoice',
+        description: 'Failed to send invoice. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setSendingInvoiceId(null);
+    }
+  };
+
+  const handleMarkAsPaid = async (invoice: Quote) => {
+    try {
+      setMarkingPaidId(invoice.id);
+      
+      const { error } = await supabase
+        .from('quotes')
+        .update({ invoice_status: 'paid' })
+        .eq('id', invoice.id);
+
+      if (error) throw error;
+
+      toast({
+        title: 'Invoice marked as paid',
+        description: `Invoice ${invoice.invoice_number} has been marked as paid.`,
+      });
+      
+      await fetchInvoices();
+    } catch (error) {
+      console.error('Error marking invoice as paid:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to mark invoice as paid. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setMarkingPaidId(null);
     }
   };
 
@@ -334,8 +420,9 @@ const InvoicesPage = () => {
                       </p>
                     </div>
 
-                    {/* Action Button */}
-                    <div className="w-full">
+                    {/* Action Buttons */}
+                    <div className="w-full space-y-2">
+                      {/* Primary Action */}
                       <div className="flex sm:hidden w-full">
                         <MobileButton
                           size="default"
@@ -360,6 +447,64 @@ const InvoicesPage = () => {
                         >
                           {actionButton.text}
                         </MobileButton>
+                      </div>
+
+                      {/* Secondary Actions */}
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleDownloadPDF(invoice)}
+                          className="flex-1 sm:flex-initial"
+                        >
+                          <Download className="mr-2 h-4 w-4" />
+                          <span className="hidden sm:inline">PDF</span>
+                        </Button>
+
+                        {invoice.invoice_status !== 'paid' && (
+                          <>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleSendInvoice(invoice)}
+                              disabled={sendingInvoiceId === invoice.id}
+                              className="flex-1 sm:flex-initial"
+                            >
+                              <Mail className="mr-2 h-4 w-4" />
+                              <span className="hidden sm:inline">
+                                {sendingInvoiceId === invoice.id ? 'Sending...' : 'Send'}
+                              </span>
+                            </Button>
+
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  disabled={markingPaidId === invoice.id}
+                                  className="flex-1 sm:flex-initial"
+                                >
+                                  <CheckCircle className="mr-2 h-4 w-4" />
+                                  <span className="hidden sm:inline">Mark Paid</span>
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Mark invoice as paid?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    This will mark invoice {invoice.invoice_number} as paid.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction onClick={() => handleMarkAsPaid(invoice)}>
+                                    Confirm
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
