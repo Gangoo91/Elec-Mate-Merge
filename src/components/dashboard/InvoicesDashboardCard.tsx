@@ -82,8 +82,8 @@ export const InvoicesDashboardCard = ({ invoices }: InvoicesDashboardCardProps) 
   };
 
   const handleInvoiceAction = (invoice: Quote) => {
-    // Navigate to invoice builder with the quote ID
-    navigate(`/electrician/invoice-builder?quoteId=${invoice.id}`);
+    // Navigate to invoice quote builder for editing
+    navigate(`/electrician/invoice-quote-builder/${invoice.id}`);
   };
 
   const getActionButton = (invoice: Quote) => {

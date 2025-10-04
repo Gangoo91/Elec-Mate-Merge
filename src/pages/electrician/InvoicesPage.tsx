@@ -69,7 +69,7 @@ const InvoicesPage = () => {
   };
 
   const handleInvoiceAction = (invoice: Quote) => {
-    navigate(`/electrician/invoice-builder?quoteId=${invoice.id}`);
+    navigate(`/electrician/invoice-quote-builder/${invoice.id}`);
   };
 
   const getActionButton = (invoice: Quote) => {
