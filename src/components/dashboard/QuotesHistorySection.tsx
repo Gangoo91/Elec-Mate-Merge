@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { 
@@ -316,76 +317,83 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                 filteredQuotes.map((quote) => (
                   <div
                     key={quote.id}
-                    className="border border-elec-yellow/20 rounded-lg p-4 space-y-3"
+                    className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4 space-y-3"
                   >
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <h4 className="font-medium">Quote #{quote.quoteNumber}</h4>
+                    <div className="flex flex-col gap-3">
+                      {/* Header: Quote number and badge */}
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h4 className="font-semibold text-base sm:text-lg">
+                            #{quote.quoteNumber}
+                          </h4>
                           {getMainStatusBadge(quote)}
                         </div>
-                        <p className="text-sm text-muted-foreground">
+                        {getStatusBadge(quote)}
+                      </div>
+
+                      {/* Client and Price */}
+                      <div className="space-y-1">
+                        <p className="text-sm text-muted-foreground truncate">
                           {quote.client.name}
                         </p>
-                        <p className="text-lg font-semibold">
+                        <p className="text-xl sm:text-2xl font-bold">
                           {formatCurrency(quote.total)}
                         </p>
                       </div>
                       
-                      <div className="flex flex-col items-end gap-2">
-                        {getStatusBadge(quote)}
-                        <p className="text-xs text-muted-foreground">
-                          Created: {format(quote.createdAt, "dd/MM/yyyy")}
-                        </p>
+                      {/* Dates in compact grid */}
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                        <span>Created: {format(quote.createdAt, "dd/MM/yy")}</span>
                         {quote.accepted_at && (
-                          <p className="text-xs text-muted-foreground">
-                            {quote.acceptance_status === "accepted" ? "Accepted" : "Rejected"}: {format(quote.accepted_at, "dd/MM/yyyy")}
-                          </p>
+                          <span>
+                            {quote.acceptance_status === "accepted" ? "Accepted" : "Rejected"}: {format(quote.accepted_at, "dd/MM/yy")}
+                          </span>
                         )}
                       </div>
                     </div>
                     
-                    <div className="flex flex-wrap gap-2">
-                      <Button
-                        size="sm"
+                    {/* Action buttons - full width on mobile */}
+                    <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-elec-yellow/10">
+                      <MobileButton
+                        size="default"
                         variant="outline"
                         onClick={() => navigate(`/electrician/quotes?filter=${quote.status}`)}
-                        className="flex items-center gap-1"
+                        icon={<Eye className="h-4 w-4" />}
+                        className="w-full sm:w-auto"
                       >
-                        <Eye className="h-4 w-4" />
                         View Details
-                      </Button>
+                      </MobileButton>
                       
                       {/* Show Mark Work Complete button for accepted quotes */}
                       {quote.acceptance_status === 'accepted' && !isWorkComplete(quote) && (
-                        <Button
-                          size="sm"
+                        <MobileButton
+                          size="default"
                           variant="outline"
                           onClick={() => {
                             setSelectedQuote(quote);
                             setShowWorkCompleteDialog(true);
                           }}
-                          className="flex items-center gap-1 bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200"
+                          icon={<CheckCheck className="h-4 w-4" />}
+                          className="w-full sm:w-auto bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200"
                         >
-                          <CheckCheck className="h-4 w-4" />
                           Mark Work Complete
-                        </Button>
+                        </MobileButton>
                       )}
                       
                       {/* Show Raise Invoice button for completed work */}
                       {quote.acceptance_status === 'accepted' && isWorkComplete(quote) && !hasInvoiceRaised(quote) && (
-                        <Button
-                          size="sm"
+                        <MobileButton
+                          size="default"
                           variant="outline"
                           onClick={() => {
                             setSelectedQuote(quote);
                             setShowInvoiceDecisionDialog(true);
                           }}
-                          className="flex items-center gap-1 bg-green-50 hover:bg-green-100 text-green-700 border-green-200"
+                          icon={<Receipt className="h-4 w-4" />}
+                          className="w-full sm:w-auto bg-green-50 hover:bg-green-100 text-green-700 border-green-200"
                         >
-                          <Receipt className="h-4 w-4" />
                           Raise Invoice
-                        </Button>
+                        </MobileButton>
                       )}
                     </div>
                   </div>
