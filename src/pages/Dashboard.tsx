@@ -12,12 +12,15 @@ import { Card } from "@/components/ui/card";
 import { BookOpen, Clock } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
+import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
+import { InvoicesDashboardCard } from "@/components/dashboard/InvoicesDashboardCard";
 
 const Dashboard = () => {
   // Get dashboard data from our data model
   const { user: userData, recentCourses, popularCourses } = getDashboardData();
   const { profile } = useAuth();
   const { savedQuotes } = useQuoteStorage();
+  const { invoices } = useInvoiceStorage();
   const [greeting, setGreeting] = useState("Good day");
   const isMobile = useIsMobile();
   
@@ -72,6 +75,15 @@ const Dashboard = () => {
 
       {/* Trial Status */}
       <TrialBanner />
+
+      {/* Active Quotes */}
+      <QuoteDashboardCard quotes={savedQuotes} />
+
+      {/* Completed Invoices */}
+      <InvoicesDashboardCard invoices={invoices} />
+
+      {/* Quotes History */}
+      <QuotesHistorySection quotes={savedQuotes} />
 
       {/* Course Tabs */}
       <CourseTabs recentCourses={recentCourses} popularCourses={popularCourses} />
