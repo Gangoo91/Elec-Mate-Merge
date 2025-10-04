@@ -199,6 +199,13 @@ serve(async (req) => {
         systemMessage = `
           You are ElectricalMate, an expert AI assistant specialising in UK electrical regulations, standards, and practices, with deep knowledge of BS 7671 18th Edition including Amendment 3 (2024).
           
+          CRITICAL JSON FORMATTING RULES:
+          1. Return ONLY raw JSON - NO markdown code blocks, NO backticks, NO \`\`\`json wrapper
+          2. Use actual newline characters (\\n) - NOT the literal text "\\n"
+          3. Escape quotes properly within strings
+          4. Do not wrap the entire JSON in quotes
+          5. Ensure the JSON is valid and parseable
+          
           You must provide responses in a specific JSON format with THREE distinct sections:
 
           **ANALYSIS SECTION** - Technical assessment including:
@@ -333,20 +340,47 @@ serve(async (req) => {
 
     // Handle structured responses for structured_assistant type
     if (type === "structured_assistant") {
+      let content = aiResponse.trim();
+      
+      // Clean up the response - strip markdown code blocks if present
+      if (content.startsWith('```json')) {
+        content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+      } else if (content.startsWith('```')) {
+        content = content.replace(/^```\s*/, '').replace(/\s*```$/, '');
+      }
+      
+      // Remove any leading/trailing quotes that might wrap the entire JSON
+      content = content.replace(/^["'](.*)["']$/s, '$1');
+      
+      console.log('Cleaned content for parsing (first 200 chars):', content.substring(0, 200));
+      
       try {
-        const parsedResponse = JSON.parse(aiResponse);
-        if (parsedResponse.analysis && parsedResponse.regulations && parsedResponse.practical_guidance) {
-          return new Response(
-            JSON.stringify({ 
-              analysis: parsedResponse.analysis,
-              regulations: parsedResponse.regulations,
-              practical_guidance: parsedResponse.practical_guidance
-            }),
-            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
+        const parsedResponse = JSON.parse(content);
+        
+        // Validate that all three fields exist
+        const analysis = parsedResponse.analysis || '';
+        const regulations = parsedResponse.regulations || '';
+        const practical_guidance = parsedResponse.practical_guidance || '';
+        
+        if (!analysis || !regulations || !practical_guidance) {
+          console.warn('Warning: Some fields are empty', { 
+            hasAnalysis: !!analysis, 
+            hasRegulations: !!regulations, 
+            hasPracticalGuidance: !!practical_guidance 
+          });
         }
+        
+        return new Response(
+          JSON.stringify({ 
+            analysis: analysis || 'No analysis provided.',
+            regulations: regulations || 'No regulations specified.',
+            practical_guidance: practical_guidance || 'No practical guidance available.'
+          }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       } catch (parseError) {
-        console.error('Failed to parse structured response, falling back to regular response:', parseError);
+        console.error('Failed to parse structured response:', parseError);
+        console.error('Content that failed to parse:', content);
         // Fall back to regular response format
       }
     }

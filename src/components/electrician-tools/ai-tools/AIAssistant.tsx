@@ -15,6 +15,84 @@ const AIAssistant = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(true);
 
+  // Helper function to process content and format it properly
+  const processContent = (content: string, colorTheme: 'blue' | 'purple' | 'green') => {
+    if (!content) return null;
+    
+    // Convert literal \n strings to actual newlines
+    const normalizedContent = content.replace(/\\n/g, '\n');
+    
+    const lines = normalizedContent.split('\n');
+    const elements: JSX.Element[] = [];
+    let listItems: string[] = [];
+    let listType: 'ordered' | 'bullet' | null = null;
+    
+    const flushList = () => {
+      if (listItems.length > 0) {
+        if (listType === 'ordered') {
+          elements.push(
+            <ol key={`list-${elements.length}`} className="list-decimal list-inside space-y-2 my-3 ml-2">
+              {listItems.map((item, idx) => (
+                <li key={idx} className="text-gray-200 leading-relaxed">{item}</li>
+              ))}
+            </ol>
+          );
+        } else {
+          elements.push(
+            <ul key={`list-${elements.length}`} className="list-disc list-inside space-y-2 my-3 ml-2">
+              {listItems.map((item, idx) => (
+                <li key={idx} className="text-gray-200 leading-relaxed">{item}</li>
+              ))}
+            </ul>
+          );
+        }
+        listItems = [];
+        listType = null;
+      }
+    };
+    
+    lines.forEach((line, index) => {
+      const trimmed = line.trim();
+      if (!trimmed) {
+        flushList();
+        return;
+      }
+      
+      // Detect numbered lists (1. 2. 3.)
+      const numberedMatch = trimmed.match(/^(\d+)\.\s+(.+)/);
+      if (numberedMatch) {
+        if (listType !== 'ordered') {
+          flushList();
+          listType = 'ordered';
+        }
+        listItems.push(numberedMatch[2]);
+        return;
+      }
+      
+      // Detect bullet points (- or •)
+      const bulletMatch = trimmed.match(/^[-•]\s+(.+)/);
+      if (bulletMatch) {
+        if (listType !== 'bullet') {
+          flushList();
+          listType = 'bullet';
+        }
+        listItems.push(bulletMatch[1]);
+        return;
+      }
+      
+      // Regular paragraph
+      flushList();
+      elements.push(
+        <p key={`p-${index}`} className="text-gray-200 leading-relaxed my-2">
+          {trimmed}
+        </p>
+      );
+    });
+    
+    flushList();
+    return elements;
+  };
+
   const handleAIQuery = async () => {
     if (prompt.trim() === "") {
       toast({
@@ -219,11 +297,91 @@ const AIAssistant = () => {
           </CardContent>
         </Card>
 
-        {/* Results Grid */}
+        {/* Results Grid - Horizontal scroll on mobile, grid on desktop */}
         {(analysisResult || regulationsResult || practicalGuidanceResult) && !isLoading && showResults && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-w-7xl mx-auto">
-            {/* Analysis Section */}
-            {analysisResult && (
+          <div className="w-full max-w-7xl mx-auto">
+            {/* Mobile: Horizontal Scroll */}
+            <div className="md:hidden overflow-x-auto snap-x snap-mandatory -mx-3 px-3">
+              <div className="flex gap-3 pb-4">
+                {analysisResult && (
+                  <div className="snap-center min-w-[85vw] max-w-[85vw]">
+                    <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 h-full">
+                      <CardHeader className="p-4">
+                        <CardTitle className="text-base flex items-center gap-2 text-white">
+                          <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                            <Search className="h-4 w-4 text-blue-400" />
+                          </div>
+                          Analysis
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-0">
+                        <div className="prose prose-invert max-w-none">
+                          <div className="text-sm text-gray-300 leading-relaxed space-y-3">
+                            {processContent(analysisResult, 'blue')}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+                
+                {regulationsResult && (
+                  <div className="snap-center min-w-[85vw] max-w-[85vw]">
+                    <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 h-full">
+                      <CardHeader className="p-4">
+                        <CardTitle className="text-base flex items-center gap-2 text-white">
+                          <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                            <BookOpen className="h-4 w-4 text-purple-400" />
+                          </div>
+                          Relevant Regulations
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-0">
+                        <div className="prose prose-invert max-w-none">
+                          <div className="text-sm text-gray-300 leading-relaxed space-y-3">
+                            {processContent(regulationsResult, 'purple')}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+                
+                {practicalGuidanceResult && (
+                  <div className="snap-center min-w-[85vw] max-w-[85vw]">
+                    <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 h-full">
+                      <CardHeader className="p-4">
+                        <CardTitle className="text-base flex items-center gap-2 text-white">
+                          <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                            <Wrench className="h-4 w-4 text-green-400" />
+                          </div>
+                          Practical Guidance
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-0">
+                        <div className="prose prose-invert max-w-none">
+                          <div className="text-sm text-gray-300 leading-relaxed space-y-3">
+                            {processContent(practicalGuidanceResult, 'green')}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+              </div>
+              
+              {/* Scroll indicator dots */}
+              <div className="flex justify-center gap-2 mt-2">
+                {analysisResult && <div className="w-2 h-2 rounded-full bg-blue-400/50" />}
+                {regulationsResult && <div className="w-2 h-2 rounded-full bg-purple-400/50" />}
+                {practicalGuidanceResult && <div className="w-2 h-2 rounded-full bg-green-400/50" />}
+              </div>
+            </div>
+            
+            {/* Desktop: Grid Layout */}
+            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* Analysis Section */}
+              {analysisResult && (
               <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
                 <CardHeader className="p-3 sm:p-4">
                   <CardTitle className="text-base sm:text-lg flex items-center gap-2 sm:gap-3 text-white">
@@ -452,6 +610,7 @@ const AIAssistant = () => {
                 </CardContent>
               </Card>
             )}
+            </div>
           </div>
         )}
 
