@@ -108,7 +108,7 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-6xl space-y-6">
+    <div className="container mx-auto p-0 sm:px-4 sm:py-6 max-w-6xl space-y-6">
       {/* Header */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
