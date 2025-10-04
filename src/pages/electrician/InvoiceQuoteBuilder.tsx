@@ -112,7 +112,7 @@ export default function InvoiceQuoteBuilder() {
       description: 'Your invoice has been generated successfully',
       variant: 'success',
     });
-    navigate('/electrician/quotes');
+    navigate('/electrician/invoices');
   };
 
   if (isLoading) {
@@ -132,6 +132,13 @@ export default function InvoiceQuoteBuilder() {
       
       <div className="container mx-auto p-0 sm:px-4 sm:py-6">
         <div className="mb-6">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+            <span>Business Hub</span>
+            <span>›</span>
+            <span>Quotes</span>
+            <span>›</span>
+            <span className="text-foreground">Create Invoice</span>
+          </div>
           <h1 className="text-2xl md:text-3xl font-bold mb-2">Adjust Invoice Costs</h1>
           <p className="text-muted-foreground">
             Review and modify the quote items before generating the final invoice

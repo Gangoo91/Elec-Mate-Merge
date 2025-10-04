@@ -67,7 +67,13 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
     setIsGenerating(false);
     
     if (success) {
-      navigate('/electrician/quotes');
+      const invoiceNumber = invoiceBuilder.invoice.invoice_number || 'Invoice';
+      toast({
+        title: 'Invoice saved successfully',
+        description: `${invoiceNumber} has been created and saved`,
+        variant: 'success',
+      });
+      navigate('/electrician/invoices');
     }
   };
 

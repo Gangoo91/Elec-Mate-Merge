@@ -49,6 +49,10 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   const canRaiseInvoice = (quote: Quote) => {
     return quote.status === 'approved' && quote.tags?.includes('work_done') && !quote.invoice_raised;
   };
+
+  const hasInvoiceRaised = (quote: Quote) => {
+    return quote.invoice_raised === true;
+  };
   
   const handleRegeneratePDF = async (quote: Quote) => {
     setLoadingAction(`pdf-${quote.id}`);
@@ -196,13 +200,21 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
 
     setLoadingAction(`invoice-${quoteForInvoice.id}`);
     try {
+      const invoiceNumber = `INV-${Date.now()}`;
+      const dueDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
       const invoiceData = {
+        ...quoteForInvoice,
         id: quoteForInvoice.id,
-        invoice_number: `INV-${Date.now()}`,
+        invoice_number: invoiceNumber,
         invoice_date: new Date(),
-        invoice_due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        invoice_due_date: dueDate,
         invoice_status: 'draft' as const,
         invoice_raised: true,
+        settings: {
+          ...quoteForInvoice.settings,
+          paymentTerms: '30 days',
+          dueDate: dueDate,
+        },
       };
 
       const success = await saveInvoice(invoiceData);
@@ -210,10 +222,12 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
       if (success) {
         toast({
           title: "Invoice Created",
-          description: "Invoice has been generated successfully from quote data",
+          description: `${invoiceNumber} created successfully from quote ${quoteForInvoice.quoteNumber}`,
+          variant: "success",
         });
         setShowInvoiceDecision(false);
         setQuoteForInvoice(null);
+        navigate('/electrician/invoices');
       } else {
         toast({
           title: "Error",
@@ -397,28 +411,46 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               </div>
             </div>
             
-            {/* Tags */}
-            {quote.tags && quote.tags.length > 0 && (
-              <div className="flex gap-1.5 flex-wrap">
-                {quote.tags.map((tag) => (
-                  <Badge 
-                    key={tag} 
-                    variant={tag === 'work_done' ? 'success' : getTagVariant(tag)} 
-                    className="text-xs"
-                  >
-                    {tag === 'work_done' && <Check className="h-3 w-3 mr-1" />}
-                    {getTagLabel(tag)}
-                  </Badge>
-                ))}
-              </div>
-            )}
+            {/* Tags & Invoice Status */}
+            <div className="flex gap-1.5 flex-wrap">
+              {hasInvoiceRaised(quote) && (
+                <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
+                  <Receipt className="h-3 w-3 mr-1" />
+                  Invoice Raised
+                </Badge>
+              )}
+              {quote.tags && quote.tags.length > 0 && (
+                <>
+                  {quote.tags.map((tag) => (
+                    <Badge 
+                      key={tag} 
+                      variant={tag === 'work_done' ? 'success' : getTagVariant(tag)} 
+                      className="text-xs"
+                    >
+                      {tag === 'work_done' && <Check className="h-3 w-3 mr-1" />}
+                      {getTagLabel(tag)}
+                    </Badge>
+                  ))}
+                </>
+              )}
+            </div>
           </div>
 
           {/* Actions */}
           <div className="p-4 sm:p-5 pt-3 border-t">
             <div className="flex gap-2">
               {/* Primary Action */}
-              {canRaiseInvoice(quote) ? (
+              {hasInvoiceRaised(quote) ? (
+                <MobileButton
+                  variant="elec"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => navigate('/electrician/invoices')}
+                  icon={<Eye className="h-4 w-4" />}
+                >
+                  View Invoice
+                </MobileButton>
+              ) : canRaiseInvoice(quote) ? (
                 <MobileButton
                   variant="elec"
                   size="sm"

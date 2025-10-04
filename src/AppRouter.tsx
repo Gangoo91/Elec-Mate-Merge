@@ -20,7 +20,6 @@ import RightsAndPay from "@/pages/apprentice/RightsAndPay";
 import NotificationsPage from "@/pages/NotificationsPage";
 import PublicQuote from "@/pages/PublicQuote";
 import LaTeXPDFGeneratorPage from "@/pages/LaTeXPDFGeneratorPage";
-import InvoiceBuilder from "@/pages/electrician/InvoiceBuilder";
 import InvoiceQuoteBuilder from "@/pages/electrician/InvoiceQuoteBuilder";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
@@ -72,7 +71,6 @@ const AppRouter = () => {
         <Route path="electrical-hub" element={<LegacyRedirect from="/electrical-hub" to="/electrician" />} />
         <Route path="electrical-hub/*" element={<LegacyRedirect from="/electrical-hub" to="/electrician" />} />
         {/* Canonical Electrician Hub */}
-        <Route path="electrician/invoice-builder/:quoteId" element={<InvoiceBuilder />} />
         <Route path="electrician/invoice-quote-builder/:quoteId" element={<InvoiceQuoteBuilder />} />
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
