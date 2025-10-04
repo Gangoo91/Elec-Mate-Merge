@@ -8,9 +8,7 @@ import {
   Search,
   ArrowLeft,
   Loader2,
-  TrendingUp,
-  Package,
-  Sparkles
+  Package
 } from "lucide-react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
@@ -80,17 +78,6 @@ const ElectricalTools = () => {
               className="relative border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-card backdrop-blur cursor-pointer hover:border-elec-yellow/60 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] group overflow-hidden"
               onClick={() => navigate(`/electrician/tools?category=${encodeURIComponent(category.name)}`)}
             >
-              {/* Trending Badge */}
-              {category.trending && (
-                <Badge 
-                  className="absolute top-3 right-3 bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 text-xs gap-1 z-10"
-                  variant="outline"
-                >
-                  <TrendingUp className="h-3 w-3" />
-                  Trending
-                </Badge>
-              )}
-              
               {/* Background Pattern */}
               <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               
@@ -130,27 +117,6 @@ const ElectricalTools = () => {
                           {category.priceRange}
                         </div>
                       )}
-                      
-                      {/* Quick Info Badges */}
-                      <div className="flex flex-wrap gap-1.5 justify-center mt-1">
-                        {hasDeals && (
-                          <Badge 
-                            variant="outline" 
-                            className="text-xs bg-green-500/10 text-green-400 border-green-500/30"
-                          >
-                            In Stock
-                          </Badge>
-                        )}
-                        {isPopular && (
-                          <Badge 
-                            variant="outline" 
-                            className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30 gap-1"
-                          >
-                            <Sparkles className="h-2.5 w-2.5" />
-                            Popular
-                          </Badge>
-                        )}
-                      </div>
                     </div>
                   ) : (
                     <span className="text-xs text-muted-foreground italic">
