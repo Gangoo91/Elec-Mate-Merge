@@ -28,7 +28,9 @@ import {
   FileText,
   Eye,
   Receipt,
-  CheckCheck
+  CheckCheck,
+  User,
+  Calendar
 } from "lucide-react";
 import { Quote } from "@/types/quote";
 import { format } from "date-fns";
@@ -68,69 +70,51 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
     });
   }, [quotes, searchQuery, statusFilter]);
 
-  const getStatusBadge = (quote: Quote) => {
-    const status = quote.acceptance_status || "pending";
+  const getUnifiedStatusBadge = (quote: Quote) => {
+    const acceptanceStatus = quote.acceptance_status || "pending";
     
-    switch (status) {
-      case "accepted":
-        return (
-          <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
-            <CheckCircle className="h-3 w-3 mr-1" />
-            Accepted
-          </Badge>
-        );
-      case "rejected":
-        return (
-          <Badge variant="destructive">
-            <XCircle className="h-3 w-3 mr-1" />
-            Rejected
-          </Badge>
-        );
-      case "pending":
-      default:
-        return (
-          <Badge variant="outline">
-            <Clock className="h-3 w-3 mr-1" />
-            Pending
-          </Badge>
-        );
+    // Priority: acceptance status > quote status
+    if (acceptanceStatus === "accepted") {
+      return (
+        <Badge className="bg-green-500 text-white border-0 hover:bg-green-600">
+          <CheckCircle className="h-3 w-3 mr-1" />
+          Accepted
+        </Badge>
+      );
     }
-  };
-
-  const getMainStatusBadge = (quote: Quote) => {
+    
+    if (acceptanceStatus === "rejected") {
+      return (
+        <Badge className="bg-red-500 text-white border-0 hover:bg-red-600">
+          <XCircle className="h-3 w-3 mr-1" />
+          Rejected
+        </Badge>
+      );
+    }
+    
+    // If pending acceptance, show quote status
     switch (quote.status) {
-      case "draft":
-        return <Badge variant="outline">Draft</Badge>;
       case "sent":
         return (
-          <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200">
+          <Badge className="bg-blue-500 text-white border-0 hover:bg-blue-600">
             <Send className="h-3 w-3 mr-1" />
             Sent
           </Badge>
         );
-      case "pending":
+      case "draft":
         return (
-          <Badge variant="outline">
+          <Badge variant="outline" className="border-muted-foreground/30">
+            <FileText className="h-3 w-3 mr-1" />
+            Draft
+          </Badge>
+        );
+      default:
+        return (
+          <Badge variant="outline" className="border-elec-yellow/50">
             <Clock className="h-3 w-3 mr-1" />
             Pending
           </Badge>
         );
-      case "approved":
-        return (
-          <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
-            <CheckCircle className="h-3 w-3 mr-1" />
-            Approved
-          </Badge>
-        );
-      case "rejected":
-        return (
-          <Badge variant="destructive">
-            <XCircle className="h-3 w-3 mr-1" />
-            Rejected
-          </Badge>
-        );
-      default:
-        return <Badge variant="outline">{quote.status}</Badge>;
     }
   };
 
@@ -317,82 +301,94 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                 filteredQuotes.map((quote) => (
                   <div
                     key={quote.id}
-                    className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4 space-y-3"
+                    className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-elec-card"
                   >
-                    <div className="flex flex-col gap-3">
-                      {/* Header: Quote number and badge */}
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h4 className="font-semibold text-base sm:text-lg">
-                            #{quote.quoteNumber}
-                          </h4>
-                          {getMainStatusBadge(quote)}
-                        </div>
-                        {getStatusBadge(quote)}
+                    {/* Hero Section - Price & Status */}
+                    <div className="bg-gradient-to-br from-elec-gray to-elec-gray/80 p-4 sm:p-5 border-b border-elec-yellow/10">
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <Badge variant="outline" className="border-elec-yellow/40 bg-elec-dark/50">
+                          #{quote.quoteNumber}
+                        </Badge>
+                        {getUnifiedStatusBadge(quote)}
                       </div>
+                      <div className="text-3xl sm:text-4xl font-bold text-elec-light">
+                        {formatCurrency(quote.total)}
+                      </div>
+                    </div>
 
-                      {/* Client and Price */}
-                      <div className="space-y-1">
-                        <p className="text-sm text-muted-foreground truncate">
-                          {quote.client.name}
-                        </p>
-                        <p className="text-xl sm:text-2xl font-bold">
-                          {formatCurrency(quote.total)}
-                        </p>
+                    {/* Client & Date Info */}
+                    <div className="p-4 sm:p-5 space-y-3 border-b border-elec-yellow/10">
+                      <div className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-elec-yellow shrink-0" />
+                        <span className="font-medium truncate">{quote.client.name}</span>
                       </div>
-                      
-                      {/* Dates in compact grid */}
-                      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                        <span>Created: {format(quote.createdAt, "dd/MM/yy")}</span>
+                      <div className="flex flex-col gap-2 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
+                          <span>Created {format(quote.createdAt, "dd MMM yyyy")}</span>
+                        </div>
                         {quote.accepted_at && (
-                          <span>
-                            {quote.acceptance_status === "accepted" ? "Accepted" : "Rejected"}: {format(quote.accepted_at, "dd/MM/yy")}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            {quote.acceptance_status === "accepted" ? (
+                              <CheckCircle className="h-3.5 w-3.5 text-green-500 shrink-0" />
+                            ) : (
+                              <XCircle className="h-3.5 w-3.5 text-red-500 shrink-0" />
+                            )}
+                            <span>
+                              {quote.acceptance_status === "accepted" ? "Accepted" : "Rejected"} {format(quote.accepted_at, "dd MMM yyyy")}
+                            </span>
+                          </div>
                         )}
                       </div>
                     </div>
-                    
-                    {/* Action buttons - full width on mobile */}
-                    <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-elec-yellow/10">
-                      <MobileButton
-                        size="default"
-                        variant="outline"
-                        onClick={() => navigate(`/electrician/quotes?filter=${quote.status}`)}
-                        icon={<Eye className="h-4 w-4" />}
-                        className="w-full sm:w-auto"
-                      >
-                        View Details
-                      </MobileButton>
-                      
-                      {/* Show Mark Work Complete button for accepted quotes */}
-                      {quote.acceptance_status === 'accepted' && !isWorkComplete(quote) && (
+
+                    {/* Actions */}
+                    <div className="p-4 sm:p-5 space-y-2">
+                      {/* Primary action based on quote state */}
+                      {quote.acceptance_status === 'accepted' && isWorkComplete(quote) && !hasInvoiceRaised(quote) ? (
                         <MobileButton
-                          size="default"
-                          variant="outline"
-                          onClick={() => {
-                            setSelectedQuote(quote);
-                            setShowWorkCompleteDialog(true);
-                          }}
-                          icon={<CheckCheck className="h-4 w-4" />}
-                          className="w-full sm:w-auto bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200"
-                        >
-                          Mark Work Complete
-                        </MobileButton>
-                      )}
-                      
-                      {/* Show Raise Invoice button for completed work */}
-                      {quote.acceptance_status === 'accepted' && isWorkComplete(quote) && !hasInvoiceRaised(quote) && (
-                        <MobileButton
-                          size="default"
-                          variant="outline"
+                          variant="elec"
+                          size="wide"
                           onClick={() => {
                             setSelectedQuote(quote);
                             setShowInvoiceDecisionDialog(true);
                           }}
                           icon={<Receipt className="h-4 w-4" />}
-                          className="w-full sm:w-auto bg-green-50 hover:bg-green-100 text-green-700 border-green-200"
                         >
                           Raise Invoice
+                        </MobileButton>
+                      ) : quote.acceptance_status === 'accepted' && !isWorkComplete(quote) ? (
+                        <MobileButton
+                          variant="elec"
+                          size="wide"
+                          onClick={() => {
+                            setSelectedQuote(quote);
+                            setShowWorkCompleteDialog(true);
+                          }}
+                          icon={<CheckCheck className="h-4 w-4" />}
+                        >
+                          Mark Work Complete
+                        </MobileButton>
+                      ) : (
+                        <MobileButton
+                          variant="elec"
+                          size="wide"
+                          onClick={() => navigate(`/electrician/quotes?filter=${quote.status}`)}
+                          icon={<Eye className="h-4 w-4" />}
+                        >
+                          View Details
+                        </MobileButton>
+                      )}
+                      
+                      {/* Secondary action - always show View Details if primary is different */}
+                      {(quote.acceptance_status === 'accepted' || isWorkComplete(quote)) && (
+                        <MobileButton
+                          variant="outline"
+                          size="wide"
+                          onClick={() => navigate(`/electrician/quotes?filter=${quote.status}`)}
+                          icon={<Eye className="h-4 w-4" />}
+                        >
+                          View Details
                         </MobileButton>
                       )}
                     </div>
