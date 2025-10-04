@@ -128,7 +128,7 @@ const ModernCoursesFilters = ({ courses, onFiltersChange, onReset, resultCount }
 
           {/* Sort By */}
           <Select value={filters.sortBy} onValueChange={(value) => handleFilterChange("sortBy", value)}>
-            <SelectTrigger className="h-9 w-48 bg-white/10 border-white/20 text-white">
+            <SelectTrigger className="h-9 w-48 bg-white/10 border-white/20 text-white rounded-md">
               <SelectValue placeholder="Sort by..." />
             </SelectTrigger>
             <SelectContent className="bg-background border-border">
