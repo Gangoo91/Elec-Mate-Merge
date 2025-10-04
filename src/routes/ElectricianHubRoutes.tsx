@@ -54,6 +54,7 @@ import CISDRCHelper from "@/pages/electrician/business-development/tools/CISDRCH
 import QuoteBuilder from "@/pages/electrician/QuoteBuilder";
 import QuoteBuilderCreate from "@/pages/electrician/QuoteBuilderCreate";
 import QuotesPage from "@/pages/electrician/QuotesPage";
+import InvoicesPage from "@/pages/electrician/InvoicesPage";
 import Calculations from "@/pages/electrician-tools/Calculations";
 import InstallPlanner from "@/pages/electrician-tools/InstallPlanner";
 import InspectionTesting from "@/pages/electrician-tools/InspectionTesting";
@@ -93,6 +94,7 @@ const ElectricianHubRoutes = () => (
     <Route path="quote-builder" element={<QuoteBuilder />} />
     <Route path="quote-builder/create" element={<QuoteBuilderCreate />} />
     <Route path="quotes" element={<QuotesPage />} />
+    <Route path="invoices" element={<InvoicesPage />} />
     {/* Business Development Routes */}
     <Route path="business-development" element={<BusinessDevelopment />} />
     <Route path="business-development/startup" element={<BusinessStartup />} />

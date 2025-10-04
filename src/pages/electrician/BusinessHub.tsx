@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Briefcase, Settings as Cog, Calculator, ArrowLeft, FileText, Package, Wrench, PoundSterling } from "lucide-react";
+import { Briefcase, Settings as Cog, Calculator, ArrowLeft, FileText, Package, Wrench, PoundSterling, Receipt } from "lucide-react";
 
 const BusinessHub = () => {
   const cards = [
@@ -20,24 +20,30 @@ const BusinessHub = () => {
     },
     {
       id: 3,
+      title: "Invoices",
+      icon: Receipt,
+      link: "/electrician/invoices",
+    },
+    {
+      id: 4,
       title: "Business Calculators",
       icon: Calculator,
       link: "/electrician/business-development/tools",
     },
     {
-      id: 4,
+      id: 5,
       title: "Materials",
       icon: Package,
       link: "/electrician/materials",
     },
     {
-      id: 5,
+      id: 6,
       title: "Tools",
       icon: Wrench,
       link: "/electrician/tools",
     },
     {
-      id: 6,
+      id: 7,
       title: "Business Admin",
       icon: Cog,
       link: "/electrician/business-admin",
