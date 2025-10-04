@@ -114,7 +114,7 @@ const ModernCoursesFilters = ({ courses, onFiltersChange, onReset, resultCount }
         <div className="flex items-center gap-3">
           <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
             <CollapsibleTrigger asChild>
-              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 hover:border-elec-yellow/30">
+              <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/10 hover:border-elec-yellow/30">
                 <SlidersHorizontal className="h-4 w-4 mr-2" />
                 Filters
                 {activeFiltersCount > 0 && (
