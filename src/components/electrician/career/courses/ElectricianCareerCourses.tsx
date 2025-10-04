@@ -14,6 +14,7 @@ import {
 } from "@/components/apprentice/career/courses/enhancedCoursesData";
 import { generateCoursesAnalytics } from "./coursesAnalyticsHelper";
 import { useLiveCourses, LiveCourse } from "@/hooks/useLiveCourses";
+import { isValidUrl } from "@/utils/urlUtils";
 
 const ElectricianCareerCourses = () => {
   const [allCourses, setAllCourses] = useState<EnhancedCareerCourse[]>([]);
@@ -141,8 +142,10 @@ const ElectricianCareerCourses = () => {
   const handleRefreshData = async () => {
     const result = await fetchLiveCourses();
     if (result?.success && result.data) {
-      // Transform live courses to match EnhancedCareerCourse format
-      const transformedLiveCourses = result.data.map(transformLiveCourse);
+      // Transform live courses to match EnhancedCareerCourse format and filter out invalid URLs
+      const transformedLiveCourses = result.data
+        .filter(course => isValidUrl(course.visitLink))
+        .map(transformLiveCourse);
       
       // Only show live courses data
       setAllCourses(transformedLiveCourses);
