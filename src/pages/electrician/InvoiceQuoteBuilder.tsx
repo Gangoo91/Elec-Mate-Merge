@@ -130,7 +130,7 @@ export default function InvoiceQuoteBuilder() {
         <meta name="description" content="Adjust costs and items before generating your invoice" />
       </Helmet>
       
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto p-0 sm:px-4 sm:py-6">
         <div className="mb-6">
           <h1 className="text-2xl md:text-3xl font-bold mb-2">Adjust Invoice Costs</h1>
           <p className="text-muted-foreground">
