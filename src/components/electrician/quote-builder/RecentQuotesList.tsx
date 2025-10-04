@@ -468,7 +468,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                   <MobileButton
                     variant="outline"
                     size="icon"
-                    className="shrink-0"
+                    className="shrink-0 h-10 w-10"
                   >
                     <MoreVertical className="h-4 w-4" />
                   </MobileButton>
