@@ -304,7 +304,7 @@ const InvoicesPage = () => {
                       </div>
                       <div className="space-y-1">
                         <p className="mobile-text text-muted-foreground truncate min-w-0">
-                          Client: {invoice.client.name}
+                          Client: {invoice.client?.name || 'N/A'}
                         </p>
                         {invoice.invoice_date && (
                           <p className="mobile-text text-sm text-muted-foreground truncate min-w-0">
