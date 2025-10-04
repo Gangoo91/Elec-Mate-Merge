@@ -33,7 +33,7 @@ const AIAssistant = () => {
           elements.push(
             <ol key={`list-${elements.length}`} className="list-decimal list-inside space-y-2 my-3 ml-2">
               {listItems.map((item, idx) => (
-                <li key={idx} className="text-gray-200 leading-relaxed">{item}</li>
+                <li key={idx} className="text-white leading-relaxed">{item}</li>
               ))}
             </ol>
           );
@@ -41,7 +41,7 @@ const AIAssistant = () => {
           elements.push(
             <ul key={`list-${elements.length}`} className="list-disc list-inside space-y-2 my-3 ml-2">
               {listItems.map((item, idx) => (
-                <li key={idx} className="text-gray-200 leading-relaxed">{item}</li>
+                <li key={idx} className="text-white leading-relaxed">{item}</li>
               ))}
             </ul>
           );
@@ -83,7 +83,7 @@ const AIAssistant = () => {
       // Regular paragraph
       flushList();
       elements.push(
-        <p key={`p-${index}`} className="text-gray-200 leading-relaxed my-2">
+        <p key={`p-${index}`} className="text-white leading-relaxed my-2">
           {trimmed}
         </p>
       );
@@ -297,85 +297,70 @@ const AIAssistant = () => {
           </CardContent>
         </Card>
 
-        {/* Results Grid - Horizontal scroll on mobile, grid on desktop */}
+        {/* Results - Vertical stack on mobile, grid on desktop */}
         {(analysisResult || regulationsResult || practicalGuidanceResult) && !isLoading && showResults && (
           <div className="w-full max-w-7xl mx-auto">
-            {/* Mobile: Horizontal Scroll */}
-            <div className="md:hidden overflow-x-auto snap-x snap-mandatory -mx-3 px-3">
-              <div className="flex gap-3 pb-4">
-                {analysisResult && (
-                  <div className="snap-center min-w-[85vw] max-w-[85vw]">
-                    <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 h-full">
-                      <CardHeader className="p-4">
-                        <CardTitle className="text-base flex items-center gap-2 text-white">
-                          <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                            <Search className="h-4 w-4 text-blue-400" />
-                          </div>
-                          Analysis
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-4 pt-0">
-                        <div className="prose prose-invert max-w-none">
-                          <div className="text-sm text-gray-300 leading-relaxed space-y-3">
-                            {processContent(analysisResult, 'blue')}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                )}
-                
-                {regulationsResult && (
-                  <div className="snap-center min-w-[85vw] max-w-[85vw]">
-                    <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 h-full">
-                      <CardHeader className="p-4">
-                        <CardTitle className="text-base flex items-center gap-2 text-white">
-                          <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                            <BookOpen className="h-4 w-4 text-purple-400" />
-                          </div>
-                          Relevant Regulations
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-4 pt-0">
-                        <div className="prose prose-invert max-w-none">
-                          <div className="text-sm text-gray-300 leading-relaxed space-y-3">
-                            {processContent(regulationsResult, 'purple')}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                )}
-                
-                {practicalGuidanceResult && (
-                  <div className="snap-center min-w-[85vw] max-w-[85vw]">
-                    <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 h-full">
-                      <CardHeader className="p-4">
-                        <CardTitle className="text-base flex items-center gap-2 text-white">
-                          <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
-                            <Wrench className="h-4 w-4 text-green-400" />
-                          </div>
-                          Practical Guidance
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-4 pt-0">
-                        <div className="prose prose-invert max-w-none">
-                          <div className="text-sm text-gray-300 leading-relaxed space-y-3">
-                            {processContent(practicalGuidanceResult, 'green')}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                )}
-              </div>
+            {/* Mobile: Vertical Stack */}
+            <div className="md:hidden flex flex-col gap-4">
+              {analysisResult && (
+                <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+                  <CardHeader className="p-4">
+                    <CardTitle className="text-base flex items-center gap-2 text-white">
+                      <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                        <Search className="h-4 w-4 text-blue-400" />
+                      </div>
+                      Analysis
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-0">
+                    <div className="prose prose-invert max-w-none">
+                      <div className="text-sm text-white leading-relaxed space-y-3">
+                        {processContent(analysisResult, 'blue')}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
               
-              {/* Scroll indicator dots */}
-              <div className="flex justify-center gap-2 mt-2">
-                {analysisResult && <div className="w-2 h-2 rounded-full bg-blue-400/50" />}
-                {regulationsResult && <div className="w-2 h-2 rounded-full bg-purple-400/50" />}
-                {practicalGuidanceResult && <div className="w-2 h-2 rounded-full bg-green-400/50" />}
-              </div>
+              {regulationsResult && (
+                <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+                  <CardHeader className="p-4">
+                    <CardTitle className="text-base flex items-center gap-2 text-white">
+                      <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                        <BookOpen className="h-4 w-4 text-purple-400" />
+                      </div>
+                      Relevant Regulations
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-0">
+                    <div className="prose prose-invert max-w-none">
+                      <div className="text-sm text-white leading-relaxed space-y-3">
+                        {processContent(regulationsResult, 'purple')}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+              
+              {practicalGuidanceResult && (
+                <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+                  <CardHeader className="p-4">
+                    <CardTitle className="text-base flex items-center gap-2 text-white">
+                      <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                        <Wrench className="h-4 w-4 text-green-400" />
+                      </div>
+                      Practical Guidance
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-0">
+                    <div className="prose prose-invert max-w-none">
+                      <div className="text-sm text-white leading-relaxed space-y-3">
+                        {processContent(practicalGuidanceResult, 'green')}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
             
             {/* Desktop: Grid Layout */}
