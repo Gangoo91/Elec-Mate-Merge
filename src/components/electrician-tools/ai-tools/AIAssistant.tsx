@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sparkles, Loader, Search, BookOpen, Eye, EyeOff } from "lucide-react";
+import { Sparkles, Loader, Search, BookOpen, Eye, EyeOff, Wrench } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,6 +11,7 @@ const AIAssistant = () => {
   const [prompt, setPrompt] = useState("");
   const [analysisResult, setAnalysisResult] = useState("");
   const [regulationsResult, setRegulationsResult] = useState("");
+  const [practicalGuidanceResult, setPracticalGuidanceResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(true);
 
@@ -27,6 +28,7 @@ const AIAssistant = () => {
     setIsLoading(true);
     setAnalysisResult("");
     setRegulationsResult("");
+    setPracticalGuidanceResult("");
     
     try {
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
@@ -44,9 +46,8 @@ const AIAssistant = () => {
         throw new Error(data.error);
       }
       
-      // Handle both structured and regular responses
-      if (data.analysis && data.regulations) {
-        // Structured response - handle both string and object formats
+      // Handle structured responses with three sections
+      if (data.analysis && data.regulations && data.practical_guidance) {
         const analysisText = typeof data.analysis === 'string' ? data.analysis : 
           typeof data.analysis === 'object' ? Object.values(data.analysis).join('\n\n') : 
           String(data.analysis);
@@ -54,9 +55,14 @@ const AIAssistant = () => {
         const regulationsText = typeof data.regulations === 'string' ? data.regulations :
           typeof data.regulations === 'object' ? Object.values(data.regulations).join('\n\n') :
           String(data.regulations);
+        
+        const practicalText = typeof data.practical_guidance === 'string' ? data.practical_guidance :
+          typeof data.practical_guidance === 'object' ? Object.values(data.practical_guidance).join('\n\n') :
+          String(data.practical_guidance);
           
         setAnalysisResult(analysisText);
         setRegulationsResult(regulationsText);
+        setPracticalGuidanceResult(practicalText);
       } else if (data.response) {
         // Fallback to regular response - split into sections
         const response = data.response;
@@ -208,8 +214,8 @@ const AIAssistant = () => {
         </Card>
 
         {/* Results Grid */}
-        {(analysisResult || regulationsResult) && !isLoading && showResults && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 max-w-6xl mx-auto">
+        {(analysisResult || regulationsResult || practicalGuidanceResult) && !isLoading && showResults && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 max-w-6xl mx-auto">
             {/* Analysis Section */}
             {analysisResult && (
               <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
@@ -228,16 +234,8 @@ const AIAssistant = () => {
                         const trimmed = line.trim();
                         if (!trimmed) return null;
                         
-                        // Enhanced formatting with technical term highlighting
-                        const technicalTerms = /\b(RCD|RCBO|MCB|MCCB|RCM|AFDD|SPD|CU|DB|EICR|PIR|EIC|PAT|Zs|Ze|Zdb|PFC|PSCC|TN-S|TN-C-S|TT|IT|IP\d{2}|CSA|CPC|PME|SWA|MICC|FP200|XLPE|PVC|LSZH|BS\s*7671|IET|Part\s*P)\b/gi;
-                        const measurements = /\b(\d+(?:\.\d+)?)\s*(A|mA|V|kV|W|kW|VA|kVA|Ω|mΩ|mm²?|m|cm|Hz|°C|lx|lm|cd)\b/g;
-                        const regulationNumbers = /\b(\d{3}\.\d+(?:\.\d+)?)\b/g;
-                        
-                        // Process text with highlighting
-                        let processedText = trimmed
-                          .replace(technicalTerms, '<span class="px-1.5 py-0.5 bg-blue-500/25 text-blue-200 rounded font-medium text-xs">$&</span>')
-                          .replace(measurements, '<span class="px-1 py-0.5 bg-green-500/25 text-green-200 rounded font-mono text-xs">$&</span>')
-                          .replace(regulationNumbers, '<span class="px-1.5 py-0.5 bg-purple-500/25 text-purple-200 rounded font-semibold text-xs">$&</span>');
+                        // Process text without highlighting
+                        let processedText = trimmed;
                         
                         // Section headers
                         if (trimmed.match(/^(CALCULATION|SIZING|ASSESSMENT|ANALYSIS|RECOMMENDATION):?$/i)) {
@@ -316,15 +314,8 @@ const AIAssistant = () => {
                         const trimmed = line.trim();
                         if (!trimmed) return null;
                         
-                        // Enhanced formatting for regulations
-                        const regulationNumbers = /\b(\d{3}\.\d+(?:\.\d+)?)\b/g;
-                        const partNumbers = /(Part|Chapter|Section|Appendix)\s*(\d+)/gi;
-                        const bsNumbers = /(BS\s*7671|IET)/gi;
-                        
-                        let processedText = trimmed
-                          .replace(regulationNumbers, '<span class="px-2 py-1 bg-purple-500/30 text-purple-200 rounded font-bold text-xs">$&</span>')
-                          .replace(partNumbers, '<span class="px-1.5 py-0.5 bg-indigo-500/25 text-indigo-200 rounded font-semibold text-xs">$&</span>')
-                          .replace(bsNumbers, '<span class="px-2 py-1 bg-blue-500/30 text-blue-200 rounded font-bold text-xs">$&</span>');
+                        // Process text without highlighting
+                        let processedText = trimmed;
                         
                         // Main regulation headers
                         if (trimmed.match(/^(Regulation|BS 7671|IET|REGULATIONS?):?$/i)) {
@@ -383,6 +374,69 @@ const AIAssistant = () => {
                         }
                         
                         // Regular regulation text
+                        return (
+                          <p key={index} className="text-gray-300 text-xs sm:text-sm my-2" dangerouslySetInnerHTML={{ __html: processedText }} />
+                        );
+                      }).filter(Boolean)}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Practical Guidance Section */}
+            {practicalGuidanceResult && (
+              <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
+                <CardHeader className="p-3 sm:p-4">
+                  <CardTitle className="text-base sm:text-lg flex items-center gap-2 sm:gap-3 text-white">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                      <Wrench className="h-3 w-3 sm:h-4 sm:w-4 text-green-400" />
+                    </div>
+                    Practical Guidance
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-3 sm:p-4 pt-0">
+                  <div className="prose prose-invert max-w-none">
+                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed space-y-3">
+                      {String(practicalGuidanceResult || '').split('\n').map((line, index) => {
+                        const trimmed = line.trim();
+                        if (!trimmed) return null;
+                        
+                        let processedText = trimmed;
+                        
+                        // Section headers
+                        if (trimmed.match(/^(PRACTICAL|GUIDANCE|INSTALLATION|TESTING|PROCEDURE):?$/i)) {
+                          return (
+                            <div key={index} className="mt-4 mb-3 first:mt-0 pb-2 border-b border-green-400/20">
+                              <h4 className="text-green-400 font-bold text-sm sm:text-base flex items-center gap-2">
+                                <span className="text-lg">🔧</span>
+                                <span>{trimmed}</span>
+                              </h4>
+                            </div>
+                          );
+                        }
+                        
+                        // Subsection headers
+                        if (trimmed.endsWith(':') && trimmed.length < 60 && !trimmed.match(/^[\d\w\s]{1,3}:/)) {
+                          return (
+                            <div key={index} className="mt-3 mb-2">
+                              <h5 className="font-semibold text-green-300 text-sm" dangerouslySetInnerHTML={{ __html: processedText }} />
+                            </div>
+                          );
+                        }
+                        
+                        // Bullet points
+                        if (trimmed.match(/^[-•]\s+/)) {
+                          const bulletText = processedText.replace(/^[-•]\s+/, '');
+                          return (
+                            <div key={index} className="ml-4 mb-2 flex items-start gap-2">
+                              <span className="text-green-400 text-sm mt-1">•</span>
+                              <span className="text-gray-300 text-xs sm:text-sm" dangerouslySetInnerHTML={{ __html: bulletText }} />
+                            </div>
+                          );
+                        }
+                        
+                        // Regular paragraphs
                         return (
                           <p key={index} className="text-gray-300 text-xs sm:text-sm my-2" dangerouslySetInnerHTML={{ __html: processedText }} />
                         );

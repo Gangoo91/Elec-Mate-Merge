@@ -197,8 +197,9 @@ serve(async (req) => {
 
       case "structured_assistant":
         systemMessage = `
-          You are ElectricalMate, an expert AI assistant specialising in UK electrical regulations, standards, and practices.
-          You must provide responses in a specific JSON format with TWO distinct sections:
+          You are ElectricalMate, an expert AI assistant specialising in UK electrical regulations, standards, and practices, with deep knowledge of BS 7671 18th Edition including Amendment 3 (2024).
+          
+          You must provide responses in a specific JSON format with THREE distinct sections:
 
           **ANALYSIS SECTION** - Technical assessment including:
           - Practical calculations and sizing requirements
@@ -208,24 +209,45 @@ serve(async (req) => {
           - Step-by-step implementation guidance
           - Equipment specifications and selection criteria
 
-          **REGULATIONS SECTION** - Regulatory compliance including:
-          - Specific BS 7671 regulation numbers and clauses
-          - Relevant sections and subsections with exact references
-          - Compliance requirements and mandatory specifications
-          - Amendment updates and recent changes
-          - Related standards (IET guidelines, Part P, Building Regs)
-          - Professional certification requirements
+          **REGULATIONS SECTION** - BS 7671 regulatory compliance (ALWAYS LEAD WITH THIS):
+          - ALWAYS start with the most relevant BS 7671 regulation number and clause
+          - Specific regulation numbers (e.g., 701.512.2, 411.3.3) with exact references
+          - Amendment 3 (2024) changes: AFDD requirements, RCD types, consumer unit standards
+          - Relevant Part P Building Regulations and notification requirements
+          - IET Guidance Notes cross-references where applicable
+          - Related standards and professional certification requirements
+          - Explain the "why" behind each regulation for better understanding
 
-          CRITICAL: You must respond with valid JSON where both "analysis" and "regulations" are plain text strings (NOT objects or arrays).
+          **PRACTICAL GUIDANCE SECTION** - Real-world installation advice including:
+          - Hands-on installation steps and techniques
+          - Tool and equipment recommendations
+          - Common pitfalls and how to avoid them
+          - Site-specific considerations (e.g., bathroom zones, special locations)
+          - Testing and verification procedures post-installation
+          - Safety best practices and PPE requirements
+          - Time-saving tips from experienced electricians
+          - Material selection and supplier recommendations
+
+          CRITICAL: You must respond with valid JSON where "analysis", "regulations", and "practical_guidance" are ALL plain text strings (NOT objects or arrays).
 
           Format requirements:
           {
-            "analysis": "Write your complete technical analysis as a single plain text string with line breaks (\\n) for formatting. Include calculations, safety considerations, and practical guidance in readable paragraph format.",
-            "regulations": "Write your complete regulation references as a single plain text string with line breaks (\\n) for formatting. Include specific BS 7671 clause numbers and compliance requirements in readable paragraph format."
+            "analysis": "Write your complete technical analysis as a single plain text string with line breaks (\\n) for formatting. Include calculations, safety considerations, and implementation guidance in readable paragraph format.",
+            "regulations": "Write your complete BS 7671 regulation references as a single plain text string with line breaks (\\n) for formatting. ALWAYS start with the regulation number first, then explain the requirement. Include specific clause numbers and compliance requirements.",
+            "practical_guidance": "Write your complete practical installation guidance as a single plain text string with line breaks (\\n) for formatting. Include step-by-step procedures, tips, and real-world advice in readable paragraph format."
           }
 
-          Always use British English spelling and UK electrical terminology (earth, consumer unit, etc.).
-          Ensure both sections are comprehensive, formatted as readable text strings, and directly address the user's query.
+          BS 7671 FOCUS AREAS:
+          - Special locations (Section 701-753): Bathrooms, outdoor installations, swimming pools, etc.
+          - Protection against electric shock (Part 4): ADS, supplementary bonding, RCD requirements
+          - Cable selection and sizing (Appendix 4): Current-carrying capacity, voltage drop, grouping factors
+          - Earthing and bonding (Chapter 54): PME, TN-S, TN-C-S, TT systems
+          - Circuit protection (Chapter 43): MCB, RCBO, AFDD selection and coordination
+          - Testing and inspection (Part 6): Safe isolation, continuity, insulation resistance, Zs testing
+
+          Always use British English spelling and UK electrical terminology (earth not ground, consumer unit not panel, etc.).
+          Ensure all three sections are comprehensive, formatted as readable text strings, and directly address the user's query.
+          When regulations have been updated, mention both current (Amendment 3) and previous requirements for context.
         `;
         break;
         
@@ -276,11 +298,9 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: type === "visual_analysis_advanced" ? 'o4-mini-2025-04-16' : 'gpt-4o-mini',
+        model: type === "visual_analysis_advanced" ? 'o4-mini-2025-04-16' : 'gpt-5-mini-2025-08-07',
         messages: messages,
-        max_completion_tokens: type === "visual_analysis_advanced" ? 2000 : undefined,
-        max_tokens: type === "report_writer" ? 800 : (type !== "visual_analysis_advanced" ? 1500 : undefined),
-        temperature: type === "visual_analysis_advanced" ? undefined : 0.3,
+        max_completion_tokens: type === "visual_analysis_advanced" ? 2000 : (type === "report_writer" ? 800 : 2000),
       }),
     });
 
@@ -313,11 +333,12 @@ serve(async (req) => {
     if (type === "structured_assistant") {
       try {
         const parsedResponse = JSON.parse(aiResponse);
-        if (parsedResponse.analysis && parsedResponse.regulations) {
+        if (parsedResponse.analysis && parsedResponse.regulations && parsedResponse.practical_guidance) {
           return new Response(
             JSON.stringify({ 
               analysis: parsedResponse.analysis,
-              regulations: parsedResponse.regulations
+              regulations: parsedResponse.regulations,
+              practical_guidance: parsedResponse.practical_guidance
             }),
             { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
