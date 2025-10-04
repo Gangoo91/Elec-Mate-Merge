@@ -360,59 +360,53 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   return (
     <div className="space-y-3">
       {displayQuotes.map((quote) => (
-        <Card key={quote.id} className="group border-elec-yellow/10 rounded-xl overflow-hidden bg-gradient-to-br from-elec-card to-elec-card/80 hover:border-elec-yellow/40 hover:shadow-[0_0_20px_-5px_rgba(234,179,8,0.15)] transition-all duration-300">
-          {/* Hero Section - Price & Status */}
-          <div className="bg-gradient-to-br from-elec-gray via-elec-gray/90 to-elec-gray/80 p-3 sm:p-5 border-b border-elec-yellow/20">
-            <div className="flex items-start justify-between gap-3 mb-4">
-              <Badge variant="outline" className="border-elec-yellow/50 bg-elec-dark/60 text-elec-yellow font-semibold text-xs px-2.5 py-1">
-                {quote.quoteNumber}
-              </Badge>
-              <Badge 
-                variant={getStatusVariant(quote.status)} 
-                className="shrink-0 shadow-sm text-xs px-2.5 py-1"
-              >
-                {quote.status.charAt(0).toUpperCase() + quote.status.slice(1)}
-              </Badge>
-            </div>
-            
-            {/* Large Price Display */}
-            <div className="text-4xl sm:text-5xl font-bold text-elec-yellow tracking-tight">
-              {formatCurrency(quote.total)}
-            </div>
+        <Card key={quote.id} className="group hover:border-elec-yellow/30 transition-all duration-200">
+          {/* Top Bar - Quote Number & Status */}
+          <div className="p-4 sm:p-5 pb-3 flex items-start justify-between gap-3">
+            <Badge variant="outline" className="text-xs font-medium">
+              {quote.quoteNumber}
+            </Badge>
+            <Badge variant={getStatusVariant(quote.status)} className="text-xs">
+              {quote.status.charAt(0).toUpperCase() + quote.status.slice(1)}
+            </Badge>
           </div>
 
-          {/* Client & Essential Info */}
-          <div className="p-3 sm:p-5 space-y-3 border-b border-elec-yellow/10">
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-md bg-elec-yellow/10">
-                <User className="h-4 w-4 text-elec-yellow shrink-0" />
+          {/* Main Content - Client Info & Price */}
+          <div className="px-4 sm:px-5 pb-3 space-y-3">
+            {/* Client Name & Price (Inline) */}
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <User className="h-4 w-4 text-muted-foreground shrink-0" />
+                <span className="font-semibold text-base truncate">{quote.client.name}</span>
               </div>
-              <span className="font-semibold text-base truncate">{quote.client.name}</span>
+              <span className="text-xl sm:text-2xl font-bold text-elec-yellow shrink-0">
+                {formatCurrency(quote.total)}
+              </span>
             </div>
             
-            <div className="flex items-center gap-3 sm:gap-4 text-xs text-muted-foreground">
+            {/* Meta Info */}
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
               <div className="flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5 text-elec-yellow/80" />
+                <Calendar className="h-3.5 w-3.5" />
                 <span>{format(quote.createdAt, 'dd MMM yyyy')}</span>
               </div>
-              <div className="h-3 w-px bg-border"></div>
+              <span className="text-border">•</span>
               <div className="flex items-center gap-1.5">
-                <FileText className="h-3.5 w-3.5 text-elec-yellow/80" />
+                <FileText className="h-3.5 w-3.5" />
                 <span>{quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
               </div>
             </div>
             
-            {/* Tags - Enhanced */}
+            {/* Tags */}
             {quote.tags && quote.tags.length > 0 && (
-              <div className="flex gap-1.5 flex-wrap pt-1">
+              <div className="flex gap-1.5 flex-wrap">
                 {quote.tags.map((tag) => (
                   <Badge 
                     key={tag} 
                     variant={tag === 'work_done' ? 'success' : getTagVariant(tag)} 
-                    className={`text-xs font-medium ${tag === 'work_done' ? 'shadow-sm' : ''}`}
+                    className="text-xs"
                   >
                     {tag === 'work_done' && <Check className="h-3 w-3 mr-1" />}
-                    {tag !== 'work_done' && <Tag className="h-3 w-3 mr-1" />}
                     {getTagLabel(tag)}
                   </Badge>
                 ))}
@@ -420,15 +414,15 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             )}
           </div>
 
-          {/* Actions Section - Enhanced */}
-          <div className="p-3 sm:p-5 bg-gradient-to-br from-background/50 to-background/30">
+          {/* Actions */}
+          <div className="p-4 sm:p-5 pt-3 border-t">
             <div className="flex gap-2">
-              {/* Primary Action - Context Aware */}
+              {/* Primary Action */}
               {canRaiseInvoice(quote) ? (
                 <MobileButton
                   variant="elec"
                   size="default"
-                  className="flex-1 h-11 font-semibold shadow-md hover:shadow-lg transition-shadow"
+                  className="flex-1"
                   onClick={() => {
                     setQuoteForInvoice(quote);
                     setShowInvoiceDecision(true);
@@ -445,7 +439,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     onClick={() => handleActionClick(quote, 'accept')}
                     disabled={loadingAction.startsWith(`action-${quote.id}`)}
                     icon={<Check className="h-4 w-4" />}
-                    className="flex-1 h-11 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white border-0 shadow-md font-semibold"
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white border-0"
                   >
                     Accept
                   </MobileButton>
@@ -455,7 +449,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     onClick={() => handleActionClick(quote, 'reject')}
                     disabled={loadingAction.startsWith(`action-${quote.id}`)}
                     icon={<X className="h-4 w-4" />}
-                    className="flex-1 h-11 border-red-500/40 text-red-500 hover:bg-red-500/20 hover:border-red-500/60 font-semibold"
+                    className="flex-1 border-red-500/40 text-red-500 hover:bg-red-500/10"
                   >
                     Reject
                   </MobileButton>
@@ -464,7 +458,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                 <MobileButton
                   variant="elec"
                   size="default"
-                  className="flex-1 h-11 shadow-md hover:shadow-lg transition-shadow font-semibold"
+                  className="flex-1"
                   onClick={() => handleRegeneratePDF(quote)}
                   disabled={loadingAction === `pdf-${quote.id}`}
                   icon={<Download className="h-4 w-4" />}
@@ -479,7 +473,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                   <MobileButton
                     variant="outline"
                     size="icon"
-                    className="shrink-0 h-11 w-11 hover:bg-accent/50"
+                    className="shrink-0"
                   >
                     <MoreVertical className="h-4 w-4" />
                   </MobileButton>
