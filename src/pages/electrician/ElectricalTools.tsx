@@ -2,11 +2,15 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { 
   Wrench, 
   Search,
   ArrowLeft,
-  Loader2
+  Loader2,
+  TrendingUp,
+  Package,
+  Sparkles
 } from "lucide-react";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { useToolCategories } from "@/hooks/useToolCategories";
@@ -67,39 +71,102 @@ const ElectricalTools = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {filteredCategories.map((category) => {
           const IconComponent = category.icon;
+          const isPopular = category.count > 20;
+          const hasDeals = category.count > 0;
+          
           return (
             <Card 
               key={category.name}
-              className="border-elec-yellow/20 bg-elec-gray backdrop-blur cursor-pointer hover:border-elec-yellow/50 transition-all duration-300 hover:shadow-lg group"
+              className="relative border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-card backdrop-blur cursor-pointer hover:border-elec-yellow/60 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] group overflow-hidden"
               onClick={() => navigate(`/electrician/tools?category=${encodeURIComponent(category.name)}`)}
             >
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center justify-center gap-3 text-lg text-center text-white group-hover:text-white/90 transition-colors">
-                  <IconComponent className="h-6 w-6 text-elec-yellow group-hover:text-elec-yellow/90 transition-colors" />
+              {/* Trending Badge */}
+              {category.trending && (
+                <Badge 
+                  className="absolute top-3 right-3 bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 text-xs gap-1 z-10"
+                  variant="outline"
+                >
+                  <TrendingUp className="h-3 w-3" />
+                  Trending
+                </Badge>
+              )}
+              
+              {/* Background Pattern */}
+              <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              <CardHeader className="pb-3 relative">
+                <CardTitle className="flex items-center justify-center gap-3 text-lg text-center text-white group-hover:text-elec-yellow transition-colors">
+                  <IconComponent className="h-6 w-6 text-elec-yellow group-hover:scale-110 transition-transform duration-300" />
                   {category.name}
                 </CardTitle>
                 <CardDescription className="text-sm text-center leading-relaxed">
                   {category.description}
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="text-xs text-elec-yellow/80 flex items-center justify-center gap-2 font-medium">
+              
+              <CardContent className="relative space-y-3">
+                {/* Tool Count & Status */}
+                <div className="flex items-center justify-center gap-2">
                   {isLoading ? (
-                    <>
+                    <div className="flex items-center gap-2 text-xs text-elec-yellow/80">
                       <Loader2 className="h-3 w-3 animate-spin" />
-                      Loading...
-                    </>
+                      <span>Loading...</span>
+                    </div>
                   ) : category.count > 0 ? (
-                    <>
-                      <Wrench className="h-3 w-3" />
-                      {category.count} tools available
-                    </>
+                    <div className="flex flex-col items-center gap-2 w-full">
+                      <div className="flex items-center gap-2">
+                        <Badge 
+                          variant="outline" 
+                          className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 gap-1.5"
+                        >
+                          <Package className="h-3 w-3" />
+                          {category.count} available
+                        </Badge>
+                      </div>
+                      
+                      {/* Price Range */}
+                      {category.priceRange && (
+                        <div className="text-xs text-muted-foreground">
+                          {category.priceRange}
+                        </div>
+                      )}
+                      
+                      {/* Quick Info Badges */}
+                      <div className="flex flex-wrap gap-1.5 justify-center mt-1">
+                        {hasDeals && (
+                          <Badge 
+                            variant="outline" 
+                            className="text-xs bg-green-500/10 text-green-400 border-green-500/30"
+                          >
+                            In Stock
+                          </Badge>
+                        )}
+                        {isPopular && (
+                          <Badge 
+                            variant="outline" 
+                            className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30 gap-1"
+                          >
+                            <Sparkles className="h-2.5 w-2.5" />
+                            Popular
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
                   ) : (
-                    <span className="text-muted-foreground italic">
+                    <span className="text-xs text-muted-foreground italic">
                       Data being collected
                     </span>
                   )}
                 </div>
+                
+                {/* View All Indicator */}
+                {category.count > 0 && (
+                  <div className="text-center">
+                    <span className="text-xs text-elec-yellow/60 group-hover:text-elec-yellow transition-colors">
+                      Browse tools →
+                    </span>
+                  </div>
+                )}
               </CardContent>
             </Card>
           );
