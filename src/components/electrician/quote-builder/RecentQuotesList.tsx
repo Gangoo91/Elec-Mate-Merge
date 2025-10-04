@@ -421,7 +421,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               {canRaiseInvoice(quote) ? (
                 <MobileButton
                   variant="elec"
-                  size="default"
+                  size="sm"
                   className="flex-1"
                   onClick={() => {
                     setQuoteForInvoice(quote);
@@ -435,7 +435,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                 <>
                   <MobileButton
                     variant="elec"
-                    size="default"
+                    size="sm"
                     onClick={() => handleActionClick(quote, 'accept')}
                     disabled={loadingAction.startsWith(`action-${quote.id}`)}
                     icon={<Check className="h-4 w-4" />}
@@ -445,7 +445,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                   </MobileButton>
                   <MobileButton
                     variant="outline"
-                    size="default"
+                    size="sm"
                     onClick={() => handleActionClick(quote, 'reject')}
                     disabled={loadingAction.startsWith(`action-${quote.id}`)}
                     icon={<X className="h-4 w-4" />}
@@ -457,7 +457,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               ) : (
                 <MobileButton
                   variant="elec"
-                  size="default"
+                  size="sm"
                   className="flex-1"
                   onClick={() => handleRegeneratePDF(quote)}
                   disabled={loadingAction === `pdf-${quote.id}`}
@@ -472,8 +472,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                 <DropdownMenuTrigger asChild>
                   <MobileButton
                     variant="outline"
-                    size="icon"
-                    className="shrink-0"
+                    size="sm"
+                    className="shrink-0 w-9"
                   >
                     <MoreVertical className="h-4 w-4" />
                   </MobileButton>
