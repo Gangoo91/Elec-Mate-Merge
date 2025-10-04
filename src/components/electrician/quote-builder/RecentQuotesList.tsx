@@ -360,48 +360,59 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   return (
     <div className="space-y-3">
       {displayQuotes.map((quote) => (
-        <Card key={quote.id} className="border-elec-yellow/20 rounded-lg overflow-hidden bg-elec-card hover:border-elec-yellow/30 transition-all duration-200">
+        <Card key={quote.id} className="group border-elec-yellow/10 rounded-xl overflow-hidden bg-gradient-to-br from-elec-card to-elec-card/80 hover:border-elec-yellow/40 hover:shadow-[0_0_20px_-5px_rgba(234,179,8,0.15)] transition-all duration-300">
           {/* Hero Section - Price & Status */}
-          <div className="bg-gradient-to-br from-elec-gray to-elec-gray/80 p-5 border-b border-elec-yellow/10">
-            <div className="flex items-start justify-between gap-3 mb-3">
-              <Badge variant="outline" className="border-elec-yellow/40 bg-elec-dark/50">
+          <div className="bg-gradient-to-br from-elec-gray via-elec-gray/90 to-elec-gray/80 p-3 sm:p-5 border-b border-elec-yellow/20">
+            <div className="flex items-start justify-between gap-3 mb-4">
+              <Badge variant="outline" className="border-elec-yellow/50 bg-elec-dark/60 text-elec-yellow font-semibold text-xs px-2.5 py-1">
                 {quote.quoteNumber}
               </Badge>
-              <Badge variant={getStatusVariant(quote.status)} className="shrink-0">
+              <Badge 
+                variant={getStatusVariant(quote.status)} 
+                className="shrink-0 shadow-sm text-xs px-2.5 py-1"
+              >
                 {quote.status.charAt(0).toUpperCase() + quote.status.slice(1)}
               </Badge>
             </div>
             
             {/* Large Price Display */}
-            <div className="text-4xl font-bold text-elec-yellow">
+            <div className="text-4xl sm:text-5xl font-bold text-elec-yellow tracking-tight">
               {formatCurrency(quote.total)}
             </div>
           </div>
 
           {/* Client & Essential Info */}
-          <div className="p-5 space-y-4 border-b border-elec-yellow/10">
-            <div className="flex items-center gap-2">
-              <User className="h-4 w-4 text-elec-yellow shrink-0" />
-              <span className="font-medium truncate">{quote.client.name}</span>
+          <div className="p-3 sm:p-5 space-y-3 border-b border-elec-yellow/10">
+            <div className="flex items-center gap-2.5">
+              <div className="p-1.5 rounded-md bg-elec-yellow/10">
+                <User className="h-4 w-4 text-elec-yellow shrink-0" />
+              </div>
+              <span className="font-semibold text-base truncate">{quote.client.name}</span>
             </div>
             
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+            <div className="flex items-center gap-3 sm:gap-4 text-xs text-muted-foreground">
               <div className="flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5 text-elec-yellow" />
+                <Calendar className="h-3.5 w-3.5 text-elec-yellow/80" />
                 <span>{format(quote.createdAt, 'dd MMM yyyy')}</span>
               </div>
+              <div className="h-3 w-px bg-border"></div>
               <div className="flex items-center gap-1.5">
-                <FileText className="h-3.5 w-3.5 text-elec-yellow" />
+                <FileText className="h-3.5 w-3.5 text-elec-yellow/80" />
                 <span>{quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
               </div>
             </div>
             
-            {/* Tags - Only show if present */}
+            {/* Tags - Enhanced */}
             {quote.tags && quote.tags.length > 0 && (
-              <div className="flex gap-1.5 flex-wrap">
+              <div className="flex gap-1.5 flex-wrap pt-1">
                 {quote.tags.map((tag) => (
-                  <Badge key={tag} variant={getTagVariant(tag)} className="text-xs">
-                    <Tag className="h-3 w-3 mr-1" />
+                  <Badge 
+                    key={tag} 
+                    variant={tag === 'work_done' ? 'success' : getTagVariant(tag)} 
+                    className={`text-xs font-medium ${tag === 'work_done' ? 'shadow-sm' : ''}`}
+                  >
+                    {tag === 'work_done' && <Check className="h-3 w-3 mr-1" />}
+                    {tag !== 'work_done' && <Tag className="h-3 w-3 mr-1" />}
                     {getTagLabel(tag)}
                   </Badge>
                 ))}
@@ -409,15 +420,15 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             )}
           </div>
 
-          {/* Actions Section - Simplified */}
-          <div className="p-5">
+          {/* Actions Section - Enhanced */}
+          <div className="p-3 sm:p-5 bg-gradient-to-br from-background/50 to-background/30">
             <div className="flex gap-2">
               {/* Primary Action - Context Aware */}
               {canRaiseInvoice(quote) ? (
                 <MobileButton
                   variant="elec"
                   size="default"
-                  className="flex-1 h-10"
+                  className="flex-1 h-11 font-semibold shadow-md hover:shadow-lg transition-shadow"
                   onClick={() => {
                     setQuoteForInvoice(quote);
                     setShowInvoiceDecision(true);
@@ -434,7 +445,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     onClick={() => handleActionClick(quote, 'accept')}
                     disabled={loadingAction.startsWith(`action-${quote.id}`)}
                     icon={<Check className="h-4 w-4" />}
-                    className="flex-1 h-10 bg-green-600 hover:bg-green-700 text-white border-0"
+                    className="flex-1 h-11 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white border-0 shadow-md font-semibold"
                   >
                     Accept
                   </MobileButton>
@@ -444,7 +455,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     onClick={() => handleActionClick(quote, 'reject')}
                     disabled={loadingAction.startsWith(`action-${quote.id}`)}
                     icon={<X className="h-4 w-4" />}
-                    className="flex-1 h-10 border-red-500/30 text-red-500 hover:bg-red-500/10"
+                    className="flex-1 h-11 border-red-500/40 text-red-500 hover:bg-red-500/20 hover:border-red-500/60 font-semibold"
                   >
                     Reject
                   </MobileButton>
@@ -453,7 +464,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                 <MobileButton
                   variant="elec"
                   size="default"
-                  className="flex-1 h-10"
+                  className="flex-1 h-11 shadow-md hover:shadow-lg transition-shadow font-semibold"
                   onClick={() => handleRegeneratePDF(quote)}
                   disabled={loadingAction === `pdf-${quote.id}`}
                   icon={<Download className="h-4 w-4" />}
@@ -468,7 +479,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                   <MobileButton
                     variant="outline"
                     size="icon"
-                    className="shrink-0 h-10 w-10"
+                    className="shrink-0 h-11 w-11 hover:bg-accent/50"
                   >
                     <MoreVertical className="h-4 w-4" />
                   </MobileButton>
