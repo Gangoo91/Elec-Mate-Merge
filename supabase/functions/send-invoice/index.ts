@@ -170,34 +170,80 @@ const handler = async (req: Request): Promise<Response> => {
       </html>
     `;
 
-    // Send email using Resend
-    const resendApiKey = Deno.env.get('RESEND_API_KEY');
-    if (!resendApiKey) {
-      throw new Error('Resend API key not configured');
+    // Send email using Gmail API
+    const gmailClientId = Deno.env.get('GMAIL_CLIENT_ID');
+    const gmailClientSecret = Deno.env.get('GMAIL_CLIENT_SECRET');
+    const gmailRefreshToken = Deno.env.get('GMAIL_REFRESH_TOKEN');
+
+    if (!gmailClientId || !gmailClientSecret || !gmailRefreshToken) {
+      throw new Error('Gmail API credentials not configured');
     }
 
-    const resendResponse = await fetch('https://api.resend.com/emails', {
+    // Get OAuth2 access token
+    const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({
-        from: companyProfile?.company_email || 'invoices@elecmate.dev',
-        to: [clientEmail],
-        subject: `Invoice ${invoice.invoice_number} - ${companyProfile?.company_name || 'ElecMate'}`,
-        html: emailHtml,
+      body: new URLSearchParams({
+        client_id: gmailClientId,
+        client_secret: gmailClientSecret,
+        refresh_token: gmailRefreshToken,
+        grant_type: 'refresh_token',
       }),
     });
 
-    if (!resendResponse.ok) {
-      const errorText = await resendResponse.text();
-      console.error('Resend error:', errorText);
-      throw new Error('Failed to send email');
+    if (!tokenResponse.ok) {
+      const errorText = await tokenResponse.text();
+      console.error('OAuth2 token error:', errorText);
+      throw new Error('Failed to obtain Gmail access token');
     }
 
-    const resendData = await resendResponse.json();
-    console.log('Email sent successfully:', resendData);
+    const { access_token } = await tokenResponse.json();
+
+    // Construct email in MIME format
+    const subject = `Invoice ${invoice.invoice_number} - ${companyProfile?.company_name || 'ElecMate'}`;
+    const fromEmail = companyProfile?.company_email || 'invoices@elecmate.dev';
+    
+    const emailContent = [
+      `From: ${fromEmail}`,
+      `To: ${clientEmail}`,
+      `Subject: ${subject}`,
+      'MIME-Version: 1.0',
+      'Content-Type: text/html; charset=utf-8',
+      '',
+      emailHtml,
+    ].join('\r\n');
+
+    // Encode email in base64url format
+    const encodedEmail = btoa(emailContent)
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+
+    // Send email via Gmail API
+    const gmailResponse = await fetch(
+      'https://gmail.googleapis.com/gmail/v1/users/me/messages/send',
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          raw: encodedEmail,
+        }),
+      }
+    );
+
+    if (!gmailResponse.ok) {
+      const errorText = await gmailResponse.text();
+      console.error('Gmail API error:', errorText);
+      throw new Error('Failed to send email via Gmail');
+    }
+
+    const gmailData = await gmailResponse.json();
+    console.log('Email sent successfully via Gmail:', gmailData);
 
     return new Response(
       JSON.stringify({ success: true, message: 'Invoice sent successfully' }),
