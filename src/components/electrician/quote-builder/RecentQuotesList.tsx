@@ -416,7 +416,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               {canRaiseInvoice(quote) ? (
                 <MobileButton
                   variant="elec"
-                  size="wide"
+                  size="default"
+                  className="flex-1 h-10"
                   onClick={() => {
                     setQuoteForInvoice(quote);
                     setShowInvoiceDecision(true);
@@ -433,7 +434,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     onClick={() => handleActionClick(quote, 'accept')}
                     disabled={loadingAction.startsWith(`action-${quote.id}`)}
                     icon={<Check className="h-4 w-4" />}
-                    className="flex-1 bg-green-600 hover:bg-green-700 text-white border-0"
+                    className="flex-1 h-10 bg-green-600 hover:bg-green-700 text-white border-0"
                   >
                     Accept
                   </MobileButton>
@@ -443,7 +444,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     onClick={() => handleActionClick(quote, 'reject')}
                     disabled={loadingAction.startsWith(`action-${quote.id}`)}
                     icon={<X className="h-4 w-4" />}
-                    className="flex-1 border-red-500/30 text-red-500 hover:bg-red-500/10"
+                    className="flex-1 h-10 border-red-500/30 text-red-500 hover:bg-red-500/10"
                   >
                     Reject
                   </MobileButton>
@@ -451,7 +452,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               ) : (
                 <MobileButton
                   variant="elec"
-                  size="wide"
+                  size="default"
+                  className="flex-1 h-10"
                   onClick={() => handleRegeneratePDF(quote)}
                   disabled={loadingAction === `pdf-${quote.id}`}
                   icon={<Download className="h-4 w-4" />}
