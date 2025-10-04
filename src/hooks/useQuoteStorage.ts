@@ -48,6 +48,7 @@ export const useQuoteStorage = () => {
         const { data, error } = await supabase
           .from('quotes')
           .select('*')
+          .eq('invoice_raised', false)
           .order('created_at', { ascending: false });
 
         if (error) {
@@ -219,6 +220,7 @@ export const useQuoteStorage = () => {
       const { data, error } = await supabase
         .from('quotes')
         .select('*')
+        .eq('invoice_raised', false)
         .order('created_at', { ascending: false });
 
       if (error) {
