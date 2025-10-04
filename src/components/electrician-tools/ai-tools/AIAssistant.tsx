@@ -22,74 +22,86 @@ const AIAssistant = () => {
     // Convert literal \n strings to actual newlines
     const normalizedContent = content.replace(/\\n/g, '\n');
     
-    const lines = normalizedContent.split('\n');
+    // Split into paragraphs (double newlines = paragraph break)
+    const paragraphs = normalizedContent.split(/\n\n+/);
     const elements: JSX.Element[] = [];
-    let listItems: string[] = [];
-    let listType: 'ordered' | 'bullet' | null = null;
     
-    const flushList = () => {
-      if (listItems.length > 0) {
-        if (listType === 'ordered') {
-          elements.push(
-            <ol key={`list-${elements.length}`} className="list-decimal list-inside space-y-2 my-3 ml-2">
-              {listItems.map((item, idx) => (
-                <li key={idx} className="text-white leading-relaxed">{item}</li>
-              ))}
-            </ol>
-          );
-        } else {
-          elements.push(
-            <ul key={`list-${elements.length}`} className="list-disc list-inside space-y-2 my-3 ml-2">
-              {listItems.map((item, idx) => (
-                <li key={idx} className="text-white leading-relaxed">{item}</li>
-              ))}
-            </ul>
-          );
-        }
-        listItems = [];
-        listType = null;
-      }
-    };
-    
-    lines.forEach((line, index) => {
-      const trimmed = line.trim();
-      if (!trimmed) {
-        flushList();
-        return;
-      }
+    paragraphs.forEach((paragraph, pIndex) => {
+      const lines = paragraph.split('\n').filter(l => l.trim());
+      let listItems: string[] = [];
+      let listType: 'ordered' | 'bullet' | null = null;
       
-      // Detect numbered lists (1. 2. 3.)
-      const numberedMatch = trimmed.match(/^(\d+)\.\s+(.+)/);
-      if (numberedMatch) {
-        if (listType !== 'ordered') {
+      const flushList = () => {
+        if (listItems.length > 0) {
+          if (listType === 'ordered') {
+            elements.push(
+              <ol key={`list-${elements.length}`} className="list-decimal list-outside space-y-2.5 my-4 ml-6 pl-2">
+                {listItems.map((item, idx) => (
+                  <li key={idx} className="text-white leading-relaxed text-base">{item}</li>
+                ))}
+              </ol>
+            );
+          } else {
+            elements.push(
+              <ul key={`list-${elements.length}`} className="list-disc list-outside space-y-2.5 my-4 ml-6 pl-2">
+                {listItems.map((item, idx) => (
+                  <li key={idx} className="text-white leading-relaxed text-base">{item}</li>
+                ))}
+              </ul>
+            );
+          }
+          listItems = [];
+          listType = null;
+        }
+      };
+      
+      lines.forEach((line) => {
+        const trimmed = line.trim();
+        if (!trimmed) return;
+        
+        // Detect numbered lists (1. 2. 3.)
+        const numberedMatch = trimmed.match(/^(\d+)\.\s+(.+)/);
+        if (numberedMatch) {
+          if (listType !== 'ordered') {
+            flushList();
+            listType = 'ordered';
+          }
+          listItems.push(numberedMatch[2]);
+          return;
+        }
+        
+        // Detect bullet points (- or •)
+        const bulletMatch = trimmed.match(/^[-•]\s+(.+)/);
+        if (bulletMatch) {
+          if (listType !== 'bullet') {
+            flushList();
+            listType = 'bullet';
+          }
+          listItems.push(bulletMatch[1]);
+          return;
+        }
+        
+        // Regular text - if we have a list going, this line belongs to the paragraph
+        if (listType) {
           flushList();
-          listType = 'ordered';
         }
-        listItems.push(numberedMatch[2]);
-        return;
-      }
+      });
       
-      // Detect bullet points (- or •)
-      const bulletMatch = trimmed.match(/^[-•]\s+(.+)/);
-      if (bulletMatch) {
-        if (listType !== 'bullet') {
-          flushList();
-          listType = 'bullet';
-        }
-        listItems.push(bulletMatch[1]);
-        return;
-      }
-      
-      // Regular paragraph
       flushList();
-      elements.push(
-        <p key={`p-${index}`} className="text-white leading-relaxed my-2">
-          {trimmed}
-        </p>
-      );
+      
+      // If no lists were found, render as paragraph
+      if (lines.length > 0 && listItems.length === 0) {
+        const paragraphText = lines.join(' ');
+        if (paragraphText.trim()) {
+          elements.push(
+            <p key={`p-${pIndex}`} className="text-white leading-relaxed text-base mb-4">
+              {paragraphText.trim()}
+            </p>
+          );
+        }
+      }
     });
     
-    flushList();
     return elements;
   };
 
