@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { 
   Package, 
   Search,
@@ -14,6 +15,7 @@ import {
   ArrowLeft,
   Loader2,
   Boxes,
+  Badge as BadgeIcon,
   Wifi,
   Flame,
   Car,
@@ -279,40 +281,63 @@ const ElectricalMaterials = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {filteredMaterials.map((material) => (
           <Card 
             key={material.id}
-            className="border-elec-yellow/20 bg-elec-gray cursor-pointer hover:border-elec-yellow/50 transition-colors"
+            className="relative border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-card backdrop-blur cursor-pointer hover:border-elec-yellow/60 transition-all duration-300 hover:shadow-xl hover:shadow-elec-yellow/10 hover:scale-[1.02] group overflow-hidden"
             onClick={() => navigate(material.path)}
           >
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center justify-center gap-3 text-lg text-center">
-                {material.icon}
+            {/* Background Pattern */}
+            <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            
+            <CardHeader className="pb-3 relative">
+              <CardTitle className="flex items-center justify-center gap-3 text-lg text-center text-white group-hover:text-elec-yellow transition-colors">
+                <div className="text-elec-yellow group-hover:scale-110 transition-transform duration-300">
+                  {material.icon}
+                </div>
                 {material.title}
               </CardTitle>
-              <CardDescription className="text-sm">
+              <CardDescription className="text-sm text-center leading-relaxed">
                 {material.description}
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="text-xs text-elec-yellow/80 flex items-center justify-center gap-2 font-medium">
+            
+            <CardContent className="relative space-y-3">
+              {/* Product Count & Status */}
+              <div className="flex items-center justify-center gap-2">
                 {isLoadingCounts ? (
-                  <>
+                  <div className="flex items-center gap-2 text-xs text-elec-yellow/80">
                     <Loader2 className="h-3 w-3 animate-spin" />
-                    Loading...
-                  </>
+                    <span>Loading...</span>
+                  </div>
                 ) : material.productCount > 0 ? (
-                  <>
-                    <Package className="h-3 w-3" />
-                    {material.productCount} products available
-                  </>
+                  <div className="flex flex-col items-center gap-2 w-full">
+                    <div className="flex items-center gap-2">
+                      <Badge 
+                        variant="outline" 
+                        className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 gap-1.5"
+                      >
+                        <Package className="h-3 w-3" />
+                        {material.productCount} available
+                      </Badge>
+                    </div>
+                  </div>
                 ) : (
-                  <span className="text-muted-foreground italic">
+                  <span className="text-xs text-muted-foreground italic">
                     Data being collected
                   </span>
                 )}
               </div>
+              
+              {/* View All Indicator */}
+              {material.productCount > 0 && (
+                <div className="text-center">
+                  <span className="text-xs text-elec-yellow/60 group-hover:text-elec-yellow transition-colors">
+                    Browse materials →
+                  </span>
+                </div>
+              )}
             </CardContent>
           </Card>
         ))}
