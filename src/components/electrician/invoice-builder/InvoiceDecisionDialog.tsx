@@ -25,7 +25,7 @@ export const InvoiceDecisionDialog = ({
 }: InvoiceDecisionDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-lg mx-4">
         <DialogHeader>
           <DialogTitle>Create Invoice</DialogTitle>
           <DialogDescription>
