@@ -107,8 +107,18 @@ const InvoicesPage = () => {
     try {
       setSendingInvoiceId(invoice.id);
       
+      // Get the current session to ensure we have a valid auth token
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        throw new Error('Not authenticated');
+      }
+      
       const { error } = await supabase.functions.invoke('send-invoice', {
-        body: { invoiceId: invoice.id }
+        body: { invoiceId: invoice.id },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
       });
 
       if (error) throw error;

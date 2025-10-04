@@ -17,12 +17,21 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Check if Authorization header is present
+    const authHeader = req.headers.get('Authorization');
+    console.log('Authorization header present:', !!authHeader);
+    
+    if (!authHeader) {
+      console.error('No Authorization header found');
+      throw new Error('No Authorization header provided');
+    }
+
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       {
         global: {
-          headers: { Authorization: req.headers.get('Authorization')! },
+          headers: { Authorization: authHeader },
         },
       }
     );
@@ -34,8 +43,11 @@ const handler = async (req: Request): Promise<Response> => {
     } = await supabaseClient.auth.getUser();
 
     if (userError || !user) {
+      console.error('User authentication error:', userError);
       throw new Error('Unauthorized');
     }
+    
+    console.log('User authenticated:', user.id);
 
     const { invoiceId }: InvoiceEmailRequest = await req.json();
 
