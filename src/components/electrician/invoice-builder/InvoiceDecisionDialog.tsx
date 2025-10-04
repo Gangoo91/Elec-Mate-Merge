@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { FileText, Edit } from "lucide-react";
 
 interface InvoiceDecisionDialogProps {
@@ -25,48 +25,48 @@ export const InvoiceDecisionDialog = ({
 }: InvoiceDecisionDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Create Invoice</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="sm:max-w-md w-[calc(100%-2rem)] max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="space-y-2">
+          <DialogTitle className="text-lg sm:text-xl">Create Invoice</DialogTitle>
+          <DialogDescription className="text-sm sm:text-base">
             Were there any changes in costs from the original quote?
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-col gap-3 pt-4">
-          <Button
+        <div className="flex flex-col gap-3 pt-4 pb-2">
+          <MobileButton
             onClick={onNoChanges}
             disabled={loading}
-            className="w-full justify-start h-auto py-4"
+            className="w-full justify-start h-auto py-4 px-4"
             variant="outline"
           >
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3 w-full">
               <FileText className="h-5 w-5 mt-0.5 flex-shrink-0" />
-              <div className="text-left">
-                <div className="font-semibold">No Changes</div>
-                <div className="text-sm text-muted-foreground font-normal">
+              <div className="text-left flex-1">
+                <div className="font-semibold text-sm sm:text-base">No Changes</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-normal mt-0.5">
                   Use the exact quote amounts to generate the invoice
                 </div>
               </div>
             </div>
-          </Button>
+          </MobileButton>
 
-          <Button
+          <MobileButton
             onClick={onHasChanges}
             disabled={loading}
-            className="w-full justify-start h-auto py-4"
+            className="w-full justify-start h-auto py-4 px-4"
             variant="outline"
           >
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3 w-full">
               <Edit className="h-5 w-5 mt-0.5 flex-shrink-0" />
-              <div className="text-left">
-                <div className="font-semibold">Yes, There Are Changes</div>
-                <div className="text-sm text-muted-foreground font-normal">
+              <div className="text-left flex-1">
+                <div className="font-semibold text-sm sm:text-base">Yes, There Are Changes</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-normal mt-0.5">
                   Adjust costs, add or remove items before generating
                 </div>
               </div>
             </div>
-          </Button>
+          </MobileButton>
         </div>
       </DialogContent>
     </Dialog>
