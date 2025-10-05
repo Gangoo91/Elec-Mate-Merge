@@ -134,7 +134,11 @@ const InvoiceCardList = ({
         return (
           <div
             key={invoice.id}
-            className="relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border border-primary/20 border-l-4 border-l-primary/60"
+            className={`relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border ${
+              invoice.invoice_status === 'paid' 
+                ? 'border-green-500/30 border-l-4 border-l-green-500/60' 
+                : 'border-primary/20 border-l-4 border-l-primary/60'
+            }`}
           >
             
             {/* Content Container */}
