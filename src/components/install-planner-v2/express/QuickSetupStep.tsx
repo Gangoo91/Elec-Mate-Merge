@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { InstallPlanDataV2 } from "../types";
+import { SmartInput } from "../SmartInput";
 
 interface QuickSetupStepProps {
   planData: InstallPlanDataV2;
@@ -72,6 +73,9 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
 
   return (
     <div className="space-y-6">
+      {/* Smart Natural Language Input */}
+      <SmartInput onParsed={(parsed) => updatePlanData({ ...planData, ...parsed })} />
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Circuit Type */}
         <div className="space-y-2 md:col-span-2">

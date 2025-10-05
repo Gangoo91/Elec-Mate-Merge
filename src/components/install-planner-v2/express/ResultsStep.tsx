@@ -1,7 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, AlertTriangle, Cable, Zap, TrendingDown, Shield, Package, DollarSign, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CheckCircle2, AlertTriangle, Cable, Zap, TrendingDown, Shield, Package, DollarSign, BookOpen, FileText, Loader2 } from "lucide-react";
 import { InstallPlanDataV2, CalculationResult } from "../types";
+import { InstallationInsights } from "../InstallationInsights";
+import { RegulationTooltip } from "../RegulationTooltip";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface ResultsStepProps {
   planData: InstallPlanDataV2;
@@ -9,7 +15,10 @@ interface ResultsStepProps {
   result: CalculationResult | null;
 }
 
-export const ResultsStep = ({ result }: ResultsStepProps) => {
+export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const { toast } = useToast();
+
   if (!result) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -20,8 +29,59 @@ export const ResultsStep = ({ result }: ResultsStepProps) => {
     );
   }
 
+  const handleExportPdf = async () => {
+    setIsGeneratingPdf(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-install-plan-pdf', {
+        body: { planData, result }
+      });
+
+      if (error) throw error;
+
+      // Open PDF in new tab or download
+      if (data.downloadUrl) {
+        window.open(data.downloadUrl, '_blank');
+        toast({
+          title: "PDF generated",
+          description: "Your installation plan is ready",
+        });
+      }
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast({
+        title: "Export failed",
+        description: "Could not generate PDF. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsGeneratingPdf(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
+      {/* Export PDF Button */}
+      <div className="flex justify-end">
+        <Button 
+          onClick={handleExportPdf} 
+          disabled={isGeneratingPdf}
+          variant="outline"
+          className="gap-2"
+        >
+          {isGeneratingPdf ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Generating...
+            </>
+          ) : (
+            <>
+              <FileText className="h-4 w-4" />
+              Export Professional PDF
+            </>
+          )}
+        </Button>
+      </div>
+
       {/* Compliance Status - Mobile Optimized */}
       <div className={`p-4 md:p-6 rounded-xl ${
         result.compliant 
@@ -57,8 +117,14 @@ export const ResultsStep = ({ result }: ResultsStepProps) => {
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-0">
-            <div className="text-3xl md:text-4xl font-bold text-primary mb-1 md:mb-2">
-              {result.recommendedCableSize}mm²
+            <div className="flex items-baseline gap-2">
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-1 md:mb-2">
+                {result.recommendedCableSize}mm²
+              </div>
+              <RegulationTooltip 
+                topic="cable size" 
+                context={{ size: result.recommendedCableSize, load: planData.totalLoad, length: planData.cableLength }}
+              />
             </div>
             <div className="text-xs md:text-sm text-foreground">
               Capacity: {result.deratedCapacity.toFixed(1)}A (derated)
@@ -127,10 +193,19 @@ export const ResultsStep = ({ result }: ResultsStepProps) => {
         </Card>
       </div>
 
+      {/* Professional Insights */}
+      <InstallationInsights planData={planData} result={result} />
+
       {/* Derating Factors - Mobile Optimized */}
       <Card className="bg-card border-border">
         <CardHeader className="pb-3 md:pb-4">
-          <CardTitle className="text-sm md:text-base text-foreground">Applied Derating Factors</CardTitle>
+          <CardTitle className="text-sm md:text-base text-foreground flex items-center gap-2">
+            Applied Derating Factors
+            <RegulationTooltip 
+              topic="derating factors" 
+              context={{ temp: result.factors.temperature, grouping: result.factors.grouping }}
+            />
+          </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
           <div className="grid grid-cols-3 gap-3 md:gap-4 text-center">

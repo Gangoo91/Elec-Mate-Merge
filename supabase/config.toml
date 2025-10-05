@@ -170,3 +170,15 @@ verify_jwt = false
 
 [functions.generate-pdf-monkey]
 verify_jwt = false
+
+[functions.parse-circuit-description]
+verify_jwt = false
+
+[functions.validate-installation]
+verify_jwt = false
+
+[functions.explain-regulation]
+verify_jwt = false
+
+[functions.generate-install-plan-pdf]
+verify_jwt = false
