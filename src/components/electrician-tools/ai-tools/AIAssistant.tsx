@@ -489,90 +489,113 @@ const AIAssistant = () => {
                 <CardContent className="p-3 sm:p-4 pt-0">
                   <div className="prose prose-invert max-w-none">
                     <div className="text-xs sm:text-sm text-gray-300 leading-relaxed space-y-4">
-                      {String(regulationsResult || '').split('\n').map((line, index) => {
-                        const trimmed = line.trim();
-                        if (!trimmed) return null;
-
-                        // Process the text to highlight BS numbers and regulations
-                        let processedText = trimmed;
-                        processedText = processedText.replace(/\b(BS\s*7671)[:\s]*/gi, '<span class="text-purple-400 font-bold">$1</span>');
-                        processedText = processedText.replace(/\b(\d{3}\.\d+(?:\.\d+)?(?:\.\d+)?)/g, '<span class="text-purple-300 font-semibold font-mono">$1</span>');
-                        processedText = processedText.replace(/\b(Zone\s+[0-2])\b/gi, '<span class="text-amber-300 font-semibold">$1</span>');
-                        processedText = processedText.replace(/\b(IPX[0-9X])\b/gi, '<span class="text-green-400 font-semibold">$1</span>');
-                        processedText = processedText.replace(/(\d+mm²)/g, '<span class="text-blue-400 font-semibold">$1</span>');
-
-                        // Divider lines
-                        if (trimmed.match(/^━+$/)) {
-                          return <hr key={index} className="border-neutral-600 my-4" />;
-                        }
-
-                        // Regulation header with emoji (📖 Regulation 701.512.2)
-                        if (trimmed.match(/^📖\s*Regulation\s+\d{3}\.\d+/)) {
-                          return (
-                            <div key={index} className="mt-6 mb-3 p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
-                              <h5 className="font-bold text-purple-300 text-sm flex items-center gap-2">
-                                <span dangerouslySetInnerHTML={{ __html: processedText }} />
-                              </h5>
-                            </div>
+                      {(() => {
+                        // Fallback parsing: Auto-split regulations if AI didn't format correctly
+                        let regulationsText = String(regulationsResult || '');
+                        const hasProperDividers = regulationsText.includes('━━━');
+                        
+                        if (!hasProperDividers) {
+                          // Auto-insert dividers and formatting for paragraph-style output
+                          regulationsText = regulationsText.replace(
+                            /(\n|^)(Regulation\s+\d{3}\.\d+(?:\.\d+)?)/gi,
+                            '\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n📖 $2'
                           );
-                        }
-
-                        // Section headers (Requirements:, Compliance:, etc.)
-                        if (trimmed.match(/^(Requirements|Compliance|Notes|Key Points):/i)) {
-                          return (
-                            <div key={index} className="mt-3 mb-2">
-                              <span className="text-amber-300 font-semibold text-sm" dangerouslySetInnerHTML={{ __html: processedText }} />
-                            </div>
-                          );
-                        }
-
-                        // Bullet points starting with •
-                        if (trimmed.match(/^[•●▪]\s+/)) {
-                          const bulletContent = trimmed.replace(/^[•●▪]\s+/, '');
-                          const processedBullet = bulletContent
-                            .replace(/\b(BS\s*7671)[:\s]*/gi, '<span class="text-purple-400 font-bold">$1</span>')
-                            .replace(/\b(\d{3}\.\d+(?:\.\d+)?(?:\.\d+)?)/g, '<span class="text-purple-300 font-semibold font-mono">$1</span>')
-                            .replace(/\b(Zone\s+[0-2])\b/gi, '<span class="text-amber-300 font-semibold">$1</span>')
-                            .replace(/\b(IPX[0-9X])\b/gi, '<span class="text-green-400 font-semibold">$1</span>')
-                            .replace(/(\d+mm²)/g, '<span class="text-blue-400 font-semibold">$1</span>');
                           
-                          return (
-                            <div key={index} className="flex items-start gap-3 my-2 ml-4">
-                              <span className="text-elec-yellow mt-0.5 flex-shrink-0">•</span>
-                              <span className="text-gray-300 flex-1" dangerouslySetInnerHTML={{ __html: processedBullet }} />
-                            </div>
-                          );
+                          if (!regulationsText.startsWith('━━━')) {
+                            regulationsText = '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' + regulationsText;
+                          }
                         }
+                        
+                        return regulationsText.split('\n').map((line, index) => {
+                          const trimmed = line.trim();
+                          if (!trimmed) return null;
 
-                        // Compliance/Warning notes with ⚠️
-                        if (trimmed.match(/^⚠️/)) {
-                          return (
-                            <div key={index} className="my-4 p-3 bg-amber-500/15 border border-amber-500/25 rounded-lg">
-                              <div className="flex items-start gap-2">
-                                <span className="text-amber-400 text-base flex-shrink-0">⚠️</span>
-                                <span className="text-amber-200 text-sm font-medium flex-1" dangerouslySetInnerHTML={{ __html: processedText.replace(/^⚠️\s*/, '') }} />
+                          // Process the text to highlight BS numbers and regulations
+                          let processedText = trimmed;
+                          processedText = processedText.replace(/\b(BS\s*7671)[:\s]*/gi, '<span class="text-purple-400 font-bold">$1</span>');
+                          processedText = processedText.replace(/\b(\d{3}\.\d+(?:\.\d+)?(?:\.\d+)?)/g, '<span class="text-purple-300 font-semibold font-mono">$1</span>');
+                          processedText = processedText.replace(/\b(Zone\s+[0-2])\b/gi, '<span class="text-amber-300 font-semibold">$1</span>');
+                          processedText = processedText.replace(/\b(IPX[0-9X])\b/gi, '<span class="text-green-400 font-semibold">$1</span>');
+                          processedText = processedText.replace(/(\d+mm²)/g, '<span class="text-blue-400 font-semibold">$1</span>');
+
+                          // Divider lines - more prominent spacing
+                          if (trimmed.match(/^━+$/)) {
+                            return <hr key={index} className="border-elec-yellow/30 my-6" />;
+                          }
+
+                          // Regulation header with emoji (📖 Regulation 701.512.2)
+                          if (trimmed.match(/^📖\s*Regulation\s+\d{3}\.\d+/i)) {
+                            return (
+                              <div key={index} className="mt-6 mb-3">
+                                <div className="inline-block bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg px-4 py-2.5">
+                                  <h5 className="font-bold text-elec-yellow text-sm">
+                                    <span dangerouslySetInnerHTML={{ __html: processedText }} />
+                                  </h5>
+                                </div>
                               </div>
-                            </div>
-                          );
-                        }
+                            );
+                          }
 
-                        // Standalone regulation numbers
-                        if (trimmed.match(/^\d{3}\.\d+(?:\.\d+)?:?\s*$/)) {
+                          // Section headers (Requirements:, Compliance:, etc.)
+                          if (trimmed.match(/^(Requirements|Compliance|Notes|Key Points):/i)) {
+                            return (
+                              <div key={index} className="mt-4 mb-2">
+                                <span className="text-elec-yellow/90 font-semibold text-xs uppercase tracking-wider" dangerouslySetInnerHTML={{ __html: processedText }} />
+                              </div>
+                            );
+                          }
+
+                          // Bullet points starting with •
+                          if (trimmed.match(/^[•●▪]\s+/)) {
+                            const bulletContent = trimmed.replace(/^[•●▪]\s+/, '');
+                            const processedBullet = bulletContent
+                              .replace(/\b(BS\s*7671)[:\s]*/gi, '<span class="text-purple-400 font-bold">$1</span>')
+                              .replace(/\b(\d{3}\.\d+(?:\.\d+)?(?:\.\d+)?)/g, '<span class="text-purple-300 font-semibold font-mono">$1</span>')
+                              .replace(/\b(Zone\s+[0-2])\b/gi, '<span class="text-amber-300 font-semibold">$1</span>')
+                              .replace(/\b(IPX[0-9X])\b/gi, '<span class="text-green-400 font-semibold">$1</span>')
+                              .replace(/(\d+mm²)/g, '<span class="text-blue-400 font-semibold">$1</span>');
+                            
+                            return (
+                              <div key={index} className="flex items-start gap-3 my-2 ml-4">
+                                <span className="text-elec-yellow mt-1 flex-shrink-0 text-sm">•</span>
+                                <span className="text-gray-300 flex-1 leading-relaxed" dangerouslySetInnerHTML={{ __html: processedBullet }} />
+                              </div>
+                            );
+                          }
+
+                          // Compliance/Warning notes with ⚠️
+                          if (trimmed.match(/^⚠️/)) {
+                            const warningText = processedText.replace(/^⚠️\s*/, '');
+                            return (
+                              <div key={index} className="my-4 p-3 bg-amber-500/10 border-l-4 border-amber-500 rounded-r">
+                                <div className="flex items-start gap-2">
+                                  <span className="text-amber-400 text-base flex-shrink-0">⚠️</span>
+                                  <span className="text-amber-200 text-sm font-medium flex-1" dangerouslySetInnerHTML={{ __html: warningText }} />
+                                </div>
+                              </div>
+                            );
+                          }
+
+                          // Standalone regulation numbers (fallback for old format)
+                          if (trimmed.match(/^Regulation\s+\d{3}\.\d+/i) && !trimmed.startsWith('📖')) {
+                            return (
+                              <div key={index} className="mt-6 mb-3">
+                                <div className="inline-block bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg px-4 py-2.5">
+                                  <h5 className="font-bold text-elec-yellow text-sm flex items-center gap-2">
+                                    <span className="text-xs">📖</span>
+                                    <span dangerouslySetInnerHTML={{ __html: processedText }} />
+                                  </h5>
+                                </div>
+                              </div>
+                            );
+                          }
+
+                          // Regular text paragraphs (regulation descriptions)
                           return (
-                            <div key={index} className="mt-6 mb-3 p-3 bg-purple-500/10 rounded border border-purple-500/20">
-                              <h5 className="font-bold text-purple-300 text-sm flex items-center gap-2">
-                                <span className="text-xs">📋</span>
-                                <span dangerouslySetInnerHTML={{ __html: processedText }} />
-                              </h5>
-                            </div>
+                            <p key={index} className="text-gray-300 text-sm my-2 leading-relaxed ml-4" dangerouslySetInnerHTML={{ __html: processedText }} />
                           );
-                        }
-
-                        // Regular text paragraphs
-                        return (
-                          <p key={index} className="text-gray-300 text-sm my-2 leading-relaxed" dangerouslySetInnerHTML={{ __html: processedText }} />
-                        );
-                      }).filter(Boolean)}
+                        }).filter(Boolean);
+                      })()}
                     </div>
                   </div>
                 </CardContent>
