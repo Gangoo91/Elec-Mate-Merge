@@ -32,28 +32,28 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
 
   return (
     <div className="space-y-6">
-      {/* Auto-detected conditions */}
-      <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-        <div className="flex items-center gap-2 mb-3">
-          <Badge className="bg-green-500 text-white">Auto-Detected</Badge>
-          <span className="text-sm text-muted-foreground">Based on your installation type</span>
+      {/* Auto-detected conditions - Mobile Optimized */}
+      <div className="p-3 md:p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+        <div className="flex items-center gap-2 mb-2 md:mb-3">
+          <Badge className="bg-green-500 text-white text-xs">Auto-Detected</Badge>
+          <span className="text-xs md:text-sm text-foreground/80">Based on your installation type</span>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-          <div>
-            <span className="text-muted-foreground">Ambient:</span>
-            <span className="ml-2 text-foreground font-medium">30°C</span>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 text-xs md:text-sm">
+          <div className="flex flex-col">
+            <span className="text-foreground/70">Ambient:</span>
+            <span className="text-foreground font-semibold">30°C</span>
           </div>
-          <div>
-            <span className="text-muted-foreground">Earthing:</span>
-            <span className="ml-2 text-foreground font-medium">TN-S</span>
+          <div className="flex flex-col">
+            <span className="text-foreground/70">Earthing:</span>
+            <span className="text-foreground font-semibold">TN-S</span>
           </div>
-          <div>
-            <span className="text-muted-foreground">Ze:</span>
-            <span className="ml-2 text-foreground font-medium">0.35Ω</span>
+          <div className="flex flex-col">
+            <span className="text-foreground/70">Ze:</span>
+            <span className="text-foreground font-semibold">0.35Ω</span>
           </div>
-          <div>
-            <span className="text-muted-foreground">Grouping:</span>
-            <span className="ml-2 text-foreground font-medium">1 cable</span>
+          <div className="flex flex-col">
+            <span className="text-foreground/70">Grouping:</span>
+            <span className="text-foreground font-semibold">1 cable</span>
           </div>
         </div>
       </div>

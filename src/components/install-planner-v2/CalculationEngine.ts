@@ -142,7 +142,7 @@ export const calculateCableSelection = (planData: InstallPlanDataV2): Calculatio
 // Helper functions
 const getCableTypeName = (cableType: CableType): string => {
   const names: Record<CableType, string> = {
-    'pvc-single': 'PVC Single Core',
+    'pvc-single': 'FP200 Gold Fire Rated', // For fire/emergency circuits
     'xlpe-single': 'XLPE Single Core (90°C)',
     'pvc-twin-earth': 'PVC Twin & Earth',
     'xlpe-twin-earth': 'XLPE Twin & Earth (90°C)',
@@ -199,6 +199,10 @@ const getProtectiveDevice = (current: number): string => {
   return `${rating}A Type B MCB`;
 };
 
+const isFireRatedCircuit = (cableType: CableType): boolean => {
+  return cableType === 'pvc-single'; // We use pvc-single to represent FP200
+};
+
 const generateMaterialsList = (
   cableSize: number,
   length: number,
@@ -208,21 +212,26 @@ const generateMaterialsList = (
   location?: string
 ): { name: string; quantity: string; specification: string }[] => {
   const lengthWithWastage = Math.ceil(length * 1.1);
-  const clipSpacing = installationMethod.includes('surface') ? 0.4 : 0.25; // meters
+  const isFireCircuit = isFireRatedCircuit(cableType);
+  
+  // Fire-rated circuits need metal clips at 300mm spacing max
+  const clipSpacing = isFireCircuit ? 0.3 : (installationMethod.includes('surface') ? 0.4 : 0.25);
   const numClips = Math.ceil(length / clipSpacing) + 2; // +2 for ends
   
   const cableSpec = getCableTypeName(cableType);
+  // Ensure minimum 1.5mm² for lighting circuits (industry standard)
+  const effectiveCableSize = cableSize < 1.5 ? 1.5 : cableSize;
   
   const materials = [
     {
       name: 'Cable',
       quantity: `${lengthWithWastage}m`,
-      specification: `${cableSize}mm² ${cableSpec}`
+      specification: `${effectiveCableSize}mm² ${cableSpec} (BS EN 50200 compliant${isFireCircuit ? ', 3-hour fire rating' : ''})`
     },
     {
       name: 'Protective Device',
       quantity: '1',
-      specification: protectiveDevice
+      specification: `${protectiveDevice} (BS EN 60898)`
     }
   ];
 
@@ -247,10 +256,24 @@ const generateMaterialsList = (
   } else if (installationMethod.includes('trunking')) {
     materials.push({ name: 'Trunking', quantity: `${Math.ceil(length / 3)}`, specification: '50×50mm PVC trunking (3m lengths)' });
   } else {
-    materials.push({ name: 'Cable Clips', quantity: `${numClips}`, specification: `${cableSize}mm² spacer bar saddles` });
+    // Fire-rated circuits require metal clips
+    const clipType = isFireCircuit ? 'Fire-rated metal cable clips' : 'Cable clips (spacer bar saddles)';
+    const clipSpec = isFireCircuit 
+      ? `BS 5839 compliant, 300mm max spacing` 
+      : `${effectiveCableSize}mm² plastic/metal saddles`;
+    materials.push({ name: clipType, quantity: `${numClips}`, specification: clipSpec });
   }
 
-  materials.push({ name: 'Circuit Labels', quantity: '2', specification: 'BS 7671 compliant identification' });
+  // Fire-rated circuits require additional materials
+  if (isFireCircuit) {
+    materials.push(
+      { name: 'Fire barrier compound', quantity: '1 tube', specification: 'Intumescent sealant (BS 476 Part 20)' },
+      { name: 'Fire-rated cable ties', quantity: '10-15', specification: 'Metal cable ties for fire compartments' },
+      { name: 'Circuit identification', quantity: '2', specification: 'EMERGENCY LIGHTING - DO NOT SWITCH OFF labels' }
+    );
+  } else {
+    materials.push({ name: 'Circuit labels', quantity: '2', specification: 'BS 7671 compliant identification' });
+  }
 
   return materials;
 };
@@ -276,10 +299,20 @@ const generatePracticalGuidance = (
         location === 'underground' ? 'Lay warning tape 150mm above cable' : 'Secure with galvanized cleats every 600mm'
       ]
     });
-  } else if (fireProtection === 'fire-alarm') {
+  } else if (fireProtection === 'fire-alarm' || loadType.toLowerCase().includes('emergency')) {
+    const isEmergencyLighting = loadType.toLowerCase().includes('emergency') && loadType.toLowerCase().includes('light');
     guidance.push({
-      title: 'Fire Circuit Installation (BS 5839)',
-      points: [
+      title: isEmergencyLighting ? 'Emergency Lighting Installation (BS 5266 & BS 5839)' : 'Fire Circuit Installation (BS 5839)',
+      points: isEmergencyLighting ? [
+        'Use FP200 Gold fire-rated cable with metal clips - maximum 300mm spacing',
+        'Segregate from power cables by minimum 50mm or use fire-rated barrier',
+        'Fire-stop all penetrations through fire compartments using intumescent sealant',
+        'Maintain cable support within 150mm of fire barrier penetrations',
+        'Label clearly: EMERGENCY LIGHTING CIRCUIT - DO NOT SWITCH OFF',
+        'Test 3-hour fire integrity after installation (BS EN 50200)',
+        'Minimum 1.5mm² cable size for emergency lighting circuits (industry standard)',
+        'Connect to maintained supply or central battery system as per BS 5266'
+      ] : [
         'Use metal fire-rated clips - maximum 300mm spacing',
         'Segregate from power cables by 50mm minimum',
         'Fire-stop all penetrations through fire compartments',
@@ -366,9 +399,9 @@ const generateCostEstimate = (
         1.5: 4.80, 2.5: 6.20, 4: 8.50, 6: 11.20, 10: 17.50,
         16: 26.00, 25: 38.00, 35: 52.00, 50: 68.00
       },
-      'pvc-single': {
-        1.0: 0.45, 1.5: 0.60, 2.5: 0.95, 4: 1.40, 6: 1.90,
-        10: 3.20, 16: 5.00, 25: 7.80, 35: 10.50, 50: 14.00
+      'pvc-single': { // FP200 Gold fire-rated cable pricing
+        1.0: 3.20, 1.5: 3.80, 2.5: 4.50, 4: 5.80, 6: 7.20,
+        10: 11.50, 16: 17.00, 25: 26.00, 35: 34.00, 50: 45.00
       },
       'xlpe-single': {
         1.0: 0.55, 1.5: 0.75, 2.5: 1.20, 4: 1.75, 6: 2.40,
@@ -399,15 +432,22 @@ const generateCostEstimate = (
   const mcbRating = protectiveDevice.split('A')[0];
   const mcbCost = mcbPrices[`${mcbRating}A`] || 10;
 
-  // Additional materials based on installation method
+  // Additional materials based on installation method and fire rating
+  const isFireCircuitLocal = isFireRatedCircuit(cableType);
   let accessoriesCost = 5;
+  
   if (cableType === 'swa') {
     accessoriesCost += 9; // SWA glands
   }
+  
+  if (isFireCircuitLocal) {
+    accessoriesCost += 18; // Fire barrier compound (£12) + fire-rated ties (£6)
+  }
 
-  const clipSpacing = installationMethod.includes('conduit') ? 0 : 0.4;
+  const clipSpacing = installationMethod.includes('conduit') ? 0 : (isFireCircuitLocal ? 0.3 : 0.4);
   const numClips = clipSpacing > 0 ? Math.ceil(length / clipSpacing) + 2 : 0;
-  const clipsCost = numClips * 0.15;
+  const clipCostEach = isFireCircuitLocal ? 0.45 : 0.15; // Fire-rated metal clips cost more
+  const clipsCost = numClips * clipCostEach;
 
   const materialsCost = cableCost + mcbCost + clipsCost + accessoriesCost;
   
@@ -415,11 +455,14 @@ const generateCostEstimate = (
   const labourHours = Math.max(1.5, Math.min(3, length / 8));
   const labourCost = labourHours * 35;
 
+  const cableDescription = isFireCircuitLocal ? 'FP200 Gold Cable' : 'Cable';
+  
   const breakdown = [
-    { item: `${cableSize}mm² Cable (${lengthWithWastage}m)`, cost: Math.round(cableCost) },
+    { item: `${cableDescription} ${cableSize >= 1.5 ? cableSize : 1.5}mm² (${lengthWithWastage}m)`, cost: Math.round(cableCost) },
     { item: protectiveDevice, cost: mcbCost },
-    { item: `Clips & Accessories`, cost: Math.round(clipsCost + accessoriesCost) },
-    { item: `Labour (${labourHours.toFixed(1)} hours)`, cost: Math.round(labourCost) }
+    { item: isFireCircuitLocal ? 'Fire-rated clips' : 'Cable clips', cost: Math.round(clipsCost) },
+    { item: isFireCircuitLocal ? 'Fire accessories (sealant, ties, labels)' : 'Accessories & labels', cost: Math.round(accessoriesCost) },
+    { item: `Labour (${labourHours.toFixed(1)} hours @ £35/hr)`, cost: Math.round(labourCost) }
   ];
 
   return {

@@ -150,8 +150,9 @@ export const getLoadTypeRequirements = (loadType: string): Partial<CableSelectio
     return { fireProtection: 'fire-alarm' };
   }
   
+  // Emergency lighting requires fire-rated cable (FP200 Gold)
   if (lower.includes('emergency') && lower.includes('light')) {
-    return { fireProtection: 'escape-route' };
+    return { fireProtection: 'fire-alarm' }; // Use fire-alarm to trigger FP200
   }
   
   if (lower.includes('outdoor') || lower.includes('garden') || lower.includes('outside')) {
