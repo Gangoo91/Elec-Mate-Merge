@@ -141,10 +141,21 @@ const InvoiceCardList = ({
             <div className="relative p-3">
               {/* Top Row: Invoice Number & Status Badge */}
               <div className="flex items-start justify-between mb-4 pb-3 border-b border-primary/20">
-                <h3 className="text-xl font-bold text-white">
-                  #{invoice.invoice_number || invoice.quoteNumber}
-                </h3>
-                {getStatusBadge(invoice)}
+                <div className="flex items-center gap-3">
+                  <h3 className="text-xl font-bold text-foreground">
+                    #{invoice.invoice_number || invoice.quoteNumber}
+                  </h3>
+                  {getStatusBadge(invoice)}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onInvoiceAction(invoice)}
+                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                  aria-label="Edit invoice"
+                >
+                  <Edit className="h-4 w-4" />
+                </Button>
               </div>
 
               {/* Middle Row: Logo + Client Info (left) | Dates (right) */}
