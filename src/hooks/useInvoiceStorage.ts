@@ -122,6 +122,7 @@ export const useInvoiceStorage = () => {
           work_completion_date: invoice.work_completion_date?.toISOString(),
           items: JSON.parse(JSON.stringify(mergedItems)), // Save merged items
           settings: JSON.parse(JSON.stringify(invoice.settings || {})),
+          job_details: invoice.jobDetails ? JSON.parse(JSON.stringify(invoice.jobDetails)) : null,
           subtotal: invoice.subtotal,
           overhead: invoice.overhead,
           profit: invoice.profit,

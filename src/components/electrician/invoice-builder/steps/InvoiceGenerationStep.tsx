@@ -45,6 +45,7 @@ export const InvoiceGenerationStep = ({
           ...invoice,
           items: mergedItems,
           additional_invoice_items: [],
+          jobDetails: invoice.jobDetails,
         };
         
         await generateInvoicePDF(completeInvoice, companyProfile);
