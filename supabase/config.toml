@@ -1,5 +1,7 @@
-
 project_id = "jtwygbeceundfgnkirof"
+
+[functions.generate-briefing-content]
+verify_jwt = false
 
 [functions.latex-pdf-generator]
 verify_jwt = false

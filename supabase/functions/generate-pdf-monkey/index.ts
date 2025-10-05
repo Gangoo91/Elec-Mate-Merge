@@ -10,6 +10,7 @@ const corsHeaders = {
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
 const QUOTE_TEMPLATE_ID = 'B9CD1B3D-71A2-4F67-84E9-B81E0DC3E0B2';
 const INVOICE_TEMPLATE_ID = 'DC891A6A-4B38-48F5-A7DB-7CD0B550F4A2';
+const BRIEFING_TEMPLATE_ID = 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D';
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -33,8 +34,8 @@ serve(async (req) => {
     }
 
     // Parse request body
-    const { quote, companyProfile, invoice_mode } = await req.json();
-    console.log('[PDF-MONKEY] Received request - Invoice mode:', invoice_mode, 'Quote ID:', quote?.id);
+    const { quote, companyProfile, invoice_mode, briefing, briefing_mode } = await req.json();
+    console.log('[PDF-MONKEY] Received request - Mode:', invoice_mode ? 'invoice' : briefing_mode ? 'briefing' : 'quote');
     console.log('[PDF-MONKEY] Received items count:', quote?.items?.length || 0);
     console.log('[PDF-MONKEY] Received settings:', JSON.stringify(quote?.settings, null, 2));
     console.log('[PDF-MONKEY] Using provided data from UI - NOT fetching from database');
@@ -50,12 +51,56 @@ serve(async (req) => {
     }
 
     // Select template based on mode
-    const TEMPLATE_ID = invoice_mode ? INVOICE_TEMPLATE_ID : QUOTE_TEMPLATE_ID;
-    console.log('[PDF-MONKEY] Using template:', TEMPLATE_ID, 'for', invoice_mode ? 'invoice' : 'quote');
+    const TEMPLATE_ID = briefing_mode ? BRIEFING_TEMPLATE_ID : invoice_mode ? INVOICE_TEMPLATE_ID : QUOTE_TEMPLATE_ID;
+    console.log('[PDF-MONKEY] Using template:', TEMPLATE_ID, 'for', briefing_mode ? 'briefing' : invoice_mode ? 'invoice' : 'quote');
 
-    // Transform data for invoice template
+    // Transform data based on mode
     let payload;
-    if (invoice_mode) {
+    if (briefing_mode) {
+      // Transform briefing data for PDF
+      const transformedBriefing = {
+        company_logo: companyProfile?.logo_url || companyProfile?.logo_data_url || "",
+        company_name: companyProfile?.company_name || "Professional Contractor",
+        company_address: companyProfile?.company_address || "",
+        company_phone: companyProfile?.company_phone || "",
+        company_email: companyProfile?.company_email || "",
+        
+        briefing_title: briefing.briefing_name,
+        job_name: briefing.job_name || briefing.briefing_name,
+        location: briefing.location,
+        briefing_date: new Date(briefing.briefing_date).toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        }),
+        briefing_time: briefing.briefing_time,
+        conductor_name: briefing.conductor_name || briefing.created_by_name,
+        contractor_company: briefing.contractor_company || companyProfile?.company_name || "",
+        created_by: briefing.created_by_name,
+        
+        briefing_description: briefing.briefing_description || briefing.notes || "",
+        hazards: briefing.hazards || "",
+        safety_warning: briefing.safety_warning || "",
+        additional_notes: briefing.notes || "",
+        
+        photos: (briefing.photos || []).map((p: any) => ({
+          url: p.url,
+          caption: p.caption || "Reference photo"
+        })),
+        
+        generation_timestamp: new Date().toLocaleString('en-GB', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        })
+      };
+
+      payload = transformedBriefing;
+      console.log('[PDF-MONKEY] Transformed briefing payload');
+    } else if (invoice_mode) {
       // Transform to invoice format
       // Use bank details from invoice settings first, fallback to company profile
       const bankDetails = quote?.settings?.bankDetails || companyProfile?.bank_details || {};

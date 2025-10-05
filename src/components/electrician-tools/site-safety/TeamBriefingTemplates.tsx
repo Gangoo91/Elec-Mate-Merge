@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2, X, MoreHorizontal, Calendar, MapPin, Bell, QrCode, Camera, Trash } from "lucide-react";
+import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2, X, MoreHorizontal, Calendar, MapPin, Bell, QrCode, Camera, Trash, Sparkles, History } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import {
@@ -21,6 +21,9 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import { BriefingFormWizard } from "./BriefingFormWizard";
+import { BriefingHistory } from "./BriefingHistory";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface BriefingTemplate {
   id: string;
@@ -63,6 +66,8 @@ const TeamBriefingTemplates = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [templateToDelete, setTemplateToDelete] = useState<BriefingTemplate | null>(null);
+  const [showAIWizard, setShowAIWizard] = useState(false);
+  const [activeTab, setActiveTab] = useState("briefings");
   
   const [templates, setTemplates] = useState<BriefingTemplate[]>([
     {
@@ -601,31 +606,54 @@ const TeamBriefingTemplates = () => {
         </CardContent>
       </Card>
 
-      {/* Header and Actions */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg sm:text-xl">
-              <Users className="h-5 w-5" />
-              Team Briefing Templates
-            </CardTitle>
-            <MobileButton 
-              onClick={createNewTemplate} 
-              variant="elec"
-              size="default"
-              icon={<Plus className="h-4 w-4" />}
-            >
-              New Template
-            </MobileButton>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            Pre-built safety briefing templates to ensure consistent communication 
-            and safety standards across all your electrical projects.
-          </p>
-        </CardContent>
-      </Card>
+      {/* Tabs Navigation */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-2 bg-card border border-primary/30">
+          <TabsTrigger value="briefings" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-background">
+            <Users className="h-4 w-4 mr-2" />
+            Templates
+          </TabsTrigger>
+          <TabsTrigger value="history" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-background">
+            <History className="h-4 w-4 mr-2" />
+            History
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="briefings" className="space-y-6 mt-6">
+          {/* Header and Actions */}
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg sm:text-xl">
+                  <Users className="h-5 w-5" />
+                  Team Briefing Templates
+                </CardTitle>
+                <div className="flex gap-2">
+                  <MobileButton 
+                    onClick={() => setShowAIWizard(true)} 
+                    variant="elec"
+                    size="default"
+                    icon={<Sparkles className="h-4 w-4" />}
+                  >
+                    AI Briefing
+                  </MobileButton>
+                  <MobileButton 
+                    onClick={createNewTemplate} 
+                    variant="outline"
+                    size="default"
+                    icon={<Plus className="h-4 w-4" />}
+                  >
+                    Template
+                  </MobileButton>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Create AI-powered briefings instantly or use pre-built templates for consistent safety standards.
+              </p>
+            </CardContent>
+          </Card>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
         {/* Template List */}
@@ -1262,6 +1290,26 @@ const TeamBriefingTemplates = () => {
         variant="destructive"
         onConfirm={() => templateToDelete && deleteTemplate(templateToDelete)}
       />
+
+        </TabsContent>
+
+        <TabsContent value="history" className="mt-6">
+          <BriefingHistory />
+        </TabsContent>
+      </Tabs>
+
+      {/* AI Wizard Dialog */}
+      <Dialog open={showAIWizard} onOpenChange={setShowAIWizard}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <BriefingFormWizard 
+            onClose={() => setShowAIWizard(false)} 
+            onSuccess={() => {
+              setShowAIWizard(false);
+              fetchBriefings();
+            }} 
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

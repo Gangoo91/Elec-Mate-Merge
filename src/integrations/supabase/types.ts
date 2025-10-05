@@ -3477,58 +3477,118 @@ export type Database = {
       }
       team_briefings: {
         Row: {
+          ai_generated: boolean | null
+          ai_prompt_data: Json | null
           attendees: Json
           briefing_date: string
+          briefing_description: string | null
           briefing_name: string
           briefing_time: string
           completed: boolean
+          conductor_name: string | null
+          contractor_company: string | null
           created_at: string
+          created_by_name: string | null
+          custom_hazards: string | null
           duration_minutes: number | null
+          environment_type: string | null
           equipment_required: string[] | null
+          hazards: string | null
           id: string
+          identified_hazards: string[] | null
+          job_name: string | null
           key_points: string[] | null
           location: string
           notes: string | null
+          pdf_document_id: string | null
+          pdf_generated_at: string | null
+          pdf_url: string | null
+          photos: Json | null
+          risk_level: string | null
           safety_points: string[] | null
+          safety_warning: string | null
+          special_considerations: string | null
+          team_size: number | null
           template_id: string
           updated_at: string
           user_id: string
+          work_scope: string | null
         }
         Insert: {
+          ai_generated?: boolean | null
+          ai_prompt_data?: Json | null
           attendees?: Json
           briefing_date: string
+          briefing_description?: string | null
           briefing_name: string
           briefing_time: string
           completed?: boolean
+          conductor_name?: string | null
+          contractor_company?: string | null
           created_at?: string
+          created_by_name?: string | null
+          custom_hazards?: string | null
           duration_minutes?: number | null
+          environment_type?: string | null
           equipment_required?: string[] | null
+          hazards?: string | null
           id?: string
+          identified_hazards?: string[] | null
+          job_name?: string | null
           key_points?: string[] | null
           location: string
           notes?: string | null
+          pdf_document_id?: string | null
+          pdf_generated_at?: string | null
+          pdf_url?: string | null
+          photos?: Json | null
+          risk_level?: string | null
           safety_points?: string[] | null
+          safety_warning?: string | null
+          special_considerations?: string | null
+          team_size?: number | null
           template_id: string
           updated_at?: string
           user_id: string
+          work_scope?: string | null
         }
         Update: {
+          ai_generated?: boolean | null
+          ai_prompt_data?: Json | null
           attendees?: Json
           briefing_date?: string
+          briefing_description?: string | null
           briefing_name?: string
           briefing_time?: string
           completed?: boolean
+          conductor_name?: string | null
+          contractor_company?: string | null
           created_at?: string
+          created_by_name?: string | null
+          custom_hazards?: string | null
           duration_minutes?: number | null
+          environment_type?: string | null
           equipment_required?: string[] | null
+          hazards?: string | null
           id?: string
+          identified_hazards?: string[] | null
+          job_name?: string | null
           key_points?: string[] | null
           location?: string
           notes?: string | null
+          pdf_document_id?: string | null
+          pdf_generated_at?: string | null
+          pdf_url?: string | null
+          photos?: Json | null
+          risk_level?: string | null
           safety_points?: string[] | null
+          safety_warning?: string | null
+          special_considerations?: string | null
+          team_size?: number | null
           template_id?: string
           updated_at?: string
           user_id?: string
+          work_scope?: string | null
         }
         Relationships: []
       }
