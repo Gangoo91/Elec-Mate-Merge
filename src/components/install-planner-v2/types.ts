@@ -1,0 +1,72 @@
+export interface EnvironmentConditions {
+  ambientTemp: number;
+  conditions: string;
+  earthing: string;
+  ze: number;
+  grouping: number;
+}
+
+export interface EnvironmentalProfile {
+  autoDetected: EnvironmentConditions;
+  userOverrides: Partial<EnvironmentConditions>;
+  finalApplied: EnvironmentConditions;
+}
+
+export interface InstallPlanDataV2 {
+  // Mode
+  mode: 'express' | 'professional' | 'multi';
+  
+  // Core Required
+  installationType: 'domestic' | 'commercial' | 'industrial';
+  loadType: string;
+  totalLoad: number;
+  voltage: number;
+  phases: 'single' | 'three';
+  
+  // Cable Required
+  cableLength: number;
+  cableType: string;
+  installationMethod: string;
+  
+  // Environment
+  environmentalProfile: EnvironmentalProfile;
+  
+  // Optional fields
+  powerFactor?: number;
+  circuits?: CircuitV2[];
+  
+  // State Management
+  savedAt?: Date;
+  resumeToken?: string;
+}
+
+export interface CircuitV2 {
+  id: string;
+  name: string;
+  loadType: string;
+  totalLoad: number;
+  voltage: number;
+  phases: 'single' | 'three';
+  cableLength: number;
+  enabled: boolean;
+  environmentOverrides?: Partial<EnvironmentConditions>;
+}
+
+export interface CalculationResult {
+  recommendedCableSize: number;
+  capacity: number;
+  deratedCapacity: number;
+  protectiveDevice: string;
+  voltageDrop: number;
+  voltageDropPercent: number;
+  zs: number;
+  compliant: boolean;
+  factors: {
+    temperature: number;
+    grouping: number;
+    overall: number;
+  };
+  safetyMargin: number;
+  warnings: string[];
+  recommendations: string[];
+}

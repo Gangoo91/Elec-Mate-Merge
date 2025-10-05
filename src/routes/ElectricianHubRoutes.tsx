@@ -56,7 +56,7 @@ import QuoteBuilderCreate from "@/pages/electrician/QuoteBuilderCreate";
 import QuotesPage from "@/pages/electrician/QuotesPage";
 import InvoicesPage from "@/pages/electrician/InvoicesPage";
 import Calculations from "@/pages/electrician-tools/Calculations";
-import InstallPlanner from "@/pages/electrician-tools/InstallPlanner";
+import InstallPlannerV2 from "@/pages/electrician-tools/InstallPlannerV2";
 import InspectionTesting from "@/pages/electrician-tools/InspectionTesting";
 import SiteSafety from "@/pages/electrician-tools/SiteSafety";
 
@@ -123,7 +123,7 @@ const ElectricianHubRoutes = () => (
     
     {/* Core Workshop Tools */}
     <Route path="calculations" element={<Calculations />} />
-    <Route path="install-planner" element={<InstallPlanner />} />
+    <Route path="install-planner" element={<InstallPlannerV2 />} />
     <Route path="inspection-testing" element={<InspectionTesting />} />
     <Route path="site-safety" element={<SiteSafety />} />
   </Routes>
