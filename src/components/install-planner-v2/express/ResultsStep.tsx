@@ -212,12 +212,12 @@ export const ResultsStep = ({ result }: ResultsStepProps) => {
           <div className="space-y-3 md:space-y-4">
             {result.practicalGuidance.map((section, idx) => (
               <div key={idx}>
-                <h4 className="font-semibold text-xs md:text-sm mb-1.5 md:mb-2 text-foreground">{section.title}</h4>
-                <ul className="space-y-1 md:space-y-1.5">
+                <h4 className="font-semibold text-xs md:text-sm mb-2 text-foreground">{section.title}</h4>
+                <ul className="space-y-1.5 md:space-y-2">
                   {section.points.map((point, pidx) => (
-                    <li key={pidx} className="text-xs md:text-sm text-foreground/80 flex items-start gap-1.5 md:gap-2">
-                      <CheckCircle2 className="h-3 w-3 md:h-4 md:w-4 mt-0.5 text-primary shrink-0" />
-                      <span>{point}</span>
+                    <li key={pidx} className="grid grid-cols-[14px_1fr] gap-2 items-start text-xs md:text-sm text-foreground leading-relaxed">
+                      <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-success shrink-0" />
+                      <span className="break-words">{point}</span>
                     </li>
                   ))}
                 </ul>

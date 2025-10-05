@@ -155,6 +155,11 @@ export const getLoadTypeRequirements = (loadType: string): Partial<CableSelectio
     return { fireProtection: 'fire-alarm' }; // Use fire-alarm to trigger FP200
   }
   
+  // Outdoor socket detection - requires SWA and minimum 2.5mm²
+  if (lower.includes('outdoor') && lower.includes('socket')) {
+    return { location: 'outside', mechanicalProtection: true };
+  }
+  
   if (lower.includes('outdoor') || lower.includes('garden') || lower.includes('outside')) {
     return { location: 'outside' };
   }

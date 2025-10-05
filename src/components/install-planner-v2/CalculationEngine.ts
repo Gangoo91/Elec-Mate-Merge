@@ -23,6 +23,9 @@ export const calculateCableSelection = (planData: InstallPlanDataV2): Calculatio
 
   const selectedCableType = cableSelection.cableType;
 
+  // Determine voltage drop limit: 3% for lighting, 5% for power
+  const voltageDropLimit = planData.loadType.toLowerCase().includes('light') ? 3 : 5;
+  
   // Use the simplified cable sizing engine with intelligent cable type
   const result = calculateSimplifiedCableSize({
     current: designCurrent,
@@ -30,10 +33,16 @@ export const calculateCableSelection = (planData: InstallPlanDataV2): Calculatio
     ambientTemp: planData.environmentalProfile.finalApplied.ambientTemp,
     groupingCircuits: planData.environmentalProfile.finalApplied.grouping,
     length: planData.cableLength,
-    cableType: selectedCableType
+    voltage: planData.voltage,
+    cableType: selectedCableType,
+    voltageDropLimit
   });
 
   if (!result) {
+    const failureReason = planData.cableLength > 50 
+      ? `For ${planData.cableLength}m cable run, voltage drop exceeds ${voltageDropLimit}% limit with available cable sizes`
+      : 'No suitable cable size found for the specified parameters';
+    
     return {
       recommendedCableSize: 0,
       capacity: 0,
@@ -45,18 +54,21 @@ export const calculateCableSelection = (planData: InstallPlanDataV2): Calculatio
       compliant: false,
       factors: { temperature: 1, grouping: 1, overall: 1 },
       safetyMargin: 0,
-      warnings: ['Unable to calculate suitable cable size'],
-      recommendations: ['Check input parameters'],
+      warnings: [failureReason],
+      recommendations: [
+        'Increase cable size to reduce voltage drop',
+        'Reduce cable length or supply closer to load',
+        'Consider alternative installation method or cable type'
+      ],
       materials: [],
       practicalGuidance: [],
       costEstimate: { materials: 0, labour: 0, total: 0, breakdown: [] }
     };
   }
 
-  // Calculate voltage drop (simplified - using mV/A/m approach)
-  const voltageDropPerMeter = getVoltageDrop(result.recommendedSize, designCurrent);
-  const totalVoltageDrop = voltageDropPerMeter * planData.cableLength;
-  const voltageDropPercent = (totalVoltageDrop / planData.voltage) * 100;
+  // Use voltage drop from sizing result (already calculated)
+  const voltageDropPercent = result.voltageDropPercent;
+  const totalVoltageDrop = (voltageDropPercent / 100) * planData.voltage;
 
   // Calculate Zs (simplified)
   const r1r2 = getR1R2(result.recommendedSize);
@@ -71,14 +83,12 @@ export const calculateCableSelection = (planData: InstallPlanDataV2): Calculatio
 
   // Add cable selection reasoning
   recommendations.push(`Cable type: ${getCableTypeName(selectedCableType)} - ${cableSelection.reason}`);
-
-  if (voltageDropPercent > 3) {
-    warnings.push(`Voltage drop of ${voltageDropPercent.toFixed(2)}% exceeds 3% limit for lighting circuits`);
-    recommendations.push('Consider increasing cable size or reducing cable length');
-  }
-
-  if (voltageDropPercent > 5) {
-    warnings.push(`Voltage drop of ${voltageDropPercent.toFixed(2)}% exceeds 5% limit`);
+  
+  // Add selection reason if cable was sized for voltage drop
+  if (result.selectionReason === 'voltage-drop') {
+    recommendations.push(`Cable size selected to meet voltage drop requirement for ${planData.cableLength}m run`);
+  } else if (result.selectionReason === 'current') {
+    recommendations.push(`Cable size selected based on current carrying capacity`);
   }
 
   if (result.safetyMargin < 10) {
