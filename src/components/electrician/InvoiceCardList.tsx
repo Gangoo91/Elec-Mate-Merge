@@ -172,7 +172,7 @@ const InvoiceCardList = ({
               {/* Middle Row: Logo + Client Info (left) | Dates (right) */}
               <div className="flex items-start justify-between mb-4 gap-3">
                 {/* Left: Logo + Client */}
-                <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
                   <div className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center flex-shrink-0">
                     <FileText className="h-10 w-10 sm:h-14 sm:w-14 text-muted-foreground/40" strokeWidth={1.5} />
                   </div>
