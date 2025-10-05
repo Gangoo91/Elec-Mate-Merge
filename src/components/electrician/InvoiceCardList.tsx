@@ -134,52 +134,58 @@ const InvoiceCardList = ({
         return (
           <div
             key={invoice.id}
-            className="relative bg-gradient-to-br from-background to-elec-card border border-elec-yellow/20 rounded-xl overflow-hidden hover:border-elec-yellow/40 hover:shadow-lg transition-all"
+            className="relative bg-slate-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all"
+            style={{
+              backgroundImage: 'url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
           >
-            {/* Dark overlay for better contrast */}
-            <div className="absolute inset-0 bg-gradient-to-b from-background/40 to-background/60 pointer-events-none" />
+            {/* Dark overlay - exact match to reference */}
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
             
             {/* Content Container */}
-            <div className="relative z-10">
-              {/* Header - Invoice Number & Status */}
-              <div className="px-4 pt-4 pb-3 flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  {/* Logo/Icon Placeholder */}
-                  <div className="w-12 h-12 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30 flex items-center justify-center">
-                    <FileText className="h-6 w-6 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-foreground">
-                      #{invoice.invoice_number || invoice.quoteNumber}
-                    </h4>
-                  </div>
-                </div>
-                {/* Status Badge - Top Right */}
-                <div className="absolute top-4 right-4">
+            <div className="relative z-10 p-4">
+              {/* Top Row: Invoice Number & Status Badge */}
+              <div className="flex items-start justify-between mb-6">
+                <h3 className="text-xl font-bold text-white">
+                  #{invoice.invoice_number || invoice.quoteNumber}
+                </h3>
+                <div className="flex items-center gap-1.5 bg-blue-500/20 text-blue-300 border border-blue-400/30 px-3 py-1 rounded-full text-xs font-medium">
+                  <Edit className="h-3 w-3" />
                   {getStatusBadge(invoice)}
                 </div>
               </div>
 
-              {/* Client & Dates Section */}
-              <div className="px-4 pb-4 flex justify-between items-start gap-4">
-                <div className="flex-1 min-w-0" />
-                <div className="text-right space-y-2">
-                  <div>
-                    <div className="text-xs text-muted-foreground/80 mb-0.5">Client</div>
-                    <div className="font-semibold text-sm">{invoice.client?.name || 'N/A'}</div>
+              {/* Middle Row: Logo + Client Info (left) | Dates (right) */}
+              <div className="flex items-start justify-between mb-8">
+                {/* Left: Logo + Client */}
+                <div className="flex items-center gap-4">
+                  <div className="w-20 h-20 flex items-center justify-center">
+                    <FileText className="h-16 w-16 text-white/40" strokeWidth={1.5} />
                   </div>
+                  <div>
+                    <div className="text-sm text-white/60 mb-1">Client</div>
+                    <div className="text-base text-white font-medium">
+                      {invoice.client?.name || 'N/A'}
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Right: Dates */}
+                <div className="text-right space-y-3">
                   {invoice.invoice_date && (
                     <div>
-                      <div className="text-xs text-muted-foreground/80 mb-0.5">Issued</div>
-                      <div className="text-sm font-medium">
+                      <div className="text-sm text-white/60 mb-1">Issued</div>
+                      <div className="text-sm text-white font-medium">
                         {format(new Date(invoice.invoice_date), "dd MMM yyyy")}
                       </div>
                     </div>
                   )}
                   {invoice.invoice_due_date && (
                     <div>
-                      <div className="text-xs text-muted-foreground/80 mb-0.5">Due Date</div>
-                      <div className="text-sm font-semibold">
+                      <div className="text-sm text-white/60 mb-1">Due Date</div>
+                      <div className="text-sm text-white font-semibold">
                         {format(new Date(invoice.invoice_due_date), "dd MMM yyyy")}
                       </div>
                     </div>
@@ -187,100 +193,98 @@ const InvoiceCardList = ({
                 </div>
               </div>
 
-              {/* Total Amount - Centered */}
-              <div className="px-4 pb-4">
-                <div className="bg-background/40 backdrop-blur-sm border border-elec-yellow/20 rounded-lg p-4 text-center">
-                  <div className="text-xs text-muted-foreground/80 mb-1.5 font-medium uppercase tracking-wider">Total Amount</div>
-                  <div className="text-3xl font-bold text-foreground">
-                    {formatCurrency(invoice.total)}
-                  </div>
+
+              {/* Total Amount - Centered, White Text */}
+              <div className="text-center mb-6">
+                <div className="text-sm text-white/60 mb-2 font-normal">Total Amount</div>
+                <div className="text-4xl font-bold text-white">
+                  {formatCurrency(invoice.total)}
                 </div>
               </div>
 
-              {/* Primary Action Button - Centered */}
-              <div className="px-4 pb-3">
-                <MobileButton
-                  size="lg"
-                  variant="elec"
+              {/* Primary Action Button - Yellow, Centered, Rounded */}
+              <div className="mb-4">
+                <button
                   onClick={() => onInvoiceAction(invoice)}
-                  icon={actionButton.icon}
-                  className={`w-full ${actionButton.className}`}
+                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors"
                   aria-label={actionButton.ariaLabel}
                 >
+                  {actionButton.icon}
                   {actionButton.text}
-                </MobileButton>
+                </button>
               </div>
 
-              {/* Bottom Action Bar */}
-              <div className="border-t border-elec-yellow/10 bg-background/20 backdrop-blur-sm">
-                <div className="grid grid-cols-3 divide-x divide-elec-yellow/10">
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => onDownloadPDF(invoice)}
-                    disabled={downloadingPdfId === invoice.id}
-                    className="h-12 rounded-none hover:bg-elec-yellow/10 flex flex-col gap-1 items-center justify-center"
-                  >
-                    <Download className="h-4 w-4" />
-                    <span className="text-xs">
-                      {downloadingPdfId === invoice.id ? 'Loading' : 'PDF'}
-                    </span>
-                  </Button>
 
-                  {invoice.invoice_status !== 'paid' ? (
-                    <>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => onSendInvoice(invoice)}
-                        disabled={sendingInvoiceId === invoice.id}
-                        className="h-12 rounded-none hover:bg-elec-yellow/10 flex flex-col gap-1 items-center justify-center"
-                      >
-                        <Mail className="h-4 w-4" />
-                        <span className="text-xs">
-                          {sendingInvoiceId === invoice.id ? 'Sending' : 'Send'}
-                        </span>
-                      </Button>
+              {/* Bottom Action Bar - Three Dark Rounded Buttons */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => onDownloadPDF(invoice)}
+                  disabled={downloadingPdfId === invoice.id}
+                  className="flex-1 bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white py-3 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                >
+                  <Download className="h-4 w-4" />
+                  <span className="text-sm font-medium">
+                    {downloadingPdfId === invoice.id ? 'Loading' : 'PDF'}
+                  </span>
+                </button>
 
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            disabled={markingPaidId === invoice.id}
-                            className="h-12 rounded-none hover:bg-elec-yellow/10 flex flex-col gap-1 items-center justify-center"
-                          >
-                            <CheckCircle className="h-4 w-4" />
-                            <span className="text-xs">Mark Paid</span>
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Mark invoice as paid?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              This will mark invoice {invoice.invoice_number} as paid.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={() => onMarkAsPaid(invoice)}>
-                              Confirm
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </>
-                  ) : (
-                    <>
-                      <div className="h-12 flex items-center justify-center">
-                        <span className="text-xs text-muted-foreground">-</span>
-                      </div>
-                      <div className="h-12 flex items-center justify-center">
-                        <span className="text-xs text-muted-foreground">-</span>
-                      </div>
-                    </>
-                  )}
-                </div>
+                {invoice.invoice_status !== 'paid' ? (
+                  <>
+                    <button
+                      onClick={() => onSendInvoice(invoice)}
+                      disabled={sendingInvoiceId === invoice.id}
+                      className="flex-1 bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white py-3 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                    >
+                      <Mail className="h-4 w-4" />
+                      <span className="text-sm font-medium">
+                        {sendingInvoiceId === invoice.id ? 'Sending' : 'Send'}
+                      </span>
+                    </button>
+
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <button
+                          disabled={markingPaidId === invoice.id}
+                          className="flex-1 bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white py-3 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                        >
+                          <CheckCircle className="h-4 w-4" />
+                          <span className="text-sm font-medium">Paid</span>
+                        </button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Mark invoice as paid?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This will mark invoice {invoice.invoice_number} as paid.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={() => onMarkAsPaid(invoice)}>
+                            Confirm
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      disabled
+                      className="flex-1 bg-black/20 backdrop-blur-sm text-white/40 py-3 rounded-xl flex items-center justify-center gap-2"
+                    >
+                      <Mail className="h-4 w-4" />
+                      <span className="text-sm font-medium">Send</span>
+                    </button>
+                    <button
+                      disabled
+                      className="flex-1 bg-black/20 backdrop-blur-sm text-white/40 py-3 rounded-xl flex items-center justify-center gap-2"
+                    >
+                      <CheckCircle className="h-4 w-4" />
+                      <span className="text-sm font-medium">Paid</span>
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
