@@ -136,11 +136,9 @@ const InvoiceCardList = ({
             key={invoice.id}
             className="relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border border-primary/20 border-l-3 border-l-primary/20"
           >
-            {/* Dark overlay - exact match to reference */}
-            <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
             
             {/* Content Container */}
-            <div className="relative z-10 p-4">
+            <div className="relative p-4">
               {/* Top Row: Invoice Number & Status Badge */}
               <div className="flex items-start justify-between mb-6">
                 <h3 className="text-xl font-bold text-white">
