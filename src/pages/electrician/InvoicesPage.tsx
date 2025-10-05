@@ -436,84 +436,76 @@ const InvoicesPage = () => {
               return (
                 <div
                   key={invoice.id}
-                  className="mobile-card border border-elec-yellow/20 rounded-lg mobile-interactive overflow-hidden"
+                  className="bg-elec-card border border-elec-yellow/20 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-all"
                 >
-                  <div className="space-y-4 min-w-0 w-full">
-                    {/* Header Section */}
-                    <div className="flex flex-col space-y-2 min-w-0">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 min-w-0">
-                        <h4 className="mobile-heading text-lg font-semibold truncate min-w-0 flex-1">
-                          Invoice #{invoice.invoice_number || invoice.quoteNumber}
-                        </h4>
-                        <div className="flex-shrink-0">
-                          {getStatusBadge(invoice)}
+                  {/* Header with Status */}
+                  <div className="bg-elec-gray/30 px-4 py-3 border-b border-elec-yellow/10">
+                    <div className="flex items-center justify-between gap-3">
+                      <h4 className="text-lg font-semibold text-foreground truncate">
+                        #{invoice.invoice_number || invoice.quoteNumber}
+                      </h4>
+                      {getStatusBadge(invoice)}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-4 space-y-4">
+                    {/* Client & Dates */}
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <span className="text-sm text-muted-foreground min-w-[60px]">Client:</span>
+                        <span className="text-sm font-medium truncate">{invoice.client?.name || 'N/A'}</span>
+                      </div>
+                      {invoice.invoice_date && (
+                        <div className="flex items-start gap-2">
+                          <span className="text-sm text-muted-foreground min-w-[60px]">Issued:</span>
+                          <span className="text-sm">{format(new Date(invoice.invoice_date), "dd MMM yyyy")}</span>
                         </div>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="mobile-text text-muted-foreground truncate min-w-0">
-                          Client: {invoice.client?.name || 'N/A'}
-                        </p>
-                        {invoice.invoice_date && (
-                          <p className="mobile-text text-sm text-muted-foreground truncate min-w-0">
-                            Issued: {format(new Date(invoice.invoice_date), "dd MMM yyyy")}
-                          </p>
-                        )}
-                        {invoice.invoice_due_date && (
-                          <p className="mobile-text text-sm text-muted-foreground truncate min-w-0">
-                            Due: {format(new Date(invoice.invoice_due_date), "dd MMM yyyy")}
-                          </p>
-                        )}
-                      </div>
+                      )}
+                      {invoice.invoice_due_date && (
+                        <div className="flex items-start gap-2">
+                          <span className="text-sm text-muted-foreground min-w-[60px]">Due:</span>
+                          <span className="text-sm">{format(new Date(invoice.invoice_due_date), "dd MMM yyyy")}</span>
+                        </div>
+                      )}
                     </div>
 
-                    {/* Amount Section */}
-                    <div className="py-2">
-                      <p className="text-2xl sm:text-3xl font-bold text-primary">
-                        {formatCurrency(invoice.total)}
-                      </p>
+                    {/* Amount - Highlighted */}
+                    <div className="bg-elec-yellow/5 border border-elec-yellow/20 rounded-md p-3">
+                      <div className="flex items-baseline justify-between">
+                        <span className="text-sm text-muted-foreground">Total Amount</span>
+                        <span className="text-2xl font-bold text-elec-yellow">
+                          {formatCurrency(invoice.total)}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="w-full space-y-2">
+                    <div className="space-y-2 pt-2">
                       {/* Primary Action */}
-                      <div className="flex sm:hidden w-full">
-                        <MobileButton
-                          size="default"
-                          variant="elec"
-                          onClick={() => handleInvoiceAction(invoice)}
-                          icon={actionButton.icon}
-                          className={`w-full touch-target ${actionButton.className} min-w-0`}
-                          aria-label={actionButton.ariaLabel}
-                        >
-                          <span className="truncate">{actionButton.text}</span>
-                        </MobileButton>
-                      </div>
+                      <MobileButton
+                        size="default"
+                        variant="elec"
+                        onClick={() => handleInvoiceAction(invoice)}
+                        icon={actionButton.icon}
+                        className={`w-full ${actionButton.className}`}
+                        aria-label={actionButton.ariaLabel}
+                      >
+                        {actionButton.text}
+                      </MobileButton>
 
-                      <div className="hidden sm:flex justify-end w-full max-w-full">
-                        <MobileButton
-                          size="sm"
-                          variant="elec"
-                          onClick={() => handleInvoiceAction(invoice)}
-                          icon={actionButton.icon}
-                          className={`${actionButton.className} px-3 py-2 flex-shrink-0`}
-                          aria-label={actionButton.ariaLabel}
-                        >
-                          {actionButton.text}
-                        </MobileButton>
-                      </div>
-
-                      {/* Secondary Actions */}
-                      <div className="flex flex-wrap gap-2">
+                      {/* Secondary Actions Grid */}
+                      <div className="grid grid-cols-3 gap-2">
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => handleDownloadPDF(invoice)}
                           disabled={downloadingPdfId === invoice.id}
-                          className="flex-1 sm:flex-initial"
+                          className="text-xs h-9"
                         >
-                          <Download className="mr-2 h-4 w-4" />
+                          <Download className="h-3.5 w-3.5 sm:mr-1.5" />
                           <span className="hidden sm:inline">
-                            {downloadingPdfId === invoice.id ? 'Downloading...' : 'PDF'}
+                            {downloadingPdfId === invoice.id ? 'Loading...' : 'PDF'}
                           </span>
                         </Button>
 
@@ -524,9 +516,9 @@ const InvoicesPage = () => {
                               variant="outline"
                               onClick={() => handleSendInvoice(invoice)}
                               disabled={sendingInvoiceId === invoice.id}
-                              className="flex-1 sm:flex-initial"
+                              className="text-xs h-9"
                             >
-                              <Mail className="mr-2 h-4 w-4" />
+                              <Mail className="h-3.5 w-3.5 sm:mr-1.5" />
                               <span className="hidden sm:inline">
                                 {sendingInvoiceId === invoice.id ? 'Sending...' : 'Send'}
                               </span>
@@ -538,10 +530,10 @@ const InvoicesPage = () => {
                                   size="sm"
                                   variant="outline"
                                   disabled={markingPaidId === invoice.id}
-                                  className="flex-1 sm:flex-initial"
+                                  className="text-xs h-9"
                                 >
-                                  <CheckCircle className="mr-2 h-4 w-4" />
-                                  <span className="hidden sm:inline">Mark Paid</span>
+                                  <CheckCircle className="h-3.5 w-3.5 sm:mr-1.5" />
+                                  <span className="hidden sm:inline">Paid</span>
                                 </Button>
                               </AlertDialogTrigger>
                               <AlertDialogContent>
