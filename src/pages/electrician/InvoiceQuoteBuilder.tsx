@@ -83,6 +83,7 @@ export default function InvoiceQuoteBuilder() {
           createdAt: new Date(data.created_at),
           updatedAt: new Date(data.updated_at),
           expiryDate: new Date(data.expiry_date),
+          jobDetails: data.job_details as unknown as Quote['jobDetails'],
           notes: data.notes,
           acceptance_status: data.acceptance_status as Quote['acceptance_status'],
           accepted_at: data.accepted_at ? new Date(data.accepted_at) : undefined,
