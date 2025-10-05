@@ -59,6 +59,24 @@ const AIAssistant = () => {
         const trimmed = line.trim();
         if (!trimmed) return;
         
+        // Detect regulation format (e.g., "701.512.2 - Description")
+        const regulationMatch = trimmed.match(/^(\d{3}\.\d+(?:\.\d+)?)\s*-\s*(.+)/);
+        if (regulationMatch) {
+          flushList();
+          const [, regNumber, regText] = regulationMatch;
+          elements.push(
+            <div key={`reg-${elements.length}`} className="mb-6 p-4 bg-neutral-800/40 rounded-lg border-l-4 border-purple-500/50">
+              <div className="text-purple-400 font-bold text-lg mb-2">
+                {regNumber}
+              </div>
+              <div className="text-white leading-relaxed text-base">
+                {regText}
+              </div>
+            </div>
+          );
+          return;
+        }
+        
         // Detect numbered lists (1. 2. 3.)
         const numberedMatch = trimmed.match(/^(\d+)\.\s+(.+)/);
         if (numberedMatch) {

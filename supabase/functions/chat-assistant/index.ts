@@ -40,6 +40,17 @@ FORMATTING PATTERNS:
 - Use "🎯 Next Steps:" for follow-up actions
 - Use "📖 Regulations:" for BS 7671 references
 
+CRITICAL FORMATTING FOR REGULATIONS:
+- When listing multiple regulations, separate EACH regulation with a double newline (\\n\\n)
+- Format each regulation like this:
+  701.512.2 - Equipment description here
+  
+  701.414.1.2 - Next regulation description here
+  
+  701.432.2.2 - Another regulation description here
+- NEVER run regulations together in a single paragraph
+- Each regulation number and its description must be on its own line, followed by a blank line
+
 CONTENT STRUCTURE:
 - Break information into digestible sections
 - Use numbered steps for procedures
