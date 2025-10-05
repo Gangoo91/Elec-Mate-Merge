@@ -10,7 +10,17 @@ const corsHeaders = {
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
 const QUOTE_TEMPLATE_ID = 'B9CD1B3D-71A2-4F67-84E9-B81E0DC3E0B2';
 const INVOICE_TEMPLATE_ID = 'DC891A6A-4B38-48F5-A7DB-7CD0B550F4A2';
-const BRIEFING_TEMPLATE_ID = 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D';
+
+// Briefing template IDs - different templates for different briefing types
+const BRIEFING_TEMPLATES = {
+  'site-work': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D',  // Electrical safety template
+  'safety-alert': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D', // Same as site-work
+  'lfe': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D',  // Same as site-work
+  'business-update': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D', // For now, use same template
+  'hse-update': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D', // For now, use same template
+  'regulatory': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D', // For now, use same template
+  'general': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D' // For now, use same template
+};
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -76,9 +86,16 @@ serve(async (req) => {
       }
     }
 
-    // Select template based on mode
-    const TEMPLATE_ID = briefing_mode ? BRIEFING_TEMPLATE_ID : invoice_mode ? INVOICE_TEMPLATE_ID : QUOTE_TEMPLATE_ID;
-    console.log('[PDF-MONKEY] Using template:', TEMPLATE_ID, 'for', briefing_mode ? 'briefing' : invoice_mode ? 'invoice' : 'quote');
+    // Select template based on mode and briefing type
+    let TEMPLATE_ID: string;
+    if (briefing_mode) {
+      const briefingType = briefing?.briefing_type || 'general';
+      TEMPLATE_ID = BRIEFING_TEMPLATES[briefingType as keyof typeof BRIEFING_TEMPLATES] || BRIEFING_TEMPLATES['general'];
+      console.log('[PDF-MONKEY] Using briefing template for type:', briefingType, 'Template ID:', TEMPLATE_ID);
+    } else {
+      TEMPLATE_ID = invoice_mode ? INVOICE_TEMPLATE_ID : QUOTE_TEMPLATE_ID;
+      console.log('[PDF-MONKEY] Using template:', TEMPLATE_ID, 'for', invoice_mode ? 'invoice' : 'quote');
+    }
 
     // Transform data based on mode
     let payload;

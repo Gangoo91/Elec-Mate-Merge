@@ -6,6 +6,173 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// System prompt templates for each briefing type
+function getSystemPromptForType(briefingType: string): string {
+  const prompts: Record<string, string> = {
+    'site-work': `You are a UK electrical safety briefing expert with deep knowledge of BS 7671:2018+A3:2024 regulations. Generate professional, concise, and actionable team briefings for electrical installation work.
+
+Focus on: Electrical hazards, BS 7671 compliance, isolation procedures, PPE requirements, and safe working practices.`,
+
+    'business-update': `You are a professional business communications expert. Generate clear, concise, and action-oriented briefings for business updates and organizational changes.
+
+Focus on: Key changes, impact on team, action items, timelines, stakeholder responsibilities, and transition planning. Avoid safety jargon unless specifically relevant.`,
+
+    'hse-update': `You are an HSE (Health, Safety & Environment) compliance specialist with broad knowledge of UK workplace regulations. Generate comprehensive briefings on HSE updates and regulatory changes.
+
+Focus on: Regulatory changes, compliance requirements, impact assessment, implementation steps, and deadlines. Cover all workplace safety, not just electrical.`,
+
+    'lfe': `You are an incident analysis expert specializing in lessons from experience. Generate insightful briefings that help teams learn from past incidents.
+
+Focus on: Incident summary, root cause analysis, contributing factors, preventive measures, and actionable learnings. Use clear, blame-free language.`,
+
+    'safety-alert': `You are an urgent safety communications specialist. Generate immediate, clear, and actionable safety alerts that demand attention.
+
+Focus on: Immediate hazard description, specific dangers, required actions, who's affected, and compliance deadlines. Use direct, urgent language.`,
+
+    'regulatory': `You are a regulatory change management expert. Generate detailed briefings on regulatory changes and their business impact.
+
+Focus on: Change summary, compliance requirements, implementation roadmap, resource needs, training requirements, and deadlines.`,
+
+    'general': `You are a professional team briefing coordinator. Generate clear, well-structured briefings for general team communications.
+
+Focus on: Clear objectives, key information, action items, and next steps. Adapt tone to the content provided.`
+  };
+
+  return prompts[briefingType] || prompts['general'];
+}
+
+// Get briefing type-specific contextual information
+function getBriefingTypeContext(briefingType: string): string {
+  const contexts: Record<string, string> = {
+    'site-work': 'electrical installation work with BS 7671 compliance requirements',
+    'business-update': 'organizational change or business process update',
+    'hse-update': 'health, safety, and environmental regulatory update',
+    'lfe': 'incident review and lessons learned session',
+    'safety-alert': 'urgent safety warning requiring immediate attention',
+    'regulatory': 'regulatory or compliance change requiring action',
+    'general': 'team communication or information sharing'
+  };
+
+  return contexts[briefingType] || 'general team briefing';
+}
+
+// Get tool definition based on briefing type
+function getToolDefinitionForType(briefingType: string) {
+  const baseProps = {
+    briefingDescription: {
+      type: "string",
+      description: "2-4 paragraph comprehensive overview"
+    }
+  };
+
+  // Safety-related briefings (site-work, safety-alert, lfe)
+  if (['site-work', 'safety-alert', 'lfe'].includes(briefingType)) {
+    return {
+      type: "function",
+      function: {
+        name: "generate_briefing_content",
+        description: "Generate comprehensive safety briefing content",
+        parameters: {
+          type: "object",
+          properties: {
+            ...baseProps,
+            hazardsAndControls: {
+              type: "string",
+              description: "Detailed hazard analysis with controls for each hazard"
+            },
+            safetyWarning: {
+              type: "string",
+              description: "Critical safety warning - clear and direct"
+            },
+            equipmentRequired: {
+              type: "array",
+              items: { type: "string" },
+              description: "Required PPE and safety equipment"
+            },
+            keyRegulations: {
+              type: "array",
+              items: { type: "string" },
+              description: "Relevant regulations (BS 7671, HSE guidelines)"
+            }
+          },
+          required: ["briefingDescription", "hazardsAndControls", "safetyWarning", "equipmentRequired", "keyRegulations"]
+        }
+      }
+    };
+  }
+
+  // Business/operational briefings
+  if (['business-update', 'hse-update', 'regulatory'].includes(briefingType)) {
+    return {
+      type: "function",
+      function: {
+        name: "generate_briefing_content",
+        description: "Generate business/operational briefing content",
+        parameters: {
+          type: "object",
+          properties: {
+            ...baseProps,
+            keyChanges: {
+              type: "string",
+              description: "Summary of key changes or updates"
+            },
+            impactAssessment: {
+              type: "string",
+              description: "Impact on team, operations, or compliance"
+            },
+            actionItems: {
+              type: "array",
+              items: { type: "string" },
+              description: "Specific actions required from team"
+            },
+            timeline: {
+              type: "array",
+              items: { type: "string" },
+              description: "Implementation timeline and key dates"
+            },
+            resourcesNeeded: {
+              type: "array",
+              items: { type: "string" },
+              description: "Resources, training, or support needed"
+            }
+          },
+          required: ["briefingDescription", "keyChanges", "impactAssessment", "actionItems", "timeline"]
+        }
+      }
+    };
+  }
+
+  // General briefing
+  return {
+    type: "function",
+    function: {
+      name: "generate_briefing_content",
+      description: "Generate general briefing content",
+      parameters: {
+        type: "object",
+        properties: {
+          ...baseProps,
+          keyPoints: {
+            type: "array",
+            items: { type: "string" },
+            description: "Main points to communicate"
+          },
+          actionItems: {
+            type: "array",
+            items: { type: "string" },
+            description: "Actions required from team"
+          },
+          additionalInfo: {
+            type: "string",
+            description: "Any additional relevant information"
+          }
+        },
+        required: ["briefingDescription", "keyPoints", "actionItems"]
+      }
+    }
+  };
+}
+
 const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
 serve(async (req) => {
@@ -42,86 +209,52 @@ serve(async (req) => {
     
     console.log('[BRIEFING-AI] Generating content for:', briefingContext.briefingTitle, 'Type:', briefingType);
 
-    // Build system prompt for BS 7671 compliance with plain text output
-    const systemPrompt = `You are a UK electrical safety briefing expert with deep knowledge of BS 7671:2018+A3:2024 regulations. Generate professional, concise, and actionable team briefings.
-
-CRITICAL OUTPUT FORMAT RULES:
-- Use PLAIN PROFESSIONAL ENGLISH only - NO markdown formatting
-- Do NOT use #, ##, ###, **, *, -, or any markdown symbols
-- Use proper paragraphs with line breaks between sections
-- Use proper punctuation and capitalization
-- Write in complete sentences with professional tone
-
-Your briefings must:
-- Be clear and practical for all experience levels
-- Reference specific BS 7671 regulations where applicable (e.g., Regulation 132.16)
-- Include HSE guidance and best practices
-- Be suitable for reading in 10-15 minutes
-- Focus on critical safety measures
-- Use UK English terminology
-
-You must respond with valid JSON matching this exact structure:
-{
-  "briefingDescription": "Plain text overview in 2-3 paragraphs with context, scope, and key objectives. Use complete sentences and proper punctuation. No markdown.",
-  "keyPoints": ["Plain text point 1", "Plain text point 2", ...],
-  "safetyPoints": ["Plain text safety point 1 (BS 7671 Reg X)", ...],
-  "equipmentRequired": ["PPE item 1", "Tool 2", ...],
-  "hazardsAndControls": "Plain text explanation of each hazard and control measures. Use paragraphs separated by line breaks. Include BS 7671 references. NO markdown formatting.",
-  "safetyWarning": "A critical safety message in plain text (1-2 sentences)",
-  "estimatedDuration": "realistic time e.g. 30 minutes"
-}`;
-
-    // Build user prompt based on briefing type
-    const identifiedHazardsList = (hazards?.identified || []).join('\n- ');
+    // Get briefing type-specific context for better prompting
+    const briefingTypeContext = getBriefingTypeContext(briefingType);
     
-    let briefingTypeContext = '';
-    switch (briefingType) {
-      case 'site-work':
-        briefingTypeContext = 'electrical site work/installation';
-        break;
-      case 'lfe':
-        briefingTypeContext = 'Lessons From Experience (LFE) incident review';
-        break;
-      case 'hse-update':
-        briefingTypeContext = 'Health & Safety Executive (HSE) update';
-        break;
-      case 'business-update':
-        briefingTypeContext = 'business announcement or update';
-        break;
-      case 'safety-alert':
-        briefingTypeContext = 'safety alert notification';
-        break;
-      case 'regulatory':
-        briefingTypeContext = 'regulatory change notification';
-        break;
-      default:
-        briefingTypeContext = 'general briefing';
+    // Build dynamic system prompt based on briefing type
+    const systemPrompt = getSystemPromptForType(briefingType);
+
+    // Build dynamic user prompt based on briefing type
+    let userPrompt = `Generate a comprehensive team briefing for:
+
+**Briefing Title:** ${briefingContext.briefingTitle}
+**Type:** ${briefingTypeContext}
+**${briefingType === 'site-work' ? 'Work' : 'Content'} Description:** ${briefingContext.briefingContent || 'Not specified'}`;
+
+    // Add type-specific fields
+    if (briefingType === 'site-work') {
+      userPrompt += `
+${briefingContext.workScope ? `**Work Scope:** ${briefingContext.workScope}` : ''}
+${briefingContext.environment ? `**Environment:** ${briefingContext.environment}` : ''}`;
     }
 
-    const userPrompt = `Generate a professional team briefing for the following ${briefingTypeContext}:
+    userPrompt += `
+**Location:** ${briefingContext.location || 'Not specified'}
+**Team Size:** ${briefingContext.teamSize || 'Not specified'}
+${briefingContext.experienceLevel ? `**Team Experience:** ${briefingContext.experienceLevel}` : ''}`;
 
-**BRIEFING DETAILS:**
-- Title: ${briefingContext.briefingTitle}
-- Content: ${briefingContext.briefingContent}
-${briefingContext.workScope ? `- Work Scope: ${briefingContext.workScope}` : ''}
-${briefingContext.environment ? `- Environment: ${briefingContext.environment}` : ''}
-- Location: ${briefingContext.location}
-- Team Size: ${briefingContext.teamSize} people
-- Experience Level: ${briefingContext.experienceLevel}
+    // Add hazards only if it's a safety-related briefing
+    if (['site-work', 'safety-alert', 'lfe'].includes(briefingType)) {
+      userPrompt += `
 
-**IDENTIFIED HAZARDS:**
-- ${identifiedHazardsList}
-${hazards?.custom ? `\n**ADDITIONAL HAZARDS:**\n${hazards.custom}` : ''}
+**Identified Hazards:**
+${hazards.identified && hazards.identified.length > 0 ? hazards.identified.join(', ') : 'None specified'}
+${hazards.custom ? `\n**Additional Hazards:** ${hazards.custom}` : ''}
+${hazards.riskLevel ? `**Overall Risk Level:** ${hazards.riskLevel}` : ''}
+${hazards.specialConsiderations ? `**Special Considerations:** ${hazards.specialConsiderations}` : ''}`;
+    }
+    
+    userPrompt += `
 
-**RISK ASSESSMENT:**
-- Overall Risk Level: ${hazards.riskLevel}
-${hazards?.specialConsiderations ? `- Special Considerations: ${hazards.specialConsiderations}` : ''}
+Generate comprehensive, detailed, and highly relevant content for this specific briefing type. 
+Be specific, actionable, and adapt your response to match the briefing type's focus areas.
+${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - adjust content accordingly.' : ''}`;
 
-Generate a comprehensive BS 7671:2018+A3:2024 compliant safety briefing. Remember: Use PLAIN TEXT only, NO markdown symbols.`;
+    console.log('[BRIEFING-AI] Calling Lovable AI for type:', briefingType);
+    console.log('[BRIEFING-AI] User prompt preview:', userPrompt.substring(0, 200) + '...');
 
-    console.log('[BRIEFING-AI] Calling Lovable AI...');
-
-    // Call Lovable AI with structured output
+    // Call Lovable AI with type-specific tool definition
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -129,49 +262,17 @@ Generate a comprehensive BS 7671:2018+A3:2024 compliant safety briefing. Remembe
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+        model: "google/gemini-2.5-flash",
         messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userPrompt }
         ],
-        tools: [{
-          type: 'function',
-          function: {
-            name: 'create_briefing',
-            description: 'Generate structured briefing content',
-            parameters: {
-              type: 'object',
-              properties: {
-                briefingDescription: { type: 'string' },
-                keyPoints: { 
-                  type: 'array',
-                  items: { type: 'string' },
-                  minItems: 5,
-                  maxItems: 7
-                },
-                safetyPoints: { 
-                  type: 'array',
-                  items: { type: 'string' },
-                  minItems: 6,
-                  maxItems: 10
-                },
-                equipmentRequired: { 
-                  type: 'array',
-                  items: { type: 'string' },
-                  minItems: 8,
-                  maxItems: 12
-                },
-                hazardsAndControls: { type: 'string' },
-                safetyWarning: { type: 'string' },
-                estimatedDuration: { type: 'string' }
-              },
-              required: ['briefingDescription', 'keyPoints', 'safetyPoints', 'equipmentRequired', 'hazardsAndControls', 'safetyWarning', 'estimatedDuration'],
-              additionalProperties: false
-            }
-          }
-        }],
-        tool_choice: { type: 'function', function: { name: 'create_briefing' } }
-      })
+        tools: [getToolDefinitionForType(briefingType)],
+        tool_choice: {
+          type: "function",
+          function: { name: "generate_briefing_content" }
+        }
+      }),
     });
 
     if (!response.ok) {

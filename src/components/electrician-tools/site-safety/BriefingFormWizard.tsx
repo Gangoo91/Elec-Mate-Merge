@@ -35,6 +35,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
   const [step, setStep] = useState(1);
   const [aiGenerating, setAiGenerating] = useState(false);
   const [aiContent, setAiContent] = useState<any>(null);
+  const [uploadingPhotos, setUploadingPhotos] = useState(false);
 
   // Form data - pre-populate if editing
   const [formData, setFormData] = useState({
@@ -74,6 +75,73 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
 
   const totalSteps = 6;
   const progress = (step / totalSteps) * 100;
+
+  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploadingPhotos(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not authenticated");
+
+      const uploadedPhotos: any[] = [];
+
+      for (const file of Array.from(files)) {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${user.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+        const { data, error } = await supabase.storage
+          .from('briefing-photos')
+          .upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: false
+          });
+
+        if (error) throw error;
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('briefing-photos')
+          .getPublicUrl(data.path);
+
+        uploadedPhotos.push({
+          url: publicUrl,
+          caption: '',
+          filename: file.name
+        });
+      }
+
+      setFormData(prev => ({
+        ...prev,
+        photos: [...prev.photos, ...uploadedPhotos]
+      }));
+
+      toast({
+        title: "Photos Uploaded",
+        description: `${uploadedPhotos.length} photo(s) added successfully.`,
+      });
+    } catch (error: any) {
+      console.error('Photo upload error:', error);
+      toast({
+        title: "Upload Failed",
+        description: error.message || "Failed to upload photos.",
+        variant: "destructive",
+      });
+    } finally {
+      setUploadingPhotos(false);
+    }
+  };
+
+  const handleDeletePhoto = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      photos: prev.photos.filter((_, idx) => idx !== index)
+    }));
+    toast({
+      title: "Photo Removed",
+      description: "Photo removed from briefing.",
+    });
+  };
 
   const handleGenerateAI = async () => {
     setAiGenerating(true);
@@ -544,19 +612,55 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                 <p className="text-sm text-elec-light">Add photos to your briefing</p>
                 <p className="text-xs text-elec-light/60">Upload reference photos, site conditions, or incident images</p>
               </div>
-              <Button variant="outline" size="sm" className="mt-2">
-                <Camera className="h-4 w-4 mr-2" />
-                Add Photos
+              <input
+                type="file"
+                id="photo-upload"
+                className="hidden"
+                accept="image/*"
+                multiple
+                capture="environment"
+                onChange={handlePhotoUpload}
+                disabled={uploadingPhotos}
+              />
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="mt-2"
+                onClick={() => document.getElementById('photo-upload')?.click()}
+                disabled={uploadingPhotos}
+              >
+                {uploadingPhotos ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Uploading...
+                  </>
+                ) : (
+                  <>
+                    <Camera className="h-4 w-4 mr-2" />
+                    Add Photos
+                  </>
+                )}
               </Button>
             </div>
 
             {formData.photos.length > 0 && (
-              <div className="grid grid-cols-2 gap-3">
-                {formData.photos.map((photo, idx) => (
-                  <div key={idx} className="relative aspect-video bg-card rounded-lg overflow-hidden border border-primary/20">
-                    <img src={photo.url} alt={photo.caption || `Photo ${idx + 1}`} className="w-full h-full object-cover" />
-                  </div>
-                ))}
+              <div className="space-y-3">
+                <p className="text-xs text-elec-light/70">{formData.photos.length} photo(s) attached</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {formData.photos.map((photo, idx) => (
+                    <div key={idx} className="relative aspect-video bg-card rounded-lg overflow-hidden border border-primary/20 group">
+                      <img src={photo.url} alt={photo.caption || `Photo ${idx + 1}`} className="w-full h-full object-cover" />
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => handleDeletePhoto(idx)}
+                      >
+                        ×
+                      </Button>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
