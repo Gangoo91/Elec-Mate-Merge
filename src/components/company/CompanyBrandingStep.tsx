@@ -218,7 +218,7 @@ export const CompanyBrandingStep = ({ onComplete }: CompanyBrandingStepProps) =>
             <div className="space-y-2">
               <Label htmlFor="company_email">Email</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                 <Input
                   id="company_email"
                   type="email"
@@ -233,7 +233,7 @@ export const CompanyBrandingStep = ({ onComplete }: CompanyBrandingStepProps) =>
             <div className="space-y-2">
               <Label htmlFor="company_phone">Phone</Label>
               <div className="relative">
-                <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                 <Input
                   id="company_phone"
                   value={formData.company_phone}
@@ -250,7 +250,7 @@ export const CompanyBrandingStep = ({ onComplete }: CompanyBrandingStepProps) =>
             <div className="md:col-span-3 space-y-2">
               <Label htmlFor="company_address">Address</Label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
                 <Textarea
                   id="company_address"
                   value={formData.company_address}
@@ -277,7 +277,7 @@ export const CompanyBrandingStep = ({ onComplete }: CompanyBrandingStepProps) =>
             <div className="space-y-2">
               <Label htmlFor="company_website">Website</Label>
               <div className="relative">
-                <Globe className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                 <Input
                   id="company_website"
                   value={formData.company_website}
@@ -303,7 +303,7 @@ export const CompanyBrandingStep = ({ onComplete }: CompanyBrandingStepProps) =>
           <div className="space-y-2">
             <Label htmlFor="payment_terms">Payment Terms</Label>
             <div className="relative">
-              <FileText className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <FileText className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
               <Input
                 id="payment_terms"
                 value={formData.payment_terms}
