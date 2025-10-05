@@ -3,8 +3,7 @@ import { Invoice } from '@/types/invoice';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { FileText, Download, ChevronDown } from 'lucide-react';
+import { FileText, Download } from 'lucide-react';
 import { generateInvoicePDF } from '@/utils/invoice-pdf';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
@@ -24,7 +23,6 @@ export const InvoiceGenerationStep = ({
 }: InvoiceGenerationStepProps) => {
   const { companyProfile } = useCompanyProfile();
   const [isPreviewing, setIsPreviewing] = useState(false);
-  const [isDebugOpen, setIsDebugOpen] = useState(true);
   
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
@@ -62,17 +60,6 @@ export const InvoiceGenerationStep = ({
     } finally {
       setIsPreviewing(false);
     }
-  };
-
-  // Prepare the data that will be sent to PDF generator
-  const pdfData = {
-    invoice: {
-      ...invoice,
-      items: [...(invoice.items || []), ...(invoice.additional_invoice_items || [])],
-      additional_invoice_items: [],
-      jobDetails: invoice.jobDetails,
-    },
-    companyProfile,
   };
 
   return (
@@ -182,22 +169,6 @@ export const InvoiceGenerationStep = ({
           )}
         </div>
       </Card>
-
-      <Collapsible open={isDebugOpen} onOpenChange={setIsDebugOpen}>
-        <Card className="p-4 border-2 border-warning/50 bg-warning/5">
-          <CollapsibleTrigger className="w-full flex items-center justify-between">
-            <h3 className="font-semibold text-warning">Debug: PDF Data Preview</h3>
-            <ChevronDown className={`h-4 w-4 transition-transform ${isDebugOpen ? 'rotate-180' : ''}`} />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-4">
-            <div className="bg-muted p-4 rounded-md overflow-auto max-h-96">
-              <pre className="text-xs">
-                {JSON.stringify(pdfData, null, 2)}
-              </pre>
-            </div>
-          </CollapsibleContent>
-        </Card>
-      </Collapsible>
 
       <div className="flex gap-3">
         <Button
