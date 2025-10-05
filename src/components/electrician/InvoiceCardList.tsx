@@ -210,7 +210,7 @@ const InvoiceCardList = ({
               {/* Total Amount - Centered, White Text */}
               <div className="text-center mb-4 -mt-4">
                 <div className="text-sm text-white/60 mb-2 font-normal">Total Amount</div>
-                <div className="text-4xl font-bold text-white">
+                <div className="text-4xl font-bold text-primary">
                   {formatCurrency(invoice.total)}
                 </div>
               </div>
