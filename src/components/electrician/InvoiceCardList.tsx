@@ -176,9 +176,9 @@ const InvoiceCardList = ({
                   <div className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center flex-shrink-0">
                     <FileText className="h-10 w-10 sm:h-14 sm:w-14 text-muted-foreground/40" strokeWidth={1.5} />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="text-xs sm:text-sm text-muted-foreground mb-0.5">Client</div>
-                    <div className="text-sm sm:text-base text-foreground font-medium truncate">
+                  <div className="min-w-0 flex-1 text-left">
+                    <div className="text-xs sm:text-sm text-muted-foreground mb-0.5 text-left">Client</div>
+                    <div className="text-sm sm:text-base text-foreground font-medium truncate text-left">
                       {invoice.client?.name || 'N/A'}
                     </div>
                   </div>
