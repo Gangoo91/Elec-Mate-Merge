@@ -140,7 +140,7 @@ const InvoiceCardList = ({
             {/* Content Container */}
             <div className="relative p-4">
               {/* Top Row: Invoice Number & Status Badge */}
-              <div className="flex items-start justify-between mb-6">
+              <div className="flex items-start justify-between mb-6 pb-4 border-b border-primary/20">
                 <h3 className="text-xl font-bold text-white">
                   #{invoice.invoice_number || invoice.quoteNumber}
                 </h3>
