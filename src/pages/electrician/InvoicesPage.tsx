@@ -436,7 +436,7 @@ const InvoicesPage = () => {
               return (
                 <div
                   key={invoice.id}
-                  className="bg-elec-card border border-elec-yellow/20 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-all"
+                  className="bg-elec-card border border-elec-yellow/20 rounded-lg overflow-hidden hover:border-elec-yellow/30 hover:shadow-lg transition-all border-l-2 border-l-elec-yellow/50"
                 >
                   {/* Header with Status */}
                   <div className="bg-elec-gray/30 px-4 py-3 border-b border-elec-yellow/10">
@@ -449,61 +449,61 @@ const InvoicesPage = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="p-4 space-y-4">
+                  <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
                     {/* Client & Dates */}
-                    <div className="space-y-2">
-                      <div className="flex items-start gap-2">
-                        <span className="text-sm text-muted-foreground min-w-[60px]">Client:</span>
-                        <span className="text-sm font-medium truncate">{invoice.client?.name || 'N/A'}</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 pb-3 border-b border-border/50">
+                      <div className="min-w-0">
+                        <div className="text-xs text-muted-foreground mb-1">Client</div>
+                        <div className="font-semibold truncate">{invoice.client?.name || 'N/A'}</div>
                       </div>
                       {invoice.invoice_date && (
-                        <div className="flex items-start gap-2">
-                          <span className="text-sm text-muted-foreground min-w-[60px]">Issued:</span>
-                          <span className="text-sm">{format(new Date(invoice.invoice_date), "dd MMM yyyy")}</span>
+                        <div className="sm:text-right">
+                          <div className="text-xs text-muted-foreground mb-1">Issued</div>
+                          <div className="text-sm font-medium">
+                            {format(new Date(invoice.invoice_date), "dd MMM yyyy")}
+                          </div>
                         </div>
                       )}
                       {invoice.invoice_due_date && (
-                        <div className="flex items-start gap-2">
-                          <span className="text-sm text-muted-foreground min-w-[60px]">Due:</span>
-                          <span className="text-sm">{format(new Date(invoice.invoice_due_date), "dd MMM yyyy")}</span>
+                        <div className="sm:col-span-2 sm:text-right">
+                          <div className="text-xs text-muted-foreground mb-1">Due Date</div>
+                          <div className="text-sm font-semibold">
+                            {format(new Date(invoice.invoice_due_date), "dd MMM yyyy")}
+                          </div>
                         </div>
                       )}
                     </div>
 
                     {/* Amount - Highlighted */}
-                    <div className="bg-elec-yellow/5 border border-elec-yellow/20 rounded-md p-3">
-                      <div className="flex items-baseline justify-between">
-                        <span className="text-sm text-muted-foreground">Total Amount</span>
-                        <span className="text-2xl font-bold text-elec-yellow">
-                          {formatCurrency(invoice.total)}
-                        </span>
+                    <div className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-lg p-4 text-center shadow-sm">
+                      <div className="text-xs text-muted-foreground mb-2 font-medium">Total Amount</div>
+                      <div className="text-2xl sm:text-3xl font-bold text-foreground">
+                        {formatCurrency(invoice.total)}
                       </div>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="space-y-2 pt-2">
+                    <div className="space-y-3 pt-2">
                       {/* Primary Action */}
-                      <div className="flex justify-center md:justify-start">
-                        <MobileButton
-                          size="default"
-                          variant="elec"
-                          onClick={() => handleInvoiceAction(invoice)}
-                          icon={actionButton.icon}
-                          className={`w-full md:w-auto md:min-w-[160px] ${actionButton.className}`}
-                          aria-label={actionButton.ariaLabel}
-                        >
-                          {actionButton.text}
-                        </MobileButton>
-                      </div>
+                      <MobileButton
+                        size="default"
+                        variant="elec"
+                        onClick={() => handleInvoiceAction(invoice)}
+                        icon={actionButton.icon}
+                        className={`w-full sm:w-auto sm:min-w-[200px] ${actionButton.className}`}
+                        aria-label={actionButton.ariaLabel}
+                      >
+                        {actionButton.text}
+                      </MobileButton>
 
                       {/* Secondary Actions */}
-                      <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                      <div className="flex flex-wrap gap-2">
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => handleDownloadPDF(invoice)}
                           disabled={downloadingPdfId === invoice.id}
-                          className="text-xs h-9 flex-1 sm:flex-initial sm:min-w-[100px]"
+                          className="text-xs h-9 flex-1 sm:flex-none sm:max-w-[120px]"
                         >
                           <Download className="h-3.5 w-3.5 sm:mr-1.5" />
                           <span className="hidden sm:inline">
@@ -518,7 +518,7 @@ const InvoicesPage = () => {
                               variant="outline"
                               onClick={() => handleSendInvoice(invoice)}
                               disabled={sendingInvoiceId === invoice.id}
-                              className="text-xs h-9 flex-1 sm:flex-initial sm:min-w-[100px]"
+                              className="text-xs h-9 flex-1 sm:flex-none sm:max-w-[120px]"
                             >
                               <Mail className="h-3.5 w-3.5 sm:mr-1.5" />
                               <span className="hidden sm:inline">
@@ -532,7 +532,7 @@ const InvoicesPage = () => {
                                   size="sm"
                                   variant="outline"
                                   disabled={markingPaidId === invoice.id}
-                                  className="text-xs h-9 flex-1 sm:flex-initial sm:min-w-[100px]"
+                                  className="text-xs h-9 flex-1 sm:flex-none sm:max-w-[120px]"
                                 >
                                   <CheckCircle className="h-3.5 w-3.5 sm:mr-1.5" />
                                   <span className="hidden sm:inline">Paid</span>
