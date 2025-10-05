@@ -114,16 +114,20 @@ serve(async (req) => {
 
       console.log('[PDF-MONKEY] Transformed invoice payload for template');
     } else {
-      // Transform quote format to ensure jobDetails is properly structured
+      // Transform quote format to ensure jobDetails is properly structured with all fields
       const transformedQuote = {
         ...quote,
         jobDetails: {
           title: quote?.jobDetails?.title || "",
+          description: quote?.jobDetails?.description || "",
           location: quote?.jobDetails?.location || "",
+          estimatedDuration: quote?.jobDetails?.estimatedDuration || "",
+          customDuration: quote?.jobDetails?.customDuration || "",
+          workStartDate: quote?.jobDetails?.workStartDate || "",
+          specialRequirements: quote?.jobDetails?.specialRequirements || "",
           completionDate: quote?.work_completion_date ? 
             new Date(quote.work_completion_date).toISOString().split('T')[0] : "",
-          reference: quote?.jobDetails?.reference || quote?.quoteNumber || "",
-          description: quote?.jobDetails?.description || ""
+          reference: quote?.jobDetails?.reference || quote?.quoteNumber || ""
         }
       };
       
@@ -131,9 +135,12 @@ serve(async (req) => {
         quote: transformedQuote,
         companyProfile
       };
-      console.log('[PDF-MONKEY] Using quote format with transformed jobDetails:', {
+      console.log('[PDF-MONKEY] Using quote format with all jobDetails fields:', {
         hasTitle: !!transformedQuote.jobDetails.title,
-        hasDescription: !!transformedQuote.jobDetails.description
+        hasDescription: !!transformedQuote.jobDetails.description,
+        hasLocation: !!transformedQuote.jobDetails.location,
+        hasEstimatedDuration: !!transformedQuote.jobDetails.estimatedDuration,
+        hasWorkStartDate: !!transformedQuote.jobDetails.workStartDate
       });
     }
 
