@@ -81,10 +81,14 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
       });
 
       // Call PDF Monkey edge function
+      // Use invoice template if this quote has been converted to an invoice
+      const isInvoice = quote.invoice_raised === true;
+      
       const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: {
           quote,
-          companyProfile: effectiveCompanyProfile
+          companyProfile: effectiveCompanyProfile,
+          invoice_mode: isInvoice
         }
       });
 
