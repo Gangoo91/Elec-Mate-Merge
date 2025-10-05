@@ -138,9 +138,9 @@ const InvoiceCardList = ({
           >
             
             {/* Content Container */}
-            <div className="relative p-4">
+            <div className="relative p-3">
               {/* Top Row: Invoice Number & Status Badge */}
-              <div className="flex items-start justify-between mb-6 pb-4 border-b border-primary/20">
+              <div className="flex items-start justify-between mb-4 pb-3 border-b border-primary/20">
                 <h3 className="text-xl font-bold text-white">
                   #{invoice.invoice_number || invoice.quoteNumber}
                 </h3>
@@ -148,7 +148,7 @@ const InvoiceCardList = ({
               </div>
 
               {/* Middle Row: Logo + Client Info (left) | Dates (right) */}
-              <div className="flex items-start justify-between mb-8">
+              <div className="flex items-start justify-between mb-5">
                 {/* Left: Logo + Client */}
                 <div className="flex items-center gap-4">
                   <div className="w-20 h-20 flex items-center justify-center">
@@ -185,7 +185,7 @@ const InvoiceCardList = ({
 
 
               {/* Total Amount - Centered, White Text */}
-              <div className="text-center mb-6">
+              <div className="text-center mb-4">
                 <div className="text-sm text-white/60 mb-2 font-normal">Total Amount</div>
                 <div className="text-4xl font-bold text-white">
                   {formatCurrency(invoice.total)}
@@ -193,7 +193,7 @@ const InvoiceCardList = ({
               </div>
 
               {/* Primary Action Button - Yellow, Centered, Rounded */}
-              <div className="mb-4">
+              <div className="mb-3">
                 <button
                   onClick={() => onInvoiceAction(invoice)}
                   className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors"
