@@ -97,13 +97,13 @@ const TeamBriefingTemplates = () => {
   return (
     <div className="space-y-6 pb-20">
       {/* MOBILE LAYOUT */}
-      <div className="md:hidden space-y-6">
+      <div className="md:hidden space-y-4 px-3">
         {/* Hero AI Briefing Card */}
         <HeroAIBriefingCard onCreateBriefing={() => setShowAIWizard(true)} />
 
         {/* History Tab */}
-        <div>
-          <h3 className="text-lg font-semibold text-elec-light mb-4">Recent Briefings</h3>
+        <div className="mt-6">
+          <h3 className="text-base font-semibold text-elec-light mb-3">Recent Briefings</h3>
           <BriefingHistory />
         </div>
 
