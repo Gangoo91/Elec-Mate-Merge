@@ -483,25 +483,27 @@ const InvoicesPage = () => {
                     {/* Action Buttons */}
                     <div className="space-y-2 pt-2">
                       {/* Primary Action */}
-                      <MobileButton
-                        size="default"
-                        variant="elec"
-                        onClick={() => handleInvoiceAction(invoice)}
-                        icon={actionButton.icon}
-                        className={`w-full ${actionButton.className}`}
-                        aria-label={actionButton.ariaLabel}
-                      >
-                        {actionButton.text}
-                      </MobileButton>
+                      <div className="flex justify-center md:justify-start">
+                        <MobileButton
+                          size="default"
+                          variant="elec"
+                          onClick={() => handleInvoiceAction(invoice)}
+                          icon={actionButton.icon}
+                          className={`w-full md:w-auto md:min-w-[160px] ${actionButton.className}`}
+                          aria-label={actionButton.ariaLabel}
+                        >
+                          {actionButton.text}
+                        </MobileButton>
+                      </div>
 
-                      {/* Secondary Actions Grid */}
-                      <div className="grid grid-cols-3 gap-2">
+                      {/* Secondary Actions */}
+                      <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => handleDownloadPDF(invoice)}
                           disabled={downloadingPdfId === invoice.id}
-                          className="text-xs h-9"
+                          className="text-xs h-9 flex-1 sm:flex-initial sm:min-w-[100px]"
                         >
                           <Download className="h-3.5 w-3.5 sm:mr-1.5" />
                           <span className="hidden sm:inline">
@@ -516,7 +518,7 @@ const InvoicesPage = () => {
                               variant="outline"
                               onClick={() => handleSendInvoice(invoice)}
                               disabled={sendingInvoiceId === invoice.id}
-                              className="text-xs h-9"
+                              className="text-xs h-9 flex-1 sm:flex-initial sm:min-w-[100px]"
                             >
                               <Mail className="h-3.5 w-3.5 sm:mr-1.5" />
                               <span className="hidden sm:inline">
@@ -530,7 +532,7 @@ const InvoicesPage = () => {
                                   size="sm"
                                   variant="outline"
                                   disabled={markingPaidId === invoice.id}
-                                  className="text-xs h-9"
+                                  className="text-xs h-9 flex-1 sm:flex-initial sm:min-w-[100px]"
                                 >
                                   <CheckCircle className="h-3.5 w-3.5 sm:mr-1.5" />
                                   <span className="hidden sm:inline">Paid</span>
