@@ -9,7 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
   const { saveQuote } = useQuoteStorage();
-  const { companyProfile } = useCompanyProfile();
+  const { companyProfile, refetch } = useCompanyProfile();
   
   const [quote, setQuote] = useState<Partial<Quote>>({
     id: uuidv4(),
@@ -188,6 +188,16 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
       });
 
       setQuote(updatedQuote);
+
+      // Fetch latest company profile before generating PDF
+      console.log('PDF Generation - Fetching latest company profile');
+      await refetch();
+      
+      console.log('PDF Generation - Company Profile:', {
+        name: companyProfile?.company_name,
+        email: companyProfile?.company_email,
+        hasLogo: !!companyProfile?.logo_url
+      });
 
       // Generate PDF using PDF Monkey
       try {
