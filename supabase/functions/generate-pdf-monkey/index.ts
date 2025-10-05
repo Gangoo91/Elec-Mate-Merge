@@ -36,18 +36,44 @@ serve(async (req) => {
     // Parse request body
     const { quote, companyProfile, invoice_mode, briefing, briefing_mode } = await req.json();
     console.log('[PDF-MONKEY] Received request - Mode:', invoice_mode ? 'invoice' : briefing_mode ? 'briefing' : 'quote');
-    console.log('[PDF-MONKEY] Received items count:', quote?.items?.length || 0);
-    console.log('[PDF-MONKEY] Received settings:', JSON.stringify(quote?.settings, null, 2));
-    console.log('[PDF-MONKEY] Using provided data from UI - NOT fetching from database');
-
-    if (!quote) {
-      return new Response(
-        JSON.stringify({ error: 'Quote/Invoice data is required' }),
-        { 
-          status: 400, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      );
+    
+    if (briefing_mode) {
+      console.log('[PDF-MONKEY] Briefing data:', {
+        title: briefing?.briefing_name,
+        date: briefing?.briefing_date,
+        location: briefing?.location,
+        hasDescription: !!briefing?.briefing_description,
+        hasHazards: !!briefing?.hazards,
+        hasWarning: !!briefing?.safety_warning,
+        photosCount: (briefing?.photos || []).length
+      });
+      
+      if (!briefing || !briefing.briefing_name) {
+        console.error('[PDF-MONKEY] Invalid briefing data - missing required fields');
+        return new Response(
+          JSON.stringify({ 
+            error: 'Briefing data is incomplete. Missing briefing name or other required fields.',
+            received: briefing 
+          }),
+          { 
+            status: 400, 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+          }
+        );
+      }
+    } else {
+      console.log('[PDF-MONKEY] Quote/Invoice items count:', quote?.items?.length || 0);
+      console.log('[PDF-MONKEY] Settings:', JSON.stringify(quote?.settings, null, 2));
+      
+      if (!quote) {
+        return new Response(
+          JSON.stringify({ error: 'Quote/Invoice data is required' }),
+          { 
+            status: 400, 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+          }
+        );
+      }
     }
 
     // Select template based on mode

@@ -24,43 +24,75 @@ serve(async (req) => {
       );
     }
 
-    const { jobContext, hazards } = await req.json();
-    console.log('[BRIEFING-AI] Generating content for:', jobContext?.jobName);
+    const { briefingType, briefingContext, hazards } = await req.json();
+    console.log('[BRIEFING-AI] Generating content for:', briefingContext?.briefingTitle, 'Type:', briefingType);
 
-    // Build system prompt for BS 7671 compliance
-    const systemPrompt = `You are a UK electrical safety briefing expert with deep knowledge of BS 7671:2018+A3:2024 regulations. Generate professional, concise, and actionable team briefings for electrical contractors.
+    // Build system prompt for BS 7671 compliance with plain text output
+    const systemPrompt = `You are a UK electrical safety briefing expert with deep knowledge of BS 7671:2018+A3:2024 regulations. Generate professional, concise, and actionable team briefings.
+
+CRITICAL OUTPUT FORMAT RULES:
+- Use PLAIN PROFESSIONAL ENGLISH only - NO markdown formatting
+- Do NOT use #, ##, ###, **, *, -, or any markdown symbols
+- Use proper paragraphs with line breaks between sections
+- Use proper punctuation and capitalization
+- Write in complete sentences with professional tone
 
 Your briefings must:
-- Be clear and practical for electricians of varying experience levels
-- Reference specific BS 7671 regulations where applicable (e.g., Regulation 132.16, 411.3.2.1)
+- Be clear and practical for all experience levels
+- Reference specific BS 7671 regulations where applicable (e.g., Regulation 132.16)
 - Include HSE guidance and best practices
 - Be suitable for reading in 10-15 minutes
-- Focus on critical safety measures for the specific job context
-- Use UK English terminology and electrical standards
+- Focus on critical safety measures
+- Use UK English terminology
 
 You must respond with valid JSON matching this exact structure:
 {
-  "briefingDescription": "2-3 paragraphs overview with context, scope, and key objectives",
-  "keyPoints": ["point 1", "point 2", ...],
-  "safetyPoints": ["safety point 1 (BS 7671 Reg X)", ...],
+  "briefingDescription": "Plain text overview in 2-3 paragraphs with context, scope, and key objectives. Use complete sentences and proper punctuation. No markdown.",
+  "keyPoints": ["Plain text point 1", "Plain text point 2", ...],
+  "safetyPoints": ["Plain text safety point 1 (BS 7671 Reg X)", ...],
   "equipmentRequired": ["PPE item 1", "Tool 2", ...],
-  "hazardsAndControls": "Detailed markdown text explaining each hazard and specific control measures with BS 7671 references",
-  "safetyWarning": "A critical safety message to emphasize (1-2 sentences)",
+  "hazardsAndControls": "Plain text explanation of each hazard and control measures. Use paragraphs separated by line breaks. Include BS 7671 references. NO markdown formatting.",
+  "safetyWarning": "A critical safety message in plain text (1-2 sentences)",
   "estimatedDuration": "realistic time e.g. 30 minutes"
 }`;
 
-    // Build user prompt with all context
+    // Build user prompt based on briefing type
     const identifiedHazardsList = (hazards?.identified || []).join('\n- ');
-    const userPrompt = `Generate a professional team briefing for the following electrical work:
+    
+    let briefingTypeContext = '';
+    switch (briefingType) {
+      case 'site-work':
+        briefingTypeContext = 'electrical site work/installation';
+        break;
+      case 'lfe':
+        briefingTypeContext = 'Lessons From Experience (LFE) incident review';
+        break;
+      case 'hse-update':
+        briefingTypeContext = 'Health & Safety Executive (HSE) update';
+        break;
+      case 'business-update':
+        briefingTypeContext = 'business announcement or update';
+        break;
+      case 'safety-alert':
+        briefingTypeContext = 'safety alert notification';
+        break;
+      case 'regulatory':
+        briefingTypeContext = 'regulatory change notification';
+        break;
+      default:
+        briefingTypeContext = 'general briefing';
+    }
 
-**JOB DETAILS:**
-- Job Name: ${jobContext.jobName}
-- Work Description: ${jobContext.jobDescription}
-- Work Scope: ${jobContext.workScope}
-- Environment: ${jobContext.environment}
-- Location: ${jobContext.location}
-- Team Size: ${jobContext.teamSize} electricians
-- Experience Level: ${jobContext.experienceLevel}
+    const userPrompt = `Generate a professional team briefing for the following ${briefingTypeContext}:
+
+**BRIEFING DETAILS:**
+- Title: ${briefingContext.briefingTitle}
+- Content: ${briefingContext.briefingContent}
+${briefingContext.workScope ? `- Work Scope: ${briefingContext.workScope}` : ''}
+${briefingContext.environment ? `- Environment: ${briefingContext.environment}` : ''}
+- Location: ${briefingContext.location}
+- Team Size: ${briefingContext.teamSize} people
+- Experience Level: ${briefingContext.experienceLevel}
 
 **IDENTIFIED HAZARDS:**
 - ${identifiedHazardsList}
@@ -70,7 +102,7 @@ ${hazards?.custom ? `\n**ADDITIONAL HAZARDS:**\n${hazards.custom}` : ''}
 - Overall Risk Level: ${hazards.riskLevel}
 ${hazards?.specialConsiderations ? `- Special Considerations: ${hazards.specialConsiderations}` : ''}
 
-Generate a comprehensive BS 7671:2018+A3:2024 compliant safety briefing with all required sections.`;
+Generate a comprehensive BS 7671:2018+A3:2024 compliant safety briefing. Remember: Use PLAIN TEXT only, NO markdown symbols.`;
 
     console.log('[BRIEFING-AI] Calling Lovable AI...');
 
