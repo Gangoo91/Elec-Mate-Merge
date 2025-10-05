@@ -76,12 +76,7 @@ const InvoiceCardList = ({
     }
 
     if (status === "paid") {
-      return (
-        <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800">
-          <FileText className="h-3 w-3 mr-1" />
-          Paid
-        </Badge>
-      );
+      return null;
     }
 
     return null;
