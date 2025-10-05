@@ -293,48 +293,58 @@ const SiteSafety = () => {
                 <CardTitle className="text-2xl text-elec-yellow">
                   Safety Best Practices
                 </CardTitle>
-                <p className="text-muted-foreground">
-                  Essential guidelines for safe electrical work
+                <p className="text-foreground/90">
+                  Essential guidelines for safe electrical work in compliance with BS 7671
                 </p>
               </CardHeader>
               
               <CardContent>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div className="space-y-6">
-                    <h4 className="font-semibold text-elec-yellow text-lg flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-sm">1</div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                  <div className="space-y-5">
+                    <h4 className="font-semibold text-elec-yellow text-xl flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center text-base font-bold">1</div>
                       Before Starting Work
                     </h4>
-                    <div className="space-y-4 pl-10">
+                    <div className="space-y-3">
                       {[
-                        "Complete risk assessment for each task",
-                        "Brief all team members on hazards",
-                        "Check all safety equipment",
-                        "Document site conditions"
+                        { title: "Complete risk assessment for each task", detail: "Identify all electrical hazards and plan control measures" },
+                        { title: "Brief all team members on hazards", detail: "Ensure everyone understands risks and emergency procedures" },
+                        { title: "Check all safety equipment and PPE", detail: "Verify voltage detectors, insulated tools, and protective gear" },
+                        { title: "Document site conditions", detail: "Record existing hazards and environmental factors" },
+                        { title: "Verify isolation and permit to work", detail: "Confirm safe isolation and authorization to proceed" },
+                        { title: "Review method statements", detail: "Understand step-by-step safe working procedures" }
                       ].map((item, index) => (
                         <div key={index} className="flex items-start gap-3">
                           <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                          <span className="text-muted-foreground text-left">{item}</span>
+                          <div className="text-left">
+                            <span className="text-foreground font-medium block">{item.title}</span>
+                            <span className="text-foreground/70 text-sm">{item.detail}</span>
+                          </div>
                         </div>
                       ))}
                     </div>
                   </div>
                   
-                  <div className="space-y-6">
-                    <h4 className="font-semibold text-elec-yellow text-lg flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-sm">2</div>
+                  <div className="space-y-5">
+                    <h4 className="font-semibold text-elec-yellow text-xl flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center text-base font-bold">2</div>
                       During Work
                     </h4>
-                    <div className="space-y-4 pl-10">
+                    <div className="space-y-3">
                       {[
-                        "Follow method statements precisely",
-                        "Report near misses immediately", 
-                        "Take photos of safety concerns",
-                        "Update risk assessments if conditions change"
+                        { title: "Follow method statements precisely", detail: "Adhere to approved procedures without deviation" },
+                        { title: "Report near misses immediately", detail: "Document incidents to prevent future accidents" }, 
+                        { title: "Take photos of safety concerns", detail: "Create visual evidence of hazards and conditions" },
+                        { title: "Update risk assessments if conditions change", detail: "Re-evaluate when new hazards are discovered" },
+                        { title: "Maintain safe working distances", detail: "Keep appropriate clearance from live equipment" },
+                        { title: "Use proper tools and equipment", detail: "Only use correctly rated and calibrated instruments" }
                       ].map((item, index) => (
                         <div key={index} className="flex items-start gap-3">
                           <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                          <span className="text-muted-foreground text-left">{item}</span>
+                          <div className="text-left">
+                            <span className="text-foreground font-medium block">{item.title}</span>
+                            <span className="text-foreground/70 text-sm">{item.detail}</span>
+                          </div>
                         </div>
                       ))}
                     </div>
