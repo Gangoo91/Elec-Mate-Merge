@@ -134,7 +134,7 @@ const InvoiceCardList = ({
         return (
           <div
             key={invoice.id}
-            className="relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border border-primary/20 border-l-2 border-l-primary"
+            className="relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border border-primary/40 border-l-2 border-l-primary"
           >
             {/* Dark overlay - exact match to reference */}
             <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
