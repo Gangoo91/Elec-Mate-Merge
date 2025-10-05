@@ -44,6 +44,8 @@ export const useInvoiceStorage = () => {
     invoice_due_date: row.invoice_due_date ? new Date(row.invoice_due_date) : undefined,
     invoice_status: row.invoice_status,
     work_completion_date: row.work_completion_date ? new Date(row.work_completion_date) : undefined,
+    invoice_notes: row.invoice_notes,
+    additional_invoice_items: row.additional_invoice_items || [],
   }), []);
 
 

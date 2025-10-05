@@ -108,6 +108,8 @@ export interface Quote {
   invoice_due_date?: Date;
   invoice_status?: 'draft' | 'sent' | 'paid' | 'overdue';
   work_completion_date?: Date;
+  invoice_notes?: string;
+  additional_invoice_items?: QuoteItem[];
 }
 
 export type QuoteTag = 'awaiting_payment' | 'job_not_complete' | 'on_hold' | 'disputed' | 'work_done';
