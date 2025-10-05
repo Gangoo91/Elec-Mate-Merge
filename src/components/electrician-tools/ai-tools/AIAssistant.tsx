@@ -331,7 +331,7 @@ const AIAssistant = () => {
         {(analysisResult || regulationsResult || practicalGuidanceResult) && !isLoading && showResults && (
           <div className="w-full max-w-7xl mx-auto">
             {/* Mobile: Vertical Stack */}
-            <div className="md:hidden flex flex-col gap-4">
+            <div className="md:hidden flex flex-col gap-6">
               {analysisResult && (
                 <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
                   <CardHeader className="p-4">
@@ -393,8 +393,8 @@ const AIAssistant = () => {
               )}
             </div>
             
-            {/* Desktop: Grid Layout */}
-            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Desktop: Vertical Layout */}
+            <div className="hidden md:flex md:flex-col gap-6">
               {/* Analysis Section */}
               {analysisResult && (
               <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
@@ -488,7 +488,7 @@ const AIAssistant = () => {
                 </CardHeader>
                 <CardContent className="p-3 sm:p-4 pt-0">
                   <div className="prose prose-invert max-w-none">
-                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed space-y-3">
+                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed space-y-5">
                       {String(regulationsResult || '').split('\n').map((line, index) => {
                         const trimmed = line.trim();
                         if (!trimmed) return null;
@@ -511,7 +511,7 @@ const AIAssistant = () => {
                         // Regulation numbers as standalone headers
                         if (trimmed.match(/^\d{3}\.\d+(?:\.\d+)?:?\s*$/)) {
                           return (
-                            <div key={index} className="mt-3 mb-2 p-2 bg-purple-500/10 rounded border border-purple-500/20">
+                            <div key={index} className="mt-6 mb-4 p-3 bg-purple-500/10 rounded border border-purple-500/20">
                               <h5 className="font-bold text-purple-300 text-sm flex items-center gap-2">
                                 <span className="text-xs">📋</span>
                                 <span dangerouslySetInnerHTML={{ __html: processedText }} />
@@ -543,7 +543,7 @@ const AIAssistant = () => {
                         // Compliance requirements (containing "must", "shall", "required")
                         if (trimmed.match(/\b(must|shall|required|mandatory|compliance)\b/gi)) {
                           return (
-                            <div key={index} className="my-3 p-3 bg-amber-500/15 border border-amber-500/25 rounded-lg">
+                            <div key={index} className="my-5 p-4 bg-amber-500/15 border border-amber-500/25 rounded-lg">
                               <div className="flex items-start gap-2">
                                 <span className="text-amber-400 text-sm">⚖️</span>
                                 <span className="text-amber-200 text-xs sm:text-sm font-medium" dangerouslySetInnerHTML={{ __html: processedText }} />
@@ -554,7 +554,7 @@ const AIAssistant = () => {
                         
                         // Regular regulation text
                         return (
-                          <p key={index} className="text-gray-300 text-xs sm:text-sm my-2" dangerouslySetInnerHTML={{ __html: processedText }} />
+                          <p key={index} className="text-gray-300 text-xs sm:text-sm my-3 leading-relaxed" dangerouslySetInnerHTML={{ __html: processedText }} />
                         );
                       }).filter(Boolean)}
                     </div>
