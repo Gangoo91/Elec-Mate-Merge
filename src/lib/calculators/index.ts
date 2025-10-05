@@ -2,6 +2,7 @@
 export * from './engines';
 export * from './bs7671-data';
 export * from './utils';
+export * from './cableTypeSelection';
 
 // Phase 1 Advanced Calculation Engines
 export * from './engines/diversityEngine';

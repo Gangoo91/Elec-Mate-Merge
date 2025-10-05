@@ -28,6 +28,12 @@ export interface InstallPlanDataV2 {
   cableType: string;
   installationMethod: string;
   
+  // Installation Context (NEW)
+  location?: 'inside' | 'outside' | 'underground' | 'loft' | 'plant-room' | 'data-center';
+  cableRun?: string; // Installation method detail
+  mechanicalProtection?: boolean;
+  fireProtection?: 'none' | 'fire-alarm' | 'escape-route' | 'fire-compartment';
+  
   // Environment
   environmentalProfile: EnvironmentalProfile;
   
