@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Invoice } from '@/types/invoice';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,6 +19,7 @@ export const InvoiceGenerationStep = ({
   isGenerating,
 }: InvoiceGenerationStepProps) => {
   const { companyProfile } = useCompanyProfile();
+  const [isPreviewing, setIsPreviewing] = useState(false);
   
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
@@ -30,7 +32,12 @@ export const InvoiceGenerationStep = ({
   const allItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
 
   const handlePreviewPDF = async () => {
-    await generateInvoicePDF(invoice, companyProfile);
+    setIsPreviewing(true);
+    try {
+      await generateInvoicePDF(invoice, companyProfile);
+    } finally {
+      setIsPreviewing(false);
+    }
   };
 
   return (
@@ -145,14 +152,15 @@ export const InvoiceGenerationStep = ({
         <Button
           variant="outline"
           onClick={handlePreviewPDF}
+          disabled={isPreviewing || isGenerating}
           className="flex-1 h-10"
         >
           <Download className="mr-2 h-4 w-4" />
-          Preview PDF
+          {isPreviewing ? 'Generating...' : 'Preview PDF'}
         </Button>
         <Button
           onClick={onGenerate}
-          disabled={isGenerating}
+          disabled={isGenerating || isPreviewing}
           className="flex-1 h-10"
         >
           <FileText className="mr-2 h-4 w-4" />
