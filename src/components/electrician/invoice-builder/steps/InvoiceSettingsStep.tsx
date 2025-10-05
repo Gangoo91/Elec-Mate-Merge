@@ -100,12 +100,30 @@ export const InvoiceSettingsStep = ({
         </CardHeader>
         <CardContent className="space-y-4">
           <MobileInputWrapper
+            label="Bank Name"
+            placeholder="e.g., Barclays, HSBC, Lloyds"
+            value={settings?.bankDetails?.bankName || ''}
+            onChange={(value) =>
+              onUpdateSettings({
+                bankDetails: {
+                  bankName: value,
+                  accountName: settings?.bankDetails?.accountName || '',
+                  accountNumber: settings?.bankDetails?.accountNumber || '',
+                  sortCode: settings?.bankDetails?.sortCode || '',
+                },
+              })
+            }
+            hint="The name of your bank"
+          />
+          
+          <MobileInputWrapper
             label="Account Name"
             placeholder="e.g., Smith Electrical Ltd"
             value={settings?.bankDetails?.accountName || ''}
             onChange={(value) =>
               onUpdateSettings({
                 bankDetails: {
+                  bankName: settings?.bankDetails?.bankName || '',
                   accountName: value,
                   accountNumber: settings?.bankDetails?.accountNumber || '',
                   sortCode: settings?.bankDetails?.sortCode || '',
@@ -124,6 +142,7 @@ export const InvoiceSettingsStep = ({
                 const numericValue = value.replace(/\D/g, '').slice(0, 8);
                 onUpdateSettings({
                   bankDetails: {
+                    bankName: settings?.bankDetails?.bankName || '',
                     accountName: settings?.bankDetails?.accountName || '',
                     accountNumber: numericValue,
                     sortCode: settings?.bankDetails?.sortCode || '',
@@ -145,6 +164,7 @@ export const InvoiceSettingsStep = ({
                 
                 onUpdateSettings({
                   bankDetails: {
+                    bankName: settings?.bankDetails?.bankName || '',
                     accountName: settings?.bankDetails?.accountName || '',
                     accountNumber: settings?.bankDetails?.accountNumber || '',
                     sortCode: formattedValue,

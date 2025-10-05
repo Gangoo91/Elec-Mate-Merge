@@ -10,6 +10,7 @@ export interface InvoiceSettings extends QuoteSettings {
   dueDate: Date;
   paymentMethod?: string;
   bankDetails?: {
+    bankName: string;
     accountName: string;
     accountNumber: string;
     sortCode: string;
