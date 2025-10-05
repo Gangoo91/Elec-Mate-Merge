@@ -39,7 +39,15 @@ export const InvoiceGenerationStep = ({
     try {
       const success = await onSave();
       if (success) {
-        await generateInvoicePDF(invoice, companyProfile);
+        // Merge all items before sending to PDF generator
+        const mergedItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
+        const completeInvoice = {
+          ...invoice,
+          items: mergedItems,
+          additional_invoice_items: [],
+        };
+        
+        await generateInvoicePDF(completeInvoice, companyProfile);
         toast({
           title: 'Invoice saved & PDF generated',
           description: 'Invoice has been saved and PDF preview is ready',
