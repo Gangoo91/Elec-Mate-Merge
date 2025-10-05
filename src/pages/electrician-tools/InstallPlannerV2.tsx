@@ -100,7 +100,7 @@ const InstallPlannerV2 = () => {
             </div>
             
             {/* Main content - centered on mobile, flex on desktop */}
-            <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between pl-12 md:pl-0">
+            <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between pt-12 md:pt-0">
               <div className="text-center md:text-left md:flex md:items-center md:gap-3">
                 {/* Back button - visible only on desktop */}
                 <Link to="/electrician" className="hidden md:block">
