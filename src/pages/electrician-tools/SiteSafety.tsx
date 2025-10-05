@@ -215,7 +215,7 @@ const SiteSafety = () => {
                 return (
                   <Card 
                     key={tool.id}
-                    className="group border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-300 hover:scale-105 cursor-pointer"
+                    className="group border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-all duration-300 hover:scale-105 cursor-pointer flex flex-col h-full"
                     onClick={() => setActiveView(tool.id)}
                   >
                     <CardHeader className="text-center pb-2">
@@ -229,11 +229,11 @@ const SiteSafety = () => {
                       </CardTitle>
                     </CardHeader>
                     
-                    <CardContent className="text-center">
+                    <CardContent className="text-center flex-1 flex flex-col">
                       <p className="text-foreground/90 text-sm mb-4 leading-relaxed">
                         {tool.description}
                       </p>
-                      <div className="flex items-center justify-center gap-2 text-xs text-elec-yellow/80">
+                      <div className="flex items-center justify-center gap-2 text-xs text-elec-yellow/80 mt-auto">
                         <span>{tool.category}</span>
                         <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
                       </div>
