@@ -88,20 +88,37 @@ const InstallPlannerV2 = () => {
       <div className="container mx-auto px-4 py-6 max-w-7xl">
         <div className="space-y-6 animate-fade-in">
           {/* Header */}
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-                Installation Designer
-              </h1>
-              <p className="text-muted-foreground mt-1">BS 7671:2018 Compliant</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <SaveManager planData={planData} onLoad={setPlanData} />
+          <div className="relative">
+            {/* Back button - floating top-right on mobile, inline on desktop */}
+            <div className="absolute top-0 right-0 md:hidden">
               <Link to="/electrician">
-                <Button variant="outline" size="sm" className="gap-2">
-                  <ArrowLeft className="h-4 w-4" /> Back
+                <Button variant="outline" size="sm">
+                  <ArrowLeft className="h-4 w-4" />
+                  <span className="sr-only">Back</span>
                 </Button>
               </Link>
+            </div>
+            
+            {/* Main content - centered on mobile, flex on desktop */}
+            <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between pr-12 md:pr-0">
+              <div className="text-center md:text-left">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+                  Installation Designer
+                </h1>
+                <p className="text-muted-foreground text-sm md:text-base mt-1">BS 7671:2018 Compliant</p>
+              </div>
+              
+              {/* Save/Load - centered under title on mobile */}
+              <div className="flex items-center gap-3 mt-4 md:mt-0">
+                <SaveManager planData={planData} onLoad={setPlanData} />
+                
+                {/* Back button - visible only on desktop */}
+                <Link to="/electrician" className="hidden md:block">
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <ArrowLeft className="h-4 w-4" /> Back
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
 
