@@ -104,6 +104,28 @@ export const getInstallationMethodDescription = (method: string): string => {
   return installationMethods[method]?.description || method;
 };
 
+// Map user-friendly installation method names to BS 7671 Reference Methods
+export const cableRunToReferenceMethod: Record<string, string> = {
+  'clipped-direct': 'C',
+  'trunking-perforated': 'B',
+  'trunking-enclosed': 'B',
+  'conduit-surface': 'A2',
+  'conduit-embedded': 'A1',
+  'conduit-insulation': 'A1',
+  'cable-tray': 'E',
+  'cable-basket': 'F',
+  'free-air': 'G',
+  'buried-direct': 'D',
+  'buried-duct': 'D',
+  'loft-insulation-contact': 'A1',
+  'loft-insulation-above': 'A1',
+  'loft-free': 'C'
+};
+
+export const getReferenceMethod = (installationMethod: string): string => {
+  return cableRunToReferenceMethod[installationMethod] || 'C'; // Default to C (clipped direct)
+};
+
 // Grouping for cable selection based on run location
 export const locationToCableType: Record<string, string[]> = {
   'inside': ['pvc-twin-earth', 'pvc-single'],

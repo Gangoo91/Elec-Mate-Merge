@@ -1,5 +1,6 @@
 import { getTemperatureFactor, getGroupingFactor } from '../bs7671-data/temperatureFactors';
 import { getCableCapacity, CableType } from '../bs7671-data/cableCapacities';
+import { getReferenceMethod } from '../bs7671-data/installationMethodFactors';
 
 export interface SimplifiedCableSizingInputs {
   current: number;
@@ -40,9 +41,17 @@ export const calculateSimplifiedCableSize = (inputs: SimplifiedCableSizingInputs
     const cableData = getCableCapacity(cableType, size);
     if (!cableData) continue;
 
-    // Get base capacity for installation method
-    const baseCapacity = (cableData as any)[installationType];
-    if (!baseCapacity) continue;
+    // Get BS 7671 Reference Method from installation type
+    const referenceMethod = getReferenceMethod(installationType);
+    
+    // Get base capacity for this reference method
+    const baseCapacity = cableData.capacities[referenceMethod];
+    if (!baseCapacity) {
+      // Fallback to most conservative (lowest) capacity if reference method not found
+      const capacities = Object.values(cableData.capacities);
+      const fallbackCapacity = Math.min(...capacities);
+      if (!fallbackCapacity) continue;
+    }
 
     // Determine temperature rating
     const temperatureRating = cableType.includes('xlpe') || cableType.includes('aluminium') ? '90C' : '70C';

@@ -3,6 +3,7 @@
 
 import { getCableCapacity } from '../bs7671-data/cableCapacities';
 import { standardDeviceRatings, getSuitableDevices, getRecommendedDeviceType } from '../bs7671-data/protectiveDevices';
+import { getReferenceMethod } from '../bs7671-data/installationMethodFactors';
 
 export interface MotorStartingInputs {
   powerKw: number;
@@ -119,9 +120,14 @@ export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStarti
   
   const standardCableSizes = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400, 500];
   
+  // Get reference method for installation
+  const referenceMethod = getReferenceMethod(inputs.installationMethod || 'clipped-direct');
+  
   for (const size of standardCableSizes) {
     const capacityData = getCableCapacity('pvc-single', size);
-    const capacity = capacityData?.capacity || 0;
+    if (!capacityData) continue;
+    
+    const capacity = capacityData.capacities[referenceMethod] || Math.min(...Object.values(capacityData.capacities));
     const deratedCapacity = capacity * totalDerating;
     
     if (deratedCapacity >= designCurrent) {
@@ -223,7 +229,8 @@ export const calculateMotorStarting = (inputs: MotorStartingInputs): MotorStarti
 
   // Overall compliance
   const capacityData = getCableCapacity('pvc-single', recommendedCableSize);
-  const currentCapacity = (capacityData?.capacity || 0) * totalDerating;
+  const finalCapacity = capacityData?.capacities[referenceMethod] || (capacityData ? Math.min(...Object.values(capacityData.capacities)) : 0);
+  const currentCapacity = finalCapacity * totalDerating;
   const bs7671Compliant = 
     currentCapacity >= designCurrent &&
     voltageDropRunning <= 3 &&

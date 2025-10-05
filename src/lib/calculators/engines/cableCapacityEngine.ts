@@ -8,6 +8,7 @@ import {
   getNextCableSize, 
   CableType 
 } from '../bs7671-data/cableCapacities';
+import { getReferenceMethod } from '../bs7671-data/installationMethodFactors';
 
 export interface CableCapacityInputs {
   cableType: CableType;
@@ -16,7 +17,7 @@ export interface CableCapacityInputs {
   groupingCircuits: number;
   designCurrent: number;
   deviceRating: number;
-  installationMethod: 'air' | 'soil';
+  installationMethod: string; // Now accepts installation method strings like 'clipped-direct'
   soilTemp?: number;
 }
 
@@ -59,13 +60,15 @@ export const calculateCableCapacity = (inputs: CableCapacityInputs): CableCapaci
   const cableData = getCableCapacity(cableType, cableSize);
   if (!cableData) return null;
 
-  const IzTabulated = cableData.capacity;
+  // Get reference method and base capacity
+  const referenceMethod = getReferenceMethod(installationMethod);
+  const IzTabulated = cableData.capacities[referenceMethod] || Math.min(...Object.values(cableData.capacities));
   
   // Determine temperature rating based on cable type
   const temperatureRating = cableType.includes('xlpe') || cableType.includes('aluminium') ? '90C' : '70C';
   
   // Get derating factors using BS 7671 tables
-  const temperatureFactor = installationMethod === 'soil' 
+  const temperatureFactor = installationMethod.includes('buried') || installationMethod.includes('underground')
     ? getSoilTemperatureFactor(soilTemp, temperatureRating)
     : getTemperatureFactor(ambientTemp, temperatureRating);
     
@@ -89,7 +92,8 @@ export const calculateCableCapacity = (inputs: CableCapacityInputs): CableCapaci
   if (!InLeIz) {
     const nextCable = getNextCableSize(cableType, cableSize);
     if (nextCable) {
-      const nextIz = nextCable.capacity * overallFactor;
+      const nextCableCapacity = nextCable.capacities[referenceMethod] || Math.min(...Object.values(nextCable.capacities));
+      const nextIz = nextCableCapacity * overallFactor;
       nextSizes.cable = { 
         size: nextCable.size, 
         capacity: Math.round(nextIz) 
