@@ -30,6 +30,7 @@ const InvoicesPage = () => {
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'sent' | 'overdue' | 'paid'>('all');
   const [sendingInvoiceId, setSendingInvoiceId] = useState<string | null>(null);
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
+  const [downloadingPdfId, setDownloadingPdfId] = useState<string | null>(null);
 
   const canonical = `${window.location.origin}/electrician/invoices`;
 
@@ -97,6 +98,8 @@ const InvoicesPage = () => {
 
   const handleDownloadPDF = async (invoice: Quote) => {
     try {
+      setDownloadingPdfId(invoice.id);
+      
       toast({
         title: 'Generating PDF',
         description: `Generating PDF for invoice ${invoice.invoice_number}...`,
@@ -126,6 +129,11 @@ const InvoicesPage = () => {
       // Call generateInvoicePDF utility
       const { generateInvoicePDF } = await import('@/utils/invoice-pdf');
       await generateInvoicePDF(invoice, companyData);
+      
+      toast({
+        title: 'PDF downloaded',
+        description: `Invoice ${invoice.invoice_number} downloaded successfully.`,
+      });
     } catch (error) {
       console.error('Error generating invoice PDF:', error);
       toast({
@@ -133,6 +141,8 @@ const InvoicesPage = () => {
         description: 'Failed to generate invoice PDF. Please try again.',
         variant: 'destructive',
       });
+    } finally {
+      setDownloadingPdfId(null);
     }
   };
 
@@ -498,10 +508,13 @@ const InvoicesPage = () => {
                           size="sm"
                           variant="outline"
                           onClick={() => handleDownloadPDF(invoice)}
+                          disabled={downloadingPdfId === invoice.id}
                           className="flex-1 sm:flex-initial"
                         >
                           <Download className="mr-2 h-4 w-4" />
-                          <span className="hidden sm:inline">PDF</span>
+                          <span className="hidden sm:inline">
+                            {downloadingPdfId === invoice.id ? 'Downloading...' : 'PDF'}
+                          </span>
                         </Button>
 
                         {invoice.invoice_status !== 'paid' && (
