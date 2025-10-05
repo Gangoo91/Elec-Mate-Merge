@@ -154,9 +154,9 @@ const InvoiceCardList = ({
                   <div className="w-20 h-20 flex items-center justify-center">
                     <FileText className="h-16 w-16 text-white/40" strokeWidth={1.5} />
                   </div>
-                  <div>
-                    <div className="text-sm text-white/60 mb-1">Client</div>
-                    <div className="text-base text-white font-medium">
+                  <div className="text-left">
+                    <div className="text-sm text-muted-foreground mb-1">Client</div>
+                    <div className="text-base text-foreground font-medium">
                       {invoice.client?.name || 'N/A'}
                     </div>
                   </div>
