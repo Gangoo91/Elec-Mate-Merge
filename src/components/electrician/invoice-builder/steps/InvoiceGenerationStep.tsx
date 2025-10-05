@@ -6,16 +6,19 @@ import { Badge } from '@/components/ui/badge';
 import { FileText, Download } from 'lucide-react';
 import { generateInvoicePDF } from '@/utils/invoice-pdf';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { toast } from '@/hooks/use-toast';
 
 interface InvoiceGenerationStepProps {
   invoice: Partial<Invoice>;
   onGenerate: () => void;
+  onSave: () => Promise<boolean>;
   isGenerating: boolean;
 }
 
 export const InvoiceGenerationStep = ({
   invoice,
   onGenerate,
+  onSave,
   isGenerating,
 }: InvoiceGenerationStepProps) => {
   const { companyProfile } = useCompanyProfile();
@@ -34,7 +37,15 @@ export const InvoiceGenerationStep = ({
   const handlePreviewPDF = async () => {
     setIsPreviewing(true);
     try {
-      await generateInvoicePDF(invoice, companyProfile);
+      const success = await onSave();
+      if (success) {
+        await generateInvoicePDF(invoice, companyProfile);
+        toast({
+          title: 'Invoice saved & PDF generated',
+          description: 'Invoice has been saved and PDF preview is ready',
+          variant: 'success',
+        });
+      }
     } finally {
       setIsPreviewing(false);
     }

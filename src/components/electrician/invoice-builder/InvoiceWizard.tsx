@@ -61,10 +61,15 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
     }
   };
 
-  const handleGenerate = async () => {
+  const handleSave = async (): Promise<boolean> => {
     setIsGenerating(true);
     const success = await saveInvoice(invoiceBuilder.invoice);
     setIsGenerating(false);
+    return success;
+  };
+
+  const handleGenerate = async () => {
+    const success = await handleSave();
     
     if (success) {
       const invoiceNumber = invoiceBuilder.invoice.invoice_number || 'Invoice';
@@ -105,6 +110,7 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
           <InvoiceGenerationStep
             invoice={invoiceBuilder.invoice}
             onGenerate={handleGenerate}
+            onSave={handleSave}
             isGenerating={isGenerating}
           />
         );
