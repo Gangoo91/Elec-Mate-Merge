@@ -1,29 +1,19 @@
-
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { Input } from "@/components/ui/input";
-import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Users, FileText, Download, Plus, Edit, Copy, Clock, UserCheck, Loader2, X, MoreHorizontal, Calendar, MapPin, Bell, QrCode, Camera, Trash, Sparkles, History } from "lucide-react";
+import { Users, FileText, Loader2, Calendar, Clock, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { BriefingFormWizard } from "./BriefingFormWizard";
 import { BriefingHistory } from "./BriefingHistory";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { HeroAIBriefingCard } from "./HeroAIBriefingCard";
+import { TemplateQuickAccess } from "./TemplateQuickAccess";
 
 interface BriefingTemplate {
   id: string;
@@ -58,18 +48,13 @@ interface TeamBriefing {
 const TeamBriefingTemplates = () => {
   const [briefings, setBriefings] = useState<TeamBriefing[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showAttendanceModal, setShowAttendanceModal] = useState(false);
-  const [selectedBriefing, setSelectedBriefing] = useState<TeamBriefing | null>(null);
-  const [newAttendee, setNewAttendee] = useState("");
-  const [attendanceView, setAttendanceView] = useState<'list' | 'qr' | 'camera'>('list');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [templateToDelete, setTemplateToDelete] = useState<BriefingTemplate | null>(null);
   const [showAIWizard, setShowAIWizard] = useState(false);
-  const [activeTab, setActiveTab] = useState("briefings");
+  const [activeTab, setActiveTab] = useState("templates");
+  const [scheduledBriefingsExpanded, setScheduledBriefingsExpanded] = useState(false);
+  const [showNewBriefingForm, setShowNewBriefingForm] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<BriefingTemplate | null>(null);
   
-  const [templates, setTemplates] = useState<BriefingTemplate[]>([
+  const [templates] = useState<BriefingTemplate[]>([
     {
       id: "1",
       name: "Consumer Unit Installation Briefing",
@@ -122,9 +107,6 @@ const TeamBriefingTemplates = () => {
     }
   ]);
 
-  const [selectedTemplate, setSelectedTemplate] = useState<BriefingTemplate | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [showNewBriefingForm, setShowNewBriefingForm] = useState(false);
   const [newBriefing, setNewBriefing] = useState({
     template_id: "",
     briefing_name: "",
@@ -245,160 +227,19 @@ const TeamBriefingTemplates = () => {
     }
   };
 
-  const addAttendee = async (capturePhoto = false) => {
-    if (!selectedBriefing || !newAttendee.trim()) return;
-
-    try {
-      const attendeeData: { name: string; timestamp: string; photo?: string } = { 
-        name: newAttendee, 
-        timestamp: new Date().toISOString() 
-      };
-
-      if (capturePhoto) {
-        attendeeData.photo = `photo-${Date.now()}`; // Placeholder for actual photo capture
-      }
-
-      const updatedAttendees = [...selectedBriefing.attendees, attendeeData];
-
-      const { error } = await supabase
-        .from('team_briefings')
-        .update({ attendees: updatedAttendees })
-        .eq('id', selectedBriefing.id);
-
-      if (error) throw error;
-
-      setSelectedBriefing(prev => prev ? { ...prev, attendees: updatedAttendees } : null);
-      setBriefings(prev => prev.map(b => 
-        b.id === selectedBriefing.id ? { ...b, attendees: updatedAttendees } : b
-      ));
-      setNewAttendee("");
-
-      toast({
-        title: "Success",
-        description: "Attendee added successfully",
-        variant: "success"
-      });
-    } catch (error) {
-      console.error('Error adding attendee:', error);
-      toast({
-        title: "Error",
-        description: "Failed to add attendee",
-        variant: "destructive"
-      });
+  const handleTemplateSelect = (templateId: string) => {
+    const template = templates.find(t => t.id === templateId);
+    if (template) {
+      setSelectedTemplate(template);
+      setShowNewBriefingForm(true);
     }
   };
 
-  const updateBriefingStatus = async (briefingId: string, status: TeamBriefing['status']) => {
-    try {
-      const { error } = await supabase
-        .from('team_briefings')
-        .update({ 
-          completed: status === 'completed',
-          ...(status !== 'completed' ? {} : {})
-        })
-        .eq('id', briefingId);
-
-      if (error) throw error;
-
-      setBriefings(prev => prev.map(b => 
-        b.id === briefingId ? { ...b, status, completed: status === 'completed' } : b
-      ));
-
-      toast({
-        title: "Success",
-        description: `Briefing ${status === 'completed' ? 'completed' : `marked as ${status}`}`,
-        variant: "success"
-      });
-    } catch (error) {
-      console.error('Error updating briefing status:', error);
-      toast({
-        title: "Error",
-        description: "Failed to update briefing status",
-        variant: "destructive"
-      });
-    }
+  const handleViewAllTemplates = () => {
+    setActiveTab('templates');
   };
 
-  const getStatusColor = (status: TeamBriefing['status']) => {
-    switch (status) {
-      case 'completed': return 'bg-primary text-primary-foreground';
-      case 'in_progress': return 'bg-warning text-warning-foreground';
-      case 'cancelled': return 'bg-destructive text-destructive-foreground';
-      case 'postponed': return 'bg-muted text-muted-foreground';
-      default: return 'bg-secondary text-secondary-foreground';
-    }
-  };
-
-  const filteredBriefings = briefings.filter(briefing => {
-    if (filterStatus === 'all') return true;
-    if (filterStatus === 'upcoming') return new Date(briefing.briefing_date) >= new Date() && briefing.status === 'scheduled';
-    if (filterStatus === 'today') return briefing.briefing_date === new Date().toISOString().split('T')[0];
-    return briefing.status === filterStatus;
-  });
-
-  const categories = ["Installation", "Maintenance", "Testing", "Safety", "Emergency", "General"];
-
-  const createNewTemplate = () => {
-    const newTemplate: BriefingTemplate = {
-      id: Date.now().toString(),
-      name: "New Briefing Template",
-      category: "General",
-      keyPoints: [""],
-      safetyPoints: [""],
-      equipment: [""],
-      duration: "10 minutes",
-      teamSize: "2-4 personnel"
-    };
-    setTemplates(prev => [...prev, newTemplate]);
-    setSelectedTemplate(newTemplate);
-    setIsEditing(true);
-  };
-
-  const duplicateTemplate = (template: BriefingTemplate) => {
-    const duplicatedTemplate: BriefingTemplate = {
-      ...template,
-      id: Date.now().toString(),
-      name: `${template.name} (Copy)`
-    };
-    setTemplates(prev => [...prev, duplicatedTemplate]);
-  };
-
-  const updateTemplate = (updatedTemplate: BriefingTemplate) => {
-    setTemplates(prev => 
-      prev.map(template => 
-        template.id === updatedTemplate.id ? updatedTemplate : template
-      )
-    );
-    setSelectedTemplate(updatedTemplate);
-  };
-
-  const deleteTemplate = (template: BriefingTemplate) => {
-    setTemplates(prev => prev.filter(t => t.id !== template.id));
-    setShowDeleteDialog(false);
-    setTemplateToDelete(null);
-    toast({
-      title: "Success",
-      description: "Template deleted successfully",
-      variant: "success"
-    });
-  };
-
-  const handleDeleteClick = (template: BriefingTemplate) => {
-    setTemplateToDelete(template);
-    setShowDeleteDialog(true);
-  };
-
-  const getCategoryColor = (category: string) => {
-    const colors: { [key: string]: string } = {
-      "Installation": "bg-blue-500",
-      "Maintenance": "bg-green-500", 
-      "Testing": "bg-purple-500",
-      "Safety": "bg-red-500",
-      "Emergency": "bg-orange-500",
-      "General": "bg-gray-500"
-    };
-    return colors[category] || "bg-gray-500";
-  };
+  const upcomingBriefings = briefings.filter(b => new Date(b.briefing_date) >= new Date() && b.status === 'scheduled').length;
 
   if (loading) {
     return (
@@ -409,905 +250,363 @@ const TeamBriefingTemplates = () => {
     );
   }
 
+  if (showAIWizard) {
+    return <BriefingFormWizard onClose={() => setShowAIWizard(false)} onSuccess={() => {
+      setShowAIWizard(false);
+      fetchBriefings();
+    }} />;
+  }
+
   return (
-    <div className="space-y-6">
-      {/* Enhanced Statistics with Touch Targets */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <MobileGestureHandler onTap={() => setFilterStatus('all')}>
-          <Card className="border-primary/30 cursor-pointer hover:bg-accent/50 transition-colors">
-            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
-              <div className="text-2xl lg:text-3xl font-bold text-primary">{briefings.length}</div>
-              <div className="text-sm text-muted-foreground">Total Briefings</div>
-            </CardContent>
-          </Card>
-        </MobileGestureHandler>
-        
-        <MobileGestureHandler onTap={() => setFilterStatus('completed')}>
-          <Card className="border-primary/30 cursor-pointer hover:bg-accent/50 transition-colors">
-            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
-              <div className="text-2xl lg:text-3xl font-bold text-primary">
+    <div className="space-y-6 pb-20">
+      {/* MOBILE LAYOUT */}
+      <div className="md:hidden space-y-6">
+        {/* Hero AI Briefing Card */}
+        <HeroAIBriefingCard onCreateBriefing={() => setShowAIWizard(true)} />
+
+        {/* Quick Template Access */}
+        <TemplateQuickAccess
+          onTemplateSelect={handleTemplateSelect}
+          onViewAll={handleViewAllTemplates}
+        />
+
+        {/* Tabs for Templates & History */}
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="w-full">
+            <TabsTrigger value="templates" className="flex-1">Templates</TabsTrigger>
+            <TabsTrigger value="history" className="flex-1">History</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="templates" className="space-y-4 mt-4">
+            {/* Templates Grid */}
+            <div className="grid gap-4">
+              {templates.map((template) => (
+                <div
+                  key={template.id}
+                  className="bg-card border border-elec-yellow/20 rounded-xl p-4 hover:border-elec-yellow/40 transition-all"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="h-12 w-12 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                      <FileText className="h-6 w-6 text-elec-yellow" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <h4 className="font-semibold text-elec-light">{template.name}</h4>
+                        <Badge className="bg-elec-yellow/10 text-elec-yellow border-0 whitespace-nowrap text-xs">
+                          {template.category}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm text-elec-light/60 mb-3">
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-4 w-4" />
+                          <span>{template.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Users className="h-4 w-4" />
+                          <span>{template.teamSize}</span>
+                        </div>
+                      </div>
+                      <MobileButton
+                        onClick={() => handleTemplateSelect(template.id)}
+                        variant="outline"
+                        size="sm"
+                        className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10"
+                        icon={<ArrowRight className="h-4 w-4" />}
+                      >
+                        Use Template
+                      </MobileButton>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="history" className="mt-4">
+            <BriefingHistory />
+          </TabsContent>
+        </Tabs>
+
+        {/* Scheduled Briefings - Collapsible at Bottom */}
+        <div className="border-t border-elec-yellow/20 pt-6">
+          <button
+            onClick={() => setScheduledBriefingsExpanded(!scheduledBriefingsExpanded)}
+            className="w-full flex items-center justify-between mb-4 touch-manipulation min-h-[44px]"
+          >
+            <h2 className="text-lg font-semibold text-elec-light flex items-center gap-2">
+              <Calendar className="h-5 w-5 text-elec-yellow" />
+              Your Scheduled Briefings
+              {upcomingBriefings > 0 && (
+                <span className="bg-elec-yellow text-elec-dark text-xs font-bold px-2 py-1 rounded-full">
+                  {upcomingBriefings}
+                </span>
+              )}
+            </h2>
+            {scheduledBriefingsExpanded ? (
+              <ChevronUp className="h-5 w-5 text-elec-yellow" />
+            ) : (
+              <ChevronDown className="h-5 w-5 text-elec-yellow" />
+            )}
+          </button>
+
+          {scheduledBriefingsExpanded && (
+            <div className="space-y-3 animate-fade-in">
+              {briefings && briefings.length > 0 ? (
+                briefings.slice(0, 5).map((briefing) => (
+                  <div
+                    key={briefing.id}
+                    className="bg-card border border-elec-yellow/20 rounded-xl p-4 hover:border-elec-yellow/40 transition-all"
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-elec-light mb-1">{briefing.briefing_name}</h3>
+                        <p className="text-sm text-elec-light/70">
+                          {briefing.location}
+                        </p>
+                      </div>
+                      <Badge className={`${
+                        briefing.status === 'completed' ? 'bg-primary/10 text-primary border-primary/20' :
+                        briefing.status === 'in_progress' ? 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20' :
+                        'bg-card border-elec-yellow/20 text-elec-light'
+                      }`}>
+                        {briefing.status}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-elec-light/60">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        <span>{new Date(briefing.briefing_date).toLocaleDateString('en-GB')}</span>
+                      </div>
+                      {briefing.attendees.length > 0 && (
+                        <div className="flex items-center gap-1">
+                          <Users className="h-4 w-4" />
+                          <span>{briefing.attendees.length}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="bg-card border border-elec-yellow/20 rounded-xl p-6 text-center">
+                  <Calendar className="h-12 w-12 text-elec-yellow/50 mx-auto mb-3" />
+                  <p className="text-elec-light/70">No scheduled briefings yet</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* DESKTOP LAYOUT - Keep existing functionality */}
+      <div className="hidden md:block space-y-6">
+        {/* Statistics Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <MobileGestureHandler onTap={() => {}}>
+            <Card className="border-primary/30">
+              <CardContent className="p-4 text-center">
+                <div className="text-3xl font-bold text-primary">{briefings.length}</div>
+                <div className="text-sm text-muted-foreground">Total Briefings</div>
+              </CardContent>
+            </Card>
+          </MobileGestureHandler>
+          
+          <Card className="border-primary/30">
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl font-bold text-primary">
                 {briefings.filter(b => b.status === 'completed').length}
               </div>
               <div className="text-sm text-muted-foreground">Completed</div>
             </CardContent>
           </Card>
-        </MobileGestureHandler>
-        
-        <MobileGestureHandler onTap={() => setFilterStatus('upcoming')}>
-          <Card className="border-secondary/30 cursor-pointer hover:bg-accent/50 transition-colors">
-            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
-              <div className="text-2xl lg:text-3xl font-bold text-secondary-foreground">
+          
+          <Card className="border-secondary/30">
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl font-bold text-secondary-foreground">
                 {briefings.reduce((total, b) => total + b.attendees.length, 0)}
               </div>
               <div className="text-sm text-muted-foreground">Total Attendees</div>
             </CardContent>
           </Card>
-        </MobileGestureHandler>
-        
-        <MobileGestureHandler onTap={() => setFilterStatus('today')}>
-          <Card className="border-accent/30 cursor-pointer hover:bg-accent/50 transition-colors">
-            <CardContent className="p-4 text-center min-h-[80px] flex flex-col justify-center">
-              <div className="text-2xl lg:text-3xl font-bold text-accent-foreground">
-                {briefings.filter(b => new Date(b.briefing_date) >= new Date() && b.status === 'scheduled').length}
+          
+          <Card className="border-accent/30">
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl font-bold text-accent-foreground">
+                {upcomingBriefings}
               </div>
               <div className="text-sm text-muted-foreground">Upcoming</div>
             </CardContent>
           </Card>
-        </MobileGestureHandler>
-      </div>
+        </div>
 
-      {/* Filter and View Controls */}
-      <Card className="border-border bg-card">
-        <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-            <div className="flex flex-wrap gap-2">
-              {['all', 'upcoming', 'today', 'completed', 'in_progress'].map((status) => (
-                <MobileButton
-                  key={status}
-                  size="sm"
-                  variant={filterStatus === status ? "elec" : "outline"}
-                  onClick={() => setFilterStatus(status)}
-                  className="capitalize"
-                >
-                  {status === 'all' ? 'All' : status.replace('_', ' ')}
-                </MobileButton>
+        {/* Desktop Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="w-full">
+            <TabsTrigger value="templates" className="flex-1">Templates</TabsTrigger>
+            <TabsTrigger value="history" className="flex-1">History</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="templates" className="space-y-4 mt-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold text-elec-light">Briefing Templates</h3>
+              <MobileButton
+                onClick={() => setShowAIWizard(true)}
+                variant="elec"
+                size="default"
+              >
+                Create AI Briefing
+              </MobileButton>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {templates.map((template) => (
+                <Card key={template.id} className="border-elec-yellow/20">
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <h4 className="font-semibold text-lg text-elec-light">{template.name}</h4>
+                      <Badge className="bg-elec-yellow/10 text-elec-yellow border-0">
+                        {template.category}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-elec-light/60 mb-4">
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        <span>{template.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="h-4 w-4" />
+                        <span>{template.teamSize}</span>
+                      </div>
+                    </div>
+                    <MobileButton
+                      onClick={() => handleTemplateSelect(template.id)}
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                    >
+                      Use Template
+                    </MobileButton>
+                  </CardContent>
+                </Card>
               ))}
             </div>
-            
-            <div className="flex gap-2">
-              <MobileButton
-                size="sm"
-                variant={viewMode === 'list' ? "elec" : "outline"}
-                onClick={() => setViewMode('list')}
-                icon={<FileText className="h-4 w-4" />}
-              />
-              <MobileButton
-                size="sm"
-                variant={viewMode === 'grid' ? "elec" : "outline"}
-                onClick={() => setViewMode('grid')}
-                icon={<Users className="h-4 w-4" />}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </TabsContent>
 
-      {/* Enhanced Scheduled Briefings */}
-      <Card className="border-border bg-card">
-        <CardHeader>
-          <CardTitle className="text-foreground flex items-center gap-2">
-            <Clock className="h-5 w-5" />
-            Scheduled Team Briefings ({filteredBriefings.length})
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {filteredBriefings.length === 0 ? (
-            <div className="text-center py-12">
-              <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground mb-4">
-                {filterStatus === 'all' 
-                  ? "No briefings scheduled yet. Create one from a template below."
-                  : `No briefings found for filter: ${filterStatus.replace('_', ' ')}`
-                }
-              </p>
-              {filterStatus !== 'all' && (
-                <MobileButton 
-                  variant="outline" 
-                  onClick={() => setFilterStatus('all')}
-                >
-                  Show All Briefings
-                </MobileButton>
-              )}
+          <TabsContent value="history">
+            <BriefingHistory />
+          </TabsContent>
+        </Tabs>
+
+        {/* Desktop Scheduled Briefings */}
+        <div>
+          <h2 className="text-xl font-semibold text-elec-light mb-4 flex items-center gap-2">
+            <Calendar className="h-5 w-5 text-elec-yellow" />
+            Scheduled Briefings
+          </h2>
+          {briefings && briefings.length > 0 ? (
+            <div className="grid md:grid-cols-2 gap-4">
+              {briefings.map((briefing) => (
+                <Card key={briefing.id} className="border-elec-yellow/20">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h3 className="font-semibold text-elec-light">{briefing.briefing_name}</h3>
+                        <p className="text-sm text-elec-light/70">{briefing.location}</p>
+                      </div>
+                      <Badge className={`${
+                        briefing.status === 'completed' ? 'bg-primary/10 text-primary' :
+                        'bg-card text-elec-light'
+                      }`}>
+                        {briefing.status}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm text-elec-light/60">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        <span>{new Date(briefing.briefing_date).toLocaleDateString('en-GB')}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="h-4 w-4" />
+                        <span>{briefing.attendees.length}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           ) : (
-            <div className={viewMode === 'grid' ? "grid grid-cols-1 lg:grid-cols-2 gap-4" : "space-y-4"}>
-              {filteredBriefings.map((briefing) => (
-                <MobileGestureHandler
-                  key={briefing.id}
-                  onSwipeRight={() => updateBriefingStatus(briefing.id, 'completed')}
-                  onLongPress={() => {
-                    setSelectedBriefing(briefing);
-                    setShowAttendanceModal(true);
-                  }}
-                >
-                  <Card className="border-border hover:bg-accent/50 transition-colors">
-                    <CardContent className="p-4">
-                      <div className="space-y-3">
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex flex-wrap gap-2">
-                            <Badge className={getStatusColor(briefing.status)}>
-                              {briefing.status.replace('_', ' ')}
-                            </Badge>
-                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                              <Calendar className="h-4 w-4" />
-                              {briefing.briefing_date} at {briefing.briefing_time}
-                            </div>
-                          </div>
-                          
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <MobileButton size="sm" variant="ghost" icon={<MoreHorizontal className="h-4 w-4" />} />
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem onClick={() => updateBriefingStatus(briefing.id, 'in_progress')}>
-                                Start Briefing
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => updateBriefingStatus(briefing.id, 'completed')}>
-                                Mark Complete
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => updateBriefingStatus(briefing.id, 'postponed')}>
-                                Postpone
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => updateBriefingStatus(briefing.id, 'cancelled')}>
-                                Cancel
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
-                      
-                        <div className="space-y-2">
-                          <h4 className="font-semibold leading-tight">{briefing.briefing_name}</h4>
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <MapPin className="h-4 w-4" />
-                            {briefing.location}
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div className="text-sm">
-                              <span className="font-medium">{briefing.attendees.length}</span> attendees
-                            </div>
-                            <div className="flex gap-2">
-                              <MobileButton 
-                                size="sm" 
-                                variant="outline"
-                                onClick={() => {
-                                  setSelectedBriefing(briefing);
-                                  setShowAttendanceModal(true);
-                                }}
-                                icon={<UserCheck className="h-4 w-4" />}
-                              >
-                                Attendance
-                              </MobileButton>
-                            </div>
-                          </div>
-                          
-                          {briefing.attendees.length > 0 && (
-                            <div className="text-xs text-muted-foreground truncate">
-                              {briefing.attendees.map(a => a.name).join(', ')}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </MobileGestureHandler>
-              ))}
-            </div>
+            <Card className="border-elec-yellow/20">
+              <CardContent className="p-6 text-center">
+                <Calendar className="h-12 w-12 text-elec-yellow/50 mx-auto mb-3" />
+                <p className="text-elec-light/70">No scheduled briefings yet</p>
+              </CardContent>
+            </Card>
           )}
-        </CardContent>
-      </Card>
-
-      {/* Tabs Navigation */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 bg-card border border-primary/30">
-          <TabsTrigger value="briefings" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-background">
-            <Users className="h-4 w-4 mr-2" />
-            Templates
-          </TabsTrigger>
-          <TabsTrigger value="history" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-background">
-            <History className="h-4 w-4 mr-2" />
-            History
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="briefings" className="space-y-6 mt-6">
-          {/* Header and Actions */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg sm:text-xl">
-                  <Users className="h-5 w-5" />
-                  Team Briefing Templates
-                </CardTitle>
-                <div className="flex gap-2">
-                  <MobileButton 
-                    onClick={() => setShowAIWizard(true)} 
-                    variant="elec"
-                    size="default"
-                    icon={<Sparkles className="h-4 w-4" />}
-                  >
-                    AI Briefing
-                  </MobileButton>
-                  <MobileButton 
-                    onClick={createNewTemplate} 
-                    variant="outline"
-                    size="default"
-                    icon={<Plus className="h-4 w-4" />}
-                  >
-                    Template
-                  </MobileButton>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Create AI-powered briefings instantly or use pre-built templates for consistent safety standards.
-              </p>
-            </CardContent>
-          </Card>
-
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
-        {/* Template List */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-white">Available Templates ({templates.length})</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {templates.map((template) => (
-                <Card 
-                  key={template.id} 
-                  className={`border-elec-yellow/30 cursor-pointer transition-colors ${
-                    selectedTemplate?.id === template.id ? 'bg-elec-yellow/10' : 'hover:bg-elec-gray/80'
-                  }`}
-                  onClick={() => setSelectedTemplate(template)}
-                >
-                   <CardContent className="p-0">
-                     <div className="flex items-start justify-between p-4 pb-3">
-                       <div className="flex-1 min-w-0">
-                         <div className="flex items-center gap-2 mb-3">
-                           <Badge className={`${getCategoryColor(template.category)} text-white text-xs px-2 py-1`}>
-                             {template.category}
-                           </Badge>
-                         </div>
-                         <h4 className="font-semibold text-base text-foreground mb-2 leading-tight">{template.name}</h4>
-                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-muted-foreground">
-                           <div className="flex items-center gap-1">
-                             <Clock className="h-3 w-3" />
-                             <span>{template.duration}</span>
-                           </div>
-                           <div className="flex items-center gap-1">
-                             <Users className="h-3 w-3" />
-                             <span>{template.teamSize}</span>
-                           </div>
-                         </div>
-                       </div>
-                       <DropdownMenu>
-                         <DropdownMenuTrigger asChild>
-                           <Button
-                             size="sm"
-                             variant="ghost"
-                             className="min-h-[44px] min-w-[44px] touch-manipulation p-0 hover:bg-transparent shrink-0"
-                             onClick={(e) => e.stopPropagation()}
-                           >
-                             <MoreHorizontal className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
-                           </Button>
-                         </DropdownMenuTrigger>
-                          <DropdownMenuContent 
-                            align="end" 
-                            className="w-48 z-50 bg-popover border border-border shadow-lg"
-                            sideOffset={5}
-                          >
-                            <DropdownMenuItem
-                              className="cursor-pointer flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                duplicateTemplate(template);
-                              }}
-                            >
-                              <Copy className="h-4 w-4" />
-                              Copy
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="cursor-pointer flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedTemplate(template);
-                                setIsEditing(true);
-                              }}
-                            >
-                              <Edit className="h-4 w-4" />
-                              Edit
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="cursor-pointer flex items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedTemplate(template);
-                                setNewBriefing(prev => ({ ...prev, template_id: template.id }));
-                                setShowNewBriefingForm(true);
-                              }}
-                            >
-                              <Plus className="h-4 w-4" />
-                              Use Template
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="cursor-pointer flex items-center gap-2 px-3 py-2 text-sm hover:bg-destructive hover:text-destructive-foreground focus:bg-destructive focus:text-destructive-foreground text-destructive"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDeleteClick(template);
-                              }}
-                            >
-                              <Trash className="h-4 w-4" />
-                              Delete Template
-                            </DropdownMenuItem>
-                         </DropdownMenuContent>
-                       </DropdownMenu>
-                     </div>
-                      <div className="border-t border-border/50 px-3 sm:px-4 py-2 sm:py-3 bg-muted/30">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs sm:text-sm">
-                          <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-                            <span className="flex items-center gap-1 text-blue-400 min-w-fit">
-                              <FileText className="h-3 w-3 flex-shrink-0" />
-                              <span className="whitespace-nowrap">{template.keyPoints.length} key points</span>
-                            </span>
-                            <span className="flex items-center gap-1 text-red-400 min-w-fit">
-                              <span className="text-xs">⚠</span>
-                              <span className="whitespace-nowrap">{template.safetyPoints.length} safety points</span>
-                            </span>
-                          </div>
-                          {template.equipment && template.equipment.length > 0 && (
-                            <span className="text-muted-foreground flex items-center gap-1 min-w-fit">
-                              <span className="text-xs">🔧</span>
-                              <span className="whitespace-nowrap">{template.equipment.length} equipment</span>
-                            </span>
-                          )}
-                        </div>
-                     </div>
-                   </CardContent>
-                 </Card>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Template Preview/Editor */}
-        <Card className="border-elec-yellow/20 bg-elec-gray animate-fade-in">
-          <CardHeader className="border-b border-elec-yellow/10">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="space-y-1">
-                <CardTitle className="text-white flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-elec-yellow" />
-                  {selectedTemplate ? (isEditing ? 'Edit Template' : 'Template Preview') : 'Select Template'}
-                </CardTitle>
-                {selectedTemplate && (
-                  <p className="text-sm text-muted-foreground">
-                    {isEditing ? 'Modify the template details below' : 'Review template structure and content'}
-                  </p>
-                )}
-              </div>
-              {selectedTemplate && (
-                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                  {isEditing ? (
-                    <>
-                      <Button 
-                        size="sm" 
-                        variant="ghost"
-                        onClick={() => setIsEditing(false)}
-                        className="w-full sm:w-auto"
-                      >
-                        Cancel
-                      </Button>
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        className="bg-elec-yellow text-black hover:bg-elec-yellow/80 w-full sm:w-auto"
-                      >
-                        Save Changes
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button 
-                        size="sm" 
-                        variant="outline" 
-                        onClick={() => setIsEditing(true)}
-                        className="hover-scale w-full sm:w-auto"
-                      >
-                        <Edit className="h-3 w-3 mr-1" />
-                        Edit
-                      </Button>
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        className="hover-scale w-full sm:w-auto"
-                      >
-                        <Download className="h-3 w-3 mr-1" />
-                        Export
-                      </Button>
-                    </>
-                  )}
-                </div>
-              )}
-            </div>
-          </CardHeader>
-          <CardContent className="p-4 sm:p-6">
-            {!selectedTemplate ? (
-              <div className="text-center py-12">
-                <div className="max-w-sm mx-auto space-y-3">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                    <FileText className="h-8 w-8 text-elec-yellow" />
-                  </div>
-                  <h3 className="text-lg font-medium text-white">No Template Selected</h3>
-                  <p className="text-muted-foreground">
-                    Choose a template from the list to preview or edit its content.
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-8">
-                {/* Template Overview Section */}
-                <div className="bg-elec-dark/50 rounded-lg p-4 space-y-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-2 h-2 rounded-full bg-elec-yellow"></div>
-                    <h3 className="text-sm font-medium text-elec-yellow uppercase tracking-wide">Template Overview</h3>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Template Name</Label>
-                      {isEditing ? (
-                        <Input
-                          value={selectedTemplate.name}
-                          onChange={(e) => updateTemplate({
-                            ...selectedTemplate,
-                            name: e.target.value
-                          })}
-                          className="bg-background border-border/50 focus:border-elec-yellow"
-                        />
-                      ) : (
-                        <div className="p-3 bg-elec-dark rounded-md border border-border/30">
-                          <span className="text-white font-medium">{selectedTemplate.name}</span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Category</Label>
-                      {isEditing ? (
-                        <select
-                          className="w-full p-3 border border-border/50 rounded-md bg-background focus:border-elec-yellow focus:outline-none"
-                          value={selectedTemplate.category}
-                          onChange={(e) => updateTemplate({
-                            ...selectedTemplate,
-                            category: e.target.value
-                          })}
-                        >
-                          {categories.map(category => (
-                            <option key={category} value={category}>{category}</option>
-                          ))}
-                        </select>
-                      ) : (
-                        <div className="p-3 bg-elec-dark rounded-md border border-border/30">
-                          <Badge className={`${getCategoryColor(selectedTemplate.category)} text-white text-xs`}>
-                            {selectedTemplate.category}
-                          </Badge>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Duration</Label>
-                      {isEditing ? (
-                        <Input
-                          value={selectedTemplate.duration}
-                          onChange={(e) => updateTemplate({
-                            ...selectedTemplate,
-                            duration: e.target.value
-                          })}
-                          className="bg-background border-border/50 focus:border-elec-yellow"
-                        />
-                      ) : (
-                        <div className="p-3 bg-elec-dark rounded-md border border-border/30 flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-elec-yellow" />
-                          <span className="text-white">{selectedTemplate.duration}</span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Team Size</Label>
-                      {isEditing ? (
-                        <Input
-                          value={selectedTemplate.teamSize}
-                          onChange={(e) => updateTemplate({
-                            ...selectedTemplate,
-                            teamSize: e.target.value
-                          })}
-                          className="bg-background border-border/50 focus:border-elec-yellow"
-                        />
-                      ) : (
-                        <div className="p-3 bg-elec-dark rounded-md border border-border/30 flex items-center gap-2">
-                          <Users className="h-4 w-4 text-elec-yellow" />
-                          <span className="text-white">{selectedTemplate.teamSize}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Key Points */}
-                <div>
-                  <Label className="text-sm font-medium">Key Briefing Points</Label>
-                  <div className="mt-2 space-y-2">
-                    {selectedTemplate.keyPoints.map((point, index) => (
-                      <div key={index} className="flex items-start gap-2">
-                        <span className="text-elec-yellow mt-1">•</span>
-                        {isEditing ? (
-                          <Textarea
-                            value={point}
-                            onChange={(e) => {
-                              const newPoints = [...selectedTemplate.keyPoints];
-                              newPoints[index] = e.target.value;
-                              updateTemplate({
-                                ...selectedTemplate,
-                                keyPoints: newPoints
-                              });
-                            }}
-                            rows={2}
-                            className="flex-1"
-                          />
-                        ) : (
-                          <span className="text-sm">{point}</span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Safety Points */}
-                <div>
-                  <Label className="text-sm font-medium">Critical Safety Points</Label>
-                  <div className="mt-2 space-y-2">
-                    {selectedTemplate.safetyPoints.map((point, index) => (
-                      <div key={index} className="flex items-start gap-2">
-                        <span className="text-red-400 mt-1">⚠</span>
-                        {isEditing ? (
-                          <Textarea
-                            value={point}
-                            onChange={(e) => {
-                              const newPoints = [...selectedTemplate.safetyPoints];
-                              newPoints[index] = e.target.value;
-                              updateTemplate({
-                                ...selectedTemplate,
-                                safetyPoints: newPoints
-                              });
-                            }}
-                            rows={2}
-                            className="flex-1"
-                          />
-                        ) : (
-                          <span className="text-sm">{point}</span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Equipment List */}
-                <div>
-                  <Label className="text-sm font-medium">Required Equipment</Label>
-                  <div className="mt-2 space-y-2">
-                    {selectedTemplate.equipment.map((item, index) => (
-                      <div key={index} className="flex items-start gap-2">
-                        <span className="text-blue-400 mt-1">🔧</span>
-                        {isEditing ? (
-                          <Input
-                            value={item}
-                            onChange={(e) => {
-                              const newEquipment = [...selectedTemplate.equipment];
-                              newEquipment[index] = e.target.value;
-                              updateTemplate({
-                                ...selectedTemplate,
-                                equipment: newEquipment
-                              });
-                            }}
-                          />
-                        ) : (
-                          <span className="text-sm">{item}</span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        </div>
       </div>
 
-      {/* Enhanced Attendance Modal */}
-      <Drawer open={showAttendanceModal} onOpenChange={setShowAttendanceModal}>
-        <DrawerContent className="max-h-[90vh]">
-          <DrawerHeader>
-            <DrawerTitle className="text-center">Manage Attendance</DrawerTitle>
-          </DrawerHeader>
-          {selectedBriefing && (
-            <div className="p-4 space-y-6">
-              {/* Briefing Info Card */}
-              <Card className="border-border">
-                <CardContent className="p-4 space-y-2">
-                  <h4 className="font-semibold">{selectedBriefing.briefing_name}</h4>
-                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                    <Calendar className="h-4 w-4" />
-                    {selectedBriefing.briefing_date} at {selectedBriefing.briefing_time}
-                  </div>
-                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4" />
-                    {selectedBriefing.location}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Attendance Method Toggle */}
-              <div className="flex justify-center">
-                <div className="flex bg-muted rounded-lg p-1">
-                  {['list', 'qr', 'camera'].map((mode) => (
-                    <MobileButton
-                      key={mode}
-                      size="sm"
-                      variant={attendanceView === mode ? "elec" : "ghost"}
-                      onClick={() => setAttendanceView(mode as any)}
-                      className="capitalize"
-                      icon={
-                        mode === 'list' ? <Users className="h-4 w-4" /> :
-                        mode === 'qr' ? <QrCode className="h-4 w-4" /> :
-                        <Camera className="h-4 w-4" />
-                      }
-                    >
-                      {mode === 'qr' ? 'QR Code' : mode}
-                    </MobileButton>
-                  ))}
-                </div>
-              </div>
-
-              {/* Attendance Content */}
-              {attendanceView === 'list' && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <Label className="text-base font-semibold">
-                      Attendees ({selectedBriefing.attendees.length})
-                    </Label>
-                    <Badge variant="secondary">
-                      {selectedBriefing.attendees.length} present
-                    </Badge>
-                  </div>
-                  
-                  <div className="space-y-2 max-h-60 overflow-y-auto">
-                    {selectedBriefing.attendees.length === 0 ? (
-                      <div className="text-center py-8 text-muted-foreground">
-                        <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                        <p>No attendees yet</p>
-                      </div>
-                    ) : (
-                      selectedBriefing.attendees.map((attendee, index) => (
-                        <Card key={index} className="border-border">
-                          <CardContent className="p-3 flex justify-between items-center">
-                            <div className="flex-1">
-                              <span className="font-medium">{attendee.name}</span>
-                              {attendee.timestamp && (
-                                <div className="text-xs text-muted-foreground">
-                                  Signed in: {new Date(attendee.timestamp).toLocaleString()}
-                                </div>
-                              )}
-                            </div>
-                            {attendee.photo && (
-                              <Camera className="h-4 w-4 text-muted-foreground" />
-                            )}
-                          </CardContent>
-                        </Card>
-                      ))
-                    )}
-                  </div>
-
-                  {/* Add Attendee */}
-                  <div className="space-y-3">
-                    <MobileInput
-                      label="Add New Attendee"
-                      placeholder="Enter attendee name..."
-                      value={newAttendee}
-                      onChange={(e) => setNewAttendee(e.target.value)}
-                      onKeyDown={(e) => e.key === 'Enter' && addAttendee()}
-                    />
-                    <div className="flex gap-2">
-                      <MobileButton
-                        onClick={() => addAttendee()}
-                        disabled={!newAttendee.trim()}
-                        variant="elec"
-                        size="wide"
-                        icon={<UserCheck className="h-4 w-4" />}
-                      >
-                        Add Attendee
-                      </MobileButton>
-                      <MobileButton
-                        onClick={() => addAttendee(true)}
-                        disabled={!newAttendee.trim()}
-                        variant="outline"
-                        icon={<Camera className="h-4 w-4" />}
-                      >
-                        With Photo
-                      </MobileButton>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {attendanceView === 'qr' && (
-                <div className="text-center space-y-4">
-                  <div className="w-48 h-48 mx-auto bg-muted rounded-lg flex items-center justify-center">
-                    <QrCode className="h-16 w-16 text-muted-foreground" />
-                  </div>
-                  <div className="space-y-2">
-                    <p className="font-medium">QR Code Check-in</p>
-                    <p className="text-sm text-muted-foreground">
-                      Team members can scan this code to sign in
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Code: {selectedBriefing.qr_code || 'Generating...'}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {attendanceView === 'camera' && (
-                <div className="text-center space-y-4">
-                  <div className="w-full h-48 bg-muted rounded-lg flex items-center justify-center">
-                    <Camera className="h-16 w-16 text-muted-foreground" />
-                  </div>
-                  <div className="space-y-2">
-                    <p className="font-medium">Photo Attendance</p>
-                    <p className="text-sm text-muted-foreground">
-                      Capture team photo for attendance record
-                    </p>
-                    <MobileButton 
-                      variant="elec" 
-                      icon={<Camera className="h-4 w-4" />}
-                    >
-                      Capture Group Photo
-                    </MobileButton>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </DrawerContent>
-      </Drawer>
-
-      {/* New Briefing Form Modal */}
+      {/* Template Selection Dialog */}
       <Dialog open={showNewBriefingForm} onOpenChange={setShowNewBriefingForm}>
-        <DialogContent className="sm:max-w-lg">
+        <DialogContent className="bg-card border-elec-yellow/30">
           <DialogHeader>
-            <DialogTitle>Schedule New Briefing</DialogTitle>
+            <DialogTitle className="text-elec-light">Schedule New Briefing</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {selectedTemplate && (
+            <div className="space-y-4">
               <div>
-                <Label htmlFor="briefing-name">Briefing Name *</Label>
+                <Label className="text-elec-light">Template</Label>
+                <p className="text-sm text-elec-light/70">{selectedTemplate.name}</p>
+              </div>
+              <div>
+                <Label htmlFor="name" className="text-elec-light">Briefing Name</Label>
                 <Input
-                  id="briefing-name"
+                  id="name"
                   value={newBriefing.briefing_name}
-                  onChange={(e) => setNewBriefing(prev => ({ ...prev, briefing_name: e.target.value }))}
-                  placeholder="Enter briefing name"
-                  className="mt-1"
+                  onChange={(e) => setNewBriefing({ ...newBriefing, briefing_name: e.target.value })}
+                  placeholder="e.g., Morning Safety Briefing"
+                  className="bg-background border-elec-yellow/30"
                 />
               </div>
               <div>
-                <Label htmlFor="location">Location *</Label>
+                <Label htmlFor="location" className="text-elec-light">Location</Label>
                 <Input
                   id="location"
                   value={newBriefing.location}
-                  onChange={(e) => setNewBriefing(prev => ({ ...prev, location: e.target.value }))}
-                  placeholder="Enter location"
-                  className="mt-1"
+                  onChange={(e) => setNewBriefing({ ...newBriefing, location: e.target.value })}
+                  placeholder="e.g., Site Office"
+                  className="bg-background border-elec-yellow/30"
                 />
               </div>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="briefing-date">Date</Label>
-                <Input
-                  id="briefing-date"
-                  type="date"
-                  value={newBriefing.briefing_date}
-                  onChange={(e) => setNewBriefing(prev => ({ ...prev, briefing_date: e.target.value }))}
-                  className="mt-1"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="date" className="text-elec-light">Date</Label>
+                  <Input
+                    id="date"
+                    type="date"
+                    value={newBriefing.briefing_date}
+                    onChange={(e) => setNewBriefing({ ...newBriefing, briefing_date: e.target.value })}
+                    className="bg-background border-elec-yellow/30"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="time" className="text-elec-light">Time</Label>
+                  <Input
+                    id="time"
+                    type="time"
+                    value={newBriefing.briefing_time}
+                    onChange={(e) => setNewBriefing({ ...newBriefing, briefing_time: e.target.value })}
+                    className="bg-background border-elec-yellow/30"
+                  />
+                </div>
               </div>
-              <div>
-                <Label htmlFor="briefing-time">Time</Label>
-                <Input
-                  id="briefing-time"
-                  type="time"
-                  value={newBriefing.briefing_time}
-                  onChange={(e) => setNewBriefing(prev => ({ ...prev, briefing_time: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="notes">Additional Notes</Label>
-              <Textarea
-                id="notes"
-                value={newBriefing.notes}
-                onChange={(e) => setNewBriefing(prev => ({ ...prev, notes: e.target.value }))}
-                placeholder="Any additional notes for this briefing..."
-                rows={3}
-                className="mt-1"
-              />
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-2">
-              <Button 
-                variant="outline" 
-                onClick={() => setShowNewBriefingForm(false)}
-                className="w-full sm:w-auto"
-              >
-                Cancel
-              </Button>
-              <Button 
-                onClick={() => {
-                  const template = templates.find(t => t.id === newBriefing.template_id);
-                  if (template) createBriefingFromTemplate(template);
-                }}
-                disabled={!newBriefing.briefing_name.trim() || !newBriefing.location.trim()}
-                className="w-full sm:w-auto"
+              <MobileButton
+                onClick={() => createBriefingFromTemplate(selectedTemplate)}
+                variant="elec"
+                size="wide"
               >
                 Schedule Briefing
-              </Button>
+              </MobileButton>
             </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      <ConfirmationDialog
-        open={showDeleteDialog}
-        onOpenChange={setShowDeleteDialog}
-        title="Delete Template"
-        description={`Are you sure you want to delete "${templateToDelete?.name}"? This action cannot be undone.`}
-        confirmText="Delete"
-        cancelText="Cancel"
-        variant="destructive"
-        onConfirm={() => templateToDelete && deleteTemplate(templateToDelete)}
-      />
-
-        </TabsContent>
-
-        <TabsContent value="history" className="mt-6">
-          <BriefingHistory />
-        </TabsContent>
-      </Tabs>
-
-      {/* AI Wizard Dialog */}
-      <Dialog open={showAIWizard} onOpenChange={setShowAIWizard}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <BriefingFormWizard 
-            onClose={() => setShowAIWizard(false)} 
-            onSuccess={() => {
-              setShowAIWizard(false);
-              fetchBriefings();
-            }} 
-          />
+          )}
         </DialogContent>
       </Dialog>
     </div>
