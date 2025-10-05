@@ -94,7 +94,9 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
     return (
       <Button
         onClick={handleGeneratePDF}
-        className="w-full sm:w-auto bg-elec-yellow text-background"
+        variant="outline"
+        size="sm"
+        className="w-full border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow hover:text-background"
       >
         <FileText className="h-4 w-4 mr-2" />
         Generate PDF
@@ -104,7 +106,7 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
 
   if (generating) {
     return (
-      <Button disabled className="w-full sm:w-auto">
+      <Button disabled size="sm" className="w-full">
         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
         Generating PDF...
       </Button>
@@ -112,10 +114,11 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-col sm:flex-row gap-2 w-full">
       <Button
         onClick={handleViewPDF}
-        className="bg-elec-yellow text-background"
+        size="sm"
+        className="flex-1 bg-elec-yellow text-background hover:bg-elec-yellow/90"
       >
         <ExternalLink className="h-4 w-4 mr-2" />
         View PDF
@@ -124,6 +127,8 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
       <Button
         onClick={handleDownloadPDF}
         variant="outline"
+        size="sm"
+        className="flex-1 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
       >
         <Download className="h-4 w-4 mr-2" />
         Download
@@ -132,6 +137,8 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
       <Button
         onClick={handlePrintPDF}
         variant="outline"
+        size="sm"
+        className="flex-1 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
       >
         <Printer className="h-4 w-4 mr-2" />
         Print

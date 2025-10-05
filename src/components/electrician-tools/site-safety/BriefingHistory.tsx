@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { FileText, Download, Search, Calendar, MapPin, User, Sparkles, Filter } from "lucide-react";
+import { FileText, Search, Calendar, MapPin, User, Sparkles, Camera, Clock, CheckCircle2, FileEdit, Wrench, ClipboardList } from "lucide-react";
 import { BriefingPDFActions } from "./BriefingPDFActions";
 import {
   Select,
@@ -145,52 +145,124 @@ export const BriefingHistory = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            {filteredBriefings.map((briefing) => (
-              <Card key={briefing.id} className="bg-card/50 border-primary/20">
-                <CardContent className="p-4 space-y-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h3 className="font-bold text-elec-light">
-                          {briefing.job_name || briefing.briefing_name}
-                        </h3>
-                        {briefing.ai_generated && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">
-                            <Sparkles className="h-3 w-3" />
-                            AI
-                          </span>
-                        )}
-                      </div>
+            {filteredBriefings.map((briefing) => {
+              const briefingTypeConfig = {
+                'site-work': { label: 'Site Work', color: 'bg-blue-500/20 text-blue-400' },
+                'lfe': { label: 'LFE Report', color: 'bg-red-500/20 text-red-400' },
+                'hse-update': { label: 'HSE Update', color: 'bg-orange-500/20 text-orange-400' },
+                'business-update': { label: 'Business', color: 'bg-purple-500/20 text-purple-400' },
+                'safety-alert': { label: 'Safety Alert', color: 'bg-yellow-500/20 text-yellow-400' },
+                'regulatory': { label: 'Regulatory', color: 'bg-green-500/20 text-green-400' },
+                'general': { label: 'General', color: 'bg-gray-500/20 text-gray-400' },
+              };
+              
+              const typeInfo = briefingTypeConfig[briefing.briefing_type as keyof typeof briefingTypeConfig] || briefingTypeConfig['general'];
+              const photoCount = briefing.photos?.length || 0;
+              const equipmentCount = briefing.equipment?.length || 0;
+              const keyPointsCount = briefing.key_points?.length || 0;
+              const description = briefing.briefing_description || briefing.job_description || '';
+              const truncatedDesc = description.length > 80 ? description.substring(0, 80) + '...' : description;
 
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm text-elec-light/70">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-3 w-3" />
-                          {new Date(briefing.briefing_date).toLocaleDateString('en-GB')} at {briefing.briefing_time}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <MapPin className="h-3 w-3" />
-                          {briefing.location}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <User className="h-3 w-3" />
-                          {briefing.conductor_name || 'Not specified'}
-                        </div>
-                      </div>
-
-                      {briefing.team_size && (
-                        <p className="text-xs text-elec-light/60 mt-2">
-                          Team: {briefing.team_size} electricians | Risk: <span className="uppercase font-medium">{briefing.risk_level || 'medium'}</span>
-                        </p>
+              return (
+                <Card key={briefing.id} className="bg-card/50 border-primary/20">
+                  <CardContent className="p-4">
+                    {/* Top badges row */}
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                      <Badge className={`${typeInfo.color} border-0 text-xs`}>
+                        {typeInfo.label}
+                      </Badge>
+                      {briefing.ai_generated && (
+                        <Badge className="bg-elec-yellow/20 text-elec-yellow border-0 text-xs">
+                          <Sparkles className="h-3 w-3 mr-1" />
+                          AI
+                        </Badge>
+                      )}
+                      {briefing.completed ? (
+                        <Badge className="bg-green-500/20 text-green-400 border-0 text-xs">
+                          <CheckCircle2 className="h-3 w-3 mr-1" />
+                          Completed
+                        </Badge>
+                      ) : (
+                        <Badge className="bg-amber-500/20 text-amber-400 border-0 text-xs">
+                          <FileEdit className="h-3 w-3 mr-1" />
+                          Draft
+                        </Badge>
                       )}
                     </div>
 
-                    <div className="flex flex-col sm:flex-row items-end gap-2">
+                    {/* Title */}
+                    <h3 className="font-bold text-lg text-elec-light mb-2">
+                      {briefing.job_name || briefing.briefing_name}
+                    </h3>
+
+                    {/* Description preview */}
+                    {truncatedDesc && (
+                      <p className="text-sm text-elec-light/60 mb-3">
+                        {truncatedDesc}
+                      </p>
+                    )}
+
+                    {/* Metadata grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-elec-light/70 mb-3">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-4 w-4 text-elec-yellow" />
+                        <span>{new Date(briefing.briefing_date).toLocaleDateString('en-GB')} at {briefing.briefing_time}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="h-4 w-4 text-elec-yellow" />
+                        <span>{briefing.location}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-elec-yellow" />
+                        <span>{briefing.conductor_name || 'Not specified'}</span>
+                      </div>
+                      {briefing.team_size && (
+                        <div className="flex items-center gap-2">
+                          <User className="h-4 w-4 text-elec-yellow" />
+                          <span>Team: {briefing.team_size}</span>
+                        </div>
+                      )}
+                      {briefing.duration_minutes && (
+                        <div className="flex items-center gap-2">
+                          <Clock className="h-4 w-4 text-elec-yellow" />
+                          <span>{briefing.duration_minutes} min</span>
+                        </div>
+                      )}
+                      {briefing.risk_level && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs uppercase font-medium">
+                            Risk: {briefing.risk_level}
+                          </span>
+                        </div>
+                      )}
+                      {photoCount > 0 && (
+                        <div className="flex items-center gap-2">
+                          <Camera className="h-4 w-4 text-elec-yellow" />
+                          <span>{photoCount} photo{photoCount > 1 ? 's' : ''}</span>
+                        </div>
+                      )}
+                      {equipmentCount > 0 && (
+                        <div className="flex items-center gap-2">
+                          <Wrench className="h-4 w-4 text-elec-yellow" />
+                          <span>{equipmentCount} equipment</span>
+                        </div>
+                      )}
+                      {keyPointsCount > 0 && (
+                        <div className="flex items-center gap-2">
+                          <ClipboardList className="h-4 w-4 text-elec-yellow" />
+                          <span>{keyPointsCount} key points</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* PDF Actions at bottom */}
+                    <div className="pt-3 border-t border-primary/10">
                       <BriefingPDFActions briefing={briefing} companyProfile={companyProfile} />
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         )}
       </CardContent>
