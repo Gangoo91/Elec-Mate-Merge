@@ -35,6 +35,7 @@ serve(async (req) => {
     // Parse request body
     const { quote, companyProfile, invoice_mode } = await req.json();
     console.log('[PDF-MONKEY] Received request - Invoice mode:', invoice_mode, 'Quote ID:', quote?.id);
+    console.log('[PDF-MONKEY] Received jobDetails:', JSON.stringify(quote?.jobDetails, null, 2));
 
     if (!quote) {
       return new Response(

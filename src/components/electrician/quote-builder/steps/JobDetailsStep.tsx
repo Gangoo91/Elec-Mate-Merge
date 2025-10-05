@@ -14,7 +14,7 @@ interface JobDetailsStepProps {
 export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
   const handleChange = (field: keyof JobDetails, value: string) => {
     onUpdate({
-      ...jobDetails,
+      ...(jobDetails || {}),
       [field]: value,
     } as JobDetails);
   };

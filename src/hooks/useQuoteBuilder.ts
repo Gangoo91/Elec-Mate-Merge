@@ -148,10 +148,26 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
         return;
       }
 
+      // Validate job details
+      if (!finalQuote.jobDetails || !finalQuote.jobDetails.title || !finalQuote.jobDetails.description) {
+        console.log('Quote Generation - Job details validation failed', {
+          hasJobDetails: !!finalQuote.jobDetails,
+          hasTitle: !!finalQuote.jobDetails?.title,
+          hasDescription: !!finalQuote.jobDetails?.description
+        });
+        toast({
+          title: "Missing Job Details",
+          description: "Please complete the Job Title and Job Description in the Job Details step.",
+          variant: "destructive"
+        });
+        return;
+      }
+
       console.log('Quote Generation - Starting quote generation', {
         quoteId: finalQuote.id,
         quoteNumber: finalQuote.quoteNumber,
         clientName: finalQuote.client?.name,
+        jobDetails: finalQuote.jobDetails,
         itemCount: finalQuote.items?.length,
         total: finalQuote.total,
         status: finalQuote.status
