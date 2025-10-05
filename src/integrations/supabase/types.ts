@@ -3484,6 +3484,7 @@ export type Database = {
           briefing_description: string | null
           briefing_name: string
           briefing_time: string
+          briefing_type: string | null
           completed: boolean
           conductor_name: string | null
           contractor_company: string | null
@@ -3522,6 +3523,7 @@ export type Database = {
           briefing_description?: string | null
           briefing_name: string
           briefing_time: string
+          briefing_type?: string | null
           completed?: boolean
           conductor_name?: string | null
           contractor_company?: string | null
@@ -3560,6 +3562,7 @@ export type Database = {
           briefing_description?: string | null
           briefing_name?: string
           briefing_time?: string
+          briefing_type?: string | null
           completed?: boolean
           conductor_name?: string | null
           contractor_company?: string | null
