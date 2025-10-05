@@ -9,6 +9,7 @@ import { useInvoiceBuilder } from '@/hooks/useInvoiceBuilder';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { InvoiceProgressIndicator } from './InvoiceProgressIndicator';
 import { InvoiceReviewStep } from './steps/InvoiceReviewStep';
+import { InvoiceJobDetailsStep } from './steps/InvoiceJobDetailsStep';
 import { InvoiceItemsStep } from './steps/InvoiceItemsStep';
 import { InvoiceSettingsStep } from './steps/InvoiceSettingsStep';
 import { InvoiceGenerationStep } from './steps/InvoiceGenerationStep';
@@ -20,6 +21,7 @@ interface InvoiceWizardProps {
 
 const steps = [
   { title: 'Review Quote', description: 'Verify quote details' },
+  { title: 'Project Details', description: 'Add project information' },
   { title: 'Review & Edit Items', description: 'Adjust costs and quantities' },
   { title: 'Invoice Settings', description: 'Configure payment terms' },
   { title: 'Generate Invoice', description: 'Preview and save' },
@@ -88,6 +90,13 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
         return <InvoiceReviewStep invoice={invoiceBuilder.invoice} />;
       case 1:
         return (
+          <InvoiceJobDetailsStep
+            jobDetails={invoiceBuilder.invoice.jobDetails}
+            onUpdate={invoiceBuilder.updateJobDetails}
+          />
+        );
+      case 2:
+        return (
           <InvoiceItemsStep
             originalItems={invoiceBuilder.invoice.items || []}
             additionalItems={invoiceBuilder.invoice.additional_invoice_items || []}
@@ -96,7 +105,7 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
             onRemoveItem={invoiceBuilder.removeInvoiceItem}
           />
         );
-      case 2:
+      case 3:
         return (
           <InvoiceSettingsStep
             settings={invoiceBuilder.invoice.settings}
@@ -105,7 +114,7 @@ export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
             onUpdateNotes={invoiceBuilder.setInvoiceNotes}
           />
         );
-      case 3:
+      case 4:
         return (
           <InvoiceGenerationStep
             invoice={invoiceBuilder.invoice}

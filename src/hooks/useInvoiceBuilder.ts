@@ -221,6 +221,16 @@ export const useInvoiceBuilder = (sourceQuote?: Quote) => {
     }));
   }, []);
 
+  const updateJobDetails = useCallback((jobDetails: Partial<Quote['jobDetails']>) => {
+    setInvoice(prev => ({
+      ...prev,
+      jobDetails: {
+        ...prev.jobDetails,
+        ...jobDetails,
+      },
+    }));
+  }, []);
+
   return {
     invoice,
     addInvoiceItem,
@@ -229,6 +239,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote) => {
     updateInvoiceSettings,
     setInvoiceNotes,
     updateInvoiceStatus,
+    updateJobDetails,
     recalculateTotals,
   };
 };
