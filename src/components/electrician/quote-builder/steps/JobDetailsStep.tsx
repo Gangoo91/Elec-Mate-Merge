@@ -58,7 +58,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
           <div className="space-y-2">
             <Label htmlFor="job-location">Work Location</Label>
             <div className="relative">
-              <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 id="job-location"
                 value={jobDetails?.location || ""}
@@ -72,7 +72,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
           <div className="space-y-2">
             <Label htmlFor="estimated-duration">Estimated Duration</Label>
             <div className="relative">
-              <Clock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               {jobDetails?.estimatedDuration === "Other" ? (
                 <Input
                   id="estimated-duration-custom"
@@ -110,7 +110,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
         <div className="space-y-2">
           <Label htmlFor="work-start-date">Proposed Start Date</Label>
           <div className="relative">
-            <Calendar className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               id="work-start-date"
               type="date"
