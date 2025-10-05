@@ -134,7 +134,7 @@ const InvoiceCardList = ({
         return (
           <div
             key={invoice.id}
-            className="relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border border-primary/20 border-l-3 border-l-primary/20"
+            className="relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border border-primary/20 border-l-4 border-l-primary/60"
           >
             
             {/* Content Container */}
