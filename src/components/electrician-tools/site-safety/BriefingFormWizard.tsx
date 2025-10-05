@@ -25,50 +25,51 @@ const HAZARD_CATEGORIES = [
 ];
 
 interface BriefingFormWizardProps {
+  initialData?: any;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export const BriefingFormWizard = ({ onClose, onSuccess }: BriefingFormWizardProps) => {
+export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: BriefingFormWizardProps) => {
   const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [aiGenerating, setAiGenerating] = useState(false);
   const [aiContent, setAiContent] = useState<any>(null);
 
-  // Form data
+  // Form data - pre-populate if editing
   const [formData, setFormData] = useState({
     // Step 1: Briefing Type & Basic Info
-    briefingType: "site-work",
-    briefingTitle: "",
-    location: "",
-    contractorCompany: "",
-    conductorName: "",
-    briefingDate: new Date().toISOString().split('T')[0],
-    briefingTime: "09:00",
+    briefingType: initialData?.briefing_type || "site-work",
+    briefingTitle: initialData?.briefing_name || initialData?.title || "",
+    location: initialData?.location || "",
+    contractorCompany: initialData?.contractor_company || "",
+    conductorName: initialData?.conductor_name || "",
+    briefingDate: initialData?.briefing_date || new Date().toISOString().split('T')[0],
+    briefingTime: initialData?.briefing_time || "09:00",
     
     // Step 2: Content Details
-    briefingContent: "",
-    workScope: "",
-    environment: "",
-    teamSize: 4,
-    experienceLevel: "",
+    briefingContent: initialData?.briefing_content || "",
+    workScope: initialData?.work_scope || "",
+    environment: initialData?.environment || "",
+    teamSize: initialData?.team_size || 4,
+    experienceLevel: initialData?.experience_level || "",
     
     // Step 3: Hazards
-    identifiedHazards: [] as string[],
-    customHazards: "",
-    riskLevel: "medium",
-    specialConsiderations: "",
+    identifiedHazards: initialData?.identified_hazards || [] as string[],
+    customHazards: initialData?.custom_hazards || "",
+    riskLevel: initialData?.risk_level || "medium",
+    specialConsiderations: initialData?.special_considerations || "",
     
     // Step 4: AI Generated (will be populated)
-    briefingDescription: "",
-    hazards: "",
-    safetyWarning: "",
+    briefingDescription: initialData?.briefing_description || "",
+    hazards: initialData?.hazards || "",
+    safetyWarning: initialData?.safety_warning || "",
     
     // Step 5: Photos
-    photos: [] as any[],
+    photos: initialData?.photos || [] as any[],
     
     // Step 6: Review & Attendees
-    attendees: [] as any[],
+    attendees: initialData?.attendees || [] as any[],
   });
 
   const totalSteps = 6;
@@ -181,15 +182,28 @@ export const BriefingFormWizard = ({ onClose, onSuccess }: BriefingFormWizardPro
         created_by_name: profile?.full_name || user.email,
       };
 
-      const { error } = await supabase
-        .from('team_briefings')
-        .insert([briefingData]);
+      let error;
+      
+      if (initialData?.id) {
+        // Update existing briefing
+        const { error: updateError } = await supabase
+          .from('team_briefings')
+          .update(briefingData)
+          .eq('id', initialData.id);
+        error = updateError;
+      } else {
+        // Insert new briefing
+        const { error: insertError } = await supabase
+          .from('team_briefings')
+          .insert([briefingData]);
+        error = insertError;
+      }
 
       if (error) throw error;
 
       toast({
-        title: asDraft ? "Draft Saved" : "Briefing Created",
-        description: asDraft ? "You can complete it later." : "Team briefing created successfully.",
+        title: initialData?.id ? "Briefing Updated" : (asDraft ? "Draft Saved" : "Briefing Created"),
+        description: initialData?.id ? "Briefing updated successfully." : (asDraft ? "You can complete it later." : "Team briefing created successfully."),
       });
 
       onSuccess();

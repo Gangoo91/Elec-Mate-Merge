@@ -3485,6 +3485,8 @@ export type Database = {
           briefing_name: string
           briefing_time: string
           briefing_type: string | null
+          cancelled_at: string | null
+          cancelled_reason: string | null
           completed: boolean
           conductor_name: string | null
           contractor_company: string | null
@@ -3509,6 +3511,8 @@ export type Database = {
           safety_points: string[] | null
           safety_warning: string | null
           special_considerations: string | null
+          started_at: string | null
+          status: string | null
           team_size: number | null
           template_id: string
           updated_at: string
@@ -3524,6 +3528,8 @@ export type Database = {
           briefing_name: string
           briefing_time: string
           briefing_type?: string | null
+          cancelled_at?: string | null
+          cancelled_reason?: string | null
           completed?: boolean
           conductor_name?: string | null
           contractor_company?: string | null
@@ -3548,6 +3554,8 @@ export type Database = {
           safety_points?: string[] | null
           safety_warning?: string | null
           special_considerations?: string | null
+          started_at?: string | null
+          status?: string | null
           team_size?: number | null
           template_id: string
           updated_at?: string
@@ -3563,6 +3571,8 @@ export type Database = {
           briefing_name?: string
           briefing_time?: string
           briefing_type?: string | null
+          cancelled_at?: string | null
+          cancelled_reason?: string | null
           completed?: boolean
           conductor_name?: string | null
           contractor_company?: string | null
@@ -3587,6 +3597,8 @@ export type Database = {
           safety_points?: string[] | null
           safety_warning?: string | null
           special_considerations?: string | null
+          started_at?: string | null
+          status?: string | null
           team_size?: number | null
           template_id?: string
           updated_at?: string

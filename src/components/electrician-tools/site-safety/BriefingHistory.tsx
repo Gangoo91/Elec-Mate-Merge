@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { FileText, Search, Calendar, MapPin, User, Sparkles, Camera, Clock, CheckCircle2, FileEdit, Wrench, ClipboardList } from "lucide-react";
 import { BriefingPDFActions } from "./BriefingPDFActions";
+import { BriefingActionsMenu } from "./BriefingActionsMenu";
 import {
   Select,
   SelectContent,
@@ -14,7 +15,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export const BriefingHistory = () => {
+interface BriefingHistoryProps {
+  onEdit: (briefing: any) => void;
+  onDuplicate: (briefing: any) => void;
+  onStatusChange: (briefingId: string, status: string) => void;
+}
+
+export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: BriefingHistoryProps) => {
   const { toast } = useToast();
   const [briefings, setBriefings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,7 +43,8 @@ export const BriefingHistory = () => {
       const { data, error } = await supabase
         .from('team_briefings')
         .select('*')
-        .order('briefing_date', { ascending: false });
+        .neq('status', 'cancelled')
+        .order('briefing_date', { ascending: true });
 
       if (error) throw error;
       setBriefings(data || []);
@@ -162,32 +170,44 @@ export const BriefingHistory = () => {
               const keyPointsCount = briefing.key_points?.length || 0;
               const description = briefing.briefing_description || briefing.job_description || '';
               const truncatedDesc = description.length > 80 ? description.substring(0, 80) + '...' : description;
+              
+              const getStatusBadge = (status: string, completed: boolean) => {
+                if (status === 'completed' || completed) {
+                  return <Badge className="bg-green-500/20 text-green-400 border-0 text-xs"><CheckCircle2 className="h-3 w-3 mr-1" />Completed</Badge>;
+                }
+                if (status === 'in_progress') {
+                  return <Badge className="bg-blue-500/20 text-blue-400 border-0 text-xs">In Progress</Badge>;
+                }
+                if (status === 'cancelled') {
+                  return <Badge className="bg-red-500/20 text-red-400 border-0 text-xs">Cancelled</Badge>;
+                }
+                return <Badge className="bg-gray-500/20 text-gray-400 border-0 text-xs">Scheduled</Badge>;
+              };
 
               return (
                 <Card key={briefing.id} className="bg-card/50 border-primary/20">
                   <CardContent className="p-4">
-                    {/* Top badges row */}
-                    <div className="flex flex-wrap items-center gap-2 mb-3">
-                      <Badge className={`${typeInfo.color} border-0 text-xs`}>
-                        {typeInfo.label}
-                      </Badge>
-                      {briefing.ai_generated && (
-                        <Badge className="bg-elec-yellow/20 text-elec-yellow border-0 text-xs">
-                          <Sparkles className="h-3 w-3 mr-1" />
-                          AI
+                    {/* Top badges row with actions */}
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge className={`${typeInfo.color} border-0 text-xs`}>
+                          {typeInfo.label}
                         </Badge>
-                      )}
-                      {briefing.completed ? (
-                        <Badge className="bg-green-500/20 text-green-400 border-0 text-xs">
-                          <CheckCircle2 className="h-3 w-3 mr-1" />
-                          Completed
-                        </Badge>
-                      ) : (
-                        <Badge className="bg-amber-500/20 text-amber-400 border-0 text-xs">
-                          <FileEdit className="h-3 w-3 mr-1" />
-                          Draft
-                        </Badge>
-                      )}
+                        {briefing.ai_generated && (
+                          <Badge className="bg-elec-yellow/20 text-elec-yellow border-0 text-xs">
+                            <Sparkles className="h-3 w-3 mr-1" />
+                            AI
+                          </Badge>
+                        )}
+                        {getStatusBadge(briefing.status, briefing.completed)}
+                      </div>
+                      <BriefingActionsMenu
+                        briefing={briefing}
+                        onEdit={() => onEdit(briefing)}
+                        onDuplicate={() => onDuplicate(briefing)}
+                        onStatusChange={(status) => onStatusChange(briefing.id, status)}
+                        onRefresh={fetchBriefings}
+                      />
                     </div>
 
                     {/* Title */}

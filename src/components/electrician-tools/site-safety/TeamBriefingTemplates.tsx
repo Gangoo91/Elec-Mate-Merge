@@ -34,6 +34,7 @@ const TeamBriefingTemplates = () => {
   const [briefings, setBriefings] = useState<TeamBriefing[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAIWizard, setShowAIWizard] = useState(false);
+  const [editingBriefing, setEditingBriefing] = useState<any>(null);
   const [activeTab, setActiveTab] = useState("history");
   const [scheduledBriefingsExpanded, setScheduledBriefingsExpanded] = useState(false);
 
@@ -76,6 +77,60 @@ const TeamBriefingTemplates = () => {
   };
 
 
+  const handleEdit = (briefing: any) => {
+    setEditingBriefing(briefing);
+    setShowAIWizard(true);
+  };
+
+  const handleDuplicate = async (briefing: any) => {
+    const { id, created_at, updated_at, status, started_at, cancelled_at, cancelled_reason, ...duplicateData } = briefing;
+    setEditingBriefing({
+      ...duplicateData,
+      title: `${duplicateData.title || duplicateData.briefing_name} (Copy)`,
+      briefing_date: null,
+      briefing_time: "09:00",
+    });
+    setShowAIWizard(true);
+  };
+
+  const handleStatusChange = async (briefingId: string, newStatus: string) => {
+    try {
+      const updates: any = { status: newStatus };
+      
+      if (newStatus === 'in_progress') {
+        updates.started_at = new Date().toISOString();
+      } else if (newStatus === 'completed') {
+        updates.completed = true;
+      }
+
+      const { error } = await supabase
+        .from("team_briefings")
+        .update(updates)
+        .eq("id", briefingId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Status Updated",
+        description: `Briefing marked as ${newStatus.replace('_', ' ')}`,
+      });
+
+      fetchBriefings();
+    } catch (error) {
+      console.error("Error updating status:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update briefing status",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleCloseWizard = () => {
+    setShowAIWizard(false);
+    setEditingBriefing(null);
+  };
+
   const upcomingBriefings = briefings.filter(b => new Date(b.briefing_date) >= new Date() && b.status === 'scheduled').length;
 
   if (loading) {
@@ -88,10 +143,14 @@ const TeamBriefingTemplates = () => {
   }
 
   if (showAIWizard) {
-    return <BriefingFormWizard onClose={() => setShowAIWizard(false)} onSuccess={() => {
-      setShowAIWizard(false);
-      fetchBriefings();
-    }} />;
+    return <BriefingFormWizard 
+      initialData={editingBriefing}
+      onClose={handleCloseWizard} 
+      onSuccess={() => {
+        handleCloseWizard();
+        fetchBriefings();
+      }} 
+    />;
   }
 
   return (
@@ -104,7 +163,11 @@ const TeamBriefingTemplates = () => {
         {/* History Tab */}
         <div className="mt-6">
           <h3 className="text-base font-semibold text-elec-light mb-3">Recent Briefings</h3>
-          <BriefingHistory />
+          <BriefingHistory
+            onEdit={handleEdit}
+            onDuplicate={handleDuplicate}
+            onStatusChange={handleStatusChange}
+          />
         </div>
 
         {/* Scheduled Briefings - Collapsible at Bottom */}
@@ -224,7 +287,11 @@ const TeamBriefingTemplates = () => {
           
           <div>
             <h3 className="text-xl font-semibold text-elec-light mb-4">Recent Briefings</h3>
-            <BriefingHistory />
+            <BriefingHistory
+              onEdit={handleEdit}
+              onDuplicate={handleDuplicate}
+              onStatusChange={handleStatusChange}
+            />
           </div>
         </div>
 
