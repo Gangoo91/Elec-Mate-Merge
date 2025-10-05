@@ -101,6 +101,12 @@ export const useInvoiceStorage = () => {
         return false;
       }
 
+      // Merge additional invoice items into the main items array
+      const mergedItems = [
+        ...(invoice.items || []),
+        ...(invoice.additional_invoice_items || [])
+      ];
+
       const { error } = await supabase
         .from('quotes')
         .update({
@@ -109,10 +115,10 @@ export const useInvoiceStorage = () => {
           invoice_date: invoice.invoice_date?.toISOString(),
           invoice_due_date: invoice.invoice_due_date?.toISOString(),
           invoice_status: invoice.invoice_status,
-          additional_invoice_items: JSON.parse(JSON.stringify(invoice.additional_invoice_items || [])),
-          invoice_notes: invoice.invoice_notes,
+          additional_invoice_items: JSON.parse(JSON.stringify([])), // Clear after merging
+          invoice_notes: invoice.invoice_notes || null,
           work_completion_date: invoice.work_completion_date?.toISOString(),
-          items: JSON.parse(JSON.stringify(invoice.items || [])),
+          items: JSON.parse(JSON.stringify(mergedItems)), // Save merged items
           settings: JSON.parse(JSON.stringify(invoice.settings || {})),
           subtotal: invoice.subtotal,
           overhead: invoice.overhead,
