@@ -57,24 +57,24 @@ export const ExpressMode = ({ planData, updatePlanData, onReset }: ExpressModePr
         {steps.map((s, idx) => (
           <div key={s.num} className="flex items-center">
             <div className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
-              step === s.num ? 'bg-blue-500 text-white' :
+              step === s.num ? 'bg-primary text-primary-foreground' :
               step > s.num ? 'bg-green-500 text-white' :
-              'bg-slate-700 text-slate-400'
+              'bg-muted text-muted-foreground'
             }`}>
               {step > s.num ? <Check className="h-4 w-4" /> : <span className="font-bold">{s.num}</span>}
               <span className="font-medium">{s.title}</span>
             </div>
             {idx < steps.length - 1 && (
-              <ArrowRight className={`h-5 w-5 mx-2 ${step > s.num ? 'text-green-500' : 'text-slate-600'}`} />
+              <ArrowRight className={`h-5 w-5 mx-2 ${step > s.num ? 'text-green-500' : 'text-border'}`} />
             )}
           </div>
         ))}
       </div>
 
       {/* Step Content */}
-      <Card className="bg-slate-800/50 border-slate-700 backdrop-blur">
+      <Card className="bg-card border-border">
         <CardHeader>
-          <CardTitle className="text-2xl text-white">
+          <CardTitle className="text-2xl text-foreground">
             {currentStepData?.title}
           </CardTitle>
         </CardHeader>
@@ -100,7 +100,7 @@ export const ExpressMode = ({ planData, updatePlanData, onReset }: ExpressModePr
           <Button
             variant="outline"
             onClick={onReset}
-            className="gap-2 text-slate-400"
+            className="gap-2"
           >
             <RotateCcw className="h-4 w-4" /> Start Over
           </Button>
@@ -109,14 +109,14 @@ export const ExpressMode = ({ planData, updatePlanData, onReset }: ExpressModePr
             <Button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="gap-2 bg-blue-500 hover:bg-blue-600 text-white"
+              className="gap-2"
             >
               Next <ArrowRight className="h-4 w-4" />
             </Button>
           ) : (
             <Button
               onClick={onReset}
-              className="gap-2 bg-green-500 hover:bg-green-600 text-white"
+              className="gap-2 bg-green-500 hover:bg-green-600"
             >
               New Calculation
             </Button>

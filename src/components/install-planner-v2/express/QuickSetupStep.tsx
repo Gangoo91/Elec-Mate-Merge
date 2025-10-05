@@ -41,9 +41,9 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Circuit Type */}
         <div className="space-y-2">
-          <Label className="text-white">What are you installing?</Label>
+          <Label>What are you installing?</Label>
           <Select value={planData.loadType} onValueChange={handleCircuitTypeChange}>
-            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+            <SelectTrigger>
               <SelectValue placeholder="Select circuit type" />
             </SelectTrigger>
             <SelectContent>
@@ -59,7 +59,7 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
         {/* Load (if custom) */}
         {planData.loadType === 'custom' && (
           <div className="space-y-2">
-            <Label className="text-white">Load (Watts)</Label>
+            <Label>Load (Watts)</Label>
             <Input
               type="number"
               value={planData.totalLoad || ''}
@@ -67,7 +67,6 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
                 ...planData,
                 totalLoad: parseFloat(e.target.value) || 0
               })}
-              className="bg-slate-700 border-slate-600 text-white"
               placeholder="Enter load in watts"
             />
           </div>
@@ -76,8 +75,8 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
         {/* Cable Length Slider */}
         <div className="space-y-3 md:col-span-2">
           <div className="flex items-center justify-between">
-            <Label className="text-white">Cable Length</Label>
-            <span className="text-2xl font-bold text-blue-400">{planData.cableLength}m</span>
+            <Label>Cable Length</Label>
+            <span className="text-2xl font-bold text-primary">{planData.cableLength}m</span>
           </div>
           <Slider
             value={[planData.cableLength]}
@@ -90,7 +89,7 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
             step={1}
             className="w-full"
           />
-          <div className="flex justify-between text-xs text-slate-400">
+          <div className="flex justify-between text-xs text-muted-foreground">
             <span>1m</span>
             <span>25m</span>
             <span>50m</span>
@@ -102,21 +101,21 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
 
       {/* Summary */}
       {planData.loadType && planData.totalLoad > 0 && (
-        <div className="mt-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
+        <div className="mt-6 p-4 rounded-lg bg-primary/10 border border-primary/20">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <div className="text-sm text-slate-400">Load</div>
-              <div className="text-lg font-bold text-white">{planData.totalLoad}W</div>
+              <div className="text-sm text-muted-foreground">Load</div>
+              <div className="text-lg font-bold text-foreground">{planData.totalLoad}W</div>
             </div>
             <div>
-              <div className="text-sm text-slate-400">Current</div>
-              <div className="text-lg font-bold text-blue-400">
+              <div className="text-sm text-muted-foreground">Current</div>
+              <div className="text-lg font-bold text-primary">
                 {(planData.totalLoad / planData.voltage).toFixed(1)}A
               </div>
             </div>
             <div>
-              <div className="text-sm text-slate-400">Distance</div>
-              <div className="text-lg font-bold text-white">{planData.cableLength}m</div>
+              <div className="text-sm text-muted-foreground">Distance</div>
+              <div className="text-lg font-bold text-foreground">{planData.cableLength}m</div>
             </div>
           </div>
         </div>

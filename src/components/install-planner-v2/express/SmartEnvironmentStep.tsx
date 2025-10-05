@@ -36,24 +36,24 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
       <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
         <div className="flex items-center gap-2 mb-3">
           <Badge className="bg-green-500 text-white">Auto-Detected</Badge>
-          <span className="text-sm text-slate-300">Based on your installation type</span>
+          <span className="text-sm text-muted-foreground">Based on your installation type</span>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
           <div>
-            <span className="text-slate-400">Ambient:</span>
-            <span className="ml-2 text-white font-medium">30°C</span>
+            <span className="text-muted-foreground">Ambient:</span>
+            <span className="ml-2 text-foreground font-medium">30°C</span>
           </div>
           <div>
-            <span className="text-slate-400">Earthing:</span>
-            <span className="ml-2 text-white font-medium">TN-S</span>
+            <span className="text-muted-foreground">Earthing:</span>
+            <span className="ml-2 text-foreground font-medium">TN-S</span>
           </div>
           <div>
-            <span className="text-slate-400">Ze:</span>
-            <span className="ml-2 text-white font-medium">0.35Ω</span>
+            <span className="text-muted-foreground">Ze:</span>
+            <span className="ml-2 text-foreground font-medium">0.35Ω</span>
           </div>
           <div>
-            <span className="text-slate-400">Grouping:</span>
-            <span className="ml-2 text-white font-medium">1 cable</span>
+            <span className="text-muted-foreground">Grouping:</span>
+            <span className="ml-2 text-foreground font-medium">1 cable</span>
           </div>
         </div>
       </div>
@@ -61,29 +61,28 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
       {/* Override options */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label className="text-white flex items-center gap-2">
-            <Thermometer className="h-4 w-4 text-amber-400" />
+          <Label className="flex items-center gap-2">
+            <Thermometer className="h-4 w-4 text-primary" />
             Ambient Temperature
           </Label>
           <Input
             type="number"
             value={planData.environmentalProfile.finalApplied.ambientTemp}
             onChange={(e) => updateEnvironment('ambientTemp', parseFloat(e.target.value) || 30)}
-            className="bg-slate-700 border-slate-600 text-white"
           />
-          <p className="text-xs text-slate-400">Typical indoor: 25-30°C</p>
+          <p className="text-xs text-muted-foreground">Typical indoor: 25-30°C</p>
         </div>
 
         <div className="space-y-2">
-          <Label className="text-white flex items-center gap-2">
-            <Shield className="h-4 w-4 text-blue-400" />
+          <Label className="flex items-center gap-2">
+            <Shield className="h-4 w-4 text-primary" />
             Earthing System
           </Label>
           <Select 
             value={planData.environmentalProfile.finalApplied.earthing}
             onValueChange={(value) => updateEnvironment('earthing', value)}
           >
-            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+            <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -95,27 +94,26 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
         </div>
 
         <div className="space-y-2">
-          <Label className="text-white">Ze (External Earth Fault Loop Impedance)</Label>
+          <Label>Ze (External Earth Fault Loop Impedance)</Label>
           <Input
             type="number"
             step="0.01"
             value={planData.environmentalProfile.finalApplied.ze}
             onChange={(e) => updateEnvironment('ze', parseFloat(e.target.value) || 0.35)}
-            className="bg-slate-700 border-slate-600 text-white"
           />
-          <p className="text-xs text-slate-400">TN-S typical: 0.35Ω, TN-C-S typical: 0.35Ω</p>
+          <p className="text-xs text-muted-foreground">TN-S typical: 0.35Ω, TN-C-S typical: 0.35Ω</p>
         </div>
 
         <div className="space-y-2">
-          <Label className="text-white flex items-center gap-2">
-            <Layers className="h-4 w-4 text-purple-400" />
+          <Label className="flex items-center gap-2">
+            <Layers className="h-4 w-4 text-primary" />
             Cable Grouping
           </Label>
           <Select 
             value={planData.environmentalProfile.finalApplied.grouping.toString()}
             onValueChange={(value) => updateEnvironment('grouping', parseInt(value))}
           >
-            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+            <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -131,12 +129,12 @@ export const SmartEnvironmentStep = ({ planData, updatePlanData }: SmartEnvironm
 
       {/* Conditions summary */}
       <div className="space-y-2">
-        <Label className="text-white">Installation Conditions</Label>
+        <Label>Installation Conditions</Label>
         <Select 
           value={planData.environmentalProfile.finalApplied.conditions}
           onValueChange={(value) => updateEnvironment('conditions', value)}
         >
-          <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+          <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
