@@ -15,6 +15,7 @@ export const useInvoiceStorage = () => {
     client: row.client_data,
     items: row.items,
     settings: row.settings,
+    jobDetails: row.job_details,
     subtotal: parseFloat(row.subtotal),
     overhead: parseFloat(row.overhead),
     profit: parseFloat(row.profit),
