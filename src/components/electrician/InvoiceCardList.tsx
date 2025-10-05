@@ -205,19 +205,6 @@ const InvoiceCardList = ({
                 </div>
               </div>
 
-              {/* Primary Action Button - Yellow, Centered, Rounded */}
-              <div className="mb-3">
-                <button
-                  onClick={() => onInvoiceAction(invoice)}
-                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors"
-                  aria-label={actionButton.ariaLabel}
-                >
-                  {actionButton.icon}
-                  {actionButton.text}
-                </button>
-              </div>
-
-
               {/* Bottom Action Bar - Three Dark Rounded Buttons */}
               <div className="flex items-center gap-3">
                 <button
