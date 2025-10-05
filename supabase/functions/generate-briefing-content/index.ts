@@ -24,8 +24,23 @@ serve(async (req) => {
       );
     }
 
-    const { briefingType, briefingContext, hazards } = await req.json();
-    console.log('[BRIEFING-AI] Generating content for:', briefingContext?.briefingTitle, 'Type:', briefingType);
+    const requestBody = await req.json();
+    console.log('[BRIEFING-AI] Request body:', JSON.stringify(requestBody, null, 2));
+    
+    const { briefingType, briefingContext, hazards } = requestBody;
+    
+    if (!briefingContext || !briefingContext.briefingTitle) {
+      console.error('[BRIEFING-AI] Missing required fields:', { briefingType, briefingContext, hazards });
+      return new Response(
+        JSON.stringify({ 
+          error: 'Missing required briefing context. Please provide briefing title and details.',
+          received: requestBody 
+        }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    console.log('[BRIEFING-AI] Generating content for:', briefingContext.briefingTitle, 'Type:', briefingType);
 
     // Build system prompt for BS 7671 compliance with plain text output
     const systemPrompt = `You are a UK electrical safety briefing expert with deep knowledge of BS 7671:2018+A3:2024 regulations. Generate professional, concise, and actionable team briefings.

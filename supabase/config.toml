@@ -169,4 +169,4 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.generate-pdf-monkey]
-# Requires JWT authentication for security
+verify_jwt = false
