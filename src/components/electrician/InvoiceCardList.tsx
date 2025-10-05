@@ -140,9 +140,9 @@ const InvoiceCardList = ({
             {/* Content Container */}
             <div className="relative p-3">
               {/* Top Row: Invoice Number & Status Badge */}
-              <div className="flex items-start justify-between mb-4 pb-3 border-b border-primary/20">
-                <div className="flex items-center gap-3 w-full">
-                  <h3 className="text-xl font-bold text-foreground">
+              <div className="flex items-start justify-between mb-3 pb-2 border-b border-primary/20">
+                <div className="flex items-center gap-2 w-full">
+                  <h3 className="text-base sm:text-lg font-bold text-foreground">
                     #{invoice.invoice_number || invoice.quoteNumber}
                   </h3>
                   {getStatusBadge(invoice)}
@@ -152,53 +152,53 @@ const InvoiceCardList = ({
                     variant="ghost"
                     size="icon"
                     onClick={() => onInvoiceAction(invoice)}
-                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                    className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
                     aria-label="View invoice"
                   >
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Button>
                 ) : (
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => onInvoiceAction(invoice)}
-                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                    className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
                     aria-label="Edit invoice"
                   >
-                    <Edit className="h-4 w-4" />
+                    <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Button>
                 )}
               </div>
 
               {/* Middle Row: Logo + Client Info (left) | Dates (right) */}
-              <div className="flex items-start justify-between mb-5">
+              <div className="flex items-start justify-between mb-4 gap-3">
                 {/* Left: Logo + Client */}
-                <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 flex items-center justify-center">
-                    <FileText className="h-16 w-16 text-white/40" strokeWidth={1.5} />
+                <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center flex-shrink-0">
+                    <FileText className="h-10 w-10 sm:h-14 sm:w-14 text-muted-foreground/40" strokeWidth={1.5} />
                   </div>
-                  <div className="text-left">
-                    <div className="text-sm text-muted-foreground mb-1">Client</div>
-                    <div className="text-base text-foreground font-medium">
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs sm:text-sm text-muted-foreground mb-0.5">Client</div>
+                    <div className="text-sm sm:text-base text-foreground font-medium truncate">
                       {invoice.client?.name || 'N/A'}
                     </div>
                   </div>
                 </div>
                 
                 {/* Right: Dates */}
-                <div className="text-right space-y-3">
+                <div className="text-right space-y-2 flex-shrink-0">
                   {invoice.invoice_date && (
                     <div>
-                      <div className="text-sm text-white/60 mb-1">Issued</div>
-                      <div className="text-sm text-white font-medium">
+                      <div className="text-xs text-muted-foreground mb-0.5">Issued</div>
+                      <div className="text-xs sm:text-sm text-foreground font-medium">
                         {format(new Date(invoice.invoice_date), "dd MMM yyyy")}
                       </div>
                     </div>
                   )}
                   {invoice.invoice_due_date && (
                     <div>
-                      <div className="text-sm text-white/60 mb-1">Due Date</div>
-                      <div className="text-sm text-white font-semibold">
+                      <div className="text-xs text-muted-foreground mb-0.5">Due Date</div>
+                      <div className="text-xs sm:text-sm text-foreground font-semibold">
                         {format(new Date(invoice.invoice_due_date), "dd MMM yyyy")}
                       </div>
                     </div>
@@ -207,23 +207,23 @@ const InvoiceCardList = ({
               </div>
 
 
-              {/* Total Amount - Centered, White Text */}
-              <div className="text-center mb-4 -mt-4">
-                <div className="text-sm text-white/60 mb-2 font-normal">Total Amount</div>
-                <div className="text-4xl font-bold text-primary">
+              {/* Total Amount - Centered */}
+              <div className="text-center mb-3 -mt-3">
+                <div className="text-xs sm:text-sm text-muted-foreground mb-1 font-normal">Total Amount</div>
+                <div className="text-2xl sm:text-3xl font-bold text-primary">
                   {formatCurrency(invoice.total)}
                 </div>
               </div>
 
               {/* Bottom Action Bar - Three Dark Rounded Buttons */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => onDownloadPDF(invoice)}
                   disabled={downloadingPdfId === invoice.id}
-                  className="flex-1 bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white py-3 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                  className="flex-1 bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
                 >
-                  <Download className="h-4 w-4" />
-                  <span className="text-sm font-medium">
+                  <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="text-xs sm:text-sm font-medium">
                     {downloadingPdfId === invoice.id ? 'Loading' : 'PDF'}
                   </span>
                 </button>
@@ -233,10 +233,10 @@ const InvoiceCardList = ({
                     <button
                       onClick={() => onSendInvoice(invoice)}
                       disabled={sendingInvoiceId === invoice.id}
-                      className="flex-1 bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white py-3 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                      className="flex-1 bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
                     >
-                      <Mail className="h-4 w-4" />
-                      <span className="text-sm font-medium">
+                      <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="text-xs sm:text-sm font-medium">
                         {sendingInvoiceId === invoice.id ? 'Sending' : 'Send'}
                       </span>
                     </button>
@@ -245,10 +245,10 @@ const InvoiceCardList = ({
                       <AlertDialogTrigger asChild>
                         <button
                           disabled={markingPaidId === invoice.id}
-                          className="flex-1 bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white py-3 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                          className="flex-1 bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
                         >
-                          <CheckCircle className="h-4 w-4" />
-                          <span className="text-sm font-medium">Paid</span>
+                          <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                          <span className="text-xs sm:text-sm font-medium">Paid</span>
                         </button>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
@@ -271,17 +271,17 @@ const InvoiceCardList = ({
                   <>
                     <button
                       disabled
-                      className="flex-1 bg-black/20 backdrop-blur-sm text-white/40 py-3 rounded-xl flex items-center justify-center gap-2"
+                      className="flex-1 bg-background/20 border border-primary/10 text-muted-foreground/40 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 touch-manipulation"
                     >
-                      <Mail className="h-4 w-4" />
-                      <span className="text-sm font-medium">Send</span>
+                      <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="text-xs sm:text-sm font-medium">Send</span>
                     </button>
                     <button
                       disabled
-                      className="flex-1 bg-black/20 backdrop-blur-sm text-white/40 py-3 rounded-xl flex items-center justify-center gap-2"
+                      className="flex-1 bg-background/20 border border-primary/10 text-muted-foreground/40 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 touch-manipulation"
                     >
-                      <CheckCircle className="h-4 w-4" />
-                      <span className="text-sm font-medium">Paid</span>
+                      <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="text-xs sm:text-sm font-medium">Paid</span>
                     </button>
                   </>
                 )}
