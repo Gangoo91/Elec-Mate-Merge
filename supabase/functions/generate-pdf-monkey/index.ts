@@ -114,12 +114,27 @@ serve(async (req) => {
 
       console.log('[PDF-MONKEY] Transformed invoice payload for template');
     } else {
-      // Keep original quote format
+      // Transform quote format to ensure jobDetails is properly structured
+      const transformedQuote = {
+        ...quote,
+        jobDetails: {
+          title: quote?.jobDetails?.title || "",
+          location: quote?.jobDetails?.location || "",
+          completionDate: quote?.work_completion_date ? 
+            new Date(quote.work_completion_date).toISOString().split('T')[0] : "",
+          reference: quote?.jobDetails?.reference || quote?.quoteNumber || "",
+          description: quote?.jobDetails?.description || ""
+        }
+      };
+      
       payload = {
-        quote,
+        quote: transformedQuote,
         companyProfile
       };
-      console.log('[PDF-MONKEY] Using original quote format');
+      console.log('[PDF-MONKEY] Using quote format with transformed jobDetails:', {
+        hasTitle: !!transformedQuote.jobDetails.title,
+        hasDescription: !!transformedQuote.jobDetails.description
+      });
     }
 
     console.log('[PDF-MONKEY] Calling PDF Monkey API');
