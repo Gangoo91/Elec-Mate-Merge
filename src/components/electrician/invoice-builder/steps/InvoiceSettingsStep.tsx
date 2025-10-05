@@ -78,7 +78,9 @@ export const InvoiceSettingsStep = ({
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal mt-1",
+                      "w-full h-14 rounded-xl border border-primary/30 bg-card px-4 text-base font-medium text-elec-light",
+                      "hover:border-elec-yellow/40 focus:border-elec-yellow focus-visible:border-elec-yellow transition-all duration-200",
+                      "justify-start text-left mt-1",
                       !settings?.dueDate && "text-muted-foreground"
                     )}
                   >
