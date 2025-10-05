@@ -35,7 +35,9 @@ serve(async (req) => {
     // Parse request body
     const { quote, companyProfile, invoice_mode } = await req.json();
     console.log('[PDF-MONKEY] Received request - Invoice mode:', invoice_mode, 'Quote ID:', quote?.id);
-    console.log('[PDF-MONKEY] Received jobDetails:', JSON.stringify(quote?.jobDetails, null, 2));
+    console.log('[PDF-MONKEY] Received items count:', quote?.items?.length || 0);
+    console.log('[PDF-MONKEY] Received settings:', JSON.stringify(quote?.settings, null, 2));
+    console.log('[PDF-MONKEY] Using provided data from UI - NOT fetching from database');
 
     if (!quote) {
       return new Response(
@@ -55,6 +57,9 @@ serve(async (req) => {
     let payload;
     if (invoice_mode) {
       // Transform to invoice format
+      // Use bank details from invoice settings first, fallback to company profile
+      const bankDetails = quote?.settings?.bankDetails || companyProfile?.bank_details || {};
+      
       const transformedCompanyProfile = {
         logo_url: companyProfile?.logo_url || "",
         company_name: companyProfile?.company_name || "",
@@ -64,13 +69,20 @@ serve(async (req) => {
         company_email: companyProfile?.company_email || "",
         vat_number: companyProfile?.vat_number || "",
         company_website: companyProfile?.company_website || "",
-        bank_name: companyProfile?.bank_details?.bank_name || "",
-        account_name: companyProfile?.bank_details?.account_name || companyProfile?.company_name || "",
-        account_number: companyProfile?.bank_details?.account_number || "",
-        sort_code: companyProfile?.bank_details?.sort_code || "",
+        bank_name: bankDetails?.bankName || bankDetails?.bank_name || "",
+        account_name: bankDetails?.accountName || bankDetails?.account_name || companyProfile?.company_name || "",
+        account_number: bankDetails?.accountNumber || bankDetails?.account_number || "",
+        sort_code: bankDetails?.sortCode || bankDetails?.sort_code || "",
         payment_terms: quote?.settings?.paymentTerms || "7 days",
         company_registration: companyProfile?.company_registration || ""
       };
+      
+      console.log('[PDF-MONKEY] Bank details for invoice:', {
+        source: quote?.settings?.bankDetails ? 'invoice settings' : 'company profile',
+        account_name: transformedCompanyProfile.account_name,
+        account_number: transformedCompanyProfile.account_number,
+        sort_code: transformedCompanyProfile.sort_code
+      });
 
       const transformedInvoice = {
         invoiceNumber: quote?.invoice_number || "",
@@ -78,25 +90,25 @@ serve(async (req) => {
         dueDate: quote?.invoice_due_date ? new Date(quote.invoice_due_date).toISOString().split('T')[0] : "",
         purchaseOrder: quote?.purchase_order || "",
         client: {
-          name: quote?.client?.name || "",
-          contactName: quote?.client?.contactName || "",
-          address: quote?.client?.address ? 
-            `${quote.client.address}${quote.client.postcode ? '\n' + quote.client.postcode : ''}` : "",
-          postcode: quote?.client?.postcode || "",
-          email: quote?.client?.email || "",
-          phone: quote?.client?.phone || ""
+          name: quote?.client?.name || quote?.client_data?.name || "",
+          contactName: quote?.client?.contactName || quote?.client_data?.contactName || "",
+          address: quote?.client?.address || quote?.client_data?.address ? 
+            `${(quote?.client?.address || quote?.client_data?.address)}${(quote?.client?.postcode || quote?.client_data?.postcode) ? '\n' + (quote?.client?.postcode || quote?.client_data?.postcode) : ''}` : "",
+          postcode: quote?.client?.postcode || quote?.client_data?.postcode || "",
+          email: quote?.client?.email || quote?.client_data?.email || "",
+          phone: quote?.client?.phone || quote?.client_data?.phone || ""
         },
         jobDetails: {
-          title: quote?.jobDetails?.title || "",
-          description: quote?.jobDetails?.description || "",
-          location: quote?.jobDetails?.location || "",
-          estimatedDuration: quote?.jobDetails?.estimatedDuration || "",
-          customDuration: quote?.jobDetails?.customDuration || "",
-          workStartDate: quote?.jobDetails?.workStartDate || "",
-          specialRequirements: quote?.jobDetails?.specialRequirements || "",
+          title: quote?.jobDetails?.title || quote?.job_details?.title || "",
+          description: quote?.jobDetails?.description || quote?.job_details?.description || "",
+          location: quote?.jobDetails?.location || quote?.job_details?.location || "",
+          estimatedDuration: quote?.jobDetails?.estimatedDuration || quote?.job_details?.estimatedDuration || "",
+          customDuration: quote?.jobDetails?.customDuration || quote?.job_details?.customDuration || "",
+          workStartDate: quote?.jobDetails?.workStartDate || quote?.job_details?.workStartDate || "",
+          specialRequirements: quote?.jobDetails?.specialRequirements || quote?.job_details?.specialRequirements || "",
           completionDate: quote?.work_completion_date ? 
             new Date(quote.work_completion_date).toISOString().split('T')[0] : "",
-          reference: quote?.jobDetails?.reference || quote?.quoteNumber || ""
+          reference: quote?.jobDetails?.reference || quote?.job_details?.reference || quote?.quote_number || ""
         },
         items: (quote?.items || []).map((item: any) => ({
           name: item.description || "",
@@ -107,6 +119,8 @@ serve(async (req) => {
         })),
         notes: quote?.invoice_notes || ""
       };
+      
+      console.log('[PDF-MONKEY] Transformed invoice items:', transformedInvoice.items.length, 'items');
 
       payload = {
         companyProfile: transformedCompanyProfile,
