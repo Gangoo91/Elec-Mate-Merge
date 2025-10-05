@@ -147,15 +147,17 @@ const InvoiceCardList = ({
                   </h3>
                   {getStatusBadge(invoice)}
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onInvoiceAction(invoice)}
-                  className="h-8 w-8 text-muted-foreground hover:text-foreground"
-                  aria-label="Edit invoice"
-                >
-                  <Edit className="h-4 w-4" />
-                </Button>
+                {invoice.invoice_status !== 'paid' && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onInvoiceAction(invoice)}
+                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                    aria-label="Edit invoice"
+                  >
+                    <Edit className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
 
               {/* Middle Row: Logo + Client Info (left) | Dates (right) */}
