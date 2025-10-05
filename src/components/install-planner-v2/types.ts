@@ -69,4 +69,25 @@ export interface CalculationResult {
   safetyMargin: number;
   warnings: string[];
   recommendations: string[];
+  materials: MaterialItem[];
+  practicalGuidance: GuidanceSection[];
+  costEstimate: CostEstimate;
+}
+
+export interface MaterialItem {
+  name: string;
+  quantity: string;
+  specification: string;
+}
+
+export interface GuidanceSection {
+  title: string;
+  points: string[];
+}
+
+export interface CostEstimate {
+  materials: number;
+  labour: number;
+  total: number;
+  breakdown: { item: string; cost: number }[];
 }

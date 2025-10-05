@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, AlertTriangle, Cable, Zap, TrendingDown, Shield } from "lucide-react";
+import { CheckCircle2, AlertTriangle, Cable, Zap, TrendingDown, Shield, Package, DollarSign, BookOpen } from "lucide-react";
 import { InstallPlanDataV2, CalculationResult } from "../types";
 
 interface ResultsStepProps {
@@ -146,6 +146,83 @@ export const ResultsStep = ({ result }: ResultsStepProps) => {
               <div className="text-sm text-muted-foreground">Overall</div>
               <div className="text-2xl font-bold text-primary">{result.factors.overall.toFixed(2)}</div>
             </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Materials List */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-foreground flex items-center gap-2">
+            <Package className="h-5 w-5 text-primary" />
+            Required Materials
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {result.materials.map((material, idx) => (
+              <div key={idx} className="flex justify-between items-start pb-3 border-b border-border last:border-0 last:pb-0">
+                <div>
+                  <p className="font-medium text-foreground">{material.name}</p>
+                  <p className="text-sm text-muted-foreground">{material.specification}</p>
+                </div>
+                <span className="text-sm font-semibold text-primary">{material.quantity}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Cost Estimate */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-foreground flex items-center gap-2">
+            <DollarSign className="h-5 w-5 text-primary" />
+            Cost Estimate
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {result.costEstimate.breakdown.map((item, idx) => (
+              <div key={idx} className="flex justify-between items-center text-sm">
+                <span className="text-muted-foreground">{item.item}</span>
+                <span className="font-medium text-foreground">£{item.cost}</span>
+              </div>
+            ))}
+            <div className="pt-3 border-t border-border flex justify-between items-center">
+              <span className="font-semibold text-foreground">Total Estimate</span>
+              <span className="text-xl font-bold text-primary">£{result.costEstimate.total}</span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              * Prices are estimates based on typical UK market rates (September 2025)
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Practical Guidance */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-foreground flex items-center gap-2">
+            <BookOpen className="h-5 w-5 text-primary" />
+            Practical Installation Guidance
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {result.practicalGuidance.map((section, idx) => (
+              <div key={idx}>
+                <h4 className="font-semibold text-sm mb-2 text-foreground">{section.title}</h4>
+                <ul className="space-y-1.5">
+                  {section.points.map((point, pidx) => (
+                    <li key={pidx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 mt-0.5 text-primary shrink-0" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
