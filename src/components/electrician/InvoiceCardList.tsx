@@ -135,11 +135,6 @@ const InvoiceCardList = ({
           <div
             key={invoice.id}
             className="relative bg-slate-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all"
-            style={{
-              backgroundImage: 'url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop")',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
           >
             {/* Dark overlay - exact match to reference */}
             <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" />
