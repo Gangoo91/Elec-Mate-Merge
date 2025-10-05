@@ -112,6 +112,13 @@ export const useInvoiceStorage = () => {
           additional_invoice_items: JSON.parse(JSON.stringify(invoice.additional_invoice_items || [])),
           invoice_notes: invoice.invoice_notes,
           work_completion_date: invoice.work_completion_date?.toISOString(),
+          items: JSON.parse(JSON.stringify(invoice.items || [])),
+          settings: JSON.parse(JSON.stringify(invoice.settings || {})),
+          subtotal: invoice.subtotal,
+          overhead: invoice.overhead,
+          profit: invoice.profit,
+          vat_amount: invoice.vatAmount,
+          total: invoice.total,
           updated_at: new Date().toISOString(),
         })
         .eq('id', invoice.id);
