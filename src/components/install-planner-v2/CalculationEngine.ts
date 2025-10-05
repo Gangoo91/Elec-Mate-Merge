@@ -296,47 +296,49 @@ const generatePracticalGuidance = (
       'Mark cable routes clearly to prevent future damage'
     ]
   });
-    {
-      title: 'Installation Method',
-      points: installationMethod.includes('surface')
-        ? [
-            `Clip cable every ${installationMethod.includes('surface') ? '400mm' : '250mm'} horizontally`,
-            'Use appropriate clips for the cable size and surface type',
-            'Ensure cable is not kinked or sharply bent (min bend radius: 6× cable diameter)',
-            'Protect cable in high-risk areas with conduit or trunking'
-          ]
-        : [
-            'Ensure cable is de-rated if run in insulation',
-            'Do not pull cable too tight - allow some slack',
-            'Protect cable at entry/exit points with grommets',
-            'Avoid running parallel to water pipes or gas lines'
-          ]
-    },
-    {
-      title: 'RCD Protection (BS 7671 Regulation 411.3.3)',
-      points: loadType.toLowerCase().includes('socket') || loadType.toLowerCase().includes('outdoor')
-        ? [
-            'RCD protection (30mA) is required for socket outlets',
-            'Test RCD monthly using the test button',
-            'Label RCD with circuit identification'
-          ]
-        : [
-            'Consider RCD protection for additional safety',
-            'Required if cable depth is less than 50mm in walls/partitions'
-          ]
-    },
-    {
-      title: 'Testing & Verification (BS 7671 Part 6)',
-      points: [
-        'Test continuity of protective conductors',
-        'Test insulation resistance (≥1MΩ at 500V DC)',
-        'Verify polarity is correct',
-        `Test earth fault loop impedance (Zs must be < 1.44Ω for ${getProtectiveDevice(cableSize)})`,
-        'Complete an Electrical Installation Certificate',
-        'Provide the client with operating instructions'
-      ]
-    }
-  ];
+
+  guidance.push({
+    title: 'Installation Method',
+    points: installationMethod.includes('surface')
+      ? [
+          `Clip cable every ${installationMethod.includes('surface') ? '400mm' : '250mm'} horizontally`,
+          'Use appropriate clips for the cable size and surface type',
+          'Ensure cable is not kinked or sharply bent (min bend radius: 6× cable diameter)',
+          'Protect cable in high-risk areas with conduit or trunking'
+        ]
+      : [
+          'Ensure cable is de-rated if run in insulation',
+          'Do not pull cable too tight - allow some slack',
+          'Protect cable at entry/exit points with grommets',
+          'Avoid running parallel to water pipes or gas lines'
+        ]
+  });
+
+  guidance.push({
+    title: 'RCD Protection (BS 7671 Regulation 411.3.3)',
+    points: loadType.toLowerCase().includes('socket') || loadType.toLowerCase().includes('outdoor')
+      ? [
+          'RCD protection (30mA) is required for socket outlets',
+          'Test RCD monthly using the test button',
+          'Label RCD with circuit identification'
+        ]
+      : [
+          'Consider RCD protection for additional safety',
+          'Required if cable depth is less than 50mm in walls/partitions'
+        ]
+  });
+
+  guidance.push({
+    title: 'Testing & Verification (BS 7671 Part 6)',
+    points: [
+      'Test continuity of protective conductors',
+      'Test insulation resistance (≥1MΩ at 500V DC)',
+      'Verify polarity is correct',
+      `Test earth fault loop impedance (Zs must be < 1.44Ω for ${getProtectiveDevice(cableSize)})`,
+      'Complete an Electrical Installation Certificate',
+      'Provide the client with operating instructions'
+    ]
+  });
 
   return guidance;
 };
