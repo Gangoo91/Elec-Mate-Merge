@@ -280,8 +280,6 @@ const SiteSafety = () => {
             </div>
           </section>
 
-          {/* Quick Add Section */}
-          <RAMSQuickAdd />
 
           {/* Modern Safety Best Practices */}
           <section>
