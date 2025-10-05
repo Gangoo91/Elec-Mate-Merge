@@ -28,6 +28,7 @@ export interface Invoice extends Omit<Quote, 'items' | 'settings'> {
   items: InvoiceItem[];
   settings: InvoiceSettings;
   originalQuoteId: string;
+  purchase_order?: string;
 }
 
 export type InvoiceStatus = 'draft' | 'sent' | 'paid' | 'overdue';

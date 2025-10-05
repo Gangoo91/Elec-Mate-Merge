@@ -8,7 +8,8 @@ const corsHeaders = {
 };
 
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
-const TEMPLATE_ID = 'B9CD1B3D-71A2-4F67-84E9-B81E0DC3E0B2';
+const QUOTE_TEMPLATE_ID = 'B9CD1B3D-71A2-4F67-84E9-B81E0DC3E0B2';
+const INVOICE_TEMPLATE_ID = 'DC891A6A-4B38-48F5-A7DB-7CD0B550F4A2';
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -32,12 +33,12 @@ serve(async (req) => {
     }
 
     // Parse request body
-    const { quote, companyProfile } = await req.json();
-    console.log('[PDF-MONKEY] Received quote:', quote?.id, 'company:', companyProfile?.company_name);
+    const { quote, companyProfile, invoice_mode } = await req.json();
+    console.log('[PDF-MONKEY] Received request - Invoice mode:', invoice_mode, 'Quote ID:', quote?.id);
 
     if (!quote) {
       return new Response(
-        JSON.stringify({ error: 'Quote data is required' }),
+        JSON.stringify({ error: 'Quote/Invoice data is required' }),
         { 
           status: 400, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
@@ -45,15 +46,82 @@ serve(async (req) => {
       );
     }
 
-    // Prepare payload for PDF Monkey
-    const payload = {
-      quote,
-      companyProfile
-    };
+    // Select template based on mode
+    const TEMPLATE_ID = invoice_mode ? INVOICE_TEMPLATE_ID : QUOTE_TEMPLATE_ID;
+    console.log('[PDF-MONKEY] Using template:', TEMPLATE_ID, 'for', invoice_mode ? 'invoice' : 'quote');
 
-    console.log('[PDF-MONKEY] Payload includes company:', companyProfile?.company_name);
+    // Transform data for invoice template
+    let payload;
+    if (invoice_mode) {
+      // Transform to invoice format
+      const transformedCompanyProfile = {
+        logo_url: companyProfile?.logo_url || "",
+        company_name: companyProfile?.company_name || "",
+        company_address: companyProfile?.company_address ? 
+          `${companyProfile.company_address}${companyProfile.company_postcode ? '\n' + companyProfile.company_postcode : ''}` : "",
+        company_phone: companyProfile?.company_phone || "",
+        company_email: companyProfile?.company_email || "",
+        vat_number: companyProfile?.vat_number || "",
+        company_website: companyProfile?.company_website || "",
+        bank_name: companyProfile?.bank_details?.bank_name || "",
+        account_name: companyProfile?.bank_details?.account_name || companyProfile?.company_name || "",
+        account_number: companyProfile?.bank_details?.account_number || "",
+        sort_code: companyProfile?.bank_details?.sort_code || "",
+        payment_terms: quote?.settings?.paymentTerms || "7 days",
+        company_registration: companyProfile?.company_registration || ""
+      };
 
-    console.log('[PDF-MONKEY] Calling PDF Monkey API with template:', TEMPLATE_ID);
+      const transformedInvoice = {
+        invoiceNumber: quote?.invoice_number || "",
+        createdAt: quote?.invoice_date ? new Date(quote.invoice_date).toISOString().split('T')[0] : "",
+        dueDate: quote?.invoice_due_date ? new Date(quote.invoice_due_date).toISOString().split('T')[0] : "",
+        purchaseOrder: quote?.purchase_order || "",
+        client: {
+          name: quote?.client?.name || "",
+          contactName: quote?.client?.contactName || "",
+          address: quote?.client?.address ? 
+            `${quote.client.address}${quote.client.postcode ? '\n' + quote.client.postcode : ''}` : "",
+          postcode: quote?.client?.postcode || "",
+          email: quote?.client?.email || "",
+          phone: quote?.client?.phone || ""
+        },
+        jobDetails: {
+          title: quote?.jobDetails?.title || "",
+          location: quote?.jobDetails?.location || "",
+          completionDate: quote?.work_completion_date ? 
+            new Date(quote.work_completion_date).toISOString().split('T')[0] : "",
+          reference: quote?.jobDetails?.reference || quote?.quoteNumber || "",
+          description: quote?.jobDetails?.description || ""
+        },
+        items: (quote?.items || []).map((item: any) => ({
+          name: item.description || "",
+          description: item.notes || "",
+          quantity: item.actualQuantity || item.quantity || 0,
+          unit: item.unit || "each",
+          unitPrice: item.unitPrice || 0
+        })),
+        notes: quote?.invoice_notes || ""
+      };
+
+      payload = {
+        companyProfile: transformedCompanyProfile,
+        invoice: transformedInvoice,
+        terms: quote?.settings?.terms || "",
+        useVat: (quote?.settings?.vatRate || 0) > 0,
+        vatRate: quote?.settings?.vatRate || 20
+      };
+
+      console.log('[PDF-MONKEY] Transformed invoice payload for template');
+    } else {
+      // Keep original quote format
+      payload = {
+        quote,
+        companyProfile
+      };
+      console.log('[PDF-MONKEY] Using original quote format');
+    }
+
+    console.log('[PDF-MONKEY] Calling PDF Monkey API');
 
     // Call PDF Monkey API
     const pdfMonkeyResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {

@@ -1,25 +1,16 @@
 import { Invoice } from '@/types/invoice';
+import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
-export const generateInvoicePDF = async (invoice: Partial<Invoice>, companyProfile?: any) => {
+export const generateInvoicePDF = async (invoice: Partial<Invoice> | Quote, companyProfile?: any) => {
   try {
-    // Call the PDF Monkey edge function
+    // Call the PDF Monkey edge function with invoice mode
     const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
       body: {
-        quote: {
-          ...invoice,
-          // Transform invoice data to match quote format for PDF generation
-          invoice_mode: true,
-          invoice_number: invoice.invoice_number,
-          invoice_date: invoice.invoice_date,
-          invoice_due_date: invoice.invoice_due_date,
-          invoice_status: invoice.invoice_status,
-          work_completion_date: invoice.work_completion_date,
-          additional_invoice_items: invoice.additional_invoice_items,
-          invoice_notes: invoice.invoice_notes,
-        },
+        quote: invoice,
         companyProfile,
+        invoice_mode: true,
       },
     });
 
@@ -33,9 +24,10 @@ export const generateInvoicePDF = async (invoice: Partial<Invoice>, companyProfi
       return false;
     }
 
-    if (data?.download_url) {
+    if (data?.downloadUrl || data?.download_url) {
       // Download the PDF
-      window.open(data.download_url, '_blank');
+      const pdfUrl = data.downloadUrl || data.download_url;
+      window.open(pdfUrl, '_blank');
       toast({
         title: 'Success',
         description: 'Invoice PDF generated successfully',

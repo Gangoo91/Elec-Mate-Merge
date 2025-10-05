@@ -96,11 +96,44 @@ const InvoicesPage = () => {
   };
 
   const handleDownloadPDF = async (invoice: Quote) => {
-    toast({
-      title: 'Generating PDF',
-      description: `Generating PDF for invoice ${invoice.invoice_number}...`,
-    });
-    // TODO: Implement PDF generation
+    try {
+      toast({
+        title: 'Generating PDF',
+        description: `Generating PDF for invoice ${invoice.invoice_number}...`,
+      });
+
+      // Fetch company profile
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      const { data: companyData } = await supabase
+        .from('company_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (!companyData) {
+        toast({
+          title: 'Company profile required',
+          description: 'Please set up your company profile before generating invoices',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      // Call generateInvoicePDF utility
+      const { generateInvoicePDF } = await import('@/utils/invoice-pdf');
+      await generateInvoicePDF(invoice, companyData);
+    } catch (error) {
+      console.error('Error generating invoice PDF:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to generate invoice PDF. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleSendInvoice = async (invoice: Quote) => {
