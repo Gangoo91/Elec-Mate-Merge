@@ -3,7 +3,12 @@ import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Calendar, CreditCard, FileText, Info } from 'lucide-react';
+import { Calendar as CalendarIcon, CreditCard, FileText, Info } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 import {
   Select,
   SelectContent,
@@ -38,7 +43,7 @@ export const InvoiceSettingsStep = ({
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-primary" />
+            <CalendarIcon className="h-5 w-5 text-primary" />
             <CardTitle className="text-lg">Payment Terms</CardTitle>
           </div>
           <CardDescription>
@@ -68,13 +73,29 @@ export const InvoiceSettingsStep = ({
             </div>
             <div>
               <Label htmlFor="dueDate" className="text-sm">Due Date</Label>
-              <input
-                id="dueDate"
-                type="date"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1"
-                value={settings?.dueDate ? new Date(settings.dueDate).toISOString().split('T')[0] : ''}
-                onChange={(e) => onUpdateSettings({ dueDate: new Date(e.target.value) })}
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal mt-1",
+                      !settings?.dueDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {settings?.dueDate ? format(new Date(settings.dueDate), "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={settings?.dueDate ? new Date(settings.dueDate) : undefined}
+                    onSelect={(date) => date && onUpdateSettings({ dueDate: date })}
+                    initialFocus
+                    className="pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
           
