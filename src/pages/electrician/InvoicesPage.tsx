@@ -436,12 +436,12 @@ const InvoicesPage = () => {
               return (
                 <div
                   key={invoice.id}
-                  className="bg-elec-card border border-elec-yellow/20 rounded-lg overflow-hidden hover:border-elec-yellow/30 hover:shadow-lg transition-all border-l-2 border-l-elec-yellow/50"
+                  className="bg-elec-card border border-elec-yellow/20 rounded-lg overflow-hidden hover:border-elec-yellow/30 hover:shadow-md transition-all border-l-2 border-l-elec-yellow/50"
                 >
                   {/* Header with Status */}
-                  <div className="bg-elec-gray/30 px-4 py-3 border-b border-elec-yellow/10">
+                  <div className="bg-elec-gray/30 px-3 py-2 border-b border-elec-yellow/10">
                     <div className="flex items-center justify-between gap-3">
-                      <h4 className="text-lg font-semibold text-foreground truncate">
+                      <h4 className="text-base font-semibold text-foreground truncate">
                         #{invoice.invoice_number || invoice.quoteNumber}
                       </h4>
                       {getStatusBadge(invoice)}
@@ -449,9 +449,9 @@ const InvoicesPage = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
+                  <div className="p-3 sm:p-4 space-y-3">
                     {/* Client & Dates */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 pb-3 border-b border-border/50">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 pb-2 border-b border-border/50">
                       <div className="min-w-0">
                         <div className="text-xs text-muted-foreground mb-1">Client</div>
                         <div className="font-semibold truncate">{invoice.client?.name || 'N/A'}</div>
@@ -475,22 +475,22 @@ const InvoicesPage = () => {
                     </div>
 
                     {/* Amount - Highlighted */}
-                    <div className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-lg p-4 text-center shadow-sm">
-                      <div className="text-xs text-muted-foreground mb-2 font-medium">Total Amount</div>
-                      <div className="text-2xl sm:text-3xl font-bold text-foreground">
+                    <div className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-lg p-3 text-center shadow-sm">
+                      <div className="text-xs text-muted-foreground mb-1 font-medium">Total Amount</div>
+                      <div className="text-xl sm:text-2xl font-bold text-foreground">
                         {formatCurrency(invoice.total)}
                       </div>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="space-y-3 pt-2">
+                    <div className="space-y-2 pt-1">
                       {/* Primary Action */}
                       <MobileButton
                         size="default"
                         variant="elec"
                         onClick={() => handleInvoiceAction(invoice)}
                         icon={actionButton.icon}
-                        className={`w-full sm:w-auto sm:min-w-[200px] ${actionButton.className}`}
+                        className={`w-full sm:w-auto sm:min-w-[160px] ${actionButton.className}`}
                         aria-label={actionButton.ariaLabel}
                       >
                         {actionButton.text}
@@ -503,7 +503,7 @@ const InvoicesPage = () => {
                           variant="outline"
                           onClick={() => handleDownloadPDF(invoice)}
                           disabled={downloadingPdfId === invoice.id}
-                          className="text-xs h-9 flex-1 sm:flex-none sm:max-w-[120px]"
+                          className="text-xs h-8 flex-1 sm:flex-none sm:max-w-[100px]"
                         >
                           <Download className="h-3.5 w-3.5 sm:mr-1.5" />
                           <span className="hidden sm:inline">
@@ -518,7 +518,7 @@ const InvoicesPage = () => {
                               variant="outline"
                               onClick={() => handleSendInvoice(invoice)}
                               disabled={sendingInvoiceId === invoice.id}
-                              className="text-xs h-9 flex-1 sm:flex-none sm:max-w-[120px]"
+                              className="text-xs h-8 flex-1 sm:flex-none sm:max-w-[100px]"
                             >
                               <Mail className="h-3.5 w-3.5 sm:mr-1.5" />
                               <span className="hidden sm:inline">
@@ -532,7 +532,7 @@ const InvoicesPage = () => {
                                   size="sm"
                                   variant="outline"
                                   disabled={markingPaidId === invoice.id}
-                                  className="text-xs h-9 flex-1 sm:flex-none sm:max-w-[120px]"
+                                  className="text-xs h-8 flex-1 sm:flex-none sm:max-w-[100px]"
                                 >
                                   <CheckCircle className="h-3.5 w-3.5 sm:mr-1.5" />
                                   <span className="hidden sm:inline">Paid</span>
