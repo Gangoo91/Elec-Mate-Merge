@@ -449,9 +449,9 @@ const InvoicesPage = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="p-3 sm:p-4 space-y-3">
+                  <div className="p-3 sm:p-3 space-y-3 sm:space-y-2">
                     {/* Client & Dates */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 pb-2 border-b border-border/50">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 sm:gap-y-1.5 pb-2 sm:pb-1.5 border-b border-border/50">
                       <div className="min-w-0">
                         <div className="text-xs text-muted-foreground mb-1">Client</div>
                         <div className="font-semibold truncate">{invoice.client?.name || 'N/A'}</div>
@@ -475,22 +475,22 @@ const InvoicesPage = () => {
                     </div>
 
                     {/* Amount - Highlighted */}
-                    <div className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-lg p-3 text-center shadow-sm">
-                      <div className="text-xs text-muted-foreground mb-1 font-medium">Total Amount</div>
-                      <div className="text-xl sm:text-2xl font-bold text-foreground">
+                    <div className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/20 rounded-lg p-3 sm:p-2.5 text-center shadow-sm">
+                      <div className="text-xs text-muted-foreground mb-1 sm:mb-0.5 font-medium">Total Amount</div>
+                      <div className="text-xl sm:text-xl font-bold text-foreground">
                         {formatCurrency(invoice.total)}
                       </div>
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="space-y-2 pt-1">
+                    <div className="space-y-2 sm:space-y-1.5 pt-1 sm:pt-0.5">
                       {/* Primary Action */}
                       <MobileButton
                         size="default"
                         variant="elec"
                         onClick={() => handleInvoiceAction(invoice)}
                         icon={actionButton.icon}
-                        className={`w-full sm:w-auto sm:min-w-[160px] ${actionButton.className}`}
+                        className={`w-full sm:w-auto sm:min-w-[140px] ${actionButton.className}`}
                         aria-label={actionButton.ariaLabel}
                       >
                         {actionButton.text}
