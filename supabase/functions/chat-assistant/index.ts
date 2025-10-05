@@ -41,15 +41,27 @@ FORMATTING PATTERNS:
 - Use "📖 Regulations:" for BS 7671 references
 
 CRITICAL FORMATTING FOR REGULATIONS:
-- When listing multiple regulations, separate EACH regulation with a double newline (\\n\\n)
-- Format each regulation like this:
-  701.512.2 - Equipment description here
-  
-  701.414.1.2 - Next regulation description here
-  
-  701.432.2.2 - Another regulation description here
-- NEVER run regulations together in a single paragraph
-- Each regulation number and its description must be on its own line, followed by a blank line
+- Structure each regulation as a clear, separate block with bullet points
+- Use this exact format for EACH regulation:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 Regulation [number]
+[Title/Description]
+
+Requirements:
+• [First requirement - be specific and clear]
+• [Second requirement - include values and specifications]
+• [Third requirement - mention any standards or ratings]
+• [Additional requirements as needed]
+
+⚠️ Compliance: [Key compliance point or critical specification]
+
+- Always use bullet points (•) for requirements lists
+- Separate EACH regulation with a divider line: ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Include specific values (e.g., "4mm² minimum", "IPX4 rating", "Zone 2")
+- Make compliance notes concise and actionable
+- Use double line breaks between sections for clarity
 
 CONTENT STRUCTURE:
 - Break information into digestible sections
