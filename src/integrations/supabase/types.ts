@@ -2666,6 +2666,7 @@ export type Database = {
           invoice_raised: boolean | null
           invoice_status: string | null
           items: Json
+          job_details: Json | null
           last_reminder_sent_at: string | null
           notes: string | null
           overhead: number
@@ -2705,6 +2706,7 @@ export type Database = {
           invoice_raised?: boolean | null
           invoice_status?: string | null
           items?: Json
+          job_details?: Json | null
           last_reminder_sent_at?: string | null
           notes?: string | null
           overhead?: number
@@ -2744,6 +2746,7 @@ export type Database = {
           invoice_raised?: boolean | null
           invoice_status?: string | null
           items?: Json
+          job_details?: Json | null
           last_reminder_sent_at?: string | null
           notes?: string | null
           overhead?: number
