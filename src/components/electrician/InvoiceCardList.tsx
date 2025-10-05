@@ -147,7 +147,17 @@ const InvoiceCardList = ({
                   </h3>
                   {getStatusBadge(invoice)}
                 </div>
-                {invoice.invoice_status !== 'paid' && (
+                {invoice.invoice_status === 'paid' ? (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onInvoiceAction(invoice)}
+                    className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                    aria-label="View invoice"
+                  >
+                    <Eye className="h-4 w-4" />
+                  </Button>
+                ) : (
                   <Button
                     variant="ghost"
                     size="icon"
