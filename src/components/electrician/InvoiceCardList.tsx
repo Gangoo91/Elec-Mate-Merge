@@ -67,12 +67,7 @@ const InvoiceCardList = ({
     }
 
     if (status === "draft") {
-      return (
-        <Badge variant="outline" className="bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-950 dark:text-slate-300 dark:border-slate-800">
-          <Edit className="h-3 w-3 mr-1" />
-          Draft
-        </Badge>
-      );
+      return null;
     }
 
     if (status === "paid") {
