@@ -113,6 +113,19 @@ serve(async (req) => {
     console.log('📋 Phase 4: Planning agent orchestration...');
     const agentPlan = await planAgentSequence(intentAnalysis, conversationSummary, latestMessage, openAIApiKey);
     
+    // Safety check: ensure we have a valid plan
+    if (!agentPlan || !agentPlan.sequence || agentPlan.sequence.length === 0) {
+      console.warn('⚠️ Empty agent plan, using safe default');
+      agentPlan.sequence = [{
+        agent: 'designer',
+        priority: 1,
+        reasoning: 'Safe default - empty plan',
+        dependencies: []
+      }];
+      agentPlan.reasoning = 'Fallback to designer agent';
+      agentPlan.estimatedComplexity = 'simple';
+    }
+    
     console.log('Agent Plan:', {
       sequence: agentPlan.sequence.map(s => s.agent),
       complexity: agentPlan.estimatedComplexity,
@@ -246,12 +259,15 @@ serve(async (req) => {
 function getAgentFunctionName(agent: string): string {
   const mapping: Record<string, string> = {
     'designer': 'designer-agent',
-    'health-safety': 'health-safety-agent',
+    'design': 'designer-agent',
     'cost-engineer': 'cost-engineer-agent',
+    'cost': 'cost-engineer-agent',
     'installer': 'installer-agent',
-    'commissioning': 'commissioning-agent'
+    'installation': 'installer-agent',
+    'commissioning': 'commissioning-agent',
+    'health-safety': 'health-safety-agent'
   };
-  return mapping[agent] || agent;
+  return mapping[agent] || 'designer-agent';
 }
 
 async function synthesizeResponse(

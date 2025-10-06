@@ -55,7 +55,19 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
         if (response.status === 402) {
           throw new Error('AI credits exhausted. Please add credits to continue.');
         }
-        throw new Error(`Request failed: ${response.statusText}`);
+        
+        // Try to get detailed error message from server
+        let serverMessage = '';
+        try {
+          const errorData = await response.json();
+          serverMessage = errorData.error || errorData.message || '';
+        } catch {
+          try {
+            serverMessage = await response.text();
+          } catch {}
+        }
+        
+        throw new Error(`Request failed (${response.status}): ${serverMessage || response.statusText || 'Unknown error'}`);
       }
 
       // Check if response is streaming (SSE) or regular JSON

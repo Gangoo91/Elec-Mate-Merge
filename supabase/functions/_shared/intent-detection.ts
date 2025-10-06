@@ -83,7 +83,15 @@ Rules:
     const intentData = JSON.parse(data.choices[0]?.message?.content || '{}');
     
     console.log('🎯 AI Intent Analysis:', intentData);
-    return intentData as IntentAnalysis;
+    
+    // Ensure well-formed structure with all required fields
+    return {
+      intents: intentData?.intents ?? { design: 0.6, cost: 0.4, installation: 0.4, commissioning: 0.3 },
+      primaryIntent: intentData?.primaryIntent ?? 'design',
+      reasoning: intentData?.reasoning ?? 'AI analysis',
+      requiresClarification: !!intentData?.requiresClarification,
+      suggestedFollowUp: intentData?.suggestedFollowUp
+    };
 
   } catch (error) {
     console.error('Intent detection failed, using fallback:', error);
@@ -112,8 +120,9 @@ function fallbackIntentDetection(message: string): IntentAnalysis {
 
   return {
     intents: scores,
-    primaryIntent: scores[primaryIntent] > 0.3 ? primaryIntent : 'general',
+    primaryIntent: scores[primaryIntent as keyof typeof scores] > 0.3 ? primaryIntent : 'general',
     reasoning: 'Fallback keyword-based detection',
-    requiresClarification: Object.values(scores).every(s => s < 0.3)
+    requiresClarification: Object.values(scores).every(s => s < 0.3),
+    suggestedFollowUp: undefined
   };
 }

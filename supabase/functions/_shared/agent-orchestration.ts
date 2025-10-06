@@ -34,6 +34,20 @@ export interface AgentOutput {
   confidence: number;
 }
 
+// Normalise intent keys to agent IDs
+function normaliseIntentKey(k: string): 'designer' | 'cost-engineer' | 'installer' | 'commissioning' {
+  const map: Record<string, 'designer' | 'cost-engineer' | 'installer' | 'commissioning'> = {
+    design: 'designer',
+    designer: 'designer',
+    cost: 'cost-engineer',
+    'cost-engineer': 'cost-engineer',
+    installation: 'installer',
+    installer: 'installer',
+    commissioning: 'commissioning'
+  };
+  return map[k] ?? 'designer';
+}
+
 export async function planAgentSequence(
   intentAnalysis: IntentAnalysis,
   conversationSummary: ConversationSummary,
@@ -46,10 +60,10 @@ export async function planAgentSequence(
     if (!intentAnalysis || !intentAnalysis.intents) {
       console.warn('⚠️ Invalid intent analysis, using fallback');
       return createFallbackPlan({ 
-        intents: { designer: 0.5 }, 
-        primaryIntent: 'designer',
+        intents: { design: 0.6, cost: 0.5, installation: 0.5, commissioning: 0.4 }, 
+        primaryIntent: 'design',
         reasoning: 'Fallback due to missing intent data',
-        needsClarification: false 
+        requiresClarification: false 
       });
     }
 
@@ -137,45 +151,72 @@ Return JSON:
     console.error('Planning failed, using fallback:', error);
   }
 
-  // Fallback: Create sequence based on intent scores
-  return createFallbackPlan(intentAnalysis);
+  // Fallback: Create sequence based on intent scores (with safe defaults)
+  return createFallbackPlan(
+    intentAnalysis?.intents 
+      ? intentAnalysis 
+      : { 
+          intents: { design: 0.6, cost: 0.5, installation: 0.5, commissioning: 0.4 }, 
+          primaryIntent: 'design', 
+          reasoning: 'Planner fallback', 
+          requiresClarification: false 
+        }
+  );
   } catch (outerError) {
     console.error('❌ Critical error in planAgentSequence:', outerError);
-    // Ultimate fallback
-    return {
-      sequence: [{
-        agent: 'designer',
-        priority: 1,
-        reasoning: 'Emergency fallback - critical error in planning',
-        dependencies: []
-      }],
-      reasoning: 'Emergency fallback due to critical error',
-      estimatedComplexity: 'simple'
-    };
+    // Ultimate fallback with safe defaults
+    return createFallbackPlan({
+      intents: { design: 0.8 },
+      primaryIntent: 'design',
+      reasoning: 'Emergency fallback - critical error',
+      requiresClarification: false
+    });
   }
 }
 
 function createFallbackPlan(intentAnalysis: IntentAnalysis): AgentPlan {
+  // Safe defaults if intents are missing or malformed
+  const intents = intentAnalysis?.intents ?? { 
+    design: 0.6, 
+    cost: 0.5, 
+    installation: 0.5, 
+    commissioning: 0.4 
+  };
+  
   const sequence: AgentStep[] = [];
   let priority = 1;
 
   // Add agents in logical order based on confidence
-  const sortedIntents = Object.entries(intentAnalysis.intents)
-    .filter(([_, score]) => score >= 0.4)
-    .sort((a, b) => b[1] - a[1]);
+  const sortedIntents = Object.entries(intents)
+    .filter(([_, score]) => (score ?? 0) >= 0.4)
+    .sort((a, b) => (b[1] ?? 0) - (a[1] ?? 0));
 
-  for (const [agent, score] of sortedIntents) {
-    sequence.push({
-      agent: agent as any,
-      priority: priority++,
-      reasoning: `Intent score: ${score.toFixed(2)}`,
-      dependencies: priority > 2 ? [sequence[0].agent] : []
+  for (const [intentKey, score] of sortedIntents) {
+    const agent = normaliseIntentKey(intentKey);
+    // Prevent duplicates if multiple keys normalise to same agent
+    if (!sequence.find(s => s.agent === agent)) {
+      sequence.push({
+        agent,
+        priority: priority++,
+        reasoning: `Intent score: ${(score ?? 0).toFixed(2)}`,
+        dependencies: []
+      });
+    }
+  }
+
+  // Ultimate fallback: always have at least one agent
+  if (sequence.length === 0) {
+    sequence.push({ 
+      agent: 'designer', 
+      priority: 1, 
+      reasoning: 'Ultimate fallback - no valid intents', 
+      dependencies: [] 
     });
   }
 
   return {
     sequence,
-    reasoning: 'Fallback plan based on intent scores',
+    reasoning: 'Fallback plan based on normalised intent scores',
     estimatedComplexity: sequence.length > 2 ? 'complex' : 'simple'
   };
 }
