@@ -24,7 +24,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('📘 Starting Guidance Note 3 processing...');
+    console.log('🧮 Starting Electrical Installation Calculations: Basic processing...');
     
     const { fileContent } = await req.json();
     
@@ -39,7 +39,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
     const chunks: Chunk[] = [];
-    const chunkSize = 100;
+    const chunkSize = 110;
 
     for (let i = 0; i < lines.length; i += chunkSize) {
       const chunkLines = lines.slice(i, i + chunkSize);
@@ -51,34 +51,37 @@ serve(async (req) => {
       const chapterNumber = chapterMatch ? chapterMatch[1] : undefined;
       const chapterTitle = chapterMatch ? chapterMatch[2]?.trim() : undefined;
 
-      let topic = 'Inspection & Testing';
-      let keywords: string[] = ['Guidance Note 3', 'inspection', 'testing'];
+      let topic = 'Basic Electrical Calculations';
+      let keywords: string[] = ['calculations', 'basic electrical', 'formulae'];
 
-      if (content.toLowerCase().includes('earth') || content.toLowerCase().includes('continuity')) {
-        topic = 'Continuity & Earth Testing';
-        keywords.push('continuity', 'earth fault loop', 'protective conductor');
-      } else if (content.toLowerCase().includes('insulation') && content.toLowerCase().includes('resistance')) {
-        topic = 'Insulation Resistance Testing';
-        keywords.push('insulation resistance', 'IR testing', 'megger');
-      } else if (content.toLowerCase().includes('rcd') || content.toLowerCase().includes('residual current')) {
-        topic = 'RCD Testing';
-        keywords.push('RCD', 'residual current device', 'trip time');
-      } else if (content.toLowerCase().includes('polarity')) {
-        topic = 'Polarity Testing';
-        keywords.push('polarity', 'correct connections');
-      } else if (content.toLowerCase().includes('certification') || content.toLowerCase().includes('certificate')) {
-        topic = 'Certification & Documentation';
-        keywords.push('EIC', 'MEIWC', 'certification');
-      } else if (content.toLowerCase().includes('schedule') || content.toLowerCase().includes('test results')) {
-        topic = 'Test Results & Schedules';
-        keywords.push('test results', 'schedules', 'recording');
+      if (content.toLowerCase().includes('ohm') || content.toLowerCase().includes('resistance')) {
+        topic = "Ohm's Law & Resistance";
+        keywords.push("Ohm's law", 'resistance', 'voltage', 'current');
+      } else if (content.toLowerCase().includes('power') || content.toLowerCase().includes('watt')) {
+        topic = 'Power Calculations';
+        keywords.push('power', 'watts', 'energy', 'consumption');
+      } else if (content.toLowerCase().includes('cable') && content.toLowerCase().includes('size')) {
+        topic = 'Cable Sizing Calculations';
+        keywords.push('cable sizing', 'current capacity', 'volt drop');
+      } else if (content.toLowerCase().includes('voltage drop') || content.toLowerCase().includes('volt drop')) {
+        topic = 'Voltage Drop Calculations';
+        keywords.push('voltage drop', 'volt drop', 'mV/A/m');
+      } else if (content.toLowerCase().includes('earth fault') || content.toLowerCase().includes('loop impedance')) {
+        topic = 'Earth Fault Loop Impedance';
+        keywords.push('Zs', 'earth fault loop', 'impedance');
+      } else if (content.toLowerCase().includes('diversity') || content.toLowerCase().includes('maximum demand')) {
+        topic = 'Diversity & Maximum Demand';
+        keywords.push('diversity', 'maximum demand', 'load assessment');
+      } else if (content.toLowerCase().includes('three phase') || content.toLowerCase().includes('3-phase')) {
+        topic = 'Three Phase Calculations';
+        keywords.push('three phase', 'balanced load', 'power factor');
       }
 
       chunks.push({
         section: chapterTitle || `Section at line ${i}`,
         content,
         metadata: {
-          document: 'Guidance Note 3: Inspection & Testing',
+          document: 'Electrical Installation Calculations: Basic',
           chapter_number: chapterNumber,
           chapter_title: chapterTitle,
           topic,
@@ -87,7 +90,7 @@ serve(async (req) => {
       });
     }
 
-    console.log(`✅ Parsed ${chunks.length} chunks from Guidance Note 3`);
+    console.log(`✅ Parsed ${chunks.length} chunks from Basic Calculations`);
     console.log(`📊 Topics: ${[...new Set(chunks.map(c => c.metadata.topic))].slice(0, 5).join(', ')}`);
 
     const response = await fetch(`${supabaseUrl}/functions/v1/process-pdf-embeddings`, {
@@ -101,9 +104,9 @@ serve(async (req) => {
           section: chunk.section,
           content: chunk.content,
           metadata: chunk.metadata,
-          source: 'guidance-note-3'
+          source: 'calculations-basic'
         })),
-        source: 'guidance-note-3'
+        source: 'calculations-basic'
       }),
     });
 
@@ -112,7 +115,7 @@ serve(async (req) => {
     }
 
     const result = await response.json();
-    console.log('✅ Guidance Note 3 embeddings created successfully');
+    console.log('✅ Basic Calculations embeddings created successfully');
 
     return new Response(JSON.stringify({ 
       success: true,
@@ -123,7 +126,7 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Error processing Guidance Note 3:', error);
+    console.error('❌ Error processing Basic Calculations:', error);
     return new Response(JSON.stringify({ 
       error: error instanceof Error ? error.message : 'Processing failed' 
     }), {

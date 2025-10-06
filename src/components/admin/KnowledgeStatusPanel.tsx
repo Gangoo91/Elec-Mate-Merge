@@ -23,6 +23,12 @@ export const KnowledgeStatusPanel = () => {
         city_guilds_book_1: installationBySource['city-guilds-book-1'] || 0,
         city_guilds_book_2: installationBySource['city-guilds-book-2'] || 0,
         emergency_lighting: installationBySource['emergency-lighting'] || 0,
+        guidance_note_3: installationBySource['guidance-note-3'] || 0,
+        design_guide: installationBySource['design-guide'] || 0,
+        wiring_diagrams: installationBySource['wiring-diagrams'] || 0,
+        ev_charging: installationBySource['ev-charging'] || 0,
+        calculations_basic: installationBySource['calculations-basic'] || 0,
+        inservice_testing: installationBySource['inservice-testing'] || 0,
       };
     },
     refetchInterval: 5000,
@@ -48,6 +54,12 @@ export const KnowledgeStatusPanel = () => {
     { name: 'City & Guilds Book 1', count: stats.city_guilds_book_1, icon: FileText, table: 'installation_knowledge' },
     { name: 'City & Guilds Book 2', count: stats.city_guilds_book_2, icon: FileText, table: 'installation_knowledge' },
     { name: 'Emergency Lighting Guide', count: stats.emergency_lighting, icon: FileText, table: 'installation_knowledge' },
+    { name: 'Guidance Note 3: Inspection & Testing', count: stats.guidance_note_3, icon: BookOpen, table: 'installation_knowledge' },
+    { name: 'Installation Design Guide', count: stats.design_guide, icon: FileText, table: 'installation_knowledge' },
+    { name: 'Wiring Diagrams Book', count: stats.wiring_diagrams, icon: FileText, table: 'installation_knowledge' },
+    { name: 'IET Code: EV Charging', count: stats.ev_charging, icon: BookOpen, table: 'installation_knowledge' },
+    { name: 'Installation Calculations: Basic', count: stats.calculations_basic, icon: FileText, table: 'installation_knowledge' },
+    { name: 'IET Code: In-service Testing', count: stats.inservice_testing, icon: BookOpen, table: 'installation_knowledge' },
   ];
 
   const totalChunks = sources.reduce((sum, s) => sum + s.count, 0);

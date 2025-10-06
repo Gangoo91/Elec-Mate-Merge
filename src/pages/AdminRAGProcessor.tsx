@@ -64,6 +64,60 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 30 seconds - 2 minutes"
           icon={<Lightbulb className="h-6 w-6 text-yellow-600" />}
         />
+
+        <DocumentProcessor
+          title="Guidance Note 3: Inspection & Testing"
+          description="IET testing procedures - processes into installation_knowledge"
+          functionName="parse-guidance-note-3"
+          estimatedTime="Processing time: 10-12 minutes"
+          icon={<Zap className="h-6 w-6 text-indigo-600" />}
+          requiresFileUpload={true}
+        />
+
+        <DocumentProcessor
+          title="Electrical Installation Design Guide"
+          description="Design calculations and methods - processes into installation_knowledge"
+          functionName="parse-design-guide"
+          estimatedTime="Processing time: 2-3 minutes"
+          icon={<FileText className="h-6 w-6 text-teal-600" />}
+          requiresFileUpload={true}
+        />
+
+        <DocumentProcessor
+          title="Electrical Wiring Diagrams"
+          description="Circuit diagrams and symbols - processes into installation_knowledge"
+          functionName="parse-wiring-diagrams"
+          estimatedTime="Processing time: 8-10 minutes"
+          icon={<FileText className="h-6 w-6 text-cyan-600" />}
+          requiresFileUpload={true}
+        />
+
+        <DocumentProcessor
+          title="IET Code of Practice: EV Charging"
+          description="Electric vehicle charging infrastructure - processes into installation_knowledge"
+          functionName="parse-ev-charging"
+          estimatedTime="Processing time: 5-6 minutes"
+          icon={<Zap className="h-6 w-6 text-emerald-600" />}
+          requiresFileUpload={true}
+        />
+
+        <DocumentProcessor
+          title="Electrical Installation Calculations: Basic"
+          description="Basic electrical calculations - processes into installation_knowledge"
+          functionName="parse-calculations-basic"
+          estimatedTime="Processing time: 8-10 minutes"
+          icon={<FileText className="h-6 w-6 text-orange-600" />}
+          requiresFileUpload={true}
+        />
+
+        <DocumentProcessor
+          title="IET Code of Practice: In-service Testing"
+          description="PAT testing procedures - processes into installation_knowledge"
+          functionName="parse-inservice-testing"
+          estimatedTime="Processing time: 2-3 minutes"
+          icon={<Zap className="h-6 w-6 text-rose-600" />}
+          requiresFileUpload={true}
+        />
       </div>
     </div>
   );

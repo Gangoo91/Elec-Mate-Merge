@@ -24,7 +24,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('📘 Starting Guidance Note 3 processing...');
+    console.log('📐 Starting Electrical Installation Design Guide processing...');
     
     const { fileContent } = await req.json();
     
@@ -51,34 +51,31 @@ serve(async (req) => {
       const chapterNumber = chapterMatch ? chapterMatch[1] : undefined;
       const chapterTitle = chapterMatch ? chapterMatch[2]?.trim() : undefined;
 
-      let topic = 'Inspection & Testing';
-      let keywords: string[] = ['Guidance Note 3', 'inspection', 'testing'];
+      let topic = 'Installation Design';
+      let keywords: string[] = ['design guide', 'installation design', 'calculations'];
 
-      if (content.toLowerCase().includes('earth') || content.toLowerCase().includes('continuity')) {
-        topic = 'Continuity & Earth Testing';
-        keywords.push('continuity', 'earth fault loop', 'protective conductor');
-      } else if (content.toLowerCase().includes('insulation') && content.toLowerCase().includes('resistance')) {
-        topic = 'Insulation Resistance Testing';
-        keywords.push('insulation resistance', 'IR testing', 'megger');
-      } else if (content.toLowerCase().includes('rcd') || content.toLowerCase().includes('residual current')) {
-        topic = 'RCD Testing';
-        keywords.push('RCD', 'residual current device', 'trip time');
-      } else if (content.toLowerCase().includes('polarity')) {
-        topic = 'Polarity Testing';
-        keywords.push('polarity', 'correct connections');
-      } else if (content.toLowerCase().includes('certification') || content.toLowerCase().includes('certificate')) {
-        topic = 'Certification & Documentation';
-        keywords.push('EIC', 'MEIWC', 'certification');
-      } else if (content.toLowerCase().includes('schedule') || content.toLowerCase().includes('test results')) {
-        topic = 'Test Results & Schedules';
-        keywords.push('test results', 'schedules', 'recording');
+      if (content.toLowerCase().includes('load') && content.toLowerCase().includes('calculation')) {
+        topic = 'Load Calculations';
+        keywords.push('load assessment', 'demand', 'diversity');
+      } else if (content.toLowerCase().includes('cable') && content.toLowerCase().includes('sizing')) {
+        topic = 'Cable Sizing & Selection';
+        keywords.push('cable sizing', 'current capacity', 'derating');
+      } else if (content.toLowerCase().includes('voltage drop') || content.toLowerCase().includes('volt drop')) {
+        topic = 'Voltage Drop Calculations';
+        keywords.push('voltage drop', 'volt drop', 'distance');
+      } else if (content.toLowerCase().includes('discrimination')) {
+        topic = 'Protection & Discrimination';
+        keywords.push('discrimination', 'protective devices', 'selectivity');
+      } else if (content.toLowerCase().includes('earthing') || content.toLowerCase().includes('fault loop')) {
+        topic = 'Earthing Design';
+        keywords.push('earthing', 'fault loop impedance', 'protective conductor');
       }
 
       chunks.push({
         section: chapterTitle || `Section at line ${i}`,
         content,
         metadata: {
-          document: 'Guidance Note 3: Inspection & Testing',
+          document: 'Electrical Installation Design Guide',
           chapter_number: chapterNumber,
           chapter_title: chapterTitle,
           topic,
@@ -87,7 +84,7 @@ serve(async (req) => {
       });
     }
 
-    console.log(`✅ Parsed ${chunks.length} chunks from Guidance Note 3`);
+    console.log(`✅ Parsed ${chunks.length} chunks from Design Guide`);
     console.log(`📊 Topics: ${[...new Set(chunks.map(c => c.metadata.topic))].slice(0, 5).join(', ')}`);
 
     const response = await fetch(`${supabaseUrl}/functions/v1/process-pdf-embeddings`, {
@@ -101,9 +98,9 @@ serve(async (req) => {
           section: chunk.section,
           content: chunk.content,
           metadata: chunk.metadata,
-          source: 'guidance-note-3'
+          source: 'design-guide'
         })),
-        source: 'guidance-note-3'
+        source: 'design-guide'
       }),
     });
 
@@ -112,7 +109,7 @@ serve(async (req) => {
     }
 
     const result = await response.json();
-    console.log('✅ Guidance Note 3 embeddings created successfully');
+    console.log('✅ Design Guide embeddings created successfully');
 
     return new Response(JSON.stringify({ 
       success: true,
@@ -123,7 +120,7 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Error processing Guidance Note 3:', error);
+    console.error('❌ Error processing Design Guide:', error);
     return new Response(JSON.stringify({ 
       error: error instanceof Error ? error.message : 'Processing failed' 
     }), {

@@ -24,7 +24,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('📘 Starting Guidance Note 3 processing...');
+    console.log('🔌 Starting Electrical Wiring Diagrams processing...');
     
     const { fileContent } = await req.json();
     
@@ -39,7 +39,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
     const chunks: Chunk[] = [];
-    const chunkSize = 100;
+    const chunkSize = 110;
 
     for (let i = 0; i < lines.length; i += chunkSize) {
       const chunkLines = lines.slice(i, i + chunkSize);
@@ -47,38 +47,35 @@ serve(async (req) => {
       
       if (content.length < 100) continue;
 
-      const chapterMatch = content.match(/(?:Chapter|Section)\s+(\d+)[:\s-]+([^\n]+)/i);
+      const chapterMatch = content.match(/(?:Chapter|Section|Circuit)\s+(\d+)[:\s-]+([^\n]+)/i);
       const chapterNumber = chapterMatch ? chapterMatch[1] : undefined;
       const chapterTitle = chapterMatch ? chapterMatch[2]?.trim() : undefined;
 
-      let topic = 'Inspection & Testing';
-      let keywords: string[] = ['Guidance Note 3', 'inspection', 'testing'];
+      let topic = 'Wiring Diagrams';
+      let keywords: string[] = ['wiring diagrams', 'circuit diagrams', 'electrical symbols'];
 
-      if (content.toLowerCase().includes('earth') || content.toLowerCase().includes('continuity')) {
-        topic = 'Continuity & Earth Testing';
-        keywords.push('continuity', 'earth fault loop', 'protective conductor');
-      } else if (content.toLowerCase().includes('insulation') && content.toLowerCase().includes('resistance')) {
-        topic = 'Insulation Resistance Testing';
-        keywords.push('insulation resistance', 'IR testing', 'megger');
-      } else if (content.toLowerCase().includes('rcd') || content.toLowerCase().includes('residual current')) {
-        topic = 'RCD Testing';
-        keywords.push('RCD', 'residual current device', 'trip time');
-      } else if (content.toLowerCase().includes('polarity')) {
-        topic = 'Polarity Testing';
-        keywords.push('polarity', 'correct connections');
-      } else if (content.toLowerCase().includes('certification') || content.toLowerCase().includes('certificate')) {
-        topic = 'Certification & Documentation';
-        keywords.push('EIC', 'MEIWC', 'certification');
-      } else if (content.toLowerCase().includes('schedule') || content.toLowerCase().includes('test results')) {
-        topic = 'Test Results & Schedules';
-        keywords.push('test results', 'schedules', 'recording');
+      if (content.toLowerCase().includes('lighting') || content.toLowerCase().includes('switch')) {
+        topic = 'Lighting Circuit Diagrams';
+        keywords.push('lighting circuits', 'two-way switching', 'lighting design');
+      } else if (content.toLowerCase().includes('socket') || content.toLowerCase().includes('ring')) {
+        topic = 'Socket Circuit Diagrams';
+        keywords.push('socket outlets', 'ring circuit', 'radial circuit');
+      } else if (content.toLowerCase().includes('motor') || content.toLowerCase().includes('control')) {
+        topic = 'Motor Control Diagrams';
+        keywords.push('motor control', 'starter circuits', 'contactors');
+      } else if (content.toLowerCase().includes('symbol') || content.toLowerCase().includes('notation')) {
+        topic = 'Electrical Symbols & Notation';
+        keywords.push('symbols', 'notation', 'standards');
+      } else if (content.toLowerCase().includes('distribution') || content.toLowerCase().includes('consumer unit')) {
+        topic = 'Distribution Board Diagrams';
+        keywords.push('distribution boards', 'consumer units', 'protective devices');
       }
 
       chunks.push({
         section: chapterTitle || `Section at line ${i}`,
         content,
         metadata: {
-          document: 'Guidance Note 3: Inspection & Testing',
+          document: 'Electrical Wiring Diagrams',
           chapter_number: chapterNumber,
           chapter_title: chapterTitle,
           topic,
@@ -87,7 +84,7 @@ serve(async (req) => {
       });
     }
 
-    console.log(`✅ Parsed ${chunks.length} chunks from Guidance Note 3`);
+    console.log(`✅ Parsed ${chunks.length} chunks from Wiring Diagrams`);
     console.log(`📊 Topics: ${[...new Set(chunks.map(c => c.metadata.topic))].slice(0, 5).join(', ')}`);
 
     const response = await fetch(`${supabaseUrl}/functions/v1/process-pdf-embeddings`, {
@@ -101,9 +98,9 @@ serve(async (req) => {
           section: chunk.section,
           content: chunk.content,
           metadata: chunk.metadata,
-          source: 'guidance-note-3'
+          source: 'wiring-diagrams'
         })),
-        source: 'guidance-note-3'
+        source: 'wiring-diagrams'
       }),
     });
 
@@ -112,7 +109,7 @@ serve(async (req) => {
     }
 
     const result = await response.json();
-    console.log('✅ Guidance Note 3 embeddings created successfully');
+    console.log('✅ Wiring Diagrams embeddings created successfully');
 
     return new Response(JSON.stringify({ 
       success: true,
@@ -123,7 +120,7 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Error processing Guidance Note 3:', error);
+    console.error('❌ Error processing Wiring Diagrams:', error);
     return new Response(JSON.stringify({ 
       error: error instanceof Error ? error.message : 'Processing failed' 
     }), {

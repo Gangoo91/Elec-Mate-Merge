@@ -24,7 +24,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('📘 Starting Guidance Note 3 processing...');
+    console.log('🔍 Starting IET Code of Practice: In-service Testing processing...');
     
     const { fileContent } = await req.json();
     
@@ -51,34 +51,34 @@ serve(async (req) => {
       const chapterNumber = chapterMatch ? chapterMatch[1] : undefined;
       const chapterTitle = chapterMatch ? chapterMatch[2]?.trim() : undefined;
 
-      let topic = 'Inspection & Testing';
-      let keywords: string[] = ['Guidance Note 3', 'inspection', 'testing'];
+      let topic = 'In-service Testing';
+      let keywords: string[] = ['in-service testing', 'PAT testing', 'portable appliances'];
 
-      if (content.toLowerCase().includes('earth') || content.toLowerCase().includes('continuity')) {
-        topic = 'Continuity & Earth Testing';
-        keywords.push('continuity', 'earth fault loop', 'protective conductor');
-      } else if (content.toLowerCase().includes('insulation') && content.toLowerCase().includes('resistance')) {
+      if (content.toLowerCase().includes('pat') || content.toLowerCase().includes('portable appliance')) {
+        topic = 'PAT Testing Procedures';
+        keywords.push('PAT', 'portable appliance testing', 'electrical safety');
+      } else if (content.toLowerCase().includes('visual') || content.toLowerCase().includes('inspection')) {
+        topic = 'Visual Inspection';
+        keywords.push('visual inspection', 'preliminary checks', 'damage assessment');
+      } else if (content.toLowerCase().includes('earth') || content.toLowerCase().includes('continuity')) {
+        topic = 'Earth Continuity Testing';
+        keywords.push('earth continuity', 'protective conductor', 'bonding');
+      } else if (content.toLowerCase().includes('insulation') || content.toLowerCase().includes('resistance')) {
         topic = 'Insulation Resistance Testing';
-        keywords.push('insulation resistance', 'IR testing', 'megger');
-      } else if (content.toLowerCase().includes('rcd') || content.toLowerCase().includes('residual current')) {
-        topic = 'RCD Testing';
-        keywords.push('RCD', 'residual current device', 'trip time');
-      } else if (content.toLowerCase().includes('polarity')) {
-        topic = 'Polarity Testing';
-        keywords.push('polarity', 'correct connections');
-      } else if (content.toLowerCase().includes('certification') || content.toLowerCase().includes('certificate')) {
-        topic = 'Certification & Documentation';
-        keywords.push('EIC', 'MEIWC', 'certification');
-      } else if (content.toLowerCase().includes('schedule') || content.toLowerCase().includes('test results')) {
-        topic = 'Test Results & Schedules';
-        keywords.push('test results', 'schedules', 'recording');
+        keywords.push('insulation resistance', 'IR testing', 'leakage');
+      } else if (content.toLowerCase().includes('frequency') || content.toLowerCase().includes('interval')) {
+        topic = 'Test Frequency & Intervals';
+        keywords.push('test frequency', 'inspection intervals', 'retest periods');
+      } else if (content.toLowerCase().includes('record') || content.toLowerCase().includes('documentation')) {
+        topic = 'Testing Records & Documentation';
+        keywords.push('test records', 'documentation', 'labelling');
       }
 
       chunks.push({
         section: chapterTitle || `Section at line ${i}`,
         content,
         metadata: {
-          document: 'Guidance Note 3: Inspection & Testing',
+          document: 'IET Code of Practice: In-service Testing',
           chapter_number: chapterNumber,
           chapter_title: chapterTitle,
           topic,
@@ -87,7 +87,7 @@ serve(async (req) => {
       });
     }
 
-    console.log(`✅ Parsed ${chunks.length} chunks from Guidance Note 3`);
+    console.log(`✅ Parsed ${chunks.length} chunks from In-service Testing`);
     console.log(`📊 Topics: ${[...new Set(chunks.map(c => c.metadata.topic))].slice(0, 5).join(', ')}`);
 
     const response = await fetch(`${supabaseUrl}/functions/v1/process-pdf-embeddings`, {
@@ -101,9 +101,9 @@ serve(async (req) => {
           section: chunk.section,
           content: chunk.content,
           metadata: chunk.metadata,
-          source: 'guidance-note-3'
+          source: 'inservice-testing'
         })),
-        source: 'guidance-note-3'
+        source: 'inservice-testing'
       }),
     });
 
@@ -112,7 +112,7 @@ serve(async (req) => {
     }
 
     const result = await response.json();
-    console.log('✅ Guidance Note 3 embeddings created successfully');
+    console.log('✅ In-service Testing embeddings created successfully');
 
     return new Response(JSON.stringify({ 
       success: true,
@@ -123,7 +123,7 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Error processing Guidance Note 3:', error);
+    console.error('❌ Error processing In-service Testing:', error);
     return new Response(JSON.stringify({ 
       error: error instanceof Error ? error.message : 'Processing failed' 
     }), {
