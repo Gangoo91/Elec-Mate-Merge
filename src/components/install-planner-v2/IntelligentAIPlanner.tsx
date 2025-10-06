@@ -162,7 +162,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                     : 'bg-elec-card text-white'
                 }`}
               >
-                <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                <p className="text-sm whitespace-pre-wrap leading-relaxed text-left">{message.content}</p>
               </div>
             </div>
           ))}

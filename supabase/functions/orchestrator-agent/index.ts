@@ -34,8 +34,12 @@ serve(async (req) => {
 
     const latestMessage = messages[messages.length - 1]?.content || '';
     
-    // Intent classification using keyword matching
-    const intents = classifyIntent(latestMessage);
+    // Analyze conversation context
+    const conversationContext = analyzeConversationContext(messages);
+    console.log('📝 Conversation context:', conversationContext);
+    
+    // Intent classification using keyword matching and context
+    const intents = classifyIntent(latestMessage, conversationContext);
     console.log('📊 Detected intents:', intents);
 
     // Create Supabase client for invoking specialist agents
@@ -101,7 +105,9 @@ serve(async (req) => {
     const aggregatedResponse = await aggregateResponses(
       agentResponses,
       latestMessage,
-      openAIApiKey
+      openAIApiKey,
+      conversationContext,
+      messages
     );
 
     return new Response(JSON.stringify({
@@ -127,7 +133,54 @@ serve(async (req) => {
   }
 });
 
-function classifyIntent(message: string): {
+interface ConversationContext {
+  stage: 'initial' | 'gathering' | 'designing' | 'approving' | 'refining';
+  lastTopic: string;
+  userSentiment: 'positive' | 'neutral' | 'questioning';
+  hasDesignInProgress: boolean;
+  isAcknowledgment: boolean;
+}
+
+function analyzeConversationContext(messages: Message[]): ConversationContext {
+  const lastUserMessage = messages[messages.length - 1]?.content.toLowerCase() || '';
+  
+  // Detect positive acknowledgment
+  const acknowledgmentWords = ['great', 'sounds good', 'sound', 'perfect', 'yes', 'okay', 'yeah', 'nice', 'thanks', 'brilliant', 'cheers', 'lovely'];
+  const isAcknowledgment = acknowledgmentWords.some(word => lastUserMessage.includes(word)) && lastUserMessage.length < 50;
+  
+  // Detect if we're in design phase
+  const hasDesignInProgress = messages.some(m => 
+    m.role === 'assistant' && 
+    (m.content.includes('circuit') || m.content.includes('cable') || m.content.includes('bed') || m.content.includes('shower') || m.content.includes('design'))
+  );
+  
+  // Detect last topic
+  const lastTopic = detectLastTopic(messages);
+  
+  return {
+    stage: isAcknowledgment ? 'approving' : 'gathering',
+    lastTopic,
+    userSentiment: isAcknowledgment ? 'positive' : 'neutral',
+    hasDesignInProgress,
+    isAcknowledgment
+  };
+}
+
+function detectLastTopic(messages: Message[]): string {
+  // Look at last few assistant messages for topics
+  const recentAssistant = messages.filter(m => m.role === 'assistant').slice(-2);
+  const combined = recentAssistant.map(m => m.content.toLowerCase()).join(' ');
+  
+  if (combined.includes('3-bed') || combined.includes('three bed')) return '3-bed house';
+  if (combined.includes('shower')) return 'shower circuit';
+  if (combined.includes('cooker')) return 'cooker circuit';
+  if (combined.includes('ev') || combined.includes('charger')) return 'ev charger';
+  if (combined.includes('circuit')) return 'circuits';
+  
+  return 'general electrical';
+}
+
+function classifyIntent(message: string, conversationContext: ConversationContext): {
   design: boolean;
   cost: boolean;
   installation: boolean;
@@ -140,18 +193,45 @@ function classifyIntent(message: string): {
   const installationKeywords = ['install', 'how to', 'method', 'steps', 'practical', 'fix', 'mount', 'route', 'clip', 'location'];
   const commissioningKeywords = ['test', 'certificate', 'eic', 'verify', 'inspect', 'commission', 'ir test', 'continuity', 'zs'];
 
+  // If it's an acknowledgment and we have design in progress, trigger design agent for follow-up
+  const shouldTriggerDesign = conversationContext.isAcknowledgment && conversationContext.hasDesignInProgress;
+
   return {
-    design: designKeywords.some(keyword => lowerMessage.includes(keyword)),
+    design: designKeywords.some(keyword => lowerMessage.includes(keyword)) || shouldTriggerDesign,
     cost: costKeywords.some(keyword => lowerMessage.includes(keyword)),
     installation: installationKeywords.some(keyword => lowerMessage.includes(keyword)),
     commissioning: commissioningKeywords.some(keyword => lowerMessage.includes(keyword))
   };
 }
 
+function generateContextualFollowUp(context: ConversationContext, userMessage: string): string {
+  // If user approved a design, ask for details
+  if (context.lastTopic.includes('3-bed') || context.lastTopic.includes('house')) {
+    return "No worries mate! 👍 Right, let's get specific then - how many circuits are you planning? Just the basics like lighting and sockets, or are we adding shower circuits, EV charger, that sort of thing?";
+  }
+  
+  if (context.lastTopic.includes('shower')) {
+    return "Sound! What size shower are we talking? 8.5kW? 9.5kW? And how far's the run from the board?";
+  }
+
+  if (context.lastTopic.includes('cooker')) {
+    return "Brilliant! What size cooker? Single oven or double? And is it gas hob with electric oven or all electric?";
+  }
+
+  if (context.lastTopic.includes('ev') || context.lastTopic.includes('charger')) {
+    return "Nice one! What charger are you fitting? 7kW tethered? And where's it going - inside the garage or outside?";
+  }
+  
+  // Generic but natural follow-up
+  return "Brilliant! So what's the next bit you need help with?";
+}
+
 async function aggregateResponses(
   agentResponses: any[],
   userQuery: string,
-  openAIApiKey: string
+  openAIApiKey: string,
+  conversationContext: ConversationContext,
+  messages: Message[]
 ): Promise<{
   response: string;
   citations: any[];
@@ -197,10 +277,21 @@ async function aggregateResponses(
     }
   }
 
-  // If no agents responded, provide fallback
+  // If no agents responded, provide smart fallback based on context
   if (sections.length === 0) {
+    // If user is acknowledging/positive and we have design in progress, provide natural follow-up
+    if (conversationContext.userSentiment === 'positive' && conversationContext.hasDesignInProgress) {
+      return {
+        response: generateContextualFollowUp(conversationContext, userQuery),
+        citations: [],
+        costUpdates: null,
+        toolCalls: []
+      };
+    }
+    
+    // Default fallback - more conversational
     return {
-      response: 'I need more specific information to help you. Could you clarify your question about the electrical installation?',
+      response: 'No worries mate. What specifically are you looking to install or need help with?',
       citations: [],
       costUpdates: null,
       toolCalls: []
@@ -210,10 +301,17 @@ async function aggregateResponses(
   // Use GPT-4o to refine and connect the sections if needed
   const combinedSections = sections.join('\n\n---\n\n');
 
-  // Smart coordination: Merge responses naturally
+  // Smart coordination: Merge responses naturally with context awareness
   const refinementPrompt = `You're coordinating specialist electricians chatting with a colleague. Merge their responses into ONE natural conversation - like texting a mate about the job.
 
-The user asked: "${userQuery}"
+CONTEXT AWARENESS:
+- User's message: "${userQuery}"
+- Conversation stage: ${conversationContext.stage}
+- Last topic discussed: ${conversationContext.lastTopic}
+- User sentiment: ${conversationContext.userSentiment}
+- Is this an acknowledgment/agreement? ${conversationContext.isAcknowledgment}
+
+${conversationContext.isAcknowledgment ? '⚠️ The user just acknowledged/agreed (said "sounds great", "okay", "yes", etc.). Start with a natural acknowledgment like "No worries mate! 👍" or "Sound!" or "Brilliant!" then flow naturally into the next logical question based on the conversation context.' : ''}
 
 Specialist responses:
 ${combinedSections}
@@ -226,8 +324,11 @@ Rules for merging:
 - Sound like an experienced spark texting back, not a textbook
 - Write in paragraphs, not lists
 - Be conversational but professional - like you're helping a mate out
+- If user just agreed/acknowledged, respond with "No worries!" or "Sound!" or "Brilliant!" then continue naturally
+- Build on previous conversation - don't repeat what was already discussed
+- Ask natural follow-up questions that progress the conversation logically
 
-Merge everything into a single friendly chat response that covers design, cost, installation, and testing naturally.`;
+Merge everything into a single friendly chat response that flows naturally from the previous conversation.`;
 
   const refinementResponse = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
