@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, currentDesign } = await req.json();
+    const { messages, currentDesign, context } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
@@ -21,61 +21,29 @@ serve(async (req) => {
 
     console.log('✅ Commissioning Agent: Processing testing query');
 
-    const tools = [
-      {
-        type: "function",
-        function: {
-          name: "list_required_tests",
-          description: "List all required tests per BS 7671 Part 6 based on circuit type and installation",
-          parameters: {
-            type: "object",
-            properties: {
-              circuit_type: { type: "string", description: "Type of circuit being tested" },
-              installation_type: { type: "string", enum: ["domestic", "commercial", "industrial"] }
-            },
-            required: ["circuit_type"]
-          }
-        }
-      },
-      {
-        type: "function",
-        function: {
-          name: "specify_test_values",
-          description: "Provide expected test results and pass/fail criteria per BS 7671",
-          parameters: {
-            type: "object",
-            properties: {
-              test_type: { type: "string", enum: ["insulation_resistance", "continuity", "earth_fault_loop", "rcd"], description: "Type of test" },
-              voltage: { type: "number", description: "Circuit voltage" },
-              circuit_details: { type: "object", description: "Circuit specifications" }
-            },
-            required: ["test_type"]
-          }
-        }
-      },
-      {
-        type: "function",
-        function: {
-          name: "generate_test_schedule",
-          description: "Create testing checklist with sequence and procedures",
-          parameters: {
-            type: "object",
-            properties: {
-              circuits: { type: "array", items: { type: "string" }, description: "List of circuits to test" }
-            },
-            required: ["circuits"]
-          }
-        }
-      }
-    ];
+    const previousAgents = context?.previousAgentOutputs?.map((a: any) => a.agent) || [];
+    const hasDesigner = previousAgents.includes('designer');
+    const hasInstaller = previousAgents.includes('installer');
 
-    const systemPrompt = `You're a commissioning specialist chatting with a colleague about testing the job. Keep it natural and conversational - no markdown, no bullet points, just chat like you're texting a mate about what tests to do.
+    let systemPrompt = `You're a commissioning specialist with 15 years testing and signing off electrical work. Talk the user through the testing schedule like you're prepping them for the job.
 
-Talk about the required tests (continuity, insulation resistance, polarity, earth loop, RCD tests) but explain it casually. Reference BS 7671 Part 6 and GN3 when needed but keep it flowing naturally.
+CRITICAL RULES:
+- Conversational tone like you're texting a colleague (UK electrician)
+- NO markdown, NO bullet points - just natural chat
+- Reference BS 7671 Part 6 and GN3 naturally
+- Explain what readings to expect and what's a fail
+- Use ✅ for pass criteria, ❌ for fails
+- Mention the test sequence (dead tests first, then live)
 
-Mention what readings they should expect and what would be a fail, but do it conversationally. For example: "Right so you'll need to check continuity first - should be under 0.05 ohms for that 10mm. Then insulation resistance, you're looking for at least 1 megohm, ideally way higher."
+`;
 
-Keep it friendly and helpful, like you're walking them through the test schedule.`;
+    if (hasDesigner || hasInstaller) {
+      systemPrompt += `\nThey've already covered the design${hasInstaller ? ' and installation' : ''}, so focus on the TESTING side - what tests are needed, what order, what readings you're looking for, and what the pass/fail criteria are.`;
+    }
+
+    systemPrompt += `\n\nWalk them through it conversationally: "Right so you'll need to check continuity first - should be under 0.05 ohms for that 10mm cable. Then insulation resistance, you're looking for at least 1 megohm but ideally way higher. Then polarity check, earth loop impedance test (max Zs for that MCB), and if there's an RCD, the trip time tests."
+
+Keep it friendly and practical, like you're talking them through their first EIC.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -89,7 +57,7 @@ Keep it friendly and helpful, like you're walking them through the test schedule
           { role: 'system', content: systemPrompt },
           ...messages
         ],
-        max_completion_tokens: 1500
+        max_completion_tokens: 2000
       }),
     });
 
@@ -102,28 +70,22 @@ Keep it friendly and helpful, like you're walking them through the test schedule
     const data = await response.json();
     const assistantMessage = data.choices[0]?.message;
 
-    const toolCalls = assistantMessage.tool_calls || [];
-    const citations: any[] = [];
-
-    for (const toolCall of toolCalls) {
-      const functionName = toolCall.function.name;
-      const args = JSON.parse(toolCall.function.arguments);
-      
-      console.log(`🔧 Executing tool: ${functionName}`, args);
-      
-      const toolResult = await executeCommissioningTool(functionName, args);
-      
-      if (toolResult.citations) {
-        citations.push(...toolResult.citations);
-      }
-    }
-
     const responseContent = assistantMessage.content || 'Testing guidance complete.';
+
+    // Extract citations from response
+    const citations: any[] = [];
+    const regMatches = responseContent.matchAll(/(?:Reg|BS 7671)\s*(\d{3}(?:\.\d+)?)/gi);
+    for (const match of regMatches) {
+      citations.push({
+        number: `Reg ${match[1]}`,
+        title: `BS 7671 Regulation ${match[1]}`
+      });
+    }
 
     return new Response(JSON.stringify({
       response: responseContent,
-      toolCalls,
       citations,
+      confidence: 0.85,
       timestamp: new Date().toISOString()
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -133,118 +95,11 @@ Keep it friendly and helpful, like you're walking them through the test schedule
     console.error('❌ Error in commissioning-agent:', error);
     return new Response(JSON.stringify({ 
       error: error instanceof Error ? error.message : 'Commissioning agent failed',
-      response: 'Unable to process testing request.'
+      response: 'Unable to process testing request. Standard BS 7671 Part 6 testing applies.',
+      confidence: 0.3
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 });
-
-async function executeCommissioningTool(functionName: string, args: any): Promise<any> {
-  switch (functionName) {
-    case 'list_required_tests':
-      return listRequiredTests(args);
-    case 'specify_test_values':
-      return specifyTestValues(args);
-    case 'generate_test_schedule':
-      return generateTestSchedule(args);
-    default:
-      return { result: 'Unknown tool' };
-  }
-}
-
-function listRequiredTests(args: any) {
-  const { circuit_type, installation_type } = args;
-  
-  const baseTests = [
-    'Continuity of protective conductors',
-    'Insulation resistance',
-    'Polarity',
-    'Earth fault loop impedance',
-    'RCD operation (if applicable)'
-  ];
-  
-  const ringTests = circuit_type?.toLowerCase().includes('ring') 
-    ? ['Ring final circuit continuity'] 
-    : [];
-  
-  return {
-    result: {
-      required_tests: [...baseTests, ...ringTests],
-      test_sequence: 'Dead tests first, then live tests',
-      equipment_needed: [
-        'Multifunction tester (MFT)',
-        'Proving unit',
-        'RCD tester (if applicable)'
-      ]
-    },
-    citations: [
-      { number: 'Reg 610.1', title: 'General requirements for testing' },
-      { number: 'Reg 612', title: 'Testing procedures' }
-    ]
-  };
-}
-
-function specifyTestValues(args: any) {
-  const { test_type, voltage } = args;
-  
-  const testCriteria: Record<string, any> = {
-    'insulation_resistance': {
-      test_voltage: voltage && voltage > 250 ? '500V DC' : '250V DC',
-      min_value: '≥ 1.0 MΩ (preferably ≥ 2.0 MΩ)',
-      regulation: 'Reg 612.4',
-      procedure: 'Test between live conductors and earth, and between live conductors'
-    },
-    'continuity': {
-      test_method: 'Long lead or wander lead method',
-      max_value: 'R1 + R2 should not exceed calculated value',
-      regulation: 'Reg 612.2',
-      procedure: 'Measure resistance between MET and furthest point on circuit'
-    },
-    'earth_fault_loop': {
-      test_method: 'Direct measurement using loop tester',
-      max_value: 'Must not exceed maximum Zs for protective device',
-      regulation: 'Reg 612.9',
-      safety: 'Live test - ensure RCD bypassed or locked out'
-    },
-    'rcd': {
-      trip_time_half_rating: '≤ 300ms at 0.5 × IΔn',
-      trip_time_full_rating: '≤ 300ms at 1 × IΔn',
-      trip_time_five_times: '≤ 40ms at 5 × IΔn',
-      regulation: 'Reg 612.10'
-    }
-  };
-  
-  return {
-    result: testCriteria[test_type] || { message: 'Refer to BS 7671 Part 6' },
-    citations: [
-      { number: 'BS 7671 Part 6', title: 'Inspection and Testing' }
-    ]
-  };
-}
-
-function generateTestSchedule(args: any) {
-  const { circuits } = args;
-  
-  return {
-    result: {
-      test_sequence: [
-        '1. Visual inspection (Reg 611)',
-        '2. Continuity tests (dead)',
-        '3. Insulation resistance tests (dead)',
-        '4. Polarity check (dead)',
-        '5. Earth fault loop impedance (live)',
-        '6. RCD operation tests (live)',
-        '7. Functional testing'
-      ],
-      schedule: circuits?.map((circuit: string, idx: number) => ({
-        circuit_number: idx + 1,
-        circuit_description: circuit,
-        tests_required: 'All applicable tests per BS 7671 Part 6',
-        status: 'Pending'
-      })) || [],
-      documentation: 'Record all results on Electrical Installation Certificate (EIC)'
-    }
-  };
-}

@@ -12,11 +12,35 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, context } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAIApiKey) throw new Error('OpenAI API key not configured');
 
-    const systemPrompt = `You're a cost engineer. Give realistic UK 2025 prices conversationally, mention suppliers (Screwfix, CEF), break down materials vs labour naturally. No markdown.`;
+    const previousAgents = context?.previousAgentOutputs?.map((a: any) => a.agent) || [];
+    const hasDesigner = previousAgents.includes('designer');
+    const hasInstaller = previousAgents.includes('installer');
+
+    let systemPrompt = `You're a cost engineer with 20 years pricing electrical jobs. Give realistic UK 2025 prices, breaking down materials vs labour naturally.
+
+CRITICAL RULES:
+- Talk conversationally like you're pricing a job over WhatsApp
+- NO markdown, NO bullet points - natural paragraphs
+- Mention real suppliers (Screwfix, CEF, Toolstation, TLC)
+- Give actual 2025 prices (materials + labour + markup)
+- Explain pricing strategy (day rate vs fixed price)
+- Use 💰 for costs, ✓ for good value
+
+`;
+
+    if (hasDesigner) {
+      systemPrompt += `\nThe designer's already spec'd the circuit, so price up those exact materials. Include cable, MCBs, accessories, clips, grommets - everything needed.`;
+    }
+
+    if (hasInstaller) {
+      systemPrompt += `\nInstallation method's been covered, so factor in the labour time they mentioned when pricing.`;
+    }
+
+    systemPrompt += `\n\nBreak it down conversationally: "Right, materials-wise you're looking at about £X for the cable from CEF, £Y for the MCB, then labour's probably a day and a half so £Z. All in, you'd want to quote around £Total plus VAT."`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -27,14 +51,14 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'gpt-5-2025-08-07',
         messages: [{ role: 'system', content: systemPrompt }, ...messages],
-        max_completion_tokens: 1500
+        max_completion_tokens: 2000
       }),
     });
 
     const data = await response.json();
     return new Response(JSON.stringify({
       response: data.choices[0]?.message?.content || 'Cost estimate complete.',
-      confidence: 0.8
+      confidence: 0.85
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

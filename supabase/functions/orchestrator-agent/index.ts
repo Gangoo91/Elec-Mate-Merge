@@ -1,12 +1,5 @@
-// BEST-IN-CLASS ORCHESTRATOR - All 8 Phases Implemented
-// Phase 1: GPT-5 model upgrade
-// Phase 2: Full conversation memory
-// Phase 3: AI-powered intent detection
-// Phase 4: Agentic orchestration with sequential execution
-// Phase 5: Chain-of-thought reasoning
-// Phase 6: Orchestrator as synthesis agent (no redundant refinement)
-// Phase 7: Quality assurance
-// Phase 8: Performance optimization
+// CONVERSATIONAL MULTI-AGENT ORCHESTRATOR
+// Sequential agent conversations where each specialist speaks directly to the user
 
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -14,22 +7,21 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import type { Message, ConversationState, ConversationSummary } from '../_shared/conversation-memory.ts';
 import { buildConversationState, summarizeConversation } from '../_shared/conversation-memory.ts';
 import { detectIntents, type IntentAnalysis } from '../_shared/intent-detection.ts';
-import { planAgentSequence, shouldRetryWithFeedback, type AgentContext, type AgentOutput, type AgentPlan } from '../_shared/agent-orchestration.ts';
+import { planAgentSequence, type AgentContext, type AgentOutput, type AgentPlan } from '../_shared/agent-orchestration.ts';
 import { validateResponse } from '../_shared/response-validation.ts';
 import { ResponseCache, isCacheable } from '../_shared/response-cache.ts';
-import { createStreamingResponse, StreamingResponseBuilder } from '../_shared/streaming-utils.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// PHASE 8: Initialize cache
 const responseCache = new ResponseCache();
 
 interface OrchestratorRequest {
   messages: Message[];
   currentDesign?: any;
+  conversationalMode?: boolean; // Enable sequential agent conversations
 }
 
 serve(async (req) => {
@@ -39,14 +31,14 @@ serve(async (req) => {
 
   try {
     const startTime = Date.now();
-    const { messages, currentDesign } = await req.json() as OrchestratorRequest;
+    const { messages, currentDesign, conversationalMode = true } = await req.json() as OrchestratorRequest;
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
       throw new Error('OpenAI API key not configured');
     }
 
-    console.log('🎯 Orchestrator v2.0: Processing query with best-in-class AI');
+    console.log('🎯 Conversational Orchestrator: Starting multi-agent consultation');
     
     const latestMessage = messages[messages.length - 1]?.content || '';
 
@@ -69,8 +61,8 @@ serve(async (req) => {
       }
     }
 
-    // PHASE 2: Build conversation state and summary
-    console.log('📊 Phase 2: Building conversation memory...');
+    // Build conversation state and summary
+    console.log('📊 Building conversation memory...');
     const conversationState = buildConversationState(messages);
     const conversationSummary = await summarizeConversation(messages, openAIApiKey);
     
@@ -81,8 +73,8 @@ serve(async (req) => {
       lastTopic: conversationSummary.lastTopic
     });
 
-    // PHASE 3: AI-powered intent detection
-    console.log('🎯 Phase 3: AI intent detection...');
+    // AI-powered intent detection
+    console.log('🎯 AI intent detection...');
     const intentAnalysis = await detectIntents(latestMessage, conversationSummary, openAIApiKey);
     
     // Validate intent analysis before logging
@@ -109,140 +101,50 @@ serve(async (req) => {
       });
     }
 
-    // PHASE 4: Plan agent sequence
-    console.log('📋 Phase 4: Planning agent orchestration...');
+    // Plan agent sequence
+    console.log('📋 Planning agent conversation sequence...');
     const agentPlan = await planAgentSequence(intentAnalysis, conversationSummary, latestMessage, openAIApiKey);
     
-    // Safety check: ensure we have a valid plan
+    // Safety check
     if (!agentPlan || !agentPlan.sequence || agentPlan.sequence.length === 0) {
       console.warn('⚠️ Empty agent plan, using safe default');
       agentPlan.sequence = [{
         agent: 'designer',
         priority: 1,
-        reasoning: 'Safe default - empty plan',
+        reasoning: 'Safe default',
         dependencies: []
       }];
-      agentPlan.reasoning = 'Fallback to designer agent';
-      agentPlan.estimatedComplexity = 'simple';
     }
     
     console.log('Agent Plan:', {
       sequence: agentPlan.sequence.map(s => s.agent),
-      complexity: agentPlan.estimatedComplexity,
-      reasoning: agentPlan.reasoning
+      complexity: agentPlan.estimatedComplexity
     });
 
-    // PHASE 8: Optimize parallel execution where dependencies allow
-    const agentOutputs: AgentOutput[] = [];
-    const agentContext: AgentContext = {
-      messages,
-      conversationSummary,
-      conversationState,
-      previousAgentOutputs: [],
-      userQuery: latestMessage
-    };
-
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    // Group agents by dependency level for parallel execution
-    const executionGroups = groupByDependencies(agentPlan.sequence);
-    console.log('📋 Execution groups (parallel optimization):', executionGroups.map(g => g.map(s => s.agent)));
-
-    for (const group of executionGroups) {
-      // Execute all agents in this group in parallel
-      const groupPromises = group.map(async (step) => {
-        console.log(`🚀 Executing ${step.agent} (priority ${step.priority})`);
-        
-        try {
-          const agentFunctionName = getAgentFunctionName(step.agent);
-          const result = await supabase.functions.invoke(agentFunctionName, {
-            body: { 
-              messages, 
-              currentDesign,
-              context: agentContext
-            }
-          });
-
-          if (result.error) {
-            console.error(`Agent ${step.agent} error:`, result.error);
-            return null;
-          }
-
-          const output: AgentOutput = {
-            agent: step.agent,
-            response: result.data?.response || '',
-            citations: result.data?.citations || [],
-            toolCalls: result.data?.toolCalls || [],
-            costUpdates: result.data?.costUpdates,
-            confidence: result.data?.confidence || 0.8
-          };
-
-          // PHASE 7: Validate response
-          const validation = validateResponse(output.response, latestMessage, agentContext);
-          console.log(`✅ Validation for ${step.agent}:`, {
-            isValid: validation.isValid,
-            confidence: validation.confidence,
-            issues: validation.issues.length
-          });
-
-          if (validation.issues.length > 0) {
-            console.log('⚠️ Validation issues:', validation.issues);
-          }
-
-          output.confidence = validation.confidence;
-          return output;
-
-        } catch (error) {
-          console.error(`❌ Error executing ${step.agent}:`, error);
-          return null;
-        }
-      });
-
-      // Wait for all agents in this group to complete
-      const groupResults = await Promise.all(groupPromises);
-      const validResults = groupResults.filter(r => r !== null) as AgentOutput[];
-      agentOutputs.push(...validResults);
-      agentContext.previousAgentOutputs = agentOutputs;
-    }
-
-    // PHASE 6: Orchestrator synthesizes final response (no separate refinement call)
-    console.log('🎨 Phase 6: Synthesizing final response...');
-    const finalResponse = await synthesizeResponse(
-      agentOutputs,
-      latestMessage,
-      conversationSummary,
-      conversationState,
-      openAIApiKey
-    );
-
-    const executionTime = Date.now() - startTime;
-    console.log(`⏱️ Total execution time: ${executionTime}ms`);
-
-    // PHASE 8: Cache the response if it's cacheable
-    if (isCacheable(latestMessage) && finalResponse.confidence >= 0.8) {
-      await responseCache.set(
+    // CONVERSATIONAL MODE: Sequential agent responses
+    if (conversationalMode) {
+      return await handleConversationalMode(
+        agentPlan,
+        messages,
+        currentDesign,
+        conversationSummary,
+        conversationState,
         latestMessage,
-        finalResponse.response,
-        finalResponse.citations,
-        finalResponse.confidence
+        startTime
       );
     }
 
-    return new Response(JSON.stringify({
-      response: finalResponse.response,
-      activeAgents: agentOutputs.map(a => a.agent),
-      citations: finalResponse.citations,
-      costUpdates: finalResponse.costUpdates,
-      toolCalls: finalResponse.toolCalls,
-      confidence: finalResponse.confidence,
-      executionTime,
-      fromCache: false,
-      timestamp: new Date().toISOString()
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    // Legacy synthesis mode (fallback)
+    return await handleSynthesisMode(
+      agentPlan,
+      messages,
+      currentDesign,
+      conversationSummary,
+      conversationState,
+      latestMessage,
+      openAIApiKey,
+      startTime
+    );
 
   } catch (error) {
     console.error('❌ Error in orchestrator-agent:', error);
@@ -256,6 +158,263 @@ serve(async (req) => {
   }
 });
 
+// CONVERSATIONAL MODE: Each agent speaks directly in sequence
+async function handleConversationalMode(
+  agentPlan: any,
+  messages: Message[],
+  currentDesign: any,
+  conversationSummary: ConversationSummary,
+  conversationState: ConversationState,
+  latestMessage: string,
+  startTime: number
+): Promise<Response> {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const agentOutputs: AgentOutput[] = [];
+  const agentContext: AgentContext = {
+    messages,
+    conversationSummary,
+    conversationState,
+    previousAgentOutputs: [],
+    userQuery: latestMessage
+  };
+
+  let conversationalResponse = '';
+  const allCitations: any[] = [];
+  const allToolCalls: any[] = [];
+  let costUpdates: any = null;
+
+  // Execute agents sequentially with natural transitions
+  for (let i = 0; i < agentPlan.sequence.length; i++) {
+    const step = agentPlan.sequence[i];
+    const agentName = step.agent;
+    const isFirst = i === 0;
+    const isLast = i === agentPlan.sequence.length - 1;
+    
+    console.log(`🎨 Agent ${i + 1}/${agentPlan.sequence.length}: ${agentName} speaking...`);
+
+    try {
+      const agentFunctionName = getAgentFunctionName(agentName);
+      
+      // Build context-aware messages for this agent
+      const agentMessages = buildAgentMessages(
+        messages,
+        agentContext,
+        agentName,
+        isFirst,
+        isLast
+      );
+
+      const result = await supabase.functions.invoke(agentFunctionName, {
+        body: { 
+          messages: agentMessages,
+          currentDesign,
+          context: agentContext
+        }
+      });
+
+      if (result.error) {
+        console.error(`Agent ${agentName} error:`, result.error);
+        continue;
+      }
+
+      const output: AgentOutput = {
+        agent: agentName,
+        response: result.data?.response || '',
+        citations: result.data?.citations || [],
+        toolCalls: result.data?.toolCalls || [],
+        costUpdates: result.data?.costUpdates,
+        confidence: result.data?.confidence || 0.8
+      };
+
+      agentOutputs.push(output);
+      agentContext.previousAgentOutputs = agentOutputs;
+
+      // Build conversational flow
+      if (!isFirst && !isLast) {
+        conversationalResponse += `\n\n---\n\n`;
+      }
+      
+      // Add agent introduction for multi-agent scenarios
+      if (agentPlan.sequence.length > 1 && !isFirst) {
+        const agentIntro = getAgentIntro(agentName);
+        conversationalResponse += `${agentIntro}\n\n`;
+      }
+      
+      conversationalResponse += output.response;
+
+      allCitations.push(...output.citations);
+      allToolCalls.push(...output.toolCalls);
+      if (output.costUpdates) costUpdates = output.costUpdates;
+
+      // Add transition if not last
+      if (!isLast && agentPlan.sequence.length > 1) {
+        const nextAgent = agentPlan.sequence[i + 1].agent;
+        const transition = getAgentTransition(agentName, nextAgent);
+        conversationalResponse += `\n\n${transition}`;
+      }
+
+    } catch (error) {
+      console.error(`❌ Error executing ${agentName}:`, error);
+    }
+  }
+
+  const executionTime = Date.now() - startTime;
+  console.log(`⏱️ Conversational flow complete: ${executionTime}ms`);
+
+  return new Response(JSON.stringify({
+    response: conversationalResponse,
+    activeAgents: agentOutputs.map(a => a.agent),
+    citations: allCitations,
+    costUpdates,
+    toolCalls: allToolCalls,
+    confidence: agentOutputs.reduce((sum, a) => sum + a.confidence, 0) / agentOutputs.length,
+    executionTime,
+    conversationalMode: true,
+    timestamp: new Date().toISOString()
+  }), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+// Legacy synthesis mode
+async function handleSynthesisMode(
+  agentPlan: any,
+  messages: Message[],
+  currentDesign: any,
+  conversationSummary: ConversationSummary,
+  conversationState: ConversationState,
+  latestMessage: string,
+  openAIApiKey: string,
+  startTime: number
+): Promise<Response> {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const agentOutputs: AgentOutput[] = [];
+  const agentContext: AgentContext = {
+    messages,
+    conversationSummary,
+    conversationState,
+    previousAgentOutputs: [],
+    userQuery: latestMessage
+  };
+
+  for (const step of agentPlan.sequence) {
+    try {
+      const agentFunctionName = getAgentFunctionName(step.agent);
+      const result = await supabase.functions.invoke(agentFunctionName, {
+        body: { messages, currentDesign, context: agentContext }
+      });
+
+      if (!result.error && result.data) {
+        agentOutputs.push({
+          agent: step.agent,
+          response: result.data.response || '',
+          citations: result.data.citations || [],
+          toolCalls: result.data.toolCalls || [],
+          costUpdates: result.data.costUpdates,
+          confidence: result.data.confidence || 0.8
+        });
+      }
+    } catch (error) {
+      console.error(`Error executing ${step.agent}:`, error);
+    }
+  }
+
+  const finalResponse = await synthesizeResponse(
+    agentOutputs,
+    latestMessage,
+    conversationSummary,
+    conversationState,
+    openAIApiKey
+  );
+
+  return new Response(JSON.stringify({
+    ...finalResponse,
+    activeAgents: agentOutputs.map(a => a.agent),
+    executionTime: Date.now() - startTime,
+    timestamp: new Date().toISOString()
+  }), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
+// Helper: Build context-aware messages for each agent
+function buildAgentMessages(
+  messages: Message[],
+  agentContext: AgentContext,
+  agentName: string,
+  isFirst: boolean,
+  isLast: boolean
+): Message[] {
+  const baseMessages = [...messages];
+  
+  // Add context from previous agents if not the first
+  if (!isFirst && agentContext.previousAgentOutputs.length > 0) {
+    const previousContext = agentContext.previousAgentOutputs
+      .map(a => `${a.agent.toUpperCase()}: ${a.response.slice(0, 300)}...`)
+      .join('\n\n');
+    
+    baseMessages.push({
+      role: 'system',
+      content: `Previous specialists have already discussed:\n\n${previousContext}\n\nNow it's your turn to add your expertise. Reference what they said if relevant, but focus on your specialty.`
+    });
+  }
+  
+  return baseMessages;
+}
+
+// Helper: Get agent introduction
+function getAgentIntro(agentName: string): string {
+  const intros: Record<string, string> = {
+    'designer': '🎨 **Designer here**',
+    'installer': '🔧 **Installation specialist**',
+    'health-safety': '🦺 **Health & Safety**',
+    'cost-engineer': '💰 **Cost Engineer**',
+    'project-manager': '📋 **Project Manager**',
+    'commissioning': '✅ **Commissioning**'
+  };
+  return intros[agentName] || `**${agentName}**`;
+}
+
+// Helper: Get transition between agents
+function getAgentTransition(currentAgent: string, nextAgent: string): string {
+  const transitions: Record<string, Record<string, string>> = {
+    'designer': {
+      'installer': "Alright, design's sorted. Now let me hand over to the installer for the practical side...",
+      'health-safety': "Design's done. Before we crack on though, let's get the H&S perspective...",
+      'cost-engineer': "Right, design's locked in. Let's get costs on this...",
+      'project-manager': "Design complete. Let's see what the project manager reckons for timelines..."
+    },
+    'installer': {
+      'health-safety': "Installation method sorted. Now, safety considerations...",
+      'cost-engineer': "You know how to install it now. Let's price it up properly...",
+      'commissioning': "Install plan's there. Let's talk testing and commissioning..."
+    },
+    'health-safety': {
+      'cost-engineer': "Safety's covered. Now for the money side...",
+      'installer': "H&S brief done. Back to installation specifics...",
+      'commissioning': "Safety sorted. Let's talk about testing this safely..."
+    },
+    'cost-engineer': {
+      'installer': "Costs are there. Let's get into how you'll actually install this...",
+      'project-manager': "Pricing done. Let me get the project manager to talk timelines...",
+      'commissioning': "Budget's set. Finally, let's talk testing and sign-off..."
+    },
+    'project-manager': {
+      'installer': "Timeline's clear. Now for installation details...",
+      'cost-engineer': "Project plan's there. Let's get accurate costs on this...",
+      'commissioning': "Schedule's sorted. Finally, commissioning requirements..."
+    }
+  };
+  
+  return transitions[currentAgent]?.[nextAgent] || "Moving on to the next specialist...";
+}
+
 function getAgentFunctionName(agent: string): string {
   const mapping: Record<string, string> = {
     'designer': 'designer-agent',
@@ -265,7 +424,8 @@ function getAgentFunctionName(agent: string): string {
     'installer': 'installer-agent',
     'installation': 'installer-agent',
     'commissioning': 'commissioning-agent',
-    'health-safety': 'health-safety-agent'
+    'health-safety': 'health-safety-agent',
+    'project-manager': 'project-manager-agent'
   };
   return mapping[agent] || 'designer-agent';
 }
