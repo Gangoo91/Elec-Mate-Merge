@@ -22,6 +22,7 @@ import PublicQuote from "@/pages/PublicQuote";
 import LaTeXPDFGeneratorPage from "@/pages/LaTeXPDFGeneratorPage";
 import InvoiceQuoteBuilder from "@/pages/electrician/InvoiceQuoteBuilder";
 import InvoiceViewPage from "@/pages/electrician/InvoiceViewPage";
+import AdminRAGProcessor from "@/pages/AdminRAGProcessor";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -56,6 +57,7 @@ const AppRouter = () => {
         <Route path="notifications" element={<NotificationsPage />} />
         <Route path="subscriptions" element={<Subscriptions />} />
         <Route path="payment-success" element={<PaymentSuccess />} />
+        <Route path="admin/rag-processor" element={<AdminRAGProcessor />} />
         
         {/* Top level routes for shared features */}
         <Route path="mental-health" element={<ApprenticeMentalHealth />} />

@@ -224,3 +224,6 @@ verify_jwt = false
 
 [functions.intelligent-install-designer]
 verify_jwt = false
+
+[functions.parse-onsite-guide]
+verify_jwt = false
