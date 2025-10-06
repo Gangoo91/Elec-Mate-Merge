@@ -66,6 +66,18 @@ const InstallPlannerResults = () => {
     navigate('/electrician/install-planner');
   };
 
+  const handleReEngageAgent = (agentId: string) => {
+    // Navigate back to planner with agent context
+    navigate('/electrician/install-planner', {
+      state: {
+        resumeMessages: messages,
+        resumePlanData: planData,
+        targetAgent: agentId,
+        activeAgents: [agentId]
+      }
+    });
+  };
+
   return (
     <div className="min-h-screen bg-elec-dark">
       <div className="container mx-auto px-4 py-6 max-w-7xl">
@@ -89,6 +101,7 @@ const InstallPlannerResults = () => {
             selectedAgents={activeAgents}
             onExport={handleExport}
             onNewConsultation={handleNewConsultation}
+            onReEngageAgent={handleReEngageAgent}
           />
         </div>
       </div>

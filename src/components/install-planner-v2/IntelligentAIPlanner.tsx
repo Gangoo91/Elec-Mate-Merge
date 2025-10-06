@@ -10,9 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { useStreamingChat } from "@/hooks/useStreamingChat";
 import { ReasoningPanel } from "./ReasoningPanel";
 import { CitationBadge } from "./CitationBadge";
-import { PulsatingLightbulb } from "@/components/ui/pulsating-lightbulb";
 import { AgentSelector } from "./AgentSelector";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Feature flag to toggle between orchestrator and legacy designer
 const USE_ORCHESTRATOR = true;
@@ -33,12 +32,17 @@ interface IntelligentAIPlannerProps {
 }
 
 export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: IntelligentAIPlannerProps) => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: 'assistant',
-      content: "Alright mate, what are we designing today? Shower? EV charger? Just tell me what you're installing and I'll help you spec it properly - all BS 7671 compliant obviously 👍"
-    }
-  ]);
+  const location = useLocation();
+  const resumeState = location.state as any;
+  
+  const [messages, setMessages] = useState<Message[]>(
+    resumeState?.resumeMessages || [
+      {
+        role: 'assistant',
+        content: "Alright mate, what are we designing today? Shower? EV charger? Just tell me what you're installing and I'll help you spec it properly - all BS 7671 compliant obviously 👍"
+      }
+    ]
+  );
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentAction, setCurrentAction] = useState<string>("");
@@ -50,12 +54,25 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [showComplexMode, setShowComplexMode] = useState(false);
-  const [consultationStarted, setConsultationStarted] = useState(false);
+  const [consultationStarted, setConsultationStarted] = useState(!!resumeState?.resumeMessages);
   const [consultationPaused, setConsultationPaused] = useState(false);
   const [currentAgent, setCurrentAgent] = useState<string | null>(null);
   const [nextAgent, setNextAgent] = useState<string | null>(null);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Handle resume from results page
+  useEffect(() => {
+    if (resumeState?.resumePlanData) {
+      updatePlanData(resumeState.resumePlanData);
+    }
+    if (resumeState?.targetAgent) {
+      setCurrentAgent(resumeState.targetAgent);
+      toast.info(`Resuming consultation with ${resumeState.targetAgent}`, {
+        description: "Ask your follow-up question"
+      });
+    }
+  }, []);
 
   const { streamMessage, isStreaming } = useStreamingChat({
     onPlan: (agents, complexity) => {
@@ -118,9 +135,18 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     }
   });
 
+  // Smooth, throttled auto-scroll - only if user is near bottom
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, currentAction, reasoningSteps]);
+    if (!scrollRef.current) return;
+    
+    const scrollContainer = scrollRef.current;
+    const isNearBottom = scrollContainer.scrollHeight - scrollContainer.scrollTop - scrollContainer.clientHeight < 100;
+    
+    // Only auto-scroll if user is already near the bottom
+    if (isNearBottom && messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [messages]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading || isStreaming) return;
@@ -432,11 +458,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             >
               {/* AI Avatar - only for assistant messages */}
               {message.role === 'assistant' && (
-                <div className="flex-shrink-0 mt-1">
-                  <PulsatingLightbulb 
-                    size="sm"
-                    state={index === streamingMessageIndex ? 'thinking' : 'complete'}
-                  />
+                <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-lg">
+                  {index === streamingMessageIndex ? '🤔' : '✅'}
                 </div>
               )}
 
@@ -487,8 +510,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           {/* Loading indicator */}
           {(isLoading || isStreaming) && activeAgents.length > 0 && (
             <div className="flex justify-start gap-2">
-              <div className="flex-shrink-0 mt-1">
-                <PulsatingLightbulb size="sm" state="active" />
+              <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-lg">
+                🤔
               </div>
               <div className="bg-elec-card rounded-2xl px-4 py-3 shadow-sm flex items-center gap-2">
                 <Loader2 className="h-4 w-4 animate-spin text-white" />
