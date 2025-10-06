@@ -6,11 +6,18 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { InstallPlanDataV2 } from "./types";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+
+// Feature flag to toggle between orchestrator and legacy designer
+const USE_ORCHESTRATOR = true;
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
   toolCalls?: any[];
+  citations?: Array<{ number: string; title: string }>;
+  costUpdates?: { materials: number; vat: number; total: number };
+  activeAgents?: string[];
 }
 
 interface IntelligentAIPlannerProps {
@@ -29,6 +36,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentAction, setCurrentAction] = useState<string>("");
+  const [activeAgents, setActiveAgents] = useState<string[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +53,10 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('intelligent-install-designer', {
+      // Choose function based on feature flag
+      const functionName = USE_ORCHESTRATOR ? 'orchestrator-agent' : 'intelligent-install-designer';
+      
+      const { data, error } = await supabase.functions.invoke(functionName, {
         body: { 
           messages: [...messages, { role: 'user', content: userMessage }],
           currentDesign: {
@@ -57,11 +68,19 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       if (error) throw error;
       if (data.error) throw new Error(data.error);
 
+      // Update active agents if using orchestrator
+      if (data.activeAgents) {
+        setActiveAgents(data.activeAgents);
+      }
+
       // Show AI's response
       const aiMessage: Message = {
         role: 'assistant',
         content: data.response,
-        toolCalls: data.toolCalls
+        toolCalls: data.toolCalls,
+        citations: data.citations,
+        costUpdates: data.costUpdates,
+        activeAgents: data.activeAgents
       };
 
       setMessages(prev => [...prev, aiMessage]);
@@ -95,6 +114,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     } finally {
       setIsLoading(false);
       setCurrentAction("");
+      setActiveAgents([]);
     }
   };
 
@@ -110,10 +130,36 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       {/* Header */}
       <div className="flex-none px-4 py-3 border-b border-border bg-card">
         <div className="flex items-center justify-between max-w-5xl mx-auto">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <Sparkles className="h-5 w-5 text-elec-yellow" />
             <h2 className="font-semibold text-foreground">Intelligent Designer</h2>
             <span className="text-xs text-muted-foreground hidden sm:inline">BS 7671:2018</span>
+            
+            {/* Agent Status Indicators */}
+            {USE_ORCHESTRATOR && activeAgents.length > 0 && (
+              <div className="flex gap-1 ml-2">
+                {activeAgents.includes('designer') && (
+                  <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 text-xs">
+                    🎨 Designer
+                  </Badge>
+                )}
+                {activeAgents.includes('cost-engineer') && (
+                  <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 text-xs">
+                    💰 Cost
+                  </Badge>
+                )}
+                {activeAgents.includes('installer') && (
+                  <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200 text-xs">
+                    🔧 Installer
+                  </Badge>
+                )}
+                {activeAgents.includes('commissioning') && (
+                  <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200 text-xs">
+                    ✅ Testing
+                  </Badge>
+                )}
+              </div>
+            )}
           </div>
           <Button variant="ghost" size="sm" onClick={onReset} className="text-muted-foreground hover:text-foreground">
             <XCircle className="h-4 w-4 mr-2" />
@@ -141,6 +187,38 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 }`}
               >
                 <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                
+                {/* Regulation Citations */}
+                {message.citations && message.citations.length > 0 && (
+                  <div className="mt-3 space-y-2">
+                    {message.citations.map((citation, idx) => (
+                      <div key={idx} className="bg-blue-50 dark:bg-blue-950 p-2 rounded border-l-4 border-blue-500 text-xs">
+                        <span className="font-semibold text-blue-700 dark:text-blue-300">📖 {citation.number}</span>
+                        <span className="text-blue-600 dark:text-blue-400 ml-2">{citation.title}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
+                {/* Cost Updates */}
+                {message.costUpdates && (
+                  <Card className="mt-3 bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800">
+                    <div className="p-3 space-y-1 text-xs">
+                      <div className="flex justify-between text-green-700 dark:text-green-300">
+                        <span>Materials:</span>
+                        <span className="font-mono font-semibold">£{message.costUpdates.materials.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-green-600 dark:text-green-400">
+                        <span>VAT (20%):</span>
+                        <span className="font-mono">£{message.costUpdates.vat.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between font-bold text-green-800 dark:text-green-200 pt-1 border-t border-green-300 dark:border-green-700">
+                        <span>Total:</span>
+                        <span className="font-mono">£{message.costUpdates.total.toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </Card>
+                )}
                 
                 {/* Tool Call Results */}
                 {message.toolCalls && message.toolCalls.length > 0 && (
