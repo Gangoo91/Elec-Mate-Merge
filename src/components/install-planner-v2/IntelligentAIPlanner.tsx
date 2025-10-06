@@ -11,6 +11,8 @@ import { useStreamingChat } from "@/hooks/useStreamingChat";
 import { ReasoningPanel } from "./ReasoningPanel";
 import { CitationBadge } from "./CitationBadge";
 import { PulsatingLightbulb } from "@/components/ui/pulsating-lightbulb";
+import { AgentSelector } from "./AgentSelector";
+import { useNavigate } from "react-router-dom";
 
 // Feature flag to toggle between orchestrator and legacy designer
 const USE_ORCHESTRATOR = true;
@@ -48,6 +50,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [showComplexMode, setShowComplexMode] = useState(false);
+  const [consultationStarted, setConsultationStarted] = useState(false);
+  const [consultationComplete, setConsultationComplete] = useState(false);
+  const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { streamMessage, isStreaming } = useStreamingChat({
@@ -86,9 +91,12 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     },
     onAllAgentsComplete: (agentOutputs) => {
       console.log('All agents complete:', agentOutputs);
+      setConsultationComplete(true);
       setCurrentAction('');
       setReasoningSteps(prev => prev.map(step => ({ ...step, status: 'complete' as const })));
-      toast.success('Consultation complete!');
+      toast.success("Consultation Complete! 🎉", {
+        description: "All specialists have reviewed your design. View the detailed results."
+      });
     },
     onAgentUpdate: (agents) => {
       setActiveAgents(agents);
@@ -176,7 +184,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           }
 
           setStreamingMessageIndex(null);
-        }
+        },
+        // Pass selected agents
+        planData.selectedAgents
       );
 
     } catch (error) {
@@ -259,6 +269,36 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       setIsExporting(false);
     }
   };
+
+  const handleAgentSelection = (selectedAgents: string[]) => {
+    console.log('Selected agents:', selectedAgents);
+    updatePlanData({
+      ...planData,
+      selectedAgents
+    });
+    setConsultationStarted(true);
+  };
+
+  const handleViewResults = () => {
+    navigate('/electrician/install-planner/results', {
+      state: {
+        messages,
+        planData,
+        activeAgents: planData.selectedAgents || []
+      }
+    });
+  };
+
+  // If consultation hasn't started, show agent selector
+  if (!consultationStarted) {
+    return (
+      <div className="flex flex-col h-screen bg-elec-dark">
+        <div className="flex-1 flex items-center justify-center p-4">
+          <AgentSelector onStartConsultation={handleAgentSelection} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-screen bg-elec-dark">
@@ -459,6 +499,26 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       {/* Input Area - WhatsApp style */}
       <div className="flex-none bg-elec-dark border-t border-border/30 px-4 py-3">
         <div className="space-y-2">
+          {/* View Results Button - show when consultation is complete */}
+          {consultationComplete && (
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-elec-yellow">All Specialists Have Reviewed Your Design!</p>
+                  <p className="text-xs text-muted-foreground mt-1">View detailed contributions from each agent</p>
+                </div>
+                <Button
+                  onClick={handleViewResults}
+                  size="sm"
+                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                >
+                  <CheckCircle2 className="h-4 w-4 mr-2" />
+                  View Results
+                </Button>
+              </div>
+            </div>
+          )}
+          
           {/* Quick suggestions - only show on first message */}
           {messages.length === 1 && (
             <div className="flex flex-wrap gap-2">

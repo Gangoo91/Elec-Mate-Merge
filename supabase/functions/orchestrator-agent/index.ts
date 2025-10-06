@@ -22,6 +22,7 @@ interface OrchestratorRequest {
   messages: Message[];
   currentDesign?: any;
   conversationalMode?: boolean; // Enable sequential agent conversations
+  selectedAgents?: string[]; // User-selected agents (e.g., ['designer', 'cost-engineer'])
 }
 
 serve(async (req) => {
@@ -31,7 +32,7 @@ serve(async (req) => {
 
   try {
     const startTime = Date.now();
-    const { messages, currentDesign, conversationalMode = true } = await req.json() as OrchestratorRequest;
+    const { messages, currentDesign, conversationalMode = true, selectedAgents } = await req.json() as OrchestratorRequest;
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
@@ -116,9 +117,29 @@ serve(async (req) => {
       }];
     }
     
+    // Filter by user-selected agents if provided
+    if (selectedAgents && selectedAgents.length > 0) {
+      console.log('🎯 Filtering to user-selected agents:', selectedAgents);
+      agentPlan.sequence = agentPlan.sequence.filter((step: any) => 
+        selectedAgents.includes(step.agent)
+      );
+      
+      // Ensure we have at least one agent
+      if (agentPlan.sequence.length === 0) {
+        console.warn('⚠️ No matching agents found, using first selected agent');
+        agentPlan.sequence = [{
+          agent: selectedAgents[0],
+          priority: 1,
+          reasoning: 'User selected',
+          dependencies: []
+        }];
+      }
+    }
+    
     console.log('Agent Plan:', {
-      sequence: agentPlan.sequence.map(s => s.agent),
-      complexity: agentPlan.estimatedComplexity
+      sequence: agentPlan.sequence.map((s: any) => s.agent),
+      complexity: agentPlan.estimatedComplexity,
+      userFiltered: !!selectedAgents
     });
 
     // CONVERSATIONAL MODE: Sequential agent responses
