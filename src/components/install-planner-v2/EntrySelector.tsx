@@ -74,7 +74,7 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
       {/* Main Selection */}
       <div>
         <h2 className="text-2xl font-bold text-foreground mb-6 text-center">
-          What are you installing?
+          Or do it manually
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {installationTypes.map((type) => (
