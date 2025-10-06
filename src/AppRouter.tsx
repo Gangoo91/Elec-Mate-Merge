@@ -24,6 +24,7 @@ import InvoiceQuoteBuilder from "@/pages/electrician/InvoiceQuoteBuilder";
 import InvoiceViewPage from "@/pages/electrician/InvoiceViewPage";
 import AdminRAGProcessor from "@/pages/AdminRAGProcessor";
 import ProcessOnsiteGuide from "@/pages/ProcessOnsiteGuide";
+import AutoProcessOnsite from "@/pages/AutoProcessOnsite";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -37,6 +38,7 @@ const AppRouter = () => {
     <Routes>
       {/* Public Routes */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/process-onsite-now" element={<AutoProcessOnsite />} />
       <Route path="/index" element={<Index />} />
       <Route path="/auth/signin" element={<SignIn />} />
       <Route path="/auth/signup" element={<SignUp />} />
