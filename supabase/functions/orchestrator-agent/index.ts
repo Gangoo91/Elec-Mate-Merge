@@ -165,10 +165,10 @@ async function aggregateResponses(
   const allToolCalls: any[] = [];
 
   const emojiMap: Record<string, string> = {
-    'designer': '🎨 DESIGN ANALYSIS (BS 7671 Compliance)',
-    'cost-engineer': '💰 COST ESTIMATE',
-    'installer': '🔧 INSTALLATION GUIDANCE',
-    'commissioning': '✅ TESTING & COMMISSIONING'
+    'designer': '🎨',
+    'cost-engineer': '💰',
+    'installer': '🔧',
+    'commissioning': '✅'
   };
 
   for (const agentResult of agentResponses) {
@@ -210,17 +210,24 @@ async function aggregateResponses(
   // Use GPT-4o to refine and connect the sections if needed
   const combinedSections = sections.join('\n\n---\n\n');
 
-  // Smart coordination: Ask GPT to check if refinement is needed
-  const refinementPrompt = `You are coordinating multiple specialist agents. Review their responses and determine if they need refinement or if they're already complete.
+  // Smart coordination: Merge responses naturally
+  const refinementPrompt = `You're coordinating specialist electricians chatting with a colleague. Merge their responses into ONE natural conversation - like texting a mate about the job.
 
-User Query: ${userQuery}
+The user asked: "${userQuery}"
 
-Agent Responses:
+Specialist responses:
 ${combinedSections}
 
-If the responses fully answer the user's query, return them as-is with minimal changes (just ensure proper formatting).
-If they need connection or refinement, provide a brief introduction and smooth transitions.
-Keep the sectioned format with emoji headers.`;
+Rules for merging:
+- NO markdown (**, ##, bullets, lists)
+- NO formal sections or headers
+- Use emojis naturally within the flow (🎨 for design stuff, 💰 for costs, 🔧 for installation, ✅ for testing)
+- Keep regulation citations but make them flow naturally in sentences
+- Sound like an experienced spark texting back, not a textbook
+- Write in paragraphs, not lists
+- Be conversational but professional - like you're helping a mate out
+
+Merge everything into a single friendly chat response that covers design, cost, installation, and testing naturally.`;
 
   const refinementResponse = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -231,7 +238,7 @@ Keep the sectioned format with emoji headers.`;
     body: JSON.stringify({
       model: 'gpt-4o',
       messages: [
-        { role: 'system', content: 'You are a smart coordinator for electrical installation specialists. Maintain sectioned format with emoji headers.' },
+        { role: 'system', content: 'You are an experienced electrician chatting with a colleague. Keep responses natural and conversational, no markdown formatting.' },
         { role: 'user', content: refinementPrompt }
       ],
       max_tokens: 2000,
