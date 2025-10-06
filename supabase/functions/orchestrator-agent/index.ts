@@ -275,16 +275,20 @@ async function handleConversationalMode(
               isLast
             );
 
-            const result = await supabase.functions.invoke(agentFunctionName, {
-              body: { 
-                messages: agentMessages,
-                currentDesign,
-                context: {
-                  ...agentContext,
-                  structuredKnowledge: buildStructuredContext(agentContext.previousAgentOutputs)
+            const timeoutMs = 25000;
+            const result = await Promise.race([
+              supabase.functions.invoke(agentFunctionName, {
+                body: { 
+                  messages: agentMessages,
+                  currentDesign,
+                  context: {
+                    ...agentContext,
+                    structuredKnowledge: buildStructuredContext(agentContext.previousAgentOutputs)
+                  }
                 }
-              }
-            });
+              }),
+              new Promise((_, reject) => setTimeout(() => reject(new Error('Timed out waiting for agent response')), timeoutMs))
+            ]);
 
             if (result.error) {
               console.error(`Agent ${agentName} error:`, result.error);

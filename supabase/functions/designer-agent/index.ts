@@ -198,7 +198,7 @@ Rules:
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'o4-mini-2025-04-16', // PHASE 1: Reasoning model
+        model: 'gpt-5-mini-2025-08-07', // Faster GPT-5-mini for responsive design calcs
         messages: [
           { role: 'system', content: systemPrompt },
           ...messages,
@@ -207,8 +207,8 @@ Rules:
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 2500, // PHASE 1: Updated parameter for o4-mini
-        // Note: o4-mini doesn't support temperature parameter
+        max_completion_tokens: 2000,
+        // Note: GPT-5 models don't support temperature parameter
       }),
     });
 
@@ -230,8 +230,8 @@ Rules:
     return new Response(JSON.stringify({
       response: responseContent,
       citations,
-      confidence: 0.9, // High confidence for o4-mini reasoning
-      model: 'o4-mini-2025-04-16',
+      confidence: 0.85,
+      model: 'gpt-5-mini-2025-08-07',
       timestamp: new Date().toISOString()
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
