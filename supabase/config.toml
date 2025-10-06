@@ -185,3 +185,6 @@ verify_jwt = false
 
 [functions.generate-briefing-from-near-miss]
 verify_jwt = false
+
+[functions.intelligent-install-designer]
+verify_jwt = false

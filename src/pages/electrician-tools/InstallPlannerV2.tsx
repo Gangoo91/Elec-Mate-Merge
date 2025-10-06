@@ -6,7 +6,7 @@ import { EntrySelector } from "@/components/install-planner-v2/EntrySelector";
 import { ExpressMode } from "@/components/install-planner-v2/ExpressMode";
 import { ProfessionalMode } from "@/components/install-planner-v2/ProfessionalMode";
 import { MultiCircuitMode } from "@/components/install-planner-v2/MultiCircuitMode";
-import { AIGuidedPlanner } from "@/components/install-planner-v2/AIGuidedPlanner";
+import { IntelligentAIPlanner } from "@/components/install-planner-v2/IntelligentAIPlanner";
 import { InstallPlanDataV2 } from "@/components/install-planner-v2/types";
 import { SaveManager } from "@/components/install-planner-v2/SaveManager";
 
@@ -155,7 +155,7 @@ const InstallPlannerV2 = () => {
           )}
 
           {mode === 'ai-guided' && (
-            <AIGuidedPlanner
+            <IntelligentAIPlanner
               planData={planData}
               updatePlanData={setPlanData}
               onReset={handleReset}
