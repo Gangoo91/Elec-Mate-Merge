@@ -1,9 +1,61 @@
 import { KnowledgeStatusPanel } from "@/components/admin/KnowledgeStatusPanel";
 import { DocumentProcessor } from "@/components/admin/DocumentProcessor";
-import { BookOpen, GraduationCap, Lightbulb, FileText, Zap } from "lucide-react";
+import { BookOpen, GraduationCap, Lightbulb, FileText, Zap, CheckCircle2, XCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminRAGProcessor = () => {
+  const { data: stats } = useQuery({
+    queryKey: ['knowledge-stats-admin'],
+    queryFn: async () => {
+      const [bs7671Result, installationResult] = await Promise.all([
+        supabase.from('bs7671_embeddings').select('id', { count: 'exact', head: false }),
+        supabase.from('installation_knowledge').select('source', { count: 'exact', head: false })
+      ]);
+
+      const sourceCounts = installationResult.data?.reduce((acc: Record<string, number>, item) => {
+        acc[item.source] = (acc[item.source] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>) || {};
+
+      return {
+        'bs7671': bs7671Result.data?.length || 0,
+        'on-site-guide': sourceCounts['on-site-guide'] || 0,
+        'city-guilds-book-1': sourceCounts['city-guilds-book-1'] || 0,
+        'city-guilds-book-2': sourceCounts['city-guilds-book-2'] || 0,
+        'city-guilds-level-2': sourceCounts['city-guilds-level-2'] || 0,
+        'city-guilds-level-3': sourceCounts['city-guilds-level-3'] || 0,
+        'emergency-lighting': sourceCounts['emergency-lighting'] || 0,
+        'guidance-note-3': sourceCounts['guidance-note-3'] || 0,
+        'design-guide': sourceCounts['design-guide'] || 0,
+        'wiring-diagrams': sourceCounts['wiring-diagrams'] || 0,
+        'ev-charging': sourceCounts['ev-charging'] || 0,
+        'calculations-basic': sourceCounts['calculations-basic'] || 0,
+        'inservice-testing': sourceCounts['inservice-testing'] || 0,
+        'health-safety-management': sourceCounts['health-safety-management'] || 0,
+        'nebosh-igc': sourceCounts['nebosh-igc'] || 0,
+      };
+    },
+    refetchInterval: 5000,
+  });
+
+  const getStatusIcon = (source: string) => {
+    const count = stats?.[source] || 0;
+    if (count > 0) {
+      return <CheckCircle2 className="w-5 h-5 text-green-500" />;
+    }
+    return <XCircle className="w-5 h-5 text-muted-foreground/40" />;
+  };
+
+  const getStatusText = (source: string) => {
+    const count = stats?.[source] || 0;
+    if (count > 0) {
+      return `✅ ${count} chunks`;
+    }
+    return 'Not uploaded';
+  };
+
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="max-w-3xl mx-auto space-y-6">
@@ -31,6 +83,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 15-20 minutes"
           icon={<BookOpen className="h-6 w-6 text-amber-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('bs7671')}
+          statusText={getStatusText('bs7671')}
         />
 
         <DocumentProcessor
@@ -39,6 +93,8 @@ const AdminRAGProcessor = () => {
           functionName="parse-onsite-guide"
           estimatedTime="Processing time: 5-10 minutes"
           icon={<FileText className="h-6 w-6 text-blue-600" />}
+          statusIcon={getStatusIcon('on-site-guide')}
+          statusText={getStatusText('on-site-guide')}
         />
 
         <DocumentProcessor
@@ -48,6 +104,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 3-8 minutes"
           icon={<GraduationCap className="h-6 w-6 text-green-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('city-guilds-book-1')}
+          statusText={getStatusText('city-guilds-book-1')}
         />
 
         <DocumentProcessor
@@ -57,6 +115,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 3-8 minutes"
           icon={<GraduationCap className="h-6 w-6 text-purple-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('city-guilds-book-2')}
+          statusText={getStatusText('city-guilds-book-2')}
         />
 
         <DocumentProcessor
@@ -66,6 +126,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 2-3 minutes"
           icon={<GraduationCap className="h-6 w-6 text-blue-500" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('city-guilds-level-2')}
+          statusText={getStatusText('city-guilds-level-2')}
         />
 
         <DocumentProcessor
@@ -75,6 +137,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 5-8 minutes"
           icon={<GraduationCap className="h-6 w-6 text-violet-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('city-guilds-level-3')}
+          statusText={getStatusText('city-guilds-level-3')}
         />
 
         <DocumentProcessor
@@ -84,6 +148,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 10-15 minutes"
           icon={<FileText className="h-6 w-6 text-red-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('health-safety-management')}
+          statusText={getStatusText('health-safety-management')}
         />
 
         <DocumentProcessor
@@ -93,6 +159,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 5-8 minutes"
           icon={<FileText className="h-6 w-6 text-amber-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('nebosh-igc')}
+          statusText={getStatusText('nebosh-igc')}
         />
 
         <DocumentProcessor
@@ -102,6 +170,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 30 seconds - 2 minutes"
           icon={<Lightbulb className="h-6 w-6 text-yellow-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('emergency-lighting')}
+          statusText={getStatusText('emergency-lighting')}
         />
 
         <DocumentProcessor
@@ -111,6 +181,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 10-12 minutes"
           icon={<Zap className="h-6 w-6 text-indigo-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('guidance-note-3')}
+          statusText={getStatusText('guidance-note-3')}
         />
 
         <DocumentProcessor
@@ -120,6 +192,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 2-3 minutes"
           icon={<FileText className="h-6 w-6 text-teal-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('design-guide')}
+          statusText={getStatusText('design-guide')}
         />
 
         <DocumentProcessor
@@ -129,6 +203,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 8-10 minutes"
           icon={<FileText className="h-6 w-6 text-cyan-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('wiring-diagrams')}
+          statusText={getStatusText('wiring-diagrams')}
         />
 
         <DocumentProcessor
@@ -138,6 +214,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 5-6 minutes"
           icon={<Zap className="h-6 w-6 text-emerald-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('ev-charging')}
+          statusText={getStatusText('ev-charging')}
         />
 
         <DocumentProcessor
@@ -147,6 +225,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 8-10 minutes"
           icon={<FileText className="h-6 w-6 text-orange-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('calculations-basic')}
+          statusText={getStatusText('calculations-basic')}
         />
 
         <DocumentProcessor
@@ -156,6 +236,8 @@ const AdminRAGProcessor = () => {
           estimatedTime="Processing time: 2-3 minutes"
           icon={<Zap className="h-6 w-6 text-rose-600" />}
           requiresFileUpload={true}
+          statusIcon={getStatusIcon('inservice-testing')}
+          statusText={getStatusText('inservice-testing')}
         />
       </div>
     </div>

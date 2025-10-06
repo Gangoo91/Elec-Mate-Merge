@@ -12,6 +12,8 @@ interface DocumentProcessorProps {
   estimatedTime: string;
   icon?: React.ReactNode;
   requiresFileUpload?: boolean;
+  statusIcon?: React.ReactNode;
+  statusText?: string;
 }
 
 export const DocumentProcessor = ({ 
@@ -20,7 +22,9 @@ export const DocumentProcessor = ({
   functionName, 
   estimatedTime,
   icon,
-  requiresFileUpload = false
+  requiresFileUpload = false,
+  statusIcon,
+  statusText
 }: DocumentProcessorProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<any>(null);
@@ -94,6 +98,12 @@ export const DocumentProcessor = ({
             <h3 className="text-lg font-semibold">{title}</h3>
             <p className="text-sm text-muted-foreground">{description}</p>
           </div>
+          {statusIcon && (
+            <div className="flex items-center gap-2 text-sm">
+              {statusIcon}
+              <span className="text-muted-foreground">{statusText}</span>
+            </div>
+          )}
         </div>
 
         {requiresFileUpload && (

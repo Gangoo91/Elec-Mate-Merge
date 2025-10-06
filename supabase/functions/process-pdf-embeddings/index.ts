@@ -12,7 +12,7 @@ interface PDFChunk {
   section: string;
   content: string;
   metadata: Record<string, any>;
-  source: 'bs7671' | 'on-site-guide' | 'spons' | 'acop';
+  source: string;
 }
 
 serve(async (req) => {
@@ -23,7 +23,7 @@ serve(async (req) => {
   try {
     const { chunks, source } = await req.json() as { 
       chunks: PDFChunk[], 
-      source: 'bs7671' | 'on-site-guide' | 'spons' | 'acop' 
+      source: string
     };
     
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
