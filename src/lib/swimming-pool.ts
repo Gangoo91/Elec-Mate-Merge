@@ -101,7 +101,9 @@ export function calculatePoolInstallation(inputs: PoolCalculationInputs): PoolCa
   const diversifiedLightingLoad = lighting * lightingDiversity;
 
   const totalLoad = diversifiedHeaterLoad + diversifiedPumpLoad + diversifiedLightingLoad;
-  const totalCurrent = totalLoad / (supplyVoltage * (supplyVoltage === 400 ? Math.sqrt(3) : 1));
+  const totalCurrent = supplyVoltage === 400 
+    ? totalLoad / (supplyVoltage * Math.sqrt(3))
+    : totalLoad / supplyVoltage;
 
   // Temperature derating factor
   const temperatureDerating = ambientTemperature > 30 ? 0.87 : 1.0;
