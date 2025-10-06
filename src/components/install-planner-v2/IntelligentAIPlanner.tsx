@@ -127,12 +127,12 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
 
   return (
     <div className="flex flex-col h-[calc(100vh-200px)] md:h-[calc(100vh-160px)]">
-      {/* Header */}
-      <div className="flex-none px-4 py-3 border-b border-border bg-card">
-        <div className="flex items-center justify-between max-w-5xl mx-auto">
+      {/* Header - Full width on mobile */}
+      <div className="flex-none px-3 md:px-4 py-2.5 md:py-3 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="flex items-center justify-between md:max-w-5xl md:mx-auto">
           <div className="flex items-center gap-2 flex-wrap">
-            <Sparkles className="h-5 w-5 text-elec-yellow" />
-            <h2 className="font-semibold text-foreground">Intelligent Designer</h2>
+            <Sparkles className="h-4 w-4 md:h-5 md:w-5 text-elec-yellow" />
+            <h2 className="font-semibold text-sm md:text-base text-foreground">Intelligent Designer</h2>
             <span className="text-xs text-muted-foreground hidden sm:inline">BS 7671:2018</span>
             
             {/* Agent Status Indicators */}
@@ -161,9 +161,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               </div>
             )}
           </div>
-          <Button variant="ghost" size="sm" onClick={onReset} className="text-muted-foreground hover:text-foreground">
-            <XCircle className="h-4 w-4 mr-2" />
-            Reset
+          <Button variant="ghost" size="sm" onClick={onReset} className="text-muted-foreground hover:text-foreground h-8 text-xs md:text-sm">
+            <XCircle className="h-3.5 w-3.5 md:h-4 md:w-4 md:mr-2" />
+            <span className="hidden md:inline">Reset</span>
           </Button>
         </div>
       </div>
@@ -173,17 +173,17 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         ref={scrollRef}
         className="flex-1 overflow-y-auto bg-background"
       >
-        <div className="max-w-5xl mx-auto px-3 sm:px-4 py-4 space-y-4">
+        <div className="md:max-w-5xl md:mx-auto px-3 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4">
           {messages.map((message, index) => (
             <div
               key={index}
               className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 ${
+                className={`max-w-[90%] md:max-w-[80%] rounded-2xl md:rounded-3xl px-3.5 py-2.5 md:px-4 md:py-3 ${
                   message.role === 'user'
-                    ? 'bg-elec-yellow text-elec-dark font-medium'
-                    : 'bg-card border border-border text-foreground'
+                    ? 'bg-elec-yellow text-elec-dark font-medium shadow-sm'
+                    : 'bg-muted/50 md:bg-card md:border md:border-border text-foreground'
                 }`}
               >
                 <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
@@ -272,8 +272,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           {/* Loading indicator */}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-card border border-border rounded-2xl px-4 py-3 flex items-center gap-3">
-                <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+              <div className="bg-muted/50 md:bg-card md:border md:border-border rounded-2xl md:rounded-3xl px-3.5 py-2.5 md:px-4 md:py-3 flex items-center gap-2 md:gap-3">
+                <Loader2 className="h-3.5 w-3.5 md:h-4 md:w-4 animate-spin text-elec-yellow" />
                 <span className="text-sm text-muted-foreground">
                   {currentAction || "Thinking..."}
                 </span>
@@ -285,17 +285,17 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         </div>
       </div>
 
-      {/* Input Area - Sticky bottom */}
-      <div className="flex-none border-t border-border bg-card">
-        <div className="max-w-5xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
+      {/* Input Area - Sticky bottom, full width on mobile */}
+      <div className="flex-none border-t border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="md:max-w-5xl md:mx-auto px-3 md:px-4 py-2.5 md:py-3">
           {/* Quick Suggestions */}
           {messages.length === 1 && (
-            <div className="flex flex-wrap gap-2 mb-3">
+            <div className="flex flex-wrap gap-1.5 md:gap-2 mb-2.5 md:mb-3">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("9.5kW shower, 18 metres from the board")}
-                className="text-xs"
+                className="text-xs h-7 md:h-8 px-2.5 md:px-3 bg-background"
               >
                 Shower install
               </Button>
@@ -303,7 +303,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("7kW EV charger in garage")}
-                className="text-xs"
+                className="text-xs h-7 md:h-8 px-2.5 md:px-3 bg-background"
               >
                 EV charger
               </Button>
@@ -311,7 +311,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("Design complete board for 3-bed house")}
-                className="text-xs"
+                className="text-xs h-7 md:h-8 px-2.5 md:px-3 bg-background"
               >
                 Whole house
               </Button>
@@ -323,15 +323,15 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Just chat naturally - tell me what you're installing..."
+              placeholder="Tell me what you're installing..."
               disabled={isLoading}
-              className="flex-1 bg-background border-border"
+              className="flex-1 bg-background border-border h-10 md:h-11 text-sm rounded-full md:rounded-lg px-4"
             />
             <Button 
               onClick={handleSend}
               disabled={isLoading || !input.trim()}
               size="icon"
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-10 w-10 md:h-11 md:w-11 rounded-full shadow-md"
             >
               <Send className="h-4 w-4" />
             </Button>
