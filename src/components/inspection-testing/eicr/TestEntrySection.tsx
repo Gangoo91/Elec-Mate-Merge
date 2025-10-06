@@ -9,6 +9,9 @@ import { Switch } from '@/components/ui/switch';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Zap, Check, X, AlertTriangle } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 
 interface TestEntryProps {
   reportType: string;
@@ -35,10 +38,14 @@ interface TestResult {
 }
 
 const TestEntrySection = ({ reportType, onComplete }: TestEntryProps) => {
+  const [searchParams] = useSearchParams();
+  const designId = searchParams.get('design_id');
+  
   const [circuits, setCircuits] = useState<Circuit[]>([]);
   const [currentCircuit, setCurrentCircuit] = useState<string>('');
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [completedTests, setCompletedTests] = useState<string[]>([]);
+  const [expectedValues, setExpectedValues] = useState<Record<string, any>>({});
   const [currentResult, setCurrentResult] = useState<TestResult>({
     circuitRef: '',
     continuityR1: '',
@@ -53,6 +60,68 @@ const TestEntrySection = ({ reportType, onComplete }: TestEntryProps) => {
   });
 
   useEffect(() => {
+    if (designId) {
+      loadDesignData();
+    } else {
+      loadLocalCircuits();
+    }
+  }, [designId]);
+
+  const loadDesignData = async () => {
+    if (!designId) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('saved_designs')
+        .select('*')
+        .eq('id', designId)
+        .single();
+
+      if (error) throw error;
+
+      if (data?.circuits && Array.isArray(data.circuits)) {
+        const loadedCircuits = data.circuits.map((circuit: any, index: number) => ({
+          ref: circuit.reference || `C${index + 1}`,
+          description: circuit.description || circuit.type || 'Circuit',
+          type: circuit.type || 'general'
+        }));
+        
+        setCircuits(loadedCircuits);
+        
+        // Store expected values for display
+        const expectedValuesMap: Record<string, any> = {};
+        data.circuits.forEach((circuit: any, index: number) => {
+          const ref = circuit.reference || `C${index + 1}`;
+          expectedValuesMap[ref] = {
+            expectedR1R2: circuit.expectedR1R2,
+            expectedZs: circuit.expectedZs,
+            expectedInsulation: circuit.expectedInsulation || 1.0
+          };
+        });
+        setExpectedValues(expectedValuesMap);
+        
+        if (loadedCircuits.length > 0) {
+          setCurrentCircuit(loadedCircuits[0].ref);
+        }
+        
+        toast({
+          title: "Design loaded",
+          description: `Pre-filled ${loadedCircuits.length} circuits from saved design`,
+          variant: "success"
+        });
+      }
+    } catch (error) {
+      console.error('Error loading design:', error);
+      toast({
+        title: "Error loading design",
+        description: "Falling back to manual entry",
+        variant: "destructive"
+      });
+      loadLocalCircuits();
+    }
+  };
+
+  const loadLocalCircuits = () => {
     // Load saved circuits
     const savedCircuits = localStorage.getItem('eicr-circuits');
     if (savedCircuits) {
@@ -71,7 +140,7 @@ const TestEntrySection = ({ reportType, onComplete }: TestEntryProps) => {
       const completed = parsedResults.map((r: TestResult) => r.circuitRef);
       setCompletedTests(completed);
     }
-  }, []);
+  };
 
   useEffect(() => {
     if (currentCircuit) {
@@ -148,6 +217,17 @@ const TestEntrySection = ({ reportType, onComplete }: TestEntryProps) => {
 
   return (
     <div className="space-y-6">
+      {/* Design Mode Indicator */}
+      {designId && (
+        <Card className="border-green-500/50 bg-green-500/10">
+          <CardContent className="pt-6">
+            <p className="text-sm text-green-300">
+              <strong>Design Mode:</strong> Circuits pre-filled from saved design. Expected values shown for reference.
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Circuit Selection */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
@@ -203,7 +283,14 @@ const TestEntrySection = ({ reportType, onComplete }: TestEntryProps) => {
               <h3 className="text-lg font-medium">Continuity Tests</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="continuityR1">R₁ Continuity (Ω)</Label>
+                  <Label htmlFor="continuityR1">
+                    R₁ Continuity (Ω)
+                    {expectedValues[currentCircuit]?.expectedR1R2 && (
+                      <span className="ml-2 text-xs text-muted-foreground">
+                        Expected: {expectedValues[currentCircuit].expectedR1R2.toFixed(3)}Ω
+                      </span>
+                    )}
+                  </Label>
                   <Input
                     id="continuityR1"
                     type="text"
@@ -232,7 +319,14 @@ const TestEntrySection = ({ reportType, onComplete }: TestEntryProps) => {
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Insulation Resistance</h3>
               <div>
-                <Label htmlFor="insulation">Insulation Resistance (MΩ)</Label>
+                <Label htmlFor="insulation">
+                  Insulation Resistance (MΩ)
+                  {expectedValues[currentCircuit]?.expectedInsulation && (
+                    <span className="ml-2 text-xs text-muted-foreground">
+                      Min: {expectedValues[currentCircuit].expectedInsulation}MΩ
+                    </span>
+                  )}
+                </Label>
                 <Input
                   id="insulation"
                   type="text"
@@ -260,7 +354,14 @@ const TestEntrySection = ({ reportType, onComplete }: TestEntryProps) => {
             <div className="space-y-4">
               <h3 className="text-lg font-medium">Earth Fault Loop Impedance</h3>
               <div>
-                <Label htmlFor="zs">Zs Value (Ω)</Label>
+                <Label htmlFor="zs">
+                  Zs Value (Ω)
+                  {expectedValues[currentCircuit]?.expectedZs && (
+                    <span className="ml-2 text-xs text-muted-foreground">
+                      Expected: {expectedValues[currentCircuit].expectedZs.toFixed(2)}Ω
+                    </span>
+                  )}
+                </Label>
                 <Input
                   id="zs"
                   type="text"

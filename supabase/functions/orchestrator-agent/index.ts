@@ -85,11 +85,16 @@ serve(async (req) => {
     console.log('🎯 Phase 3: AI intent detection...');
     const intentAnalysis = await detectIntents(latestMessage, conversationSummary, openAIApiKey);
     
-    console.log('Intent Analysis:', {
-      primary: intentAnalysis.primaryIntent,
-      scores: intentAnalysis.intents,
-      reasoning: intentAnalysis.reasoning
-    });
+    // Validate intent analysis before logging
+    if (intentAnalysis && intentAnalysis.intents) {
+      console.log('Intent Analysis:', {
+        primary: intentAnalysis.primaryIntent,
+        scores: intentAnalysis.intents,
+        reasoning: intentAnalysis.reasoning
+      });
+    } else {
+      console.error('❌ Invalid intent analysis received:', intentAnalysis);
+    }
 
     // Handle clarification requests
     if (intentAnalysis.requiresClarification && intentAnalysis.suggestedFollowUp) {

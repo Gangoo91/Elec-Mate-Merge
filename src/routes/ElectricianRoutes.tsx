@@ -29,11 +29,13 @@ import ReportWriterPage from "@/pages/electrician-tools/ai-tools/ReportWriterPag
 import RegulationsPage from "@/pages/electrician-tools/ai-tools/RegulationsPage";
 import CircuitDesignerPage from "@/pages/electrician-tools/ai-tools/CircuitDesignerPage";
 import ClientExplainerPage from "@/pages/electrician-tools/ai-tools/ClientExplainerPage";
+import TestingProjects from "@/pages/electrician/testing-projects";
 
 
 const ElectricianRoutes = () => (
   <Routes>
     <Route index element={<ProjectManagement />} />
+    <Route path="testing-projects" element={<TestingProjects />} />
     <Route path="ai-tooling" element={<AITooling />} />
     <Route path="ai-tooling/assistant" element={<AssistantPage />} />
     <Route path="ai-tooling/visual" element={<VisualAnalysisPage />} />

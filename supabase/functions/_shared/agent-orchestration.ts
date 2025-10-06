@@ -41,23 +41,35 @@ export async function planAgentSequence(
   openAIApiKey: string
 ): Promise<AgentPlan> {
   
-  // Simple cases: Single high-confidence intent
-  const highConfidenceIntents = Object.entries(intentAnalysis.intents)
-    .filter(([_, score]) => score >= 0.7)
-    .map(([agent, score]) => ({ agent, score }));
+  try {
+    // Defensive check: ensure intents object exists
+    if (!intentAnalysis || !intentAnalysis.intents) {
+      console.warn('⚠️ Invalid intent analysis, using fallback');
+      return createFallbackPlan({ 
+        intents: { designer: 0.5 }, 
+        primaryIntent: 'designer',
+        reasoning: 'Fallback due to missing intent data',
+        needsClarification: false 
+      });
+    }
 
-  if (highConfidenceIntents.length === 1) {
-    return {
-      sequence: [{
-        agent: highConfidenceIntents[0].agent as any,
-        priority: 1,
-        reasoning: `Primary focus on ${highConfidenceIntents[0].agent}`,
-        dependencies: []
-      }],
-      reasoning: 'Single clear intent detected',
-      estimatedComplexity: 'simple'
-    };
-  }
+    // Simple cases: Single high-confidence intent
+    const highConfidenceIntents = Object.entries(intentAnalysis.intents)
+      .filter(([_, score]) => score >= 0.7)
+      .map(([agent, score]) => ({ agent, score }));
+
+    if (highConfidenceIntents.length === 1) {
+      return {
+        sequence: [{
+          agent: highConfidenceIntents[0].agent as any,
+          priority: 1,
+          reasoning: `Primary focus on ${highConfidenceIntents[0].agent}`,
+          dependencies: []
+        }],
+        reasoning: 'Single clear intent detected',
+        estimatedComplexity: 'simple'
+      };
+    }
 
   // Complex cases: Use GPT-5 to plan sequence
   const planningPrompt = `You're planning which electrical specialists to consult and in what order.
@@ -127,6 +139,20 @@ Return JSON:
 
   // Fallback: Create sequence based on intent scores
   return createFallbackPlan(intentAnalysis);
+  } catch (outerError) {
+    console.error('❌ Critical error in planAgentSequence:', outerError);
+    // Ultimate fallback
+    return {
+      sequence: [{
+        agent: 'designer',
+        priority: 1,
+        reasoning: 'Emergency fallback - critical error in planning',
+        dependencies: []
+      }],
+      reasoning: 'Emergency fallback due to critical error',
+      estimatedComplexity: 'simple'
+    };
+  }
 }
 
 function createFallbackPlan(intentAnalysis: IntentAnalysis): AgentPlan {
