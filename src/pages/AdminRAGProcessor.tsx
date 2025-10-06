@@ -47,6 +47,7 @@ const AdminRAGProcessor = () => {
           functionName="parse-city-guilds-book-1"
           estimatedTime="Processing time: 3-8 minutes"
           icon={<GraduationCap className="h-6 w-6 text-green-600" />}
+          requiresFileUpload={true}
         />
 
         <DocumentProcessor
@@ -55,6 +56,43 @@ const AdminRAGProcessor = () => {
           functionName="parse-city-guilds-book-2"
           estimatedTime="Processing time: 3-8 minutes"
           icon={<GraduationCap className="h-6 w-6 text-purple-600" />}
+          requiresFileUpload={true}
+        />
+
+        <DocumentProcessor
+          title="City & Guilds Level 2 Revision Notes"
+          description="Level 2 revision guide - processes into installation_knowledge"
+          functionName="parse-city-guilds-level-2"
+          estimatedTime="Processing time: 2-3 minutes"
+          icon={<GraduationCap className="h-6 w-6 text-blue-500" />}
+          requiresFileUpload={true}
+        />
+
+        <DocumentProcessor
+          title="City & Guilds Level 3 Revision Notes"
+          description="Level 3 advanced revision guide - processes into installation_knowledge"
+          functionName="parse-city-guilds-level-3"
+          estimatedTime="Processing time: 5-8 minutes"
+          icon={<GraduationCap className="h-6 w-6 text-violet-600" />}
+          requiresFileUpload={true}
+        />
+
+        <DocumentProcessor
+          title="Health & Safety Risk Management (5th Ed)"
+          description="H&S management guide - processes into installation_knowledge"
+          functionName="parse-health-safety-management"
+          estimatedTime="Processing time: 10-15 minutes"
+          icon={<FileText className="h-6 w-6 text-red-600" />}
+          requiresFileUpload={true}
+        />
+
+        <DocumentProcessor
+          title="NEBOSH IGC IG1 Course Notes"
+          description="NEBOSH international certificate - processes into installation_knowledge"
+          functionName="parse-nebosh-igc"
+          estimatedTime="Processing time: 5-8 minutes"
+          icon={<FileText className="h-6 w-6 text-amber-600" />}
+          requiresFileUpload={true}
         />
 
         <DocumentProcessor
@@ -63,6 +101,7 @@ const AdminRAGProcessor = () => {
           functionName="parse-emergency-lighting"
           estimatedTime="Processing time: 30 seconds - 2 minutes"
           icon={<Lightbulb className="h-6 w-6 text-yellow-600" />}
+          requiresFileUpload={true}
         />
 
         <DocumentProcessor

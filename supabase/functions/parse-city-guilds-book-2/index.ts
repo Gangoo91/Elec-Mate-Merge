@@ -10,8 +10,7 @@ interface Chunk {
   section: string;
   content: string;
   metadata: {
-    book: string;
-    qualification_level: string;
+    document: string;
     chapter_number?: string;
     chapter_title?: string;
     topic: string;
@@ -27,25 +26,20 @@ serve(async (req) => {
   try {
     console.log('📙 Starting City & Guilds Book 2 processing...');
     
+    const { fileContent } = await req.json();
+    
+    if (!fileContent) {
+      throw new Error('No file content provided in request body');
+    }
+    
+    const lines = fileContent.split('\n');
+    console.log(`📄 Total lines: ${lines.length}`);
+
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-    // Fetch from Supabase Storage
-    const fileUrl = `${supabaseUrl}/storage/v1/object/public/safety-resources/CITY-GUILDS-BOOK-2.txt`;
-    console.log(`Fetching from: ${fileUrl}`);
-    
-    const fileResponse = await fetch(fileUrl);
-    if (!fileResponse.ok) {
-      throw new Error(`Failed to fetch file: ${fileResponse.status}`);
-    }
-    
-    const fileContent = await fileResponse.text();
-    const lines = fileContent.split('\n');
-    
-    console.log(`📄 Total lines: ${lines.length}`);
-
     const chunks: Chunk[] = [];
-    const chunkSize = 120;
+    const chunkSize = 110;
 
     for (let i = 0; i < lines.length; i += chunkSize) {
       const chunkLines = lines.slice(i, i + chunkSize);
@@ -53,14 +47,11 @@ serve(async (req) => {
       
       if (content.length < 100) continue;
 
-      // Extract chapter information
       const chapterMatch = content.match(/(?:Chapter|Unit)\s+(\d+)[:\s-]+([^\n]+)/i);
       const chapterNumber = chapterMatch ? chapterMatch[1] : undefined;
       const chapterTitle = chapterMatch ? chapterMatch[2]?.trim() : undefined;
 
-      // Determine advanced topics (Level 3)
       let topic = 'Advanced Installation Techniques';
-      const qualificationLevel = 'Level 3';
       let keywords: string[] = ['City & Guilds', 'advanced', 'Level 3'];
 
       if (content.toLowerCase().includes('motor') && content.toLowerCase().includes('control')) {
@@ -78,32 +69,13 @@ serve(async (req) => {
       } else if (content.toLowerCase().includes('power factor') || content.toLowerCase().includes('harmonics')) {
         topic = 'Power Quality';
         keywords.push('power factor', 'harmonics', 'reactive power');
-      } else if (content.toLowerCase().includes('lighting') && content.toLowerCase().includes('design')) {
-        topic = 'Advanced Lighting Design';
-        keywords.push('lighting design', 'lux levels', 'uniformity');
-      } else if (content.toLowerCase().includes('fire alarm') || content.toLowerCase().includes('emergency')) {
-        topic = 'Fire & Emergency Systems';
-        keywords.push('fire alarm', 'emergency systems', 'BS 5839');
-      } else if (content.toLowerCase().includes('data') || content.toLowerCase().includes('structured cabling')) {
-        topic = 'Data & Communications Cabling';
-        keywords.push('data cabling', 'Cat 6', 'fibre optic');
-      } else if (content.toLowerCase().includes('solar') || content.toLowerCase().includes('renewable')) {
-        topic = 'Renewable Energy Systems';
-        keywords.push('solar PV', 'renewable', 'microgeneration');
-      } else if (content.toLowerCase().includes('ev') || content.toLowerCase().includes('charging')) {
-        topic = 'EV Charging Infrastructure';
-        keywords.push('EV charging', 'electric vehicle', 'charging point');
-      } else if (content.toLowerCase().includes('design') && content.toLowerCase().includes('calculation')) {
-        topic = 'Electrical Design Calculations';
-        keywords.push('design calculations', 'load assessment', 'diversity');
       }
 
       chunks.push({
         section: chapterTitle || `Section at line ${i}`,
         content,
         metadata: {
-          book: 'City & Guilds Book 2',
-          qualification_level: qualificationLevel,
+          document: 'City & Guilds Book 2',
           chapter_number: chapterNumber,
           chapter_title: chapterTitle,
           topic,

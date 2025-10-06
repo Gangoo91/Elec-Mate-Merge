@@ -24,7 +24,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('📗 Starting City & Guilds Book 1 processing...');
+    console.log('📕 Starting City & Guilds Level 3 processing...');
     
     const { fileContent } = await req.json();
     
@@ -39,7 +39,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
     const chunks: Chunk[] = [];
-    const chunkSize = 110;
+    const chunkSize = 100;
 
     for (let i = 0; i < lines.length; i += chunkSize) {
       const chunkLines = lines.slice(i, i + chunkSize);
@@ -47,35 +47,47 @@ serve(async (req) => {
       
       if (content.length < 100) continue;
 
-      const chapterMatch = content.match(/(?:Chapter|Unit)\s+(\d+)[:\s-]+([^\n]+)/i);
+      const chapterMatch = content.match(/(?:LO\d+|Unit|Topic)\s+(\d+\.?\d*)[:\s-]+([^\n]+)/i);
       const chapterNumber = chapterMatch ? chapterMatch[1] : undefined;
       const chapterTitle = chapterMatch ? chapterMatch[2]?.trim() : undefined;
 
-      let topic = 'General Installation Principles';
-      let keywords: string[] = ['City & Guilds', 'electrical installation'];
+      let topic = 'Level 3 Advanced Installation';
+      let keywords: string[] = ['City & Guilds', 'Level 3', '8202-30'];
 
-      if (content.toLowerCase().includes('health') && content.toLowerCase().includes('safety')) {
-        topic = 'Health & Safety';
-        keywords.push('H&S', 'PPE', 'risk assessment');
-      } else if (content.toLowerCase().includes('cable') && (content.toLowerCase().includes('select') || content.toLowerCase().includes('size'))) {
-        topic = 'Cable Selection & Sizing';
-        keywords.push('cable sizing', 'current capacity', 'volt drop');
-      } else if (content.toLowerCase().includes('isolat') || content.toLowerCase().includes('switch')) {
-        topic = 'Safe Isolation Procedures';
-        keywords.push('isolation', 'switching', 'safety');
-      } else if (content.toLowerCase().includes('test') || content.toLowerCase().includes('inspect')) {
-        topic = 'Testing & Inspection Methods';
-        keywords.push('testing', 'inspection', 'verification');
-      } else if (content.toLowerCase().includes('earthing') || content.toLowerCase().includes('bonding')) {
-        topic = 'Earthing & Bonding';
-        keywords.push('earthing', 'bonding', 'protection');
+      if (content.toLowerCase().includes('planning') || content.toLowerCase().includes('overseeing')) {
+        topic = 'Planning & Supervision';
+        keywords.push('planning', 'supervision', 'work programmes');
+      } else if (content.toLowerCase().includes('electrical science') || content.toLowerCase().includes('transformer')) {
+        topic = 'Advanced Electrical Science';
+        keywords.push('electrical science', 'transformers', 'three phase');
+      } else if (content.toLowerCase().includes('motor') && content.toLowerCase().includes('control')) {
+        topic = 'Motor Control Systems';
+        keywords.push('motor control', 'DOL', 'star-delta');
+      } else if (content.toLowerCase().includes('lighting') && content.toLowerCase().includes('design')) {
+        topic = 'Lighting Design';
+        keywords.push('lighting design', 'lux levels', 'illumination');
+      } else if (content.toLowerCase().includes('heating') || content.toLowerCase().includes('thermal')) {
+        topic = 'Electrical Heating Systems';
+        keywords.push('heating', 'thermal storage', 'appliances');
+      } else if (content.toLowerCase().includes('design') && content.toLowerCase().includes('calculation')) {
+        topic = 'Electrical Design & Calculations';
+        keywords.push('design calculations', 'diversity', 'volt drop');
+      } else if (content.toLowerCase().includes('earthing') && content.toLowerCase().includes('arrangement')) {
+        topic = 'Earthing Arrangements';
+        keywords.push('TN-S', 'TN-C-S', 'TT', 'earthing systems');
+      } else if (content.toLowerCase().includes('test') || content.toLowerCase().includes('commission')) {
+        topic = 'Testing & Commissioning';
+        keywords.push('testing', 'commissioning', 'certification');
+      } else if (content.toLowerCase().includes('fault') && content.toLowerCase().includes('diagnosis')) {
+        topic = 'Fault Diagnosis';
+        keywords.push('fault finding', 'diagnosis', 'rectification');
       }
 
       chunks.push({
         section: chapterTitle || `Section at line ${i}`,
         content,
         metadata: {
-          document: 'City & Guilds Book 1',
+          document: 'City & Guilds Level 3 Advanced Technical Diploma (8202-30)',
           chapter_number: chapterNumber,
           chapter_title: chapterTitle,
           topic,
@@ -84,7 +96,7 @@ serve(async (req) => {
       });
     }
 
-    console.log(`✅ Parsed ${chunks.length} chunks from City & Guilds Book 1`);
+    console.log(`✅ Parsed ${chunks.length} chunks from City & Guilds Level 3`);
     console.log(`📊 Topics: ${[...new Set(chunks.map(c => c.metadata.topic))].slice(0, 5).join(', ')}`);
 
     const response = await fetch(`${supabaseUrl}/functions/v1/process-pdf-embeddings`, {
@@ -98,9 +110,9 @@ serve(async (req) => {
           section: chunk.section,
           content: chunk.content,
           metadata: chunk.metadata,
-          source: 'city-guilds-book-1'
+          source: 'city-guilds-level-3'
         })),
-        source: 'city-guilds-book-1'
+        source: 'city-guilds-level-3'
       }),
     });
 
@@ -109,7 +121,7 @@ serve(async (req) => {
     }
 
     const result = await response.json();
-    console.log('✅ City & Guilds Book 1 embeddings created successfully');
+    console.log('✅ City & Guilds Level 3 embeddings created successfully');
 
     return new Response(JSON.stringify({ 
       success: true,
@@ -120,7 +132,7 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Error processing City & Guilds Book 1:', error);
+    console.error('❌ Error processing City & Guilds Level 3:', error);
     return new Response(JSON.stringify({ 
       error: error instanceof Error ? error.message : 'Processing failed' 
     }), {

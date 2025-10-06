@@ -257,3 +257,15 @@ verify_jwt = false
 
 [functions.parse-inservice-testing]
 verify_jwt = false
+
+[functions.parse-health-safety-management]
+verify_jwt = false
+
+[functions.parse-nebosh-igc]
+verify_jwt = false
+
+[functions.parse-city-guilds-level-2]
+verify_jwt = false
+
+[functions.parse-city-guilds-level-3]
+verify_jwt = false

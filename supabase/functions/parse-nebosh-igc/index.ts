@@ -24,7 +24,7 @@ serve(async (req) => {
   }
 
   try {
-    console.log('📗 Starting City & Guilds Book 1 processing...');
+    console.log('🎓 Starting NEBOSH IGC Course Notes processing...');
     
     const { fileContent } = await req.json();
     
@@ -39,7 +39,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
     const chunks: Chunk[] = [];
-    const chunkSize = 110;
+    const chunkSize = 100;
 
     for (let i = 0; i < lines.length; i += chunkSize) {
       const chunkLines = lines.slice(i, i + chunkSize);
@@ -47,35 +47,44 @@ serve(async (req) => {
       
       if (content.length < 100) continue;
 
-      const chapterMatch = content.match(/(?:Chapter|Unit)\s+(\d+)[:\s-]+([^\n]+)/i);
+      const chapterMatch = content.match(/(?:Element|Chapter|Section)\s+(\d+)[:\s-]+([^\n]+)/i);
       const chapterNumber = chapterMatch ? chapterMatch[1] : undefined;
       const chapterTitle = chapterMatch ? chapterMatch[2]?.trim() : undefined;
 
-      let topic = 'General Installation Principles';
-      let keywords: string[] = ['City & Guilds', 'electrical installation'];
+      let topic = 'NEBOSH IGC General';
+      let keywords: string[] = ['NEBOSH', 'IGC', 'international certificate'];
 
-      if (content.toLowerCase().includes('health') && content.toLowerCase().includes('safety')) {
-        topic = 'Health & Safety';
-        keywords.push('H&S', 'PPE', 'risk assessment');
-      } else if (content.toLowerCase().includes('cable') && (content.toLowerCase().includes('select') || content.toLowerCase().includes('size'))) {
-        topic = 'Cable Selection & Sizing';
-        keywords.push('cable sizing', 'current capacity', 'volt drop');
-      } else if (content.toLowerCase().includes('isolat') || content.toLowerCase().includes('switch')) {
-        topic = 'Safe Isolation Procedures';
-        keywords.push('isolation', 'switching', 'safety');
-      } else if (content.toLowerCase().includes('test') || content.toLowerCase().includes('inspect')) {
-        topic = 'Testing & Inspection Methods';
-        keywords.push('testing', 'inspection', 'verification');
-      } else if (content.toLowerCase().includes('earthing') || content.toLowerCase().includes('bonding')) {
-        topic = 'Earthing & Bonding';
-        keywords.push('earthing', 'bonding', 'protection');
+      if (content.toLowerCase().includes('legal') || content.toLowerCase().includes('legislation')) {
+        topic = 'Health & Safety Legislation';
+        keywords.push('legislation', 'legal framework', 'compliance');
+      } else if (content.toLowerCase().includes('management system') || content.toLowerCase().includes('sms')) {
+        topic = 'Safety Management Systems';
+        keywords.push('SMS', 'management systems', 'policy');
+      } else if (content.toLowerCase().includes('chemical') || content.toLowerCase().includes('substance')) {
+        topic = 'Chemical & Substance Hazards';
+        keywords.push('chemicals', 'substances', 'COSHH');
+      } else if (content.toLowerCase().includes('electrical') || content.toLowerCase().includes('shock')) {
+        topic = 'Electrical Safety';
+        keywords.push('electrical hazards', 'shock', 'arc flash');
+      } else if (content.toLowerCase().includes('fire') || content.toLowerCase().includes('explosion')) {
+        topic = 'Fire & Explosion Prevention';
+        keywords.push('fire safety', 'explosion', 'flammable');
+      } else if (content.toLowerCase().includes('transport') || content.toLowerCase().includes('vehicle')) {
+        topic = 'Transport & Vehicle Safety';
+        keywords.push('transport safety', 'vehicle operations', 'driving');
+      } else if (content.toLowerCase().includes('welfare') || content.toLowerCase().includes('wellbeing')) {
+        topic = 'Health & Welfare';
+        keywords.push('welfare', 'wellbeing', 'occupational health');
+      } else if (content.toLowerCase().includes('noise') || content.toLowerCase().includes('vibration')) {
+        topic = 'Physical Hazards';
+        keywords.push('noise', 'vibration', 'temperature');
       }
 
       chunks.push({
         section: chapterTitle || `Section at line ${i}`,
         content,
         metadata: {
-          document: 'City & Guilds Book 1',
+          document: 'NEBOSH IGC IG1 Course Notes',
           chapter_number: chapterNumber,
           chapter_title: chapterTitle,
           topic,
@@ -84,7 +93,7 @@ serve(async (req) => {
       });
     }
 
-    console.log(`✅ Parsed ${chunks.length} chunks from City & Guilds Book 1`);
+    console.log(`✅ Parsed ${chunks.length} chunks from NEBOSH IGC`);
     console.log(`📊 Topics: ${[...new Set(chunks.map(c => c.metadata.topic))].slice(0, 5).join(', ')}`);
 
     const response = await fetch(`${supabaseUrl}/functions/v1/process-pdf-embeddings`, {
@@ -98,9 +107,9 @@ serve(async (req) => {
           section: chunk.section,
           content: chunk.content,
           metadata: chunk.metadata,
-          source: 'city-guilds-book-1'
+          source: 'nebosh-igc'
         })),
-        source: 'city-guilds-book-1'
+        source: 'nebosh-igc'
       }),
     });
 
@@ -109,7 +118,7 @@ serve(async (req) => {
     }
 
     const result = await response.json();
-    console.log('✅ City & Guilds Book 1 embeddings created successfully');
+    console.log('✅ NEBOSH IGC embeddings created successfully');
 
     return new Response(JSON.stringify({ 
       success: true,
@@ -120,7 +129,7 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Error processing City & Guilds Book 1:', error);
+    console.error('❌ Error processing NEBOSH IGC:', error);
     return new Response(JSON.stringify({ 
       error: error instanceof Error ? error.message : 'Processing failed' 
     }), {

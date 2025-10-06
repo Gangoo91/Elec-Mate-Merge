@@ -10,10 +10,11 @@ interface Chunk {
   section: string;
   content: string;
   metadata: {
-    standard: string;
+    document: string;
+    chapter_number?: string;
+    chapter_title?: string;
     topic: string;
     keywords: string[];
-    section_number?: string;
   };
 }
 
@@ -23,39 +24,33 @@ serve(async (req) => {
   }
 
   try {
-    console.log('📘 Starting Emergency Lighting Guide processing...');
+    console.log('💡 Starting Emergency Lighting Guide processing...');
     
+    const { fileContent } = await req.json();
+    
+    if (!fileContent) {
+      throw new Error('No file content provided in request body');
+    }
+    
+    const lines = fileContent.split('\n');
+    console.log(`📄 Total lines: ${lines.length}`);
+
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-    // Fetch from Supabase Storage
-    const fileUrl = `${supabaseUrl}/storage/v1/object/public/safety-resources/EMERGENCY-LIGHTING.txt`;
-    console.log(`Fetching from: ${fileUrl}`);
-    
-    const fileResponse = await fetch(fileUrl);
-    if (!fileResponse.ok) {
-      throw new Error(`Failed to fetch file: ${fileResponse.status}`);
-    }
-    
-    const fileContent = await fileResponse.text();
-    const lines = fileContent.split('\n');
-    
-    console.log(`📄 Total lines: ${lines.length}`);
-
     const chunks: Chunk[] = [];
-    const chunkSize = 80; // Smaller chunks for focused emergency lighting content
+    const chunkSize = 100;
 
     for (let i = 0; i < lines.length; i += chunkSize) {
       const chunkLines = lines.slice(i, i + chunkSize);
       const content = chunkLines.join('\n').trim();
       
-      if (content.length < 50) continue;
+      if (content.length < 100) continue;
 
-      // Extract section information
-      const sectionMatch = content.match(/(?:Section|Chapter)\s+(\d+\.?\d*)/i);
-      const sectionNumber = sectionMatch ? sectionMatch[1] : `Line ${i}`;
+      const chapterMatch = content.match(/(?:Chapter|Section)\s+(\d+)[:\s-]+([^\n]+)/i);
+      const chapterNumber = chapterMatch ? chapterMatch[1] : undefined;
+      const chapterTitle = chapterMatch ? chapterMatch[2]?.trim() : undefined;
 
-      // Determine topic from content
       let topic = 'Emergency Lighting Systems';
       let keywords: string[] = ['emergency lighting', 'BS 5266'];
 
@@ -68,33 +63,27 @@ serve(async (req) => {
       } else if (content.toLowerCase().includes('design') || content.toLowerCase().includes('calculation')) {
         topic = 'Emergency Lighting Design';
         keywords.push('design', 'calculations', 'lux levels');
-      } else if (content.toLowerCase().includes('exit') || content.toLowerCase().includes('sign')) {
-        topic = 'Exit Signs & Signage';
-        keywords.push('exit signs', 'safety signs', 'signage');
       } else if (content.toLowerCase().includes('battery') || content.toLowerCase().includes('duration')) {
         topic = 'Battery Systems & Duration';
         keywords.push('battery', 'duration', 'autonomy');
-      } else if (content.toLowerCase().includes('maintained') || content.toLowerCase().includes('non-maintained')) {
-        topic = 'Lighting Modes';
-        keywords.push('maintained', 'non-maintained', 'sustained');
       }
 
       chunks.push({
-        section: `Section ${sectionNumber}`,
+        section: chapterTitle || `Section at line ${i}`,
         content,
         metadata: {
-          standard: 'BS 5266',
+          document: 'Emergency Lighting Guide (BS 5266)',
+          chapter_number: chapterNumber,
+          chapter_title: chapterTitle,
           topic,
-          keywords,
-          section_number: sectionNumber
+          keywords
         }
       });
     }
 
     console.log(`✅ Parsed ${chunks.length} chunks from Emergency Lighting Guide`);
-    console.log(`📊 Sample topics: ${[...new Set(chunks.map(c => c.metadata.topic))].slice(0, 5).join(', ')}`);
+    console.log(`📊 Topics: ${[...new Set(chunks.map(c => c.metadata.topic))].slice(0, 5).join(', ')}`);
 
-    // Send to processing function
     const response = await fetch(`${supabaseUrl}/functions/v1/process-pdf-embeddings`, {
       method: 'POST',
       headers: {
