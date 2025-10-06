@@ -61,8 +61,17 @@ const calculateVoltageDrop = () => {
     if (I > 0 && L > 0 && R && V > 0 && pf > 0) {
       const limit = circuitType === "lighting" ? 3 : 5; // BS 7671 design limits
       
-      // Approximate reactance (simplified for apprentice level)
-      const X = R * 0.1; // Typical reactance is about 10% of resistance for most cables
+      // Cable reactance based on BS 7671 Appendix 4 (mΩ/m)
+      // Varies with cable size: small cables ~0.08, medium ~0.15, large ~0.20
+      const cableSizeMm = parseFloat(cableSize);
+      let X;
+      if (cableSizeMm < 6) {
+        X = R * 0.08; // Small cables: low reactance
+      } else if (cableSizeMm < 25) {
+        X = R * 0.15; // Medium cables
+      } else {
+        X = R * 0.20; // Large cables: higher reactance
+      }
       
       const vdVolts =
         phase === "single"

@@ -65,13 +65,13 @@ const ACPowerCalculator = () => {
     const eff = parseFloat(efficiency) || 100;
     const f = parseFloat(frequency);
     
-    // Normalize voltage to line-to-neutral for single phase or line-to-line for 3-phase
-    if (phaseSystem === "single" && voltageType === "L-L") {
-      V = V / Math.sqrt(3); // Convert L-L to L-N for single phase equivalent
-    }
+    // Normalize voltage based on system type
+    // For single-phase, only L-N voltage is valid (230V in UK)
+    // For three-phase, convert L-N to L-L if needed (400V line-to-line)
     if (phaseSystem === "three" && voltageType === "L-N") {
       V = V * Math.sqrt(3); // Convert L-N to L-L for 3-phase
     }
+    // Note: Single-phase L-L voltage doesn't exist, so we don't convert it
     
     // Calculate power values
     let S, P, Q, phaseAngle;
