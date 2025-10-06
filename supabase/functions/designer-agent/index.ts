@@ -277,19 +277,24 @@ function extractCircuitParams(userMessage: string, currentDesign: any): any {
   // Determine circuit type and location
   let circuitType = 'socket';
   let location = '';
-  if (userMessage.toLowerCase().includes('shower')) circuitType = 'shower';
-  else if (userMessage.toLowerCase().includes('cooker')) circuitType = 'cooker';
-  else if (userMessage.toLowerCase().includes('light')) circuitType = 'lighting';
+  const msgLower = userMessage.toLowerCase();
   
-  if (userMessage.toLowerCase().includes('bath')) {
+  if (msgLower.includes('shower')) circuitType = 'shower';
+  else if (msgLower.includes('cooker')) circuitType = 'cooker';
+  else if (msgLower.includes('light')) circuitType = 'lighting';
+  
+  // CRITICAL: EV charger detection
+  if (msgLower.includes('ev') || msgLower.includes('charger') || msgLower.includes('charging point')) {
+    circuitType = 'ev-charger';
+    location = 'ev-charging';
+  }
+  
+  if (msgLower.includes('bath')) {
     circuitType = 'bathroom';
     location = 'bathroom';
   }
-  if (userMessage.toLowerCase().includes('outdoor') || userMessage.toLowerCase().includes('outside')) {
-    location = 'outdoor';
-  }
-  if (userMessage.toLowerCase().includes('ev') || userMessage.toLowerCase().includes('charging')) {
-    location = 'ev-charging';
+  if (msgLower.includes('outdoor') || msgLower.includes('outside') || msgLower.includes('garage')) {
+    location = location || 'outdoor';
   }
 
   return {

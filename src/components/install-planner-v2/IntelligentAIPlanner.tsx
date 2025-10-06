@@ -16,6 +16,32 @@ import { useNavigate, useLocation } from "react-router-dom";
 // Feature flag to toggle between orchestrator and legacy designer
 const USE_ORCHESTRATOR = true;
 
+// Helper functions for agent display
+const getAgentEmoji = (agent: string) => {
+  const emojis: Record<string, string> = {
+    'designer': '🎨',
+    'cost-engineer': '💰',
+    'installer': '🔧',
+    'health-safety': '🦺',
+    'commissioning': '✅',
+    'project-manager': '📋',
+    'cache': '⚡'
+  };
+  return emojis[agent] || '🤖';
+};
+
+const getAgentName = (agent: string) => {
+  const names: Record<string, string> = {
+    'designer': 'Circuit Designer',
+    'cost-engineer': 'Cost Engineer',
+    'installer': 'Installation Specialist',
+    'health-safety': 'Health & Safety',
+    'commissioning': 'Testing & Commissioning',
+    'project-manager': 'Project Manager'
+  };
+  return names[agent] || agent;
+};
+
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -87,6 +113,15 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     onAgentStart: (agent, index, total) => {
       console.log(`Agent ${agent} starting (${index + 1}/${total})`);
       setCurrentAction(`Consulting ${agent}...`);
+      setCurrentAgent(agent);
+      
+      // Create new assistant message for this agent
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: '',
+        activeAgents: [agent]
+      }]);
+      
       setReasoningSteps(prev => prev.map(step => 
         step.agent === agent 
           ? { ...step, status: 'active' as const, reasoning: `Now speaking...` }
@@ -95,7 +130,18 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     },
     onAgentResponse: (agent, response) => {
       console.log(`Agent ${agent} responded:`, response.slice(0, 100));
-      // Response is already being added to the message via onToken
+      
+      // Update the last message with this agent's response
+      setMessages(prev => {
+        const newMessages = [...prev];
+        const lastMsg = newMessages[newMessages.length - 1];
+        
+        if (lastMsg && lastMsg.role === 'assistant' && lastMsg.activeAgents?.includes(agent)) {
+          lastMsg.content = response;
+        }
+        
+        return newMessages;
+      });
     },
     onAgentComplete: (agent, nextAgent) => {
       console.log(`Agent ${agent} complete, next: ${nextAgent}`);
@@ -158,44 +204,19 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     setConsultationPaused(false);
     setReasoningSteps([]);
 
-    // Add empty assistant message for streaming
-    const assistantMessageIndex = messages.length + 1;
-    setStreamingMessageIndex(assistantMessageIndex);
-    setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
+    // Don't add empty message - agents will create their own messages via onAgentStart
 
     try {
       await streamMessage(
         [...messages, { role: 'user', content: userMessage }],
         { circuits: planData.circuits || [] },
-        // On each token
+        // On each token (legacy, not used in multi-agent mode)
         (token) => {
-          setMessages(prev => {
-            const newMessages = [...prev];
-            if (newMessages[assistantMessageIndex]) {
-              newMessages[assistantMessageIndex] = {
-                ...newMessages[assistantMessageIndex],
-                content: newMessages[assistantMessageIndex].content + token
-              };
-            }
-            return newMessages;
-          });
+          // Tokens are now handled by onAgentResponse
         },
         // On complete
         (fullMessage, data) => {
-          setMessages(prev => {
-            const newMessages = [...prev];
-            if (newMessages[assistantMessageIndex]) {
-              newMessages[assistantMessageIndex] = {
-                role: 'assistant',
-                content: fullMessage,
-                citations: data.citations,
-                toolCalls: data.toolCalls,
-                activeAgents: data.activeAgents
-              };
-            }
-            return newMessages;
-          });
-
+          // Final message updates handled by onAgentResponse
           // Mark reasoning steps as complete
           setReasoningSteps(prev => prev.map(step => ({ ...step, status: 'complete' as const })));
 
@@ -459,7 +480,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               {/* AI Avatar - only for assistant messages */}
               {message.role === 'assistant' && (
                 <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-lg">
-                  {index === streamingMessageIndex ? '🤔' : '✅'}
+                  {message.activeAgents && message.activeAgents.length > 0 
+                    ? getAgentEmoji(message.activeAgents[0])
+                    : '✅'}
                 </div>
               )}
 
@@ -479,14 +502,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                         variant="outline" 
                         className="text-xs bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
                       >
-                        {agent === 'designer' && '🎨'}
-                        {agent === 'health-safety' && '🦺'}
-                        {agent === 'cost-engineer' && '💰'}
-                        {agent === 'installer' && '🔧'}
-                        {agent === 'commissioning' && '✅'}
-                        {agent === 'cache' && '⚡'}
-                        {' '}
-                        {agent}
+                        {getAgentEmoji(agent)} {getAgentName(agent)}
                       </Badge>
                     ))}
                   </div>

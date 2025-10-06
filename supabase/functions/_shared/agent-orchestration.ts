@@ -56,26 +56,31 @@ export async function planAgentSequence(
 ): Promise<AgentPlan> {
   
   try {
+    console.log('📋 Using RULE-BASED agent planning (fast, deterministic)');
+    
     // Defensive check: ensure intents object exists
     if (!intentAnalysis || !intentAnalysis.intents) {
-      console.warn('⚠️ Invalid intent analysis, using fallback');
-      return createFallbackPlan({ 
-        intents: { design: 0.6, cost: 0.5, installation: 0.5, commissioning: 0.4 }, 
-        primaryIntent: 'design',
-        reasoning: 'Fallback due to missing intent data',
-        requiresClarification: false 
-      });
+      console.warn('⚠️ Invalid intent analysis, using default full sequence');
+      return createStandardSequence('Full design workflow');
     }
 
-    // Simple cases: Single high-confidence intent
-    const highConfidenceIntents = Object.entries(intentAnalysis.intents)
+    // Get intent scores (with safe defaults)
+    const intents = intentAnalysis.intents || {};
+    const designScore = intents.design || intents.designer || 0;
+    const costScore = intents.cost || intents['cost-engineer'] || 0;
+    const installScore = intents.installation || intents.installer || 0;
+    const commissionScore = intents.commissioning || 0;
+
+    // RULE 1: Single high-confidence intent
+    const highConfidenceIntents = Object.entries(intents)
       .filter(([_, score]) => score >= 0.7)
-      .map(([agent, score]) => ({ agent, score }));
+      .map(([agent, score]) => ({ agent: normaliseIntentKey(agent), score }));
 
     if (highConfidenceIntents.length === 1) {
+      console.log(`✅ Single high-confidence intent: ${highConfidenceIntents[0].agent}`);
       return {
         sequence: [{
-          agent: highConfidenceIntents[0].agent as any,
+          agent: highConfidenceIntents[0].agent,
           priority: 1,
           reasoning: `Primary focus on ${highConfidenceIntents[0].agent}`,
           dependencies: []
@@ -85,93 +90,140 @@ export async function planAgentSequence(
       };
     }
 
-  // Complex cases: Use GPT-5 to plan sequence
-  const planningPrompt = `You're planning which electrical specialists to consult and in what order.
-
-User query: "${userQuery}"
-Conversation context: ${conversationSummary.lastTopic}
-Intent scores: ${JSON.stringify(intentAnalysis.intents)}
-
-Available agents:
-- designer: Circuit design, calculations, BS 7671 compliance
-- cost-engineer: Material pricing, budget estimates
-- installer: Practical installation guidance
-- commissioning: Testing and certification
-
-Plan the optimal sequence. For example:
-- If asking about a new circuit: designer → cost-engineer → installer → commissioning
-- If asking about testing: commissioning only
-- If asking about cost: cost-engineer only (unless design not done yet, then designer → cost-engineer)
-
-Return JSON:
-{
-  "sequence": [
-    {
-      "agent": "designer",
-      "priority": 1,
-      "reasoning": "Need design calculations first",
-      "dependencies": []
-    },
-    {
-      "agent": "cost-engineer",
-      "priority": 2,
-      "reasoning": "Cost depends on design output",
-      "dependencies": ["designer"]
+    // RULE 2: Testing/commissioning only query
+    if (commissionScore >= 0.6 && designScore < 0.4 && costScore < 0.4) {
+      console.log('✅ Testing/commissioning query detected');
+      return {
+        sequence: [{
+          agent: 'commissioning',
+          priority: 1,
+          reasoning: 'Testing and commissioning focus',
+          dependencies: []
+        }],
+        reasoning: 'Commissioning-only request',
+        estimatedComplexity: 'simple'
+      };
     }
-  ],
-  "reasoning": "Overall strategy explanation",
-  "estimatedComplexity": "simple" | "moderate" | "complex"
-}`;
 
-  try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-5-2025-08-07',
-        messages: [
-          { role: 'system', content: 'You are an agent coordination planner. Return valid JSON.' },
-          { role: 'user', content: planningPrompt }
-        ],
-        response_format: { type: "json_object" },
-        max_completion_tokens: 600
-      }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      const plan = JSON.parse(data.choices[0]?.message?.content || '{}');
-      console.log('📋 Agent Plan:', plan);
-      return plan as AgentPlan;
+    // RULE 3: Cost-only query (but not if design needed)
+    if (costScore >= 0.6 && designScore < 0.4 && installScore < 0.4) {
+      console.log('✅ Cost estimation query detected');
+      return {
+        sequence: [{
+          agent: 'cost-engineer',
+          priority: 1,
+          reasoning: 'Pricing and cost focus',
+          dependencies: []
+        }],
+        reasoning: 'Cost-only request',
+        estimatedComplexity: 'simple'
+      };
     }
-  } catch (error) {
-    console.error('Planning failed, using fallback:', error);
-  }
 
-  // Fallback: Create sequence based on intent scores (with safe defaults)
-  return createFallbackPlan(
-    intentAnalysis?.intents 
-      ? intentAnalysis 
-      : { 
-          intents: { design: 0.6, cost: 0.5, installation: 0.5, commissioning: 0.4 }, 
-          primaryIntent: 'design', 
-          reasoning: 'Planner fallback', 
-          requiresClarification: false 
-        }
-  );
+    // RULE 4: Installation-only query (practical guidance)
+    if (installScore >= 0.6 && designScore < 0.4 && commissionScore < 0.4) {
+      console.log('✅ Installation guidance query detected');
+      return {
+        sequence: [{
+          agent: 'installer',
+          priority: 1,
+          reasoning: 'Practical installation focus',
+          dependencies: []
+        }],
+        reasoning: 'Installation-only request',
+        estimatedComplexity: 'simple'
+      };
+    }
+
+    // RULE 5: New circuit design (full workflow)
+    // If design score is high, use standard sequence: designer → cost → installer → commissioning
+    if (designScore >= 0.5) {
+      console.log('✅ Full circuit design detected - using standard sequence');
+      return createStandardSequence('Complete circuit design workflow');
+    }
+
+    // RULE 6: Multiple intents (partial workflow)
+    // Build sequence based on which intents are present
+    const sequence: AgentStep[] = [];
+    let priority = 1;
+
+    if (designScore >= 0.4) {
+      sequence.push({
+        agent: 'designer',
+        priority: priority++,
+        reasoning: 'Circuit design and calculations',
+        dependencies: []
+      });
+    }
+
+    if (costScore >= 0.4) {
+      sequence.push({
+        agent: 'cost-engineer',
+        priority: priority++,
+        reasoning: 'Pricing and budgeting',
+        dependencies: designScore >= 0.4 ? ['designer'] : []
+      });
+    }
+
+    if (installScore >= 0.4) {
+      sequence.push({
+        agent: 'installer',
+        priority: priority++,
+        reasoning: 'Installation guidance',
+        dependencies: designScore >= 0.4 ? ['designer'] : []
+      });
+    }
+
+    if (commissionScore >= 0.4) {
+      sequence.push({
+        agent: 'commissioning',
+        priority: priority++,
+        reasoning: 'Testing and certification',
+        dependencies: []
+      });
+    }
+
+    // Ensure we have at least one agent
+    if (sequence.length === 0) {
+      console.warn('⚠️ No clear intents, using default designer');
+      return {
+        sequence: [{
+          agent: 'designer',
+          priority: 1,
+          reasoning: 'Default - need more context',
+          dependencies: []
+        }],
+        reasoning: 'Unclear request - starting with design',
+        estimatedComplexity: 'simple'
+      };
+    }
+
+    console.log(`✅ Built sequence from intents: ${sequence.map(s => s.agent).join(' → ')}`);
+    
+    return {
+      sequence,
+      reasoning: 'Rule-based planning from intent analysis',
+      estimatedComplexity: sequence.length > 2 ? 'complex' : 'moderate'
+    };
+
   } catch (outerError) {
     console.error('❌ Critical error in planAgentSequence:', outerError);
-    // Ultimate fallback with safe defaults
-    return createFallbackPlan({
-      intents: { design: 0.8 },
-      primaryIntent: 'design',
-      reasoning: 'Emergency fallback - critical error',
-      requiresClarification: false
-    });
+    return createStandardSequence('Emergency fallback - full workflow');
   }
+}
+
+// Helper: Create standard full sequence
+function createStandardSequence(reasoning: string): AgentPlan {
+  return {
+    sequence: [
+      { agent: 'designer', priority: 1, reasoning: 'Circuit design and calculations', dependencies: [] },
+      { agent: 'cost-engineer', priority: 2, reasoning: 'Material and labour pricing', dependencies: ['designer'] },
+      { agent: 'installer', priority: 3, reasoning: 'Practical installation guidance', dependencies: ['designer'] },
+      { agent: 'commissioning', priority: 4, reasoning: 'Testing and certification', dependencies: [] }
+    ],
+    reasoning,
+    estimatedComplexity: 'complex' as const
+  };
 }
 
 function createFallbackPlan(intentAnalysis: IntentAnalysis): AgentPlan {
