@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_response_cache: {
+        Row: {
+          cache_key: string
+          citations: Json | null
+          confidence: number | null
+          created_at: string
+          hits: number | null
+          id: string
+          query: string
+          response: string
+          timestamp: string
+        }
+        Insert: {
+          cache_key: string
+          citations?: Json | null
+          confidence?: number | null
+          created_at?: string
+          hits?: number | null
+          id?: string
+          query: string
+          response: string
+          timestamp?: string
+        }
+        Update: {
+          cache_key?: string
+          citations?: Json | null
+          confidence?: number | null
+          created_at?: string
+          hits?: number | null
+          id?: string
+          query?: string
+          response?: string
+          timestamp?: string
+        }
+        Relationships: []
+      }
       assessment_tracking: {
         Row: {
           assessment_type: string
@@ -4433,6 +4469,10 @@ export type Database = {
       can_access_quote_via_token: {
         Args: { q_id: string; token: string }
         Returns: boolean
+      }
+      cleanup_ai_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
       cleanup_expired_cables_cache: {
         Args: Record<PropertyKey, never>
