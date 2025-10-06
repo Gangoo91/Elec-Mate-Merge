@@ -227,3 +227,6 @@ verify_jwt = false
 
 [functions.parse-onsite-guide]
 verify_jwt = false
+
+[functions.parse-guidance-note-3]
+verify_jwt = false
