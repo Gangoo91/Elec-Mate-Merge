@@ -76,7 +76,11 @@ export const ReasoningPanel = ({ steps, isVisible }: ReasoningPanelProps) => {
               </div>
               
               {step.reasoning && (
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <p className={`text-xs leading-relaxed ${
+                  step.reasoning.includes('Ready for questions') 
+                    ? 'text-elec-yellow font-medium' 
+                    : 'text-muted-foreground'
+                }`}>
                   {step.reasoning}
                 </p>
               )}

@@ -51,7 +51,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [isExporting, setIsExporting] = useState(false);
   const [showComplexMode, setShowComplexMode] = useState(false);
   const [consultationStarted, setConsultationStarted] = useState(false);
-  const [consultationComplete, setConsultationComplete] = useState(false);
+  const [consultationPaused, setConsultationPaused] = useState(false);
+  const [currentAgent, setCurrentAgent] = useState<string | null>(null);
+  const [nextAgent, setNextAgent] = useState<string | null>(null);
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -82,21 +84,25 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       console.log(`Agent ${agent} complete, next: ${nextAgent}`);
       setReasoningSteps(prev => prev.map(step => 
         step.agent === agent 
-          ? { ...step, status: 'complete' as const, reasoning: `Consultation complete` }
+          ? { ...step, status: 'complete' as const, reasoning: `Ready for questions` }
           : step
       ));
-      if (nextAgent) {
-        setCurrentAction(`Handing over to ${nextAgent}...`);
+      setCurrentAgent(agent);
+      setNextAgent(nextAgent);
+      setConsultationPaused(true);
+      setCurrentAction('');
+      
+      // Don't auto-advance, let user interact
+      if (!nextAgent) {
+        toast.success("All specialists consulted!", {
+          description: "You can ask follow-up questions or view results."
+        });
       }
     },
     onAllAgentsComplete: (agentOutputs) => {
       console.log('All agents complete:', agentOutputs);
-      setConsultationComplete(true);
       setCurrentAction('');
       setReasoningSteps(prev => prev.map(step => ({ ...step, status: 'complete' as const })));
-      toast.success("Consultation Complete! 🎉", {
-        description: "All specialists have reviewed your design. View the detailed results."
-      });
     },
     onAgentUpdate: (agents) => {
       setActiveAgents(agents);
@@ -123,6 +129,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     setInput("");
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
+    setConsultationPaused(false);
     setReasoningSteps([]);
 
     // Add empty assistant message for streaming
@@ -499,22 +506,48 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       {/* Input Area - WhatsApp style */}
       <div className="flex-none bg-elec-dark border-t border-border/30 px-4 py-3">
         <div className="space-y-2">
-          {/* View Results Button - show when consultation is complete */}
-          {consultationComplete && (
-            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-elec-yellow">All Specialists Have Reviewed Your Design!</p>
-                  <p className="text-xs text-muted-foreground mt-1">View detailed contributions from each agent</p>
+          {/* Agent Pause Controls */}
+          {consultationPaused && (
+            <div className="bg-elec-card border border-elec-yellow/30 rounded-lg p-3">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-white">
+                      {currentAgent === 'designer' && '🎨 Designer'} 
+                      {currentAgent === 'cost-engineer' && '💰 Cost Engineer'}
+                      {currentAgent === 'installer' && '🔧 Installer'}
+                      {currentAgent === 'commissioning' && '✅ Commissioning'}
+                      {' '}ready for questions
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {nextAgent ? `Next: ${nextAgent}` : 'All specialists consulted'}
+                    </p>
+                  </div>
                 </div>
-                <Button
-                  onClick={handleViewResults}
-                  size="sm"
-                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                >
-                  <CheckCircle2 className="h-4 w-4 mr-2" />
-                  View Results
-                </Button>
+                <div className="flex gap-2 flex-wrap">
+                  {nextAgent && (
+                    <Button
+                      onClick={() => {
+                        setConsultationPaused(false);
+                        setInput(`Continue to ${nextAgent}`);
+                        setTimeout(() => handleSend(), 100);
+                      }}
+                      size="sm"
+                      className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                    >
+                      Continue to {nextAgent === 'cost-engineer' ? 'Cost Engineer' : nextAgent === 'installer' ? 'Installer' : 'Commissioning'}
+                    </Button>
+                  )}
+                  <Button
+                    onClick={handleViewResults}
+                    size="sm"
+                    variant="outline"
+                    className="border-elec-yellow/30 text-white"
+                  >
+                    <CheckCircle2 className="h-4 w-4 mr-2" />
+                    View Results
+                  </Button>
+                </div>
               </div>
             </div>
           )}
@@ -554,7 +587,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Type your question..."
+              placeholder={consultationPaused && currentAgent ? `Ask ${currentAgent} a follow-up...` : "Type your question..."}
               disabled={isLoading}
               className="flex-1 h-11 text-sm rounded-full px-4 bg-white/5 border-white/10 text-white placeholder:text-muted-foreground"
             />

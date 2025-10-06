@@ -102,6 +102,10 @@ serve(async (req) => {
       });
     }
 
+    // Detect if this is a follow-up question to a specific agent
+    const followUpMatch = latestMessage.match(/Continue to (designer|cost-engineer|installer|commissioning)/i);
+    const isFollowUpToAgent = messages.length > 3 && !followUpMatch && !latestMessage.toLowerCase().includes('design') && !latestMessage.toLowerCase().includes('new');
+    
     // Plan agent sequence
     console.log('📋 Planning agent conversation sequence...');
     const agentPlan = await planAgentSequence(intentAnalysis, conversationSummary, latestMessage, openAIApiKey);
@@ -117,8 +121,29 @@ serve(async (req) => {
       }];
     }
     
+    // If user is asking follow-up, route to the last active agent only
+    if (isFollowUpToAgent && conversationState.circuits.length > 0) {
+      const lastAgentMessage = [...messages].reverse().find(m => 
+        m.role === 'assistant' && m.content.length > 50
+      );
+      
+      if (lastAgentMessage) {
+        // Detect which agent this was from based on content patterns
+        const agentFromMessage = detectAgentFromMessage(lastAgentMessage.content);
+        if (agentFromMessage) {
+          console.log(`🎯 Follow-up question detected for ${agentFromMessage}`);
+          agentPlan.sequence = [{
+            agent: agentFromMessage,
+            priority: 1,
+            reasoning: 'Follow-up question',
+            dependencies: []
+          }];
+        }
+      }
+    }
+    
     // Filter by user-selected agents if provided
-    if (selectedAgents && selectedAgents.length > 0) {
+    if (selectedAgents && selectedAgents.length > 0 && !isFollowUpToAgent) {
       console.log('🎯 Filtering to user-selected agents:', selectedAgents);
       agentPlan.sequence = agentPlan.sequence.filter((step: any) => 
         selectedAgents.includes(step.agent)
@@ -253,7 +278,10 @@ async function handleConversationalMode(
               body: { 
                 messages: agentMessages,
                 currentDesign,
-                context: agentContext
+                context: {
+                  ...agentContext,
+                  structuredKnowledge: buildStructuredContext(agentContext.previousAgentOutputs)
+                }
               }
             });
 
@@ -425,7 +453,7 @@ async function handleSynthesisMode(
   });
 }
 
-// Helper: Build context-aware messages for each agent
+// Helper: Build context-aware messages with FULL structured data
 function buildAgentMessages(
   messages: Message[],
   agentContext: AgentContext,
@@ -435,19 +463,191 @@ function buildAgentMessages(
 ): Message[] {
   const baseMessages = [...messages];
   
-  // Add context from previous agents if not the first
+  // Add FULL context from previous agents if not the first
   if (!isFirst && agentContext.previousAgentOutputs.length > 0) {
-    const previousContext = agentContext.previousAgentOutputs
-      .map(a => `${a.agent.toUpperCase()}: ${a.response.slice(0, 300)}...`)
-      .join('\n\n');
+    const structuredContext = buildStructuredContext(agentContext.previousAgentOutputs);
     
     baseMessages.push({
       role: 'system',
-      content: `Previous specialists have already discussed:\n\n${previousContext}\n\nNow it's your turn to add your expertise. Reference what they said if relevant, but focus on your specialty.`
+      content: `KNOWLEDGE FROM PREVIOUS SPECIALISTS (reference these exact details):
+
+${structuredContext}
+
+Now it's YOUR turn. Build on what they've said with your specialty. Reference specific numbers, calculations, or recommendations from above when relevant.`
     });
   }
   
   return baseMessages;
+}
+
+// NEW: Build structured knowledge store with FULL data
+function buildStructuredContext(previousOutputs: AgentOutput[]): string {
+  let context = '';
+  
+  for (const output of previousOutputs) {
+    const agentTitle = output.agent.toUpperCase();
+    context += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    context += `${getAgentEmoji(output.agent)} ${agentTitle}'S CONTRIBUTION:\n`;
+    context += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    
+    // Full response (not truncated)
+    context += output.response + '\n\n';
+    
+    // Add structured data extracts
+    if (output.agent === 'designer') {
+      // Extract BS 7671 calculations
+      const calculations = extractCalculations(output.response);
+      if (calculations.length > 0) {
+        context += '**DESIGN CALCULATIONS:**\n';
+        context += calculations.join('\n') + '\n\n';
+      }
+      
+      // Extract cable specs
+      const cableSpec = extractCableSpec(output.response);
+      if (cableSpec) {
+        context += `**CABLE SPECIFICATION:** ${cableSpec}\n\n`;
+      }
+      
+      // Extract device specs
+      const deviceSpec = extractDeviceSpec(output.response);
+      if (deviceSpec) {
+        context += `**PROTECTION DEVICE:** ${deviceSpec}\n\n`;
+      }
+    }
+    
+    if (output.agent === 'installer') {
+      // Extract installation method
+      const method = extractInstallationMethod(output.response);
+      if (method) {
+        context += `**INSTALLATION METHOD:** ${method}\n\n`;
+      }
+    }
+    
+    if (output.agent === 'cost-engineer') {
+      // Extract cost breakdown
+      const costs = extractCosts(output.response);
+      if (costs) {
+        context += `**COST BREAKDOWN:**\n${costs}\n\n`;
+      }
+    }
+    
+    // Add citations for traceability
+    if (output.citations && output.citations.length > 0) {
+      context += '**REGULATIONS CITED:** ';
+      context += output.citations.map(c => c.number).join(', ') + '\n\n';
+    }
+  }
+  
+  return context;
+}
+
+// Helper: Extract structured data from responses
+function extractCalculations(response: string): string[] {
+  const calculations: string[] = [];
+  
+  // Extract Ib, In, Iz values
+  const ibMatch = response.match(/Ib\s*[=:]\s*([\d.]+)\s*A/i);
+  if (ibMatch) calculations.push(`Ib (design current) = ${ibMatch[1]}A`);
+  
+  const inMatch = response.match(/In\s*[=:]\s*([\d.]+)\s*A/i);
+  if (inMatch) calculations.push(`In (device rating) = ${inMatch[1]}A`);
+  
+  const izMatch = response.match(/Iz\s*[=:]\s*([\d.]+)\s*A/i);
+  if (izMatch) calculations.push(`Iz (cable capacity) = ${izMatch[1]}A`);
+  
+  // Extract voltage drop
+  const vdMatch = response.match(/(?:voltage drop|VD)\s*[=:]\s*([\d.]+)\s*[V%]/i);
+  if (vdMatch) calculations.push(`Voltage drop = ${vdMatch[1]}V or %`);
+  
+  // Extract Max Zs
+  const zsMatch = response.match(/(?:Max Zs|Zs)\s*[=:]\s*([\d.]+)\s*Ω/i);
+  if (zsMatch) calculations.push(`Max Zs = ${zsMatch[1]}Ω`);
+  
+  return calculations;
+}
+
+function extractCableSpec(response: string): string | null {
+  const match = response.match(/(\d+(?:\.\d+)?)\s*mm²\s*(?:twin|T&E|cable|6242Y|SWA)/i);
+  return match ? match[0] : null;
+}
+
+function extractDeviceSpec(response: string): string | null {
+  const match = response.match(/(\d+)A\s*(?:Type\s*)?([ABC])\s*(?:MCB|RCBO)/i);
+  return match ? match[0] : null;
+}
+
+function extractInstallationMethod(response: string): string | null {
+  const methods = ['clipped direct', 'buried', 'conduit', 'trunking', 'SWA'];
+  for (const method of methods) {
+    if (response.toLowerCase().includes(method.toLowerCase())) {
+      return method;
+    }
+  }
+  return null;
+}
+
+function extractCosts(response: string): string | null {
+  const lines: string[] = [];
+  
+  // Extract material costs
+  const materialMatch = response.match(/materials?[:\s]+£?([\d,]+)/i);
+  if (materialMatch) lines.push(`Materials: £${materialMatch[1]}`);
+  
+  // Extract labour costs
+  const labourMatch = response.match(/labour[:\s]+£?([\d,]+)/i);
+  if (labourMatch) lines.push(`Labour: £${labourMatch[1]}`);
+  
+  // Extract total
+  const totalMatch = response.match(/total[:\s]+£?([\d,]+)/i);
+  if (totalMatch) lines.push(`Total: £${totalMatch[1]}`);
+  
+  return lines.length > 0 ? lines.join('\n') : null;
+}
+
+function getAgentEmoji(agent: string): string {
+  const emojis: Record<string, string> = {
+    'designer': '🎨',
+    'cost-engineer': '💰',
+    'installer': '🔧',
+    'commissioning': '✅',
+    'health-safety': '🦺'
+  };
+  return emojis[agent] || '🤖';
+}
+
+// Helper: Detect which agent wrote a message based on content patterns
+function detectAgentFromMessage(content: string): string | null {
+  const contentLower = content.toLowerCase();
+  
+  // Designer patterns
+  if (contentLower.includes('table 4d') || contentLower.includes('reg 433') || 
+      contentLower.includes('voltage drop') || contentLower.includes('cable capacity') ||
+      contentLower.includes('ib') || contentLower.includes('in') || contentLower.includes('iz')) {
+    return 'designer';
+  }
+  
+  // Cost Engineer patterns
+  if (contentLower.includes('£') || contentLower.includes('cost') || 
+      contentLower.includes('materials') || contentLower.includes('labour') ||
+      contentLower.includes('screwfix') || contentLower.includes('cef')) {
+    return 'cost-engineer';
+  }
+  
+  // Installer patterns
+  if (contentLower.includes('clip') || contentLower.includes('safe zone') || 
+      contentLower.includes('install') || contentLower.includes('routing') ||
+      contentLower.includes('reg 522') || contentLower.includes('support')) {
+    return 'installer';
+  }
+  
+  // Commissioning patterns
+  if (contentLower.includes('test') || contentLower.includes('commissioning') || 
+      contentLower.includes('insulation resistance') || contentLower.includes('zs') ||
+      contentLower.includes('reg 64') || contentLower.includes('continuity')) {
+    return 'commissioning';
+  }
+  
+  return null;
 }
 
 // Helper: Get agent introduction

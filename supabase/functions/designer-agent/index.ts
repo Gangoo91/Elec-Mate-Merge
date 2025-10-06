@@ -202,9 +202,9 @@ Rules:
         messages: [
           { role: 'system', content: systemPrompt },
           ...messages,
-          ...(context?.previousAgentOutputs?.length ? [{
+          ...(context?.structuredKnowledge ? [{
             role: 'system',
-            content: `Previous specialist inputs:\n${context.previousAgentOutputs.map((a: any) => `${a.agent}: ${a.response.slice(0, 200)}...`).join('\n')}`
+            content: context.structuredKnowledge
           }] : [])
         ],
         max_completion_tokens: 2500, // PHASE 1: Updated parameter for o4-mini

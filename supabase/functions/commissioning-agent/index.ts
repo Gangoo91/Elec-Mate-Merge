@@ -72,7 +72,11 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
         model: 'gpt-5-2025-08-07',
         messages: [
           { role: 'system', content: systemPrompt },
-          ...messages
+          ...messages,
+          ...(context?.structuredKnowledge ? [{
+            role: 'system',
+            content: context.structuredKnowledge
+          }] : [])
         ],
         max_completion_tokens: 2000
       }),

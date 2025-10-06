@@ -81,7 +81,14 @@ COMMUNICATION STYLE:
       headers: { 'Authorization': `Bearer ${openAIApiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'gpt-5-2025-08-07',
-        messages: [{ role: 'system', content: systemPrompt }, ...messages],
+        messages: [
+          { role: 'system', content: systemPrompt }, 
+          ...messages,
+          ...(context?.structuredKnowledge ? [{
+            role: 'system',
+            content: context.structuredKnowledge
+          }] : [])
+        ],
         max_completion_tokens: 2000
       }),
     });
