@@ -6,10 +6,11 @@ import { EntrySelector } from "@/components/install-planner-v2/EntrySelector";
 import { ExpressMode } from "@/components/install-planner-v2/ExpressMode";
 import { ProfessionalMode } from "@/components/install-planner-v2/ProfessionalMode";
 import { MultiCircuitMode } from "@/components/install-planner-v2/MultiCircuitMode";
+import { AIGuidedPlanner } from "@/components/install-planner-v2/AIGuidedPlanner";
 import { InstallPlanDataV2 } from "@/components/install-planner-v2/types";
 import { SaveManager } from "@/components/install-planner-v2/SaveManager";
 
-export type PlanMode = 'entry' | 'express' | 'professional' | 'multi';
+export type PlanMode = 'entry' | 'express' | 'professional' | 'multi' | 'ai-guided';
 
 const InstallPlannerV2 = () => {
   const [mode, setMode] = useState<PlanMode>('entry');
@@ -42,7 +43,7 @@ const InstallPlannerV2 = () => {
     }
   });
 
-  const handleModeSelect = (selectedMode: 'express' | 'professional' | 'multi', presetData?: Partial<InstallPlanDataV2>) => {
+  const handleModeSelect = (selectedMode: 'express' | 'professional' | 'multi' | 'ai-guided', presetData?: Partial<InstallPlanDataV2>) => {
     setMode(selectedMode);
     if (presetData) {
       setPlanData(prev => ({ ...prev, ...presetData, mode: selectedMode }));
@@ -147,6 +148,14 @@ const InstallPlannerV2 = () => {
 
           {mode === 'multi' && (
             <MultiCircuitMode 
+              planData={planData}
+              updatePlanData={setPlanData}
+              onReset={handleReset}
+            />
+          )}
+
+          {mode === 'ai-guided' && (
+            <AIGuidedPlanner
               planData={planData}
               updatePlanData={setPlanData}
               onReset={handleReset}

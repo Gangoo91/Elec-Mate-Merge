@@ -29,7 +29,7 @@ export interface ProjectInfo {
 
 export interface InstallPlanDataV2 {
   // Mode
-  mode: 'express' | 'professional' | 'multi';
+  mode: 'express' | 'professional' | 'multi' | 'ai-guided';
   
   // Core Required
   installationType: 'domestic' | 'commercial' | 'industrial';
