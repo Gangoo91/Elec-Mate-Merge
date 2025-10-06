@@ -158,7 +158,7 @@ serve(async (req) => {
   }
 });
 
-// CONVERSATIONAL MODE: Each agent speaks directly in sequence
+// CONVERSATIONAL MODE: Stream each agent's response as it arrives
 async function handleConversationalMode(
   agentPlan: any,
   messages: Message[],
@@ -172,110 +172,171 @@ async function handleConversationalMode(
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  const agentOutputs: AgentOutput[] = [];
-  const agentContext: AgentContext = {
-    messages,
-    conversationSummary,
-    conversationState,
-    previousAgentOutputs: [],
-    userQuery: latestMessage
-  };
-
-  let conversationalResponse = '';
-  const allCitations: any[] = [];
-  const allToolCalls: any[] = [];
-  let costUpdates: any = null;
-
-  // Execute agents sequentially with natural transitions
-  for (let i = 0; i < agentPlan.sequence.length; i++) {
-    const step = agentPlan.sequence[i];
-    const agentName = step.agent;
-    const isFirst = i === 0;
-    const isLast = i === agentPlan.sequence.length - 1;
-    
-    console.log(`🎨 Agent ${i + 1}/${agentPlan.sequence.length}: ${agentName} speaking...`);
-
-    try {
-      const agentFunctionName = getAgentFunctionName(agentName);
-      
-      // Build context-aware messages for this agent
-      const agentMessages = buildAgentMessages(
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      const agentOutputs: AgentOutput[] = [];
+      const agentContext: AgentContext = {
         messages,
-        agentContext,
-        agentName,
-        isFirst,
-        isLast
-      );
-
-      const result = await supabase.functions.invoke(agentFunctionName, {
-        body: { 
-          messages: agentMessages,
-          currentDesign,
-          context: agentContext
-        }
-      });
-
-      if (result.error) {
-        console.error(`Agent ${agentName} error:`, result.error);
-        continue;
-      }
-
-      const output: AgentOutput = {
-        agent: agentName,
-        response: result.data?.response || '',
-        citations: result.data?.citations || [],
-        toolCalls: result.data?.toolCalls || [],
-        costUpdates: result.data?.costUpdates,
-        confidence: result.data?.confidence || 0.8
+        conversationSummary,
+        conversationState,
+        previousAgentOutputs: [],
+        userQuery: latestMessage
       };
 
-      agentOutputs.push(output);
-      agentContext.previousAgentOutputs = agentOutputs;
+      const allCitations: any[] = [];
+      const allToolCalls: any[] = [];
+      let costUpdates: any = null;
 
-      // Build conversational flow
-      if (!isFirst && !isLast) {
-        conversationalResponse += `\n\n---\n\n`;
+      try {
+        // Send initial event with agent plan
+        const planEvent = `data: ${JSON.stringify({
+          type: 'plan',
+          agents: agentPlan.sequence.map((s: any) => s.agent),
+          complexity: agentPlan.estimatedComplexity,
+          reasoning: agentPlan.reasoning
+        })}\n\n`;
+        controller.enqueue(encoder.encode(planEvent));
+
+        // Execute agents sequentially
+        for (let i = 0; i < agentPlan.sequence.length; i++) {
+          const step = agentPlan.sequence[i];
+          const agentName = step.agent;
+          const isFirst = i === 0;
+          const isLast = i === agentPlan.sequence.length - 1;
+          
+          console.log(`🎨 Agent ${i + 1}/${agentPlan.sequence.length}: ${agentName} speaking...`);
+
+          // Send agent_start event
+          const startEvent = `data: ${JSON.stringify({
+            type: 'agent_start',
+            agent: agentName,
+            index: i,
+            total: agentPlan.sequence.length
+          })}\n\n`;
+          controller.enqueue(encoder.encode(startEvent));
+
+          try {
+            const agentFunctionName = getAgentFunctionName(agentName);
+            
+            // Build context-aware messages for this agent
+            const agentMessages = buildAgentMessages(
+              messages,
+              agentContext,
+              agentName,
+              isFirst,
+              isLast
+            );
+
+            const result = await supabase.functions.invoke(agentFunctionName, {
+              body: { 
+                messages: agentMessages,
+                currentDesign,
+                context: agentContext
+              }
+            });
+
+            if (result.error) {
+              console.error(`Agent ${agentName} error:`, result.error);
+              
+              // Send error event
+              const errorEvent = `data: ${JSON.stringify({
+                type: 'agent_error',
+                agent: agentName,
+                error: result.error.message
+              })}\n\n`;
+              controller.enqueue(encoder.encode(errorEvent));
+              continue;
+            }
+
+            const output: AgentOutput = {
+              agent: agentName,
+              response: result.data?.response || '',
+              citations: result.data?.citations || [],
+              toolCalls: result.data?.toolCalls || [],
+              costUpdates: result.data?.costUpdates,
+              confidence: result.data?.confidence || 0.8
+            };
+
+            agentOutputs.push(output);
+            agentContext.previousAgentOutputs = agentOutputs;
+
+            // Send agent_response event with full response
+            const responseEvent = `data: ${JSON.stringify({
+              type: 'agent_response',
+              agent: agentName,
+              response: output.response,
+              citations: output.citations,
+              toolCalls: output.toolCalls,
+              costUpdates: output.costUpdates,
+              confidence: output.confidence
+            })}\n\n`;
+            controller.enqueue(encoder.encode(responseEvent));
+
+            allCitations.push(...output.citations);
+            allToolCalls.push(...output.toolCalls);
+            if (output.costUpdates) costUpdates = output.costUpdates;
+
+            // Send agent_complete event
+            const completeEvent = `data: ${JSON.stringify({
+              type: 'agent_complete',
+              agent: agentName,
+              nextAgent: !isLast ? agentPlan.sequence[i + 1].agent : null
+            })}\n\n`;
+            controller.enqueue(encoder.encode(completeEvent));
+
+          } catch (error) {
+            console.error(`❌ Error executing ${agentName}:`, error);
+            const errorEvent = `data: ${JSON.stringify({
+              type: 'agent_error',
+              agent: agentName,
+              error: error instanceof Error ? error.message : 'Unknown error'
+            })}\n\n`;
+            controller.enqueue(encoder.encode(errorEvent));
+          }
+        }
+
+        // Send all_agents_complete event
+        const executionTime = Date.now() - startTime;
+        const finalEvent = `data: ${JSON.stringify({
+          type: 'all_agents_complete',
+          agentOutputs: agentOutputs.map(a => ({
+            agent: a.agent,
+            response: a.response,
+            citations: a.citations,
+            confidence: a.confidence
+          })),
+          totalCitations: allCitations,
+          costUpdates,
+          toolCalls: allToolCalls,
+          executionTime,
+          timestamp: new Date().toISOString()
+        })}\n\n`;
+        controller.enqueue(encoder.encode(finalEvent));
+
+        // Send [DONE] marker
+        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+
+      } catch (error) {
+        console.error('❌ Stream error:', error);
+        const errorEvent = `data: ${JSON.stringify({
+          type: 'error',
+          error: error instanceof Error ? error.message : 'Stream failed'
+        })}\n\n`;
+        controller.enqueue(encoder.encode(errorEvent));
+      } finally {
+        controller.close();
       }
-      
-      // Add agent introduction for multi-agent scenarios
-      if (agentPlan.sequence.length > 1 && !isFirst) {
-        const agentIntro = getAgentIntro(agentName);
-        conversationalResponse += `${agentIntro}\n\n`;
-      }
-      
-      conversationalResponse += output.response;
-
-      allCitations.push(...output.citations);
-      allToolCalls.push(...output.toolCalls);
-      if (output.costUpdates) costUpdates = output.costUpdates;
-
-      // Add transition if not last
-      if (!isLast && agentPlan.sequence.length > 1) {
-        const nextAgent = agentPlan.sequence[i + 1].agent;
-        const transition = getAgentTransition(agentName, nextAgent);
-        conversationalResponse += `\n\n${transition}`;
-      }
-
-    } catch (error) {
-      console.error(`❌ Error executing ${agentName}:`, error);
     }
-  }
+  });
 
-  const executionTime = Date.now() - startTime;
-  console.log(`⏱️ Conversational flow complete: ${executionTime}ms`);
-
-  return new Response(JSON.stringify({
-    response: conversationalResponse,
-    activeAgents: agentOutputs.map(a => a.agent),
-    citations: allCitations,
-    costUpdates,
-    toolCalls: allToolCalls,
-    confidence: agentOutputs.reduce((sum, a) => sum + a.confidence, 0) / agentOutputs.length,
-    executionTime,
-    conversationalMode: true,
-    timestamp: new Date().toISOString()
-  }), {
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  return new Response(stream, {
+    headers: {
+      ...corsHeaders,
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive'
+    }
   });
 }
 

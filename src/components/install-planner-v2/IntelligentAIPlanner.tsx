@@ -51,14 +51,47 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { streamMessage, isStreaming } = useStreamingChat({
-    onAgentUpdate: (agents) => {
+    onPlan: (agents, complexity) => {
+      console.log('Agent plan:', agents, complexity);
       setActiveAgents(agents);
-      // Update reasoning panel
       setReasoningSteps(agents.map(agent => ({
         agent,
-        status: 'active' as const,
-        reasoning: `Processing your request...`
+        status: 'pending' as const,
+        reasoning: `Waiting to consult...`
       })));
+    },
+    onAgentStart: (agent, index, total) => {
+      console.log(`Agent ${agent} starting (${index + 1}/${total})`);
+      setCurrentAction(`Consulting ${agent}...`);
+      setReasoningSteps(prev => prev.map(step => 
+        step.agent === agent 
+          ? { ...step, status: 'active' as const, reasoning: `Now speaking...` }
+          : step
+      ));
+    },
+    onAgentResponse: (agent, response) => {
+      console.log(`Agent ${agent} responded:`, response.slice(0, 100));
+      // Response is already being added to the message via onToken
+    },
+    onAgentComplete: (agent, nextAgent) => {
+      console.log(`Agent ${agent} complete, next: ${nextAgent}`);
+      setReasoningSteps(prev => prev.map(step => 
+        step.agent === agent 
+          ? { ...step, status: 'complete' as const, reasoning: `Consultation complete` }
+          : step
+      ));
+      if (nextAgent) {
+        setCurrentAction(`Handing over to ${nextAgent}...`);
+      }
+    },
+    onAllAgentsComplete: (agentOutputs) => {
+      console.log('All agents complete:', agentOutputs);
+      setCurrentAction('');
+      setReasoningSteps(prev => prev.map(step => ({ ...step, status: 'complete' as const })));
+      toast.success('Consultation complete!');
+    },
+    onAgentUpdate: (agents) => {
+      setActiveAgents(agents);
     },
     onToolCall: (toolCall) => {
       toast.success(`✨ ${toolCall.toolName === 'add_circuit_to_design' ? 'Circuit added' : 'Action performed'}`);

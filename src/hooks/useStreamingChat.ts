@@ -1,9 +1,16 @@
 import { useState, useCallback } from 'react';
 
 interface StreamChunk {
-  type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error';
+  type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error';
   content?: string;
   data?: any;
+  agent?: string;
+  agents?: string[];
+  response?: string;
+  citations?: any[];
+  costUpdates?: any;
+  nextAgent?: string | null;
+  agentOutputs?: any[];
 }
 
 interface Message {
@@ -19,6 +26,11 @@ interface UseStreamingChatOptions {
   onToolCall?: (toolCall: any) => void;
   onCitation?: (citation: any) => void;
   onError?: (error: string) => void;
+  onAgentStart?: (agent: string, index: number, total: number) => void;
+  onAgentResponse?: (agent: string, response: string) => void;
+  onAgentComplete?: (agent: string, nextAgent: string | null) => void;
+  onAllAgentsComplete?: (agentOutputs: any[]) => void;
+  onPlan?: (agents: string[], complexity: string) => void;
 }
 
 export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
@@ -98,6 +110,55 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
                 const chunk: StreamChunk = JSON.parse(data);
 
                 switch (chunk.type) {
+                  case 'plan':
+                    // Agent plan received
+                    if (chunk.agents) {
+                      activeAgents = chunk.agents;
+                      options.onPlan?.(chunk.agents, chunk.data?.complexity || 'simple');
+                    }
+                    break;
+
+                  case 'agent_start':
+                    // Agent is starting to respond
+                    if (chunk.agent) {
+                      options.onAgentStart?.(chunk.agent, chunk.data?.index || 0, chunk.data?.total || 1);
+                    }
+                    break;
+
+                  case 'agent_response':
+                    // Full agent response received
+                    if (chunk.agent && chunk.response) {
+                      fullResponse += (fullResponse ? '\n\n' : '') + chunk.response;
+                      onToken(chunk.response);
+                      options.onAgentResponse?.(chunk.agent, chunk.response);
+                      
+                      if (chunk.citations) {
+                        citations.push(...chunk.citations);
+                      }
+                      if (chunk.costUpdates) {
+                        // Handle cost updates
+                      }
+                    }
+                    break;
+
+                  case 'agent_complete':
+                    // Agent finished
+                    if (chunk.agent) {
+                      options.onAgentComplete?.(chunk.agent, chunk.nextAgent || null);
+                    }
+                    break;
+
+                  case 'all_agents_complete':
+                    // All agents have finished
+                    if (chunk.agentOutputs) {
+                      options.onAllAgentsComplete?.(chunk.agentOutputs);
+                    }
+                    break;
+
+                  case 'agent_error':
+                    console.error(`Agent ${chunk.agent} error:`, chunk.data?.error);
+                    break;
+
                   case 'token':
                     if (chunk.content) {
                       fullResponse += chunk.content;
