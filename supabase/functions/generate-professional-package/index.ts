@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { corsHeaders } from '../_shared/cors.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 interface PackageRequest {
   conversationId?: string;
@@ -18,7 +19,12 @@ serve(async (req) => {
   try {
     const { messages, designData, companyName, clientName } = await req.json() as PackageRequest;
 
-    console.log('📦 Generating Professional Package: 6 PDFs + ZIP bundle');
+    // Phase 3: Initialize Supabase for saving design to database
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    console.log('📦 Generating Professional Package: 6 PDFs + ZIP bundle + Database save');
 
     // Extract data from conversation and design
     const extractedData = extractDataFromConversation(messages, designData);
@@ -47,6 +53,36 @@ serve(async (req) => {
     zip.file("6_Electrical_Installation_Certificate.pdf", eic);
 
     const zipBlob = await zip.generateAsync({ type: "uint8array" });
+
+    // Phase 3: Save design to database for later testing
+    const authHeader = req.headers.get('Authorization');
+    if (authHeader) {
+      try {
+        const token = authHeader.replace('Bearer ', '');
+        const { data: { user } } = await supabase.auth.getUser(token);
+
+        if (user) {
+          const savedDesign = await supabase.from('saved_designs').insert({
+            user_id: user.id,
+            project_name: extractedData.projectName,
+            client_name: extractedData.clientName,
+            installation_address: extractedData.location,
+            circuits: extractCircuitsForTesting(extractedData, messages),
+            test_expectations: generateTestExpectations(extractedData),
+            materials_list: extractedData.materialsRequired,
+            rams_data: { hazards: extractedData.safetyHazards, steps: extractedData.installationSteps },
+            h_and_s_data: { hazards: extractedData.safetyHazards },
+            exported_at: new Date().toISOString(),
+            status: 'design_complete'
+          }).select().single();
+
+          console.log('✅ Design saved to database for testing:', savedDesign.data?.id);
+        }
+      } catch (dbError) {
+        console.error('⚠️ Failed to save design to database:', dbError);
+        // Continue anyway - package still generated
+      }
+    }
 
     console.log('✅ Professional Package: Generated successfully');
 
@@ -213,4 +249,101 @@ async function generateTestSchedule(data: any): Promise<Uint8Array> {
 async function generateEIC(data: any, clientName: string): Promise<Uint8Array> {
   const mockPDF = new TextEncoder().encode("EIC Template PDF placeholder");
   return mockPDF;
+}
+
+// Phase 3: Extract circuits with test expectations
+function extractCircuitsForTesting(data: any, messages: any[]): any[] {
+  // Extract circuit designs from conversation
+  const designerMessages = messages.filter((m: any) => 
+    m.role === 'assistant' && m.content?.includes('mm²')
+  );
+
+  const circuits = [];
+  
+  // Parse circuit data from messages (simplified)
+  for (const msg of designerMessages) {
+    const cableSizeMatch = msg.content?.match(/(\d+)mm²/);
+    const deviceMatch = msg.content?.match(/(\d+)A\s+Type\s+([BCD])/);
+    const loadMatch = msg.content?.match(/(\d+\.?\d*)(kW|W)/);
+    
+    if (cableSizeMatch && deviceMatch) {
+      circuits.push({
+        ref: `C${circuits.length + 1}`,
+        description: data.projectName || 'Circuit',
+        cable: `${cableSizeMatch[1]}mm² 6242Y`,
+        length: data.cableLength || 15,
+        device: `${deviceMatch[1]}A Type ${deviceMatch[2]} MCB`,
+        load: loadMatch ? `${loadMatch[1]}${loadMatch[2]}` : 'Unknown',
+        expectedValues: {
+          r1r2: calculateExpectedR1R2(parseInt(cableSizeMatch[1]), data.cableLength || 15),
+          zs: 1.44, // Simplified
+          insulationResistance: '>200MΩ',
+          rcdTime: '30mA @ <40ms'
+        }
+      });
+    }
+  }
+
+  // If no circuits extracted, create default
+  if (circuits.length === 0) {
+    circuits.push({
+      ref: 'C1',
+      description: data.projectName || 'Main Circuit',
+      cable: '6mm² 6242Y',
+      length: 15,
+      device: '32A Type B MCB',
+      load: 'TBC',
+      expectedValues: {
+        r1r2: 0.74,
+        zs: 1.44,
+        insulationResistance: '>200MΩ',
+        rcdTime: '30mA @ <40ms'
+      }
+    });
+  }
+
+  return circuits;
+}
+
+// Calculate expected R1+R2 based on cable size and length
+function calculateExpectedR1R2(cableSize: number, length: number): number {
+  // Resistance values (mΩ/m at 20°C) for 70°C thermoplastic
+  const r1r2Values: Record<number, number> = {
+    1.5: 30.2,
+    2.5: 18.1,
+    4: 11.5,
+    6: 7.41,
+    10: 4.61,
+    16: 2.87,
+  };
+
+  const r1r2PerMetre = r1r2Values[cableSize] || 7.41;
+  return Math.round((r1r2PerMetre * length / 1000) * 100) / 100; // Convert to Ω
+}
+
+// Generate test expectations for all tests
+function generateTestExpectations(data: any): any {
+  return {
+    insulationResistance: {
+      line_line: '>200MΩ',
+      line_neutral: '>200MΩ',
+      line_earth: '>200MΩ'
+    },
+    continuity: {
+      method: 'R1+R2 method',
+      maxValue: 0.74
+    },
+    earthFaultLoop: {
+      maxZs: 1.44,
+      pfc: '>6kA'
+    },
+    rcd: {
+      operatingTime: '<40ms at 30mA',
+      tripCurrent: '15-30mA'
+    },
+    polarity: {
+      result: 'Correct',
+      notes: 'All live conductors connected to correct terminals'
+    }
+  };
 }

@@ -3389,6 +3389,69 @@ export type Database = {
         }
         Relationships: []
       }
+      saved_designs: {
+        Row: {
+          circuits: Json
+          client_email: string | null
+          client_name: string | null
+          cost_estimate: Json | null
+          created_at: string | null
+          design_calculations: Json | null
+          exported_at: string | null
+          h_and_s_data: Json | null
+          id: string
+          installation_address: string | null
+          installation_postcode: string | null
+          materials_list: Json | null
+          project_name: string
+          rams_data: Json | null
+          status: string | null
+          test_expectations: Json
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          circuits?: Json
+          client_email?: string | null
+          client_name?: string | null
+          cost_estimate?: Json | null
+          created_at?: string | null
+          design_calculations?: Json | null
+          exported_at?: string | null
+          h_and_s_data?: Json | null
+          id?: string
+          installation_address?: string | null
+          installation_postcode?: string | null
+          materials_list?: Json | null
+          project_name: string
+          rams_data?: Json | null
+          status?: string | null
+          test_expectations?: Json
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          circuits?: Json
+          client_email?: string | null
+          client_name?: string | null
+          cost_estimate?: Json | null
+          created_at?: string | null
+          design_calculations?: Json | null
+          exported_at?: string | null
+          h_and_s_data?: Json | null
+          id?: string
+          installation_address?: string | null
+          installation_postcode?: string | null
+          materials_list?: Json | null
+          project_name?: string
+          rams_data?: Json | null
+          status?: string | null
+          test_expectations?: Json
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       scraped_project_tracking: {
         Row: {
           created_at: string

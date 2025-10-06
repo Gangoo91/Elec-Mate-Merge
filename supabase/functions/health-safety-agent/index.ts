@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { corsHeaders } from '../_shared/cors.ts';
+import { getHazardsForWork, emergencyProcedures } from './healthSafetyKnowledge.ts';
 
 interface HealthSafetyAgentRequest {
   messages: Array<{ role: string; content: string }>;
@@ -25,10 +26,14 @@ serve(async (req) => {
 
     const latestMessage = messages[messages.length - 1]?.content || '';
 
-    // Extract circuit details from context
+    // Phase 2: Load relevant H&S knowledge
     const circuitDetails = extractCircuitDetails(latestMessage, currentDesign, context);
+    const workType = extractWorkType(latestMessage, currentDesign);
+    const relevantHazards = getHazardsForWork(workType);
 
-    // System prompt: Senior H&S advisor
+    console.log(`🦺 Loading H&S knowledge for work type: ${workType}, found ${relevantHazards.length} relevant hazards`);
+
+    // System prompt: Senior H&S advisor with REAL knowledge base
     const systemPrompt = `You are a senior Health & Safety advisor specializing in electrical work, with 20 years experience in BS 7671, CDM 2015, and HASAWA 1974.
 
 CRITICAL RULES:
@@ -39,13 +44,15 @@ CRITICAL RULES:
 5. Include emergency procedures for electrical incidents
 6. Speak like a UK site safety officer - direct but friendly
 
-KNOWLEDGE BASE (from src/data/healthAndSafety/):
-- HASAWA 1974, EWR 1989, CDM 2015 legislation
-- Electrical safety: live work prohibition, safe isolation (lock-off), emergency procedures
-- Access equipment: ladders (max 9m), scaffolding, MEWPs
-- Hazards: working at height, confined spaces, underground cables, asbestos
-- PPE: Arc flash protection, insulated gloves (BS EN 60903), safety boots (BS EN ISO 20345)
-- Safe working practices: isolation procedure, voltage indicator testing, permit-to-work
+**RELEVANT H&S GUIDELINES FOR THIS WORK (${workType}):**
+${relevantHazards.map(h => `
+${h.title} (${h.regulation}) - SEVERITY: ${h.severity.toUpperCase()}
+${h.content}
+`).join('\n')}
+
+**EMERGENCY PROCEDURES:**
+Electric Shock: ${emergencyProcedures.electricShock.slice(0, 3).join(' → ')}
+Arc Flash: ${emergencyProcedures.arcFlash.slice(0, 3).join(' → ')}
 
 CURRENT WORK:
 ${circuitDetails}
@@ -144,6 +151,18 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
     });
   }
 });
+
+function extractWorkType(message: string, currentDesign: any): string {
+  const lowerMessage = message.toLowerCase();
+  
+  if (lowerMessage.includes('shower') || lowerMessage.includes('bathroom')) return 'shower';
+  if (lowerMessage.includes('outdoor') || lowerMessage.includes('garden')) return 'outdoor';
+  if (lowerMessage.includes('commercial') || lowerMessage.includes('factory')) return 'commercial';
+  if (lowerMessage.includes('excavat') || lowerMessage.includes('dig') || lowerMessage.includes('underground')) return 'excavation';
+  if (lowerMessage.includes('consumer unit') || lowerMessage.includes('distribution board')) return 'consumer-unit';
+  
+  return 'general';
+}
 
 function extractCircuitDetails(message: string, currentDesign: any, context: any): string {
   let details = `User Query: ${message}\n\n`;
