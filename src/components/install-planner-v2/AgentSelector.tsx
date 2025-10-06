@@ -108,80 +108,78 @@ export const AgentSelector = ({ onStartConsultation }: AgentSelectorProps) => {
         </p>
       </div>
 
-      <Card className="p-4 md:p-6 bg-card border-border">
-        <RadioGroup value={mode} onValueChange={(val) => setMode(val as any)}>
-          <div className="space-y-3">
-            {/* Full Consultation */}
-            <div className="flex items-start gap-3 p-4 rounded-lg border border-border bg-muted/50 hover:bg-muted transition-colors">
-              <RadioGroupItem value="full" id="full" className="mt-1 flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <Label htmlFor="full" className="text-base font-semibold cursor-pointer block">
-                  Full Consultation (All 6 Agents)
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Complete design package: design → costing → installation → safety → testing → compliance
-                </p>
-              </div>
-            </div>
-
-            {/* Quick Design */}
-            <div className="flex items-start gap-3 p-4 rounded-lg border border-border bg-muted/50 hover:bg-muted transition-colors">
-              <RadioGroupItem value="quick" id="quick" className="mt-1 flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <Label htmlFor="quick" className="text-base font-semibold cursor-pointer block">
-                  Quick Design (Designer + Cost Engineer)
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Fast design + pricing estimate only
-                </p>
-              </div>
-            </div>
-
-            {/* Custom Selection */}
-            <div className="flex items-start gap-3 p-4 rounded-lg border border-border bg-muted/50 hover:bg-muted transition-colors">
-              <RadioGroupItem value="custom" id="custom" className="mt-1 flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <Label htmlFor="custom" className="text-base font-semibold cursor-pointer block">
-                  Custom Selection
-                </Label>
-                <p className="text-sm text-muted-foreground mt-1 mb-3">
-                  Choose specific agents for your needs
-                </p>
-
-                {mode === 'custom' && (
-                  <div className="grid grid-cols-1 gap-3 mt-4">
-                    {AVAILABLE_AGENTS.map(agent => (
-                      <div
-                        key={agent.id}
-                        className="flex items-start gap-3 p-3 rounded-lg bg-background border border-border hover:bg-accent/50 transition-colors"
-                      >
-                        <Checkbox
-                          id={agent.id}
-                          checked={customAgents.includes(agent.id)}
-                          onCheckedChange={() => handleAgentToggle(agent.id)}
-                          className="mt-0.5 flex-shrink-0"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <Label
-                            htmlFor={agent.id}
-                            className="text-sm font-medium cursor-pointer flex items-center gap-2"
-                          >
-                            <span className="text-base">{agent.emoji}</span>
-                            <span className="flex-1">{agent.name}</span>
-                          </Label>
-                          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                            {agent.description}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+      <RadioGroup value={mode} onValueChange={(val) => setMode(val as any)}>
+        <div className="space-y-3">
+          {/* Full Consultation */}
+          <div className="flex items-start gap-2.5 p-4 rounded-lg border border-border bg-card/50 hover:bg-card transition-colors">
+            <RadioGroupItem value="full" id="full" className="mt-0.5 flex-shrink-0" />
+            <div className="flex-1 min-w-0 space-y-1">
+              <Label htmlFor="full" className="text-base font-semibold cursor-pointer block leading-tight">
+                Full Consultation (All 6 Agents)
+              </Label>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Complete design package: design → costing → installation → safety → testing → compliance
+              </p>
             </div>
           </div>
-        </RadioGroup>
-      </Card>
+
+          {/* Quick Design */}
+          <div className="flex items-start gap-2.5 p-4 rounded-lg border border-border bg-card/50 hover:bg-card transition-colors">
+            <RadioGroupItem value="quick" id="quick" className="mt-0.5 flex-shrink-0" />
+            <div className="flex-1 min-w-0 space-y-1">
+              <Label htmlFor="quick" className="text-base font-semibold cursor-pointer block leading-tight">
+                Quick Design (Designer + Cost Engineer)
+              </Label>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Fast design + pricing estimate only
+              </p>
+            </div>
+          </div>
+
+          {/* Custom Selection */}
+          <div className="flex items-start gap-2.5 p-4 rounded-lg border border-border bg-card/50 hover:bg-card transition-colors">
+            <RadioGroupItem value="custom" id="custom" className="mt-0.5 flex-shrink-0" />
+            <div className="flex-1 min-w-0 space-y-1">
+              <Label htmlFor="custom" className="text-base font-semibold cursor-pointer block leading-tight">
+                Custom Selection
+              </Label>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Choose specific agents for your needs
+              </p>
+
+              {mode === 'custom' && (
+                <div className="grid grid-cols-1 gap-2.5 mt-3 pt-3 border-t border-border/50">
+                  {AVAILABLE_AGENTS.map(agent => (
+                    <div
+                      key={agent.id}
+                      className="flex items-start gap-2.5 p-3 rounded-lg bg-background border border-border hover:bg-accent/50 transition-colors"
+                    >
+                      <Checkbox
+                        id={agent.id}
+                        checked={customAgents.includes(agent.id)}
+                        onCheckedChange={() => handleAgentToggle(agent.id)}
+                        className="mt-0.5 flex-shrink-0"
+                      />
+                      <div className="flex-1 min-w-0 space-y-0.5">
+                        <Label
+                          htmlFor={agent.id}
+                          className="text-sm font-medium cursor-pointer flex items-center gap-2 leading-tight"
+                        >
+                          <span className="text-base">{agent.emoji}</span>
+                          <span className="flex-1">{agent.name}</span>
+                        </Label>
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          {agent.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </RadioGroup>
 
       <div className="flex justify-center">
         <Button
