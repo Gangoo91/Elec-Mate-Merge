@@ -175,16 +175,16 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
               cableLength: value
             })}
             min={1}
-            max={100}
-            step={1}
+            max={200}
+            step={2}
             className="w-full"
           />
           <div className="flex justify-between text-xs text-muted-foreground">
             <span>1m</span>
-            <span>25m</span>
             <span>50m</span>
-            <span>75m</span>
             <span>100m</span>
+            <span>150m</span>
+            <span>200m</span>
           </div>
         </div>
       </div>
