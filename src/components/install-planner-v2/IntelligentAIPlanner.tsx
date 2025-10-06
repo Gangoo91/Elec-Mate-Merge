@@ -126,19 +126,19 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-200px)] md:h-[calc(100vh-160px)] bg-elec-grey">
+    <div className="flex flex-col h-screen bg-elec-grey">
       {/* Header - WhatsApp style */}
-      <div className="flex-none px-4 py-3 border-b border-border/30 bg-white/90 backdrop-blur-sm">
+      <div className="flex-none px-4 py-3 border-b border-border/30 bg-elec-dark">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Sparkles className="h-5 w-5 text-elec-yellow" />
             <div>
-              <h2 className="font-semibold text-base">AI Design Assistant</h2>
+              <h2 className="font-semibold text-base text-white">AI Design Assistant</h2>
               <p className="text-xs text-muted-foreground">BS 7671 Compliant</p>
             </div>
           </div>
           
-          <Button variant="ghost" size="sm" onClick={onReset} className="text-xs">
+          <Button variant="ghost" size="sm" onClick={onReset} className="text-xs text-white hover:bg-white/10">
             New Chat
           </Button>
         </div>
@@ -182,7 +182,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       </div>
 
       {/* Input Area - WhatsApp style */}
-      <div className="flex-none bg-white border-t border-border/30 px-4 py-3">
+      <div className="flex-none bg-elec-dark border-t border-border/30 px-4 py-3">
         <div className="space-y-2">
           {/* Quick suggestions - only show on first message */}
           {messages.length === 1 && (
@@ -191,7 +191,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("9.5kW shower, 18 metres from the board")}
-                className="text-xs h-7 px-3 bg-elec-grey/50 hover:bg-elec-grey border-border/50"
+                className="text-xs h-7 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white"
               >
                 Shower install
               </Button>
@@ -199,7 +199,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("7kW EV charger in garage")}
-                className="text-xs h-7 px-3 bg-elec-grey/50 hover:bg-elec-grey border-border/50"
+                className="text-xs h-7 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white"
               >
                 EV charger
               </Button>
@@ -207,7 +207,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("Design complete board for 3-bed house")}
-                className="text-xs h-7 px-3 bg-elec-grey/50 hover:bg-elec-grey border-border/50"
+                className="text-xs h-7 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white"
               >
                 Whole house
               </Button>
@@ -221,7 +221,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               onKeyPress={handleKeyPress}
               placeholder="Type your question..."
               disabled={isLoading}
-              className="flex-1 h-11 text-sm rounded-full px-4 bg-elec-grey/30 border-border/50"
+              className="flex-1 h-11 text-sm rounded-full px-4 bg-white/5 border-white/10 text-white placeholder:text-muted-foreground"
             />
             <Button 
               onClick={handleSend}

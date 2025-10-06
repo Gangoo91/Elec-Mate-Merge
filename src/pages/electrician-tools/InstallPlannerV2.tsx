@@ -84,8 +84,21 @@ const InstallPlannerV2 = () => {
     });
   };
 
+  // Full-screen for AI chat mode, container for other modes
+  if (mode === 'ai-guided') {
+    return (
+      <div className="min-h-screen bg-elec-dark">
+        <IntelligentAIPlanner
+          planData={planData}
+          updatePlanData={setPlanData}
+          onReset={handleReset}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-elec-dark">
       <div className="container mx-auto px-4 py-6 max-w-7xl">
         <div className="space-y-6 animate-fade-in">
           {/* Header */}
@@ -148,14 +161,6 @@ const InstallPlannerV2 = () => {
 
           {mode === 'multi' && (
             <MultiCircuitMode 
-              planData={planData}
-              updatePlanData={setPlanData}
-              onReset={handleReset}
-            />
-          )}
-
-          {mode === 'ai-guided' && (
-            <IntelligentAIPlanner
               planData={planData}
               updatePlanData={setPlanData}
               onReset={handleReset}
