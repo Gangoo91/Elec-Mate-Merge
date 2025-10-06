@@ -21,13 +21,20 @@ export interface CableSelection {
 export const selectOptimalCableType = (context: CableSelectionContext): CableSelection => {
   const { loadType, location, cableRun, mechanicalProtection, fireProtection, ambientTemp } = context;
 
-  // Priority 1: Fire protection requirements
+  // Priority 1: Fire protection requirements (fire alarms and emergency lighting only)
   if (fireProtection === 'fire-alarm') {
-    return {
-      cableType: 'pvc-single', // FP200 equivalent in our system
-      reason: 'BS 5839 requires fire-resistant cable for fire alarm circuits',
-      alternatives: ['xlpe-single']
-    };
+    // Check if it's actually a fire circuit, not just any circuit with fire protection setting
+    const isActualFireCircuit = loadType.toLowerCase().includes('fire') || 
+                                (loadType.toLowerCase().includes('emergency') && loadType.toLowerCase().includes('light'));
+    
+    if (isActualFireCircuit) {
+      return {
+        cableType: 'pvc-single', // FP200 equivalent in our system
+        reason: 'BS 5839 requires fire-resistant cable for fire alarm and emergency lighting circuits',
+        alternatives: ['xlpe-single']
+      };
+    }
+    // If fireProtection is set but load isn't actually fire-related, fall through to other logic
   }
 
   if (fireProtection === 'escape-route' || fireProtection === 'fire-compartment') {

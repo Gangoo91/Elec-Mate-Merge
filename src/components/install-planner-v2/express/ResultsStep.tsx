@@ -236,12 +236,12 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
         <CardContent className="pt-0">
           <div className="space-y-2 md:space-y-3">
             {result.materials.map((material, idx) => (
-              <div key={idx} className="grid grid-cols-[1fr_auto] gap-3 pb-2 md:pb-3 border-b border-border last:border-0 last:pb-0">
-                <div className="min-w-0">
+              <div key={idx} className="flex justify-between items-start gap-3 pb-2 md:pb-3 border-b border-border last:border-0 last:pb-0">
+                <div className="text-left min-w-0">
                   <p className="text-sm md:text-base font-medium text-foreground">{material.name}</p>
-                  <p className="text-xs md:text-sm text-foreground/80 mt-0.5">{material.specification}</p>
+                  <p className="text-xs md:text-sm text-foreground/70 mt-0.5">{material.specification}</p>
                 </div>
-                <span className="text-xs md:text-sm font-semibold text-primary flex-shrink-0 self-start">{material.quantity}</span>
+                <span className="text-xs md:text-sm font-semibold text-primary flex-shrink-0">{material.quantity}</span>
               </div>
             ))}
           </div>
@@ -259,16 +259,16 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
         <CardContent className="pt-0">
           <div className="space-y-2 md:space-y-3">
             {result.costEstimate.breakdown.map((item, idx) => (
-              <div key={idx} className="grid grid-cols-[1fr_auto] gap-3 text-xs md:text-sm">
-                <span className="text-foreground/80">{item.item}</span>
+              <div key={idx} className="flex justify-between items-center gap-3 text-xs md:text-sm">
+                <span className="text-left text-foreground/80">{item.item}</span>
                 <span className="font-medium text-foreground">£{item.cost}</span>
               </div>
             ))}
-            <div className="pt-2 md:pt-3 border-t border-border grid grid-cols-[1fr_auto] gap-3">
-              <span className="font-semibold text-sm md:text-base text-foreground">Total Estimate</span>
+            <div className="pt-2 md:pt-3 border-t border-border flex justify-between items-center gap-3">
+              <span className="font-semibold text-sm md:text-base text-foreground text-left">Total Estimate</span>
               <span className="text-lg md:text-xl font-bold text-primary">£{result.costEstimate.total}</span>
             </div>
-            <p className="text-xs text-foreground/70 mt-2">
+            <p className="text-xs text-foreground/70 mt-2 text-left">
               * Prices are estimates based on UK market rates (September 2025)
             </p>
           </div>
@@ -287,12 +287,12 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
           <div className="space-y-3 md:space-y-4">
             {result.practicalGuidance.map((section, idx) => (
               <div key={idx}>
-                <h4 className="font-semibold text-xs md:text-sm mb-2 text-foreground">{section.title}</h4>
-                <ul className="space-y-1.5 md:space-y-2">
+                <h4 className="font-semibold text-xs md:text-sm mb-2 text-foreground text-left">{section.title}</h4>
+                <ul className="space-y-1 md:space-y-1.5">
                   {section.points.map((point, pidx) => (
-                    <li key={pidx} className="grid grid-cols-[14px_1fr] gap-2 items-start text-xs md:text-sm text-foreground leading-relaxed">
+                    <li key={pidx} className="flex gap-1.5 items-start text-xs md:text-sm text-foreground leading-snug">
                       <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-success shrink-0" />
-                      <span className="break-words">{point}</span>
+                      <span className="break-words text-left">{point}</span>
                     </li>
                   ))}
                 </ul>

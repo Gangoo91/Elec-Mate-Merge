@@ -62,12 +62,12 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
               className="group cursor-pointer transition-all hover:scale-105 bg-elec-grey border-border hover:border-primary/50"
               onClick={() => onModeSelect(type.mode, { installationType: type.type })}
             >
-              <CardContent className="p-6">
-                <div className="w-16 h-16 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:border-primary/40 transition-all">
-                  <type.icon className="h-8 w-8 text-primary" />
+              <CardContent className="p-4 md:p-6">
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 group-hover:border-primary/40 transition-all">
+                  <type.icon className="h-6 w-6 md:h-8 md:w-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{type.title}</h3>
-                <p className="text-muted-foreground">{type.description}</p>
+                <h3 className="text-lg md:text-xl font-bold text-foreground mb-1 md:mb-2">{type.title}</h3>
+                <p className="text-sm md:text-base text-muted-foreground">{type.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -86,13 +86,13 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
               className="group cursor-pointer transition-all hover:scale-105 bg-elec-grey border-border hover:border-primary"
               onClick={() => onModeSelect(quick.mode, { loadType: quick.loadType })}
             >
-              <CardContent className="p-6 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-elec-yellow flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <quick.icon className="h-6 w-6 text-elec-dark" />
+              <CardContent className="p-4 md:p-6 flex items-center gap-3 md:gap-4">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-elec-yellow flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                  <quick.icon className="h-5 w-5 md:h-6 md:w-6 text-elec-dark" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-1">{quick.title}</h4>
-                  <p className="text-sm text-muted-foreground">{quick.description}</p>
+                <div className="min-w-0">
+                  <h4 className="text-sm md:text-base font-semibold text-foreground mb-0.5 md:mb-1">{quick.title}</h4>
+                  <p className="text-xs md:text-sm text-muted-foreground">{quick.description}</p>
                 </div>
               </CardContent>
             </Card>

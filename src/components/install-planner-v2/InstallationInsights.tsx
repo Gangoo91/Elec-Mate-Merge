@@ -63,18 +63,18 @@ export const InstallationInsights = ({ planData, result }: InstallationInsightsP
           Professional Insights
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 pt-0">
+      <CardContent className="space-y-3 md:space-y-4 pt-0">
         {/* Safety Checks */}
         <div>
-          <h4 className="text-sm font-semibold mb-2 text-foreground flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-green-500" />
+          <h4 className="text-xs md:text-sm font-semibold mb-1.5 md:mb-2 text-foreground flex items-center gap-2">
+            <CheckCircle2 className="h-3.5 w-3.5 md:h-4 md:w-4 text-green-500" />
             Safety Verification
           </h4>
-          <div className="space-y-1">
+          <div className="space-y-0.5 md:space-y-1">
             {insights.safetyChecks.map((check, idx) => (
-              <div key={idx} className="text-xs text-foreground/90 flex items-start gap-2">
-                <span className="text-green-500 mt-0.5">✓</span>
-                <span>{check}</span>
+              <div key={idx} className="text-xs text-foreground/90 flex items-start gap-1.5">
+                <span className="text-green-500 mt-0.5 shrink-0 text-xs">✓</span>
+                <span className="text-left">{check}</span>
               </div>
             ))}
           </div>
@@ -83,15 +83,15 @@ export const InstallationInsights = ({ planData, result }: InstallationInsightsP
         {/* Optimizations */}
         {insights.optimizations.length > 0 && (
           <div>
-            <h4 className="text-sm font-semibold mb-2 text-foreground flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-primary" />
+            <h4 className="text-xs md:text-sm font-semibold mb-1.5 md:mb-2 text-foreground flex items-center gap-2">
+              <TrendingUp className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
               Optimisation Opportunities
             </h4>
-            <div className="space-y-1">
+            <div className="space-y-0.5 md:space-y-1">
               {insights.optimizations.map((opt, idx) => (
-                <div key={idx} className="text-xs text-foreground/90 flex items-start gap-2">
-                  <span className="text-primary mt-0.5">→</span>
-                  <span>{opt}</span>
+                <div key={idx} className="text-xs text-foreground/90 flex items-start gap-1.5">
+                  <span className="text-primary mt-0.5 shrink-0 text-xs">→</span>
+                  <span className="text-left">{opt}</span>
                 </div>
               ))}
             </div>
@@ -101,15 +101,15 @@ export const InstallationInsights = ({ planData, result }: InstallationInsightsP
         {/* Cost Savings */}
         {insights.costSavings && insights.costSavings.length > 0 && (
           <div>
-            <h4 className="text-sm font-semibold mb-2 text-foreground flex items-center gap-2">
-              <span className="text-primary">£</span>
+            <h4 className="text-xs md:text-sm font-semibold mb-1.5 md:mb-2 text-foreground flex items-center gap-2">
+              <span className="text-primary text-sm">£</span>
               Cost Savings
             </h4>
-            <div className="space-y-1">
+            <div className="space-y-0.5 md:space-y-1">
               {insights.costSavings.map((saving, idx) => (
-                <div key={idx} className="text-xs text-foreground/90 flex items-start gap-2">
-                  <span className="text-green-500 mt-0.5">£</span>
-                  <span>{saving}</span>
+                <div key={idx} className="text-xs text-foreground/90 flex items-start gap-1.5">
+                  <span className="text-green-500 mt-0.5 shrink-0 text-xs">£</span>
+                  <span className="text-left">{saving}</span>
                 </div>
               ))}
             </div>
@@ -118,14 +118,14 @@ export const InstallationInsights = ({ planData, result }: InstallationInsightsP
 
         {/* Warnings */}
         {insights.warnings && insights.warnings.length > 0 && (
-          <div className="bg-amber-500/10 rounded-lg p-3">
-            <h4 className="text-sm font-semibold mb-2 text-amber-400 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />
+          <div className="bg-amber-500/10 rounded-lg p-2 md:p-3">
+            <h4 className="text-xs md:text-sm font-semibold mb-1.5 md:mb-2 text-amber-400 flex items-center gap-2">
+              <AlertTriangle className="h-3.5 w-3.5 md:h-4 md:w-4" />
               Important Considerations
             </h4>
-            <div className="space-y-1">
+            <div className="space-y-0.5 md:space-y-1">
               {insights.warnings.map((warning, idx) => (
-                <div key={idx} className="text-xs text-foreground/90">• {warning}</div>
+                <div key={idx} className="text-xs text-foreground/90 text-left">• {warning}</div>
               ))}
             </div>
           </div>
@@ -134,10 +134,10 @@ export const InstallationInsights = ({ planData, result }: InstallationInsightsP
         {/* Recommendations */}
         {insights.recommendations && insights.recommendations.length > 0 && (
           <div>
-            <h4 className="text-sm font-semibold mb-2 text-foreground">Best Practice</h4>
-            <div className="space-y-1">
+            <h4 className="text-xs md:text-sm font-semibold mb-1.5 md:mb-2 text-foreground">Best Practice</h4>
+            <div className="space-y-0.5 md:space-y-1">
               {insights.recommendations.map((rec, idx) => (
-                <div key={idx} className="text-xs text-foreground/90">• {rec}</div>
+                <div key={idx} className="text-xs text-foreground/90 text-left">• {rec}</div>
               ))}
             </div>
           </div>

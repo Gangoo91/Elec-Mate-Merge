@@ -409,9 +409,9 @@ const generateCostEstimate = (
         1.5: 4.80, 2.5: 6.20, 4: 8.50, 6: 11.20, 10: 17.50,
         16: 26.00, 25: 38.00, 35: 52.00, 50: 68.00
       },
-      'pvc-single': { // FP200 Gold fire-rated cable pricing
+      'pvc-single': { // FP200 Gold fire-rated cable pricing (2025 UK market rates)
         1.0: 3.20, 1.5: 3.80, 2.5: 4.50, 4: 5.80, 6: 7.20,
-        10: 11.50, 16: 17.00, 25: 26.00, 35: 34.00, 50: 45.00
+        10: 11.50, 16: 17.00, 25: 26.00, 35: 15.00, 50: 20.00
       },
       'xlpe-single': {
         1.0: 0.55, 1.5: 0.75, 2.5: 1.20, 4: 1.75, 6: 2.40,
@@ -461,9 +461,9 @@ const generateCostEstimate = (
 
   const materialsCost = cableCost + mcbCost + clipsCost + accessoriesCost;
   
-  // Labour: £35/hour (UK average for experienced electrician Sept 2025)
+  // Labour: £45/hour (UK experienced electrician rate Sept 2025)
   const labourHours = Math.max(1.5, Math.min(3, length / 8));
-  const labourCost = labourHours * 35;
+  const labourCost = labourHours * 45;
 
   const cableDescription = isFireCircuitLocal ? 'FP200 Gold Cable' : 'Cable';
   
@@ -472,7 +472,7 @@ const generateCostEstimate = (
     { item: protectiveDevice, cost: mcbCost },
     { item: isFireCircuitLocal ? 'Fire-rated clips' : 'Cable clips', cost: Math.round(clipsCost) },
     { item: isFireCircuitLocal ? 'Fire accessories (sealant, ties, labels)' : 'Accessories & labels', cost: Math.round(accessoriesCost) },
-    { item: `Labour (${labourHours.toFixed(1)} hours @ £35/hr)`, cost: Math.round(labourCost) }
+    { item: `Labour (${labourHours.toFixed(1)} hours @ £45/hr)`, cost: Math.round(labourCost) }
   ];
 
   return {

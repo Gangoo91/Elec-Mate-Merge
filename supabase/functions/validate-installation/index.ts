@@ -52,7 +52,14 @@ Load: ${planData.totalLoad}W (${(planData.totalLoad / planData.voltage).toFixed(
 Cable: ${result.recommendedCableSize}mm² ${planData.cableType}
 Length: ${planData.cableLength}m
 Installation: ${planData.installationMethod}
-Location: ${planData.location}
+Location: ${planData.location || 'Not specified'}
+
+Environmental Profile:
+- Earthing: ${planData.environmentalProfile?.finalApplied?.earthing || 'TN-S'}
+- Ambient Temperature: ${planData.environmentalProfile?.finalApplied?.ambientTemp || 30}°C
+- Conditions: ${planData.environmentalProfile?.finalApplied?.conditions || 'Indoor dry locations'}
+- Ze: ${planData.environmentalProfile?.finalApplied?.ze || 0.35}Ω
+- Grouping: ${planData.environmentalProfile?.finalApplied?.grouping || 1} circuit(s)
 
 Results:
 - Voltage drop: ${result.voltageDropPercent.toFixed(2)}% (${result.voltageDrop.toFixed(2)}V)
@@ -62,7 +69,7 @@ Results:
 - Safety margin: ${result.safetyMargin.toFixed(1)}%
 - Derating: Temperature ${result.factors.temperature}, Grouping ${result.factors.grouping}, Overall ${result.factors.overall.toFixed(2)}
 
-Provide structured insights in JSON format.` 
+Provide structured insights in JSON format.`
           }
         ],
         tools: [
