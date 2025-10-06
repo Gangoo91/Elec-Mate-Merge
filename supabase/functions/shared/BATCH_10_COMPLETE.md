@@ -256,12 +256,233 @@ TESTING:
 - Verify compliance with Section 722
 - Check labelling and documentation
 
+## Section 551: Generating Sets & Battery Energy Storage
+
+### Knowledge Added:
+- ✅ Generating set scope (off-grid, standby, parallel operation) - Reg 551.1
+- ✅ **G98/G99 Grid Connection Requirements** - CRITICAL for solar/battery
+  - G98 (≤16A/≤3.68kW): DNO notification only
+  - G99 (>16A/>3.68kW): DNO approval REQUIRED (6-12 weeks)
+- ✅ Standby generator requirements - Reg 551.6
+  - Independent earthing (cannot use PME when grid off)
+  - Interlocked changeover switch
+  - Auto-start, fuel storage
+- ✅ Parallel operation (grid-tied) - Reg 551.7
+  - Loss of Mains (LOM) protection MANDATORY
+  - Anti-islanding protection (frequency/voltage monitoring)
+  - Power quality requirements (PF, THD, flicker)
+- ✅ Battery energy storage - Reg 551.8
+  - Location requirements (secure, temperature controlled)
+  - **CRITICAL**: Ventilation (hydrogen gas from lead-acid, thermal runaway from lithium-ion)
+  - Fire risk mitigation (smoke detectors, Class D/F extinguishers)
+  - BMS (Battery Management System) mandatory for lithium-ion
+- ✅ RCD protection with generators - Reg 551.4.2
+- ✅ Utility functions: `getGridConnectionRequirement`, `getStandbyGeneratorEarthing`, `calculateBatteryVentilation`, `validateGeneratingSetInstallation`
+
+### Critical Safety Knowledge:
+
+🚨 **G98 vs G99 Grid Connection**:
+- **G98** (≤16A per phase):
+  - Solar ≤3.68kW (single-phase) or ≤11.04kW (3-phase)
+  - DNO NOTIFICATION only (online portal, AFTER installation)
+  - LOM protection per BS EN 50549-1
+  - Most domestic solar falls here
+- **G99** (>16A per phase):
+  - Solar >3.68kW (single-phase) or >11.04kW (3-phase)
+  - DNO APPROVAL REQUIRED (apply BEFORE installation, 6-12 weeks)
+  - Protection settings agreed with DNO
+  - May require witness testing
+  - Cannot connect until approval received
+
+🚨 **Standby Generator Earthing** (Reg 551.4.3.2.1):
+- **PME (TN-C-S) supply = DANGER**
+  - CANNOT use PME earth when grid disconnected
+  - MUST install independent earth electrode (≤200Ω)
+  - 4-pole changeover switch (switch neutral too)
+  - Generator neutral bonded to earth electrode
+- **TN-S supply**: Can usually use existing earth
+- **Critical**: Grid earth may not be available when on generator power
+
+🚨 **Battery Storage Ventilation** (Reg 551.8.1):
+- **Lead-acid batteries**:
+  - HYDROGEN GAS (explosive if >4% concentration)
+  - Ventilation: 0.05 m³/h per kWh capacity
+  - High & low level vents
+  - NO ignition sources, NO SMOKING
+  - Spark-proof light switches
+- **Lithium-ion batteries**:
+  - THERMAL RUNAWAY risk (fire/toxic gases)
+  - Heat dissipation ventilation
+  - Smoke/heat detector in battery room
+  - Fire extinguisher: Class D/F (NOT WATER!)
+  - Temperature controlled: 15-25°C optimal
+  - BMS (Battery Management System) MANDATORY
+
+🚨 **Loss of Mains (LOM) Protection** (Reg 551.7.4):
+- **MANDATORY for grid-tied systems**
+- Prevents "islanding" (generator powering dead grid)
+- **Danger**: DNO workers think grid is dead but it's energized = FATAL
+- Auto-disconnect within 0.5s of grid loss (G98)
+- Cannot reconnect until grid stable for 20s
+- Voltage/frequency monitoring:
+  - 207-253V, 47-52Hz (disconnect outside range)
+
+## Batch Completion Status:
+
+✅ **Batch 1**: Appendix 4 (Cable Tables, Correction Factors)
+✅ **Batch 2**: Special Locations (Bathrooms, Outdoor) + Testing
+✅ **Batch 3**: Chapter 52 (Installation Methods, Safe Zones)
+✅ **Batch 4**: Chapter 54 (Earthing & Bonding, CPC Sizing)
+✅ **Batch 5**: Extended Special Locations (Pools, Construction, Caravans)
+✅ **Batch 6**: Chapter 53 (SPDs, Isolation, Switching)
+✅ **Batch 7-8**: Appendix 6 (Certification Templates, EICR Codes)
+✅ **Batch 9**: Section 712 (Solar PV) + Appendix 15 (Ring/Radial Circuits)
+✅ **Batch 10**: Section 722 (EV Charging) + Section 551 (Generating Sets/Battery Storage) ← UPDATED!
+
+## Knowledge Extraction: ~95% COMPLETE! 🎉
+
+### Modern Installation Capabilities:
+- ✅ Electric vehicle charging installations
+- ✅ Solar PV systems (grid-tied and off-grid)
+- ✅ Battery energy storage systems
+- ✅ Backup generators (standby and parallel)
+- ✅ G98/G99 grid connection compliance
+- ✅ Loss of Mains protection
+- ✅ Battery safety (hydrogen gas, thermal runaway)
+
+## Real-World Examples - Generating Sets & Battery Storage:
+
+### Example 1: 5kW Solar PV + 10kWh Battery Storage (Grid-Tied)
+```
+SCENARIO: Domestic dwelling, 5kW solar + 10kWh lithium battery, TN-C-S supply
+
+DESIGN:
+- Solar PV: 5kW (13× 400W panels, 2 strings)
+  - Inverter: 5kW hybrid (solar + battery)
+  - G98 compliant (≤3.68kW export after battery charging)
+- Battery: 10kWh lithium-ion (e.g., GivEnergy)
+  - DC coupled to inverter
+  - BMS integrated
+- Grid connection: G98 notification (≤16A export)
+- LOM protection: Built into inverter (BS EN 50549-1)
+- Earthing: TN-C-S (no PME issue for inverter-based systems)
+- RCD: Type A 40A/30mA (inverter has galvanic isolation, no DC leakage)
+- MCB: 32A Type B (from consumer unit to inverter)
+
+INSTALLATION:
+- Solar panels: Roof-mounted, 30° south-facing
+- Inverter: Garage wall (ventilated, 5-30°C)
+- Battery: Garage floor (insulated cabinet, temperature controlled)
+- Battery ventilation: Natural (vents top & bottom)
+- Smoke detector in garage
+- Fire extinguisher: Class F (lithium fires)
+- DC isolator: Adjacent to inverter (<0.5m cable length)
+- AC isolator: Consumer unit (dedicated 32A MCB)
+- Labelling: "SOLAR PV + BATTERY SYSTEM - DUAL SUPPLY"
+- G98 notification: Submit online to DNO after commissioning
+
+TESTING:
+- Solar PV tests per Section 712
+- Battery BMS functional test ✅
+- LOM protection test: Simulate grid loss = inverter disconnects within 0.5s ✅
+- Frequency/voltage trip thresholds verified (47-52Hz, 207-253V) ✅
+- RCD test: 28mA @ 26ms ✅
+- Export meter verification (smart meter SMETS2)
+- MCS certification for SEG (Smart Export Guarantee)
+```
+
+### Example 2: 20kVA Diesel Standby Generator (Hospital)
+```
+SCENARIO: Small hospital, critical loads, TN-C-S mains, requires backup power
+
+DESIGN:
+- Generator: 20kVA diesel (3-phase, 415V)
+  - Auto-start on mains failure
+  - Weekly self-test (Sunday 2am, 30 min run)
+- Grid connection: STANDBY (NOT parallel)
+- Changeover: Automatic Transfer Switch (ATS), 4-pole
+  - Interlocked (prevents parallel operation)
+  - Transfer time: 15 seconds
+  - Priority: Critical circuits only (30% load)
+- Earthing: TT system for generator (Reg 551.4.3.2.1)
+  - Earth electrode: 3× rods, Ra = 15Ω
+  - CANNOT use PME when on generator power
+  - 4-pole changeover switches neutral to generator earth
+- Fuel: 1000L diesel tank (bunded, 110% capacity, above-ground)
+- Exhaust: Through roof, 2m above ridge
+- Cooling: Radiator cooled, outside air intake/exhaust
+- Battery: 12V starter battery (maintained by mains charger)
+
+INSTALLATION:
+- Generator: External compound (acoustic enclosure, -20dB)
+- ATS: Main switchroom (distribution board)
+- Earth electrode: Compound (3× 1.5m rods, 3m spacing)
+- Fuel tank: Bunded, fire-separated 2m from building
+- Critical circuits: IT equipment, emergency lighting, refrigeration
+- Non-critical circuits: Heating, air-con, kitchen (shed on gen power)
+- Labelling: "STANDBY GENERATOR - 4-POLE CHANGEOVER - TT EARTHING"
+- Emergency stop: Red mushroom button (accessible entrance)
+
+TESTING:
+- Earth electrode: Ra = 15Ω ✅ (≤200Ω requirement)
+- ATS interlock: Cannot close both mains AND generator contactors ✅
+- Auto-start test: Mains trip = gen starts in 12s, transfer at 15s ✅
+- Weekly self-test: Runs 30min, loads 30% ✅
+- Zs on generator power: 8.2Ω (TT system, RCD protected) ✅
+- Neutral switching verified (disconnects from PME) ✅
+- Fuel leak test ✅
+- Exhaust CO levels: 50ppm ✅ (<200ppm limit)
+```
+
+### Example 3: 15kW Commercial Solar (G99 Required)
+```
+SCENARIO: Small business, 15kW rooftop solar, 3-phase supply, export to grid
+
+DESIGN:
+- Solar PV: 15kW (37× 400W panels, 3-phase inverter)
+- Grid connection: G99 APPLICATION REQUIRED (>11.04kW)
+  - Submit application to DNO: 8 weeks before installation
+  - Protection settings: AGREED with DNO
+    - Overvoltage: 253V/0.5s, 265V/0.1s
+    - Undervoltage: 207V/2.5s, 184V/0.5s
+    - Overfrequency: 50.5Hz/20s, 51.5Hz/0.5s
+    - Underfrequency: 49.5Hz/20s, 47.5Hz/0.5s
+  - DNO witness testing REQUIRED
+- LOM protection: G99 relay (separate from inverter)
+- Earthing: TN-S (safe for inverter)
+- RCD: Type B 63A/30mA (per DNO requirement)
+- Isolation: Lockable AC isolator (DNO accessible)
+
+INSTALLATION:
+- Solar panels: Flat roof, ballasted mounts
+- Inverter: 15kW 3-phase (plant room)
+- G99 relay: Separate panel (voltage/frequency monitoring)
+- AC isolator: External wall (DNO lockable)
+- Export meter: 3-phase (CT clamps, Modbus to inverter)
+- Labelling: "SOLAR PV 15kW - G99 APPROVED - DNO ISOLATION"
+- DNO notification: Application submitted 10 weeks before installation
+
+TESTING (DNO Witness Test):
+- G99 relay calibration: Voltage/frequency trip points ✅
+- LOM test: Simulate grid loss = disconnect in 0.32s ✅
+- Islanding test: Load bank connected, grid trip = immediate shutdown ✅
+- Power quality: THD <3%, PF 0.98 ✅
+- Export limitation: Max 15kW verified ✅
+- Zs: 0.45Ω ✅
+- RCD Type B test: 29mA @ 24ms ✅
+- DNO certificate issued ✅
+- G99 commissioning certificate to DNO ✅
+```
+
 ## System Status: READY FOR MODERN UK ELECTRICAL INSTALLATIONS! ✅
 
 The agents now have comprehensive knowledge for:
 - Electric vehicle charging (domestic, commercial, public)
-- PME protection methods (life-safety critical)
-- RCD Type B and DC fault protection
-- Type 2 connector standard
-- IP/IK ratings for harsh environments
-- Complete BS 7671 Section 722 compliance
+- Solar PV systems (grid-tied and off-grid)
+- Battery energy storage (lithium-ion and lead-acid)
+- Backup generators (standby and parallel operation)
+- G98/G99 grid connection compliance
+- Loss of Mains (LOM) protection
+- PME restrictions for EV/generators
+- Battery safety (ventilation, fire risk, thermal runaway)
+- Complete BS 7671 Sections 551, 722, 712 compliance

@@ -515,3 +515,501 @@ export function calculateEVCircuitSizing(chargingPower: number, phases: 1 | 3): 
     notes
   };
 }
+
+// ============================================================================
+// SECTION 551: LOW VOLTAGE GENERATING SETS & BATTERY ENERGY STORAGE
+// ============================================================================
+
+/**
+ * Generating Set Scope (Reg 551.1)
+ * Covers backup generators, solar inverters, battery storage, micro-CHP
+ */
+export interface GeneratingSetScope {
+  regulation: string;
+  applicability: string;
+  supplyArrangements: string[];
+  powerSources: string[];
+  electricalTypes: string[];
+  uses: string[];
+}
+
+export const GENERATING_SET_SCOPE: GeneratingSetScope = {
+  regulation: 'Reg 551.1',
+  applicability: 'All installations incorporating generating sets (continuous or occasional supply)',
+  supplyArrangements: [
+    'Supply NOT connected to public network (off-grid)',
+    'Supply as SWITCHED ALTERNATIVE to public network (standby/backup)',
+    'Supply in PARALLEL with public network (grid-tied solar/battery)',
+    'Combinations of the above'
+  ],
+  powerSources: [
+    'Combustion engines (diesel/petrol/gas generators)',
+    'Turbines (wind, hydro, steam)',
+    'Electric motors (rotary UPS)',
+    'Photovoltaic cells (solar inverters)',
+    'Batteries (energy storage systems)',
+    'Other suitable sources (fuel cells, micro-CHP)'
+  ],
+  electricalTypes: [
+    'Synchronous generators (mains-excited or separately excited)',
+    'Asynchronous generators (mains-excited or self-excited)',
+    'Static convertors (inverters) with or without bypass'
+  ],
+  uses: [
+    'Permanent installations (solar PV, battery storage)',
+    'Temporary installations (site generators)',
+    'Mobile equipment (portable generators)',
+    'Mobile units (motorhomes, caravans) - see Section 717'
+  ]
+};
+
+/**
+ * Grid Connection Requirements (G98/G99)
+ * CRITICAL - DNO notification/approval required
+ */
+export interface GridConnectionRequirement {
+  standard: string;
+  threshold: string;
+  regulation: string;
+  requirements: string[];
+  timeline: string;
+  notes: string[];
+}
+
+export const GRID_CONNECTION_REQUIREMENTS: GridConnectionRequirement[] = [
+  {
+    standard: 'G98 (BS EN 50549-1)',
+    threshold: 'Output ≤16A per phase (≤3.68kW single-phase, ≤11.04kW 3-phase)',
+    regulation: 'Reg 551.7.4, 551.7.6',
+    requirements: [
+      'NOTIFICATION to DNO (not approval) - use DNO online portal',
+      'Loss of Mains (LOM) protection MANDATORY',
+      'Automatic disconnection within 0.5s if grid fails',
+      'Settings per BS EN 50549-1:',
+      '  - Voltage: 207-253V (single-phase)',
+      '  - Frequency: 47-52Hz',
+      'Isolation accessible per BS EN 50549-1',
+      'Cannot export if DNO limits capacity (export limitation device)'
+    ],
+    timeline: 'Notify DNO AFTER installation (online submission)',
+    notes: [
+      'Most domestic solar PV (4-10kW) falls under G98',
+      'Plug-and-play systems (e.g., balcony solar) also G98',
+      'No DNO approval needed - just notification',
+      'DNO has right to refuse if network capacity exceeded'
+    ]
+  },
+  {
+    standard: 'G99 (ENA ER G99)',
+    threshold: 'Output >16A per phase (>3.68kW single-phase, >11.04kW 3-phase)',
+    regulation: 'Reg 551.7.3-551.7.6',
+    requirements: [
+      'DNO APPROVAL REQUIRED before connection',
+      'Submit application via DNO (can take 6-12 weeks)',
+      'Loss of Mains (LOM) protection MANDATORY',
+      'Protection settings AGREED with DNO (vary by location)',
+      'May require:',
+      '  - Power quality monitoring',
+      '  - Export limitation',
+      '  - DNO witness testing',
+      '  - G99 commissioning certificate',
+      'Isolation accessible to DNO'
+    ],
+    timeline: 'Apply BEFORE installation - allow 6-12 weeks for DNO approval',
+    notes: [
+      'Commercial solar (>10kW), large battery systems (>13.8kWh)',
+      '3-phase domestic solar (>11kW)',
+      'DNO can refuse or require network upgrades (costly)',
+      'Export tariff (SEG) requires smart meter + MCS certificate'
+    ]
+  }
+];
+
+/**
+ * Standby Generator Requirements (Reg 551.6)
+ * Switched alternative to grid supply
+ */
+export interface StandbyGeneratorRequirements {
+  regulation: string;
+  application: string;
+  earthingRequirement: string;
+  switchingRequirements: string[];
+  autoStartRequirements: string[];
+  fuelStorage: string[];
+}
+
+export const STANDBY_GENERATOR_REQUIREMENTS: StandbyGeneratorRequirements = {
+  regulation: 'Reg 551.6',
+  application: 'Generator provides supply when grid fails (hospitals, data centres, critical infrastructure)',
+  earthingRequirement: 'Reg 551.4.3.2.1 - Independent earthing REQUIRED (cannot rely on PME when grid disconnected)',
+  switchingRequirements: [
+    'Interlocked changeover switch (prevents parallel operation with grid)',
+    '3-pole or 4-pole changeover (L1, L2, L3, N)',
+    'Neutral switching if TN-S from grid but generator is separately derived',
+    'Emergency stop button accessible',
+    'Clear labelling: "GENERATOR" and "MAINS"',
+    'Manual or automatic transfer switch (ATS)'
+  ],
+  autoStartRequirements: [
+    'Auto-start on grid failure (typical: 10-30 second delay)',
+    'Battery-powered starter motor (maintained charged)',
+    'Fuel level monitoring (alarm if low)',
+    'Coolant temperature/oil pressure protection',
+    'Auto shutdown if fault detected',
+    'Weekly/monthly self-test (exercise run)'
+  ],
+  fuelStorage: [
+    'Diesel/petrol storage: Building Regulations Part B (fire safety)',
+    'Above-ground tanks: Bunded, 110% capacity',
+    'Underground tanks: Double-skinned, leak detection',
+    'Max 275L domestic (3000L commercial with fire separation)',
+    'Ventilation if indoors (CO/fumes exhaust)',
+    'Fire extinguisher nearby'
+  ]
+};
+
+/**
+ * Parallel Operation (Grid-Tied) Requirements (Reg 551.7)
+ * Solar PV, battery storage, CHP
+ */
+export interface ParallelOperationRequirements {
+  regulation: string;
+  application: string;
+  protectionRequirements: string[];
+  powerQualityRequirements: string[];
+  antiIslandingProtection: string[];
+  notes: string[];
+}
+
+export const PARALLEL_OPERATION_REQUIREMENTS: ParallelOperationRequirements = {
+  regulation: 'Reg 551.7',
+  application: 'Generating set operates in parallel with grid (exports or imports as needed)',
+  protectionRequirements: [
+    'Loss of Mains (LOM) protection - Reg 551.7.4',
+    'Automatic disconnection if grid fails (<0.5s for G98, agreed for G99)',
+    'Prevents "islanding" (generator powering dead grid = danger to DNO workers)',
+    'Voltage/frequency monitoring:',
+    '  - Overvoltage: >253V (disconnect)',
+    '  - Undervoltage: <207V (disconnect)',
+    '  - Overfrequency: >52Hz (disconnect)',
+    '  - Underfrequency: <47Hz (disconnect)',
+    'Isolation accessible to DNO - Reg 551.7.6'
+  ],
+  powerQualityRequirements: [
+    'Reg 551.7.3 - Avoid adverse effects to grid:',
+    '  - Power factor ≥0.95 (G98/G99)',
+    '  - Harmonic distortion <5% THD',
+    '  - Voltage unbalance <2% (3-phase)',
+    '  - Flicker limits per G98/G99',
+    'Synchronization for rotating machines:',
+    '  - Automatic synchronizer (frequency, phase, voltage)',
+    '  - Phase sequence correct (L1-L2-L3)',
+    '  - Voltage match ±10%',
+    '  - Frequency match ±0.2Hz'
+  ],
+  antiIslandingProtection: [
+    'Active anti-islanding (inverters):',
+    '  - Frequency shift detection',
+    '  - Voltage shift detection',
+    '  - Impedance measurement',
+    'Passive anti-islanding:',
+    '  - Over/under voltage relays',
+    '  - Over/under frequency relays',
+    '  - ROCOF (Rate of Change of Frequency)',
+    'Disconnect within 0.5s of grid loss (G98)',
+    'Cannot reconnect until grid stable for 20s minimum'
+  ],
+  notes: [
+    'Most solar inverters have built-in G98/G99 compliance',
+    'Battery inverters (e.g., Tesla Powerwall, Givenergy) also compliant',
+    'Older generators may need retrofitting with LOM protection',
+    'Smart export guarantee (SEG) requires export meter'
+  ]
+};
+
+/**
+ * Battery Energy Storage Requirements (Reg 551.8)
+ * Stationary batteries (lithium-ion, lead-acid)
+ */
+export interface BatteryStorageRequirements {
+  regulation: string;
+  application: string;
+  locationRequirements: string[];
+  ventilationRequirements: string[];
+  electricalRequirements: string[];
+  fireRiskRequirements: string[];
+  notes: string[];
+}
+
+export const BATTERY_STORAGE_REQUIREMENTS: BatteryStorageRequirements = {
+  regulation: 'Reg 551.8',
+  application: 'Stationary batteries (home battery storage, UPS, off-grid systems)',
+  locationRequirements: [
+    'Reg 551.8.1 - Accessible only to skilled/instructed persons',
+    'Secure location (locked room/garage) OR secure enclosure (cabinet)',
+    'NOT in bedrooms or escape routes',
+    'Temperature controlled: 5-30°C (lithium-ion optimal 15-25°C)',
+    'Dry location (no condensation)',
+    'Away from ignition sources',
+    'Floor loading adequate (batteries are HEAVY - e.g., 150kg for 13.5kWh)'
+  ],
+  ventilationRequirements: [
+    'Reg 551.8.1 - Adequate ventilation MANDATORY',
+    'Lead-acid batteries: Hydrogen gas release (EXPLOSIVE if concentrated)',
+    '  - Ventilation: 0.05m³/h per kWh of battery capacity',
+    '  - High & low level vents (prevent stratification)',
+    '  - No ignition sources (sparks, naked flames)',
+    'Lithium-ion batteries: Less gas, but thermal runaway risk',
+    '  - Ventilation for heat dissipation',
+    '  - Thermal runaway = toxic gases (HF, CO)',
+    '  - Consider mechanical extraction if large system (>20kWh)'
+  ],
+  electricalRequirements: [
+    'Reg 551.8.2 - Basic protection by insulation or enclosures',
+    'Bare conductive parts with >120V potential difference:',
+    '  - Cannot be inadvertently touched simultaneously',
+    '  - Insulated terminals or shrouded busbars',
+    'DC isolator (breaking capacity ≥prospective DC short-circuit current)',
+    'DC overcurrent protection (fuses or DC-rated MCBs)',
+    'Battery Management System (BMS) MANDATORY for lithium-ion',
+    'Earthing/bonding of metal enclosures',
+    'Cable sizing for DC currents (no diversity)'
+  ],
+  fireRiskRequirements: [
+    'Lithium-ion thermal runaway risk:',
+    '  - Install smoke/heat detector in battery room',
+    '  - Fire extinguisher: Class D (lithium metal) or Class F (avoid water!)',
+    '  - Building Regulations Part B guidance (NFPA 855 US reference)',
+    '  - Spacing between battery modules (prevent cascade failure)',
+    'Lead-acid battery fire risk:',
+    '  - Hydrogen explosion risk (>4% concentration)',
+    '  - No smoking signs (BS EN ISO 7010 P003)',
+    '  - Spark-proof light switches (outside battery room)',
+    'Manufacturer safety data sheets (SDS) available'
+  ],
+  notes: [
+    'Home battery systems (e.g., Tesla Powerwall 13.5kWh) typically lithium-ion',
+    'Must comply with manufacturer installation manual',
+    'MCS certification required for renewable incentives (SEG)',
+    'Insurance notification required (some insurers exclude lithium batteries)',
+    'Planning permission usually NOT required (domestic <1m above roof)',
+    'Fire brigade notification (>20kWh systems in some areas)'
+  ]
+};
+
+/**
+ * RCD Protection with Generating Sets (Reg 551.4.2)
+ */
+export const GENERATING_SET_RCD_REQUIREMENTS = {
+  regulation: 'Reg 551.4.2',
+  requirement: 'RCD protection must remain effective for EVERY combination of sources',
+  issues: [
+    {
+      issue: 'Generator neutral earthed (TN system)',
+      problem: 'RCD may not operate correctly if generator neutral earthed when grid is TN-C-S',
+      solution: 'Use TT earthing for generator (separate earth electrode) OR ensure neutral-earth bond switches with changeover'
+    },
+    {
+      issue: 'Inverter DC leakage (solar/battery)',
+      problem: 'DC components can blind Type AC/A RCDs',
+      solution: 'Use RCD Type B OR Type A/F with manufacturer confirmation of DC immunity'
+    },
+    {
+      issue: 'Parallel operation',
+      problem: 'Earth fault current shared between sources - RCD may not see full fault current',
+      solution: 'Calculate prospective fault current from ALL sources, verify RCD sensitivity adequate'
+    }
+  ],
+  notes: [
+    'Solar inverters typically have galvanic isolation (transformer) - no DC leakage',
+    'Battery inverters may have DC leakage - check manufacturer specs',
+    'Generators with AVR (Automatic Voltage Regulator) affect RCD operation'
+  ]
+};
+
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+/**
+ * Determine grid connection requirements (G98 vs G99)
+ */
+export function getGridConnectionRequirement(
+  power: number,
+  phases: 1 | 3
+): {
+  standard: string;
+  threshold: string;
+  approval: string;
+  timeline: string;
+  notes: string[];
+} {
+  const currentPerPhase = phases === 1 ? power / 230 : power / (Math.sqrt(3) * 400);
+  
+  if (currentPerPhase <= 16) {
+    return {
+      standard: 'G98 (BS EN 50549-1)',
+      threshold: `${power}W ≤ ${phases === 1 ? '3.68kW' : '11.04kW'} (≤16A per phase)`,
+      approval: 'DNO NOTIFICATION only (not approval)',
+      timeline: 'Submit AFTER installation via DNO online portal',
+      notes: [
+        'Most domestic solar PV systems (4-10kW)',
+        'No DNO approval needed - just notification',
+        'LOM protection per BS EN 50549-1 required',
+        'Can proceed with installation before notifying DNO'
+      ]
+    };
+  } else {
+    return {
+      standard: 'G99 (ENA ER G99)',
+      threshold: `${power}W > ${phases === 1 ? '3.68kW' : '11.04kW'} (>16A per phase)`,
+      approval: 'DNO APPROVAL REQUIRED before connection',
+      timeline: 'Apply BEFORE installation - allow 6-12 weeks',
+      notes: [
+        'Commercial solar (>10kW), large battery (>13.8kWh)',
+        'DNO can refuse or require network upgrades',
+        'Protection settings agreed with DNO',
+        'May require witness testing',
+        'Cannot connect until approval received'
+      ]
+    };
+  }
+}
+
+/**
+ * Determine earthing for standby generator
+ */
+export function getStandbyGeneratorEarthing(
+  gridEarthing: 'TN-C-S' | 'TN-S' | 'TT',
+  generatorType: 'separately-derived' | 'solidly-grounded'
+): {
+  earthingMethod: string;
+  earthElectrode: boolean;
+  neutralSwitching: boolean;
+  notes: string[];
+} {
+  if (gridEarthing === 'TN-C-S') {
+    // PME supply - MUST have independent earth when on generator
+    return {
+      earthingMethod: 'TT earthing system for generator (Reg 551.4.3.2.1)',
+      earthElectrode: true,
+      neutralSwitching: true,
+      notes: [
+        '❌ CANNOT rely on PME earth when grid disconnected',
+        '✅ Install earth electrode (≤200Ω) for generator supply',
+        '✅ 4-pole changeover switch (L1, L2, L3, N)',
+        'Neutral must switch to disconnect from PME',
+        'Generator neutral connected to earth electrode'
+      ]
+    };
+  } else if (gridEarthing === 'TN-S' && generatorType === 'separately-derived') {
+    return {
+      earthingMethod: 'Separate earth electrode for generator',
+      earthElectrode: true,
+      neutralSwitching: true,
+      notes: [
+        'Generator is separately derived (separate neutral-earth bond)',
+        '4-pole changeover to isolate neutral',
+        'Earth electrode for generator earthing',
+        'Cannot share TN-S earth when on generator power'
+      ]
+    };
+  } else {
+    return {
+      earthingMethod: 'Can use existing TN-S earthing',
+      earthElectrode: false,
+      neutralSwitching: false,
+      notes: [
+        'Grid TN-S earth can be used (not PME)',
+        '3-pole changeover acceptable',
+        'Generator neutral NOT separately bonded to earth',
+        'Verify earth electrode resistance acceptable'
+      ]
+    };
+  }
+}
+
+/**
+ * Calculate battery ventilation requirement
+ */
+export function calculateBatteryVentilation(
+  batteryCapacity: number,
+  batteryType: 'lead-acid' | 'lithium-ion'
+): {
+  ventilationRequired: boolean;
+  flowRate: string;
+  notes: string[];
+} {
+  if (batteryType === 'lead-acid') {
+    const flowRate = batteryCapacity * 0.05; // 0.05 m³/h per kWh
+    return {
+      ventilationRequired: true,
+      flowRate: `${flowRate.toFixed(2)} m³/h minimum (natural or mechanical)`,
+      notes: [
+        '⚠️ HYDROGEN GAS RISK - explosive if >4% concentration',
+        'High & low level vents required',
+        'Vent area: ≥0.5% of floor area (natural ventilation)',
+        'No ignition sources (sparks, naked flames)',
+        'Battery room: NO SMOKING signs (BS EN ISO 7010 P003)',
+        'Spark-proof light switches (outside room)'
+      ]
+    };
+  } else {
+    // Lithium-ion - less gas, but thermal runaway risk
+    return {
+      ventilationRequired: true,
+      flowRate: batteryCapacity < 10 
+        ? 'Natural ventilation adequate (vents top & bottom)' 
+        : `Mechanical extraction recommended for ${batteryCapacity}kWh (≥${(batteryCapacity * 0.02).toFixed(1)} m³/h)`,
+      notes: [
+        '⚠️ THERMAL RUNAWAY RISK - toxic gases (HF, CO, CO2)',
+        'Natural ventilation usually adequate <10kWh',
+        'Consider mechanical extraction if >20kWh',
+        'Temperature monitoring (BMS)',
+        'Smoke/heat detector in battery room',
+        'Fire extinguisher: Class D or F (NOT WATER!)',
+        'Manufacturer installation manual MUST be followed'
+      ]
+    };
+  }
+}
+
+/**
+ * Validate generating set installation
+ */
+export function validateGeneratingSetInstallation(installation: {
+  powerOutput: number;
+  phases: 1 | 3;
+  gridConnection: 'none' | 'standby' | 'parallel';
+  gridEarthing?: 'TN-C-S' | 'TN-S' | 'TT';
+  earthElectrodeInstalled?: boolean;
+  lomProtectionInstalled?: boolean;
+  dnoNotificationSubmitted?: boolean;
+}): { valid: boolean; issues: string[] } {
+  const issues: string[] = [];
+
+  // Check grid connection approval
+  if (installation.gridConnection === 'parallel') {
+    const gridReq = getGridConnectionRequirement(installation.powerOutput, installation.phases);
+    
+    if (gridReq.standard.includes('G99') && !installation.dnoNotificationSubmitted) {
+      issues.push('❌ G99 approval: DNO approval REQUIRED before connection (>16A per phase)');
+    }
+
+    if (!installation.lomProtectionInstalled) {
+      issues.push('❌ Loss of Mains (LOM) protection MANDATORY for parallel operation (Reg 551.7.4)');
+    }
+  }
+
+  // Check standby generator earthing
+  if (installation.gridConnection === 'standby') {
+    if (installation.gridEarthing === 'TN-C-S' && !installation.earthElectrodeInstalled) {
+      issues.push('❌ PME supply: Independent earth electrode REQUIRED for standby generator (Reg 551.4.3.2.1)');
+    }
+  }
+
+  return {
+    valid: issues.length === 0,
+    issues
+  };
+}
