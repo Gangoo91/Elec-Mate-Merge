@@ -241,6 +241,7 @@ serve(async (req) => {
 function getAgentFunctionName(agent: string): string {
   const mapping: Record<string, string> = {
     'designer': 'designer-agent',
+    'health-safety': 'health-safety-agent',
     'cost-engineer': 'cost-engineer-agent',
     'installer': 'installer-agent',
     'commissioning': 'commissioning-agent'

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle } from "lucide-react";
+import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { InstallPlanDataV2 } from "./types";
@@ -45,6 +45,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const scrollRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
+  const [isExporting, setIsExporting] = useState(false);
 
   const { streamMessage, isStreaming } = useStreamingChat({
     onAgentUpdate: (agents) => {
@@ -165,6 +166,64 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     }
   };
 
+  const handleExportPackage = async () => {
+    const hasCompleteDesign = messages.length >= 5 && planData.circuits && planData.circuits.length > 0;
+    
+    if (!hasCompleteDesign) {
+      toast.error("Need a complete design first", {
+        description: "Have a conversation with the AI to design at least one circuit before exporting."
+      });
+      return;
+    }
+
+    setIsExporting(true);
+    
+    toast.info("Generating Package...", {
+      description: "Creating 6 professional documents"
+    });
+
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-professional-package', {
+        body: { 
+          messages,
+          designData: planData,
+          companyName: "Your Company Name", // Could be from user profile
+          clientName: "Client Name"
+        }
+      });
+
+      if (error) {
+        console.error('Export error:', error);
+        toast.error("Export Failed", {
+          description: "Couldn't generate the professional package. Please try again."
+        });
+        return;
+      }
+
+      // Download ZIP
+      const blob = new Blob([data], { type: 'application/zip' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Electrical_Design_Package_${Date.now()}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success("Package Ready! 🎉", {
+        description: "6 professional documents downloaded as ZIP"
+      });
+    } catch (error) {
+      console.error('Export error:', error);
+      toast.error("Export Failed", {
+        description: error instanceof Error ? error.message : "Unknown error occurred"
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   return (
     <div className="flex flex-col h-screen bg-elec-dark">
       {/* Header - WhatsApp style */}
@@ -178,9 +237,30 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             </div>
           </div>
           
-          <Button variant="ghost" size="sm" onClick={onReset} className="text-xs text-white hover:bg-white/10">
-            New Chat
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleExportPackage}
+              disabled={isExporting || messages.length < 5}
+              className="text-xs bg-white/5 hover:bg-white/10 border-white/10 text-white"
+            >
+              {isExporting ? (
+                <>
+                  <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                  Exporting...
+                </>
+              ) : (
+                <>
+                  <FileDown className="h-3 w-3 mr-1" />
+                  Export Package
+                </>
+              )}
+            </Button>
+            <Button variant="ghost" size="sm" onClick={onReset} className="text-xs text-white hover:bg-white/10">
+              New Chat
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -221,6 +301,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                         className="text-xs bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
                       >
                         {agent === 'designer' && '🎨'}
+                        {agent === 'health-safety' && '🦺'}
                         {agent === 'cost-engineer' && '💰'}
                         {agent === 'installer' && '🔧'}
                         {agent === 'commissioning' && '✅'}
