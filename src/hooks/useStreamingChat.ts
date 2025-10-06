@@ -11,6 +11,8 @@ interface StreamChunk {
   costUpdates?: any;
   nextAgent?: string | null;
   agentOutputs?: any[];
+  index?: number;
+  total?: number;
 }
 
 interface Message {
@@ -122,7 +124,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
                   case 'agent_start':
                     // Agent is starting to respond
                     if (chunk.agent) {
-                      options.onAgentStart?.(chunk.agent, chunk.data?.index || 0, chunk.data?.total || 1);
+                      options.onAgentStart?.(chunk.agent, chunk.index || 0, chunk.total || 1);
                     }
                     break;
 

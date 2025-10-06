@@ -228,7 +228,7 @@ async function handleConversationalMode(
         conversationState,
         previousAgentOutputs: [],
         userQuery: latestMessage,
-        fullConversationThread: [...messages]
+        fullConversationThread: reconstructFullConversationThread(messages)
       };
 
       const allCitations: any[] = [];
@@ -418,7 +418,7 @@ async function handleSynthesisMode(
     conversationState,
     previousAgentOutputs: [],
     userQuery: latestMessage,
-    fullConversationThread: [...messages]
+    fullConversationThread: reconstructFullConversationThread(messages)
   };
 
   for (const step of agentPlan.sequence) {
@@ -626,13 +626,23 @@ function getAgentEmoji(agent: string): string {
 
 function getAgentDisplayName(agent: string): string {
   const names: Record<string, string> = {
-    'designer': 'Designer',
+    'designer': 'Circuit Designer',
     'cost-engineer': 'Cost Engineer',
-    'installer': 'Installer',
-    'commissioning': 'Commissioning',
+    'installer': 'Installation Specialist',
+    'commissioning': 'Testing & Commissioning',
     'health-safety': 'Health & Safety'
   };
   return names[agent] || agent;
+}
+
+// NEW: Reconstruct full conversation thread from messages
+// Handles both fresh messages (user-only) and resumed conversations (user + formatted agent responses)
+function reconstructFullConversationThread(messages: Message[]): Message[] {
+  return messages.map(msg => {
+    // If this is an assistant message that's already formatted with [AgentName]:, keep it as-is
+    // If not, it's probably from initial messages, keep it
+    return msg;
+  });
 }
 
 // Helper: Detect which agent wrote a message based on content patterns

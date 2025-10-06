@@ -132,12 +132,15 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       console.log(`Agent ${agent} responded:`, response.slice(0, 100));
       
       // Update the last message with this agent's response
+      // Format: [AgentName]: response for proper backend tracking
+      const formattedResponse = `[${getAgentName(agent)}]: ${response}`;
+      
       setMessages(prev => {
         const newMessages = [...prev];
         const lastMsg = newMessages[newMessages.length - 1];
         
         if (lastMsg && lastMsg.role === 'assistant' && lastMsg.activeAgents?.includes(agent)) {
-          lastMsg.content = response;
+          lastMsg.content = formattedResponse;
         }
         
         return newMessages;
