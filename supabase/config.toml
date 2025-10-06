@@ -1,5 +1,8 @@
 project_id = "jtwygbeceundfgnkirof"
 
+[functions.parse-bs7671]
+verify_jwt = false
+
 [functions.orchestrator-agent]
 verify_jwt = false
 

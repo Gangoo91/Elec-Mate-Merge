@@ -25,6 +25,32 @@ const ProcessOnsiteGuide = () => {
   const [book2Result, setBook2Result] = useState<any>(null);
   const [book2Error, setBook2Error] = useState<string>('');
 
+  const [bs7671Status, setBs7671Status] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [bs7671Result, setBs7671Result] = useState<any>(null);
+  const [bs7671Error, setBs7671Error] = useState<string>('');
+
+  const processBS7671 = async () => {
+    setBs7671Status('loading');
+    setBs7671Error('');
+    setBs7671Result(null);
+
+    try {
+      const { data, error: invokeError } = await supabase.functions.invoke('parse-bs7671');
+
+      if (invokeError) {
+        throw invokeError;
+      }
+
+      setBs7671Result(data);
+      setBs7671Status('success');
+      
+    } catch (err) {
+      console.error('Processing error:', err);
+      setBs7671Error(err instanceof Error ? err.message : 'Unknown error');
+      setBs7671Status('error');
+    }
+  };
+
   const processOnsiteGuide = async () => {
     setOnsiteStatus('loading');
     setOnsiteError('');
@@ -535,6 +561,81 @@ const ProcessOnsiteGuide = () => {
                   </span>
                 </div>
                 <p className="text-sm text-red-600 dark:text-red-400">{book2Error}</p>
+              </div>
+            )}
+          </div>
+        </Card>
+
+        {/* BS 7671 Wiring Regulations */}
+        <Card className="p-6 border-2 border-primary/50">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <FileText className="h-6 w-6 text-primary" />
+              <div>
+                <p className="font-semibold text-primary">BS 7671:2018+A2:2022 (Wiring Regulations)</p>
+                <p className="text-sm text-muted-foreground">
+                  🔥 FOUNDATIONAL DOCUMENT - The legal basis for all electrical installations
+                </p>
+              </div>
+            </div>
+
+            <Button 
+              onClick={processBS7671} 
+              disabled={bs7671Status === 'loading'}
+              className="w-full"
+              size="lg"
+              variant="default"
+            >
+              {bs7671Status === 'loading' ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                  Processing BS 7671...
+                </>
+              ) : (
+                <>
+                  <FileText className="h-5 w-5 mr-2" />
+                  Process BS 7671 Wiring Regulations
+                </>
+              )}
+            </Button>
+
+            {bs7671Status === 'loading' && (
+              <div className="text-center text-sm text-muted-foreground">
+                <p>Processing ~20,000 lines...</p>
+                <p>Extracting regulation numbers, parts, chapters, sections...</p>
+                <p>Creating intelligent chunks with metadata...</p>
+                <p className="font-semibold text-primary mt-2">This may take 15-20 minutes...</p>
+              </div>
+            )}
+
+            {bs7671Status === 'success' && bs7671Result && (
+              <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle2 className="h-5 w-5 text-green-500" />
+                  <span className="font-semibold text-green-700 dark:text-green-400">
+                    BS 7671 Successfully Processed! 🎉
+                  </span>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <p>✅ Chunks Created: <strong>{bs7671Result.chunks_created}</strong></p>
+                  <p>✅ Embeddings Processed: <strong>{bs7671Result.chunks_processed}</strong></p>
+                  <p className="text-xs text-muted-foreground mt-3">
+                    All agents now have access to BS 7671 regulations via RAG search
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {bs7671Status === 'error' && (
+              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertCircle className="h-5 w-5 text-red-500" />
+                  <span className="font-semibold text-red-700 dark:text-red-400">
+                    Processing Failed
+                  </span>
+                </div>
+                <p className="text-sm text-red-600 dark:text-red-400">{bs7671Error}</p>
               </div>
             )}
           </div>
