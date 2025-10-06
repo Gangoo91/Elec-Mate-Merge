@@ -59,7 +59,7 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
           {installationTypes.map((type) => (
             <Card
               key={type.title}
-              className="group cursor-pointer transition-all hover:scale-105 bg-card border-border hover:border-primary/50"
+              className="group cursor-pointer transition-all hover:scale-105 bg-elec-grey border-border hover:border-primary/50"
               onClick={() => onModeSelect(type.mode, { installationType: type.type })}
             >
               <CardContent className="p-6">
@@ -83,7 +83,7 @@ export const EntrySelector = ({ onModeSelect }: EntrySelectorProps) => {
           {quickStarts.map((quick) => (
             <Card
               key={quick.title}
-              className="group cursor-pointer transition-all hover:scale-105 bg-card border-border hover:border-primary"
+              className="group cursor-pointer transition-all hover:scale-105 bg-elec-grey border-border hover:border-primary"
               onClick={() => onModeSelect(quick.mode, { loadType: quick.loadType })}
             >
               <CardContent className="p-6 flex items-center gap-4">
