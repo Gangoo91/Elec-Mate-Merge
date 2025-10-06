@@ -11,6 +11,7 @@ interface DocumentProcessorProps {
   functionName: string;
   estimatedTime: string;
   icon?: React.ReactNode;
+  requiresFileUpload?: boolean;
 }
 
 export const DocumentProcessor = ({ 
@@ -18,13 +19,27 @@ export const DocumentProcessor = ({
   description, 
   functionName, 
   estimatedTime,
-  icon 
+  icon,
+  requiresFileUpload = false
 }: DocumentProcessorProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
 
   const handleProcess = async () => {
+    if (requiresFileUpload && !selectedFile) {
+      toast.error('Please select a file first');
+      return;
+    }
+
     setIsProcessing(true);
     setResult(null);
     setError(null);
@@ -33,8 +48,16 @@ export const DocumentProcessor = ({
       toast.info(`Starting ${title} processing...`, {
         description: estimatedTime
       });
+
+      let body = {};
+      if (requiresFileUpload && selectedFile) {
+        const fileContent = await selectedFile.text();
+        body = { fileContent };
+      }
       
-      const { data, error: funcError } = await supabase.functions.invoke(functionName);
+      const { data, error: funcError } = await supabase.functions.invoke(functionName, {
+        body
+      });
       
       if (funcError) {
         throw new Error(funcError.message || `Function invocation failed: ${funcError}`);
@@ -73,10 +96,27 @@ export const DocumentProcessor = ({
           </div>
         </div>
 
+        {requiresFileUpload && (
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Upload Document</label>
+            <input
+              type="file"
+              accept=".txt"
+              onChange={handleFileChange}
+              className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+            />
+            {selectedFile && (
+              <p className="text-xs text-muted-foreground">
+                Selected: {selectedFile.name} ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="flex items-center gap-4">
           <Button 
             onClick={handleProcess} 
-            disabled={isProcessing}
+            disabled={isProcessing || (requiresFileUpload && !selectedFile)}
             className="gap-2"
           >
             {isProcessing ? (

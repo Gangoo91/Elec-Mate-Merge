@@ -32,17 +32,15 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Fetch the BS 7671 file
-    const fileUrl = `${supabaseUrl}/storage/v1/object/public/safety-resources/bs7671-wiring-regs.txt`;
-    console.log(`Fetching BS 7671 from: ${fileUrl}`);
+    // Get file content from request body
+    const { fileContent } = await req.json();
     
-    const fileResponse = await fetch(fileUrl);
-    if (!fileResponse.ok) {
-      throw new Error(`Failed to fetch BS 7671 file: ${fileResponse.status}`);
+    if (!fileContent) {
+      throw new Error('No file content provided in request body');
     }
     
-    const fileText = await fileResponse.text();
-    const lines = fileText.split('\n');
+    console.log('Processing BS 7671 content...');
+    const lines = fileContent.split('\n');
     console.log(`Loaded ${lines.length} lines from BS 7671`);
 
     // Parse the document into structured chunks

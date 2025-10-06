@@ -16,8 +16,9 @@ const AdminRAGProcessor = () => {
 
         <Alert>
           <AlertDescription>
-            <strong>Important:</strong> Files must be uploaded to Supabase Storage bucket <code>safety-resources</code> before processing.
-            Upload these files: bs7671-wiring-regs.txt, CITY-GUILDS-BOOK-1.txt, CITY-GUILDS-BOOK-2.txt, EMERGENCY-LIGHTING.txt
+            <strong>BS 7671:</strong> Upload the text file directly below.
+            <br />
+            <strong>Other documents:</strong> Must be in Supabase Storage bucket <code>safety-resources</code> as: CITY-GUILDS-BOOK-1.txt, CITY-GUILDS-BOOK-2.txt, EMERGENCY-LIGHTING.txt
           </AlertDescription>
         </Alert>
 
@@ -29,6 +30,7 @@ const AdminRAGProcessor = () => {
           functionName="parse-bs7671"
           estimatedTime="Processing time: 15-20 minutes"
           icon={<BookOpen className="h-6 w-6 text-amber-600" />}
+          requiresFileUpload={true}
         />
 
         <DocumentProcessor
