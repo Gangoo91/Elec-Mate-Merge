@@ -126,7 +126,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   };
 
   return (
-    <div className="flex flex-col h-screen bg-elec-grey">
+    <div className="flex flex-col h-screen bg-elec-dark">
       {/* Header - WhatsApp style */}
       <div className="flex-none px-4 py-3 border-b border-border/30 bg-elec-dark">
         <div className="flex items-center justify-between">
@@ -147,7 +147,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       {/* Messages Area - WhatsApp style */}
       <div 
         ref={scrollRef}
-        className="flex-1 overflow-y-auto bg-elec-grey"
+        className="flex-1 overflow-y-auto bg-elec-dark"
       >
         <div className="px-4 py-4 space-y-2">
           {messages.map((message, index) => (
