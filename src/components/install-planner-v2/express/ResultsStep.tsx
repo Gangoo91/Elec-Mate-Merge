@@ -2,12 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, AlertTriangle, Cable, Zap, TrendingDown, Shield, Package, DollarSign, BookOpen, FileText, Loader2 } from "lucide-react";
-import { InstallPlanDataV2, CalculationResult } from "../types";
+import { InstallPlanDataV2, CalculationResult, SiteInfo, ProjectInfo } from "../types";
 import { InstallationInsights } from "../InstallationInsights";
 import { RegulationTooltip } from "../RegulationTooltip";
+import { SiteProjectInfoDialog } from "../SiteProjectInfoDialog";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { generateInstallationPlanPDF, generatePlanReference } from "@/utils/installation-plan-pdf";
 
 interface ResultsStepProps {
   planData: InstallPlanDataV2;
@@ -17,6 +18,7 @@ interface ResultsStepProps {
 
 export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [showSiteInfoDialog, setShowSiteInfoDialog] = useState(false);
   const { toast } = useToast();
 
   if (!result) {
@@ -29,23 +31,27 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
     );
   }
 
-  const handleExportPdf = async () => {
+  const handleExportPdf = () => {
+    setShowSiteInfoDialog(true);
+  };
+
+  const handleSiteInfoSave = async (siteInfo: SiteInfo, projectInfo: ProjectInfo) => {
     setIsGeneratingPdf(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('generate-install-plan-pdf', {
-        body: { planData, result }
-      });
-
-      if (error) throw error;
-
-      // Open PDF in new tab or download
-      if (data.downloadUrl) {
-        window.open(data.downloadUrl, '_blank');
-        toast({
-          title: "PDF generated",
-          description: "Your installation plan is ready",
-        });
+    const updatedPlanData = {
+      ...planData,
+      siteInfo,
+      projectInfo: {
+        ...projectInfo,
+        planReference: projectInfo.planReference || generatePlanReference()
       }
+    };
+
+    try {
+      await generateInstallationPlanPDF(updatedPlanData, result);
+      toast({
+        title: "PDF Generated",
+        description: "Your installation plan has been downloaded successfully"
+      });
     } catch (error) {
       console.error('PDF generation error:', error);
       toast({
@@ -335,6 +341,14 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
           </div>
         </div>
       )}
+
+      {/* Site & Project Info Dialog */}
+      <SiteProjectInfoDialog
+        open={showSiteInfoDialog}
+        onOpenChange={setShowSiteInfoDialog}
+        planData={planData}
+        onSave={handleSiteInfoSave}
+      />
     </div>
   );
 };

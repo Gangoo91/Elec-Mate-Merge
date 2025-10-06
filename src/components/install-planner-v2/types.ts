@@ -12,6 +12,21 @@ export interface EnvironmentalProfile {
   finalApplied: EnvironmentConditions;
 }
 
+export interface SiteInfo {
+  propertyAddress?: string;
+  postcode?: string;
+  clientName?: string;
+  contactNumber?: string;
+}
+
+export interface ProjectInfo {
+  planReference?: string;
+  plannedStartDate?: string;
+  estimatedDuration?: string;
+  leadElectrician?: string;
+  registrationNumber?: string;
+}
+
 export interface InstallPlanDataV2 {
   // Mode
   mode: 'express' | 'professional' | 'multi';
@@ -40,6 +55,10 @@ export interface InstallPlanDataV2 {
   // Optional fields
   powerFactor?: number;
   circuits?: CircuitV2[];
+  
+  // Site & Project Information
+  siteInfo?: SiteInfo;
+  projectInfo?: ProjectInfo;
   
   // State Management
   savedAt?: Date;
@@ -84,6 +103,8 @@ export interface MaterialItem {
   name: string;
   quantity: string;
   specification: string;
+  unitCost?: number;
+  totalCost?: number;
 }
 
 export interface GuidanceSection {

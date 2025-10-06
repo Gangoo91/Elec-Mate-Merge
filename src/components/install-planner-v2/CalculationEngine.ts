@@ -220,7 +220,7 @@ const generateMaterialsList = (
   cableType: CableType,
   installationMethod: string,
   location?: string
-): { name: string; quantity: string; specification: string }[] => {
+): { name: string; quantity: string; specification: string; unitCost?: number; totalCost?: number }[] => {
   const lengthWithWastage = Math.ceil(length * 1.1);
   const isFireCircuit = isFireRatedCircuit(cableType);
   
@@ -232,16 +232,44 @@ const generateMaterialsList = (
   // Ensure minimum 1.5mm² for lighting circuits (industry standard)
   const effectiveCableSize = cableSize < 1.5 ? 1.5 : cableSize;
   
+  // Get pricing for materials
+  const getCablePricePerMeter = (type: CableType, size: number): number => {
+    const prices: Record<CableType, Record<number, number>> = {
+      'pvc-twin-earth': { 1.5: 1.50, 2.5: 2.50, 4: 3.80, 6: 5.00, 10: 8.50, 16: 13.50, 25: 21.00, 35: 28.00 },
+      'pvc-single': { 1.5: 3.80, 2.5: 4.50, 4: 5.80, 6: 7.20, 10: 11.50, 16: 17.00, 25: 26.00, 35: 15.00 },
+      'swa': { 1.5: 4.80, 2.5: 6.20, 4: 8.50, 6: 11.20, 10: 17.50, 16: 26.00, 25: 38.00, 35: 52.00 },
+      'xlpe-twin-earth': { 1.5: 1.80, 2.5: 3.00, 4: 4.50, 6: 6.00, 10: 10.00, 16: 16.00, 25: 25.00, 35: 34.00 },
+      'xlpe-single': { 1.5: 0.75, 2.5: 1.20, 4: 1.75, 6: 2.40, 10: 4.00, 16: 6.20, 25: 9.80, 35: 13.20 },
+      'micc': { 1.5: 3.80, 2.5: 5.50, 4: 7.20, 6: 9.50, 10: 15.00, 16: 23.00, 25: 35.00 },
+      'aluminium-xlpe': { 16: 4.50, 25: 7.00, 35: 9.50, 50: 13.00, 70: 18.00, 95: 24.00 }
+    };
+    return prices[type]?.[size] || 2.50;
+  };
+
+  const cablePricePerMeter = getCablePricePerMeter(cableType, effectiveCableSize);
+  const cableTotalCost = cablePricePerMeter * lengthWithWastage;
+  
+  const mcbPrices: Record<string, number> = {
+    '6A': 8, '10A': 8, '16A': 8, '20A': 9, '25A': 9,
+    '32A': 10, '40A': 12, '50A': 14, '63A': 16
+  };
+  const mcbRating = protectiveDevice.split('A')[0];
+  const mcbCost = mcbPrices[`${mcbRating}A`] || 10;
+
   const materials = [
     {
       name: 'Cable',
       quantity: `${lengthWithWastage}m`,
-      specification: `${effectiveCableSize}mm² ${cableSpec} (BS EN 50200 compliant${isFireCircuit ? ', 3-hour fire rating' : ''})`
+      specification: `${effectiveCableSize}mm² ${cableSpec} (BS EN 50200 compliant${isFireCircuit ? ', 3-hour fire rating' : ''})`,
+      unitCost: cablePricePerMeter,
+      totalCost: cableTotalCost
     },
     {
       name: 'Protective Device',
       quantity: '1',
-      specification: `${protectiveDevice} (BS EN 60898)`
+      specification: `${protectiveDevice} (BS EN 60898)`,
+      unitCost: mcbCost,
+      totalCost: mcbCost
     }
   ];
 
