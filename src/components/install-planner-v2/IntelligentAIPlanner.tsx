@@ -159,7 +159,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm ${
                   message.role === 'user'
                     ? 'bg-elec-yellow text-elec-dark'
-                    : 'bg-white text-foreground'
+                    : 'bg-elec-card text-white'
                 }`}
               >
                 <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
@@ -170,9 +170,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           {/* Loading indicator */}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-white rounded-2xl px-4 py-3 shadow-sm flex items-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin text-primary" />
-                <span className="text-sm text-muted-foreground">Thinking...</span>
+              <div className="bg-elec-card rounded-2xl px-4 py-3 shadow-sm flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin text-white" />
+                <span className="text-sm text-white">Thinking...</span>
               </div>
             </div>
           )}
