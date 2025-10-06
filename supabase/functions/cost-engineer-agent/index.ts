@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { searchPricingData } from '../shared/ragHelper.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -15,6 +16,16 @@ serve(async (req) => {
     const { messages, context } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAIApiKey) throw new Error('OpenAI API key not configured');
+
+    // RAG - Get pricing data from database
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    
+    const userMessage = messages[messages.length - 1]?.content || '';
+    const ragQuery = `${userMessage} electrical materials cable MCB accessories`;
+    
+    console.log(`🔍 RAG query: "${ragQuery}"`);
+    const pricingData = await searchPricingData(ragQuery, openAIApiKey, supabaseUrl, supabaseKey, undefined, 15);
 
     const previousAgents = context?.previousAgentOutputs?.map((a: any) => a.agent) || [];
     const hasDesigner = previousAgents.includes('designer');
@@ -40,7 +51,7 @@ CRITICAL RULES:
       systemPrompt += `\nInstallation method's been covered, so factor in the labour time they mentioned when pricing.`;
     }
 
-    systemPrompt += `\n\nBreak it down conversationally: "Right, materials-wise you're looking at about £X for the cable from CEF, £Y for the MCB, then labour's probably a day and a half so £Z. All in, you'd want to quote around £Total plus VAT."`;
+    systemPrompt += `\n\n💰 CURRENT PRICING (from RAG database):\n${pricingData || 'No specific pricing found - use typical 2025 UK prices'}\n\nBreak it down conversationally: "Right, materials-wise you're looking at about £X for the cable from CEF, £Y for the MCB, then labour's probably a day and a half so £Z. All in, you'd want to quote around £Total plus VAT."`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

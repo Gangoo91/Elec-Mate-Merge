@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { searchBS7671Regulations } from '../shared/ragHelper.ts';
 // BS 7671:2018+A2:2022 Chapter 64 - Complete Testing Knowledge
 import { getTestSequence, getTest, verifyInsulationResistance, INSULATION_RESISTANCE_LIMITS } from "../shared/bs7671TestingRequirements.ts";
 import { getMaxZs } from "../shared/bs7671ProtectionData.ts";
@@ -28,6 +29,16 @@ serve(async (req) => {
     const hasDesigner = previousAgents.includes('designer');
     const hasInstaller = previousAgents.includes('installer');
 
+    // RAG - Get testing regulations from database
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    
+    const userMessage = messages[messages.length - 1]?.content || '';
+    const ragQuery = `${userMessage} testing commissioning insulation resistance earth fault loop RCD Chapter 64`;
+    
+    console.log(`🔍 RAG query: "${ragQuery}"`);
+    const testingRegulations = await searchBS7671Regulations(ragQuery, openAIApiKey, supabaseUrl, supabaseKey, 10);
+
     // Build testing context from BS 7671 Chapter 64
     const testSequence = getTestSequence();
     const testContext = testSequence.map(t => 
@@ -52,6 +63,9 @@ CRITICAL TEST VALUES TO USE:
 - Max Zs examples: B32 MCB = 1.44Ω, C32 MCB = 0.72Ω (Table 41.3)
 - RCD trip times: ≤300ms at 1× IΔn, ≤40ms at 5× IΔn (Reg 643.8)
 - Continuity: Very low (typically <0.05Ω short runs, <1Ω longer runs)
+
+📚 TESTING REGULATIONS (from RAG database):
+${testingRegulations || 'No specific testing regulations retrieved - use general Chapter 64 principles'}
 `;
 
     if (hasDesigner || hasInstaller) {

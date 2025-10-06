@@ -9,7 +9,7 @@ import { calculateVoltageDrop, getCableCapacity, VOLTAGE_DROP_70C_PVC_COPPER, TA
 import { calculateOverallCorrectionFactor, getTemperatureFactor, getGroupingFactor, GROUPING_FACTORS_ENCLOSED } from "../shared/bs7671CorrectionFactors.ts";
 import { getMaxZs, checkRCDRequirement, MAX_ZS_MCB_TYPE_B_04S, MAX_ZS_MCB_TYPE_C_04S, RCD_REQUIREMENTS } from "../shared/bs7671ProtectionData.ts";
 import { getSpecialLocationRequirements, checkSafeZoneCompliance, SECTION_701_BATHROOMS, SECTION_722_EV_CHARGING, SAFE_ZONES_522_6 } from "../shared/bs7671SpecialLocations.ts";
-import { searchBS7671, getRegulationsForCircuitType } from './bs7671Knowledge.ts';
+import { searchBS7671Regulations } from '../shared/ragHelper.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -98,10 +98,16 @@ serve(async (req) => {
       };
     }
 
-    // Phase 2: Load relevant BS 7671 regulations
-    const relevantRegs = circuitParams.circuitType 
-      ? getRegulationsForCircuitType(circuitParams.circuitType)
-      : searchBS7671('overload protection voltage drop');
+    // Phase 2: RAG - Load relevant BS 7671 regulations from database
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    
+    const ragQuery = circuitParams.circuitType 
+      ? `${circuitParams.circuitType} circuit design overload protection voltage drop cable sizing`
+      : 'overload protection voltage drop cable capacity';
+    
+    console.log(`🔍 RAG query: "${ragQuery}"`);
+    const relevantRegsText = await searchBS7671Regulations(ragQuery, openAIApiKey, supabaseUrl, supabaseKey, 15);
 
     // Enhanced system prompt with FULL BS 7671:2018+A2:2022 knowledge
     const systemPrompt = `You're a senior spark with full access to BS 7671:2018+A2:2022. CRITICAL: Always SHOW YOUR WORKING like you're explaining to an apprentice.
@@ -141,8 +147,8 @@ ${calculationResults.rcdRequirements.map((rcd: any) => `- ${rcd.regulation}: ${r
 USE THESE EXACT VALUES. Don't recalculate - explain what they mean and cite the table references.
 ` : ''}
 
-**Relevant BS 7671 Regulations:**
-${relevantRegs.map(reg => `Reg ${reg.number} (${reg.section}): ${reg.content}`).join('\n')}
+**Relevant BS 7671 Regulations (from RAG database):**
+${relevantRegsText || 'No specific regulations retrieved - use general BS 7671 principles'}
 
 When calculating anything:
 "Right, let me work through this 9.5kW shower circuit properly mate...

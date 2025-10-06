@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { searchInstallationKnowledge } from '../shared/ragHelper.ts';
 import { 
   CABLE_SUPPORT_INTERVALS, 
   SAFE_ZONES, 
@@ -28,6 +29,16 @@ serve(async (req) => {
     const { messages, context } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAIApiKey) throw new Error('OpenAI API key not configured');
+
+    // RAG - Get installation knowledge from database
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    
+    const userMessage = messages[messages.length - 1]?.content || '';
+    const ragQuery = `${userMessage} cable installation methods safe zones support intervals termination`;
+    
+    console.log(`🔍 RAG query: "${ragQuery}"`);
+    const installationKnowledge = await searchInstallationKnowledge(ragQuery, openAIApiKey, supabaseUrl, supabaseKey, 10);
 
     // Build context-aware prompt with BS 7671 Chapter 52 knowledge
     const previousAgents = context?.previousAgentOutputs?.map((a: any) => a.agent) || [];
@@ -58,6 +69,9 @@ ${TERMINATION_GUIDANCE.slice(0, 2).map(t => `- ${t.conductorType}: ${t.torqueSet
 
 🌧️ EXTERNAL INFLUENCES (Section 522):
 ${EXTERNAL_INFLUENCE_PROTECTIONS.slice(0, 4).map(p => `- ${p.code} (${p.influence}): ${p.protection}`).join('\n')}
+
+📚 INSTALLATION KNOWLEDGE (from RAG database):
+${installationKnowledge || 'No specific installation guides retrieved - use general BS 7671 Chapter 52 principles'}
 
 COMMUNICATION STYLE:
 - Chat naturally like you're texting a mate on site
