@@ -1,5 +1,17 @@
 project_id = "jtwygbeceundfgnkirof"
 
+[functions.process-pdf-embeddings]
+verify_jwt = false
+
+[functions.scrape-screwfix]
+verify_jwt = false
+
+[functions.scrape-cef]
+verify_jwt = false
+
+[functions.scrape-toolstation]
+verify_jwt = false
+
 [functions.generate-briefing-content]
 verify_jwt = false
 
