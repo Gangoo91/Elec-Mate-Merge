@@ -1,7 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { corsHeaders } from '../_shared/cors.ts';
-import { getHazardsForWork, emergencyProcedures } from './healthSafetyKnowledge.ts';
+import { getHazardsForWork, getACOPsForWork, emergencyProcedures } from './healthSafetyKnowledge.ts';
 
 interface HealthSafetyAgentRequest {
   messages: Array<{ role: string; content: string }>;
@@ -26,29 +26,38 @@ serve(async (req) => {
 
     const latestMessage = messages[messages.length - 1]?.content || '';
 
-    // Phase 2: Load relevant H&S knowledge
+    // Phase 2: Load relevant H&S knowledge + ACOPs
     const circuitDetails = extractCircuitDetails(latestMessage, currentDesign, context);
     const workType = extractWorkType(latestMessage, currentDesign);
     const relevantHazards = getHazardsForWork(workType);
+    const relevantACOPs = getACOPsForWork(workType);
 
-    console.log(`🦺 Loading H&S knowledge for work type: ${workType}, found ${relevantHazards.length} relevant hazards`);
+    console.log(`🦺 Loading H&S knowledge for work type: ${workType}, found ${relevantHazards.length} hazards and ${relevantACOPs.length} ACOPs`);
 
-    // System prompt: Senior H&S advisor with REAL knowledge base
-    const systemPrompt = `You are a senior Health & Safety advisor specializing in electrical work, with 20 years experience in BS 7671, CDM 2015, and HASAWA 1974.
+    // System prompt: Senior H&S advisor with REAL knowledge base + ACOPs
+    const systemPrompt = `You are a senior Health & Safety advisor specializing in electrical work, with 20 years experience in BS 7671, CDM 2015, HASAWA 1974, and HSE ACOPs.
 
 CRITICAL RULES:
-1. Always cite specific regulations (e.g., "EWR 1989 Reg 4(3)", "CDM 2015 Reg 13", "BS 7671 Reg 537.2")
+1. Always cite specific regulations AND ACOPs (e.g., "EWR 1989 Reg 4(3)", "CDM 2015 Reg 13 (ACOP L153)", "BS 7671 Reg 537.2")
 2. Assess risks using 5x5 matrix: Likelihood (1-5) × Severity (1-5)
 3. Provide SPECIFIC hazards for the work being done, not generic lists
 4. Focus on ELECTRICAL-SPECIFIC hazards (arc flash, electric shock, underground cables)
-5. Include emergency procedures for electrical incidents
-6. Speak like a UK site safety officer - direct but friendly
+5. Reference ACOP requirements where applicable (quasi-legal status)
+6. Include emergency procedures for electrical incidents
+7. Speak like a UK site safety officer - direct but friendly
 
 **RELEVANT H&S GUIDELINES FOR THIS WORK (${workType}):**
 ${relevantHazards.map(h => `
-${h.title} (${h.regulation}) - SEVERITY: ${h.severity.toUpperCase()}
+${h.title} (${h.regulation}${h.acop ? ` - ACOP ${h.acop}` : ''}) - SEVERITY: ${h.severity.toUpperCase()}
 ${h.content}
 `).join('\n')}
+
+**APPLICABLE ACOPs (Approved Codes of Practice):**
+${relevantACOPs.length > 0 ? relevantACOPs.map(acop => `
+${acop.acop_number}: ${acop.title} (${acop.regulation})
+Key Requirements:
+${acop.key_requirements.map(req => `  • ${req}`).join('\n')}
+`).join('\n') : 'Standard ACOP L21 (Management of H&S at Work) applies'}
 
 **EMERGENCY PROCEDURES:**
 Electric Shock: ${emergencyProcedures.electricShock.slice(0, 3).join(' → ')}
@@ -82,6 +91,7 @@ OUTPUT FORMAT:
     "Re-test after work completion"
   ],
   "citations": ["EWR 1989 Reg 4(3)", "CDM 2015 Reg 13", "BS 7671:2018 Reg 537.2"],
+  "acopCitations": ["L153: CDM 2015 ACOP", "L138: Work at Height ACOP"],
   "emergencyProcedures": ["In case of electric shock: isolate supply, call 999, start CPR if required"],
   "confidence": 0.95
 }
@@ -120,7 +130,7 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
 
     const parsedResponse = JSON.parse(content);
 
-    // Ensure structured output
+    // Ensure structured output with ACOP citations
     const structuredResponse = {
       agent: 'health-safety',
       response: parsedResponse.response || "Safety assessment complete. Refer to risk assessment below.",
@@ -128,6 +138,7 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
       requiredPPE: parsedResponse.requiredPPE || [],
       methodStatement: parsedResponse.methodStatement || [],
       citations: parsedResponse.citations || [],
+      acopCitations: parsedResponse.acopCitations || [],
       emergencyProcedures: parsedResponse.emergencyProcedures || [],
       confidence: parsedResponse.confidence || 0.85
     };
@@ -157,9 +168,12 @@ function extractWorkType(message: string, currentDesign: any): string {
   
   if (lowerMessage.includes('shower') || lowerMessage.includes('bathroom')) return 'shower';
   if (lowerMessage.includes('outdoor') || lowerMessage.includes('garden')) return 'outdoor';
-  if (lowerMessage.includes('commercial') || lowerMessage.includes('factory')) return 'commercial';
+  if (lowerMessage.includes('commercial') || lowerMessage.includes('factory') || lowerMessage.includes('industrial')) return 'commercial';
   if (lowerMessage.includes('excavat') || lowerMessage.includes('dig') || lowerMessage.includes('underground')) return 'excavation';
   if (lowerMessage.includes('consumer unit') || lowerMessage.includes('distribution board')) return 'consumer-unit';
+  if (lowerMessage.includes('height') || lowerMessage.includes('ladder') || lowerMessage.includes('scaffold')) return 'height';
+  if (lowerMessage.includes('confined') || lowerMessage.includes('duct') || lowerMessage.includes('void') || lowerMessage.includes('loft')) return 'confined';
+  if (lowerMessage.includes('refurb') || lowerMessage.includes('demolit') || lowerMessage.includes('strip out')) return 'refurbishment';
   
   return 'general';
 }
