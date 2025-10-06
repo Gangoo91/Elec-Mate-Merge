@@ -7,6 +7,9 @@ import { toast } from "sonner";
 import { InstallPlanDataV2 } from "./types";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useStreamingChat } from "@/hooks/useStreamingChat";
+import { ReasoningPanel } from "./ReasoningPanel";
+import { CitationBadge } from "./CitationBadge";
 
 // Feature flag to toggle between orchestrator and legacy designer
 const USE_ORCHESTRATOR = true;
@@ -37,80 +40,117 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [isLoading, setIsLoading] = useState(false);
   const [currentAction, setCurrentAction] = useState<string>("");
   const [activeAgents, setActiveAgents] = useState<string[]>([]);
+  const [reasoningSteps, setReasoningSteps] = useState<Array<{agent: string; status: 'pending' | 'active' | 'complete'; reasoning?: string}>>([]);
+  const [showReasoning, setShowReasoning] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
+
+  const { streamMessage, isStreaming } = useStreamingChat({
+    onAgentUpdate: (agents) => {
+      setActiveAgents(agents);
+      // Update reasoning panel
+      setReasoningSteps(agents.map(agent => ({
+        agent,
+        status: 'active' as const,
+        reasoning: `Processing your request...`
+      })));
+    },
+    onToolCall: (toolCall) => {
+      toast.success(`✨ ${toolCall.toolName === 'add_circuit_to_design' ? 'Circuit added' : 'Action performed'}`);
+    },
+    onCitation: (citation) => {
+      console.log('Citation received:', citation);
+    },
+    onError: (error) => {
+      toast.error(error);
+    }
+  });
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, currentAction]);
+  }, [messages, currentAction, reasoningSteps]);
 
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading || isStreaming) return;
 
     const userMessage = input.trim();
     setInput("");
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
+    setReasoningSteps([]);
+
+    // Add empty assistant message for streaming
+    const assistantMessageIndex = messages.length + 1;
+    setStreamingMessageIndex(assistantMessageIndex);
+    setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
 
     try {
-      // Choose function based on feature flag
-      const functionName = USE_ORCHESTRATOR ? 'orchestrator-agent' : 'intelligent-install-designer';
-      
-      const { data, error } = await supabase.functions.invoke(functionName, {
-        body: { 
-          messages: [...messages, { role: 'user', content: userMessage }],
-          currentDesign: {
-            circuits: planData.circuits || []
+      await streamMessage(
+        [...messages, { role: 'user', content: userMessage }],
+        { circuits: planData.circuits || [] },
+        // On each token
+        (token) => {
+          setMessages(prev => {
+            const newMessages = [...prev];
+            if (newMessages[assistantMessageIndex]) {
+              newMessages[assistantMessageIndex] = {
+                ...newMessages[assistantMessageIndex],
+                content: newMessages[assistantMessageIndex].content + token
+              };
+            }
+            return newMessages;
+          });
+        },
+        // On complete
+        (fullMessage, data) => {
+          setMessages(prev => {
+            const newMessages = [...prev];
+            if (newMessages[assistantMessageIndex]) {
+              newMessages[assistantMessageIndex] = {
+                role: 'assistant',
+                content: fullMessage,
+                citations: data.citations,
+                toolCalls: data.toolCalls,
+                activeAgents: data.activeAgents
+              };
+            }
+            return newMessages;
+          });
+
+          // Mark reasoning steps as complete
+          setReasoningSteps(prev => prev.map(step => ({ ...step, status: 'complete' as const })));
+
+          // Handle tool calls
+          if (data.toolCalls && data.toolCalls.length > 0) {
+            for (const toolCall of data.toolCalls) {
+              if (toolCall.toolName === 'add_circuit_to_design') {
+                const newCircuit = {
+                  id: toolCall.result?.circuitId || `circuit-${Date.now()}`,
+                  ...toolCall.args,
+                  enabled: true
+                };
+                updatePlanData({
+                  ...planData,
+                  circuits: [...(planData.circuits || []), newCircuit]
+                });
+              }
+            }
           }
+
+          setStreamingMessageIndex(null);
         }
-      });
-
-      if (error) throw error;
-      if (data.error) throw new Error(data.error);
-
-      // Update active agents if using orchestrator
-      if (data.activeAgents) {
-        setActiveAgents(data.activeAgents);
-      }
-
-      // Show AI's response
-      const aiMessage: Message = {
-        role: 'assistant',
-        content: data.response,
-        toolCalls: data.toolCalls,
-        citations: data.citations,
-        costUpdates: data.costUpdates,
-        activeAgents: data.activeAgents
-      };
-
-      setMessages(prev => [...prev, aiMessage]);
-
-      // Update design if circuit was added
-      if (data.toolCalls && data.toolCalls.length > 0) {
-        for (const toolCall of data.toolCalls) {
-          if (toolCall.toolName === 'add_circuit_to_design') {
-            // Add circuit to planData
-            const newCircuit = {
-              id: toolCall.result.circuitId,
-              ...toolCall.args,
-              enabled: true
-            };
-            updatePlanData({
-              ...planData,
-              circuits: [...(planData.circuits || []), newCircuit]
-            });
-            toast.success(`Circuit added: ${toolCall.args.circuitName}`);
-          }
-        }
-      }
+      );
 
     } catch (error) {
       console.error('AI conversation error:', error);
-      toast.error(error instanceof Error ? error.message : 'Failed to get AI response');
+      // Remove the empty streaming message
+      setMessages(prev => prev.slice(0, -1));
       setMessages(prev => [...prev, { 
         role: 'assistant', 
         content: "Sorry mate, hit a snag there. Can you try that again?" 
       }]);
+      setStreamingMessageIndex(null);
     } finally {
       setIsLoading(false);
       setCurrentAction("");
@@ -150,6 +190,15 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         className="flex-1 overflow-y-auto bg-elec-dark"
       >
         <div className="px-4 py-4 space-y-2">
+          {/* Reasoning Panel */}
+          {showReasoning && reasoningSteps.length > 0 && (
+            <div className="flex justify-start mb-2">
+              <div className="max-w-[95%]">
+                <ReasoningPanel steps={reasoningSteps} isVisible={true} />
+              </div>
+            </div>
+          )}
+
           {messages.map((message, index) => (
             <div
               key={index}
@@ -162,17 +211,50 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                     : 'bg-elec-card text-white'
                 }`}
               >
-                <p className="text-sm whitespace-pre-wrap leading-relaxed text-left">{message.content}</p>
+                {/* Active agents badge */}
+                {message.role === 'assistant' && message.activeAgents && message.activeAgents.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {message.activeAgents.map((agent, i) => (
+                      <Badge 
+                        key={i}
+                        variant="outline" 
+                        className="text-xs bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
+                      >
+                        {agent === 'designer' && '🎨'}
+                        {agent === 'cost-engineer' && '💰'}
+                        {agent === 'installer' && '🔧'}
+                        {agent === 'commissioning' && '✅'}
+                        {agent === 'cache' && '⚡'}
+                        {' '}
+                        {agent}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+
+                <p className="text-sm whitespace-pre-wrap leading-relaxed text-left">
+                  {message.content}
+                  {index === streamingMessageIndex && (
+                    <span className="inline-block w-2 h-4 ml-1 bg-elec-yellow animate-pulse" />
+                  )}
+                </p>
+
+                {/* Citations */}
+                {message.role === 'assistant' && message.citations && (
+                  <CitationBadge citations={message.citations} />
+                )}
               </div>
             </div>
           ))}
           
           {/* Loading indicator */}
-          {isLoading && (
+          {(isLoading || isStreaming) && activeAgents.length > 0 && (
             <div className="flex justify-start">
               <div className="bg-elec-card rounded-2xl px-4 py-3 shadow-sm flex items-center gap-2">
                 <Loader2 className="h-4 w-4 animate-spin text-white" />
-                <span className="text-sm text-white">Thinking...</span>
+                <span className="text-sm text-white">
+                  {activeAgents.map(a => a === 'designer' ? '🎨' : a === 'cost-engineer' ? '💰' : a === 'installer' ? '🔧' : '✅').join(' ')} Working...
+                </span>
               </div>
             </div>
           )}
@@ -225,11 +307,15 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             />
             <Button 
               onClick={handleSend}
-              disabled={isLoading || !input.trim()}
+              disabled={isLoading || isStreaming || !input.trim()}
               size="icon"
               className="h-11 w-11 rounded-full shadow-sm shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
             >
-              <Send className="h-4 w-4" />
+              {(isLoading || isStreaming) ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
             </Button>
           </div>
         </div>
