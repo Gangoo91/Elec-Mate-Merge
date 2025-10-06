@@ -30,7 +30,16 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-    const fileContent = await Deno.readTextFile('/var/task/public/data/CITY-GUILDS-BOOK-2.txt');
+    // Fetch from Supabase Storage
+    const fileUrl = `${supabaseUrl}/storage/v1/object/public/safety-resources/CITY-GUILDS-BOOK-2.txt`;
+    console.log(`Fetching from: ${fileUrl}`);
+    
+    const fileResponse = await fetch(fileUrl);
+    if (!fileResponse.ok) {
+      throw new Error(`Failed to fetch file: ${fileResponse.status}`);
+    }
+    
+    const fileContent = await fileResponse.text();
     const lines = fileContent.split('\n');
     
     console.log(`📄 Total lines: ${lines.length}`);
