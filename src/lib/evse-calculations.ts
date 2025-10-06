@@ -87,11 +87,10 @@ export function calculateEVSELoad(inputs: CalculationInputs): CalculationResult 
     const chargerData = CHARGER_TYPES[point.chargerType];
     const powerPerPoint = chargerData.power * point.quantity;
     
-    // Determine base voltage for current calculation based on charger phases
-    const baseVoltage = chargerData.phases === 1 ? inputs.supplyVoltage / Math.sqrt(3) : inputs.supplyVoltage;
+    // BS 7671: I = P / (U × √3 × PF) for 3-phase, I = P / (U × PF) for single-phase
     const voltageMultiplier = chargerData.phases === 3 ? Math.sqrt(3) : 1;
+    const currentPerPoint = (powerPerPoint * 1000) / (inputs.supplyVoltage * voltageMultiplier * inputs.powerFactor);
     
-    const currentPerPoint = (powerPerPoint * 1000) / (baseVoltage * voltageMultiplier * inputs.powerFactor);
     return total + currentPerPoint;
   }, 0) * diversityFactor;
 
