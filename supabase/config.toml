@@ -230,3 +230,12 @@ verify_jwt = false
 
 [functions.parse-guidance-note-3]
 verify_jwt = false
+
+[functions.parse-emergency-lighting]
+verify_jwt = false
+
+[functions.parse-city-guilds-book-1]
+verify_jwt = false
+
+[functions.parse-city-guilds-book-2]
+verify_jwt = false

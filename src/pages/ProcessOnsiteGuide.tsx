@@ -13,6 +13,18 @@ const ProcessOnsiteGuide = () => {
   const [gn3Result, setGn3Result] = useState<any>(null);
   const [gn3Error, setGn3Error] = useState<string>('');
 
+  const [elStatus, setElStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [elResult, setElResult] = useState<any>(null);
+  const [elError, setElError] = useState<string>('');
+
+  const [book1Status, setBook1Status] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [book1Result, setBook1Result] = useState<any>(null);
+  const [book1Error, setBook1Error] = useState<string>('');
+
+  const [book2Status, setBook2Status] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [book2Result, setBook2Result] = useState<any>(null);
+  const [book2Error, setBook2Error] = useState<string>('');
+
   const processOnsiteGuide = async () => {
     setOnsiteStatus('loading');
     setOnsiteError('');
@@ -51,17 +63,7 @@ const ProcessOnsiteGuide = () => {
     setGn3Result(null);
 
     try {
-      const response = await fetch('/data/GUIDANCE-NOTE-3.txt');
-      if (!response.ok) {
-        throw new Error('Failed to load Guidance Note 3 file');
-      }
-      
-      const fileContent = await response.text();
-      console.log(`📄 Loaded Guidance Note 3: ${fileContent.length} characters`);
-
-      const { data, error: invokeError } = await supabase.functions.invoke('parse-guidance-note-3', {
-        body: { fileContent }
-      });
+      const { data, error: invokeError } = await supabase.functions.invoke('parse-guidance-note-3');
 
       if (invokeError) {
         throw invokeError;
@@ -74,6 +76,72 @@ const ProcessOnsiteGuide = () => {
       console.error('Processing error:', err);
       setGn3Error(err instanceof Error ? err.message : 'Unknown error');
       setGn3Status('error');
+    }
+  };
+
+  const processEmergencyLighting = async () => {
+    setElStatus('loading');
+    setElError('');
+    setElResult(null);
+
+    try {
+      const { data, error: invokeError } = await supabase.functions.invoke('parse-emergency-lighting');
+
+      if (invokeError) {
+        throw invokeError;
+      }
+
+      setElResult(data);
+      setElStatus('success');
+      
+    } catch (err) {
+      console.error('Processing error:', err);
+      setElError(err instanceof Error ? err.message : 'Unknown error');
+      setElStatus('error');
+    }
+  };
+
+  const processBook1 = async () => {
+    setBook1Status('loading');
+    setBook1Error('');
+    setBook1Result(null);
+
+    try {
+      const { data, error: invokeError } = await supabase.functions.invoke('parse-city-guilds-book-1');
+
+      if (invokeError) {
+        throw invokeError;
+      }
+
+      setBook1Result(data);
+      setBook1Status('success');
+      
+    } catch (err) {
+      console.error('Processing error:', err);
+      setBook1Error(err instanceof Error ? err.message : 'Unknown error');
+      setBook1Status('error');
+    }
+  };
+
+  const processBook2 = async () => {
+    setBook2Status('loading');
+    setBook2Error('');
+    setBook2Result(null);
+
+    try {
+      const { data, error: invokeError } = await supabase.functions.invoke('parse-city-guilds-book-2');
+
+      if (invokeError) {
+        throw invokeError;
+      }
+
+      setBook2Result(data);
+      setBook2Status('success');
+      
+    } catch (err) {
+      console.error('Processing error:', err);
+      setBook2Error(err instanceof Error ? err.message : 'Unknown error');
+      setBook2Status('error');
     }
   };
 
@@ -266,10 +334,216 @@ const ProcessOnsiteGuide = () => {
           </div>
         </Card>
 
+        {/* Emergency Lighting */}
+        <Card className="p-6">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <FileText className="h-6 w-6 text-primary" />
+              <div>
+                <p className="font-semibold">Emergency Lighting Guide (BS 5266)</p>
+                <p className="text-sm text-muted-foreground">
+                  Emergency escape lighting, exit signs, testing & maintenance - ~30 seconds
+                </p>
+              </div>
+            </div>
+
+            <Button 
+              onClick={processEmergencyLighting} 
+              disabled={elStatus === 'loading'}
+              className="w-full"
+              size="lg"
+            >
+              {elStatus === 'loading' ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                  Processing Emergency Lighting...
+                </>
+              ) : (
+                <>
+                  <FileText className="h-5 w-5 mr-2" />
+                  Process Emergency Lighting
+                </>
+              )}
+            </Button>
+
+            {elStatus === 'loading' && (
+              <div className="text-center text-sm text-muted-foreground">
+                <p>Processing ~1,000 lines...</p>
+                <p>Quick processing - less than 1 minute...</p>
+              </div>
+            )}
+
+            {elStatus === 'success' && elResult && (
+              <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle2 className="h-5 w-5 text-green-500" />
+                  <span className="font-semibold text-green-700 dark:text-green-400">
+                    Processing Complete!
+                  </span>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <p>✅ Chunks Processed: <strong>{elResult.chunksProcessed}</strong></p>
+                </div>
+              </div>
+            )}
+
+            {elStatus === 'error' && (
+              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertCircle className="h-5 w-5 text-red-500" />
+                  <span className="font-semibold text-red-700 dark:text-red-400">
+                    Processing Failed
+                  </span>
+                </div>
+                <p className="text-sm text-red-600 dark:text-red-400">{elError}</p>
+              </div>
+            )}
+          </div>
+        </Card>
+
+        {/* City & Guilds Book 1 */}
+        <Card className="p-6">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <FileText className="h-6 w-6 text-primary" />
+              <div>
+                <p className="font-semibold">City & Guilds Book 1 (Level 2/3)</p>
+                <p className="text-sm text-muted-foreground">
+                  H&S, cable selection, safe isolation, testing methods - ~10-11 minutes
+                </p>
+              </div>
+            </div>
+
+            <Button 
+              onClick={processBook1} 
+              disabled={book1Status === 'loading'}
+              className="w-full"
+              size="lg"
+            >
+              {book1Status === 'loading' ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                  Processing Book 1...
+                </>
+              ) : (
+                <>
+                  <FileText className="h-5 w-5 mr-2" />
+                  Process City & Guilds Book 1
+                </>
+              )}
+            </Button>
+
+            {book1Status === 'loading' && (
+              <div className="text-center text-sm text-muted-foreground">
+                <p>Processing ~26,000 lines...</p>
+                <p>Creating ~217 chunks with embeddings...</p>
+                <p>This may take 10-11 minutes...</p>
+              </div>
+            )}
+
+            {book1Status === 'success' && book1Result && (
+              <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle2 className="h-5 w-5 text-green-500" />
+                  <span className="font-semibold text-green-700 dark:text-green-400">
+                    Processing Complete!
+                  </span>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <p>✅ Chunks Processed: <strong>{book1Result.chunksProcessed}</strong></p>
+                </div>
+              </div>
+            )}
+
+            {book1Status === 'error' && (
+              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertCircle className="h-5 w-5 text-red-500" />
+                  <span className="font-semibold text-red-700 dark:text-red-400">
+                    Processing Failed
+                  </span>
+                </div>
+                <p className="text-sm text-red-600 dark:text-red-400">{book1Error}</p>
+              </div>
+            )}
+          </div>
+        </Card>
+
+        {/* City & Guilds Book 2 */}
+        <Card className="p-6">
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <FileText className="h-6 w-6 text-primary" />
+              <div>
+                <p className="font-semibold">City & Guilds Book 2 (Level 3 Advanced)</p>
+                <p className="text-sm text-muted-foreground">
+                  Motor control, distribution design, 3-phase systems, renewables - ~12-14 minutes
+                </p>
+              </div>
+            </div>
+
+            <Button 
+              onClick={processBook2} 
+              disabled={book2Status === 'loading'}
+              className="w-full"
+              size="lg"
+            >
+              {book2Status === 'loading' ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                  Processing Book 2...
+                </>
+              ) : (
+                <>
+                  <FileText className="h-5 w-5 mr-2" />
+                  Process City & Guilds Book 2
+                </>
+              )}
+            </Button>
+
+            {book2Status === 'loading' && (
+              <div className="text-center text-sm text-muted-foreground">
+                <p>Processing ~30,000 lines...</p>
+                <p>Creating ~252 chunks with embeddings...</p>
+                <p>This may take 12-14 minutes...</p>
+              </div>
+            )}
+
+            {book2Status === 'success' && book2Result && (
+              <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle2 className="h-5 w-5 text-green-500" />
+                  <span className="font-semibold text-green-700 dark:text-green-400">
+                    Processing Complete!
+                  </span>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <p>✅ Chunks Processed: <strong>{book2Result.chunksProcessed}</strong></p>
+                </div>
+              </div>
+            )}
+
+            {book2Status === 'error' && (
+              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertCircle className="h-5 w-5 text-red-500" />
+                  <span className="font-semibold text-red-700 dark:text-red-400">
+                    Processing Failed
+                  </span>
+                </div>
+                <p className="text-sm text-red-600 dark:text-red-400">{book2Error}</p>
+              </div>
+            )}
+          </div>
+        </Card>
+
         <div className="text-sm text-muted-foreground text-center">
           <p>After processing, these guides will be available to:</p>
           <p className="font-semibold mt-1">
-            Designer Agent • Installer Agent • Commissioning Agent • Cost Engineer
+            Designer Agent • Installer Agent • Commissioning Agent • Cost Engineer • Apprentice Learning
           </p>
         </div>
       </div>

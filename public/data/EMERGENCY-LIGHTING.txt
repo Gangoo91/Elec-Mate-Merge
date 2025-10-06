@@ -1,0 +1,988 @@
+Fu
+BS lly
+52 upd
+66 at
+-1 ed
+:2 to
+01
+1
+
+electrician’s guide
+
+ELECTRICIAN’S
+GUIDE TO
+EMERGENCY
+LIGHTING
+
+Published by The Institution of Engineering and Technology, London, United Kingdom
+The Institution of Engineering and Technology is registered as a Charity in England & Wales
+(no. 211014) and Scotland (no. SCO38698).
+The Institution of Engineering and Technology is the new institution
+formed by the joining together of two great institutions; the IEE (Institution
+of Electrical Engineers) and the IIE (The Institution of Incorporated
+Engineers). The new Institution is the inheritor of the IEE brand and all its
+products and services, such as this one, which we hope you find useful.
+© 2009, 2014 The Institution of Engineering and Technology
+First published 2009
+Second edition 2014
+This publication is copyright under the Berne Convention and the Universal Copyright Convention. All
+rights reserved. Apart from any fair dealing for the purposes of research or private study, or criticism
+or review, as permitted under the Copyright, Designs and Patents Act 1988, this publication may be
+reproduced, stored or transmitted, in any form or by any means, only with the prior permission in
+writing of the publishers, or in the case of reprographic reproduction in accordance with the terms of
+licences issued by the Copyright Licensing Agency. Enquiries concerning reproduction outside those
+terms should be sent to the publishers at The Institution of Engineering and Technology, Michael
+Faraday House, Six Hills Way, Stevenage, SG1 2AY, United Kingdom.
+Copies of this publication may be obtained from:
+The Institution of Engineering and Technology
+PO Box 96, Stevenage, SG1 2SD, UK
+Tel: +44 (0)1438 767328
+Email: sales@theiet.org
+www.theiet.org/wiringbooks
+While the author, publisher and contributors believe that the information and guidance given in this
+work are correct, all parties must rely upon their own skill and judgement when making use of them.
+The author, publisher and contributors do not assume any liability to anyone for any loss or damage
+caused by any error or omission in the work, whether such an error or omission is the result of
+negligence or any other cause. Where reference is made to legislation it is not to be considered as legal
+advice. Any and all such liability is disclaimed.
+Extracts from BS 5266-1 (2011) are reproduced within this Publication with the permission of the
+BSI Standards Limited. Copyright subsists in all BSI publications. British Standards can be obtained in
+PDF or hard copy formats from the BSI online shop: www.bsigroup.com/shop or by contacting BSI
+Customer Services for hard copies only: Tel: +44 (0)20 8996 9001, Email: cservices@bsigroup.com.
+
+ISBN 978-1-84919-771-7
+eISBN 978-1-84919-772-4
+Typeset in the UK by Carnegie Book Production, Lancaster
+Printed in the UK by Polestar Wheaton
+
+Contents
+Cooperating organisations	
+
+7
+
+Acknowledgements	
+
+9
+
+Preface		
+Chapter 1	
+
+11
+Legislation	
+
+13
+
+1.1	 Introduction	
+1.2	 The Health and Safety at Work etc. Act 1974	
+1.3	 The Management of Health and Safety at Work Regulations 1999
+(SI 1999 No. 3242)	
+1.4	 The Workplace (Health, Safety and Welfare) Regulations 1992
+(SI 1992 No. 3004)	
+1.5	 The Health and Safety (Safety Signs and Signals) Regulations 1996
+(SI 1996 No. 341)	
+1.6	 The Building Regulations 2010 (SI 2010 No. 2214)	
+1.7	 The Regulatory Reform (Fire Safety) Order 2005 (SI 2005 No. 1541)	
+1.8	 The Cinematograph (Safety) Regulations 1955 (SI 1955 no. 1129)
+as amended	
+
+20
+
+Chapter 2	
+
+21
+
+Building Regulations	
+
+13
+14
+15
+16
+16
+18
+18
+
+2.1	 Introduction	
+2.2	 Approved Document B, Volume 1 – dwellinghouses	
+2.3	 Approved Document B, Volume 2 – buildings other than dwellinghouses	
+
+21
+23
+24
+
+Chapter 3	
+
+27
+
+3.1	
+3.2	
+3.3	
+3.4	
+
+Emergency lighting standards	
+
+European standards	
+British Standards	
+Definitions	
+BS 5266 Emergency lighting	
+
+27
+27
+29
+30
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+3
+
+Chapter 4	
+4.1	
+4.2	
+4.3	
+4.4	
+4.5	
+4.6	
+4.7	
+4.8	
+4.9	
+4.10	
+
+Chapter 5	
+5.1	
+5.2	
+5.3	
+5.4	
+5.5	
+5.6	
+5.7	
+5.8	
+5.9	
+5.10	
+
+33
+33
+37
+40
+44
+47
+49
+49
+50
+53
+54
+
+Electrical installation	
+
+57
+
+Basic requirement	
+Self-contained luminaires	
+Central power supply systems	
+Cable support, fixings and joints	
+Segregation	
+Continuity of supply to the emergency lighting	
+Isolation	
+Warning notices	
+Inspection and testing	
+BS 7671:2008 as amended	
+
+Chapter 6	
+6.1	
+6.2	
+6.3	
+6.4	
+6.5	
+6.6	
+6.7	
+6.8	
+6.9	
+6.10	
+6.11	
+6.12	
+6.13	
+
+Design	
+
+Introduction	
+Primary escape route signs and luminaires	
+Additional emergency lighting luminaires	
+Escape route illumination	
+Open area (anti-panic) lighting	
+High risk task area lighting	
+Standby lighting	
+Classification of emergency lighting systems	
+Requirements for safety signs	
+Automatic test systems	
+
+Operation and maintenance	
+
+57
+57
+58
+60
+60
+61
+62
+62
+63
+63
+65
+
+Disabled persons	
+Legislation	
+Instructions	
+As-installed drawings	
+Handover	
+Logbook	
+Care of batteries during installation	
+Servicing	
+Routine inspection and testing	
+Certificates	
+Automatic testing systems (ATS)	
+The Waste Electrical and Electronic Equipment (WEEE) Directive	
+Guidance	
+
+65
+65
+65
+65
+66
+66
+67
+67
+68
+69
+70
+70
+71
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+4
+
+Annex A  Model completion certificate	
+Annex B  Model certificate for completion of small new installations and
+verification of existing installations	
+Annex C  Model periodic inspection and test certificate	
+
+72
+
+Chapter 7	
+
+83
+
+7.1	
+7.2	
+7.3	
+7.4	
+
+Safety signs	
+
+Introduction	
+Format of safety signs	
+Emergency escape and first-aid signs	
+Fire-fighting signs	
+
+Index		
+
+76
+79
+
+83
+84
+86
+88
+89
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+5
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+6
+
+Cooperating
+organisations
+The IET acknowledges the invaluable contribution made by the following organisations in
+the preparation of this Guide.
+BEAMA Installations Ltd
+Eur Ing M.H. Mullins BA CEng FIET
+P. Sayer IEng MIIE GCGI
+British Standards Institution
+Department for Communities
+and Local Government
+A. Burd
+Electrical Contractors’ Association
+G. Digilio IEng FIET ACIBSE MSLL
+Electrical Contractors’ Association
+of Scotland t/a SELECT
+D. Millar IEng MIIE MILE
+Electrical Safety Council
+Fire and Security Association
+M. Turner
+
+Health and Safety Executive
+K. Morton CEng MIET
+Institution of Engineering
+and Technology
+M. Coles BEng(Hons) MIEE
+P.E. Donnachie BSc CEng FIET
+Scottish Government
+Building Standards Division
+C. Donnelly
+Author
+P.R.L. Cook CEng FIET
+The author would like to record special
+thanks to Eur Ing Leon Markwell MSc BSc
+CEng MIET MCIBSE LCGI of the ECA for
+his particular assistance in preparing the
+publication.
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+7
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+8
+
+Acknowledgements
+
+References to British Standards are made with the kind permission of BSI. Complete copies
+can be obtained by post from:
+BSI Customer Services
+389 Chiswick High Road
+London W4 4AL
+For all enquiries contact:
+Tel: +44 (0)20 8996 9001
+Fax: +44 (0)20 8996 7001
+Email: cservices@bsi-global.com
+www.bsi-global.com/en/Shop/
+References to Building Regulations, Approved Documents and guidance are made with the
+kind permission of the Department for Communities and Local Government. Downloads
+of Approved Documents are available from the Planning Portal: www.planningportal.gov.uk
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+9
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+10
+
+Preface
+The Electrician’s Guide to Emergency Lighting is one of a number of publications prepared
+by the IET to provide guidance on electrical installations in buildings. This publication is
+concerned with emergency lighting and in particular emergency escape lighting and must
+be read in conjunction with the legislation, Approved Document B and the relevant British
+Standards, in particular BS 5266.
+Designers and installers should always consult these documents to satisfy themselves of
+compliance.
+It is expected that persons carrying out work in accordance with this Guide will be
+competent to do so, competence being a statutory requirement of the Electricity at Work
+Regulations 1989 for those engaged in electrical work.
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+11
+
+Index
+A
+Additional emergency lighting	 4.1.5; 4.3
+Alterations record
+6.6
+Annual testing
+6.9.3
+Anti-panic glare limits	
+4.4.1; 4.5
+Anti-panic lighting 	
+3.4.5
+Approved codes of practice 	
+1.2
+Approved Document B	
+2.2; 2.3; 7.1.2
+Approved Documents status
+2.1.3
+As-installed drawings	
+4.1.5; 6.4
+Automatic test systems	
+4.10; 6.11
+
+B
+Batteries 	
+British Standards 	
+BS 5266 	
+BS EN standards	
+BS 7671:2008 	
+Building Regulations	
+
+6.7; 6.8.2
+3.2
+3.4
+2.3.3; 3.1; 3.2
+5.10
+1.6; Chap 2
+
+C
+Cable categories
+2.3.3
+Cable fixings
+5.4.1
+Cable joints
+5.4.2
+Cable segregation	
+2.3.3; 5.3; 5.5
+Cable support	
+5.4.1
+Cables	
+2.3.3; 5.3.2
+Call points
+4.2.2
+Car parks	
+4.3; 4.8.5
+Categories X, Y
+4.8
+Central batteries
+6.8.2
+Central control testing systems
+4.10.2
+Central power supply systems	
+5.3
+Central power supply systems
+standard	
+3.2
+Certificates	
+6.10
+Change of direction	
+4.2.2
+Change of level	
+4.2.2
+Cinematograph (Safety) Regulations	 1.8
+
+Circuit arrangements	
+5.6; 5.7
+Classification of emergency lighting
+systems	
+4.8
+Class of premises	
+4.8.5
+Combined emergency luminaire,
+definition	
+4.8.3
+Combined lighting	
+4.8
+Commissioning record	
+6.6
+Compartment lighting	
+4.4.2
+Competence	
+Preface
+Completion certificates	
+6.10;
+Chap 6 Annex A
+Conformity declaration	 Chap 6 Annex A
+Connection of supply	
+6.7
+Continuity of supply	
+5.6
+Corridors, intersection of	
+4.2.2
+Critical electrical circuits	
+2.3.3
+Cross-sectional area	
+5.3.3
+
+D
+Daily inspection	
+6.9.1
+Declaration of
+conformity	
+Chap 6 Annex A
+Defects record	
+6.6
+Definitions	
+1.1; 3.3; 4.8
+Design	
+Chap 4
+Design certificate	
+Chap 6 Annex A
+Design procedure	
+4.1.6
+Design sequence	
+4.1.6; Fig 4.1
+Disability glare limits	
+4.4.1; 4.5; 4.6
+Disabled persons 	
+4.2.2; 4.3; 4.5; 6.1
+Drawings 	
+6.4
+Duration of emergency
+lighting	
+4.1.4; 4.8.1; 4.8.5
+Dwellings 	
+2.2
+
+E
+Electrical circuits, critical
+Electrical installation	
+
+2.3.3
+Chap 5
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+89
+
+Index
+Electricity at Work
+Regulations 1989	
+Emergency escape lighting	
+Emergency escape lighting,
+definition	
+Emergency escape lighting
+systems standard	
+Emergency escape route
+lighting, definition	
+Emergency escape signs	
+
+Preface; 6.2
+3.4.3
+1.1; 3.3
+3.1
+1.1; 3.3
+7.3; Fig 7.4;
+Fig 7.6
+1.7; 4.2.2
+
+Fire safety order	
+First-aid posts	
+First-aid signs	
+Fixings, cable	
+Flame temperature	
+
+1.7; 6.8.1
+4.2.2; 4.4.1
+7.3; Fig 7.8
+5.4.1
+2.3.3
+
+G
+Generators	
+Glare limits	
+
+6.8.3
+4.4.1, Table 4.2
+
+H
+
+Emergency exits	
+Emergency lighting
+completion certificate	 Chap 6 Annex A
+Emergency lighting,
+definition	
+1.1; 3.3
+Emergency lighting design
+procedure	
+4.1.6
+Emergency lighting
+duration	
+4.1.4; 4.8.1; 4.8.5
+Emergency lighting standard,
+BS 5266	
+3.4
+Emergency lighting standards	
+Chap 3
+Emergency lighting, suitable
+and sufficient	
+1.4
+Emergency routes	
+1.7
+Emergency sign locations	
+4.1.6
+Emergency standby lighting	
+4.7
+Equipment standards	
+3.2
+Escalators	
+4.3
+Escape lighting, additional	
+4.1.5; 4.3
+Escape route illumination	
+2.3.1; 4.4
+Escape route luminaires	
+4.2
+Escape route signs	
+4.2; 4.9; 7.3
+Escape route sign viewing
+distances	
+4.2.3; 4.9
+European standards	
+3.1
+Evacuation strategy	
+4.1.6
+Exit doors	
+4.2.2
+Exit signs	
+2.3.2
+Exit sign viewing distances	
+4.2.3
+
+Handover of system	
+6.5
+Hazards	
+3.4.4; 4.1.6
+Health and Safety at Work etc.
+Act	
+1.2
+Health and Safety (Safety
+Signs and Signals)
+Regulations 1996	
+1.5; 7.1; 7.2
+High risk task area lighting	
+3.4.4; 4.6
+High risk task area lighting,
+definition	
+1.1; 3.3
+Houses	
+2.2
+
+F
+
+No entries
+
+Facilities	
+4.8.1; 4.8.4
+Failure of supply	
+4.1.2
+Fault action record	
+Chap 6 Annex C
+Fire-fighting equipment	
+4.2.2; 4.4.1
+Fire-fighting signs	
+7.4; Fig 7.5;
+Fig 7.9
+Fire-resistant cables	
+2.3.3; 5.3.2
+Fire risk safety assessment	
+6.1
+
+I
+Illuminance minimum	
+4.4.1
+Illumination levels	
+4.4.1
+Inhibiting mode
+4.8.4
+Inspection and test certificate,
+periodic
+6.10.2
+Inspection and testing	
+5.9; 6.9
+Inspection and test
+record	
+Chap 6 Annex C
+Installation	
+Chap 5; 6.7
+Installation conformity 	 Chap 6 Annex A
+Installation drawings
+6.4
+Instructions on O&M
+6.3
+Isolation 	
+5.7
+
+J
+Joints
+
+5.4.2
+
+K
+L
+Legislation	
+Chap 1; 6.2
+Lifts	
+4.3
+Lighting applications – Emergency
+lighting, standard	
+3.1
+Lighting fittings spacing	
+4.4.1
+Lighting levels	
+4.4.1
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+90
+
+Index
+Lighting of workplace	
+Location of emergency
+lighting	
+Logbook	
+Luminaire installation	
+Luminaire spacing	
+Luminaire types	
+Luminance, signs	
+
+1.4
+4.1.6; 4.2.2
+6.6
+Chap 5
+4.4.1
+4.8.2
+4.9
+
+M
+Maintained emergency luminaire,
+definition	
+4.8.3
+Maintained lighting	
+4.8
+Maintenance	
+Chap 6
+Maintenance instructions	
+6.3
+Management of Health and
+Safety at Work Regulations	 1.3; 4.1.1
+Mandatory signs	
+4.2.2; 7.2;
+Fig 7.3
+Minimum duration	
+4.1.4; 4.8.5
+Minimum illumination	
+4.4.1
+Model certificates	
+Chap 6 Annexes
+Mode of operation	
+4.8.1; 4.8.3
+Monthly testing	
+6.9.2
+
+N
+Natural light	
+Non-maintained lighting	
+Non-maintained luminaire,
+definition	
+Non-residential premises	
+Notices	
+
+1.4
+4.8
+4.8.3
+4.8.5
+5.8
+
+O
+Objective of escape lighting	
+4.1
+Open area lighting	
+1.1; 3.4.5; 4.5
+Open area lighting,
+definition	
+1.1; 3.3
+Operating instructions	
+6.3
+Operation and maintenance	
+Chap 6
+
+P
+Periodic inspection and
+test certificate	 6.9.2; Chap 6 Annex B
+PH classification	
+2.3.3; 5.3.2
+Plans	
+4.1.5
+Plant rooms	
+4.3
+Primary escape route signs
+and luminaires	
+4.2
+Process lighting	
+4.6
+Product standards	
+3.2
+
+Prohibitory signs	
+7.2; Fig 7.1
+Provisions for escape
+lighting	
+2.3.1, Table 2.1; 4.1
+
+Q
+No entries
+
+R
+Ratios of illuminance	
+4.4; 4.5; 4.6
+Records	
+4.1.5
+Regulatory Reform (Fire Safety)
+Order 2005	
+1.7; 6.8.1; 6.9.3 Note
+Remote rest mode	
+4.8.4
+Response times	
+4.1.3
+Risk assessment	 1.3; 4.1.1; 6.9.3 Note
+Risk assessment, emergency lighting	 4.1.6
+Routine inspection and testing	
+6.9
+
+S
+Safety assessment	
+6.1
+Safety signs	
+1.5; 4.2; 4.9; Chap 7
+Schedule 1 to the Building Regulations	 2.1
+Segregation	
+2.3.3; 5.3; 5.5
+Self-contained luminaires	
+4.8; 5.2
+Servicing
+6.8
+Signs	
+1.5; 4.2; 4.9; Chap 7
+Spacing tables	
+4.4.1; 4.5
+Stairs	
+4.2.2; 4.3
+Stand-alone luminaire testing	
+4.10.3
+Standards	
+Chap 3
+Standby batteries	
+5.6; 6.8.2
+Standby generators	
+6.8.3
+Standby lighting	
+3.4.2; 4.7
+Standby lighting, definition	
+1.1; 3.3
+Standby supply	
+5.6
+Statutory instruments	
+Chaps 1 and 2
+Supervision	
+6.7.1
+Support, cable	
+5.4.1
+Survival times of cables	
+5.3.2
+Sustained luminaire	
+4.8.3
+Switching	
+5.7
+Switch rooms	
+4.3
+
+T
+Task area lighting	
+Test certificates	
+Test records	
+Test systems	
+‘This way’ signs	
+Toilets	
+Type of system	
+
+1.1; 3.4.4; 4.6
+6.10
+Chap 6 Annex C
+4.10
+7.3; Fig 7.7; Fig 7.10
+4.3
+4.8.1
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+91
+
+Index
+
+U
+Uniformity of illuminance	
+
+4.4.1
+
+V
+Verification	
+Viewing distances	
+Voltage drop	
+
+Chap 6 Annex A
+4.2.3
+5.3
+
+W
+Wales, building regulations for	
+2.1.2
+Warning and escape, means of	
+2.1
+Warning notices	
+5.8
+Warning signs	
+7.2; Fig 7.2
+
+Waste Electrical and Electronic
+Equipment Directive	
+Wiring	
+Workplace (Health, Safety and
+Welfare) Regulations	
+
+6.12
+Chap 5
+1.4
+
+X
+X type luminaire	
+
+4.8.2; 5.2
+
+Y
+Y type luminaire	
+
+4.8.2
+
+Z
+No entries
+
+Electrician’s Guide to Emergency Lighting
+© The Institution of Engineering and Technology
+
+92
+
+Membership
+Passionate about your career? Become an IET Member and benefit from a range of benefits from the industry
+experts. As co-publishers of the IET Wiring Regulations, we can assist you in demonstrating your technical
+professional competence and support you with all your training and career development needs.
+The Institution of Engineering and Technology is the professional home for life for engineers and technicians.
+With over 150,000 members in 127 countries, the IET is the largest professional body of engineers in Europe.
+Joining the IET and having access to tailored products and services will become invaluable for your career and
+can be your first step towards professional qualifications.
+You can take advantage of …
+ a 35% discount on BS 7671:2008 (2011) IET Wiring Regulations, associated guidance publications
+and Wiring Regulations Digital: Pick&Mix
+ career support services to assist throughout your professional development
+ dedicated training courses, seminars and events covering a wide range of subjects and skills
+ an array of specialist online communities
+ professional development events covering a wide range of topics from essential business skills to
+time management, health and safety, life skills and many more
+ access to over 100 Local Networks around the world
+ live IET.tv event footage
+ instant online access to over 70,000 books, 3,000 periodicals and full-text collections of electronic
+articles through the Virtual Library, wherever you are in the world.
+Join online today: www.theiet.org/join or contact our membership and customer service centre on
++44 (0)1438 765678.
+
+
