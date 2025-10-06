@@ -276,41 +276,43 @@ const generateMaterialsList = (
   // Cable-type specific materials
   if (cableType === 'swa') {
     materials.push(
-      { name: 'SWA Glands', quantity: '2', specification: '20mm brass outdoor rated' },
-      { name: 'Banjo Washers', quantity: '2', specification: 'Earthing banjo washers' },
-      { name: 'Lockrings', quantity: '2', specification: '20mm brass lockrings' }
+      { name: 'SWA Glands', quantity: '2', specification: '20mm brass outdoor rated', unitCost: 12.50, totalCost: 25.00 },
+      { name: 'Banjo Washers', quantity: '2', specification: 'Earthing banjo washers', unitCost: 2.50, totalCost: 5.00 },
+      { name: 'Lockrings', quantity: '2', specification: '20mm brass lockrings', unitCost: 3.00, totalCost: 6.00 }
     );
     if (location === 'underground') {
       materials.push(
-        { name: 'Warning Tape', quantity: `${length}m`, specification: 'Electrical cable buried below' },
-        { name: 'Marker Posts', quantity: '2-4', specification: 'Cable route markers' }
+        { name: 'Warning Tape', quantity: `${length}m`, specification: 'Electrical cable buried below', unitCost: 0.50, totalCost: length * 0.50 },
+        { name: 'Marker Posts', quantity: '2-4', specification: 'Cable route markers', unitCost: 8.00, totalCost: 24.00 }
       );
     }
   } else if (installationMethod.includes('conduit')) {
     materials.push(
-      { name: 'Conduit', quantity: `${lengthWithWastage}m`, specification: '20mm PVC conduit' },
-      { name: 'Conduit Fittings', quantity: '6-10', specification: 'Elbows, couplers, inspection boxes' }
+      { name: 'Conduit', quantity: `${lengthWithWastage}m`, specification: '20mm PVC conduit', unitCost: 1.80, totalCost: lengthWithWastage * 1.80 },
+      { name: 'Conduit Fittings', quantity: '6-10', specification: 'Elbows, couplers, inspection boxes', unitCost: 2.50, totalCost: 20.00 }
     );
   } else if (installationMethod.includes('trunking')) {
-    materials.push({ name: 'Trunking', quantity: `${Math.ceil(length / 3)}`, specification: '50×50mm PVC trunking (3m lengths)' });
+    const trunkingLengths = Math.ceil(length / 3);
+    materials.push({ name: 'Trunking', quantity: `${trunkingLengths}`, specification: '50×50mm PVC trunking (3m lengths)', unitCost: 12.00, totalCost: trunkingLengths * 12.00 });
   } else {
     // Fire-rated circuits require metal clips
     const clipType = isFireCircuit ? 'Fire-rated metal cable clips' : 'Cable clips (spacer bar saddles)';
     const clipSpec = isFireCircuit 
       ? `BS 5839 compliant, 300mm max spacing` 
       : `${effectiveCableSize}mm² plastic/metal saddles`;
-    materials.push({ name: clipType, quantity: `${numClips}`, specification: clipSpec });
+    const clipCost = isFireCircuit ? 0.80 : 0.35;
+    materials.push({ name: clipType, quantity: `${numClips}`, specification: clipSpec, unitCost: clipCost, totalCost: numClips * clipCost });
   }
 
   // Fire-rated circuits require additional materials
   if (isFireCircuit) {
     materials.push(
-      { name: 'Fire barrier compound', quantity: '1 tube', specification: 'Intumescent sealant (BS 476 Part 20)' },
-      { name: 'Fire-rated cable ties', quantity: '10-15', specification: 'Metal cable ties for fire compartments' },
-      { name: 'Circuit identification', quantity: '2', specification: 'EMERGENCY LIGHTING - DO NOT SWITCH OFF labels' }
+      { name: 'Fire barrier compound', quantity: '1 tube', specification: 'Intumescent sealant (BS 476 Part 20)', unitCost: 18.50, totalCost: 18.50 },
+      { name: 'Fire-rated cable ties', quantity: '10-15', specification: 'Metal cable ties for fire compartments', unitCost: 0.60, totalCost: 7.50 },
+      { name: 'Circuit identification', quantity: '2', specification: 'EMERGENCY LIGHTING - DO NOT SWITCH OFF labels', unitCost: 2.50, totalCost: 5.00 }
     );
   } else {
-    materials.push({ name: 'Circuit labels', quantity: '2', specification: 'BS 7671 compliant identification' });
+    materials.push({ name: 'Circuit labels', quantity: '2', specification: 'BS 7671 compliant identification', unitCost: 1.50, totalCost: 3.00 });
   }
 
   return materials;
