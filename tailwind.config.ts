@@ -128,6 +128,16 @@ export default {
 				'float': {
 					'0%, 100%': { transform: 'translateY(0px)' },
 					'50%': { transform: 'translateY(-4px)' }
+				},
+				'lightbulb-pulse': {
+					'0%, 100%': {
+						transform: 'scale(1)',
+						boxShadow: '0 0 0 0 hsl(var(--elec-yellow) / 0.4)'
+					},
+					'50%': {
+						transform: 'scale(1.05)',
+						boxShadow: '0 0 20px 5px hsl(var(--elec-yellow) / 0.2)'
+					}
 				}
 			},
 			animation: {
@@ -135,7 +145,8 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-				'float': 'float 3s ease-in-out infinite'
+				'float': 'float 3s ease-in-out infinite',
+				'lightbulb-pulse': 'lightbulb-pulse 2s ease-in-out infinite'
 			}
 		}
 	},

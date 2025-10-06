@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { useStreamingChat } from "@/hooks/useStreamingChat";
 import { ReasoningPanel } from "./ReasoningPanel";
 import { CitationBadge } from "./CitationBadge";
+import { PulsatingLightbulb } from "@/components/ui/pulsating-lightbulb";
 
 // Feature flag to toggle between orchestrator and legacy designer
 const USE_ORCHESTRATOR = true;
@@ -347,8 +348,18 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
+              {/* AI Avatar - only for assistant messages */}
+              {message.role === 'assistant' && (
+                <div className="flex-shrink-0 mt-1">
+                  <PulsatingLightbulb 
+                    size="sm"
+                    state={index === streamingMessageIndex ? 'thinking' : 'complete'}
+                  />
+                </div>
+              )}
+
               <div
                 className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm ${
                   message.role === 'user'
@@ -395,7 +406,10 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           
           {/* Loading indicator */}
           {(isLoading || isStreaming) && activeAgents.length > 0 && (
-            <div className="flex justify-start">
+            <div className="flex justify-start gap-2">
+              <div className="flex-shrink-0 mt-1">
+                <PulsatingLightbulb size="sm" state="active" />
+              </div>
               <div className="bg-elec-card rounded-2xl px-4 py-3 shadow-sm flex items-center gap-2">
                 <Loader2 className="h-4 w-4 animate-spin text-white" />
                 <span className="text-sm text-white">
