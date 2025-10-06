@@ -64,28 +64,74 @@ export const ResultsStep = ({ planData, result }: ResultsStepProps) => {
     }
   };
 
+  const hasSiteInfo = planData.siteInfo?.propertyAddress || planData.siteInfo?.clientName;
+  const hasProjectInfo = planData.projectInfo?.leadElectrician || planData.projectInfo?.plannedStartDate;
+
   return (
     <div className="space-y-6">
-      {/* Export PDF Button */}
-      <div className="flex justify-end">
-        <Button 
-          onClick={handleExportPdf} 
-          disabled={isGeneratingPdf}
-          variant="outline"
-          className="gap-2"
-        >
-          {isGeneratingPdf ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Generating...
-            </>
-          ) : (
-            <>
-              <FileText className="h-4 w-4" />
-              Export Professional PDF
-            </>
+      {/* Site/Project Info Preview & PDF Export */}
+      <div className="space-y-3">
+        {(hasSiteInfo || hasProjectInfo) && (
+          <Card className="bg-elec-grey/50 border-primary/20">
+            <CardContent className="pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                {hasSiteInfo && (
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-2">Site Information</h4>
+                    {planData.siteInfo?.propertyAddress && (
+                      <p className="text-foreground/70">Address: {planData.siteInfo.propertyAddress}</p>
+                    )}
+                    {planData.siteInfo?.clientName && (
+                      <p className="text-foreground/70">Client: {planData.siteInfo.clientName}</p>
+                    )}
+                  </div>
+                )}
+                {hasProjectInfo && (
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-2">Project Information</h4>
+                    {planData.projectInfo?.leadElectrician && (
+                      <p className="text-foreground/70">Electrician: {planData.projectInfo.leadElectrician}</p>
+                    )}
+                    {planData.projectInfo?.plannedStartDate && (
+                      <p className="text-foreground/70">Start: {planData.projectInfo.plannedStartDate}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+        
+        <div className="flex justify-end gap-2">
+          {(hasSiteInfo || hasProjectInfo) && (
+            <Button 
+              onClick={() => setShowSiteInfoDialog(true)} 
+              variant="outline"
+              size="sm"
+              className="gap-2"
+            >
+              Edit Details
+            </Button>
           )}
-        </Button>
+          <Button 
+            onClick={handleExportPdf} 
+            disabled={isGeneratingPdf}
+            variant="outline"
+            className="gap-2"
+          >
+            {isGeneratingPdf ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <FileText className="h-4 w-4" />
+                Export Professional PDF
+              </>
+            )}
+          </Button>
+        </div>
       </div>
 
       {/* Compliance Status - Mobile Optimized */}

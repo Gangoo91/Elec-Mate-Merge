@@ -1,6 +1,41 @@
 import html2pdf from 'html2pdf.js';
 import { InstallPlanDataV2, CalculationResult } from '@/components/install-planner-v2/types';
 
+// Generate QR code as data URL
+const generateQRCode = async (text: string): Promise<string> => {
+  return new Promise((resolve) => {
+    const canvas = document.createElement('canvas');
+    const size = 120;
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    
+    if (ctx) {
+      // Simple QR placeholder - draw a bordered box with text
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, size, size);
+      ctx.strokeStyle = '#003087';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(0, 0, size, size);
+      ctx.fillStyle = '#000000';
+      ctx.font = 'bold 10px monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      
+      // Wrap text
+      const words = text.match(/.{1,8}/g) || [text];
+      const lineHeight = 14;
+      const startY = (size - words.length * lineHeight) / 2;
+      
+      words.forEach((word, i) => {
+        ctx.fillText(word, size / 2, startY + i * lineHeight + lineHeight / 2);
+      });
+    }
+    
+    resolve(canvas.toDataURL());
+  });
+};
+
 export const generatePlanReference = (): string => {
   const now = new Date();
   const year = now.getFullYear();
@@ -50,6 +85,9 @@ export const generateInstallationPlanPDF = async (
   const designCurrent = (planData.totalLoad / planData.voltage).toFixed(1);
   const cableTypeName = getCableTypeName(planData.cableType);
   const locationName = getLocationName(planData.location);
+  
+  // Generate QR code for plan reference
+  const qrCodeDataUrl = await generateQRCode(planReference);
   
   const htmlContent = `
 <!DOCTYPE html>
@@ -370,6 +408,12 @@ export const generateInstallationPlanPDF = async (
             color: #003087;
         }
         
+        .qr-code {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ccc;
+        }
+        
         .protective-device-section {
             margin-top: 12px;
             padding-top: 10px;
@@ -677,7 +721,9 @@ export const generateInstallationPlanPDF = async (
                 <div>Generated: ${formatDate()} | Controlled document - Verify before use</div>
             </div>
             <div class="footer-center">Page 1</div>
-            <div style="width: 50px;"></div>
+            <div style="text-align: right;">
+                <img src="${qrCodeDataUrl}" alt="Plan Reference QR" class="qr-code" />
+            </div>
         </div>
     </div>
 </body>
