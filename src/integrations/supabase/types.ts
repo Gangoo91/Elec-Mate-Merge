@@ -1249,6 +1249,45 @@ export type Database = {
           },
         ]
       }
+      gs38_guidance: {
+        Row: {
+          applies_to: string[] | null
+          content: string
+          created_at: string | null
+          equipment_type: string | null
+          id: string
+          key_points: string[] | null
+          safety_category: string | null
+          section_number: string
+          section_title: string
+          updated_at: string | null
+        }
+        Insert: {
+          applies_to?: string[] | null
+          content: string
+          created_at?: string | null
+          equipment_type?: string | null
+          id?: string
+          key_points?: string[] | null
+          safety_category?: string | null
+          section_number: string
+          section_title: string
+          updated_at?: string | null
+        }
+        Update: {
+          applies_to?: string[] | null
+          content?: string
+          created_at?: string | null
+          equipment_type?: string | null
+          id?: string
+          key_points?: string[] | null
+          safety_category?: string | null
+          section_number?: string
+          section_title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       historical_prices: {
         Row: {
           category: string | null
@@ -1512,6 +1551,45 @@ export type Database = {
           metadata?: Json | null
           source?: string
           topic?: string
+        }
+        Relationships: []
+      }
+      installation_methods: {
+        Row: {
+          bs7671_reference: string | null
+          created_at: string | null
+          derating_factor: number | null
+          description: string
+          id: string
+          method_reference: string
+          onsite_guide_reference: string | null
+          restrictions: string | null
+          suitable_for: string[] | null
+          updated_at: string | null
+        }
+        Insert: {
+          bs7671_reference?: string | null
+          created_at?: string | null
+          derating_factor?: number | null
+          description: string
+          id?: string
+          method_reference: string
+          onsite_guide_reference?: string | null
+          restrictions?: string | null
+          suitable_for?: string[] | null
+          updated_at?: string | null
+        }
+        Update: {
+          bs7671_reference?: string | null
+          created_at?: string | null
+          derating_factor?: number | null
+          description?: string
+          id?: string
+          method_reference?: string
+          onsite_guide_reference?: string | null
+          restrictions?: string | null
+          suitable_for?: string[] | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -2226,6 +2304,42 @@ export type Database = {
           report_type?: string
           title?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      onsite_guide_tables: {
+        Row: {
+          applies_to: string[] | null
+          created_at: string | null
+          id: string
+          json_data: Json
+          notes: string | null
+          section: string
+          table_number: string
+          table_title: string
+          updated_at: string | null
+        }
+        Insert: {
+          applies_to?: string[] | null
+          created_at?: string | null
+          id?: string
+          json_data?: Json
+          notes?: string | null
+          section: string
+          table_number: string
+          table_title: string
+          updated_at?: string | null
+        }
+        Update: {
+          applies_to?: string[] | null
+          created_at?: string | null
+          id?: string
+          json_data?: Json
+          notes?: string | null
+          section?: string
+          table_number?: string
+          table_title?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -3862,6 +3976,51 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      testing_limits: {
+        Row: {
+          circuit_type: string | null
+          created_at: string | null
+          gs38_reference: string | null
+          id: string
+          max_value: number | null
+          min_value: number | null
+          notes: string | null
+          regulation_reference: string | null
+          test_type: string
+          unit: string
+          updated_at: string | null
+          voltage_level: string | null
+        }
+        Insert: {
+          circuit_type?: string | null
+          created_at?: string | null
+          gs38_reference?: string | null
+          id?: string
+          max_value?: number | null
+          min_value?: number | null
+          notes?: string | null
+          regulation_reference?: string | null
+          test_type: string
+          unit: string
+          updated_at?: string | null
+          voltage_level?: string | null
+        }
+        Update: {
+          circuit_type?: string | null
+          created_at?: string | null
+          gs38_reference?: string | null
+          id?: string
+          max_value?: number | null
+          min_value?: number | null
+          notes?: string | null
+          regulation_reference?: string | null
+          test_type?: string
+          unit?: string
+          updated_at?: string | null
+          voltage_level?: string | null
+        }
+        Relationships: []
       }
       time_entries: {
         Row: {
