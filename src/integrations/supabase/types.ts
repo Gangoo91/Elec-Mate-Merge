@@ -163,6 +163,39 @@ export type Database = {
           },
         ]
       }
+      bs7671_embeddings: {
+        Row: {
+          amendment: string | null
+          content: string
+          created_at: string | null
+          embedding: string | null
+          id: string
+          metadata: Json | null
+          regulation_number: string
+          section: string
+        }
+        Insert: {
+          amendment?: string | null
+          content: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          regulation_number: string
+          section: string
+        }
+        Update: {
+          amendment?: string | null
+          content?: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          regulation_number?: string
+          section?: string
+        }
+        Relationships: []
+      }
       cables_materials_cache: {
         Row: {
           category: string
@@ -1416,6 +1449,36 @@ export type Database = {
         }
         Relationships: []
       }
+      installation_knowledge: {
+        Row: {
+          content: string
+          created_at: string | null
+          embedding: string | null
+          id: string
+          metadata: Json | null
+          source: string
+          topic: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source: string
+          topic: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string
+          topic?: string
+        }
+        Relationships: []
+      }
       job_listings: {
         Row: {
           company: string
@@ -2195,6 +2258,30 @@ export type Database = {
           },
         ]
       }
+      price_history: {
+        Row: {
+          id: string
+          item_name: string
+          price: number
+          recorded_at: string | null
+          wholesaler: string
+        }
+        Insert: {
+          id?: string
+          item_name: string
+          price: number
+          recorded_at?: string | null
+          wholesaler: string
+        }
+        Update: {
+          id?: string
+          item_name?: string
+          price?: number
+          recorded_at?: string | null
+          wholesaler?: string
+        }
+        Relationships: []
+      }
       price_reports: {
         Row: {
           attributes: Json
@@ -2300,6 +2387,48 @@ export type Database = {
           source_name?: string
           source_type?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      pricing_embeddings: {
+        Row: {
+          base_cost: number
+          category: string
+          embedding: string | null
+          id: string
+          in_stock: boolean | null
+          item_name: string
+          last_scraped: string | null
+          metadata: Json | null
+          price_per_unit: string | null
+          product_url: string | null
+          wholesaler: string
+        }
+        Insert: {
+          base_cost: number
+          category: string
+          embedding?: string | null
+          id?: string
+          in_stock?: boolean | null
+          item_name: string
+          last_scraped?: string | null
+          metadata?: Json | null
+          price_per_unit?: string | null
+          product_url?: string | null
+          wholesaler: string
+        }
+        Update: {
+          base_cost?: number
+          category?: string
+          embedding?: string | null
+          id?: string
+          in_stock?: boolean | null
+          item_name?: string
+          last_scraped?: string | null
+          metadata?: Json | null
+          price_per_unit?: string | null
+          product_url?: string | null
+          wholesaler?: string
         }
         Relationships: []
       }
@@ -4297,6 +4426,10 @@ export type Database = {
       }
     }
     Functions: {
+      binary_quantize: {
+        Args: { "": string } | { "": unknown }
+        Returns: unknown
+      }
       can_access_quote_via_token: {
         Args: { q_id: string; token: string }
         Returns: boolean
@@ -4384,13 +4517,148 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      halfvec_avg: {
+        Args: { "": number[] }
+        Returns: unknown
+      }
+      halfvec_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      halfvec_send: {
+        Args: { "": unknown }
+        Returns: string
+      }
+      halfvec_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
+      hnsw_bit_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnsw_halfvec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnsw_sparsevec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnswhandler: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
       is_owner_of_quote: {
         Args: { q_id: string }
         Returns: boolean
       }
+      ivfflat_bit_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflat_halfvec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflathandler: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      l2_norm: {
+        Args: { "": unknown } | { "": unknown }
+        Returns: number
+      }
+      l2_normalize: {
+        Args: { "": string } | { "": unknown } | { "": unknown }
+        Returns: string
+      }
+      search_bs7671: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+        }
+        Returns: {
+          content: string
+          id: string
+          regulation_number: string
+          section: string
+          similarity: number
+        }[]
+      }
+      search_installation_knowledge: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+          source_filter?: string
+        }
+        Returns: {
+          content: string
+          id: string
+          similarity: number
+          source: string
+          topic: string
+        }[]
+      }
+      search_pricing: {
+        Args: {
+          category_filter?: string
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+        }
+        Returns: {
+          base_cost: number
+          category: string
+          id: string
+          in_stock: boolean
+          item_name: string
+          price_per_unit: string
+          similarity: number
+          wholesaler: string
+        }[]
+      }
+      sparsevec_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      sparsevec_send: {
+        Args: { "": unknown }
+        Returns: string
+      }
+      sparsevec_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
       trigger_materials_weekly_refresh: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      vector_avg: {
+        Args: { "": number[] }
+        Returns: string
+      }
+      vector_dims: {
+        Args: { "": string } | { "": unknown }
+        Returns: number
+      }
+      vector_norm: {
+        Args: { "": string }
+        Returns: number
+      }
+      vector_out: {
+        Args: { "": string }
+        Returns: unknown
+      }
+      vector_send: {
+        Args: { "": string }
+        Returns: string
+      }
+      vector_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
       }
     }
     Enums: {
