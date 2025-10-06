@@ -4,10 +4,11 @@
 
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-// BS 7671:2018+A2:2022 Complete Knowledge Base
+// BS 7671:2018+A2:2022 Complete Knowledge Base - Full Regulation Coverage
 import { calculateVoltageDrop, getCableCapacity, VOLTAGE_DROP_70C_PVC_COPPER, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor, getTemperatureFactor, getGroupingFactor, GROUPING_FACTORS_ENCLOSED } from "../shared/bs7671CorrectionFactors.ts";
 import { getMaxZs, checkRCDRequirement, MAX_ZS_MCB_TYPE_B_04S, MAX_ZS_MCB_TYPE_C_04S, RCD_REQUIREMENTS } from "../shared/bs7671ProtectionData.ts";
+import { getSpecialLocationRequirements, checkSafeZoneCompliance, SECTION_701_BATHROOMS, SECTION_722_EV_CHARGING, SAFE_ZONES_522_6 } from "../shared/bs7671SpecialLocations.ts";
 import { searchBS7671, getRegulationsForCircuitType } from './bs7671Knowledge.ts';
 
 const corsHeaders = {

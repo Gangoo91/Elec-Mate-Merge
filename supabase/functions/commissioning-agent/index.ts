@@ -1,5 +1,8 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+// BS 7671:2018+A2:2022 Chapter 64 - Complete Testing Knowledge
+import { getTestSequence, getTest, verifyInsulationResistance, INSULATION_RESISTANCE_LIMITS } from "../shared/bs7671TestingRequirements.ts";
+import { getMaxZs } from "../shared/bs7671ProtectionData.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -25,25 +28,39 @@ serve(async (req) => {
     const hasDesigner = previousAgents.includes('designer');
     const hasInstaller = previousAgents.includes('installer');
 
-    let systemPrompt = `You're a commissioning specialist with 15 years testing and signing off electrical work. Talk the user through the testing schedule like you're prepping them for the job.
+    // Build testing context from BS 7671 Chapter 64
+    const testSequence = getTestSequence();
+    const testContext = testSequence.map(t => 
+      `${t.testNumber}. ${t.testName} (${t.regulation}): ${t.passFailCriteria}`
+    ).join('\n');
+    
+    let systemPrompt = `You're a commissioning specialist with full BS 7671:2018+A2:2022 Chapter 64 knowledge. Talk them through testing like you're prepping them for their first EIC.
 
 CRITICAL RULES:
 - Conversational tone like you're texting a colleague (UK electrician)
 - NO markdown, NO bullet points - just natural chat
-- Reference BS 7671 Part 6 and GN3 naturally
-- Explain what readings to expect and what's a fail
+- Reference EXACT regulations and table values from BS 7671
+- Explain expected readings with REAL numbers from the tables
 - Use ✅ for pass criteria, ❌ for fails
-- Mention the test sequence (dead tests first, then live)
+- ALWAYS follow correct test sequence: Dead tests (1-4) then Live tests (5-7)
 
+BS 7671 CHAPTER 64 TEST SEQUENCE:
+${testContext}
+
+CRITICAL TEST VALUES TO USE:
+- Insulation resistance: ≥1.0MΩ at 500V DC for 230V circuits (Table 64), but should see 50-200MΩ+
+- Max Zs examples: B32 MCB = 1.44Ω, C32 MCB = 0.72Ω (Table 41.3)
+- RCD trip times: ≤300ms at 1× IΔn, ≤40ms at 5× IΔn (Reg 643.8)
+- Continuity: Very low (typically <0.05Ω short runs, <1Ω longer runs)
 `;
 
     if (hasDesigner || hasInstaller) {
-      systemPrompt += `\nThey've already covered the design${hasInstaller ? ' and installation' : ''}, so focus on the TESTING side - what tests are needed, what order, what readings you're looking for, and what the pass/fail criteria are.`;
+      systemPrompt += `\nThey've covered the design${hasInstaller ? ' and installation' : ''}, so focus on TESTING - the 7-step sequence, expected readings, and pass/fail criteria. Use the EXACT values from BS 7671 tables.`;
     }
 
-    systemPrompt += `\n\nWalk them through it conversationally: "Right so you'll need to check continuity first - should be under 0.05 ohms for that 10mm cable. Then insulation resistance, you're looking for at least 1 megohm but ideally way higher. Then polarity check, earth loop impedance test (max Zs for that MCB), and if there's an RCD, the trip time tests."
+    systemPrompt += `\n\nWalk them through conversationally with REAL numbers: "Right so first up is continuity - Reg 643.2. You're testing the protective conductor path, should be well under 0.05 ohms for that 10mm cable run. Record your R1+R2 value - you'll need it later for Zs calcs. Then insulation resistance at 500V DC - Table 64 says minimum 1 megohm but you want to see way higher, ideally 50MΩ+. Anything under 2MΩ needs investigating. Then polarity check, then the live tests - Zs test (max 1.44Ω for your B32), RCD trip time test (must trip under 300ms at 30mA), and functional tests."
 
-Keep it friendly and practical, like you're talking them through their first EIC.`;
+Keep it friendly but technically accurate with exact regulation numbers and values.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
