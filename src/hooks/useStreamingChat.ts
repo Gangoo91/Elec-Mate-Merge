@@ -21,6 +21,7 @@ interface Message {
   citations?: Array<{ number: string; title: string }>;
   toolCalls?: any[];
   activeAgents?: string[];
+  agentName?: string;
 }
 
 interface UseStreamingChatOptions {
@@ -58,7 +59,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
         },
         body: JSON.stringify({ messages, currentDesign, selectedAgents })
       });
@@ -160,6 +161,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
 
                   case 'agent_error':
                     console.error(`Agent ${chunk.agent} error:`, chunk.data?.error);
+                    options.onError?.(`${chunk.agent} failed: ${chunk.data?.error || 'Unknown error'}`);
                     break;
 
                   case 'token':

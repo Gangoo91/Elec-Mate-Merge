@@ -356,23 +356,32 @@ async function handleConversationalMode(
           }
         }
 
-        // Send all_agents_complete event
-        const executionTime = Date.now() - startTime;
-        const finalEvent = `data: ${JSON.stringify({
-          type: 'all_agents_complete',
-          agentOutputs: agentOutputs.map(a => ({
-            agent: a.agent,
-            response: a.response,
-            citations: a.citations,
-            confidence: a.confidence
-          })),
-          totalCitations: allCitations,
-          costUpdates,
-          toolCalls: allToolCalls,
-          executionTime,
-          timestamp: new Date().toISOString()
-        })}\n\n`;
-        controller.enqueue(encoder.encode(finalEvent));
+        // Only send completion if we got at least one agent response
+        if (agentOutputs.length === 0) {
+          const errorEvent = `data: ${JSON.stringify({
+            type: 'error',
+            error: 'No agents completed successfully'
+          })}\n\n`;
+          controller.enqueue(encoder.encode(errorEvent));
+        } else {
+          // Send all_agents_complete event
+          const executionTime = Date.now() - startTime;
+          const finalEvent = `data: ${JSON.stringify({
+            type: 'all_agents_complete',
+            agentOutputs: agentOutputs.map(a => ({
+              agent: a.agent,
+              response: a.response,
+              citations: a.citations,
+              confidence: a.confidence
+            })),
+            totalCitations: allCitations,
+            costUpdates,
+            toolCalls: allToolCalls,
+            executionTime,
+            timestamp: new Date().toISOString()
+          })}\n\n`;
+          controller.enqueue(encoder.encode(finalEvent));
+        }
 
         // Send [DONE] marker
         controller.enqueue(encoder.encode('data: [DONE]\n\n'));

@@ -49,6 +49,7 @@ interface Message {
   citations?: Array<{ number: string; title: string }>;
   costUpdates?: { materials: number; vat: number; total: number };
   activeAgents?: string[];
+  agentName?: string;
 }
 
 interface IntelligentAIPlannerProps {
@@ -115,11 +116,12 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       setCurrentAction(`Consulting ${agent}...`);
       setCurrentAgent(agent);
       
-      // Create new assistant message for this agent
+      // Create new assistant message for this agent with agentName
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: '',
-        activeAgents: [agent]
+        activeAgents: [agent],
+        agentName: agent
       }]);
       
       setReasoningSteps(prev => prev.map(step => 
@@ -337,11 +339,18 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   };
 
   const handleViewResults = () => {
+    // Compute selectedAgents from messages with agentName
+    const consultedAgents = [...new Set(
+      messages
+        .filter(m => m.role === 'assistant' && m.agentName)
+        .map(m => m.agentName!)
+    )];
+    
     navigate('/electrician/install-planner/results', {
       state: {
         messages,
         planData,
-        activeAgents: planData.selectedAgents || []
+        activeAgents: consultedAgents.length > 0 ? consultedAgents : (planData.selectedAgents || [])
       }
     });
   };
