@@ -242,3 +242,18 @@ verify_jwt = false
 
 [functions.parse-city-guilds-book-2]
 verify_jwt = false
+
+[functions.parse-design-guide]
+verify_jwt = false
+
+[functions.parse-wiring-diagrams]
+verify_jwt = false
+
+[functions.parse-ev-charging]
+verify_jwt = false
+
+[functions.parse-calculations-basic]
+verify_jwt = false
+
+[functions.parse-inservice-testing]
+verify_jwt = false

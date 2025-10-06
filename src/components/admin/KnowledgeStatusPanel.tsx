@@ -49,20 +49,20 @@ export const KnowledgeStatusPanel = () => {
   }
 
   const sources = [
-    { name: 'BS 7671 Wiring Regulations', count: stats.bs7671_total, icon: BookOpen, table: 'bs7671_embeddings' },
-    { name: 'On-Site Guide', count: stats.onsite_guide, icon: FileText, table: 'installation_knowledge' },
-    { name: 'City & Guilds Book 1', count: stats.city_guilds_book_1, icon: FileText, table: 'installation_knowledge' },
-    { name: 'City & Guilds Book 2', count: stats.city_guilds_book_2, icon: FileText, table: 'installation_knowledge' },
-    { name: 'Emergency Lighting Guide', count: stats.emergency_lighting, icon: FileText, table: 'installation_knowledge' },
-    { name: 'Guidance Note 3: Inspection & Testing', count: stats.guidance_note_3, icon: BookOpen, table: 'installation_knowledge' },
-    { name: 'Installation Design Guide', count: stats.design_guide, icon: FileText, table: 'installation_knowledge' },
-    { name: 'Wiring Diagrams Book', count: stats.wiring_diagrams, icon: FileText, table: 'installation_knowledge' },
-    { name: 'IET Code: EV Charging', count: stats.ev_charging, icon: BookOpen, table: 'installation_knowledge' },
-    { name: 'Installation Calculations: Basic', count: stats.calculations_basic, icon: FileText, table: 'installation_knowledge' },
-    { name: 'IET Code: In-service Testing', count: stats.inservice_testing, icon: BookOpen, table: 'installation_knowledge' },
+    { name: 'BS 7671 Wiring Regulations', count: stats.bs7671_total ?? 0, icon: BookOpen, table: 'bs7671_embeddings' },
+    { name: 'On-Site Guide', count: stats.onsite_guide ?? 0, icon: FileText, table: 'installation_knowledge' },
+    { name: 'City & Guilds Book 1', count: stats.city_guilds_book_1 ?? 0, icon: FileText, table: 'installation_knowledge' },
+    { name: 'City & Guilds Book 2', count: stats.city_guilds_book_2 ?? 0, icon: FileText, table: 'installation_knowledge' },
+    { name: 'Emergency Lighting Guide', count: stats.emergency_lighting ?? 0, icon: FileText, table: 'installation_knowledge' },
+    { name: 'Guidance Note 3: Inspection & Testing', count: stats.guidance_note_3 ?? 0, icon: BookOpen, table: 'installation_knowledge' },
+    { name: 'Installation Design Guide', count: stats.design_guide ?? 0, icon: FileText, table: 'installation_knowledge' },
+    { name: 'Wiring Diagrams Book', count: stats.wiring_diagrams ?? 0, icon: FileText, table: 'installation_knowledge' },
+    { name: 'IET Code: EV Charging', count: stats.ev_charging ?? 0, icon: BookOpen, table: 'installation_knowledge' },
+    { name: 'Installation Calculations: Basic', count: stats.calculations_basic ?? 0, icon: FileText, table: 'installation_knowledge' },
+    { name: 'IET Code: In-service Testing', count: stats.inservice_testing ?? 0, icon: BookOpen, table: 'installation_knowledge' },
   ];
 
-  const totalChunks = sources.reduce((sum, s) => sum + s.count, 0);
+  const totalChunks = sources.reduce((sum, s) => sum + (s.count ?? 0), 0);
 
   return (
     <Card>
@@ -89,7 +89,7 @@ export const KnowledgeStatusPanel = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold">{source.count.toLocaleString()}</p>
+                  <p className="font-semibold">{(source.count ?? 0).toLocaleString()}</p>
                   <p className="text-xs text-muted-foreground">chunks</p>
                 </div>
               </div>
