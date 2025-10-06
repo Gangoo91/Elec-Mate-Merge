@@ -16,11 +16,16 @@ import { buildConversationState, summarizeConversation } from '../_shared/conver
 import { detectIntents, type IntentAnalysis } from '../_shared/intent-detection.ts';
 import { planAgentSequence, shouldRetryWithFeedback, type AgentContext, type AgentOutput, type AgentPlan } from '../_shared/agent-orchestration.ts';
 import { validateResponse } from '../_shared/response-validation.ts';
+import { ResponseCache, isCacheable } from '../_shared/response-cache.ts';
+import { createStreamingResponse, StreamingResponseBuilder } from '../_shared/streaming-utils.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// PHASE 8: Initialize cache
+const responseCache = new ResponseCache();
 
 interface OrchestratorRequest {
   messages: Message[];
@@ -44,6 +49,25 @@ serve(async (req) => {
     console.log('🎯 Orchestrator v2.0: Processing query with best-in-class AI');
     
     const latestMessage = messages[messages.length - 1]?.content || '';
+
+    // PHASE 8: Check cache first for common queries
+    if (isCacheable(latestMessage)) {
+      const cached = await responseCache.get(latestMessage);
+      if (cached) {
+        console.log('⚡ Returning cached response (10x faster)');
+        return new Response(JSON.stringify({
+          response: cached.response,
+          activeAgents: ['cache'],
+          citations: cached.citations,
+          confidence: cached.confidence,
+          fromCache: true,
+          executionTime: Date.now() - startTime,
+          timestamp: new Date().toISOString()
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+    }
 
     // PHASE 2: Build conversation state and summary
     console.log('📊 Phase 2: Building conversation memory...');
@@ -90,7 +114,7 @@ serve(async (req) => {
       reasoning: agentPlan.reasoning
     });
 
-    // Execute agents sequentially with context passing
+    // PHASE 8: Optimize parallel execution where dependencies allow
     const agentOutputs: AgentOutput[] = [];
     const agentContext: AgentContext = {
       messages,
@@ -104,68 +128,65 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    for (const step of agentPlan.sequence) {
-      console.log(`🚀 Executing ${step.agent} (priority ${step.priority})`);
-      
-      // Check dependencies
-      const dependenciesMet = step.dependencies.every(dep => 
-        agentOutputs.some(out => out.agent === dep)
-      );
+    // Group agents by dependency level for parallel execution
+    const executionGroups = groupByDependencies(agentPlan.sequence);
+    console.log('📋 Execution groups (parallel optimization):', executionGroups.map(g => g.map(s => s.agent)));
 
-      if (!dependenciesMet) {
-        console.log(`⏸️ Skipping ${step.agent} - dependencies not met`);
-        continue;
-      }
+    for (const group of executionGroups) {
+      // Execute all agents in this group in parallel
+      const groupPromises = group.map(async (step) => {
+        console.log(`🚀 Executing ${step.agent} (priority ${step.priority})`);
+        
+        try {
+          const agentFunctionName = getAgentFunctionName(step.agent);
+          const result = await supabase.functions.invoke(agentFunctionName, {
+            body: { 
+              messages, 
+              currentDesign,
+              context: agentContext
+            }
+          });
 
-      try {
-        const agentFunctionName = getAgentFunctionName(step.agent);
-        const result = await supabase.functions.invoke(agentFunctionName, {
-          body: { 
-            messages, 
-            currentDesign,
-            context: agentContext // Pass full context to agents
+          if (result.error) {
+            console.error(`Agent ${step.agent} error:`, result.error);
+            return null;
           }
-        });
 
-        if (result.error) {
-          console.error(`Agent ${step.agent} error:`, result.error);
-          continue;
+          const output: AgentOutput = {
+            agent: step.agent,
+            response: result.data?.response || '',
+            citations: result.data?.citations || [],
+            toolCalls: result.data?.toolCalls || [],
+            costUpdates: result.data?.costUpdates,
+            confidence: result.data?.confidence || 0.8
+          };
+
+          // PHASE 7: Validate response
+          const validation = validateResponse(output.response, latestMessage, agentContext);
+          console.log(`✅ Validation for ${step.agent}:`, {
+            isValid: validation.isValid,
+            confidence: validation.confidence,
+            issues: validation.issues.length
+          });
+
+          if (validation.issues.length > 0) {
+            console.log('⚠️ Validation issues:', validation.issues);
+          }
+
+          output.confidence = validation.confidence;
+          return output;
+
+        } catch (error) {
+          console.error(`❌ Error executing ${step.agent}:`, error);
+          return null;
         }
+      });
 
-        const output: AgentOutput = {
-          agent: step.agent,
-          response: result.data?.response || '',
-          citations: result.data?.citations || [],
-          toolCalls: result.data?.toolCalls || [],
-          costUpdates: result.data?.costUpdates,
-          confidence: result.data?.confidence || 0.8
-        };
-
-        // PHASE 7: Validate response
-        const validation = validateResponse(output.response, latestMessage, agentContext);
-        console.log(`✅ Validation for ${step.agent}:`, {
-          isValid: validation.isValid,
-          confidence: validation.confidence,
-          issues: validation.issues.length
-        });
-
-        if (validation.issues.length > 0) {
-          console.log('⚠️ Validation issues:', validation.issues);
-        }
-
-        output.confidence = validation.confidence;
-        agentOutputs.push(output);
-        agentContext.previousAgentOutputs = agentOutputs;
-
-        // Self-correction loop: Retry if confidence too low
-        if (shouldRetryWithFeedback(output, validation.issues.map(i => i.message))) {
-          console.log(`🔄 Retrying ${step.agent} with feedback...`);
-          // Could implement retry logic here
-        }
-
-      } catch (error) {
-        console.error(`❌ Error executing ${step.agent}:`, error);
-      }
+      // Wait for all agents in this group to complete
+      const groupResults = await Promise.all(groupPromises);
+      const validResults = groupResults.filter(r => r !== null) as AgentOutput[];
+      agentOutputs.push(...validResults);
+      agentContext.previousAgentOutputs = agentOutputs;
     }
 
     // PHASE 6: Orchestrator synthesizes final response (no separate refinement call)
@@ -181,6 +202,16 @@ serve(async (req) => {
     const executionTime = Date.now() - startTime;
     console.log(`⏱️ Total execution time: ${executionTime}ms`);
 
+    // PHASE 8: Cache the response if it's cacheable
+    if (isCacheable(latestMessage) && finalResponse.confidence >= 0.8) {
+      await responseCache.set(
+        latestMessage,
+        finalResponse.response,
+        finalResponse.citations,
+        finalResponse.confidence
+      );
+    }
+
     return new Response(JSON.stringify({
       response: finalResponse.response,
       activeAgents: agentOutputs.map(a => a.agent),
@@ -189,6 +220,7 @@ serve(async (req) => {
       toolCalls: finalResponse.toolCalls,
       confidence: finalResponse.confidence,
       executionTime,
+      fromCache: false,
       timestamp: new Date().toISOString()
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -339,6 +371,27 @@ Write as if you're texting back on a job site - professional but friendly. Show 
       confidence: avgConfidence * 0.7
     };
   }
+}
+
+// PHASE 8: Group agents by dependencies for parallel execution
+function groupByDependencies(sequence: any[]): any[][] {
+  const groups: any[][] = [];
+  const processed = new Set<string>();
+
+  while (processed.size < sequence.length) {
+    const currentGroup = sequence.filter(step => {
+      // Can execute if all dependencies are already processed
+      return !processed.has(step.agent) &&
+             step.dependencies.every((dep: string) => processed.has(dep));
+    });
+
+    if (currentGroup.length === 0) break; // Circular dependency or error
+
+    groups.push(currentGroup);
+    currentGroup.forEach(step => processed.add(step.agent));
+  }
+
+  return groups;
 }
 
 function generateSmartFallback(
