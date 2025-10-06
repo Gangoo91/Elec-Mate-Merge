@@ -38,14 +38,70 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-    const chunks: Chunk[] = [];
-    const chunkSize = 100;
-
-    for (let i = 0; i < lines.length; i += chunkSize) {
-      const chunkLines = lines.slice(i, i + chunkSize);
-      const content = chunkLines.join('\n').trim();
+    // Smart chunking function for PDFs
+    const smartChunk = (text: string, targetSize: number = 2500): string[] => {
+      const results: string[] = [];
+      let currentPos = 0;
       
-      if (content.length < 100) continue;
+      while (currentPos < text.length) {
+        let chunkEnd = Math.min(currentPos + targetSize, text.length);
+        
+        // Don't exceed max safe size (6000 chars ≈ 1500 tokens)
+        const maxChunkSize = 6000;
+        if (chunkEnd - currentPos > maxChunkSize) {
+          chunkEnd = currentPos + maxChunkSize;
+        }
+        
+        // If not at end, try to break at paragraph
+        if (chunkEnd < text.length) {
+          const paragraphBreak = text.lastIndexOf('\n\n', chunkEnd);
+          if (paragraphBreak > currentPos && chunkEnd - paragraphBreak < 500) {
+            chunkEnd = paragraphBreak + 2;
+          } else {
+            // Try sentence boundary
+            const sentenceEnd = Math.max(
+              text.lastIndexOf('. ', chunkEnd),
+              text.lastIndexOf('.\n', chunkEnd),
+              text.lastIndexOf('! ', chunkEnd),
+              text.lastIndexOf('? ', chunkEnd)
+            );
+            if (sentenceEnd > currentPos && chunkEnd - sentenceEnd < 200) {
+              chunkEnd = sentenceEnd + 2;
+            } else {
+              // Try word boundary
+              const spacePos = text.lastIndexOf(' ', chunkEnd);
+              if (spacePos > currentPos) {
+                chunkEnd = spacePos + 1;
+              }
+            }
+          }
+        }
+        
+        const chunk = text.slice(currentPos, chunkEnd).trim();
+        if (chunk.length >= 100) {
+          results.push(chunk);
+        }
+        currentPos = chunkEnd;
+      }
+      
+      return results;
+    };
+
+    const fullText = fileContent.trim();
+    const textChunks = smartChunk(fullText);
+    
+    console.log(`📦 Created ${textChunks.length} smart chunks (avg ${Math.round(fullText.length / textChunks.length)} chars each)`);
+
+    const chunks: Chunk[] = [];
+    
+    for (let i = 0; i < textChunks.length; i++) {
+      const content = textChunks[i];
+      
+      // Validate chunk size
+      const estimatedTokens = Math.ceil(content.length / 4);
+      if (estimatedTokens > 2000) {
+        console.warn(`⚠️ Large chunk at index ${i}: ${content.length} chars (~${estimatedTokens} tokens)`);
+      }
 
       const chapterMatch = content.match(/(?:LO\d+|Unit|Topic)\s+(\d+\.?\d*)[:\s-]+([^\n]+)/i);
       const chapterNumber = chapterMatch ? chapterMatch[1] : undefined;
@@ -81,7 +137,7 @@ serve(async (req) => {
       }
 
       chunks.push({
-        section: chapterTitle || `Section at line ${i}`,
+        section: chapterTitle || `Section ${i + 1}`,
         content,
         metadata: {
           document: 'City & Guilds Level 2 Technical Certificate (8202-20)',

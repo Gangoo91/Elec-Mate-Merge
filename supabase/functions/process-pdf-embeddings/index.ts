@@ -59,7 +59,10 @@ serve(async (req) => {
       });
 
       if (!embeddingResponse.ok) {
-        throw new Error(`OpenAI API error: ${embeddingResponse.status}`);
+        const errorText = await embeddingResponse.text();
+        console.error(`OpenAI API error ${embeddingResponse.status}:`, errorText);
+        console.error(`Batch info: ${batch.length} chunks, sizes:`, batch.map(c => c.content.length));
+        throw new Error(`OpenAI API error: ${embeddingResponse.status} - ${errorText}`);
       }
 
       const embeddingData = await embeddingResponse.json();
