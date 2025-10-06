@@ -227,7 +227,8 @@ async function handleConversationalMode(
         conversationSummary,
         conversationState,
         previousAgentOutputs: [],
-        userQuery: latestMessage
+        userQuery: latestMessage,
+        fullConversationThread: [...messages]
       };
 
       const allCitations: any[] = [];
@@ -309,6 +310,12 @@ async function handleConversationalMode(
 
             agentOutputs.push(output);
             agentContext.previousAgentOutputs = agentOutputs;
+            
+            // Add agent's response to full conversation thread
+            agentContext.fullConversationThread.push({
+              role: 'assistant',
+              content: `[${getAgentDisplayName(agentName)}]: ${output.response}`
+            });
 
             // Send agent_response event with full response
             const responseEvent = `data: ${JSON.stringify({
@@ -410,7 +417,8 @@ async function handleSynthesisMode(
     conversationSummary,
     conversationState,
     previousAgentOutputs: [],
-    userQuery: latestMessage
+    userQuery: latestMessage,
+    fullConversationThread: [...messages]
   };
 
   for (const step of agentPlan.sequence) {
@@ -453,7 +461,7 @@ async function handleSynthesisMode(
   });
 }
 
-// Helper: Build context-aware messages with FULL structured data
+// Helper: Build context-aware messages with FULL conversation history
 function buildAgentMessages(
   messages: Message[],
   agentContext: AgentContext,
@@ -461,23 +469,24 @@ function buildAgentMessages(
   isFirst: boolean,
   isLast: boolean
 ): Message[] {
-  const baseMessages = [...messages];
+  // Start with the FULL conversation thread (includes all user + agent messages)
+  const fullMessages = [...agentContext.fullConversationThread];
   
-  // Add FULL context from previous agents if not the first
+  // Add structured context from previous agents if not the first
   if (!isFirst && agentContext.previousAgentOutputs.length > 0) {
     const structuredContext = buildStructuredContext(agentContext.previousAgentOutputs);
     
-    baseMessages.push({
+    fullMessages.push({
       role: 'system',
       content: `KNOWLEDGE FROM PREVIOUS SPECIALISTS (reference these exact details):
 
 ${structuredContext}
 
-Now it's YOUR turn. Build on what they've said with your specialty. Reference specific numbers, calculations, or recommendations from above when relevant.`
+Now it's YOUR turn. Build on what they've said with your specialty. You can see the full conversation history above, including what other specialists have said. Reference specific numbers, calculations, or recommendations when relevant.`
     });
   }
   
-  return baseMessages;
+  return fullMessages;
 }
 
 // NEW: Build structured knowledge store with FULL data
@@ -613,6 +622,17 @@ function getAgentEmoji(agent: string): string {
     'health-safety': '🦺'
   };
   return emojis[agent] || '🤖';
+}
+
+function getAgentDisplayName(agent: string): string {
+  const names: Record<string, string> = {
+    'designer': 'Designer',
+    'cost-engineer': 'Cost Engineer',
+    'installer': 'Installer',
+    'commissioning': 'Commissioning',
+    'health-safety': 'Health & Safety'
+  };
+  return names[agent] || agent;
 }
 
 // Helper: Detect which agent wrote a message based on content patterns

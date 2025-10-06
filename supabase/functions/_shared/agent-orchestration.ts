@@ -23,6 +23,7 @@ export interface AgentContext {
   conversationState: ConversationState;
   previousAgentOutputs: AgentOutput[];
   userQuery: string;
+  fullConversationThread: Message[]; // Complete thread including agent responses
 }
 
 export interface AgentOutput {
