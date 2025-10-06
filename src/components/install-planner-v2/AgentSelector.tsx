@@ -111,39 +111,39 @@ export const AgentSelector = ({ onStartConsultation }: AgentSelectorProps) => {
       <RadioGroup value={mode} onValueChange={(val) => setMode(val as any)}>
         <div className="space-y-3">
           {/* Full Consultation */}
-          <div className="flex items-start gap-2.5 p-4 rounded-lg border border-border bg-card/50 hover:bg-card transition-colors">
+          <div className="flex items-start gap-2.5 p-4 rounded-lg border border-border bg-elec-grey hover:bg-elec-grey/80 transition-colors">
             <RadioGroupItem value="full" id="full" className="mt-0.5 flex-shrink-0" />
             <div className="flex-1 min-w-0 space-y-1">
               <Label htmlFor="full" className="text-base font-semibold cursor-pointer block leading-tight">
                 Full Consultation (All 6 Agents)
               </Label>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-foreground/70 leading-relaxed">
                 Complete design package: design → costing → installation → safety → testing → compliance
               </p>
             </div>
           </div>
 
           {/* Quick Design */}
-          <div className="flex items-start gap-2.5 p-4 rounded-lg border border-border bg-card/50 hover:bg-card transition-colors">
+          <div className="flex items-start gap-2.5 p-4 rounded-lg border border-border bg-elec-grey hover:bg-elec-grey/80 transition-colors">
             <RadioGroupItem value="quick" id="quick" className="mt-0.5 flex-shrink-0" />
             <div className="flex-1 min-w-0 space-y-1">
               <Label htmlFor="quick" className="text-base font-semibold cursor-pointer block leading-tight">
                 Quick Design (Designer + Cost Engineer)
               </Label>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-foreground/70 leading-relaxed">
                 Fast design + pricing estimate only
               </p>
             </div>
           </div>
 
           {/* Custom Selection */}
-          <div className="flex items-start gap-2.5 p-4 rounded-lg border border-border bg-card/50 hover:bg-card transition-colors">
+          <div className="flex items-start gap-2.5 p-4 rounded-lg border border-border bg-elec-grey hover:bg-elec-grey/80 transition-colors">
             <RadioGroupItem value="custom" id="custom" className="mt-0.5 flex-shrink-0" />
             <div className="flex-1 min-w-0 space-y-1">
               <Label htmlFor="custom" className="text-base font-semibold cursor-pointer block leading-tight">
                 Custom Selection
               </Label>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-foreground/70 leading-relaxed">
                 Choose specific agents for your needs
               </p>
 
@@ -152,7 +152,7 @@ export const AgentSelector = ({ onStartConsultation }: AgentSelectorProps) => {
                   {AVAILABLE_AGENTS.map(agent => (
                     <div
                       key={agent.id}
-                      className="flex items-start gap-2.5 p-3 rounded-lg bg-background border border-border hover:bg-accent/50 transition-colors"
+                      className="flex items-start gap-2.5 p-3 rounded-lg bg-elec-card border border-border hover:bg-elec-card/80 transition-colors"
                     >
                       <Checkbox
                         id={agent.id}
