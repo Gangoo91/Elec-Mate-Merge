@@ -4,7 +4,10 @@
 
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { calculateCableCapacity, calculateVoltageDrop, calculateMaxZs } from './calculationEngines.ts';
+// BS 7671:2018+A2:2022 Complete Knowledge Base
+import { calculateVoltageDrop, getCableCapacity, VOLTAGE_DROP_70C_PVC_COPPER, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
+import { calculateOverallCorrectionFactor, getTemperatureFactor, getGroupingFactor, GROUPING_FACTORS_ENCLOSED } from "../shared/bs7671CorrectionFactors.ts";
+import { getMaxZs, checkRCDRequirement, MAX_ZS_MCB_TYPE_B_04S, MAX_ZS_MCB_TYPE_C_04S, RCD_REQUIREMENTS } from "../shared/bs7671ProtectionData.ts";
 import { searchBS7671, getRegulationsForCircuitType } from './bs7671Knowledge.ts';
 
 const corsHeaders = {
@@ -31,35 +34,67 @@ serve(async (req) => {
     const userMessage = messages[messages.length - 1]?.content || '';
     const circuitParams = extractCircuitParams(userMessage, currentDesign);
 
-    // Phase 1: Run actual BS 7671 calculations if we have enough data
+    // Phase 1: Run REAL BS 7671 calculations using comprehensive tables
     let calculationResults: any = null;
     if (circuitParams.hasEnoughData) {
-      console.log('🔧 Running BS 7671 calculations with params:', circuitParams);
+      console.log('🔧 Running BS 7671 calculations with FULL TABLES:', circuitParams);
       
-      const cableCalc = calculateCableCapacity({
-        cableSize: circuitParams.cableSize,
-        designCurrent: circuitParams.designCurrent,
-        deviceRating: circuitParams.deviceRating,
+      // Get cable data from Table 4D5 (T&E cables)
+      const cableData = getCableCapacity(circuitParams.cableSize, 'C', 2);
+      
+      // Calculate correction factors (Ca × Cg)
+      const correctionFactors = calculateOverallCorrectionFactor({
         ambientTemp: circuitParams.ambientTemp,
-        groupingCircuits: circuitParams.groupingCircuits,
-        installationMethod: circuitParams.installationMethod,
-        cableType: circuitParams.cableType
+        numberOfCircuits: circuitParams.groupingCircuits,
+        insulationType: '70°C PVC',
+        location: 'air',
+        arrangementCategory: 'clipped-direct-touching',
+        thermalInsulation: 'none'
       });
+      
+      // Calculate derated capacity: Iz = It × Ca × Cg
+      const IzTabulated = cableData?.currentRating || 0;
+      const Iz = IzTabulated * correctionFactors.overallFactor;
+      const Ib = circuitParams.designCurrent;
+      const In = circuitParams.deviceRating;
+      
+      // Check compliance: Ib ≤ In ≤ Iz (Reg 433.1)
+      const IbLeIn = Ib <= In;
+      const InLeIz = In <= Iz;
+      const safetyMargin = ((Iz - In) / In) * 100;
+      
+      const cableCalc = {
+        Ib, In, Iz: Math.round(Iz * 10) / 10, IzTabulated,
+        factors: correctionFactors,
+        compliance: {
+          IbLeIn, InLeIz,
+          overallCompliant: IbLeIn && InLeIz,
+          safetyMargin: Math.round(safetyMargin * 10) / 10
+        },
+        equation: `Iz = It × Ca × Cg = ${IzTabulated}A × ${correctionFactors.temperatureFactor} × ${correctionFactors.groupingFactor} = ${Math.round(Iz * 10) / 10}A`,
+        tableReference: 'Table 4D5'
+      };
 
-      const voltDropCalc = calculateVoltageDrop({
-        current: circuitParams.designCurrent,
-        cableLength: circuitParams.cableLength,
-        cableSize: circuitParams.cableSize,
-        voltage: circuitParams.voltage,
-        phases: circuitParams.phases
-      });
+      // Voltage drop using REAL mV/A/m values from Table 4D1B/4D5
+      const voltDropCalc = calculateVoltageDrop(
+        circuitParams.cableSize,
+        circuitParams.designCurrent,
+        circuitParams.cableLength,
+        circuitParams.voltage
+      );
 
-      const zsCalc = calculateMaxZs({
-        deviceRating: circuitParams.deviceRating,
-        deviceType: circuitParams.deviceType
-      });
+      // Max Zs from Table 41.3
+      const zsCalc = getMaxZs(circuitParams.deviceType, circuitParams.deviceRating, 0.4);
 
-      calculationResults = { cableCapacity: cableCalc, voltageDrop: voltDropCalc, maxZs: zsCalc };
+      // RCD requirements check
+      const rcdRequirements = checkRCDRequirement(circuitParams.circuitType, circuitParams.location);
+
+      calculationResults = { 
+        cableCapacity: cableCalc, 
+        voltageDrop: voltDropCalc, 
+        maxZs: zsCalc,
+        rcdRequirements
+      };
     }
 
     // Phase 2: Load relevant BS 7671 regulations
@@ -67,31 +102,42 @@ serve(async (req) => {
       ? getRegulationsForCircuitType(circuitParams.circuitType)
       : searchBS7671('overload protection voltage drop');
 
-    // Enhanced system prompt for chain-of-thought with REAL calculations
-    const systemPrompt = `You're an experienced UK spark doing circuit design. CRITICAL: Always SHOW YOUR WORKING like you're explaining to an apprentice on site.
+    // Enhanced system prompt with FULL BS 7671:2018+A2:2022 knowledge
+    const systemPrompt = `You're a senior spark with full access to BS 7671:2018+A2:2022. CRITICAL: Always SHOW YOUR WORKING like you're explaining to an apprentice.
 
 ${calculationResults ? `
-IMPORTANT: I've already run the BS 7671 calculations for you with REAL data:
+I'VE RUN THE REAL BS 7671 CALCULATIONS USING THE ACTUAL TABLES:
 
-**Cable Capacity Calculation (BS 7671 Reg 433.1):**
+**Cable Capacity (${calculationResults.cableCapacity.tableReference}, Reg 433.1):**
 ${calculationResults.cableCapacity.equation}
 - Ib (design current) = ${calculationResults.cableCapacity.Ib}A
 - In (device rating) = ${calculationResults.cableCapacity.In}A
-- Iz (cable capacity after derating) = ${calculationResults.cableCapacity.Iz}A
-- Temperature factor (Ca) = ${calculationResults.cableCapacity.factors.temperature}
-- Grouping factor (Cg) = ${calculationResults.cableCapacity.factors.grouping}
+- It (tabulated capacity) = ${calculationResults.cableCapacity.IzTabulated}A (from ${calculationResults.cableCapacity.tableReference})
+- Iz (derated capacity) = ${calculationResults.cableCapacity.Iz}A
+- Ca (temperature factor) = ${calculationResults.cableCapacity.factors.temperatureFactor} (${calculationResults.cableCapacity.factors.regulations[0]})
+- Cg (grouping factor) = ${calculationResults.cableCapacity.factors.groupingFactor} (${calculationResults.cableCapacity.factors.regulations[1]})
 - Safety margin: ${calculationResults.cableCapacity.compliance.safetyMargin}%
-- Compliance: ${calculationResults.cableCapacity.compliance.overallCompliant ? '✓ PASS' : '✗ FAIL'}
+- Compliance: Ib≤In? ${calculationResults.cableCapacity.compliance.IbLeIn ? '✓' : '✗'}, In≤Iz? ${calculationResults.cableCapacity.compliance.InLeIz ? '✓' : '✗'}
+${calculationResults.cableCapacity.compliance.overallCompliant ? '✅ COMPLIANT' : '⚠️ NON-COMPLIANT'}
 
-**Voltage Drop Calculation (BS 7671 Reg 525):**
-- Voltage drop: ${calculationResults.voltageDrop.voltageDropVolts}V (${calculationResults.voltageDrop.voltageDropPercent}%)
-- Max allowed: ${calculationResults.voltageDrop.maxAllowed}%
-- Compliance: ${calculationResults.voltageDrop.compliant ? '✓ PASS' : '✗ FAIL'}
+**Voltage Drop (Table 4D1B/4D5, Reg 525):**
+- mV/A/m for ${circuitParams.cableSize}mm² = ${calculationResults.voltageDrop.mvPerAPerM} (from Table 4D5)
+- VD = ${calculationResults.voltageDrop.mvPerAPerM} × ${circuitParams.designCurrent}A × ${circuitParams.cableLength}m ÷ 1000
+- Result: ${calculationResults.voltageDrop.voltageDropVolts}V (${calculationResults.voltageDrop.voltageDropPercent}%)
+- Limit: ${calculationResults.voltageDrop.limit}% (Reg 525: 3% lighting, 5% other)
+${calculationResults.voltageDrop.compliant ? '✅ COMPLIANT' : '⚠️ EXCEEDS LIMIT'}
 
-**Earth Fault Loop (${calculationResults.maxZs.regulation}):**
-- Max Zs for ${circuitParams.deviceRating}A Type ${circuitParams.deviceType} = ${calculationResults.maxZs.maxZs}Ω
+**Max Zs (Table 41.3, Reg 411.3.2):**
+- Max Zs for ${circuitParams.deviceRating}A Type ${circuitParams.deviceType} MCB = ${calculationResults.maxZs?.maxZs}Ω
+- Disconnection time: 0.4s (final circuits ≤32A)
+- Must verify on-site with loop impedance tester
 
-USE THESE EXACT RESULTS IN YOUR RESPONSE. Don't recalculate - just explain what they mean.
+${calculationResults.rcdRequirements?.length > 0 ? `
+**RCD Requirements:**
+${calculationResults.rcdRequirements.map((rcd: any) => `- ${rcd.regulation}: ${rcd.reason} (${rcd.rcdRating}mA Type ${rcd.rcdType} ${rcd.mandatory ? 'MANDATORY' : 'recommended'})`).join('\n')}
+` : ''}
+
+USE THESE EXACT VALUES. Don't recalculate - explain what they mean and cite the table references.
 ` : ''}
 
 **Relevant BS 7671 Regulations:**
@@ -227,12 +273,23 @@ function extractCircuitParams(userMessage: string, currentDesign: any): any {
                    deviceRating <= 45 ? 10 :
                    deviceRating <= 63 ? 16 : 25;
 
-  // Determine circuit type
+  // Determine circuit type and location
   let circuitType = 'socket';
+  let location = '';
   if (userMessage.toLowerCase().includes('shower')) circuitType = 'shower';
   else if (userMessage.toLowerCase().includes('cooker')) circuitType = 'cooker';
   else if (userMessage.toLowerCase().includes('light')) circuitType = 'lighting';
-  else if (userMessage.toLowerCase().includes('bath')) circuitType = 'bathroom';
+  
+  if (userMessage.toLowerCase().includes('bath')) {
+    circuitType = 'bathroom';
+    location = 'bathroom';
+  }
+  if (userMessage.toLowerCase().includes('outdoor') || userMessage.toLowerCase().includes('outside')) {
+    location = 'outdoor';
+  }
+  if (userMessage.toLowerCase().includes('ev') || userMessage.toLowerCase().includes('charging')) {
+    location = 'ev-charging';
+  }
 
   return {
     hasEnoughData: power > 0 && designCurrent > 0,
@@ -244,11 +301,12 @@ function extractCircuitParams(userMessage: string, currentDesign: any): any {
     deviceType: 'B', // Assume Type B unless specified
     cableSize,
     cableLength: lengthMatch ? parseInt(lengthMatch[1]) : (currentDesign?.cableLength || 15),
-    ambientTemp: currentDesign?.ambientTemp || 25,
-    groupingCircuits: currentDesign?.groupingCircuits || 1,
+    ambientTemp: currentDesign?.environmentalProfile?.finalApplied?.ambientTemp || 25,
+    groupingCircuits: currentDesign?.environmentalProfile?.finalApplied?.grouping || 1,
     installationMethod: currentDesign?.installationMethod || 'clipped-direct',
     cableType: '6242Y',
-    circuitType
+    circuitType,
+    location
   };
 }
 
