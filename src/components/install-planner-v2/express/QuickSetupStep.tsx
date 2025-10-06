@@ -164,9 +164,27 @@ export const QuickSetupStep = ({ planData, updatePlanData }: QuickSetupStepProps
 
         {/* Cable Length Slider */}
         <div className="space-y-3 md:col-span-2">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <Label>Cable Length</Label>
-            <span className="text-2xl font-bold text-primary">{planData.cableLength}m</span>
+            <div className="flex items-center gap-2">
+              <Input
+                type="number"
+                value={planData.cableLength}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value) || 1;
+                  const clampedValue = Math.min(Math.max(value, 1), 200);
+                  updatePlanData({
+                    ...planData,
+                    cableLength: clampedValue
+                  });
+                }}
+                min={1}
+                max={200}
+                step={2}
+                className="w-20 text-right"
+              />
+              <span className="text-lg font-bold text-primary">m</span>
+            </div>
           </div>
           <Slider
             value={[planData.cableLength]}
