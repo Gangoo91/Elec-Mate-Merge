@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown } from "lucide-react";
+import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { InstallPlanDataV2 } from "./types";
@@ -46,6 +46,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
   const [isExporting, setIsExporting] = useState(false);
+  const [showComplexMode, setShowComplexMode] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { streamMessage, isStreaming } = useStreamingChat({
     onAgentUpdate: (agents) => {
@@ -226,18 +228,29 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
 
   return (
     <div className="flex flex-col h-screen bg-elec-dark">
-      {/* Header - WhatsApp style */}
-      <div className="flex-none px-4 py-3 border-b border-border/30 bg-elec-dark">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Sparkles className="h-5 w-5 text-elec-yellow" />
-            <div>
-              <h2 className="font-semibold text-base text-white">AI Design Assistant</h2>
-              <p className="text-xs text-muted-foreground">BS 7671 Compliant</p>
+      {/* Header - Centered & Clean */}
+      <div className="flex-none px-4 py-4 border-b border-border/30 bg-elec-dark">
+        <div className="flex flex-col items-center gap-3">
+          {/* Title Section */}
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-elec-yellow" />
+            <div className="text-center">
+              <h2 className="font-semibold text-lg text-white">AI Design Assistant</h2>
+              <p className="text-xs text-elec-yellow/80">BS 7671 Compliant • Multi-Agent System</p>
             </div>
           </div>
           
-          <div className="flex items-center gap-2">
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2 flex-wrap justify-center">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => setShowComplexMode(!showComplexMode)}
+              className="text-xs bg-white/5 hover:bg-white/10 border-white/10 text-white"
+            >
+              <Briefcase className="h-3 w-3 mr-1" />
+              Complex Project
+            </Button>
             <Button 
               variant="outline" 
               size="sm" 
@@ -263,6 +276,58 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           </div>
         </div>
       </div>
+
+      {/* Complex Project Mode Panel */}
+      {showComplexMode && (
+        <div className="flex-none px-4 py-3 bg-elec-card border-b border-border/30">
+          <div className="space-y-2">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+              <Briefcase className="h-4 w-4 text-elec-yellow" />
+              Bulk Input Mode - For Factories, Large Installations
+            </h3>
+            <p className="text-xs text-muted-foreground mb-2">
+              Upload a CSV/Excel file with your loads or paste a list below. The Project Manager Agent will break it into phases.
+            </p>
+            
+            <div className="flex gap-2">
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept=".csv,.xlsx,.xls"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    // Handle file upload
+                    toast.info("Processing file...", { description: `Reading ${file.name}` });
+                    // TODO: Parse CSV/Excel and send to Project Manager Agent
+                  }
+                }}
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+                className="text-xs bg-white/5 hover:bg-white/10 border-white/10 text-white"
+              >
+                <Upload className="h-3 w-3 mr-1" />
+                Upload File
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setInput("I need to design a factory with:\n- 50x LED high bay lights (150W each)\n- 10x 3-phase motors (5.5kW each)\n- Office area with 30x sockets\n- Emergency lighting system\n- Fire alarm integration");
+                  setShowComplexMode(false);
+                }}
+                className="text-xs text-white hover:bg-white/10"
+              >
+                Use Example
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Messages Area - WhatsApp style */}
       <div 
