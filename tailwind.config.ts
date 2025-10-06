@@ -146,7 +146,7 @@ export default {
 				'fade-in': 'fade-in 0.3s ease-out',
 				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
 				'float': 'float 3s ease-in-out infinite',
-				'lightbulb-pulse': 'lightbulb-pulse 2s ease-in-out infinite'
+				'lightbulb-pulse': 'lightbulb-pulse 3.5s ease-in-out infinite'
 			}
 		}
 	},

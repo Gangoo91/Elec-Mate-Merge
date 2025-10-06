@@ -31,6 +31,9 @@ export interface InstallPlanDataV2 {
   // Mode
   mode: 'express' | 'professional' | 'multi' | 'ai-guided';
   
+  // Agent Selection (for ai-guided mode)
+  selectedAgents?: string[];
+  
   // Core Required
   installationType: 'domestic' | 'commercial' | 'industrial';
   loadType: string;
