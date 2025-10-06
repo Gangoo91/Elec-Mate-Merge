@@ -84,15 +84,12 @@ Keep it friendly and helpful, like you're walking them through the test schedule
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-5-2025-08-07',
         messages: [
           { role: 'system', content: systemPrompt },
           ...messages
         ],
-        tools,
-        tool_choice: "auto",
-        max_tokens: 1500,
-        temperature: 0.2
+        max_completion_tokens: 1500
       }),
     });
 
