@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Plus, Eye, Search, Filter, Clock, CheckCircle, ArrowLeft, ArrowRight, Camera, Upload, Loader2, Calendar, TrendingUp, BarChart3, AlertCircle, Zap, HardHat, Shield, X } from "lucide-react";
+import { AlertTriangle, Plus, Eye, Search, Filter, Clock, CheckCircle, ArrowLeft, ArrowRight, Camera, Upload, Loader2, Calendar, TrendingUp, BarChart3, AlertCircle, Zap, HardHat, Shield, X, Sparkles } from "lucide-react";
 import { MobileWizardStep } from "@/components/ui/mobile-wizard-step";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
@@ -12,6 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { hazardCategories } from "@/data/hazards";
+import { NearMissToBriefingDialog } from "./NearMissToBriefingDialog";
+import { NearMissSuccessDialog } from "./NearMissSuccessDialog";
 
 interface NearMissReport {
   id: string;
@@ -88,6 +90,8 @@ const quickTemplates: QuickTemplate[] = [
   }
 ];
 
+const statusOptions = ["Reported", "Under Review", "Briefing Scheduled", "Action Taken", "Closed"];
+
 const NearMissReporting = () => {
   const [reports, setReports] = useState<NearMissReport[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,6 +103,9 @@ const NearMissReporting = () => {
   const [uploading, setUploading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [showBriefingDialog, setShowBriefingDialog] = useState(false);
+  const [submittedReport, setSubmittedReport] = useState<NearMissReport | null>(null);
 
   const [formData, setFormData] = useState<Partial<NearMissReport>>({
     incident_date: new Date().toISOString().split('T')[0],
@@ -117,7 +124,6 @@ const NearMissReporting = () => {
 
   const categories = hazardCategories.map(cat => cat.name);
   const severityLevels = ["Low", "Medium", "High", "Critical"];
-  const statusOptions = ["Reported", "Under Review", "Action Taken", "Closed"];
 
   useEffect(() => {
     fetchReports();
@@ -265,13 +271,9 @@ const NearMissReporting = () => {
       if (error) throw error;
 
       setReports(prev => [data, ...prev]);
+      setSubmittedReport(data);
+      setShowSuccessDialog(true);
       resetForm();
-
-      toast({
-        title: "Success",
-        description: "Near miss report submitted successfully",
-        variant: "success"
-      });
     } catch (error) {
       console.error('Error submitting report:', error);
       toast({
@@ -805,6 +807,28 @@ const NearMissReporting = () => {
           ))
         )}
       </div>
+
+      {/* Success Dialog */}
+      {submittedReport && (
+        <>
+          <NearMissSuccessDialog
+            open={showSuccessDialog}
+            onClose={() => setShowSuccessDialog(false)}
+            onCreateBriefing={() => setShowBriefingDialog(true)}
+            onViewReport={() => {
+              setShowForm(false);
+              // Report is already in the list, just close dialog
+            }}
+            reportId={submittedReport.id}
+          />
+
+          <NearMissToBriefingDialog
+            open={showBriefingDialog}
+            onClose={() => setShowBriefingDialog(false)}
+            nearMissReport={submittedReport}
+          />
+        </>
+      )}
     </div>
   );
 };

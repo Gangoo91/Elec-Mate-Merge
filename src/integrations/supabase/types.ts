@@ -1882,6 +1882,9 @@ export type Database = {
       near_miss_reports: {
         Row: {
           assigned_to: string | null
+          briefed_to_team: boolean | null
+          briefing_created_at: string | null
+          briefing_id: string | null
           category: string
           completed_date: string | null
           created_at: string
@@ -1904,6 +1907,9 @@ export type Database = {
         }
         Insert: {
           assigned_to?: string | null
+          briefed_to_team?: boolean | null
+          briefing_created_at?: string | null
+          briefing_id?: string | null
           category: string
           completed_date?: string | null
           created_at?: string
@@ -1926,6 +1932,9 @@ export type Database = {
         }
         Update: {
           assigned_to?: string | null
+          briefed_to_team?: boolean | null
+          briefing_created_at?: string | null
+          briefing_id?: string | null
           category?: string
           completed_date?: string | null
           created_at?: string
@@ -1946,7 +1955,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "near_miss_reports_briefing_id_fkey"
+            columns: ["briefing_id"]
+            isOneToOne: false
+            referencedRelation: "team_briefings"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       ojt_assessments: {
         Row: {
@@ -3501,6 +3518,7 @@ export type Database = {
           identified_hazards: string[] | null
           job_name: string | null
           key_points: string[] | null
+          linked_near_miss_id: string | null
           location: string
           notes: string | null
           pdf_document_id: string | null
@@ -3544,6 +3562,7 @@ export type Database = {
           identified_hazards?: string[] | null
           job_name?: string | null
           key_points?: string[] | null
+          linked_near_miss_id?: string | null
           location: string
           notes?: string | null
           pdf_document_id?: string | null
@@ -3587,6 +3606,7 @@ export type Database = {
           identified_hazards?: string[] | null
           job_name?: string | null
           key_points?: string[] | null
+          linked_near_miss_id?: string | null
           location?: string
           notes?: string | null
           pdf_document_id?: string | null
@@ -3605,7 +3625,15 @@ export type Database = {
           user_id?: string
           work_scope?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "team_briefings_linked_near_miss_id_fkey"
+            columns: ["linked_near_miss_id"]
+            isOneToOne: false
+            referencedRelation: "near_miss_reports"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       time_entries: {
         Row: {
