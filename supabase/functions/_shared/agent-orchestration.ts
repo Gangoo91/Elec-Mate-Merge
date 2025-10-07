@@ -11,7 +11,7 @@ export interface AgentPlan {
 }
 
 export interface AgentStep {
-  agent: 'designer' | 'cost-engineer' | 'installer' | 'commissioning';
+  agent: 'designer' | 'cost-engineer' | 'installer' | 'health-safety' | 'commissioning';
   priority: number;
   reasoning: string;
   dependencies: string[]; // Which previous agents must complete first
@@ -36,14 +36,20 @@ export interface AgentOutput {
 }
 
 // Normalise intent keys to agent IDs
-function normaliseIntentKey(k: string): 'designer' | 'cost-engineer' | 'installer' | 'commissioning' {
-  const map: Record<string, 'designer' | 'cost-engineer' | 'installer' | 'commissioning'> = {
+function normaliseIntentKey(k: string): 'designer' | 'cost-engineer' | 'installer' | 'health-safety' | 'commissioning' {
+  const map: Record<string, 'designer' | 'cost-engineer' | 'installer' | 'health-safety' | 'commissioning'> = {
     design: 'designer',
     designer: 'designer',
     cost: 'cost-engineer',
     'cost-engineer': 'cost-engineer',
     installation: 'installer',
     installer: 'installer',
+    safety: 'health-safety',
+    'health-safety': 'health-safety',
+    ppe: 'health-safety',
+    hazard: 'health-safety',
+    risk: 'health-safety',
+    'risk-assessment': 'health-safety',
     commissioning: 'commissioning'
   };
   return map[k] ?? 'designer';
@@ -220,7 +226,8 @@ function createStandardSequence(reasoning: string): AgentPlan {
       { agent: 'designer', priority: 1, reasoning: 'Circuit design and calculations', dependencies: [] },
       { agent: 'cost-engineer', priority: 2, reasoning: 'Material and labour pricing', dependencies: ['designer'] },
       { agent: 'installer', priority: 3, reasoning: 'Practical installation guidance', dependencies: ['designer'] },
-      { agent: 'commissioning', priority: 4, reasoning: 'Testing and certification', dependencies: [] }
+      { agent: 'health-safety', priority: 4, reasoning: 'Risk assessment and PPE requirements', dependencies: ['installer'] },
+      { agent: 'commissioning', priority: 5, reasoning: 'Testing and certification', dependencies: [] }
     ],
     reasoning,
     estimatedComplexity: 'complex' as const

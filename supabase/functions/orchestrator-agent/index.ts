@@ -683,6 +683,14 @@ function detectAgentFromMessage(content: string): string | null {
     return 'installer';
   }
   
+  // Health & Safety patterns
+  if (contentLower.includes('ppe') || contentLower.includes('hazard') || 
+      contentLower.includes('risk') || contentLower.includes('safety') ||
+      contentLower.includes('ewr') || contentLower.includes('acop') ||
+      contentLower.includes('likelihood') || contentLower.includes('severity')) {
+    return 'health-safety';
+  }
+  
   // Commissioning patterns
   if (contentLower.includes('test') || contentLower.includes('commissioning') || 
       contentLower.includes('insulation resistance') || contentLower.includes('zs') ||
