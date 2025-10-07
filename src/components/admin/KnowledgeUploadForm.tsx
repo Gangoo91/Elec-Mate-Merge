@@ -93,7 +93,9 @@ export default function KnowledgeUploadForm({
       if (targetType === "installation") {
         // Route installation knowledge to the appropriate parser
         const filename = selectedFile.name.toLowerCase();
-        if (filename.includes("calc") || filename.includes("sizing") || filename.includes("calculation")) {
+        if (filename.includes("table")) {
+          edgeFunctionName = "parse-bs7671-tables";
+        } else if (filename.includes("calc") || filename.includes("sizing") || filename.includes("calculation")) {
           edgeFunctionName = "parse-calculations-basic";
         } else {
           edgeFunctionName = "parse-onsite-guide";
