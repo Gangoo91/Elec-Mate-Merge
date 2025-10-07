@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase } from "lucide-react";
+import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase, Play, RotateCcw, Pause } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { InstallPlanDataV2 } from "./types";
@@ -84,6 +84,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [showComplexMode, setShowComplexMode] = useState(false);
   const [consultationStarted, setConsultationStarted] = useState(!!resumeState?.resumeMessages);
   const [consultationPaused, setConsultationPaused] = useState(false);
+  const [completedAgent, setCompletedAgent] = useState<string | null>(null);
   const [currentAgent, setCurrentAgent] = useState<string | null>(null);
   const [nextAgent, setNextAgent] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -141,14 +142,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     onAgentResponse: (agent, response) => {
       console.log(`Agent ${agent} responded:`, response.slice(0, 100));
       
-      // Remove "Analyzing..." and add actual response
+      // Remove "Analyzing..." and add actual response (without agent name prefix)
       setMessages(prev => {
         const filtered = prev.filter(m => !(m.agentName === agent && m.isTyping));
-        const formattedResponse = `[${getAgentName(agent)}]: ${response}`;
         
         return [...filtered, {
           role: 'assistant',
-          content: formattedResponse,
+          content: response, // No prefix
           activeAgents: [agent],
           agentName: agent
         }];
@@ -165,12 +165,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       setNextAgent(nextAgent);
       setCurrentAction('');
       
-      // Don't auto-pause - let conversation flow naturally
-      if (!nextAgent) {
-        toast.success("All specialists consulted!", {
-          description: "You can ask follow-up questions or view results."
-        });
-      }
+      // Pause after each agent for user review
+      setConsultationPaused(true);
+      setCompletedAgent(agent);
     },
     onAllAgentsComplete: (agentOutputs) => {
       console.log('All agents complete:', agentOutputs);
@@ -381,10 +378,32 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     );
   }
 
+  // Clean agent text - remove markdown artifacts
+  const cleanAgentText = (text: string): string => {
+    return text
+      // Remove agent name prefixes like "[Circuit Designer]:"
+      .replace(/^\[.*?\]:\s*/gm, '')
+      // Convert **bold** to <strong>
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      // Convert *italic* to <em>
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      // Remove any remaining asterisks
+      .replace(/\*/g, '')
+      // Clean up section separators
+      .replace(/^---+$/gm, '')
+      // Remove empty brackets
+      .replace(/\(\s*\)/g, '')
+      // Fix checkmarks and ticks
+      .replace(/✓/g, '✓ ')
+      .replace(/⚠/g, '⚠ ')
+      .trim();
+  };
+
   // Parse agent responses into structured sections
   const parseAgentResponse = (content: string) => {
+    const cleanContent = cleanAgentText(content);
     const sections: Array<{ title: string; content: string }> = [];
-    const lines = content.split('\n');
+    const lines = cleanContent.split('\n');
     let currentSection = { title: '', content: '' };
     
     for (const line of lines) {
@@ -392,13 +411,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       // Detect section headers
       if (
         (trimmed.match(/^[A-Z\s]{3,}$/) && trimmed.length < 50) ||
-        trimmed.match(/^(CIRCUIT SPECIFICATION|CALCULATIONS|COMPLIANCE|MATERIALS BREAKDOWN|LABOUR ESTIMATE|PROJECT TOTAL|PRICING NOTES|INSTALLATION METHOD|STEP-BY-STEP PROCEDURE|SAFETY REQUIREMENTS|MATERIAL LIST|TIME ESTIMATE|TEST SEQUENCE|DEAD TESTS|LIVE TESTS|BREAKDOWN|---)/i)
+        trimmed.match(/^(CIRCUIT SPECIFICATION|CALCULATIONS|COMPLIANCE|MATERIALS BREAKDOWN|LABOUR ESTIMATE|PROJECT TOTAL|PRICING NOTES|INSTALLATION METHOD|STEP-BY-STEP PROCEDURE|SAFETY REQUIREMENTS|MATERIAL LIST|TIME ESTIMATE|TEST SEQUENCE|DEAD TESTS|LIVE TESTS|BREAKDOWN)/i)
       ) {
         if (currentSection.content.trim()) {
           sections.push({ ...currentSection });
         }
-        currentSection = { title: trimmed.replace(/^---/, '').trim(), content: '' };
-      } else {
+        currentSection = { title: trimmed.replace(/_/g, ' ').trim(), content: '' };
+      } else if (trimmed) {
         currentSection.content += line + '\n';
       }
     }
@@ -409,7 +428,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     
     // If no sections found, return content as single section
     if (sections.length === 0) {
-      return [{ title: '', content }];
+      return [{ title: '', content: cleanContent }];
     }
     
     return sections;
@@ -554,48 +573,19 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                     : 'bg-elec-card text-white'
                 }`}
               >
-                {/* Active agents badge */}
-                {message.role === 'assistant' && message.activeAgents && message.activeAgents.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mb-2">
-                    {message.activeAgents.map((agent, i) => (
-                      <Badge 
-                        key={i}
-                        variant="outline" 
-                        className="text-xs bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
-                      >
-                        {getAgentEmoji(agent)} {getAgentName(agent)}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
-
                 {message.role === 'assistant' && message.content && !message.isTyping && (
-                  <div className="text-left space-y-3">
+                  <div className="text-left space-y-4">
                     {parseAgentResponse(message.content).map((section, i) => (
                       <div key={i}>
                         {section.title && (
-                          <h4 className="font-bold text-elec-yellow text-xs uppercase tracking-wide mb-2 border-l-2 border-elec-yellow pl-2">
+                          <h4 className="font-bold text-elec-yellow text-sm mb-2">
                             {section.title}
                           </h4>
                         )}
-                        <div className="text-sm text-white/90 leading-relaxed whitespace-pre-wrap">
-                          {section.content.split('\n').map((line, li) => {
-                            const priceHighlighted = line.replace(/£[\d,]+(\.\d{2})?/g, (match) => 
-                              `<span class="text-elec-yellow font-semibold">${match}</span>`
-                            );
-                            const withIcons = priceHighlighted
-                              .replace(/✓|✅/g, '<span class="text-green-400">✓</span>')
-                              .replace(/⚠|❌/g, '<span class="text-orange-400">⚠</span>');
-                            
-                            return (
-                              <p 
-                                key={li} 
-                                className="mb-1 last:mb-0" 
-                                dangerouslySetInnerHTML={{ __html: withIcons }}
-                              />
-                            );
-                          })}
-                        </div>
+                        <div 
+                          className="text-sm text-white/90 leading-relaxed"
+                          dangerouslySetInnerHTML={{ __html: section.content.trim().replace(/\n/g, '<br/>') }}
+                        />
                       </div>
                     ))}
                   </div>

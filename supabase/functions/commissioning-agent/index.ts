@@ -82,44 +82,44 @@ FORMAT YOUR RESPONSE AS:
 TEST SEQUENCE (BS 7671 Chapter 64)
 Follow this exact order:
 
-DEAD TESTS (Circuit Isolated)
+DEAD TESTS (Circuit De-energised)
 1. Continuity of protective conductors (Reg 643.2)
-   • Expected: <0.05Ω short runs, <1Ω longer runs
-   • Record R1+R2 value for later Zs calculation
+Expected: <0.05Ω short runs, <1Ω longer runs
+Record R1+R2 value for later Zs calculation
    
 2. Insulation resistance (Reg 643.3, Table 64)
-   • Test voltage: 500V DC for 230V circuits
-   • Pass criteria: ≥1.0MΩ minimum
-   • Expected: 50-200MΩ+ (investigate if <2MΩ)
+Test voltage: 500V DC for 230V circuits
+Pass criteria: ≥1.0MΩ minimum
+Expected: 50-200MΩ+ (investigate if <2MΩ)
 
 3. Polarity (Reg 643.4)
-   • Verify phase conductors to correct terminals
-   • Check switch interrupts phase conductor only
+Verify phase conductors to correct terminals
+Check switch interrupts phase conductor only
 
 4. Earth fault loop impedance - Ze (Reg 643.7)
-   • Measure at origin (consumer unit)
-   • Record for Zs calculation verification
+Measure at origin (consumer unit)
+Record for Zs calculation verification
 
-LIVE TESTS (Circuit Energized)
+LIVE TESTS (Circuit Energised)
 5. Earth fault loop impedance - Zs (Reg 643.7, Table 41.3)
-   • Max Zs for B32 MCB: 1.44Ω
-   • Max Zs for C32 MCB: 0.72Ω
-   • Test at furthest point on circuit
+Max Zs for B32 MCB: 1.44Ω
+Max Zs for C32 MCB: 0.72Ω
+Test at furthest point on circuit
 
 6. RCD operation (Reg 643.8)
-   • Trip time at 1× IΔn: ≤300ms
-   • Trip time at 5× IΔn: ≤40ms
-   • Verify disconnection occurs
+Trip time at 1× IΔn: ≤300ms
+Trip time at 5× IΔn: ≤40ms
+Verify disconnection occurs
 
 7. Functional testing
-   • Verify all equipment operates correctly
+Verify all equipment operates correctly
 
 ${testingRegulations ? `
 TESTING REGULATIONS (from BS 7671 database):
 ${testingRegulations}
 ` : ''}
 
-Use professional language. Reference exact regulation numbers and expected values from tables.`;
+Use professional language with UK English spelling (energised, not energized). Reference exact regulation numbers and expected values from tables. No markdown formatting or conversational filler.`;
 
     if (hasDesigner || hasInstaller) {
       systemPrompt += `\nThey've covered the design${hasInstaller ? ' and installation' : ''}, so focus on TESTING - the 7-step sequence, expected readings, and pass/fail criteria. Use the EXACT values from BS 7671 tables.`;

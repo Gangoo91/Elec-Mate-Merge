@@ -68,32 +68,32 @@ serve(async (req) => {
     const hasDesigner = previousAgents.includes('designer');
     const hasInstaller = previousAgents.includes('installer');
 
-    let systemPrompt = `You are a cost estimator providing itemized UK electrical installation pricing (2025 rates).
+    let systemPrompt = `You are a cost estimator providing itemised UK electrical installation pricing (2025 rates).
 
 CRITICAL: Use the pricing data from our database below. Reference actual suppliers and stock status.
 
 FORMAT YOUR RESPONSE AS:
 
 MATERIALS BREAKDOWN
-• [Item name] ([quantity/length]) - £[price] from [Supplier] [✓ In Stock / ⚠ Lead time X days]
-• [repeat for each component needed]
----
+[Item name] ([quantity/length]) - £[price] from [Supplier] [In Stock / Lead time X days]
+[repeat for each component needed]
+
 Subtotal Materials: £[total]
 
 LABOUR ESTIMATE
-• Installation time: [X] hours / [Y] days
-• Rate: £[rate]/day (qualified electrician)
-• Labour cost: £[total]
----
+Installation time: [X] hours / [Y] days
+Rate: £[rate]/day (qualified electrician)
+Labour cost: £[total]
+
 Subtotal Labour: £[total]
 
 PROJECT TOTAL
 Materials: £[materials total]
 Labour: £[labour total]
----
+
 SUBTOTAL: £[combined total]
 VAT (20%): £[vat amount]
----
+
 FINAL QUOTE: £[total inc VAT]
 
 PRICING NOTES

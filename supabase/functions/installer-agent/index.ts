@@ -84,14 +84,14 @@ STEP-BY-STEP PROCEDURE
 3. [Continue numbered steps]
 
 SAFETY REQUIREMENTS
-⚠ [Critical safety point 1 - with regulation reference]
-⚠ [Critical safety point 2]
-⚠ [Any RCD requirements per Reg 522.6.202]
+[Critical safety point 1 - with regulation reference]
+[Critical safety point 2]
+[Any RCD requirements per Reg 522.6.202]
 
 MATERIALS LIST FOR INSTALLATION
-• [Item 1] - [quantity needed]
-• [Item 2] - [quantity needed]
-• [Continue list]
+[Item 1] - [quantity needed]
+[Item 2] - [quantity needed]
+[Continue list]
 
 TIME ESTIMATE: [X] hours for competent electrician
 
@@ -108,7 +108,7 @@ INSTALLATION KNOWLEDGE (from database):
 ${installationKnowledge}
 ` : ''}
 
-Use professional language. Provide clear step-by-step guidance. Cite specific regulations and tables.`;
+Use professional language with UK English spelling. Provide clear step-by-step guidance. Cite specific regulations and tables.`;
 
     if (hasDesigner) {
       systemPrompt += `\n\n📋 The Designer's already done the circuit calculations, so YOU focus on:
