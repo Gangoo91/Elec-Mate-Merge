@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { query, categoryFilter, supplierFilter, matchThreshold = 0.7, matchCount = 50 } = await req.json();
+    const { query, categoryFilter, supplierFilter, matchThreshold = 0.6, matchCount = 50 } = await req.json();
 
     if (!query || query.trim().length === 0) {
       return new Response(
@@ -24,17 +24,17 @@ serve(async (req) => {
 
     console.log('🔍 RAG Search initiated:', { query, categoryFilter, supplierFilter, matchThreshold, matchCount });
 
-    // Get embedding from Lovable AI
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY not configured');
+    // Get embedding from OpenAI directly
+    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+    if (!OPENAI_API_KEY) {
+      throw new Error('OPENAI_API_KEY not configured');
     }
 
-    console.log('📡 Generating embedding via Lovable AI...');
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+    console.log('📡 Generating embedding via OpenAI...');
+    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -46,11 +46,24 @@ serve(async (req) => {
     if (!embeddingResponse.ok) {
       const errorText = await embeddingResponse.text();
       console.error('❌ Embedding API error:', embeddingResponse.status, errorText);
+      
+      if (embeddingResponse.status === 429) {
+        throw new Error('OpenAI rate limit exceeded. Please try again in a moment.');
+      }
+      if (embeddingResponse.status === 402) {
+        throw new Error('OpenAI payment required. Please check your API credits.');
+      }
       throw new Error(`Failed to generate embedding: ${embeddingResponse.status} ${errorText}`);
     }
 
     const embeddingData = await embeddingResponse.json();
     const queryVector = embeddingData.data[0].embedding;
+
+    // Validate embedding dimensions
+    if (queryVector.length !== 1536) {
+      console.error('❌ Invalid embedding dimensions:', queryVector.length);
+      throw new Error(`Expected 1536 dimensions, got ${queryVector.length}`);
+    }
 
     console.log('✅ Query embedding generated:', queryVector.length, 'dimensions');
 
@@ -84,6 +97,33 @@ serve(async (req) => {
         item => item.wholesaler?.toLowerCase() === supplierFilter.toLowerCase()
       );
       console.log('🏷️ Filtered to', filteredResults.length, 'products from', supplierFilter);
+    }
+
+    // Fallback to keyword search if no results
+    if (filteredResults.length === 0) {
+      console.log('⚠️ No vector results found, trying keyword fallback search...');
+      
+      const { data: keywordResults, error: keywordError } = await supabase
+        .from('pricing_embeddings')
+        .select('*')
+        .ilike('item_name', `%${query}%`)
+        .limit(matchCount);
+
+      if (!keywordError && keywordResults && keywordResults.length > 0) {
+        console.log('✅ Keyword search found', keywordResults.length, 'products');
+        filteredResults = keywordResults.map((item: any) => ({
+          ...item,
+          similarity: 0.5 // Mark as keyword match with lower confidence
+        }));
+
+        // Apply supplier filter to keyword results
+        if (supplierFilter && supplierFilter !== 'all') {
+          filteredResults = filteredResults.filter(
+            item => item.wholesaler?.toLowerCase() === supplierFilter.toLowerCase()
+          );
+          console.log('🏷️ Filtered keyword results to', filteredResults.length, 'products from', supplierFilter);
+        }
+      }
     }
 
     // Transform results to match expected format
