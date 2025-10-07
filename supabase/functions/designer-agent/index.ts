@@ -1,15 +1,10 @@
-// DESIGNER AGENT - Chain-of-Thought Reasoning with o4-mini
-// Phase 5: Deep reasoning and "show your working"
-// Phase 1: Uses o4-mini reasoning model
-
+// DESIGNER AGENT - RAG-enabled with Lovable AI Gateway
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-// BS 7671:2018+A2:2022 Complete Knowledge Base - Full Regulation Coverage
-import { calculateVoltageDrop, getCableCapacity, VOLTAGE_DROP_70C_PVC_COPPER, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
-import { calculateOverallCorrectionFactor, getTemperatureFactor, getGroupingFactor, GROUPING_FACTORS_ENCLOSED } from "../shared/bs7671CorrectionFactors.ts";
-import { getMaxZs, checkRCDRequirement, MAX_ZS_MCB_TYPE_B_04S, MAX_ZS_MCB_TYPE_C_04S, RCD_REQUIREMENTS } from "../shared/bs7671ProtectionData.ts";
-import { getSpecialLocationRequirements, checkSafeZoneCompliance, SECTION_701_BATHROOMS, SECTION_722_EV_CHARGING, SAFE_ZONES_522_6 } from "../shared/bs7671SpecialLocations.ts";
-import { searchBS7671Regulations } from '../shared/ragHelper.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { calculateVoltageDrop, getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
+import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
+import { getMaxZs, checkRCDRequirement } from "../shared/bs7671ProtectionData.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -23,27 +18,20 @@ serve(async (req) => {
 
   try {
     const { messages, currentDesign, context } = await req.json();
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+    if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
 
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
-    }
+    console.log('🎨 Designer Agent: Processing with RAG + Lovable AI');
 
-    console.log('🎨 Designer Agent v2.0: Processing with chain-of-thought reasoning');
-
-    // Phase 1: Extract circuit parameters for calculations
     const userMessage = messages[messages.length - 1]?.content || '';
     const circuitParams = extractCircuitParams(userMessage, currentDesign);
 
-    // Phase 1: Run REAL BS 7671 calculations using comprehensive tables
+    // Run BS 7671 calculations
     let calculationResults: any = null;
     if (circuitParams.hasEnoughData) {
-      console.log('🔧 Running BS 7671 calculations with FULL TABLES:', circuitParams);
+      console.log('🔧 Running BS 7671 calculations:', circuitParams);
       
-      // Get cable data from Table 4D5 (T&E cables)
       const cableData = getCableCapacity(circuitParams.cableSize, 'C', 2);
-      
-      // Calculate correction factors (Ca × Cg)
       const correctionFactors = calculateOverallCorrectionFactor({
         ambientTemp: circuitParams.ambientTemp,
         numberOfCircuits: circuitParams.groupingCircuits,
@@ -53,30 +41,24 @@ serve(async (req) => {
         thermalInsulation: 'none'
       });
       
-      // Calculate derated capacity: Iz = It × Ca × Cg
       const IzTabulated = cableData?.currentRating || 0;
       const Iz = IzTabulated * correctionFactors.overallFactor;
       const Ib = circuitParams.designCurrent;
       const In = circuitParams.deviceRating;
       
-      // Check compliance: Ib ≤ In ≤ Iz (Reg 433.1)
-      const IbLeIn = Ib <= In;
-      const InLeIz = In <= Iz;
-      const safetyMargin = ((Iz - In) / In) * 100;
-      
       const cableCalc = {
         Ib, In, Iz: Math.round(Iz * 10) / 10, IzTabulated,
         factors: correctionFactors,
         compliance: {
-          IbLeIn, InLeIz,
-          overallCompliant: IbLeIn && InLeIz,
-          safetyMargin: Math.round(safetyMargin * 10) / 10
+          IbLeIn: Ib <= In,
+          InLeIz: In <= Iz,
+          overallCompliant: Ib <= In && In <= Iz,
+          safetyMargin: Math.round(((Iz - In) / In) * 1000) / 10
         },
         equation: `Iz = It × Ca × Cg = ${IzTabulated}A × ${correctionFactors.temperatureFactor} × ${correctionFactors.groupingFactor} = ${Math.round(Iz * 10) / 10}A`,
         tableReference: 'Table 4D5'
       };
 
-      // Voltage drop using REAL mV/A/m values from Table 4D1B/4D5
       const voltDropCalc = calculateVoltageDrop(
         circuitParams.cableSize,
         circuitParams.designCurrent,
@@ -84,127 +66,103 @@ serve(async (req) => {
         circuitParams.voltage
       );
 
-      // Max Zs from Table 41.3
       const zsCalc = getMaxZs(circuitParams.deviceType, circuitParams.deviceRating, 0.4);
-
-      // RCD requirements check
       const rcdRequirements = checkRCDRequirement(circuitParams.circuitType, circuitParams.location);
 
-      calculationResults = { 
-        cableCapacity: cableCalc, 
-        voltageDrop: voltDropCalc, 
-        maxZs: zsCalc,
-        rcdRequirements
-      };
+      calculationResults = { cableCapacity: cableCalc, voltageDrop: voltDropCalc, maxZs: zsCalc, rcdRequirements };
     }
 
-    // Phase 2: RAG - Load relevant BS 7671 regulations from database
+    // RAG: Query BS 7671 regulations via Supabase RPC
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
     
     const ragQuery = circuitParams.circuitType 
       ? `${circuitParams.circuitType} circuit design overload protection voltage drop cable sizing`
-      : 'overload protection voltage drop cable capacity';
+      : 'socket circuit design overload protection voltage drop cable sizing';
     
-    console.log(`🔍 RAG query: "${ragQuery}"`);
-    const relevantRegsText = await searchBS7671Regulations(ragQuery, openAIApiKey, supabaseUrl, supabaseKey, 15);
+    console.log(`🔍 RAG: Searching BS 7671 regulations for: ${ragQuery}`);
+    
+    // Generate embedding for RAG query using Lovable AI
+    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'text-embedding-3-small',
+        input: ragQuery,
+      }),
+    });
 
-    // Enhanced system prompt with FULL BS 7671:2018+A2:2022 knowledge
+    let relevantRegsText = '';
+    if (embeddingResponse.ok) {
+      const embeddingData = await embeddingResponse.json();
+      const embedding = embeddingData.data[0].embedding;
+      
+      // Search BS 7671 regulations using vector similarity
+      const { data: regulations, error: ragError } = await supabase.rpc('search_bs7671', {
+        query_embedding: embedding,
+        match_threshold: 0.7,
+        match_count: 10
+      });
+
+      if (!ragError && regulations && regulations.length > 0) {
+        relevantRegsText = regulations.map((r: any) => 
+          `Reg ${r.regulation_number} (${r.section}): ${r.content}`
+        ).join('\n\n');
+        console.log(`✅ Found ${regulations.length} relevant regulations`);
+      } else {
+        console.log('⚠️ No relevant regulations found');
+      }
+    }
+
+    // Build system prompt
     const systemPrompt = `You're a senior spark with full access to BS 7671:2018+A2:2022. CRITICAL: Always SHOW YOUR WORKING like you're explaining to an apprentice.
 
 ${calculationResults ? `
-I'VE RUN THE REAL BS 7671 CALCULATIONS USING THE ACTUAL TABLES:
+I'VE RUN THE REAL BS 7671 CALCULATIONS:
 
 **Cable Capacity (${calculationResults.cableCapacity.tableReference}, Reg 433.1):**
 ${calculationResults.cableCapacity.equation}
 - Ib (design current) = ${calculationResults.cableCapacity.Ib}A
 - In (device rating) = ${calculationResults.cableCapacity.In}A
-- It (tabulated capacity) = ${calculationResults.cableCapacity.IzTabulated}A (from ${calculationResults.cableCapacity.tableReference})
-- Iz (derated capacity) = ${calculationResults.cableCapacity.Iz}A
-- Ca (temperature factor) = ${calculationResults.cableCapacity.factors.temperatureFactor} (${calculationResults.cableCapacity.factors.regulations[0]})
-- Cg (grouping factor) = ${calculationResults.cableCapacity.factors.groupingFactor} (${calculationResults.cableCapacity.factors.regulations[1]})
+- It (tabulated) = ${calculationResults.cableCapacity.IzTabulated}A
+- Iz (derated) = ${calculationResults.cableCapacity.Iz}A
+- Ca = ${calculationResults.cableCapacity.factors.temperatureFactor}, Cg = ${calculationResults.cableCapacity.factors.groupingFactor}
 - Safety margin: ${calculationResults.cableCapacity.compliance.safetyMargin}%
-- Compliance: Ib≤In? ${calculationResults.cableCapacity.compliance.IbLeIn ? '✓' : '✗'}, In≤Iz? ${calculationResults.cableCapacity.compliance.InLeIz ? '✓' : '✗'}
 ${calculationResults.cableCapacity.compliance.overallCompliant ? '✅ COMPLIANT' : '⚠️ NON-COMPLIANT'}
 
-**Voltage Drop (Table 4D1B/4D5, Reg 525):**
-- mV/A/m for ${circuitParams.cableSize}mm² = ${calculationResults.voltageDrop.mvPerAPerM} (from Table 4D5)
-- VD = ${calculationResults.voltageDrop.mvPerAPerM} × ${circuitParams.designCurrent}A × ${circuitParams.cableLength}m ÷ 1000
-- Result: ${calculationResults.voltageDrop.voltageDropVolts}V (${calculationResults.voltageDrop.voltageDropPercent}%)
-- Limit: ${calculationResults.voltageDrop.limit}% (Reg 525: 3% lighting, 5% other)
+**Voltage Drop (Reg 525):**
+- VD = ${calculationResults.voltageDrop.voltageDropVolts}V (${calculationResults.voltageDrop.voltageDropPercent}%)
 ${calculationResults.voltageDrop.compliant ? '✅ COMPLIANT' : '⚠️ EXCEEDS LIMIT'}
 
-**Max Zs (Table 41.3, Reg 411.3.2):**
-- Max Zs for ${circuitParams.deviceRating}A Type ${circuitParams.deviceType} MCB = ${calculationResults.maxZs?.maxZs}Ω
-- Disconnection time: 0.4s (final circuits ≤32A)
-- Must verify on-site with loop impedance tester
+**Max Zs (Table 41.3):**
+- Max Zs for ${circuitParams.deviceRating}A Type ${circuitParams.deviceType} = ${calculationResults.maxZs?.maxZs}Ω
 
-${calculationResults.rcdRequirements?.length > 0 ? `
-**RCD Requirements:**
-${calculationResults.rcdRequirements.map((rcd: any) => `- ${rcd.regulation}: ${rcd.reason} (${rcd.rcdRating}mA Type ${rcd.rcdType} ${rcd.mandatory ? 'MANDATORY' : 'recommended'})`).join('\n')}
+USE THESE EXACT VALUES. Explain what they mean and cite table references.
 ` : ''}
 
-USE THESE EXACT VALUES. Don't recalculate - explain what they mean and cite the table references.
-` : ''}
-
-**Relevant BS 7671 Regulations (from RAG database):**
+**Relevant BS 7671 Regulations (RAG):**
 ${relevantRegsText || 'No specific regulations retrieved - use general BS 7671 principles'}
 
-When calculating anything:
-"Right, let me work through this 9.5kW shower circuit properly mate...
+STYLE:
+- Talk conversationally like you're chatting on site
+- NO markdown (**, ##, bullets) - natural paragraphs only
+- Show all calculations step-by-step
+- Cite regulation numbers naturally
+- Use emojis sparingly (✓ for checks)`;
 
-**Load Current Calculation:**
-Power = 9500W, voltage = 230V single phase
-Load current = 9500W ÷ 230V ÷ 0.95 (power factor) = 43.5A
-
-So we need a protective device ≥ 43.5A
-Nearest standard rating: 45A Type B MCB (BS EN 60898) ✓
-
-**Cable Sizing:**
-45A MCB protection, assuming clipped direct installation (Method C)
-From BS 7671 Table 4D5:
-- 6mm² twin & earth = 46A capacity (too close to 45A limit)
-- 10mm² twin & earth = 57A capacity ✓
-
-Going with 10mm² for safety margin. Reg 433.1.204 says cable current-carrying capacity must be ≥ protective device rating.
-
-**Voltage Drop Check:**
-Cable run length: 12m (let's assume worst case)
-From Table 4D5, mV/A/m for 10mm² = 4.4
-Voltage drop = 4.4 × 43.5A × 12m ÷ 1000 = 2.3V
-As percentage: 2.3V ÷ 230V × 100 = 1.0%
-Well within 3% limit per Reg 525 ✓
-
-**Earth Fault Loop:**
-Max Zs for 45A Type B = 1.02Ω (Table 41.3)
-Need to verify on site with loop tester during commissioning.
-
-**Final Spec:**
-- Cable: 10mm² twin & earth (6242Y)
-- Protection: 45A Type B MCB
-- Expected cable run: <12m to stay within volt drop
-- RCD protection: Yes (30mA if socket could be used for portable equipment)
-
-Regulations covered: Reg 433.1 (overload), Reg 525 (volt drop), Reg 411.3.2 (fault protection)"
-
-Rules:
-- NO markdown (**, ##, bullets)
-- Write in paragraphs with natural flow
-- Use emojis sparingly (✓ for checks, 🎨 for design points)
-- Cite regulation numbers naturally in sentences
-- Explain the WHY, not just the WHAT
-- Sound like you're chatting over a brew on site
-- Always show your calculations step-by-step`;
-
-    // Use o4-mini for complex reasoning
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Call Lovable AI Gateway with tool-calling for RAG
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${lovableApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07', // Faster GPT-5-mini for responsive design calcs
+        model: 'google/gemini-2.5-flash',
         messages: [
           { role: 'system', content: systemPrompt },
           ...messages,
@@ -213,41 +171,38 @@ Rules:
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 2000,
-        // Note: GPT-5 models don't support temperature parameter
+        max_tokens: 2000,
       }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenAI API error:', errorText);
-      throw new Error(`OpenAI API error: ${response.status}`);
+      console.error('Lovable AI error:', response.status, errorText);
+      throw new Error(`AI gateway error: ${response.status}`);
     }
 
     const data = await response.json();
-    const assistantMessage = data.choices[0]?.message;
-    const responseContent = assistantMessage.content || 'Design analysis complete.';
+    const responseContent = data.choices[0]?.message?.content || 'Design analysis complete.';
 
-    // Extract any regulation citations from the response
     const citations = extractCitations(responseContent);
 
-    console.log('✅ Designer response generated with chain-of-thought reasoning');
+    console.log('✅ Designer response generated');
 
     return new Response(JSON.stringify({
       response: responseContent,
       citations,
       confidence: 0.85,
-      model: 'gpt-5-mini-2025-08-07',
+      model: 'google/gemini-2.5-flash',
       timestamp: new Date().toISOString()
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
   } catch (error) {
-    console.error('❌ Error in designer-agent:', error);
+    console.error('❌ Designer agent error:', error);
     return new Response(JSON.stringify({ 
       error: error instanceof Error ? error.message : 'Designer agent failed',
-      response: 'Unable to process design request. Please provide circuit details (load, cable length, installation method).',
+      response: 'Unable to process design request.',
       confidence: 0.3
     }), {
       status: 500,
@@ -257,7 +212,6 @@ Rules:
 });
 
 function extractCircuitParams(userMessage: string, currentDesign: any): any {
-  // Extract parameters from user message and design context
   const loadMatch = userMessage.match(/(\d+\.?\d*)\s*(kW|W)/i);
   const voltageMatch = userMessage.match(/(\d+)\s*V/i);
   const lengthMatch = userMessage.match(/(\d+)\s*m(?:etre)?s?/i);
@@ -269,18 +223,15 @@ function extractCircuitParams(userMessage: string, currentDesign: any): any {
   
   const designCurrent = power > 0 ? power / voltage / (phases === 'three' ? Math.sqrt(3) : 1) / 0.95 : 0;
   
-  // Determine device rating (next standard size up)
   const standardRatings = [6, 10, 16, 20, 25, 32, 40, 45, 50, 63, 80, 100, 125];
   const deviceRating = standardRatings.find(r => r >= designCurrent) || 32;
   
-  // Determine cable size (starting guess)
   const cableSize = deviceRating <= 16 ? 2.5 :
                    deviceRating <= 25 ? 4 :
                    deviceRating <= 32 ? 6 :
                    deviceRating <= 45 ? 10 :
                    deviceRating <= 63 ? 16 : 25;
 
-  // Determine circuit type and location
   let circuitType = 'socket';
   let location = '';
   const msgLower = userMessage.toLowerCase();
@@ -289,7 +240,6 @@ function extractCircuitParams(userMessage: string, currentDesign: any): any {
   else if (msgLower.includes('cooker')) circuitType = 'cooker';
   else if (msgLower.includes('light')) circuitType = 'lighting';
   
-  // CRITICAL: EV charger detection
   if (msgLower.includes('ev') || msgLower.includes('charger') || msgLower.includes('charging point')) {
     circuitType = 'ev-charger';
     location = 'ev-charging';
@@ -310,7 +260,7 @@ function extractCircuitParams(userMessage: string, currentDesign: any): any {
     phases,
     designCurrent: Math.round(designCurrent * 10) / 10,
     deviceRating,
-    deviceType: 'B', // Assume Type B unless specified
+    deviceType: 'B',
     cableSize,
     cableLength: lengthMatch ? parseInt(lengthMatch[1]) : (currentDesign?.cableLength || 15),
     ambientTemp: currentDesign?.environmentalProfile?.finalApplied?.ambientTemp || 25,
@@ -325,7 +275,6 @@ function extractCircuitParams(userMessage: string, currentDesign: any): any {
 function extractCitations(response: string): any[] {
   const citations: any[] = [];
   
-  // Extract regulation references
   const regMatches = response.matchAll(/Reg(?:ulation)?\s*(\d{3}(?:\.\d+)?(?:\.\d+)?)/gi);
   for (const match of regMatches) {
     citations.push({
@@ -334,7 +283,6 @@ function extractCitations(response: string): any[] {
     });
   }
 
-  // Extract table references
   const tableMatches = response.matchAll(/Table\s*(\w+)/gi);
   for (const match of tableMatches) {
     citations.push({
@@ -343,6 +291,5 @@ function extractCitations(response: string): any[] {
     });
   }
 
-  // Deduplicate
   return Array.from(new Map(citations.map(c => [c.number, c])).values());
 }

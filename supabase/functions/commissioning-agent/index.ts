@@ -1,8 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { searchBS7671Regulations } from '../shared/ragHelper.ts';
-// BS 7671:2018+A2:2022 Chapter 64 - Complete Testing Knowledge
-import { getTestSequence, getTest, verifyInsulationResistance, INSULATION_RESISTANCE_LIMITS } from "../shared/bs7671TestingRequirements.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { getTestSequence } from "../shared/bs7671TestingRequirements.ts";
 import { getMaxZs } from "../shared/bs7671ProtectionData.ts";
 
 const corsHeaders = {
@@ -17,11 +16,8 @@ serve(async (req) => {
 
   try {
     const { messages, currentDesign, context } = await req.json();
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
-    }
+    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+    if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
 
     console.log('✅ Commissioning Agent: Processing testing query');
 
@@ -32,12 +28,46 @@ serve(async (req) => {
     // RAG - Get testing regulations from database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
     
     const userMessage = messages[messages.length - 1]?.content || '';
     const ragQuery = `${userMessage} testing commissioning insulation resistance earth fault loop RCD Chapter 64`;
     
     console.log(`🔍 RAG query: "${ragQuery}"`);
-    const testingRegulations = await searchBS7671Regulations(ragQuery, openAIApiKey, supabaseUrl, supabaseKey, 10);
+    
+    // Generate embedding for testing regulations search
+    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'text-embedding-3-small',
+        input: ragQuery,
+      }),
+    });
+
+    let testingRegulations = '';
+    if (embeddingResponse.ok) {
+      const embeddingDataRes = await embeddingResponse.json();
+      const embedding = embeddingDataRes.data[0].embedding;
+      
+      const { data: regulations, error: ragError } = await supabase.rpc('search_bs7671', {
+        query_embedding: embedding,
+        match_threshold: 0.7,
+        match_count: 10
+      });
+
+      if (!ragError && regulations && regulations.length > 0) {
+        testingRegulations = regulations.map((r: any) => 
+          `Reg ${r.regulation_number} (${r.section}): ${r.content}`
+        ).join('\n\n');
+        console.log(`✅ Found ${regulations.length} testing regulations`);
+      } else {
+        console.log('⚠️ No relevant regulations found');
+      }
+    }
 
     // Build testing context from BS 7671 Chapter 64
     const testSequence = getTestSequence();
@@ -72,18 +102,18 @@ ${testingRegulations || 'No specific testing regulations retrieved - use general
       systemPrompt += `\nThey've covered the design${hasInstaller ? ' and installation' : ''}, so focus on TESTING - the 7-step sequence, expected readings, and pass/fail criteria. Use the EXACT values from BS 7671 tables.`;
     }
 
-    systemPrompt += `\n\nWalk them through conversationally with REAL numbers: "Right so first up is continuity - Reg 643.2. You're testing the protective conductor path, should be well under 0.05 ohms for that 10mm cable run. Record your R1+R2 value - you'll need it later for Zs calcs. Then insulation resistance at 500V DC - Table 64 says minimum 1 megohm but you want to see way higher, ideally 50MΩ+. Anything under 2MΩ needs investigating. Then polarity check, then the live tests - Zs test (max 1.44Ω for your B32), RCD trip time test (must trip under 300ms at 30mA), and functional tests."
+    systemPrompt += `\n\nWalk them through conversationally with REAL numbers: "Right so first up is continuity - Reg 643.2. You're testing the protective conductor path, should be well under 0.05 ohms for that cable run. Record your R1+R2 value - you'll need it later for Zs calcs. Then insulation resistance at 500V DC - Table 64 says minimum 1 megohm but you want to see way higher, ideally 50MΩ+. Anything under 2MΩ needs investigating."
 
 Keep it friendly but technically accurate with exact regulation numbers and values.`;
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${lovableApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-2025-08-07',
+        model: 'google/gemini-2.5-flash',
         messages: [
           { role: 'system', content: systemPrompt },
           ...messages,
@@ -92,22 +122,20 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 2000
+        max_tokens: 2000
       }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenAI API error:', errorText);
-      throw new Error(`OpenAI API error: ${response.status}`);
+      console.error('Lovable AI error:', errorText);
+      throw new Error(`AI gateway error: ${response.status}`);
     }
 
     const data = await response.json();
-    const assistantMessage = data.choices[0]?.message;
+    const responseContent = data.choices[0]?.message?.content || 'Testing guidance complete.';
 
-    const responseContent = assistantMessage.content || 'Testing guidance complete.';
-
-    // Extract citations from response
+    // Extract citations
     const citations: any[] = [];
     const regMatches = responseContent.matchAll(/(?:Reg|BS 7671)\s*(\d{3}(?:\.\d+)?)/gi);
     for (const match of regMatches) {
@@ -127,10 +155,10 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
     });
 
   } catch (error) {
-    console.error('❌ Error in commissioning-agent:', error);
+    console.error('❌ Commissioning agent error:', error);
     return new Response(JSON.stringify({ 
       error: error instanceof Error ? error.message : 'Commissioning agent failed',
-      response: 'Unable to process testing request. Standard BS 7671 Part 6 testing applies.',
+      response: 'Unable to process testing request.',
       confidence: 0.3
     }), {
       status: 500,

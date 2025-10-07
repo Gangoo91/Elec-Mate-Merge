@@ -275,7 +275,7 @@ async function handleConversationalMode(
               isLast
             );
 
-            const timeoutMs = 25000;
+            const timeoutMs = 60000; // 60s for complex RAG queries
             const result = await Promise.race([
               supabase.functions.invoke(agentFunctionName, {
                 body: { 
@@ -293,11 +293,11 @@ async function handleConversationalMode(
             if (result.error) {
               console.error(`Agent ${agentName} error:`, result.error);
               
-              // Send error event
+              // Send error event with detailed message
               const errorEvent = `data: ${JSON.stringify({
                 type: 'agent_error',
                 agent: agentName,
-                error: result.error.message
+                data: { error: result.error.message || 'Agent failed' }
               })}\n\n`;
               controller.enqueue(encoder.encode(errorEvent));
               continue;

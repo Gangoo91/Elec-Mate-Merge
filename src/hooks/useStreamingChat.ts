@@ -160,8 +160,9 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
                     break;
 
                   case 'agent_error':
-                    console.error(`Agent ${chunk.agent} error:`, chunk.data?.error);
-                    options.onError?.(`${chunk.agent} failed: ${chunk.data?.error || 'Unknown error'}`);
+                    const errorMsg = chunk.data?.error || chunk.content || 'Unknown error';
+                    console.error(`Agent ${chunk.agent} error:`, errorMsg);
+                    options.onError?.(`${chunk.agent} failed: ${errorMsg}`);
                     break;
 
                   case 'token':

@@ -116,13 +116,20 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       setCurrentAction(`Consulting ${agent}...`);
       setCurrentAgent(agent);
       
-      // Create new assistant message for this agent with agentName
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: '',
-        activeAgents: [agent],
-        agentName: agent
-      }]);
+      // Remove acknowledgment message and create agent message
+      setMessages(prev => {
+        const withoutAck = prev.filter((m, i) => {
+          // Remove the acknowledgment message if it exists
+          return !(m.role === 'assistant' && m.content.includes("Let me get you the right specialist"));
+        });
+        
+        return [...withoutAck, {
+          role: 'assistant',
+          content: '',
+          activeAgents: [agent],
+          agentName: agent
+        }];
+      });
       
       setReasoningSteps(prev => prev.map(step => 
         step.agent === agent 
@@ -209,7 +216,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     setConsultationPaused(false);
     setReasoningSteps([]);
 
-    // Don't add empty message - agents will create their own messages via onAgentStart
+    // Add immediate acknowledgment message
+    const acknowledgmentIndex = messages.length + 1; // +1 for user message
+    setMessages(prev => [...prev, { 
+      role: 'assistant', 
+      content: "Thanks! Let me get you the right specialist...",
+      activeAgents: []
+    }]);
 
     try {
       await streamMessage(
@@ -250,12 +263,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
 
     } catch (error) {
       console.error('AI conversation error:', error);
-      // Remove the empty streaming message
-      setMessages(prev => prev.slice(0, -1));
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: "Sorry mate, hit a snag there. Can you try that again?" 
-      }]);
+      const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+      
+      // Remove acknowledgment message and replace with error
+      setMessages(prev => {
+        const filtered = prev.filter((_, i) => i !== acknowledgmentIndex);
+        return [...filtered, { 
+          role: 'assistant', 
+          content: `Sorry mate, hit a snag: ${errorMsg}. Can you try that again?` 
+        }];
+      });
       setStreamingMessageIndex(null);
     } finally {
       setIsLoading(false);
