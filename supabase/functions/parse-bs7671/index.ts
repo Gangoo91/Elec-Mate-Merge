@@ -112,6 +112,14 @@ serve(async (req) => {
     const flushRegulation = () => {
       if (!currentRegNumber || currentRegContent.length === 0) return;
       
+      // Skip problematic oversized regulations (will be replaced with practical guides)
+      if (currentRegNumber === '712.534.101' || currentRegNumber === '134.2.2') {
+        console.log(`Skipping ${currentRegNumber} - will be replaced with practical reference files`);
+        currentRegContent = [];
+        currentRegTitle = '';
+        return;
+      }
+      
       const content = currentRegContent.join('\n').trim();
       if (content.length < 30) {
         currentRegContent = [];
