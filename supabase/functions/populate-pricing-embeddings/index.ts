@@ -141,11 +141,48 @@ serve(async (req) => {
       }
     }
 
-    console.log(`🔢 Processing ${allItems.length} items in batches of 100`);
+    console.log(`📦 Collected ${allItems.length} items, de-duplicating...`);
+
+    // De-duplicate by content string to avoid "ON CONFLICT DO UPDATE" errors
+    const uniqueItems = new Map<string, { item: any; material: any }>();
+    let duplicatesFound = 0;
+
+    for (const itemData of allItems) {
+      const { item, material } = itemData;
+      
+      // Build content string (same logic used for embeddings)
+      const contentStr = [
+        item.name || item.title,
+        material.category,
+        item.brand,
+        item.specifications,
+        item.supplier || material.source,
+        `£${item.price}`,
+        item.price_per_unit,
+        item.in_stock ? 'in stock' : 'out of stock'
+      ].filter(Boolean).join(' ');
+      
+      if (uniqueItems.has(contentStr)) {
+        duplicatesFound++;
+      } else {
+        uniqueItems.set(contentStr, itemData);
+      }
+    }
+
+    const deduplicatedItems = Array.from(uniqueItems.values());
+    console.log(`🔍 De-duplication: ${allItems.length} → ${deduplicatedItems.length} (removed ${duplicatesFound} duplicates)`);
+
+    // Update totalItems to reflect deduplicated count
+    totalItems = deduplicatedItems.length;
+
+    // Update batch progress with correct total
+    await supabase.from('batch_progress').update({
+      total_items: totalItems
+    }).eq('job_id', jobId).eq('batch_number', 1);
 
     // Split into batches of 100 items
     const BATCH_SIZE = 100;
-    const batches = chunkArray(allItems, BATCH_SIZE);
+    const batches = chunkArray(deduplicatedItems, BATCH_SIZE);
     console.log(`📦 Created ${batches.length} batches`);
 
     for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
