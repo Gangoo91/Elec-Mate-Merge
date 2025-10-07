@@ -2547,6 +2547,7 @@ export type Database = {
         Row: {
           base_cost: number
           category: string
+          content: string
           embedding: string | null
           id: string
           in_stock: boolean | null
@@ -2560,6 +2561,7 @@ export type Database = {
         Insert: {
           base_cost: number
           category: string
+          content: string
           embedding?: string | null
           id?: string
           in_stock?: boolean | null
@@ -2573,6 +2575,7 @@ export type Database = {
         Update: {
           base_cost?: number
           category?: string
+          content?: string
           embedding?: string | null
           id?: string
           in_stock?: boolean | null
