@@ -307,7 +307,7 @@ serve(async (req) => {
           wholesaler: item.supplier || material.source || 'Unknown',
           price_per_unit: item.price_per_unit || `£${item.price || 0}`,
           in_stock: Boolean(item.in_stock),
-          product_url: item.url || null,
+          product_url: item.productUrl || item.view_product_url || item.url || null,
           last_scraped: new Date().toISOString(),
           metadata: {
             brand: item.brand,
