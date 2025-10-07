@@ -23,6 +23,7 @@ interface OrchestratorRequest {
   currentDesign?: any;
   conversationalMode?: boolean; // Enable sequential agent conversations
   selectedAgents?: string[]; // User-selected agents (e.g., ['designer', 'cost-engineer'])
+  targetAgent?: string; // Specific agent to re-engage for follow-up
 }
 
 serve(async (req) => {
@@ -32,7 +33,7 @@ serve(async (req) => {
 
   try {
     const startTime = Date.now();
-    const { messages, currentDesign, conversationalMode = true, selectedAgents } = await req.json() as OrchestratorRequest;
+    const { messages, currentDesign, conversationalMode = true, selectedAgents, targetAgent } = await req.json() as OrchestratorRequest;
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
@@ -142,8 +143,18 @@ serve(async (req) => {
       }
     }
     
+    // Handle targetAgent for follow-up questions
+    if (targetAgent) {
+      console.log('🎯 Re-engaging specific agent:', targetAgent);
+      agentPlan.sequence = [{
+        agent: targetAgent,
+        priority: 1,
+        reasoning: 'User requested follow-up',
+        dependencies: []
+      }];
+    }
     // Filter by user-selected agents if provided
-    if (selectedAgents && selectedAgents.length > 0 && !isFollowUpToAgent) {
+    else if (selectedAgents && selectedAgents.length > 0 && !isFollowUpToAgent) {
       console.log('🎯 Filtering to user-selected agents:', selectedAgents);
       agentPlan.sequence = agentPlan.sequence.filter((step: any) => 
         selectedAgents.includes(step.agent)

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { ResultsPage } from "@/components/install-planner/ResultsPage";
+import { EnhancedResultsPage } from "@/components/install-planner-v2/EnhancedResultsPage";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
@@ -67,13 +67,12 @@ const InstallPlannerResults = () => {
   };
 
   const handleReEngageAgent = (agentId: string) => {
-    // Navigate back to planner with agent context
+    // Navigate back to planner with targetAgent parameter
     navigate('/electrician/install-planner', {
       state: {
         resumeMessages: messages,
         resumePlanData: planData,
-        targetAgent: agentId,
-        activeAgents: [agentId]
+        targetAgent: agentId
       }
     });
   };
@@ -95,10 +94,13 @@ const InstallPlannerResults = () => {
             </Button>
           </div>
 
-          {/* Results Page Content */}
-          <ResultsPage
+          {/* Enhanced Results Page Content */}
+          <EnhancedResultsPage
             messages={messages}
             selectedAgents={activeAgents}
+            circuits={planData?.circuits || []}
+            projectId={planData?.projectId}
+            projectName={planData?.projectName || "Installation Design"}
             onExport={handleExport}
             onNewConsultation={handleNewConsultation}
             onReEngageAgent={handleReEngageAgent}

@@ -44,7 +44,8 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     currentDesign: any,
     onToken: (token: string) => void,
     onComplete: (fullMessage: string, data: any) => void,
-    selectedAgents?: string[]
+    selectedAgents?: string[],
+    targetAgent?: string
   ) => {
     setIsStreaming(true);
     let fullResponse = '';
@@ -61,7 +62,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
         },
-        body: JSON.stringify({ messages, currentDesign, selectedAgents })
+        body: JSON.stringify({ messages, currentDesign, selectedAgents, targetAgent })
       });
 
       if (!response.ok) {

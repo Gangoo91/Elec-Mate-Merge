@@ -284,7 +284,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           setStreamingMessageIndex(null);
         },
         // Pass selected agents
-        planData.selectedAgents
+        planData.selectedAgents,
+        // Pass target agent if resuming
+        resumeState?.targetAgent
       );
 
     } catch (error) {
