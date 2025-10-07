@@ -2,7 +2,16 @@
 import { Navigate, useParams } from "react-router-dom";
 import { supplierData } from "@/data/electrician/supplierData";
 
-const categorySlugs = ["cables", "components", "protection", "accessories", "lighting"] as const;
+const categorySlugs = [
+  "cables", 
+  "protection", 
+  "cable-management", 
+  "ev-charging", 
+  "lighting", 
+  "accessories", 
+  "fixings-consumables", 
+  "components"
+] as const;
 
 const MaterialsSlugRedirect = () => {
   const { slug = "" } = useParams<{ slug: string }>();

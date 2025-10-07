@@ -7,6 +7,43 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Intelligent product categorization based on item name
+function categorizeProduct(itemName: string): string {
+  const name = itemName.toLowerCase();
+  
+  // Priority order matters!
+  if (name.includes('ev') || name.includes('electric vehicle') || name.includes('charging') || name.includes('charger')) 
+    return 'EV Charging';
+  
+  if (name.includes('mcb') || name.includes('rcd') || name.includes('rcbo') || 
+      name.includes('consumer unit') || name.includes('fuseboard') || 
+      name.includes('spd') || name.includes('surge') || name.includes('isolator'))
+    return 'Protection Equipment';
+  
+  if (name.includes('cable') || name.includes('swa') || name.includes('flex') || 
+      name.includes('wire') || name.includes('twin') || name.includes('earth'))
+    return 'Cables';
+  
+  if (name.includes('trunking') || name.includes('conduit') || name.includes('tray') || 
+      name.includes('cable clip') || name.includes('dado') || name.includes('mini trunking'))
+    return 'Cable Management';
+  
+  if (name.includes('led') || name.includes('downlight') || name.includes('batten') || 
+      name.includes('bulb') || name.includes('lamp') || name.includes('lighting'))
+    return 'Lighting';
+  
+  if (name.includes('socket') || name.includes('switch') || name.includes('dimmer') || 
+      name.includes('faceplate') || name.includes('accessory'))
+    return 'Accessories';
+  
+  if (name.includes('screw') || name.includes('rawlplug') || name.includes('connector') || 
+      name.includes('terminal') || name.includes('grommet') || name.includes('wago') || 
+      name.includes('crimp') || name.includes('junction'))
+    return 'Fixings & Consumables';
+  
+  return 'Components'; // Default fallback
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -302,7 +339,7 @@ serve(async (req) => {
           content: batchInputs[index],
           embedding: JSON.stringify(embeddings[index].embedding),
           item_name: item.name || item.title || 'Unknown Item',
-          category: material.category || 'Electrical Components',
+          category: categorizeProduct(item.name || item.title || ''),
           base_cost: parseFloat(item.price) || 0,
           wholesaler: item.supplier || material.source || 'Unknown',
           price_per_unit: item.price_per_unit || `£${item.price || 0}`,
