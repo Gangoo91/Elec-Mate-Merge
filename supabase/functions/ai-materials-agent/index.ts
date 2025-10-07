@@ -22,7 +22,100 @@ interface ParsedList {
 interface ProductScore {
   product: any;
   score: number;
+  usedFallback?: boolean;
 }
+
+// Category mapping for better RAG filtering
+const CATEGORY_MAP: Record<string, string> = {
+  'twin & earth cable': 'Cables',
+  'twin and earth': 'Cables',
+  'twin & earth': 'Cables',
+  'swa cable': 'Cables',
+  'swa': 'Cables',
+  'flex': 'Cables',
+  'flex cable': 'Cables',
+  'cable clip': 'Fixings & Consumables',
+  'cable clips': 'Fixings & Consumables',
+  'screw': 'Fixings & Consumables',
+  'screws': 'Fixings & Consumables',
+  'rawlplug': 'Fixings & Consumables',
+  'rawlplugs': 'Fixings & Consumables',
+  'double socket': 'Accessories',
+  'socket': 'Accessories',
+  'switch': 'Accessories',
+  'switches': 'Accessories',
+  'faceplate': 'Accessories',
+  'led downlight': 'Lighting',
+  'downlight': 'Lighting',
+  'pendant light': 'Lighting',
+  'ev charging': 'EV Charging',
+  'ev charger': 'EV Charging',
+  'consumer unit': 'Distribution',
+  'rcd': 'Distribution',
+  'rcbo': 'Distribution',
+  'mcb': 'Distribution',
+};
+
+// Get category filter from product name
+const getCategoryFilter = (product: string): string | undefined => {
+  const lowerProduct = product.toLowerCase();
+  for (const [key, category] of Object.entries(CATEGORY_MAP)) {
+    if (lowerProduct.includes(key)) {
+      return category;
+    }
+  }
+  return undefined;
+};
+
+// Check if product passes required keyword filter
+const passesKeywordFilter = (productName: string, requestedProduct: string): boolean => {
+  const lowerName = productName.toLowerCase();
+  const lowerRequest = requestedProduct.toLowerCase();
+  
+  // Cable requests should not return clips/fixings
+  if (lowerRequest.includes('cable') && !lowerRequest.includes('clip')) {
+    const excludeTerms = ['clip', 'clips', 'cleat', 'gland', 'glands', 'tray', 'trunk', 'conduit'];
+    if (excludeTerms.some(term => lowerName.includes(term))) {
+      return false;
+    }
+    // Cable requests should have 'cable' in the name
+    return lowerName.includes('cable') || lowerName.includes('flex');
+  }
+  
+  // Socket requests need "socket" in name
+  if (lowerRequest.includes('socket')) {
+    return lowerName.includes('socket');
+  }
+  
+  // Downlight requests need "downlight" in name
+  if (lowerRequest.includes('downlight')) {
+    return lowerName.includes('downlight') || lowerName.includes('down light');
+  }
+  
+  return true;
+};
+
+// Generate query variants for retry
+const getQueryVariants = (query: string): string[] => {
+  const variants = [query];
+  const lower = query.toLowerCase();
+  
+  if (lower.includes('rcd') && lower.includes('ma')) {
+    variants.push(query.replace(/(\d+)ma/i, '$1 ma'));
+    variants.push(query.replace(/(\d+)\s*ma/i, '$1mA'));
+  }
+  
+  if (lower.includes('ev charging')) {
+    variants.push(query.replace(/ev charging point/i, 'ev charger'));
+  }
+  
+  if (lower.includes('consumer unit')) {
+    variants.push(query.replace(/consumer unit/i, 'fuse board'));
+    variants.push(query.replace(/consumer unit/i, 'consumer board'));
+  }
+  
+  return [...new Set(variants)];
+};
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -96,76 +189,141 @@ Return ONLY valid JSON in this format:
 
     console.log('[AI-MATERIALS-AGENT] Parsed items:', parsedList.items.length);
 
-    // Step 2: Search for each item using RAG
+    // Step 2: Search for each item using RAG (PARALLELIZED)
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const searchResults: any[] = [];
+    console.log('[AI-MATERIALS-AGENT] Starting parallel search for', parsedList.items.length, 'items...');
     
-    for (const item of parsedList.items) {
-      console.log(`[AI-MATERIALS-AGENT] Searching for: ${item.product} ${item.specs || ''}`);
-      
+    // Search all items in parallel
+    const searchPromises = parsedList.items.map(async (item) => {
       const searchQuery = `${item.product} ${item.specs || ''}`.trim();
+      const categoryFilter = getCategoryFilter(item.product);
       
-      const { data, error } = await supabase.functions.invoke('search-pricing-rag', {
+      console.log(`[AI-MATERIALS-AGENT] Searching for: ${searchQuery}`, categoryFilter ? `[${categoryFilter}]` : '');
+      
+      // Try primary search with category filter
+      let searchResult = await supabase.functions.invoke('search-pricing-rag', {
         body: { 
           query: searchQuery,
+          categoryFilter,
           matchCount: 15
         }
       });
 
-      if (error) {
-        console.error(`[AI-MATERIALS-AGENT] Search error for ${item.product}:`, error);
-        continue;
+      let usedFallback = false;
+      
+      // If no results, try query variants
+      if (!searchResult.error && (!searchResult.data?.materials || searchResult.data.materials.length === 0)) {
+        const variants = getQueryVariants(searchQuery);
+        
+        for (let i = 1; i < variants.length && (!searchResult.data?.materials || searchResult.data.materials.length === 0); i++) {
+          console.log(`[AI-MATERIALS-AGENT] Trying variant: ${variants[i]}`);
+          searchResult = await supabase.functions.invoke('search-pricing-rag', {
+            body: { 
+              query: variants[i],
+              categoryFilter,
+              matchCount: 15
+            }
+          });
+          usedFallback = true;
+        }
       }
 
-      if (data?.materials && data.materials.length > 0) {
-        searchResults.push({
-          requestedItem: item,
-          foundProducts: data.materials
-        });
+      return {
+        item,
+        result: searchResult,
+        usedFallback
+      };
+    });
+
+    const searchSettled = await Promise.allSettled(searchPromises);
+    
+    const searchResults: any[] = [];
+    for (const settled of searchSettled) {
+      if (settled.status === 'fulfilled') {
+        const { item, result, usedFallback } = settled.value;
+        
+        if (result.error) {
+          console.error(`[AI-MATERIALS-AGENT] Search error for ${item.product}:`, result.error);
+          continue;
+        }
+
+        if (result.data?.materials && result.data.materials.length > 0) {
+          // Post-filter results to exclude irrelevant products
+          let filteredProducts = result.data.materials.filter((product: any) => 
+            passesKeywordFilter(product.name, item.product)
+          );
+          
+          // If filter removed everything, fall back to unfiltered
+          if (filteredProducts.length === 0) {
+            console.log(`[AI-MATERIALS-AGENT] ⚠️ Keyword filter removed all results for ${item.product}, using unfiltered`);
+            filteredProducts = result.data.materials;
+          }
+          
+          // Limit to top 8 for performance
+          filteredProducts = filteredProducts.slice(0, 8);
+          
+          searchResults.push({
+            requestedItem: item,
+            foundProducts: filteredProducts,
+            usedFallback
+          });
+        }
+      } else {
+        console.error('[AI-MATERIALS-AGENT] Search promise rejected:', settled.reason);
       }
     }
 
     console.log('[AI-MATERIALS-AGENT] Found products for', searchResults.length, 'items');
 
     // Step 3: Score and select products based on preference
-    const scoreProduct = (product: any, pref: string): number => {
+    const scoreProduct = (product: any, pref: string, requestedProduct: string): number => {
       const price = parseFloat(product.price.replace(/[£,]/g, '')) || 0;
       
-      if (pref === 'cheapest') {
-        return 1 / (price || 1);
-      }
+      // Apply penalty if product fails keyword check
+      const keywordPenalty = passesKeywordFilter(product.name, requestedProduct) ? 1.0 : 0.3;
       
-      if (pref === 'best-quality') {
+      let baseScore = 0;
+      
+      if (pref === 'cheapest') {
+        baseScore = 1 / (price || 1);
+      } else if (pref === 'best-quality') {
         const brandScore = ['Hager', 'MK', 'Schneider', 'Crabtree', 'BG'].some(b => 
           product.name.includes(b) || product.supplier.includes(b)
         ) ? 1.0 : 0.7;
         const stockScore = product.stockStatus === 'In Stock' ? 1.0 : 0.5;
-        return (brandScore * 0.6) + (stockScore * 0.4);
+        baseScore = (brandScore * 0.6) + (stockScore * 0.4);
+      } else {
+        // Balanced
+        const priceScore = 1 / (price || 1);
+        const stockScore = product.stockStatus === 'In Stock' ? 1.0 : 0.5;
+        const brandScore = ['Hager', 'MK', 'Schneider', 'Crabtree', 'BG'].some(b => 
+          product.name.includes(b) || product.supplier.includes(b)
+        ) ? 1.0 : 0.7;
+        
+        baseScore = (priceScore * 0.35) + (stockScore * 0.30) + (brandScore * 0.35);
       }
       
-      // Balanced
-      const priceScore = 1 / (price || 1);
-      const stockScore = product.stockStatus === 'In Stock' ? 1.0 : 0.5;
-      const brandScore = ['Hager', 'MK', 'Schneider', 'Crabtree', 'BG'].some(b => 
-        product.name.includes(b) || product.supplier.includes(b)
-      ) ? 1.0 : 0.7;
-      
-      return (priceScore * 0.35) + (stockScore * 0.30) + (brandScore * 0.35);
+      return baseScore * keywordPenalty;
     };
 
     // Generate 3 options: cheapest, best-quality, balanced
     const generateOption = (optionType: string) => {
       const selectedItems = searchResults.map(result => {
         const scoredProducts = result.foundProducts
-          .map((p: any) => ({ product: p, score: scoreProduct(p, optionType) }))
+          .map((p: any) => ({ 
+            product: p, 
+            score: scoreProduct(p, optionType, result.requestedItem.product),
+            usedFallback: result.usedFallback 
+          }))
           .sort((a: ProductScore, b: ProductScore) => b.score - a.score);
         
         return {
           requestedItem: result.requestedItem,
           selectedProduct: scoredProducts[0]?.product,
+          usedFallback: scoredProducts[0]?.usedFallback || false,
           alternatives: includeAlternatives ? scoredProducts.slice(1, 4).map((s: ProductScore) => s.product) : []
         };
       }).filter(item => item.selectedProduct);
