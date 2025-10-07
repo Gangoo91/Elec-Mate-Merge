@@ -144,11 +144,14 @@ serve(async (req) => {
     for (let startRow = 1; startRow <= totalRows; startRow += CHUNK_SIZE) {
       const endRow = Math.min(startRow + CHUNK_SIZE - 1, totalRows);
       
-      // Parse small chunk
+      // Parse ONLY this chunk's rows (efficient - no redundant parsing)
       const chunk = XLSX.utils.sheet_to_json(fullWorksheet, { 
-        range: startRow,
+        range: XLSX.utils.encode_range({
+          s: { c: 0, r: startRow },
+          e: { c: range.e.c, r: endRow }
+        }),
         header: headers
-      }).slice(0, CHUNK_SIZE);
+      });
 
       console.log(`📦 Chunk ${Math.floor(startRow/CHUNK_SIZE) + 1}: rows ${startRow}-${endRow} (${chunk.length} rows)`);
 
@@ -304,9 +307,23 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('Error in parse-supplier-pricing:', error);
+    console.error('❌ Error in parse-supplier-pricing:', error);
+    
+    // Better error messages for users
+    let errorMessage = 'Failed to process Excel file';
+    if (error instanceof Error) {
+      if (error.message.includes('CPU')) {
+        errorMessage = 'File too large - processing exceeded CPU limits. Try splitting into smaller files.';
+      } else if (error.message.includes('memory')) {
+        errorMessage = 'File too large - exceeded memory limits. Try splitting into smaller files.';
+      } else {
+        errorMessage = error.message;
+      }
+    }
+    
     return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to process Excel file',
+      error: errorMessage,
+      details: error instanceof Error ? error.message : String(error),
       success: false
     }), {
       status: 500,
