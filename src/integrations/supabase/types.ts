@@ -612,48 +612,59 @@ export type Database = {
       }
       conversation_memory: {
         Row: {
-          agent_outputs: Json | null
-          circuits: Json | null
-          constraints: Json | null
-          conversation_id: string
+          active_agents: string[] | null
+          conversation_data: Json
           created_at: string
           id: string
-          key_decisions: Json | null
-          project_type: string | null
-          reasoning_chains: string[] | null
-          technical_specs: Json | null
+          last_agent: string | null
+          message_count: number | null
+          plan_data: Json
+          project_name: string | null
+          result_id: string | null
+          resumed_at: string | null
+          session_id: string
           updated_at: string
-          user_id: string | null
+          user_id: string
         }
         Insert: {
-          agent_outputs?: Json | null
-          circuits?: Json | null
-          constraints?: Json | null
-          conversation_id: string
+          active_agents?: string[] | null
+          conversation_data?: Json
           created_at?: string
           id?: string
-          key_decisions?: Json | null
-          project_type?: string | null
-          reasoning_chains?: string[] | null
-          technical_specs?: Json | null
+          last_agent?: string | null
+          message_count?: number | null
+          plan_data?: Json
+          project_name?: string | null
+          result_id?: string | null
+          resumed_at?: string | null
+          session_id: string
           updated_at?: string
-          user_id?: string | null
+          user_id: string
         }
         Update: {
-          agent_outputs?: Json | null
-          circuits?: Json | null
-          constraints?: Json | null
-          conversation_id?: string
+          active_agents?: string[] | null
+          conversation_data?: Json
           created_at?: string
           id?: string
-          key_decisions?: Json | null
-          project_type?: string | null
-          reasoning_chains?: string[] | null
-          technical_specs?: Json | null
+          last_agent?: string | null
+          message_count?: number | null
+          plan_data?: Json
+          project_name?: string | null
+          result_id?: string | null
+          resumed_at?: string | null
+          session_id?: string
           updated_at?: string
-          user_id?: string | null
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "conversation_memory_result_id_fkey"
+            columns: ["result_id"]
+            isOneToOne: false
+            referencedRelation: "install_planner_results"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       course_dates_cache: {
         Row: {
@@ -1728,6 +1739,63 @@ export type Database = {
           metadata?: Json | null
           source?: string
           topic?: string
+        }
+        Relationships: []
+      }
+      install_planner_results: {
+        Row: {
+          agent_outputs: Json
+          circuits: Json
+          compliance: Json
+          conversation_id: string | null
+          created_at: string
+          export_history: Json | null
+          id: string
+          installation_type: string
+          photos: Json | null
+          project_name: string
+          share_enabled: boolean | null
+          share_expires_at: string | null
+          share_token: string | null
+          total_cost: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agent_outputs?: Json
+          circuits?: Json
+          compliance?: Json
+          conversation_id?: string | null
+          created_at?: string
+          export_history?: Json | null
+          id?: string
+          installation_type: string
+          photos?: Json | null
+          project_name: string
+          share_enabled?: boolean | null
+          share_expires_at?: string | null
+          share_token?: string | null
+          total_cost?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          agent_outputs?: Json
+          circuits?: Json
+          compliance?: Json
+          conversation_id?: string | null
+          created_at?: string
+          export_history?: Json | null
+          id?: string
+          installation_type?: string
+          photos?: Json | null
+          project_name?: string
+          share_enabled?: boolean | null
+          share_expires_at?: string | null
+          share_token?: string | null
+          total_cost?: Json
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
