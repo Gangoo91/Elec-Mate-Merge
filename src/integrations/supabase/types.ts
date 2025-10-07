@@ -1910,6 +1910,7 @@ export type Database = {
           last_updated: string
           materials_data: Json | null
           scraper_response: Json
+          source: string
           suppliers: string[]
           total_materials: number
           total_products: number | null
@@ -1925,6 +1926,7 @@ export type Database = {
           last_updated?: string
           materials_data?: Json | null
           scraper_response?: Json
+          source: string
           suppliers?: string[]
           total_materials?: number
           total_products?: number | null
@@ -1940,6 +1942,7 @@ export type Database = {
           last_updated?: string
           materials_data?: Json | null
           scraper_response?: Json
+          source?: string
           suppliers?: string[]
           total_materials?: number
           total_products?: number | null
