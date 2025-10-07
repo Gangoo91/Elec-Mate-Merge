@@ -128,23 +128,36 @@ export async function summarizeConversation(
     return extractSimpleSummary(messages);
   }
 
-  // For longer conversations, use GPT-5 to summarize
-  const conversationText = messages
-    .slice(-15) // Last 15 messages
-    .map(m => `${m.role}: ${m.content}`)
-    .join('\n');
+  // UPGRADE: Use FULL conversation with compression for older messages
+  // Keep last 20 messages full, compress older ones
+  const recentMessages = messages.slice(-20);
+  const olderMessages = messages.slice(0, -20);
+  
+  const compressedOlder = olderMessages.length > 0 
+    ? `[Earlier conversation: ${olderMessages.length} messages about ${detectLastTopic(olderMessages)}]`
+    : '';
+  
+  const conversationText = [
+    compressedOlder,
+    ...recentMessages.map(m => `${m.role}: ${m.content}`)
+  ].filter(Boolean).join('\n');
 
-  const summaryPrompt = `Analyze this conversation and extract key information as JSON:
+  const summaryPrompt = `Analyze this electrical installation conversation and extract COMPREHENSIVE structured data as JSON:
 
 ${conversationText}
 
 Return JSON with these keys:
 - projectType: string (domestic/commercial/industrial)
-- decisions: string[] (key decisions made)
-- requirements: string[] (user requirements extracted)
+- decisions: string[] (ALL key decisions made with reasoning)
+- requirements: string[] (ALL user requirements extracted)
 - openQuestions: string[] (questions still unanswered)
-- keyFacts: string[] (important technical facts mentioned)
-- lastTopic: string (what was the most recent topic discussed)`;
+- keyFacts: string[] (ALL technical facts: cable sizes, MCB ratings, loads, correction factors, Zs values, installation methods, etc.)
+- circuits: array of {type, cableSize, protection, load, method, status} (extract ALL circuits discussed)
+- calculations: {cableCapacity?, voltageDrop?, earthFault?, diversity?} (extract any calculation results)
+- constraints: {budget?, timeline?, location?, buildingType?, specialRequirements?}
+- lastTopic: string (what was the most recent topic discussed)
+
+CRITICAL: Extract ALL technical specifications and reasoning chains, not just summaries.`;
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -156,11 +169,11 @@ Return JSON with these keys:
       body: JSON.stringify({
         model: 'gpt-5-2025-08-07',
         messages: [
-          { role: 'system', content: 'You extract structured information from conversations. Always return valid JSON.' },
+          { role: 'system', content: 'You extract ALL structured information from electrical conversations. Return comprehensive JSON with every technical detail.' },
           { role: 'user', content: summaryPrompt }
         ],
         response_format: { type: "json_object" },
-        max_completion_tokens: 800
+        max_completion_tokens: 2000 // INCREASED for detailed extraction
       }),
     });
 

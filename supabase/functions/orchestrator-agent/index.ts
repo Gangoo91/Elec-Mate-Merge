@@ -515,7 +515,18 @@ function buildStructuredContext(previousOutputs: AgentOutput[]): string {
     // Full response (not truncated)
     context += output.response + '\n\n';
     
-    // Add structured data extracts
+    // UPGRADE: Add DEEP structured data extracts
+    if (output.structuredData) {
+      context += '**STRUCTURED DATA FROM ' + output.agent.toUpperCase() + ':**\n';
+      context += JSON.stringify(output.structuredData, null, 2) + '\n\n';
+    }
+    
+    if (output.reasoning && output.reasoning.length > 0) {
+      context += '**REASONING CHAIN:**\n';
+      output.reasoning.forEach((r: string) => context += `  • ${r}\n`);
+      context += '\n';
+    }
+    
     if (output.agent === 'designer') {
       // Extract BS 7671 calculations
       const calculations = extractCalculations(output.response);

@@ -14,6 +14,9 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 90000); // INCREASED to 90s for deep RAG queries
+
   try {
     const { messages, currentDesign, context } = await req.json() as HealthSafetyAgentRequest;
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
@@ -110,9 +113,10 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
           { role: 'system', content: systemPrompt },
           { role: 'user', content: latestMessage }
         ],
-        max_completion_tokens: 2000,
+        max_completion_tokens: 3000, // INCREASED for comprehensive risk assessments
         response_format: { type: "json_object" }
       }),
+      signal: controller.signal
     });
 
     if (!response.ok) {
@@ -134,16 +138,22 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
     const structuredResponse = {
       agent: 'health-safety',
       response: parsedResponse.response || "Safety assessment complete. Refer to risk assessment below.",
-      riskAssessment: parsedResponse.riskAssessment || { hazards: [] },
-      requiredPPE: parsedResponse.requiredPPE || [],
-      methodStatement: parsedResponse.methodStatement || [],
+      structuredData: {
+        riskAssessment: parsedResponse.riskAssessment || { hazards: [] },
+        requiredPPE: parsedResponse.requiredPPE || [],
+        methodStatement: parsedResponse.methodStatement || [],
+        emergencyProcedures: parsedResponse.emergencyProcedures || []
+      },
+      reasoning: parsedResponse.reasoning || [],
       citations: parsedResponse.citations || [],
       acopCitations: parsedResponse.acopCitations || [],
-      emergencyProcedures: parsedResponse.emergencyProcedures || [],
-      confidence: parsedResponse.confidence || 0.85
+      confidence: parsedResponse.confidence || 0.85,
+      timestamp: new Date().toISOString()
     };
 
-    console.log('✅ H&S Agent: Generated risk assessment with', structuredResponse.riskAssessment.hazards.length, 'hazards');
+    console.log('✅ H&S Agent: Generated risk assessment with', structuredResponse.structuredData.riskAssessment.hazards.length, 'hazards');
+    
+    clearTimeout(timeoutId);
 
     return new Response(JSON.stringify(structuredResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

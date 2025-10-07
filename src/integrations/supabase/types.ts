@@ -610,6 +610,51 @@ export type Database = {
         }
         Relationships: []
       }
+      conversation_memory: {
+        Row: {
+          agent_outputs: Json | null
+          circuits: Json | null
+          constraints: Json | null
+          conversation_id: string
+          created_at: string
+          id: string
+          key_decisions: Json | null
+          project_type: string | null
+          reasoning_chains: string[] | null
+          technical_specs: Json | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          agent_outputs?: Json | null
+          circuits?: Json | null
+          constraints?: Json | null
+          conversation_id: string
+          created_at?: string
+          id?: string
+          key_decisions?: Json | null
+          project_type?: string | null
+          reasoning_chains?: string[] | null
+          technical_specs?: Json | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          agent_outputs?: Json | null
+          circuits?: Json | null
+          constraints?: Json | null
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          key_decisions?: Json | null
+          project_type?: string | null
+          reasoning_chains?: string[] | null
+          technical_specs?: Json | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       course_dates_cache: {
         Row: {
           course_id: string

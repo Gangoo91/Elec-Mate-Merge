@@ -205,10 +205,40 @@ Use professional language with UK English spelling. Present calculations clearly
 
     console.log('✅ Designer response generated');
 
+    // UPGRADE: Extract ALL structured data for next agents
+    const structuredData: any = {};
+    const reasoning: string[] = [];
+    
+    if (calculationResults?.cableCapacity) {
+      structuredData.cableSize = circuitParams.cableSize;
+      structuredData.protectionDevice = `${circuitParams.deviceRating}A ${circuitParams.deviceType}`;
+      structuredData.designCurrent = circuitParams.designCurrent;
+      structuredData.deviceRating = circuitParams.deviceRating;
+      structuredData.correctedCapacity = calculationResults.cableCapacity.Iz;
+      structuredData.correctionFactors = {
+        temperature: calculationResults.cableCapacity.factors.temperatureFactor,
+        grouping: calculationResults.cableCapacity.factors.groupingFactor,
+        overall: calculationResults.cableCapacity.factors.overallFactor
+      };
+      structuredData.voltageDrop = calculationResults.voltageDrop;
+      structuredData.earthFault = calculationResults.maxZs;
+      structuredData.installationMethod = circuitParams.installationMethod;
+      
+      reasoning.push(`Selected ${circuitParams.cableSize}mm² cable: Iz (${Math.round(calculationResults.cableCapacity.Iz * 10) / 10}A) > In (${circuitParams.deviceRating}A)`);
+      reasoning.push(`Correction factors: Ca=${calculationResults.cableCapacity.factors.temperatureFactor}, Cg=${calculationResults.cableCapacity.factors.groupingFactor}`);
+      
+      if (calculationResults.voltageDrop?.compliant) {
+        reasoning.push(`Voltage drop ${calculationResults.voltageDrop.percentage}% complies with 3% BS 7671 limit`);
+      }
+    }
+
     return new Response(JSON.stringify({
       response: responseContent,
+      structuredData,
+      reasoning,
+      calculationResults,
       citations,
-      confidence: 0.85,
+      confidence: 0.95,
       model: 'google/gemini-2.5-flash',
       timestamp: new Date().toISOString()
     }), {

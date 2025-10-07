@@ -145,7 +145,7 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_tokens: 2000
+        max_completion_tokens: 3000 // INCREASED for comprehensive testing guidance
       }),
     });
 
