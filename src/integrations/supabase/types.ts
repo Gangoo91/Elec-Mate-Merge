@@ -895,6 +895,36 @@ export type Database = {
         }
         Relationships: []
       }
+      design_knowledge: {
+        Row: {
+          content: string
+          created_at: string | null
+          embedding: string | null
+          id: string
+          metadata: Json | null
+          source: string
+          topic: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source: string
+          topic: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string
+          topic?: string
+        }
+        Relationships: []
+      }
       document_relationships: {
         Row: {
           created_at: string
@@ -4943,6 +4973,21 @@ export type Database = {
           regulation_number: string
           section: string
           similarity: number
+        }[]
+      }
+      search_design_knowledge: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+          source_filter?: string
+        }
+        Returns: {
+          content: string
+          id: string
+          similarity: number
+          source: string
+          topic: string
         }[]
       }
       search_health_safety: {

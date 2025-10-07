@@ -29,9 +29,9 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
     
     const userMessage = messages[messages.length - 1]?.content || '';
-    const ragQuery = `${userMessage} cable installation methods safe zones support intervals termination`;
+    const ragQuery = `${userMessage} cable installation methods safe zones support intervals termination practical guidance`;
     
-    console.log(`🔍 RAG: Searching installation knowledge for: ${ragQuery}`);
+    console.log(`🔍 RAG: Searching installation + design knowledge for: ${ragQuery}`);
     
     // Generate embedding for installation knowledge search
     const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
@@ -47,14 +47,17 @@ serve(async (req) => {
     });
 
     let installationKnowledge = '';
+    let designKnowledge = '';
+    
     if (embeddingResponse.ok) {
       const embeddingDataRes = await embeddingResponse.json();
       const embedding = embeddingDataRes.data[0].embedding;
       
+      // Search installation knowledge
       const { data: knowledge, error: ragError } = await supabase.rpc('search_installation_knowledge', {
         query_embedding: embedding,
         match_threshold: 0.7,
-        match_count: 10
+        match_count: 8
       });
 
       if (!ragError && knowledge && knowledge.length > 0) {
@@ -62,8 +65,20 @@ serve(async (req) => {
           `${k.topic} (${k.source}): ${k.content}`
         ).join('\n\n');
         console.log(`✅ Found ${knowledge.length} installation guides`);
-      } else {
-        console.log('⚠️ No relevant installation knowledge found');
+      }
+      
+      // Search design knowledge for installation-relevant content
+      const { data: designDocs, error: designError } = await supabase.rpc('search_design_knowledge', {
+        query_embedding: embedding,
+        match_threshold: 0.7,
+        match_count: 5
+      });
+
+      if (!designError && designDocs && designDocs.length > 0) {
+        designKnowledge = designDocs.map((d: any) => 
+          `${d.topic} (${d.source}): ${d.content}`
+        ).join('\n\n');
+        console.log(`✅ Found ${designDocs.length} design documents`);
       }
     }
 
@@ -103,9 +118,14 @@ ${SAFE_ZONES.map(z => `${z.zoneType}: ${z.description}`).join('\n')}
 TERMINATIONS (Section 526):
 ${TERMINATION_GUIDANCE.slice(0, 2).map(t => `${t.conductorType}: Torque ${t.torqueSettings}, strip ${t.stripLength}`).join('\n')}
 
-${installationKnowledge ? `
+    ${installationKnowledge ? `
 INSTALLATION KNOWLEDGE (from database):
 ${installationKnowledge}
+` : ''}
+
+${designKnowledge ? `
+DESIGN GUIDANCE (relevant to installation):
+${designKnowledge}
 ` : ''}
 
 Use professional language with UK English spelling. Provide clear step-by-step guidance. Cite specific regulations and tables.`;

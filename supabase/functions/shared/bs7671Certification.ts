@@ -351,6 +351,190 @@ export const scheduleOfInspections: InspectionItemCategory[] = [
         applicableTo: ['special-locations']
       }
     ]
+  },
+  {
+    category: "6.0 Accessories and Equipment",
+    regulation: "Sec 553",
+    items: [
+      {
+        itemNumber: "6.1",
+        description: "Sockets, switches, and accessories correctly positioned and secure",
+        regulation: "553.1.7",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "6.2",
+        description: "Accessories suitable for environment (IP rating, material)",
+        regulation: "512.2.1",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "6.3",
+        description: "Fixed equipment correctly connected and earthed",
+        regulation: "543.2.1",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "6.4",
+        description: "Luminaires correctly installed with appropriate heat management",
+        regulation: "559.10.2",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      }
+    ]
+  },
+  {
+    category: "7.0 Identification and Notices",
+    regulation: "Sec 514",
+    items: [
+      {
+        itemNumber: "7.1",
+        description: "Warning notice for voltage present (at distribution board)",
+        regulation: "514.10.1",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "7.2",
+        description: "Warning notice for dual supply / generator (if applicable)",
+        regulation: "514.15.1",
+        critical: true,
+        applicableTo: ['commercial', 'industrial']
+      },
+      {
+        itemNumber: "7.3",
+        description: "Earthing/bonding labels present ('Safety Electrical Connection - Do Not Remove')",
+        regulation: "514.13.1",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "7.4",
+        description: "Periodic inspection notice present (recommending next inspection)",
+        regulation: "514.12.1",
+        critical: false,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "7.5",
+        description: "Circuit charts present at each distribution board (circuits clearly identified)",
+        regulation: "514.9.1",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "7.6",
+        description: "RCD test button quarterly test notice",
+        regulation: "514.12.2",
+        critical: false,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      }
+    ]
+  },
+  {
+    category: "8.0 Surge Protection Devices (SPDs)",
+    regulation: "534.4",
+    items: [
+      {
+        itemNumber: "8.1",
+        description: "SPD installed where required (mandatory for new installations from 2019 - A3:2024)",
+        regulation: "534.4.4.1",
+        critical: false,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "8.2",
+        description: "SPD correctly rated for supply system (Type 1/2/3 as appropriate)",
+        regulation: "534.4.3",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "8.3",
+        description: "SPD protected by overcurrent device (if not integral)",
+        regulation: "534.4.6",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "8.4",
+        description: "SPD status indicator visible / working",
+        regulation: "534.4.7",
+        critical: false,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      }
+    ]
+  },
+  {
+    category: "9.0 Arc Fault Detection Devices (AFDDs) - A3:2024",
+    regulation: "421.1.7",
+    items: [
+      {
+        itemNumber: "9.1",
+        description: "AFDD installed where required (AC final circuits in dwellings - A3:2024)",
+        regulation: "421.1.7",
+        critical: false,
+        applicableTo: ['domestic']
+      },
+      {
+        itemNumber: "9.2",
+        description: "AFDD correctly rated and appropriate for circuit type",
+        regulation: "421.1.7",
+        critical: true,
+        applicableTo: ['domestic']
+      },
+      {
+        itemNumber: "9.3",
+        description: "AFDD test button operates correctly",
+        regulation: "643.10",
+        critical: true,
+        applicableTo: ['domestic']
+      }
+    ]
+  },
+  {
+    category: "10.0 Periodic Inspection Items (EICR)",
+    regulation: "Sec 653",
+    items: [
+      {
+        itemNumber: "10.1",
+        description: "Evidence of damage, overheating, or deterioration",
+        regulation: "134.1.1",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "10.2",
+        description: "Adequacy of earthing and bonding arrangements",
+        regulation: "411.3.1.2",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "10.3",
+        description: "Suitability of equipment for current use",
+        regulation: "132.16",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "10.4",
+        description: "Presence of dangerous or obsolete equipment",
+        regulation: "653.1",
+        critical: true,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      },
+      {
+        itemNumber: "10.5",
+        description: "Alterations/additions since last inspection",
+        regulation: "644.1",
+        critical: false,
+        applicableTo: ['domestic', 'commercial', 'industrial']
+      }
+    ]
   }
 ];
 

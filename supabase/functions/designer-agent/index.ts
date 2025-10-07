@@ -72,16 +72,16 @@ serve(async (req) => {
       calculationResults = { cableCapacity: cableCalc, voltageDrop: voltDropCalc, maxZs: zsCalc, rcdRequirements };
     }
 
-    // RAG: Query BS 7671 regulations via Supabase RPC
+    // RAG: Query BS 7671 regulations AND design knowledge via Supabase RPC
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
     const ragQuery = circuitParams.circuitType 
-      ? `${circuitParams.circuitType} circuit design overload protection voltage drop cable sizing`
-      : 'socket circuit design overload protection voltage drop cable sizing';
+      ? `${circuitParams.circuitType} circuit design overload protection voltage drop cable sizing installation methods`
+      : 'socket circuit design overload protection voltage drop cable sizing installation methods';
     
-    console.log(`🔍 RAG: Searching BS 7671 regulations for: ${ragQuery}`);
+    console.log(`🔍 RAG: Searching BS 7671 + Design Knowledge for: ${ragQuery}`);
     
     // Generate embedding for RAG query using Lovable AI
     const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
@@ -97,6 +97,8 @@ serve(async (req) => {
     });
 
     let relevantRegsText = '';
+    let designKnowledge = '';
+    
     if (embeddingResponse.ok) {
       const embeddingData = await embeddingResponse.json();
       const embedding = embeddingData.data[0].embedding;
@@ -113,8 +115,20 @@ serve(async (req) => {
           `Reg ${r.regulation_number} (${r.section}): ${r.content}`
         ).join('\n\n');
         console.log(`✅ Found ${regulations.length} relevant regulations`);
-      } else {
-        console.log('⚠️ No relevant regulations found');
+      }
+      
+      // Search design knowledge database
+      const { data: designDocs, error: designError } = await supabase.rpc('search_design_knowledge', {
+        query_embedding: embedding,
+        match_threshold: 0.7,
+        match_count: 5
+      });
+
+      if (!designError && designDocs && designDocs.length > 0) {
+        designKnowledge = designDocs.map((d: any) => 
+          `${d.topic} (${d.source}): ${d.content}`
+        ).join('\n\n');
+        console.log(`✅ Found ${designDocs.length} design knowledge documents`);
       }
     }
 
@@ -145,12 +159,17 @@ ${calculationResults?.cableCapacity.compliance.overallCompliant ? 'Regulation 43
 ${calculationResults?.voltageDrop.compliant ? 'Regulation 525 - Voltage drop within limits' : 'Regulation 525 - Voltage drop exceeds 3%/5% limit'}
 ${calculationResults.cableCapacity.tableReference} - Cable sizing reference
 
-${relevantRegsText ? `
+    ${relevantRegsText ? `
 RELEVANT REGULATIONS (from BS 7671 database):
 ${relevantRegsText}
 ` : ''}
 
-Use professional language with UK English spelling. Present calculations clearly. Cite regulation numbers. No conversational filler or markdown formatting.`;
+${designKnowledge ? `
+DESIGN GUIDANCE (from technical library):
+${designKnowledge}
+` : ''}
+
+Use professional language with UK English spelling. Present calculations clearly. Cite regulation numbers and technical guidance. No conversational filler or markdown formatting.`;
 
     // Call Lovable AI Gateway with tool-calling for RAG
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
