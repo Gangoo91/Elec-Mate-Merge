@@ -62,25 +62,66 @@ serve(async (req) => {
     const headers = headerRow[0] as string[];
     console.log('📋 Detected columns:', headers);
 
-    // Flexible column detection
-    const priceHeaders = ['TRADE2', 'TRADE1', 'TRADE', 'Price', 'Unit Price', 'Trade Price', 'Cost', 'PRICE'];
+    // Smart column detection - find best match by checking data quality
     const nameHeaders = ['DESCRIPTION', 'Description', 'Product Name', 'Product', 'Item', 'NAME'];
     const skuHeaders = ['CAT NUMBER', 'Code', 'SKU', 'Part Number', 'Product Code', 'PART NO', 'ITEM CODE'];
-    const brandHeaders = ['MANUF', 'Manufacturer', 'Brand', 'BRAND', 'MFG'];
+    const brandHeaders = ['MANUF', 'MANU', 'Manufacturer', 'Brand', 'BRAND', 'MFG'];
     const packHeaders = ['PACK QTY', 'Pack Qty', 'Pack', 'Quantity', 'QTY'];
+    const unitHeaders = ['UNIT', 'PER', 'Unit', 'Per'];
+    const discGroupHeaders = ['DISC GROUP', 'Disc Group', 'Group'];
 
-    const priceCol = headers.find(h => priceHeaders.some(ph => h.toUpperCase().includes(ph.toUpperCase())));
+    // Find non-price columns first
     const nameCol = headers.find(h => nameHeaders.some(nh => h.toUpperCase().includes(nh.toUpperCase())));
     const skuCol = headers.find(h => skuHeaders.some(sh => h.toUpperCase().includes(sh.toUpperCase())));
     const brandCol = headers.find(h => brandHeaders.some(bh => h.toUpperCase().includes(bh.toUpperCase())));
     const packCol = headers.find(h => packHeaders.some(ph => h.toUpperCase().includes(ph.toUpperCase())));
+    const unitCol = headers.find(h => unitHeaders.some(uh => h.toUpperCase().includes(uh.toUpperCase())));
+    const discGroupCol = headers.find(h => discGroupHeaders.some(dh => h.toUpperCase().includes(dh.toUpperCase())));
+
+    // Smart price column detection - check which has most valid numbers
+    const priceHeaders = ['TRADE2', 'TRADE1 (SPLIT PACK)', 'TRADE1', 'TRADE', 'Price', 'Unit Price', 'Trade Price', 'Cost', 'PRICE'];
+    const potentialPriceCols = headers.filter(h => 
+      priceHeaders.some(ph => h.toUpperCase().includes(ph.toUpperCase()))
+    );
+
+    console.log('🔍 Found potential price columns:', potentialPriceCols);
+
+    // Sample first 50 rows to find best price column
+    const sampleData = XLSX.utils.sheet_to_json(worksheet, { 
+      header: headers,
+      range: 1,
+      defval: ''
+    }).slice(0, 50);
+
+    let priceCol = potentialPriceCols[0]; // Default to first
+    let maxValidPrices = 0;
+
+    for (const col of potentialPriceCols) {
+      let validCount = 0;
+      for (const row of sampleData) {
+        const val = row[col];
+        if (val && val !== '-' && val !== '') {
+          const numVal = typeof val === 'number' ? val : parseFloat(String(val).replace(/[£,\s]/g, ''));
+          if (!isNaN(numVal) && numVal > 0) {
+            validCount++;
+          }
+        }
+      }
+      console.log(`  ${col}: ${validCount} valid prices in sample`);
+      if (validCount > maxValidPrices) {
+        maxValidPrices = validCount;
+        priceCol = col;
+      }
+    }
 
     console.log('🎯 Column mapping:', {
       price: priceCol,
       name: nameCol,
       sku: skuCol,
       brand: brandCol,
-      pack: packCol
+      pack: packCol,
+      unit: unitCol,
+      discGroup: discGroupCol
     });
 
     if (!priceCol || !nameCol) {
@@ -110,7 +151,13 @@ serve(async (req) => {
     // Process in very small chunks to minimize memory
     const CHUNK_SIZE = 100;  // Smaller chunks
     const allProducts: any[] = [];
-    let totalSkipped = 0;
+    let skippedReasons = {
+      noName: 0,
+      noSku: 0,
+      noPrice: 0,
+      invalidPrice: 0,
+      obsolete: 0
+    };
 
     console.log(`🔄 Processing ${totalRows} rows in chunks of ${CHUNK_SIZE}...`);
 
@@ -127,40 +174,73 @@ serve(async (req) => {
 
       // Process chunk immediately
       for (const row of chunk) {
-        const rawPrice = row[priceCol];
+        // Check for obsolete items
+        if (discGroupCol) {
+          const discGroup = String(row[discGroupCol] || '').toUpperCase();
+          if (discGroup === 'OBSOLETE' || discGroup.includes('DISCONTINUED')) {
+            skippedReasons.obsolete++;
+            continue;
+          }
+        }
+
         const name = row[nameCol];
+        const sku = skuCol ? row[skuCol] : null;
+        const rawPrice = row[priceCol];
         
-        if (!name || !rawPrice) {
-          totalSkipped++;
+        // Require name, sku, and price
+        if (!name || String(name).trim() === '') {
+          skippedReasons.noName++;
+          continue;
+        }
+        
+        if (!sku || String(sku).trim() === '') {
+          skippedReasons.noSku++;
           continue;
         }
 
+        if (!rawPrice || rawPrice === '-' || rawPrice === '') {
+          skippedReasons.noPrice++;
+          continue;
+        }
+
+        // Parse price - handle various formats
         let price = 0;
         if (typeof rawPrice === 'number') {
           price = rawPrice;
         } else if (typeof rawPrice === 'string') {
-          price = parseFloat(rawPrice.replace(/[£,]/g, ''));
+          // Remove £, commas, spaces, and handle dashes
+          const cleanPrice = rawPrice.replace(/[£,\s]/g, '').replace(/-/g, '');
+          price = parseFloat(cleanPrice);
         }
 
-        if (isNaN(price) || price === 0) {
-          totalSkipped++;
+        if (isNaN(price) || price <= 0) {
+          skippedReasons.invalidPrice++;
           continue;
         }
 
-        const sku = skuCol ? String(row[skuCol] || '') : '';
-        const brand = brandCol ? String(row[brandCol] || supplier) : supplier;
-        const packQty = packCol ? (parseInt(row[packCol]) || 1) : 1;
+        // Parse pack quantity
+        const packQty = packCol ? (parseInt(String(row[packCol]).replace(/\D/g, '')) || 1) : 1;
+        
+        // Get unit type
+        const unit = unitCol ? String(row[unitCol] || 'EA').trim() : 'EA';
+        
+        // Calculate unit price if pack > 1
+        const unitPrice = packQty > 1 ? price / packQty : price;
+
+        const brand = brandCol ? String(row[brandCol] || supplier).trim() : supplier;
 
         allProducts.push({
           name: String(name).trim(),
-          sku: sku.trim(),
+          sku: String(sku).trim(),
           price: price.toFixed(2),
-          price_per_unit: `£${price.toFixed(2)} per ${packQty} EA`,
-          brand: brand.trim(),
+          price_per_unit: packQty > 1 
+            ? `£${unitPrice.toFixed(2)} per ${unit} (£${price.toFixed(2)} per pack of ${packQty})`
+            : `£${price.toFixed(2)} per ${unit}`,
+          brand: brand,
           supplier: supplier,
           pack_qty: packQty,
           in_stock: true,
-          specifications: `Pack of ${packQty}`
+          specifications: packQty > 1 ? `Pack of ${packQty} ${unit}` : `Single ${unit}`
         });
       }
 
@@ -169,6 +249,9 @@ serve(async (req) => {
       
       console.log(`✓ Total processed: ${allProducts.length} products`);
     }
+
+    const totalSkipped = Object.values(skippedReasons).reduce((a, b) => a + b, 0);
+    console.log(`✅ Completed: ${allProducts.length} products | Skipped: ${totalSkipped} (${JSON.stringify(skippedReasons)})`);
 
     console.log(`✅ Completed: ${allProducts.length} products (skipped ${totalSkipped} invalid rows)`);
 
