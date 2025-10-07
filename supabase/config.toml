@@ -272,3 +272,9 @@ verify_jwt = false
 
 [functions.parse-city-guilds-level-3]
 verify_jwt = false
+
+[functions.parse-supplier-pricing]
+verify_jwt = false
+
+[functions.populate-pricing-embeddings]
+verify_jwt = false

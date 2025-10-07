@@ -85,13 +85,55 @@ export default function KnowledgeUploadForm({
     onProcessingStart();
 
     try {
+      // Check if this is an Excel file for pricing data
+      const isExcel = selectedFile.name.toLowerCase().match(/\.(xlsx|xls)$/);
+      
+      if (targetType === "pricing" && isExcel) {
+        // Handle Excel pricing uploads
+        console.log('📊 Processing Excel pricing file:', selectedFile.name);
+        
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('filename', selectedFile.name);
+        
+        const { data, error } = await supabase.functions.invoke('parse-supplier-pricing', {
+          body: formData,
+        });
+
+        if (error) {
+          console.error("Excel parsing error:", error);
+          throw new Error(error.message || "Failed to parse Excel file");
+        }
+
+        if (data?.error) {
+          throw new Error(data.error);
+        }
+
+        onProcessingComplete({
+          total: data.products_found || 0,
+          processed: data.products_found || 0,
+          status: "completed",
+        });
+
+        toast({
+          title: "Excel import complete",
+          description: `Successfully imported ${data.products_found} products from ${data.supplier}`,
+        });
+
+        setSelectedFile(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+        return;
+      }
+
+      // Handle text-based uploads (existing logic)
       const fileContent = await selectedFile.text();
       
       // Determine which edge function to call based on targetType
       let edgeFunctionName = "parse-bs7671";
       
       if (targetType === "installation") {
-        // Route installation knowledge to the appropriate parser
         const filename = selectedFile.name.toLowerCase();
         if (filename.includes("table")) {
           edgeFunctionName = "parse-bs7671-tables";
@@ -117,7 +159,6 @@ export default function KnowledgeUploadForm({
         throw new Error(data.error);
       }
 
-      // Normalize response data from different edge functions
       const chunksProcessed = data.chunksProcessed || data.chunks_processed || data.processed || 0;
       const chunksCreated = data.chunksCreated || data.chunks_created || chunksProcessed;
 
@@ -160,7 +201,7 @@ export default function KnowledgeUploadForm({
             id="file-upload"
             ref={fileInputRef}
             type="file"
-            accept=".txt,.pdf"
+            accept={targetType === "pricing" ? ".txt,.pdf,.xlsx,.xls" : ".txt,.pdf"}
             onChange={handleFileSelect}
             disabled={isProcessing}
           />
@@ -180,7 +221,7 @@ export default function KnowledgeUploadForm({
           {targetType === "installation" && 
             "Upload installation guides, On-Site Guide content, or technical documentation."}
           {targetType === "pricing" && 
-            "Upload pricing data in text format with item names, categories, and costs."}
+            "Upload UK wholesaler price lists in Excel format (.xlsx, .xls). The system will automatically detect columns for product names, SKUs, prices, and brands."}
         </AlertDescription>
       </Alert>
 
