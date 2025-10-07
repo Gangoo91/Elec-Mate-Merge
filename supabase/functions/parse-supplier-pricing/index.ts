@@ -128,9 +128,11 @@ serve(async (req) => {
     
     console.log(`📊 Total rows: ${totalRows}`);
 
-    // Process in very small chunks to minimize memory
-    const CHUNK_SIZE = 100;  // Smaller chunks
-    const allProducts: any[] = [];
+    // Process in very small chunks to minimise memory and stream inserts
+    const CHUNK_SIZE = 100; // Read 100 rows at a time from the sheet
+
+    // Running tallies
+    let totalProcessed = 0;
     let skippedReasons = {
       noName: 0,
       noSku: 0,
@@ -139,13 +141,45 @@ serve(async (req) => {
       obsolete: 0
     };
 
-    console.log(`🔄 Processing ${totalRows} rows in chunks of ${CHUNK_SIZE}...`);
+    // Buffer for DB inserts so we never hold all products in memory
+    const INSERT_CHUNK_SIZE = 800; // insert rows to cache in ~800 item pages
+    const buffer: any[] = [];
+    const cacheIds: string[] = [];
+
+    console.log(`🔄 Streaming ${totalRows} rows in chunks of ${CHUNK_SIZE}, inserting every ${INSERT_CHUNK_SIZE} products...`);
+
+    const flushBuffer = async (partLabel?: string) => {
+      if (buffer.length === 0) return;
+      const page = buffer.splice(0, Math.min(buffer.length, INSERT_CHUNK_SIZE));
+      const partIndex = cacheIds.length + 1;
+
+      const { data: cacheEntry, error: insertError } = await supabase
+        .from('materials_weekly_cache')
+        .insert({
+          category: 'Electrical Components',
+          source: `${supplier} Trade Pricing${partLabel ? ` (${partLabel})` : ''}${page.length < INSERT_CHUNK_SIZE ? '' : ` (Part ${partIndex})`}`,
+          materials_data: page,
+          total_products: page.length,
+          last_updated: new Date().toISOString(),
+          expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+        })
+        .select()
+        .single();
+
+      if (insertError) {
+        console.error(`Insert error for streamed page ${partIndex}:`, insertError);
+        throw insertError;
+      }
+
+      cacheIds.push(cacheEntry.id);
+      console.log(`✅ Inserted cache page ${partIndex} with ${page.length} products (total so far: ${totalProcessed})`);
+    };
 
     for (let startRow = 1; startRow <= totalRows; startRow += CHUNK_SIZE) {
       const endRow = Math.min(startRow + CHUNK_SIZE - 1, totalRows);
-      
+
       // Parse ONLY this chunk's rows (efficient - no redundant parsing)
-      const chunk = XLSX.utils.sheet_to_json(fullWorksheet, { 
+      const chunk = XLSX.utils.sheet_to_json(fullWorksheet, {
         range: XLSX.utils.encode_range({
           s: { c: 0, r: startRow },
           e: { c: range.e.c, r: endRow }
@@ -153,7 +187,7 @@ serve(async (req) => {
         header: headers
       });
 
-      console.log(`📦 Chunk ${Math.floor(startRow/CHUNK_SIZE) + 1}: rows ${startRow}-${endRow} (${chunk.length} rows)`);
+      console.log(`📦 Chunk ${Math.floor(startRow / CHUNK_SIZE) + 1}: rows ${startRow}-${endRow} (${chunk.length} rows)`);
 
       // Process chunk immediately
       for (const row of chunk) {
@@ -168,26 +202,24 @@ serve(async (req) => {
 
         const name = row[nameCol];
         const sku = skuCol ? row[skuCol] : null;
-        
+
         // Require name and sku
         if (!name || String(name).trim() === '') {
           skippedReasons.noName++;
           continue;
         }
-        
+
         if (!sku || String(sku).trim() === '') {
           skippedReasons.noSku++;
           continue;
         }
 
         // Per-row price fallback: try TRADE2 → TRADE1 → TRADE → PRICE
-        let rawPrice = null;
-        let priceSource = '';
+        let rawPrice: any = null;
         for (const col of potentialPriceCols) {
           const val = row[col];
           if (val && val !== '-' && val !== '') {
             rawPrice = val;
-            priceSource = col;
             break;
           }
         }
@@ -202,7 +234,6 @@ serve(async (req) => {
         if (typeof rawPrice === 'number') {
           price = rawPrice;
         } else if (typeof rawPrice === 'string') {
-          // Remove £, commas, spaces, and handle dashes
           const cleanPrice = rawPrice.replace(/[£,\s]/g, '').replace(/-/g, '');
           price = parseFloat(cleanPrice);
         }
@@ -214,20 +245,20 @@ serve(async (req) => {
 
         // Parse pack quantity
         const packQty = packCol ? (parseInt(String(row[packCol]).replace(/\D/g, '')) || 1) : 1;
-        
+
         // Get unit type
         const unit = unitCol ? String(row[unitCol] || 'EA').trim() : 'EA';
-        
+
         // Calculate unit price if pack > 1
         const unitPrice = packQty > 1 ? price / packQty : price;
 
         const brand = brandCol ? String(row[brandCol] || supplier).trim() : supplier;
 
-        allProducts.push({
+        buffer.push({
           name: String(name).trim(),
           sku: String(sku).trim(),
           price: price.toFixed(2),
-          price_per_unit: packQty > 1 
+          price_per_unit: packQty > 1
             ? `£${unitPrice.toFixed(2)} per ${unit} (£${price.toFixed(2)} per pack of ${packQty})`
             : `£${price.toFixed(2)} per ${unit}`,
           brand: brand,
@@ -236,61 +267,32 @@ serve(async (req) => {
           in_stock: true,
           specifications: packQty > 1 ? `Pack of ${packQty} ${unit}` : `Single ${unit}`
         });
+        totalProcessed++;
+
+        // Flush if buffer large
+        if (buffer.length >= INSERT_CHUNK_SIZE) {
+          await flushBuffer(`Part ${cacheIds.length + 1}`);
+        }
       }
 
       // Clear chunk from memory
-      chunk.length = 0;
-      
-      console.log(`✓ Total processed: ${allProducts.length} products`);
+      (chunk as any[]).length = 0;
     }
+
+    // Final flush
+    await flushBuffer();
 
     const totalSkipped = Object.values(skippedReasons).reduce((a, b) => a + b, 0);
-    console.log(`✅ Completed: ${allProducts.length} products | Skipped: ${totalSkipped} (${JSON.stringify(skippedReasons)})`);
+    console.log(`✅ Completed: ${totalProcessed} products | Skipped: ${totalSkipped} (${JSON.stringify(skippedReasons)})`);
 
-    console.log(`✅ Completed: ${allProducts.length} products (skipped ${totalSkipped} invalid rows)`);
-
-    // Clear workbook from memory before database insert
+    // Clear workbook from memory before triggering embeddings
     fullWorksheet['!ref'] = null;
 
-    // Insert into materials_weekly_cache in chunks to reduce memory pressure
-    const INSERT_CHUNK_SIZE = 1000; // Insert 1000 products at a time
-    const productChunks = [];
-    for (let i = 0; i < allProducts.length; i += INSERT_CHUNK_SIZE) {
-      productChunks.push(allProducts.slice(i, i + INSERT_CHUNK_SIZE));
-    }
-
-    console.log(`💾 Inserting ${allProducts.length} products in ${productChunks.length} cache chunks...`);
-
-    const cacheIds: string[] = [];
-    for (let i = 0; i < productChunks.length; i++) {
-      const chunk = productChunks[i];
-      const { data: cacheEntry, error: insertError } = await supabase
-        .from('materials_weekly_cache')
-        .insert({
-          category: 'Electrical Components',
-          source: `${supplier} Trade Pricing${productChunks.length > 1 ? ` (Part ${i + 1}/${productChunks.length})` : ''}`,
-          materials_data: chunk,
-          total_products: chunk.length,
-          last_updated: new Date().toISOString(),
-          expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
-        })
-        .select()
-        .single();
-
-      if (insertError) {
-        console.error(`Insert error for chunk ${i + 1}:`, insertError);
-        throw insertError;
-      }
-
-      cacheIds.push(cacheEntry.id);
-      console.log(`✅ Chunk ${i + 1}/${productChunks.length} inserted (${chunk.length} products)`);
-    }
-
-    console.log(`💾 All chunks inserted with IDs: ${cacheIds.join(', ')}`);
+    console.log(`💾 Inserted ${cacheIds.length} cache pages with streamed inserts`);
 
     // Trigger embeddings generation by supplier (picks up all chunks)
     console.log('🧠 Triggering embeddings generation in background...');
-    
+
     const { data: embedData, error: embedError } = await supabase.functions.invoke('populate-pricing-embeddings', {
       body: { supplier }
     });
@@ -307,11 +309,11 @@ serve(async (req) => {
       supplier: supplier,
       cache_ids: cacheIds,
       job_id: jobId,
-      products_found: allProducts.length,
+      products_found: totalProcessed,
       products_skipped: totalSkipped,
       total_rows: totalRows,
-      chunks_created: productChunks.length,
-      message: `Successfully processed ${allProducts.length} products from ${supplier} in ${productChunks.length} chunk(s). Embeddings generating in background.`
+      chunks_created: cacheIds.length,
+      message: `Successfully processed ${totalProcessed} products from ${supplier} in ${cacheIds.length} chunk(s). Embeddings generating in background.`
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
