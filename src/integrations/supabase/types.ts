@@ -1033,6 +1033,45 @@ export type Database = {
         }
         Relationships: []
       }
+      eic_schedules: {
+        Row: {
+          created_at: string
+          design_date: string
+          designer_name: string
+          id: string
+          installation_address: string
+          installation_id: string
+          schedule_data: Json
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          design_date: string
+          designer_name: string
+          id?: string
+          installation_address: string
+          installation_id: string
+          schedule_data?: Json
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          design_date?: string
+          designer_name?: string
+          id?: string
+          installation_address?: string
+          installation_id?: string
+          schedule_data?: Json
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       enhanced_hazards: {
         Row: {
           category: string

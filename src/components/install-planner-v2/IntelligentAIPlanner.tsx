@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase, Play, RotateCcw, Pause } from "lucide-react";
+import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase, Play, RotateCcw, Pause, ClipboardCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { InstallPlanDataV2 } from "./types";
@@ -12,6 +12,9 @@ import { ReasoningPanel } from "./ReasoningPanel";
 import { CitationBadge } from "./CitationBadge";
 import { AgentSelector } from "./AgentSelector";
 import { useNavigate, useLocation } from "react-router-dom";
+import { transformAgentOutputToEIC } from "@/utils/eic-transformer";
+import { exportEICScheduleToInspectionApp } from "@/utils/eic-export";
+import { AgentCircuitOutput } from "@/types/eic-integration";
 
 // Feature flag to toggle between orchestrator and legacy designer
 const USE_ORCHESTRATOR = true;
@@ -367,6 +370,91 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     }
   };
 
+  const handleExportToEIC = async () => {
+    const hasCompleteDesign = planData.circuits && planData.circuits.length > 0;
+    
+    if (!hasCompleteDesign) {
+      toast.error("No circuits to export", {
+        description: "Design at least one circuit before exporting to testing app."
+      });
+      return;
+    }
+
+    try {
+      // Calculate cable sizes based on load (simplified - real values from AI agents)
+      const getCableSize = (load: number, phases: string) => {
+        if (phases === "three") return load > 10000 ? "10.0" : "6.0";
+        if (load > 7000) return "6.0";
+        if (load > 5000) return "4.0";
+        if (load > 3000) return "2.5";
+        return "1.5";
+      };
+
+      const getCPCSize = (liveSize: string) => {
+        const sizes: Record<string, string> = {
+          "1.5": "1.0", "2.5": "1.5", "4.0": "2.5", "6.0": "2.5",
+          "10.0": "4.0", "16.0": "6.0"
+        };
+        return sizes[liveSize] || "1.5";
+      };
+
+      const getProtectiveDevice = (load: number, voltage: number) => {
+        const current = load / voltage;
+        if (current <= 6) return { device: "MCB B6", rating: 6, curve: "B" };
+        if (current <= 10) return { device: "MCB B10", rating: 10, curve: "B" };
+        if (current <= 16) return { device: "MCB B16", rating: 16, curve: "B" };
+        if (current <= 20) return { device: "MCB B20", rating: 20, curve: "B" };
+        if (current <= 32) return { device: "MCB B32", rating: 32, curve: "B" };
+        return { device: "MCB B40", rating: 40, curve: "B" };
+      };
+
+      // Transform circuits to EIC format with calculated values
+      const agentCircuits: AgentCircuitOutput[] = planData.circuits.map((circuit, index) => {
+        const liveSize = getCableSize(circuit.totalLoad, circuit.phases);
+        const cpcSize = getCPCSize(liveSize);
+        const protDevice = getProtectiveDevice(circuit.totalLoad, circuit.voltage);
+
+        return {
+          circuitNumber: index + 1,
+          description: circuit.name || `${circuit.loadType} Circuit ${index + 1}`,
+          loadType: circuit.loadType,
+          phases: circuit.phases,
+          cableSize: `${liveSize}mm²`,
+          cpcSize: `${cpcSize}mm²`,
+          cableLength: circuit.cableLength,
+          installationMethod: planData.installationMethod || "100",
+          protectiveDevice: protDevice.device,
+          protectiveDeviceRating: protDevice.rating,
+          protectiveDeviceCurve: protDevice.curve,
+          maxZs: protDevice.curve === "B" ? (protDevice.rating <= 32 ? 1.44 : 0.92) : 0.72,
+          voltageDropCompliance: true,
+          rcdProtection: circuit.loadType === "shower" || circuit.loadType === "ev-charger",
+          isRingCircuit: circuit.loadType === "power" && circuit.totalLoad > 3000,
+        };
+      });
+
+      const eicSchedule = transformAgentOutputToEIC(agentCircuits, {
+        address: planData.siteInfo?.propertyAddress || "Installation Site",
+        designerName: planData.projectInfo?.leadElectrician || "AI Design Assistant",
+        conversationId: `conv-${Date.now()}`
+      });
+
+      // Export to Supabase
+      const result = await exportEICScheduleToInspectionApp(eicSchedule);
+      
+      if (result.success) {
+        toast.success("EIC Schedule Ready! ✅", {
+          description: `${eicSchedule.circuits.length} circuits exported with expected test values`
+        });
+      }
+    } catch (error) {
+      console.error('EIC export error:', error);
+      toast.error("Export Failed", {
+        description: error instanceof Error ? error.message : "Failed to export EIC schedule"
+      });
+    }
+  };
+
   const handleAgentSelection = (selectedAgents: string[]) => {
     console.log('Selected agents:', selectedAgents);
     updatePlanData({
@@ -501,6 +589,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   Export Package
                 </>
               )}
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleExportToEIC}
+              disabled={!planData.circuits || planData.circuits.length === 0}
+              className="text-xs bg-elec-yellow/10 hover:bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow"
+            >
+              <ClipboardCheck className="h-3 w-3 mr-1" />
+              Export to Testing App
             </Button>
             <Button variant="ghost" size="sm" onClick={onReset} className="text-xs text-white hover:bg-white/10">
               New Chat

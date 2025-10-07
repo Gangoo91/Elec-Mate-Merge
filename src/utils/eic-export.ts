@@ -16,9 +16,9 @@ export async function exportEICScheduleToInspectionApp(
       throw new Error("User not authenticated");
     }
     
-    // Insert into eic_schedules table
+    // Insert into eic_schedules table (type will auto-update after migration)
     const { data, error } = await supabase
-      .from("eic_schedules")
+      .from("eic_schedules" as any)
       .insert({
         user_id: user.user.id,
         installation_id: schedule.installationId,
@@ -38,12 +38,14 @@ export async function exportEICScheduleToInspectionApp(
     
     console.log("✅ EIC Schedule exported successfully:", data);
     
+    const scheduleId = (data as any)?.id || "unknown";
+    
     toast({
       title: "EIC Schedule Exported",
-      description: `${schedule.circuits.length} circuits ready for testing. Schedule ID: ${data.id.slice(0, 8)}`,
+      description: `${schedule.circuits.length} circuits ready for testing. Schedule ID: ${scheduleId.slice(0, 8)}`,
     });
     
-    return { success: true, scheduleId: data.id };
+    return { success: true, scheduleId };
   } catch (error) {
     console.error("❌ Export error:", error);
     const errorMessage = error instanceof Error ? error.message : "Failed to export EIC schedule";
@@ -66,7 +68,7 @@ export async function getUserEICSchedules() {
   if (!user.user) return [];
   
   const { data, error } = await supabase
-    .from("eic_schedules")
+    .from("eic_schedules" as any)
     .select("*")
     .eq("user_id", user.user.id)
     .order("created_at", { ascending: false });
