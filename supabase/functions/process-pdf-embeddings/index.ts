@@ -13,6 +13,51 @@ interface PDFChunk {
   content: string;
   metadata: Record<string, any>;
   source: string;
+  chunk_index?: number;
+  total_chunks?: number;
+}
+
+// Utility: Estimate tokens (chars / 4 is a reasonable approximation)
+function estimateTokens(text: string): number {
+  return Math.ceil(text.length / 4);
+}
+
+// Utility: Split content on paragraph boundaries
+function splitContent(text: string, maxTokens: number = 6000): string[] {
+  const estimatedTokens = estimateTokens(text);
+  if (estimatedTokens <= maxTokens) return [text];
+
+  const chunks: string[] = [];
+  const paragraphs = text.split(/\n\n+/);
+  let currentChunk = '';
+
+  for (const para of paragraphs) {
+    const testChunk = currentChunk ? currentChunk + '\n\n' + para : para;
+    if (estimateTokens(testChunk) > maxTokens && currentChunk) {
+      chunks.push(currentChunk);
+      currentChunk = para;
+    } else {
+      currentChunk = testChunk;
+    }
+  }
+
+  if (currentChunk) chunks.push(currentChunk);
+
+  // Safety: if any chunk is still too large, force split
+  const finalChunks: string[] = [];
+  for (const chunk of chunks) {
+    if (estimateTokens(chunk) > maxTokens) {
+      // Force split by character count
+      const chunkSize = Math.floor(chunk.length * (maxTokens / estimateTokens(chunk)));
+      for (let i = 0; i < chunk.length; i += chunkSize) {
+        finalChunks.push(chunk.slice(i, i + chunkSize));
+      }
+    } else {
+      finalChunks.push(chunk);
+    }
+  }
+
+  return finalChunks;
 }
 
 serve(async (req) => {
@@ -38,56 +83,95 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Process in batches of 100 to avoid rate limits
-    const batchSize = 100;
+    // Pre-process: expand any oversized chunks before batching
+    const expandedChunks: PDFChunk[] = [];
+    for (const chunk of chunks) {
+      const tokens = estimateTokens(chunk.content);
+      if (tokens > 6000) {
+        console.log(`📦 Splitting oversized chunk: ${chunk.regulation_number || chunk.section} (~${tokens} tokens)`);
+        const splitParts = splitContent(chunk.content, 6000);
+        splitParts.forEach((part, idx) => {
+          expandedChunks.push({
+            ...chunk,
+            content: part,
+            chunk_index: idx + 1,
+            total_chunks: splitParts.length,
+            section: chunk.chunk_index 
+              ? `${chunk.section} (Part ${chunk.chunk_index}.${idx + 1})`
+              : `${chunk.section} (Part ${idx + 1} of ${splitParts.length})`,
+          });
+        });
+      } else {
+        expandedChunks.push(chunk);
+      }
+    }
+
+    console.log(`📊 Expanded ${chunks.length} chunks to ${expandedChunks.length} processable chunks`);
+
+    // Process in smaller batches to reduce risk
+    const batchSize = 50;
     let processedCount = 0;
 
-    for (let i = 0; i < chunks.length; i += batchSize) {
-      const batch = chunks.slice(i, i + batchSize);
+    for (let i = 0; i < expandedChunks.length; i += batchSize) {
+      const batch = expandedChunks.slice(i, i + batchSize);
       
-      // Pre-validate chunk sizes (1 token ≈ 4 characters, limit is 8192 tokens)
-      const oversizedChunks = batch.filter(chunk => {
-        const estimatedTokens = Math.ceil(chunk.content.length / 4);
-        return estimatedTokens > 8000;
-      });
+      // Final safety check
+      const validBatch = batch.filter(chunk => estimateTokens(chunk.content) <= 6000);
+      const skippedCount = batch.length - validBatch.length;
       
-      if (oversizedChunks.length > 0) {
-        console.error('⚠️ Found oversized chunks that will be skipped:');
-        oversizedChunks.forEach(chunk => {
-          const tokens = Math.ceil(chunk.content.length / 4);
-          console.error(`  - ${chunk.regulation_number || chunk.section}: ~${tokens} tokens`);
-        });
+      if (skippedCount > 0) {
+        console.warn(`⚠️ Skipping ${skippedCount} chunks in batch ${Math.floor(i / batchSize) + 1}`);
       }
-      
-      // Filter out oversized chunks
-      const validBatch = batch.filter(chunk => {
-        const estimatedTokens = Math.ceil(chunk.content.length / 4);
-        return estimatedTokens <= 8000;
-      });
       
       if (validBatch.length === 0) {
         console.log(`Batch ${Math.floor(i / batchSize) + 1}: All chunks oversized, skipping`);
         continue;
       }
       
-      // Generate embeddings for this batch
-      const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${openAIApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'text-embedding-3-small',
-          input: validBatch.map(chunk => chunk.content),
-        }),
-      });
+      // Generate embeddings with retry logic
+      let embeddingResponse;
+      let retryAttempt = 0;
+      
+      while (retryAttempt < 2) {
+        embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${openAIApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'text-embedding-3-small',
+            input: validBatch.map(chunk => chunk.content),
+          }),
+        });
 
-      if (!embeddingResponse.ok) {
-        const errorText = await embeddingResponse.text();
-        console.error(`OpenAI API error ${embeddingResponse.status}:`, errorText);
-        console.error(`Batch info: ${validBatch.length} chunks, sizes:`, validBatch.map(c => c.content.length));
-        throw new Error(`OpenAI API error: ${embeddingResponse.status} - ${errorText}`);
+        if (embeddingResponse.ok) break;
+
+        // Handle 400 errors with context length issues
+        if (embeddingResponse.status === 400) {
+          const errorText = await embeddingResponse.text();
+          console.error(`❌ OpenAI API error ${embeddingResponse.status}:`, errorText);
+          
+          if (errorText.includes('maximum context length') && retryAttempt === 0) {
+            // Find and log the largest chunk
+            const largest = validBatch.reduce((max, chunk) => 
+              estimateTokens(chunk.content) > estimateTokens(max.content) ? chunk : max
+            );
+            console.error(`🔍 Largest chunk: ${largest.regulation_number || largest.section} (~${estimateTokens(largest.content)} tokens)`);
+            console.error(`📝 Content preview: ${largest.content.substring(0, 200)}...`);
+            throw new Error(`Context length exceeded. Largest chunk: ${largest.regulation_number || largest.section} with ~${estimateTokens(largest.content)} tokens`);
+          }
+          
+          throw new Error(`OpenAI API error: ${embeddingResponse.status} - ${errorText}`);
+        }
+
+        retryAttempt++;
+      }
+
+      if (!embeddingResponse || !embeddingResponse.ok) {
+        const errorText = await embeddingResponse?.text() || 'Unknown error';
+        console.error(`OpenAI API error ${embeddingResponse?.status}:`, errorText);
+        throw new Error(`OpenAI API error: ${embeddingResponse?.status} - ${errorText}`);
       }
 
       const embeddingData = await embeddingResponse.json();

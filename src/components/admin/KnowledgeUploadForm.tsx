@@ -91,7 +91,14 @@ export default function KnowledgeUploadForm({
         body: { fileContent },
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Edge function error:", error);
+        throw new Error(error.message || "Edge function returned an error");
+      }
+
+      if (data?.error) {
+        throw new Error(data.error);
+      }
 
       onProcessingComplete({
         total: data.chunks_created || 0,
