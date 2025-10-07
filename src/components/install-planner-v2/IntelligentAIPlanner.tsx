@@ -88,14 +88,10 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
   const [isExporting, setIsExporting] = useState(false);
-  const [showComplexMode, setShowComplexMode] = useState(false);
   const [consultationStarted, setConsultationStarted] = useState(!!resumeState?.resumeMessages);
-  const [consultationPaused, setConsultationPaused] = useState(false);
-  const [completedAgent, setCompletedAgent] = useState<string | null>(null);
   const [currentAgent, setCurrentAgent] = useState<string | null>(null);
   const [nextAgent, setNextAgent] = useState<string | null>(null);
   const navigate = useNavigate();
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Auto-populate pricing embeddings if empty
   useEffect(() => {
@@ -197,10 +193,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       setCurrentAgent(agent);
       setNextAgent(nextAgent);
       setCurrentAction('');
-      
-      // Pause after each agent for user review
-      setConsultationPaused(true);
-      setCompletedAgent(agent);
     },
     onAllAgentsComplete: (agentOutputs) => {
       console.log('All agents complete:', agentOutputs);
@@ -241,7 +233,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     setInput("");
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
-    setConsultationPaused(false);
     setReasoningSteps([]);
 
     // Add immediate acknowledgment message
@@ -715,133 +706,31 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
 
   return (
     <div className="flex flex-col h-screen bg-elec-dark">
-      {/* Header - Centered & Clean */}
-      <div className="flex-none px-4 py-4 border-b border-border/30 bg-elec-dark">
-        <div className="flex flex-col items-center gap-3">
-          {/* Title Section */}
+      {/* Minimal Header - Non-sticky */}
+      <div className="flex-none px-5 py-4 border-b border-border/30 bg-elec-dark">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-elec-yellow" />
-            <div className="text-center">
-              <h2 className="font-semibold text-lg text-white">AI Design Assistant</h2>
-              <p className="text-xs text-elec-yellow/80">BS 7671 Compliant • Multi-Agent System</p>
-            </div>
+            <Sparkles className="h-5 w-5 text-elec-yellow" />
+            <h2 className="font-semibold text-base text-white">AI Design</h2>
           </div>
-          
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2 flex-wrap justify-center">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => setShowComplexMode(!showComplexMode)}
-              className="text-xs bg-white/5 hover:bg-white/10 border-white/10 text-white"
-            >
-              <Briefcase className="h-3 w-3 mr-1" />
-              Complex Project
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleExportPackage}
-              disabled={isExporting || messages.length < 5}
-              className="text-xs bg-white/5 hover:bg-white/10 border-white/10 text-white"
-            >
-              {isExporting ? (
-                <>
-                  <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-                  Exporting...
-                </>
-              ) : (
-                <>
-                  <FileDown className="h-3 w-3 mr-1" />
-                  Export Package
-                </>
-              )}
-            </Button>
-            <Button 
-              variant="default" 
-              size="sm" 
-              onClick={handleCompleteProjectExport}
-              disabled={!planData.circuits || planData.circuits.length === 0 || isExporting}
-              className="text-xs bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
-            >
-              <FileDown className="h-3 w-3 mr-1" />
-              {isExporting ? "Exporting..." : "Export Complete Project"}
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleExportToEIC}
-              disabled={!planData.circuits || planData.circuits.length === 0 || isExporting}
-              className="text-xs bg-elec-yellow/10 hover:bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow"
-            >
-              <ClipboardCheck className="h-3 w-3 mr-1" />
-              Export to Testing App
-            </Button>
-            <Button variant="ghost" size="sm" onClick={onReset} className="text-xs text-white hover:bg-white/10">
-              New Chat
-            </Button>
-          </div>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={onReset} 
+            className="text-xs text-elec-yellow hover:bg-elec-yellow/10"
+          >
+            New Chat
+          </Button>
         </div>
       </div>
 
-      {/* Complex Project Mode Panel */}
-      {showComplexMode && (
-        <div className="flex-none px-4 py-3 bg-elec-card border-b border-border/30">
-          <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <Briefcase className="h-4 w-4 text-elec-yellow" />
-              Bulk Input Mode - For Factories, Large Installations
-            </h3>
-            <p className="text-xs text-muted-foreground mb-2">
-              Upload a CSV/Excel file with your loads or paste a list below. The Project Manager Agent will break it into phases.
-            </p>
-            
-            <div className="flex gap-2">
-              <input
-                type="file"
-                ref={fileInputRef}
-                accept=".csv,.xlsx,.xls"
-                className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    // Handle file upload
-                    toast.info("Processing file...", { description: `Reading ${file.name}` });
-                    // TODO: Parse CSV/Excel and send to Project Manager Agent
-                  }
-                }}
-              />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => fileInputRef.current?.click()}
-                className="text-xs bg-white/5 hover:bg-white/10 border-white/10 text-white"
-              >
-                <Upload className="h-3 w-3 mr-1" />
-                Upload File
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  setInput("I need to design a factory with:\n- 50x LED high bay lights (150W each)\n- 10x 3-phase motors (5.5kW each)\n- Office area with 30x sockets\n- Emergency lighting system\n- Fire alarm integration");
-                  setShowComplexMode(false);
-                }}
-                className="text-xs text-white hover:bg-white/10"
-              >
-                Use Example
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Messages Area - WhatsApp style */}
       <div 
         ref={scrollRef}
         className="flex-1 overflow-y-auto bg-elec-dark"
       >
-        <div className="px-4 py-4 space-y-2">
+        <div className="px-5 py-6 space-y-4">
           {/* Reasoning Panel */}
           {showReasoning && reasoningSteps.length > 0 && (
             <div className="flex justify-start mb-2">
@@ -866,24 +755,44 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               )}
 
               <div
-                className={`max-w-[85%] rounded-2xl px-4 py-3 shadow-sm ${
+                className={`max-w-[90%] rounded-2xl shadow-sm ${
                   message.role === 'user'
-                    ? 'bg-elec-yellow text-elec-dark'
-                    : 'bg-elec-card text-white'
+                    ? 'bg-elec-yellow text-elec-dark px-5 py-3'
+                    : 'bg-elec-card text-white px-5 py-4'
                 }`}
               >
                 {message.role === 'assistant' && message.content && !message.isTyping && (
-                  <div className="text-left space-y-4">
+                  <div className="text-left space-y-6">
                     {parseAgentResponse(message.content).map((section, i) => (
-                      <div key={i}>
+                      <div key={i} className="space-y-3">
                         {section.title && (
-                          <h4 className="font-bold text-elec-yellow text-sm mb-2">
-                            {section.title}
-                          </h4>
+                          <div className="flex items-center gap-2 pb-2 border-b border-elec-yellow/20">
+                            <div className="w-1 h-4 bg-elec-yellow rounded-full" />
+                            <h4 className="font-bold text-elec-yellow text-base tracking-wide uppercase">
+                              {section.title}
+                            </h4>
+                          </div>
                         )}
                         <div 
-                          className="text-sm text-white/90 leading-relaxed"
-                          dangerouslySetInnerHTML={{ __html: section.content.trim().replace(/\n/g, '<br/>') }}
+                          className="text-[15px] text-white/95 leading-[1.7] space-y-2"
+                          style={{ 
+                            wordSpacing: '0.05em',
+                            letterSpacing: '0.01em'
+                          }}
+                          dangerouslySetInnerHTML={{ 
+                            __html: section.content
+                              .trim()
+                              .split('\n')
+                              .map(line => {
+                                // Convert bullet points
+                                if (line.trim().startsWith('•') || line.trim().startsWith('-') || line.trim().startsWith('*')) {
+                                  return `<div class="flex gap-3 py-1.5"><span class="text-elec-yellow mt-1">•</span><span class="flex-1">${line.trim().replace(/^[•\-*]\s*/, '')}</span></div>`;
+                                }
+                                // Regular lines
+                                return line.trim() ? `<p class="py-0.5">${line}</p>` : '';
+                              })
+                              .join('')
+                          }}
                         />
                       </div>
                     ))}
@@ -891,20 +800,22 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 )}
 
                 {message.role === 'assistant' && message.isTyping && (
-                  <p className="text-sm text-white/70 text-left italic">
+                  <p className="text-[15px] text-white/70 text-left italic leading-[1.7]">
                     {message.content}
                   </p>
                 )}
 
                 {message.role === 'user' && (
-                  <p className="text-sm whitespace-pre-wrap leading-relaxed text-left">
+                  <p className="text-[15px] whitespace-pre-wrap leading-[1.7] text-left">
                     {message.content}
                   </p>
                 )}
 
                 {/* Citations */}
                 {message.role === 'assistant' && message.citations && (
-                  <CitationBadge citations={message.citations} />
+                  <div className="mt-4 pt-3 border-t border-white/10">
+                    <CitationBadge citations={message.citations} />
+                  </div>
                 )}
               </div>
             </div>
@@ -929,52 +840,60 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         </div>
       </div>
 
-      {/* Input Area - WhatsApp style */}
-      <div className="flex-none bg-elec-dark border-t border-border/30 px-4 py-3">
-        <div className="space-y-2">
-          {/* Agent Pause Controls */}
-          {consultationPaused && (
-            <div className="bg-elec-card border border-elec-yellow/30 rounded-lg p-2.5">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <p className="text-xs font-medium text-white">
-                      {currentAgent === 'designer' && '🎨 Designer'} 
-                      {currentAgent === 'cost-engineer' && '💰 Cost Engineer'}
-                      {currentAgent === 'installer' && '🔧 Installer'}
-                      {currentAgent === 'commissioning' && '✅ Commissioning'}
-                      {' '}ready for questions
-                    </p>
-                    <p className="text-[10px] text-muted-foreground mt-0.5">
-                      {nextAgent ? `Next: ${nextAgent}` : 'All specialists consulted'}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-2 flex-wrap">
-                  {nextAgent && (
-                    <Button
-                      onClick={() => {
-                        setConsultationPaused(false);
-                        setInput(`Continue to ${nextAgent}`);
-                        setTimeout(() => handleSend(), 100);
-                      }}
-                      size="sm"
-                      className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-7 text-xs px-2"
-                    >
-                      Continue to {nextAgent === 'cost-engineer' ? 'Cost Engineer' : nextAgent === 'installer' ? 'Installer' : 'Commissioning'}
-                    </Button>
-                  )}
-                  <Button
-                    onClick={handleViewResults}
-                    size="sm"
-                    variant="outline"
-                    className="border-elec-yellow/30 text-white h-7 text-xs px-2"
-                  >
-                    <CheckCircle2 className="h-3 w-3 mr-1" />
-                    View Results
-                  </Button>
-                </div>
-              </div>
+      {/* Input Area - WhatsApp style with Export Actions */}
+      <div className="flex-none bg-elec-dark border-t border-border/30 px-5 py-4">
+        <div className="space-y-3">
+          {/* Export Actions - Only show when circuits exist */}
+          {planData.circuits && planData.circuits.length > 0 && (
+            <div className="flex flex-wrap gap-2 justify-center pb-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleExportPackage}
+                disabled={isExporting || messages.length < 5}
+                className="text-xs h-9 bg-white/5 hover:bg-white/10 border-white/10 text-white"
+              >
+                {isExporting ? (
+                  <>
+                    <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                    Exporting...
+                  </>
+                ) : (
+                  <>
+                    <FileDown className="h-3 w-3 mr-1" />
+                    Export Package
+                  </>
+                )}
+              </Button>
+              <Button 
+                variant="default" 
+                size="sm" 
+                onClick={handleCompleteProjectExport}
+                disabled={isExporting}
+                className="text-xs h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
+              >
+                <FileDown className="h-3 w-3 mr-1" />
+                {isExporting ? "Exporting..." : "Export Complete"}
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleExportToEIC}
+                disabled={isExporting}
+                className="text-xs h-9 bg-elec-yellow/10 hover:bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow"
+              >
+                <ClipboardCheck className="h-3 w-3 mr-1" />
+                Testing App
+              </Button>
+              <Button 
+                onClick={handleViewResults}
+                size="sm"
+                variant="outline"
+                className="text-xs h-9 border-elec-yellow/30 text-white bg-white/5 hover:bg-white/10"
+              >
+                <CheckCircle2 className="h-3 w-3 mr-1" />
+                View Results
+              </Button>
             </div>
           )}
           
@@ -985,7 +904,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("9.5kW shower, 18 metres from the board")}
-                className="text-xs h-7 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white"
+                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white"
               >
                 Shower install
               </Button>
@@ -993,7 +912,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("7kW EV charger in garage")}
-                className="text-xs h-7 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white"
+                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white"
               >
                 EV charger
               </Button>
@@ -1001,34 +920,45 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("Design complete board for 3-bed house")}
-                className="text-xs h-7 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white"
+                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white"
               >
                 Whole house
               </Button>
             </div>
           )}
           
-          <div className="flex gap-2">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder={consultationPaused && currentAgent ? `Ask ${currentAgent} a follow-up...` : "Type your question..."}
-              disabled={isLoading}
-              className="flex-1 h-11 text-sm rounded-full px-4 bg-white/5 border-white/10 text-white placeholder:text-muted-foreground"
-            />
-            <Button 
-              onClick={handleSend}
-              disabled={isLoading || isStreaming || !input.trim()}
-              size="icon"
-              className="h-11 w-11 rounded-full shadow-sm shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-            >
-              {(isLoading || isStreaming) ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Send className="h-4 w-4" />
-              )}
-            </Button>
+          {/* Chat Input with Agent Selector */}
+          <div className="flex flex-col gap-2">
+            {/* Agent Selector Hint */}
+            {!isLoading && !isStreaming && (
+              <p className="text-xs text-center text-muted-foreground">
+                💬 Just chat naturally - ask questions anytime
+              </p>
+            )}
+            
+            <div className="flex gap-2">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Ask anything... 'Can you change the cable?' or 'What's the cost?'"
+                disabled={isLoading}
+                className="flex-1 h-12 text-base rounded-2xl px-5 bg-white/5 border-white/10 text-white placeholder:text-muted-foreground"
+                style={{ fontSize: '16px' }}
+              />
+              <Button 
+                onClick={handleSend}
+                disabled={isLoading || isStreaming || !input.trim()}
+                size="icon"
+                className="h-12 w-12 rounded-full shadow-sm shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+              >
+                {(isLoading || isStreaming) ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <Send className="h-5 w-5" />
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

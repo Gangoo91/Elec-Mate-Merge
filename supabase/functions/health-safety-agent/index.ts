@@ -111,9 +111,9 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
         model: 'gpt-5-2025-08-07',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: latestMessage }
+          { role: 'user', content: `${latestMessage}\n\nIMPORTANT: Respond with valid JSON matching the specified format.` }
         ],
-        max_completion_tokens: 3000, // INCREASED for comprehensive risk assessments
+        max_completion_tokens: 3000,
         response_format: { type: "json_object" }
       }),
       signal: controller.signal
