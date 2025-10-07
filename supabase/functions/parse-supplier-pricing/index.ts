@@ -36,25 +36,32 @@ serve(async (req) => {
 
     console.log(`🏢 Detected supplier: ${supplier}`);
 
-    // Read Excel file
+    // Read Excel file with streaming approach
+    console.log('📥 Reading Excel file...');
     const arrayBuffer = await file.arrayBuffer();
-    const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+    const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array', sheetRows: 10000 });
     
     // Get first sheet
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
-    const jsonData = XLSX.utils.sheet_to_json(worksheet);
+    
+    // Get total row count from range
+    const range = XLSX.utils.decode_range(worksheet['!ref'] || 'A1');
+    const totalRows = range.e.r + 1;
+    
+    console.log(`📊 Found ${totalRows} rows in Excel file`);
 
-    console.log(`📊 Found ${jsonData.length} rows in Excel file`);
-
-    if (jsonData.length === 0) {
+    if (totalRows <= 1) {
       throw new Error('Excel file is empty or could not be parsed');
     }
 
-    // Detect column mappings
-    const firstRow = jsonData[0] as Record<string, any>;
-    const headers = Object.keys(firstRow);
-    
+    // Parse first batch to detect columns
+    const firstBatch = XLSX.utils.sheet_to_json(worksheet, { range: 0, header: 1 }) as any[][];
+    if (firstBatch.length === 0) {
+      throw new Error('Could not read Excel headers');
+    }
+
+    const headers = firstBatch[0] as string[];
     console.log('📋 Detected columns:', headers);
 
     // Flexible column detection
@@ -82,51 +89,76 @@ serve(async (req) => {
       throw new Error('Could not detect required columns (price and product name)');
     }
 
-    // Process products
-    const products: any[] = [];
-    let skipped = 0;
+    // Process in chunks to avoid memory issues
+    const CHUNK_SIZE = 1000;
+    const allProducts: any[] = [];
+    let totalSkipped = 0;
+    let processedRows = 0;
 
-    for (const row of jsonData) {
-      const rawPrice = row[priceCol];
-      const name = row[nameCol];
+    console.log(`🔄 Processing ${totalRows} rows in chunks of ${CHUNK_SIZE}...`);
+
+    for (let startRow = 1; startRow < totalRows; startRow += CHUNK_SIZE) {
+      const endRow = Math.min(startRow + CHUNK_SIZE - 1, totalRows - 1);
       
-      // Skip if missing essential data
-      if (!name || !rawPrice) {
-        skipped++;
-        continue;
+      // Parse chunk
+      const chunk = XLSX.utils.sheet_to_json(worksheet, { 
+        range: startRow,
+        header: headers
+      }).slice(0, CHUNK_SIZE);
+
+      console.log(`📦 Processing chunk: rows ${startRow} to ${endRow} (${chunk.length} rows)`);
+
+      // Process chunk
+      const chunkProducts: any[] = [];
+      
+      for (const row of chunk) {
+        const rawPrice = row[priceCol];
+        const name = row[nameCol];
+        
+        if (!name || !rawPrice) {
+          totalSkipped++;
+          continue;
+        }
+
+        let price = 0;
+        if (typeof rawPrice === 'number') {
+          price = rawPrice;
+        } else if (typeof rawPrice === 'string') {
+          price = parseFloat(rawPrice.replace(/[£,]/g, ''));
+        }
+
+        if (isNaN(price) || price === 0) {
+          totalSkipped++;
+          continue;
+        }
+
+        const sku = skuCol ? String(row[skuCol] || '') : '';
+        const brand = brandCol ? String(row[brandCol] || supplier) : supplier;
+        const packQty = packCol ? (parseInt(row[packCol]) || 1) : 1;
+
+        chunkProducts.push({
+          name: String(name).trim(),
+          sku: sku.trim(),
+          price: price.toFixed(2),
+          price_per_unit: `£${price.toFixed(2)} per ${packQty} EA`,
+          brand: brand.trim(),
+          supplier: supplier,
+          pack_qty: packQty,
+          in_stock: true,
+          specifications: `Pack of ${packQty}`
+        });
       }
 
-      // Normalize price (remove £, convert to number)
-      let price = 0;
-      if (typeof rawPrice === 'number') {
-        price = rawPrice;
-      } else if (typeof rawPrice === 'string') {
-        price = parseFloat(rawPrice.replace(/[£,]/g, ''));
-      }
-
-      if (isNaN(price) || price === 0) {
-        skipped++;
-        continue;
-      }
-
-      const sku = skuCol ? String(row[skuCol] || '') : '';
-      const brand = brandCol ? String(row[brandCol] || supplier) : supplier;
-      const packQty = packCol ? (parseInt(row[packCol]) || 1) : 1;
-
-      products.push({
-        name: String(name).trim(),
-        sku: sku.trim(),
-        price: price.toFixed(2),
-        price_per_unit: `£${price.toFixed(2)} per ${packQty} EA`,
-        brand: brand.trim(),
-        supplier: supplier,
-        pack_qty: packQty,
-        in_stock: true,
-        specifications: `Pack of ${packQty}`
-      });
+      allProducts.push(...chunkProducts);
+      processedRows += chunk.length;
+      
+      console.log(`✓ Chunk complete: ${chunkProducts.length} valid products (Total: ${allProducts.length})`);
+      
+      // Clear chunk from memory
+      chunk.length = 0;
     }
 
-    console.log(`✅ Processed ${products.length} products (skipped ${skipped} invalid rows)`);
+    console.log(`✅ Processed ${allProducts.length} products (skipped ${totalSkipped} invalid rows)`);
 
     // Insert into materials_weekly_cache
     const { data: cacheEntry, error: insertError } = await supabase
@@ -134,10 +166,10 @@ serve(async (req) => {
       .insert({
         category: 'Electrical Components',
         source: `${supplier} Trade Pricing`,
-        materials_data: products,
-        total_products: products.length,
+        materials_data: allProducts,
+        total_products: allProducts.length,
         last_updated: new Date().toISOString(),
-        expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString() // 1 year
+        expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
       })
       .select()
       .single();
@@ -174,10 +206,10 @@ serve(async (req) => {
       supplier: supplier,
       cache_id: cacheId,
       job_id: jobId,
-      products_found: products.length,
-      products_skipped: skipped,
-      total_rows: jsonData.length,
-      message: `Successfully processed ${products.length} products from ${supplier}. Embeddings generating in background.`
+      products_found: allProducts.length,
+      products_skipped: totalSkipped,
+      total_rows: totalRows,
+      message: `Successfully processed ${allProducts.length} products from ${supplier}. Embeddings generating in background.`
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
