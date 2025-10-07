@@ -100,24 +100,26 @@ serve(async (req) => {
             const embeddingData = await embeddingResponse.json();
             const embedding = embeddingData.data[0].embedding;
 
-            // Insert into pricing_embeddings table
+            // Insert into pricing_embeddings table with all required top-level fields
             const { error: insertError } = await supabase
               .from('pricing_embeddings')
               .upsert({
                 content: searchableText,
                 embedding: JSON.stringify(embedding),
+                item_name: item.name || item.title || 'Unknown Item',
+                category: material.category || 'Electrical Components',
+                base_cost: parseFloat(item.price) || 0,
+                wholesaler: item.supplier || material.source || 'Unknown',
+                price_per_unit: item.price_per_unit || `£${item.price || 0}`,
+                in_stock: Boolean(item.in_stock),
+                product_url: item.url || null,
+                last_scraped: new Date().toISOString(),
                 metadata: {
-                  item_name: item.name || item.title,
-                  category: material.category,
                   brand: item.brand,
                   supplier: item.supplier || material.source,
-                  base_cost: parseFloat(item.price) || 0,
-                  price_per_unit: item.price_per_unit,
-                  in_stock: item.in_stock || false,
                   specifications: item.specifications,
-                  wholesaler: item.supplier || material.source,
-                  url: item.url,
-                  last_updated: material.last_updated || new Date().toISOString()
+                  sku: item.sku,
+                  pack_qty: item.pack_qty
                 }
               }, {
                 onConflict: 'content'

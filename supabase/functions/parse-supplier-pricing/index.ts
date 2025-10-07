@@ -147,16 +147,21 @@ serve(async (req) => {
 
     console.log('💾 Inserted into materials_weekly_cache');
 
-    // Trigger embeddings generation
-    console.log('🧠 Triggering embeddings generation...');
+    // Trigger embeddings generation in background (non-blocking)
+    console.log('🧠 Triggering embeddings generation in background...');
     
-    const { error: embeddingError } = await supabase.functions.invoke('populate-pricing-embeddings', {
-      body: {}
-    });
-
-    if (embeddingError) {
-      console.error('Embedding generation error (non-fatal):', embeddingError);
-    }
+    // @ts-ignore - EdgeRuntime.waitUntil is available in Deno Deploy
+    EdgeRuntime.waitUntil(
+      supabase.functions.invoke('populate-pricing-embeddings', {
+        body: {}
+      }).then(({ error }) => {
+        if (error) {
+          console.error('Background embedding error:', error);
+        } else {
+          console.log('✅ Background embeddings completed');
+        }
+      })
+    );
 
     return new Response(JSON.stringify({
       success: true,
@@ -164,7 +169,7 @@ serve(async (req) => {
       products_found: products.length,
       products_skipped: skipped,
       total_rows: jsonData.length,
-      message: `Successfully processed ${products.length} products from ${supplier}`
+      message: `Successfully processed ${products.length} products from ${supplier}. Embeddings generating in background.`
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
