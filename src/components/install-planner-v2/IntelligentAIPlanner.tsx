@@ -90,6 +90,32 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Auto-populate pricing embeddings if empty
+  useEffect(() => {
+    const checkAndPopulatePricing = async () => {
+      try {
+        const { count } = await supabase
+          .from('pricing_embeddings')
+          .select('*', { count: 'exact', head: true });
+        
+        if (count === 0) {
+          console.log('🔄 Pricing embeddings empty, populating from materials cache...');
+          const { data, error } = await supabase.functions.invoke('populate-pricing-embeddings');
+          
+          if (error) {
+            console.error('Failed to populate pricing embeddings:', error);
+          } else {
+            console.log('✅ Pricing embeddings populated:', data);
+          }
+        }
+      } catch (error) {
+        console.error('Error checking pricing embeddings:', error);
+      }
+    };
+    
+    checkAndPopulatePricing();
+  }, []);
+
   // Handle resume from results page
   useEffect(() => {
     if (resumeState?.resumePlanData) {
