@@ -22,33 +22,69 @@ serve(async (req) => {
     }
 
     const supabase = createClient(supabaseUrl, supabaseKey);
-    const { cache_id, supplier } = await req.json();
+    const { cache_id, supplier, worker, resume_from, job_id: existingJobId } = await req.json();
 
-    console.log('🔄 Starting pricing embeddings population...', { cache_id, supplier });
+    console.log('🔄 Starting pricing embeddings population...', { cache_id, supplier, worker, resume_from });
 
-    // Create batch job for tracking
-    const { data: job, error: jobError } = await supabase
-      .from('batch_jobs')
-      .insert({
-        job_type: 'pricing_embeddings',
-        status: 'processing',
-        total_batches: 1,
-        completed_batches: 0,
-        failed_batches: 0,
-        current_batch: 0,
-        progress_percentage: 0,
-        metadata: { cache_id, supplier }
-      })
-      .select()
-      .single();
+    let jobId = existingJobId;
 
-    if (jobError || !job) {
-      console.error('Failed to create job:', jobError);
-      throw new Error('Failed to create tracking job');
+    // If NOT in worker mode, create job and return immediately
+    if (!worker) {
+      const { data: job, error: jobError } = await supabase
+        .from('batch_jobs')
+        .insert({
+          job_type: 'pricing_embeddings',
+          status: 'processing',
+          total_batches: 1,
+          completed_batches: 0,
+          failed_batches: 0,
+          current_batch: 0,
+          progress_percentage: 0,
+          metadata: { cache_id, supplier }
+        })
+        .select()
+        .single();
+
+      if (jobError || !job) {
+        console.error('Failed to create job:', jobError);
+        throw new Error('Failed to create tracking job');
+      }
+
+      jobId = job.id;
+      console.log(`📋 Created job ${jobId}, starting background worker...`);
+
+      // Start background worker immediately
+      // @ts-ignore - EdgeRuntime available in Deno Deploy
+      EdgeRuntime.waitUntil(
+        fetch(req.url, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'authorization': req.headers.get('authorization') || '',
+            'apikey': req.headers.get('apikey') || ''
+          },
+          body: JSON.stringify({ 
+            cache_id, 
+            supplier, 
+            worker: true, 
+            resume_from: 0,
+            job_id: jobId 
+          })
+        }).catch(err => console.error('Background worker failed to start:', err))
+      );
+
+      // Return immediately with 200 OK
+      return new Response(JSON.stringify({
+        success: true,
+        job_id: jobId,
+        message: 'Embeddings generation started in background'
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    const jobId = job.id;
-    console.log(`📋 Created job ${jobId}`);
+    // ========== WORKER MODE ==========
+    console.log(`👷 Worker mode - job ${jobId}, resume_from: ${resume_from || 0}`);
 
     // Fetch materials from cache
     let query = supabase.from('materials_weekly_cache').select('*');
@@ -180,10 +216,16 @@ serve(async (req) => {
       total_items: totalItems
     }).eq('job_id', jobId).eq('batch_number', 1);
 
-    // Split into batches of 100 items
+    // Worker safety limits to prevent CPU exhaustion
     const BATCH_SIZE = 100;
-    const batches = chunkArray(deduplicatedItems, BATCH_SIZE);
-    console.log(`📦 Created ${batches.length} batches`);
+    const MAX_BATCHES_PER_RUN = 20; // Process max 2,000 items per worker run
+    const startIndex = resume_from || 0;
+    const endIndex = Math.min(startIndex + (BATCH_SIZE * MAX_BATCHES_PER_RUN), deduplicatedItems.length);
+    
+    const itemsThisRun = deduplicatedItems.slice(startIndex, endIndex);
+    const batches = chunkArray(itemsThisRun, BATCH_SIZE);
+    
+    console.log(`📦 Worker processing items ${startIndex}-${endIndex} (${itemsThisRun.length} items, ${batches.length} batches)`);
 
     for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
       const batch = batches[batchIndex];
@@ -329,7 +371,60 @@ serve(async (req) => {
       }
     }
 
-    // Final update
+    // Check if there are more items to process
+    const remainingItems = totalItems - endIndex;
+    
+    if (remainingItems > 0) {
+      console.log(`🔄 ${remainingItems} items remaining, scheduling next worker run...`);
+      
+      // Update progress
+      const currentProgress = Math.floor((endIndex / totalItems) * 100);
+      await supabase.from('batch_progress').update({
+        items_processed: endIndex,
+        data: { 
+          errors: errorCount, 
+          skipped: skippedCount,
+          batches_completed: batches.length,
+          resume_from: endIndex
+        }
+      }).eq('job_id', jobId).eq('batch_number', 1);
+
+      await supabase.from('batch_jobs').update({
+        progress_percentage: currentProgress
+      }).eq('id', jobId);
+
+      // Schedule next worker run
+      // @ts-ignore - EdgeRuntime available
+      EdgeRuntime.waitUntil(
+        fetch(req.url, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'authorization': req.headers.get('authorization') || '',
+            'apikey': req.headers.get('apikey') || ''
+          },
+          body: JSON.stringify({ 
+            cache_id, 
+            supplier, 
+            worker: true, 
+            resume_from: endIndex,
+            job_id: jobId 
+          })
+        }).catch(err => console.error('Next worker failed to start:', err))
+      );
+
+      return new Response(JSON.stringify({
+        success: true,
+        job_id: jobId,
+        processed: endIndex,
+        total: totalItems,
+        continuing: true
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Final update - all items processed
     const finalProgress = Math.floor((processedCount / totalItems) * 100);
     await supabase.from('batch_progress').update({
       items_processed: processedCount,
@@ -345,7 +440,7 @@ serve(async (req) => {
       completed_at: new Date().toISOString()
     }).eq('id', jobId);
 
-    console.log(`✅ Completed! Processed: ${processedCount}, Errors: ${errorCount}, Skipped: ${skippedCount}`);
+    console.log(`✅ All items processed! Total: ${processedCount}, Errors: ${errorCount}, Skipped: ${skippedCount}`);
 
     return new Response(JSON.stringify({
       success: true,

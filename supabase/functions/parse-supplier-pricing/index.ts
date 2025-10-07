@@ -252,56 +252,66 @@ serve(async (req) => {
     // Clear workbook from memory before database insert
     fullWorksheet['!ref'] = null;
 
-    // Insert into materials_weekly_cache
-    const { data: cacheEntry, error: insertError } = await supabase
-      .from('materials_weekly_cache')
-      .insert({
-        category: 'Electrical Components',
-        source: `${supplier} Trade Pricing`,
-        materials_data: allProducts,
-        total_products: allProducts.length,
-        last_updated: new Date().toISOString(),
-        expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
-      })
-      .select()
-      .single();
-
-    if (insertError) {
-      console.error('Insert error:', insertError);
-      throw insertError;
+    // Insert into materials_weekly_cache in chunks to reduce memory pressure
+    const INSERT_CHUNK_SIZE = 1000; // Insert 1000 products at a time
+    const productChunks = [];
+    for (let i = 0; i < allProducts.length; i += INSERT_CHUNK_SIZE) {
+      productChunks.push(allProducts.slice(i, i + INSERT_CHUNK_SIZE));
     }
 
-    console.log('💾 Inserted into materials_weekly_cache with ID:', cacheEntry?.id);
+    console.log(`💾 Inserting ${allProducts.length} products in ${productChunks.length} cache chunks...`);
 
-    const cacheId = cacheEntry?.id;
-    let jobId: string | null = null;
+    const cacheIds: string[] = [];
+    for (let i = 0; i < productChunks.length; i++) {
+      const chunk = productChunks[i];
+      const { data: cacheEntry, error: insertError } = await supabase
+        .from('materials_weekly_cache')
+        .insert({
+          category: 'Electrical Components',
+          source: `${supplier} Trade Pricing${productChunks.length > 1 ? ` (Part ${i + 1}/${productChunks.length})` : ''}`,
+          materials_data: chunk,
+          total_products: chunk.length,
+          last_updated: new Date().toISOString(),
+          expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+        })
+        .select()
+        .single();
 
-    // Trigger embeddings generation in background (non-blocking)
+      if (insertError) {
+        console.error(`Insert error for chunk ${i + 1}:`, insertError);
+        throw insertError;
+      }
+
+      cacheIds.push(cacheEntry.id);
+      console.log(`✅ Chunk ${i + 1}/${productChunks.length} inserted (${chunk.length} products)`);
+    }
+
+    console.log(`💾 All chunks inserted with IDs: ${cacheIds.join(', ')}`);
+
+    // Trigger embeddings generation by supplier (picks up all chunks)
     console.log('🧠 Triggering embeddings generation in background...');
     
-    // @ts-ignore - EdgeRuntime.waitUntil is available in Deno Deploy
-    EdgeRuntime.waitUntil(
-      supabase.functions.invoke('populate-pricing-embeddings', {
-        body: { cache_id: cacheId, supplier }
-      }).then(({ data, error }) => {
-        if (error) {
-          console.error('Background embedding error:', error);
-        } else {
-          jobId = data?.job_id;
-          console.log('✅ Background embeddings started with job_id:', jobId);
-        }
-      })
-    );
+    const { data: embedData, error: embedError } = await supabase.functions.invoke('populate-pricing-embeddings', {
+      body: { supplier }
+    });
+
+    const jobId = embedData?.job_id || null;
+    if (embedError) {
+      console.error('Embeddings trigger error:', embedError);
+    } else {
+      console.log('✅ Embeddings generation started with job_id:', jobId);
+    }
 
     return new Response(JSON.stringify({
       success: true,
       supplier: supplier,
-      cache_id: cacheId,
+      cache_ids: cacheIds,
       job_id: jobId,
       products_found: allProducts.length,
       products_skipped: totalSkipped,
       total_rows: totalRows,
-      message: `Successfully processed ${allProducts.length} products from ${supplier}. Embeddings generating in background.`
+      chunks_created: productChunks.length,
+      message: `Successfully processed ${allProducts.length} products from ${supplier} in ${productChunks.length} chunk(s). Embeddings generating in background.`
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

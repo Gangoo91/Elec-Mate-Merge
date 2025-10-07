@@ -277,6 +277,10 @@ verify_jwt = false
 verify_jwt = false
 timeout_sec = 60
 
+[functions.populate-pricing-embeddings]
+verify_jwt = false
+timeout_sec = 60
+
 [functions.parse-project-management]
 verify_jwt = false
 
@@ -284,7 +288,4 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.parse-inspection-testing]
-verify_jwt = false
-
-[functions.populate-pricing-embeddings]
 verify_jwt = false
