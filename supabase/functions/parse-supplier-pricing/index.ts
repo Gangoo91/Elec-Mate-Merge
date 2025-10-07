@@ -254,9 +254,18 @@ serve(async (req) => {
 
         const brand = brandCol ? String(row[brandCol] || supplier).trim() : supplier;
 
+        const productName = String(name).trim();
+        const productSku = String(sku).trim();
+        
+        // Final validation before adding to buffer
+        if (!productName || !productSku || !brand) {
+          console.warn(`⚠️ Skipping invalid product: name=${productName}, sku=${productSku}, brand=${brand}`);
+          continue;
+        }
+
         buffer.push({
-          name: String(name).trim(),
-          sku: String(sku).trim(),
+          name: productName,
+          sku: productSku,
           price: price.toFixed(2),
           price_per_unit: packQty > 1
             ? `£${unitPrice.toFixed(2)} per ${unit} (£${price.toFixed(2)} per pack of ${packQty})`
@@ -265,6 +274,7 @@ serve(async (req) => {
           supplier: supplier,
           pack_qty: packQty,
           in_stock: true,
+          category: 'Electrical Components',
           specifications: packQty > 1 ? `Pack of ${packQty} ${unit}` : `Single ${unit}`
         });
         totalProcessed++;

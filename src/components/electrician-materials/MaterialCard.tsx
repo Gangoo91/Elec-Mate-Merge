@@ -48,8 +48,8 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   
   // Extract cable-specific information
   const getCableInfo = () => {
-    const name = item.name.toLowerCase();
-    const info: { 
+    const name = (item.name || '').toLowerCase();
+    const info: {
       type?: string; 
       size?: string; 
       length?: string; 
@@ -92,7 +92,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   };
 
   const cableInfo = getCableInfo();
-  const isCable = item.category.toLowerCase().includes('cable') || cableInfo.type;
+  const isCable = (item.category || '').toLowerCase().includes('cable') || cableInfo.type;
 
   // Generate dynamic badges
   const getBadges = () => {
@@ -131,7 +131,7 @@ const MaterialCard: React.FC<MaterialCardProps> = ({
   // Generate consistent social proof based on item properties
   const getSocialProof = useMemo(() => {
     // Create a simple hash from item name to ensure consistency
-    const hash = item.name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const hash = (item.name || '').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const baseViews = (hash % 50) + 10;
     const rating = (4.2 + ((hash % 80) / 100)).toFixed(1);
     const reviews = (hash % 200) + 50;
