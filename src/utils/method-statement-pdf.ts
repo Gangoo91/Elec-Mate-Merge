@@ -468,7 +468,8 @@ class MethodStatementPDFGenerator {
     this.addEquipmentList(data);
     this.addSignOffSection(data);
 
-    return this.doc.output('arraybuffer') as Uint8Array;
+    const arrayBuffer = this.doc.output('arraybuffer') as ArrayBuffer;
+    return new Uint8Array(arrayBuffer);
   }
 }
 
@@ -487,7 +488,9 @@ export function generateMethodStatementPDFPreview(
 ): string {
   const generator = new MethodStatementPDFGenerator();
   const pdfData = generator.generate(data, options);
-  return URL.createObjectURL(new Blob([pdfData], { type: 'application/pdf' }));
+  const arrayBuffer = new ArrayBuffer(pdfData.byteLength);
+  new Uint8Array(arrayBuffer).set(pdfData);
+  return URL.createObjectURL(new Blob([arrayBuffer], { type: 'application/pdf' }));
 }
 
 export function downloadMethodStatementPDF(
@@ -497,7 +500,9 @@ export function downloadMethodStatementPDF(
   const generator = new MethodStatementPDFGenerator();
   const pdfData = generator.generate(data, options);
   
-  const blob = new Blob([pdfData], { type: 'application/pdf' });
+  const arrayBuffer = new ArrayBuffer(pdfData.byteLength);
+  new Uint8Array(arrayBuffer).set(pdfData);
+  const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
   const url = URL.createObjectURL(blob);
   
   const link = document.createElement('a');
