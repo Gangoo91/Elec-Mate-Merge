@@ -36,32 +36,30 @@ serve(async (req) => {
 
     console.log(`🏢 Detected supplier: ${supplier}`);
 
-    // Read Excel file with streaming approach
-    console.log('📥 Reading Excel file...');
+    // Read Excel file with memory-efficient approach
+    console.log('📥 Reading Excel file with memory optimization...');
     const arrayBuffer = await file.arrayBuffer();
-    const workbook = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array', sheetRows: 10000 });
+    
+    // Use sheetRows to limit initial memory footprint
+    const workbook = XLSX.read(new Uint8Array(arrayBuffer), { 
+      type: 'array', 
+      sheetRows: 100,  // Only read first 100 rows initially
+      cellDates: false,
+      cellNF: false,
+      cellHTML: false
+    });
     
     // Get first sheet
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     
-    // Get total row count from range
-    const range = XLSX.utils.decode_range(worksheet['!ref'] || 'A1');
-    const totalRows = range.e.r + 1;
-    
-    console.log(`📊 Found ${totalRows} rows in Excel file`);
-
-    if (totalRows <= 1) {
-      throw new Error('Excel file is empty or could not be parsed');
-    }
-
-    // Parse first batch to detect columns
-    const firstBatch = XLSX.utils.sheet_to_json(worksheet, { range: 0, header: 1 }) as any[][];
-    if (firstBatch.length === 0) {
+    // Parse just the first row to detect columns
+    const headerRow = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as any[][];
+    if (headerRow.length === 0) {
       throw new Error('Could not read Excel headers');
     }
 
-    const headers = firstBatch[0] as string[];
+    const headers = headerRow[0] as string[];
     console.log('📋 Detected columns:', headers);
 
     // Flexible column detection
@@ -89,28 +87,45 @@ serve(async (req) => {
       throw new Error('Could not detect required columns (price and product name)');
     }
 
-    // Process in chunks to avoid memory issues
-    const CHUNK_SIZE = 1000;
+    // Clear initial workbook from memory
+    worksheet['!ref'] = null;
+    
+    // Now re-read without row limit to get full data
+    console.log('📊 Loading full dataset...');
+    const fullWorkbook = XLSX.read(new Uint8Array(arrayBuffer), { 
+      type: 'array',
+      cellDates: false,
+      cellNF: false,
+      cellHTML: false
+    });
+    
+    const fullWorksheet = fullWorkbook.Sheets[fullWorkbook.SheetNames[0]];
+    
+    // Get row count
+    const range = XLSX.utils.decode_range(fullWorksheet['!ref'] || 'A1');
+    const totalRows = range.e.r;
+    
+    console.log(`📊 Total rows: ${totalRows}`);
+
+    // Process in very small chunks to minimize memory
+    const CHUNK_SIZE = 100;  // Smaller chunks
     const allProducts: any[] = [];
     let totalSkipped = 0;
-    let processedRows = 0;
 
     console.log(`🔄 Processing ${totalRows} rows in chunks of ${CHUNK_SIZE}...`);
 
-    for (let startRow = 1; startRow < totalRows; startRow += CHUNK_SIZE) {
-      const endRow = Math.min(startRow + CHUNK_SIZE - 1, totalRows - 1);
+    for (let startRow = 1; startRow <= totalRows; startRow += CHUNK_SIZE) {
+      const endRow = Math.min(startRow + CHUNK_SIZE - 1, totalRows);
       
-      // Parse chunk
-      const chunk = XLSX.utils.sheet_to_json(worksheet, { 
+      // Parse small chunk
+      const chunk = XLSX.utils.sheet_to_json(fullWorksheet, { 
         range: startRow,
         header: headers
       }).slice(0, CHUNK_SIZE);
 
-      console.log(`📦 Processing chunk: rows ${startRow} to ${endRow} (${chunk.length} rows)`);
+      console.log(`📦 Chunk ${Math.floor(startRow/CHUNK_SIZE) + 1}: rows ${startRow}-${endRow} (${chunk.length} rows)`);
 
-      // Process chunk
-      const chunkProducts: any[] = [];
-      
+      // Process chunk immediately
       for (const row of chunk) {
         const rawPrice = row[priceCol];
         const name = row[nameCol];
@@ -136,7 +151,7 @@ serve(async (req) => {
         const brand = brandCol ? String(row[brandCol] || supplier) : supplier;
         const packQty = packCol ? (parseInt(row[packCol]) || 1) : 1;
 
-        chunkProducts.push({
+        allProducts.push({
           name: String(name).trim(),
           sku: sku.trim(),
           price: price.toFixed(2),
@@ -149,16 +164,16 @@ serve(async (req) => {
         });
       }
 
-      allProducts.push(...chunkProducts);
-      processedRows += chunk.length;
-      
-      console.log(`✓ Chunk complete: ${chunkProducts.length} valid products (Total: ${allProducts.length})`);
-      
       // Clear chunk from memory
       chunk.length = 0;
+      
+      console.log(`✓ Total processed: ${allProducts.length} products`);
     }
 
-    console.log(`✅ Processed ${allProducts.length} products (skipped ${totalSkipped} invalid rows)`);
+    console.log(`✅ Completed: ${allProducts.length} products (skipped ${totalSkipped} invalid rows)`);
+
+    // Clear workbook from memory before database insert
+    fullWorksheet['!ref'] = null;
 
     // Insert into materials_weekly_cache
     const { data: cacheEntry, error: insertError } = await supabase
