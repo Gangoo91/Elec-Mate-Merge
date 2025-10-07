@@ -1,178 +1,119 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Check, Zap, Calculator, Wrench, Shield, ClipboardCheck, FolderKanban } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Lightbulb, Calculator, Wrench, Shield, CheckCircle, ClipboardList,
+  ChevronLeft, ChevronRight
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-export interface Agent {
-  id: string;
+export type AgentType = 'designer' | 'cost-engineer' | 'installer' | 'health-safety' | 'commissioning' | 'project-manager';
+
+interface Agent {
+  id: AgentType;
   name: string;
-  icon: React.ComponentType<{ className?: string }>;
-  description: string;
+  icon: typeof Lightbulb;
   color: string;
+  description: string;
 }
 
 const AGENTS: Agent[] = [
-  {
-    id: 'designer',
-    name: 'Designer',
-    icon: Zap,
-    description: 'Circuit design & cable sizing',
-    color: 'text-yellow-500',
-  },
-  {
-    id: 'cost-engineer',
-    name: 'Cost Engineer',
-    icon: Calculator,
-    description: 'Material costs & pricing',
-    color: 'text-green-500',
-  },
-  {
-    id: 'installer',
-    name: 'Installer',
-    icon: Wrench,
-    description: 'Installation guidance',
-    color: 'text-blue-500',
-  },
-  {
-    id: 'health-safety',
-    name: 'H&S Specialist',
-    icon: Shield,
-    description: 'Safety requirements',
-    color: 'text-red-500',
-  },
-  {
-    id: 'commissioning',
-    name: 'Commissioning',
-    icon: ClipboardCheck,
-    description: 'Testing & inspection',
-    color: 'text-purple-500',
-  },
-  {
-    id: 'project-manager',
-    name: 'Project Manager',
-    icon: FolderKanban,
-    description: 'Timeline & coordination',
-    color: 'text-orange-500',
-  },
+  { id: 'designer', name: 'Designer', icon: Lightbulb, color: 'text-blue-400', description: 'Circuit design & cable sizing' },
+  { id: 'cost-engineer', name: 'Cost', icon: Calculator, color: 'text-green-400', description: 'Material costs & quotes' },
+  { id: 'installer', name: 'Installer', icon: Wrench, color: 'text-orange-400', description: 'Practical installation advice' },
+  { id: 'health-safety', name: 'H&S', icon: Shield, color: 'text-red-400', description: 'Safety requirements' },
+  { id: 'commissioning', name: 'Testing', icon: CheckCircle, color: 'text-purple-400', description: 'Inspection & testing' },
+  { id: 'project-manager', name: 'Manager', icon: ClipboardList, color: 'text-yellow-400', description: 'Project coordination' }
 ];
 
 interface InChatAgentSelectorProps {
-  selectedAgent: string | null;
-  onSelectAgent: (agentId: string | null) => void;
-  activeAgents: string[];
+  selectedAgent: AgentType | null;
+  onAgentSelect: (agentId: AgentType | null) => void;
+  activeAgents?: string[];
   className?: string;
 }
 
 export const InChatAgentSelector = ({
-  selectedAgent,
-  onSelectAgent,
-  activeAgents,
-  className,
+  selectedAgent, onAgentSelect, activeAgents = [], className
 }: InChatAgentSelectorProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const handleAgentClick = (agentId: string) => {
-    if (selectedAgent === agentId) {
-      // Deselect if clicking the same agent
-      onSelectAgent(null);
-      setIsExpanded(false);
-    } else {
-      onSelectAgent(agentId);
-      setIsExpanded(false);
-    }
-  };
-
-  const selectedAgentData = AGENTS.find(a => a.id === selectedAgent);
+  const [scrollIndex, setScrollIndex] = useState(0);
+  const visibleCount = 3;
 
   return (
-    <div className={cn("w-full", className)}>
-      {/* Compact mode - Show selected agent or expand button */}
-      {!isExpanded && (
-        <div className="flex items-center gap-2">
-          {selectedAgent && selectedAgentData ? (
-            <div className="flex items-center gap-2 bg-elec-card/50 border border-elec-yellow/30 rounded-xl px-3 py-2">
-              <selectedAgentData.icon className={cn("h-4 w-4", selectedAgentData.color)} />
-              <span className="text-sm font-medium text-elec-yellow">
-                {selectedAgentData.name}
-              </span>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onSelectAgent(null)}
-                className="h-5 w-5 p-0 hover:bg-elec-yellow/20"
-              >
-                ×
-              </Button>
-            </div>
-          ) : (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsExpanded(true)}
-              className="text-xs border-dashed border-elec-yellow/30 hover:border-elec-yellow/60"
-            >
-              🎯 Choose Specialist Agent
+    <div className={cn("relative", className)}>
+      {/* Desktop */}
+      <div className="hidden md:flex items-center gap-2 flex-wrap">
+        <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
+          className={cn("h-8 text-xs", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}>
+          Auto
+        </Button>
+        {AGENTS.map((agent) => {
+          const Icon = agent.icon;
+          const isSelected = selectedAgent === agent.id;
+          const isComplete = activeAgents.includes(agent.id) && !isSelected;
+          return (
+            <Button key={agent.id} variant="ghost" size="sm"
+              onClick={() => onAgentSelect(isSelected ? null : agent.id)}
+              className={cn("h-8 gap-2 text-xs relative",
+                isSelected && "bg-elec-yellow/20 text-elec-yellow",
+                isComplete && "bg-green-500/10 text-green-400")}>
+              <Icon className={cn("h-3.5 w-3.5", agent.color)} />
+              <span>{agent.name}</span>
+              {isComplete && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -top-1 -right-1">
+                <CheckCircle className="h-3 w-3 text-green-400 fill-current" />
+              </motion.div>}
             </Button>
-          )}
-        </div>
-      )}
+          );
+        })}
+      </div>
 
-      {/* Expanded mode - Show all agents */}
-      {isExpanded && (
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <p className="text-xs text-muted-foreground">Select a specialist agent:</p>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsExpanded(false)}
-              className="h-6 text-xs"
-            >
-              Cancel
+      {/* Mobile */}
+      <div className="md:hidden flex items-center gap-2">
+        <Button variant="ghost" size="icon" onClick={() => setScrollIndex(i => Math.max(0, i - 1))}
+          disabled={scrollIndex === 0} className="h-8 w-8 flex-shrink-0">
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        <div className="flex-1 overflow-hidden">
+          <motion.div className="flex gap-2" animate={{ x: -scrollIndex * 120 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}>
+            <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
+              className={cn("h-8 text-xs flex-shrink-0", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}>
+              Auto
             </Button>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {AGENTS.map((agent) => {
               const Icon = agent.icon;
-              const isActive = activeAgents.includes(agent.id);
               const isSelected = selectedAgent === agent.id;
-              
+              const isComplete = activeAgents.includes(agent.id) && !isSelected;
               return (
-                <button
-                  key={agent.id}
-                  onClick={() => handleAgentClick(agent.id)}
-                  className={cn(
-                    "relative flex flex-col items-start gap-1 p-3 rounded-xl border transition-all",
-                    "hover:scale-105 hover:shadow-lg",
-                    isSelected && "bg-elec-yellow/10 border-elec-yellow shadow-lg scale-105",
-                    !isSelected && isActive && "bg-green-500/5 border-green-500/30",
-                    !isSelected && !isActive && "bg-elec-card/30 border-border/50 hover:border-border"
-                  )}
-                >
-                  {isActive && !isSelected && (
-                    <div className="absolute top-2 right-2">
-                      <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                    </div>
-                  )}
-                  
-                  {isSelected && (
-                    <div className="absolute top-2 right-2">
-                      <Check className="h-4 w-4 text-elec-yellow" />
-                    </div>
-                  )}
-                  
-                  <Icon className={cn("h-5 w-5", agent.color)} />
-                  <div className="text-left">
-                    <p className="text-sm font-medium">{agent.name}</p>
-                    <p className="text-xs text-muted-foreground">{agent.description}</p>
-                  </div>
-                </button>
+                <Button key={agent.id} variant="ghost" size="sm"
+                  onClick={() => onAgentSelect(isSelected ? null : agent.id)}
+                  className={cn("h-8 gap-2 text-xs flex-shrink-0 relative min-w-[100px]",
+                    isSelected && "bg-elec-yellow/20 text-elec-yellow",
+                    isComplete && "bg-green-500/10 text-green-400")}>
+                  <Icon className={cn("h-3.5 w-3.5", agent.color)} />
+                  <span>{agent.name}</span>
+                </Button>
               );
             })}
-          </div>
+          </motion.div>
         </div>
-      )}
+        <Button variant="ghost" size="icon" onClick={() => setScrollIndex(i => Math.min(AGENTS.length - visibleCount + 1, i + 1))}
+          disabled={scrollIndex + visibleCount >= AGENTS.length} className="h-8 w-8 flex-shrink-0">
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+
+      <AnimatePresence>
+        {selectedAgent && (
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+            className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="h-1 w-1 rounded-full bg-elec-yellow animate-pulse" />
+            <span>Directing to <span className="text-elec-yellow font-medium">
+              {AGENTS.find(a => a.id === selectedAgent)?.name}
+            </span></span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

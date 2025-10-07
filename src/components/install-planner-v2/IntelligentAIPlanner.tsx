@@ -19,6 +19,10 @@ import { exportCompleteProject, AgentOutputs } from "@/utils/project-export";
 import { InstallerAgentOutput } from "@/utils/rams-transformer";
 import { HealthSafetyAgentOutput } from "@/utils/hs-to-rams-transformer";
 import { CostEngineerOutput } from "@/utils/cost-to-quote-transformer";
+import { useConversationPersistence } from "@/hooks/useConversationPersistence";
+import { InChatAgentSelector, AgentType } from "./InChatAgentSelector";
+import { PhotoUploadButton } from "./PhotoUploadButton";
+import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 
 // Feature flag to toggle between orchestrator and legacy designer
 const USE_ORCHESTRATOR = true;
@@ -91,7 +95,10 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [consultationStarted, setConsultationStarted] = useState(!!resumeState?.resumeMessages);
   const [currentAgent, setCurrentAgent] = useState<string | null>(null);
   const [nextAgent, setNextAgent] = useState<string | null>(null);
+  const [selectedAgent, setSelectedAgent] = useState<AgentType | null>(null);
   const navigate = useNavigate();
+  
+  const { sessionId, isSaving, lastSaved } = useConversationPersistence(messages, planData, activeAgents);
 
   // Auto-populate pricing embeddings if empty
   useEffect(() => {
@@ -927,12 +934,19 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             </div>
           )}
           
-          {/* Chat Input with Agent Selector */}
+          {/* Agent Selector */}
+          <InChatAgentSelector 
+            selectedAgent={selectedAgent}
+            onAgentSelect={setSelectedAgent}
+            activeAgents={activeAgents}
+            className="mb-3"
+          />
+
+          {/* Chat Input */}
           <div className="flex flex-col gap-2">
-            {/* Agent Selector Hint */}
-            {!isLoading && !isStreaming && (
+            {!isLoading && !isStreaming && lastSaved && (
               <p className="text-xs text-center text-muted-foreground">
-                💬 Just chat naturally - ask questions anytime
+                💾 Auto-saved {Math.round((Date.now() - lastSaved.getTime()) / 1000)}s ago
               </p>
             )}
             
@@ -945,6 +959,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 disabled={isLoading}
                 className="flex-1 h-12 text-base rounded-2xl px-5 bg-white/5 border-white/10 text-white placeholder:text-muted-foreground"
                 style={{ fontSize: '16px' }}
+              />
+              <PhotoUploadButton 
+                onPhotoUploaded={(url) => {
+                  setInput(prev => prev + ` [Photo attached: ${url}]`);
+                  toast.success('Photo added to message');
+                }}
+                disabled={isLoading}
               />
               <Button 
                 onClick={handleSend}

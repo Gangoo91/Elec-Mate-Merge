@@ -1,75 +1,94 @@
-import { useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Camera, Loader2 } from "lucide-react";
-import { usePhotoUpload } from "@/hooks/usePhotoUpload";
-import { cn } from "@/lib/utils";
+import { useState, useRef } from 'react';
+import { Camera, Upload, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 interface PhotoUploadButtonProps {
   onPhotoUploaded: (photoUrl: string) => void;
+  disabled?: boolean;
   className?: string;
-  size?: "sm" | "default" | "lg";
 }
 
-export const PhotoUploadButton = ({
-  onPhotoUploaded,
-  className,
-  size = "default",
-}: PhotoUploadButtonProps) => {
+export const PhotoUploadButton = ({ onPhotoUploaded, disabled, className }: PhotoUploadButtonProps) => {
+  const [isUploading, setIsUploading] = useState(false);
+  const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { isUploading, uploadPhoto } = usePhotoUpload();
+  const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    // Validate file type
+  const handleFileSelect = async (file: File) => {
     if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file');
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image must be less than 5MB');
       return;
     }
 
-    const uploadedPhoto = await uploadPhoto(file);
-    if (uploadedPhoto) {
-      onPhotoUploaded(uploadedPhoto.publicUrl);
-    }
+    setIsUploading(true);
+    try {
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result as string);
+      reader.readAsDataURL(file);
 
-    // Reset input
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
 
-  const handleClick = () => {
-    fileInputRef.current?.click();
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+
+      const { data, error } = await supabase.storage
+        .from('visual-uploads')
+        .upload(fileName, file, { cacheControl: '3600', upsert: false });
+
+      if (error) throw error;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('visual-uploads')
+        .getPublicUrl(data.path);
+
+      toast.success('Photo uploaded');
+      onPhotoUploaded(publicUrl);
+      setTimeout(() => setPreview(null), 2000);
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast.error('Failed to upload photo');
+      setPreview(null);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
-    <>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        capture="environment"
-        onChange={handleFileSelect}
-        className="hidden"
-      />
-      
-      <Button
-        type="button"
-        variant="outline"
-        size={size}
-        onClick={handleClick}
-        disabled={isUploading}
-        className={cn(
-          "border-elec-yellow/30 hover:bg-elec-yellow/10",
-          className
-        )}
-      >
-        {isUploading ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
-        ) : (
-          <Camera className="h-4 w-4" />
-        )}
-      </Button>
-    </>
+    <div className={cn("relative", className)}>
+      <input ref={fileInputRef} type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])} className="hidden" />
+      <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])} className="hidden" />
+
+      <div className="flex gap-2">
+        <Button type="button" variant="ghost" size="icon" disabled={disabled || isUploading}
+          onClick={() => cameraInputRef.current?.click()} className="h-9 w-9 shrink-0" title="Take photo">
+          {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
+        </Button>
+        <Button type="button" variant="ghost" size="icon" disabled={disabled || isUploading}
+          onClick={() => fileInputRef.current?.click()} className="h-9 w-9 shrink-0" title="Upload photo">
+          <Upload className="h-4 w-4" />
+        </Button>
+      </div>
+
+      {preview && (
+        <div className="absolute bottom-full mb-2 right-0 w-32 h-32 rounded-lg overflow-hidden shadow-lg border border-border/50 bg-card">
+          <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-center pb-2">
+            <div className="flex gap-1">
+              {[0, 100, 200].map((delay, i) => (
+                <div key={i} className="h-1 w-1 rounded-full bg-elec-yellow animate-pulse" style={{ animationDelay: `${delay}ms` }} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
