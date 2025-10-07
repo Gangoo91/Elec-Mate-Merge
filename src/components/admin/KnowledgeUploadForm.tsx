@@ -87,7 +87,22 @@ export default function KnowledgeUploadForm({
     try {
       const fileContent = await selectedFile.text();
       
-      const { data, error } = await supabase.functions.invoke("parse-bs7671", {
+      // Determine which edge function to call based on targetType
+      let edgeFunctionName = "parse-bs7671";
+      
+      if (targetType === "installation") {
+        // Route installation knowledge to the appropriate parser
+        const filename = selectedFile.name.toLowerCase();
+        if (filename.includes("calc") || filename.includes("sizing") || filename.includes("calculation")) {
+          edgeFunctionName = "parse-calculations-basic";
+        } else {
+          edgeFunctionName = "parse-onsite-guide";
+        }
+      }
+      
+      console.log(`Routing to edge function: ${edgeFunctionName}`);
+      
+      const { data, error } = await supabase.functions.invoke(edgeFunctionName, {
         body: { fileContent },
       });
 
@@ -100,15 +115,19 @@ export default function KnowledgeUploadForm({
         throw new Error(data.error);
       }
 
+      // Normalize response data from different edge functions
+      const chunksProcessed = data.chunksProcessed || data.chunks_processed || data.processed || 0;
+      const chunksCreated = data.chunksCreated || data.chunks_created || chunksProcessed;
+
       onProcessingComplete({
-        total: data.chunks_created || 0,
-        processed: data.chunks_processed || 0,
+        total: chunksCreated,
+        processed: chunksProcessed,
         status: "completed",
       });
 
       toast({
         title: "Processing complete",
-        description: `Successfully processed ${data.chunks_processed} regulations.`,
+        description: `Successfully processed ${chunksProcessed} chunks.`,
       });
 
       setSelectedFile(null);
