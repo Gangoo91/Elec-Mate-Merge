@@ -59,7 +59,7 @@ Consumer unit 12 way
     if (!materialsText.trim()) {
       toast({
         title: "Input Required",
-        description: "Please enter a materials list to analyze",
+        description: "Please enter a materials list to analyse",
         variant: "destructive"
       });
       return;
@@ -97,7 +97,7 @@ Consumer unit 12 way
       console.error('[SMART-QUOTE] Failed:', error);
       toast({
         title: "Analysis Failed",
-        description: error.message || "Failed to analyze materials list",
+        description: error.message || "Failed to analyse materials list",
         variant: "destructive"
       });
     } finally {
@@ -285,12 +285,12 @@ Consumer unit 12 way
             {isAnalyzing ? (
               <>
                 <Sparkles className="mr-2 h-4 w-4 animate-pulse" />
-                Analyzing...
+                Analysing...
               </>
             ) : (
               <>
                 <Brain className="mr-2 h-4 w-4" />
-                Analyze & Find Best Options
+                Analyse
               </>
             )}
           </Button>
