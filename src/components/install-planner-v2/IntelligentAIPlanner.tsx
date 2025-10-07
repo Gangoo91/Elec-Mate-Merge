@@ -404,7 +404,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     );
   }
 
-  // Clean agent text - remove markdown artifacts
+  // Clean agent text - convert markdown to HTML for rendering
   const cleanAgentText = (text: string): string => {
     return text
       // Remove agent name prefixes like "[Circuit Designer]:"
@@ -413,8 +413,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
       // Convert *italic* to <em>
       .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      // Remove any remaining asterisks
-      .replace(/\*/g, '')
       // Clean up section separators
       .replace(/^---+$/gm, '')
       // Remove empty brackets
@@ -661,18 +659,18 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         <div className="space-y-2">
           {/* Agent Pause Controls */}
           {consultationPaused && (
-            <div className="bg-elec-card border border-elec-yellow/30 rounded-lg p-3">
+            <div className="bg-elec-card border border-elec-yellow/30 rounded-lg p-2.5">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <p className="text-sm font-semibold text-white">
+                    <p className="text-xs font-medium text-white">
                       {currentAgent === 'designer' && '🎨 Designer'} 
                       {currentAgent === 'cost-engineer' && '💰 Cost Engineer'}
                       {currentAgent === 'installer' && '🔧 Installer'}
                       {currentAgent === 'commissioning' && '✅ Commissioning'}
                       {' '}ready for questions
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-[10px] text-muted-foreground mt-0.5">
                       {nextAgent ? `Next: ${nextAgent}` : 'All specialists consulted'}
                     </p>
                   </div>
@@ -686,7 +684,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                         setTimeout(() => handleSend(), 100);
                       }}
                       size="sm"
-                      className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                      className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-7 text-xs px-2"
                     >
                       Continue to {nextAgent === 'cost-engineer' ? 'Cost Engineer' : nextAgent === 'installer' ? 'Installer' : 'Commissioning'}
                     </Button>
@@ -695,9 +693,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                     onClick={handleViewResults}
                     size="sm"
                     variant="outline"
-                    className="border-elec-yellow/30 text-white"
+                    className="border-elec-yellow/30 text-white h-7 text-xs px-2"
                   >
-                    <CheckCircle2 className="h-4 w-4 mr-2" />
+                    <CheckCircle2 className="h-3 w-3 mr-1" />
                     View Results
                   </Button>
                 </div>
