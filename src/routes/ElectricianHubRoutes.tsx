@@ -53,6 +53,7 @@ import VATSchemeComparison from "@/pages/electrician/business-development/tools/
 import CISDRCHelper from "@/pages/electrician/business-development/tools/CISDRCHelper";
 import QuoteBuilder from "@/pages/electrician/QuoteBuilder";
 import QuoteBuilderCreate from "@/pages/electrician/QuoteBuilderCreate";
+import SmartQuoteBuilderPage from "@/pages/electrician/SmartQuoteBuilderPage";
 import QuotesPage from "@/pages/electrician/QuotesPage";
 import InvoicesPage from "@/pages/electrician/InvoicesPage";
 import Calculations from "@/pages/electrician-tools/Calculations";
@@ -94,6 +95,7 @@ const ElectricianHubRoutes = () => (
     <Route path="business-admin" element={<BusinessAdmin />} />
     <Route path="quote-builder" element={<QuoteBuilder />} />
     <Route path="quote-builder/create" element={<QuoteBuilderCreate />} />
+    <Route path="quote-builder/smart" element={<SmartQuoteBuilderPage />} />
     <Route path="quotes" element={<QuotesPage />} />
     <Route path="invoices" element={<InvoicesPage />} />
     {/* Business Development Routes */}

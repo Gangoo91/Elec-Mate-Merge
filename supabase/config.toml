@@ -292,3 +292,6 @@ verify_jwt = false
 
 [functions.parse-inspection-testing]
 verify_jwt = false
+
+[functions.ai-materials-agent]
+verify_jwt = false
