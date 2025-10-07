@@ -25,6 +25,7 @@ import InvoiceViewPage from "@/pages/electrician/InvoiceViewPage";
 import AdminRAGProcessor from "@/pages/AdminRAGProcessor";
 import ProcessOnsiteGuide from "@/pages/ProcessOnsiteGuide";
 import AutoProcessOnsite from "@/pages/AutoProcessOnsite";
+import KnowledgeUploader from "@/pages/Admin/KnowledgeUploader";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -62,6 +63,7 @@ const AppRouter = () => {
         <Route path="payment-success" element={<PaymentSuccess />} />
         <Route path="admin/rag-processor" element={<AdminRAGProcessor />} />
         <Route path="admin/process-onsite-guide" element={<ProcessOnsiteGuide />} />
+        <Route path="admin/knowledge-uploader" element={<KnowledgeUploader />} />
         
         {/* Top level routes for shared features */}
         <Route path="mental-health" element={<ApprenticeMentalHealth />} />
