@@ -970,6 +970,39 @@ export type Database = {
         }
         Relationships: []
       }
+      document_field_schemas: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          document_type: Database["public"]["Enums"]["document_type"]
+          example_data: Json
+          field_schema: Json
+          id: string
+          schema_version: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          document_type: Database["public"]["Enums"]["document_type"]
+          example_data: Json
+          field_schema: Json
+          id?: string
+          schema_version?: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          document_type?: Database["public"]["Enums"]["document_type"]
+          example_data?: Json
+          field_schema?: Json
+          id?: string
+          schema_version?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       document_relationships: {
         Row: {
           created_at: string
@@ -2517,6 +2550,45 @@ export type Database = {
           table_number?: string
           table_title?: string
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      pdf_templates: {
+        Row: {
+          created_at: string | null
+          field_mapping: Json | null
+          file_url: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          pdf_monkey_template_id: string | null
+          type: Database["public"]["Enums"]["document_type"]
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          field_mapping?: Json | null
+          file_url?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          pdf_monkey_template_id?: string | null
+          type: Database["public"]["Enums"]["document_type"]
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          field_mapping?: Json | null
+          file_url?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          pdf_monkey_template_id?: string | null
+          type?: Database["public"]["Enums"]["document_type"]
+          updated_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -5248,6 +5320,13 @@ export type Database = {
       }
     }
     Enums: {
+      document_type:
+        | "design_spec"
+        | "quote"
+        | "rams"
+        | "checklist"
+        | "test_schedule"
+        | "eic"
       incident_status:
         | "draft"
         | "submitted"
@@ -5392,6 +5471,14 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      document_type: [
+        "design_spec",
+        "quote",
+        "rams",
+        "checklist",
+        "test_schedule",
+        "eic",
+      ],
       incident_status: [
         "draft",
         "submitted",

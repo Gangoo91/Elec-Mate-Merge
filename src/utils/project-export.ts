@@ -7,6 +7,14 @@ import { transformInstallerOutputToMethodStatement, InstallerAgentOutput } from 
 import { extractHazardsFromInstallation } from './installer-to-rams-mapper';
 import { transformHealthSafetyOutputToRAMS, HealthSafetyAgentOutput } from './hs-to-rams-transformer';
 import { createQuoteFromCostOutput, CostEngineerOutput } from './cost-to-quote-transformer';
+import { generateProjectPDFs } from './project-pdf-generator';
+
+export interface GeneratedPDF {
+  type: string;
+  name: string;
+  url: string;
+  generatedAt: string;
+}
 
 export interface ProjectExport {
   eicSchedule?: EICScheduleOfTests;
@@ -20,6 +28,7 @@ export interface ProjectExport {
   quote?: Partial<Quote>;
   sourceConversation: string;
   exportedAt: string;
+  generatedPDFs?: GeneratedPDF[];
 }
 
 export interface AgentOutputs {
@@ -59,6 +68,12 @@ export async function exportCompleteProject(
   };
 
   try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('User not authenticated');
+
+    // Initialize PDFs array
+    projectExport.generatedPDFs = [];
+
     // Generate EIC Schedule (if available)
     if (agentOutputs.eicData) {
       projectExport.eicSchedule = agentOutputs.eicData;
@@ -112,6 +127,9 @@ export async function exportCompleteProject(
         conversationId
       );
     }
+
+    // Generate PDFs using PDF Monkey with fallback
+    await generateProjectPDFs(user.id, agentOutputs, projectDetails, projectExport);
 
     // Save to database
     await saveProjectExport(projectExport);
