@@ -22,7 +22,13 @@ interface KnowledgeUploadFormProps {
   targetType: "bs7671" | "installation" | "pricing";
   isProcessing: boolean;
   onProcessingStart: () => void;
-  onProcessingComplete: (stats: { total: number; processed: number; status: string }) => void;
+  onProcessingComplete: (stats: { 
+    total: number; 
+    processed: number; 
+    status: string;
+    jobId?: string;
+    cacheId?: string;
+  }) => void;
 }
 
 export default function KnowledgeUploadForm({
@@ -112,12 +118,14 @@ export default function KnowledgeUploadForm({
         onProcessingComplete({
           total: data.products_found || 0,
           processed: data.products_found || 0,
-          status: "completed",
+          status: "processing",
+          jobId: data.job_id,
+          cacheId: data.cache_id,
         });
 
         toast({
-          title: "Excel import complete",
-          description: `Successfully imported ${data.products_found} products from ${data.supplier}`,
+          title: "Excel import started",
+          description: `Processing ${data.products_found} products from ${data.supplier}. Embeddings generating...`,
         });
 
         setSelectedFile(null);

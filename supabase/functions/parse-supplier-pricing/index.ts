@@ -129,7 +129,7 @@ serve(async (req) => {
     console.log(`✅ Processed ${products.length} products (skipped ${skipped} invalid rows)`);
 
     // Insert into materials_weekly_cache
-    const { error: insertError } = await supabase
+    const { data: cacheEntry, error: insertError } = await supabase
       .from('materials_weekly_cache')
       .insert({
         category: 'Electrical Components',
@@ -138,14 +138,19 @@ serve(async (req) => {
         total_products: products.length,
         last_updated: new Date().toISOString(),
         expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString() // 1 year
-      });
+      })
+      .select()
+      .single();
 
     if (insertError) {
       console.error('Insert error:', insertError);
       throw insertError;
     }
 
-    console.log('💾 Inserted into materials_weekly_cache');
+    console.log('💾 Inserted into materials_weekly_cache with ID:', cacheEntry?.id);
+
+    const cacheId = cacheEntry?.id;
+    let jobId: string | null = null;
 
     // Trigger embeddings generation in background (non-blocking)
     console.log('🧠 Triggering embeddings generation in background...');
@@ -153,12 +158,13 @@ serve(async (req) => {
     // @ts-ignore - EdgeRuntime.waitUntil is available in Deno Deploy
     EdgeRuntime.waitUntil(
       supabase.functions.invoke('populate-pricing-embeddings', {
-        body: {}
-      }).then(({ error }) => {
+        body: { cache_id: cacheId, supplier }
+      }).then(({ data, error }) => {
         if (error) {
           console.error('Background embedding error:', error);
         } else {
-          console.log('✅ Background embeddings completed');
+          jobId = data?.job_id;
+          console.log('✅ Background embeddings started with job_id:', jobId);
         }
       })
     );
@@ -166,6 +172,8 @@ serve(async (req) => {
     return new Response(JSON.stringify({
       success: true,
       supplier: supplier,
+      cache_id: cacheId,
+      job_id: jobId,
       products_found: products.length,
       products_skipped: skipped,
       total_rows: jsonData.length,

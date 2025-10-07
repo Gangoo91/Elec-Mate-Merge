@@ -5,6 +5,7 @@ import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import KnowledgeUploadForm from "@/components/admin/KnowledgeUploadForm";
 import ProcessingProgress from "@/components/admin/ProcessingProgress";
+import PricingEmbeddingsProgress from "@/components/admin/PricingEmbeddingsProgress";
 
 export default function KnowledgeUploader() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -12,6 +13,8 @@ export default function KnowledgeUploader() {
     total: number;
     processed: number;
     status: string;
+    jobId?: string;
+    cacheId?: string;
   } | null>(null);
 
   return (
@@ -113,6 +116,17 @@ export default function KnowledgeUploader() {
               />
             </CardContent>
           </Card>
+
+          {processingStats?.jobId && (
+            <PricingEmbeddingsProgress
+              jobId={processingStats.jobId}
+              cacheId={processingStats.cacheId}
+              onRetry={() => {
+                // User can re-trigger embeddings
+                setProcessingStats(null);
+              }}
+            />
+          )}
         </TabsContent>
       </Tabs>
     </div>
