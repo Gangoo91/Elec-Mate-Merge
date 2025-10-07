@@ -43,111 +43,100 @@ serve(async (req) => {
     const lines = fileContent.split('\n');
     console.log(`Loaded ${lines.length} lines from BS 7671`);
 
-    // Parse the document into structured chunks
+    // Parse individual regulations
     const chunks: BS7671Chunk[] = [];
     let currentPart = '';
     let currentChapter = '';
     let currentSection = '';
-    let currentRegNumber = '';
-    let currentContent: string[] = [];
     let currentTopic = '';
     
-    const CHUNK_SIZE = 120; // Lines per chunk for optimal embedding
-    let lineBuffer: string[] = [];
-    let bufferMetadata = {
-      part: '',
-      chapter: '',
-      section: '',
-      regulation_number: '',
-      topic: ''
-    };
+    // For tracking individual regulations
+    let currentRegNumber = '';
+    let currentRegContent: string[] = [];
+    let currentRegTitle = '';
 
-    const flushChunk = () => {
-      if (lineBuffer.length === 0) return;
+    const flushRegulation = () => {
+      if (!currentRegNumber || currentRegContent.length === 0) return;
       
-      const content = lineBuffer.join('\n').trim();
-      if (content.length < 50) {
-        lineBuffer = [];
+      const content = currentRegContent.join('\n').trim();
+      if (content.length < 30) {
+        currentRegContent = [];
         return;
       }
 
+      // Build section context
+      const sectionContext = currentSection || currentChapter || currentPart || 'BS 7671';
+      const fullSection = currentRegTitle 
+        ? `${sectionContext} - ${currentRegTitle}`
+        : sectionContext;
+
       chunks.push({
-        regulation_number: bufferMetadata.regulation_number || 'General',
-        section: bufferMetadata.section || bufferMetadata.chapter || bufferMetadata.part || 'BS 7671',
+        regulation_number: currentRegNumber,
+        section: fullSection,
         content: content,
         metadata: {
-          part: bufferMetadata.part,
-          chapter: bufferMetadata.chapter,
-          amendment: 'A2:2022',
-          topic: bufferMetadata.topic
+          part: currentPart,
+          chapter: currentChapter,
+          amendment: 'A3:2024',
+          topic: currentTopic,
+          page: undefined
         }
       });
       
-      lineBuffer = [];
+      currentRegContent = [];
+      currentRegTitle = '';
     };
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
+      if (!line) continue;
       
       // Detect structural elements
       if (line.match(/^PART\s+(\d+)/i)) {
-        flushChunk();
+        flushRegulation();
         const match = line.match(/^PART\s+(\d+)\s+(.*)/i);
         currentPart = match ? `Part ${match[1]}` : line;
         currentTopic = match?.[2] || '';
-        bufferMetadata.part = currentPart;
-        bufferMetadata.topic = currentTopic;
-        lineBuffer.push(line);
         continue;
       }
       
       if (line.match(/^CHAPTER\s+(\d+)/i)) {
-        flushChunk();
+        flushRegulation();
         const match = line.match(/^CHAPTER\s+(\d+)\s+(.*)/i);
         currentChapter = match ? `Chapter ${match[1]}` : line;
         currentTopic = match?.[2] || currentTopic;
-        bufferMetadata.chapter = currentChapter;
-        bufferMetadata.topic = currentTopic;
-        lineBuffer.push(line);
         continue;
       }
       
       if (line.match(/^SECTION\s+(\d+)/i)) {
-        flushChunk();
+        flushRegulation();
         const match = line.match(/^SECTION\s+(\d+)\s+(.*)/i);
         currentSection = match ? `Section ${match[1]}` : line;
         currentTopic = match?.[2] || currentTopic;
-        bufferMetadata.section = currentSection;
-        bufferMetadata.topic = currentTopic;
-        lineBuffer.push(line);
         continue;
       }
       
-      // Detect regulation numbers (e.g., 411.3.2, 522.6.6)
-      const regMatch = line.match(/^(\d{3}\.\d+(?:\.\d+)?)/);
+      // Detect regulation numbers (e.g., 411.3.2, 522.6.6, 433.1.1)
+      const regMatch = line.match(/^(\d{3}(?:\.\d+)+)\s*(.*)/);
       if (regMatch) {
-        if (lineBuffer.length > CHUNK_SIZE * 0.8) {
-          flushChunk();
-        }
+        // Flush previous regulation
+        flushRegulation();
+        
+        // Start new regulation
         currentRegNumber = regMatch[1];
-        bufferMetadata.regulation_number = currentRegNumber;
+        currentRegTitle = regMatch[2] || '';
+        currentRegContent.push(line);
+        continue;
       }
       
-      // Add line to buffer
-      if (line.length > 0) {
-        lineBuffer.push(line);
-      }
-      
-      // Flush when chunk is full
-      if (lineBuffer.length >= CHUNK_SIZE) {
-        flushChunk();
-        // Carry forward metadata for next chunk
-        bufferMetadata.regulation_number = currentRegNumber;
+      // Accumulate content for current regulation
+      if (currentRegNumber) {
+        currentRegContent.push(line);
       }
     }
     
-    // Flush any remaining content
-    flushChunk();
+    // Flush final regulation
+    flushRegulation();
 
     console.log(`Created ${chunks.length} chunks from BS 7671`);
 
