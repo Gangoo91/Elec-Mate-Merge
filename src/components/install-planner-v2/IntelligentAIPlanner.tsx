@@ -50,6 +50,7 @@ interface Message {
   costUpdates?: { materials: number; vat: number; total: number };
   activeAgents?: string[];
   agentName?: string;
+  isTyping?: boolean;
 }
 
 interface IntelligentAIPlannerProps {
@@ -116,18 +117,18 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       setCurrentAction(`Consulting ${agent}...`);
       setCurrentAgent(agent);
       
-      // Remove acknowledgment message and create agent message
+      // Add "Analyzing..." message
       setMessages(prev => {
         const withoutAck = prev.filter((m, i) => {
-          // Remove the acknowledgment message if it exists
           return !(m.role === 'assistant' && m.content.includes("Let me get you the right specialist"));
         });
         
         return [...withoutAck, {
           role: 'assistant',
-          content: '',
+          content: `${getAgentName(agent)}: Analyzing your requirements...`,
           activeAgents: [agent],
-          agentName: agent
+          agentName: agent,
+          isTyping: true
         }];
       });
       
@@ -140,19 +141,17 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     onAgentResponse: (agent, response) => {
       console.log(`Agent ${agent} responded:`, response.slice(0, 100));
       
-      // Update the last message with this agent's response
-      // Format: [AgentName]: response for proper backend tracking
-      const formattedResponse = `[${getAgentName(agent)}]: ${response}`;
-      
+      // Remove "Analyzing..." and add actual response
       setMessages(prev => {
-        const newMessages = [...prev];
-        const lastMsg = newMessages[newMessages.length - 1];
+        const filtered = prev.filter(m => !(m.agentName === agent && m.isTyping));
+        const formattedResponse = `[${getAgentName(agent)}]: ${response}`;
         
-        if (lastMsg && lastMsg.role === 'assistant' && lastMsg.activeAgents?.includes(agent)) {
-          lastMsg.content = formattedResponse;
-        }
-        
-        return newMessages;
+        return [...filtered, {
+          role: 'assistant',
+          content: formattedResponse,
+          activeAgents: [agent],
+          agentName: agent
+        }];
       });
     },
     onAgentComplete: (agent, nextAgent) => {
@@ -164,10 +163,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       ));
       setCurrentAgent(agent);
       setNextAgent(nextAgent);
-      setConsultationPaused(true);
       setCurrentAction('');
       
-      // Don't auto-advance, let user interact
+      // Don't auto-pause - let conversation flow naturally
       if (!nextAgent) {
         toast.success("All specialists consulted!", {
           description: "You can ask follow-up questions or view results."
@@ -383,6 +381,40 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     );
   }
 
+  // Parse agent responses into structured sections
+  const parseAgentResponse = (content: string) => {
+    const sections: Array<{ title: string; content: string }> = [];
+    const lines = content.split('\n');
+    let currentSection = { title: '', content: '' };
+    
+    for (const line of lines) {
+      const trimmed = line.trim();
+      // Detect section headers
+      if (
+        (trimmed.match(/^[A-Z\s]{3,}$/) && trimmed.length < 50) ||
+        trimmed.match(/^(CIRCUIT SPECIFICATION|CALCULATIONS|COMPLIANCE|MATERIALS BREAKDOWN|LABOUR ESTIMATE|PROJECT TOTAL|PRICING NOTES|INSTALLATION METHOD|STEP-BY-STEP PROCEDURE|SAFETY REQUIREMENTS|MATERIAL LIST|TIME ESTIMATE|TEST SEQUENCE|DEAD TESTS|LIVE TESTS|BREAKDOWN|---)/i)
+      ) {
+        if (currentSection.content.trim()) {
+          sections.push({ ...currentSection });
+        }
+        currentSection = { title: trimmed.replace(/^---/, '').trim(), content: '' };
+      } else {
+        currentSection.content += line + '\n';
+      }
+    }
+    
+    if (currentSection.content.trim()) {
+      sections.push(currentSection);
+    }
+    
+    // If no sections found, return content as single section
+    if (sections.length === 0) {
+      return [{ title: '', content }];
+    }
+    
+    return sections;
+  };
+
   return (
     <div className="flex flex-col h-screen bg-elec-dark">
       {/* Header - Centered & Clean */}
@@ -537,12 +569,49 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   </div>
                 )}
 
-                <p className="text-sm whitespace-pre-wrap leading-relaxed text-left">
-                  {message.content}
-                  {index === streamingMessageIndex && (
-                    <span className="inline-block w-2 h-4 ml-1 bg-elec-yellow animate-pulse" />
-                  )}
-                </p>
+                {message.role === 'assistant' && message.content && !message.isTyping && (
+                  <div className="text-left space-y-3">
+                    {parseAgentResponse(message.content).map((section, i) => (
+                      <div key={i}>
+                        {section.title && (
+                          <h4 className="font-bold text-elec-yellow text-xs uppercase tracking-wide mb-2 border-l-2 border-elec-yellow pl-2">
+                            {section.title}
+                          </h4>
+                        )}
+                        <div className="text-sm text-white/90 leading-relaxed whitespace-pre-wrap">
+                          {section.content.split('\n').map((line, li) => {
+                            const priceHighlighted = line.replace(/£[\d,]+(\.\d{2})?/g, (match) => 
+                              `<span class="text-elec-yellow font-semibold">${match}</span>`
+                            );
+                            const withIcons = priceHighlighted
+                              .replace(/✓|✅/g, '<span class="text-green-400">✓</span>')
+                              .replace(/⚠|❌/g, '<span class="text-orange-400">⚠</span>');
+                            
+                            return (
+                              <p 
+                                key={li} 
+                                className="mb-1 last:mb-0" 
+                                dangerouslySetInnerHTML={{ __html: withIcons }}
+                              />
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {message.role === 'assistant' && message.isTyping && (
+                  <p className="text-sm text-white/70 text-left italic">
+                    {message.content}
+                  </p>
+                )}
+
+                {message.role === 'user' && (
+                  <p className="text-sm whitespace-pre-wrap leading-relaxed text-left">
+                    {message.content}
+                  </p>
+                )}
 
                 {/* Citations */}
                 {message.role === 'assistant' && message.citations && (

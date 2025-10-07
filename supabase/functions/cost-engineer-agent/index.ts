@@ -51,13 +51,16 @@ serve(async (req) => {
         match_count: 15
       });
 
-      if (!ragError && pricingResults && pricingResults.length > 0) {
-        pricingData = pricingResults.map((p: any) => 
-          `${p.item_name} - £${p.base_cost} (${p.price_per_unit}) at ${p.wholesaler} ${p.in_stock ? '✓ In Stock' : '✗ Out of Stock'}`
-        ).join('\n');
+    if (!ragError && pricingResults && pricingResults.length > 0) {
         console.log(`✅ Found ${pricingResults.length} pricing items`);
+        console.log('Top 3 items:', pricingResults.slice(0, 3).map((p: any) => 
+          `${p.item_name} - £${p.base_cost} @ ${p.wholesaler}`
+        ));
+        pricingData = pricingResults.map((p: any) => 
+          `${p.item_name} - £${p.base_cost} (${p.price_per_unit}) at ${p.wholesaler} ${p.in_stock ? '✓ In Stock' : '⚠ Out of Stock'}`
+        ).join('\n');
       } else {
-        console.log('⚠️ No relevant pricing data found');
+        console.log('⚠️ No relevant pricing data found for query:', ragQuery);
       }
     }
 
@@ -65,15 +68,36 @@ serve(async (req) => {
     const hasDesigner = previousAgents.includes('designer');
     const hasInstaller = previousAgents.includes('installer');
 
-    let systemPrompt = `You're a cost engineer with 20 years pricing electrical jobs. Give realistic UK 2025 prices, breaking down materials vs labour naturally.
+    let systemPrompt = `You are a cost estimator providing itemized UK electrical installation pricing (2025 rates).
 
-CRITICAL RULES:
-- Talk conversationally like you're pricing a job over WhatsApp
-- NO markdown, NO bullet points - natural paragraphs
-- Mention real suppliers (Screwfix, CEF, Toolstation, TLC)
-- Give actual 2025 prices (materials + labour + markup)
-- Explain pricing strategy (day rate vs fixed price)
-- Use 💰 for costs, ✓ for good value
+CRITICAL: Use the pricing data from our database below. Reference actual suppliers and stock status.
+
+FORMAT YOUR RESPONSE AS:
+
+MATERIALS BREAKDOWN
+• [Item name] ([quantity/length]) - £[price] from [Supplier] [✓ In Stock / ⚠ Lead time X days]
+• [repeat for each component needed]
+---
+Subtotal Materials: £[total]
+
+LABOUR ESTIMATE
+• Installation time: [X] hours / [Y] days
+• Rate: £[rate]/day (qualified electrician)
+• Labour cost: £[total]
+---
+Subtotal Labour: £[total]
+
+PROJECT TOTAL
+Materials: £[materials total]
+Labour: £[labour total]
+---
+SUBTOTAL: £[combined total]
+VAT (20%): £[vat amount]
+---
+FINAL QUOTE: £[total inc VAT]
+
+PRICING NOTES
+[Any assumptions, alternative suppliers, or value engineering suggestions]
 
 `;
 
@@ -85,7 +109,7 @@ CRITICAL RULES:
       systemPrompt += `\nInstallation method's been covered, so factor in the labour time they mentioned when pricing.`;
     }
 
-    systemPrompt += `\n\n💰 CURRENT PRICING (from RAG database):\n${pricingData || 'No specific pricing found - use typical 2025 UK prices'}\n\nBreak it down conversationally: "Right, materials-wise you're looking at about £X for the cable from CEF, £Y for the MCB, then labour's probably a day and a half so £Z. All in, you'd want to quote around £Total plus VAT."`;
+    systemPrompt += `\n\nCURRENT PRICING DATABASE (use these actual prices):\n${pricingData || 'No specific pricing found in database - estimate typical 2025 UK wholesale prices from CEF/Screwfix/TLC'}\n\nYou MUST end your response with the structured breakdown format above. Include all components needed for the installation.`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',

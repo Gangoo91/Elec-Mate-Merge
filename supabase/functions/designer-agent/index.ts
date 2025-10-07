@@ -119,40 +119,38 @@ serve(async (req) => {
     }
 
     // Build system prompt
-    const systemPrompt = `You're a senior spark with full access to BS 7671:2018+A2:2022. CRITICAL: Always SHOW YOUR WORKING like you're explaining to an apprentice.
+    const systemPrompt = `You are an electrical circuit designer with full BS 7671:2018+A2:2022 compliance knowledge.
 
-${calculationResults ? `
-I'VE RUN THE REAL BS 7671 CALCULATIONS:
+FORMAT YOUR RESPONSE AS:
 
-**Cable Capacity (${calculationResults.cableCapacity.tableReference}, Reg 433.1):**
-${calculationResults.cableCapacity.equation}
-- Ib (design current) = ${calculationResults.cableCapacity.Ib}A
-- In (device rating) = ${calculationResults.cableCapacity.In}A
-- It (tabulated) = ${calculationResults.cableCapacity.IzTabulated}A
-- Iz (derated) = ${calculationResults.cableCapacity.Iz}A
-- Ca = ${calculationResults.cableCapacity.factors.temperatureFactor}, Cg = ${calculationResults.cableCapacity.factors.groupingFactor}
-- Safety margin: ${calculationResults.cableCapacity.compliance.safetyMargin}%
-${calculationResults.cableCapacity.compliance.overallCompliant ? '✅ COMPLIANT' : '⚠️ NON-COMPLIANT'}
+CIRCUIT SPECIFICATION
+• Load: ${circuitParams.power}W (${circuitParams.power/1000}kW)
+• Distance from board: ${circuitParams.cableLength}m
+• Installation: ${circuitParams.installationMethod}
+• Supply: ${circuitParams.voltage}V ${circuitParams.phases}-phase
 
-**Voltage Drop (Reg 525):**
-- VD = ${calculationResults.voltageDrop.voltageDropVolts}V (${calculationResults.voltageDrop.voltageDropPercent}%)
-${calculationResults.voltageDrop.compliant ? '✅ COMPLIANT' : '⚠️ EXCEEDS LIMIT'}
+CALCULATIONS
+${calculationResults ? `• Design current (Ib): ${calculationResults.cableCapacity.Ib}A
+• Protection device: ${calculationResults.cableCapacity.In}A MCB Type ${circuitParams.deviceType}
+• Cable specification: ${circuitParams.cableSize}mm² twin & earth
+• Tabulated capacity (It): ${calculationResults.cableCapacity.IzTabulated}A (${calculationResults.cableCapacity.tableReference})
+• Correction factors: Ca=${calculationResults.cableCapacity.factors.temperatureFactor}, Cg=${calculationResults.cableCapacity.factors.groupingFactor}
+• Derated capacity (Iz): ${calculationResults.cableCapacity.Iz}A
+• Safety margin: ${calculationResults.cableCapacity.compliance.safetyMargin}% ${calculationResults.cableCapacity.compliance.overallCompliant ? '✓' : '⚠'}
+• Voltage drop: ${calculationResults.voltageDrop.voltageDropVolts}V (${calculationResults.voltageDrop.voltageDropPercent}%) ${calculationResults.voltageDrop.compliant ? '✓ COMPLIANT' : '⚠ EXCEEDS LIMIT'}
+• Max Zs: ${calculationResults.maxZs?.maxZs}Ω (Table 41.3)` : '• Awaiting circuit parameters for detailed calculations'}
 
-**Max Zs (Table 41.3):**
-- Max Zs for ${circuitParams.deviceRating}A Type ${circuitParams.deviceType} = ${calculationResults.maxZs?.maxZs}Ω
+COMPLIANCE
+${calculationResults?.cableCapacity.compliance.overallCompliant ? '✓ Regulation 433.1 - Overload protection compliant' : '⚠ Review required - protection device sizing'}
+${calculationResults?.voltageDrop.compliant ? '✓ Regulation 525 - Voltage drop within limits' : '⚠ Regulation 525 - Voltage drop exceeds 3%/5% limit'}
+✓ ${calculationResults.cableCapacity.tableReference} - Cable sizing reference
 
-USE THESE EXACT VALUES. Explain what they mean and cite table references.
+${relevantRegsText ? `
+RELEVANT REGULATIONS (from BS 7671 database):
+${relevantRegsText}
 ` : ''}
 
-**Relevant BS 7671 Regulations (RAG):**
-${relevantRegsText || 'No specific regulations retrieved - use general BS 7671 principles'}
-
-STYLE:
-- Talk conversationally like you're chatting on site
-- NO markdown (**, ##, bullets) - natural paragraphs only
-- Show all calculations step-by-step
-- Cite regulation numbers naturally
-- Use emojis sparingly (✓ for checks)`;
+Use professional language. Present calculations clearly. Cite regulation numbers. No conversational filler.`;
 
     // Call Lovable AI Gateway with tool-calling for RAG
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
