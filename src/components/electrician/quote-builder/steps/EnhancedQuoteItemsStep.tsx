@@ -4,15 +4,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp, Tag, Hash, DollarSign, Ruler, MessageSquare, RotateCcw, Search } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp, Tag, Hash, DollarSign, Ruler, MessageSquare, RotateCcw, Search, Brain } from "lucide-react";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Switch } from "@/components/ui/switch";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
+import { SmartQuoteBuilder } from "../SmartQuoteBuilder";
+import { MaterialToQuoteItem } from "@/hooks/useQuoteMaterialIntegration";
 import { 
   workerTypes, 
   materialCategories, 
@@ -54,6 +56,24 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
     template.items.forEach(item => {
       onAdd(item);
     });
+  };
+
+  // Handlers for Smart Quote Builder integration
+  const handleMaterialToQuote = (material: MaterialToQuoteItem, quantity?: number) => {
+    const parsedPrice = parseFloat(material.price.replace(/[£,]/g, '')) || 0;
+    onAdd({
+      description: material.name,
+      quantity: quantity || 1,
+      unit: 'each',
+      unitPrice: parsedPrice,
+      category: 'materials',
+      subcategory: material.category || 'general',
+      notes: `${material.supplier} - ${material.stockStatus}`
+    });
+  };
+
+  const handleMultipleMaterialsToQuote = (materials: MaterialToQuoteItem[]) => {
+    materials.forEach(material => handleMaterialToQuote(material, 1));
   };
 
   const handleCategoryChange = (category: string) => {
@@ -213,23 +233,35 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
   return (
     <div className="space-y-4">
-      <DropdownTabs
-        tabs={[
-          {
-            value: "quick",
-            label: "Quick Add",
-            icon: Clock,
-            content: (
-              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-4">
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <Clock className="h-5 w-5" />
-                    Quick Add Items
-                  </h3>
-                </div>
-                
-                
-                <div className="space-y-4">
+      <Tabs defaultValue="smart" className="w-full">
+        <TabsList className="grid w-full grid-cols-3 mb-6">
+          <TabsTrigger value="smart" className="flex items-center gap-2">
+            <Brain className="h-4 w-4" />
+            <span className="hidden sm:inline">Smart List Builder</span>
+            <span className="sm:hidden">Smart</span>
+          </TabsTrigger>
+          <TabsTrigger value="labour" className="flex items-center gap-2">
+            <Wrench className="h-4 w-4" />
+            Labour
+          </TabsTrigger>
+          <TabsTrigger value="templates" className="flex items-center gap-2">
+            <FileText className="h-4 w-4" />
+            <span className="hidden sm:inline">Job Templates</span>
+            <span className="sm:hidden">Templates</span>
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="smart">
+          <SmartQuoteBuilder 
+            onAddToQuote={handleMaterialToQuote}
+            onAddMultipleToQuote={handleMultipleMaterialsToQuote}
+          />
+        </TabsContent>
+
+        <TabsContent value="labour">
+          <Card className="bg-card/50 border border-primary/20">
+            <CardContent className="pt-6">
+              <div className="space-y-4">
                   {/* Category Selection */}
                   <div className="space-y-2">
                     <Label htmlFor="category" className="text-sm font-medium">Category</Label>
@@ -459,165 +491,18 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                     </div>
                   )}
 
-                  <Button onClick={handleAddItem} className="w-full">
-                    Add Item
-                  </Button>
-                </div>
+                <Button onClick={handleAddItem} className="w-full">
+                  Add Item to Quote
+                </Button>
               </div>
-            )
-          },
-          {
-            value: "manual",
-            label: "Manual Entry",
-            icon: Plus,
-            content: (
-              <Card className="bg-card border-primary/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Plus className="h-5 w-5" />
-                    Manual Item Entry
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="description" className="text-sm font-medium">Description</Label>
-                      <Input
-                        value={newItem.description}
-                        onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
-                        placeholder="Item description"
-                        className="h-12"
-                      />
-                    </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="category-manual" className="text-sm font-medium">Category</Label>
-                      <Select value={newItem.category} onValueChange={handleCategoryChange}>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                        <SelectContent className="z-50 bg-background border shadow-lg">
-                          <SelectItem value="labour">
-                            <div className="flex items-center gap-2">
-                              <Wrench className="h-4 w-4" />
-                              Labour
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="materials">
-                            <div className="flex items-center gap-2">
-                              <Package className="h-4 w-4" />
-                              Materials
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="equipment">
-                            <div className="flex items-center gap-2">
-                              <Zap className="h-4 w-4" />
-                              Equipment
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="quantity" className="text-sm font-medium">Quantity</Label>
-                      <Input
-                        type="number"
-                        value={newItem.quantity === 0 ? "" : newItem.quantity}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value === '') {
-                            setNewItem(prev => ({ ...prev, quantity: 0 }));
-                          } else {
-                            const parsed = parseFloat(value);
-                            if (!isNaN(parsed) && parsed >= 0) {
-                              setNewItem(prev => ({ ...prev, quantity: parsed }));
-                            }
-                          }
-                        }}
-                        onBlur={(e) => {
-                          const value = parseFloat(e.target.value);
-                          if (isNaN(value) || value <= 0) {
-                            setNewItem(prev => ({ ...prev, quantity: 1 }));
-                          }
-                        }}
-                        min="0.1"
-                        step="0.1"
-                        className="h-12"
-                        placeholder="Enter quantity"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="unit-price" className="text-sm font-medium">Unit Price (£)</Label>
-                      <Input
-                        type="number"
-                        value={newItem.unitPrice}
-                        onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
-                        min="0"
-                        step="0.01"
-                        className="h-12"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="unit" className="text-sm font-medium">Unit</Label>
-                      <Select value={newItem.unit} onValueChange={(value) => setNewItem(prev => ({ ...prev, unit: value }))}>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select unit" />
-                        </SelectTrigger>
-                        <SelectContent className="z-50 bg-background border shadow-lg">
-                          <SelectItem value="each">Each</SelectItem>
-                          <SelectItem value="hour">Hour</SelectItem>
-                          <SelectItem value="day">Day</SelectItem>
-                          <SelectItem value="metre">Metre</SelectItem>
-                          <SelectItem value="linear metre">Linear Metre</SelectItem>
-                          <SelectItem value="m²">Square Metre</SelectItem>
-                          <SelectItem value="point">Point</SelectItem>
-                          <SelectItem value="circuit">Circuit</SelectItem>
-                          <SelectItem value="way">Way</SelectItem>
-                          <SelectItem value="core">Core</SelectItem>
-                          <SelectItem value="pack">Pack</SelectItem>
-                          <SelectItem value="roll">Roll</SelectItem>
-                          <SelectItem value="box">Box</SelectItem>
-                          <SelectItem value="installation">Installation</SelectItem>
-                          <SelectItem value="system">System</SelectItem>
-                          <SelectItem value="panel">Panel</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="notes" className="text-sm font-medium">Notes (Optional)</Label>
-                      <Textarea
-                        value={newItem.notes}
-                        onChange={(e) => setNewItem(prev => ({ ...prev, notes: e.target.value }))}
-                        placeholder="Additional notes"
-                        rows={2}
-                      />
-                    </div>
-                  </div>
-
-                  <Button onClick={handleAddItem} className="w-full">
-                    Add Item to Quote
-                  </Button>
-                </div>
-                </CardContent>
-              </Card>
-            )
-          },
-          {
-            value: "templates",
-            label: "Job Templates",
-            icon: FileText,
-            content: <JobTemplates onSelectTemplate={handleTemplateSelect} />
-          }
-        ]}
-        defaultValue="quick"
-        placeholder="Select option"
-        className="mb-6"
-      />
+        <TabsContent value="templates">
+          <JobTemplates onSelectTemplate={handleTemplateSelect} />
+        </TabsContent>
+      </Tabs>
 
       {/* Items List */}
       {items.length > 0 && (
