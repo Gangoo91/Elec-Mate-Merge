@@ -45,6 +45,31 @@ serve(async (req) => {
     for (let i = 0; i < chunks.length; i += batchSize) {
       const batch = chunks.slice(i, i + batchSize);
       
+      // Pre-validate chunk sizes (1 token ≈ 4 characters, limit is 8192 tokens)
+      const oversizedChunks = batch.filter(chunk => {
+        const estimatedTokens = Math.ceil(chunk.content.length / 4);
+        return estimatedTokens > 8000;
+      });
+      
+      if (oversizedChunks.length > 0) {
+        console.error('⚠️ Found oversized chunks that will be skipped:');
+        oversizedChunks.forEach(chunk => {
+          const tokens = Math.ceil(chunk.content.length / 4);
+          console.error(`  - ${chunk.regulation_number || chunk.section}: ~${tokens} tokens`);
+        });
+      }
+      
+      // Filter out oversized chunks
+      const validBatch = batch.filter(chunk => {
+        const estimatedTokens = Math.ceil(chunk.content.length / 4);
+        return estimatedTokens <= 8000;
+      });
+      
+      if (validBatch.length === 0) {
+        console.log(`Batch ${Math.floor(i / batchSize) + 1}: All chunks oversized, skipping`);
+        continue;
+      }
+      
       // Generate embeddings for this batch
       const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
         method: 'POST',
@@ -54,14 +79,14 @@ serve(async (req) => {
         },
         body: JSON.stringify({
           model: 'text-embedding-3-small',
-          input: batch.map(chunk => chunk.content),
+          input: validBatch.map(chunk => chunk.content),
         }),
       });
 
       if (!embeddingResponse.ok) {
         const errorText = await embeddingResponse.text();
         console.error(`OpenAI API error ${embeddingResponse.status}:`, errorText);
-        console.error(`Batch info: ${batch.length} chunks, sizes:`, batch.map(c => c.content.length));
+        console.error(`Batch info: ${validBatch.length} chunks, sizes:`, validBatch.map(c => c.content.length));
         throw new Error(`OpenAI API error: ${embeddingResponse.status} - ${errorText}`);
       }
 
@@ -69,7 +94,7 @@ serve(async (req) => {
       
       // Insert into appropriate table
       if (source === 'bs7671') {
-        const records = batch.map((chunk, idx) => ({
+        const records = validBatch.map((chunk, idx) => ({
           regulation_number: chunk.regulation_number || 'Unknown',
           section: chunk.section,
           content: chunk.content,
@@ -83,7 +108,7 @@ serve(async (req) => {
 
         if (error) throw error;
       } else {
-        const records = batch.map((chunk, idx) => ({
+        const records = validBatch.map((chunk, idx) => ({
           topic: chunk.section,
           content: chunk.content,
           source,
@@ -98,8 +123,8 @@ serve(async (req) => {
         if (error) throw error;
       }
 
-      processedCount += batch.length;
-      console.log(`Processed ${processedCount}/${chunks.length} chunks`);
+      processedCount += validBatch.length;
+      console.log(`Processed ${processedCount}/${chunks.length} chunks (${batch.length - validBatch.length} skipped)`);
     }
 
     return new Response(JSON.stringify({ 

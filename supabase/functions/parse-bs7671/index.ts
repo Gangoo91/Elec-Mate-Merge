@@ -17,7 +17,61 @@ interface BS7671Chunk {
     amendment?: string;
     page?: number;
     topic?: string;
+    chunk_index?: number;
+    total_chunks?: number;
   };
+}
+
+// Estimate tokens (rough approximation: 1 token ≈ 4 characters)
+function estimateTokens(text: string): number {
+  return Math.ceil(text.length / 4);
+}
+
+// Split content into chunks that fit within token limits
+function splitContent(content: string, maxTokens: number = 6000): string[] {
+  const estimatedTokens = estimateTokens(content);
+  
+  if (estimatedTokens <= maxTokens) {
+    return [content];
+  }
+  
+  // Split on paragraph boundaries (double newlines)
+  const paragraphs = content.split(/\n\n+/);
+  const chunks: string[] = [];
+  let currentChunk = '';
+  
+  for (const paragraph of paragraphs) {
+    const testChunk = currentChunk + (currentChunk ? '\n\n' : '') + paragraph;
+    
+    if (estimateTokens(testChunk) > maxTokens && currentChunk) {
+      // Current chunk is full, save it and start new one
+      chunks.push(currentChunk.trim());
+      currentChunk = paragraph;
+    } else {
+      currentChunk = testChunk;
+    }
+  }
+  
+  // Add final chunk
+  if (currentChunk.trim()) {
+    chunks.push(currentChunk.trim());
+  }
+  
+  // Ensure minimum chunk size (500 tokens) by merging small chunks
+  const mergedChunks: string[] = [];
+  let buffer = '';
+  
+  for (const chunk of chunks) {
+    const combined = buffer + (buffer ? '\n\n' : '') + chunk;
+    if (estimateTokens(combined) >= 500 || chunk === chunks[chunks.length - 1]) {
+      mergedChunks.push(combined.trim());
+      buffer = '';
+    } else {
+      buffer = combined;
+    }
+  }
+  
+  return mergedChunks.length > 0 ? mergedChunks : [content];
 }
 
 serve(async (req) => {
@@ -70,17 +124,28 @@ serve(async (req) => {
         ? `${sectionContext} - ${currentRegTitle}`
         : sectionContext;
 
-      chunks.push({
-        regulation_number: currentRegNumber,
-        section: fullSection,
-        content: content,
-        metadata: {
-          part: currentPart,
-          chapter: currentChapter,
-          amendment: 'A3:2024',
-          topic: currentTopic,
-          page: undefined
-        }
+      // Split large regulations into multiple chunks
+      const contentChunks = splitContent(content, 6000);
+      
+      contentChunks.forEach((chunkContent, index) => {
+        const chunkNumber = contentChunks.length > 1 
+          ? `${currentRegNumber} (Part ${index + 1} of ${contentChunks.length})`
+          : currentRegNumber;
+        
+        chunks.push({
+          regulation_number: chunkNumber,
+          section: fullSection,
+          content: chunkContent,
+          metadata: {
+            part: currentPart,
+            chapter: currentChapter,
+            amendment: 'A3:2024',
+            topic: currentTopic,
+            page: undefined,
+            chunk_index: contentChunks.length > 1 ? index + 1 : undefined,
+            total_chunks: contentChunks.length > 1 ? contentChunks.length : undefined
+          }
+        });
       });
       
       currentRegContent = [];
