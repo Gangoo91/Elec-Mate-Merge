@@ -2870,6 +2870,60 @@ export type Database = {
         }
         Relationships: []
       }
+      project_exports: {
+        Row: {
+          conversation_id: string
+          created_at: string
+          eic_schedule_id: string | null
+          exported_at: string
+          id: string
+          method_statement_data: Json | null
+          quote_id: string | null
+          rams_data: Json | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string
+          eic_schedule_id?: string | null
+          exported_at?: string
+          id?: string
+          method_statement_data?: Json | null
+          quote_id?: string | null
+          rams_data?: Json | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string
+          eic_schedule_id?: string | null
+          exported_at?: string
+          id?: string
+          method_statement_data?: Json | null
+          quote_id?: string | null
+          rams_data?: Json | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_exports_eic_schedule_id_fkey"
+            columns: ["eic_schedule_id"]
+            isOneToOne: false
+            referencedRelation: "eic_schedules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_exports_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       project_mgmt_knowledge: {
         Row: {
           content: string

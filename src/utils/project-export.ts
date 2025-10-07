@@ -183,8 +183,9 @@ async function saveProjectExport(projectExport: ProjectExport): Promise<void> {
   }
 
   // Save the project export record linking all documents
+  // Note: Using 'as any' temporarily until Supabase types regenerate
   const { error: exportError } = await supabase
-    .from('project_exports')
+    .from('project_exports' as any)
     .insert({
       user_id: user.id,
       conversation_id: projectExport.sourceConversation,
@@ -193,7 +194,7 @@ async function saveProjectExport(projectExport: ProjectExport): Promise<void> {
       rams_data: projectExport.rams,
       method_statement_data: projectExport.methodStatement,
       exported_at: projectExport.exportedAt,
-    } as any);
+    });
 
   if (exportError) throw exportError;
 }
@@ -205,15 +206,16 @@ export async function getUserProjectExports(): Promise<ProjectExport[]> {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('User not authenticated');
 
+  // Note: Using 'as any' temporarily until Supabase types regenerate
   const { data, error } = await supabase
-    .from('project_exports')
+    .from('project_exports' as any)
     .select('*')
     .eq('user_id', user.id)
     .order('exported_at', { ascending: false });
 
   if (error) throw error;
 
-  return data.map(record => ({
+  return data.map((record: any) => ({
     sourceConversation: record.conversation_id,
     exportedAt: record.exported_at,
     rams: record.rams_data,

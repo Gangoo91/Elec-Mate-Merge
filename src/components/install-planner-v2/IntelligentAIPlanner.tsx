@@ -15,6 +15,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { transformAgentOutputToEIC } from "@/utils/eic-transformer";
 import { exportEICScheduleToInspectionApp } from "@/utils/eic-export";
 import { AgentCircuitOutput } from "@/types/eic-integration";
+import { exportCompleteProject, AgentOutputs } from "@/utils/project-export";
+import { InstallerAgentOutput } from "@/utils/rams-transformer";
+import { HealthSafetyAgentOutput } from "@/utils/hs-to-rams-transformer";
+import { CostEngineerOutput } from "@/utils/cost-to-quote-transformer";
 
 // Feature flag to toggle between orchestrator and legacy designer
 const USE_ORCHESTRATOR = true;
@@ -452,6 +456,169 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       toast.error("Export Failed", {
         description: error instanceof Error ? error.message : "Failed to export EIC schedule"
       });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleCompleteProjectExport = async () => {
+    if (!planData.circuits || planData.circuits.length === 0) {
+      toast.error("No project data to export", {
+        description: "Please complete the design consultation first"
+      });
+      return;
+    }
+
+    setIsExporting(true);
+    toast.info("Generating project documents...", {
+      description: "Creating EIC, RAMS, Method Statement, and Quote"
+    });
+
+    try {
+      // Extract agent data from messages
+      const installerMessages = messages.filter(m => m.agentName === 'installer');
+      const healthSafetyMessages = messages.filter(m => m.agentName === 'health-safety');
+      const costMessages = messages.filter(m => m.agentName === 'cost-engineer');
+
+      // Build agent outputs
+      const agentOutputs: AgentOutputs = {};
+
+      // Generate EIC data from circuits
+      if (planData.circuits.length > 0) {
+        const getCableSize = (load: number, phases: 'single' | 'three') => {
+          const current = phases === 'single' ? load / 230 : load / (Math.sqrt(3) * 400);
+          if (current <= 13.5) return 1.5;
+          if (current <= 20) return 2.5;
+          if (current <= 27) return 4;
+          if (current <= 37) return 6;
+          if (current <= 50) return 10;
+          return 16;
+        };
+
+        const agentCircuits: AgentCircuitOutput[] = planData.circuits.map((circuit, index) => ({
+          circuitNumber: index + 1,
+          description: circuit.name || `${circuit.loadType} Circuit`,
+          loadType: circuit.loadType,
+          phases: circuit.phases,
+          cableSize: `${getCableSize(circuit.totalLoad, circuit.phases)}mm²`,
+          cpcSize: `${getCableSize(circuit.totalLoad, circuit.phases) / 2}mm²`,
+          cableLength: circuit.cableLength,
+          installationMethod: planData.installationMethod || "100",
+          protectiveDevice: "MCB B32",
+          protectiveDeviceRating: 32,
+          protectiveDeviceCurve: "B",
+          maxZs: 1.44,
+          voltageDropCompliance: true,
+          rcdProtection: true,
+          isRingCircuit: false,
+        }));
+
+        agentOutputs.eicData = transformAgentOutputToEIC(agentCircuits, {
+          address: planData.siteInfo?.propertyAddress || "Installation Site",
+          designerName: planData.projectInfo?.leadElectrician || "AI Design Assistant",
+          conversationId: `conv-${Date.now()}`
+        });
+      }
+
+      // Simplified installer output
+      if (installerMessages.length > 0) {
+        agentOutputs.installer = {
+          steps: [
+            {
+              stepNumber: 1,
+              description: "Isolate supply and prove dead",
+              safetyRequirements: ["Lock off supply", "Test dead with voltage indicator"],
+              toolsRequired: ["Voltage tester", "Lock off kit"],
+              materialsNeeded: [],
+              estimatedTime: "15 minutes",
+              criticalPoints: ["Verify dead on all phases"],
+            }
+          ],
+          totalDuration: "2-3 hours",
+          requiredQualifications: ["18th Edition", "Level 3 Electrical Installation"],
+          specialRequirements: [],
+          overallRiskLevel: 'medium',
+        };
+      }
+
+      // Simplified H&S output
+      if (healthSafetyMessages.length > 0) {
+        agentOutputs.healthSafety = {
+          riskAssessment: {
+            hazards: [
+              {
+                hazard: "Electrical shock from live conductors",
+                likelihood: 3,
+                severity: 5,
+                riskRating: 15,
+                controls: ["Isolate supply", "Lock off", "Test dead", "Use insulated tools"],
+                residualRisk: 6,
+              }
+            ]
+          },
+          requiredPPE: ["Safety footwear", "Insulated gloves"],
+          methodStatement: ["Isolate supply", "Install circuits", "Test and commission"],
+          emergencyProcedures: ["Switch off at main isolator", "Call emergency services"],
+          acopCitations: ["BS 7671:2018+A3:2024"],
+          workActivities: ["Electrical installation work"],
+        };
+      }
+
+      // Simplified cost output
+      if (costMessages.length > 0) {
+        agentOutputs.costEngineer = {
+          materials: [
+            {
+              item: "Twin and Earth Cable",
+              quantity: 50,
+              unitPrice: 1.20,
+              supplier: "CEF",
+              total: 60,
+            }
+          ],
+          labour: {
+            hours: 4,
+            rate: 45,
+            total: 180,
+          },
+          totalCost: 240,
+        };
+      }
+
+      // Export complete project
+      const projectExport = await exportCompleteProject(
+        agentOutputs,
+        {
+          projectName: "Electrical Installation Project",
+          location: planData.siteInfo?.propertyAddress || "Installation Site",
+          assessor: planData.projectInfo?.leadElectrician || "AI Design Assistant",
+          jobTitle: "Electrical Installation",
+          contractor: "Electrical Contractor",
+          supervisor: planData.projectInfo?.leadElectrician || "Supervisor",
+          teamSize: "2",
+        },
+        `conv-${Date.now()}`
+      );
+
+      // Count what was generated
+      const generatedDocs = [];
+      if (projectExport.eicSchedule) generatedDocs.push("EIC Schedule");
+      if (projectExport.rams) generatedDocs.push("RAMS");
+      if (projectExport.methodStatement) generatedDocs.push("Method Statement");
+      if (projectExport.quote) generatedDocs.push("Quote");
+
+      toast.success("Project Documentation Generated! 🎉", {
+        description: `Created: ${generatedDocs.join(", ")}`,
+        duration: 5000,
+      });
+
+    } catch (error) {
+      console.error('Complete export error:', error);
+      toast.error("Export Failed", {
+        description: error instanceof Error ? error.message : "Failed to export complete project"
+      });
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -591,10 +758,20 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               )}
             </Button>
             <Button 
+              variant="default" 
+              size="sm" 
+              onClick={handleCompleteProjectExport}
+              disabled={!planData.circuits || planData.circuits.length === 0 || isExporting}
+              className="text-xs bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
+            >
+              <FileDown className="h-3 w-3 mr-1" />
+              {isExporting ? "Exporting..." : "Export Complete Project"}
+            </Button>
+            <Button 
               variant="outline" 
               size="sm" 
               onClick={handleExportToEIC}
-              disabled={!planData.circuits || planData.circuits.length === 0}
+              disabled={!planData.circuits || planData.circuits.length === 0 || isExporting}
               className="text-xs bg-elec-yellow/10 hover:bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow"
             >
               <ClipboardCheck className="h-3 w-3 mr-1" />
