@@ -1,6 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.1.2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -24,18 +23,33 @@ serve(async (req) => {
 
     console.log('🔍 RAG Search initiated:', { query, categoryFilter, supplierFilter, matchThreshold, matchCount });
 
-    // Initialize embedding model
-    const embeddingPipeline = await pipeline(
-      'feature-extraction',
-      'Xenova/all-MiniLM-L6-v2'
-    );
+    // Get embedding from Lovable AI
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    if (!LOVABLE_API_KEY) {
+      throw new Error('LOVABLE_API_KEY not configured');
+    }
 
-    // Generate query embedding
-    const queryEmbedding = await embeddingPipeline(query, {
-      pooling: 'mean',
-      normalize: true,
+    console.log('📡 Generating embedding via Lovable AI...');
+    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        input: query,
+        model: 'text-embedding-3-small',
+      }),
     });
-    const queryVector = Array.from(queryEmbedding.data);
+
+    if (!embeddingResponse.ok) {
+      const errorText = await embeddingResponse.text();
+      console.error('❌ Embedding API error:', embeddingResponse.status, errorText);
+      throw new Error(`Failed to generate embedding: ${embeddingResponse.status} ${errorText}`);
+    }
+
+    const embeddingData = await embeddingResponse.json();
+    const queryVector = embeddingData.data[0].embedding;
 
     console.log('✅ Query embedding generated:', queryVector.length, 'dimensions');
 
