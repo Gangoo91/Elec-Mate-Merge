@@ -173,9 +173,9 @@ Consumer unit 12 way
           {/* Items List */}
           <div className="space-y-2 max-h-60 overflow-y-auto">
             {option.items.map((item, idx) => (
-              <div key={idx} className="flex items-start justify-between p-3 bg-background/50 rounded-lg text-sm">
-                <div className="flex-1">
-                  <p className="font-medium">{item.selectedProduct.name}</p>
+              <div key={idx} className="flex items-start gap-4 p-3 bg-background/50 rounded-lg text-sm">
+                <div className="flex-1 min-w-0 pr-4">
+                  <p className="font-medium break-words">{item.selectedProduct.name}</p>
                   <p className="text-xs text-muted-foreground">
                     {item.requestedItem.quantity} • {item.selectedProduct.supplier}
                   </p>
@@ -185,7 +185,7 @@ Consumer unit 12 way
                     </Badge>
                   )}
                 </div>
-                <div className="text-right">
+                <div className="text-right flex-shrink-0 min-w-[80px]">
                   <p className="font-medium">{item.selectedProduct.price}</p>
                 </div>
               </div>
