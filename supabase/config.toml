@@ -60,6 +60,9 @@ verify_jwt = false
 [functions.comprehensive-materials-scraper]
 verify_jwt = false
 
+[functions.search-pricing-rag]
+verify_jwt = false
+
 [functions.comprehensive-materials-weekly-scraper]
 verify_jwt = false
 

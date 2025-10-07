@@ -216,16 +216,24 @@ const MaterialPriceComparison = ({
     setShowingPreSelected(false);
     
     try {
-      console.log('📡 Calling comprehensive-materials-scraper...');
-      const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
+      console.log('🔍 Starting RAG search with query:', searchQuery);
+      
+      // Add loading toast
+      toast({
+        title: "Searching materials...",
+        description: "Finding the best matches...",
+      });
+
+      // Call the RAG search function
+      const { data, error } = await supabase.functions.invoke('search-pricing-rag', {
         body: { 
-          categoryFilter: selectedCategory === 'all' ? null : selectedCategory, 
-          supplierFilter: selectedSupplier === 'all' ? null : selectedSupplier, 
-          searchTerm: searchQuery.trim()
+          query: searchQuery.trim(),
+          categoryFilter: selectedCategory === 'all' ? undefined : selectedCategory,
+          supplierFilter: selectedSupplier === 'all' ? undefined : selectedSupplier
         }
       });
 
-      console.log('📡 Scraper response:', { data, error });
+      console.log('✅ RAG search response:', { data, error });
 
       if (error) {
         console.error('❌ Scraper error:', error);
