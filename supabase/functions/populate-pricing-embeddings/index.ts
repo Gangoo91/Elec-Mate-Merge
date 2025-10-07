@@ -115,23 +115,46 @@ serve(async (req) => {
     let errorCount = 0;
     let skippedCount = 0;
 
+    // Helper function for chunking arrays into batches
+    const chunkArray = <T,>(array: T[], size: number): T[][] => {
+      const chunks: T[][] = [];
+      for (let i = 0; i < array.length; i += size) {
+        chunks.push(array.slice(i, i + size));
+      }
+      return chunks;
+    };
+
     // Process with exponential backoff for rate limits
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
     let consecutiveErrors = 0;
 
+    // Collect all items from all materials with their metadata
+    const allItems: Array<{ item: any; material: any }> = [];
     for (const material of materials) {
       const items = Array.isArray(material.materials_data) ? material.materials_data : [material.materials_data];
-      
       for (const item of items) {
-        try {
-          // Skip if missing essential data
-          if (!item.name && !item.title) {
-            skippedCount++;
-            continue;
-          }
+        if (!item.name && !item.title) {
+          skippedCount++;
+          continue;
+        }
+        allItems.push({ item, material });
+      }
+    }
 
-          // Construct searchable text
-          const searchableText = [
+    console.log(`🔢 Processing ${allItems.length} items in batches of 100`);
+
+    // Split into batches of 100 items
+    const BATCH_SIZE = 100;
+    const batches = chunkArray(allItems, BATCH_SIZE);
+    console.log(`📦 Created ${batches.length} batches`);
+
+    for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+      const batch = batches[batchIndex];
+      
+      try {
+        // Prepare batch input for OpenAI
+        const batchInputs = batch.map(({ item, material }) => {
+          return [
             item.name || item.title,
             material.category,
             item.brand,
@@ -141,119 +164,130 @@ serve(async (req) => {
             item.price_per_unit,
             item.in_stock ? 'in stock' : 'out of stock'
           ].filter(Boolean).join(' ');
+        });
 
-          // Generate embedding with retry logic
-          let embeddingResponse;
-          let retryCount = 0;
-          const maxRetries = 3;
+        // Generate embeddings for entire batch with retry logic
+        let embeddingResponse;
+        let retryCount = 0;
+        const maxRetries = 3;
 
-          while (retryCount < maxRetries) {
-            try {
-              embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${openAIApiKey}`,
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  model: 'text-embedding-3-small',
-                  input: searchableText,
-                }),
-              });
-
-              if (embeddingResponse.ok) {
-                consecutiveErrors = 0;
-                break;
-              }
-
-              // Handle rate limits
-              if (embeddingResponse.status === 429) {
-                const backoffTime = Math.min(1000 * Math.pow(2, retryCount), 10000);
-                console.log(`⏳ Rate limited, waiting ${backoffTime}ms...`);
-                await sleep(backoffTime);
-                retryCount++;
-                consecutiveErrors++;
-              } else {
-                throw new Error(`OpenAI API error: ${embeddingResponse.status}`);
-              }
-            } catch (err) {
-              console.error(`Retry ${retryCount + 1} failed:`, err);
-              retryCount++;
-              if (retryCount >= maxRetries) throw err;
-              await sleep(1000 * retryCount);
-            }
-          }
-
-          if (!embeddingResponse || !embeddingResponse.ok) {
-            errorCount++;
-            continue;
-          }
-
-          const embeddingData = await embeddingResponse.json();
-          const embedding = embeddingData.data[0].embedding;
-
-          // Insert into pricing_embeddings
-          const { error: insertError } = await supabase
-            .from('pricing_embeddings')
-            .upsert({
-              content: searchableText,
-              embedding: JSON.stringify(embedding),
-              item_name: item.name || item.title || 'Unknown Item',
-              category: material.category || 'Electrical Components',
-              base_cost: parseFloat(item.price) || 0,
-              wholesaler: item.supplier || material.source || 'Unknown',
-              price_per_unit: item.price_per_unit || `£${item.price || 0}`,
-              in_stock: Boolean(item.in_stock),
-              product_url: item.url || null,
-              last_scraped: new Date().toISOString(),
-              metadata: {
-                brand: item.brand,
-                supplier: item.supplier || material.source,
-                specifications: item.specifications,
-                sku: item.sku,
-                pack_qty: item.pack_qty
-              }
-            }, {
-              onConflict: 'content'
+        while (retryCount < maxRetries) {
+          try {
+            embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${openAIApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model: 'text-embedding-3-small',
+                input: batchInputs, // Send array of inputs
+              }),
             });
 
-          if (insertError) {
-            console.error('Insert error:', insertError);
-            errorCount++;
-          } else {
-            processedCount++;
+            if (embeddingResponse.ok) {
+              consecutiveErrors = 0;
+              break;
+            }
+
+            // Handle rate limits
+            if (embeddingResponse.status === 429) {
+              const backoffTime = Math.min(1000 * Math.pow(2, retryCount), 10000);
+              console.log(`⏳ Rate limited on batch ${batchIndex + 1}, waiting ${backoffTime}ms...`);
+              await sleep(backoffTime);
+              retryCount++;
+              consecutiveErrors++;
+            } else {
+              const errorText = await embeddingResponse.text();
+              throw new Error(`OpenAI API error ${embeddingResponse.status}: ${errorText}`);
+            }
+          } catch (err) {
+            console.error(`Retry ${retryCount + 1} failed for batch ${batchIndex + 1}:`, err);
+            retryCount++;
+            if (retryCount >= maxRetries) throw err;
+            await sleep(1000 * retryCount);
           }
+        }
 
-          // Update progress every 50 items
-          if (processedCount % 50 === 0) {
-            const progress = Math.floor((processedCount / totalItems) * 100);
-            await supabase.from('batch_progress').update({
-              items_processed: processedCount,
-              data: { errors: errorCount, skipped: skippedCount }
-            }).eq('job_id', jobId).eq('batch_number', 1);
+        if (!embeddingResponse || !embeddingResponse.ok) {
+          console.error(`❌ Failed batch ${batchIndex + 1} after ${maxRetries} retries`);
+          errorCount += batch.length;
+          continue;
+        }
 
-            await supabase.from('batch_jobs').update({
-              progress_percentage: progress
-            }).eq('id', jobId);
+        const embeddingData = await embeddingResponse.json();
+        const embeddings = embeddingData.data; // Array of embeddings
 
-            console.log(`📈 Progress: ${processedCount}/${totalItems} (${progress}%)`);
+        // Prepare bulk insert data
+        const insertData = batch.map(({ item, material }, index) => ({
+          content: batchInputs[index],
+          embedding: JSON.stringify(embeddings[index].embedding),
+          item_name: item.name || item.title || 'Unknown Item',
+          category: material.category || 'Electrical Components',
+          base_cost: parseFloat(item.price) || 0,
+          wholesaler: item.supplier || material.source || 'Unknown',
+          price_per_unit: item.price_per_unit || `£${item.price || 0}`,
+          in_stock: Boolean(item.in_stock),
+          product_url: item.url || null,
+          last_scraped: new Date().toISOString(),
+          metadata: {
+            brand: item.brand,
+            supplier: item.supplier || material.source,
+            specifications: item.specifications,
+            sku: item.sku,
+            pack_qty: item.pack_qty
           }
+        }));
 
-          // Add small delay to avoid rate limits
-          if (consecutiveErrors > 0) {
-            await sleep(200);
-          }
+        // Bulk insert into pricing_embeddings
+        const { error: insertError } = await supabase
+          .from('pricing_embeddings')
+          .upsert(insertData, {
+            onConflict: 'content'
+          });
 
-        } catch (error) {
-          console.error('Error processing item:', error);
-          errorCount++;
-          
-          // If too many consecutive errors, pause longer
-          if (consecutiveErrors > 5) {
-            console.log('⚠️ Too many errors, pausing for 5 seconds...');
-            await sleep(5000);
-            consecutiveErrors = 0;
+        if (insertError) {
+          console.error(`Insert error for batch ${batchIndex + 1}:`, insertError);
+          errorCount += batch.length;
+        } else {
+          processedCount += batch.length;
+        }
+
+        // Update progress after each batch
+        const progress = Math.floor((processedCount / totalItems) * 100);
+        await supabase.from('batch_progress').update({
+          items_processed: processedCount,
+          data: { 
+            errors: errorCount, 
+            skipped: skippedCount,
+            batches_completed: batchIndex + 1,
+            total_batches: batches.length
           }
+        }).eq('job_id', jobId).eq('batch_number', 1);
+
+        await supabase.from('batch_jobs').update({
+          progress_percentage: progress
+        }).eq('id', jobId);
+
+        console.log(`📈 Progress: ${processedCount}/${totalItems} (${progress}%) - Batch ${batchIndex + 1}/${batches.length}`);
+
+        // Small delay between batches to avoid rate limits
+        if (consecutiveErrors > 0) {
+          await sleep(500);
+        } else {
+          await sleep(100); // Small delay even on success
+        }
+
+      } catch (error) {
+        console.error(`Error processing batch ${batchIndex + 1}:`, error);
+        errorCount += batch.length;
+        consecutiveErrors++;
+        
+        // If too many consecutive errors, pause longer
+        if (consecutiveErrors > 3) {
+          console.log('⚠️ Too many batch errors, pausing for 10 seconds...');
+          await sleep(10000);
+          consecutiveErrors = 0;
         }
       }
     }
