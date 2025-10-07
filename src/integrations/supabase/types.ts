@@ -1288,6 +1288,36 @@ export type Database = {
         }
         Relationships: []
       }
+      health_safety_knowledge: {
+        Row: {
+          content: string
+          created_at: string | null
+          embedding: string | null
+          id: string
+          metadata: Json | null
+          source: string
+          topic: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source: string
+          topic: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string
+          topic?: string
+        }
+        Relationships: []
+      }
       historical_prices: {
         Row: {
           category: string | null
@@ -1521,6 +1551,36 @@ export type Database = {
           title?: string
           updated_at?: string
           view_count?: number | null
+        }
+        Relationships: []
+      }
+      inspection_testing_knowledge: {
+        Row: {
+          content: string
+          created_at: string | null
+          embedding: string | null
+          id: string
+          metadata: Json | null
+          source: string
+          topic: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source: string
+          topic: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string
+          topic?: string
         }
         Relationships: []
       }
@@ -2693,6 +2753,36 @@ export type Database = {
           subscribed?: boolean | null
           updated_at?: string | null
           username?: string | null
+        }
+        Relationships: []
+      }
+      project_mgmt_knowledge: {
+        Row: {
+          content: string
+          created_at: string | null
+          embedding: string | null
+          id: string
+          metadata: Json | null
+          source: string
+          topic: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source: string
+          topic: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string
+          topic?: string
         }
         Relationships: []
       }
@@ -4855,6 +4945,36 @@ export type Database = {
           similarity: number
         }[]
       }
+      search_health_safety: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+          source_filter?: string
+        }
+        Returns: {
+          content: string
+          id: string
+          similarity: number
+          source: string
+          topic: string
+        }[]
+      }
+      search_inspection_testing: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+          source_filter?: string
+        }
+        Returns: {
+          content: string
+          id: string
+          similarity: number
+          source: string
+          topic: string
+        }[]
+      }
       search_installation_knowledge: {
         Args: {
           match_count?: number
@@ -4886,6 +5006,21 @@ export type Database = {
           price_per_unit: string
           similarity: number
           wholesaler: string
+        }[]
+      }
+      search_project_mgmt: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+          source_filter?: string
+        }
+        Returns: {
+          content: string
+          id: string
+          similarity: number
+          source: string
+          topic: string
         }[]
       }
       sparsevec_out: {

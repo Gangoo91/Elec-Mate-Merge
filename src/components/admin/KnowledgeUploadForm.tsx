@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface KnowledgeUploadFormProps {
-  targetType: "bs7671" | "installation" | "pricing";
+  targetType: "bs7671" | "installation" | "pricing" | "project-management" | "health-safety" | "inspection-testing";
   isProcessing: boolean;
   onProcessingStart: () => void;
   onProcessingComplete: (stats: { 
@@ -52,13 +52,21 @@ export default function KnowledgeUploadForm({
   const handleClearDatabase = async () => {
     setIsClearing(true);
     try {
-      const tableName = targetType === "bs7671" 
-        ? "bs7671_embeddings" 
-        : targetType === "installation"
-        ? "installation_knowledge"
-        : "pricing_embeddings";
+      let tableName = "bs7671_embeddings";
+      
+      if (targetType === "installation") {
+        tableName = "installation_knowledge";
+      } else if (targetType === "pricing") {
+        tableName = "pricing_embeddings";
+      } else if (targetType === "project-management") {
+        tableName = "project_mgmt_knowledge";
+      } else if (targetType === "health-safety") {
+        tableName = "health_safety_knowledge";
+      } else if (targetType === "inspection-testing") {
+        tableName = "inspection_testing_knowledge";
+      }
 
-      const { error } = await supabase.from(tableName).delete().neq('id', '00000000-0000-0000-0000-000000000000');
+      const { error } = await supabase.from(tableName as any).delete().neq('id', '00000000-0000-0000-0000-000000000000');
       
       if (error) throw error;
 
@@ -150,12 +158,18 @@ export default function KnowledgeUploadForm({
         } else {
           edgeFunctionName = "parse-onsite-guide";
         }
+      } else if (targetType === "project-management") {
+        edgeFunctionName = "parse-project-management";
+      } else if (targetType === "health-safety") {
+        edgeFunctionName = "parse-health-safety";
+      } else if (targetType === "inspection-testing") {
+        edgeFunctionName = "parse-inspection-testing";
       }
       
       console.log(`Routing to edge function: ${edgeFunctionName}`);
       
       const { data, error } = await supabase.functions.invoke(edgeFunctionName, {
-        body: { fileContent },
+        body: { text: fileContent },
       });
 
       if (error) {
@@ -230,6 +244,12 @@ export default function KnowledgeUploadForm({
             "Upload installation guides, On-Site Guide content, or technical documentation."}
           {targetType === "pricing" && 
             "Upload UK wholesaler price lists in Excel format (.xlsx, .xls). The system will automatically detect columns for product names, SKUs, prices, and brands."}
+          {targetType === "project-management" && 
+            "Upload project management guides, templates, and best practices for electrical projects."}
+          {targetType === "health-safety" && 
+            "Upload health & safety regulations, risk assessments, and safety procedures."}
+          {targetType === "inspection-testing" && 
+            "Upload inspection procedures, testing guides, and EICR documentation."}
         </AlertDescription>
       </Alert>
 

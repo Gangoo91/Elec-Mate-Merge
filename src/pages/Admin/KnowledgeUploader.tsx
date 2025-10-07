@@ -36,10 +36,13 @@ export default function KnowledgeUploader() {
       </Alert>
 
       <Tabs defaultValue="bs7671" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="bs7671">BS 7671 Regulations</TabsTrigger>
-          <TabsTrigger value="installation">Installation Knowledge</TabsTrigger>
-          <TabsTrigger value="pricing">Pricing Data</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger value="bs7671">BS 7671</TabsTrigger>
+          <TabsTrigger value="installation">Installation</TabsTrigger>
+          <TabsTrigger value="pricing">Pricing</TabsTrigger>
+          <TabsTrigger value="project-mgmt">Project Mgmt</TabsTrigger>
+          <TabsTrigger value="health-safety">Health & Safety</TabsTrigger>
+          <TabsTrigger value="inspection">Inspection</TabsTrigger>
         </TabsList>
 
         <TabsContent value="bs7671" className="space-y-4">
@@ -122,11 +125,76 @@ export default function KnowledgeUploader() {
               jobId={processingStats.jobId}
               cacheId={processingStats.cacheId}
               onRetry={() => {
-                // User can re-trigger embeddings
                 setProcessingStats(null);
               }}
             />
           )}
+        </TabsContent>
+
+        <TabsContent value="project-mgmt" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Project Management Knowledge</CardTitle>
+              <CardDescription>
+                Upload project management guides, templates, and best practices for electrical projects.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <KnowledgeUploadForm
+                targetType="project-management"
+                isProcessing={isProcessing}
+                onProcessingStart={() => setIsProcessing(true)}
+                onProcessingComplete={(stats) => {
+                  setIsProcessing(false);
+                  setProcessingStats(stats);
+                }}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="health-safety" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Health & Safety Knowledge</CardTitle>
+              <CardDescription>
+                Upload health & safety regulations, risk assessments, and safety procedures.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <KnowledgeUploadForm
+                targetType="health-safety"
+                isProcessing={isProcessing}
+                onProcessingStart={() => setIsProcessing(true)}
+                onProcessingComplete={(stats) => {
+                  setIsProcessing(false);
+                  setProcessingStats(stats);
+                }}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="inspection" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Inspection & Testing Knowledge</CardTitle>
+              <CardDescription>
+                Upload inspection procedures, testing guides, and EICR documentation.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <KnowledgeUploadForm
+                targetType="inspection-testing"
+                isProcessing={isProcessing}
+                onProcessingStart={() => setIsProcessing(true)}
+                onProcessingComplete={(stats) => {
+                  setIsProcessing(false);
+                  setProcessingStats(stats);
+                }}
+              />
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </div>

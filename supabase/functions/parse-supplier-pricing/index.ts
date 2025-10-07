@@ -74,48 +74,28 @@ serve(async (req) => {
     const nameCol = headers.find(h => nameHeaders.some(nh => h.toUpperCase().includes(nh.toUpperCase())));
     const skuCol = headers.find(h => skuHeaders.some(sh => h.toUpperCase().includes(sh.toUpperCase())));
     const brandCol = headers.find(h => brandHeaders.some(bh => h.toUpperCase().includes(bh.toUpperCase())));
-    const packCol = headers.find(h => packHeaders.some(ph => h.toUpperCase().includes(ph.toUpperCase())));
+    // Strict pack column detection - must be exact match, no TRADE columns
+    const packCol = headers.find(h => {
+      const upper = h.toUpperCase();
+      if (upper.includes('TRADE')) return false;
+      return packHeaders.some(ph => upper === ph.toUpperCase() || upper.includes('PACK QTY'));
+    });
     const unitCol = headers.find(h => unitHeaders.some(uh => h.toUpperCase().includes(uh.toUpperCase())));
     const discGroupCol = headers.find(h => discGroupHeaders.some(dh => h.toUpperCase().includes(dh.toUpperCase())));
 
-    // Smart price column detection - check which has most valid numbers
-    const priceHeaders = ['TRADE2', 'TRADE1 (SPLIT PACK)', 'TRADE1', 'TRADE', 'Price', 'Unit Price', 'Trade Price', 'Cost', 'PRICE'];
-    const potentialPriceCols = headers.filter(h => 
-      priceHeaders.some(ph => h.toUpperCase().includes(ph.toUpperCase()))
-    );
+    // Map price columns - we'll use per-row fallback
+    const priceHeaders = ['TRADE2', 'TRADE1', 'TRADE', 'Price', 'Unit Price', 'Trade Price', 'Cost', 'PRICE'];
+    const potentialPriceCols = headers.filter(h => {
+      const upper = h.toUpperCase();
+      // Exclude SPLIT PACK columns from price detection
+      if (upper.includes('SPLIT') || upper.includes('PACK')) return false;
+      return priceHeaders.some(ph => upper.includes(ph.toUpperCase()));
+    });
 
-    console.log('🔍 Found potential price columns:', potentialPriceCols);
+    console.log('🔍 Smart column mapping - Found potential price columns:', potentialPriceCols);
 
-    // Sample first 50 rows to find best price column
-    const sampleData = XLSX.utils.sheet_to_json(worksheet, { 
-      header: headers,
-      range: 1,
-      defval: ''
-    }).slice(0, 50);
-
-    let priceCol = potentialPriceCols[0]; // Default to first
-    let maxValidPrices = 0;
-
-    for (const col of potentialPriceCols) {
-      let validCount = 0;
-      for (const row of sampleData) {
-        const val = row[col];
-        if (val && val !== '-' && val !== '') {
-          const numVal = typeof val === 'number' ? val : parseFloat(String(val).replace(/[£,\s]/g, ''));
-          if (!isNaN(numVal) && numVal > 0) {
-            validCount++;
-          }
-        }
-      }
-      console.log(`  ${col}: ${validCount} valid prices in sample`);
-      if (validCount > maxValidPrices) {
-        maxValidPrices = validCount;
-        priceCol = col;
-      }
-    }
-
-    console.log('🎯 Column mapping:', {
-      price: priceCol,
+    console.log('🎯 Smart column mapping:', {
+      priceColumns: potentialPriceCols,
       name: nameCol,
       sku: skuCol,
       brand: brandCol,
@@ -124,8 +104,8 @@ serve(async (req) => {
       discGroup: discGroupCol
     });
 
-    if (!priceCol || !nameCol) {
-      throw new Error('Could not detect required columns (price and product name)');
+    if (potentialPriceCols.length === 0 || !nameCol) {
+      throw new Error('Could not detect required columns (price columns and product name)');
     }
 
     // Clear initial workbook from memory
@@ -185,9 +165,8 @@ serve(async (req) => {
 
         const name = row[nameCol];
         const sku = skuCol ? row[skuCol] : null;
-        const rawPrice = row[priceCol];
         
-        // Require name, sku, and price
+        // Require name and sku
         if (!name || String(name).trim() === '') {
           skippedReasons.noName++;
           continue;
@@ -198,7 +177,19 @@ serve(async (req) => {
           continue;
         }
 
-        if (!rawPrice || rawPrice === '-' || rawPrice === '') {
+        // Per-row price fallback: try TRADE2 → TRADE1 → TRADE → PRICE
+        let rawPrice = null;
+        let priceSource = '';
+        for (const col of potentialPriceCols) {
+          const val = row[col];
+          if (val && val !== '-' && val !== '') {
+            rawPrice = val;
+            priceSource = col;
+            break;
+          }
+        }
+
+        if (!rawPrice) {
           skippedReasons.noPrice++;
           continue;
         }

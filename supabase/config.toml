@@ -276,5 +276,14 @@ verify_jwt = false
 [functions.parse-supplier-pricing]
 verify_jwt = false
 
+[functions.parse-project-management]
+verify_jwt = false
+
+[functions.parse-health-safety]
+verify_jwt = false
+
+[functions.parse-inspection-testing]
+verify_jwt = false
+
 [functions.populate-pricing-embeddings]
 verify_jwt = false

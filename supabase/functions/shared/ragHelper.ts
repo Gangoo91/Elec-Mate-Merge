@@ -149,3 +149,117 @@ export async function searchPricingData(
     `${item.item_name} at ${item.wholesaler}: £${item.base_cost} ${item.price_per_unit} ${item.in_stock ? '✓ In Stock' : '✗ Out of Stock'} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
   ).join('\n\n');
 }
+
+/**
+ * Search project management knowledge using RAG
+ */
+export async function searchProjectManagement(
+  query: string,
+  openAIApiKey: string,
+  supabaseUrl: string,
+  supabaseKey: string,
+  limit: number = 10
+): Promise<string> {
+  console.log('🔍 RAG: Searching project management knowledge for:', query);
+  
+  const embedding = await generateEmbedding(query, openAIApiKey);
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const { data, error } = await supabase.rpc('search_project_mgmt', {
+    query_embedding: JSON.stringify(embedding),
+    match_threshold: 0.7,
+    match_count: limit
+  });
+
+  if (error) {
+    console.error('RAG search error:', error);
+    return '';
+  }
+
+  if (!data || data.length === 0) {
+    console.log('⚠️ No relevant project management knowledge found');
+    return '';
+  }
+
+  console.log(`✅ Found ${data.length} relevant project management guides`);
+  
+  return data.map((item: any) => 
+    `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
+  ).join('\n\n');
+}
+
+/**
+ * Search health & safety knowledge using RAG
+ */
+export async function searchHealthSafety(
+  query: string,
+  openAIApiKey: string,
+  supabaseUrl: string,
+  supabaseKey: string,
+  limit: number = 10
+): Promise<string> {
+  console.log('🔍 RAG: Searching health & safety knowledge for:', query);
+  
+  const embedding = await generateEmbedding(query, openAIApiKey);
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const { data, error } = await supabase.rpc('search_health_safety', {
+    query_embedding: JSON.stringify(embedding),
+    match_threshold: 0.7,
+    match_count: limit
+  });
+
+  if (error) {
+    console.error('RAG search error:', error);
+    return '';
+  }
+
+  if (!data || data.length === 0) {
+    console.log('⚠️ No relevant health & safety knowledge found');
+    return '';
+  }
+
+  console.log(`✅ Found ${data.length} relevant health & safety guides`);
+  
+  return data.map((item: any) => 
+    `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
+  ).join('\n\n');
+}
+
+/**
+ * Search inspection & testing knowledge using RAG
+ */
+export async function searchInspectionTesting(
+  query: string,
+  openAIApiKey: string,
+  supabaseUrl: string,
+  supabaseKey: string,
+  limit: number = 10
+): Promise<string> {
+  console.log('🔍 RAG: Searching inspection & testing knowledge for:', query);
+  
+  const embedding = await generateEmbedding(query, openAIApiKey);
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const { data, error } = await supabase.rpc('search_inspection_testing', {
+    query_embedding: JSON.stringify(embedding),
+    match_threshold: 0.7,
+    match_count: limit
+  });
+
+  if (error) {
+    console.error('RAG search error:', error);
+    return '';
+  }
+
+  if (!data || data.length === 0) {
+    console.log('⚠️ No relevant inspection & testing knowledge found');
+    return '';
+  }
+
+  console.log(`✅ Found ${data.length} relevant inspection & testing guides`);
+  
+  return data.map((item: any) => 
+    `${item.topic} (${item.source}): ${item.content} [Similarity: ${(item.similarity * 100).toFixed(0)}%]`
+  ).join('\n\n');
+}
