@@ -275,6 +275,7 @@ verify_jwt = false
 
 [functions.parse-supplier-pricing]
 verify_jwt = false
+timeout_sec = 60
 
 [functions.parse-project-management]
 verify_jwt = false
