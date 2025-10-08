@@ -303,3 +303,9 @@ verify_jwt = false
 [functions.generate-circuit-diagrams]
 verify_jwt = false
 timeout_sec = 90
+
+[functions.generate-eic-schedule]
+verify_jwt = true
+
+[functions.check-subscription]
+verify_jwt = true

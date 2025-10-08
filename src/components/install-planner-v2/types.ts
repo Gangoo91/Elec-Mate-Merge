@@ -51,9 +51,11 @@ export interface FullCircuitDesign {
   phases: string;
   loadPower: number;
   designCurrent: number;
+  voltage: number;
   cableSize: number;
   cpcSize: number;
   cableLength: number;
+  installationMethod?: string;
   protectionDevice: {
     type: string;
     curve?: string;
@@ -62,7 +64,13 @@ export interface FullCircuitDesign {
   };
   rcdProtected: boolean;
   afddRequired?: boolean;
-  calculationResults: any;
+  calculationResults?: {
+    zs: number;
+    maxZs: number;
+    installationMethod?: string;
+    deratedCapacity?: number;
+    safetyMargin?: number;
+  };
 }
 
 export interface InstallPlanDataV2 {

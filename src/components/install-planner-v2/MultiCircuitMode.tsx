@@ -58,12 +58,18 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
         phases: circuitData.phases || "single",
         loadPower: circuitData.loadPower || 0,
         designCurrent: (circuitData.loadPower || 0) / 230,
+        voltage: 230,
         cableSize: 2.5,
         cpcSize: 1.5,
         cableLength: circuitData.cableLength || 0,
+        installationMethod: circuitData.installationMethod || "clipped-direct",
         protectionDevice: circuitData.protectionDevice || { type: "MCB", curve: "B", rating: 0, kaRating: 6 },
         rcdProtected: circuitData.rcdProtected || false,
-        calculationResults: {}
+        calculationResults: {
+          zs: 0,
+          maxZs: 1.44,
+          installationMethod: circuitData.installationMethod || "clipped-direct"
+        }
       };
       setCircuits([...circuits, newCircuit]);
     }
@@ -73,15 +79,18 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
     setCircuits(circuits.filter(c => c.circuitNumber !== circuitNumber));
   };
 
-  // Calculate circuit results
+  // Calculate circuit results using proper BS 7671 engines
   const circuitResults = circuits.map(circuit => {
     const designCurrent = circuit.loadPower / 230;
     const cableCalc = calculateSimplifiedCableSize({
       current: designCurrent,
-      installationType: "clipped-direct",
+      installationType: circuit.installationMethod || "clipped-direct",
+      ambientTemp: 30,
+      groupingCircuits: circuits.length,
       length: circuit.cableLength,
       voltage: 230,
-      cableType: "pvc-single"
+      cableType: "pvc-single",
+      voltageDropLimit: circuit.loadType === 'lighting' ? 3 : 5
     });
 
     const protectionRating = Math.ceil(designCurrent / 6) * 6;
@@ -94,7 +103,9 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
       protectionRating,
       zs,
       voltageDropPercent: cableCalc?.voltageDropPercent || 0,
-      compliant: (cableCalc?.compliant && zs < 1.44) || false
+      compliant: (cableCalc?.compliant && zs < 1.44) || false,
+      deratedCapacity: cableCalc?.deratedCapacity || 0,
+      safetyMargin: cableCalc?.safetyMargin || 0
     };
   });
 

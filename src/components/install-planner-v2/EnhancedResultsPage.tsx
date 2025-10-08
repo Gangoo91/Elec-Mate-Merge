@@ -388,7 +388,7 @@ export const EnhancedResultsPage = ({
 
       {/* Mobile-Optimized Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-5 h-auto">
+        <TabsList className="grid w-full grid-cols-6 h-auto">
           <TabsTrigger value="overview" className="text-xs sm:text-sm py-2.5">Overview</TabsTrigger>
           <TabsTrigger value="details" className="text-xs sm:text-sm py-2.5">
             Details {detailsComplete && "✓"}
@@ -396,7 +396,8 @@ export const EnhancedResultsPage = ({
           <TabsTrigger value="circuits" className="text-xs sm:text-sm py-2.5">
             Circuits ({circuits.length})
           </TabsTrigger>
-          <TabsTrigger value="drawings" className="text-xs sm:text-sm py-2.5">Drawings</TabsTrigger>
+          <TabsTrigger value="drawings" className="text-xs sm:text-sm py-2.5">Diagrams</TabsTrigger>
+          <TabsTrigger value="testing" className="text-xs sm:text-sm py-2.5">Testing</TabsTrigger>
           <TabsTrigger value="specialists" className="text-xs sm:text-sm py-2.5">Specialists</TabsTrigger>
         </TabsList>
 
@@ -479,6 +480,32 @@ export const EnhancedResultsPage = ({
             messages={messages}
             projectName={projectName}
           />
+        </TabsContent>
+
+        {/* Testing Tab - EIC Schedule & Documentation */}
+        <TabsContent value="testing" className="mt-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base md:text-lg">Testing & Commissioning Documentation</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Electrical Installation Certificate (EIC) schedule generation and testing guidance coming soon.
+                This will include pre-calculated test values, BS 7671 compliance checks, and downloadable PDF schedules.
+              </p>
+              <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
+                <h4 className="font-medium text-sm mb-2">Placeholder - Available Soon:</h4>
+                <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
+                  <li>Pre-populated EIC test schedule with expected values</li>
+                  <li>R1+R2 calculations for each circuit</li>
+                  <li>Zs verification and maximum disconnection times</li>
+                  <li>Insulation resistance test guidance</li>
+                  <li>RCD testing parameters (where applicable)</li>
+                  <li>Downloadable PDF in BS 7671 compliant format</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* Specialists Tab - Mobile-First Design */}
