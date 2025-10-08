@@ -299,3 +299,7 @@ verify_jwt = false
 
 [functions.generate-design-spec-pdf]
 verify_jwt = false
+
+[functions.generate-circuit-diagrams]
+verify_jwt = false
+timeout_sec = 90

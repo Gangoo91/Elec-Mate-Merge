@@ -14,6 +14,7 @@ import { parseQuoteFromCostAgent } from "@/utils/parseQuoteFromCostAgent";
 import { useNavigate } from "react-router-dom";
 import { Quote } from "@/types/quote";
 import { ProjectDetailsForm } from "./ProjectDetailsForm";
+import { CircuitDrawingsDisplay } from "./CircuitDrawingsDisplay";
 import { useEffect } from "react";
 
 interface Message {
@@ -387,14 +388,15 @@ export const EnhancedResultsPage = ({
 
       {/* Mobile-Optimized Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 h-auto">
+        <TabsList className="grid w-full grid-cols-5 h-auto">
           <TabsTrigger value="overview" className="text-xs sm:text-sm py-2.5">Overview</TabsTrigger>
           <TabsTrigger value="details" className="text-xs sm:text-sm py-2.5">
-            Project Details {detailsComplete && "✓"}
+            Details {detailsComplete && "✓"}
           </TabsTrigger>
           <TabsTrigger value="circuits" className="text-xs sm:text-sm py-2.5">
             Circuits ({circuits.length})
           </TabsTrigger>
+          <TabsTrigger value="drawings" className="text-xs sm:text-sm py-2.5">Drawings</TabsTrigger>
           <TabsTrigger value="specialists" className="text-xs sm:text-sm py-2.5">Specialists</TabsTrigger>
         </TabsList>
 
@@ -469,6 +471,14 @@ export const EnhancedResultsPage = ({
               <p className="text-muted-foreground text-base">No circuits designed yet.</p>
             </Card>
           )}
+        </TabsContent>
+
+        {/* Drawings Tab */}
+        <TabsContent value="drawings" className="mt-4">
+          <CircuitDrawingsDisplay 
+            messages={messages}
+            projectName={projectName}
+          />
         </TabsContent>
 
         {/* Specialists Tab - Mobile-First Design */}
