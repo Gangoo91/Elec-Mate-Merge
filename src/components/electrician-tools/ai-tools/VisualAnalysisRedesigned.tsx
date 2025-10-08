@@ -773,35 +773,43 @@ const VisualAnalysisRedesigned = () => {
         <div className="space-y-3 sm:space-y-4">
           {/* Findings */}
           {selectedMode === 'fault_diagnosis' && analysisResult.findings && analysisResult.findings.length > 0 && (
-            <div className="space-y-2">
+            <div className="space-y-3">
               {analysisResult.findings.map((finding, index) => (
                 <Card key={index} className={`border-l-4 ${getSeverityColor(finding.eicr_code)}`}>
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="space-y-2">
-                      <div className="flex items-start gap-2">
-                        <div className={`p-1.5 rounded ${getSeverityColor(finding.eicr_code)}`}>
+                  <CardContent className="p-4 sm:p-5">
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3 sm:gap-4">
+                        <div className={`p-1.5 rounded flex-shrink-0 ${getSeverityColor(finding.eicr_code)}`}>
                           {getSeverityIcon(finding.eicr_code)}
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Badge variant="outline" className="font-mono text-xs">
+                        <div className="flex-1 min-w-0 space-y-2">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <Badge variant="outline" className="font-mono text-xs sm:text-sm">
                               {finding.eicr_code}
                             </Badge>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs sm:text-sm text-foreground/80">
                               {Math.round(finding.confidence * 100)}% confidence
                             </span>
                           </div>
-                          <p className="text-sm font-medium text-foreground">{finding.description}</p>
+                          <p className="text-sm sm:text-base font-medium text-foreground leading-relaxed">
+                            {finding.description}
+                          </p>
                           {finding.bs7671_clauses && finding.bs7671_clauses.length > 0 && (
-                            <p className="text-xs text-muted-foreground mt-1">
-                              BS 7671: {finding.bs7671_clauses.join(', ')}
-                            </p>
+                            <div className="text-xs sm:text-sm">
+                              <p className="font-medium text-foreground/90 mb-1.5">BS 7671 References:</p>
+                              <ul className="list-disc list-inside space-y-1 text-foreground/85 ml-1">
+                                {finding.bs7671_clauses.map((clause, clauseIndex) => (
+                                  <li key={clauseIndex} className="leading-relaxed">{clause}</li>
+                                ))}
+                              </ul>
+                            </div>
                           )}
                         </div>
                       </div>
                       {finding.fix_guidance && (
-                        <div className="pl-9 text-xs text-muted-foreground border-l-2 border-border ml-2 pl-3">
-                          {finding.fix_guidance}
+                        <div className="text-xs sm:text-sm border-l-2 border-elec-yellow/60 pl-3 sm:pl-4 py-1 ml-0">
+                          <p className="font-medium text-foreground/90 mb-1">Recommended Fix:</p>
+                          <p className="text-foreground/85 leading-relaxed">{finding.fix_guidance}</p>
                         </div>
                       )}
                     </div>
