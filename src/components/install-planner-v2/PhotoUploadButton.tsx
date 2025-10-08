@@ -68,11 +68,11 @@ export const PhotoUploadButton = ({ onPhotoUploaded, disabled, className }: Phot
 
       <div className="flex gap-2">
         <Button type="button" variant="ghost" size="icon" disabled={disabled || isUploading}
-          onClick={() => cameraInputRef.current?.click()} className="h-9 w-9 shrink-0" title="Take photo">
+          onClick={() => cameraInputRef.current?.click()} className="h-9 w-9 shrink-0" aria-label="Take photo">
           {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
         </Button>
         <Button type="button" variant="ghost" size="icon" disabled={disabled || isUploading}
-          onClick={() => fileInputRef.current?.click()} className="h-9 w-9 shrink-0" title="Upload photo">
+          onClick={() => fileInputRef.current?.click()} className="h-9 w-9 shrink-0" aria-label="Upload photo">
           <Upload className="h-4 w-4" />
         </Button>
       </div>
