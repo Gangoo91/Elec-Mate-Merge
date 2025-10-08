@@ -133,7 +133,7 @@ serve(async (req) => {
     }
 
     // Build system prompt
-    const systemPrompt = `You are an electrical circuit designer with full BS 7671:2018+A2:2022 compliance knowledge.
+    const systemPrompt = `You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance knowledge.
 
 FORMAT YOUR RESPONSE AS:
 

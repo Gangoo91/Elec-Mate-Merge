@@ -89,7 +89,7 @@ export const parseAgentResponse = (text: string): ParsedSection[] => {
       continue;
     }
     
-    // List item
+    // List item (includes • bullet point)
     if (/^\s*[-*•]\s+/.test(trimmed)) {
       flushParagraph();
       const item = trimmed.replace(/^\s*[-*•]\s+/, '').replace(/\*\*/g, '');

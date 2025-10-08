@@ -9,6 +9,10 @@ import { WhatsAppShareButton } from "./WhatsAppShareButton";
 import { AgentResponseRenderer } from "./AgentResponseRenderer";
 import { generateDesignerPDF, generateRAMSFromAgents, prepareTestSheetData } from "@/utils/agent-pdf-generator";
 import { toast } from "sonner";
+import { useQuoteStorage } from "@/hooks/useQuoteStorage";
+import { parseQuoteFromCostAgent } from "@/utils/parseQuoteFromCostAgent";
+import { useNavigate } from "react-router-dom";
+import { Quote } from "@/types/quote";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -58,6 +62,8 @@ export const EnhancedResultsPage = ({
   // Start with all collapsed for performance (mobile-first)
   const [expandedAgents, setExpandedAgents] = useState<Set<string>>(new Set());
   const [activeTab, setActiveTab] = useState("overview");
+  const { saveQuote } = useQuoteStorage();
+  const navigate = useNavigate();
 
   // Memoize filtered messages
   const agentResponses = useMemo(() => messages.filter(m => m.role === 'assistant' && m.agentName), [messages]);
@@ -130,11 +136,52 @@ export const EnhancedResultsPage = ({
     }
   };
 
-  const handleSendToQuoteHub = () => {
-    toast.info("Quote Hub integration coming soon", {
-      description: "Cost data will be sent to your Quote Hub for further editing"
-    });
-    // Future: navigate to quote hub with pre-filled data
+  const handleSendToQuoteHub = async () => {
+    // Find cost engineer response
+    const costEngineerResponse = messages.find(m => m.agentName === 'cost-engineer');
+    
+    if (!costEngineerResponse) {
+      toast.error("No pricing data available", {
+        description: "Cost Engineer hasn't provided pricing yet."
+      });
+      return;
+    }
+
+    try {
+      // Parse the cost engineer's response to extract quote data
+      const quoteData = parseQuoteFromCostAgent(
+        costEngineerResponse.content,
+        {
+          name: "Client Name"
+        },
+        {
+          title: projectName
+        }
+      );
+
+      // Save to database
+      const saved = await saveQuote(quoteData as Quote);
+      
+      if (saved) {
+        toast.success("Quote saved to Quote Hub! 📋", {
+          description: "Opening Quote Hub..."
+        });
+        
+        // Navigate to quote hub
+        setTimeout(() => {
+          navigate('/quote-hub');
+        }, 1000);
+      } else {
+        toast.error("Failed to save quote", {
+          description: "Please try again or contact support."
+        });
+      }
+    } catch (error) {
+      console.error('Error saving quote:', error);
+      toast.error("Failed to parse quote data", {
+        description: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
   };
 
   const handleSendToTestSheet = () => {

@@ -70,13 +70,20 @@ serve(async (req) => {
 
     let systemPrompt = `You are a cost estimator providing itemised UK electrical installation pricing (2025 rates).
 
+CRITICAL RULES:
+1. DO NOT discuss circuit design, cable calculations, or technical specifications
+2. DO NOT repeat any design information from previous agents
+3. START IMMEDIATELY with "MATERIALS BREAKDOWN" - no preamble about circuits or design
+4. Use design specs ONLY to identify which materials to price - never repeat the specifications
+5. Use bullet points (•) for each material line item
+
 CRITICAL: Use the pricing data from our database below. Reference actual suppliers and stock status.
 
 FORMAT YOUR RESPONSE AS:
 
 MATERIALS BREAKDOWN
-[Item name] ([quantity/length]) - £[price] from [Supplier] [In Stock / Lead time X days]
-[repeat for each component needed]
+• [Item name] ([quantity/length]) - £[price] from [Supplier] [In Stock / Lead time X days]
+• [repeat for each component needed]
 
 Subtotal Materials: £[total]
 
@@ -132,8 +139,24 @@ PRICING NOTES
     });
 
     const data = await response.json();
+    let responseContent = data.choices[0]?.message?.content || 'Cost estimate complete.';
+    
+    // Strip any design-related crossover content
+    const designKeywords = [
+      'circuit specification', 'voltage drop calculation', 'bs 7671 compliance', 
+      'cable specification:', 'design current', 'protection device:', 'correction factors',
+      'derated capacity', 'safety margin', 'tabulated capacity', 'load:', 'distance from board:',
+      'installation:', 'supply:', 'calculations'
+    ];
+    
+    // Find where MATERIALS BREAKDOWN starts and only keep from there onwards
+    const materialsIndex = responseContent.indexOf('MATERIALS BREAKDOWN');
+    if (materialsIndex > 0) {
+      responseContent = responseContent.substring(materialsIndex);
+    }
+    
     return new Response(JSON.stringify({
-      response: data.choices[0]?.message?.content || 'Cost estimate complete.',
+      response: responseContent,
       confidence: 0.85
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
