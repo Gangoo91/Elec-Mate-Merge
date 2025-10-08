@@ -945,32 +945,34 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           />
 
           {/* Chat Input */}
-          <div className="flex flex-col gap-3 p-5 bg-elec-dark/80 backdrop-blur-sm rounded-2xl border border-white/10">
+          <div className="flex flex-col gap-3 p-5 bg-elec-dark/50 backdrop-blur-sm rounded-2xl border border-white/5">
             <Textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="Ask anything... 'Can you change the cable?' or 'What's the cost?'"
               disabled={isLoading}
-              className="w-full min-h-[80px] max-h-[160px] resize-none text-base rounded-2xl px-4 py-3 bg-white/5 border-white/10 text-white placeholder:text-muted-foreground leading-relaxed overflow-y-auto"
+              className="w-full min-h-[80px] max-h-[160px] resize-none text-base rounded-2xl px-4 py-3 bg-white/5 border-white/5 text-white placeholder:text-muted-foreground leading-relaxed overflow-y-auto"
               style={{ fontSize: '16px' }}
               rows={3}
             />
             
-            <div className="flex gap-3 justify-end items-center">
+            <div className="flex justify-between items-center w-full gap-3">
               <PhotoUploadButton 
                 onPhotoUploaded={(url) => {
                   setInput(prev => prev + ` [Photo attached: ${url}]`);
                   toast.success('Photo added to message');
                 }}
                 disabled={isLoading}
-                className="h-12 w-12 active:scale-95 transition-transform"
+                className="h-12 w-12 active:scale-95 transition-transform active:bg-white/10"
               />
+              <div className="flex-1" />
               <Button 
                 onClick={handleSend}
                 disabled={isLoading || isStreaming || !input.trim()}
                 size="icon"
                 className="h-12 w-12 rounded-full shadow-sm shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-transform"
+                aria-label="Send message"
               >
                 {(isLoading || isStreaming) ? (
                   <Loader2 className="h-5 w-5 animate-spin" />

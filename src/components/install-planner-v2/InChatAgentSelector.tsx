@@ -68,39 +68,30 @@ export const InChatAgentSelector = ({
       </div>
 
       {/* Mobile */}
-      <div className="md:hidden flex items-center gap-2">
-        <Button variant="ghost" size="icon" onClick={() => setScrollIndex(i => Math.max(0, i - 1))}
-          disabled={scrollIndex === 0} className="h-8 w-8 flex-shrink-0">
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
-        <div className="flex-1 overflow-hidden">
-          <motion.div className="flex gap-2" animate={{ x: -scrollIndex * 120 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}>
-            <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
-              className={cn("h-8 text-xs flex-shrink-0", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}>
-              Auto
-            </Button>
-            {AGENTS.map((agent) => {
-              const Icon = agent.icon;
-              const isSelected = selectedAgent === agent.id;
-              const isComplete = activeAgents.includes(agent.id) && !isSelected;
-              return (
-                <Button key={agent.id} variant="ghost" size="sm"
-                  onClick={() => onAgentSelect(isSelected ? null : agent.id)}
-                  className={cn("h-8 gap-2 text-xs flex-shrink-0 relative min-w-[100px]",
-                    isSelected && "bg-elec-yellow/20 text-elec-yellow",
-                    isComplete && "bg-green-500/10 text-green-400")}>
-                  <Icon className={cn("h-3.5 w-3.5", agent.color)} />
-                  <span>{agent.name}</span>
-                </Button>
-              );
-            })}
-          </motion.div>
+      <div className="md:hidden overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+        <div className="flex gap-2 snap-x snap-mandatory pb-2">
+          <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
+            className={cn("h-10 text-xs flex-shrink-0 snap-center", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}
+            aria-label="Auto select agent">
+            Auto
+          </Button>
+          {AGENTS.map((agent) => {
+            const Icon = agent.icon;
+            const isSelected = selectedAgent === agent.id;
+            const isComplete = activeAgents.includes(agent.id) && !isSelected;
+            return (
+              <Button key={agent.id} variant="ghost" size="sm"
+                onClick={() => onAgentSelect(isSelected ? null : agent.id)}
+                className={cn("h-10 gap-2 text-xs flex-shrink-0 relative min-w-[100px] snap-center",
+                  isSelected && "bg-elec-yellow/20 text-elec-yellow",
+                  isComplete && "bg-green-500/10 text-green-400")}
+                aria-label={`Select ${agent.name} agent`}>
+                <Icon className={cn("h-3.5 w-3.5", agent.color)} />
+                <span>{agent.name}</span>
+              </Button>
+            );
+          })}
         </div>
-        <Button variant="ghost" size="icon" onClick={() => setScrollIndex(i => Math.min(AGENTS.length - visibleCount + 1, i + 1))}
-          disabled={scrollIndex + visibleCount >= AGENTS.length} className="h-8 w-8 flex-shrink-0">
-          <ChevronRight className="h-4 w-4" />
-        </Button>
       </div>
 
       <AnimatePresence>
