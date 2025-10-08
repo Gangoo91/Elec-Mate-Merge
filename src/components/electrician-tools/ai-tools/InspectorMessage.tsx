@@ -1,5 +1,8 @@
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
+import { toast } from "sonner";
+import { Copy } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -14,18 +17,38 @@ interface InspectorMessageProps {
 }
 
 export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps) => {
+  const isUser = message.role === 'user';
+
+  const handleLongPress = () => {
+    if (navigator.clipboard && message.content) {
+      navigator.clipboard.writeText(message.content);
+      toast.success('Copied to clipboard');
+    }
+  };
+
+  const handleCopy = () => {
+    if (navigator.clipboard && message.content) {
+      navigator.clipboard.writeText(message.content);
+      toast.success('Copied to clipboard');
+    }
+  };
+
   return (
-    <div className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-      <Card className={`max-w-[95%] sm:max-w-[85%] p-3 sm:p-4 ${
-        message.role === 'user' 
-          ? 'bg-primary text-primary-foreground' 
-          : 'bg-muted/80 backdrop-blur-sm'
+    <MobileGestureHandler
+      onLongPress={handleLongPress}
+      className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
+    >
+      <div className={`max-w-[85%] rounded-2xl px-4 py-3 ${
+        isUser
+          ? 'bg-primary text-primary-foreground'
+          : 'bg-muted text-foreground'
       }`}>
         {message.agentName && (
-          <div className="flex items-center gap-2 mb-3">
-            <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
-              {message.agentName === 'inspector' ? '🔍 Inspector' : '🔧 Installer'}
-            </Badge>
+          <div className="flex items-center gap-2 mb-2 pb-2 border-b border-border/50">
+            <span className="text-lg">{message.agentName === 'inspector' ? '🔍' : '🔧'}</span>
+            <span className="text-xs font-semibold opacity-80">
+              {message.agentName === 'inspector' ? 'Inspector' : 'Installer'}
+            </span>
           </div>
         )}
         
@@ -34,22 +57,22 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
             remarkPlugins={[remarkGfm]}
             components={{
               h1: ({ children }) => (
-                <h1 className="text-base sm:text-lg font-bold text-elec-yellow mt-4 mb-2 first:mt-0">
+                <h1 className="text-base sm:text-lg font-bold mt-3 mb-2 first:mt-0">
                   {children}
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="text-sm sm:text-base font-semibold text-elec-yellow/90 mt-3 mb-2 first:mt-0">
+                <h2 className="text-sm sm:text-base font-semibold mt-3 mb-2 first:mt-0">
                   {children}
                 </h2>
               ),
               h3: ({ children }) => (
-                <h3 className="text-xs sm:text-sm font-semibold text-elec-yellow/80 mt-2 mb-1 first:mt-0">
+                <h3 className="text-xs sm:text-sm font-semibold mt-2 mb-1 first:mt-0">
                   {children}
                 </h3>
               ),
               p: ({ children }) => (
-                <p className="text-sm sm:text-base leading-relaxed my-2 text-foreground">
+                <p className="text-sm leading-relaxed my-1.5">
                   {children}
                 </p>
               ),
@@ -64,22 +87,22 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
                 </ol>
               ),
               li: ({ children }) => (
-                <li className="text-sm sm:text-base leading-relaxed before:content-['⚡'] before:text-elec-yellow before:mr-2 before:font-bold list-none">
+                <li className="text-sm leading-relaxed before:content-['⚡'] before:text-elec-yellow before:mr-2 before:font-bold list-none">
                   {children}
                 </li>
               ),
               strong: ({ children }) => (
-                <strong className="font-semibold text-white">
+                <strong className="font-semibold">
                   {children}
                 </strong>
               ),
               code: ({ children }) => (
-                <code className="bg-elec-dark/50 px-1 py-0.5 rounded text-xs sm:text-sm text-elec-yellow font-mono">
+                <code className="bg-muted/50 px-1.5 py-0.5 rounded text-xs font-mono">
                   {children}
                 </code>
               ),
               blockquote: ({ children }) => (
-                <blockquote className="border-l-2 border-elec-yellow/50 pl-3 my-2 text-muted-foreground italic">
+                <blockquote className="border-l-2 border-border/50 pl-3 my-2 italic opacity-80">
                   {children}
                 </blockquote>
               ),
@@ -102,7 +125,21 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
             ))}
           </div>
         )}
-      </Card>
-    </div>
+
+        {!isUser && (
+          <div className="mt-2 pt-2 border-t border-border/30 flex gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleCopy}
+              className="h-7 px-2 text-xs"
+            >
+              <Copy className="h-3 w-3 mr-1" />
+              Copy
+            </Button>
+          </div>
+        )}
+      </div>
+    </MobileGestureHandler>
   );
 };

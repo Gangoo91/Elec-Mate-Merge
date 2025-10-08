@@ -53,6 +53,7 @@ export const InspectorChatModal = ({
   const [showReasoning, setShowReasoning] = useState(false); // Start collapsed
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
+  const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
 
   const { streamMessage, isStreaming } = useStreamingChat({
     onAgentStart: (agent, index, total) => {
@@ -235,9 +236,19 @@ export const InspectorChatModal = ({
     }
   };
 
+  // Only auto-scroll if user hasn't manually scrolled up
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (shouldAutoScroll) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, shouldAutoScroll]);
+
+  // Track if user has scrolled up
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const element = e.currentTarget;
+    const isAtBottom = element.scrollHeight - element.scrollTop <= element.clientHeight + 100;
+    setShouldAutoScroll(isAtBottom);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -262,7 +273,10 @@ export const InspectorChatModal = ({
         </DialogHeader>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4">
+        <div 
+          className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 space-y-3 scroll-smooth"
+          onScroll={handleScroll}
+        >
           {/* Inline Reasoning Panel - Compact */}
           {reasoningSteps.length > 0 && (
             <div className="mb-2">
