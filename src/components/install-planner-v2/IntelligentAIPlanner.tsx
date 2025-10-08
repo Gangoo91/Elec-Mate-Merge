@@ -945,37 +945,32 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           />
 
           {/* Chat Input */}
-          <div className="flex flex-col gap-2">
-            {!isLoading && !isStreaming && lastSaved && (
-              <p className="text-xs text-center text-muted-foreground">
-                💾 Auto-saved {Math.round((Date.now() - lastSaved.getTime()) / 1000)}s ago
-              </p>
-            )}
+          <div className="flex flex-col gap-3 p-5 bg-elec-dark/80 backdrop-blur-sm rounded-2xl border border-white/10">
+            <Textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Ask anything... 'Can you change the cable?' or 'What's the cost?'"
+              disabled={isLoading}
+              className="w-full min-h-[80px] max-h-[160px] resize-none text-base rounded-2xl px-4 py-3 bg-white/5 border-white/10 text-white placeholder:text-muted-foreground leading-relaxed overflow-y-auto"
+              style={{ fontSize: '16px' }}
+              rows={3}
+            />
             
-            <div className="flex gap-3 items-end">
-              <Textarea
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyPress}
-                placeholder="Ask anything... 'Can you change the cable?' or 'What's the cost?'"
-                disabled={isLoading}
-                className="flex-1 min-h-[80px] max-h-[160px] resize-none text-base rounded-2xl px-4 py-3 bg-white/5 border-white/10 text-white placeholder:text-muted-foreground leading-relaxed overflow-y-auto"
-                style={{ fontSize: '16px' }}
-                rows={3}
-              />
+            <div className="flex gap-3 justify-end items-center">
               <PhotoUploadButton 
                 onPhotoUploaded={(url) => {
                   setInput(prev => prev + ` [Photo attached: ${url}]`);
                   toast.success('Photo added to message');
                 }}
                 disabled={isLoading}
-                className="h-14 w-14 active:scale-95 transition-transform"
+                className="h-12 w-12 active:scale-95 transition-transform"
               />
               <Button 
                 onClick={handleSend}
                 disabled={isLoading || isStreaming || !input.trim()}
                 size="icon"
-                className="h-14 w-14 rounded-full shadow-sm shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-transform"
+                className="h-12 w-12 rounded-full shadow-sm shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-transform"
               >
                 {(isLoading || isStreaming) ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
