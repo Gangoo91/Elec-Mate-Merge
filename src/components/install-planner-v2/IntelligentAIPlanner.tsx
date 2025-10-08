@@ -908,12 +908,12 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           
           {/* Quick suggestions - only show on first message */}
           {messages.length === 1 && (
-            <div className="flex flex-nowrap gap-2 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4">
+            <div className="flex flex-nowrap gap-2 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4 scrollbar-thin">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("9.5kW shower, 18 metres from the board")}
-                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white whitespace-nowrap snap-start min-w-[140px]"
+                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white whitespace-nowrap snap-start w-[140px] flex-shrink-0"
               >
                 Shower install
               </Button>
@@ -921,7 +921,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("7kW EV charger in garage")}
-                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white whitespace-nowrap snap-start min-w-[140px]"
+                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white whitespace-nowrap snap-start w-[140px] flex-shrink-0"
               >
                 EV charger
               </Button>
@@ -929,7 +929,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 variant="outline"
                 size="sm"
                 onClick={() => setInput("Design complete board for 3-bed house")}
-                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white whitespace-nowrap snap-start min-w-[140px]"
+                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white whitespace-nowrap snap-start w-[140px] flex-shrink-0"
               >
                 Whole house
               </Button>
@@ -941,7 +941,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             selectedAgent={selectedAgent}
             onAgentSelect={setSelectedAgent}
             activeAgents={activeAgents}
-            className="mb-4"
+            className="mb-6"
           />
 
           {/* Chat Input */}
@@ -952,16 +952,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               </p>
             )}
             
-            <div className="flex gap-2 items-end">
+            <div className="flex gap-3 items-end">
               <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder="Ask anything... 'Can you change the cable?' or 'What's the cost?'"
                 disabled={isLoading}
-                className="flex-1 min-h-[60px] max-h-[120px] resize-none text-base rounded-2xl px-4 py-3 bg-white/5 border-white/10 text-white placeholder:text-muted-foreground leading-relaxed"
+                className="flex-1 min-h-[80px] max-h-[160px] resize-none text-base rounded-2xl px-4 py-3 bg-white/5 border-white/10 text-white placeholder:text-muted-foreground leading-relaxed overflow-y-auto"
                 style={{ fontSize: '16px' }}
-                rows={2}
+                rows={3}
               />
               <PhotoUploadButton 
                 onPhotoUploaded={(url) => {
@@ -969,13 +969,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   toast.success('Photo added to message');
                 }}
                 disabled={isLoading}
-                className="h-12 w-12"
+                className="h-14 w-14 active:scale-95 transition-transform"
               />
               <Button 
                 onClick={handleSend}
                 disabled={isLoading || isStreaming || !input.trim()}
                 size="icon"
-                className="h-12 w-12 rounded-full shadow-sm shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                className="h-14 w-14 rounded-full shadow-sm shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-transform"
               >
                 {(isLoading || isStreaming) ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
