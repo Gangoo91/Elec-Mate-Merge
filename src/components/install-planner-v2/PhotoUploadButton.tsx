@@ -78,7 +78,7 @@ export const PhotoUploadButton = ({ onPhotoUploaded, disabled, className }: Phot
       </div>
 
       {preview && (
-        <div className="absolute bottom-full mb-2 right-0 w-32 h-32 rounded-lg overflow-hidden shadow-lg border border-border/50 bg-card">
+        <div className="absolute bottom-full mb-2 right-0 w-32 h-32 rounded-lg overflow-hidden border border-border/50 bg-card">
           <img src={preview} alt="Preview" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-center pb-2">
             <div className="flex gap-1">
