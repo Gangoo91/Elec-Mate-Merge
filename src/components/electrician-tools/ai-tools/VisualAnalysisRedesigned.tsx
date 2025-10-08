@@ -260,6 +260,20 @@ const VisualAnalysisRedesigned = () => {
           .map(image => uploadImageToSupabase(image))
       );
 
+      const getFocusAreasForMode = (mode: AnalysisMode): string[] => {
+        switch (mode) {
+          case 'component_identify':
+            return ['component identification', 'specifications', 'ratings', 'manufacturer details'];
+          case 'wiring_instruction':
+            return ['terminals', 'wire routing', 'connection points', 'cable types'];
+          case 'installation_verify':
+            return ['compliance checks', 'protective devices', 'earthing', 'labelling'];
+          case 'fault_diagnosis':
+          default:
+            return ['visible defects', 'safety hazards', 'non-compliances', 'damage'];
+        }
+      };
+
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: { 
           primary_image: primaryImageUrl,
@@ -268,6 +282,8 @@ const VisualAnalysisRedesigned = () => {
             mode: selectedMode || 'fault_diagnosis',
             confidence_threshold: 0.75,
             enable_bounding_boxes: true,
+            focus_areas: getFocusAreasForMode(selectedMode || 'fault_diagnosis'),
+            remove_background: false,
             bs7671_compliance: true
           }
         },
@@ -292,11 +308,22 @@ const VisualAnalysisRedesigned = () => {
       });
     } catch (error) {
       console.error('Analysis Error:', error);
+      
+      const isRagError = error instanceof Error && error.message.includes('RAG');
+      
       toast({
-        title: "Analysis failed",
-        description: error instanceof Error ? error.message : "Failed to analyse images",
-        variant: "destructive",
+        title: isRagError ? "Analysis completed (RAG unavailable)" : "Analysis failed",
+        description: error instanceof Error 
+          ? error.message 
+          : "Unable to analyse images. Please check your images and try again.",
+        variant: isRagError ? "default" : "destructive",
+        duration: 6000
       });
+      
+      if (!isRagError) {
+        setImages([]);
+        setPrimaryImageIndex(0);
+      }
     } finally {
       setIsAnalyzing(false);
     }
@@ -410,7 +437,26 @@ const VisualAnalysisRedesigned = () => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="space-y-4 sm:space-y-6 relative">
+      {/* Loading Overlay */}
+      {isAnalyzing && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center animate-fade-in">
+          <Card className="p-6 max-w-sm mx-4 bg-card border-border">
+            <div className="flex flex-col items-center gap-4">
+              <div className="animate-spin rounded-full h-12 w-12 border-4 border-elec-yellow border-t-transparent" />
+              <div className="text-center space-y-2">
+                <h3 className="font-semibold text-lg text-foreground">Analysing Images</h3>
+                <p className="text-sm text-muted-foreground">
+                  Stage 1: Scanning components...<br/>
+                  Stage 2: Verifying against BS 7671...<br/>
+                  Stage 3: Generating report...
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+      
       {/* Compact Header */}
       <Card className="bg-gradient-to-br from-elec-card to-elec-grey/50 border-border">
         <CardHeader className="p-4 sm:p-6 pb-3 sm:pb-4">
@@ -555,7 +601,7 @@ const VisualAnalysisRedesigned = () => {
                       key={index} 
                       className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-200 active:scale-95 sm:hover:scale-105 ${
                         index === primaryImageIndex 
-                          ? 'border-elec-yellow shadow-lg shadow-elec-yellow/20 animate-pulse-glow' 
+                          ? 'border-elec-yellow shadow-lg shadow-elec-yellow/20' 
                           : 'border-border hover:border-elec-yellow/50'
                       }`}
                       onClick={() => setPrimaryImageIndex(index)}

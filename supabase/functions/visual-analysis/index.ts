@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
@@ -194,7 +195,7 @@ Your role is to analyse electrical installation images and provide:
 4. Professional remedial guidance and cost estimates
 5. Bounding box coordinates for detected issues (when requested)
 
-Analysis Focus Areas: ${analysis_settings.focus_areas.join(', ')}
+Analysis Focus Areas: ${(analysis_settings.focus_areas || ['wiring', 'protective devices', 'earthing', 'general installation']).join(', ')}
 Confidence Threshold: ${analysis_settings.confidence_threshold}
 Enable Bounding Boxes: ${analysis_settings.enable_bounding_boxes}
 
@@ -334,7 +335,7 @@ Provide a pass/fail assessment with detailed reasoning and improvement recommend
         default:
           return `Analyse these electrical installation images for EICR compliance and BS 7671 18th Edition requirements.
 
-Primary focus areas: ${analysis_settings.focus_areas.join(', ')}
+Primary focus areas: ${(analysis_settings.focus_areas || ['wiring', 'protective devices', 'earthing', 'general installation']).join(', ')}
 
 ${analysis_settings.enable_bounding_boxes ? 
   'Please include bounding box coordinates (normalised 0-1) for any detected issues or components of interest.' : 
