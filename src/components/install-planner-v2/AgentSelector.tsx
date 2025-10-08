@@ -103,7 +103,7 @@ export const AgentSelector = ({ onStartConsultation }: AgentSelectorProps) => {
         <h2 className="text-2xl md:text-3xl font-bold text-foreground">
           Choose Your Consultation Team
         </h2>
-        <p className="text-white/70">
+        <p className="text-muted-foreground">
           Select which specialist agents will help design your installation
         </p>
       </div>
@@ -168,7 +168,7 @@ export const AgentSelector = ({ onStartConsultation }: AgentSelectorProps) => {
                           <span className="text-base">{agent.emoji}</span>
                           <span className="flex-1">{agent.name}</span>
                         </Label>
-                        <p className="text-xs text-white/70 leading-relaxed">
+                        <p className="text-xs text-muted-foreground leading-relaxed">
                           {agent.description}
                         </p>
                       </div>

@@ -92,22 +92,22 @@ export const TestingDocumentation = ({
             {/* Installation Details */}
             <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
               <div>
-                <p className="text-sm font-medium text-white/70">Installation Address</p>
-                <p className="font-medium text-white">{eicSchedule.installationAddress}</p>
+                <p className="text-sm font-medium text-muted-foreground">Installation Address</p>
+                <p className="font-medium">{eicSchedule.installationAddress}</p>
               </div>
               <div>
-                <p className="text-sm font-medium text-white/70">Designer</p>
-                <p className="font-medium text-white">{eicSchedule.designerName}</p>
+                <p className="text-sm font-medium text-muted-foreground">Designer</p>
+                <p className="font-medium">{eicSchedule.designerName}</p>
               </div>
               <div>
-                <p className="text-sm font-medium text-white/70">Design Date</p>
-                <p className="font-medium text-white">
+                <p className="text-sm font-medium text-muted-foreground">Design Date</p>
+                <p className="font-medium">
                   {new Date(eicSchedule.designDate).toLocaleDateString('en-GB')}
                 </p>
               </div>
               <div>
-                <p className="text-sm font-medium text-white/70">Installation ID</p>
-                <p className="font-medium text-white">{eicSchedule.installationId}</p>
+                <p className="text-sm font-medium text-muted-foreground">Installation ID</p>
+                <p className="font-medium">{eicSchedule.installationId}</p>
               </div>
             </div>
 
@@ -170,8 +170,8 @@ export const TestingDocumentation = ({
             </div>
 
             {/* Standards Reference */}
-            <div className="text-sm text-white/70 p-3 bg-muted rounded">
-              <p className="font-medium mb-1 text-white">Testing Standards:</p>
+            <div className="text-sm text-muted-foreground p-3 bg-muted rounded">
+              <p className="font-medium mb-1">Testing Standards:</p>
               <p>✓ BS 7671:2018+A3:2024 - Part 6: Inspection and Testing</p>
               <p>✓ All expected values pre-calculated for on-site verification</p>
             </div>
@@ -229,7 +229,7 @@ const TestGuidanceStep = ({ step, stepNumber }: TestGuidanceStepProps) => {
           </span>
           {step.test}
         </h4>
-        <p className="text-sm text-white/70 mt-1">{step.regulation}</p>
+        <p className="text-sm text-muted-foreground mt-1">{step.regulation}</p>
       </div>
 
       <div className="space-y-2">

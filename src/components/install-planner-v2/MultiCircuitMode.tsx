@@ -344,7 +344,7 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
       {circuits.length === 0 && (
         <Card className="bg-muted/50 border-dashed">
           <CardContent className="py-12 text-center">
-            <p className="text-white/70 mb-4">No circuits added yet</p>
+            <p className="text-muted-foreground mb-4">No circuits added yet</p>
             <Button onClick={handleAddCircuit}>
               <Plus className="h-4 w-4 mr-2" />
               Add Your First Circuit
