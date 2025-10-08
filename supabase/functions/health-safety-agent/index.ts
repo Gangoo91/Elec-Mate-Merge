@@ -1,7 +1,8 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { corsHeaders } from '../_shared/cors.ts';
-import { getHazardsForWork, getACOPsForWork, emergencyProcedures } from './healthSafetyKnowledge.ts';
+import { emergencyProcedures } from './healthSafetyKnowledge.ts';
 
 interface HealthSafetyAgentRequest {
   messages: Array<{ role: string; content: string }>;
@@ -20,24 +21,72 @@ serve(async (req) => {
   try {
     const { messages, currentDesign, context } = await req.json() as HealthSafetyAgentRequest;
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
 
     if (!openAIApiKey) {
       throw new Error('OpenAI API key not configured');
     }
+    if (!lovableApiKey) {
+      throw new Error('LOVABLE_API_KEY not configured');
+    }
 
-    console.log('🦺 Health & Safety Agent: Analyzing work for safety requirements');
+    console.log('🦺 Health & Safety Agent: Analyzing work with RAG knowledge base');
 
     const latestMessage = messages[messages.length - 1]?.content || '';
-
-    // Phase 2: Load relevant H&S knowledge + ACOPs
     const circuitDetails = extractCircuitDetails(latestMessage, currentDesign, context);
     const workType = extractWorkType(latestMessage, currentDesign);
-    const relevantHazards = getHazardsForWork(workType);
-    const relevantACOPs = getACOPsForWork(workType);
 
-    console.log(`🦺 Loading H&S knowledge for work type: ${workType}, found ${relevantHazards.length} hazards and ${relevantACOPs.length} ACOPs`);
+    // RAG: Query health_safety_knowledge via Supabase RPC
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    
+    const ragQuery = `${workType} electrical work hazards safety risks controls PPE ACOP CDM EWR HASAWA`;
+    console.log(`🔍 RAG: Searching H&S knowledge for: ${ragQuery}`);
+    
+    // Generate embedding for RAG query using Lovable AI
+    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'text-embedding-3-small',
+        input: ragQuery,
+      }),
+    });
 
-    // System prompt: Senior H&S advisor with REAL knowledge base + ACOPs
+    if (!embeddingResponse.ok) {
+      console.error('Embedding API error:', await embeddingResponse.text());
+      throw new Error('Failed to generate embedding');
+    }
+
+    const embeddingData = await embeddingResponse.json();
+    const queryEmbedding = embeddingData.data[0].embedding;
+
+    // Query RAG database using search_health_safety RPC
+    const { data: ragResults, error: ragError } = await supabase.rpc('search_health_safety', {
+      query_embedding: queryEmbedding,
+      match_threshold: 0.7,
+      match_count: 15
+    });
+
+    if (ragError) {
+      console.error('RAG query error:', ragError);
+      throw new Error('Failed to query H&S knowledge base');
+    }
+
+    const relevantGuidelines = ragResults || [];
+    console.log(`🦺 RAG: Found ${relevantGuidelines.length} relevant H&S guidelines (similarity > 0.7)`);
+
+    // Build RAG-enhanced system prompt
+    const ragContext = relevantGuidelines.length > 0
+      ? relevantGuidelines.map((item: any, idx: number) => 
+          `${idx + 1}. ${item.topic} (Source: ${item.source}, Similarity: ${(item.similarity * 100).toFixed(0)}%)\n${item.content}`
+        ).join('\n\n')
+      : 'No specific guidelines found - using general electrical safety knowledge.';
+
     const systemPrompt = `You are a senior Health & Safety advisor specializing in electrical work, with 20 years experience in BS 7671, CDM 2015, HASAWA 1974, and HSE ACOPs.
 
 CRITICAL RULES:
@@ -49,18 +98,8 @@ CRITICAL RULES:
 6. Include emergency procedures for electrical incidents
 7. Speak like a UK site safety officer - direct but friendly
 
-**RELEVANT H&S GUIDELINES FOR THIS WORK (${workType}):**
-${relevantHazards.map(h => `
-${h.title} (${h.regulation}${h.acop ? ` - ACOP ${h.acop}` : ''}) - SEVERITY: ${h.severity.toUpperCase()}
-${h.content}
-`).join('\n')}
-
-**APPLICABLE ACOPs (Approved Codes of Practice):**
-${relevantACOPs.length > 0 ? relevantACOPs.map(acop => `
-${acop.acop_number}: ${acop.title} (${acop.regulation})
-Key Requirements:
-${acop.key_requirements.map(req => `  • ${req}`).join('\n')}
-`).join('\n') : 'Standard ACOP L21 (Management of H&S at Work) applies'}
+**RELEVANT H&S KNOWLEDGE FROM DATABASE (${workType}):**
+${ragContext}
 
 **EMERGENCY PROCEDURES:**
 Electric Shock: ${emergencyProcedures.electricShock.slice(0, 3).join(' → ')}
