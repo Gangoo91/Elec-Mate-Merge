@@ -107,7 +107,7 @@ CRITICAL RULES:
 5. Reference ACOP requirements where applicable (quasi-legal status)
 6. Include emergency procedures for electrical incidents
 7. Speak like a UK site safety officer - direct but friendly
-8. IF other agents have provided design/installation info, reference their findings in your safety assessment${previousContext}`
+8. IF other agents have provided design/installation info, reference their findings in your safety assessment${previousContext}
 
 **RELEVANT H&S KNOWLEDGE FROM DATABASE (${workType}):**
 ${ragContext}
