@@ -2,7 +2,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { corsHeaders } from '../_shared/cors.ts';
-import { emergencyProcedures } from './healthSafetyKnowledge.ts';
+import { emergencyProcedures } from '../_shared/emergencyProcedures.ts';
 
 interface HealthSafetyAgentRequest {
   messages: Array<{ role: string; content: string }>;
@@ -87,6 +87,14 @@ serve(async (req) => {
         ).join('\n\n')
       : 'No specific guidelines found - using general electrical safety knowledge.';
 
+    // Extract context from previous agents
+    const previousAgentOutputs = context?.previousAgentOutputs || [];
+    const previousContext = previousAgentOutputs.length > 0
+      ? `\n\n**PREVIOUS AGENT RESPONSES:**\n${previousAgentOutputs.map((a: any) => 
+          `[${a.agent}]: ${a.response.substring(0, 300)}...`
+        ).join('\n\n')}`
+      : '';
+
     const systemPrompt = `You are a senior Health & Safety advisor specializing in electrical work, with 20 years experience in BS 7671, CDM 2015, HASAWA 1974, and HSE ACOPs.
 
 CRITICAL RULES:
@@ -97,6 +105,7 @@ CRITICAL RULES:
 5. Reference ACOP requirements where applicable (quasi-legal status)
 6. Include emergency procedures for electrical incidents
 7. Speak like a UK site safety officer - direct but friendly
+8. IF other agents have provided design/installation info, reference their findings in your safety assessment${previousContext}`
 
 **RELEVANT H&S KNOWLEDGE FROM DATABASE (${workType}):**
 ${ragContext}
@@ -140,35 +149,62 @@ OUTPUT FORMAT:
 
 IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic checklists.`;
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-5-2025-08-07',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: `${latestMessage}\n\nIMPORTANT: Respond with valid JSON matching the specified format.` }
-        ],
-        max_completion_tokens: 3000,
-        response_format: { type: "json_object" }
-      }),
-      signal: controller.signal
-    });
+    // RETRY LOGIC: OpenAI can return empty content, retry up to 2 times
+    let response;
+    let data;
+    let content;
+    let retries = 0;
+    const maxRetries = 2;
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('OpenAI API error:', errorText);
-      throw new Error(`OpenAI API error: ${response.status}`);
+    while (retries <= maxRetries) {
+      try {
+        response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${openAIApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'gpt-5-2025-08-07',
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: `${latestMessage}\n\nIMPORTANT: Respond with valid JSON matching the specified format.` }
+            ],
+            max_completion_tokens: 3000,
+            response_format: { type: "json_object" }
+          }),
+          signal: controller.signal
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('OpenAI API error:', errorText);
+          throw new Error(`OpenAI API error: ${response.status}`);
+        }
+
+        data = await response.json();
+        content = data.choices[0]?.message?.content;
+
+        if (content) {
+          console.log(`✅ H&S Agent: Got response on attempt ${retries + 1}`);
+          break; // Success!
+        }
+
+        console.warn(`⚠️ Empty response from OpenAI (attempt ${retries + 1}/${maxRetries + 1})`);
+        retries++;
+        if (retries <= maxRetries) {
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s before retry
+        }
+      } catch (error) {
+        if (retries === maxRetries) throw error;
+        console.warn(`⚠️ Error on attempt ${retries + 1}, retrying...`);
+        retries++;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
     }
 
-    const data = await response.json();
-    const content = data.choices[0]?.message?.content;
-
     if (!content) {
-      throw new Error('No response from AI');
+      throw new Error('No response from AI after 3 attempts');
     }
 
     const parsedResponse = JSON.parse(content);
