@@ -26,10 +26,10 @@ serve(async (req) => {
     const userMessage = messages[messages.length - 1]?.content || '';
     const circuitParams = extractCircuitParams(userMessage, currentDesign);
 
-    // Run BS 7671 calculations
+    // Run enhanced BS 7671 calculations
     let calculationResults: any = null;
     if (circuitParams.hasEnoughData) {
-      console.log('🔧 Running BS 7671 calculations:', circuitParams);
+      console.log('🔧 Running enhanced BS 7671 calculations:', circuitParams);
       
       const cableData = getCableCapacity(circuitParams.cableSize, 'C', 2);
       const correctionFactors = calculateOverallCorrectionFactor({
@@ -69,7 +69,35 @@ serve(async (req) => {
       const zsCalc = getMaxZs(circuitParams.deviceType, circuitParams.deviceRating, 0.4);
       const rcdRequirements = checkRCDRequirement(circuitParams.circuitType, circuitParams.location);
 
-      calculationResults = { cableCapacity: cableCalc, voltageDrop: voltDropCalc, maxZs: zsCalc, rcdRequirements };
+      // Calculate prospective short-circuit current (PSCC)
+      const r1r2PerMeter = circuitParams.cableSize === 2.5 ? 7.41 : circuitParams.cableSize === 4 ? 4.61 : 3.08;
+      const zs = 0.35 + (r1r2PerMeter * circuitParams.cableLength / 1000);
+      const pscc = Math.round((0.95 * circuitParams.voltage) / zs);
+
+      // Motor circuit detection
+      const isMotorCircuit = circuitParams.circuitType?.toLowerCase().includes('motor');
+      let motorData = null;
+      if (isMotorCircuit) {
+        const motorPower = circuitParams.power / 1000; // Convert to kW
+        const startingCurrent = circuitParams.designCurrent * 6; // DOL starter ~6x FLC
+        motorData = {
+          power: motorPower,
+          fullLoadCurrent: circuitParams.designCurrent,
+          startingCurrent,
+          startingMethod: 'DOL',
+          requiredDevice: `${Math.ceil(circuitParams.designCurrent * 1.25)}A Motor Protection CB`
+        };
+      }
+
+      calculationResults = { 
+        cableCapacity: cableCalc, 
+        voltageDrop: voltDropCalc, 
+        maxZs: zsCalc, 
+        rcdRequirements,
+        zs,
+        pscc,
+        motorData
+      };
     }
 
     // RAG: Query BS 7671 regulations AND design knowledge via Supabase RPC
@@ -237,12 +265,33 @@ Use professional language with UK English spelling. Present calculations clearly
       structuredData.voltageDrop = calculationResults.voltageDrop;
       structuredData.earthFault = calculationResults.maxZs;
       structuredData.installationMethod = circuitParams.installationMethod;
+      structuredData.zs = calculationResults.zs;
+      structuredData.pscc = calculationResults.pscc;
+      
+      if (calculationResults.motorData) {
+        structuredData.motorData = calculationResults.motorData;
+      }
+      
+      // EIC-ready test values
+      structuredData.eicTestData = {
+        r1r2Expected: `${(calculationResults.zs - 0.35).toFixed(3)}Ω`,
+        zsExpected: `${calculationResults.zs.toFixed(2)}Ω`,
+        maxZs: `${calculationResults.maxZs.maxZs}Ω`,
+        insulationTest: '≥1.0 MΩ at 500V DC',
+        polarity: 'Correct (verify on-site)',
+        rcdTest: calculationResults.rcdRequirements?.required ? '30mA RCD required' : 'N/A'
+      };
       
       reasoning.push(`Selected ${circuitParams.cableSize}mm² cable: Iz (${Math.round(calculationResults.cableCapacity.Iz * 10) / 10}A) > In (${circuitParams.deviceRating}A)`);
       reasoning.push(`Correction factors: Ca=${calculationResults.cableCapacity.factors.temperatureFactor}, Cg=${calculationResults.cableCapacity.factors.groupingFactor}`);
+      reasoning.push(`Zs = ${calculationResults.zs.toFixed(2)}Ω (max ${calculationResults.maxZs.maxZs}Ω) - PSCC = ${calculationResults.pscc}A`);
       
       if (calculationResults.voltageDrop?.compliant) {
         reasoning.push(`Voltage drop ${calculationResults.voltageDrop.percentage}% complies with 3% BS 7671 limit`);
+      }
+      
+      if (calculationResults.motorData) {
+        reasoning.push(`Motor circuit: FLC=${calculationResults.motorData.fullLoadCurrent}A, Starting=${calculationResults.motorData.startingCurrent}A (${calculationResults.motorData.startingMethod})`);
       }
     }
 

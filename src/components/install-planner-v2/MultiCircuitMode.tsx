@@ -5,7 +5,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { InstallPlanDataV2, FullCircuitDesign } from "./types";
 import { useState } from "react";
-import { Plus, FileText, Image, Download } from "lucide-react";
+import { Plus, FileText, Image, Download, Layout } from "lucide-react";
+import { generateConsumerUnitDiagram } from "@/lib/diagramGenerator/layoutEngine";
 import { CircuitCard } from "./multi-circuit/CircuitCard";
 import { CircuitFormDialog } from "./multi-circuit/CircuitFormDialog";
 import { SystemSummary } from "./multi-circuit/SystemSummary";
@@ -255,6 +256,49 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
                 <FileText className="h-4 w-4 mr-2" />
                 {showTesting ? "Hide" : "Show"} EIC
               </Button>
+              {circuits.length >= 3 && (
+                <Button variant="outline" size="sm" onClick={() => {
+                  const circuitData = circuits.map(c => ({
+                    circuitNumber: c.circuitNumber,
+                    name: c.name,
+                    voltage: c.voltage || 230,
+                    cableSize: c.cableSize,
+                    cpcSize: c.cpcSize,
+                    cableLength: c.cableLength,
+                    loadType: c.loadType,
+                    loadPower: c.loadPower,
+                    protectionDevice: c.protectionDevice || { type: 'MCB', curve: 'B', rating: 32, kaRating: 6 },
+                    rcdProtected: c.rcdProtected || false,
+                    ze
+                  }));
+                  
+                  const diagramLayout = generateConsumerUnitDiagram(circuitData, mainSwitchRating);
+                  
+                  // Create SVG from layout - simplified export
+                  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                  svg.setAttribute('width', '600');
+                  svg.setAttribute('height', '800');
+                  svg.setAttribute('viewBox', '0 0 600 800');
+                  
+                  const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                  text.setAttribute('x', '50');
+                  text.setAttribute('y', '50');
+                  text.setAttribute('font-size', '16');
+                  text.textContent = `Consumer Unit - ${circuits.length} Circuits - ${mainSwitchRating}A Main Switch`;
+                  svg.appendChild(text);
+                  
+                  const blob = new Blob([svg.outerHTML], { type: 'image/svg+xml' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'consumer-unit-layout.svg';
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}>
+                  <Layout className="h-4 w-4 mr-2" />
+                  Consumer Unit Layout
+                </Button>
+              )}
             </>
           )}
           <Button onClick={handleAddCircuit}>

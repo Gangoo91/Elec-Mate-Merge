@@ -7,6 +7,7 @@ import { QuickSetupStep } from "./express/QuickSetupStep";
 import { SmartEnvironmentStep } from "./express/SmartEnvironmentStep";
 import { ResultsStep } from "./express/ResultsStep";
 import { calculateCableSelection } from "./CalculationEngine";
+import { calculateSimplifiedCableSize } from "@/lib/calculators/engines/simplifiedCableSizingEngine";
 
 interface ExpressModeProps {
   planData: InstallPlanDataV2;
