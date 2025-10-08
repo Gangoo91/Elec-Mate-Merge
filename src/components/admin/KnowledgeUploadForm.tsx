@@ -143,6 +143,51 @@ export default function KnowledgeUploadForm({
         return;
       }
 
+      // Handle PDF and text-based uploads
+      const isPdf = selectedFile.type === 'application/pdf';
+      
+      if (isPdf && targetType === "inspection-testing") {
+        // Handle PDF for inspection-testing
+        console.log('📄 Processing PDF for inspection-testing:', selectedFile.name);
+        
+        const reader = new FileReader();
+        const fileData = await new Promise<string>((resolve, reject) => {
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(selectedFile);
+        });
+
+        const { data, error } = await supabase.functions.invoke('parse-inspection-testing-pdf', {
+          body: { fileData },
+        });
+
+        if (error) {
+          console.error("PDF parsing error:", error);
+          throw new Error(error.message || "Failed to parse PDF file");
+        }
+
+        if (data?.error) {
+          throw new Error(data.error);
+        }
+
+        onProcessingComplete({
+          total: data.total || 0,
+          processed: data.processed || 0,
+          status: "completed",
+        });
+
+        toast({
+          title: "PDF processing complete",
+          description: `Successfully processed ${data.processed} chunks from PDF.`,
+        });
+
+        setSelectedFile(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+        return;
+      }
+
       // Handle text-based uploads (existing logic)
       const fileContent = await selectedFile.text();
       
