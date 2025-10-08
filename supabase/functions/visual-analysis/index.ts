@@ -9,6 +9,41 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Robust JSON parser that handles markdown-wrapped responses
+const parseAIResponse = (content: string, context: string = 'AI response') => {
+  if (!content || content.trim() === '') {
+    throw new Error(`${context} is empty`);
+  }
+
+  try {
+    // Try direct parse first
+    return JSON.parse(content);
+  } catch (e) {
+    console.error(`Direct JSON parse failed for ${context}:`, e);
+    
+    // Try to extract JSON from markdown code blocks
+    const patterns = [
+      /```json\s*\n([\s\S]*?)\n```/,  // ```json ... ```
+      /```\s*\n([\s\S]*?)\n```/,        // ``` ... ```
+      /{[\s\S]*}/                       // Find any JSON object
+    ];
+    
+    for (const pattern of patterns) {
+      const match = content.match(pattern);
+      if (match) {
+        try {
+          const extracted = match[1] || match[0];
+          return JSON.parse(extracted);
+        } catch (parseError) {
+          continue;
+        }
+      }
+    }
+    
+    throw new Error(`Could not parse ${context} as JSON. Raw content: ${content.substring(0, 200)}...`);
+  }
+};
+
 type AnalysisMode = 'fault_diagnosis' | 'component_identify' | 'wiring_instruction' | 'installation_verify';
 
 interface AnalysisSettings {
@@ -410,7 +445,7 @@ Respond with JSON only:
       if (scanResponse.ok) {
         const scanData = await scanResponse.json();
         try {
-          preliminaryFindings = JSON.parse(scanData.choices[0].message.content);
+          preliminaryFindings = parseAIResponse(scanData.choices[0].message.content, 'Preliminary scan');
           console.log('✅ Preliminary scan complete:', preliminaryFindings);
 
           // STAGE 2: RAG-enhanced analysis based on preliminary findings
@@ -567,9 +602,38 @@ USE THIS VERIFIED INFORMATION to enhance your analysis. Cross-reference your fin
 
     let analysisResult;
     try {
-      analysisResult = JSON.parse(data.choices[0].message.content);
+      analysisResult = parseAIResponse(data.choices[0].message.content, 'Final analysis');
+      
+      // Validate required structure
+      if (!analysisResult || typeof analysisResult !== 'object') {
+        throw new Error('Analysis result is not a valid object');
+      }
+
+      // Ensure analysis wrapper exists
+      if (!analysisResult.analysis) {
+        analysisResult = { analysis: analysisResult };
+      }
+
+      // Ensure findings array exists
+      if (!analysisResult.analysis.findings || !Array.isArray(analysisResult.analysis.findings)) {
+        console.warn('No findings array in analysis result, creating empty array');
+        analysisResult.analysis.findings = [];
+      }
+
+      // Sanitize each finding with defaults
+      analysisResult.analysis.findings = analysisResult.analysis.findings.map((finding: any, index: number) => ({
+        description: finding.description || `Finding ${index + 1}`,
+        severity: finding.severity || finding.eicr_code || 'FI',
+        eicr_code: finding.eicr_code || finding.severity || 'FI',
+        confidence: typeof finding.confidence === 'number' ? finding.confidence : 0.5,
+        regulation_reference: finding.regulation_reference || finding.bs7671_clauses || ['N/A'],
+        bs7671_clauses: finding.bs7671_clauses || finding.regulation_reference || ['N/A'],
+        fix_guidance: finding.fix_guidance || finding.remedial_action || 'Consult qualified electrician',
+        ...finding
+      }));
+
     } catch (parseError) {
-      console.error('Failed to parse OpenAI response as JSON:', parseError);
+      console.error('Failed to parse and validate OpenAI response:', parseError);
       console.error('Raw response:', data.choices[0].message.content);
       
       // Fallback response structure

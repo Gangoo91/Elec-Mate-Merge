@@ -298,29 +298,45 @@ const VisualAnalysisRedesigned = () => {
       };
 
       setAnalysisProgress(60);
-      const { data, error } = await supabase.functions.invoke('visual-analysis', {
-        body: { 
-          primary_image: primaryImageUrl,
-          additional_images: additionalImageUrls,
-          analysis_settings: {
-            mode: selectedMode || 'fault_diagnosis',
-            confidence_threshold: 0.75,
-            enable_bounding_boxes: true,
-            focus_areas: getFocusAreasForMode(selectedMode || 'fault_diagnosis'),
-            remove_background: false,
-            bs7671_compliance: true
+      
+      // Create a promise that rejects when aborted
+      const analyzeWithAbort = new Promise<any>((resolve, reject) => {
+        if (abortControllerRef.current) {
+          abortControllerRef.current.signal.addEventListener('abort', () => {
+            reject(new Error('Analysis cancelled'));
+          });
+        }
+        
+        supabase.functions.invoke('visual-analysis', {
+          body: { 
+            primary_image: primaryImageUrl,
+            additional_images: additionalImageUrls,
+            analysis_settings: {
+              mode: selectedMode || 'fault_diagnosis',
+              confidence_threshold: 0.75,
+              enable_bounding_boxes: true,
+              focus_areas: getFocusAreasForMode(selectedMode || 'fault_diagnosis'),
+              remove_background: false,
+              bs7671_compliance: true
+            }
           }
-        },
+        }).then(resolve).catch(reject);
       });
+
+      const { data, error } = await analyzeWithAbort;
       
       if (abortControllerRef.current?.signal.aborted) {
         return;
       }
 
-      setAnalysisProgress(90);
-      
-      if (error) {
-        throw new Error(error.message || 'Error connecting to the Visual Analysis service');
+      setAnalysisProgress(80);
+
+      if (!data || error) {
+        throw new Error(error?.message || 'No data returned from analysis');
+      }
+
+      if (!data.analysis) {
+        throw new Error('Invalid analysis response structure');
       }
       
       if (data.error) {
@@ -337,26 +353,41 @@ const VisualAnalysisRedesigned = () => {
         description: "BS 7671 compliance check finished",
         variant: "success"
       });
-    } catch (error) {
-      if (abortControllerRef.current?.signal.aborted) {
-        return;
+    } catch (error: any) {
+      // Check if aborted
+      if (error.name === 'AbortError' || abortControllerRef.current?.signal.aborted) {
+        console.log('Analysis was cancelled by user');
+        return; // Don't show error toast for manual cancellation
       }
       
-      console.error('Analysis Error:', error);
+      console.error('Visual Analysis Error:', error);
+      
+      // Provide specific error messages
+      let errorTitle = "Analysis failed";
+      let errorDescription = "Please check your images and try again.";
+      
+      if (error.message?.includes('rate limit')) {
+        errorTitle = "Rate limit exceeded";
+        errorDescription = "Too many requests. Please wait a moment and try again.";
+      } else if (error.message?.includes('timeout')) {
+        errorTitle = "Analysis timeout";
+        errorDescription = "The analysis took too long. Try with fewer or smaller images.";
+      } else if (error.message?.includes('JSON')) {
+        errorTitle = "Processing error";
+        errorDescription = "The analysis completed but results couldn't be formatted. Please try again.";
+      } else if (error.message) {
+        errorDescription = error.message;
+      }
       
       toast({
-        title: "Analysis failed",
-        description: error instanceof Error 
-          ? error.message 
-          : "Unable to analyse images. Please try again.",
+        title: errorTitle,
+        description: errorDescription,
         variant: "destructive",
         duration: 6000
       });
     } finally {
-      if (!abortControllerRef.current?.signal.aborted) {
-        setIsAnalyzing(false);
-        setAnalysisProgress(0);
-      }
+      setIsAnalyzing(false);
+      setAnalysisProgress(0);
       abortControllerRef.current = null;
     }
   };

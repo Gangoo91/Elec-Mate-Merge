@@ -64,11 +64,21 @@ serve(async (req) => {
     });
 
     // Query health & safety for safe working
-    const { data: safetyDocs, error: safetyError } = await supabase.rpc('search_health_safety_knowledge', {
+    const { data: safetyDocs, error: safetyError } = await supabase.rpc('search_health_safety', {
       query_embedding: embedding,
       match_threshold: 0.7,
       match_count: 3
     });
+
+    if (instError) {
+      console.error('❌ Installation knowledge search failed:', instError);
+    }
+    if (regError) {
+      console.error('❌ BS 7671 search failed:', regError);
+    }
+    if (safetyError) {
+      console.error('❌ Safety knowledge search failed:', safetyError);
+    }
 
     console.log(`✅ RAG Results: ${installationDocs?.length || 0} installation docs, ${regulations?.length || 0} regs, ${safetyDocs?.length || 0} safety docs`);
 

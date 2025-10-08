@@ -96,18 +96,28 @@ serve(async (req) => {
     });
 
     // Query inspection/testing knowledge (includes GN3)
-    const { data: inspectionKnowledge, error: inspError } = await supabase.rpc('search_inspection_testing_knowledge', {
+    const { data: inspectionKnowledge, error: inspError } = await supabase.rpc('search_inspection_testing', {
       query_embedding: embedding,
       match_threshold: 0.7,
       match_count: 3
     });
 
     // Query health & safety knowledge
-    const { data: safetyKnowledge, error: safetyError } = await supabase.rpc('search_health_safety_knowledge', {
+    const { data: safetyKnowledge, error: safetyError } = await supabase.rpc('search_health_safety', {
       query_embedding: embedding,
       match_threshold: 0.7,
       match_count: 3
     });
+
+    if (regError) {
+      console.error('❌ BS 7671 search failed:', regError);
+    }
+    if (inspError) {
+      console.error('❌ Inspection knowledge search failed:', inspError);
+    }
+    if (safetyError) {
+      console.error('❌ Safety knowledge search failed:', safetyError);
+    }
 
     console.log(`✅ RAG Results: ${regulations?.length || 0} regs, ${inspectionKnowledge?.length || 0} inspection docs, ${safetyKnowledge?.length || 0} safety docs`);
 
