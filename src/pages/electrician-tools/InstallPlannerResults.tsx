@@ -19,7 +19,7 @@ const InstallPlannerResults = () => {
     return null;
   }
 
-  const handleExport = async (selectedDocs?: string[]) => {
+  const handleExport = async (selectedDocs?: string[], clientDetails?: any, companyDetails?: any) => {
     setIsExporting(true);
     
     const docCount = selectedDocs?.length || 6;
@@ -32,8 +32,8 @@ const InstallPlannerResults = () => {
         body: { 
           messages,
           designData: planData,
-          companyName: "Your Company Name",
-          clientName: "Client Name",
+          clientDetails,
+          companyDetails,
           selectedDocuments: selectedDocs
         }
       });
@@ -105,7 +105,7 @@ const InstallPlannerResults = () => {
             circuits={planData?.circuits || []}
             projectId={planData?.projectId}
             projectName={planData?.projectName || "Installation Design"}
-            onExport={(selectedDocs?: string[]) => handleExport(selectedDocs)}
+            onExport={handleExport}
             onNewConsultation={handleNewConsultation}
             onReEngageAgent={handleReEngageAgent}
           />

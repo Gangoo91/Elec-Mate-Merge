@@ -9,6 +9,8 @@ interface PackageRequest {
   designData: any;
   companyName?: string;
   clientName?: string;
+  clientDetails?: any;
+  companyDetails?: any;
   selectedDocuments?: string[];
 }
 
@@ -18,7 +20,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, designData, companyName, clientName, selectedDocuments = ['design', 'quote', 'rams', 'checklist', 'test', 'eic'] } = await req.json() as PackageRequest;
+    const { messages, designData, companyName, clientName, clientDetails, companyDetails, selectedDocuments = ['design', 'quote', 'rams', 'checklist', 'test', 'eic'] } = await req.json() as PackageRequest;
 
     // Phase 3: Initialize Supabase for saving design to database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -36,42 +38,42 @@ serve(async (req) => {
     if (selectedDocuments.includes('design')) {
       pdfPromises.push({
         key: 'design',
-        promise: generateDesignSpec(extractedData, companyName),
+        promise: generateDesignSpec(extractedData, companyDetails || { companyName }),
         filename: "1_Design_Specification.pdf"
       });
     }
     if (selectedDocuments.includes('quote')) {
       pdfPromises.push({
         key: 'quote',
-        promise: generateClientQuote(extractedData, companyName, clientName),
+        promise: generateClientQuote(extractedData, companyDetails || { companyName }, clientDetails || { clientName }),
         filename: "2_Client_Quote.pdf"
       });
     }
     if (selectedDocuments.includes('rams')) {
       pdfPromises.push({
         key: 'rams',
-        promise: generateRAMS(extractedData, companyName),
+        promise: generateRAMS(extractedData, companyDetails || { companyName }, clientDetails),
         filename: "3_Risk_Assessment_Method_Statement.pdf"
       });
     }
     if (selectedDocuments.includes('checklist')) {
       pdfPromises.push({
         key: 'checklist',
-        promise: generateInstallationChecklist(extractedData),
+        promise: generateInstallationChecklist(extractedData, clientDetails),
         filename: "4_Installation_Checklist.pdf"
       });
     }
     if (selectedDocuments.includes('test')) {
       pdfPromises.push({
         key: 'test',
-        promise: generateTestSchedule(extractedData),
+        promise: generateTestSchedule(extractedData, clientDetails),
         filename: "5_Test_Schedule.pdf"
       });
     }
     if (selectedDocuments.includes('eic')) {
       pdfPromises.push({
         key: 'eic',
-        promise: generateEIC(extractedData, clientName),
+        promise: generateEIC(extractedData, clientDetails || { clientName }, companyDetails),
         filename: "6_Electrical_Installation_Certificate.pdf"
       });
     }
@@ -258,7 +260,7 @@ function extractMaterials(text: string): Array<{ item: string; quantity: string 
 }
 
 // Real PDF generation using jsPDF
-async function generateDesignSpec(data: any, companyName: string): Promise<Uint8Array> {
+async function generateDesignSpec(data: any, companyDetails: any): Promise<Uint8Array> {
   const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
   const doc = new jsPDF();
   
@@ -268,31 +270,52 @@ async function generateDesignSpec(data: any, companyName: string): Promise<Uint8
   doc.setFontSize(10);
   doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')}`, 105, 28, { align: 'center' });
   
+  // Company branding
+  if (companyDetails?.companyName) {
+    doc.setFontSize(12);
+    doc.text(companyDetails.companyName, 105, 36, { align: 'center' });
+  }
+  
   // Project Info
   doc.setFontSize(14);
-  doc.text('Project Information', 20, 45);
+  doc.text('Project Information', 20, 50);
   doc.setFontSize(10);
-  doc.text(`Project: ${data.projectName}`, 20, 55);
-  doc.text(`Location: ${data.location}`, 20, 62);
-  doc.text(`Company: ${companyName || 'N/A'}`, 20, 69);
+  doc.text(`Project: ${data.projectName}`, 20, 60);
+  doc.text(`Location: ${data.location}`, 20, 67);
+  if (companyDetails?.companyName) {
+    doc.text(`Company: ${companyDetails.companyName}`, 20, 74);
+  }
   
   // Designer Notes
   doc.setFontSize(14);
-  doc.text('Design Notes', 20, 85);
+  doc.text('Design Notes', 20, 90);
   doc.setFontSize(10);
   const notes = doc.splitTextToSize(data.designerNotes || 'Design completed to BS 7671:2018+A3:2024', 170);
-  doc.text(notes, 20, 95);
+  doc.text(notes, 20, 100);
   
   // Compliance
   doc.setFontSize(12);
-  doc.text('Compliance Statement', 20, 120);
+  doc.text('Compliance Statement', 20, 130);
   doc.setFontSize(9);
-  doc.text('This design complies with BS 7671:2018+A3:2024 (Sept 2025)', 20, 128);
+  doc.text('This design complies with BS 7671:2018+A3:2024 (Sept 2025)', 20, 138);
+  
+  // Footer with company details
+  if (companyDetails?.phone || companyDetails?.email) {
+    doc.setFontSize(8);
+    let footerY = 280;
+    if (companyDetails.phone) {
+      doc.text(`Tel: ${companyDetails.phone}`, 20, footerY);
+      footerY += 4;
+    }
+    if (companyDetails.email) {
+      doc.text(`Email: ${companyDetails.email}`, 20, footerY);
+    }
+  }
   
   return new Uint8Array(doc.output('arraybuffer'));
 }
 
-async function generateClientQuote(data: any, companyName: string, clientName: string): Promise<Uint8Array> {
+async function generateClientQuote(data: any, companyDetails: any, clientDetails: any): Promise<Uint8Array> {
   const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
   const doc = new jsPDF();
   
@@ -301,16 +324,37 @@ async function generateClientQuote(data: any, companyName: string, clientName: s
   doc.setFontSize(10);
   doc.text(`Date: ${new Date().toLocaleDateString('en-GB')}`, 105, 28, { align: 'center' });
   
-  doc.setFontSize(14);
-  doc.text('Client Details', 20, 45);
+  // Company Details (From)
+  doc.setFontSize(12);
+  doc.text('From:', 20, 45);
   doc.setFontSize(10);
-  doc.text(`Client: ${clientName || 'N/A'}`, 20, 55);
-  doc.text(`Project: ${data.projectName}`, 20, 62);
+  if (companyDetails?.companyName) {
+    doc.text(companyDetails.companyName, 20, 52);
+    if (companyDetails.companyAddress) {
+      const addr = doc.splitTextToSize(companyDetails.companyAddress, 80);
+      doc.text(addr, 20, 58);
+    }
+  }
+  
+  // Client Details (To)
+  doc.setFontSize(12);
+  doc.text('Quote To:', 120, 45);
+  doc.setFontSize(10);
+  if (clientDetails?.clientName) {
+    doc.text(clientDetails.clientName, 120, 52);
+    if (clientDetails.propertyAddress) {
+      const addr = doc.splitTextToSize(clientDetails.propertyAddress, 80);
+      doc.text(addr, 120, 58);
+    }
+    if (clientDetails.postcode) {
+      doc.text(clientDetails.postcode, 120, 70);
+    }
+  }
   
   doc.setFontSize(14);
-  doc.text('Materials', 20, 80);
+  doc.text('Materials', 20, 90);
   doc.setFontSize(10);
-  let yPos = 90;
+  let yPos = 100;
   (data.materialsRequired || []).slice(0, 10).forEach((item: any) => {
     doc.text(`• ${item.item}: ${item.quantity}`, 25, yPos);
     yPos += 7;
@@ -322,7 +366,7 @@ async function generateClientQuote(data: any, companyName: string, clientName: s
   return new Uint8Array(doc.output('arraybuffer'));
 }
 
-async function generateRAMS(data: any, companyName: string): Promise<Uint8Array> {
+async function generateRAMS(data: any, companyDetails: any, clientDetails: any): Promise<Uint8Array> {
   const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
   const doc = new jsPDF();
   
@@ -332,16 +376,26 @@ async function generateRAMS(data: any, companyName: string): Promise<Uint8Array>
   doc.text(`Date: ${new Date().toLocaleDateString('en-GB')}`, 105, 28, { align: 'center' });
   
   doc.setFontSize(14);
-  doc.text('Project Details', 20, 45);
+  doc.text('Site Details', 20, 45);
   doc.setFontSize(10);
   doc.text(`Project: ${data.projectName}`, 20, 55);
-  doc.text(`Location: ${data.location}`, 20, 62);
-  doc.text(`Company: ${companyName || 'N/A'}`, 20, 69);
+  if (clientDetails?.propertyAddress) {
+    doc.text(`Location: ${clientDetails.propertyAddress}`, 20, 62);
+  } else {
+    doc.text(`Location: ${data.location}`, 20, 62);
+  }
   
   doc.setFontSize(14);
-  doc.text('Installation Steps', 20, 85);
+  doc.text('Prepared By', 20, 80);
   doc.setFontSize(10);
-  let yPos = 95;
+  if (companyDetails?.companyName) {
+    doc.text(`Company: ${companyDetails.companyName}`, 20, 90);
+  }
+  
+  doc.setFontSize(14);
+  doc.text('Installation Steps', 20, 105);
+  doc.setFontSize(10);
+  let yPos = 115;
   (data.installationSteps || []).slice(0, 8).forEach((step: string, idx: number) => {
     const wrapped = doc.splitTextToSize(`${idx + 1}. ${step}`, 170);
     doc.text(wrapped, 20, yPos);
@@ -357,7 +411,7 @@ async function generateRAMS(data: any, companyName: string): Promise<Uint8Array>
   return new Uint8Array(doc.output('arraybuffer'));
 }
 
-async function generateInstallationChecklist(data: any): Promise<Uint8Array> {
+async function generateInstallationChecklist(data: any, clientDetails: any): Promise<Uint8Array> {
   const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
   const doc = new jsPDF();
   
@@ -388,7 +442,7 @@ async function generateInstallationChecklist(data: any): Promise<Uint8Array> {
   return new Uint8Array(doc.output('arraybuffer'));
 }
 
-async function generateTestSchedule(data: any): Promise<Uint8Array> {
+async function generateTestSchedule(data: any, clientDetails: any): Promise<Uint8Array> {
   const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
   const doc = new jsPDF();
   
@@ -421,7 +475,7 @@ async function generateTestSchedule(data: any): Promise<Uint8Array> {
   return new Uint8Array(doc.output('arraybuffer'));
 }
 
-async function generateEIC(data: any, clientName: string): Promise<Uint8Array> {
+async function generateEIC(data: any, clientDetails: any, companyDetails: any): Promise<Uint8Array> {
   const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
   const doc = new jsPDF();
   
@@ -433,28 +487,47 @@ async function generateEIC(data: any, clientName: string): Promise<Uint8Array> {
   doc.setFontSize(12);
   doc.text('Client Details', 20, 45);
   doc.setFontSize(10);
-  doc.text(`Client: ${clientName || 'N/A'}`, 20, 55);
-  doc.text(`Installation: ${data.location}`, 20, 62);
+  if (clientDetails?.clientName) {
+    doc.text(`Client: ${clientDetails.clientName}`, 20, 55);
+    if (clientDetails.propertyAddress) {
+      doc.text(`Installation: ${clientDetails.propertyAddress}`, 20, 62);
+    }
+    if (clientDetails.postcode) {
+      doc.text(`Postcode: ${clientDetails.postcode}`, 20, 69);
+    }
+  } else {
+    doc.text(`Installation: ${data.location}`, 20, 55);
+  }
   
   doc.setFontSize(12);
-  doc.text('Design Details', 20, 80);
+  doc.text('Installer Details', 20, 85);
   doc.setFontSize(10);
-  doc.text('Design Standard: BS 7671:2018+A3:2024', 20, 90);
-  doc.text(`Project: ${data.projectName}`, 20, 97);
+  if (companyDetails?.companyName) {
+    doc.text(`Company: ${companyDetails.companyName}`, 20, 95);
+    if (companyDetails.registrationNumber) {
+      doc.text(`Registration: ${companyDetails.registrationNumber}`, 20, 102);
+    }
+  }
+  
+  doc.setFontSize(12);
+  doc.text('Design Details', 20, 120);
+  doc.setFontSize(10);
+  doc.text('Design Standard: BS 7671:2018+A3:2024', 20, 130);
+  doc.text(`Project: ${data.projectName}`, 20, 137);
   
   doc.setFontSize(9);
-  doc.text('This is a template certificate. Complete all sections before use.', 20, 120);
-  doc.text('Designer, Constructor, and Inspector signatures required.', 20, 127);
+  doc.text('This is a template certificate. Complete all sections before use.', 20, 160);
+  doc.text('Designer, Constructor, and Inspector signatures required.', 20, 167);
   
   // Signature blocks
-  doc.rect(20, 145, 55, 25);
-  doc.text('Designer Signature:', 22, 150);
+  doc.rect(20, 185, 55, 25);
+  doc.text('Designer Signature:', 22, 190);
   
-  doc.rect(85, 145, 55, 25);
-  doc.text('Constructor Signature:', 87, 150);
+  doc.rect(85, 185, 55, 25);
+  doc.text('Constructor Signature:', 87, 190);
   
-  doc.rect(150, 145, 55, 25);
-  doc.text('Inspector Signature:', 152, 150);
+  doc.rect(150, 185, 55, 25);
+  doc.text('Inspector Signature:', 152, 190);
   
   return new Uint8Array(doc.output('arraybuffer'));
 }

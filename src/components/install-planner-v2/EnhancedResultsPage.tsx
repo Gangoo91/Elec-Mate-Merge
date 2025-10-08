@@ -13,6 +13,8 @@ import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import { parseQuoteFromCostAgent } from "@/utils/parseQuoteFromCostAgent";
 import { useNavigate } from "react-router-dom";
 import { Quote } from "@/types/quote";
+import { ProjectDetailsForm } from "./ProjectDetailsForm";
+import { useEffect } from "react";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -35,7 +37,7 @@ interface EnhancedResultsPageProps {
   circuits?: Circuit[];
   projectId?: string;
   projectName?: string;
-  onExport: (selectedDocs?: string[]) => void;
+  onExport: (selectedDocs?: string[], clientDetails?: any, companyDetails?: any) => void;
   onNewConsultation: () => void;
   onReEngageAgent?: (agentId: string) => void;
 }
@@ -67,6 +69,21 @@ export const EnhancedResultsPage = ({
   );
   const { saveQuote } = useQuoteStorage();
   const navigate = useNavigate();
+  const [clientDetails, setClientDetails] = useState<any>(null);
+  const [companyDetails, setCompanyDetails] = useState<any>(null);
+  const [detailsComplete, setDetailsComplete] = useState(false);
+
+  // Load saved details from localStorage on mount
+  useEffect(() => {
+    const storageKey = `elecmate_project_details_${projectId || 'temp'}`;
+    const saved = localStorage.getItem(storageKey);
+    if (saved) {
+      const { clientDetails: savedClient, companyDetails: savedCompany } = JSON.parse(saved);
+      setClientDetails(savedClient);
+      setCompanyDetails(savedCompany);
+      setDetailsComplete(!!savedClient?.clientName && !!savedClient?.propertyAddress && !!savedCompany?.companyName);
+    }
+  }, [projectId]);
 
   // Memoize filtered messages
   const agentResponses = useMemo(() => messages.filter(m => m.role === 'assistant' && m.agentName), [messages]);
@@ -232,6 +249,23 @@ export const EnhancedResultsPage = ({
     }
   };
 
+  const handleDetailsSaved = (client: any, company: any) => {
+    setClientDetails(client);
+    setCompanyDetails(company);
+    setDetailsComplete(!!client?.clientName && !!client?.propertyAddress && !!company?.companyName);
+  };
+
+  const handleExportWithValidation = () => {
+    if (!detailsComplete) {
+      toast.error("Complete Project Details first", {
+        description: "Switch to Project Details tab to fill required fields"
+      });
+      setActiveTab("details");
+      return;
+    }
+    onExport(Array.from(selectedDocuments), clientDetails, companyDetails);
+  };
+
   return (
     <div className="space-y-4 md:space-y-6">
       {/* Mobile-First Header */}
@@ -326,7 +360,7 @@ export const EnhancedResultsPage = ({
               <Button 
                 variant="default" 
                 size="default" 
-                onClick={() => onExport(Array.from(selectedDocuments))} 
+                onClick={handleExportWithValidation} 
                 disabled={selectedDocuments.size === 0}
                 className="flex-1 sm:flex-none min-h-[44px]"
               >
@@ -353,8 +387,11 @@ export const EnhancedResultsPage = ({
 
       {/* Mobile-Optimized Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 h-auto">
+        <TabsList className="grid w-full grid-cols-4 h-auto">
           <TabsTrigger value="overview" className="text-xs sm:text-sm py-2.5">Overview</TabsTrigger>
+          <TabsTrigger value="details" className="text-xs sm:text-sm py-2.5">
+            Project Details {detailsComplete && "✓"}
+          </TabsTrigger>
           <TabsTrigger value="circuits" className="text-xs sm:text-sm py-2.5">
             Circuits ({circuits.length})
           </TabsTrigger>
@@ -384,6 +421,14 @@ export const EnhancedResultsPage = ({
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        {/* Project Details Tab */}
+        <TabsContent value="details" className="mt-4">
+          <ProjectDetailsForm
+            projectId={projectId}
+            onDetailsSaved={handleDetailsSaved}
+          />
         </TabsContent>
 
         {/* Circuits Tab */}
