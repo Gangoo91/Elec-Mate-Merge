@@ -288,7 +288,7 @@ export const EnhancedResultsPage = ({
             </div>
             <div className="flex-1 min-w-0">
               <h1 className="text-xl md:text-2xl font-bold text-foreground">{projectName}</h1>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-white/70 mt-1">
                 {selectedAgents.length} specialist{selectedAgents.length !== 1 ? 's' : ''} consulted
               </p>
             </div>
@@ -414,11 +414,11 @@ export const EnhancedResultsPage = ({
                   <div className="grid grid-cols-2 gap-3">
                     <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
                       <div className="text-3xl font-bold text-elec-yellow">{circuits.length}</div>
-                      <div className="text-xs text-muted-foreground mt-1">Circuits</div>
+                      <div className="text-xs text-white/90 mt-1">Circuits</div>
                     </div>
                     <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
                       <div className="text-3xl font-bold text-elec-yellow">{selectedAgents.length}</div>
-                      <div className="text-xs text-muted-foreground mt-1">Specialists</div>
+                      <div className="text-xs text-white/90 mt-1">Specialists</div>
                     </div>
                   </div>
                 </CardContent>
@@ -449,20 +449,20 @@ export const EnhancedResultsPage = ({
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1 min-w-0">
                           <h3 className="font-semibold text-base">Circuit {idx + 1}: {circuit.name}</h3>
-                          <p className="text-sm text-muted-foreground mt-1">Load: {circuit.load}W</p>
+                          <p className="text-sm text-white/70 mt-1">Load: {circuit.load}W</p>
                         </div>
                         <Badge variant="secondary" className="ml-2 flex-shrink-0">{circuit.mcbRating || 'N/A'}</Badge>
                       </div>
                       <div className="space-y-2 text-sm">
                         {circuit.cableSize && (
                           <div className="flex justify-between items-center py-1">
-                            <span className="text-muted-foreground">Cable Size:</span>
+                            <span className="text-white/70">Cable Size:</span>
                             <span className="font-medium">{circuit.cableSize}</span>
                           </div>
                         )}
                         {circuit.protection && (
                           <div className="flex justify-between items-center py-1">
-                            <span className="text-muted-foreground">Protection:</span>
+                            <span className="text-white/70">Protection:</span>
                             <span className="font-medium">{circuit.protection}</span>
                           </div>
                         )}
@@ -471,7 +471,7 @@ export const EnhancedResultsPage = ({
                   ))
                 ) : (
                   <Card className="p-8 text-center">
-                    <p className="text-muted-foreground">No circuits designed yet.</p>
+                    <p className="text-white/70">No circuits designed yet.</p>
                   </Card>
                 )}
               </div>
@@ -499,12 +499,12 @@ export const EnhancedResultsPage = ({
                   <CardTitle className="text-base">Testing & Commissioning</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white/70">
                     EIC schedule generation and testing guidance coming soon.
                   </p>
                   <div className="p-3 rounded-lg bg-elec-card border border-elec-yellow/20">
                     <h4 className="font-medium text-sm mb-2">Available Soon:</h4>
-                    <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                    <ul className="text-xs text-white/70 space-y-1 list-disc list-inside">
                       <li>Pre-populated EIC test schedule</li>
                       <li>R1+R2 calculations</li>
                       <li>Zs verification</li>
@@ -542,7 +542,7 @@ export const EnhancedResultsPage = ({
                                 </div>
                                 <div className="text-left flex-1">
                                   <h3 className="font-semibold text-sm">{agent?.name || agentId}</h3>
-                                  <p className="text-xs text-muted-foreground">{hasContent ? 'View details' : 'No response'}</p>
+                                  <p className="text-xs text-white/70">{hasContent ? 'View details' : 'No response'}</p>
                                 </div>
                               </div>
                               <ChevronDown className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
@@ -560,7 +560,7 @@ export const EnhancedResultsPage = ({
                                   )}
                                 </>
                               ) : (
-                                <p className="text-sm text-muted-foreground text-center py-4">Not consulted</p>
+                                <p className="text-sm text-white/70 text-center py-4">Not consulted</p>
                               )}
                             </div>
                           </CollapsibleContent>
@@ -570,7 +570,7 @@ export const EnhancedResultsPage = ({
                   })
                 ) : (
                   <Card className="p-8 text-center">
-                    <p className="text-muted-foreground">No specialists selected.</p>
+                    <p className="text-white/70">No specialists selected.</p>
                   </Card>
                 )}
               </div>
@@ -598,11 +598,11 @@ export const EnhancedResultsPage = ({
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
                     <div className="text-3xl font-bold text-elec-yellow">{circuits.length}</div>
-                    <div className="text-xs text-muted-foreground mt-1">Circuits Designed</div>
+                    <div className="text-xs text-white/90 mt-1">Circuits Designed</div>
                   </div>
                   <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
                     <div className="text-3xl font-bold text-elec-yellow">{selectedAgents.length}</div>
-                    <div className="text-xs text-muted-foreground mt-1">Specialists Used</div>
+                    <div className="text-xs text-white/90 mt-1">Specialists Used</div>
                   </div>
                 </div>
               </CardContent>
@@ -642,7 +642,7 @@ export const EnhancedResultsPage = ({
               ))
             ) : (
               <Card className="p-12 text-center">
-                <p className="text-muted-foreground">No circuits designed yet.</p>
+                <p className="text-white/70">No circuits designed yet.</p>
               </Card>
             )}
           </TabsContent>
@@ -699,7 +699,7 @@ export const EnhancedResultsPage = ({
                             </div>
                             <div className="text-left flex-1">
                               <h3 className="font-semibold text-base">{agent?.name || agentId}</h3>
-                              <p className="text-xs text-muted-foreground">{hasContent ? 'Tap to view' : 'No response'}</p>
+                              <p className="text-xs text-white/70">{hasContent ? 'Tap to view' : 'No response'}</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
@@ -747,7 +747,7 @@ export const EnhancedResultsPage = ({
                               )}
                             </>
                           ) : (
-                            <p className="text-sm text-muted-foreground text-center py-6">Not consulted in this session.</p>
+                            <p className="text-sm text-white/70 text-center py-6">Not consulted in this session.</p>
                           )}
                         </div>
                       </CollapsibleContent>
@@ -757,7 +757,7 @@ export const EnhancedResultsPage = ({
               })
             ) : (
               <Card className="p-12 text-center">
-                <p className="text-muted-foreground">No specialists selected.</p>
+                <p className="text-white/70">No specialists selected.</p>
               </Card>
             )}
           </TabsContent>

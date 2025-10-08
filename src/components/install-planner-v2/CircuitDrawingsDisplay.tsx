@@ -77,7 +77,7 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-center py-6 md:py-8 text-muted-foreground">
+          <div className="text-center py-6 md:py-8 text-white/70">
             <p className="text-sm md:text-base">No circuit design data available.</p>
             <p className="text-xs md:text-sm mt-2">The Circuit Designer agent must be consulted first.</p>
           </div>
@@ -98,8 +98,8 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
         </CardHeader>
         <CardContent>
           <div className="bg-muted/50 p-3 md:p-4 rounded-lg border border-border">
-            <h3 className="font-semibold text-sm mb-2">About These Drawings</h3>
-            <div className="flex flex-col gap-1 text-xs md:text-sm text-muted-foreground">
+            <h3 className="font-semibold text-sm mb-2 text-white">About These Drawings</h3>
+            <div className="flex flex-col gap-1 text-xs md:text-sm text-white/90">
               <span>✓ BS 7671:2018+A2:2022 compliant</span>
               <span>✓ Professional single-line diagrams</span>
               <span>✓ Ready for Building Control</span>
