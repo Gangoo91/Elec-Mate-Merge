@@ -64,12 +64,14 @@ serve(async (req) => {
 
     const embeddingData = await embeddingResponse.json();
     const queryEmbedding = embeddingData.data[0].embedding;
+    console.log('✅ Embedding generated successfully');
 
     // Query RAG database using search_health_safety RPC
+    const ragStartTime = Date.now();
     const { data: ragResults, error: ragError } = await supabase.rpc('search_health_safety', {
       query_embedding: queryEmbedding,
       match_threshold: 0.7,
-      match_count: 15
+      match_count: 8 // Reduced from 15 for faster processing
     });
 
     if (ragError) {
@@ -78,7 +80,7 @@ serve(async (req) => {
     }
 
     const relevantGuidelines = ragResults || [];
-    console.log(`🦺 RAG: Found ${relevantGuidelines.length} relevant H&S guidelines (similarity > 0.7)`);
+    console.log(`✅ RAG query complete: ${relevantGuidelines.length} results in ${Date.now() - ragStartTime}ms`);
 
     // Build RAG-enhanced system prompt
     const ragContext = relevantGuidelines.length > 0
@@ -158,6 +160,8 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
 
     while (retries <= maxRetries) {
       try {
+        console.log(`🤖 Calling OpenAI (attempt ${retries + 1}/${maxRetries + 1})`);
+        const openaiStartTime = Date.now();
         response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -170,7 +174,7 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
               { role: 'system', content: systemPrompt },
               { role: 'user', content: `${latestMessage}\n\nIMPORTANT: Respond with valid JSON matching the specified format.` }
             ],
-            max_completion_tokens: 3000,
+            max_completion_tokens: 1500, // Reduced from 3000 for faster response
             response_format: { type: "json_object" }
           }),
           signal: controller.signal
@@ -186,6 +190,7 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
         content = data.choices[0]?.message?.content;
 
         if (content) {
+          console.log(`✅ OpenAI responded in ${Date.now() - openaiStartTime}ms`);
           console.log(`✅ H&S Agent: Got response on attempt ${retries + 1}`);
           break; // Success!
         }

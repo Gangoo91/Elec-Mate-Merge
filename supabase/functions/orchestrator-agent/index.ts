@@ -286,7 +286,7 @@ async function handleConversationalMode(
               isLast
             );
 
-            const timeoutMs = 60000; // 60s for complex RAG queries
+            const timeoutMs = 120000; // 120s for complex RAG agents (H&S needs 90s)
             const result = await Promise.race([
               supabase.functions.invoke(agentFunctionName, {
                 body: { 
