@@ -309,3 +309,15 @@ verify_jwt = true
 
 [functions.check-subscription]
 verify_jwt = true
+
+[functions.bs7671-rag-search]
+verify_jwt = false
+
+[functions.electrician-ai-assistant]
+verify_jwt = false
+
+[functions.visual-fault-diagnosis-rag]
+verify_jwt = false
+
+[functions.wiring-diagram-generator-rag]
+verify_jwt = false

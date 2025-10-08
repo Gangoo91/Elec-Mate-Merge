@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import ComponentIdentificationResults from "./ComponentIdentificationResults";
+import WiringSchematicDisplay from "./WiringSchematicDisplay";
 import ModeSelector, { AnalysisMode } from "./ModeSelector";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -31,6 +32,14 @@ interface AnalysisResult {
     bs7671_clauses: string[];
     location?: string;
     fix_guidance: string;
+    rag_verified?: {
+      fault_code: string;
+      regulation_references: any[];
+      gn3_guidance: string;
+      confidence: number;
+      reasoning: string;
+      verification_status: string;
+    };
   }>;
   recommendations: Array<{
     action: string;
@@ -48,6 +57,18 @@ interface AnalysisResult {
     safety_rating: number;
   };
   summary: string;
+  rag_verified?: boolean;
+  verification_note?: string;
+  wiring_schematic?: {
+    schematic_svg: string;
+    circuit_spec: any;
+    wiring_procedure: any[];
+    terminal_connections: any[];
+    testing_requirements: string[];
+    installation_method_guidance: string;
+    safety_warnings: string[];
+    rag_sources: any;
+  };
 }
 
 const VisualAnalysisRedesigned = () => {
@@ -621,6 +642,32 @@ const VisualAnalysisRedesigned = () => {
               </div>
             </CardHeader>
           </Card>
+
+          {/* RAG Verification Notice */}
+          {analysisResult.rag_verified && analysisResult.verification_note && (
+            <Card className="bg-green-500/5 border-green-500/20">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
+                  <CheckCircle2 className="h-5 w-5" />
+                  <p className="text-sm font-medium">{analysisResult.verification_note}</p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Wiring Schematic Display (for wiring_instruction mode) */}
+          {selectedMode === 'wiring_instruction' && analysisResult.wiring_schematic && (
+            <WiringSchematicDisplay 
+              schematicSvg={analysisResult.wiring_schematic.schematic_svg}
+              circuitSpec={analysisResult.wiring_schematic.circuit_spec}
+              wiringProcedure={analysisResult.wiring_schematic.wiring_procedure}
+              terminalConnections={analysisResult.wiring_schematic.terminal_connections}
+              testingRequirements={analysisResult.wiring_schematic.testing_requirements}
+              installationMethodGuidance={analysisResult.wiring_schematic.installation_method_guidance}
+              safetyWarnings={analysisResult.wiring_schematic.safety_warnings}
+              ragSourcesCount={analysisResult.wiring_schematic.rag_sources}
+            />
+          )}
 
           {/* Results Component - Conditional based on mode */}
           {selectedMode === 'component_identify' ? (

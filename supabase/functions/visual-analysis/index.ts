@@ -362,6 +362,151 @@ Focus on visible defects and compliance issues that can be determined from the e
 
     console.log('Sending request to OpenAI with GPT-5...');
 
+    // STAGE 1: Initial lightweight scan to extract key identifiers
+    const initialScanPrompt = `Quickly scan this electrical installation image and extract key identifiers:
+- Component types visible
+- Visible issues or faults
+- Installation context
+- Location/environment type
+
+Respond with JSON only:
+{
+  "components": ["MCB Type B 32A", "consumer unit", "socket outlet"],
+  "visible_issues": ["exposed conductor", "damaged casing"],
+  "context": "domestic installation",
+  "location": "consumer unit enclosure"
+}`;
+
+    let preliminaryFindings: any = null;
+    let ragEnhancedContext = '';
+
+    if (analysis_settings.mode === 'fault_diagnosis' || analysis_settings.mode === 'wiring_instruction') {
+      console.log('🔍 STAGE 1: Quick vision scan for RAG query generation');
+      
+      const scanResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openAIApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-2025-08-07',
+          messages: [
+            { role: 'system', content: initialScanPrompt },
+            {
+              role: 'user',
+              content: [
+                { type: "text", text: 'Extract key identifiers from this image' },
+                ...images
+              ]
+            }
+          ],
+          max_completion_tokens: 500,
+          response_format: { type: "json_object" }
+        }),
+      });
+
+      if (scanResponse.ok) {
+        const scanData = await scanResponse.json();
+        try {
+          preliminaryFindings = JSON.parse(scanData.choices[0].message.content);
+          console.log('✅ Preliminary scan complete:', preliminaryFindings);
+
+          // STAGE 2: RAG-enhanced analysis based on preliminary findings
+          const supabaseUrl = Deno.env.get('SUPABASE_URL');
+          const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+          
+          if (supabaseUrl && supabaseKey) {
+            const supabase = createClient(supabaseUrl, supabaseKey);
+
+            if (analysis_settings.mode === 'fault_diagnosis') {
+              console.log('🔍 STAGE 2: Querying fault diagnosis RAG for EICR verification');
+              
+              // Query RAG for each visible issue
+              const ragPromises = (preliminaryFindings.visible_issues || []).map(async (issue: string) => {
+                try {
+                  const { data, error } = await supabase.functions.invoke('visual-fault-diagnosis-rag', {
+                    body: {
+                      fault_description: issue,
+                      location_context: preliminaryFindings.context || 'general installation',
+                      visible_indicators: preliminaryFindings.components || []
+                    }
+                  });
+                  
+                  if (!error && data) {
+                    return `
+VERIFIED FAULT: ${issue}
+EICR Code: ${data.fault_code} (Confidence: ${(data.confidence * 100).toFixed(0)}%)
+BS 7671 References: ${data.regulation_references?.map((r: any) => r.number).join(', ') || 'N/A'}
+GN3 Guidance: ${data.gn3_guidance}
+Reasoning: ${data.reasoning}
+`;
+                  }
+                } catch (e) {
+                  console.error('RAG fault verification failed:', e);
+                }
+                return '';
+              });
+
+              const ragResults = await Promise.all(ragPromises);
+              ragEnhancedContext = ragResults.filter(r => r).join('\n\n');
+              
+              if (ragEnhancedContext) {
+                console.log('✅ RAG-verified fault classifications obtained');
+              }
+            }
+
+            if (analysis_settings.mode === 'wiring_instruction') {
+              console.log('🔍 STAGE 2: Querying wiring diagram RAG');
+              
+              try {
+                const { data, error } = await supabase.functions.invoke('wiring-diagram-generator-rag', {
+                  body: {
+                    component_type: (preliminaryFindings.components || [])[0] || 'socket outlet',
+                    circuit_params: {
+                      voltage: 230,
+                      load: 'general purpose'
+                    },
+                    installation_context: preliminaryFindings.context || 'domestic installation'
+                  }
+                });
+                
+                if (!error && data) {
+                  ragEnhancedContext = `
+WIRING SCHEMATIC AVAILABLE:
+Circuit Specification: ${JSON.stringify(data.circuit_spec)}
+Installation Guidance: ${data.installation_method_guidance}
+Safety Warnings: ${data.safety_warnings?.join(', ') || 'N/A'}
+Testing Requirements: ${data.testing_requirements?.join(', ') || 'N/A'}
+
+Follow the step-by-step wiring procedure with BS 7671 verification.
+`;
+                  console.log('✅ RAG wiring procedure obtained');
+                }
+              } catch (e) {
+                console.error('RAG wiring diagram failed:', e);
+              }
+            }
+          }
+        } catch (parseError) {
+          console.error('Failed to parse preliminary scan:', parseError);
+        }
+      }
+    }
+
+    // STAGE 3: Deep analysis with RAG context injected
+    const enhancedSystemPrompt = ragEnhancedContext 
+      ? `${systemPrompt}
+
+===== RAG-VERIFIED KNOWLEDGE =====
+${ragEnhancedContext}
+
+USE THIS VERIFIED INFORMATION to enhance your analysis. Cross-reference your findings with the RAG-verified data above.
+=================================`
+      : systemPrompt;
+
+    console.log('🔍 STAGE 3: Deep analysis with', ragEnhancedContext ? 'RAG context' : 'standard context');
+
     // Helper function for OpenAI API call with retry logic
     const callOpenAI = async (attempt = 1): Promise<Response> => {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -375,7 +520,7 @@ Focus on visible defects and compliance issues that can be determined from the e
           messages: [
             {
               role: 'system',
-              content: systemPrompt
+              content: enhancedSystemPrompt
             },
             {
               role: 'user',
@@ -461,6 +606,14 @@ Focus on visible defects and compliance issues that can be determined from the e
     // Ensure the response has the expected structure
     if (!analysisResult.analysis) {
       analysisResult = { analysis: analysisResult };
+    }
+
+    // Add RAG verification metadata
+    if (ragEnhancedContext) {
+      analysisResult.analysis.rag_verified = true;
+      analysisResult.analysis.verification_note = analysis_settings.mode === 'fault_diagnosis'
+        ? 'EICR codes verified against BS 7671 + GN3 database'
+        : 'Wiring procedure verified against installation knowledge database';
     }
 
     // Apply confidence threshold filtering

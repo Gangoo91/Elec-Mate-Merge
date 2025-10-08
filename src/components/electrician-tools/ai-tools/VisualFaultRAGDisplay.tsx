@@ -1,0 +1,146 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle2, AlertTriangle, Info, FileText } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useState } from "react";
+
+interface RegulationReference {
+  number: string;
+  section: string;
+  content: string;
+  similarity: number;
+  severity_justification: string;
+}
+
+interface VisualFaultRAGDisplayProps {
+  faultCode: 'C1' | 'C2' | 'C3' | 'FI';
+  regulationReferences: RegulationReference[];
+  gn3Guidance: string;
+  confidence: number;
+  reasoning: string;
+  verificationStatus?: string;
+}
+
+const VisualFaultRAGDisplay = ({
+  faultCode,
+  regulationReferences,
+  gn3Guidance,
+  confidence,
+  reasoning,
+  verificationStatus
+}: VisualFaultRAGDisplayProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const getCodeColor = (code: string) => {
+    switch (code) {
+      case 'C1': return 'bg-destructive text-destructive-foreground';
+      case 'C2': return 'bg-orange-500 text-white';
+      case 'C3': return 'bg-yellow-500 text-black';
+      case 'FI': return 'bg-blue-500 text-white';
+      default: return 'bg-muted text-muted-foreground';
+    }
+  };
+
+  const getCodeIcon = (code: string) => {
+    switch (code) {
+      case 'C1': return <AlertTriangle className="h-4 w-4" />;
+      case 'C2': return <AlertTriangle className="h-4 w-4" />;
+      case 'C3': return <Info className="h-4 w-4" />;
+      case 'FI': return <FileText className="h-4 w-4" />;
+      default: return null;
+    }
+  };
+
+  const getCodeDescription = (code: string) => {
+    switch (code) {
+      case 'C1': return 'Danger present - immediate action required';
+      case 'C2': return 'Potentially dangerous - urgent remedial action';
+      case 'C3': return 'Improvement recommended';
+      case 'FI': return 'Further investigation required';
+      default: return '';
+    }
+  };
+
+  return (
+    <Card className="border-l-4" style={{ borderLeftColor: faultCode === 'C1' ? 'hsl(var(--destructive))' : faultCode === 'C2' ? '#f97316' : faultCode === 'C3' ? '#eab308' : '#3b82f6' }}>
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Badge className={getCodeColor(faultCode)}>
+              {getCodeIcon(faultCode)}
+              <span className="ml-1.5 font-bold">{faultCode}</span>
+            </Badge>
+            <CardTitle className="text-base sm:text-lg">RAG-Verified Classification</CardTitle>
+          </div>
+          <Badge variant="outline" className="text-xs">
+            <CheckCircle2 className="h-3 w-3 mr-1 text-green-500" />
+            {(confidence * 100).toFixed(0)}%
+          </Badge>
+        </div>
+        <CardDescription className="text-xs sm:text-sm">
+          {getCodeDescription(faultCode)}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {verificationStatus && (
+          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
+            <div className="flex items-center gap-2 text-sm text-green-700 dark:text-green-400">
+              <CheckCircle2 className="h-4 w-4" />
+              <span className="font-medium">{verificationStatus}</span>
+            </div>
+          </div>
+        )}
+
+        <div className="space-y-2">
+          <h4 className="text-sm font-semibold text-foreground">Reasoning</h4>
+          <p className="text-sm text-muted-foreground leading-relaxed">{reasoning}</p>
+        </div>
+
+        {gn3Guidance && gn3Guidance !== 'No specific GN3 guidance found' && (
+          <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3">
+            <h4 className="text-sm font-semibold text-blue-700 dark:text-blue-400 mb-1.5">
+              GN3 Guidance (Inspection & Testing)
+            </h4>
+            <p className="text-sm text-muted-foreground">{gn3Guidance}</p>
+          </div>
+        )}
+
+        {regulationReferences && regulationReferences.length > 0 && (
+          <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full p-3 bg-muted/50 hover:bg-muted rounded-lg transition-colors">
+              <span className="text-sm font-semibold">
+                BS 7671 Regulation References ({regulationReferences.length})
+              </span>
+              <Badge variant="secondary" className="text-xs">
+                {isOpen ? 'Hide' : 'Show'}
+              </Badge>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 space-y-2">
+              {regulationReferences.map((reg, idx) => (
+                <div key={idx} className="bg-card border border-border rounded-lg p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <Badge variant="outline" className="font-mono text-xs">
+                      Reg {reg.number}
+                    </Badge>
+                    <Badge variant="secondary" className="text-xs">
+                      {(reg.similarity * 100).toFixed(0)}% match
+                    </Badge>
+                  </div>
+                  <h5 className="text-sm font-medium text-foreground mb-1.5">{reg.section}</h5>
+                  <p className="text-xs text-muted-foreground mb-2 leading-relaxed">{reg.content}</p>
+                  <div className="bg-amber-500/10 border border-amber-500/20 rounded p-2">
+                    <p className="text-xs text-amber-700 dark:text-amber-400">
+                      <strong>Why this matters:</strong> {reg.severity_justification}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </CollapsibleContent>
+          </Collapsible>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
+
+export default VisualFaultRAGDisplay;
