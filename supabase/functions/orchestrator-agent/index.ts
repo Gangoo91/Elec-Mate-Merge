@@ -643,7 +643,8 @@ function getAgentEmoji(agent: string): string {
     'cost-engineer': '💰',
     'installer': '🔧',
     'commissioning': '✅',
-    'health-safety': '🦺'
+    'health-safety': '🦺',
+    'inspector': '🔍'
   };
   return emojis[agent] || '🤖';
 }
@@ -654,7 +655,8 @@ function getAgentDisplayName(agent: string): string {
     'cost-engineer': 'Cost Engineer',
     'installer': 'Installation Specialist',
     'commissioning': 'Testing & Commissioning',
-    'health-safety': 'Health & Safety'
+    'health-safety': 'Health & Safety',
+    'inspector': 'Inspection & Testing Specialist'
   };
   return names[agent] || agent;
 }
@@ -769,7 +771,8 @@ function getAgentFunctionName(agent: string): string {
     'installation': 'installer-agent',
     'commissioning': 'commissioning-agent',
     'health-safety': 'health-safety-agent',
-    'project-manager': 'project-manager-agent'
+    'project-manager': 'project-manager-agent',
+    'inspector': 'inspector-agent'
   };
   return mapping[agent] || 'designer-agent';
 }

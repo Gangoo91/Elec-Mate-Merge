@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { InspectorChatModal } from "./InspectorChatModal";
 
 interface AnalysisResult {
   findings: Array<{
@@ -83,6 +84,7 @@ const VisualAnalysisRedesigned = () => {
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [fastMode, setFastMode] = useState(true); // Default Quick mode
+  const [inspectorModalOpen, setInspectorModalOpen] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
@@ -451,20 +453,7 @@ const VisualAnalysisRedesigned = () => {
   };
 
   const handleDiscussWithInspector = () => {
-    const findings = analysisResult?.findings || [];
-    const context = {
-      analysisType: 'visual_inspection',
-      findings: findings.map(f => ({
-        issue: f.description,
-        code: f.eicr_code,
-        clauses: f.bs7671_clauses
-      })),
-      imageCount: uploadedImageUrls.length
-    };
-    
-    navigate('/electrician-tools/ai-tooling/assistant', { 
-      state: { visualAnalysisContext: context }
-    });
+    setInspectorModalOpen(true);
   };
 
   const resetAnalysis = () => {
@@ -871,6 +860,15 @@ const VisualAnalysisRedesigned = () => {
 
       {/* Hidden canvas for camera */}
       <canvas ref={canvasRef} className="hidden" />
+
+      {/* Inspector Chat Modal */}
+      <InspectorChatModal
+        isOpen={inspectorModalOpen}
+        onClose={() => setInspectorModalOpen(false)}
+        findings={analysisResult?.findings || []}
+        imageUrl={uploadedImageUrls[0]}
+        analysisMode={selectedMode || 'fault_diagnosis'}
+      />
     </div>
   );
 };

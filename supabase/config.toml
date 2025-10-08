@@ -18,6 +18,10 @@ verify_jwt = false
 [functions.installer-agent]
 verify_jwt = false
 
+[functions.inspector-agent]
+verify_jwt = false
+timeout_sec = 120
+
 [functions.commissioning-agent]
 verify_jwt = false
 

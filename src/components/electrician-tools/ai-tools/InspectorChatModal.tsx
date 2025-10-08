@@ -1,0 +1,353 @@
+import { useState, useRef, useEffect } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Send, Loader2, X, AlertCircle } from "lucide-react";
+import { useStreamingChat } from "@/hooks/useStreamingChat";
+import { ReasoningPanel } from "@/components/install-planner-v2/ReasoningPanel";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { toast } from "sonner";
+
+interface Finding {
+  description: string;
+  eicr_code: string;
+  bs7671_clauses: string[];
+  fix_guidance?: string;
+  confidence: number;
+}
+
+interface InspectorChatModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  findings: Finding[];
+  imageUrl?: string;
+  analysisMode: string;
+}
+
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+  citations?: Array<{ number: string; title: string }>;
+  activeAgents?: string[];
+  agentName?: string;
+}
+
+export const InspectorChatModal = ({
+  isOpen,
+  onClose,
+  findings,
+  imageUrl,
+  analysisMode
+}: InspectorChatModalProps) => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [reasoningSteps, setReasoningSteps] = useState<Array<{
+    agent: string;
+    status: 'pending' | 'active' | 'complete';
+    reasoning?: string;
+  }>>([]);
+  const [showReasoning, setShowReasoning] = useState(true);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
+
+  const { streamMessage, isStreaming } = useStreamingChat({
+    onAgentStart: (agent, index, total) => {
+      setReasoningSteps(prev => {
+        const newSteps = [...prev];
+        const existingIndex = newSteps.findIndex(s => s.agent === agent);
+        if (existingIndex >= 0) {
+          newSteps[existingIndex] = { agent, status: 'active' };
+        } else {
+          newSteps.push({ agent, status: 'active' });
+        }
+        return newSteps;
+      });
+    },
+    onAgentResponse: (agent, response) => {
+      setReasoningSteps(prev => 
+        prev.map(s => s.agent === agent ? { ...s, status: 'complete', reasoning: response.slice(0, 100) + '...' } : s)
+      );
+    },
+    onAgentComplete: (agent, nextAgent) => {
+      setReasoningSteps(prev => 
+        prev.map(s => s.agent === agent ? { ...s, status: 'complete' } : s)
+      );
+      if (nextAgent) {
+        setReasoningSteps(prev => [...prev, { agent: nextAgent, status: 'pending' }]);
+      }
+    },
+    onError: (error) => {
+      toast.error(error);
+      setIsLoading(false);
+    }
+  });
+
+  // Auto-generate initial question when modal opens
+  useEffect(() => {
+    if (isOpen && findings.length > 0 && messages.length === 0) {
+      const initialQuestion = generateInitialQuestion();
+      
+      // Add assistant greeting
+      const greeting: Message = {
+        role: 'assistant',
+        content: "Right, let me have a look at what you've found. I'll analyse the safety classification, required tests, and how to verify these defects properly.",
+        agentName: 'inspector'
+      };
+      
+      setMessages([greeting]);
+      
+      // Auto-send the initial question
+      setTimeout(() => {
+        handleSendInitialMessage(initialQuestion);
+      }, 500);
+    }
+  }, [isOpen, findings]);
+
+  const generateInitialQuestion = (): string => {
+    const findingsList = findings.map((f, i) => 
+      `${i + 1}. [${f.eicr_code}] ${f.description}\n   BS 7671: ${f.bs7671_clauses.join(', ')}`
+    ).join('\n\n');
+
+    return `I've completed a visual inspection and identified the following issues:\n\n${findingsList}\n\nPlease help me:\n1. Confirm the safety classification for each finding\n2. Specify which tests I need to perform to verify these defects\n3. Explain the safety implications\n4. Advise on remediation approach`;
+  };
+
+  const handleSendInitialMessage = async (question: string) => {
+    const userMessage: Message = {
+      role: 'user',
+      content: question
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setIsLoading(true);
+    setStreamingMessageIndex(1); // Next message will be at index 1
+
+    const assistantMessage: Message = {
+      role: 'assistant',
+      content: '',
+      activeAgents: ['inspector']
+    };
+
+    setMessages(prev => [...prev, assistantMessage]);
+
+    try {
+      await streamMessage(
+        [userMessage],
+        { findings, analysisMode },
+        (token) => {
+          setMessages(prev => {
+            const newMessages = [...prev];
+            const lastIndex = newMessages.length - 1;
+            if (newMessages[lastIndex].role === 'assistant') {
+              newMessages[lastIndex] = {
+                ...newMessages[lastIndex],
+                content: newMessages[lastIndex].content + token
+              };
+            }
+            return newMessages;
+          });
+        },
+        (fullMessage, data) => {
+          setMessages(prev => {
+            const newMessages = [...prev];
+            const lastIndex = newMessages.length - 1;
+            newMessages[lastIndex] = {
+              ...newMessages[lastIndex],
+              content: fullMessage,
+              citations: data.citations,
+              activeAgents: data.activeAgents
+            };
+            return newMessages;
+          });
+          setIsLoading(false);
+          setStreamingMessageIndex(null);
+        },
+        ['inspector']
+      );
+    } catch (error) {
+      setIsLoading(false);
+      setStreamingMessageIndex(null);
+    }
+  };
+
+  const handleSend = async () => {
+    if (!input.trim() || isLoading) return;
+
+    const userMessage: Message = {
+      role: 'user',
+      content: input
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
+
+    const currentStreamIndex = messages.length + 1;
+    setStreamingMessageIndex(currentStreamIndex);
+
+    const assistantMessage: Message = {
+      role: 'assistant',
+      content: '',
+      activeAgents: []
+    };
+
+    setMessages(prev => [...prev, assistantMessage]);
+
+    try {
+      await streamMessage(
+        [...messages, userMessage],
+        { findings, analysisMode },
+        (token) => {
+          setMessages(prev => {
+            const newMessages = [...prev];
+            const lastIndex = newMessages.length - 1;
+            if (newMessages[lastIndex].role === 'assistant') {
+              newMessages[lastIndex] = {
+                ...newMessages[lastIndex],
+                content: newMessages[lastIndex].content + token
+              };
+            }
+            return newMessages;
+          });
+        },
+        (fullMessage, data) => {
+          setMessages(prev => {
+            const newMessages = [...prev];
+            const lastIndex = newMessages.length - 1;
+            newMessages[lastIndex] = {
+              ...newMessages[lastIndex],
+              content: fullMessage,
+              citations: data.citations,
+              activeAgents: data.activeAgents
+            };
+            return newMessages;
+          });
+          setIsLoading(false);
+          setStreamingMessageIndex(null);
+        }
+      );
+    } catch (error) {
+      setIsLoading(false);
+      setStreamingMessageIndex(null);
+    }
+  };
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-4xl h-[90vh] sm:h-[85vh] flex flex-col p-0 gap-0">
+        <DialogHeader className="p-4 sm:p-6 pb-3 border-b">
+          <div className="flex items-center justify-between">
+            <div>
+              <DialogTitle className="text-lg sm:text-xl font-semibold">Inspector AI Consultation</DialogTitle>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                BS 7671 Part 6 Inspection & Testing Analysis
+              </p>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onClose}
+              className="h-8 w-8 sm:h-10 sm:w-10"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        </DialogHeader>
+
+        {/* Reasoning Panel */}
+        {showReasoning && reasoningSteps.length > 0 && (
+          <div className="px-4 sm:px-6 pt-3">
+            <ReasoningPanel steps={reasoningSteps} isVisible={true} />
+          </div>
+        )}
+
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <Card className={`max-w-[85%] sm:max-w-[75%] p-3 sm:p-4 ${
+                message.role === 'user' 
+                  ? 'bg-primary text-primary-foreground' 
+                  : 'bg-muted'
+              }`}>
+                {message.agentName && (
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge variant="outline" className="text-xs">
+                      {message.agentName === 'inspector' ? '🔍 Inspector' : '🔧 Installer'}
+                    </Badge>
+                  </div>
+                )}
+                <p className="text-sm sm:text-base whitespace-pre-wrap leading-relaxed">
+                  {message.content}
+                  {index === streamingMessageIndex && <span className="inline-block w-2 h-4 ml-1 bg-current animate-pulse" />}
+                </p>
+                {message.citations && message.citations.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {message.citations.map((citation, i) => (
+                      <Badge key={i} variant="secondary" className="text-xs">
+                        {citation.title}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </Card>
+            </div>
+          ))}
+          {isLoading && messages[messages.length - 1]?.role === 'user' && (
+            <div className="flex justify-start">
+              <Card className="max-w-[85%] sm:max-w-[75%] p-4 bg-muted">
+                <div className="flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <p className="text-sm text-muted-foreground">Analysing...</p>
+                </div>
+              </Card>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input Area */}
+        <div className="border-t p-4 sm:p-6">
+          <div className="flex gap-2">
+            <Textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+              placeholder="Ask about testing procedures, safety implications, or remediation..."
+              className="min-h-[60px] resize-none text-sm sm:text-base"
+              disabled={isLoading}
+            />
+            <Button
+              onClick={handleSend}
+              disabled={isLoading || !input.trim()}
+              size="icon"
+              className="h-[60px] w-12 flex-shrink-0"
+            >
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
+          <p className="text-xs text-muted-foreground mt-2">
+            Press Enter to send, Shift+Enter for new line
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
