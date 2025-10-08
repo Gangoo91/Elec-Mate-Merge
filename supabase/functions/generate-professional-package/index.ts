@@ -9,6 +9,7 @@ interface PackageRequest {
   designData: any;
   companyName?: string;
   clientName?: string;
+  selectedDocuments?: string[];
 }
 
 serve(async (req) => {
@@ -17,40 +18,73 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, designData, companyName, clientName } = await req.json() as PackageRequest;
+    const { messages, designData, companyName, clientName, selectedDocuments = ['design', 'quote', 'rams', 'checklist', 'test', 'eic'] } = await req.json() as PackageRequest;
 
     // Phase 3: Initialize Supabase for saving design to database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    console.log('📦 Generating Professional Package: 6 PDFs + ZIP bundle + Database save');
+    console.log(`📦 Generating Professional Package: ${selectedDocuments.length} of 6 PDFs selected`);
 
     // Extract data from conversation and design
     const extractedData = extractDataFromConversation(messages, designData);
 
-    // Generate 6 PDFs (using the edge function's ability to import from CDN)
-    const pdfGenerationPromises = [
-      generateDesignSpec(extractedData, companyName),
-      generateClientQuote(extractedData, companyName, clientName),
-      generateRAMS(extractedData, companyName),
-      generateInstallationChecklist(extractedData),
-      generateTestSchedule(extractedData),
-      generateEIC(extractedData, clientName)
-    ];
+    // Generate selected PDFs only
+    const pdfPromises: { key: string; promise: Promise<Uint8Array>; filename: string }[] = [];
+    
+    if (selectedDocuments.includes('design')) {
+      pdfPromises.push({
+        key: 'design',
+        promise: generateDesignSpec(extractedData, companyName),
+        filename: "1_Design_Specification.pdf"
+      });
+    }
+    if (selectedDocuments.includes('quote')) {
+      pdfPromises.push({
+        key: 'quote',
+        promise: generateClientQuote(extractedData, companyName, clientName),
+        filename: "2_Client_Quote.pdf"
+      });
+    }
+    if (selectedDocuments.includes('rams')) {
+      pdfPromises.push({
+        key: 'rams',
+        promise: generateRAMS(extractedData, companyName),
+        filename: "3_Risk_Assessment_Method_Statement.pdf"
+      });
+    }
+    if (selectedDocuments.includes('checklist')) {
+      pdfPromises.push({
+        key: 'checklist',
+        promise: generateInstallationChecklist(extractedData),
+        filename: "4_Installation_Checklist.pdf"
+      });
+    }
+    if (selectedDocuments.includes('test')) {
+      pdfPromises.push({
+        key: 'test',
+        promise: generateTestSchedule(extractedData),
+        filename: "5_Test_Schedule.pdf"
+      });
+    }
+    if (selectedDocuments.includes('eic')) {
+      pdfPromises.push({
+        key: 'eic',
+        promise: generateEIC(extractedData, clientName),
+        filename: "6_Electrical_Installation_Certificate.pdf"
+      });
+    }
 
-    const [designSpec, quote, rams, checklist, testSchedule, eic] = await Promise.all(pdfGenerationPromises);
+    const pdfs = await Promise.all(pdfPromises.map(p => p.promise));
 
     // Create ZIP bundle (using JSZip from CDN)
     const JSZip = (await import('https://esm.sh/jszip@3.10.1')).default;
     const zip = new JSZip();
 
-    zip.file("1_Design_Specification.pdf", designSpec);
-    zip.file("2_Client_Quote.pdf", quote);
-    zip.file("3_Risk_Assessment_Method_Statement.pdf", rams);
-    zip.file("4_Installation_Checklist.pdf", checklist);
-    zip.file("5_Test_Schedule.pdf", testSchedule);
-    zip.file("6_Electrical_Installation_Certificate.pdf", eic);
+    pdfs.forEach((pdfData, idx) => {
+      zip.file(pdfPromises[idx].filename, pdfData);
+    });
 
     const zipBlob = await zip.generateAsync({ type: "uint8array" });
 
@@ -86,11 +120,15 @@ serve(async (req) => {
 
     console.log('✅ Professional Package: Generated successfully');
 
+    const docCount = selectedDocuments.length;
+    const packageType = docCount === 6 ? 'Full' : `Partial_${docCount}doc`;
+    const timestamp = new Date().toISOString().split('T')[0];
+    
     return new Response(zipBlob, {
       headers: {
         ...corsHeaders,
         'Content-Type': 'application/zip',
-        'Content-Disposition': `attachment; filename="Electrical_Design_Package_${Date.now()}.zip"`
+        'Content-Disposition': `attachment; filename="ElecMate_${packageType}_Package_${timestamp}.zip"`
       },
     });
 
@@ -219,36 +257,206 @@ function extractMaterials(text: string): Array<{ item: string; quantity: string 
   return defaults;
 }
 
-// Simplified PDF generation - in production, these would call the actual PDF utilities
+// Real PDF generation using jsPDF
 async function generateDesignSpec(data: any, companyName: string): Promise<Uint8Array> {
-  // Mock PDF - in production, import and use actual PDF generation
-  const mockPDF = new TextEncoder().encode("Design Specification PDF placeholder");
-  return mockPDF;
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const doc = new jsPDF();
+  
+  // Header
+  doc.setFontSize(20);
+  doc.text('ELECTRICAL DESIGN SPECIFICATION', 105, 20, { align: 'center' });
+  doc.setFontSize(10);
+  doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')}`, 105, 28, { align: 'center' });
+  
+  // Project Info
+  doc.setFontSize(14);
+  doc.text('Project Information', 20, 45);
+  doc.setFontSize(10);
+  doc.text(`Project: ${data.projectName}`, 20, 55);
+  doc.text(`Location: ${data.location}`, 20, 62);
+  doc.text(`Company: ${companyName || 'N/A'}`, 20, 69);
+  
+  // Designer Notes
+  doc.setFontSize(14);
+  doc.text('Design Notes', 20, 85);
+  doc.setFontSize(10);
+  const notes = doc.splitTextToSize(data.designerNotes || 'Design completed to BS 7671:2018+A3:2024', 170);
+  doc.text(notes, 20, 95);
+  
+  // Compliance
+  doc.setFontSize(12);
+  doc.text('Compliance Statement', 20, 120);
+  doc.setFontSize(9);
+  doc.text('This design complies with BS 7671:2018+A3:2024 (Sept 2025)', 20, 128);
+  
+  return new Uint8Array(doc.output('arraybuffer'));
 }
 
 async function generateClientQuote(data: any, companyName: string, clientName: string): Promise<Uint8Array> {
-  const mockPDF = new TextEncoder().encode("Client Quote PDF placeholder");
-  return mockPDF;
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const doc = new jsPDF();
+  
+  doc.setFontSize(20);
+  doc.text('QUOTATION', 105, 20, { align: 'center' });
+  doc.setFontSize(10);
+  doc.text(`Date: ${new Date().toLocaleDateString('en-GB')}`, 105, 28, { align: 'center' });
+  
+  doc.setFontSize(14);
+  doc.text('Client Details', 20, 45);
+  doc.setFontSize(10);
+  doc.text(`Client: ${clientName || 'N/A'}`, 20, 55);
+  doc.text(`Project: ${data.projectName}`, 20, 62);
+  
+  doc.setFontSize(14);
+  doc.text('Materials', 20, 80);
+  doc.setFontSize(10);
+  let yPos = 90;
+  (data.materialsRequired || []).slice(0, 10).forEach((item: any) => {
+    doc.text(`• ${item.item}: ${item.quantity}`, 25, yPos);
+    yPos += 7;
+  });
+  
+  doc.setFontSize(12);
+  doc.text('This quotation is valid for 30 days', 20, yPos + 20);
+  
+  return new Uint8Array(doc.output('arraybuffer'));
 }
 
 async function generateRAMS(data: any, companyName: string): Promise<Uint8Array> {
-  const mockPDF = new TextEncoder().encode("RAMS PDF placeholder");
-  return mockPDF;
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const doc = new jsPDF();
+  
+  doc.setFontSize(18);
+  doc.text('RISK ASSESSMENT & METHOD STATEMENT', 105, 20, { align: 'center' });
+  doc.setFontSize(10);
+  doc.text(`Date: ${new Date().toLocaleDateString('en-GB')}`, 105, 28, { align: 'center' });
+  
+  doc.setFontSize(14);
+  doc.text('Project Details', 20, 45);
+  doc.setFontSize(10);
+  doc.text(`Project: ${data.projectName}`, 20, 55);
+  doc.text(`Location: ${data.location}`, 20, 62);
+  doc.text(`Company: ${companyName || 'N/A'}`, 20, 69);
+  
+  doc.setFontSize(14);
+  doc.text('Installation Steps', 20, 85);
+  doc.setFontSize(10);
+  let yPos = 95;
+  (data.installationSteps || []).slice(0, 8).forEach((step: string, idx: number) => {
+    const wrapped = doc.splitTextToSize(`${idx + 1}. ${step}`, 170);
+    doc.text(wrapped, 20, yPos);
+    yPos += wrapped.length * 6;
+  });
+  
+  doc.setFontSize(14);
+  doc.text('Safety Hazards', 20, Math.min(yPos + 10, 180));
+  doc.setFontSize(9);
+  doc.text('• Electric shock - Safe isolation required', 20, Math.min(yPos + 20, 190));
+  doc.text('• Working at height - Use appropriate access equipment', 20, Math.min(yPos + 27, 197));
+  
+  return new Uint8Array(doc.output('arraybuffer'));
 }
 
 async function generateInstallationChecklist(data: any): Promise<Uint8Array> {
-  const mockPDF = new TextEncoder().encode("Installation Checklist PDF placeholder");
-  return mockPDF;
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const doc = new jsPDF();
+  
+  doc.setFontSize(18);
+  doc.text('INSTALLATION CHECKLIST', 105, 20, { align: 'center' });
+  doc.setFontSize(10);
+  doc.text(`Project: ${data.projectName}`, 105, 30, { align: 'center' });
+  
+  const checklist = [
+    '☐ Carry out risk assessment',
+    '☐ Isolate power supply',
+    '☐ Test for dead',
+    '☐ Install cable routes',
+    '☐ Install protective devices',
+    '☐ Terminate all connections',
+    '☐ Conduct testing (IR, continuity, Zs)',
+    '☐ Complete certification',
+    '☐ Handover to client'
+  ];
+  
+  doc.setFontSize(12);
+  let yPos = 50;
+  checklist.forEach(item => {
+    doc.text(item, 20, yPos);
+    yPos += 10;
+  });
+  
+  return new Uint8Array(doc.output('arraybuffer'));
 }
 
 async function generateTestSchedule(data: any): Promise<Uint8Array> {
-  const mockPDF = new TextEncoder().encode("Test Schedule PDF placeholder");
-  return mockPDF;
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const doc = new jsPDF();
+  
+  doc.setFontSize(18);
+  doc.text('TEST & INSPECTION SCHEDULE', 105, 20, { align: 'center' });
+  doc.setFontSize(10);
+  doc.text(`Project: ${data.projectName}`, 105, 30, { align: 'center' });
+  
+  doc.setFontSize(12);
+  doc.text('Required Tests (BS 7671:2018+A3:2024)', 20, 50);
+  
+  const tests = [
+    '1. Continuity of protective conductors',
+    '2. Insulation resistance',
+    '3. Polarity',
+    '4. Earth fault loop impedance (Zs)',
+    '5. RCD operation',
+    '6. Functional testing'
+  ];
+  
+  doc.setFontSize(10);
+  let yPos = 65;
+  tests.forEach(test => {
+    doc.text(test, 25, yPos);
+    yPos += 10;
+  });
+  
+  doc.text('All tests must meet BS 7671:2018+A3:2024 requirements', 20, yPos + 20);
+  
+  return new Uint8Array(doc.output('arraybuffer'));
 }
 
 async function generateEIC(data: any, clientName: string): Promise<Uint8Array> {
-  const mockPDF = new TextEncoder().encode("EIC Template PDF placeholder");
-  return mockPDF;
+  const { default: jsPDF } = await import('https://esm.sh/jspdf@2.5.1');
+  const doc = new jsPDF();
+  
+  doc.setFontSize(18);
+  doc.text('ELECTRICAL INSTALLATION CERTIFICATE', 105, 20, { align: 'center' });
+  doc.setFontSize(9);
+  doc.text('(BS 7671:2018+A3:2024)', 105, 28, { align: 'center' });
+  
+  doc.setFontSize(12);
+  doc.text('Client Details', 20, 45);
+  doc.setFontSize(10);
+  doc.text(`Client: ${clientName || 'N/A'}`, 20, 55);
+  doc.text(`Installation: ${data.location}`, 20, 62);
+  
+  doc.setFontSize(12);
+  doc.text('Design Details', 20, 80);
+  doc.setFontSize(10);
+  doc.text('Design Standard: BS 7671:2018+A3:2024', 20, 90);
+  doc.text(`Project: ${data.projectName}`, 20, 97);
+  
+  doc.setFontSize(9);
+  doc.text('This is a template certificate. Complete all sections before use.', 20, 120);
+  doc.text('Designer, Constructor, and Inspector signatures required.', 20, 127);
+  
+  // Signature blocks
+  doc.rect(20, 145, 55, 25);
+  doc.text('Designer Signature:', 22, 150);
+  
+  doc.rect(85, 145, 55, 25);
+  doc.text('Constructor Signature:', 87, 150);
+  
+  doc.rect(150, 145, 55, 25);
+  doc.text('Inspector Signature:', 152, 150);
+  
+  return new Uint8Array(doc.output('arraybuffer'));
 }
 
 // Phase 3: Extract circuits with test expectations

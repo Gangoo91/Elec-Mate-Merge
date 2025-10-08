@@ -19,11 +19,12 @@ const InstallPlannerResults = () => {
     return null;
   }
 
-  const handleExport = async () => {
+  const handleExport = async (selectedDocs?: string[]) => {
     setIsExporting(true);
     
-    toast.info("Generating Package...", {
-      description: "Creating professional documents"
+    const docCount = selectedDocs?.length || 6;
+    toast.info(`Generating ${docCount} document${docCount !== 1 ? 's' : ''}...`, {
+      description: "Creating professional PDFs"
     });
 
     try {
@@ -32,7 +33,8 @@ const InstallPlannerResults = () => {
           messages,
           designData: planData,
           companyName: "Your Company Name",
-          clientName: "Client Name"
+          clientName: "Client Name",
+          selectedDocuments: selectedDocs
         }
       });
 
@@ -43,14 +45,16 @@ const InstallPlannerResults = () => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Electrical_Design_Package_${Date.now()}.zip`;
+      const packageType = docCount === 6 ? 'Full' : `${docCount}doc`;
+      const timestamp = new Date().toISOString().split('T')[0];
+      a.download = `ElecMate_${packageType}_Package_${timestamp}.zip`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-      toast.success("Package Ready! 🎉", {
-        description: "Professional documents downloaded as ZIP"
+      toast.success("Package Downloaded! 🎉", {
+        description: `${docCount} professional document${docCount !== 1 ? 's' : ''} ready`
       });
     } catch (error) {
       console.error('Export error:', error);
@@ -101,7 +105,7 @@ const InstallPlannerResults = () => {
             circuits={planData?.circuits || []}
             projectId={planData?.projectId}
             projectName={planData?.projectName || "Installation Design"}
-            onExport={handleExport}
+            onExport={(selectedDocs?: string[]) => handleExport(selectedDocs)}
             onNewConsultation={handleNewConsultation}
             onReEngageAgent={handleReEngageAgent}
           />

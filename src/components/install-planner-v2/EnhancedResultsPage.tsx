@@ -35,7 +35,7 @@ interface EnhancedResultsPageProps {
   circuits?: Circuit[];
   projectId?: string;
   projectName?: string;
-  onExport: () => void;
+  onExport: (selectedDocs?: string[]) => void;
   onNewConsultation: () => void;
   onReEngageAgent?: (agentId: string) => void;
 }
@@ -62,6 +62,9 @@ export const EnhancedResultsPage = ({
   // Start with all collapsed for performance (mobile-first)
   const [expandedAgents, setExpandedAgents] = useState<Set<string>>(new Set());
   const [activeTab, setActiveTab] = useState("overview");
+  const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(
+    new Set(['design', 'quote', 'rams', 'checklist', 'test', 'eic'])
+  );
   const { saveQuote } = useQuoteStorage();
   const navigate = useNavigate();
 
@@ -92,6 +95,27 @@ export const EnhancedResultsPage = ({
   };
 
   const allExpanded = selectedAgents.every(id => expandedAgents.has(id));
+
+  // Document selection handlers
+  const toggleDocument = (docId: string) => {
+    setSelectedDocuments(prev => {
+      const next = new Set(prev);
+      if (next.has(docId)) {
+        next.delete(docId);
+      } else {
+        next.add(docId);
+      }
+      return next;
+    });
+  };
+
+  const toggleAllDocuments = () => {
+    if (selectedDocuments.size === 6) {
+      setSelectedDocuments(new Set());
+    } else {
+      setSelectedDocuments(new Set(['design', 'quote', 'rams', 'checklist', 'test', 'eic']));
+    }
+  };
 
   const getAgentResponse = (agentId: string): string => {
     const agentMessages = messages.filter(m => m.agentName === agentId);
@@ -225,31 +249,104 @@ export const EnhancedResultsPage = ({
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-2">
-            <Button 
-              variant="default" 
-              size="default" 
-              onClick={onExport} 
-              className="flex-1 sm:flex-none min-h-[44px]"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Export Package
-            </Button>
-            {projectId && (
+          <div className="space-y-3">
+            {/* Document Selection */}
+            <div className="bg-elec-card border border-elec-yellow/20 rounded-lg p-3">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-foreground">Select Documents to Export</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={toggleAllDocuments}
+                  className="h-7 text-xs"
+                >
+                  {selectedDocuments.size === 6 ? 'Deselect All' : 'Select All'}
+                </Button>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={selectedDocuments.has('design')}
+                    onChange={() => toggleDocument('design')}
+                    className="w-4 h-4 rounded border-elec-yellow/30 text-elec-yellow focus:ring-elec-yellow"
+                  />
+                  <span className="text-foreground">Design Spec</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={selectedDocuments.has('quote')}
+                    onChange={() => toggleDocument('quote')}
+                    className="w-4 h-4 rounded border-elec-yellow/30 text-elec-yellow focus:ring-elec-yellow"
+                  />
+                  <span className="text-foreground">Quote</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={selectedDocuments.has('rams')}
+                    onChange={() => toggleDocument('rams')}
+                    className="w-4 h-4 rounded border-elec-yellow/30 text-elec-yellow focus:ring-elec-yellow"
+                  />
+                  <span className="text-foreground">RAMS</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={selectedDocuments.has('checklist')}
+                    onChange={() => toggleDocument('checklist')}
+                    className="w-4 h-4 rounded border-elec-yellow/30 text-elec-yellow focus:ring-elec-yellow"
+                  />
+                  <span className="text-foreground">Checklist</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={selectedDocuments.has('test')}
+                    onChange={() => toggleDocument('test')}
+                    className="w-4 h-4 rounded border-elec-yellow/30 text-elec-yellow focus:ring-elec-yellow"
+                  />
+                  <span className="text-foreground">Test Schedule</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={selectedDocuments.has('eic')}
+                    onChange={() => toggleDocument('eic')}
+                    className="w-4 h-4 rounded border-elec-yellow/30 text-elec-yellow focus:ring-elec-yellow"
+                  />
+                  <span className="text-foreground">EIC Template</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button 
+                variant="default" 
+                size="default" 
+                onClick={() => onExport(Array.from(selectedDocuments))} 
+                disabled={selectedDocuments.size === 0}
+                className="flex-1 sm:flex-none min-h-[44px]"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Export Package ({selectedDocuments.size} of 6)
+              </Button>
               <WhatsAppShareButton
-                projectId={projectId}
+                projectId={projectId || 'temp'}
                 projectName={projectName}
               />
-            )}
-            <Button 
-              variant="outline" 
-              size="default" 
-              onClick={onNewConsultation} 
-              className="flex-1 sm:flex-none min-h-[44px]"
-            >
-              <RotateCcw className="w-4 h-4 mr-2" />
-              New Consultation
-            </Button>
+              <Button 
+                variant="outline" 
+                size="default" 
+                onClick={onNewConsultation} 
+                className="flex-1 sm:flex-none min-h-[44px]"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                New Consultation
+              </Button>
+            </div>
           </div>
         </div>
       </Card>
