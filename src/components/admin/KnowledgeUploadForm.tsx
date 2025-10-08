@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface KnowledgeUploadFormProps {
-  targetType: "bs7671" | "installation" | "pricing" | "project-management" | "health-safety" | "inspection-testing";
+  targetType: "bs7671" | "installation" | "pricing" | "design" | "project-management" | "health-safety" | "inspection-testing";
   isProcessing: boolean;
   onProcessingStart: () => void;
   onProcessingComplete: (stats: { 
@@ -58,6 +58,8 @@ export default function KnowledgeUploadForm({
         tableName = "installation_knowledge";
       } else if (targetType === "pricing") {
         tableName = "pricing_embeddings";
+      } else if (targetType === "design") {
+        tableName = "design_knowledge";
       } else if (targetType === "project-management") {
         tableName = "project_mgmt_knowledge";
       } else if (targetType === "health-safety") {
@@ -203,6 +205,8 @@ export default function KnowledgeUploadForm({
         } else {
           edgeFunctionName = "parse-onsite-guide";
         }
+      } else if (targetType === "design") {
+        edgeFunctionName = "parse-design-guide";
       } else if (targetType === "project-management") {
         edgeFunctionName = "parse-project-management";
       } else if (targetType === "health-safety") {
@@ -289,6 +293,8 @@ export default function KnowledgeUploadForm({
             "Upload installation guides, On-Site Guide content, or technical documentation."}
           {targetType === "pricing" && 
             "Upload UK wholesaler price lists in Excel format (.xlsx, .xls). The system will automatically detect columns for product names, SKUs, prices, and brands."}
+          {targetType === "design" && 
+            "Upload circuit design examples, calculation walkthroughs, wiring diagrams, schematics, and design specifications as text files."}
           {targetType === "project-management" && 
             "Upload project management guides, templates, and best practices for electrical projects."}
           {targetType === "health-safety" && 

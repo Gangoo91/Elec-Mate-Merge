@@ -36,10 +36,11 @@ export default function KnowledgeUploader() {
       </Alert>
 
       <Tabs defaultValue="bs7671" className="w-full">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid w-full grid-cols-7">
           <TabsTrigger value="bs7671">BS 7671</TabsTrigger>
           <TabsTrigger value="installation">Installation</TabsTrigger>
           <TabsTrigger value="pricing">Pricing</TabsTrigger>
+          <TabsTrigger value="design">Design</TabsTrigger>
           <TabsTrigger value="project-mgmt">Project Mgmt</TabsTrigger>
           <TabsTrigger value="health-safety">Health & Safety</TabsTrigger>
           <TabsTrigger value="inspection">Inspection</TabsTrigger>
@@ -129,6 +130,28 @@ export default function KnowledgeUploader() {
               }}
             />
           )}
+        </TabsContent>
+
+        <TabsContent value="design" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Electrical Design Knowledge</CardTitle>
+              <CardDescription>
+                Upload circuit design examples, calculation walkthroughs, wiring diagrams, schematics, and design specifications for electrical installations.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <KnowledgeUploadForm
+                targetType="design"
+                isProcessing={isProcessing}
+                onProcessingStart={() => setIsProcessing(true)}
+                onProcessingComplete={(stats) => {
+                  setIsProcessing(false);
+                  setProcessingStats(stats);
+                }}
+              />
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="project-mgmt" className="space-y-4">

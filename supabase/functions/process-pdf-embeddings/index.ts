@@ -191,6 +191,20 @@ serve(async (req) => {
           .insert(records);
 
         if (error) throw error;
+      } else if (source === 'design-guide') {
+        const records = validBatch.map((chunk, idx) => ({
+          topic: chunk.section,
+          content: chunk.content,
+          source: 'design-guide',
+          embedding: JSON.stringify(embeddingData.data[idx].embedding),
+          metadata: chunk.metadata,
+        }));
+
+        const { error } = await supabase
+          .from('design_knowledge')
+          .insert(records);
+
+        if (error) throw error;
       } else {
         const records = validBatch.map((chunk, idx) => ({
           topic: chunk.section,
