@@ -94,9 +94,10 @@ serve(async (req) => {
       throw new Error('Primary image URL is required');
     }
 
-    console.log(`⚡ Starting ${analysis_settings.fast_mode ? 'FAST' : 'FULL'} visual analysis`, {
+    console.log(`⚡ Starting ${analysis_settings.fast_mode ? 'FAST' : 'FULL'} visual analysis v2`, {
       mode: analysis_settings.mode,
-      images: 1 + additional_images.length
+      images: 1 + additional_images.length,
+      timestamp: new Date().toISOString()
     });
 
     const getSystemPrompt = (mode: AnalysisMode, fast: boolean): string => {

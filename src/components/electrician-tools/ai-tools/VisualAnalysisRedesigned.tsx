@@ -366,22 +366,30 @@ const VisualAnalysisRedesigned = () => {
         return;
       }
 
-      if (!data || error) {
+      if (error) {
         if (error?.message?.includes('429') || error?.message?.includes('rate limit')) {
           throw new Error('RATE_LIMIT');
         }
         if (error?.message?.includes('402') || error?.message?.includes('payment')) {
           throw new Error('PAYMENT_REQUIRED');
         }
-        throw new Error(error?.message || 'Analysis failed');
+        throw new Error(error?.message || 'Edge function error');
+      }
+
+      if (!data) {
+        throw new Error('No response from analysis');
+      }
+
+      if (data.error || data.code) {
+        if (data.code === 429) throw new Error('RATE_LIMIT');
+        if (data.code === 402) throw new Error('PAYMENT_REQUIRED');
+        if (data.code === 'TIMEOUT') throw new Error('TIMEOUT');
+        throw new Error(data.message || data.error || 'Analysis failed');
       }
 
       if (!data.analysis) {
-        throw new Error('Invalid analysis response');
-      }
-      
-      if (data.error) {
-        throw new Error(data.error);
+        console.error('Invalid data structure:', data);
+        throw new Error('Empty analysis - try again');
       }
       
       setAnalysisProgress(90);
