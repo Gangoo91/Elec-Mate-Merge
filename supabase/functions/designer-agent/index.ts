@@ -210,10 +210,24 @@ Use professional language with UK English spelling. Present calculations clearly
     const reasoning: string[] = [];
     
     if (calculationResults?.cableCapacity) {
+      // Add circuit metadata for PDF generation
+      structuredData.circuit = {
+        name: formatCircuitName(circuitParams.circuitType),
+        circuitType: circuitParams.circuitType,
+        loadType: formatLoadType(circuitParams.circuitType),
+        power: circuitParams.power,
+        totalLoadKW: (circuitParams.power / 1000).toFixed(2),
+        cableLength: circuitParams.cableLength,
+        voltage: circuitParams.voltage,
+        phases: circuitParams.phases,
+      };
+      
       structuredData.cableSize = circuitParams.cableSize;
+      structuredData.cableType = circuitParams.cableType;
       structuredData.protectionDevice = `${circuitParams.deviceRating}A ${circuitParams.deviceType}`;
       structuredData.designCurrent = circuitParams.designCurrent;
       structuredData.deviceRating = circuitParams.deviceRating;
+      structuredData.deviceType = circuitParams.deviceType;
       structuredData.correctedCapacity = calculationResults.cableCapacity.Iz;
       structuredData.correctionFactors = {
         temperature: calculationResults.cableCapacity.factors.temperatureFactor,
@@ -339,4 +353,29 @@ function extractCitations(response: string): any[] {
   }
 
   return Array.from(new Map(citations.map(c => [c.number, c])).values());
+}
+
+// Helper functions for circuit formatting
+function formatCircuitName(circuitType: string): string {
+  const names: Record<string, string> = {
+    'shower': 'Electric Shower Circuit',
+    'cooker': 'Cooker Circuit',
+    'socket': 'Socket Outlet Circuit',
+    'lighting': 'Lighting Circuit',
+    'ev-charger': 'EV Charging Point',
+    'bathroom': 'Bathroom Circuit',
+  };
+  return names[circuitType] || `${circuitType.charAt(0).toUpperCase()}${circuitType.slice(1)} Circuit`;
+}
+
+function formatLoadType(circuitType: string): string {
+  const types: Record<string, string> = {
+    'shower': 'Fixed Appliance',
+    'cooker': 'Fixed Appliance',
+    'socket': 'Socket Outlets',
+    'lighting': 'Lighting',
+    'ev-charger': 'EV Charging',
+    'bathroom': 'Bathroom Installation',
+  };
+  return types[circuitType] || 'General Load';
 }

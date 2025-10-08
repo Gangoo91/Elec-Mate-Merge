@@ -32,13 +32,27 @@ serve(async (req) => {
     // Extract data from conversation and design
     const extractedData = extractDataFromConversation(messages, designData);
 
+    // Get user ID for company profile lookup
+    const authHeader = req.headers.get('Authorization');
+    let userId: string | undefined;
+    if (authHeader) {
+      try {
+        const token = authHeader.replace('Bearer ', '');
+        const { data: { user } } = await supabase.auth.getUser(token);
+        userId = user?.id;
+      } catch (e) {
+        console.warn('Could not get user ID:', e);
+      }
+    }
+
     // Generate selected PDFs only
     const pdfPromises: { key: string; promise: Promise<Uint8Array>; filename: string }[] = [];
     
     if (selectedDocuments.includes('design')) {
+      // Try PDF Monkey first, fallback to jsPDF
       pdfPromises.push({
         key: 'design',
-        promise: generateDesignSpec(extractedData, companyDetails || { companyName }),
+        promise: generateDesignSpecWithPDFMonkey(extractedData, companyDetails, clientDetails, userId, supabase),
         filename: "1_Design_Specification.pdf"
       });
     }
@@ -627,4 +641,48 @@ function generateTestExpectations(data: any): any {
       notes: 'All live conductors connected to correct terminals'
     }
   };
+}
+
+// PDF Monkey Integration for Designer Calculations
+async function generateDesignSpecWithPDFMonkey(
+  extractedData: any, 
+  companyDetails: any, 
+  clientDetails: any, 
+  userId: string | undefined,
+  supabase: any
+): Promise<Uint8Array> {
+  try {
+    console.log('🎨 Attempting PDF Monkey generation for Design Spec...');
+
+    // Call the generate-design-spec-pdf edge function
+    const { data, error } = await supabase.functions.invoke('generate-design-spec-pdf', {
+      body: {
+        designData: extractedData,
+        companyDetails,
+        clientDetails,
+        userId,
+      },
+    });
+
+    if (error || !data?.success) {
+      console.warn('⚠️ PDF Monkey failed, using fallback:', error || data?.error);
+      return generateDesignSpec(extractedData, companyDetails || {});
+    }
+
+    console.log('✅ PDF Monkey succeeded, downloading PDF...');
+
+    // Download the PDF from PDF Monkey URL
+    const pdfResponse = await fetch(data.downloadUrl);
+    if (!pdfResponse.ok) {
+      throw new Error('Failed to download PDF from PDF Monkey');
+    }
+
+    const pdfBuffer = await pdfResponse.arrayBuffer();
+    return new Uint8Array(pdfBuffer);
+
+  } catch (error) {
+    console.error('❌ PDF Monkey error, using fallback:', error);
+    // Fallback to jsPDF
+    return generateDesignSpec(extractedData, companyDetails || {});
+  }
 }

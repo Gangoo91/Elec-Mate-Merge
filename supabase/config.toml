@@ -296,3 +296,6 @@ verify_jwt = false
 
 [functions.ai-materials-agent]
 verify_jwt = false
+
+[functions.generate-design-spec-pdf]
+verify_jwt = false
