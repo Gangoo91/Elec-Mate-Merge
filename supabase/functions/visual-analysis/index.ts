@@ -9,35 +9,59 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Robust JSON parser that handles markdown-wrapped responses
+// Enhanced JSON parser with better error recovery
 const parseAIResponse = (content: string, context: string = 'AI response') => {
   if (!content || content.trim() === '') {
+    console.error(`❌ ${context} is empty`);
     throw new Error(`${context} is empty`);
   }
 
+  console.log(`🔍 Parsing ${context}:`, content.slice(0, 200) + (content.length > 200 ? '...' : ''));
+
+  // Try direct JSON parse first
   try {
-    return JSON.parse(content);
-  } catch (e) {
-    const patterns = [
-      /```json\s*\n([\s\S]*?)\n```/,
-      /```\s*\n([\s\S]*?)\n```/,
-      /{[\s\S]*}/
-    ];
-    
-    for (const pattern of patterns) {
-      const match = content.match(pattern);
-      if (match) {
-        try {
-          const extracted = match[1] || match[0];
-          return JSON.parse(extracted);
-        } catch (parseError) {
-          continue;
-        }
+    const parsed = JSON.parse(content);
+    console.log(`✅ Direct JSON parse successful`);
+    return parsed;
+  } catch (directError) {
+    console.log(`⚠️ Direct parse failed, trying extraction patterns...`);
+  }
+
+  // Enhanced extraction patterns
+  const patterns = [
+    // JSON wrapped in markdown code blocks with language
+    /```json\s*\n([\s\S]*?)\n```/,
+    // JSON wrapped in plain code blocks
+    /```\s*\n([\s\S]*?)\n```/,
+    // JSON object (greedy match)
+    /({[\s\S]*})/,
+    // Attempt to find object after any prefix text
+    /(?:.*?)?({[\s\S]*})/
+  ];
+  
+  for (let i = 0; i < patterns.length; i++) {
+    const pattern = patterns[i];
+    const match = content.match(pattern);
+    if (match) {
+      const extracted = (match[1] || match[0]).trim();
+      console.log(`🔍 Pattern ${i + 1} matched, extracted: ${extracted.slice(0, 100)}...`);
+      
+      try {
+        const parsed = JSON.parse(extracted);
+        console.log(`✅ Successfully parsed with pattern ${i + 1}`);
+        return parsed;
+      } catch (parseError) {
+        console.log(`⚠️ Pattern ${i + 1} extraction failed:`, parseError.message);
+        continue;
       }
     }
-    
-    throw new Error(`Could not parse ${context} as JSON`);
   }
+  
+  // Last resort: try to extract findings from text
+  console.error(`❌ All parsing attempts failed for ${context}`);
+  console.error(`Raw content:`, content);
+  
+  throw new Error(`Could not parse ${context} as JSON. See logs for details.`);
 };
 
 type AnalysisMode = 'fault_diagnosis' | 'component_identify' | 'wiring_instruction' | 'installation_verify';

@@ -63,74 +63,80 @@ const VisualFaultRAGDisplay = ({
 
   return (
     <Card className="border-l-4" style={{ borderLeftColor: faultCode === 'C1' ? 'hsl(var(--destructive))' : faultCode === 'C2' ? '#f97316' : faultCode === 'C3' ? '#eab308' : '#3b82f6' }}>
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
+      <CardHeader className="pb-3 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex items-center gap-2 flex-wrap">
             <Badge className={getCodeColor(faultCode)}>
               {getCodeIcon(faultCode)}
               <span className="ml-1.5 font-bold">{faultCode}</span>
             </Badge>
             <CardTitle className="text-base sm:text-lg">RAG-Verified Classification</CardTitle>
           </div>
-          <Badge variant="outline" className="text-xs">
+          <Badge variant="outline" className="text-xs whitespace-nowrap">
             <CheckCircle2 className="h-3 w-3 mr-1 text-green-500" />
-            {(confidence * 100).toFixed(0)}%
+            {(confidence * 100).toFixed(0)}% confidence
           </Badge>
         </div>
-        <CardDescription className="text-xs sm:text-sm">
+        <CardDescription className="text-xs sm:text-sm leading-relaxed">
           {getCodeDescription(faultCode)}
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 sm:space-y-5">
         {verificationStatus && (
-          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-            <div className="flex items-center gap-2 text-sm text-green-700 dark:text-green-400">
-              <CheckCircle2 className="h-4 w-4" />
-              <span className="font-medium">{verificationStatus}</span>
+          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 sm:p-4">
+            <div className="flex items-start gap-2 text-sm text-green-700 dark:text-green-400">
+              <CheckCircle2 className="h-4 w-4 mt-0.5 flex-shrink-0" />
+              <span className="font-medium leading-relaxed">{verificationStatus}</span>
             </div>
           </div>
         )}
 
         <div className="space-y-2">
-          <h4 className="text-sm font-semibold text-foreground">Reasoning</h4>
-          <p className="text-sm text-muted-foreground leading-relaxed">{reasoning}</p>
+          <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+            <span className="text-elec-yellow">🔍</span>
+            AI Reasoning
+          </h4>
+          <p className="text-sm text-muted-foreground leading-relaxed pl-6">{reasoning}</p>
         </div>
 
         {gn3Guidance && gn3Guidance !== 'No specific GN3 guidance found' && (
-          <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3">
-            <h4 className="text-sm font-semibold text-blue-700 dark:text-blue-400 mb-1.5">
-              GN3 Guidance (Inspection & Testing)
+          <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3 sm:p-4 space-y-2">
+            <h4 className="text-sm font-semibold text-blue-700 dark:text-blue-400 flex items-center gap-2">
+              📖 GN3 Guidance (Inspection & Testing)
             </h4>
-            <p className="text-sm text-muted-foreground">{gn3Guidance}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">{gn3Guidance}</p>
           </div>
         )}
 
         {regulationReferences && regulationReferences.length > 0 && (
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full p-3 bg-muted/50 hover:bg-muted rounded-lg transition-colors">
-              <span className="text-sm font-semibold">
-                BS 7671 Regulation References ({regulationReferences.length})
+            <CollapsibleTrigger className="flex items-center justify-between w-full p-3 sm:p-4 bg-muted/50 hover:bg-muted rounded-lg transition-colors">
+              <span className="text-sm font-semibold flex items-center gap-2">
+                <span className="text-elec-yellow">⚡</span>
+                BS 7671 References ({regulationReferences.length})
               </span>
               <Badge variant="secondary" className="text-xs">
                 {isOpen ? 'Hide' : 'Show'}
               </Badge>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="mt-3 space-y-3">
               {regulationReferences.map((reg, idx) => (
-                <div key={idx} className="bg-card border border-border rounded-lg p-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge variant="outline" className="font-mono text-xs">
-                      Reg {reg.number}
+                <div key={idx} className="bg-card border border-border rounded-lg p-3 sm:p-4 space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <Badge variant="outline" className="font-mono text-xs w-fit">
+                      Regulation {reg.number}
                     </Badge>
-                    <Badge variant="secondary" className="text-xs">
-                      {(reg.similarity * 100).toFixed(0)}% match
+                    <Badge variant="secondary" className="text-xs w-fit">
+                      {(reg.similarity * 100).toFixed(0)}% relevance
                     </Badge>
                   </div>
-                  <h5 className="text-sm font-medium text-foreground mb-1.5">{reg.section}</h5>
-                  <p className="text-xs text-muted-foreground mb-2 leading-relaxed">{reg.content}</p>
-                  <div className="bg-amber-500/10 border border-amber-500/20 rounded p-2">
-                    <p className="text-xs text-amber-700 dark:text-amber-400">
-                      <strong>Why this matters:</strong> {reg.severity_justification}
+                  <div className="space-y-2">
+                    <h5 className="text-sm font-semibold text-foreground leading-snug">{reg.section}</h5>
+                    <p className="text-xs text-muted-foreground leading-relaxed border-l-2 border-muted pl-3">{reg.content}</p>
+                  </div>
+                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+                    <p className="text-xs text-amber-700 dark:text-amber-400 leading-relaxed">
+                      <strong className="font-semibold">Why this matters:</strong> {reg.severity_justification}
                     </p>
                   </div>
                 </div>
