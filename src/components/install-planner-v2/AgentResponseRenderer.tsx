@@ -47,17 +47,17 @@ const SectionRenderer = ({ section, agentId }: { section: ParsedSection; agentId
     
     case 'calculation':
       return (
-        <div className="px-4 py-3 bg-elec-card/50 border border-elec-yellow/20 rounded-lg">
-          <code className="text-sm text-elec-yellow font-mono">
+        <div className="px-4 py-3 bg-muted/30 border-l-2 border-elec-yellow/40 rounded">
+          <p className="text-sm font-medium text-foreground leading-relaxed">
             {section.content}
-          </code>
+          </p>
         </div>
       );
     
     case 'citation':
       return (
-        <div className="px-4 py-2 bg-amber-500/10 border-l-4 border-amber-500 rounded-r">
-          <p className="text-sm text-amber-200 font-medium">
+        <div className="px-4 py-2 border-l-2 border-muted-foreground/30 bg-muted/20 rounded-r">
+          <p className="text-sm text-muted-foreground italic">
             {section.content}
           </p>
         </div>

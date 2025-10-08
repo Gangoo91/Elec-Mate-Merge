@@ -3,10 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Download, RotateCcw, Lightbulb, MessageSquare, ChevronDown } from "lucide-react";
+import { Download, RotateCcw, Lightbulb, MessageSquare, ChevronDown, FileDown, Send, ExternalLink, Shield, ClipboardCheck } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { WhatsAppShareButton } from "./WhatsAppShareButton";
 import { AgentResponseRenderer } from "./AgentResponseRenderer";
+import { generateDesignerPDF, generateRAMSFromAgents, prepareTestSheetData } from "@/utils/agent-pdf-generator";
+import { toast } from "sonner";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -70,6 +72,80 @@ export const EnhancedResultsPage = ({
       }
       return next;
     });
+  };
+
+  const getAgentResponse = (agentId: string): string => {
+    const agentMessages = messages.filter(m => m.agentName === agentId);
+    return agentMessages[agentMessages.length - 1]?.content || '';
+  };
+
+  const handleDownloadDesignPDF = () => {
+    try {
+      const designerResponse = getAgentResponse('designer');
+      const pdf = generateDesignerPDF(designerResponse, projectName, "ElecMate User");
+      pdf.save(`${projectName}_Cable_Design.pdf`);
+      toast.success("Cable design PDF downloaded");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to generate PDF");
+    }
+  };
+
+  const handleDownloadRAMS = () => {
+    try {
+      const hsResponse = getAgentResponse('health-safety');
+      const installerResponse = getAgentResponse('installer');
+      const pdfDataUri = generateRAMSFromAgents(
+        hsResponse,
+        installerResponse,
+        projectName,
+        "Project Site",
+        "Site Manager",
+        "ElecMate User"
+      );
+      
+      // Convert data URI to downloadable link
+      const link = document.createElement('a');
+      link.href = pdfDataUri;
+      link.download = `${projectName}_RAMS.pdf`;
+      link.click();
+      
+      toast.success("RAMS document downloaded");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to generate RAMS document");
+    }
+  };
+
+  const handleSendToQuoteHub = () => {
+    toast.info("Quote Hub integration coming soon", {
+      description: "Cost data will be sent to your Quote Hub for further editing"
+    });
+    // Future: navigate to quote hub with pre-filled data
+  };
+
+  const handleSendToTestSheet = () => {
+    try {
+      const commissioningResponse = getAgentResponse('commissioning');
+      const testData = prepareTestSheetData(commissioningResponse, projectName, "Project Site");
+      
+      // For now, download as JSON
+      const dataStr = JSON.stringify(testData, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${projectName}_TestSheet.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+      
+      toast.info("Test sheet data prepared", {
+        description: "Integration with Inspection & Testing app coming soon"
+      });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to prepare test sheet data");
+    }
   };
 
   return (
@@ -241,12 +317,74 @@ export const EnhancedResultsPage = ({
                               agentId={agentId}
                             />
                             
+                            {/* Agent-Specific Action Buttons */}
+                            <div className="flex flex-col sm:flex-row gap-2 mt-4 pt-4 border-t border-border">
+                              {agentId === 'designer' && (
+                                <Button
+                                  variant="default"
+                                  size="default"
+                                  onClick={handleDownloadDesignPDF}
+                                  className="flex-1 min-h-[44px]"
+                                >
+                                  <FileDown className="w-4 h-4 mr-2" />
+                                  Download Cable Design PDF
+                                </Button>
+                              )}
+                              
+                              {agentId === 'cost-engineer' && (
+                                <>
+                                  <Button
+                                    variant="default"
+                                    size="default"
+                                    onClick={handleSendToQuoteHub}
+                                    className="flex-1 min-h-[44px]"
+                                  >
+                                    <Send className="w-4 h-4 mr-2" />
+                                    Send to Quote Hub
+                                  </Button>
+                                  <Button
+                                    variant="outline"
+                                    size="default"
+                                    onClick={() => window.open('/quote-hub', '_blank')}
+                                    className="flex-1 min-h-[44px]"
+                                  >
+                                    <ExternalLink className="w-4 h-4 mr-2" />
+                                    Open Quote Hub
+                                  </Button>
+                                </>
+                              )}
+                              
+                              {(agentId === 'installer' || agentId === 'health-safety') && (
+                                <Button
+                                  variant="default"
+                                  size="default"
+                                  onClick={handleDownloadRAMS}
+                                  className="flex-1 min-h-[44px]"
+                                >
+                                  <Shield className="w-4 h-4 mr-2" />
+                                  Download RAMS PDF
+                                </Button>
+                              )}
+                              
+                              {agentId === 'commissioning' && (
+                                <Button
+                                  variant="default"
+                                  size="default"
+                                  onClick={handleSendToTestSheet}
+                                  className="flex-1 min-h-[44px]"
+                                >
+                                  <ClipboardCheck className="w-4 h-4 mr-2" />
+                                  Send to Test Sheet
+                                </Button>
+                              )}
+                            </div>
+                            
                             {onReEngageAgent && (
                               <Button
                                 variant="outline"
                                 size="default"
                                 onClick={() => onReEngageAgent(agentId)}
-                                className="w-full min-h-[44px] mt-4"
+                                className="w-full min-h-[44px]"
                               >
                                 <MessageSquare className="w-4 h-4 mr-2" />
                                 Ask {agent?.name} a Follow-up
