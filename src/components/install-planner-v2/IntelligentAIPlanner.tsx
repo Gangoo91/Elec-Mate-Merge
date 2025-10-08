@@ -104,8 +104,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   
   const { sessionId, isSaving, lastSaved } = useConversationPersistence(messages, planData, activeAgents);
 
-  // Check if consultation has meaningful content
-  const hasMeaningfulContent = messages.length > 3;
+  // Check if consultation has meaningful content - show results button after first agent reply
+  const hasMeaningfulContent = messages.length >= 2 && messages.some(m => m.role === 'assistant' && m.agentName);
 
   // Auto-populate pricing embeddings if empty
   useEffect(() => {
@@ -899,52 +899,56 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       {/* Input Area - WhatsApp style with Export Actions */}
       <div className="flex-none bg-elec-dark border-t border-border/30 px-5 py-4">
         <div className="space-y-3">
-          {/* Export Actions - Only show when circuits exist */}
-          {planData.circuits && planData.circuits.length > 0 && (
+          {/* Export Actions & Results - Show after first agent reply */}
+          {hasMeaningfulContent && (
             <div className="flex flex-wrap gap-2 justify-center pb-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleExportPackage}
-                disabled={isExporting || messages.length < 5}
-                className="text-xs h-9 bg-white/5 hover:bg-white/10 border-white/10 text-white"
-              >
-                {isExporting ? (
-                  <>
-                    <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-                    Exporting...
-                  </>
-                ) : (
-                  <>
+              {planData.circuits && planData.circuits.length > 0 && (
+                <>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleExportPackage}
+                    disabled={isExporting || messages.length < 5}
+                    className="text-xs h-9 bg-white/5 hover:bg-white/10 border-white/10 text-white"
+                  >
+                    {isExporting ? (
+                      <>
+                        <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                        Exporting...
+                      </>
+                    ) : (
+                      <>
+                        <FileDown className="h-3 w-3 mr-1" />
+                        Export Package
+                      </>
+                    )}
+                  </Button>
+                  <Button 
+                    variant="default" 
+                    size="sm" 
+                    onClick={handleCompleteProjectExport}
+                    disabled={isExporting}
+                    className="text-xs h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
+                  >
                     <FileDown className="h-3 w-3 mr-1" />
-                    Export Package
-                  </>
-                )}
-              </Button>
-              <Button 
-                variant="default" 
-                size="sm" 
-                onClick={handleCompleteProjectExport}
-                disabled={isExporting}
-                className="text-xs h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
-              >
-                <FileDown className="h-3 w-3 mr-1" />
-                {isExporting ? "Exporting..." : "Export Complete"}
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleExportToEIC}
-                disabled={isExporting}
-                className="text-xs h-9 bg-elec-yellow/10 hover:bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow"
-              >
-                <ClipboardCheck className="h-3 w-3 mr-1" />
-                Testing App
-              </Button>
+                    {isExporting ? "Exporting..." : "Export Complete"}
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleExportToEIC}
+                    disabled={isExporting}
+                    className="text-xs h-9 bg-elec-yellow/10 hover:bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow"
+                  >
+                    <ClipboardCheck className="h-3 w-3 mr-1" />
+                    Testing App
+                  </Button>
+                </>
+              )}
               <Button 
                 onClick={handleViewResults}
                 size="sm"
-                className="text-xs h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold shadow-lg shadow-elec-yellow/20 animate-pulse"
+                className="text-xs h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold shadow-lg shadow-elec-yellow/20"
               >
                 <CheckCircle2 className="h-3 w-3 mr-1" />
                 View Results

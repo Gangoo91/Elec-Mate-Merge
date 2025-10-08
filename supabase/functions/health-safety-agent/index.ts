@@ -16,7 +16,7 @@ serve(async (req) => {
   }
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 90000); // INCREASED to 90s for deep RAG queries
+  const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
 
   try {
     const { messages, currentDesign, context } = await req.json() as HealthSafetyAgentRequest;
@@ -60,12 +60,12 @@ serve(async (req) => {
       const queryEmbedding = embeddingData.data[0].embedding;
       console.log('✅ Embedding generated successfully');
 
-      // Query RAG database using search_health_safety RPC
+      // Query RAG database (optimized for speed)
       const ragStartTime = Date.now();
       const { data: ragResults, error: ragError } = await supabase.rpc('search_health_safety', {
         query_embedding: queryEmbedding,
-        match_threshold: 0.7,
-        match_count: 8
+        match_threshold: 0.75,
+        match_count: 5
       });
 
       const ragDuration = Date.now() - ragStartTime;
@@ -169,7 +169,7 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
           response_format: { type: "json_object" }
         };
         
-        console.log('📤 Gemini Request:', JSON.stringify({ model: requestBody.model, messageCount: requestBody.messages.length }));
+        console.log('📤 Lovable AI Request:', JSON.stringify({ model: requestBody.model, messageCount: requestBody.messages.length }));
         
         response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
           method: 'POST',
@@ -183,32 +183,48 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
 
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('❌ Gemini API error:', { status: response.status, error: errorText });
-          throw new Error(`Gemini API error: ${response.status}`);
+          console.error('❌ Lovable AI error:', { status: response.status, error: errorText });
+          throw new Error(`Lovable AI error: ${response.status}`);
         }
 
         const rawResponse = await response.text();
-        console.log('📥 Gemini Raw Response Length:', rawResponse.length);
+        console.log('📥 Lovable AI Raw Response Length:', rawResponse.length);
         
         try {
           data = JSON.parse(rawResponse);
-          content = data.choices[0]?.message?.content;
+          let rawContent = data.choices?.[0]?.message?.content || null;
+          
+          // Harden JSON parsing - strip markdown fences and extract first valid object
+          if (rawContent) {
+            rawContent = rawContent.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+            const jsonMatch = rawContent.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+              rawContent = jsonMatch[0];
+            }
+            try {
+              JSON.parse(rawContent);
+              content = rawContent;
+            } catch {
+              console.warn('⚠️ Content is not valid JSON, using as-is');
+              content = rawContent;
+            }
+          }
         } catch (parseError) {
           console.error('❌ JSON Parse Error:', parseError);
           console.error('Raw response:', rawResponse.substring(0, 500));
-          throw new Error('Failed to parse Gemini response');
+          throw new Error('Failed to parse Lovable AI response');
         }
 
         if (content) {
-          console.log(`✅ Gemini responded in ${Date.now() - openaiStartTime}ms`);
+          console.log(`✅ Lovable AI responded in ${Date.now() - openaiStartTime}ms`);
           console.log(`✅ H&S Agent: Got response on attempt ${retries + 1}`);
-          break; // Success!
+          break;
         }
 
-        console.warn(`⚠️ Empty response from Gemini (attempt ${retries + 1}/${maxRetries + 1})`);
+        console.warn(`⚠️ Empty response from Lovable AI (attempt ${retries + 1}/${maxRetries + 1})`);
         retries++;
         if (retries <= maxRetries) {
-          await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s before retry
+          await new Promise(resolve => setTimeout(resolve, 1000));
         }
       } catch (error) {
         if (retries === maxRetries) throw error;
@@ -219,26 +235,28 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
     }
 
     if (!content) {
-      console.error('❌ No content received from Gemini after all retries');
+      console.error('❌ No content received from Lovable AI after all retries');
       throw new Error('No response from AI after 3 attempts');
     }
 
     let parsedResponse;
     try {
       parsedResponse = JSON.parse(content);
-      console.log('✅ Successfully parsed Gemini response');
+      console.log('✅ Successfully parsed Lovable AI response');
     } catch (parseError) {
       console.error('❌ Failed to parse final content:', parseError);
       console.error('Content:', content.substring(0, 500));
       
-      // Fallback response if parsing fails
+      // FALLBACK: Return structured error with minimal safe defaults
       parsedResponse = {
-        response: "Safety assessment completed with limited detail. Standard electrical safety precautions apply.",
-        riskAssessment: { hazards: [] },
-        requiredPPE: ["Safety boots", "Hard hat", "Hi-vis vest"],
-        methodStatement: ["Isolate supply", "Test dead", "Lock off"],
-        emergencyProcedures: ["Call 999 in emergency"],
-        confidence: 0.5
+        response: "Error generating full H&S assessment. Apply BS 7671 safe isolation procedures (Reg 14).",
+        riskAssessment: {
+          hazards: [{ hazard: 'Electrical shock', likelihood: 'MEDIUM', severity: 'HIGH', riskRating: 'HIGH' }]
+        },
+        requiredPPE: ["Safety boots", "Safety glasses", "Insulated gloves"],
+        methodStatement: ["Isolation and lock-off", "Voltage testing", "Test dead before work"],
+        emergencyProcedures: ["Call 999 in emergency", "Isolate supply if shock occurs"],
+        confidence: 0.4
       };
     }
 

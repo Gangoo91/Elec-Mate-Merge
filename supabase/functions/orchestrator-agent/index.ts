@@ -513,30 +513,65 @@ Now it's YOUR turn. Build on what they've said with your specialty. You can see 
   return fullMessages;
 }
 
-// NEW: Build structured knowledge store with FULL data
+// COMPACT CONTEXT: Build lightweight summaries for speed
 function buildStructuredContext(previousOutputs: AgentOutput[]): string {
-  let context = '';
+  const summaries: string[] = [];
   
   for (const output of previousOutputs) {
-    const agentTitle = output.agent.toUpperCase();
-    context += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-    context += `${getAgentEmoji(output.agent)} ${agentTitle}'S CONTRIBUTION:\n`;
-    context += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    const agent = output.agent;
+    let summary = `${getAgentEmoji(agent)} ${agent.toUpperCase()}:\n`;
     
-    // Full response (not truncated)
-    context += output.response + '\n\n';
-    
-    // UPGRADE: Add DEEP structured data extracts
-    if (output.structuredData) {
-      context += '**STRUCTURED DATA FROM ' + output.agent.toUpperCase() + ':**\n';
-      context += JSON.stringify(output.structuredData, null, 2) + '\n\n';
+    // Extract only essential structured data (no full responses)
+    if (agent === 'designer') {
+      const ib = extractValue(output.response, /Ib.*?(\d+\.?\d*)\s*A/i);
+      const in_ = extractValue(output.response, /In.*?(\d+\.?\d*)\s*A/i);
+      const iz = extractValue(output.response, /Iz.*?(\d+\.?\d*)\s*A/i);
+      const vd = extractValue(output.response, /voltage drop.*?(\d+\.?\d*)\s*[V%]/i);
+      const cable = extractValue(output.response, /(\d+(?:\.\d+)?)\s*mm²/i);
+      const device = extractValue(output.response, /(\d+A\s*Type\s*[ABC])/i);
+      
+      if (ib) summary += `  Ib=${ib}A`;
+      if (in_) summary += `, In=${in_}A`;
+      if (iz) summary += `, Iz=${iz}A`;
+      if (vd) summary += `\n  VD=${vd}`;
+      if (cable) summary += `, Cable=${cable}mm²`;
+      if (device) summary += `\n  Protection=${device}`;
+    } else if (agent === 'installer') {
+      const method = extractValue(output.response, /(clipped direct|buried|conduit|trunking)/i);
+      const reg = extractValue(output.response, /Reg(?:ulation)?\s*(\d{3}(?:\.\d+)?)/i);
+      
+      if (method) summary += `  Method=${method}`;
+      if (reg) summary += `, Cites Reg ${reg}`;
+    } else if (agent === 'cost-engineer') {
+      const materials = extractValue(output.response, /materials?[:\s]+£?([\d,]+)/i);
+      const labour = extractValue(output.response, /labour[:\s]+£?([\d,]+)/i);
+      const total = extractValue(output.response, /total[:\s]+£?([\d,]+)/i);
+      
+      if (materials) summary += `  Materials=£${materials}`;
+      if (labour) summary += `, Labour=£${labour}`;
+      if (total) summary += `\n  Total=£${total}`;
+    } else if (agent === 'health-safety') {
+      const hazards = extractValue(output.response, /(\d+)\s*hazards?/i) || '2-3';
+      const controls = extractValue(output.response, /(\d+)\s*controls?/i) || '3-4';
+      
+      summary += `  ${hazards} hazards identified, ${controls} controls`;
     }
     
-    if (output.reasoning && output.reasoning.length > 0) {
-      context += '**REASONING CHAIN:**\n';
-      output.reasoning.forEach((r: string) => context += `  • ${r}\n`);
-      context += '\n';
+    // Limit to 200 chars max per agent
+    if (summary.length > 250) {
+      summary = summary.substring(0, 247) + '...';
     }
+    
+    summaries.push(summary);
+  }
+  
+  return summaries.join('\n\n');
+}
+
+// Helper to extract values with regex
+function extractValue(text: string, regex: RegExp): string | null {
+  const match = text.match(regex);
+  return match ? match[1] : null;
     
     if (output.agent === 'designer') {
       // Extract BS 7671 calculations
