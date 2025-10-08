@@ -1,18 +1,20 @@
 import React, { useState, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { 
   Camera, 
   Upload, 
   X, 
   Loader, 
-  Download,
   RefreshCw,
   Sparkles,
   ArrowLeft,
   Plus,
   CheckCircle2,
-  Zap,
-  Eye,
-  Lightbulb
+  Lightbulb,
+  MessageSquare,
+  AlertTriangle,
+  ShieldAlert,
+  AlertCircle
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import ComponentIdentificationResults from "./ComponentIdentificationResults";
@@ -72,12 +74,15 @@ interface AnalysisResult {
 }
 
 const VisualAnalysisRedesigned = () => {
+  const navigate = useNavigate();
   const [selectedMode, setSelectedMode] = useState<AnalysisMode | null>(null);
   const [images, setImages] = useState<File[]>([]);
   const [primaryImageIndex, setPrimaryImageIndex] = useState(0);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
+  const [analysisProgress, setAnalysisProgress] = useState(0);
+  const abortControllerRef = useRef<AbortController | null>(null);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -239,6 +244,20 @@ const VisualAnalysisRedesigned = () => {
     return urlData.publicUrl;
   };
 
+  const cancelAnalysis = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsAnalyzing(false);
+    setAnalysisProgress(0);
+    toast({
+      title: "Analysis cancelled",
+      description: "Visual analysis has been stopped",
+      variant: "default"
+    });
+  };
+
   const handleAnalysis = async () => {
     if (images.length === 0) {
       toast({
@@ -251,10 +270,14 @@ const VisualAnalysisRedesigned = () => {
 
     setIsAnalyzing(true);
     setAnalysisResult(null);
+    setAnalysisProgress(10);
+    abortControllerRef.current = new AbortController();
 
     try {
+      setAnalysisProgress(20);
       const primaryImageUrl = await uploadImageToSupabase(images[primaryImageIndex]);
       
+      setAnalysisProgress(40);
       const additionalImageUrls = await Promise.all(
         images.filter((_, index) => index !== primaryImageIndex)
           .map(image => uploadImageToSupabase(image))
@@ -274,6 +297,7 @@ const VisualAnalysisRedesigned = () => {
         }
       };
 
+      setAnalysisProgress(60);
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: { 
           primary_image: primaryImageUrl,
@@ -289,6 +313,12 @@ const VisualAnalysisRedesigned = () => {
         },
       });
       
+      if (abortControllerRef.current?.signal.aborted) {
+        return;
+      }
+
+      setAnalysisProgress(90);
+      
       if (error) {
         throw new Error(error.message || 'Error connecting to the Visual Analysis service');
       }
@@ -300,6 +330,7 @@ const VisualAnalysisRedesigned = () => {
       const result: AnalysisResult = data.analysis;
       setAnalysisResult(result);
       setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
+      setAnalysisProgress(100);
       
       toast({
         title: "Analysis complete",
@@ -307,84 +338,44 @@ const VisualAnalysisRedesigned = () => {
         variant: "success"
       });
     } catch (error) {
+      if (abortControllerRef.current?.signal.aborted) {
+        return;
+      }
+      
       console.error('Analysis Error:', error);
       
-      const isRagError = error instanceof Error && error.message.includes('RAG');
-      
       toast({
-        title: isRagError ? "Analysis completed (RAG unavailable)" : "Analysis failed",
+        title: "Analysis failed",
         description: error instanceof Error 
           ? error.message 
-          : "Unable to analyse images. Please check your images and try again.",
-        variant: isRagError ? "default" : "destructive",
+          : "Unable to analyse images. Please try again.",
+        variant: "destructive",
         duration: 6000
       });
-      
-      if (!isRagError) {
-        setImages([]);
-        setPrimaryImageIndex(0);
-      }
     } finally {
-      setIsAnalyzing(false);
+      if (!abortControllerRef.current?.signal.aborted) {
+        setIsAnalyzing(false);
+        setAnalysisProgress(0);
+      }
+      abortControllerRef.current = null;
     }
   };
 
-  const exportReport = async () => {
-    if (!analysisResult) return;
+  const handleDiscussWithInspector = () => {
+    const findings = analysisResult?.findings || [];
+    const context = {
+      analysisType: 'visual_inspection',
+      findings: findings.map(f => ({
+        issue: f.description,
+        code: f.eicr_code,
+        clauses: f.bs7671_clauses
+      })),
+      imageCount: uploadedImageUrls.length
+    };
     
-    try {
-      const jsPDF = (await import('jspdf')).default;
-      const autoTable = (await import('jspdf-autotable')).default;
-      
-      const doc = new jsPDF();
-      
-      doc.setFontSize(20);
-      doc.text('Visual Fault Analysis Report', 20, 20);
-      doc.setFontSize(12);
-      doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')}`, 20, 30);
-      doc.text(`Safety Rating: ${analysisResult.compliance_summary.safety_rating}/10`, 20, 40);
-      
-      doc.setFontSize(14);
-      doc.text('Summary', 20, 55);
-      doc.setFontSize(10);
-      const splitSummary = doc.splitTextToSize(analysisResult.summary, 170);
-      doc.text(splitSummary, 20, 65);
-      
-      let yPosition = 65 + (splitSummary.length * 5) + 10;
-      
-      doc.setFontSize(14);
-      doc.text('Findings', 20, yPosition);
-      yPosition += 10;
-      
-      const issueData = analysisResult.findings.map(finding => [
-        finding.description,
-        finding.eicr_code,
-        `${Math.round(finding.confidence * 100)}%`,
-        finding.bs7671_clauses.join(', ') || 'N/A'
-      ]);
-      
-      autoTable(doc, {
-        head: [['Finding', 'EICR Code', 'Confidence', 'BS 7671 Clauses']],
-        body: issueData,
-        startY: yPosition,
-        margin: { left: 20 },
-        styles: { fontSize: 8 }
-      });
-      
-      doc.save(`visual-analysis-${Date.now()}.pdf`);
-      
-      toast({
-        title: "Report exported",
-        description: "PDF saved to downloads",
-        variant: "success"
-      });
-    } catch (error) {
-      toast({
-        title: "Export failed",
-        description: "Unable to generate PDF report",
-        variant: "destructive",
-      });
-    }
+    navigate('/electrician-tools/ai-tooling/assistant', { 
+      state: { visualAnalysisContext: context }
+    });
   };
 
   const resetAnalysis = () => {
@@ -436,66 +427,100 @@ const VisualAnalysisRedesigned = () => {
     }
   };
 
+  const getSeverityIcon = (code: string) => {
+    switch (code) {
+      case 'C1': return <ShieldAlert className="h-4 w-4" />;
+      case 'C2': return <AlertTriangle className="h-4 w-4" />;
+      case 'C3': return <AlertCircle className="h-4 w-4" />;
+      default: return <CheckCircle2 className="h-4 w-4" />;
+    }
+  };
+
+  const getSeverityColor = (code: string) => {
+    switch (code) {
+      case 'C1': return 'bg-red-500/10 border-red-500/20 text-red-700 dark:text-red-400';
+      case 'C2': return 'bg-orange-500/10 border-orange-500/20 text-orange-700 dark:text-orange-400';
+      case 'C3': return 'bg-yellow-500/10 border-yellow-500/20 text-yellow-700 dark:text-yellow-400';
+      default: return 'bg-green-500/10 border-green-500/20 text-green-700 dark:text-green-400';
+    }
+  };
+
   return (
-    <div className="space-y-4 sm:space-y-6 relative">
-      {/* Loading Overlay */}
-      {isAnalyzing && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center animate-fade-in">
-          <Card className="p-6 max-w-sm mx-4 bg-card border-border">
-            <div className="flex flex-col items-center gap-4">
-              <div className="animate-spin rounded-full h-12 w-12 border-4 border-elec-yellow border-t-transparent" />
-              <div className="text-center space-y-2">
-                <h3 className="font-semibold text-lg text-foreground">Analysing Images</h3>
-                <p className="text-sm text-muted-foreground">
-                  Stage 1: Scanning components...<br/>
-                  Stage 2: Verifying against BS 7671...<br/>
-                  Stage 3: Generating report...
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
-      )}
-      
+    <div className="space-y-3 sm:space-y-4 pb-20 sm:pb-6">
       {/* Compact Header */}
       <Card className="bg-gradient-to-br from-elec-card to-elec-grey/50 border-border">
-        <CardHeader className="p-4 sm:p-6 pb-3 sm:pb-4">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-              <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />
+        <CardHeader className="p-3 sm:p-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <Sparkles className="h-5 w-5 text-elec-yellow flex-shrink-0" />
               <div className="min-w-0 flex-1">
-                <CardTitle className="text-base sm:text-lg text-foreground leading-tight break-words">
+                <CardTitle className="text-sm sm:text-base text-foreground leading-tight">
                   {getModeTitle()}
                 </CardTitle>
-                <CardDescription className="text-xs sm:text-sm mt-0.5">
-                  {getModeDescription()}
-                </CardDescription>
               </div>
             </div>
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
               onClick={handleBackToModeSelection}
-              className="text-muted-foreground hover:text-foreground flex-shrink-0 h-9 px-3"
+              className="h-8 px-2"
             >
-              <ArrowLeft className="h-4 w-4 sm:mr-1" />
-              <span className="hidden sm:inline">Change</span>
+              <ArrowLeft className="h-4 w-4" />
             </Button>
           </div>
         </CardHeader>
       </Card>
 
+      {/* Inline Loading State */}
+      {isAnalyzing && (
+        <Card className="bg-card border-border animate-fade-in">
+          <CardContent className="p-4 sm:p-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Loader className="h-5 w-5 animate-spin text-elec-yellow" />
+                  <div>
+                    <h3 className="font-semibold text-sm sm:text-base">Analysing Installation</h3>
+                    <p className="text-xs text-muted-foreground">Verifying against BS 7671...</p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={cancelAnalysis}
+                  className="h-8 w-8 text-destructive hover:bg-destructive/10 flex-shrink-0"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+              <div className="space-y-2">
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-elec-yellow transition-all duration-500 ease-out"
+                    style={{ width: `${analysisProgress}%` }}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground text-center">
+                  {analysisProgress < 30 && "Uploading images..."}
+                  {analysisProgress >= 30 && analysisProgress < 70 && "Scanning components..."}
+                  {analysisProgress >= 70 && "Generating report..."}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Main Content */}
-      {!analysisResult ? (
+      {!analysisResult && !isAnalyzing ? (
         <Card className="bg-card border-border">
-          <CardContent className="p-4 sm:p-6 space-y-4">
-            {/* Camera Button - Prominent on mobile */}
+          <CardContent className="p-3 sm:p-6 space-y-3 sm:space-y-4">
+            {/* Camera Button */}
             <Button 
               onClick={isCameraActive ? captureImage : startCamera}
-              className="w-full h-12 sm:h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base shadow-lg shadow-elec-yellow/20"
-              size="lg"
+              className="w-full h-11 sm:h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
             >
-              <Camera className="h-5 w-5 mr-2" />
+              <Camera className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               {isCameraActive ? 'Capture Photo' : 'Use Camera'}
             </Button>
 
@@ -503,7 +528,7 @@ const VisualAnalysisRedesigned = () => {
               <Button 
                 variant="outline" 
                 onClick={stopCamera}
-                className="w-full h-11"
+                className="w-full h-9"
               >
                 <X className="h-4 w-4 mr-2" />
                 Close Camera
@@ -532,9 +557,9 @@ const VisualAnalysisRedesigned = () => {
               </div>
             )}
             
-            {/* Upload Zone - Compact & Inviting */}
+            {/* Upload Zone */}
             <div 
-              className="relative border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center hover:border-elec-yellow/60 transition-all duration-300 cursor-pointer group bg-gradient-to-br from-elec-yellow/5 to-transparent"
+              className="border-2 border-dashed border-border rounded-lg p-4 sm:p-6 text-center hover:border-elec-yellow/60 transition-colors cursor-pointer group"
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
               onClick={() => fileInputRef.current?.click()}
@@ -547,88 +572,62 @@ const VisualAnalysisRedesigned = () => {
                 onChange={(e) => handleFileSelect(e.target.files)}
                 className="hidden"
               />
-              <Upload className="h-8 w-8 mx-auto mb-3 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
-              <p className="text-sm sm:text-base font-semibold text-foreground mb-1">
-                Drag & drop images here
-              </p>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                or tap to browse files
+              <Upload className="h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-2 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
+              <p className="text-xs sm:text-sm font-medium text-foreground">
+                Tap to upload images
               </p>
             </div>
             
-            {/* Tips Section */}
-            <div className="bg-elec-yellow/5 border-l-4 border-elec-yellow rounded-lg p-3 sm:p-4">
-              <div className="flex items-start gap-2 mb-2">
-                <Lightbulb className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                <h4 className="text-xs sm:text-sm font-semibold text-foreground">Tips for Best Results</h4>
-              </div>
-              <ul className="space-y-1 text-xs sm:text-sm text-muted-foreground ml-6">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Good lighting improves accuracy</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Get close to components for detail</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  <span>Multiple angles recommended</span>
-                </li>
-              </ul>
-            </div>
             
-            {/* Image Gallery - Mobile Optimized */}
+            {/* Image Gallery */}
             {images.length > 0 && (
-              <div className="space-y-3 sm:space-y-4 animate-fade-in">
+              <div className="space-y-2 animate-fade-in">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm sm:text-base font-semibold text-foreground">
-                    Selected Images ({images.length})
-                  </h3>
+                  <p className="text-xs sm:text-sm font-medium text-foreground">
+                    {images.length} image{images.length > 1 ? 's' : ''}
+                  </p>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => fileInputRef.current?.click()}
-                    className="h-8 sm:h-9"
+                    className="h-7 text-xs"
                   >
-                    <Plus className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                    <span className="text-xs sm:text-sm">Add More</span>
+                    <Plus className="h-3 w-3 mr-1" />
+                    Add
                   </Button>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+                <div className="grid grid-cols-3 gap-2">
                   {images.map((image, index) => (
                     <div 
                       key={index} 
-                      className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-200 active:scale-95 sm:hover:scale-105 ${
+                      className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all ${
                         index === primaryImageIndex 
-                          ? 'border-elec-yellow shadow-lg shadow-elec-yellow/20' 
-                          : 'border-border hover:border-elec-yellow/50'
+                          ? 'border-elec-yellow' 
+                          : 'border-border'
                       }`}
                       onClick={() => setPrimaryImageIndex(index)}
                     >
-                      <div className="aspect-video w-full">
+                      <div className="aspect-square w-full">
                         <img
                           src={URL.createObjectURL(image)}
                           alt={`Upload ${index + 1}`}
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                       <Button
                         size="icon"
                         variant="destructive"
-                        className="absolute top-1.5 right-1.5 h-7 w-7 sm:h-8 sm:w-8 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
                         onClick={(e) => {
                           e.stopPropagation();
                           removeImage(index);
                         }}
                       >
-                        <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <X className="h-3 w-3" />
                       </Button>
                       {index === primaryImageIndex && (
-                        <div className="absolute bottom-1.5 left-1.5 sm:bottom-2 sm:left-2">
-                          <Badge className="bg-elec-yellow text-black font-semibold gap-1 text-xs px-2 py-0.5">
-                            <CheckCircle2 className="h-3 w-3" />
+                        <div className="absolute bottom-1 left-1">
+                          <Badge className="bg-elec-yellow text-black text-xs px-1.5 py-0">
                             Primary
                           </Badge>
                         </div>
@@ -636,72 +635,75 @@ const VisualAnalysisRedesigned = () => {
                     </div>
                   ))}
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground text-center">
-                  Tap an image to set as primary
-                </p>
-              </div>
-            )}
-
-            {/* Analyse Button - Sticky on mobile */}
-            {images.length > 0 && (
-              <div className="flex justify-center pt-2 sm:pt-4">
-                <Button 
-                  onClick={handleAnalysis}
-                  disabled={isAnalyzing}
-                  size="lg"
-                  className="w-full h-14 sm:h-16 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm sm:text-base shadow-lg shadow-elec-yellow/20 transition-all"
-                >
-                  {isAnalyzing ? (
-                    <>
-                      <Loader className="h-5 w-5 mr-2 animate-spin" />
-                      <span className="truncate">Analysing Installation...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="h-5 w-5 mr-2 flex-shrink-0" />
-                      <span>Analyse Installation</span>
-                    </>
-                  )}
-                </Button>
               </div>
             )}
           </CardContent>
         </Card>
-      ) : (
-        <div className="space-y-6">
-          {/* Results Header Card */}
-          <Card className="bg-card border-border">
-            <CardHeader>
-              <div className="flex items-center justify-between flex-wrap gap-3">
-                <div>
-                  <CardTitle className="text-foreground">Analysis Results</CardTitle>
-                  <CardDescription>
-                    {selectedMode === 'component_identify' ? 'Component identification' : 'BS 7671 compliance findings'}
-                  </CardDescription>
-                </div>
-                <div className="flex gap-2 flex-wrap">
-                  <Button variant="outline" size="sm" onClick={resetAnalysis}>
-                    <RefreshCw className="h-4 w-4 mr-2" />
-                    New Analysis
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-          </Card>
+      ) : null}
 
-          {/* RAG Verification Notice */}
-          {analysisResult.rag_verified && analysisResult.verification_note && (
-            <Card className="bg-green-500/5 border-green-500/20">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
-                  <CheckCircle2 className="h-5 w-5" />
-                  <p className="text-sm font-medium">{analysisResult.verification_note}</p>
-                </div>
-              </CardContent>
-            </Card>
+      {/* Analyse Button - Fixed at bottom on mobile */}
+      {images.length > 0 && !isAnalyzing && !analysisResult && (
+        <div className="fixed bottom-0 left-0 right-0 p-3 bg-elec-grey border-t border-border sm:relative sm:border-0 sm:bg-transparent sm:p-0 z-40">
+          <Button 
+            onClick={handleAnalysis}
+            size="lg"
+            className="w-full h-12 sm:h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold shadow-lg"
+          >
+            <Sparkles className="h-5 w-5 mr-2" />
+            Analyse Installation
+          </Button>
+        </div>
+      )}
+
+      {/* Results Section */}
+      {analysisResult && (
+        <div className="space-y-3 sm:space-y-4">
+          {/* Findings */}
+          {selectedMode === 'fault_diagnosis' && analysisResult.findings && analysisResult.findings.length > 0 && (
+            <div className="space-y-2">
+              {analysisResult.findings.map((finding, index) => (
+                <Card key={index} className={`border-l-4 ${getSeverityColor(finding.eicr_code)}`}>
+                  <CardContent className="p-3 sm:p-4">
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-2">
+                        <div className={`p-1.5 rounded ${getSeverityColor(finding.eicr_code)}`}>
+                          {getSeverityIcon(finding.eicr_code)}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <Badge variant="outline" className="font-mono text-xs">
+                              {finding.eicr_code}
+                            </Badge>
+                            <span className="text-xs text-muted-foreground">
+                              {Math.round(finding.confidence * 100)}% confidence
+                            </span>
+                          </div>
+                          <p className="text-sm font-medium text-foreground">{finding.description}</p>
+                          {finding.bs7671_clauses && finding.bs7671_clauses.length > 0 && (
+                            <p className="text-xs text-muted-foreground mt-1">
+                              BS 7671: {finding.bs7671_clauses.join(', ')}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      {finding.fix_guidance && (
+                        <div className="pl-9 text-xs text-muted-foreground border-l-2 border-border ml-2 pl-3">
+                          {finding.fix_guidance}
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           )}
 
-          {/* Wiring Schematic Display (for wiring_instruction mode) */}
+          {/* Component Identification Results */}
+          {selectedMode === 'component_identify' && (
+            <ComponentIdentificationResults analysisResult={analysisResult} />
+          )}
+
+          {/* Wiring Schematic */}
           {selectedMode === 'wiring_instruction' && analysisResult.wiring_schematic && (
             <WiringSchematicDisplay 
               schematicSvg={analysisResult.wiring_schematic.schematic_svg}
@@ -715,15 +717,34 @@ const VisualAnalysisRedesigned = () => {
             />
           )}
 
-          {/* Results Component - Conditional based on mode */}
-          {selectedMode === 'component_identify' ? (
-            <ComponentIdentificationResults analysisResult={analysisResult} />
-          ) : (
+          {/* Installation Verification */}
+          {selectedMode === 'installation_verify' && (
             <VisualAnalysisResults 
               analysisResult={analysisResult}
-              onExportReport={exportReport}
+              onExportReport={() => {}}
             />
           )}
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
+            <Button 
+              onClick={handleDiscussWithInspector}
+              size="lg"
+              className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+            >
+              <MessageSquare className="h-4 w-4 mr-2" />
+              Discuss with Inspector AI
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={resetAnalysis}
+              className="h-12"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              New Analysis
+            </Button>
+          </div>
         </div>
       )}
 
