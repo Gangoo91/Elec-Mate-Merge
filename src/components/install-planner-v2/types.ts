@@ -27,6 +27,44 @@ export interface ProjectInfo {
   registrationNumber?: string;
 }
 
+// Multi-Circuit Design Support
+export interface MultiCircuitDesign {
+  installationId: string;
+  circuits: FullCircuitDesign[];
+  consumerUnit: {
+    type: 'split-load' | 'high-integrity' | 'main-switch';
+    mainSwitchRating: number;
+    incomingSupply: {
+      voltage: number;
+      phases: 'single' | 'three';
+      incomingPFC: number;
+      Ze: number;
+      earthingSystem: 'TN-S' | 'TN-C-S' | 'TT';
+    };
+  };
+}
+
+export interface FullCircuitDesign {
+  circuitNumber: number;
+  name: string;
+  loadType: string;
+  phases: string;
+  loadPower: number;
+  designCurrent: number;
+  cableSize: number;
+  cpcSize: number;
+  cableLength: number;
+  protectionDevice: {
+    type: string;
+    curve?: string;
+    rating: number;
+    kaRating: number;
+  };
+  rcdProtected: boolean;
+  afddRequired?: boolean;
+  calculationResults: any;
+}
+
 export interface InstallPlanDataV2 {
   // Mode
   mode: 'express' | 'professional' | 'multi' | 'ai-guided';
