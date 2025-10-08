@@ -82,7 +82,9 @@ const VisualAnalysisRedesigned = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [analysisProgress, setAnalysisProgress] = useState(0);
+  const [fastMode, setFastMode] = useState(true); // Default Quick mode
   const abortControllerRef = useRef<AbortController | null>(null);
+  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -95,8 +97,13 @@ const VisualAnalysisRedesigned = () => {
       const ctx = canvas.getContext('2d');
       const img = new Image();
       
+      // More aggressive compression on mobile
+      const isMobile = window.innerWidth < 768;
+      const finalMaxWidth = isMobile ? 1280 : maxWidth;
+      const finalQuality = isMobile ? 0.75 : quality;
+      
       img.onload = () => {
-        const ratio = Math.min(maxWidth / img.width, maxWidth / img.height);
+        const ratio = Math.min(finalMaxWidth / img.width, finalMaxWidth / img.height);
         canvas.width = img.width * ratio;
         canvas.height = img.height * ratio;
         
@@ -112,7 +119,7 @@ const VisualAnalysisRedesigned = () => {
             } else {
               resolve(file);
             }
-          }, 'image/jpeg', quality);
+          }, 'image/jpeg', finalQuality);
         } else {
           resolve(file);
         }
@@ -249,12 +256,16 @@ const VisualAnalysisRedesigned = () => {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
     }
+    if (progressIntervalRef.current) {
+      clearInterval(progressIntervalRef.current);
+      progressIntervalRef.current = null;
+    }
     setIsAnalyzing(false);
     setAnalysisProgress(0);
     toast({
-      title: "Analysis cancelled",
-      description: "Visual analysis has been stopped",
-      variant: "default"
+      title: "Cancelled",
+      description: "Analysis stopped",
+      duration: 2000
     });
   };
 
@@ -273,14 +284,32 @@ const VisualAnalysisRedesigned = () => {
     setAnalysisProgress(10);
     abortControllerRef.current = new AbortController();
 
+    // Animate progress steadily
+    const targetProgress = fastMode ? 70 : 60;
+    const step = fastMode ? 8 : 5;
+    progressIntervalRef.current = setInterval(() => {
+      setAnalysisProgress(prev => {
+        if (prev >= targetProgress) {
+          if (progressIntervalRef.current) {
+            clearInterval(progressIntervalRef.current);
+            progressIntervalRef.current = null;
+          }
+          return prev;
+        }
+        return prev + step;
+      });
+    }, 500);
+
     try {
-      setAnalysisProgress(20);
       const primaryImageUrl = await uploadImageToSupabase(images[primaryImageIndex]);
       
-      setAnalysisProgress(40);
+      // Limit images in fast mode on mobile
+      const isMobile = window.innerWidth < 768;
+      const imageLimit = fastMode && isMobile ? 3 : images.length;
+      const imagesToUpload = images.filter((_, index) => index !== primaryImageIndex).slice(0, imageLimit - 1);
+      
       const additionalImageUrls = await Promise.all(
-        images.filter((_, index) => index !== primaryImageIndex)
-          .map(image => uploadImageToSupabase(image))
+        imagesToUpload.map(image => uploadImageToSupabase(image))
       );
 
       const getFocusAreasForMode = (mode: AnalysisMode): string[] => {
@@ -297,7 +326,9 @@ const VisualAnalysisRedesigned = () => {
         }
       };
 
-      setAnalysisProgress(60);
+      if (abortControllerRef.current?.signal.aborted) {
+        throw new Error('Analysis cancelled');
+      }
       
       // Create a promise that rejects when aborted
       const analyzeWithAbort = new Promise<any>((resolve, reject) => {
@@ -317,64 +348,79 @@ const VisualAnalysisRedesigned = () => {
               enable_bounding_boxes: true,
               focus_areas: getFocusAreasForMode(selectedMode || 'fault_diagnosis'),
               remove_background: false,
-              bs7671_compliance: true
+              bs7671_compliance: true,
+              fast_mode: fastMode
             }
           }
         }).then(resolve).catch(reject);
       });
 
       const { data, error } = await analyzeWithAbort;
+
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
       
       if (abortControllerRef.current?.signal.aborted) {
         return;
       }
 
-      setAnalysisProgress(80);
-
       if (!data || error) {
-        throw new Error(error?.message || 'No data returned from analysis');
+        if (error?.message?.includes('429') || error?.message?.includes('rate limit')) {
+          throw new Error('RATE_LIMIT');
+        }
+        if (error?.message?.includes('402') || error?.message?.includes('payment')) {
+          throw new Error('PAYMENT_REQUIRED');
+        }
+        throw new Error(error?.message || 'Analysis failed');
       }
 
       if (!data.analysis) {
-        throw new Error('Invalid analysis response structure');
+        throw new Error('Invalid analysis response');
       }
       
       if (data.error) {
         throw new Error(data.error);
       }
       
+      setAnalysisProgress(90);
       const result: AnalysisResult = data.analysis;
       setAnalysisResult(result);
       setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
       setAnalysisProgress(100);
       
       toast({
-        title: "Analysis complete",
-        description: "BS 7671 compliance check finished",
-        variant: "success"
+        title: "Analysis Complete",
+        description: `${fastMode ? 'Quick' : 'Full'} analysis of ${1 + additionalImageUrls.length} image${additionalImageUrls.length > 0 ? 's' : ''}`,
+        variant: "success",
+        duration: 3000
       });
     } catch (error: any) {
-      // Check if aborted
-      if (error.name === 'AbortError' || abortControllerRef.current?.signal.aborted) {
-        console.log('Analysis was cancelled by user');
-        return; // Don't show error toast for manual cancellation
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
+
+      if (error.message === 'Analysis cancelled' || error.name === 'AbortError' || abortControllerRef.current?.signal.aborted) {
+        console.log('Analysis cancelled by user');
+        return;
       }
       
       console.error('Visual Analysis Error:', error);
       
-      // Provide specific error messages
       let errorTitle = "Analysis failed";
-      let errorDescription = "Please check your images and try again.";
+      let errorDescription = "Please try again";
       
-      if (error.message?.includes('rate limit')) {
+      if (error.message === 'RATE_LIMIT') {
         errorTitle = "Rate limit exceeded";
-        errorDescription = "Too many requests. Please wait a moment and try again.";
-      } else if (error.message?.includes('timeout')) {
-        errorTitle = "Analysis timeout";
-        errorDescription = "The analysis took too long. Try with fewer or smaller images.";
-      } else if (error.message?.includes('JSON')) {
-        errorTitle = "Processing error";
-        errorDescription = "The analysis completed but results couldn't be formatted. Please try again.";
+        errorDescription = "Too many requests. Wait a moment and try again.";
+      } else if (error.message === 'PAYMENT_REQUIRED') {
+        errorTitle = "Credits depleted";
+        errorDescription = "Please top up your Lovable AI workspace credits.";
+      } else if (error.message?.includes('timeout') || error.message?.includes('TIMEOUT')) {
+        errorTitle = "Timeout";
+        errorDescription = fastMode ? "Try with fewer images" : "Enable Quick mode or use fewer images";
       } else if (error.message) {
         errorDescription = error.message;
       }
@@ -383,12 +429,16 @@ const VisualAnalysisRedesigned = () => {
         title: errorTitle,
         description: errorDescription,
         variant: "destructive",
-        duration: 6000
+        duration: 5000
       });
     } finally {
       setIsAnalyzing(false);
       setAnalysisProgress(0);
       abortControllerRef.current = null;
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
     }
   };
 
@@ -674,14 +724,38 @@ const VisualAnalysisRedesigned = () => {
 
       {/* Analyse Button - Fixed at bottom on mobile */}
       {images.length > 0 && !isAnalyzing && !analysisResult && (
-        <div className="fixed bottom-0 left-0 right-0 p-3 bg-elec-grey border-t border-border sm:relative sm:border-0 sm:bg-transparent sm:p-0 z-40">
+        <div className="fixed bottom-0 left-0 right-0 p-3 bg-elec-grey border-t border-border sm:relative sm:border-0 sm:bg-transparent sm:p-0 z-40 space-y-2">
+          {/* Quick/Full Toggle */}
+          <div className="flex items-center justify-center gap-2 bg-muted/50 rounded-lg p-1">
+            <button
+              onClick={() => setFastMode(true)}
+              className={`flex-1 px-3 py-1.5 rounded text-xs sm:text-sm font-medium transition-all ${
+                fastMode 
+                  ? 'bg-elec-yellow text-black shadow-sm' 
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              ⚡ Quick (5-8s)
+            </button>
+            <button
+              onClick={() => setFastMode(false)}
+              className={`flex-1 px-3 py-1.5 rounded text-xs sm:text-sm font-medium transition-all ${
+                !fastMode 
+                  ? 'bg-elec-yellow text-black shadow-sm' 
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              🔍 Full (15-20s)
+            </button>
+          </div>
+          
           <Button 
             onClick={handleAnalysis}
             size="lg"
             className="w-full h-12 sm:h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold shadow-lg"
           >
             <Sparkles className="h-5 w-5 mr-2" />
-            Analyse Installation
+            {fastMode ? 'Quick' : 'Full'} Analysis
           </Button>
         </div>
       )}

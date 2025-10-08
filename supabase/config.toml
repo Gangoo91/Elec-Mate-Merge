@@ -179,6 +179,7 @@ verify_jwt = false
 
 [functions.visual-analysis]
 verify_jwt = false
+timeout_sec = 60
 
 [functions.comprehensive-tools-scraper]
 verify_jwt = false

@@ -2,7 +2,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -16,16 +16,12 @@ const parseAIResponse = (content: string, context: string = 'AI response') => {
   }
 
   try {
-    // Try direct parse first
     return JSON.parse(content);
   } catch (e) {
-    console.error(`Direct JSON parse failed for ${context}:`, e);
-    
-    // Try to extract JSON from markdown code blocks
     const patterns = [
-      /```json\s*\n([\s\S]*?)\n```/,  // ```json ... ```
-      /```\s*\n([\s\S]*?)\n```/,        // ``` ... ```
-      /{[\s\S]*}/                       // Find any JSON object
+      /```json\s*\n([\s\S]*?)\n```/,
+      /```\s*\n([\s\S]*?)\n```/,
+      /{[\s\S]*}/
     ];
     
     for (const pattern of patterns) {
@@ -40,7 +36,7 @@ const parseAIResponse = (content: string, context: string = 'AI response') => {
       }
     }
     
-    throw new Error(`Could not parse ${context} as JSON. Raw content: ${content.substring(0, 200)}...`);
+    throw new Error(`Could not parse ${context} as JSON`);
   }
 };
 
@@ -53,6 +49,7 @@ interface AnalysisSettings {
   focus_areas: string[];
   remove_background: boolean;
   bs7671_compliance: boolean;
+  fast_mode?: boolean;
 }
 
 interface AnalysisRequest {
@@ -61,600 +58,318 @@ interface AnalysisRequest {
   analysis_settings: AnalysisSettings;
 }
 
+// Timeout wrapper for fetch calls
+const fetchWithTimeout = async (url: string, options: any, timeoutMs: number, signal?: AbortSignal) => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: signal || controller.signal
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    throw error;
+  }
+};
+
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const startTime = Date.now();
+
   try {
     const { primary_image, additional_images = [], analysis_settings }: AnalysisRequest = await req.json();
 
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+    if (!lovableApiKey) {
+      throw new Error('Lovable API key not configured');
     }
 
     if (!primary_image) {
       throw new Error('Primary image URL is required');
     }
 
-    console.log('Starting visual analysis with settings:', analysis_settings);
+    console.log(`⚡ Starting ${analysis_settings.fast_mode ? 'FAST' : 'FULL'} visual analysis`, {
+      mode: analysis_settings.mode,
+      images: 1 + additional_images.length
+    });
 
-    // Get mode-specific system prompt
-    const getSystemPrompt = (mode: AnalysisMode): string => {
-      const baseContext = `You are a highly experienced UK electrical expert specialising in BS 7671 18th Edition.`;
+    const getSystemPrompt = (mode: AnalysisMode, fast: boolean): string => {
+      const baseContext = `You are a UK electrical expert specialising in BS 7671 18th Edition.`;
+      const responseFormat = `Respond in valid JSON only. ${fast ? 'Be concise.' : ''}`;
       
       switch (mode) {
+        case 'fault_diagnosis':
+          return `${baseContext}
+${responseFormat}
+
+Analyse electrical installations for EICR compliance. Classify issues:
+- C1: Immediate danger (exposed live parts, missing earth)
+- C2: Potentially dangerous (non-compliant, deteriorated)
+- C3: Improvement recommended
+- FI: Further investigation needed
+
+${fast ? 'Focus on critical findings only.' : 'Provide detailed analysis with BS 7671 references.'}
+
+Response format:
+{
+  "analysis": {
+    "findings": [{
+      "description": "Issue description",
+      "eicr_code": "C1|C2|C3|FI",
+      "confidence": 0.95,
+      "bs7671_clauses": ["411.3.2"],
+      "fix_guidance": "Remedial action"
+    }],
+    "compliance_summary": {
+      "overall_assessment": "satisfactory|unsatisfactory",
+      "c1_count": 0,
+      "c2_count": 0,
+      "c3_count": 0,
+      "fi_count": 0,
+      "safety_rating": 7.5
+    },
+    "summary": "Brief summary"
+  }
+}`;
+
         case 'component_identify':
           return `${baseContext}
+${responseFormat}
 
-Your role is to identify electrical components and provide comprehensive specifications:
-1. Component name and type (precise terminology)
-2. Manufacturer and model number (if visible)
-3. Technical specifications (voltage, current, IP rating, breaking capacity, etc.)
-4. BS 7671 compliance requirements for this component type
-5. Typical applications and installation context
-6. UK market availability and similar alternatives
-
-IMPORTANT: You must respond in valid JSON format only. No markdown, no code blocks, just raw JSON.
+Identify electrical components and provide specifications:
+- Component name/type
+- Manufacturer/model (if visible)
+- Technical specs (voltage, current, IP rating)
+- BS 7671 requirements
+${fast ? '' : '- UK market alternatives'}
 
 Response format:
 {
   "analysis": {
     "component": {
       "name": "Component name",
-      "type": "Component type",
-      "manufacturer": "Manufacturer name or Unknown",
-      "model": "Model number or Unknown",
-      "specifications": {
-        "voltage_rating": "230V AC",
-        "current_rating": "32A",
-        "ip_rating": "IP20",
-        "breaking_capacity": "6kA",
-        "poles": "Single pole"
-      },
-      "bs7671_requirements": ["411.3.2 - RCD protection required", "526.3 - Correct cable sizing"],
-      "typical_applications": ["Domestic consumer units", "Light commercial"],
-      "installation_notes": "Must be installed by qualified electrician",
+      "type": "Type",
+      "specifications": {"voltage_rating": "230V", "current_rating": "32A"},
+      "bs7671_requirements": ["411.3.2"],
       "confidence": 0.95
     },
-    "similar_components": [
-      {
-        "name": "Alternative component",
-        "manufacturer": "Manufacturer",
-        "notes": "Suitable replacement"
-      }
-    ],
-    "summary": "Brief description of the component and its purpose"
+    "summary": "Brief description"
   }
 }`;
 
         case 'wiring_instruction':
           return `${baseContext}
+${responseFormat}
 
-Your role is to provide clear, step-by-step wiring instructions for electrical components:
-1. Terminal identification (L, N, E and any additional terminals)
-2. UK-standard colour codes (Brown=Live, Blue=Neutral, Green/Yellow=Earth)
-3. Step-by-step connection procedure
-4. Cable specification requirements (size, type, insulation)
-5. Safety precautions and isolation requirements
-6. Testing and verification steps
-7. BS 7671 compliance requirements
-
-IMPORTANT: You must respond in valid JSON format only. No markdown, no code blocks, just raw JSON.
+Provide wiring instructions:
+- Terminal identification (L, N, E)
+- UK colour codes (Brown=Live, Blue=Neutral, Green/Yellow=Earth)
+- Connection procedure (isolation first)
+- Cable requirements
+${fast ? '' : '- Testing procedures'}
 
 Response format:
 {
   "analysis": {
-    "component_name": "Component being wired",
-    "terminals": [
-      {
-        "label": "L1",
-        "description": "Live terminal 1",
-        "wire_colour": "Brown",
-        "position": "Top left"
-      }
-    ],
-    "wiring_steps": [
-      {
-        "step": 1,
-        "title": "Safe isolation",
-        "instruction": "Isolate supply and verify dead using approved voltage tester",
-        "safety_critical": true,
-        "bs7671_reference": "537.2"
-      }
-    ],
-    "cable_requirements": {
-      "minimum_size": "2.5mm²",
-      "cable_type": "Twin and Earth (6242Y)",
-      "insulation": "PVC 70°C"
-    },
-    "safety_warnings": ["Always isolate before working", "Use correct PPE"],
-    "testing_required": ["Continuity test", "Insulation resistance test", "Polarity check"],
-    "bs7671_compliance": ["411.3.2", "526.3"],
-    "summary": "Brief overview of the wiring procedure"
+    "component_name": "Component",
+    "wiring_steps": [{
+      "step": 1,
+      "instruction": "Isolate supply",
+      "safety_critical": true
+    }],
+    "cable_requirements": {"minimum_size": "2.5mm²"},
+    "summary": "Procedure overview"
   }
 }`;
 
         case 'installation_verify':
           return `${baseContext}
+${responseFormat}
 
-Your role is to verify electrical installations against BS 7671 requirements:
-1. Visual inspection checklist (workmanship, accessibility, labelling)
-2. Compliance with BS 7671 regulations
-3. Safety assessment (protective devices, earthing, bonding)
-4. Installation quality and professional standards
-5. Pass/Fail determination with detailed reasoning
-6. Improvement recommendations even if passing
-
-IMPORTANT: You must respond in valid JSON format only. No markdown, no code blocks, just raw JSON.
+Verify installation against BS 7671:
+- Protective device selection
+- Earthing/bonding
+- Cable sizing
+- Professional workmanship
+${fast ? '' : '- Improvement recommendations'}
 
 Response format:
 {
   "analysis": {
     "overall_result": "pass|fail|requires_testing",
     "confidence": 0.85,
-    "verification_checks": [
-      {
-        "check": "Protective device correctly rated",
-        "result": "pass|fail|unable_to_verify",
-        "details": "16A MCB appropriate for 2.5mm² cable",
-        "bs7671_reference": "433.1.1"
-      }
-    ],
-    "safety_assessment": {
-      "rating": 8.5,
-      "immediate_concerns": [],
-      "observations": ["Good labelling", "Neat installation"]
-    },
-    "improvements": [
-      {
-        "recommendation": "Add arc fault protection",
-        "priority": "recommended",
-        "bs7671_reference": "421.1.7",
-        "benefit": "Enhanced fire protection"
-      }
-    ],
-    "summary": "Overall assessment of the installation quality and compliance"
-  }
-}`;
-
-        case 'fault_diagnosis':
-        default:
-          return `${baseContext}
-
-Your role is to analyse electrical installation images and provide:
-1. Detailed safety assessments with EICR fault classification
-2. BS 7671 regulation compliance checks with specific clause references
-3. Risk identification with EICR codes (C1, C2, C3, FI)
-4. Professional remedial guidance and cost estimates
-5. Bounding box coordinates for detected issues (when requested)
-
-Analysis Focus Areas: ${(analysis_settings.focus_areas || ['wiring', 'protective devices', 'earthing', 'general installation']).join(', ')}
-Confidence Threshold: ${analysis_settings.confidence_threshold}
-Enable Bounding Boxes: ${analysis_settings.enable_bounding_boxes}
-
-EICR Classification Requirements:
-- C1 (Code 1): Danger present - immediate action required. Risk of injury.
-- C2 (Code 2): Potentially dangerous - urgent remedial action required.
-- C3 (Code 3): Improvement recommended to enhance safety.
-- FI (Further Investigation): Unable to verify compliance, further investigation required.
-
-When analysing images:
-- Look for immediate safety hazards (exposed live parts, damaged protective devices, etc.)
-- Check compliance with BS 7671 requirements (earthing, bonding, circuit protection, isolation, etc.)
-- Assess installation quality and workmanship against current standards
-- Identify code violations and classify with appropriate EICR codes
-- Consider environmental factors affecting safety and compliance
-- Focus on visible defects that can be determined from the image
-
-For each finding, you MUST assign the appropriate EICR code based on severity:
-- Exposed live parts, missing earth connections, damaged protective devices = C1
-- Non-compliant installations without immediate danger = C2  
-- Outdated but functioning installations = C3
-- Unclear compliance status from image = FI
-
-IMPORTANT: You must respond in valid JSON format only. No markdown, no code blocks, just raw JSON.
-
-Response format:
-{
-  "analysis": {
-    "findings": [
-      {
-        "description": "Detailed description of the issue found",
-        "eicr_code": "C1|C2|C3|FI",
-        "confidence": 0.95,
-        "bs7671_clauses": ["411.3.2", "526.3"],
-        "location": "Specific location in image",
-        "fix_guidance": "Step-by-step remedial actions required",
-        "bounding_box": {
-          "x": 0.1,
-          "y": 0.1,
-          "width": 0.2,
-          "height": 0.2,
-          "confidence": 0.95,
-          "label": "Issue type"
-        }
-      }
-    ],
-    "recommendations": [
-      {
-        "action": "Specific remedial action required",
-        "priority": "immediate|urgent|recommended",
-        "bs7671_reference": "BS 7671 clause reference",
-        "cost_estimate": "£50-100",
-        "eicr_code": "C1|C2|C3"
-      }
-    ],
-    "compliance_summary": {
-      "overall_assessment": "satisfactory|unsatisfactory",
-      "c1_count": 0,
-      "c2_count": 1,
-      "c3_count": 2,
-      "fi_count": 0,
-      "safety_rating": 7.5
-    },
-    "summary": "Brief executive summary of EICR findings and overall installation condition"
+    "verification_checks": [{
+      "check": "Device correctly rated",
+      "result": "pass|fail",
+      "bs7671_reference": "433.1.1"
+    }],
+    "summary": "Assessment summary"
   }
 }`;
       }
     };
 
-    const systemPrompt = getSystemPrompt(analysis_settings.mode);
+    const systemPrompt = getSystemPrompt(analysis_settings.mode, analysis_settings.fast_mode || false);
 
-    // Prepare images for analysis
-    const images = [
-      {
-        type: "image_url",
-        image_url: {
-          url: primary_image,
-          detail: "high"
-        }
+    // Prepare images
+    const images = [{
+      type: "image_url",
+      image_url: {
+        url: primary_image,
+        detail: analysis_settings.fast_mode ? "low" : "high"
       }
-    ];
+    }];
 
-    // Add additional images if provided
-    additional_images.forEach(imageUrl => {
+    // Limit additional images in fast mode
+    const imageLimit = analysis_settings.fast_mode ? 2 : additional_images.length;
+    additional_images.slice(0, imageLimit).forEach(imageUrl => {
       images.push({
         type: "image_url",
         image_url: {
           url: imageUrl,
-          detail: "medium"
+          detail: analysis_settings.fast_mode ? "low" : "medium"
         }
       });
     });
 
-    const getUserPrompt = (mode: AnalysisMode): string => {
-      switch (mode) {
-        case 'component_identify':
-          return `Identify the electrical component(s) in this image and provide comprehensive specifications.
-
-Focus on:
-- Exact component name and type
-- Manufacturer and model (read any visible text/labels)
-- Technical specifications visible or typical for this component type
-- BS 7671 requirements applicable to this component
-- Typical UK applications and installation contexts
-
-Provide detailed, accurate information based on what's visible in the image.`;
-
-        case 'wiring_instruction':
-          return `Provide detailed wiring instructions for the electrical component shown in this image.
-
-Include:
-- Clear terminal identification (label each terminal: L, N, E, etc.)
-- UK-standard wire colours (Brown, Blue, Green/Yellow)
-- Step-by-step connection procedure (safe isolation first)
-- Cable size and type requirements
-- Safety precautions and PPE requirements
-- Testing procedures after installation
-- Relevant BS 7671 regulations
-
-Make instructions clear enough for a qualified electrician to follow safely.`;
-
-        case 'installation_verify':
-          return `Verify this electrical installation against BS 7671 18th Edition requirements.
-
-Check for:
-- Correct protective device selection and rating
-- Proper earthing and bonding arrangements
-- Appropriate cable sizing and routing
-- Professional workmanship and installation quality
-- Labelling and identification
-- Accessibility and compliance with building regulations
-- Any visible non-compliances or safety concerns
-
-Provide a pass/fail assessment with detailed reasoning and improvement recommendations.`;
-
-        case 'fault_diagnosis':
-        default:
-          return `Analyse these electrical installation images for EICR compliance and BS 7671 18th Edition requirements.
-
-Primary focus areas: ${(analysis_settings.focus_areas || ['wiring', 'protective devices', 'earthing', 'general installation']).join(', ')}
-
-${analysis_settings.enable_bounding_boxes ? 
-  'Please include bounding box coordinates (normalised 0-1) for any detected issues or components of interest.' : 
-  'Bounding boxes are not required for this analysis.'
-}
-
-Look specifically for EICR reportable defects:
-- C1 Issues: Exposed live parts, missing protective devices, immediate dangers
-- C2 Issues: Non-compliant installations, deteriorated components, missing earthing
-- C3 Issues: Outdated installations, improvements recommended for enhanced safety
-- FI Issues: Installations requiring further investigation to determine compliance
-
-For each finding:
-1. Classify with appropriate EICR code (C1, C2, C3, or FI)
-2. Reference specific BS 7671 clauses that apply
-3. Provide clear remedial guidance
-4. Include cost estimates for typical remedial work
-5. Assess overall installation condition
-
-Focus on visible defects and compliance issues that can be determined from the electrical installation images provided.`;
-      }
-    };
-
-    const userPrompt = getUserPrompt(analysis_settings.mode);
-
-    console.log('Sending request to OpenAI with GPT-5...');
-
-    // STAGE 1: Initial lightweight scan to extract key identifiers
-    const initialScanPrompt = `Quickly scan this electrical installation image and extract key identifiers:
-- Component types visible
-- Visible issues or faults
-- Installation context
-- Location/environment type
-
-Respond with JSON only:
-{
-  "components": ["MCB Type B 32A", "consumer unit", "socket outlet"],
-  "visible_issues": ["exposed conductor", "damaged casing"],
-  "context": "domestic installation",
-  "location": "consumer unit enclosure"
-}`;
-
-    let preliminaryFindings: any = null;
-    let ragEnhancedContext = '';
-
-    if (analysis_settings.mode === 'fault_diagnosis' || analysis_settings.mode === 'wiring_instruction') {
-      console.log('🔍 STAGE 1: Quick vision scan for RAG query generation');
+    const getUserPrompt = (mode: AnalysisMode, fast: boolean): string => {
+      const focusAreas = analysis_settings.focus_areas?.join(', ') || 'general';
       
-      const scanResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${openAIApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'gpt-5-2025-08-07',
-          messages: [
-            { role: 'system', content: initialScanPrompt },
-            {
-              role: 'user',
-              content: [
-                { type: "text", text: 'Extract key identifiers from this image' },
-                ...images
-              ]
-            }
-          ],
-          max_completion_tokens: 500,
-          response_format: { type: "json_object" }
-        }),
-      });
-
-      if (scanResponse.ok) {
-        const scanData = await scanResponse.json();
-        try {
-          preliminaryFindings = parseAIResponse(scanData.choices[0].message.content, 'Preliminary scan');
-          console.log('✅ Preliminary scan complete:', preliminaryFindings);
-
-          // STAGE 2: RAG-enhanced analysis based on preliminary findings
-          const supabaseUrl = Deno.env.get('SUPABASE_URL');
-          const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-          
-          if (supabaseUrl && supabaseKey) {
-            const supabase = createClient(supabaseUrl, supabaseKey);
-
-            if (analysis_settings.mode === 'fault_diagnosis') {
-              console.log('🔍 STAGE 2: Querying fault diagnosis RAG for EICR verification');
-              
-              // Query RAG for each visible issue
-              const ragPromises = (preliminaryFindings.visible_issues || []).map(async (issue: string) => {
-                try {
-                  const { data, error } = await supabase.functions.invoke('visual-fault-diagnosis-rag', {
-                    body: {
-                      fault_description: issue,
-                      location_context: preliminaryFindings.context || 'general installation',
-                      visible_indicators: preliminaryFindings.components || []
-                    }
-                  });
-                  
-                  if (!error && data) {
-                    return `
-VERIFIED FAULT: ${issue}
-EICR Code: ${data.fault_code} (Confidence: ${(data.confidence * 100).toFixed(0)}%)
-BS 7671 References: ${data.regulation_references?.map((r: any) => r.number).join(', ') || 'N/A'}
-GN3 Guidance: ${data.gn3_guidance}
-Reasoning: ${data.reasoning}
-`;
-                  }
-                } catch (e) {
-                  console.error('RAG fault verification failed:', e);
-                }
-                return '';
-              });
-
-              const ragResults = await Promise.all(ragPromises);
-              ragEnhancedContext = ragResults.filter(r => r).join('\n\n');
-              
-              if (ragEnhancedContext) {
-                console.log('✅ RAG-verified fault classifications obtained');
-              }
-            }
-
-            if (analysis_settings.mode === 'wiring_instruction') {
-              console.log('🔍 STAGE 2: Querying wiring diagram RAG');
-              
-              try {
-                const { data, error } = await supabase.functions.invoke('wiring-diagram-generator-rag', {
-                  body: {
-                    component_type: (preliminaryFindings.components || [])[0] || 'socket outlet',
-                    circuit_params: {
-                      voltage: 230,
-                      load: 'general purpose'
-                    },
-                    installation_context: preliminaryFindings.context || 'domestic installation'
-                  }
-                });
-                
-                if (!error && data) {
-                  ragEnhancedContext = `
-WIRING SCHEMATIC AVAILABLE:
-Circuit Specification: ${JSON.stringify(data.circuit_spec)}
-Installation Guidance: ${data.installation_method_guidance}
-Safety Warnings: ${data.safety_warnings?.join(', ') || 'N/A'}
-Testing Requirements: ${data.testing_requirements?.join(', ') || 'N/A'}
-
-Follow the step-by-step wiring procedure with BS 7671 verification.
-`;
-                  console.log('✅ RAG wiring procedure obtained');
-                }
-              } catch (e) {
-                console.error('RAG wiring diagram failed:', e);
-              }
-            }
-          }
-        } catch (parseError) {
-          console.error('Failed to parse preliminary scan:', parseError);
-        }
+      switch (mode) {
+        case 'fault_diagnosis':
+          return `Analyse for EICR compliance. Focus: ${focusAreas}. ${fast ? 'Report critical issues only.' : 'Detailed analysis with BS 7671 references.'}`;
+        case 'component_identify':
+          return `Identify component(s) and provide ${fast ? 'basic' : 'detailed'} specifications.`;
+        case 'wiring_instruction':
+          return `Provide ${fast ? 'essential' : 'step-by-step'} wiring instructions for UK electricians.`;
+        case 'installation_verify':
+          return `Verify installation compliance. ${fast ? 'Pass/fail only.' : 'Detailed assessment with improvements.'}`;
       }
-    }
-
-    // STAGE 3: Deep analysis with RAG context injected
-    const enhancedSystemPrompt = ragEnhancedContext 
-      ? `${systemPrompt}
-
-===== RAG-VERIFIED KNOWLEDGE =====
-${ragEnhancedContext}
-
-USE THIS VERIFIED INFORMATION to enhance your analysis. Cross-reference your findings with the RAG-verified data above.
-=================================`
-      : systemPrompt;
-
-    console.log('🔍 STAGE 3: Deep analysis with', ragEnhancedContext ? 'RAG context' : 'standard context');
-
-    // Helper function for OpenAI API call with retry logic
-    const callOpenAI = async (attempt = 1): Promise<Response> => {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${openAIApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'gpt-5-2025-08-07',
-          messages: [
-            {
-              role: 'system',
-              content: enhancedSystemPrompt
-            },
-            {
-              role: 'user',
-              content: [
-                {
-                  type: "text",
-                  text: userPrompt
-                },
-                ...images
-              ]
-            }
-          ],
-          max_completion_tokens: 4000,
-          response_format: { type: "json_object" }
-        }),
-      });
-
-      // Retry on transient errors (429, 5xx) but only once
-      if (!response.ok && attempt === 1 && (response.status === 429 || response.status >= 500)) {
-        console.log(`Transient error ${response.status}, retrying...`);
-        await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
-        return callOpenAI(2);
-      }
-
-      return response;
     };
 
-    const response = await callOpenAI();
+    const userPrompt = getUserPrompt(analysis_settings.mode, analysis_settings.fast_mode || false);
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('OpenAI API error:', response.status, errorText);
-      console.log('Analysis failed with model: gpt-5-2025-08-07');
-      throw new Error('Analysis failed, please try again');
+    console.log(`🚀 Calling Lovable AI Gateway (gemini-2.5-flash)...`);
+
+    const timeout = analysis_settings.fast_mode ? 12000 : 20000; // 12s fast, 20s full
+    const maxTokens = analysis_settings.fast_mode ? 800 : 2000;
+
+    const aiResponse = await fetchWithTimeout(
+      'https://ai.gateway.lovable.dev/v1/chat/completions',
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${lovableApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'google/gemini-2.5-flash',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            {
+              role: 'user',
+              content: [
+                { type: "text", text: userPrompt },
+                ...images
+              ]
+            }
+          ],
+          max_tokens: maxTokens,
+          response_format: { type: "json_object" }
+        }),
+      },
+      timeout
+    );
+
+    if (!aiResponse.ok) {
+      const errorText = await aiResponse.text();
+      console.error('❌ AI Gateway error:', aiResponse.status, errorText);
+      
+      if (aiResponse.status === 429) {
+        return new Response(JSON.stringify({
+          error: 'Rate limit exceeded',
+          code: 429,
+          message: 'Too many requests. Please wait a moment.'
+        }), {
+          status: 429,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
+      if (aiResponse.status === 402) {
+        return new Response(JSON.stringify({
+          error: 'Payment required',
+          code: 402,
+          message: 'Credits depleted. Please top up your workspace.'
+        }), {
+          status: 402,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
+      throw new Error('Analysis failed');
     }
 
-    const data = await response.json();
-    console.log('GPT-5 analysis completed successfully', { model_used: 'gpt-5-2025-08-07' });
+    const data = await aiResponse.json();
+    const duration = Date.now() - startTime;
+    console.log(`✅ Analysis complete in ${duration}ms`);
 
-    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-      throw new Error('Invalid response from OpenAI API');
+    if (!data.choices?.[0]?.message?.content) {
+      throw new Error('Invalid response from AI Gateway');
     }
 
     let analysisResult;
     try {
-      analysisResult = parseAIResponse(data.choices[0].message.content, 'Final analysis');
+      analysisResult = parseAIResponse(data.choices[0].message.content, 'Analysis');
       
-      // Validate required structure
       if (!analysisResult || typeof analysisResult !== 'object') {
-        throw new Error('Analysis result is not a valid object');
+        throw new Error('Invalid analysis result');
       }
 
-      // Ensure analysis wrapper exists
       if (!analysisResult.analysis) {
         analysisResult = { analysis: analysisResult };
       }
 
-      // Ensure findings array exists
-      if (!analysisResult.analysis.findings || !Array.isArray(analysisResult.analysis.findings)) {
-        console.warn('No findings array in analysis result, creating empty array');
-        analysisResult.analysis.findings = [];
+      // Ensure findings array exists for fault_diagnosis
+      if (analysis_settings.mode === 'fault_diagnosis') {
+        if (!analysisResult.analysis.findings || !Array.isArray(analysisResult.analysis.findings)) {
+          console.warn('No findings array, creating empty array');
+          analysisResult.analysis.findings = [];
+        }
+
+        analysisResult.analysis.findings = analysisResult.analysis.findings.map((finding: any, index: number) => ({
+          description: finding.description || `Finding ${index + 1}`,
+          eicr_code: finding.eicr_code || finding.severity || 'FI',
+          confidence: typeof finding.confidence === 'number' ? finding.confidence : 0.5,
+          bs7671_clauses: finding.bs7671_clauses || finding.regulation_reference || ['N/A'],
+          fix_guidance: finding.fix_guidance || finding.remedial_action || 'Consult qualified electrician',
+          ...finding
+        }));
+
+        // Apply confidence threshold
+        analysisResult.analysis.findings = analysisResult.analysis.findings.filter(
+          (finding: any) => (finding.confidence || 0) >= analysis_settings.confidence_threshold
+        );
       }
 
-      // Sanitize each finding with defaults
-      analysisResult.analysis.findings = analysisResult.analysis.findings.map((finding: any, index: number) => ({
-        description: finding.description || `Finding ${index + 1}`,
-        severity: finding.severity || finding.eicr_code || 'FI',
-        eicr_code: finding.eicr_code || finding.severity || 'FI',
-        confidence: typeof finding.confidence === 'number' ? finding.confidence : 0.5,
-        regulation_reference: finding.regulation_reference || finding.bs7671_clauses || ['N/A'],
-        bs7671_clauses: finding.bs7671_clauses || finding.regulation_reference || ['N/A'],
-        fix_guidance: finding.fix_guidance || finding.remedial_action || 'Consult qualified electrician',
-        ...finding
-      }));
-
     } catch (parseError) {
-      console.error('Failed to parse and validate OpenAI response:', parseError);
-      console.error('Raw response:', data.choices[0].message.content);
+      console.error('❌ Parse error:', parseError);
       
-      // Fallback response structure
       analysisResult = {
         analysis: {
-          findings: [
-            {
-              description: "Analysis completed but response format was invalid. Please try again or contact support.",
-              eicr_code: "FI",
-              confidence: 0.5,
-              bs7671_clauses: ["N/A"],
-              fix_guidance: "Re-run analysis or contact technical support"
-            }
-          ],
-          recommendations: [
-            {
-              action: "Re-run analysis with different settings or contact technical support",
-              priority: "recommended",
-              eicr_code: "FI"
-            }
-          ],
+          findings: [{
+            description: "Analysis completed but response format was invalid",
+            eicr_code: "FI",
+            confidence: 0.5,
+            bs7671_clauses: ["N/A"],
+            fix_guidance: "Re-run analysis"
+          }],
           compliance_summary: {
             overall_assessment: "unsatisfactory",
             c1_count: 0,
@@ -663,43 +378,32 @@ USE THIS VERIFIED INFORMATION to enhance your analysis. Cross-reference your fin
             fi_count: 1,
             safety_rating: 5.0
           },
-          summary: "Analysis completed but encountered formatting issues. Results may be incomplete."
+          summary: "Analysis encountered formatting issues"
         }
       };
     }
 
-    // Ensure the response has the expected structure
     if (!analysisResult.analysis) {
       analysisResult = { analysis: analysisResult };
     }
 
-    // Add RAG verification metadata
-    if (ragEnhancedContext) {
-      analysisResult.analysis.rag_verified = true;
-      analysisResult.analysis.verification_note = analysis_settings.mode === 'fault_diagnosis'
-        ? 'EICR codes verified against BS 7671 + GN3 database'
-        : 'Wiring procedure verified against installation knowledge database';
-    }
-
-    // Apply confidence threshold filtering
-    if (analysisResult.analysis.findings) {
-      analysisResult.analysis.findings = analysisResult.analysis.findings.filter(
-        (finding: any) => (finding.confidence || 0) >= analysis_settings.confidence_threshold
-      );
-    }
-
-    console.log('Analysis complete, returning results');
+    analysisResult.analysis.processing_time_ms = duration;
+    analysisResult.analysis.fast_mode = analysis_settings.fast_mode || false;
 
     return new Response(JSON.stringify(analysisResult), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
   } catch (error) {
-    console.error('Error in visual-analysis function:', error);
+    const duration = Date.now() - startTime;
+    console.error(`❌ Error after ${duration}ms:`, error);
     
     const errorResponse = {
-      error: error instanceof Error ? error.message : 'Unknown error occurred during analysis',
-      details: 'Please check your images and try again. If the problem persists, contact support.'
+      error: error instanceof Error ? error.message : 'Unknown error',
+      code: error.name === 'AbortError' ? 'TIMEOUT' : 'ERROR',
+      message: error.name === 'AbortError' 
+        ? 'Analysis timed out. Try fast mode or fewer images.'
+        : 'Analysis failed. Please try again.'
     };
 
     return new Response(JSON.stringify(errorResponse), {
