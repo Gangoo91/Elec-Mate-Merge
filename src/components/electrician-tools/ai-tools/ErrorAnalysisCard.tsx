@@ -21,20 +21,15 @@ const ErrorAnalysisCard = ({ onRetry, possibleCauses = [] }: ErrorAnalysisCardPr
   };
 
   return (
-    <Card className="border-l-4 border-l-amber-500 bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/20 dark:to-orange-950/20">
+    <Card className="border border-amber-500/30 bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/20 dark:to-orange-950/20">
       <CardHeader className="pb-4">
-        <div className="flex items-start gap-4">
-          <div className="rounded-full bg-amber-100 dark:bg-amber-900/30 p-3">
-            <AlertTriangle className="h-6 w-6 text-amber-600 dark:text-amber-400" />
-          </div>
-          <div className="flex-1">
-            <CardTitle className="text-lg sm:text-xl text-amber-900 dark:text-amber-100 mb-2">
-              Analysis Needs Your Help
-            </CardTitle>
-            <p className="text-sm text-amber-700 dark:text-amber-300 leading-relaxed">
-              The AI couldn't process this image properly. This usually happens with complex installations or unclear photos.
-            </p>
-          </div>
+        <div className="space-y-3">
+          <CardTitle className="text-lg sm:text-xl text-amber-900 dark:text-amber-100">
+            Analysis Needs Your Help
+          </CardTitle>
+          <p className="text-sm sm:text-base text-amber-700 dark:text-amber-300 leading-relaxed">
+            The AI couldn't process this image properly. This usually happens with complex installations or unclear photos.
+          </p>
         </div>
       </CardHeader>
 
@@ -85,8 +80,7 @@ const ErrorAnalysisCard = ({ onRetry, possibleCauses = [] }: ErrorAnalysisCardPr
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <Button 
             onClick={onRetry} 
-            className="flex-1 bg-amber-600 hover:bg-amber-700 text-white touch-manipulation"
-            size="lg"
+            className="bg-amber-600 hover:bg-amber-700 text-white min-h-[48px] text-base"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
             Try Again with Quick Mode
@@ -94,8 +88,7 @@ const ErrorAnalysisCard = ({ onRetry, possibleCauses = [] }: ErrorAnalysisCardPr
           <Button 
             onClick={handleContactSupport}
             variant="outline"
-            className="flex-1 border-amber-300 dark:border-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/30 touch-manipulation"
-            size="lg"
+            className="border-amber-300 dark:border-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/30 min-h-[48px] text-base"
           >
             <Mail className="h-4 w-4 mr-2" />
             Contact Support

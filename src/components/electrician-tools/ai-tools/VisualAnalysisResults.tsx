@@ -142,25 +142,20 @@ This analysis is for guidance only and must be verified by a qualified electrici
     <Card className="bg-card border-border max-w-5xl mx-auto">
       <CardHeader className="p-4 sm:p-6">
         <div className="flex flex-col gap-4 mb-2">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-400" />
-            <CardTitle className="text-xl sm:text-2xl text-foreground">Visual Analysis Results</CardTitle>
-          </div>
+          <CardTitle className="text-xl sm:text-2xl text-foreground">Visual Analysis Results</CardTitle>
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
               variant="outline"
-              size="sm"
               onClick={onExportReport}
-              className="border-border hover:bg-accent/50 h-11 sm:h-10 text-sm"
+              className="border-border hover:bg-accent/50 min-h-[44px] text-sm sm:text-base"
             >
               <Download className="h-4 w-4 mr-2" />
               Export PDF
             </Button>
             <Button
               variant="outline"
-              size="sm"
               onClick={copySummary}
-              className="border-border hover:bg-accent/50 h-11 sm:h-10 text-sm"
+              className="border-border hover:bg-accent/50 min-h-[44px] text-sm sm:text-base"
             >
               <Save className="h-4 w-4 mr-2" />
               Copy Summary
@@ -189,22 +184,22 @@ This analysis is for guidance only and must be verified by a qualified electrici
           </div>
           
           {/* Code Summary */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            <div className="text-center p-4 sm:p-5 rounded-lg border border-red-400/20 bg-red-400/5">
-              <div className="text-3xl sm:text-2xl font-bold text-red-400 mb-2">{analysisResult.compliance_summary.c1_count}</div>
-              <div className="text-sm font-medium text-muted-foreground">C1 Issues</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4">
+            <div className="p-4 sm:p-5 rounded-lg border border-red-400/20 bg-red-400/5">
+              <div className="text-3xl sm:text-4xl font-bold text-red-400 mb-2">{analysisResult.compliance_summary.c1_count}</div>
+              <div className="text-sm sm:text-base font-medium text-muted-foreground">C1 Issues</div>
             </div>
-            <div className="text-center p-4 sm:p-5 rounded-lg border border-amber-400/20 bg-amber-400/5">
-              <div className="text-3xl sm:text-2xl font-bold text-amber-400 mb-2">{analysisResult.compliance_summary.c2_count}</div>
-              <div className="text-sm font-medium text-muted-foreground">C2 Issues</div>
+            <div className="p-4 sm:p-5 rounded-lg border border-amber-400/20 bg-amber-400/5">
+              <div className="text-3xl sm:text-4xl font-bold text-amber-400 mb-2">{analysisResult.compliance_summary.c2_count}</div>
+              <div className="text-sm sm:text-base font-medium text-muted-foreground">C2 Issues</div>
             </div>
-            <div className="text-center p-4 sm:p-5 rounded-lg border border-blue-400/20 bg-blue-400/5">
-              <div className="text-3xl sm:text-2xl font-bold text-blue-400 mb-2">{analysisResult.compliance_summary.c3_count}</div>
-              <div className="text-sm font-medium text-muted-foreground">C3 Issues</div>
+            <div className="p-4 sm:p-5 rounded-lg border border-blue-400/20 bg-blue-400/5">
+              <div className="text-3xl sm:text-4xl font-bold text-blue-400 mb-2">{analysisResult.compliance_summary.c3_count}</div>
+              <div className="text-sm sm:text-base font-medium text-muted-foreground">C3 Issues</div>
             </div>
-            <div className="text-center p-4 sm:p-5 rounded-lg border border-slate-400/20 bg-slate-400/5">
-              <div className="text-3xl sm:text-2xl font-bold text-slate-400 mb-2">{analysisResult.compliance_summary.fi_count}</div>
-              <div className="text-sm font-medium text-muted-foreground">FI Issues</div>
+            <div className="p-4 sm:p-5 rounded-lg border border-slate-400/20 bg-slate-400/5">
+              <div className="text-3xl sm:text-4xl font-bold text-slate-400 mb-2">{analysisResult.compliance_summary.fi_count}</div>
+              <div className="text-sm sm:text-base font-medium text-muted-foreground">FI Issues</div>
             </div>
           </div>
           
@@ -228,47 +223,53 @@ This analysis is for guidance only and must be verified by a qualified electrici
             <div className="space-y-4 sm:space-y-5">
               {analysisResult.findings.map((finding, index) => (
                 <div key={index} className="border border-border rounded-lg p-4 sm:p-5 space-y-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex flex-col gap-3 mb-3">
-                        <div className="flex items-center gap-2.5 flex-wrap">
-                          <Badge className={`${getEicrCodeColor(finding.eicr_code)} text-base sm:text-sm px-3 py-1`}>
-                            {finding.eicr_code}
-                          </Badge>
-                          <Badge variant="outline" className="text-sm px-2.5 py-1">
-                            {Math.round(finding.confidence * 100)}% confident
-                          </Badge>
-                        </div>
-                        <span className="text-sm sm:text-base text-muted-foreground font-medium">
-                          {getEicrCodeDescription(finding.eicr_code)}
-                        </span>
+                  <div className="space-y-4">
+                    {/* Header with badges */}
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center gap-2.5 flex-wrap">
+                        <Badge className={`${getEicrCodeColor(finding.eicr_code)} text-base sm:text-lg px-4 py-1.5 font-bold`}>
+                          {finding.eicr_code}
+                        </Badge>
+                        <Badge variant="outline" className="text-sm sm:text-base px-3 py-1.5">
+                          {Math.round(finding.confidence * 100)}% confident
+                        </Badge>
                       </div>
-                      <p className="font-medium text-foreground text-base sm:text-lg mb-3 leading-snug">{finding.description}</p>
-                      {finding.location && (
-                        <p className="text-sm text-muted-foreground mb-2">Location: {finding.location}</p>
-                      )}
-                      
-                      {/* BS 7671 Clauses */}
-                      {finding.bs7671_clauses.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mb-2">
+                      <span className="text-base sm:text-lg text-muted-foreground font-medium leading-relaxed">
+                        {getEicrCodeDescription(finding.eicr_code)}
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="font-medium text-foreground text-base sm:text-lg leading-relaxed">{finding.description}</p>
+                    
+                    {/* Location */}
+                    {finding.location && (
+                      <p className="text-sm sm:text-base text-muted-foreground">
+                        <span className="font-medium">Location:</span> {finding.location}
+                      </p>
+                    )}
+                    
+                    {/* BS 7671 Regulations */}
+                    {finding.bs7671_clauses.length > 0 && (
+                      <div className="space-y-2">
+                        <h4 className="text-sm sm:text-base font-semibold text-foreground">BS 7671 Regulations:</h4>
+                        <div className="flex flex-wrap gap-2">
                           {finding.bs7671_clauses.map((clause, idx) => (
-                            <Badge key={idx} variant="secondary" className="text-xs">
-                              BS 7671: {clause}
+                            <Badge key={idx} variant="secondary" className="text-sm sm:text-base px-3 py-1.5 font-mono">
+                              Reg {clause}
                             </Badge>
                           ))}
                         </div>
-                      )}
-                      
-                      {/* Fix Guidance */}
-                      <div className="bg-accent/10 rounded-lg p-4 mt-3">
-                        <div className="flex items-center gap-2.5 mb-3">
-                          <Wrench className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
-                          <span className="font-medium text-sm sm:text-base">How to Fix</span>
-                        </div>
-                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{finding.fix_guidance}</p>
                       </div>
-                    </div>
+                    )}
                     
+                    {/* Recommended Fix */}
+                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 space-y-2">
+                      <h4 className="font-semibold text-sm sm:text-base text-blue-700 dark:text-blue-400">
+                        Recommended Fix
+                      </h4>
+                      <p className="text-sm sm:text-base text-foreground leading-relaxed">{finding.fix_guidance}</p>
+                    </div>
                   </div>
                 </div>
               ))}
