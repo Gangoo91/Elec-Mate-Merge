@@ -280,7 +280,7 @@ export const EnhancedResultsPage = ({
   return (
     <div className="space-y-4 md:space-y-6">
       {/* Mobile-First Header */}
-      <Card className="p-4 md:p-6 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border-elec-yellow/30">
+      <Card className="p-4 md:p-5 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border-elec-yellow/30">
         <div className="space-y-4">
           <div className="flex items-start gap-3">
             <div className="w-12 h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
@@ -296,7 +296,7 @@ export const EnhancedResultsPage = ({
 
           <div className="space-y-3">
             {/* Document Selection */}
-            <div className="bg-elec-card border border-elec-yellow/20 rounded-lg p-3">
+            <div className="bg-elec-card border border-elec-yellow/20 rounded-lg p-3 md:p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-foreground">Select Documents to Export</span>
                 <Button
@@ -366,31 +366,36 @@ export const EnhancedResultsPage = ({
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-2">
+            {/* Action Buttons - Redesigned */}
+            <div className="space-y-2">
+              {/* Primary Action - Full Width */}
               <Button 
                 variant="default" 
-                size="default" 
+                size="lg" 
                 onClick={handleExportWithValidation} 
                 disabled={selectedDocuments.size === 0}
-                className="flex-1 sm:flex-none min-h-[44px]"
+                className="w-full min-h-[48px] bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Export Package ({selectedDocuments.size} of 6)
               </Button>
-              <WhatsAppShareButton
-                projectId={projectId || 'temp'}
-                projectName={projectName}
-              />
-              <Button 
-                variant="outline" 
-                size="default" 
-                onClick={onNewConsultation} 
-                className="flex-1 sm:flex-none min-h-[44px]"
-              >
-                <RotateCcw className="w-4 h-4 mr-2" />
-                New Consultation
-              </Button>
+              
+              {/* Secondary Actions - Side by Side on Desktop */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <WhatsAppShareButton
+                  projectId={projectId || 'temp'}
+                  projectName={projectName}
+                />
+                <Button 
+                  variant="outline" 
+                  size="default" 
+                  onClick={onNewConsultation} 
+                  className="min-h-[44px] w-full"
+                >
+                  <RotateCcw className="w-4 h-4 mr-2" />
+                  New Consultation
+                </Button>
+              </div>
             </div>
           </div>
         </div>
