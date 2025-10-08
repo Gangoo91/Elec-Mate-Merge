@@ -62,6 +62,8 @@ interface Message {
   activeAgents?: string[];
   agentName?: string;
   isTyping?: boolean;
+  hasError?: boolean;
+  retryUserMessage?: string;
 }
 
 interface IntelligentAIPlannerProps {
@@ -293,15 +295,23 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       console.error('AI conversation error:', error);
       const errorMsg = error instanceof Error ? error.message : 'Unknown error';
       
-      // Remove acknowledgment message and replace with error
+      // Remove acknowledgment message and "Analyzing..." messages
       setMessages(prev => {
-        const filtered = prev.filter((_, i) => i !== acknowledgmentIndex);
+        const filtered = prev.filter((_, i) => {
+          // Keep user message but remove acknowledgment and agent analyzing messages
+          if (i === acknowledgmentIndex) return false;
+          const msg = prev[i];
+          if (msg.role === 'assistant' && msg.isTyping) return false;
+          return true;
+        });
         return [...filtered, { 
           role: 'assistant', 
-          content: `Sorry mate, hit a snag: ${errorMsg}. Can you try that again?` 
-        }];
+          content: `Sorry mate, hit a snag: ${errorMsg}. Click below to try again.`,
+          hasError: true
+        } as any];
       });
       setStreamingMessageIndex(null);
+      setReasoningSteps([]);
     } finally {
       setIsLoading(false);
       setCurrentAction("");
@@ -818,6 +828,32 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   <p className="text-[15px] whitespace-pre-wrap leading-[1.7] text-left">
                     {message.content}
                   </p>
+                )}
+
+                {/* Error with retry button */}
+                {message.role === 'assistant' && message.hasError && (
+                  <>
+                    <p className="text-[15px] text-white/95 leading-[1.7] text-left mb-3">
+                      {message.content}
+                    </p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        // Find the last user message and retry it
+                        const lastUserMsg = [...messages].reverse().find(m => m.role === 'user');
+                        if (lastUserMsg) {
+                          setInput(lastUserMsg.content);
+                          setTimeout(() => handleSend(), 100);
+                        }
+                      }}
+                      disabled={isLoading || isStreaming}
+                      className="h-8 text-xs bg-elec-yellow/10 hover:bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow"
+                    >
+                      <RotateCcw className="h-3 w-3 mr-1" />
+                      Retry
+                    </Button>
+                  </>
                 )}
 
                 {/* Citations */}
