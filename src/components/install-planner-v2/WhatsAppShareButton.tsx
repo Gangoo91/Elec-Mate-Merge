@@ -102,7 +102,7 @@ export const WhatsAppShareButton = ({
           variant="outline"
           size="default"
           disabled={isGenerating}
-          className="gap-2 min-h-[44px] flex-1 sm:flex-none border-green-600/30 hover:bg-green-600/10 hover:border-green-600/50 transition-colors"
+          className="gap-2 min-h-[44px] w-full border-green-600/30 hover:bg-green-600/10 hover:border-green-600/50 transition-colors"
         >
           <Share2 className="h-4 w-4 text-green-600" />
           <span className="text-foreground">Share</span>
