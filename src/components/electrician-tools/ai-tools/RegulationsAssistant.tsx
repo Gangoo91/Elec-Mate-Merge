@@ -8,11 +8,14 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import RegulationSources from "./RegulationSources";
 
 const RegulationsAssistant = () => {
   const [query, setQuery] = useState("");
   const [regResult, setRegResult] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [ragRegulations, setRagRegulations] = useState<any[]>([]);
+  const [searchMethod, setSearchMethod] = useState<string>("");
 
   const handleRegulationSearch = async () => {
     if (query.trim() === "") {
@@ -26,12 +29,30 @@ const RegulationsAssistant = () => {
 
     setIsSearching(true);
     setRegResult("");
+    setRagRegulations([]);
+    setSearchMethod("");
 
     try {
+      // First, get RAG regulations
+      const { data: ragData, error: ragError } = await supabase.functions.invoke('bs7671-rag-search', {
+        body: {
+          query,
+          matchThreshold: 0.6,
+          matchCount: 10
+        }
+      });
+
+      if (!ragError && ragData?.regulations) {
+        setRagRegulations(ragData.regulations);
+        setSearchMethod(ragData.searchMethod || 'vector');
+      }
+      
+      // Then get AI interpretation
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: { 
           prompt: query,
-          type: "regulations"
+          type: "regulations",
+          use_rag: true
         },
       });
       
@@ -209,6 +230,13 @@ const RegulationsAssistant = () => {
                 );
               }).filter(Boolean)}
             </div>
+          </div>
+        )}
+
+        {/* RAG Sources */}
+        {ragRegulations.length > 0 && !isSearching && (
+          <div className="mt-4">
+            <RegulationSources regulations={ragRegulations} searchMethod={searchMethod} />
           </div>
         )}
       </CardContent>

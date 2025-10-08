@@ -27,7 +27,41 @@ serve(async (req) => {
     }
 
     const requestBody = await req.json();
-    const { prompt, type = "general", primary_image, additional_images = [], context = {} } = requestBody;
+    const { prompt, type = "general", primary_image, additional_images = [], context = {}, use_rag = false } = requestBody;
+    
+    // Fetch regulations from RAG if requested
+    let ragRegulations: any[] = [];
+    if (use_rag && prompt && !primary_image) {
+      console.log('🔍 Fetching BS 7671 regulations via RAG...');
+      try {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+        const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+        
+        const ragResponse = await fetch(`${supabaseUrl}/functions/v1/bs7671-rag-search`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${supabaseKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: prompt,
+            matchThreshold: 0.6,
+            matchCount: 5
+          })
+        });
+        
+        if (ragResponse.ok) {
+          const ragData = await ragResponse.json();
+          ragRegulations = ragData.regulations || [];
+          console.log('✅ Retrieved', ragRegulations.length, 'regulations from RAG');
+        } else {
+          console.warn('⚠️ RAG search failed, continuing without regulation context');
+        }
+      } catch (ragError) {
+        console.error('❌ RAG error:', ragError);
+        // Continue without RAG if it fails
+      }
+    }
 
     if (!prompt && !primary_image) {
       return new Response(
@@ -196,8 +230,20 @@ serve(async (req) => {
         break;
 
       case "structured_assistant":
+        const ragContext = ragRegulations.length > 0 ? `
+CONTEXT FROM BS 7671 DATABASE:
+${ragRegulations.map(reg => `
+[${reg.regulation_number}] ${reg.section}
+${reg.content}
+Amendment: ${reg.amendment || 'N/A'}
+Confidence: ${Math.round(reg.similarity * 100)}%
+`).join('\n---\n')}
+` : '';
+        
         systemMessage = `
           You are ElectricalMate, an expert AI assistant specialising in UK electrical regulations, standards, and practices, with deep knowledge of BS 7671 18th Edition including Amendment 3 (2024).
+          
+          ${ragContext ? ragContext + '\nIMPORTANT: Base your response primarily on the BS 7671 database context provided above. Always cite specific regulation numbers when using this context.\n' : ''}
           
           CRITICAL JSON FORMATTING RULES:
           1. Return ONLY raw JSON - NO markdown code blocks, NO backticks, NO \`\`\`json wrapper

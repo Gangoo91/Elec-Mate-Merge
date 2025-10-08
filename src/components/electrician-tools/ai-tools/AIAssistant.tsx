@@ -6,6 +6,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import RegulationSources from "./RegulationSources";
 
 const AIAssistant = () => {
   const [prompt, setPrompt] = useState("");
@@ -14,6 +17,9 @@ const AIAssistant = () => {
   const [practicalGuidanceResult, setPracticalGuidanceResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(true);
+  const [useRAG, setUseRAG] = useState(true);
+  const [ragRegulations, setRagRegulations] = useState<any[]>([]);
+  const [searchMethod, setSearchMethod] = useState<string>("");
 
   // Helper function to process content and format it properly
   const processContent = (content: string, colorTheme: 'blue' | 'purple' | 'green') => {
@@ -137,12 +143,15 @@ const AIAssistant = () => {
     setAnalysisResult("");
     setRegulationsResult("");
     setPracticalGuidanceResult("");
+    setRagRegulations([]);
+    setSearchMethod("");
     
     try {
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: { 
           prompt: prompt,
-          type: "structured_assistant" 
+          type: "structured_assistant",
+          use_rag: useRAG
         },
       });
       
@@ -152,6 +161,12 @@ const AIAssistant = () => {
       
       if (data.error) {
         throw new Error(data.error);
+      }
+      
+      // Store RAG regulations if available
+      if (data.rag_regulations) {
+        setRagRegulations(data.rag_regulations);
+        setSearchMethod(data.search_method || 'vector');
       }
       
       // Handle structured responses with three sections
@@ -250,15 +265,30 @@ const AIAssistant = () => {
           
           <CardContent className="p-4 sm:p-6 pt-0 space-y-4 sm:space-y-6">
             {/* Input Area */}
-            <div className="space-y-3 sm:space-y-4">
-              <Textarea
-                placeholder="e.g. 'What are the RCD requirements for bathrooms?' or 'How do I test earth fault loop impedance?'"
-                className="min-h-[80px] sm:min-h-[100px] bg-neutral-700/50 border-neutral-600 focus:border-purple-400 text-white placeholder:text-gray-400 resize-none text-sm sm:text-base"
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-              />
-              
-              <div className="flex gap-2 sm:gap-3">
+              <div className="space-y-3 sm:space-y-4">
+                <Textarea
+                  placeholder="e.g. 'What are the RCD requirements for bathrooms?' or 'How do I test earth fault loop impedance?'"
+                  className="min-h-[80px] sm:min-h-[100px] bg-neutral-700/50 border-neutral-600 focus:border-purple-400 text-white placeholder:text-gray-400 resize-none text-sm sm:text-base"
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                />
+                
+                <div className="flex items-center justify-between p-3 bg-neutral-800/40 rounded-lg border border-purple-500/20">
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="h-4 w-4 text-purple-400" />
+                    <Label htmlFor="use-rag" className="text-white text-sm cursor-pointer">
+                      Search BS 7671 Database
+                    </Label>
+                  </div>
+                  <Switch
+                    id="use-rag"
+                    checked={useRAG}
+                    onCheckedChange={setUseRAG}
+                    className="data-[state=checked]:bg-purple-600"
+                  />
+                </div>
+                
+                <div className="flex gap-2 sm:gap-3">
                 <Button 
                   className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 sm:py-3 h-10 sm:h-12 text-sm sm:text-base" 
                   onClick={handleAIQuery} 
@@ -326,6 +356,13 @@ const AIAssistant = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* RAG Sources */}
+        {ragRegulations.length > 0 && !isLoading && showResults && (
+          <div className="w-full max-w-7xl mx-auto">
+            <RegulationSources regulations={ragRegulations} searchMethod={searchMethod} />
+          </div>
+        )}
 
         {/* Results - Vertical stack on mobile, grid on desktop */}
         {(analysisResult || regulationsResult || practicalGuidanceResult) && !isLoading && showResults && (

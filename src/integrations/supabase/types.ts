@@ -5246,8 +5246,10 @@ export type Database = {
           query_embedding: string
         }
         Returns: {
+          amendment: string
           content: string
           id: string
+          metadata: Json
           regulation_number: string
           section: string
           similarity: number
