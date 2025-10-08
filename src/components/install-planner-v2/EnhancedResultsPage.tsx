@@ -1,4 +1,4 @@
-import { useState, useMemo, memo } from "react";
+import { useState, useMemo, memo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,13 @@ import { useNavigate } from "react-router-dom";
 import { Quote } from "@/types/quote";
 import { ProjectDetailsForm } from "./ProjectDetailsForm";
 import { CircuitDrawingsDisplay } from "./CircuitDrawingsDisplay";
-import { useEffect } from "react";
+import { 
+  MobileAccordion, 
+  MobileAccordionItem, 
+  MobileAccordionTrigger, 
+  MobileAccordionContent 
+} from "@/components/ui/mobile-accordion";
+import { FileText, Zap, Users, ClipboardList, Wrench } from "lucide-react";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -62,7 +68,6 @@ export const EnhancedResultsPage = ({
   onNewConsultation,
   onReEngageAgent
 }: EnhancedResultsPageProps) => {
-  // Start with all collapsed for performance (mobile-first)
   const [expandedAgents, setExpandedAgents] = useState<Set<string>>(new Set());
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedDocuments, setSelectedDocuments] = useState<Set<string>>(
@@ -73,8 +78,9 @@ export const EnhancedResultsPage = ({
   const [clientDetails, setClientDetails] = useState<any>(null);
   const [companyDetails, setCompanyDetails] = useState<any>(null);
   const [detailsComplete, setDetailsComplete] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  // Load saved details from localStorage on mount
+  // Load saved details and handle resize
   useEffect(() => {
     const storageKey = `elecmate_project_details_${projectId || 'temp'}`;
     const saved = localStorage.getItem(storageKey);
@@ -84,6 +90,10 @@ export const EnhancedResultsPage = ({
       setCompanyDetails(savedCompany);
       setDetailsComplete(!!savedClient?.clientName && !!savedClient?.propertyAddress && !!savedCompany?.companyName);
     }
+    
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [projectId]);
 
   // Memoize filtered messages
@@ -386,290 +396,373 @@ export const EnhancedResultsPage = ({
         </div>
       </Card>
 
-      {/* Mobile-Optimized Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-6 h-auto">
-          <TabsTrigger value="overview" className="text-xs sm:text-sm py-2.5">Overview</TabsTrigger>
-          <TabsTrigger value="details" className="text-xs sm:text-sm py-2.5">
-            Details {detailsComplete && "✓"}
-          </TabsTrigger>
-          <TabsTrigger value="circuits" className="text-xs sm:text-sm py-2.5">
-            Circuits ({circuits.length})
-          </TabsTrigger>
-          <TabsTrigger value="drawings" className="text-xs sm:text-sm py-2.5">Diagrams</TabsTrigger>
-          <TabsTrigger value="testing" className="text-xs sm:text-sm py-2.5">Testing</TabsTrigger>
-          <TabsTrigger value="specialists" className="text-xs sm:text-sm py-2.5">Specialists</TabsTrigger>
-        </TabsList>
-
-        {/* Overview Tab */}
-        <TabsContent value="overview" className="space-y-4 mt-4">
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base md:text-lg">Project Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm md:text-base leading-relaxed text-foreground">
-                {projectDescription}
-              </p>
-              
-              <div className="grid grid-cols-2 gap-3 md:gap-4 mt-4">
-                <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
-                  <div className="text-3xl font-bold text-elec-yellow">{circuits.length}</div>
-                  <div className="text-xs text-muted-foreground mt-1">Circuits Designed</div>
-                </div>
-                <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
-                  <div className="text-3xl font-bold text-elec-yellow">{selectedAgents.length}</div>
-                  <div className="text-xs text-muted-foreground mt-1">Specialists Used</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Project Details Tab */}
-        <TabsContent value="details" className="mt-4">
-          <ProjectDetailsForm
-            projectId={projectId}
-            onDetailsSaved={handleDetailsSaved}
-          />
-        </TabsContent>
-
-        {/* Circuits Tab */}
-        <TabsContent value="circuits" className="space-y-3 mt-4">
-          {circuits.length > 0 ? (
-            circuits.map((circuit, idx) => (
-              <Card key={circuit.id} className="p-4 md:p-5">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-foreground text-base">
-                      Circuit {idx + 1}: {circuit.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mt-1">Load: {circuit.load}W</p>
+      {/* Responsive Navigation: Accordion on Mobile, Tabs on Desktop */}
+      {isMobile ? (
+        <MobileAccordion type="single" collapsible defaultValue="overview" className="w-full space-y-2">
+          {/* Overview Section */}
+          <MobileAccordionItem value="overview">
+            <MobileAccordionTrigger icon={<Lightbulb className="w-5 h-5" />}>
+              Overview
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base">Project Summary</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-sm leading-relaxed">{projectDescription}</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
+                      <div className="text-3xl font-bold text-elec-yellow">{circuits.length}</div>
+                      <div className="text-xs text-muted-foreground mt-1">Circuits</div>
+                    </div>
+                    <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
+                      <div className="text-3xl font-bold text-elec-yellow">{selectedAgents.length}</div>
+                      <div className="text-xs text-muted-foreground mt-1">Specialists</div>
+                    </div>
                   </div>
-                  <Badge variant="secondary" className="ml-2 flex-shrink-0">
-                    {circuit.mcbRating || 'N/A'}
-                  </Badge>
-                </div>
-                
-                <div className="space-y-2.5 text-sm md:text-base">
-                  {circuit.cableSize && (
-                    <div className="flex justify-between items-center py-1">
-                      <span className="text-muted-foreground">Cable Size:</span>
-                      <span className="font-medium text-foreground">{circuit.cableSize}</span>
-                    </div>
-                  )}
-                  {circuit.protection && (
-                    <div className="flex justify-between items-center py-1">
-                      <span className="text-muted-foreground">Protection:</span>
-                      <span className="font-medium text-foreground">{circuit.protection}</span>
-                    </div>
-                  )}
-                </div>
+                </CardContent>
               </Card>
-            ))
-          ) : (
-            <Card className="p-8 md:p-12 text-center">
-              <p className="text-muted-foreground text-base">No circuits designed yet.</p>
-            </Card>
-          )}
-        </TabsContent>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
 
-        {/* Drawings Tab */}
-        <TabsContent value="drawings" className="mt-4">
-          <CircuitDrawingsDisplay 
-            messages={messages}
-            projectName={projectName}
-          />
-        </TabsContent>
+          {/* Details Section */}
+          <MobileAccordionItem value="details">
+            <MobileAccordionTrigger icon={<FileText className="w-5 h-5" />}>
+              Details {detailsComplete && "✓"}
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <ProjectDetailsForm projectId={projectId} onDetailsSaved={handleDetailsSaved} />
+            </MobileAccordionContent>
+          </MobileAccordionItem>
 
-        {/* Testing Tab - EIC Schedule & Documentation */}
-        <TabsContent value="testing" className="mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base md:text-lg">Testing & Commissioning Documentation</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Electrical Installation Certificate (EIC) schedule generation and testing guidance coming soon.
-                This will include pre-calculated test values, BS 7671 compliance checks, and downloadable PDF schedules.
-              </p>
-              <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
-                <h4 className="font-medium text-sm mb-2">Placeholder - Available Soon:</h4>
-                <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
-                  <li>Pre-populated EIC test schedule with expected values</li>
-                  <li>R1+R2 calculations for each circuit</li>
-                  <li>Zs verification and maximum disconnection times</li>
-                  <li>Insulation resistance test guidance</li>
-                  <li>RCD testing parameters (where applicable)</li>
-                  <li>Downloadable PDF in BS 7671 compliant format</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Specialists Tab - Mobile-First Design */}
-        <TabsContent value="specialists" className="space-y-3 mt-4">
-          {/* Expand/Collapse All Toggle */}
-          <div className="flex justify-end mb-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={allExpanded ? collapseAll : expandAll}
-              className="gap-2 min-h-[44px]"
-            >
-              {allExpanded ? (
-                <>
-                  <Minimize2 className="h-4 w-4" />
-                  Collapse All
-                </>
-              ) : (
-                <>
-                  <Maximize2 className="h-4 w-4" />
-                  Expand All
-                </>
-              )}
-            </Button>
-          </div>
-
-          {selectedAgents.length > 0 ? (
-            selectedAgents.map((agentId) => {
-              const agent = AGENT_INFO[agentId];
-              const agentMessages = messages.filter(m => m.agentName === agentId);
-              const hasContent = agentMessages.length > 0;
-              const isExpanded = expandedAgents.has(agentId);
-              const lastResponse = agentMessages[agentMessages.length - 1]?.content || '';
-              
-              return (
-                <Card key={agentId} className="overflow-hidden">
-                  <Collapsible open={isExpanded} onOpenChange={() => toggleAgent(agentId)}>
-                    <CollapsibleTrigger className="w-full min-h-[60px] touch-manipulation">
-                      <div className="p-4 md:p-5 flex items-center justify-between hover:bg-accent/50 transition-colors">
-                        <div className="flex items-center gap-3 flex-1 min-w-0">
-                          <div className={`w-12 h-12 rounded-full ${agent?.color || 'bg-muted'} flex items-center justify-center flex-shrink-0`}>
-                            <span className="text-2xl">{agent?.emoji || '👤'}</span>
-                          </div>
-                          <div className="text-left flex-1 min-w-0">
-                            <h3 className="font-semibold text-base text-foreground">
-                              {agent?.name || agentId}
-                            </h3>
-                            <p className="text-xs text-muted-foreground mt-0.5">
-                              {hasContent ? 'Tap to view details' : 'No response recorded'}
-                            </p>
-                          </div>
+          {/* Circuits Section */}
+          <MobileAccordionItem value="circuits">
+            <MobileAccordionTrigger icon={<Zap className="w-5 h-5" />}>
+              Circuits ({circuits.length})
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="space-y-3">
+                {circuits.length > 0 ? (
+                  circuits.map((circuit, idx) => (
+                    <Card key={circuit.id} className="p-4">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-base">Circuit {idx + 1}: {circuit.name}</h3>
+                          <p className="text-sm text-muted-foreground mt-1">Load: {circuit.load}W</p>
                         </div>
-                        <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-                          <Badge variant={hasContent ? 'default' : 'secondary'}>
-                            {hasContent ? 'Complete' : 'Pending'}
-                          </Badge>
-                          <ChevronDown 
-                            className={`w-5 h-5 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
-                          />
-                        </div>
+                        <Badge variant="secondary" className="ml-2 flex-shrink-0">{circuit.mcbRating || 'N/A'}</Badge>
                       </div>
-                    </CollapsibleTrigger>
-                    
-                    <CollapsibleContent>
-                      <div className="px-4 md:px-5 pb-4 md:pb-5 space-y-4 border-t border-border pt-4">
-                        {hasContent ? (
-                          <>
-                            <AgentResponseRenderer 
-                              content={lastResponse} 
-                              agentId={agentId}
-                            />
-                            
-                            {/* Agent-Specific Action Buttons */}
-                            <div className="flex flex-col sm:flex-row gap-2 mt-4 pt-4 border-t border-border">
-                              {agentId === 'designer' && (
-                                <Button
-                                  variant="default"
-                                  size="default"
-                                  onClick={handleDownloadDesignPDF}
-                                  className="flex-1 min-h-[44px]"
-                                >
-                                  <FileDown className="w-4 h-4 mr-2" />
-                                  Download Cable Design PDF
-                                </Button>
-                              )}
-                              
-                              {agentId === 'cost-engineer' && (
-                                <>
-                                  <Button
-                                    variant="default"
-                                    size="default"
-                                    onClick={handleSendToQuoteHub}
-                                    className="flex-1 min-h-[44px]"
-                                  >
-                                    <Send className="w-4 h-4 mr-2" />
-                                    Send to Quote Hub
-                                  </Button>
-                                  <Button
-                                    variant="outline"
-                                    size="default"
-                                    onClick={() => window.open('/quote-hub', '_blank')}
-                                    className="flex-1 min-h-[44px]"
-                                  >
-                                    <ExternalLink className="w-4 h-4 mr-2" />
-                                    Open Quote Hub
-                                  </Button>
-                                </>
-                              )}
-                              
-                              {(agentId === 'installer' || agentId === 'health-safety') && (
-                                <Button
-                                  variant="default"
-                                  size="default"
-                                  onClick={handleDownloadRAMS}
-                                  className="flex-1 min-h-[44px]"
-                                >
-                                  <Shield className="w-4 h-4 mr-2" />
-                                  Download RAMS PDF
-                                </Button>
-                              )}
-                              
-                              {agentId === 'commissioning' && (
-                                <Button
-                                  variant="default"
-                                  size="default"
-                                  onClick={handleSendToTestSheet}
-                                  className="flex-1 min-h-[44px]"
-                                >
-                                  <ClipboardCheck className="w-4 h-4 mr-2" />
-                                  Send to Test Sheet
-                                </Button>
-                              )}
-                            </div>
-                            
-                            {onReEngageAgent && (
-                              <Button
-                                variant="outline"
-                                size="default"
-                                onClick={() => onReEngageAgent(agentId)}
-                                className="w-full min-h-[44px]"
-                              >
-                                <MessageSquare className="w-4 h-4 mr-2" />
-                                Ask {agent?.name} a Follow-up
-                              </Button>
-                            )}
-                          </>
-                        ) : (
-                          <p className="text-sm text-muted-foreground text-center py-6">
-                            This specialist was not consulted during this session.
-                          </p>
+                      <div className="space-y-2 text-sm">
+                        {circuit.cableSize && (
+                          <div className="flex justify-between items-center py-1">
+                            <span className="text-muted-foreground">Cable Size:</span>
+                            <span className="font-medium">{circuit.cableSize}</span>
+                          </div>
+                        )}
+                        {circuit.protection && (
+                          <div className="flex justify-between items-center py-1">
+                            <span className="text-muted-foreground">Protection:</span>
+                            <span className="font-medium">{circuit.protection}</span>
+                          </div>
                         )}
                       </div>
-                    </CollapsibleContent>
-                  </Collapsible>
-                </Card>
-              );
-            })
-          ) : (
-            <Card className="p-8 md:p-12 text-center">
-              <p className="text-muted-foreground text-base">No specialists selected for this consultation.</p>
+                    </Card>
+                  ))
+                ) : (
+                  <Card className="p-8 text-center">
+                    <p className="text-muted-foreground">No circuits designed yet.</p>
+                  </Card>
+                )}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          {/* Diagrams Section */}
+          <MobileAccordionItem value="drawings">
+            <MobileAccordionTrigger icon={<ClipboardList className="w-5 h-5" />}>
+              Diagrams
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <CircuitDrawingsDisplay messages={messages} projectName={projectName} />
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          {/* Testing Section */}
+          <MobileAccordionItem value="testing">
+            <MobileAccordionTrigger icon={<Shield className="w-5 h-5" />}>
+              Testing
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">Testing & Commissioning</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    EIC schedule generation and testing guidance coming soon.
+                  </p>
+                  <div className="p-3 rounded-lg bg-elec-card border border-elec-yellow/20">
+                    <h4 className="font-medium text-sm mb-2">Available Soon:</h4>
+                    <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                      <li>Pre-populated EIC test schedule</li>
+                      <li>R1+R2 calculations</li>
+                      <li>Zs verification</li>
+                      <li>Insulation resistance tests</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          {/* Specialists Section */}
+          <MobileAccordionItem value="specialists">
+            <MobileAccordionTrigger icon={<Users className="w-5 h-5" />}>
+              Specialists
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="space-y-3">
+                {selectedAgents.length > 0 ? (
+                  selectedAgents.map((agentId) => {
+                    const agent = AGENT_INFO[agentId];
+                    const agentMessages = messages.filter(m => m.agentName === agentId);
+                    const hasContent = agentMessages.length > 0;
+                    const isExpanded = expandedAgents.has(agentId);
+                    const lastResponse = agentMessages[agentMessages.length - 1]?.content || '';
+                    
+                    return (
+                      <Card key={agentId}>
+                        <Collapsible open={isExpanded} onOpenChange={() => toggleAgent(agentId)}>
+                          <CollapsibleTrigger className="w-full min-h-[60px]">
+                            <div className="p-4 flex items-center justify-between hover:bg-accent/50">
+                              <div className="flex items-center gap-3 flex-1">
+                                <div className={`w-10 h-10 rounded-full ${agent?.color || 'bg-muted'} flex items-center justify-center`}>
+                                  <span className="text-xl">{agent?.emoji || '👤'}</span>
+                                </div>
+                                <div className="text-left flex-1">
+                                  <h3 className="font-semibold text-sm">{agent?.name || agentId}</h3>
+                                  <p className="text-xs text-muted-foreground">{hasContent ? 'View details' : 'No response'}</p>
+                                </div>
+                              </div>
+                              <ChevronDown className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                            </div>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent>
+                            <div className="px-4 pb-4 space-y-3 border-t pt-3">
+                              {hasContent ? (
+                                <>
+                                  <AgentResponseRenderer content={lastResponse} agentId={agentId} />
+                                  {agentId === 'designer' && (
+                                    <Button onClick={handleDownloadDesignPDF} className="w-full min-h-[44px]">
+                                      <FileDown className="w-4 h-4 mr-2" />Download Design PDF
+                                    </Button>
+                                  )}
+                                </>
+                              ) : (
+                                <p className="text-sm text-muted-foreground text-center py-4">Not consulted</p>
+                              )}
+                            </div>
+                          </CollapsibleContent>
+                        </Collapsible>
+                      </Card>
+                    );
+                  })
+                ) : (
+                  <Card className="p-8 text-center">
+                    <p className="text-muted-foreground">No specialists selected.</p>
+                  </Card>
+                )}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        </MobileAccordion>
+      ) : (
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-6 h-auto">
+            <TabsTrigger value="overview" className="text-sm py-2.5">Overview</TabsTrigger>
+            <TabsTrigger value="details" className="text-sm py-2.5">Details {detailsComplete && "✓"}</TabsTrigger>
+            <TabsTrigger value="circuits" className="text-sm py-2.5">Circuits ({circuits.length})</TabsTrigger>
+            <TabsTrigger value="drawings" className="text-sm py-2.5">Diagrams</TabsTrigger>
+            <TabsTrigger value="testing" className="text-sm py-2.5">Testing</TabsTrigger>
+            <TabsTrigger value="specialists" className="text-sm py-2.5">Specialists</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview" className="space-y-4 mt-4">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">Project Summary</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-base leading-relaxed">{projectDescription}</p>
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
+                    <div className="text-3xl font-bold text-elec-yellow">{circuits.length}</div>
+                    <div className="text-xs text-muted-foreground mt-1">Circuits Designed</div>
+                  </div>
+                  <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
+                    <div className="text-3xl font-bold text-elec-yellow">{selectedAgents.length}</div>
+                    <div className="text-xs text-muted-foreground mt-1">Specialists Used</div>
+                  </div>
+                </div>
+              </CardContent>
             </Card>
-          )}
-        </TabsContent>
-      </Tabs>
+          </TabsContent>
+
+          <TabsContent value="details" className="mt-4">
+            <ProjectDetailsForm projectId={projectId} onDetailsSaved={handleDetailsSaved} />
+          </TabsContent>
+
+          <TabsContent value="circuits" className="space-y-3 mt-4">
+            {circuits.length > 0 ? (
+              circuits.map((circuit, idx) => (
+                <Card key={circuit.id} className="p-5">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-base">Circuit {idx + 1}: {circuit.name}</h3>
+                      <p className="text-sm text-muted-foreground mt-1">Load: {circuit.load}W</p>
+                    </div>
+                    <Badge variant="secondary" className="ml-2">{circuit.mcbRating || 'N/A'}</Badge>
+                  </div>
+                  <div className="space-y-2.5 text-base">
+                    {circuit.cableSize && (
+                      <div className="flex justify-between items-center py-1">
+                        <span className="text-muted-foreground">Cable Size:</span>
+                        <span className="font-medium">{circuit.cableSize}</span>
+                      </div>
+                    )}
+                    {circuit.protection && (
+                      <div className="flex justify-between items-center py-1">
+                        <span className="text-muted-foreground">Protection:</span>
+                        <span className="font-medium">{circuit.protection}</span>
+                      </div>
+                    )}
+                  </div>
+                </Card>
+              ))
+            ) : (
+              <Card className="p-12 text-center">
+                <p className="text-muted-foreground">No circuits designed yet.</p>
+              </Card>
+            )}
+          </TabsContent>
+
+          <TabsContent value="drawings" className="mt-4">
+            <CircuitDrawingsDisplay messages={messages} projectName={projectName} />
+          </TabsContent>
+
+          <TabsContent value="testing" className="mt-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Testing & Commissioning Documentation</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  EIC schedule generation and testing guidance coming soon.
+                </p>
+                <div className="p-4 rounded-lg bg-elec-card border border-elec-yellow/20">
+                  <h4 className="font-medium text-sm mb-2">Available Soon:</h4>
+                  <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
+                    <li>Pre-populated EIC test schedule</li>
+                    <li>R1+R2 calculations for each circuit</li>
+                    <li>Zs verification and disconnection times</li>
+                    <li>Insulation resistance test guidance</li>
+                    <li>RCD testing parameters</li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="specialists" className="space-y-3 mt-4">
+            <div className="flex justify-end mb-2">
+              <Button variant="outline" size="sm" onClick={allExpanded ? collapseAll : expandAll}>
+                {allExpanded ? <><Minimize2 className="h-4 w-4 mr-2" />Collapse All</> : <><Maximize2 className="h-4 w-4 mr-2" />Expand All</>}
+              </Button>
+            </div>
+            {selectedAgents.length > 0 ? (
+              selectedAgents.map((agentId) => {
+                const agent = AGENT_INFO[agentId];
+                const agentMessages = messages.filter(m => m.agentName === agentId);
+                const hasContent = agentMessages.length > 0;
+                const isExpanded = expandedAgents.has(agentId);
+                const lastResponse = agentMessages[agentMessages.length - 1]?.content || '';
+                
+                return (
+                  <Card key={agentId}>
+                    <Collapsible open={isExpanded} onOpenChange={() => toggleAgent(agentId)}>
+                      <CollapsibleTrigger className="w-full">
+                        <div className="p-5 flex items-center justify-between hover:bg-accent/50">
+                          <div className="flex items-center gap-3 flex-1">
+                            <div className={`w-12 h-12 rounded-full ${agent?.color || 'bg-muted'} flex items-center justify-center`}>
+                              <span className="text-2xl">{agent?.emoji || '👤'}</span>
+                            </div>
+                            <div className="text-left flex-1">
+                              <h3 className="font-semibold text-base">{agent?.name || agentId}</h3>
+                              <p className="text-xs text-muted-foreground">{hasContent ? 'Tap to view' : 'No response'}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge variant={hasContent ? 'default' : 'secondary'}>{hasContent ? 'Complete' : 'Pending'}</Badge>
+                            <ChevronDown className={`w-5 h-5 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                          </div>
+                        </div>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <div className="px-5 pb-5 space-y-4 border-t pt-4">
+                          {hasContent ? (
+                            <>
+                              <AgentResponseRenderer content={lastResponse} agentId={agentId} />
+                              <div className="flex flex-col sm:flex-row gap-2 mt-4 pt-4 border-t">
+                                {agentId === 'designer' && (
+                                  <Button onClick={handleDownloadDesignPDF} className="flex-1">
+                                    <FileDown className="w-4 h-4 mr-2" />Download Cable Design PDF
+                                  </Button>
+                                )}
+                                {agentId === 'cost-engineer' && (
+                                  <>
+                                    <Button onClick={handleSendToQuoteHub} className="flex-1">
+                                      <Send className="w-4 h-4 mr-2" />Send to Quote Hub
+                                    </Button>
+                                    <Button variant="outline" onClick={() => window.open('/quote-hub', '_blank')} className="flex-1">
+                                      <ExternalLink className="w-4 h-4 mr-2" />Open Quote Hub
+                                    </Button>
+                                  </>
+                                )}
+                                {(agentId === 'installer' || agentId === 'health-safety') && (
+                                  <Button onClick={handleDownloadRAMS} className="flex-1">
+                                    <Shield className="w-4 h-4 mr-2" />Download RAMS PDF
+                                  </Button>
+                                )}
+                                {agentId === 'commissioning' && (
+                                  <Button onClick={handleSendToTestSheet} className="flex-1">
+                                    <ClipboardCheck className="w-4 h-4 mr-2" />Send to Test Sheet
+                                  </Button>
+                                )}
+                              </div>
+                              {onReEngageAgent && (
+                                <Button variant="outline" onClick={() => onReEngageAgent(agentId)} className="w-full">
+                                  <MessageSquare className="w-4 h-4 mr-2" />Ask {agent?.name} a Follow-up
+                                </Button>
+                              )}
+                            </>
+                          ) : (
+                            <p className="text-sm text-muted-foreground text-center py-6">Not consulted in this session.</p>
+                          )}
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  </Card>
+                );
+              })
+            ) : (
+              <Card className="p-12 text-center">
+                <p className="text-muted-foreground">No specialists selected.</p>
+              </Card>
+            )}
+          </TabsContent>
+        </Tabs>
+      )}
     </div>
   );
 };
