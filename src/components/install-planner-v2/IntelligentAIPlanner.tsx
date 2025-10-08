@@ -23,6 +23,7 @@ import { useConversationPersistence } from "@/hooks/useConversationPersistence";
 import { InChatAgentSelector, AgentType } from "./InChatAgentSelector";
 import { PhotoUploadButton } from "./PhotoUploadButton";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 
 // Feature flag to toggle between orchestrator and legacy designer
 const USE_ORCHESTRATOR = true;
@@ -98,9 +99,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [currentAgent, setCurrentAgent] = useState<string | null>(null);
   const [nextAgent, setNextAgent] = useState<string | null>(null);
   const [selectedAgent, setSelectedAgent] = useState<AgentType | null>(null);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
   const navigate = useNavigate();
   
   const { sessionId, isSaving, lastSaved } = useConversationPersistence(messages, planData, activeAgents);
+
+  // Check if consultation has meaningful content
+  const hasMeaningfulContent = messages.length > 3;
 
   // Auto-populate pricing embeddings if empty
   useEffect(() => {
@@ -735,7 +740,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           <Button 
             variant="ghost" 
             size="sm" 
-            onClick={onReset} 
+            onClick={() => {
+              if (hasMeaningfulContent) {
+                setShowExitConfirm(true);
+              } else {
+                onReset();
+              }
+            }}
             className="text-xs text-elec-yellow hover:bg-elec-yellow/10"
           >
             New Chat
@@ -933,8 +944,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               <Button 
                 onClick={handleViewResults}
                 size="sm"
-                variant="outline"
-                className="text-xs h-9 border-elec-yellow/30 text-white bg-white/5 hover:bg-white/10"
+                className="text-xs h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold shadow-lg shadow-elec-yellow/20 animate-pulse"
               >
                 <CheckCircle2 className="h-3 w-3 mr-1" />
                 View Results
@@ -1020,6 +1030,21 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           </div>
         </div>
       </div>
+
+      {/* Exit Confirmation Dialog */}
+      <ConfirmationDialog
+        open={showExitConfirm}
+        onOpenChange={setShowExitConfirm}
+        title="Leave Consultation?"
+        description="You have an active consultation with design work in progress. Starting a new chat will clear the current session. Are you sure?"
+        confirmText="Start New Chat"
+        cancelText="Stay Here"
+        onConfirm={() => {
+          setShowExitConfirm(false);
+          onReset();
+        }}
+        variant="destructive"
+      />
     </div>
   );
 };

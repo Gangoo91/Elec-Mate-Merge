@@ -266,7 +266,7 @@ verify_jwt = false
 
 [functions.health-safety-agent]
 verify_jwt = false
-timeout_sec = 90
+timeout_sec = 120
 
 [functions.parse-nebosh-igc]
 verify_jwt = false

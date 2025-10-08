@@ -164,32 +164,46 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
       try {
         console.log(`🤖 Calling OpenAI (attempt ${retries + 1}/${maxRetries + 1})`);
         const openaiStartTime = Date.now();
+        
+        const requestBody = {
+          model: 'gpt-5-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: `${latestMessage}\n\nIMPORTANT: Respond with valid JSON matching the specified format.` }
+          ],
+          max_completion_tokens: 1500,
+          response_format: { type: "json_object" }
+        };
+        
+        console.log('📤 OpenAI Request:', JSON.stringify({ model: requestBody.model, messageCount: requestBody.messages.length }));
+        
         response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${openAIApiKey}`,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            model: 'gpt-5-2025-08-07',
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: `${latestMessage}\n\nIMPORTANT: Respond with valid JSON matching the specified format.` }
-            ],
-            max_completion_tokens: 1500, // Reduced from 3000 for faster response
-            response_format: { type: "json_object" }
-          }),
+          body: JSON.stringify(requestBody),
           signal: controller.signal
         });
 
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('OpenAI API error:', errorText);
+          console.error('❌ OpenAI API error:', { status: response.status, error: errorText });
           throw new Error(`OpenAI API error: ${response.status}`);
         }
 
-        data = await response.json();
-        content = data.choices[0]?.message?.content;
+        const rawResponse = await response.text();
+        console.log('📥 OpenAI Raw Response Length:', rawResponse.length);
+        
+        try {
+          data = JSON.parse(rawResponse);
+          content = data.choices[0]?.message?.content;
+        } catch (parseError) {
+          console.error('❌ JSON Parse Error:', parseError);
+          console.error('Raw response:', rawResponse.substring(0, 500));
+          throw new Error('Failed to parse OpenAI response');
+        }
 
         if (content) {
           console.log(`✅ OpenAI responded in ${Date.now() - openaiStartTime}ms`);
@@ -211,10 +225,28 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
     }
 
     if (!content) {
+      console.error('❌ No content received from OpenAI after all retries');
       throw new Error('No response from AI after 3 attempts');
     }
 
-    const parsedResponse = JSON.parse(content);
+    let parsedResponse;
+    try {
+      parsedResponse = JSON.parse(content);
+      console.log('✅ Successfully parsed OpenAI response');
+    } catch (parseError) {
+      console.error('❌ Failed to parse final content:', parseError);
+      console.error('Content:', content.substring(0, 500));
+      
+      // Fallback response if parsing fails
+      parsedResponse = {
+        response: "Safety assessment completed with limited detail. Standard electrical safety precautions apply.",
+        riskAssessment: { hazards: [] },
+        requiredPPE: ["Safety boots", "Hard hat", "Hi-vis vest"],
+        methodStatement: ["Isolate supply", "Test dead", "Lock off"],
+        emergencyProcedures: ["Call 999 in emergency"],
+        confidence: 0.5
+      };
+    }
 
     // Ensure structured output with ACOP citations
     const structuredResponse = {
