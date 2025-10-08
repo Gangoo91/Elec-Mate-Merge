@@ -9,6 +9,10 @@ export interface ParsedSection {
   items?: string[];
 }
 
+// Simple cache for parsed responses
+const parseCache = new Map<string, ParsedSection[]>();
+const MAX_CACHE_SIZE = 50;
+
 /**
  * Remove markdown formatting and clean agent text
  */
@@ -26,6 +30,16 @@ export const cleanAgentText = (text: string): string => {
  * Parse agent response into structured sections
  */
 export const parseAgentResponse = (text: string): ParsedSection[] => {
+  // Early return for empty content
+  if (!text || text.trim().length === 0) {
+    return [];
+  }
+  
+  // Check cache
+  if (parseCache.has(text)) {
+    return parseCache.get(text)!;
+  }
+  
   const sections: ParsedSection[] = [];
   const lines = text.split('\n');
   
@@ -121,6 +135,13 @@ export const parseAgentResponse = (text: string): ParsedSection[] => {
   // Flush remaining content
   flushParagraph();
   flushList();
+  
+  // Cache the result (limit cache size)
+  if (parseCache.size >= MAX_CACHE_SIZE) {
+    const firstKey = parseCache.keys().next().value;
+    parseCache.delete(firstKey);
+  }
+  parseCache.set(text, sections);
   
   return sections;
 };

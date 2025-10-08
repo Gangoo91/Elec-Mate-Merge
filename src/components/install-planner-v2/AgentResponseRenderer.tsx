@@ -1,13 +1,15 @@
 import { parseAgentResponse, ParsedSection } from "@/utils/agentTextProcessor";
 import { Separator } from "@/components/ui/separator";
+import { useMemo, memo } from "react";
 
 interface AgentResponseRendererProps {
   content: string;
   agentId?: string;
 }
 
-export const AgentResponseRenderer = ({ content, agentId }: AgentResponseRendererProps) => {
-  const sections = parseAgentResponse(content);
+export const AgentResponseRenderer = memo(({ content, agentId }: AgentResponseRendererProps) => {
+  // Memoize parsed sections - only re-parse if content changes
+  const sections = useMemo(() => parseAgentResponse(content), [content]);
   
   return (
     <div className="space-y-4 text-left">
@@ -16,9 +18,9 @@ export const AgentResponseRenderer = ({ content, agentId }: AgentResponseRendere
       ))}
     </div>
   );
-};
+});
 
-const SectionRenderer = ({ section, agentId }: { section: ParsedSection; agentId?: string }) => {
+const SectionRenderer = memo(({ section, agentId }: { section: ParsedSection; agentId?: string }) => {
   switch (section.type) {
     case 'header':
       return (
@@ -73,4 +75,4 @@ const SectionRenderer = ({ section, agentId }: { section: ParsedSection; agentId
     default:
       return null;
   }
-};
+});

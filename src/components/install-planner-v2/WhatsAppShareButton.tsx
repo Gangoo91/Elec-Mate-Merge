@@ -35,23 +35,15 @@ export const WhatsAppShareButton = ({
         if (onGenerateLink) {
           link = await onGenerateLink();
         } else {
-          // Generate share token
-          const shareToken = Math.random().toString(36).substring(2, 15);
-          const expiresAt = new Date();
-          expiresAt.setDate(expiresAt.getDate() + 7); // 7 days
-
-          const { error } = await supabase
-            .from('install_planner_results')
-            .update({
-              share_token: shareToken,
-              share_enabled: true,
-              share_expires_at: expiresAt.toISOString(),
-            })
-            .eq('id', projectId);
-
-          if (error) throw error;
-
-          link = `${window.location.origin}/shared/design/${shareToken}`;
+          // Generate share link without database (base64 encoded)
+          // For now, create a simple shareable link format
+          const shareData = {
+            projectId,
+            projectName,
+            timestamp: Date.now()
+          };
+          const encoded = btoa(JSON.stringify(shareData));
+          link = `${window.location.origin}/shared/design?data=${encoded}`;
         }
 
         if (link) {

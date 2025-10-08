@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useMemo, memo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Download, RotateCcw, Lightbulb, MessageSquare, ChevronDown, FileDown, Send, ExternalLink, Shield, ClipboardCheck } from "lucide-react";
+import { Download, RotateCcw, Lightbulb, MessageSquare, ChevronDown, FileDown, Send, ExternalLink, Shield, ClipboardCheck, Maximize2, Minimize2 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { WhatsAppShareButton } from "./WhatsAppShareButton";
 import { AgentResponseRenderer } from "./AgentResponseRenderer";
@@ -55,11 +55,13 @@ export const EnhancedResultsPage = ({
   onNewConsultation,
   onReEngageAgent
 }: EnhancedResultsPageProps) => {
-  const [expandedAgents, setExpandedAgents] = useState<Set<string>>(new Set(selectedAgents));
+  // Start with all collapsed for performance (mobile-first)
+  const [expandedAgents, setExpandedAgents] = useState<Set<string>>(new Set());
   const [activeTab, setActiveTab] = useState("overview");
 
-  const agentResponses = messages.filter(m => m.role === 'assistant' && m.agentName);
-  const userMessages = messages.filter(m => m.role === 'user');
+  // Memoize filtered messages
+  const agentResponses = useMemo(() => messages.filter(m => m.role === 'assistant' && m.agentName), [messages]);
+  const userMessages = useMemo(() => messages.filter(m => m.role === 'user'), [messages]);
   const projectDescription = userMessages[0]?.content || "Installation project";
 
   const toggleAgent = (agentId: string) => {
@@ -73,6 +75,17 @@ export const EnhancedResultsPage = ({
       return next;
     });
   };
+
+  // Expand/Collapse All functionality
+  const expandAll = () => {
+    setExpandedAgents(new Set(selectedAgents));
+  };
+
+  const collapseAll = () => {
+    setExpandedAgents(new Set());
+  };
+
+  const allExpanded = selectedAgents.every(id => expandedAgents.has(id));
 
   const getAgentResponse = (agentId: string): string => {
     const agentMessages = messages.filter(m => m.agentName === agentId);
@@ -271,6 +284,28 @@ export const EnhancedResultsPage = ({
 
         {/* Specialists Tab - Mobile-First Design */}
         <TabsContent value="specialists" className="space-y-3 mt-4">
+          {/* Expand/Collapse All Toggle */}
+          <div className="flex justify-end mb-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={allExpanded ? collapseAll : expandAll}
+              className="gap-2 min-h-[44px]"
+            >
+              {allExpanded ? (
+                <>
+                  <Minimize2 className="h-4 w-4" />
+                  Collapse All
+                </>
+              ) : (
+                <>
+                  <Maximize2 className="h-4 w-4" />
+                  Expand All
+                </>
+              )}
+            </Button>
+          </div>
+
           {selectedAgents.length > 0 ? (
             selectedAgents.map((agentId) => {
               const agent = AGENT_INFO[agentId];

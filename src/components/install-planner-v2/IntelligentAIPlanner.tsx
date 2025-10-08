@@ -24,6 +24,7 @@ import { InChatAgentSelector, AgentType } from "./InChatAgentSelector";
 import { PhotoUploadButton } from "./PhotoUploadButton";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import { v4 as uuidv4 } from 'uuid';
 
 // Feature flag to toggle between orchestrator and legacy designer
 const USE_ORCHESTRATOR = true;
