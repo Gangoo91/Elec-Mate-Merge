@@ -274,7 +274,7 @@ export const InspectorChatModal = ({
 
         {/* Messages */}
         <div 
-          className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 space-y-3 scroll-smooth"
+          className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4 scroll-smooth"
           onScroll={handleScroll}
         >
           {/* Inline Reasoning Panel - Compact */}
@@ -346,8 +346,8 @@ export const InspectorChatModal = ({
         </div>
 
         {/* Input Area */}
-        <div className="border-t p-4 sm:p-6">
-          <div className="flex gap-2">
+        <div className="border-t p-4 sm:p-6 bg-background/50">
+          <div className="flex gap-3">
             <Textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -358,23 +358,23 @@ export const InspectorChatModal = ({
                 }
               }}
               placeholder="Ask about testing procedures, safety implications, or remediation..."
-              className="min-h-[60px] resize-none text-sm sm:text-base"
+              className="min-h-[64px] sm:min-h-[60px] resize-none text-sm sm:text-base"
               disabled={isLoading}
             />
             <Button
               onClick={handleSend}
               disabled={isLoading || !input.trim()}
               size="icon"
-              className="h-[60px] w-12 flex-shrink-0"
+              className="h-16 sm:h-[60px] w-14 sm:w-12 flex-shrink-0"
             >
               {isLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="h-5 w-5 sm:h-4 sm:w-4 animate-spin" />
               ) : (
-                <Send className="h-4 w-4" />
+                <Send className="h-5 w-5 sm:h-4 sm:w-4" />
               )}
             </Button>
           </div>
-          <p className="text-xs text-muted-foreground mt-2">
+          <p className="text-xs text-muted-foreground mt-2 px-1">
             Press Enter to send, Shift+Enter for new line
           </p>
         </div>

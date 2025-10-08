@@ -54,28 +54,28 @@ const VisualFaultRAGDisplay = ({
   const getCodeDescription = (code: string) => {
     switch (code) {
       case 'C1': return '⚠️ Danger - Act Now';
-      case 'C2': return '⚡ Urgent Action Required';
-      case 'C3': return '💡 Improvement Recommended';
-      case 'FI': return '🔍 Investigate Further';
+      case 'C2': return '⚡ Urgent Remedial Required';
+      case 'C3': return '📋 Improvement Recommended';
+      case 'FI': return '🔍 Investigation Required';
       default: return '';
     }
   };
 
   return (
     <Card className="border-l-4" style={{ borderLeftColor: faultCode === 'C1' ? 'hsl(var(--destructive))' : faultCode === 'C2' ? '#f97316' : faultCode === 'C3' ? '#eab308' : '#3b82f6' }}>
-      <CardHeader className="pb-3 space-y-3">
+      <CardHeader className="pb-4 space-y-3">
         <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Badge className={`${getCodeColor(faultCode)} text-sm sm:text-base px-3 py-1.5`}>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
+            <Badge className={`${getCodeColor(faultCode)} text-base sm:text-sm px-3.5 py-1.5 w-fit`}>
               {getCodeIcon(faultCode)}
               <span className="ml-1.5 font-bold">{faultCode}</span>
             </Badge>
-            <Badge variant="outline" className="text-xs sm:text-sm whitespace-nowrap px-2 py-1">
-              <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-green-500" />
-              {(confidence * 100).toFixed(0)}% confidence
+            <Badge variant="outline" className="text-sm whitespace-nowrap px-2.5 py-1.5 w-fit">
+              <CheckCircle2 className="h-4 w-4 mr-1.5 text-green-500" />
+              {(confidence * 100).toFixed(0)}% confident
             </Badge>
           </div>
-          <CardTitle className="text-base sm:text-lg">RAG-Verified Classification</CardTitle>
+          <CardTitle className="text-base sm:text-lg leading-snug">RAG-Verified Classification</CardTitle>
         </div>
         <CardDescription className="text-sm sm:text-base leading-relaxed font-medium">
           {getCodeDescription(faultCode)}
@@ -110,12 +110,12 @@ const VisualFaultRAGDisplay = ({
 
         {regulationReferences && regulationReferences.length > 0 && regulationReferences[0]?.number !== 'N/A' && (
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted/50 hover:bg-muted rounded-lg transition-colors touch-manipulation">
-              <span className="text-sm sm:text-base font-semibold flex items-center gap-2">
-                <span className="text-elec-yellow text-base sm:text-lg">⚡</span>
+            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 sm:p-4 bg-muted/50 hover:bg-muted rounded-lg transition-colors min-h-[48px] touch-manipulation">
+              <span className="text-sm sm:text-base font-semibold flex items-center gap-2.5">
+                <span className="text-elec-yellow text-lg">⚡</span>
                 BS 7671 References ({regulationReferences.length})
               </span>
-              <Badge variant="secondary" className="text-xs sm:text-sm px-3 py-1">
+              <Badge variant="secondary" className="text-sm px-3 py-1.5">
                 {isOpen ? 'Hide' : 'Show'}
               </Badge>
             </CollapsibleTrigger>

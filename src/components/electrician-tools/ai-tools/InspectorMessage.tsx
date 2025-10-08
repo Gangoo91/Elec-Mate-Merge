@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import { toast } from "sonner";
 import { Copy } from "lucide-react";
 import ReactMarkdown from "react-markdown";
@@ -19,13 +18,6 @@ interface InspectorMessageProps {
 export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps) => {
   const isUser = message.role === 'user';
 
-  const handleLongPress = () => {
-    if (navigator.clipboard && message.content) {
-      navigator.clipboard.writeText(message.content);
-      toast.success('Copied to clipboard');
-    }
-  };
-
   const handleCopy = () => {
     if (navigator.clipboard && message.content) {
       navigator.clipboard.writeText(message.content);
@@ -34,11 +26,8 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
   };
 
   return (
-    <MobileGestureHandler
-      onLongPress={handleLongPress}
-      className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
-    >
-      <div className={`max-w-[85%] rounded-2xl px-4 py-3 ${
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
+      <div className={`max-w-[85%] sm:max-w-[80%] rounded-2xl px-5 py-4 shadow-sm ${
         isUser
           ? 'bg-primary text-primary-foreground'
           : 'bg-muted text-foreground'
@@ -57,22 +46,22 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
             remarkPlugins={[remarkGfm]}
             components={{
               h1: ({ children }) => (
-                <h1 className="text-base sm:text-lg font-bold mt-3 mb-2 first:mt-0">
+                <h1 className="text-base sm:text-lg font-bold mt-4 mb-2 first:mt-0">
                   {children}
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="text-sm sm:text-base font-semibold mt-3 mb-2 first:mt-0">
+                <h2 className="text-sm sm:text-base font-semibold mt-4 mb-2 first:mt-0">
                   {children}
                 </h2>
               ),
               h3: ({ children }) => (
-                <h3 className="text-xs sm:text-sm font-semibold mt-2 mb-1 first:mt-0">
+                <h3 className="text-sm font-semibold mt-3 mb-1.5 first:mt-0">
                   {children}
                 </h3>
               ),
               p: ({ children }) => (
-                <p className="text-sm leading-relaxed my-1.5">
+                <p className="text-sm sm:text-base leading-relaxed my-2">
                   {children}
                 </p>
               ),
@@ -127,19 +116,19 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
         )}
 
         {!isUser && (
-          <div className="mt-2 pt-2 border-t border-border/30 flex gap-2">
+          <div className="mt-3 pt-3 border-t border-border/30 flex gap-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={handleCopy}
-              className="h-7 px-2 text-xs"
+              className="h-8 px-3 text-xs hover:bg-background/80"
             >
-              <Copy className="h-3 w-3 mr-1" />
+              <Copy className="h-3.5 w-3.5 mr-1.5" />
               Copy
             </Button>
           </div>
         )}
       </div>
-    </MobileGestureHandler>
+    </div>
   );
 };
