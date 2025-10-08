@@ -572,52 +572,6 @@ function buildStructuredContext(previousOutputs: AgentOutput[]): string {
 function extractValue(text: string, regex: RegExp): string | null {
   const match = text.match(regex);
   return match ? match[1] : null;
-    
-    if (output.agent === 'designer') {
-      // Extract BS 7671 calculations
-      const calculations = extractCalculations(output.response);
-      if (calculations.length > 0) {
-        context += '**DESIGN CALCULATIONS:**\n';
-        context += calculations.join('\n') + '\n\n';
-      }
-      
-      // Extract cable specs
-      const cableSpec = extractCableSpec(output.response);
-      if (cableSpec) {
-        context += `**CABLE SPECIFICATION:** ${cableSpec}\n\n`;
-      }
-      
-      // Extract device specs
-      const deviceSpec = extractDeviceSpec(output.response);
-      if (deviceSpec) {
-        context += `**PROTECTION DEVICE:** ${deviceSpec}\n\n`;
-      }
-    }
-    
-    if (output.agent === 'installer') {
-      // Extract installation method
-      const method = extractInstallationMethod(output.response);
-      if (method) {
-        context += `**INSTALLATION METHOD:** ${method}\n\n`;
-      }
-    }
-    
-    if (output.agent === 'cost-engineer') {
-      // Extract cost breakdown
-      const costs = extractCosts(output.response);
-      if (costs) {
-        context += `**COST BREAKDOWN:**\n${costs}\n\n`;
-      }
-    }
-    
-    // Add citations for traceability
-    if (output.citations && output.citations.length > 0) {
-      context += '**REGULATIONS CITED:** ';
-      context += output.citations.map(c => c.number).join(', ') + '\n\n';
-    }
-  }
-  
-  return context;
 }
 
 // Helper: Extract structured data from responses
