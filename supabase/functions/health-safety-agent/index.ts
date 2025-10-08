@@ -44,6 +44,8 @@ serve(async (req) => {
     const ragQuery = `${workType} electrical work hazards safety risks controls PPE ACOP CDM EWR HASAWA`;
     console.log(`🔍 RAG: Searching H&S knowledge for: ${ragQuery}`);
     
+    let ragContext = ''; // Initialize empty for graceful degradation
+    
     // Generate embedding for RAG query using Lovable AI
     const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
       method: 'POST',
@@ -57,37 +59,37 @@ serve(async (req) => {
       }),
     });
 
-    if (!embeddingResponse.ok) {
-      console.error('Embedding API error:', await embeddingResponse.text());
-      throw new Error('Failed to generate embedding');
+    // Only use RAG if embedding generation succeeds
+    if (embeddingResponse.ok) {
+      const embeddingData = await embeddingResponse.json();
+      const queryEmbedding = embeddingData.data[0].embedding;
+      console.log('✅ Embedding generated successfully');
+
+      // Query RAG database using search_health_safety RPC
+      const ragStartTime = Date.now();
+      const { data: ragResults, error: ragError } = await supabase.rpc('search_health_safety', {
+        query_embedding: queryEmbedding,
+        match_threshold: 0.7,
+        match_count: 8
+      });
+
+      const ragDuration = Date.now() - ragStartTime;
+      console.log(`⏱️ RAG query completed in ${ragDuration}ms`);
+
+      if (!ragError && ragResults && ragResults.length > 0) {
+        ragContext = ragResults
+          .map((item: any, idx: number) => 
+            `${idx + 1}. ${item.topic} (Source: ${item.source}, Similarity: ${(item.similarity * 100).toFixed(0)}%)\n${item.content}`
+          ).join('\n\n');
+        console.log(`✅ Found ${ragResults.length} H&S knowledge entries (avg similarity: ${Math.round(ragResults.reduce((sum: number, r: any) => sum + r.similarity, 0) / ragResults.length * 100)}%)`);
+      } else {
+        console.log('⚠️ No relevant H&S knowledge found in database');
+        ragContext = 'No specific guidelines found - using general electrical safety knowledge.';
+      }
+    } else {
+      console.error('⚠️ Embedding generation failed, continuing without RAG:', await embeddingResponse.text());
+      ragContext = 'RAG system unavailable - using general electrical safety knowledge.';
     }
-
-    const embeddingData = await embeddingResponse.json();
-    const queryEmbedding = embeddingData.data[0].embedding;
-    console.log('✅ Embedding generated successfully');
-
-    // Query RAG database using search_health_safety RPC
-    const ragStartTime = Date.now();
-    const { data: ragResults, error: ragError } = await supabase.rpc('search_health_safety', {
-      query_embedding: queryEmbedding,
-      match_threshold: 0.7,
-      match_count: 8 // Reduced from 15 for faster processing
-    });
-
-    if (ragError) {
-      console.error('RAG query error:', ragError);
-      throw new Error('Failed to query H&S knowledge base');
-    }
-
-    const relevantGuidelines = ragResults || [];
-    console.log(`✅ RAG query complete: ${relevantGuidelines.length} results in ${Date.now() - ragStartTime}ms`);
-
-    // Build RAG-enhanced system prompt
-    const ragContext = relevantGuidelines.length > 0
-      ? relevantGuidelines.map((item: any, idx: number) => 
-          `${idx + 1}. ${item.topic} (Source: ${item.source}, Similarity: ${(item.similarity * 100).toFixed(0)}%)\n${item.content}`
-        ).join('\n\n')
-      : 'No specific guidelines found - using general electrical safety knowledge.';
 
     // Extract context from previous agents
     const previousAgentOutputs = context?.previousAgentOutputs || [];
