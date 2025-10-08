@@ -62,7 +62,13 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
         },
-        body: JSON.stringify({ messages, currentDesign, selectedAgents, targetAgent })
+        body: JSON.stringify({ 
+          messages, 
+          currentDesign, 
+          selectedAgents, 
+          targetAgent,
+          ...(currentDesign?.userContext && { userContext: currentDesign.userContext })
+        })
       });
 
       if (!response.ok) {

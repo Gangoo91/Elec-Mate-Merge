@@ -23,6 +23,7 @@ interface InspectorChatModalProps {
   findings: Finding[];
   imageUrl?: string;
   analysisMode: string;
+  userContext?: string;
 }
 
 interface Message {
@@ -33,12 +34,13 @@ interface Message {
   agentName?: string;
 }
 
-export const InspectorChatModal = ({
-  isOpen,
-  onClose,
-  findings,
+export const InspectorChatModal = ({ 
+  isOpen, 
+  onClose, 
+  findings, 
   imageUrl,
-  analysisMode
+  analysisMode,
+  userContext
 }: InspectorChatModalProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -134,7 +136,7 @@ export const InspectorChatModal = ({
     try {
       await streamMessage(
         [userMessage],
-        { findings, analysisMode },
+        { findings, analysisMode, userContext },
         (token) => {
           setMessages(prev => {
             const newMessages = [...prev];
@@ -197,7 +199,7 @@ export const InspectorChatModal = ({
     try {
       await streamMessage(
         [...messages, userMessage],
-        { findings, analysisMode },
+        { findings, analysisMode, userContext },
         (token) => {
           setMessages(prev => {
             const newMessages = [...prev];

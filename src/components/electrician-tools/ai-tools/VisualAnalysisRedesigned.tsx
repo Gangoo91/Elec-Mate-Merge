@@ -85,6 +85,8 @@ const VisualAnalysisRedesigned = () => {
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [fastMode, setFastMode] = useState(true); // Default Quick mode
   const [inspectorModalOpen, setInspectorModalOpen] = useState(false);
+  const [userContext, setUserContext] = useState("");
+  const [showContextField, setShowContextField] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
@@ -344,6 +346,7 @@ const VisualAnalysisRedesigned = () => {
           body: { 
             primary_image: primaryImageUrl,
             additional_images: additionalImageUrls,
+            user_context: userContext.trim() || undefined,
             analysis_settings: {
               mode: selectedMode || 'fault_diagnosis',
               confidence_threshold: 0.75,
@@ -454,6 +457,13 @@ const VisualAnalysisRedesigned = () => {
 
   const handleDiscussWithInspector = () => {
     setInspectorModalOpen(true);
+  };
+
+  const handleContextTagClick = (tag: string) => {
+    setUserContext(prev => {
+      const current = prev.trim();
+      return current ? `${current}, ${tag}` : tag;
+    });
   };
 
   const resetAnalysis = () => {
@@ -656,6 +666,49 @@ const VisualAnalysisRedesigned = () => {
               </p>
             </div>
             
+            
+            {/* Optional Context Field */}
+            {images.length > 0 && (
+              <div className="space-y-2 animate-fade-in">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowContextField(!showContextField)}
+                  className="w-full h-8 text-xs text-muted-foreground hover:text-foreground"
+                >
+                  <Lightbulb className="h-3 w-3 mr-1.5" />
+                  {showContextField ? 'Hide' : 'Add'} Context (Optional)
+                </Button>
+                
+                {showContextField && (
+                  <div className="space-y-2 p-3 bg-muted/30 rounded-lg border border-border/50">
+                    <textarea
+                      value={userContext}
+                      onChange={(e) => setUserContext(e.target.value.slice(0, 200))}
+                      placeholder="e.g., EICR inspection, fault occurred after storm, new installation..."
+                      className="w-full h-16 px-3 py-2 text-xs bg-background border border-border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 text-foreground placeholder:text-muted-foreground"
+                      maxLength={200}
+                    />
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-wrap gap-1.5">
+                        {['EICR', 'New Install', 'Fault', 'Upgrade', 'Rewire'].map((tag) => (
+                          <button
+                            key={tag}
+                            onClick={() => handleContextTagClick(tag)}
+                            className="px-2 py-0.5 text-xs bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow rounded border border-elec-yellow/30 transition-colors"
+                          >
+                            {tag}
+                          </button>
+                        ))}
+                      </div>
+                      <span className="text-xs text-muted-foreground">
+                        {userContext.length}/200
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
             
             {/* Image Gallery */}
             {images.length > 0 && (
@@ -868,6 +921,7 @@ const VisualAnalysisRedesigned = () => {
         findings={analysisResult?.findings || []}
         imageUrl={uploadedImageUrls[0]}
         analysisMode={selectedMode || 'fault_diagnosis'}
+        userContext={userContext}
       />
     </div>
   );

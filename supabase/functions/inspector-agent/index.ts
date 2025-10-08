@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, context } = await req.json();
+    const { messages, context, userContext } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
 
@@ -79,7 +79,12 @@ serve(async (req) => {
     const previousAgents = context?.previousAgentOutputs?.map((a: any) => a.agent) || [];
     const hasInstaller = previousAgents.includes('installer');
     
-    let systemPrompt = `You are an Inspection & Testing specialist who thinks like a diagnostic electrician. Your FIRST priority is identifying the ROOT CAUSE and guiding the user to find what caused the fault.
+    // Prepend user context if provided
+    const contextPrefix = userContext 
+      ? `\n\n**PROJECT CONTEXT PROVIDED BY USER:**\n${userContext}\n\nUse this context to inform your analysis and tailor your diagnostic approach.\n\n---\n\n`
+      : '';
+    
+    let systemPrompt = contextPrefix + `You are an Inspection & Testing specialist who thinks like a diagnostic electrician. Your FIRST priority is identifying the ROOT CAUSE and guiding the user to find what caused the fault.
 
 **CRITICAL APPROACH - THINK LIKE A DIAGNOSTIC ELECTRICIAN**
 
