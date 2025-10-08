@@ -21,9 +21,6 @@ verify_jwt = false
 [functions.commissioning-agent]
 verify_jwt = false
 
-[functions.health-safety-agent]
-verify_jwt = false
-
 [functions.generate-professional-package]
 verify_jwt = false
 
