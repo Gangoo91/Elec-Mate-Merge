@@ -2,9 +2,9 @@ import { useState, useRef, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Loader2, X, AlertCircle } from "lucide-react";
+import { Send, Loader2, X, ChevronDown, ChevronUp } from "lucide-react";
 import { useStreamingChat } from "@/hooks/useStreamingChat";
-import { ReasoningPanel } from "@/components/install-planner-v2/ReasoningPanel";
+import { InspectorMessage } from "./InspectorMessage";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
@@ -48,7 +48,7 @@ export const InspectorChatModal = ({
     status: 'pending' | 'active' | 'complete';
     reasoning?: string;
   }>>([]);
-  const [showReasoning, setShowReasoning] = useState(true);
+  const [showReasoning, setShowReasoning] = useState(false); // Start collapsed
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
 
@@ -259,47 +259,62 @@ export const InspectorChatModal = ({
           </div>
         </DialogHeader>
 
-        {/* Reasoning Panel */}
-        {showReasoning && reasoningSteps.length > 0 && (
-          <div className="px-4 sm:px-6 pt-3">
-            <ReasoningPanel steps={reasoningSteps} isVisible={true} />
-          </div>
-        )}
-
         {/* Messages */}
         <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4">
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              <Card className={`max-w-[85%] sm:max-w-[75%] p-3 sm:p-4 ${
-                message.role === 'user' 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'bg-muted'
-              }`}>
-                {message.agentName && (
-                  <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="outline" className="text-xs">
-                      {message.agentName === 'inspector' ? '🔍 Inspector' : '🔧 Installer'}
-                    </Badge>
-                  </div>
-                )}
-                <p className="text-sm sm:text-base whitespace-pre-wrap leading-relaxed">
-                  {message.content}
-                  {index === streamingMessageIndex && <span className="inline-block w-2 h-4 ml-1 bg-current animate-pulse" />}
-                </p>
-                {message.citations && message.citations.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {message.citations.map((citation, i) => (
-                      <Badge key={i} variant="secondary" className="text-xs">
-                        {citation.title}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
-              </Card>
+          {/* Inline Reasoning Panel - Compact */}
+          {reasoningSteps.length > 0 && (
+            <div className="mb-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowReasoning(!showReasoning)}
+                className="w-full justify-between text-xs h-8 px-3 bg-elec-card/30 border border-elec-yellow/20 hover:bg-elec-card/50"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-elec-yellow">🔍</span>
+                  <span className="text-muted-foreground">
+                    {reasoningSteps.find(s => s.status === 'active') 
+                      ? 'Inspector analysing...' 
+                      : `Analysis complete`}
+                  </span>
+                </div>
+                {showReasoning ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+              </Button>
+              
+              {showReasoning && (
+                <div className="mt-2 space-y-1">
+                  {reasoningSteps.map((step, index) => (
+                    <div 
+                      key={index}
+                      className="flex items-center gap-2 p-2 rounded bg-elec-dark/30 border border-elec-yellow/10 text-xs"
+                    >
+                      <div className="flex-shrink-0">
+                        {step.status === 'active' && (
+                          <Loader2 className="h-3 w-3 animate-spin text-elec-yellow" />
+                        )}
+                        {step.status === 'complete' && (
+                          <span className="text-green-500">✓</span>
+                        )}
+                        {step.status === 'pending' && (
+                          <div className="h-3 w-3 rounded-full border border-muted-foreground/30" />
+                        )}
+                      </div>
+                      <span className="text-muted-foreground">
+                        {step.agent === 'inspector' ? 'Inspection Specialist' : step.agent}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+          )}
+
+          {messages.map((message, index) => (
+            <InspectorMessage 
+              key={index} 
+              message={message}
+              isStreaming={index === streamingMessageIndex}
+            />
           ))}
           {isLoading && messages[messages.length - 1]?.role === 'user' && (
             <div className="flex justify-start">

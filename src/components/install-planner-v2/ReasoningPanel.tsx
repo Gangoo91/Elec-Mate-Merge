@@ -18,6 +18,7 @@ const agentIcons: Record<string, string> = {
   'cost-engineer': '💰',
   'installer': '🔧',
   'commissioning': '✅',
+  'inspector': '🔍',
   'cache': '⚡'
 };
 
@@ -26,6 +27,7 @@ const agentNames: Record<string, string> = {
   'cost-engineer': 'Cost Engineer',
   'installer': 'Installation Planner',
   'commissioning': 'Commissioning Expert',
+  'inspector': 'Inspection & Testing Specialist',
   'cache': 'Cached Response'
 };
 
