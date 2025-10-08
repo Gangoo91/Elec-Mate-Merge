@@ -87,6 +87,7 @@ const VisualAnalysisRedesigned = () => {
   const [inspectorModalOpen, setInspectorModalOpen] = useState(false);
   const [userContext, setUserContext] = useState("");
   const [showContextField, setShowContextField] = useState(false);
+  const [retryAttempts, setRetryAttempts] = useState(0);
   const abortControllerRef = useRef<AbortController | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
@@ -399,9 +400,33 @@ const VisualAnalysisRedesigned = () => {
       
       setAnalysisProgress(90);
       const result: AnalysisResult = data.analysis;
+      
+      // Check if this is a parse error and should trigger auto-retry
+      const isParseError = result.findings?.some(
+        (f: any) => f.description?.toLowerCase().includes('unable to complete') ||
+                    f.description?.toLowerCase().includes('format was invalid')
+      );
+      
+      if (isParseError && retryAttempts === 0 && !fastMode) {
+        console.log('🔄 Parse error detected, auto-retrying with Quick mode...');
+        setRetryAttempts(1);
+        setFastMode(true);
+        
+        toast({
+          title: "Retrying with Quick mode",
+          description: "Automatically retrying with faster settings...",
+          duration: 3000
+        });
+        
+        // Retry immediately with fast mode
+        setTimeout(() => handleAnalysis(), 1000);
+        return;
+      }
+      
       setAnalysisResult(result);
       setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
       setAnalysisProgress(100);
+      setRetryAttempts(0); // Reset on success
       
       toast({
         title: "Analysis Complete",
@@ -472,6 +497,24 @@ const VisualAnalysisRedesigned = () => {
     setUploadedImageUrls([]);
     setPrimaryImageIndex(0);
     setSelectedMode(null);
+    setRetryAttempts(0);
+  };
+  
+  const handleRetryFromError = () => {
+    setRetryAttempts(prev => prev + 1);
+    setFastMode(true); // Always use fast mode on manual retry
+    setAnalysisResult(null);
+    
+    if (retryAttempts >= 2) {
+      toast({
+        title: "Need help?",
+        description: "If issues persist, contact support@example.com",
+        variant: "default",
+        duration: 5000
+      });
+    }
+    
+    handleAnalysis();
   };
 
   const handleModeSelect = (mode: AnalysisMode) => {
@@ -885,6 +928,7 @@ const VisualAnalysisRedesigned = () => {
             <VisualAnalysisResults 
               analysisResult={analysisResult}
               onExportReport={() => {}}
+              onRetry={handleRetryFromError}
             />
           )}
 

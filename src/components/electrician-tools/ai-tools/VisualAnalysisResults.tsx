@@ -13,6 +13,7 @@ import {
   FileText
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import ErrorAnalysisCard from "./ErrorAnalysisCard";
 
 interface BoundingBox {
   x: number;
@@ -54,12 +55,20 @@ interface AnalysisResult {
 interface VisualAnalysisResultsProps {
   analysisResult: AnalysisResult;
   onExportReport: () => void;
+  onRetry?: () => void;
 }
 
 const VisualAnalysisResults: React.FC<VisualAnalysisResultsProps> = ({ 
   analysisResult, 
-  onExportReport 
+  onExportReport,
+  onRetry
 }) => {
+  
+  // Detect if this is a parse error
+  const isParseError = analysisResult.findings.some(
+    finding => finding.description.toLowerCase().includes('unable to complete') || 
+               finding.description.toLowerCase().includes('format was invalid')
+  );
 
   const getEicrCodeColor = (code: string) => {
     switch (code) {
@@ -113,6 +122,21 @@ This analysis is for guidance only and must be verified by a qualified electrici
       description: "Analysis summary copied to clipboard.",
     });
   };
+
+  // Show error card if parse error detected
+  if (isParseError && onRetry) {
+    return (
+      <ErrorAnalysisCard 
+        onRetry={onRetry}
+        possibleCauses={[
+          'Complex image with multiple components',
+          'Poor lighting or image quality',
+          'Too many images uploaded at once',
+          'Network timeout during processing'
+        ]}
+      />
+    );
+  }
 
   return (
     <Card className="bg-card border-border max-w-5xl mx-auto">

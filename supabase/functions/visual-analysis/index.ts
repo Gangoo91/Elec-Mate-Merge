@@ -9,7 +9,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Enhanced JSON parser with better error recovery
+// Enhanced JSON parser with better error recovery and comprehensive logging
 const parseAIResponse = (content: string, context: string = 'AI response') => {
   if (!content || content.trim() === '') {
     console.error(`❌ ${context} is empty`);
@@ -27,16 +27,18 @@ const parseAIResponse = (content: string, context: string = 'AI response') => {
     console.log(`⚠️ Direct parse failed, trying extraction patterns...`);
   }
 
-  // Enhanced extraction patterns
+  // Enhanced extraction patterns with non-greedy matching
   const patterns = [
     // JSON wrapped in markdown code blocks with language
     /```json\s*\n([\s\S]*?)\n```/,
     // JSON wrapped in plain code blocks
     /```\s*\n([\s\S]*?)\n```/,
-    // JSON object (greedy match)
-    /({[\s\S]*})/,
-    // Attempt to find object after any prefix text
-    /(?:.*?)?({[\s\S]*})/
+    // JSON object after any text (non-greedy prefix)
+    /(?:.*?)({[\s\S]*})/s,
+    // First complete JSON object anywhere in text
+    /{[^{}]*(?:{[^{}]*}[^{}]*)*}/s,
+    // Greedy fallback
+    /({[\s\S]*})/
   ];
   
   for (let i = 0; i < patterns.length; i++) {
@@ -44,24 +46,25 @@ const parseAIResponse = (content: string, context: string = 'AI response') => {
     const match = content.match(pattern);
     if (match) {
       const extracted = (match[1] || match[0]).trim();
-      console.log(`🔍 Pattern ${i + 1} matched, extracted: ${extracted.slice(0, 100)}...`);
+      console.log(`🔍 Pattern ${i + 1} matched, length: ${extracted.length}, preview: ${extracted.slice(0, 150)}...`);
       
       try {
         const parsed = JSON.parse(extracted);
         console.log(`✅ Successfully parsed with pattern ${i + 1}`);
         return parsed;
       } catch (parseError) {
-        console.log(`⚠️ Pattern ${i + 1} extraction failed:`, parseError.message);
+        console.log(`⚠️ Pattern ${i + 1} extraction failed:`, parseError instanceof Error ? parseError.message : 'Unknown error');
         continue;
       }
     }
   }
   
-  // Last resort: try to extract findings from text
-  console.error(`❌ All parsing attempts failed for ${context}`);
-  console.error(`Raw content:`, content);
+  // Complete failure - log full response for debugging
+  console.error(`❌ ALL PARSING ATTEMPTS FAILED for ${context}`);
+  console.error(`Full response (truncated to 500 chars):`, content.slice(0, 500));
+  console.error(`Response length: ${content.length} characters`);
   
-  throw new Error(`Could not parse ${context} as JSON. See logs for details.`);
+  throw new Error(`Could not parse ${context} as JSON. Check edge function logs for full response.`);
 };
 
 type AnalysisMode = 'fault_diagnosis' | 'component_identify' | 'wiring_instruction' | 'installation_verify';
@@ -386,15 +389,22 @@ Response format:
     } catch (parseError) {
       console.error('❌ Parse error:', parseError);
       
+      // Return helpful error with actionable guidance
       analysisResult = {
         analysis: {
           findings: [{
-            description: "Analysis completed but response format was invalid",
+            description: "Unable to complete analysis - image may be too complex or unclear. The AI response couldn't be processed properly.",
             eicr_code: "FI",
-            confidence: 0.5,
-            bs7671_clauses: ["N/A"],
-            fix_guidance: "Re-run analysis"
+            confidence: 0.3,
+            bs7671_clauses: ["Manual inspection required"],
+            fix_guidance: "Try: 1) Retake photo in better lighting, 2) Focus on a specific area, 3) Use fewer images, or 4) Enable Quick mode for faster processing"
           }],
+          helpful_tips: [
+            "✓ Ensure images are well-lit and in focus",
+            "✓ Capture equipment from multiple angles if complex",
+            "✓ Avoid reflections or obstructions in photos",
+            "✓ Try Quick mode for simpler, faster analysis"
+          ],
           compliance_summary: {
             overall_assessment: "unsatisfactory",
             c1_count: 0,
@@ -403,7 +413,8 @@ Response format:
             fi_count: 1,
             safety_rating: 5.0
           },
-          summary: "Analysis encountered formatting issues"
+          summary: "Analysis could not be completed due to processing error. Please review image quality and try again.",
+          parse_error: true
         }
       };
     }
