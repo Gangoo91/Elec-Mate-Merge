@@ -20,12 +20,8 @@ serve(async (req) => {
 
   try {
     const { messages, currentDesign, context } = await req.json() as HealthSafetyAgentRequest;
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
 
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
-    }
     if (!lovableApiKey) {
       throw new Error('LOVABLE_API_KEY not configured');
     }
@@ -54,7 +50,6 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'text-embedding-3-small',
         input: ragQuery,
       }),
     });
@@ -166,21 +161,20 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
         const openaiStartTime = Date.now();
         
         const requestBody = {
-          model: 'gpt-5-2025-08-07',
+          model: 'google/gemini-2.5-flash',
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: `${latestMessage}\n\nIMPORTANT: Respond with valid JSON matching the specified format.` }
           ],
-          max_completion_tokens: 1500,
           response_format: { type: "json_object" }
         };
         
-        console.log('📤 OpenAI Request:', JSON.stringify({ model: requestBody.model, messageCount: requestBody.messages.length }));
+        console.log('📤 Gemini Request:', JSON.stringify({ model: requestBody.model, messageCount: requestBody.messages.length }));
         
-        response = await fetch('https://api.openai.com/v1/chat/completions', {
+        response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${openAIApiKey}`,
+            'Authorization': `Bearer ${lovableApiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(requestBody),
@@ -189,12 +183,12 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
 
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('❌ OpenAI API error:', { status: response.status, error: errorText });
-          throw new Error(`OpenAI API error: ${response.status}`);
+          console.error('❌ Gemini API error:', { status: response.status, error: errorText });
+          throw new Error(`Gemini API error: ${response.status}`);
         }
 
         const rawResponse = await response.text();
-        console.log('📥 OpenAI Raw Response Length:', rawResponse.length);
+        console.log('📥 Gemini Raw Response Length:', rawResponse.length);
         
         try {
           data = JSON.parse(rawResponse);
@@ -202,16 +196,16 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
         } catch (parseError) {
           console.error('❌ JSON Parse Error:', parseError);
           console.error('Raw response:', rawResponse.substring(0, 500));
-          throw new Error('Failed to parse OpenAI response');
+          throw new Error('Failed to parse Gemini response');
         }
 
         if (content) {
-          console.log(`✅ OpenAI responded in ${Date.now() - openaiStartTime}ms`);
+          console.log(`✅ Gemini responded in ${Date.now() - openaiStartTime}ms`);
           console.log(`✅ H&S Agent: Got response on attempt ${retries + 1}`);
           break; // Success!
         }
 
-        console.warn(`⚠️ Empty response from OpenAI (attempt ${retries + 1}/${maxRetries + 1})`);
+        console.warn(`⚠️ Empty response from Gemini (attempt ${retries + 1}/${maxRetries + 1})`);
         retries++;
         if (retries <= maxRetries) {
           await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s before retry
@@ -225,14 +219,14 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
     }
 
     if (!content) {
-      console.error('❌ No content received from OpenAI after all retries');
+      console.error('❌ No content received from Gemini after all retries');
       throw new Error('No response from AI after 3 attempts');
     }
 
     let parsedResponse;
     try {
       parsedResponse = JSON.parse(content);
-      console.log('✅ Successfully parsed OpenAI response');
+      console.log('✅ Successfully parsed Gemini response');
     } catch (parseError) {
       console.error('❌ Failed to parse final content:', parseError);
       console.error('Content:', content.substring(0, 500));
