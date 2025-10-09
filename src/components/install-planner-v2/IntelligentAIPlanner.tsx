@@ -762,11 +762,11 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   return (
     <div className="flex flex-col h-screen bg-elec-dark">
       {/* Minimal Header - Non-sticky */}
-      <div className="flex-none px-5 py-4 border-b border-border/30 bg-elec-dark">
+      <div className="flex-none px-3 md:px-4 py-1.5 md:py-2 border-b border-border/30 bg-elec-dark">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-elec-yellow" />
-            <h2 className="font-semibold text-base text-white">AI Design</h2>
+          <div className="flex items-center gap-1.5">
+            <Sparkles className="h-4 w-4 text-elec-yellow" />
+            <h2 className="font-semibold text-sm md:text-base text-white">AI Design</h2>
           </div>
           <Button 
             variant="ghost" 
@@ -778,7 +778,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 onReset();
               }
             }}
-            className="text-xs text-elec-yellow hover:bg-elec-yellow/10"
+            className="text-xs h-6 px-2 text-elec-yellow hover:bg-elec-yellow/10"
           >
             New Chat
           </Button>
@@ -791,7 +791,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         ref={scrollRef}
         className="flex-1 overflow-y-auto bg-elec-dark"
       >
-        <div className="px-5 py-6 space-y-4">
+        <div className="px-3 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4">
           {/* Reasoning Panel */}
           {showReasoning && reasoningSteps.length > 0 && (
             <div className="flex justify-start mb-2">
