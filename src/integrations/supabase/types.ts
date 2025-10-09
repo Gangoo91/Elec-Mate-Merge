@@ -2342,6 +2342,7 @@ export type Database = {
           description: string | null
           duration: string | null
           id: string
+          job_scale: string | null
           job_title: string
           location: string
           overall_risk_level: string
@@ -2362,6 +2363,7 @@ export type Database = {
           description?: string | null
           duration?: string | null
           id?: string
+          job_scale?: string | null
           job_title: string
           location: string
           overall_risk_level?: string
@@ -2382,6 +2384,7 @@ export type Database = {
           description?: string | null
           duration?: string | null
           id?: string
+          job_scale?: string | null
           job_title?: string
           location?: string
           overall_risk_level?: string
@@ -3546,6 +3549,7 @@ export type Database = {
           created_at: string
           date: string
           id: string
+          job_scale: string | null
           last_autosave_at: string | null
           location: string
           pdf_url: string | null
@@ -3565,6 +3569,7 @@ export type Database = {
           created_at?: string
           date: string
           id?: string
+          job_scale?: string | null
           last_autosave_at?: string | null
           location: string
           pdf_url?: string | null
@@ -3584,6 +3589,7 @@ export type Database = {
           created_at?: string
           date?: string
           id?: string
+          job_scale?: string | null
           last_autosave_at?: string | null
           location?: string
           pdf_url?: string | null
