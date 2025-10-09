@@ -41,29 +41,8 @@ export const AIRAMSGenerator: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-background to-elec-dark/90">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Header */}
-        <div className="mb-8">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/electrician/site-safety')}
-            className="mb-4 text-foreground hover:text-foreground/80"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Site Safety
-          </Button>
-          
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
-            AI-Powered RAMS Generator
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Describe your electrical work and let AI create comprehensive RAMS documentation
-          </p>
-        </div>
-
-        {/* Content */}
-        <div className="space-y-6">
+    <div className="container mx-auto px-4 py-2 max-w-6xl">
+      <div className="space-y-6">
           {!showResults ? (
             <AIRAMSInput
               onGenerate={handleGenerate}
@@ -112,7 +91,6 @@ export const AIRAMSGenerator: React.FC = () => {
               )}
             </>
           )}
-        </div>
       </div>
     </div>
   );
