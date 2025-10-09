@@ -1,9 +1,24 @@
 import VisualAnalysisRedesigned from "@/components/electrician-tools/ai-tools/VisualAnalysisRedesigned";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { AnalysisMode } from "@/components/electrician-tools/ai-tools/ModeSelector";
 
 const VisualAnalysisPage = () => {
+  const params = useParams();
+  const pathSegments = window.location.pathname.split('/');
+  const modeParam = pathSegments[pathSegments.length - 1];
+  
+  // Map URL segment to AnalysisMode
+  const modeMap: Record<string, AnalysisMode> = {
+    'component-identify': 'component_identify',
+    'wiring-instruction': 'wiring_instruction',
+    'fault-diagnosis': 'fault_diagnosis',
+    'installation-verify': 'installation_verify'
+  };
+  
+  const mode = modeMap[modeParam] || 'fault_diagnosis';
+  
   return (
     <div className="min-h-screen bg-elec-grey text-foreground">
       <div className="max-w-6xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-8">
@@ -15,7 +30,7 @@ const VisualAnalysisPage = () => {
             </Button>
           </Link>
         </div>
-        <VisualAnalysisRedesigned />
+        <VisualAnalysisRedesigned initialMode={mode} />
       </div>
     </div>
   );

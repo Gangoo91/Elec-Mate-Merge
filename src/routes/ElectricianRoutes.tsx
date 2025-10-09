@@ -38,10 +38,10 @@ const ElectricianRoutes = () => (
     <Route path="testing-projects" element={<TestingProjects />} />
     <Route path="ai-tooling" element={<AITooling />} />
     <Route path="ai-tooling/assistant" element={<AssistantPage />} />
-    <Route path="ai-tooling/visual" element={<VisualAnalysisPage />} />
-    <Route path="ai-tooling/reports" element={<ReportWriterPage />} />
-    <Route path="ai-tooling/regulations" element={<RegulationsPage />} />
-    <Route path="ai-tooling/circuit" element={<CircuitDesignerPage />} />
+    <Route path="ai-tooling/component-identify" element={<VisualAnalysisPage />} />
+    <Route path="ai-tooling/wiring-instruction" element={<VisualAnalysisPage />} />
+    <Route path="ai-tooling/fault-diagnosis" element={<VisualAnalysisPage />} />
+    <Route path="ai-tooling/installation-verify" element={<VisualAnalysisPage />} />
     <Route path="ai-tooling/explainer" element={<ClientExplainerPage />} />
     <Route path="business-management" element={<BusinessManagement />} />
     <Route path="compliance" element={<ComplianceManager />} />

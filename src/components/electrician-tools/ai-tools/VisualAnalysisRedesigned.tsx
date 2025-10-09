@@ -74,9 +74,13 @@ interface AnalysisResult {
   };
 }
 
-const VisualAnalysisRedesigned = () => {
+interface VisualAnalysisRedesignedProps {
+  initialMode?: AnalysisMode;
+}
+
+const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps) => {
   const navigate = useNavigate();
-  const [selectedMode, setSelectedMode] = useState<AnalysisMode | null>(null);
+  const [selectedMode, setSelectedMode] = useState<AnalysisMode | null>(initialMode || null);
   const [images, setImages] = useState<File[]>([]);
   const [primaryImageIndex, setPrimaryImageIndex] = useState(0);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);

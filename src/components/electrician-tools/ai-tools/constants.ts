@@ -1,5 +1,4 @@
-
-import { Brain, Image, Megaphone } from "lucide-react";
+import { Brain, Search, Wrench, AlertTriangle, CheckCircle, Megaphone } from "lucide-react";
 
 export const toolOptions = [
   { 
@@ -9,10 +8,28 @@ export const toolOptions = [
     description: "Your personal AI assistant for electrical queries and advice"
   },
   { 
-    value: "visual", 
-    label: "Visual Analysis", 
-    icon: Image,
-    description: "Analyse electrical components and identify potential issues"
+    value: "component-identify", 
+    label: "Component Identification", 
+    icon: Search,
+    description: "Identify components, specs & BS 7671 requirements"
+  },
+  { 
+    value: "wiring-instruction", 
+    label: "Wiring Instructions", 
+    icon: Wrench,
+    description: "Step-by-step UK wiring guide with terminal diagrams"
+  },
+  { 
+    value: "fault-diagnosis", 
+    label: "Fault Diagnosis", 
+    icon: AlertTriangle,
+    description: "Identify issues, EICR codes & rectification steps"
+  },
+  { 
+    value: "installation-verify", 
+    label: "Installation Verification", 
+    icon: CheckCircle,
+    description: "BS 7671 compliance check with pass/fail assessment"
   },
   { 
     value: "explainer", 
