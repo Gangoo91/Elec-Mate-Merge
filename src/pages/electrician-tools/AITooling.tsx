@@ -46,9 +46,9 @@ const AITooling = () => {
       </div>
 
       {/* Tools Grid */}
-      <div className="px-4 py-6 md:py-8">
+      <div className="px-4 py-4 md:py-8">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
             {toolOptions.map((tool) => {
               const IconComponent = tool.icon;
               return (
@@ -60,19 +60,19 @@ const AITooling = () => {
                   <Card 
                     className="relative h-full border-elec-yellow/20 bg-elec-card overflow-hidden transition-all duration-300 hover:border-elec-yellow/40 cursor-pointer"
                   >
-                    <CardHeader className="relative p-6 md:p-8 space-y-4">
+                    <CardHeader className="relative p-4 md:p-8 space-y-3 md:space-y-4">
                       {/* Icon Container */}
-                      <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-elec-yellow/10 border border-elec-yellow/20 rounded-2xl">
-                        <IconComponent className="h-8 w-8 md:h-10 md:w-10 text-elec-yellow" />
+                      <div className="inline-flex items-center justify-center w-12 h-12 md:w-20 md:h-20 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl md:rounded-2xl">
+                        <IconComponent className="h-6 w-6 md:h-10 md:w-10 text-elec-yellow" />
                       </div>
 
                       {/* Title */}
-                      <CardTitle className="text-lg md:text-xl text-elec-light font-semibold leading-tight">
+                      <CardTitle className="text-base md:text-xl text-elec-light font-semibold leading-tight">
                         {tool.label}
                       </CardTitle>
 
                       {/* Description */}
-                      <p className="text-sm md:text-base text-elec-light/60 leading-relaxed">
+                      <p className="text-xs md:text-base text-elec-light/60 leading-snug md:leading-relaxed">
                         {tool.description}
                       </p>
                     </CardHeader>
