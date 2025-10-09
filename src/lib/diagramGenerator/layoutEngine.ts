@@ -3,7 +3,7 @@
 
 export interface DiagramElement {
   id: string;
-  type: 'mcb' | 'rcbo' | 'rcd' | 'cable' | 'load' | 'earth' | 'consumer-unit';
+  type: 'mcb' | 'rcbo' | 'rcd' | 'cable' | 'load' | 'earth' | 'consumer-unit' | 'ev-charger' | 'heat-pump' | 'shower' | 'earthing-arrangement';
   x: number;
   y: number;
   props: Record<string, any>;

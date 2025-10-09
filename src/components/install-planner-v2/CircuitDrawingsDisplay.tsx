@@ -1,10 +1,14 @@
 import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download, FileText, Maximize2 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Download, FileText, Maximize2, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { generateSingleLineDiagram, generateConsumerUnitDiagram, CircuitData } from "@/lib/diagramGenerator/layoutEngine";
 import { SVGDiagramRenderer } from "@/components/circuit-diagrams/SVGDiagramRenderer";
+import { exportDiagramsAsPDF, exportDiagramAsPNG } from "@/lib/diagramGenerator/exportDiagram";
+import { FloorPlanDisplay } from "./FloorPlanDisplay";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -19,6 +23,8 @@ interface CircuitDrawingsDisplayProps {
 
 export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawingsDisplayProps) => {
   const [viewingDiagram, setViewingDiagram] = useState<number | null>(null);
+  const [aiDiagrams, setAiDiagrams] = useState<Map<number, any>>(new Map());
+  const [generatingAI, setGeneratingAI] = useState<number | null>(null);
 
   // Parse circuits from designer response
   const parsedCircuits = useMemo(() => {
@@ -46,6 +52,36 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
     return layouts;
   }, [parsedCircuits]);
 
+  const handleGenerateAIDiagram = async (index: number) => {
+    const circuit = parsedCircuits[index];
+    if (!circuit) return;
+    
+    setGeneratingAI(index);
+    toast.info("Generating AI diagram...", {
+      description: "This will use Lovable AI credits"
+    });
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-circuit-diagrams', {
+        body: {
+          designerResponse: JSON.stringify(circuit),
+          projectName: `${projectName} - Circuit ${circuit.circuitNumber}`
+        }
+      });
+      
+      if (error) throw error;
+      
+      setAiDiagrams(prev => new Map(prev).set(index, data.diagrams));
+      toast.success("AI diagrams generated! 🎨");
+    } catch (error: any) {
+      toast.error("AI generation failed", {
+        description: error.message
+      });
+    } finally {
+      setGeneratingAI(null);
+    }
+  };
+
   const downloadSVG = (index: number) => {
     const diagram = diagrams[index];
     const svgElement = document.getElementById(`diagram-${index}`)?.querySelector('svg');
@@ -62,6 +98,26 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
     link.click();
     URL.revokeObjectURL(url);
     toast.success("Diagram downloaded");
+  };
+
+  const handleExportAllPDF = async () => {
+    const svgElements = diagrams.map((_, idx) => 
+      document.getElementById(`diagram-${idx}`)?.querySelector('svg')
+    ).filter(Boolean) as SVGSVGElement[];
+    
+    if (svgElements.length === 0) {
+      toast.error("No diagrams to export");
+      return;
+    }
+    
+    toast.info(`Exporting ${svgElements.length} diagrams to PDF...`);
+    
+    try {
+      await exportDiagramsAsPDF(svgElements, projectName);
+      toast.success("PDF downloaded! 📄");
+    } catch (error) {
+      toast.error("PDF export failed");
+    }
   };
 
   const hasDesignerData = parsedCircuits.length > 0;
@@ -90,11 +146,25 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
     <div className="space-y-3 md:space-y-4">
       <Card>
         <CardHeader className="pb-3 md:pb-4">
-          <CardTitle className="flex items-center gap-2 text-base md:text-lg">
-            <FileText className="w-4 h-4 md:w-5 md:h-5" />
-            <span className="md:hidden">Drawings</span>
-            <span className="hidden md:inline">BS 7671 Circuit Drawings</span>
-          </CardTitle>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+              <FileText className="w-4 h-4 md:w-5 md:h-5" />
+              <span className="md:hidden">Drawings</span>
+              <span className="hidden md:inline">BS 7671 Circuit Drawings</span>
+            </CardTitle>
+            
+            {diagrams.length > 0 && (
+              <Button
+                onClick={handleExportAllPDF}
+                variant="outline"
+                size="sm"
+                className="w-full md:w-auto"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download All as PDF
+              </Button>
+            )}
+          </div>
         </CardHeader>
         <CardContent>
           <div className="bg-muted/50 p-3 md:p-4 rounded-lg border border-border">
@@ -103,49 +173,124 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
               <span>✓ BS 7671:2018+A2:2022 compliant</span>
               <span>✓ Professional single-line diagrams</span>
               <span>✓ Ready for Building Control</span>
+              <span>✓ AI-generated photorealistic previews available</span>
             </div>
           </div>
         </CardContent>
       </Card>
 
+      {/* Floor Plan (if multiple circuits) */}
+      {parsedCircuits.length >= 2 && (
+        <FloorPlanDisplay circuits={parsedCircuits} />
+      )}
+
       {diagrams.length > 0 && (
         <div className="space-y-3 md:space-y-4">
-          {diagrams.map((diagram, index) => (
-            <Card key={index}>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between gap-2">
-                  <CardTitle className="text-sm md:text-base">{diagram.title}</CardTitle>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => setViewingDiagram(viewingDiagram === index ? null : index)}
-                    className="h-8 w-8 p-0"
-                  >
-                    <Maximize2 className="w-4 h-4" />
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div 
-                  id={`diagram-${index}`}
-                  className={`relative rounded-lg border border-border overflow-auto ${
-                    viewingDiagram === index ? 'max-h-[600px]' : 'max-h-[300px] md:max-h-[400px]'
-                  }`}
-                >
-                  <SVGDiagramRenderer layout={diagram} />
-                </div>
-                <Button 
-                  onClick={() => downloadSVG(index)}
-                  variant="outline"
-                  size="sm"
-                  className="w-full min-h-[44px]"
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  Download SVG
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+          {diagrams.map((diagram, index) => {
+            const aiDiagram = aiDiagrams.get(index);
+            const isGenerating = generatingAI === index;
+            
+            return (
+              <Card key={index}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <CardTitle className="text-sm md:text-base">{diagram.title}</CardTitle>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setViewingDiagram(viewingDiagram === index ? null : index)}
+                      className="h-8 w-8 p-0"
+                    >
+                      <Maximize2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <Tabs defaultValue="svg" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="svg">SVG Diagram</TabsTrigger>
+                      <TabsTrigger value="ai">AI Preview</TabsTrigger>
+                    </TabsList>
+                    
+                    <TabsContent value="svg" className="space-y-3">
+                      <div 
+                        id={`diagram-${index}`}
+                        className={`relative rounded-lg border border-border overflow-auto ${
+                          viewingDiagram === index ? 'max-h-[600px]' : 'max-h-[300px] md:max-h-[400px]'
+                        }`}
+                      >
+                        <SVGDiagramRenderer layout={diagram} />
+                      </div>
+                      <Button 
+                        onClick={() => downloadSVG(index)}
+                        variant="outline"
+                        size="sm"
+                        className="w-full min-h-[44px]"
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Download SVG
+                      </Button>
+                    </TabsContent>
+                    
+                    <TabsContent value="ai" className="space-y-3">
+                      {!aiDiagram && !isGenerating && (
+                        <div className="bg-muted/30 p-6 md:p-8 rounded-lg border border-dashed border-border text-center">
+                          <Sparkles className="w-12 h-12 mx-auto mb-3 text-primary/50" />
+                          <p className="text-sm text-muted-foreground mb-4">
+                            Generate a photorealistic circuit diagram using AI
+                          </p>
+                          <Button
+                            onClick={() => handleGenerateAIDiagram(index)}
+                            variant="default"
+                            size="sm"
+                            disabled={index >= parsedCircuits.length}
+                          >
+                            <Sparkles className="w-4 h-4 mr-2" />
+                            Generate AI Preview (uses credits)
+                          </Button>
+                        </div>
+                      )}
+                      
+                      {isGenerating && (
+                        <div className="bg-muted/30 p-8 rounded-lg border border-border text-center">
+                          <Loader2 className="w-12 h-12 mx-auto mb-3 text-primary animate-spin" />
+                          <p className="text-sm text-muted-foreground">Generating AI diagrams...</p>
+                        </div>
+                      )}
+                      
+                      {aiDiagram && !isGenerating && (
+                        <div className="space-y-3">
+                          {aiDiagram.map((img: string, aiIdx: number) => (
+                            <div key={aiIdx} className="space-y-2">
+                              <img 
+                                src={img} 
+                                alt={`AI Diagram ${aiIdx + 1}`}
+                                className="w-full rounded-lg border border-border"
+                              />
+                              <Button
+                                onClick={() => {
+                                  const link = document.createElement('a');
+                                  link.href = img;
+                                  link.download = `${projectName}_AI_Diagram_${index + 1}_${aiIdx + 1}.png`;
+                                  link.click();
+                                }}
+                                variant="outline"
+                                size="sm"
+                                className="w-full"
+                              >
+                                <Download className="w-4 h-4 mr-2" />
+                                Download AI Diagram {aiIdx + 1}
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>
@@ -182,6 +327,7 @@ function parseCircuitsFromDesigner(designerResponse: string): CircuitData[] {
     else if (/cooker|oven/i.test(circuitName)) loadType = 'cooker';
     else if (/shower/i.test(circuitName)) loadType = 'shower';
     else if (/ev|charger/i.test(circuitName)) loadType = 'ev-charger';
+    else if (/heat pump|heating/i.test(circuitName)) loadType = 'heat-pump';
     else if (/outside|outdoor|external/i.test(circuitName)) loadType = 'outdoor-lighting';
     
     circuits.push({
