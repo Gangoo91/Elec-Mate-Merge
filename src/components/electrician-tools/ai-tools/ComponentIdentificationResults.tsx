@@ -300,7 +300,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 sm:p-6">
-              <p className="text-left text-sm sm:text-base leading-relaxed text-white/80">{component.replacement_notes}</p>
+              <p className="text-left text-sm sm:text-base leading-relaxed text-white">{component.replacement_notes}</p>
             </CardContent>
           </Card>
         )}
@@ -314,7 +314,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 sm:p-6">
-              <p className="text-left text-sm sm:text-base leading-relaxed text-white/80">{component.common_issues}</p>
+              <p className="text-left text-sm sm:text-base leading-relaxed text-white">{component.common_issues}</p>
             </CardContent>
           </Card>
         )}

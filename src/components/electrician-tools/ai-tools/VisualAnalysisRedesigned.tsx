@@ -938,21 +938,13 @@ const VisualAnalysisRedesigned = () => {
             />
           )}
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
-            <Button 
-              onClick={handleDiscussWithInspector}
-              size="lg"
-              className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
-            >
-              <MessageSquare className="h-4 w-4 mr-2" />
-              Discuss with Inspector AI
-            </Button>
+          {/* Action Button */}
+          <div className="pt-2">
             <Button 
               variant="outline" 
               size="lg"
               onClick={resetAnalysis}
-              className="h-12"
+              className="h-12 w-full"
             >
               <RefreshCw className="h-4 w-4 mr-2" />
               New Analysis
