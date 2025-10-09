@@ -1,13 +1,26 @@
 import { parseAgentResponse, ParsedSection } from "@/utils/agentTextProcessor";
 import { Separator } from "@/components/ui/separator";
-import { useMemo, memo } from "react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
+import { useMemo, memo, useState } from "react";
+import {
+  CircuitSpecCard,
+  CostBreakdownCard,
+  RiskMatrixCard,
+  InstallationStepsCard,
+  TestSequenceCard
+} from "./response-cards";
 
 interface AgentResponseRendererProps {
   content: string;
   agentId?: string;
+  structuredData?: any;
 }
 
-export const AgentResponseRenderer = memo(({ content, agentId }: AgentResponseRendererProps) => {
+export const AgentResponseRenderer = memo(({ content, agentId, structuredData }: AgentResponseRendererProps) => {
+  const [showFullText, setShowFullText] = useState(false);
+  
   // Memoize parsed sections - only re-parse if content changes
   const sections = useMemo(() => parseAgentResponse(content), [content]);
   
@@ -24,6 +37,9 @@ export const AgentResponseRenderer = memo(({ content, agentId }: AgentResponseRe
     return null;
   }, [content, agentId]);
   
+  // Determine which structured card to show based on agent and data
+  const hasStructuredData = structuredData && Object.keys(structuredData).length > 0;
+  
   return (
     <div className="space-y-4 text-left">
       {/* Opening Line Badge */}
@@ -35,9 +51,62 @@ export const AgentResponseRenderer = memo(({ content, agentId }: AgentResponseRe
         </div>
       )}
       
-      {sections.map((section, index) => (
-        <SectionRenderer key={index} section={section} agentId={agentId} />
-      ))}
+      {/* Structured Visual Cards (if available) */}
+      {hasStructuredData && (
+        <div className="space-y-3">
+          {/* Designer Agent - Circuit Spec Card */}
+          {agentId === 'designer' && structuredData.cableSize && (
+            <CircuitSpecCard data={structuredData} />
+          )}
+          
+          {/* Cost Engineer - Cost Breakdown Card */}
+          {agentId === 'cost-engineer' && (structuredData.materials || structuredData.totalCost) && (
+            <CostBreakdownCard data={structuredData} />
+          )}
+          
+          {/* Health & Safety - Risk Matrix Card */}
+          {agentId === 'health-safety' && structuredData.riskAssessment && (
+            <RiskMatrixCard data={structuredData} />
+          )}
+          
+          {/* Installer - Installation Steps Card */}
+          {agentId === 'installer' && structuredData.installationSteps && (
+            <InstallationStepsCard data={structuredData} />
+          )}
+          
+          {/* Commissioning - Test Sequence Card */}
+          {agentId === 'commissioning' && structuredData.testSequence && (
+            <TestSequenceCard data={structuredData} />
+          )}
+        </div>
+      )}
+      
+      {/* Full Text Response (collapsible if structured data exists) */}
+      {hasStructuredData ? (
+        <Collapsible open={showFullText} onOpenChange={setShowFullText}>
+          <CollapsibleTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="w-full justify-between text-xs h-8 text-muted-foreground"
+            >
+              <span>View Full Agent Response & Reasoning</span>
+              <ChevronDown className={`h-4 w-4 transition-transform ${showFullText ? 'rotate-180' : ''}`} />
+            </Button>
+          </CollapsibleTrigger>
+          
+          <CollapsibleContent className="space-y-4 pt-3">
+            {sections.map((section, index) => (
+              <SectionRenderer key={index} section={section} agentId={agentId} />
+            ))}
+          </CollapsibleContent>
+        </Collapsible>
+      ) : (
+        // No structured data - show text as normal
+        sections.map((section, index) => (
+          <SectionRenderer key={index} section={section} agentId={agentId} />
+        ))
+      )}
     </div>
   );
 });

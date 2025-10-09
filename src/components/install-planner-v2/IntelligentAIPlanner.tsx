@@ -11,6 +11,7 @@ import { useStreamingChat } from "@/hooks/useStreamingChat";
 import { ReasoningPanel } from "./ReasoningPanel";
 import { CitationBadge } from "./CitationBadge";
 import { AgentSelector } from "./AgentSelector";
+import { AgentResponseRenderer } from "./AgentResponseRenderer";
 import { useNavigate, useLocation } from "react-router-dom";
 import { transformAgentOutputToEIC } from "@/utils/eic-transformer";
 import { exportEICScheduleToInspectionApp } from "@/utils/eic-export";
@@ -924,41 +925,11 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 }`}
               >
                 {message.role === 'assistant' && message.content && !message.isTyping && (
-                  <div className="text-left space-y-6">
-                    {parseAgentResponse(message.content).map((section, i) => (
-                      <div key={i} className="space-y-3">
-                        {section.title && (
-                          <div className="flex items-center gap-2 pb-2 border-b border-elec-yellow/20">
-                            <div className="w-1 h-4 bg-elec-yellow rounded-full" />
-                            <h4 className="font-bold text-elec-yellow text-base tracking-wide uppercase">
-                              {section.title}
-                            </h4>
-                          </div>
-                        )}
-                        <div 
-                          className="text-[15px] text-white/95 leading-[1.7] space-y-2"
-                          style={{ 
-                            wordSpacing: '0.05em',
-                            letterSpacing: '0.01em'
-                          }}
-                          dangerouslySetInnerHTML={{ 
-                            __html: section.content
-                              .trim()
-                              .split('\n')
-                              .map(line => {
-                                // Convert bullet points
-                                if (line.trim().startsWith('•') || line.trim().startsWith('-') || line.trim().startsWith('*')) {
-                                  return `<div class="flex gap-3 py-1.5"><span class="text-elec-yellow mt-1">•</span><span class="flex-1">${line.trim().replace(/^[•\-*]\s*/, '')}</span></div>`;
-                                }
-                                // Regular lines
-                                return line.trim() ? `<p class="py-0.5">${line}</p>` : '';
-                              })
-                              .join('')
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  <AgentResponseRenderer 
+                    content={message.content} 
+                    agentId={message.agentName}
+                    structuredData={message.structuredData}
+                  />
                 )}
 
                 {message.role === 'assistant' && message.isTyping && (
