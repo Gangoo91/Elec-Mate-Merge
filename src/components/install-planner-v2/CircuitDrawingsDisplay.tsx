@@ -26,13 +26,33 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
   const [aiDiagrams, setAiDiagrams] = useState<Map<number, any>>(new Map());
   const [generatingAI, setGeneratingAI] = useState<number | null>(null);
 
-  // Parse circuits from designer response
+  // Parse circuits from designer response - check for structured data first
   const parsedCircuits = useMemo(() => {
     const designerMessages = messages.filter(m => m.agentName === 'designer');
     if (designerMessages.length === 0) return [];
     
-    const lastMessage = designerMessages[designerMessages.length - 1].content;
-    return parseCircuitsFromDesigner(lastMessage);
+    // NEW: Check if messages contain structured circuit data
+    const structuredCircuits: CircuitData[] = [];
+    designerMessages.forEach(msg => {
+      try {
+        // Check if message has structured data (from designer agent JSON response)
+        const msgData = typeof msg === 'object' && 'structuredData' in msg ? (msg as any).structuredData : null;
+        if (msgData?.circuits) {
+          structuredCircuits.push(...msgData.circuits);
+        }
+      } catch (e) {
+        // Not structured data, will parse from text
+      }
+    });
+    
+    if (structuredCircuits.length > 0) {
+      console.log('✅ Using structured circuit data:', structuredCircuits);
+      return structuredCircuits;
+    }
+    
+    // Fallback: Combine ALL designer messages and parse from text
+    const combinedContent = designerMessages.map(m => m.content).join('\n\n');
+    return parseCircuitsFromDesigner(combinedContent);
   }, [messages]);
 
   // Generate SVG diagrams
@@ -123,6 +143,8 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
   const hasDesignerData = parsedCircuits.length > 0;
 
   if (!hasDesignerData) {
+    const designerMessageCount = messages.filter(m => m.agentName === 'designer').length;
+    
     return (
       <Card>
         <CardHeader>
@@ -133,9 +155,20 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-center py-6 md:py-8 text-white/70">
-            <p className="text-sm md:text-base">No circuit design data available.</p>
-            <p className="text-xs md:text-sm mt-2">The Circuit Designer agent must be consulted first.</p>
+          <div className="text-center py-6 md:py-8">
+            <p className="text-white/70 text-sm md:text-base mb-4">No circuit design data available.</p>
+            
+            {designerMessageCount > 0 ? (
+              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 text-sm text-left max-w-md mx-auto">
+                <p className="font-semibold mb-2 text-yellow-500">⚠️ Designer responded but data couldn't be parsed.</p>
+                <p className="text-xs text-white/60">
+                  Found {designerMessageCount} designer message(s). 
+                  The circuit parser may need updating to match the designer's output format.
+                </p>
+              </div>
+            ) : (
+              <p className="text-xs md:text-sm text-white/60">The Circuit Designer agent must be consulted first.</p>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -301,55 +334,135 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
 function parseCircuitsFromDesigner(designerResponse: string): CircuitData[] {
   const circuits: CircuitData[] = [];
   
-  // Simple regex patterns to extract circuit data
-  const circuitPattern = /Circuit (\d+)[:\-\s]+([^\n]+)/gi;
-  const matches = [...designerResponse.matchAll(circuitPattern)];
+  // NEW: Try to parse structured CIRCUIT SPECIFICATION format first
+  const sections = designerResponse.split(/CIRCUIT SPECIFICATION/i).filter(s => s.trim());
   
-  matches.forEach((match, idx) => {
-    const circuitNum = parseInt(match[1]);
-    const circuitName = match[2].trim();
+  sections.forEach((section, idx) => {
+    // Extract data from structured format
+    const loadMatch = section.match(/Load:\s*(\d+)W/i);
+    const distanceMatch = section.match(/Distance from board:\s*(\d+)m/i);
+    const voltageMatch = section.match(/Supply:\s*(\d+)V\s*(\w+)-phase/i);
+    const circuitTypeMatch = section.match(/Circuit type:\s*(.+)/i);
     
-    // Extract cable size (look for patterns like "2.5mm²" or "2.5mm2")
-    const cableSizeMatch = designerResponse.match(new RegExp(`Circuit ${circuitNum}[^]*?(\\d+\\.?\\d*)\\s*mm[²2]`, 'i'));
-    const cableSize = cableSizeMatch ? parseFloat(cableSizeMatch[1]) : 2.5;
+    // Extract from CALCULATIONS section
+    const ibMatch = section.match(/Design current \(Ib\):\s*([\d.]+)A/i);
+    const protectionMatch = section.match(/Protection device:\s*(\d+)A\s*MCB\s*Type\s*([ABC])/i);
+    const cableMatch = section.match(/Cable specification:\s*([\d.]+)mm²/i);
+    const cpcMatch = section.match(/CPC:\s*([\d.]+)mm²/i);
     
-    // Extract CPC size
-    const cpcMatch = designerResponse.match(new RegExp(`CPC[^]*?(\\d+\\.?\\d*)\\s*mm[²2]`, 'i'));
-    const cpcSize = cpcMatch ? parseFloat(cpcMatch[1]) : 1.5;
+    if (!loadMatch || !cableMatch) return; // Skip invalid sections
     
-    // Extract MCB rating
-    const mcbMatch = designerResponse.match(new RegExp(`Circuit ${circuitNum}[^]*?(\\d+)A`, 'i'));
-    const mcbRating = mcbMatch ? parseInt(mcbMatch[1]) : 16;
+    const circuitNum = idx + 1;
+    const power = parseInt(loadMatch[1]);
+    const cableSize = parseFloat(cableMatch[1]);
+    const cpcSize = cpcMatch ? parseFloat(cpcMatch[1]) : (cableSize >= 2.5 ? 1.5 : 1.0);
+    const mcbRating = protectionMatch ? parseInt(protectionMatch[1]) : 16;
+    const mcbType = protectionMatch ? protectionMatch[2] : 'B';
     
-    // Determine load type from circuit name
-    let loadType = 'socket';
-    if (/lighting|light/i.test(circuitName)) loadType = 'lighting';
-    else if (/cooker|oven/i.test(circuitName)) loadType = 'cooker';
-    else if (/shower/i.test(circuitName)) loadType = 'shower';
-    else if (/ev|charger/i.test(circuitName)) loadType = 'ev-charger';
-    else if (/heat pump|heating/i.test(circuitName)) loadType = 'heat-pump';
-    else if (/outside|outdoor|external/i.test(circuitName)) loadType = 'outdoor-lighting';
+    // Determine circuit name from type
+    const circuitType = circuitTypeMatch ? circuitTypeMatch[1].trim() : 'General';
+    let name = `Circuit ${circuitNum}`;
+    if (/socket/i.test(circuitType)) name = `Socket Outlet Circuit ${circuitNum}`;
+    if (/lighting/i.test(circuitType)) name = `Lighting Circuit ${circuitNum}`;
+    if (/cooker|oven/i.test(circuitType)) name = `Cooker Circuit ${circuitNum}`;
+    if (/shower/i.test(circuitType)) name = `Shower Circuit ${circuitNum}`;
+    if (/ev|charger/i.test(circuitType)) name = `EV Charger Circuit ${circuitNum}`;
     
     circuits.push({
       circuitNumber: circuitNum,
-      name: circuitName,
-      voltage: 230,
+      name,
+      voltage: voltageMatch ? parseInt(voltageMatch[1]) : 230,
       cableSize,
       cpcSize,
-      cableLength: 15, // Default
-      loadType,
-      loadPower: mcbRating * 230 * 0.8, // Estimate
+      cableLength: distanceMatch ? parseInt(distanceMatch[1]) : 15,
+      loadType: detectLoadType(circuitType),
+      loadPower: power,
       protectionDevice: {
         type: 'MCB',
         rating: mcbRating,
-        curve: 'B',
+        curve: mcbType,
         kaRating: 6
       },
-      rcdProtected: /rcd|rcbo/i.test(designerResponse),
+      rcdProtected: /rcd|rcbo/i.test(section),
       rcdRating: 30,
       ze: 0.35
     });
   });
   
+  // Fallback: If no "CIRCUIT SPECIFICATION" headers found, try old regex pattern
+  if (circuits.length === 0) {
+    const singleCircuit = parseSingleCircuitFormat(designerResponse);
+    if (singleCircuit) circuits.push(singleCircuit);
+  }
+  
   return circuits;
+}
+
+function parseSingleCircuitFormat(text: string): CircuitData | null {
+  const loadMatch = text.match(/Load:\s*(\d+)W/i);
+  const cableMatch = text.match(/Cable specification:\s*([\d.]+)mm²/i);
+  const protectionMatch = text.match(/Protection device:\s*(\d+)A\s*MCB\s*Type\s*([ABC])/i);
+  const lengthMatch = text.match(/Distance from board:\s*(\d+)m/i);
+  
+  if (!loadMatch || !cableMatch) {
+    // Last resort: try very basic pattern matching
+    const basicCircuit = text.match(/Circuit (\d+)[:\-\s]+([^\n]+)/i);
+    const basicCable = text.match(/([\d.]+)\s*mm[²2]/i);
+    const basicMCB = text.match(/(\d+)A/i);
+    
+    if (basicCircuit && basicCable) {
+      return {
+        circuitNumber: 1,
+        name: basicCircuit[2]?.trim() || 'Circuit 1',
+        voltage: 230,
+        cableSize: parseFloat(basicCable[1]),
+        cpcSize: 1.5,
+        cableLength: 15,
+        loadType: detectLoadType(basicCircuit[2] || ''),
+        loadPower: (basicMCB ? parseInt(basicMCB[1]) : 16) * 230 * 0.8,
+        protectionDevice: {
+          type: 'MCB',
+          rating: basicMCB ? parseInt(basicMCB[1]) : 16,
+          curve: 'B',
+          kaRating: 6
+        },
+        rcdProtected: false,
+        rcdRating: 30,
+        ze: 0.35
+      };
+    }
+    return null;
+  }
+  
+  return {
+    circuitNumber: 1,
+    name: 'Circuit 1',
+    voltage: 230,
+    cableSize: parseFloat(cableMatch[1]),
+    cpcSize: 1.5,
+    cableLength: lengthMatch ? parseInt(lengthMatch[1]) : 15,
+    loadType: 'socket',
+    loadPower: parseInt(loadMatch[1]),
+    protectionDevice: {
+      type: 'MCB',
+      rating: protectionMatch ? parseInt(protectionMatch[1]) : 16,
+      curve: protectionMatch ? protectionMatch[2] : 'B',
+      kaRating: 6
+    },
+    rcdProtected: false,
+    rcdRating: 30,
+    ze: 0.35
+  };
+}
+
+function detectLoadType(circuitType: string): string {
+  if (/socket/i.test(circuitType)) return 'socket';
+  if (/lighting|light/i.test(circuitType)) return 'lighting';
+  if (/cooker|oven/i.test(circuitType)) return 'cooker';
+  if (/shower/i.test(circuitType)) return 'shower';
+  if (/ev|charger/i.test(circuitType)) return 'ev-charger';
+  if (/heat pump/i.test(circuitType)) return 'heat-pump';
+  if (/motor/i.test(circuitType)) return 'motor';
+  if (/outdoor|outside|external/i.test(circuitType)) return 'outdoor-lighting';
+  return 'socket';
 }

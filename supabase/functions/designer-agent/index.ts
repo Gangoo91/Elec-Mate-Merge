@@ -291,6 +291,34 @@ Use professional language with UK English spelling. Present calculations clearly
         rcdTest: calculationResults.rcdRequirements?.required ? '30mA RCD required' : 'N/A'
       };
       
+      // NEW: Add structured circuits array for drawing components
+      structuredData.circuits = [{
+        circuitNumber: 1,
+        name: formatCircuitName(circuitParams.circuitType),
+        voltage: circuitParams.voltage,
+        cableSize: circuitParams.cableSize,
+        cpcSize: circuitParams.cableSize >= 2.5 ? 1.5 : 1.0,
+        cableLength: circuitParams.cableLength,
+        loadType: detectLoadTypeFromCircuitType(circuitParams.circuitType),
+        loadPower: circuitParams.power,
+        protectionDevice: {
+          type: 'MCB',
+          rating: circuitParams.deviceRating,
+          curve: circuitParams.deviceType,
+          kaRating: 6
+        },
+        rcdProtected: calculationResults.rcdRequirements?.required || false,
+        rcdRating: 30,
+        ze: 0.35,
+        calculationResults: {
+          zs: calculationResults.zs,
+          maxZs: calculationResults.maxZs.maxZs,
+          installationMethod: circuitParams.installationMethod,
+          deratedCapacity: calculationResults.cableCapacity.Iz,
+          safetyMargin: calculationResults.cableCapacity.compliance.safetyMargin
+        }
+      }];
+      
       reasoning.push(`Selected ${circuitParams.cableSize}mm² cable: Iz (${Math.round(calculationResults.cableCapacity.Iz * 10) / 10}A) > In (${circuitParams.deviceRating}A)`);
       reasoning.push(`Correction factors: Ca=${calculationResults.cableCapacity.factors.temperatureFactor}, Cg=${calculationResults.cableCapacity.factors.groupingFactor}`);
       reasoning.push(`Zs = ${calculationResults.zs.toFixed(2)}Ω (max ${calculationResults.maxZs.maxZs}Ω) - PSCC = ${calculationResults.pscc}A`);
@@ -436,4 +464,17 @@ function formatLoadType(circuitType: string): string {
     'bathroom': 'Bathroom Installation',
   };
   return types[circuitType] || 'General Load';
+}
+
+function detectLoadTypeFromCircuitType(circuitType: string): string {
+  if (!circuitType) return 'socket';
+  if (/socket/i.test(circuitType)) return 'socket';
+  if (/lighting|light/i.test(circuitType)) return 'lighting';
+  if (/cooker|oven/i.test(circuitType)) return 'cooker';
+  if (/shower/i.test(circuitType)) return 'shower';
+  if (/ev|charger/i.test(circuitType)) return 'ev-charger';
+  if (/heat pump/i.test(circuitType)) return 'heat-pump';
+  if (/motor/i.test(circuitType)) return 'motor';
+  if (/outdoor|outside|external/i.test(circuitType)) return 'outdoor-lighting';
+  return 'socket';
 }
