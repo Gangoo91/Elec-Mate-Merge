@@ -152,13 +152,43 @@ const AIAssistant = () => {
     setSearchMethod("");
     
     try {
-      const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
-        body: { 
-          prompt: prompt,
-          type: "structured_assistant",
-          use_rag: true
-        },
-      });
+      // Detect if this is a circuit design/cable sizing question
+      const lowerPrompt = prompt.toLowerCase();
+      const isCircuitDesign = lowerPrompt.includes('cable') || 
+                             lowerPrompt.includes('sizing') || 
+                             lowerPrompt.includes('circuit') ||
+                             lowerPrompt.includes('ring') ||
+                             lowerPrompt.includes('mcb') ||
+                             lowerPrompt.includes('cooker') ||
+                             lowerPrompt.includes('shower') ||
+                             lowerPrompt.includes('32a') ||
+                             lowerPrompt.includes('load');
+
+      let data, error;
+
+      if (isCircuitDesign) {
+        // Route to designer agent for circuit questions
+        const designResponse = await supabase.functions.invoke('designer-agent', {
+          body: { 
+            messages: [{ role: 'user', content: prompt }],
+            currentDesign: {},
+            context: {}
+          }
+        });
+        data = designResponse.data;
+        error = designResponse.error;
+      } else {
+        // Route to general AI assistant
+        const assistantResponse = await supabase.functions.invoke('electrician-ai-assistant', {
+          body: { 
+            prompt: prompt,
+            type: "structured_assistant",
+            use_rag: true
+          },
+        });
+        data = assistantResponse.data;
+        error = assistantResponse.error;
+      }
       
       if (error) {
         throw new Error(error.message || 'Error connecting to the AI assistant');
@@ -181,8 +211,15 @@ const AIAssistant = () => {
         setCurrentQuery(prompt);
       }
       
-      // Handle structured responses with three sections
-      if (data.analysis && data.regulations && data.practical_guidance) {
+      // Handle designer agent response
+      if (data.response && data.structuredData) {
+        // Designer agent returned structured data - display as conversational response
+        setAnalysisResult(data.response);
+        setRegulationsResult("Supporting regulations included in analysis above.");
+        setPracticalGuidanceResult("Installation guidance included in analysis above.");
+      }
+      // Handle structured responses with three sections from inspector
+      else if (data.analysis && data.regulations && data.practical_guidance) {
         const analysisText = typeof data.analysis === 'string' ? data.analysis : 
           typeof data.analysis === 'object' ? Object.values(data.analysis).join('\n\n') : 
           String(data.analysis);
@@ -260,8 +297,8 @@ const AIAssistant = () => {
             {/* Input Area */}
               <div className="space-y-3 sm:space-y-4">
                 <Textarea
-                  placeholder="e.g. 'What are the RCD requirements for bathrooms?' or 'How do I test earth fault loop impedance?'"
-                  className="min-h-[180px] sm:min-h-[200px] bg-neutral-700/50 border-2 border-elec-yellow/40 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 text-white placeholder:text-gray-400 resize-none text-base sm:text-lg rounded-2xl p-5 sm:p-6 leading-relaxed transition-all duration-200"
+                  placeholder="e.g. 'What are the RCD requirements for bathrooms?' or 'Cable sizing for 32A ring circuit'"
+                  className="min-h-[180px] sm:min-h-[200px] bg-neutral-700/50 border-2 border-elec-yellow/40 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 text-white placeholder:text-gray-400 resize-none text-base sm:text-lg font-medium rounded-2xl p-5 sm:p-6 leading-relaxed transition-all duration-200"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                 />

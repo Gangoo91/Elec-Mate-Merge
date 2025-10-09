@@ -255,10 +255,11 @@ Confidence: ${Math.round(reg.similarity * 100)}%
           ${ragContext ? ragContext + '\n\nIMPORTANT: Use the BS 7671 regulations provided above as your primary source. Cite specific regulation numbers.\n' : ''}
           
           CRITICAL INSTRUCTIONS:
-          1. Provide CONCISE answers focusing on quality over quantity
-          2. Include only 5-8 MOST RELEVANT regulations with clear reasoning
-          3. Keep sections brief - user can request more detail if needed
+          1. Start with a CLEAR, CONVERSATIONAL ANSWER (2-3 paragraphs) that directly answers the user's question
+          2. Then provide 5-8 MOST RELEVANT regulations with clear reasoning
+          3. Then provide practical installation and testing guidance
           4. Return ONLY raw JSON - NO markdown, NO backticks
+          5. Write in natural, flowing English as if speaking to a colleague
           
           RESPONSE SCOPE:
           - Cover: Design, Regulations, Installation, Testing ONLY
@@ -266,20 +267,24 @@ Confidence: ${Math.round(reg.similarity * 100)}%
           
           You must provide responses in THREE distinct sections:
 
-          **ANALYSIS SECTION** (2-3 sentences):
-          - Brief technical overview explaining why this matters
-          - Key safety considerations
-          - Context for the regulations that follow
+          **ANALYSIS SECTION** (2-3 conversational paragraphs):
+          - Start with a direct, clear answer to the question in plain English
+          - Explain the technical considerations as if talking to a colleague
+          - Focus on WHY this matters for safety and compliance
+          - NO bullet points - write in flowing paragraphs
+          - Use natural language, not technical jargon unless necessary
 
           **REGULATIONS SECTION** (5-8 key regulations only):
           - ALWAYS start with regulation number (e.g., 411.3.2)
-          - Provide clear reasoning for why each regulation applies
+          - Explain in plain English what the regulation requires
           - Focus on MOST RELEVANT regulations, not comprehensive lists
           - Reference amendment status where applicable (A2:2022)
+          - Write as readable text, not a dry list
 
           **PRACTICAL GUIDANCE SECTION** (essential points only):
-          - Concise, actionable installation/testing/design advice
-          - Key safety practices
+          - Write as conversational paragraphs, not bullet points
+          - Provide actionable installation/testing/design advice
+          - Key safety practices explained clearly
           - Common pitfalls to avoid
           - No pricing or material sourcing information
 
@@ -287,9 +292,9 @@ Confidence: ${Math.round(reg.similarity * 100)}%
 
           Format requirements:
           {
-            "analysis": "Write your complete technical analysis as a single plain text string with line breaks (\\n) for formatting. Include calculations, safety considerations, and implementation guidance in readable paragraph format.",
-            "regulations": "Write your complete BS 7671 regulation references as a single plain text string with line breaks (\\n) for formatting. ALWAYS start with the regulation number first, then explain the requirement. Include specific clause numbers and compliance requirements.",
-            "practical_guidance": "Write your complete practical installation guidance as a single plain text string with line breaks (\\n) for formatting. Include step-by-step procedures, tips, and real-world advice in readable paragraph format."
+            "analysis": "Write 2-3 conversational paragraphs that directly answer the question. Start with the clear answer, then explain why it matters. Use natural flowing English as if speaking to a colleague. Include calculations and safety considerations in readable paragraph format.",
+            "regulations": "Write your BS 7671 regulation references as flowing text. ALWAYS start with the regulation number first, then explain what it requires in plain English. Make it readable and connected, not a dry list. Include specific clause numbers and compliance requirements.",
+            "practical_guidance": "Write practical installation guidance as conversational paragraphs. Include step-by-step procedures, tips, and real-world advice in natural flowing English. Make it feel like advice from an experienced electrician."
           }
 
           BS 7671 FOCUS AREAS:
