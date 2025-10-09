@@ -115,7 +115,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               {component.visual_identifiers.map((identifier, index) => (
                 <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-elec-grey/30 min-h-[44px]">
                   <span className="text-elec-yellow font-bold text-sm mt-0.5">{index + 1}.</span>
-                  <span className="text-sm sm:text-base leading-relaxed flex-1">{identifier}</span>
+                  <span className="text-left text-sm sm:text-base leading-relaxed flex-1">{identifier}</span>
                 </div>
               ))}
             </div>
