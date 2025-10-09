@@ -167,7 +167,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-base sm:text-lg font-semibold text-elec-yellow">{component.manufacturer}</p>
+              <p className="text-left text-base sm:text-lg font-semibold text-elec-yellow">{component.manufacturer}</p>
             </CardContent>
           </Card>
         )}
@@ -181,7 +181,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-base sm:text-lg font-semibold text-elec-yellow">{component.model}</p>
+              <p className="text-left text-base sm:text-lg font-semibold text-elec-yellow">{component.model}</p>
             </CardContent>
           </Card>
         )}
@@ -200,13 +200,13 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
             {component.age_estimate && (
               <div className="border-b border-elec-yellow/20 pb-4">
                 <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-2">Estimated Age</p>
-                <p className="text-base sm:text-lg font-semibold text-elec-yellow">{component.age_estimate}</p>
+                <p className="text-left text-base sm:text-lg font-semibold text-elec-yellow">{component.age_estimate}</p>
               </div>
             )}
             {component.current_compliance && (
               <div className={component.age_estimate ? "" : "pb-0"}>
                 <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-2">BS 7671:2018 Compliance</p>
-                <p className={`text-base sm:text-lg font-semibold ${
+                <p className={`text-left text-base sm:text-lg font-semibold ${
                   component.current_compliance.toLowerCase().includes('meets') || 
                   component.current_compliance.toLowerCase().includes('compliant')
                     ? 'text-green-400'
@@ -234,7 +234,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               {component.bs7671_requirements.map((req, index) => (
                 <div key={index} className="p-3 sm:p-4 rounded-lg bg-elec-grey/30 border border-elec-yellow/10 min-h-[44px] flex items-start gap-3">
                   <BookOpen className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm sm:text-base leading-relaxed">{req}</span>
+                  <span className="text-left text-sm sm:text-base leading-relaxed">{req}</span>
                 </div>
               ))}
             </div>
@@ -255,7 +255,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
             {component.where_found && (
               <div className="border-b border-elec-yellow/20 pb-4">
                 <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-2">Where You'll Find This</p>
-                <p className="text-sm sm:text-base leading-relaxed text-white/80">{component.where_found}</p>
+                <p className="text-left text-sm sm:text-base leading-relaxed text-white/80">{component.where_found}</p>
               </div>
             )}
             {component.typical_applications && component.typical_applications.length > 0 && (
@@ -265,7 +265,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
                   {component.typical_applications.map((app, index) => (
                     <div key={index} className="flex items-start gap-2 min-h-[44px] p-2 rounded bg-elec-grey/20">
                       <span className="text-elec-yellow mt-1">•</span>
-                      <span className="text-sm sm:text-base">{app}</span>
+                      <span className="text-left text-sm sm:text-base">{app}</span>
                     </div>
                   ))}
                 </div>
@@ -286,7 +286,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 sm:p-6">
-              <p className="text-sm sm:text-base leading-relaxed text-white/80">{component.installation_notes}</p>
+              <p className="text-left text-sm sm:text-base leading-relaxed text-white/80">{component.installation_notes}</p>
             </CardContent>
           </Card>
         )}
@@ -300,7 +300,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 sm:p-6">
-              <p className="text-sm sm:text-base leading-relaxed text-white/80">{component.replacement_notes}</p>
+              <p className="text-left text-sm sm:text-base leading-relaxed text-white/80">{component.replacement_notes}</p>
             </CardContent>
           </Card>
         )}
@@ -314,7 +314,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 sm:p-6">
-              <p className="text-sm sm:text-base leading-relaxed text-white/80">{component.common_issues}</p>
+              <p className="text-left text-sm sm:text-base leading-relaxed text-white/80">{component.common_issues}</p>
             </CardContent>
           </Card>
         )}
