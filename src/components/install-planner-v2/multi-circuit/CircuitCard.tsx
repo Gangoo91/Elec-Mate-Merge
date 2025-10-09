@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, Edit, Power, Zap } from "lucide-react";
+import { Trash2, Edit, Power, Zap, FileText } from "lucide-react";
 import { FullCircuitDesign } from "../types";
 
 interface CircuitCardProps {
@@ -9,6 +9,8 @@ interface CircuitCardProps {
   circuitNumber: number;
   onEdit: () => void;
   onDelete: () => void;
+  onGenerateSchematic?: () => void;
+  loadingSchematic?: boolean;
   calculationResult?: {
     designCurrent: number;
     cableSize: number;
@@ -24,6 +26,8 @@ export const CircuitCard = ({
   circuitNumber, 
   onEdit, 
   onDelete,
+  onGenerateSchematic,
+  loadingSchematic,
   calculationResult 
 }: CircuitCardProps) => {
   return (
@@ -78,12 +82,26 @@ export const CircuitCard = ({
                 <p className="font-medium">{calculationResult.zs.toFixed(3)}Ω</p>
               </div>
             </div>
-            <Badge 
-              variant={calculationResult.compliant ? "default" : "destructive"}
-              className="w-full justify-center"
-            >
-              {calculationResult.compliant ? "✓ Compliant" : "⚠ Non-Compliant"}
-            </Badge>
+            <div className="flex gap-2">
+              <Badge 
+                variant={calculationResult.compliant ? "default" : "destructive"}
+                className="flex-1 justify-center"
+              >
+                {calculationResult.compliant ? "✓ Compliant" : "⚠ Non-Compliant"}
+              </Badge>
+              {onGenerateSchematic && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={onGenerateSchematic}
+                  disabled={loadingSchematic}
+                  className="flex-1"
+                >
+                  <FileText className="h-3 w-3 mr-1" />
+                  {loadingSchematic ? "Generating..." : "Wiring Schematic"}
+                </Button>
+              )}
+            </div>
           </div>
         )}
       </CardContent>

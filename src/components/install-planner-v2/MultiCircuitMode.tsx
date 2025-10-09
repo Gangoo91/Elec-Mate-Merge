@@ -3,9 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { InstallPlanDataV2, FullCircuitDesign } from "./types";
 import { useState } from "react";
 import { Plus, FileText, Image, Download, Layout } from "lucide-react";
+import WiringSchematicDisplay from "@/components/electrician-tools/ai-tools/WiringSchematicDisplay";
+import { generateWiringSchematic, WiringSchematicResponse } from "@/lib/wiringDiagramService";
+import { toast } from "@/hooks/use-toast";
 import { generateConsumerUnitDiagram } from "@/lib/diagramGenerator/layoutEngine";
 import { CircuitCard } from "./multi-circuit/CircuitCard";
 import { CircuitFormDialog } from "./multi-circuit/CircuitFormDialog";
@@ -33,6 +37,10 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
   const [ze, setZe] = useState(0.35);
   const [showDiagram, setShowDiagram] = useState(false);
   const [showTesting, setShowTesting] = useState(false);
+  const [schematicData, setSchematicData] = useState<WiringSchematicResponse | null>(null);
+  const [loadingSchematic, setLoadingSchematic] = useState(false);
+  const [selectedCircuitForSchematic, setSelectedCircuitForSchematic] = useState<number | null>(null);
+  const [showSchematicDialog, setShowSchematicDialog] = useState(false);
 
   const handleAddCircuit = () => {
     setEditingCircuit(undefined);
@@ -78,6 +86,45 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
 
   const handleDeleteCircuit = (circuitNumber: number) => {
     setCircuits(circuits.filter(c => c.circuitNumber !== circuitNumber));
+  };
+
+  const handleGenerateSchematic = async (circuit: FullCircuitDesign) => {
+    try {
+      setLoadingSchematic(true);
+      setSelectedCircuitForSchematic(circuit.circuitNumber);
+
+      const result = circuitResults.find(r => r.circuitNumber === circuit.circuitNumber);
+      
+      const response = await generateWiringSchematic({
+        component_type: circuit.loadType || 'socket',
+        circuit_params: {
+          cableSize: result?.cableSize || circuit.cableSize,
+          cableType: "6242Y Twin & Earth",
+          protectionDevice: `${result?.protectionRating || circuit.protectionDevice.rating}A MCB Type ${circuit.protectionDevice.curve || 'B'}`,
+          rcdRequired: circuit.rcdProtected || false,
+          loadPower: circuit.loadPower,
+          voltage: circuit.voltage || 230
+        },
+        installation_context: `${circuit.name} - ${circuit.installationMethod || 'clipped-direct'} installation method, ${earthingSystem} earthing system`
+      });
+
+      setSchematicData(response);
+      setShowSchematicDialog(true);
+      toast({
+        title: "Schematic Generated",
+        description: `BS 7671 compliant wiring schematic created with ${response.rag_sources.installation_docs_count + response.rag_sources.regulations_count + response.rag_sources.safety_docs_count} knowledge sources`,
+      });
+    } catch (error) {
+      console.error('Failed to generate schematic:', error);
+      toast({
+        title: "Generation Failed",
+        description: error instanceof Error ? error.message : "Failed to generate wiring schematic",
+        variant: "destructive"
+      });
+    } finally {
+      setLoadingSchematic(false);
+      setSelectedCircuitForSchematic(null);
+    }
   };
 
   // Calculate circuit results using proper BS 7671 engines
@@ -335,6 +382,8 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
               circuitNumber={circuit.circuitNumber}
               onEdit={() => handleEditCircuit(circuit)}
               onDelete={() => handleDeleteCircuit(circuit.circuitNumber)}
+              onGenerateSchematic={() => handleGenerateSchematic(circuit)}
+              loadingSchematic={loadingSchematic && selectedCircuitForSchematic === circuit.circuitNumber}
               calculationResult={result}
             />
           );
@@ -363,6 +412,26 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
         circuit={editingCircuit}
         onSave={handleSaveCircuit}
       />
+
+      <Dialog open={showSchematicDialog} onOpenChange={setShowSchematicDialog}>
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>BS 7671 Wiring Schematic</DialogTitle>
+          </DialogHeader>
+          {schematicData && (
+            <WiringSchematicDisplay
+              schematicSvg={schematicData.schematic_svg}
+              circuitSpec={schematicData.circuit_spec}
+              wiringProcedure={schematicData.wiring_procedure}
+              terminalConnections={schematicData.terminal_connections}
+              testingRequirements={schematicData.testing_requirements}
+              installationMethodGuidance={schematicData.installation_method_guidance}
+              safetyWarnings={schematicData.safety_warnings}
+              ragSourcesCount={schematicData.rag_sources}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
