@@ -225,7 +225,7 @@ Use professional language with UK English spelling. Present calculations clearly
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 4000, // INCREASED for multi-circuit designs
+        max_completion_tokens: 10000 // INCREASED for comprehensive multi-circuit designs (18-way boards)
       }),
     });
 

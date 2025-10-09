@@ -14,27 +14,27 @@ verify_jwt = false
 
 [functions.orchestrator-agent]
 verify_jwt = false
-timeout_sec = 180
+timeout_sec = 300
 
 [functions.designer-agent]
 verify_jwt = false
-timeout_sec = 120
+timeout_sec = 240
 
 [functions.cost-engineer-agent]
 verify_jwt = false
-timeout_sec = 120
+timeout_sec = 240
 
 [functions.installer-agent]
 verify_jwt = false
-timeout_sec = 120
+timeout_sec = 240
 
 [functions.inspector-agent]
 verify_jwt = false
-timeout_sec = 120
+timeout_sec = 240
 
 [functions.commissioning-agent]
 verify_jwt = false
-timeout_sec = 120
+timeout_sec = 240
 
 [functions.generate-professional-package]
 verify_jwt = false
@@ -282,7 +282,7 @@ verify_jwt = false
 
 [functions.health-safety-agent]
 verify_jwt = false
-timeout_sec = 120
+timeout_sec = 240
 
 [functions.parse-nebosh-igc]
 verify_jwt = false
@@ -318,7 +318,7 @@ verify_jwt = false
 
 [functions.generate-circuit-diagrams]
 verify_jwt = false
-timeout_sec = 90
+timeout_sec = 180
 
 [functions.generate-eic-schedule]
 verify_jwt = true

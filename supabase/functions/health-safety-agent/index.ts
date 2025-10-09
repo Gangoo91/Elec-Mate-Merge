@@ -16,7 +16,7 @@ serve(async (req) => {
   }
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
+  const timeoutId = setTimeout(() => controller.abort(), 240000); // 240s timeout (4 minutes)
 
   try {
     const { messages, currentDesign, context } = await req.json() as HealthSafetyAgentRequest;
@@ -283,7 +283,8 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
             { role: 'system', content: systemPrompt },
             { role: 'user', content: `${latestMessage}\n\nIMPORTANT: Respond with valid JSON matching the specified format.` }
           ],
-          response_format: { type: "json_object" }
+          response_format: { type: "json_object" },
+          max_completion_tokens: 10000
         };
         
         console.log('📤 Lovable AI Request:', JSON.stringify({ model: requestBody.model, messageCount: requestBody.messages.length }));

@@ -224,7 +224,7 @@ Use professional language with UK English spelling. Cite specific regulations an
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 3500
+        max_completion_tokens: 10000
       }),
     });
 

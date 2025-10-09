@@ -198,7 +198,7 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 5000 // INCREASED for comprehensive multi-circuit testing
+        max_completion_tokens: 10000 // INCREASED for comprehensive testing procedures (18-way boards)
       }),
     });
 

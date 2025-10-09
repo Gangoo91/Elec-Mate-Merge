@@ -152,7 +152,7 @@ PRICING NOTES
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 3000 // INCREASED for detailed cost breakdowns
+        max_completion_tokens: 10000 // INCREASED for detailed cost breakdowns
       }),
     });
 

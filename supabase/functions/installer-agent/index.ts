@@ -156,7 +156,7 @@ Use professional language with UK English spelling. Provide clear step-by-step g
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 3500 // INCREASED for step-by-step installation guidance
+        max_completion_tokens: 10000 // INCREASED for comprehensive step-by-step installation guidance
       }),
     });
 

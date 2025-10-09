@@ -6,6 +6,43 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// BS 6004 Table 8: Twin and Earth Cable CPC Sizes
+const TWIN_EARTH_CPC_SIZES: Record<string, string> = {
+  '1.0': '1.0',
+  '1.5': '1.0',
+  '2.5': '1.5',
+  '4.0': '1.5',
+  '6.0': '2.5',
+  '10.0': '4.0',
+  '16.0': '6.0',
+  '25.0': '6.0'
+};
+
+// Correct CPC size for Twin & Earth cables per BS 6004
+function correctCPCSize(cableSize: string, cpcSize: string, cableType: string): { 
+  correctedCPC: string; 
+  wasCorrection: boolean;
+  originalCPC: string;
+} {
+  const lowerCableType = cableType.toLowerCase();
+  const isTwinEarth = lowerCableType.includes('twin') || 
+                      lowerCableType.includes('t&e') || 
+                      lowerCableType.includes('t and e') ||
+                      lowerCableType.includes('twin and earth');
+  
+  if (!isTwinEarth) {
+    return { correctedCPC: cpcSize, wasCorrection: false, originalCPC: cpcSize };
+  }
+
+  const correctCPC = TWIN_EARTH_CPC_SIZES[cableSize];
+  if (correctCPC && correctCPC !== cpcSize) {
+    console.log(`⚠️ SAFETY CORRECTION: ${cableSize}mm² T&E has ${correctCPC}mm² CPC (was incorrectly ${cpcSize}mm² per BS 6004 Table 8)`);
+    return { correctedCPC: correctCPC, wasCorrection: true, originalCPC: cpcSize };
+  }
+
+  return { correctedCPC: cpcSize, wasCorrection: false, originalCPC: cpcSize };
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -28,6 +65,7 @@ serve(async (req) => {
       circuitInfo = {
         cableSize: structuredCircuit.cableSize?.toString() || '2.5',
         cpcSize: structuredCircuit.cpcSize?.toString() || '1.5',
+        cableType: structuredCircuit.cableType || 'Twin and Earth',
         protection: `${structuredCircuit.protectionDevice?.rating || 32}A ${structuredCircuit.protectionDevice?.type || 'MCB'}`,
         voltage: structuredCircuit.voltage?.toString() || '230',
         load: `${(structuredCircuit.loadPower || 0) / 1000}kW`,
@@ -38,9 +76,21 @@ serve(async (req) => {
         fullResponse: JSON.stringify(structuredCircuit)
       };
       
+      // Apply CPC correction for Twin & Earth cables
+      const { correctedCPC, wasCorrection, originalCPC } = correctCPCSize(
+        circuitInfo.cableSize,
+        circuitInfo.cpcSize,
+        circuitInfo.cableType
+      );
+      
+      if (wasCorrection) {
+        console.log(`✅ CORRECTED: ${circuitInfo.cableSize}mm² ${circuitInfo.cableType} CPC from ${originalCPC}mm² to ${correctedCPC}mm² (BS 6004 Table 8)`);
+        circuitInfo.cpcSize = correctedCPC;
+      }
+      
       // Validation: Ensure critical specs match
-      if (structuredCircuit.cableSize && structuredCircuit.cpcSize) {
-        console.log(`✅ Validated: ${structuredCircuit.cableSize}mm² cable with ${structuredCircuit.cpcSize}mm² CPC`);
+      if (structuredCircuit.cableSize && circuitInfo.cpcSize) {
+        console.log(`✅ Validated: ${structuredCircuit.cableSize}mm² cable with ${circuitInfo.cpcSize}mm² CPC`);
       }
     } else if (designerResponse) {
       console.log('⚠️ No structured data, extracting from text');
@@ -172,10 +222,13 @@ function buildSingleLinePrompt(circuitInfo: any, projectName: string): string {
 
 PROJECT: ${projectName}
 
-⚠️ CRITICAL CABLE SPECIFICATIONS (MUST USE EXACT VALUES):
-- Live Conductor: ${circuitInfo.cableSize}mm² (NOT ${circuitInfo.cableSize === '10' ? '10mm², DO NOT show 10mm²' : 'any other size'})
-- CPC (Earth): ${circuitInfo.cpcSize}mm² (NOT ${circuitInfo.cpcSize === '1.5' ? '1.0mm², MUST be 1.5mm²' : 'any other size'})
+⚠️ CRITICAL CABLE SPECIFICATIONS - VERIFIED PER BS 6004 TABLE 8 (MUST USE EXACT VALUES):
+- Live Conductor: ${circuitInfo.cableSize}mm²
+- CPC (Earth): ${circuitInfo.cpcSize}mm² ← VERIFIED CORRECT SIZE PER BS 6004 TABLE 8
 - Cable Type: ${circuitInfo.cableSize}mm²/${circuitInfo.cpcSize}mm² twin & earth (6242Y)
+
+NOTE: CPC size shown is the CORRECT British Standard specification for ${circuitInfo.cableType || 'Twin and Earth'}.
+For reference: 16mm² T&E = 6mm² CPC, 10mm² T&E = 4mm² CPC, 2.5mm² T&E = 1.5mm² CPC per BS 6004 Table 8.
 
 CIRCUIT DETAILS:
 - Circuit Name: ${circuitInfo.circuitName || circuitInfo.circuitType.toUpperCase()}
@@ -210,11 +263,17 @@ function buildSchematicPrompt(circuitInfo: any, projectName: string): string {
 
 PROJECT: ${projectName}
 
-⚠️ CRITICAL CABLE SPECIFICATIONS (MUST USE EXACT VALUES):
+⚠️ CRITICAL CABLE SPECIFICATIONS - VERIFIED PER BS 6004 TABLE 8 (MUST USE EXACT VALUES):
 - Live: ${circuitInfo.cableSize}mm²
 - Neutral: ${circuitInfo.cableSize}mm²  
-- CPC (Earth): ${circuitInfo.cpcSize}mm²
+- CPC (Earth): ${circuitInfo.cpcSize}mm² ← VERIFIED CORRECT SIZE PER BS 6004 TABLE 8
 - Cable Type: ${circuitInfo.cableSize}mm²/${circuitInfo.cpcSize}mm² twin & earth (6242Y)
+
+VALIDATION CHECK: Before generating, verify that the CPC size matches BS 6004 Table 8:
+- 16mm² T&E MUST show 6mm² CPC
+- 10mm² T&E MUST show 4mm² CPC  
+- 2.5mm² T&E MUST show 1.5mm² CPC
+If the diagram shows any different CPC size, regenerate with the correct specification.
 
 CIRCUIT DETAILS:
 - Circuit Name: ${circuitInfo.circuitName || circuitInfo.circuitType.toUpperCase()}
