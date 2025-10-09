@@ -170,24 +170,73 @@ Response format:
           return `${baseContext}
 ${responseFormat}
 
-Identify electrical components and provide specifications:
-- Component name/type
-- Manufacturer/model (if visible)
-- Technical specs (voltage, current, IP rating)
-- BS 7671 requirements
-${fast ? '' : '- UK market alternatives'}
+CRITICAL: Identify electrical components with maximum accuracy, especially obscure or older equipment.
+
+1. READ ALL VISIBLE TEXT/MARKINGS:
+   - Manufacturer logos/names
+   - Model/part numbers
+   - Rating plates (voltage, current, power)
+   - Date codes/serial numbers
+   - Compliance marks (CE, UKCA, BS EN)
+
+2. ANALYSE PHYSICAL CHARACTERISTICS:
+   - Component type (MCB, RCBO, contactor, isolator, etc.)
+   - Physical size and mounting style
+   - Number of poles/terminals
+   - Colour and material (age indicators)
+   - Condition (new/aged/obsolete)
+
+3. PROVIDE COMPREHENSIVE DETAILS:
+   - Plain English explanation: "What is this?" for non-experts
+   - Technical name and type
+   - Full specifications from visible markings
+   - Manufacturer and model (if identifiable)
+   - Age/era estimate if older component
+   - Current compliance status (meets BS 7671 18th Edition?)
+   - Visual identifiers to confirm the ID
+   - Common applications where found
+   - Historical context for vintage components
+
+4. CONFIDENCE CALCULATION:
+   Return confidence as INTEGER 0-100 (e.g., 95 not 0.95):
+   - 90-100: Clear markings, positive ID
+   - 70-89: Partial markings, high probability match
+   - 50-69: Limited markings, estimated based on appearance
+   - Below 50: Insufficient visual information
 
 Response format:
 {
   "analysis": {
     "component": {
-      "name": "Component name",
-      "type": "Type",
-      "specifications": {"voltage_rating": "230V", "current_rating": "32A"},
-      "bs7671_requirements": ["411.3.2"],
-      "confidence": 0.95
+      "name": "Full component name",
+      "type": "Component category",
+      "plain_english": "Simple explanation of what this is and does",
+      "manufacturer": "Brand name if visible",
+      "model": "Model/part number if visible",
+      "confidence": 95,
+      "specifications": {
+        "voltage_rating": "230V",
+        "current_rating": "32A",
+        "breaking_capacity": "6kA",
+        "poles": "Single pole",
+        "protection_type": "B-curve",
+        "ip_rating": "IP20"
+      },
+      "visual_identifiers": [
+        "White toggle switch on front",
+        "Red trip indicator visible",
+        "Model number B16 stamped on side"
+      ],
+      "age_estimate": "Modern (2015+) | Older (2000-2015) | Vintage (pre-2000)",
+      "current_compliance": "Meets BS 7671:2018" | "Non-compliant - replace",
+      "typical_applications": ["Lighting circuits", "Socket circuits"],
+      "bs7671_requirements": ["411.3.3 - Requires RCD protection"],
+      "installation_notes": "Common in domestic installations",
+      "replacement_notes": "Still available" | "Obsolete - modern equivalent: XYZ",
+      "common_issues": "Known for nuisance tripping in older models",
+      "where_found": "Domestic consumer units, commercial distribution boards"
     },
-    "summary": "Brief description"
+    "summary": "Brief overview"
   }
 }`;
 
