@@ -22,12 +22,12 @@ const SiteSafety = () => {
 
   const primaryTools = [
     { 
-      id: "integrated-rams", 
-      title: "Professional RAMS Generator", 
-      description: "Complete integrated risk assessment and method statement workflow",
+      id: "ai-rams", 
+      title: "AI-Powered RAMS Generator", 
+      description: "Let AI create comprehensive RAMS documentation from your job description in seconds",
       icon: FileText,
       featured: true,
-      badge: "Professional"
+      badge: "AI Assistant"
     }
   ];
 
@@ -81,6 +81,9 @@ const SiteSafety = () => {
 
   const renderToolContent = () => {
     switch (activeView) {
+      case "ai-rams":
+        const { AIRAMSGenerator } = require("@/components/electrician-tools/site-safety/ai-rams/AIRAMSGenerator");
+        return <AIRAMSGenerator />;
       case "integrated-rams":
         return <IntegratedRAMSGenerator />;
       case "rams":

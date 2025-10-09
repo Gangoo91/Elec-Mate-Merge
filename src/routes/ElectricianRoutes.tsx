@@ -30,7 +30,8 @@ import RegulationsPage from "@/pages/electrician-tools/ai-tools/RegulationsPage"
 import CircuitDesignerPage from "@/pages/electrician-tools/ai-tools/CircuitDesignerPage";
 import ClientExplainerPage from "@/pages/electrician-tools/ai-tools/ClientExplainerPage";
 import TestingProjects from "@/pages/electrician/testing-projects";
-
+import SiteSafety from "@/pages/electrician-tools/SiteSafety";
+import AIRAMSPage from "@/pages/electrician-tools/AIRAMSPage";
 
 const ElectricianRoutes = () => (
   <Routes>
@@ -51,7 +52,8 @@ const ElectricianRoutes = () => (
     <Route path="calculations" element={<Navigate to="/electrician/calculations" replace />} />
     <Route path="install-planner" element={<Navigate to="/electrician/install-planner" replace />} />
     <Route path="inspection-testing" element={<Navigate to="/electrician/inspection-testing" replace />} />
-    <Route path="site-safety" element={<Navigate to="/electrician/site-safety" replace />} />
+    <Route path="site-safety" element={<SiteSafety />} />
+    <Route path="site-safety/ai-rams" element={<AIRAMSPage />} />
     
     <Route path="project-management" element={<ProjectManagement />} />
     <Route path="project-management/project/:projectId" element={<ProjectDetails />} />
