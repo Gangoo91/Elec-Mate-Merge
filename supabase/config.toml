@@ -1,5 +1,11 @@
 project_id = "jtwygbeceundfgnkirof"
 
+[functions.parse-abb-equipment]
+verify_jwt = false
+
+[functions.parse-schneider-mv]
+verify_jwt = false
+
 [functions.parse-bs7671]
 verify_jwt = false
 
