@@ -468,33 +468,80 @@ Response format:
       };
     }
 
+    // Helper: Normalize component data
+    const normalizeComponent = (comp: any): any => {
+      // Ensure confidence is 0-100
+      let conf = comp.confidence || 0;
+      if (conf > 0 && conf <= 1) conf = conf * 100;
+      conf = Math.max(0, Math.min(100, conf));
+      
+      return {
+        name: comp.name || 'Unknown Component',
+        type: comp.type || 'Unknown Type',
+        plain_english: comp.plain_english || comp.description || 'Component identification incomplete',
+        manufacturer: comp.manufacturer || 'Unknown',
+        model: comp.model || 'Unknown',
+        confidence: conf,
+        specifications: typeof comp.specifications === 'object' ? comp.specifications : {
+          voltage_rating: comp.voltage_rating || comp.specifications?.voltage_rating || 'Not specified',
+          current_rating: comp.current_rating || comp.specifications?.current_rating || 'Not specified',
+          breaking_capacity: comp.breaking_capacity || comp.specifications?.breaking_capacity || 'Not specified',
+          poles: comp.poles || comp.specifications?.poles || 'Not specified',
+          protection_type: comp.protection_type || comp.specifications?.protection_type || 'Not specified',
+          ip_rating: comp.ip_rating || comp.specifications?.ip_rating || 'Not specified'
+        },
+        visual_identifiers: Array.isArray(comp.visual_identifiers) ? comp.visual_identifiers : [],
+        age_estimate: comp.age_estimate || 'Unknown',
+        current_compliance: comp.current_compliance || comp.compliance_status || 'Unknown',
+        typical_applications: Array.isArray(comp.typical_applications) ? comp.typical_applications : 
+                             Array.isArray(comp.applications) ? comp.applications : [],
+        bs7671_requirements: Array.isArray(comp.bs7671_requirements) ? comp.bs7671_requirements : [],
+        installation_notes: comp.installation_notes || '',
+        replacement_notes: comp.replacement_notes || comp.replacement_info || '',
+        common_issues: comp.common_issues || comp.known_issues || '',
+        where_found: comp.where_found || comp.typical_location || ''
+      };
+    };
+
     // CRITICAL: Restructure component_identify responses to match expected format
     if (analysis_settings.mode === 'component_identify' && analysisResult.analysis) {
-      // If the AI returned specs directly under analysis instead of analysis.component, restructure it
-      if (!analysisResult.analysis.component && analysisResult.analysis.name) {
-        console.log('⚠️ Restructuring flat component response to nested format');
-        const flatData = analysisResult.analysis;
+      const ana = analysisResult.analysis;
+      
+      // If component already exists and is valid, just normalize it
+      if (ana.component && typeof ana.component === 'object') {
+        console.log('✅ Component already nested correctly');
+        ana.component = normalizeComponent(ana.component);
+      } 
+      // Check for candidate lists (components, component_candidates, candidate_components, matches)
+      else if (ana.components || ana.component_candidates || ana.candidate_components || ana.matches) {
+        const candidates = ana.components || ana.component_candidates || ana.candidate_components || ana.matches;
+        if (Array.isArray(candidates) && candidates.length > 0) {
+          // Pick the highest confidence candidate
+          const best = candidates.reduce((prev: any, curr: any) => {
+            const prevConf = prev.confidence || 0;
+            const currConf = curr.confidence || 0;
+            return (currConf > prevConf) ? curr : prev;
+          });
+          console.log(`⚠️ Wrapping best candidate component (confidence ${best.confidence || 0}%)`);
+          analysisResult.analysis = {
+            component: normalizeComponent(best),
+            summary: ana.summary || 'Component identified from candidates'
+          };
+        }
+      }
+      // Check for flat component fields at analysis root
+      else if (ana.type || ana.manufacturer || ana.model || ana.plain_english || 
+               ana.specifications || ana.voltage_rating || ana.current_rating || 
+               ana.name || ana.breaking_capacity || ana.poles) {
+        console.log('⚠️ Wrapping flat component fields into analysis.component');
         analysisResult.analysis = {
-          component: {
-            name: flatData.name || 'Unknown Component',
-            type: flatData.type || 'Unknown Type',
-            plain_english: flatData.plain_english || flatData.description || 'Component identification incomplete',
-            manufacturer: flatData.manufacturer || 'Unknown',
-            model: flatData.model || 'Unknown',
-            confidence: flatData.confidence || 0,
-            specifications: flatData.specifications || flatData,
-            visual_identifiers: flatData.visual_identifiers || [],
-            age_estimate: flatData.age_estimate || 'Unknown',
-            current_compliance: flatData.current_compliance || flatData.compliance_status || 'Unknown',
-            typical_applications: flatData.typical_applications || flatData.applications || [],
-            bs7671_requirements: flatData.bs7671_requirements || [],
-            installation_notes: flatData.installation_notes || '',
-            replacement_notes: flatData.replacement_notes || flatData.replacement_info || '',
-            common_issues: flatData.common_issues || flatData.known_issues || '',
-            where_found: flatData.where_found || flatData.typical_location || ''
-          },
-          summary: flatData.summary || 'Component identified'
+          component: normalizeComponent(ana),
+          summary: ana.summary || 'Component identified'
         };
+      }
+      // Last resort: check for any specification fields
+      else {
+        console.log(`⚠️ Still no component after restructure — keys present: ${Object.keys(ana).join(', ')}`);
       }
     }
 

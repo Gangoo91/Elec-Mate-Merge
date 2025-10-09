@@ -401,6 +401,12 @@ const VisualAnalysisRedesigned = () => {
       setAnalysisProgress(90);
       const result: AnalysisResult = data.analysis;
       
+      // Debug log for component_identify mode
+      if (selectedMode === 'component_identify') {
+        console.log('📋 Component identify response keys:', Object.keys(data.analysis || {}));
+        console.log('📋 Has component?', !!data.analysis?.component);
+      }
+      
       // Check if this is a parse error and should trigger auto-retry
       const isParseError = result.findings?.some(
         (f: any) => f.description?.toLowerCase().includes('unable to complete') ||
