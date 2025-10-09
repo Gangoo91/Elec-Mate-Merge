@@ -341,7 +341,8 @@ async function handleConversationalMode(
               citations: output.citations,
               toolCalls: output.toolCalls,
               costUpdates: output.costUpdates,
-              confidence: output.confidence
+              confidence: output.confidence,
+              structuredData: result.data?.structuredData || null
             })}\n\n`;
             controller.enqueue(encoder.encode(responseEvent));
 

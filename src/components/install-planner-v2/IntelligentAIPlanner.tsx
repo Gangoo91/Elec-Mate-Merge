@@ -66,6 +66,7 @@ interface Message {
   isTyping?: boolean;
   hasError?: boolean;
   retryUserMessage?: string;
+  structuredData?: any;
 }
 
 interface IntelligentAIPlannerProps {
@@ -183,8 +184,11 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           : step
       ));
     },
-    onAgentResponse: (agent, response) => {
+    onAgentResponse: (agent, response, structuredData) => {
       console.log(`Agent ${agent} responded:`, response.slice(0, 100));
+      if (structuredData) {
+        console.log('✅ Structured data received:', structuredData);
+      }
       
       // Remove "Analyzing..." and add actual response (without agent name prefix)
       setMessages(prev => {
@@ -192,9 +196,10 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         
         return [...filtered, {
           role: 'assistant',
-          content: response, // No prefix
+          content: response,
           activeAgents: [agent],
-          agentName: agent
+          agentName: agent,
+          structuredData
         }];
       });
     },

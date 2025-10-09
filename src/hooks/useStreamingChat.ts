@@ -13,6 +13,7 @@ interface StreamChunk {
   agentOutputs?: any[];
   index?: number;
   total?: number;
+  structuredData?: any;
 }
 
 interface Message {
@@ -30,7 +31,7 @@ interface UseStreamingChatOptions {
   onCitation?: (citation: any) => void;
   onError?: (error: string) => void;
   onAgentStart?: (agent: string, index: number, total: number) => void;
-  onAgentResponse?: (agent: string, response: string) => void;
+  onAgentResponse?: (agent: string, response: string, structuredData?: any) => void;
   onAgentComplete?: (agent: string, nextAgent: string | null) => void;
   onAllAgentsComplete?: (agentOutputs: any[]) => void;
   onPlan?: (agents: string[], complexity: string) => void;
@@ -52,6 +53,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     let citations: any[] = [];
     let toolCalls: any[] = [];
     let activeAgents: string[] = [];
+    let structuredData: any = null;
 
     try {
       const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/orchestrator-agent`;
@@ -141,13 +143,16 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
                     if (chunk.agent && chunk.response) {
                       fullResponse += (fullResponse ? '\n\n' : '') + chunk.response;
                       onToken(chunk.response);
-                      options.onAgentResponse?.(chunk.agent, chunk.response);
+                      options.onAgentResponse?.(chunk.agent, chunk.response, chunk.structuredData);
                       
                       if (chunk.citations) {
                         citations.push(...chunk.citations);
                       }
                       if (chunk.costUpdates) {
                         // Handle cost updates
+                      }
+                      if (chunk.structuredData) {
+                        structuredData = chunk.structuredData;
                       }
                     }
                     break;
@@ -231,7 +236,8 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
       onComplete(fullResponse, {
         citations,
         toolCalls,
-        activeAgents
+        activeAgents,
+        structuredData
       });
 
     } catch (error) {
