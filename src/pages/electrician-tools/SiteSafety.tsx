@@ -16,6 +16,7 @@ import TeamBriefingTemplates from "@/components/electrician-tools/site-safety/Te
 import NearMissReporting from "@/components/electrician-tools/site-safety/NearMissReporting";
 import SafetyEquipmentTracker from "@/components/electrician-tools/site-safety/SafetyEquipmentTracker";
 import EmergencyProcedures from "@/components/electrician-tools/site-safety/EmergencyProcedures";
+import { AIRAMSGenerator } from "@/components/electrician-tools/site-safety/ai-rams/AIRAMSGenerator";
 
 const SiteSafety = () => {
   const [activeView, setActiveView] = useState<string | null>(null);
@@ -82,7 +83,6 @@ const SiteSafety = () => {
   const renderToolContent = () => {
     switch (activeView) {
       case "ai-rams":
-        const { AIRAMSGenerator } = require("@/components/electrician-tools/site-safety/ai-rams/AIRAMSGenerator");
         return <AIRAMSGenerator />;
       case "integrated-rams":
         return <IntegratedRAMSGenerator />;
