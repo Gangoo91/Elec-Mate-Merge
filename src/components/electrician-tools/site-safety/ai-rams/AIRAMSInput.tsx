@@ -86,11 +86,11 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       </div>
 
       {/* Job Description Card */}
-      <Card className="border-none shadow-sm bg-card/60 backdrop-blur-sm">
-        <CardContent className="p-4 md:p-6 space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm md:text-base font-semibold flex items-center gap-2">
-              <Zap className="h-4 w-4 text-elec-yellow" />
+      <Card className="border-elec-yellow/20 shadow-md bg-elec-grey">
+        <CardContent className="p-5 md:p-6 space-y-5">
+          <div className="space-y-3">
+            <label className="text-base md:text-sm font-semibold text-elec-light tracking-wide flex items-center gap-2">
+              <Zap className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
               Job Description
             </label>
             <Textarea
@@ -98,22 +98,22 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               onChange={(e) => setJobDescription(e.target.value)}
               placeholder="Describe the electrical work in detail..."
               disabled={isProcessing}
-              className="min-h-[160px] md:min-h-[180px] resize-none text-base bg-background/50 border-primary/20 focus:border-elec-yellow transition-colors"
+              className="resize-none"
             />
           </div>
 
           {/* Example Prompts */}
-          <div className="space-y-2.5">
-            <p className="text-xs md:text-sm font-medium text-muted-foreground">
+          <div className="space-y-3">
+            <p className="text-sm md:text-sm font-semibold text-elec-light/70 tracking-wide">
               Quick examples:
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2.5">
               {examplePrompts.map((prompt, idx) => (
                 <button
                   key={idx}
                   onClick={() => setJobDescription(prompt)}
                   disabled={isProcessing}
-                  className="px-3 py-1.5 text-xs md:text-sm rounded-full bg-primary/10 hover:bg-primary/20 text-foreground border border-primary/20 hover:border-primary/30 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
+                  className="min-h-[44px] px-4 py-2.5 text-sm font-medium rounded-full bg-elec-grey border border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow text-elec-light transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
                 >
                   {prompt}
                 </button>
@@ -124,20 +124,21 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       </Card>
 
       {/* Project Info Card */}
-      <Card className="border-none shadow-sm bg-card/60 backdrop-blur-sm">
-        <CardContent className="p-4 md:p-6 space-y-4">
-          <h3 className="text-base md:text-lg font-semibold flex items-center gap-2">
-            <FileWarning className="h-4 w-4 md:h-5 md:w-5 text-elec-yellow" />
+      <Card className="border-elec-yellow/20 shadow-md bg-elec-grey">
+        <CardContent className="p-5 md:p-6 space-y-5">
+          <h3 className="text-lg md:text-lg font-bold tracking-tight leading-tight flex items-center gap-2.5">
+            <FileWarning className="h-5 w-5 md:h-5 md:w-5 text-elec-yellow" />
             Project Information
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-4">
             <MobileInput
               label="Project Name"
               value={projectInfo.projectName}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, projectName: e.target.value }))}
               placeholder="e.g., Warehouse Lighting Upgrade"
               disabled={isProcessing}
+              className="bg-elec-grey border-elec-yellow/20 h-14 text-base"
             />
             
             <MobileInput
@@ -146,6 +147,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               onChange={(e) => setProjectInfo(prev => ({ ...prev, location: e.target.value }))}
               placeholder="e.g., Unit 5, Industrial Estate"
               disabled={isProcessing}
+              className="bg-elec-grey border-elec-yellow/20 h-14 text-base"
             />
             
             <MobileInput
@@ -154,6 +156,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               onChange={(e) => setProjectInfo(prev => ({ ...prev, assessor: e.target.value }))}
               placeholder="Your name"
               disabled={isProcessing}
+              className="bg-elec-grey border-elec-yellow/20 h-14 text-base"
             />
             
             <MobileInput
@@ -162,6 +165,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               onChange={(e) => setProjectInfo(prev => ({ ...prev, contractor: e.target.value }))}
               placeholder="Company name"
               disabled={isProcessing}
+              className="bg-elec-grey border-elec-yellow/20 h-14 text-base"
             />
             
             <MobileInput
@@ -170,7 +174,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               onChange={(e) => setProjectInfo(prev => ({ ...prev, supervisor: e.target.value }))}
               placeholder="Site supervisor"
               disabled={isProcessing}
-              className="md:col-span-2"
+              className="md:col-span-2 bg-elec-grey border-elec-yellow/20 h-14 text-base"
             />
           </div>
         </CardContent>
@@ -181,16 +185,16 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
         onClick={handleSubmit}
         disabled={!isFormValid || isProcessing}
         loading={isProcessing}
-        size="wide"
+        size="lg"
         variant="elec"
         icon={<HardHat className="h-5 w-5" />}
-        className="text-base md:text-lg font-semibold shadow-lg"
+        className="w-full text-lg font-bold tracking-wide shadow-lg"
       >
         {isProcessing ? 'Generating Documentation...' : 'Generate RAMS Documentation'}
       </MobileButton>
 
       {!isFormValid && (
-        <p className="text-xs md:text-sm text-center text-muted-foreground">
+        <p className="text-sm md:text-sm text-center text-elec-light/60 font-medium leading-relaxed">
           Please provide job description and project name to continue
         </p>
       )}

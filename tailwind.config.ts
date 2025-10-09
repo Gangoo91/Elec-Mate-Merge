@@ -27,6 +27,9 @@ export default {
 			'2xl': '1536px',
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

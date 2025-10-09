@@ -138,52 +138,52 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   };
 
   return (
-    <div className="space-y-4 md:space-y-6">
-      <Card className="border-none shadow-sm bg-card/60 backdrop-blur-sm">
-        <CardHeader>
+    <div className="space-y-5 md:space-y-6">
+      <Card className="border-elec-yellow/20 shadow-md bg-elec-grey">
+        <CardHeader className="pb-5">
           <CardTitle className="flex items-center justify-between text-foreground">
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2.5 text-xl md:text-xl font-bold tracking-tight leading-tight">
               <Edit3 className="h-5 w-5" />
               Review & Edit Generated Documentation
             </span>
-            <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/30">
-              <CheckCircle className="h-3 w-3 mr-1" />
+            <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/30 text-sm font-semibold">
+              <CheckCircle className="h-3.5 w-3.5 mr-1" />
               AI Generated
             </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-12 md:h-auto">
-              <TabsTrigger value="rams" className="text-sm md:text-base">Risk Assessment</TabsTrigger>
-              <TabsTrigger value="method" className="text-sm md:text-base">Method Statement</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 h-14 md:h-12 bg-elec-grey/80">
+              <TabsTrigger value="rams" className="text-base md:text-base font-semibold">Risk Assessment</TabsTrigger>
+              <TabsTrigger value="method" className="text-base md:text-base font-semibold">Method Statement</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="rams" className="space-y-4 mt-6">
+            <TabsContent value="rams" className="space-y-5 mt-6">
               {/* Project Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-4">
                 <div>
-                  <label className="text-sm font-medium text-foreground">Project Name</label>
+                  <label className="text-base md:text-sm font-semibold text-elec-light tracking-wide">Project Name</label>
                   <Input
                     value={ramsData.projectName}
                     onChange={(e) => setRamsData(prev => ({ ...prev, projectName: e.target.value }))}
-                    className="mt-1 bg-background/50 border-primary/30 text-foreground"
+                    className="mt-2 h-14 text-base bg-elec-grey border-elec-yellow/20 text-foreground font-medium"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-foreground">Location</label>
+                  <label className="text-base md:text-sm font-semibold text-elec-light tracking-wide">Location</label>
                   <Input
                     value={ramsData.location}
                     onChange={(e) => setRamsData(prev => ({ ...prev, location: e.target.value }))}
-                    className="mt-1 bg-background/50 border-primary/30 text-foreground"
+                    className="mt-2 h-14 text-base bg-elec-grey border-elec-yellow/20 text-foreground font-medium"
                   />
                 </div>
               </div>
 
               {/* Risks */}
-              <div className="space-y-3">
-                <h4 className="font-semibold text-foreground flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-elec-yellow" />
+              <div className="space-y-4">
+                <h4 className="text-lg md:text-base font-bold text-foreground flex items-center gap-2.5 tracking-tight leading-tight">
+                  <AlertTriangle className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
                   Identified Risks ({ramsData.risks.length})
                 </h4>
                 

@@ -64,16 +64,16 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   const allComplete = steps.every(step => step.status === 'complete');
 
   return (
-    <Card className="border-none shadow-sm bg-card/60 backdrop-blur-sm">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg md:text-xl font-bold flex items-center gap-2">
-          <Loader2 className={`h-5 w-5 ${allComplete ? 'text-green-500' : 'text-elec-yellow animate-spin'}`} />
+    <Card className="border-elec-yellow/20 shadow-md bg-elec-grey">
+      <CardHeader className="pb-5">
+        <CardTitle className="text-xl md:text-xl font-bold tracking-tight leading-tight flex items-center gap-2.5">
+          <Loader2 className={`h-6 w-6 md:h-5 md:w-5 ${allComplete ? 'text-green-500' : 'text-elec-yellow animate-spin'}`} />
           AI Processing
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-5">
         {/* Mobile: Vertical Timeline */}
-        <div className="space-y-3">
+        <div className="space-y-5">
           {steps.map((step, idx) => {
             const Icon = agentIcons[step.agent];
             const isActive = step.status === 'processing' || step.status === 'complete';
@@ -82,23 +82,23 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               <div key={step.agent} className="relative">
                 {/* Connector line */}
                 {idx < steps.length - 1 && (
-                  <div className={`absolute left-5 top-12 w-0.5 h-full transition-colors duration-500 ${
-                    step.status === 'complete' ? 'bg-elec-yellow' : 'bg-border'
+                  <div className={`absolute left-6 md:left-5 top-14 md:top-12 w-0.5 h-full transition-colors duration-500 ${
+                    step.status === 'complete' ? 'bg-elec-yellow' : 'bg-elec-yellow/20'
                   }`} />
                 )}
                 
-                <div className={`relative flex gap-4 p-4 rounded-xl transition-all duration-300 ${
-                  isActive ? 'bg-primary/5 border border-primary/20' : 'bg-background/50 border border-transparent'
+                <div className={`relative flex gap-4 p-5 md:p-4 rounded-xl transition-all duration-300 ${
+                  isActive ? 'bg-elec-grey/80 border border-elec-yellow/30' : 'bg-elec-grey/50 border border-transparent'
                 }`}>
                   {/* Icon */}
-                  <div className={`shrink-0 h-10 w-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                  <div className={`shrink-0 h-12 w-12 md:h-10 md:w-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
                     step.status === 'complete' 
-                      ? 'bg-green-500/10 border border-green-500/30' 
+                      ? 'bg-green-500/20 border border-green-500/40' 
                       : step.status === 'processing'
-                      ? 'bg-elec-yellow/10 border border-elec-yellow/30 animate-pulse'
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 animate-pulse'
                       : 'bg-muted border border-border'
                   }`}>
-                    <Icon className={`h-5 w-5 ${
+                    <Icon className={`h-6 w-6 md:h-5 md:w-5 ${
                       step.status === 'complete' 
                         ? 'text-green-500' 
                         : step.status === 'processing'
@@ -108,17 +108,17 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1 min-w-0 space-y-2">
-                    <div className="flex items-start justify-between gap-2">
+                  <div className="flex-1 min-w-0 space-y-2.5">
+                    <div className="flex items-start justify-between gap-2.5">
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm md:text-base leading-tight">
+                        <h4 className="font-bold text-base md:text-base leading-tight tracking-tight">
                           {agentNames[step.agent]}
                         </h4>
-                        <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
+                        <p className="text-sm md:text-sm text-elec-light/70 mt-1 font-medium leading-relaxed">
                           {agentDescriptions[step.agent]}
                         </p>
                       </div>
-                      <div className="shrink-0 flex items-center gap-2">
+                      <div className="shrink-0 flex items-center gap-2.5">
                         {getStatusIcon(step.status)}
                         {getStatusBadge(step.status)}
                       </div>
@@ -126,8 +126,8 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
 
                     {/* Reasoning - only show when complete */}
                     {step.status === 'complete' && step.reasoning && (
-                      <div className="pt-2 border-t border-border">
-                        <p className="text-xs md:text-sm text-muted-foreground line-clamp-2">
+                      <div className="pt-3 border-t border-elec-yellow/20">
+                        <p className="text-sm md:text-sm text-elec-light/80 font-medium leading-relaxed">
                           {step.reasoning}
                         </p>
                       </div>
@@ -141,14 +141,14 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
 
         {/* Completion message */}
         {allComplete && (
-          <div className="mt-4 p-4 rounded-xl bg-green-500/10 border border-green-500/30 animate-fade-in">
+          <div className="mt-5 p-5 rounded-xl bg-green-500/10 border border-green-500/30 animate-fade-in">
             <div className="flex items-center gap-3">
-              <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
+              <CheckCircle2 className="h-6 w-6 md:h-5 md:w-5 text-green-500 shrink-0" />
               <div className="flex-1">
-                <p className="text-sm font-semibold text-green-600 dark:text-green-400">
+                <p className="text-base md:text-sm font-bold text-green-600 dark:text-green-400 tracking-tight leading-tight">
                   Documentation Generated Successfully
                 </p>
-                <p className="text-xs text-green-600/80 dark:text-green-400/80 mt-0.5">
+                <p className="text-sm md:text-xs text-green-600/80 dark:text-green-400/80 mt-1 font-medium leading-relaxed">
                   Review and edit your RAMS below
                 </p>
               </div>
