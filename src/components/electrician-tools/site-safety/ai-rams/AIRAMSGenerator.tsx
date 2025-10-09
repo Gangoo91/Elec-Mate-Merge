@@ -32,9 +32,10 @@ export const AIRAMSGenerator: React.FC = () => {
       assessor: string;
       contractor: string;
       supervisor: string;
-    }
+    },
+    jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => {
-    await generateRAMS(jobDescription, projectInfo);
+    await generateRAMS(jobDescription, projectInfo, jobScale);
     setShowResults(true);
   };
 

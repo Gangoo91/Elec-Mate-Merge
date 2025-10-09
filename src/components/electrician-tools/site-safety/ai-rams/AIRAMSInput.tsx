@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { Textarea } from '@/components/ui/textarea';
 import { Sparkles, Zap, HardHat, FileWarning } from 'lucide-react';
+import { JobScaleBadge } from './JobScaleBadge';
 
 export interface AIRAMSInputProps {
   onGenerate: (
@@ -14,7 +15,8 @@ export interface AIRAMSInputProps {
       assessor: string;
       contractor: string;
       supervisor: string;
-    }
+    },
+    jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => void;
   isProcessing: boolean;
 }
@@ -32,16 +34,70 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
     supervisor: ''
   });
 
-  const examplePrompts = [
-    'Install new consumer unit with 10-way board',
-    'Rewire 3-bedroom house including all circuits',
-    'Install EV charging point in residential garage',
-    'Emergency lighting installation in commercial unit'
-  ];
+  const [detectedScale, setDetectedScale] = useState<'domestic' | 'commercial' | 'industrial'>('commercial');
+  const [manualScale, setManualScale] = useState<'domestic' | 'commercial' | 'industrial' | null>(null);
+  const [scaleConfidence, setScaleConfidence] = useState<number>(0);
+
+  const examplePrompts: Record<'domestic' | 'commercial' | 'industrial', string[]> = {
+    domestic: [
+      'Install new consumer unit in 3-bed house',
+      'Rewire kitchen and add socket circuit',
+      'Install EV charging point in residential garage',
+      'Add shower circuit in bathroom'
+    ],
+    commercial: [
+      'Emergency lighting installation in office building',
+      'Distribution board upgrade in retail unit',
+      'Fire alarm panel replacement in school',
+      'Install socket circuits in new restaurant'
+    ],
+    industrial: [
+      'Install 3-phase motor circuit in factory',
+      '400V distribution upgrade in warehouse',
+      'Switchgear replacement in manufacturing plant',
+      'Cable tray installation for production line'
+    ]
+  };
+
+  const detectJobScale = (description: string, location: string): { scale: 'domestic' | 'commercial' | 'industrial'; confidence: number } => {
+    const text = `${description} ${location}`.toLowerCase();
+    
+    // Industrial indicators (highest priority)
+    const industrialKeywords = ['factory', 'plant', 'industrial estate', 'warehouse', 'manufacturing', 'substation', '3-phase motor', 'hv', '400v', 'switchgear', 'production line'];
+    const industrialScore = industrialKeywords.filter(k => text.includes(k)).length;
+    
+    // Commercial indicators
+    const commercialKeywords = ['office', 'shop', 'retail', 'restaurant', 'hotel', 'school', 'hospital', 'commercial', 'business premises', 'surgery'];
+    const commercialScore = commercialKeywords.filter(k => text.includes(k)).length;
+    
+    // Domestic indicators
+    const domesticKeywords = ['house', 'home', 'flat', 'apartment', 'bungalow', 'kitchen', 'bedroom', 'domestic', 'residential', 'consumer unit'];
+    const domesticScore = domesticKeywords.filter(k => text.includes(k)).length;
+    
+    // Determine scale with confidence
+    if (industrialScore >= 2 || text.includes('factory')) {
+      return { scale: 'industrial', confidence: Math.min(industrialScore * 30 + 40, 95) };
+    } else if (commercialScore >= 2 || (commercialScore === 1 && industrialScore === 0)) {
+      return { scale: 'commercial', confidence: Math.min(commercialScore * 25 + 50, 90) };
+    } else if (domesticScore >= 1) {
+      return { scale: 'domestic', confidence: Math.min(domesticScore * 20 + 60, 85) };
+    }
+    
+    return { scale: 'commercial', confidence: 40 }; // Default fallback
+  };
+
+  useEffect(() => {
+    if (jobDescription || projectInfo.location) {
+      const { scale, confidence } = detectJobScale(jobDescription, projectInfo.location);
+      setDetectedScale(scale);
+      setScaleConfidence(confidence);
+    }
+  }, [jobDescription, projectInfo.location]);
 
   const handleSubmit = () => {
     if (jobDescription && projectInfo.projectName) {
-      onGenerate(jobDescription, projectInfo);
+      const finalScale = manualScale || detectedScale;
+      onGenerate(jobDescription, projectInfo, finalScale);
     }
   };
 
@@ -102,13 +158,24 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
             />
           </div>
 
+          {/* Job Scale Detection */}
+          {scaleConfidence > 0 && (
+            <div className="space-y-3">
+              <JobScaleBadge 
+                scale={manualScale || detectedScale}
+                confidence={scaleConfidence}
+                onManualChange={setManualScale}
+              />
+            </div>
+          )}
+
           {/* Example Prompts */}
           <div className="space-y-3">
             <p className="text-sm md:text-sm font-semibold text-elec-light/70 tracking-wide">
               Quick examples:
             </p>
             <div className="flex flex-wrap gap-2.5">
-              {examplePrompts.map((prompt, idx) => (
+              {examplePrompts[manualScale || detectedScale].map((prompt, idx) => (
                 <button
                   key={idx}
                   onClick={() => setJobDescription(prompt)}

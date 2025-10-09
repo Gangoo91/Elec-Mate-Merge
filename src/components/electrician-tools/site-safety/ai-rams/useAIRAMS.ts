@@ -26,7 +26,7 @@ interface UseAIRAMSReturn {
     assessor: string;
     contractor: string;
     supervisor: string;
-  }) => Promise<void>;
+  }, jobScale: 'domestic' | 'commercial' | 'industrial') => Promise<void>;
   saveToDatabase: () => Promise<void>;
   reset: () => void;
 }
@@ -182,7 +182,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
       assessor: string;
       contractor: string;
       supervisor: string;
-    }
+    },
+    jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => {
     setIsProcessing(true);
     setError(null);
@@ -204,7 +205,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
           messages: [{
             role: 'user',
             content: `Create a detailed risk assessment for the following electrical work: ${jobDescription}. Include specific hazards, risk ratings (likelihood and severity), and control measures.`
-          }]
+          }],
+          jobScale
         }
       });
 
@@ -233,7 +235,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
               agent: 'health-safety',
               response: hsData.response
             }]
-          }
+          },
+          jobScale
         }
       });
 
