@@ -487,6 +487,9 @@ Response format:
           current_rating: comp.current_rating || comp.specifications?.current_rating || 'Not specified',
           breaking_capacity: comp.breaking_capacity || comp.specifications?.breaking_capacity || 'Not specified',
           poles: comp.poles || comp.specifications?.poles || 'Not specified',
+          throws: comp.throws || comp.specifications?.throws || 'Not specified',
+          contact_material: comp.contact_material || comp.specifications?.contact_material || 'Not specified',
+          insulation_material: comp.insulation_material || comp.specifications?.insulation_material || 'Not specified',
           protection_type: comp.protection_type || comp.specifications?.protection_type || 'Not specified',
           ip_rating: comp.ip_rating || comp.specifications?.ip_rating || 'Not specified'
         },
@@ -532,7 +535,9 @@ Response format:
       // Check for flat component fields at analysis root
       else if (ana.type || ana.manufacturer || ana.model || ana.plain_english || 
                ana.specifications || ana.voltage_rating || ana.current_rating || 
-               ana.name || ana.breaking_capacity || ana.poles) {
+               ana.name || ana.breaking_capacity || ana.poles || 
+               ana.throws || ana.contact_material || ana.insulation_material || 
+               ana.protection_type || ana.ip_rating) {
         console.log('⚠️ Wrapping flat component fields into analysis.component');
         analysisResult.analysis = {
           component: normalizeComponent(ana),
