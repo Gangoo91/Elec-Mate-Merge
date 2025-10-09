@@ -398,7 +398,7 @@ async function handleConversationalMode(
                 data: { error: result.error.message || 'Agent failed' }
               })}\n\n`;
               controller.enqueue(encoder.encode(errorEvent));
-              continue;
+              return;
             }
 
             const output: AgentOutput = {
