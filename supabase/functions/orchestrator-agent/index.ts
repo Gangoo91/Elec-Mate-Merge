@@ -10,6 +10,7 @@ import { detectIntents, type IntentAnalysis } from '../_shared/intent-detection.
 import { planAgentSequence, type AgentContext, type AgentOutput, type AgentPlan } from '../_shared/agent-orchestration.ts';
 import { validateResponse } from '../_shared/response-validation.ts';
 import { ResponseCache, isCacheable } from '../_shared/response-cache.ts';
+import { extractCircuitContext } from './extract-circuit-context.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -496,6 +497,19 @@ function buildAgentMessages(
   // Start with the FULL conversation thread (includes all user + agent messages)
   const fullMessages = [...agentContext.fullConversationThread];
   
+  // NEW: Extract circuit type for H&S agent
+  if (agentName === 'health-safety') {
+    const circuitContext = extractCircuitContext(agentContext);
+    
+    fullMessages.push({
+      role: 'system',
+      content: `CIRCUIT BEING INSTALLED:
+${circuitContext}
+
+Provide safety briefing specific to THIS circuit type, not generic assumptions.`
+    });
+  }
+  
   // Add structured context from previous agents if not the first
   if (!isFirst && agentContext.previousAgentOutputs.length > 0) {
     const structuredContext = buildStructuredContext(agentContext.previousAgentOutputs);
@@ -506,7 +520,11 @@ function buildAgentMessages(
 
 ${structuredContext}
 
-Now it's YOUR turn. Build on what they've said with your specialty. You can see the full conversation history above, including what other specialists have said. Reference specific numbers, calculations, or recommendations when relevant.`
+${agentName === 'commissioning' 
+  ? 'Now provide TESTING PROCEDURES only. DO NOT repeat safety briefings - H&S has covered that.'
+  : 'Build on what they\'ve said with your specialty.'}
+
+You can see the full conversation history above, including what other specialists have said. Reference specific numbers, calculations, or recommendations when relevant.`
     });
   }
   
@@ -554,7 +572,12 @@ function buildStructuredContext(previousOutputs: AgentOutput[]): string {
       const hazards = extractValue(output.response, /(\d+)\s*hazards?/i) || '2-3';
       const controls = extractValue(output.response, /(\d+)\s*controls?/i) || '3-4';
       
-      summary += `  ${hazards} hazards identified, ${controls} controls`;
+      summary += `  ${hazards} hazards identified, ${controls} controls specified`;
+      summary += `\n  ⚠️ Safety briefing complete - DO NOT REPEAT`;
+    } else if (agent === 'commissioning') {
+      const tests = extractValue(output.response, /(\d+)\s*(?:STEP|test)/i) || '4-5';
+      summary += `  ${tests} test procedures specified`;
+      summary += `\n  🔧 Testing guidance complete - DO NOT REPEAT`;
     }
     
     // Limit to 200 chars max per agent

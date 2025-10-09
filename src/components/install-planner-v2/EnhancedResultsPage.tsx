@@ -813,16 +813,31 @@ export const EnhancedResultsPage = ({
                                     </Button>
                                   </>
                                 )}
-                                {(agentId === 'installer' || agentId === 'health-safety') && (
-                                  <Button onClick={handleDownloadRAMS} className="flex-1">
-                                    <Shield className="w-4 h-4 mr-2" />Download RAMS PDF
-                                  </Button>
-                                )}
-                                {agentId === 'commissioning' && (
-                                  <Button onClick={handleSendToTestSheet} className="flex-1">
-                                    <ClipboardCheck className="w-4 h-4 mr-2" />Send to Test Sheet
-                                  </Button>
-                                )}
+                {agentId === 'health-safety' && (
+                  <>
+                    <div className="text-xs text-white/60 mb-2">
+                      Safety briefings, PPE requirements, hazard identification
+                    </div>
+                    <Button onClick={handleDownloadRAMS} className="flex-1">
+                      <Shield className="w-4 h-4 mr-2" />Download RAMS PDF
+                    </Button>
+                  </>
+                )}
+                {agentId === 'installer' && (
+                  <Button onClick={handleDownloadRAMS} className="flex-1">
+                    <Shield className="w-4 h-4 mr-2" />Download RAMS PDF
+                  </Button>
+                )}
+                {agentId === 'commissioning' && (
+                  <>
+                    <div className="text-xs text-white/60 mb-2">
+                      Testing procedures, meter settings, BS 7671 verification
+                    </div>
+                    <Button onClick={handleSendToTestSheet} className="flex-1">
+                      <ClipboardCheck className="w-4 h-4 mr-2" />Send to Test Sheet
+                    </Button>
+                  </>
+                )}
                               </div>
                               {onReEngageAgent && (
                                 <Button variant="outline" onClick={() => onReEngageAgent(agentId)} className="w-full">

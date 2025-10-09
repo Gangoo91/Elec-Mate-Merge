@@ -11,8 +11,30 @@ export const AgentResponseRenderer = memo(({ content, agentId }: AgentResponseRe
   // Memoize parsed sections - only re-parse if content changes
   const sections = useMemo(() => parseAgentResponse(content), [content]);
   
+  // Detect opening line for visual separation
+  const openingLine = useMemo(() => {
+    if (agentId === 'commissioning') {
+      const match = content.match(/^(Right then.*?(?:\.|$))/i);
+      return match ? match[1] : null;
+    }
+    if (agentId === 'health-safety') {
+      const match = content.match(/^(Alright team.*?(?:\.|$))/i);
+      return match ? match[1] : null;
+    }
+    return null;
+  }, [content, agentId]);
+  
   return (
     <div className="space-y-4 text-left">
+      {/* Opening Line Badge */}
+      {openingLine && (
+        <div className="px-4 py-3 bg-elec-yellow/10 border-l-4 border-elec-yellow rounded-r">
+          <p className="text-base font-semibold text-elec-yellow">
+            {openingLine}
+          </p>
+        </div>
+      )}
+      
       {sections.map((section, index) => (
         <SectionRenderer key={index} section={section} agentId={agentId} />
       ))}
