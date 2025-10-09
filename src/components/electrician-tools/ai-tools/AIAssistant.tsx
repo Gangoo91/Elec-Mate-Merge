@@ -18,7 +18,7 @@ const AIAssistant = () => {
   const [practicalGuidanceResult, setPracticalGuidanceResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(true);
-  const [useRAG, setUseRAG] = useState(true);
+  // RAG search is always enabled
   const [ragRegulations, setRagRegulations] = useState<any[]>([]);
   const [searchMethod, setSearchMethod] = useState<string>("");
   const [hasInstallation, setHasInstallation] = useState(false);
@@ -156,7 +156,7 @@ const AIAssistant = () => {
         body: { 
           prompt: prompt,
           type: "structured_assistant",
-          use_rag: useRAG
+          use_rag: true
         },
       });
       
@@ -292,12 +292,6 @@ const AIAssistant = () => {
                       Search BS 7671 Database
                     </Label>
                   </div>
-                  <Switch
-                    id="use-rag"
-                    checked={useRAG}
-                    onCheckedChange={setUseRAG}
-                    className="data-[state=checked]:bg-elec-yellow"
-                  />
                 </div>
                 
                 <div className="flex gap-3 sm:gap-4">
