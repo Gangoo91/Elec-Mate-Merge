@@ -115,17 +115,17 @@ const AIAssistant = () => {
         if (listItems.length > 0) {
           if (listType === 'ordered') {
             elements.push(
-              <ol key={`list-${elements.length}`} className="list-decimal list-outside space-y-2.5 my-4 ml-6 pl-2">
+              <ol key={`list-${elements.length}`} className="list-decimal list-outside space-y-2 my-3 sm:my-4 ml-4 sm:ml-6 pl-2">
                 {listItems.map((item, idx) => (
-                  <li key={idx} className="text-white leading-relaxed text-base">{item}</li>
+                  <li key={idx} className="text-white leading-loose text-sm sm:text-base">{item}</li>
                 ))}
               </ol>
             );
           } else {
             elements.push(
-              <ul key={`list-${elements.length}`} className="list-disc list-outside space-y-2.5 my-4 ml-6 pl-2">
+              <ul key={`list-${elements.length}`} className="list-disc list-outside space-y-2 my-3 sm:my-4 ml-4 sm:ml-6 pl-2">
                 {listItems.map((item, idx) => (
-                  <li key={idx} className="text-white leading-relaxed text-base">{item}</li>
+                  <li key={idx} className="text-white leading-loose text-sm sm:text-base">{item}</li>
                 ))}
               </ul>
             );
@@ -145,9 +145,9 @@ const AIAssistant = () => {
           flushList();
           const [, key, value] = kvMatch;
           elements.push(
-            <div key={`kv-${elements.length}`} className="mb-2 flex gap-3 items-baseline">
-              <span className="text-gray-400 font-medium min-w-[140px]">{key}:</span>
-              <span className="text-white font-semibold">{value}</span>
+            <div key={`kv-${elements.length}`} className="mb-3 flex flex-col sm:flex-row sm:gap-3 sm:items-baseline">
+              <span className="text-gray-300 font-medium text-sm sm:text-base mb-1 sm:mb-0 sm:min-w-[140px]">{key}:</span>
+              <span className="text-white font-semibold text-base sm:text-lg">{value}</span>
             </div>
           );
           return;
@@ -159,11 +159,11 @@ const AIAssistant = () => {
           flushList();
           const [, regNumber, regText] = regulationMatch;
           elements.push(
-            <div key={`reg-${elements.length}`} className="mb-4 p-4 bg-purple-500/10 rounded-lg border-l-4 border-purple-500/60">
-              <div className="inline-block px-3 py-1 bg-purple-500/20 rounded-full text-purple-300 font-bold text-sm mb-2">
+            <div key={`reg-${elements.length}`} className="mb-3 sm:mb-4 p-3 sm:p-4 bg-purple-500/10 rounded-lg border-l-4 border-purple-500/60">
+              <div className="inline-block px-2 sm:px-3 py-1 bg-purple-500/20 rounded-full text-purple-300 font-bold text-xs sm:text-sm mb-2">
                 Regulation {regNumber}
               </div>
-              <div className="text-white leading-relaxed text-base">
+              <div className="text-white leading-loose text-sm sm:text-base">
                 {regText}
               </div>
             </div>
@@ -227,7 +227,7 @@ const AIAssistant = () => {
         const paragraphText = lines.join(' ');
         if (paragraphText.trim()) {
           elements.push(
-            <p key={`p-${pIndex}`} className="text-white leading-relaxed text-base mb-4">
+            <p key={`p-${pIndex}`} className="text-white leading-loose text-sm sm:text-base mb-3 sm:mb-4">
               {paragraphText.trim()}
             </p>
           );
@@ -504,9 +504,9 @@ const AIAssistant = () => {
                       Analysis
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-5 pt-0">
+                  <CardContent className="p-4 sm:p-6 pt-0">
                     <div className="prose prose-invert max-w-none">
-                      <div className="text-base text-white leading-relaxed space-y-4">
+                      <div className="text-sm sm:text-base text-white leading-loose space-y-3 sm:space-y-4">
                         {processContent(analysisResult, 'blue')}
                       </div>
                     </div>
@@ -524,9 +524,9 @@ const AIAssistant = () => {
                       Relevant Regulations
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-5 pt-0">
+                  <CardContent className="p-4 sm:p-6 pt-0">
                     <div className="prose prose-invert max-w-none">
-                      <div className="text-base text-white leading-relaxed space-y-4">
+                      <div className="text-sm sm:text-base text-white leading-loose space-y-3 sm:space-y-4">
                         {processContent(regulationsResult, 'purple')}
                       </div>
                     </div>
@@ -544,9 +544,9 @@ const AIAssistant = () => {
                       Practical Guidance
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-5 pt-0">
+                  <CardContent className="p-4 sm:p-6 pt-0">
                     <div className="prose prose-invert max-w-none">
-                      <div className="text-base text-white leading-relaxed space-y-4">
+                      <div className="text-sm sm:text-base text-white leading-loose space-y-3 sm:space-y-4">
                         {processContent(practicalGuidanceResult, 'green')}
                       </div>
                     </div>
