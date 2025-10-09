@@ -69,7 +69,7 @@ export const InChatAgentSelector = ({
 
       {/* Phase 1: Compact Mobile - Icon-only buttons */}
       <div className="md:hidden overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-        <div className="flex gap-1.5 snap-x snap-mandatory pb-1">
+        <div className="flex gap-1.5 snap-x snap-mandatory pb-0.5">
           <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
             className={cn("h-8 text-xs flex-shrink-0 snap-center px-2", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}
             aria-label="Auto select agent">
@@ -99,7 +99,7 @@ export const InChatAgentSelector = ({
       <AnimatePresence>
         {selectedAgent && (
           <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}
-            className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
+            className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
             <div className="h-1 w-1 rounded-full bg-elec-yellow animate-pulse" />
             <span className="text-elec-yellow font-medium">
               {AGENTS.find(a => a.id === selectedAgent)?.name}
