@@ -468,6 +468,36 @@ Response format:
       };
     }
 
+    // CRITICAL: Restructure component_identify responses to match expected format
+    if (analysis_settings.mode === 'component_identify' && analysisResult.analysis) {
+      // If the AI returned specs directly under analysis instead of analysis.component, restructure it
+      if (!analysisResult.analysis.component && analysisResult.analysis.name) {
+        console.log('⚠️ Restructuring flat component response to nested format');
+        const flatData = analysisResult.analysis;
+        analysisResult.analysis = {
+          component: {
+            name: flatData.name || 'Unknown Component',
+            type: flatData.type || 'Unknown Type',
+            plain_english: flatData.plain_english || flatData.description || 'Component identification incomplete',
+            manufacturer: flatData.manufacturer || 'Unknown',
+            model: flatData.model || 'Unknown',
+            confidence: flatData.confidence || 0,
+            specifications: flatData.specifications || flatData,
+            visual_identifiers: flatData.visual_identifiers || [],
+            age_estimate: flatData.age_estimate || 'Unknown',
+            current_compliance: flatData.current_compliance || flatData.compliance_status || 'Unknown',
+            typical_applications: flatData.typical_applications || flatData.applications || [],
+            bs7671_requirements: flatData.bs7671_requirements || [],
+            installation_notes: flatData.installation_notes || '',
+            replacement_notes: flatData.replacement_notes || flatData.replacement_info || '',
+            common_issues: flatData.common_issues || flatData.known_issues || '',
+            where_found: flatData.where_found || flatData.typical_location || ''
+          },
+          summary: flatData.summary || 'Component identified'
+        };
+      }
+    }
+
     if (!analysisResult.analysis) {
       analysisResult = { analysis: analysisResult };
     }
