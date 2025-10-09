@@ -145,7 +145,7 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
                       </span>
                     </div>
                     {/* Value below - YELLOW text, larger */}
-                    <p className="text-base sm:text-lg font-semibold text-elec-yellow pl-6">
+                    <p className="text-left text-base sm:text-lg font-semibold text-elec-yellow pl-6">
                       {value}
                     </p>
                   </div>
