@@ -15,7 +15,10 @@ export const AIRAMSGenerator: React.FC = () => {
     ramsData,
     methodData,
     error,
+    isSaving,
+    lastSaved,
     generateRAMS,
+    saveToDatabase,
     reset
   } = useAIRAMS();
 
@@ -72,6 +75,9 @@ export const AIRAMSGenerator: React.FC = () => {
                 <RAMSReviewEditor
                   ramsData={ramsData}
                   methodData={methodData}
+                  isSaving={isSaving}
+                  lastSaved={lastSaved}
+                  onSave={() => saveToDatabase()}
                   onUpdate={(rams, method) => {
                     // Update handled by internal state
                   }}

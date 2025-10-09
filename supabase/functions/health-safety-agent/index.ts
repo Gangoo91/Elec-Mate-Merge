@@ -265,118 +265,115 @@ OUTPUT FORMAT:
 
 IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic checklists.`;
 
-    // RETRY LOGIC: OpenAI can return empty content, retry up to 2 times
-    let response;
-    let data;
-    let content;
-    let retries = 0;
-    const maxRetries = 2;
-
-    while (retries <= maxRetries) {
-      try {
-        console.log(`🤖 Calling OpenAI (attempt ${retries + 1}/${maxRetries + 1})`);
-        const openaiStartTime = Date.now();
-        
-        const requestBody = {
-          model: 'google/gemini-2.5-flash',
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: `${latestMessage}\n\nIMPORTANT: Respond with valid JSON matching the specified format.` }
-          ],
-          response_format: { type: "json_object" },
-          max_completion_tokens: calculateTokenLimit(extractCircuitCount(latestMessage)) // Phase 4: Adaptive tokens
-        };
-        
-        console.log('📤 Lovable AI Request:', JSON.stringify({ model: requestBody.model, messageCount: requestBody.messages.length }));
-        
-        response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${lovableApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-          signal: controller.signal
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error('❌ Lovable AI error:', { status: response.status, error: errorText });
-          throw new Error(`Lovable AI error: ${response.status}`);
-        }
-
-        const rawResponse = await response.text();
-        console.log('📥 Lovable AI Raw Response Length:', rawResponse.length);
-        
-        try {
-          data = JSON.parse(rawResponse);
-          let rawContent = data.choices?.[0]?.message?.content || null;
-          
-          // Harden JSON parsing - strip markdown fences and extract first valid object
-          if (rawContent) {
-            rawContent = rawContent.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-            const jsonMatch = rawContent.match(/\{[\s\S]*\}/);
-            if (jsonMatch) {
-              rawContent = jsonMatch[0];
-            }
-            try {
-              JSON.parse(rawContent);
-              content = rawContent;
-            } catch {
-              console.warn('⚠️ Content is not valid JSON, using as-is');
-              content = rawContent;
-            }
+    // Use structured tool calling for consistent JSON output
+    console.log('🤖 Calling Lovable AI with structured tool calling');
+    const openaiStartTime = Date.now();
+    
+    const requestBody = {
+      model: 'google/gemini-2.5-flash',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: latestMessage }
+      ],
+      tools: [{
+        type: "function",
+        function: {
+          name: "create_risk_assessment",
+          description: "Create a comprehensive risk assessment for electrical work",
+          parameters: {
+            type: "object",
+            properties: {
+              response: {
+                type: "string",
+                description: "Natural language safety guidance in UK electrician tone"
+              },
+              riskAssessment: {
+                type: "object",
+                properties: {
+                  hazards: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        hazard: { type: "string" },
+                        likelihood: { type: "number", minimum: 1, maximum: 5 },
+                        severity: { type: "number", minimum: 1, maximum: 5 },
+                        riskRating: { type: "number" },
+                        controls: { type: "array", items: { type: "string" } },
+                        residualRisk: { type: "number" }
+                      },
+                      required: ["hazard", "likelihood", "severity", "riskRating", "controls", "residualRisk"]
+                    }
+                  }
+                },
+                required: ["hazards"]
+              },
+              requiredPPE: {
+                type: "array",
+                items: { type: "string" }
+              },
+              methodStatement: {
+                type: "array",
+                items: { type: "string" }
+              },
+              emergencyProcedures: {
+                type: "array",
+                items: { type: "string" }
+              },
+              citations: {
+                type: "array",
+                items: { type: "string" }
+              },
+              acopCitations: {
+                type: "array",
+                items: { type: "string" }
+              },
+              confidence: {
+                type: "number",
+                minimum: 0,
+                maximum: 1
+              }
+            },
+            required: ["response", "riskAssessment", "requiredPPE", "methodStatement", "emergencyProcedures", "citations", "confidence"],
+            additionalProperties: false
           }
-        } catch (parseError) {
-          console.error('❌ JSON Parse Error:', parseError);
-          console.error('Raw response:', rawResponse.substring(0, 500));
-          throw new Error('Failed to parse Lovable AI response');
         }
+      }],
+      tool_choice: { type: "function", function: { name: "create_risk_assessment" } },
+      max_completion_tokens: calculateTokenLimit(extractCircuitCount(latestMessage))
+    };
+    
+    console.log('📤 Lovable AI Request:', JSON.stringify({ model: requestBody.model, messageCount: requestBody.messages.length }));
+    
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+      signal: controller.signal
+    });
 
-        if (content) {
-          console.log(`✅ Lovable AI responded in ${Date.now() - openaiStartTime}ms`);
-          console.log(`✅ H&S Agent: Got response on attempt ${retries + 1}`);
-          break;
-        }
-
-        console.warn(`⚠️ Empty response from Lovable AI (attempt ${retries + 1}/${maxRetries + 1})`);
-        retries++;
-        if (retries <= maxRetries) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
-        }
-      } catch (error) {
-        if (retries === maxRetries) throw error;
-        console.warn(`⚠️ Error on attempt ${retries + 1}, retrying...`);
-        retries++;
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('❌ Lovable AI error:', { status: response.status, error: errorText });
+      throw new Error(`Lovable AI error: ${response.status}`);
     }
 
-    if (!content) {
-      console.error('❌ No content received from Lovable AI after all retries');
-      throw new Error('No response from AI after 3 attempts');
+    const data = await response.json();
+    console.log(`✅ Lovable AI responded in ${Date.now() - openaiStartTime}ms`);
+    
+    // Extract structured data from tool call
+    const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
+    
+    if (!toolCall) {
+      console.error('❌ No tool call in response');
+      throw new Error('No tool call from AI');
     }
 
-    let parsedResponse;
-    try {
-      parsedResponse = JSON.parse(content);
-      console.log('✅ Successfully parsed Lovable AI response');
-    } catch (parseError) {
-      console.error('❌ Failed to parse final content:', parseError);
-      console.error('Content:', content.substring(0, 500));
-      
-      // FALLBACK: Return structured error with minimal safe defaults
-      parsedResponse = {
-        response: "Error generating full H&S assessment. Apply BS 7671 safe isolation procedures (Reg 14).",
-        riskAssessment: {
-          hazards: [{ hazard: 'Electrical shock', likelihood: 'MEDIUM', severity: 'HIGH', riskRating: 'HIGH' }]
-        },
-        requiredPPE: ["Safety boots", "Safety glasses", "Insulated gloves"],
-        methodStatement: ["Isolation and lock-off", "Voltage testing", "Test dead before work"],
-        emergencyProcedures: ["Call 999 in emergency", "Isolate supply if shock occurs"],
-        confidence: 0.4
-      };
-    }
+    const parsedResponse = JSON.parse(toolCall.function.arguments);
+    console.log('✅ Successfully parsed structured output with', parsedResponse.riskAssessment.hazards.length, 'hazards');
 
     // Ensure structured output with ACOP citations
     const structuredResponse = {

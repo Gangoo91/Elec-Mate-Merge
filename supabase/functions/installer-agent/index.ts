@@ -140,6 +140,7 @@ Use professional language with UK English spelling. Provide clear step-by-step g
 
     systemPrompt += `\n\n💬 Guide them step-by-step like you're walking an apprentice through their first install.`;
 
+    // Use structured tool calling for consistent method statement output
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: { 
@@ -156,14 +157,63 @@ Use professional language with UK English spelling. Provide clear step-by-step g
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage)) // Phase 4: Adaptive tokens
+        tools: [{
+          type: "function",
+          function: {
+            name: "create_method_statement",
+            description: "Create detailed installation method statement",
+            parameters: {
+              type: "object",
+              properties: {
+                response: { type: "string", description: "Natural language installation guidance" },
+                installationSteps: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      stepNumber: { type: "number" },
+                      title: { type: "string" },
+                      description: { type: "string" },
+                      safetyRequirements: { type: "array", items: { type: "string" } },
+                      equipmentNeeded: { type: "array", items: { type: "string" } },
+                      qualifications: { type: "array", items: { type: "string" } },
+                      estimatedDuration: { type: "string" },
+                      riskLevel: { type: "string", enum: ["low", "medium", "high"] }
+                    },
+                    required: ["stepNumber", "title", "description", "safetyRequirements", "equipmentNeeded", "riskLevel"]
+                  }
+                },
+                supportIntervals: { type: "string" },
+                specialRequirements: { type: "array", items: { type: "string" } },
+                confidence: { type: "number" }
+              },
+              required: ["response", "installationSteps", "confidence"],
+              additionalProperties: false
+            }
+          }
+        }],
+        tool_choice: { type: "function", function: { name: "create_method_statement" } },
+        max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage))
       }),
     });
 
     const data = await response.json();
+    const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
+    
+    if (!toolCall) {
+      throw new Error('No tool call from installer agent');
+    }
+
+    const structuredData = JSON.parse(toolCall.function.arguments);
+    
     return new Response(JSON.stringify({
-      response: data.choices[0]?.message?.content || 'Installation guidance complete.',
-      confidence: 0.90
+      response: structuredData.response || 'Installation guidance complete.',
+      structuredData: {
+        installationSteps: structuredData.installationSteps || [],
+        supportIntervals: structuredData.supportIntervals || "",
+        specialRequirements: structuredData.specialRequirements || []
+      },
+      confidence: structuredData.confidence || 0.90
     }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 
   } catch (error) {

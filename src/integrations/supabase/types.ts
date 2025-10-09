@@ -2334,6 +2334,77 @@ export type Database = {
         }
         Relationships: []
       }
+      method_statements: {
+        Row: {
+          approved_by: string | null
+          contractor: string
+          created_at: string
+          description: string | null
+          duration: string | null
+          id: string
+          job_title: string
+          location: string
+          overall_risk_level: string
+          rams_document_id: string | null
+          review_date: string | null
+          status: string
+          steps: Json
+          supervisor: string
+          team_size: string | null
+          updated_at: string
+          user_id: string
+          work_type: string
+        }
+        Insert: {
+          approved_by?: string | null
+          contractor: string
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          id?: string
+          job_title: string
+          location: string
+          overall_risk_level?: string
+          rams_document_id?: string | null
+          review_date?: string | null
+          status?: string
+          steps?: Json
+          supervisor: string
+          team_size?: string | null
+          updated_at?: string
+          user_id: string
+          work_type: string
+        }
+        Update: {
+          approved_by?: string | null
+          contractor?: string
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          id?: string
+          job_title?: string
+          location?: string
+          overall_risk_level?: string
+          rams_document_id?: string | null
+          review_date?: string | null
+          status?: string
+          steps?: Json
+          supervisor?: string
+          team_size?: string | null
+          updated_at?: string
+          user_id?: string
+          work_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "method_statements_rams_document_id_fkey"
+            columns: ["rams_document_id"]
+            isOneToOne: false
+            referencedRelation: "rams_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       near_miss_reports: {
         Row: {
           assigned_to: string | null
@@ -3463,6 +3534,66 @@ export type Database = {
           user_id?: string
           vat_amount?: number
           work_completion_date?: string | null
+        }
+        Relationships: []
+      }
+      rams_documents: {
+        Row: {
+          activities: string[] | null
+          ai_generation_metadata: Json | null
+          assessor: string
+          contractor: string | null
+          created_at: string
+          date: string
+          id: string
+          last_autosave_at: string | null
+          location: string
+          pdf_url: string | null
+          project_name: string
+          risks: Json
+          status: string
+          supervisor: string | null
+          updated_at: string
+          user_id: string
+          version: number
+        }
+        Insert: {
+          activities?: string[] | null
+          ai_generation_metadata?: Json | null
+          assessor: string
+          contractor?: string | null
+          created_at?: string
+          date: string
+          id?: string
+          last_autosave_at?: string | null
+          location: string
+          pdf_url?: string | null
+          project_name: string
+          risks?: Json
+          status?: string
+          supervisor?: string | null
+          updated_at?: string
+          user_id: string
+          version?: number
+        }
+        Update: {
+          activities?: string[] | null
+          ai_generation_metadata?: Json | null
+          assessor?: string
+          contractor?: string | null
+          created_at?: string
+          date?: string
+          id?: string
+          last_autosave_at?: string | null
+          location?: string
+          pdf_url?: string | null
+          project_name?: string
+          risks?: Json
+          status?: string
+          supervisor?: string | null
+          updated_at?: string
+          user_id?: string
+          version?: number
         }
         Relationships: []
       }

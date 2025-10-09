@@ -15,12 +15,18 @@ import type { MethodStatementData, MethodStep } from '@/types/method-statement';
 interface RAMSReviewEditorProps {
   ramsData: RAMSData;
   methodData: Partial<MethodStatementData>;
+  isSaving?: boolean;
+  lastSaved?: Date | null;
+  onSave?: () => void;
   onUpdate: (rams: RAMSData, method: Partial<MethodStatementData>) => void;
 }
 
 export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   ramsData: initialRamsData,
   methodData: initialMethodData,
+  isSaving = false,
+  lastSaved = null,
+  onSave,
   onUpdate
 }) => {
   const [ramsData, setRamsData] = useState<RAMSData>(initialRamsData);
@@ -141,15 +147,35 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     <div className="space-y-5 md:space-y-6">
       <Card className="border-elec-yellow/20 shadow-md bg-elec-grey">
         <CardHeader className="pb-5">
-          <CardTitle className="flex items-center justify-between text-foreground">
-            <span className="flex items-center gap-2.5 text-xl md:text-xl font-bold tracking-tight leading-tight">
-              <Edit3 className="h-5 w-5" />
-              Review & Edit Generated Documentation
-            </span>
-            <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/30 text-sm font-semibold">
-              <CheckCircle className="h-3.5 w-3.5 mr-1" />
-              AI Generated
-            </Badge>
+          <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 text-foreground">
+            <div className="flex flex-col gap-1">
+              <span className="flex items-center gap-2.5 text-xl md:text-xl font-bold tracking-tight leading-tight">
+                <Edit3 className="h-5 w-5" />
+                Review & Edit Generated Documentation
+              </span>
+              {lastSaved && (
+                <span className="text-xs text-elec-light/60">
+                  {isSaving ? 'Saving...' : `Last saved ${lastSaved.toLocaleTimeString()}`}
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              {onSave && (
+                <Button
+                  onClick={onSave}
+                  disabled={isSaving}
+                  size="sm"
+                  variant="outline"
+                  className="border-elec-yellow/30 h-10 px-4 font-semibold"
+                >
+                  {isSaving ? 'Saving...' : 'Save'}
+                </Button>
+              )}
+              <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/30 text-sm font-semibold">
+                <CheckCircle className="h-3.5 w-3.5 mr-1" />
+                AI Generated
+              </Badge>
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent>
