@@ -56,7 +56,10 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData }:
         <div className="space-y-3">
           {/* Designer Agent - Circuit Spec Card */}
           {agentId === 'designer' && structuredData.cableSize && (
-            <CircuitSpecCard data={structuredData} />
+            <CircuitSpecCard 
+              data={structuredData}
+              planData={structuredData.planData}
+            />
           )}
           
           {/* Cost Engineer - Cost Breakdown Card */}

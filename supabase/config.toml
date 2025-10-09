@@ -235,6 +235,9 @@ verify_jwt = false
 [functions.validate-installation]
 verify_jwt = false
 
+[functions.validate-spec-change]
+verify_jwt = false
+
 [functions.explain-regulation]
 verify_jwt = false
 

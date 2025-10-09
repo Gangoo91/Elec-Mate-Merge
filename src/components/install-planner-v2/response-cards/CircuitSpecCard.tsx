@@ -2,8 +2,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { CheckCircle2, ChevronDown, AlertCircle, Edit3 } from "lucide-react";
+import { CheckCircle2, ChevronDown, AlertCircle, Zap } from "lucide-react";
 import { useState } from "react";
+import { EditableField } from "../EditableField";
+import { generateSingleLineDiagram } from "@/lib/diagramGenerator/layoutEngine";
+import { SVGDiagramRenderer } from "@/components/circuit-diagrams/SVGDiagramRenderer";
 
 interface CircuitSpecData {
   cableSize?: number;
@@ -32,11 +35,70 @@ interface CircuitSpecData {
 
 interface CircuitSpecCardProps {
   data: CircuitSpecData;
-  onEdit?: () => void;
+  planData?: any;
+  onSpecChange?: (newData: CircuitSpecData) => void;
 }
 
-export const CircuitSpecCard = ({ data, onEdit }: CircuitSpecCardProps) => {
+export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCardProps) => {
   const [showCalculations, setShowCalculations] = useState(false);
+  const [showDiagram, setShowDiagram] = useState(false);
+  const [diagram, setDiagram] = useState<any>(null);
+  const [localData, setLocalData] = useState(data);
+
+  // Generate circuit diagram on mount
+  useState(() => {
+    if (planData && localData.cableSize) {
+      try {
+        const circuitData = {
+          circuitNumber: 1,
+          name: planData.loadType || 'Circuit',
+          voltage: planData.voltage,
+          cableSize: localData.cableSize,
+          cpcSize: localData.cableSize >= 16 ? localData.cableSize / 2 : localData.cableSize,
+          cableLength: planData.cableLength,
+          loadType: planData.loadType || 'General Load',
+          loadPower: planData.totalLoad,
+          protectionDevice: {
+            type: localData.protectionDevice?.includes('Type B') ? 'B' : 
+                  localData.protectionDevice?.includes('Type C') ? 'C' : 'B',
+            rating: parseInt(localData.protectionDevice?.match(/(\d+)A/)?.[1] || '16'),
+            poles: planData.phases === 'three' ? 3 : 1,
+            kaRating: 6,
+          },
+          earthing: planData.environmentalProfile?.finalApplied?.earthing || 'TN-S',
+          rcdProtected: true,
+          ze: planData.environmentalProfile?.finalApplied?.ze || 0.35,
+        };
+        const generatedDiagram = generateSingleLineDiagram(circuitData);
+        setDiagram(generatedDiagram);
+      } catch (error) {
+        console.error('Failed to generate diagram:', error);
+      }
+    }
+  });
+
+  const handleFieldUpdate = (field: string, newValue: any, validation: any) => {
+    const updatedData = { ...localData, [field]: newValue };
+    
+    // Update with new calculations if provided
+    if (validation?.newCalculations) {
+      if (validation.newCalculations.capacity) {
+        updatedData.correctedCapacity = validation.newCalculations.capacity.Iz;
+        updatedData.correctionFactors = validation.newCalculations.capacity.factors;
+      }
+      if (validation.newCalculations.voltageDrop) {
+        updatedData.voltageDrop = {
+          actual: validation.newCalculations.voltageDrop.voltageDropVolts,
+          percentage: validation.newCalculations.voltageDrop.voltageDropPercent,
+          limit: validation.newCalculations.voltageDrop.maxAllowed,
+          compliant: validation.newCalculations.voltageDrop.compliant,
+        };
+      }
+    }
+
+    setLocalData(updatedData);
+    onSpecChange?.(updatedData);
+  };
   
   return (
     <Card className="border-elec-yellow/20 bg-gradient-to-br from-blue-500/5 to-transparent hover:border-elec-yellow/30 transition-all">
@@ -46,31 +108,45 @@ export const CircuitSpecCard = ({ data, onEdit }: CircuitSpecCardProps) => {
           <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
             📐 Circuit Design
           </Badge>
-          {onEdit && (
-            <Button size="sm" variant="ghost" onClick={onEdit} className="h-7 text-xs gap-1">
-              <Edit3 className="h-3 w-3" />
-              Edit
-            </Button>
-          )}
         </div>
 
-        {/* Primary Spec - Always Visible */}
+        {/* Primary Spec - Editable */}
         <div className="space-y-3">
           <div className="flex items-baseline gap-3 flex-wrap">
             <div>
               <p className="text-xs text-muted-foreground">Cable Size</p>
-              <p className="text-2xl font-bold text-foreground">{data.cableSize}mm²</p>
+              {planData ? (
+                <EditableField
+                  label="Cable Size"
+                  value={localData.cableSize || 0}
+                  fieldType="cable"
+                  context={{ planData, currentSpec: localData }}
+                  onValidated={(newValue, validation) => handleFieldUpdate('cableSize', newValue, validation)}
+                />
+              ) : (
+                <p className="text-2xl font-bold text-foreground">{localData.cableSize}mm²</p>
+              )}
             </div>
             <span className="text-2xl text-muted-foreground">+</span>
             <div>
               <p className="text-xs text-muted-foreground">Protection</p>
-              <p className="text-xl font-bold text-foreground">{data.protectionDevice}</p>
+              {planData ? (
+                <EditableField
+                  label="Protection Device"
+                  value={localData.protectionDevice || ''}
+                  fieldType="protection"
+                  context={{ planData, currentSpec: localData }}
+                  onValidated={(newValue, validation) => handleFieldUpdate('protectionDevice', newValue, validation)}
+                />
+              ) : (
+                <p className="text-xl font-bold text-foreground">{localData.protectionDevice}</p>
+              )}
             </div>
           </div>
 
           {/* Compliance Status */}
           <div className="flex items-center gap-2 pt-2 border-t border-border/50">
-            {data.voltageDrop?.compliant ? (
+            {localData.voltageDrop?.compliant ? (
               <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
             ) : (
               <AlertCircle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
@@ -85,8 +161,8 @@ export const CircuitSpecCard = ({ data, onEdit }: CircuitSpecCardProps) => {
             <div className="bg-muted/30 rounded p-2">
               <p className="text-xs text-muted-foreground">Voltage Drop</p>
               <p className="text-base font-semibold text-foreground">
-                {data.voltageDrop?.percentage.toFixed(1)}%
-                {data.voltageDrop?.compliant && (
+                {localData.voltageDrop?.percentage.toFixed(1)}%
+                {localData.voltageDrop?.compliant && (
                   <span className="text-green-400 ml-1">✓</span>
                 )}
               </p>
@@ -94,11 +170,38 @@ export const CircuitSpecCard = ({ data, onEdit }: CircuitSpecCardProps) => {
             <div className="bg-muted/30 rounded p-2">
               <p className="text-xs text-muted-foreground">Design Current</p>
               <p className="text-base font-semibold text-foreground">
-                {data.designCurrent?.toFixed(1)}A
+                {localData.designCurrent?.toFixed(1)}A
               </p>
             </div>
           </div>
         </div>
+
+        {/* Circuit Diagram Preview */}
+        {diagram && (
+          <div className="space-y-2">
+            <Collapsible open={showDiagram} onOpenChange={setShowDiagram}>
+              <CollapsibleTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full justify-between text-xs h-8 border-elec-yellow/30"
+                >
+                  <span className="flex items-center gap-2">
+                    <Zap className="h-3 w-3" />
+                    Circuit Diagram
+                  </span>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${showDiagram ? 'rotate-180' : ''}`} />
+                </Button>
+              </CollapsibleTrigger>
+              
+              <CollapsibleContent className="pt-3">
+                <div className="border border-border/50 rounded-lg overflow-hidden bg-background">
+                  <SVGDiagramRenderer layout={diagram} />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+        )}
 
         {/* Expandable Calculations */}
         <Collapsible open={showCalculations} onOpenChange={setShowCalculations}>
