@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase, Play, RotateCcw, Pause, ClipboardCheck } from "lucide-react";
+import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase, Play, RotateCcw, Pause, ClipboardCheck, MoreVertical } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { InstallPlanDataV2 } from "./types";
@@ -102,9 +102,18 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [nextAgent, setNextAgent] = useState<string | null>(null);
   const [selectedAgent, setSelectedAgent] = useState<AgentType | null>(null);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const [showExportMenu, setShowExportMenu] = useState(false);
+  const [lastSentMessage, setLastSentMessage] = useState<string>("");
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
   
   const { sessionId, isSaving, lastSaved } = useConversationPersistence(messages, planData, activeAgents);
+
+  // Phase 2: Message pagination - only render last 50 messages for performance
+  const visibleMessages = useMemo(() => {
+    if (messages.length <= 50) return messages;
+    return messages.slice(-50);
+  }, [messages]);
 
   // Check if consultation has meaningful content - show results button after first agent reply
   const hasMeaningfulContent = messages.length >= 2 && messages.some(m => m.role === 'assistant' && m.agentName);
@@ -250,6 +259,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     if (!input.trim() || isLoading || isStreaming) return;
 
     const userMessage = input.trim();
+    
+    // Phase 2: Prevent duplicate sends within 500ms
+    if (userMessage === lastSentMessage) {
+      console.log('⏱️ Duplicate message detected, ignoring');
+      return;
+    }
+    setLastSentMessage(userMessage);
     setInput("");
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
@@ -333,7 +349,15 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSend();
+      
+      // Phase 2: Debounce rapid Enter presses (500ms)
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+      const timer = setTimeout(() => {
+        handleSend();
+      }, 300);
+      setDebounceTimer(timer);
     }
   };
 
@@ -902,92 +926,59 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         </div>
       </div>
 
-      {/* Input Area - WhatsApp style with Export Actions */}
-      <div className="flex-none bg-elec-dark border-t border-border/30 px-5 py-4">
-        <div className="space-y-3">
-          {/* Export Actions & Results - Show after first agent reply */}
+      {/* Phase 1: Compact Input Area */}
+      <div className="flex-none bg-elec-dark border-t border-border/30 px-3 md:px-5 py-2 md:py-3">
+        <div className="space-y-2">
+          {/* Phase 1: Collapsed Export Menu */}
           {hasMeaningfulContent && (
-            <div className="flex flex-wrap gap-2 justify-center pb-2">
-              {planData.circuits && planData.circuits.length > 0 && (
-                <>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={handleExportPackage}
-                    disabled={isExporting || messages.length < 5}
-                    className="text-xs h-9 bg-white/5 hover:bg-white/10 border-white/10 text-white"
-                  >
-                    {isExporting ? (
-                      <>
-                        <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-                        Exporting...
-                      </>
-                    ) : (
-                      <>
-                        <FileDown className="h-3 w-3 mr-1" />
-                        Export Package
-                      </>
-                    )}
-                  </Button>
-                  <Button 
-                    variant="default" 
-                    size="sm" 
-                    onClick={handleCompleteProjectExport}
-                    disabled={isExporting}
-                    className="text-xs h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
-                  >
-                    <FileDown className="h-3 w-3 mr-1" />
-                    {isExporting ? "Exporting..." : "Export Complete"}
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={handleExportToEIC}
-                    disabled={isExporting}
-                    className="text-xs h-9 bg-elec-yellow/10 hover:bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow"
-                  >
-                    <ClipboardCheck className="h-3 w-3 mr-1" />
-                    Testing App
-                  </Button>
-                </>
-              )}
+            <div className="flex gap-2 justify-center">
               <Button 
                 onClick={handleViewResults}
                 size="sm"
-                className="text-xs h-9 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold shadow-lg shadow-elec-yellow/20"
+                className="text-xs h-8 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
               >
-                <CheckCircle2 className="h-3 w-3 mr-1" />
-                View Results
+                <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
+                Results
               </Button>
+              <div className="relative">
+                <Button
+                  onClick={() => setShowExportMenu(!showExportMenu)}
+                  size="sm"
+                  variant="outline"
+                  className="text-xs h-8 border-elec-yellow/30"
+                >
+                  <MoreVertical className="h-3.5 w-3.5 mr-1.5" />
+                  Export
+                </Button>
+                {showExportMenu && (
+                  <div className="absolute bottom-full mb-1 right-0 bg-background border border-border rounded-lg shadow-lg p-1 min-w-[160px] z-50">
+                    {planData.circuits && planData.circuits.length > 0 && (
+                      <Button onClick={() => { handleExportToEIC(); setShowExportMenu(false); }} size="sm" variant="ghost" className="w-full justify-start h-8 text-xs">
+                        <ClipboardCheck className="h-3.5 w-3.5 mr-2" />To Testing
+                      </Button>
+                    )}
+                    <Button onClick={() => { handleExportPackage(); setShowExportMenu(false); }} size="sm" variant="ghost" disabled={isExporting} className="w-full justify-start h-8 text-xs">
+                      {isExporting ? <Loader2 className="h-3.5 w-3.5 mr-2 animate-spin" /> : <FileDown className="h-3.5 w-3.5 mr-2" />}
+                      Full Package
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
           
-          {/* Quick suggestions - only show on first message */}
+          {/* Phase 1: Only 2 quick suggestions, auto-hide after first user message */}
           {messages.length === 1 && (
-            <div className="flex flex-nowrap gap-2 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4 scrollbar-thin">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setInput("9.5kW shower, 18 metres from the board")}
-                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white whitespace-nowrap snap-start w-[140px] flex-shrink-0"
-              >
-                Shower install
+            <div className="flex gap-1.5 pb-1">
+              <Button variant="outline" size="sm" onClick={() => setInput("9.5kW shower, 15m from board")}
+                className="text-xs h-7 px-2 bg-white/5 border-white/10 text-white/80 flex-1">
+                <Sparkles className="h-3 w-3 mr-1" />
+                <span className="truncate">Shower</span>
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setInput("7kW EV charger in garage")}
-                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white whitespace-nowrap snap-start w-[140px] flex-shrink-0"
-              >
-                EV charger
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setInput("Design complete board for 3-bed house")}
-                className="text-xs h-8 px-3 bg-white/5 hover:bg-white/10 border-white/10 text-white whitespace-nowrap snap-start w-[140px] flex-shrink-0"
-              >
-                Whole house
+              <Button variant="outline" size="sm" onClick={() => setInput("Full rewire 3-bed house")}
+                className="text-xs h-7 px-2 bg-white/5 border-white/10 text-white/80 flex-1">
+                <Sparkles className="h-3 w-3 mr-1" />
+                <span className="truncate">Rewire</span>
               </Button>
             </div>
           )}

@@ -287,20 +287,44 @@ async function handleConversationalMode(
               isLast
             );
 
-            const timeoutMs = 120000; // 120s for complex RAG agents (H&S needs 90s)
-            const result = await Promise.race([
-              supabase.functions.invoke(agentFunctionName, {
-                body: { 
-                  messages: agentMessages,
-                  currentDesign,
-                  context: {
-                    ...agentContext,
-                    structuredKnowledge: buildStructuredContext(agentContext.previousAgentOutputs)
-                  }
+            // Phase 4: Add retry logic with exponential backoff
+            const timeoutMs = 120000;
+            const maxRetries = 2;
+            let result: any;
+            let lastError: Error | null = null;
+            
+            for (let attempt = 0; attempt <= maxRetries; attempt++) {
+              try {
+                const backoffMs = attempt > 0 ? Math.min(1000 * Math.pow(2, attempt - 1), 5000) : 0;
+                if (backoffMs > 0) {
+                  console.log(`🔄 Retrying ${agentName} after ${backoffMs}ms (attempt ${attempt + 1}/${maxRetries + 1})`);
+                  await new Promise(resolve => setTimeout(resolve, backoffMs));
                 }
-              }),
-              new Promise((_, reject) => setTimeout(() => reject(new Error('Timed out waiting for agent response')), timeoutMs))
-            ]);
+                
+                result = await Promise.race([
+                  supabase.functions.invoke(agentFunctionName, {
+                    body: { 
+                      messages: agentMessages,
+                      currentDesign,
+                      context: {
+                        ...agentContext,
+                        structuredKnowledge: buildStructuredContext(agentContext.previousAgentOutputs)
+                      }
+                    }
+                  }),
+                  new Promise((_, reject) => setTimeout(() => reject(new Error('Timed out waiting for agent response')), timeoutMs))
+                ]);
+                
+                // Success - break retry loop
+                break;
+              } catch (error) {
+                lastError = error as Error;
+                if (attempt === maxRetries) {
+                  throw lastError;
+                }
+                console.warn(`⚠️ Agent ${agentName} attempt ${attempt + 1} failed:`, lastError.message);
+              }
+            }
 
             if (result.error) {
               console.error(`Agent ${agentName} error:`, result.error);

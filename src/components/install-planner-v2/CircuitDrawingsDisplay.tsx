@@ -25,34 +25,43 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
   const [viewingDiagram, setViewingDiagram] = useState<number | null>(null);
   const [aiDiagrams, setAiDiagrams] = useState<Map<number, any>>(new Map());
   const [generatingAI, setGeneratingAI] = useState<number | null>(null);
+  const [isLoadingStructuredData, setIsLoadingStructuredData] = useState(true);
 
-  // Parse circuits from designer response - check for structured data first
+  // Phase 3: Parse circuits with loading state
   const parsedCircuits = useMemo(() => {
+    setIsLoadingStructuredData(true);
     const designerMessages = messages.filter(m => m.agentName === 'designer');
-    if (designerMessages.length === 0) return [];
+    if (designerMessages.length === 0) {
+      setIsLoadingStructuredData(false);
+      return [];
+    }
     
-    // NEW: Check if messages contain structured circuit data
+    // Check if messages contain structured circuit data
     const structuredCircuits: CircuitData[] = [];
     designerMessages.forEach(msg => {
       try {
-        // Check if message has structured data (from designer agent JSON response)
         const msgData = typeof msg === 'object' && 'structuredData' in msg ? (msg as any).structuredData : null;
         if (msgData?.circuits) {
+          console.log('✅ Structured data found:', msgData.circuits);
           structuredCircuits.push(...msgData.circuits);
         }
       } catch (e) {
-        // Not structured data, will parse from text
+        console.warn('⚠️ Error parsing structured data:', e);
       }
     });
     
     if (structuredCircuits.length > 0) {
       console.log('✅ Using structured circuit data:', structuredCircuits);
+      setIsLoadingStructuredData(false);
       return structuredCircuits;
     }
     
-    // Fallback: Combine ALL designer messages and parse from text
+    // Fallback: Parse from text
+    console.log('⚠️ No structured data, falling back to text parsing');
     const combinedContent = designerMessages.map(m => m.content).join('\n\n');
-    return parseCircuitsFromDesigner(combinedContent);
+    const parsed = parseCircuitsFromDesigner(combinedContent);
+    setIsLoadingStructuredData(false);
+    return parsed;
   }, [messages]);
 
   // Generate SVG diagrams
