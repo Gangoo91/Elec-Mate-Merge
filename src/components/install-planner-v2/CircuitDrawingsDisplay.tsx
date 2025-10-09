@@ -92,20 +92,29 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
     });
     
     try {
+      // Pass structured circuit data directly to edge function
       const { data, error } = await supabase.functions.invoke('generate-circuit-diagrams', {
         body: {
-          designerResponse: JSON.stringify(circuit),
+          structuredCircuit: circuit, // NEW: Pass structured data
           projectName: `${projectName} - Circuit ${circuit.circuitNumber}`
         }
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error('Edge function error:', error);
+        throw new Error(error.message || 'Unknown error from edge function');
+      }
+      
+      if (!data || !data.diagrams) {
+        throw new Error('No diagrams returned from edge function');
+      }
       
       setAiDiagrams(prev => new Map(prev).set(index, data.diagrams));
       toast.success("AI diagrams generated! 🎨");
     } catch (error: any) {
+      console.error('AI generation error:', error);
       toast.error("AI generation failed", {
-        description: error.message
+        description: error.message || "Check console for details"
       });
     } finally {
       setGeneratingAI(null);

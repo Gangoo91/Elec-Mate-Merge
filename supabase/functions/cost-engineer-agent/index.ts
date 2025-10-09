@@ -79,6 +79,24 @@ CRITICAL RULES:
 
 CRITICAL: Use the pricing data from our database below. Reference actual suppliers and stock status.
 
+⚠️ 2025 MARKET RATE VALIDATION:
+Consumer Units (Metal, dual RCD):
+- 6-way: £55-85
+- 10-way: £95-130
+- 18-way: £280-420
+MCBs: £8-18 each (Type B/C, 6-63A)
+RCBOs: £28-45 each
+Twin & Earth Cable (6242Y per metre):
+- 1.0mm²: £0.65-0.95
+- 1.5mm²: £0.85-1.20
+- 2.5mm²: £1.30-1.80
+- 4mm²: £2.10-2.90
+- 6mm²: £3.20-4.50
+- 10mm²: £5.50-7.80
+- 16mm²: £9.50-13.50
+
+⚠️ PRICE SANITY CHECK: If database pricing is >30% below market rates above, flag for review and use market rate instead.
+
 FORMAT YOUR RESPONSE AS:
 
 MATERIALS BREAKDOWN

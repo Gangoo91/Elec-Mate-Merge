@@ -225,7 +225,7 @@ Use professional language with UK English spelling. Present calculations clearly
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_tokens: 2000,
+        max_completion_tokens: 4000, // INCREASED for multi-circuit designs
       }),
     });
 

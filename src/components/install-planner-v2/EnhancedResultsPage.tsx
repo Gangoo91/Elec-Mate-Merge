@@ -230,9 +230,9 @@ export const EnhancedResultsPage = ({
           description: "Opening Quote Hub..."
         });
         
-        // Navigate to quote hub
+        // Navigate to quote builder
         setTimeout(() => {
-          navigate('/quote-hub');
+          navigate('/electrician/quote-builder');
         }, 1000);
       } else {
         toast.error("Failed to save quote", {

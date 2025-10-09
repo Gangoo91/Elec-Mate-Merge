@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { designerResponse, projectName } = await req.json();
+    const { structuredCircuit, designerResponse, projectName } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     
     if (!lovableApiKey) {
@@ -21,8 +21,33 @@ serve(async (req) => {
 
     console.log('📐 Generating circuit diagrams for:', projectName);
 
-    // Extract key circuit information from designer response
-    const circuitInfo = extractCircuitInfo(designerResponse);
+    // NEW: Use structured circuit data if available, otherwise extract from text
+    let circuitInfo;
+    if (structuredCircuit) {
+      console.log('✅ Using structured circuit data:', structuredCircuit);
+      circuitInfo = {
+        cableSize: structuredCircuit.cableSize?.toString() || '2.5',
+        cpcSize: structuredCircuit.cpcSize?.toString() || '1.5',
+        protection: `${structuredCircuit.protectionDevice?.rating || 32}A ${structuredCircuit.protectionDevice?.type || 'MCB'}`,
+        voltage: structuredCircuit.voltage?.toString() || '230',
+        load: `${(structuredCircuit.loadPower || 0) / 1000}kW`,
+        circuitType: structuredCircuit.loadType || 'socket',
+        circuitName: structuredCircuit.name || `Circuit ${structuredCircuit.circuitNumber}`,
+        cableLength: structuredCircuit.cableLength || 15,
+        rcdProtected: structuredCircuit.rcdProtected || false,
+        fullResponse: JSON.stringify(structuredCircuit)
+      };
+      
+      // Validation: Ensure critical specs match
+      if (structuredCircuit.cableSize && structuredCircuit.cpcSize) {
+        console.log(`✅ Validated: ${structuredCircuit.cableSize}mm² cable with ${structuredCircuit.cpcSize}mm² CPC`);
+      }
+    } else if (designerResponse) {
+      console.log('⚠️ No structured data, extracting from text');
+      circuitInfo = extractCircuitInfo(designerResponse);
+    } else {
+      throw new Error('No circuit data provided (need structuredCircuit or designerResponse)');
+    }
     
     // Generate single-line diagram
     const singleLineDiagram = await generateDiagram({
@@ -61,9 +86,16 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('❌ Circuit diagram generation error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to generate diagrams';
+    const errorDetails = error instanceof Error ? error.stack : 'No stack trace';
+    
+    console.error('Error details:', errorDetails);
+    
     return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to generate diagrams',
-      diagrams: []
+      error: errorMessage,
+      details: errorDetails,
+      diagrams: [],
+      timestamp: new Date().toISOString()
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -140,12 +172,17 @@ function buildSingleLinePrompt(circuitInfo: any, projectName: string): string {
 
 PROJECT: ${projectName}
 
+⚠️ CRITICAL CABLE SPECIFICATIONS (MUST USE EXACT VALUES):
+- Live Conductor: ${circuitInfo.cableSize}mm² (NOT ${circuitInfo.cableSize === '10' ? '10mm², DO NOT show 10mm²' : 'any other size'})
+- CPC (Earth): ${circuitInfo.cpcSize}mm² (NOT ${circuitInfo.cpcSize === '1.5' ? '1.0mm², MUST be 1.5mm²' : 'any other size'})
+- Cable Type: ${circuitInfo.cableSize}mm²/${circuitInfo.cpcSize}mm² twin & earth (6242Y)
+
 CIRCUIT DETAILS:
-- Circuit Type: ${circuitInfo.circuitType.toUpperCase()} CIRCUIT
+- Circuit Name: ${circuitInfo.circuitName || circuitInfo.circuitType.toUpperCase()}
 - Protection: ${circuitInfo.protection}
-- Cable Size: ${circuitInfo.cableSize}mm² twin & earth
 - Voltage: ${circuitInfo.voltage}V single phase
 - Load: ${circuitInfo.load}
+- Cable Length: ${circuitInfo.cableLength}m
 
 DRAWING REQUIREMENTS:
 1. Use standard BS 7671 electrical symbols (IEC 60617 standard)
@@ -153,15 +190,17 @@ DRAWING REQUIREMENTS:
    - Main incoming supply (${circuitInfo.voltage}V)
    - Consumer unit/distribution board with main switch
    - ${circuitInfo.protection} protective device
-   - ${circuitInfo.cableSize}mm² cable run (show cable symbol)
+   - ⚠️ CRITICAL: Cable labeled as "${circuitInfo.cableSize}mm² / ${circuitInfo.cpcSize}mm²" - DO NOT use any other sizes
    - Load/outlet at bottom
-3. Label all components clearly with ratings
-4. Include earth bonding conductor
+3. Label all components clearly with exact ratings specified above
+4. Include earth bonding conductor (${circuitInfo.cpcSize}mm² CPC)
 5. Add regulation references (e.g., "BS 7671 Reg 411.3.2")
 6. Professional engineering style - clean black lines on white background
-7. Include title block with project name
-8. Add cable length indication line
-9. Show CPC (circuit protective conductor) connection
+7. Include title block with project name and circuit designation
+8. Add cable length indication: ${circuitInfo.cableLength}m run
+9. Show CPC connection with correct ${circuitInfo.cpcSize}mm² size labeling
+
+⚠️ VALIDATION CHECK: Before finalizing, verify cable shows ${circuitInfo.cableSize}mm² and CPC shows ${circuitInfo.cpcSize}mm².
 
 STYLE: Technical drawing, professional engineering documentation, high contrast black & white, crisp lines, suitable for Building Control submission.`;
 }
@@ -171,27 +210,36 @@ function buildSchematicPrompt(circuitInfo: any, projectName: string): string {
 
 PROJECT: ${projectName}
 
+⚠️ CRITICAL CABLE SPECIFICATIONS (MUST USE EXACT VALUES):
+- Live: ${circuitInfo.cableSize}mm²
+- Neutral: ${circuitInfo.cableSize}mm²  
+- CPC (Earth): ${circuitInfo.cpcSize}mm²
+- Cable Type: ${circuitInfo.cableSize}mm²/${circuitInfo.cpcSize}mm² twin & earth (6242Y)
+
 CIRCUIT DETAILS:
-- Circuit Type: ${circuitInfo.circuitType.toUpperCase()}
+- Circuit Name: ${circuitInfo.circuitName || circuitInfo.circuitType.toUpperCase()}
 - Protection: ${circuitInfo.protection}
-- Cable: ${circuitInfo.cableSize}mm² twin & earth (Live, Neutral, CPC)
 - Voltage: ${circuitInfo.voltage}V
 - Load: ${circuitInfo.load}
+- Length: ${circuitInfo.cableLength}m
 
 DRAWING REQUIREMENTS:
 1. Show detailed wiring schematic with all conductors:
-   - Line conductor (L) in red/brown annotation
-   - Neutral conductor (N) in blue annotation  
-   - Circuit Protective Conductor (CPC/Earth) in green/yellow annotation
+   - Line conductor (L) - ${circuitInfo.cableSize}mm² in red/brown annotation
+   - Neutral conductor (N) - ${circuitInfo.cableSize}mm² in blue annotation  
+   - ⚠️ Circuit Protective Conductor (CPC/Earth) - ${circuitInfo.cpcSize}mm² in green/yellow annotation
 2. Display ${circuitInfo.protection} with trip characteristics
-3. Show cable with three conductors labeled with ${circuitInfo.cableSize}mm² size
+3. ⚠️ CRITICAL: Label cable as "${circuitInfo.cableSize}mm² / ${circuitInfo.cpcSize}mm²" - exact sizes only
 4. Include load connection point with proper terminations
 5. Add earthing arrangement and main earthing terminal
-6. Label all terminals (L, N, E)
+6. Label all terminals (L, N, E) with conductor sizes
 7. Include current ratings and cable reference method
-8. Add BS 7671 regulation references
-9. Professional electrical schematic symbols
-10. Title block with circuit designation
+8. Add BS 7671 regulation references (411.3.2, 433.1, 525)
+9. Professional electrical schematic symbols (BS EN 60617)
+10. Title block with "${circuitInfo.circuitName}" designation
+11. Cable length: ${circuitInfo.cableLength}m
+
+⚠️ VALIDATION: Verify all three conductors show correct sizes - L: ${circuitInfo.cableSize}mm², N: ${circuitInfo.cableSize}mm², CPC: ${circuitInfo.cpcSize}mm²
 
 STYLE: Detailed electrical schematic, engineering documentation standard, black & white with conductor color annotations, suitable for installation and inspection reference.`;
 }
