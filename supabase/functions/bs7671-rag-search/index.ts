@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { query, matchThreshold = 0.6, matchCount = 10 } = await req.json();
+    const { query, matchThreshold = 0.4, matchCount = 8 } = await req.json();
 
     if (!query || query.trim().length === 0) {
       return new Response(

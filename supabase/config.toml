@@ -318,6 +318,9 @@ verify_jwt = true
 [functions.bs7671-rag-search]
 verify_jwt = false
 
+[functions.multi-source-rag-search]
+verify_jwt = false
+
 [functions.electrician-ai-assistant]
 verify_jwt = false
 

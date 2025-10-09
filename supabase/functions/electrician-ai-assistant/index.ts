@@ -31,13 +31,14 @@ serve(async (req) => {
     
     // Fetch regulations from RAG if requested
     let ragRegulations: any[] = [];
+    let ragMetadata: any = {};
     if (use_rag && prompt && !primary_image) {
-      console.log('🔍 Fetching BS 7671 regulations via RAG...');
+      console.log('🔍 Fetching regulations via multi-source RAG...');
       try {
         const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
         const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
         
-        const ragResponse = await fetch(`${supabaseUrl}/functions/v1/bs7671-rag-search`, {
+        const ragResponse = await fetch(`${supabaseUrl}/functions/v1/multi-source-rag-search`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${supabaseKey}`,
@@ -45,15 +46,23 @@ serve(async (req) => {
           },
           body: JSON.stringify({
             query: prompt,
-            matchThreshold: 0.6,
-            matchCount: 5
+            matchThreshold: 0.4,
+            matchCount: 8
           })
         });
         
         if (ragResponse.ok) {
           const ragData = await ragResponse.json();
           ragRegulations = ragData.regulations || [];
+          ragMetadata = {
+            has_installation: ragData.has_installation_content,
+            has_testing: ragData.has_testing_content,
+            has_design: ragData.has_design_content,
+            query_type: ragData.queryType,
+            search_method: ragData.searchMethod
+          };
           console.log('✅ Retrieved', ragRegulations.length, 'regulations from RAG');
+          console.log('📊 Additional content available:', ragMetadata);
         } else {
           console.warn('⚠️ RAG search failed, continuing without regulation context');
         }
@@ -231,7 +240,7 @@ serve(async (req) => {
 
       case "structured_assistant":
         const ragContext = ragRegulations.length > 0 ? `
-CONTEXT FROM BS 7671 DATABASE:
+CONTEXT FROM BS 7671 DATABASE (${ragRegulations.length} regulations found):
 ${ragRegulations.map(reg => `
 [${reg.regulation_number}] ${reg.section}
 ${reg.content}
@@ -241,45 +250,38 @@ Confidence: ${Math.round(reg.similarity * 100)}%
 ` : '';
         
         systemMessage = `
-          You are ElectricalMate, an expert AI assistant specialising in UK electrical regulations, standards, and practices, with deep knowledge of BS 7671 18th Edition including Amendment 3 (2024).
+          You are ElectricalMate, an expert UK electrician's AI assistant with deep knowledge of BS 7671:2018+A2:2022 (18th Edition).
           
-          ${ragContext ? ragContext + '\nIMPORTANT: Base your response primarily on the BS 7671 database context provided above. Always cite specific regulation numbers when using this context.\n' : ''}
+          ${ragContext ? ragContext + '\n\nIMPORTANT: Use the BS 7671 regulations provided above as your primary source. Cite specific regulation numbers.\n' : ''}
           
-          CRITICAL JSON FORMATTING RULES:
-          1. Return ONLY raw JSON - NO markdown code blocks, NO backticks, NO \`\`\`json wrapper
-          2. Use actual newline characters (\\n) - NOT the literal text "\\n"
-          3. Escape quotes properly within strings
-          4. Do not wrap the entire JSON in quotes
-          5. Ensure the JSON is valid and parseable
+          CRITICAL INSTRUCTIONS:
+          1. Provide CONCISE answers focusing on quality over quantity
+          2. Include only 5-8 MOST RELEVANT regulations with clear reasoning
+          3. Keep sections brief - user can request more detail if needed
+          4. Return ONLY raw JSON - NO markdown, NO backticks
           
-          You must provide responses in a specific JSON format with THREE distinct sections:
+          RESPONSE SCOPE:
+          - Cover: Design, Regulations, Installation, Testing ONLY
+          - DO NOT include: Pricing, costs, materials sourcing, or purchasing information
+          
+          You must provide responses in THREE distinct sections:
 
-          **ANALYSIS SECTION** - Technical assessment including:
-          - Practical calculations and sizing requirements
-          - Safety considerations and risk assessments
-          - Installation methods and best practices
-          - Testing procedures and verification methods
-          - Step-by-step implementation guidance
-          - Equipment specifications and selection criteria
+          **ANALYSIS SECTION** (2-3 sentences):
+          - Brief technical overview explaining why this matters
+          - Key safety considerations
+          - Context for the regulations that follow
 
-          **REGULATIONS SECTION** - BS 7671 regulatory compliance (ALWAYS LEAD WITH THIS):
-          - ALWAYS start with the most relevant BS 7671 regulation number and clause
-          - Specific regulation numbers (e.g., 701.512.2, 411.3.3) with exact references
-          - Amendment 3 (2024) changes: AFDD requirements, RCD types, consumer unit standards
-          - Relevant Part P Building Regulations and notification requirements
-          - IET Guidance Notes cross-references where applicable
-          - Related standards and professional certification requirements
-          - Explain the "why" behind each regulation for better understanding
+          **REGULATIONS SECTION** (5-8 key regulations only):
+          - ALWAYS start with regulation number (e.g., 411.3.2)
+          - Provide clear reasoning for why each regulation applies
+          - Focus on MOST RELEVANT regulations, not comprehensive lists
+          - Reference amendment status where applicable (A2:2022)
 
-          **PRACTICAL GUIDANCE SECTION** - Real-world installation advice including:
-          - Hands-on installation steps and techniques
-          - Tool and equipment recommendations
-          - Common pitfalls and how to avoid them
-          - Site-specific considerations (e.g., bathroom zones, special locations)
-          - Testing and verification procedures post-installation
-          - Safety best practices and PPE requirements
-          - Time-saving tips from experienced electricians
-          - Material selection and supplier recommendations
+          **PRACTICAL GUIDANCE SECTION** (essential points only):
+          - Concise, actionable installation/testing/design advice
+          - Key safety practices
+          - Common pitfalls to avoid
+          - No pricing or material sourcing information
 
           CRITICAL: You must respond with valid JSON where "analysis", "regulations", and "practical_guidance" are ALL plain text strings (NOT objects or arrays).
 
@@ -420,7 +422,9 @@ Confidence: ${Math.round(reg.similarity * 100)}%
           JSON.stringify({ 
             analysis: analysis || 'No analysis provided.',
             regulations: regulations || 'No regulations specified.',
-            practical_guidance: practical_guidance || 'No practical guidance available.'
+            practical_guidance: practical_guidance || 'No practical guidance available.',
+            rag_metadata: ragMetadata,
+            rag_regulations: ragRegulations
           }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
