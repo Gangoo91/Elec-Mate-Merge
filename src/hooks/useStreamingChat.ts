@@ -58,38 +58,44 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     try {
       const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/orchestrator-agent`;
       
-      // Phase 4: Add timeout handling (60s total, 30s warning)
-      const timeoutMs = 60000;
+      // Timeout handling (120s total, 30s warning) with AbortController
+      const timeoutMs = 120000;
       const warningMs = 30000;
-      let timeoutWarningShown = false;
-      
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => {
-          if (!timeoutWarningShown) {
-            options.onError?.('Still working on your request, this is taking longer than expected...');
-            timeoutWarningShown = true;
-          }
-        }, warningMs);
-        
-        setTimeout(() => reject(new Error('Request timed out after 60 seconds')), timeoutMs);
-      });
-      
-      const fetchPromise = fetch(FUNCTION_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
-        },
-        body: JSON.stringify({ 
-          messages, 
-          currentDesign, 
-          selectedAgents, 
-          targetAgent,
-          ...(currentDesign?.userContext && { userContext: currentDesign.userContext })
-        })
-      });
-      
-      const response = await Promise.race([fetchPromise, timeoutPromise]) as Response;
+
+      const controller = new AbortController();
+      const warningTimer = setTimeout(() => {
+        options.onError?.('Still working on your request, this is taking longer than expected...');
+      }, warningMs);
+      const timeoutTimer = setTimeout(() => {
+        controller.abort();
+      }, timeoutMs);
+
+      let response: Response;
+      try {
+        response = await fetch(FUNCTION_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+          },
+          body: JSON.stringify({ 
+            messages, 
+            currentDesign, 
+            selectedAgents, 
+            targetAgent,
+            ...(currentDesign?.userContext && { userContext: currentDesign.userContext })
+          }),
+          signal: controller.signal
+        });
+      } catch (e: any) {
+        if (e?.name === 'AbortError') {
+          throw new Error('Request timed out after 120 seconds');
+        }
+        throw e;
+      } finally {
+        clearTimeout(warningTimer);
+        clearTimeout(timeoutTimer);
+      }
 
       if (!response.ok) {
         if (response.status === 429) {

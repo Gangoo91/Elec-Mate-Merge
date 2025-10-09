@@ -105,6 +105,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [lastSentMessage, setLastSentMessage] = useState<string>("");
+  const [lastSendFailed, setLastSendFailed] = useState<boolean>(false);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
   
@@ -239,7 +240,12 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       console.log('Citation received:', citation);
     },
     onError: (error) => {
-      toast.error(error);
+      const msg = String(error || '').toLowerCase();
+      if (msg.includes('still working')) {
+        toast.info(String(error));
+      } else {
+        toast.error(String(error));
+      }
     }
   });
 
@@ -260,12 +266,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     if (!input.trim() || isLoading || isStreaming) return;
 
     const userMessage = input.trim();
+    const lastAssistant = [...messages].slice().reverse().find(m => m.role === 'assistant');
+    const allowRetry = lastSendFailed || !!lastAssistant?.hasError;
     
-    // Phase 2: Prevent duplicate sends within 500ms
-    if (userMessage === lastSentMessage) {
+    // Prevent duplicate sends, but allow if last attempt failed or last assistant message was an error
+    if (userMessage === lastSentMessage && !allowRetry) {
       console.log('⏱️ Duplicate message detected, ignoring');
       return;
     }
+    // Clear failure flag when attempting a new send
+    setLastSendFailed(false);
     setLastSentMessage(userMessage);
     setInput("");
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
@@ -326,10 +336,10 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       // Remove acknowledgment message and "Analyzing..." messages
       setMessages(prev => {
         const filtered = prev.filter((_, i) => {
-          // Keep user message but remove acknowledgment and agent analyzing messages
+          // Keep user message but remove acknowledgment, analyzing, and previous error messages
           if (i === acknowledgmentIndex) return false;
           const msg = prev[i];
-          if (msg.role === 'assistant' && msg.isTyping) return false;
+          if (msg.role === 'assistant' && (msg.isTyping || msg.hasError)) return false;
           return true;
         });
         return [...filtered, { 
@@ -338,6 +348,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           hasError: true
         } as any];
       });
+      setLastSendFailed(true);
+      setLastSentMessage("");
       setStreamingMessageIndex(null);
       setReasoningSteps([]);
     } finally {
@@ -885,6 +897,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                         // Find the last user message and retry it
                         const lastUserMsg = [...messages].reverse().find(m => m.role === 'user');
                         if (lastUserMsg) {
+                          // Explicitly allow retry of the same message
+                          setLastSendFailed(true);
+                          setLastSentMessage("");
                           setInput(lastUserMsg.content);
                           setTimeout(() => handleSend(), 100);
                         }
