@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Download, RotateCcw, Lightbulb, MessageSquare, ChevronDown, FileDown, Send, ExternalLink, Shield, ClipboardCheck, Maximize2, Minimize2 } from "lucide-react";
+import { Download, RotateCcw, Lightbulb, MessageSquare, ChevronDown, FileDown, Send, ExternalLink, Shield, ClipboardCheck, Maximize2, Minimize2, Loader2 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { WhatsAppShareButton } from "./WhatsAppShareButton";
 import { AgentResponseRenderer } from "./AgentResponseRenderer";
@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { Quote } from "@/types/quote";
 import { ProjectDetailsForm } from "./ProjectDetailsForm";
 import { CircuitDrawingsDisplay } from "./CircuitDrawingsDisplay";
+import { CircuitSummaryCard } from "./CircuitSummaryCard";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   MobileAccordion, 
   MobileAccordionItem, 
@@ -36,6 +38,10 @@ interface Circuit {
   mcbRating?: string;
   cableSize?: string;
   protection?: string;
+  loadType?: string;
+  voltage?: number;
+  phases?: string;
+  cableLength?: number;
 }
 
 interface EnhancedResultsPageProps {
@@ -79,6 +85,11 @@ export const EnhancedResultsPage = ({
   const [companyDetails, setCompanyDetails] = useState<any>(null);
   const [detailsComplete, setDetailsComplete] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+  // NEW: Wiring schematic state
+  const [wiringSchematics, setWiringSchematics] = useState<Map<string, any>>(new Map());
+  const [loadingSchematic, setLoadingSchematic] = useState<string | null>(null);
+  const [isGeneratingAll, setIsGeneratingAll] = useState(false);
 
   // Load saved details and handle resize
   useEffect(() => {
@@ -275,6 +286,75 @@ export const EnhancedResultsPage = ({
       return;
     }
     onExport(Array.from(selectedDocuments), clientDetails, companyDetails);
+  };
+
+  const handleGenerateSchematic = async (circuitId: string) => {
+    const circuit = circuits.find(c => c.id === circuitId);
+    if (!circuit) return;
+
+    setLoadingSchematic(circuitId);
+    try {
+      const { data, error } = await supabase.functions.invoke('wiring-diagram-generator-rag', {
+        body: {
+          component_type: circuit.loadType || 'general',
+          circuit_params: {
+            cableSize: parseFloat(circuit.cableSize || '2.5'),
+            protectionDevice: circuit.protection || 'MCB',
+            rcdRequired: true,
+            loadPower: circuit.load || 0,
+            voltage: 230
+          },
+          installation_context: `Circuit: ${circuit.name}`
+        }
+      });
+
+      if (error) throw error;
+
+      setWiringSchematics(prev => new Map(prev).set(circuitId, data));
+      toast.success("Schematic generated");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to generate schematic");
+    } finally {
+      setLoadingSchematic(null);
+    }
+  };
+
+  const handleGenerateAllSchematics = async () => {
+    if (!circuits || circuits.length === 0) return;
+
+    setIsGeneratingAll(true);
+    toast.info(`Generating ${circuits.length} schematics...`);
+
+    const newSchematics = new Map(wiringSchematics);
+
+    for (const circuit of circuits) {
+      try {
+        const { data, error } = await supabase.functions.invoke('wiring-diagram-generator-rag', {
+          body: {
+            component_type: circuit.loadType || 'general',
+            circuit_params: {
+              cableSize: parseFloat(circuit.cableSize || '2.5'),
+              protectionDevice: circuit.protection || 'MCB',
+              rcdRequired: true,
+              loadPower: circuit.load || 0,
+              voltage: 230
+            },
+            installation_context: `Circuit: ${circuit.name}`
+          }
+        });
+
+        if (!error && data) {
+          newSchematics.set(circuit.id, data);
+        }
+      } catch (error) {
+        console.error(`Failed for ${circuit.name}:`, error);
+      }
+    }
+
+    setWiringSchematics(newSchematics);
+    setIsGeneratingAll(false);
+    toast.success("All schematics generated! 🎉");
   };
 
   return (
@@ -620,31 +700,30 @@ export const EnhancedResultsPage = ({
 
           <TabsContent value="circuits" className="space-y-3 mt-4">
             {circuits.length > 0 ? (
-              circuits.map((circuit, idx) => (
-                <Card key={circuit.id} className="p-5">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-base">Circuit {idx + 1}: {circuit.name}</h3>
-                      <p className="text-sm text-muted-foreground mt-1">Load: {circuit.load}W</p>
-                    </div>
-                    <Badge variant="secondary" className="ml-2">{circuit.mcbRating || 'N/A'}</Badge>
-                  </div>
-                  <div className="space-y-2.5 text-base">
-                    {circuit.cableSize && (
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-muted-foreground">Cable Size:</span>
-                        <span className="font-medium">{circuit.cableSize}</span>
-                      </div>
-                    )}
-                    {circuit.protection && (
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-muted-foreground">Protection:</span>
-                        <span className="font-medium">{circuit.protection}</span>
-                      </div>
-                    )}
-                  </div>
-                </Card>
-              ))
+              <>
+                <div className="flex justify-end mb-3">
+                  <Button 
+                    onClick={handleGenerateAllSchematics}
+                    disabled={isGeneratingAll}
+                    variant="default"
+                    className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                  >
+                    {isGeneratingAll ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Zap className="h-4 w-4 mr-2" />}
+                    Generate All Schematics
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {circuits.map((circuit) => (
+                    <CircuitSummaryCard
+                      key={circuit.id}
+                      circuit={circuit}
+                      onGenerateSchematic={handleGenerateSchematic}
+                      schematic={wiringSchematics.get(circuit.id)}
+                      isLoading={loadingSchematic === circuit.id}
+                    />
+                  ))}
+                </div>
+              </>
             ) : (
               <Card className="p-12 text-center">
                 <p className="text-white/70">No circuits designed yet.</p>

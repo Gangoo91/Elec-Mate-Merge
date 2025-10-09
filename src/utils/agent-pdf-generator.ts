@@ -340,3 +340,112 @@ export function prepareTestSheetData(
     testSequence
   };
 }
+
+/**
+ * Generate Pre-Job Safety Brief PDF
+ */
+export function generateSafetyBriefPDF(
+  hsAgentResponse: string,
+  projectName: string,
+  location: string,
+  date: string,
+  companyName: string = "ElecMate User"
+): jsPDF {
+  const pdf = new jsPDF();
+  const pageWidth = pdf.internal.pageSize.width;
+  let yPos = 20;
+  
+  // Header
+  pdf.setFillColor(220, 38, 38); // Red for safety
+  pdf.rect(0, 0, pageWidth, 35, 'F');
+  pdf.setTextColor(255, 255, 255);
+  pdf.setFontSize(18);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('PRE-JOB SAFETY BRIEFING', pageWidth / 2, 15, { align: 'center' });
+  pdf.setFontSize(10);
+  pdf.text('Electrical Installation Safety', pageWidth / 2, 25, { align: 'center' });
+  
+  yPos = 45;
+  
+  // Project details
+  pdf.setTextColor(0, 0, 0);
+  pdf.setFontSize(10);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text(`Project: ${projectName}`, 15, yPos);
+  yPos += 6;
+  pdf.text(`Location: ${location}`, 15, yPos);
+  yPos += 6;
+  pdf.text(`Date: ${date}`, 15, yPos);
+  yPos += 6;
+  pdf.text(`Company: ${companyName}`, 15, yPos);
+  yPos += 12;
+  
+  // Safety brief content
+  pdf.setFontSize(12);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Safety Brief', 15, yPos);
+  yPos += 8;
+  
+  pdf.setFontSize(9);
+  pdf.setFont('helvetica', 'normal');
+  const responseLines = hsAgentResponse.split('\n');
+  
+  responseLines.forEach(line => {
+    if (yPos > 270) {
+      pdf.addPage();
+      yPos = 20;
+    }
+    
+    const cleaned = line.replace(/[*#☑️✓⚡🔨]/g, '').trim();
+    if (cleaned) {
+      // Bold headings
+      if (cleaned.match(/^(BEFORE YOU START|PPE REQUIRED|HAZARDS|EMERGENCY|HSE REGULATIONS)/i)) {
+        pdf.setFont('helvetica', 'bold');
+      }
+      
+      const wrapped = pdf.splitTextToSize(cleaned, pageWidth - 30);
+      pdf.text(wrapped, 15, yPos);
+      yPos += wrapped.length * 5;
+      
+      pdf.setFont('helvetica', 'normal');
+    }
+  });
+  
+  // Signature section
+  if (yPos > 240) {
+    pdf.addPage();
+    yPos = 20;
+  }
+  
+  yPos += 10;
+  pdf.setFontSize(10);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('BRIEFING ACKNOWLEDGMENT', 15, yPos);
+  yPos += 10;
+  
+  pdf.setFont('helvetica', 'normal');
+  pdf.line(15, yPos, 100, yPos);
+  pdf.text('Briefing Given By:', 15, yPos + 5);
+  
+  pdf.line(110, yPos, 180, yPos);
+  pdf.text('Date:', 110, yPos + 5);
+  
+  yPos += 15;
+  pdf.line(15, yPos, 100, yPos);
+  pdf.text('Briefing Received By:', 15, yPos + 5);
+  
+  pdf.line(110, yPos, 180, yPos);
+  pdf.text('Signature:', 110, yPos + 5);
+  
+  // Footer
+  pdf.setFontSize(8);
+  pdf.setTextColor(100);
+  pdf.text(
+    `Reference: HSE Guidance HSG85 - Electricity at Work`,
+    pageWidth / 2,
+    285,
+    { align: 'center' }
+  );
+  
+  return pdf;
+}
