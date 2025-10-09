@@ -91,7 +91,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
       toast({
         title: 'RAMS PDF Generated',
-        description: 'Your Risk Assessment document has been downloaded.'
+        description: 'Your risk assessment document has been downloaded.'
       });
     } catch (error) {
       console.error('Error generating RAMS PDF:', error);
@@ -123,7 +123,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
       toast({
         title: 'Method Statement PDF Generated',
-        description: 'Your Method Statement has been downloaded.'
+        description: 'Your method statement has been downloaded.'
       });
     } catch (error) {
       console.error('Error generating Method Statement PDF:', error);
@@ -138,8 +138,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="border-primary/30 bg-card/60">
+    <div className="space-y-4 md:space-y-6">
+      <Card className="border-none shadow-sm bg-card/60 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="flex items-center justify-between text-foreground">
             <span className="flex items-center gap-2">
@@ -154,9 +154,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="rams">Risk Assessment</TabsTrigger>
-              <TabsTrigger value="method">Method Statement</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 h-12 md:h-auto">
+              <TabsTrigger value="rams" className="text-sm md:text-base">Risk Assessment</TabsTrigger>
+              <TabsTrigger value="method" className="text-sm md:text-base">Method Statement</TabsTrigger>
             </TabsList>
 
             <TabsContent value="rams" className="space-y-4 mt-6">
@@ -264,9 +264,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               <Button
                 onClick={handleGenerateRAMSPDF}
                 disabled={isGenerating}
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                className="w-full h-12 md:h-auto bg-primary text-primary-foreground hover:bg-primary/90 text-base font-semibold"
               >
-                <Download className="h-4 w-4 mr-2" />
+                <Download className="h-5 w-5 mr-2" />
                 {isGenerating ? 'Generating...' : 'Download Risk Assessment PDF'}
               </Button>
             </TabsContent>
@@ -348,9 +348,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               <Button
                 onClick={handleGenerateMethodPDF}
                 disabled={isGenerating}
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                className="w-full h-12 md:h-auto bg-primary text-primary-foreground hover:bg-primary/90 text-base font-semibold"
               >
-                <Download className="h-4 w-4 mr-2" />
+                <Download className="h-5 w-5 mr-2" />
                 {isGenerating ? 'Generating...' : 'Download Method Statement PDF'}
               </Button>
             </TabsContent>

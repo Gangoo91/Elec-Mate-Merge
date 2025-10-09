@@ -1,140 +1,137 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Brain, CheckCircle2, Loader2, AlertCircle, Shield, Wrench } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { ShieldCheck, Wrench, CheckCircle2, Loader2, AlertCircle, Clock } from 'lucide-react';
 
-interface ReasoningStep {
+export interface ReasoningStep {
   agent: 'health-safety' | 'installer';
   status: 'pending' | 'processing' | 'complete' | 'error';
   reasoning?: string;
 }
 
-interface AgentProcessingViewProps {
+export interface AgentProcessingViewProps {
   steps: ReasoningStep[];
   isVisible: boolean;
 }
 
 const agentIcons = {
-  'health-safety': Shield,
+  'health-safety': ShieldCheck,
   'installer': Wrench
 };
 
 const agentNames = {
-  'health-safety': 'Health & Safety Agent',
-  'installer': 'Installation Agent'
+  'health-safety': 'Health & Safety Analyser',
+  'installer': 'Installation Planner'
 };
 
 const agentDescriptions = {
-  'health-safety': 'Analyzing hazards and creating risk assessments',
-  'installer': 'Generating step-by-step installation procedures'
+  'health-safety': 'Analysing risks and safety requirements',
+  'installer': 'Creating detailed method statements'
 };
 
-export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({ steps, isVisible }) => {
+export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
+  steps,
+  isVisible
+}) => {
   if (!isVisible || steps.length === 0) return null;
 
-  const getStatusIcon = (status: string) => {
+  const getStatusIcon = (status: ReasoningStep['status']) => {
     switch (status) {
-      case 'processing':
-        return <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />;
       case 'complete':
-        return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+        return <CheckCircle2 className="h-5 w-5 text-green-500" />;
+      case 'processing':
+        return <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />;
       case 'error':
-        return <AlertCircle className="h-4 w-4 text-red-500" />;
+        return <AlertCircle className="h-5 w-5 text-red-500" />;
       default:
-        return <div className="h-4 w-4 rounded-full border-2 border-muted-foreground/30" />;
+        return <Clock className="h-5 w-5 text-muted-foreground" />;
     }
   };
 
-  const getStatusBadge = (status: string) => {
+  const getStatusBadge = (status: ReasoningStep['status']) => {
     switch (status) {
-      case 'processing':
-        return <Badge variant="outline" className="bg-yellow-500/10 text-yellow-500 border-yellow-500/30">Processing</Badge>;
       case 'complete':
-        return <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/30">Complete</Badge>;
+        return <Badge className="bg-green-500/10 text-green-600 border-green-500/30 text-xs">Complete</Badge>;
+      case 'processing':
+        return <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs animate-pulse">Processing</Badge>;
       case 'error':
-        return <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500/30">Error</Badge>;
+        return <Badge className="bg-red-500/10 text-red-600 border-red-500/30 text-xs">Error</Badge>;
       default:
-        return <Badge variant="outline" className="bg-muted text-muted-foreground">Pending</Badge>;
+        return <Badge variant="outline" className="text-xs">Pending</Badge>;
     }
   };
+
+  const allComplete = steps.every(step => step.status === 'complete');
 
   return (
-    <Card className="border-primary/30 bg-card/60">
+    <Card className="border-none shadow-sm bg-card/60 backdrop-blur-sm">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2 text-foreground">
-          <Brain className="h-5 w-5 text-elec-yellow" />
+        <CardTitle className="text-lg md:text-xl font-bold flex items-center gap-2">
+          <Loader2 className={`h-5 w-5 ${allComplete ? 'text-green-500' : 'text-elec-yellow animate-spin'}`} />
           AI Processing
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {steps.map((step, index) => {
+      <CardContent className="space-y-3">
+        {/* Mobile: Vertical Timeline */}
+        <div className="space-y-3">
+          {steps.map((step, idx) => {
             const Icon = agentIcons[step.agent];
+            const isActive = step.status === 'processing' || step.status === 'complete';
             
             return (
-              <div
-                key={step.agent}
-                className={cn(
-                  "relative p-4 rounded-lg border transition-all duration-300",
-                  step.status === 'processing' && "border-elec-yellow/50 bg-elec-yellow/5",
-                  step.status === 'complete' && "border-green-500/30 bg-green-500/5",
-                  step.status === 'error' && "border-red-500/30 bg-red-500/5",
-                  step.status === 'pending' && "border-border/30 bg-background/20"
+              <div key={step.agent} className="relative">
+                {/* Connector line */}
+                {idx < steps.length - 1 && (
+                  <div className={`absolute left-5 top-12 w-0.5 h-full transition-colors duration-500 ${
+                    step.status === 'complete' ? 'bg-elec-yellow' : 'bg-border'
+                  }`} />
                 )}
-              >
-                {/* Connection line */}
-                {index < steps.length - 1 && (
-                  <div 
-                    className={cn(
-                      "absolute left-[1.875rem] top-full h-4 w-0.5 transition-colors",
-                      step.status === 'complete' ? "bg-green-500/30" : "bg-border/30"
-                    )}
-                  />
-                )}
-
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0">
-                    <div className={cn(
-                      "w-8 h-8 rounded-full flex items-center justify-center transition-colors",
-                      step.status === 'processing' && "bg-elec-yellow/20",
-                      step.status === 'complete' && "bg-green-500/20",
-                      step.status === 'error' && "bg-red-500/20",
-                      step.status === 'pending' && "bg-muted/20"
-                    )}>
-                      <Icon className={cn(
-                        "h-4 w-4",
-                        step.status === 'processing' && "text-elec-yellow",
-                        step.status === 'complete' && "text-green-500",
-                        step.status === 'error' && "text-red-500",
-                        step.status === 'pending' && "text-muted-foreground"
-                      )} />
-                    </div>
+                
+                <div className={`relative flex gap-4 p-4 rounded-xl transition-all duration-300 ${
+                  isActive ? 'bg-primary/5 border border-primary/20' : 'bg-background/50 border border-transparent'
+                }`}>
+                  {/* Icon */}
+                  <div className={`shrink-0 h-10 w-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                    step.status === 'complete' 
+                      ? 'bg-green-500/10 border border-green-500/30' 
+                      : step.status === 'processing'
+                      ? 'bg-elec-yellow/10 border border-elec-yellow/30 animate-pulse'
+                      : 'bg-muted border border-border'
+                  }`}>
+                    <Icon className={`h-5 w-5 ${
+                      step.status === 'complete' 
+                        ? 'text-green-500' 
+                        : step.status === 'processing'
+                        ? 'text-elec-yellow'
+                        : 'text-muted-foreground'
+                    }`} />
                   </div>
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2 mb-1">
-                      <h4 className="font-semibold text-foreground">
-                        {agentNames[step.agent]}
-                      </h4>
-                      {getStatusIcon(step.status)}
+                  {/* Content */}
+                  <div className="flex-1 min-w-0 space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm md:text-base leading-tight">
+                          {agentNames[step.agent]}
+                        </h4>
+                        <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
+                          {agentDescriptions[step.agent]}
+                        </p>
+                      </div>
+                      <div className="shrink-0 flex items-center gap-2">
+                        {getStatusIcon(step.status)}
+                        {getStatusBadge(step.status)}
+                      </div>
                     </div>
 
-                    <p className="text-sm text-muted-foreground mb-2">
-                      {agentDescriptions[step.agent]}
-                    </p>
-
-                    {step.reasoning && step.status === 'complete' && (
-                      <div className="mt-3 p-3 bg-background/50 rounded border border-border/30">
-                        <p className="text-xs text-muted-foreground line-clamp-3">
+                    {/* Reasoning - only show when complete */}
+                    {step.status === 'complete' && step.reasoning && (
+                      <div className="pt-2 border-t border-border">
+                        <p className="text-xs md:text-sm text-muted-foreground line-clamp-2">
                           {step.reasoning}
                         </p>
                       </div>
                     )}
-
-                    <div className="mt-2">
-                      {getStatusBadge(step.status)}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -142,12 +139,20 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({ steps,
           })}
         </div>
 
-        {steps.every(s => s.status === 'complete') && (
-          <div className="mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
-            <p className="text-sm text-green-600 dark:text-green-400 flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4" />
-              AI processing complete! Review your generated RAMS documentation below.
-            </p>
+        {/* Completion message */}
+        {allComplete && (
+          <div className="mt-4 p-4 rounded-xl bg-green-500/10 border border-green-500/30 animate-fade-in">
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-green-600 dark:text-green-400">
+                  Documentation Generated Successfully
+                </p>
+                <p className="text-xs text-green-600/80 dark:text-green-400/80 mt-0.5">
+                  Review and edit your RAMS below
+                </p>
+              </div>
+            </div>
           </div>
         )}
       </CardContent>

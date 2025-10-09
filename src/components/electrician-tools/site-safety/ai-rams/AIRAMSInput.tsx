@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { MobileButton } from '@/components/ui/mobile-button';
+import { MobileInput } from '@/components/ui/mobile-input';
 import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Sparkles, Zap } from 'lucide-react';
+import { Sparkles, Zap, HardHat, FileWarning } from 'lucide-react';
 
-interface AIRAMSInputProps {
-  onGenerate: (jobDescription: string, projectInfo: {
-    projectName: string;
-    location: string;
-    assessor: string;
-    contractor: string;
-    supervisor: string;
-  }) => void;
+export interface AIRAMSInputProps {
+  onGenerate: (
+    jobDescription: string,
+    projectInfo: {
+      projectName: string;
+      location: string;
+      assessor: string;
+      contractor: string;
+      supervisor: string;
+    }
+  ) => void;
   isProcessing: boolean;
 }
 
-export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessing }) => {
+export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
+  onGenerate,
+  isProcessing
+}) => {
   const [jobDescription, setJobDescription] = useState('');
   const [projectInfo, setProjectInfo] = useState({
     projectName: '',
@@ -28,160 +33,167 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
   });
 
   const examplePrompts = [
-    "Installing a 10.5kW electric shower circuit in a domestic bathroom",
-    "Complete rewire of a 3-bedroom house including consumer unit upgrade",
-    "Installing outdoor socket for EV charger in domestic garage",
-    "Commercial kitchen electrical installation with 3-phase cooker circuits"
+    'Install new consumer unit with 10-way board',
+    'Rewire 3-bedroom house including all circuits',
+    'Install EV charging point in residential garage',
+    'Emergency lighting installation in commercial unit'
   ];
 
   const handleSubmit = () => {
-    if (jobDescription.trim() && projectInfo.projectName && projectInfo.assessor) {
+    if (jobDescription && projectInfo.projectName) {
       onGenerate(jobDescription, projectInfo);
     }
   };
 
-  const canGenerate = jobDescription.trim().length > 10 && 
-                       projectInfo.projectName.trim().length > 0 &&
-                       projectInfo.assessor.trim().length > 0;
+  const isFormValid = jobDescription.trim() && projectInfo.projectName.trim();
+  const completionPercentage = Math.round(
+    ([jobDescription, projectInfo.projectName, projectInfo.location, projectInfo.assessor].filter(Boolean).length / 4) * 100
+  );
 
   return (
-    <Card className="border-primary/30 bg-card/60">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-foreground">
-          <Sparkles className="h-5 w-5 text-elec-yellow" />
-          AI-Powered RAMS Generator
-        </CardTitle>
-        <CardDescription>
-          Describe your electrical work and let our AI agents create comprehensive RAMS documentation for you
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Job Description */}
-        <div>
-          <Label htmlFor="jobDescription" className="text-foreground">
-            Describe the Electrical Work *
-          </Label>
-          <Textarea
-            id="jobDescription"
-            value={jobDescription}
-            onChange={(e) => setJobDescription(e.target.value)}
-            placeholder="e.g., Installing a 10.5kW shower circuit in a domestic bathroom..."
-            className="mt-2 min-h-[120px] bg-background/50 border-primary/30 text-foreground"
-            disabled={isProcessing}
-          />
-          <p className="text-xs text-muted-foreground mt-2">
-            Be specific about the type of work, location, and any special requirements
-          </p>
-        </div>
-
-        {/* Example Prompts */}
-        <div>
-          <Label className="text-foreground text-sm mb-2 block">Example Prompts:</Label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {examplePrompts.map((example, idx) => (
-              <Button
-                key={idx}
-                variant="outline"
-                size="sm"
-                onClick={() => setJobDescription(example)}
-                disabled={isProcessing}
-                className="text-xs text-left justify-start h-auto py-2 px-3 hover:bg-primary/10"
-              >
-                <Zap className="h-3 w-3 mr-2 flex-shrink-0 text-elec-yellow" />
-                <span className="line-clamp-2">{example}</span>
-              </Button>
-            ))}
+    <div className="space-y-4 md:space-y-6">
+      {/* Header */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 md:h-12 md:w-12 rounded-2xl bg-gradient-to-br from-elec-yellow to-elec-yellow/70 flex items-center justify-center">
+            <Sparkles className="h-5 w-5 md:h-6 md:w-6 text-elec-dark" />
+          </div>
+          <div className="flex-1">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight leading-tight">
+              AI RAMS Generator
+            </h2>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed mt-0.5">
+              Describe your electrical work
+            </p>
           </div>
         </div>
+        
+        {/* Progress indicator */}
+        {completionPercentage > 0 && completionPercentage < 100 && (
+          <div className="space-y-1.5">
+            <div className="flex justify-between items-center text-xs text-muted-foreground">
+              <span>Form completion</span>
+              <span className="font-medium text-elec-yellow">{completionPercentage}%</span>
+            </div>
+            <div className="h-1.5 bg-card rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-elec-yellow to-elec-yellow/70 transition-all duration-500 ease-out"
+                style={{ width: `${completionPercentage}%` }}
+              />
+            </div>
+          </div>
+        )}
+      </div>
 
-        {/* Project Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border/40">
-          <div>
-            <Label htmlFor="projectName" className="text-foreground">
-              Project Name *
-            </Label>
-            <Input
-              id="projectName"
+      {/* Job Description Card */}
+      <Card className="border-none shadow-sm bg-card/60 backdrop-blur-sm">
+        <CardContent className="p-4 md:p-6 space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm md:text-base font-semibold flex items-center gap-2">
+              <Zap className="h-4 w-4 text-elec-yellow" />
+              Job Description
+            </label>
+            <Textarea
+              value={jobDescription}
+              onChange={(e) => setJobDescription(e.target.value)}
+              placeholder="Describe the electrical work in detail..."
+              disabled={isProcessing}
+              className="min-h-[160px] md:min-h-[180px] resize-none text-base bg-background/50 border-primary/20 focus:border-elec-yellow transition-colors"
+            />
+          </div>
+
+          {/* Example Prompts */}
+          <div className="space-y-2.5">
+            <p className="text-xs md:text-sm font-medium text-muted-foreground">
+              Quick examples:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {examplePrompts.map((prompt, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setJobDescription(prompt)}
+                  disabled={isProcessing}
+                  className="px-3 py-1.5 text-xs md:text-sm rounded-full bg-primary/10 hover:bg-primary/20 text-foreground border border-primary/20 hover:border-primary/30 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Project Info Card */}
+      <Card className="border-none shadow-sm bg-card/60 backdrop-blur-sm">
+        <CardContent className="p-4 md:p-6 space-y-4">
+          <h3 className="text-base md:text-lg font-semibold flex items-center gap-2">
+            <FileWarning className="h-4 w-4 md:h-5 md:w-5 text-elec-yellow" />
+            Project Information
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <MobileInput
+              label="Project Name"
               value={projectInfo.projectName}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, projectName: e.target.value }))}
-              placeholder="Enter project name"
-              className="mt-1 bg-background/50 border-primary/30 text-foreground"
+              placeholder="e.g., Warehouse Lighting Upgrade"
               disabled={isProcessing}
             />
-          </div>
-
-          <div>
-            <Label htmlFor="location" className="text-foreground">
-              Location
-            </Label>
-            <Input
-              id="location"
+            
+            <MobileInput
+              label="Location"
               value={projectInfo.location}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, location: e.target.value }))}
-              placeholder="Enter location"
-              className="mt-1 bg-background/50 border-primary/30 text-foreground"
+              placeholder="e.g., Unit 5, Industrial Estate"
               disabled={isProcessing}
             />
-          </div>
-
-          <div>
-            <Label htmlFor="assessor" className="text-foreground">
-              Assessor Name *
-            </Label>
-            <Input
-              id="assessor"
+            
+            <MobileInput
+              label="Assessor"
               value={projectInfo.assessor}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, assessor: e.target.value }))}
               placeholder="Your name"
-              className="mt-1 bg-background/50 border-primary/30 text-foreground"
               disabled={isProcessing}
             />
-          </div>
-
-          <div>
-            <Label htmlFor="contractor" className="text-foreground">
-              Contractor
-            </Label>
-            <Input
-              id="contractor"
+            
+            <MobileInput
+              label="Contractor"
               value={projectInfo.contractor}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, contractor: e.target.value }))}
-              placeholder="Contractor name"
-              className="mt-1 bg-background/50 border-primary/30 text-foreground"
+              placeholder="Company name"
               disabled={isProcessing}
             />
-          </div>
-
-          <div>
-            <Label htmlFor="supervisor" className="text-foreground">
-              Supervisor
-            </Label>
-            <Input
-              id="supervisor"
+            
+            <MobileInput
+              label="Supervisor (Optional)"
               value={projectInfo.supervisor}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, supervisor: e.target.value }))}
-              placeholder="Supervisor name"
-              className="mt-1 bg-background/50 border-primary/30 text-foreground"
+              placeholder="Site supervisor"
               disabled={isProcessing}
+              className="md:col-span-2"
             />
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        {/* Generate Button */}
-        <Button
-          onClick={handleSubmit}
-          disabled={!canGenerate || isProcessing}
-          className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-          size="lg"
-        >
-          <Sparkles className="h-5 w-5 mr-2" />
-          {isProcessing ? 'Generating...' : 'Generate RAMS Documentation'}
-        </Button>
+      {/* Generate Button */}
+      <MobileButton
+        onClick={handleSubmit}
+        disabled={!isFormValid || isProcessing}
+        loading={isProcessing}
+        size="wide"
+        variant="elec"
+        icon={<HardHat className="h-5 w-5" />}
+        className="text-base md:text-lg font-semibold shadow-lg"
+      >
+        {isProcessing ? 'Generating Documentation...' : 'Generate RAMS Documentation'}
+      </MobileButton>
 
-        <p className="text-xs text-muted-foreground text-center">
-          Our AI will analyze your job and create professional RAMS documentation in seconds
+      {!isFormValid && (
+        <p className="text-xs md:text-sm text-center text-muted-foreground">
+          Please provide job description and project name to continue
         </p>
-      </CardContent>
-    </Card>
+      )}
+    </div>
   );
 };

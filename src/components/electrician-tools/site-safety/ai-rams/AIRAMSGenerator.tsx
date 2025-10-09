@@ -41,8 +41,8 @@ export const AIRAMSGenerator: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-2 max-w-6xl">
-      <div className="space-y-6">
+    <div className="w-full px-4 md:px-6 lg:px-8 py-4 max-w-7xl mx-auto">
+      <div className="space-y-6 md:space-y-8">
           {!showResults ? (
             <AIRAMSInput
               onGenerate={handleGenerate}
