@@ -65,10 +65,10 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
                          "Low Confidence";
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="space-y-6 sm:space-y-8">
       {/* Hero Section - Mobile First */}
       <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-grey">
-        <CardContent className="p-4 sm:p-6">
+        <CardContent className="p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row items-start gap-4">
             <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 mx-auto sm:mx-0">
               <Package className="h-12 w-12 sm:h-16 sm:w-16 text-elec-yellow" />
@@ -104,13 +104,13 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
       {/* Visual Identifiers - How to Confirm This ID */}
       {component.visual_identifiers && component.visual_identifiers.length > 0 && (
         <Card className="border-elec-yellow/30">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
               <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
               How to Confirm This Identification
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 sm:p-6">
             <div className="space-y-2">
               {component.visual_identifiers.map((identifier, index) => (
                 <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-elec-grey/30 min-h-[44px]">
@@ -123,25 +123,31 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
         </Card>
       )}
 
-      {/* Specifications - Single Column on Mobile */}
+      {/* Technical Specifications - Mobile Optimized Vertical Layout */}
       {component.specifications && Object.keys(component.specifications).length > 0 && (
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
               <Zap className="h-5 w-5 text-elec-yellow" />
               Technical Specifications
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
+          <CardContent className="p-4 sm:p-6">
+            <div className="space-y-4 sm:space-y-5">
               {Object.entries(component.specifications).map(([key, value]) => 
                 value ? (
-                  <div key={key} className="flex justify-between items-center min-h-[44px] p-2 rounded-lg hover:bg-elec-grey/20 transition-colors">
-                    <span className="text-sm sm:text-base text-muted-foreground capitalize flex items-center gap-2">
-                      <Zap className="h-4 w-4 text-elec-yellow/50" />
-                      {key.replace(/_/g, ' ')}
-                    </span>
-                    <span className="text-sm sm:text-base font-semibold text-elec-yellow">{value}</span>
+                  <div key={key} className="border-b border-elec-yellow/20 pb-4 last:border-b-0 last:pb-0">
+                    {/* Label on top - WHITE text */}
+                    <div className="flex items-center gap-2 mb-2">
+                      <Zap className="h-4 w-4 text-elec-yellow/60" />
+                      <span className="text-sm font-medium text-white uppercase tracking-wide">
+                        {key.replace(/_/g, ' ')}
+                      </span>
+                    </div>
+                    {/* Value below - YELLOW text, larger */}
+                    <p className="text-base sm:text-lg font-semibold text-elec-yellow pl-6">
+                      {value}
+                    </p>
                   </div>
                 ) : null
               )}
@@ -184,23 +190,23 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
       {/* Age & Compliance */}
       {(component.age_estimate || component.current_compliance) && (
         <Card className="border-elec-yellow/20">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
               <Info className="h-5 w-5 text-elec-yellow" />
               Age & Compliance Status
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="p-4 sm:p-6 space-y-5">
             {component.age_estimate && (
-              <div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-1">Estimated Age</p>
-                <p className="text-sm sm:text-base font-medium">{component.age_estimate}</p>
+              <div className="border-b border-elec-yellow/20 pb-4">
+                <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-2">Estimated Age</p>
+                <p className="text-base sm:text-lg font-semibold text-elec-yellow">{component.age_estimate}</p>
               </div>
             )}
             {component.current_compliance && (
-              <div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-1">BS 7671:2018 Compliance</p>
-                <p className={`text-sm sm:text-base font-semibold ${
+              <div className={component.age_estimate ? "" : "pb-0"}>
+                <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-2">BS 7671:2018 Compliance</p>
+                <p className={`text-base sm:text-lg font-semibold ${
                   component.current_compliance.toLowerCase().includes('meets') || 
                   component.current_compliance.toLowerCase().includes('compliant')
                     ? 'text-green-400'
@@ -217,13 +223,13 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
       {/* BS 7671 Requirements - Card Based Layout */}
       {component.bs7671_requirements && component.bs7671_requirements.length > 0 && (
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
               <BookOpen className="h-5 w-5 text-elec-yellow" />
               BS 7671:2018 Requirements
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 sm:p-6">
             <div className="grid grid-cols-1 gap-3">
               {component.bs7671_requirements.map((req, index) => (
                 <div key={index} className="p-3 sm:p-4 rounded-lg bg-elec-grey/30 border border-elec-yellow/10 min-h-[44px] flex items-start gap-3">
@@ -239,22 +245,22 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
       {/* Where Found & Typical Applications */}
       {(component.where_found || (component.typical_applications && component.typical_applications.length > 0)) && (
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
               <Wrench className="h-5 w-5 text-elec-yellow" />
               Common Uses & Locations
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="p-4 sm:p-6 space-y-5">
             {component.where_found && (
-              <div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-2">Where You'll Find This</p>
-                <p className="text-sm sm:text-base leading-relaxed">{component.where_found}</p>
+              <div className="border-b border-elec-yellow/20 pb-4">
+                <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-2">Where You'll Find This</p>
+                <p className="text-sm sm:text-base leading-relaxed text-white/80">{component.where_found}</p>
               </div>
             )}
             {component.typical_applications && component.typical_applications.length > 0 && (
               <div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-2">Typical Applications</p>
+                <p className="text-sm font-medium text-white/90 uppercase tracking-wide mb-3">Typical Applications</p>
                 <div className="space-y-2">
                   {component.typical_applications.map((app, index) => (
                     <div key={index} className="flex items-start gap-2 min-h-[44px] p-2 rounded bg-elec-grey/20">
@@ -273,42 +279,42 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
       <div className="space-y-4">
         {component.installation_notes && (
           <Card className="border-elec-yellow/10">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-white">
                 <Wrench className="h-5 w-5 text-elec-yellow" />
                 Installation Notes
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-sm sm:text-base leading-relaxed">{component.installation_notes}</p>
+            <CardContent className="p-4 sm:p-6">
+              <p className="text-sm sm:text-base leading-relaxed text-white/80">{component.installation_notes}</p>
             </CardContent>
           </Card>
         )}
 
         {component.replacement_notes && (
           <Card className="border-amber-500/20 bg-amber-500/5">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base sm:text-lg text-amber-400">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-amber-400">
                 <Info className="h-5 w-5" />
                 Replacement Information
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-sm sm:text-base leading-relaxed">{component.replacement_notes}</p>
+            <CardContent className="p-4 sm:p-6">
+              <p className="text-sm sm:text-base leading-relaxed text-white/80">{component.replacement_notes}</p>
             </CardContent>
           </Card>
         )}
 
         {component.common_issues && (
           <Card className="border-red-500/20 bg-red-500/5">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base sm:text-lg text-red-400">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-red-400">
                 <Info className="h-5 w-5" />
                 Known Issues
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-sm sm:text-base leading-relaxed">{component.common_issues}</p>
+            <CardContent className="p-4 sm:p-6">
+              <p className="text-sm sm:text-base leading-relaxed text-white/80">{component.common_issues}</p>
             </CardContent>
           </Card>
         )}
