@@ -190,7 +190,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
         icon={<HardHat className="h-5 w-5" />}
         className="w-full text-lg font-bold tracking-wide shadow-lg"
       >
-        {isProcessing ? 'Generating Documentation...' : 'Generate RAMS Documentation'}
+        {isProcessing ? 'Generating...' : 'Generate'}
       </MobileButton>
 
       {!isFormValid && (
