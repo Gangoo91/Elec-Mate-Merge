@@ -208,10 +208,6 @@ function extractCircuitCount(message: string): number {
   
   return 6;
 }
-    });
-
-    const data = await response.json();
-    let responseContent = data.choices[0]?.message?.content || 'Cost estimate complete.';
     
     // Strip any design-related crossover content
     const designKeywords = [
