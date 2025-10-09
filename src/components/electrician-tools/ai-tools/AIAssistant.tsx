@@ -233,17 +233,8 @@ const AIAssistant = () => {
 
   const exampleQueries = [
     "RCD bathroom requirements",
-    "Cable sizing formula",
-    "Testing sequence",
-    "Zs values for MCBs",
-    "Bonding conductor sizes",
-    "IP rating requirements",
-    "EV charging point requirements",
-    "Maximum Zs for B32 MCB",
-    "Special location requirements",
-    "AFDD installation rules",
-    "Voltage drop calculations",
-    "Ring circuit testing procedure"
+    "Cable sizing for 32A ring circuit",
+    "Earth fault loop impedance testing procedure"
   ];
 
   return (
@@ -277,22 +268,13 @@ const AIAssistant = () => {
           
           <CardContent className="p-6 sm:p-8 pt-0 space-y-6 sm:space-y-8">
             {/* Input Area */}
-              <div className="space-y-4 sm:space-y-5">
+              <div className="space-y-3 sm:space-y-4">
                 <Textarea
                   placeholder="e.g. 'What are the RCD requirements for bathrooms?' or 'How do I test earth fault loop impedance?'"
-                  className="min-h-[100px] sm:min-h-[120px] bg-neutral-700/50 border-2 border-elec-yellow/40 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 text-white placeholder:text-gray-400 resize-none text-base sm:text-lg rounded-2xl p-5 sm:p-6 leading-relaxed transition-all duration-200"
+                  className="min-h-[180px] sm:min-h-[200px] bg-neutral-700/50 border-2 border-elec-yellow/40 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 text-white placeholder:text-gray-400 resize-none text-base sm:text-lg rounded-2xl p-5 sm:p-6 leading-relaxed transition-all duration-200"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                 />
-                
-                <div className="flex items-center justify-between p-4 bg-neutral-800/40 rounded-xl border-2 border-elec-yellow/20">
-                  <div className="flex items-center gap-3">
-                    <BookOpen className="h-5 w-5 text-elec-yellow" />
-                    <Label htmlFor="use-rag" className="text-white text-base sm:text-lg cursor-pointer font-medium">
-                      Search BS 7671 Database
-                    </Label>
-                  </div>
-                </div>
                 
                 <div className="flex gap-3 sm:gap-4">
                 <Button 
@@ -344,15 +326,14 @@ const AIAssistant = () => {
             )}
 
             {/* Quick Examples Section */}
-            <div className="space-y-4 sm:space-y-5">
-              <h4 className="font-semibold text-gray-300 text-base sm:text-lg">Try these questions:</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
                 {exampleQueries.map((query, index) => (
                   <Button
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="border-2 border-elec-yellow/30 text-gray-300 hover:bg-elec-yellow/10 hover:border-elec-yellow/50 h-auto py-4 sm:py-5 px-4 sm:px-5 text-left justify-start text-sm sm:text-base whitespace-normal transition-all duration-200"
+                    className="border-2 border-elec-yellow/30 text-gray-300 hover:bg-elec-yellow/10 hover:border-elec-yellow/50 h-auto py-2.5 sm:py-3 px-3 sm:px-4 text-left justify-start text-xs sm:text-sm whitespace-normal transition-all duration-200"
                     onClick={() => setPrompt(query)}
                   >
                     {query}
