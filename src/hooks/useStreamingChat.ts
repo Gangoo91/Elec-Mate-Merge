@@ -35,6 +35,9 @@ interface UseStreamingChatOptions {
   onAgentComplete?: (agent: string, nextAgent: string | null) => void;
   onAllAgentsComplete?: (agentOutputs: any[]) => void;
   onPlan?: (agents: string[], complexity: string) => void;
+  onEstimatedTime?: (seconds: number) => void;
+  onElapsedTimeUpdate?: (seconds: number) => void;
+  onAgentProgress?: (agent: string, status: 'pending' | 'active' | 'complete') => void;
 }
 
 export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
@@ -54,6 +57,13 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     let toolCalls: any[] = [];
     let activeAgents: string[] = [];
     let structuredData: any = null;
+    
+    // Track elapsed time
+    const startTime = Date.now();
+    const elapsedInterval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      options.onElapsedTimeUpdate?.(elapsed);
+    }, 1000);
 
     try {
       const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/orchestrator-agent`;
@@ -162,6 +172,16 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
                     if (chunk.agents) {
                       activeAgents = chunk.agents;
                       options.onPlan?.(chunk.agents, chunk.data?.complexity || 'simple');
+                      
+                      // Calculate estimated time based on circuit count
+                      const lastMessage = messages[messages.length - 1]?.content || '';
+                      const wayMatch = lastMessage.match(/(\d+)[\s-]?way/i);
+                      const circuitCount = wayMatch ? parseInt(wayMatch[1]) : 6;
+                      
+                      const baseTime = 60; // Designer base
+                      const perCircuitTime = 4; // Seconds per circuit
+                      const estimatedSeconds = baseTime + (circuitCount * perCircuitTime) + (chunk.agents.length * 25);
+                      options.onEstimatedTime?.(estimatedSeconds);
                     }
                     break;
 
@@ -169,6 +189,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
                     // Agent is starting to respond
                     if (chunk.agent) {
                       options.onAgentStart?.(chunk.agent, chunk.index || 0, chunk.total || 1);
+                      options.onAgentProgress?.(chunk.agent, 'active');
                     }
                     break;
 
@@ -195,6 +216,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
                     // Agent finished
                     if (chunk.agent) {
                       options.onAgentComplete?.(chunk.agent, chunk.nextAgent || null);
+                      options.onAgentProgress?.(chunk.agent, 'complete');
                     }
                     break;
 
@@ -279,6 +301,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
       options.onError?.(errorMessage);
       throw error;
     } finally {
+      clearInterval(elapsedInterval);
       setIsStreaming(false);
     }
   }, [options]);

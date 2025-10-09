@@ -20,6 +20,17 @@ const corsHeaders = {
 
 const responseCache = new ResponseCache();
 
+// Helper to extract circuit count from message
+function extractCircuitCount(message: string): number {
+  const wayMatch = message.match(/(\d+)[\s-]?way/i);
+  if (wayMatch) return parseInt(wayMatch[1]);
+  
+  const circuitMatch = message.match(/(\d+)\s+circuits?/i);
+  if (circuitMatch) return parseInt(circuitMatch[1]);
+  
+  return 6; // Default
+}
+
 interface OrchestratorRequest {
   messages: Message[];
   currentDesign?: any;
@@ -492,6 +503,20 @@ async function handleConversationalMode(
           
           // Send all_agents_complete event with timing breakdown
           const executionTime = Date.now() - startTime;
+          const executionSeconds = (executionTime / 1000).toFixed(1);
+          const circuitCount = extractCircuitCount(latestMessage);
+          const targetTime = (circuitCount * 10) + 60; // Target: 10s per circuit + 60s base
+          const speedup = ((245 - executionTime / 1000) / 245 * 100).toFixed(0); // vs old 4min average
+          
+          console.log(`⏱️ PERFORMANCE METRICS:
+  - Total workflow time: ${executionTime}ms (${executionSeconds}s)
+  - Agent count: ${activeAgents.length}
+  - Circuit count: ${circuitCount}
+  - Execution mode: ${workflowType}
+  - Target time: ${targetTime}s
+  - Achieved speedup: ${speedup}% faster than old sequential (4min baseline)
+  - Status: ${parseInt(executionSeconds) <= targetTime ? '✅ PASSED' : '⚠️ NEEDS OPTIMIZATION'}
+`);
           const finalEvent = `data: ${JSON.stringify({
             type: 'all_agents_complete',
             agentOutputs: agentOutputs.map(a => ({

@@ -181,14 +181,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       console.log('Agent plan:', agents, complexity);
       setActiveAgents(agents);
       
-      // Phase 5: Calculate estimated time
-      const circuitCount = extractCircuitCount(input || messages[messages.length - 1]?.content || '');
-      const baseTime = 60; // Designer base
-      const perCircuitTime = 4; // Seconds per circuit for other agents
-      const estimatedTotal = baseTime + (circuitCount * perCircuitTime) + (agents.length * 30);
-      setEstimatedTime(estimatedTotal);
-      setElapsedTime(0);
-      
       // Initialize progress tracking
       const progressMap: Record<string, 'pending' | 'active' | 'complete'> = {};
       agents.forEach(agent => progressMap[agent] = 'pending');
@@ -199,6 +191,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         status: 'pending' as const,
         reasoning: `Waiting to consult...`
       })));
+    },
+    onEstimatedTime: (seconds) => {
+      setEstimatedTime(seconds);
+      setElapsedTime(0);
+    },
+    onElapsedTimeUpdate: (seconds) => {
+      setElapsedTime(seconds);
+    },
+    onAgentProgress: (agent, status) => {
+      setAgentProgress(prev => ({ ...prev, [agent]: status }));
     },
     onAgentStart: (agent, index, total) => {
       console.log(`Agent ${agent} starting (${index + 1}/${total})`);
@@ -341,6 +343,14 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           // Final message updates handled by onAgentResponse
           // Mark reasoning steps as complete
           setReasoningSteps(prev => prev.map(step => ({ ...step, status: 'complete' as const })));
+          
+          // Log client-side performance metrics
+          console.log(`📊 CLIENT METRICS:
+  - Perceived wait time: ${elapsedTime}s
+  - Estimated time: ${estimatedTime}s
+  - Accuracy: ${Math.abs(elapsedTime - estimatedTime) < 30 ? '✅ Good (<30s variance)' : '⚠️ Needs calibration'}
+  - Active agents: ${activeAgents.join(', ')}
+`);
 
           // Handle tool calls
           if (data.toolCalls && data.toolCalls.length > 0) {
@@ -842,8 +852,49 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         className="flex-1 overflow-y-auto bg-elec-dark"
       >
         <div className="px-3 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4">
-          {/* Reasoning Panel */}
-          {showReasoning && reasoningSteps.length > 0 && (
+          {/* Progress indicator with time estimate */}
+          {isLoading && estimatedTime > 0 && (
+            <div className="flex gap-2 justify-start animate-fade-in mb-4">
+              <div className="max-w-[95%] w-full">
+                <Card className="p-4 bg-elec-card border-elec-yellow/20">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-white">Processing your design...</span>
+                    <span className="text-sm text-white/60">
+                      {elapsedTime}s / ~{estimatedTime}s
+                    </span>
+                  </div>
+                  <div className="w-full bg-elec-dark/50 rounded-full h-2 mb-3">
+                    <div 
+                      className="bg-elec-yellow h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${Math.min((elapsedTime / estimatedTime) * 100, 100)}%` }}
+                    />
+                  </div>
+                  <div className="flex gap-2 flex-wrap">
+                    {Object.entries(agentProgress).map(([agent, status]) => (
+                      <Badge 
+                        key={agent} 
+                        variant={status === 'complete' ? 'default' : 'outline'}
+                        className={
+                          status === 'complete' 
+                            ? 'bg-elec-yellow text-elec-dark border-elec-yellow' 
+                            : status === 'active'
+                            ? 'border-elec-yellow/50 text-elec-yellow bg-elec-yellow/10'
+                            : 'border-white/20 text-white/50'
+                        }
+                      >
+                        {getAgentEmoji(agent)} {getAgentName(agent)}
+                        {status === 'active' && <Loader2 className="ml-1 h-3 w-3 animate-spin" />}
+                        {status === 'complete' && <CheckCircle2 className="ml-1 h-3 w-3" />}
+                      </Badge>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+            </div>
+          )}
+
+          {/* Reasoning Panel (fallback for when no estimate) */}
+          {showReasoning && reasoningSteps.length > 0 && estimatedTime === 0 && (
             <div className="flex justify-start mb-2">
               <div className="max-w-[95%]">
                 <ReasoningPanel steps={reasoningSteps} isVisible={true} />
