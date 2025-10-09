@@ -222,54 +222,63 @@ This analysis is for guidance only and must be verified by a qualified electrici
             <h3 className="text-base sm:text-lg font-semibold text-foreground">Findings</h3>
             <div className="space-y-4 sm:space-y-5">
               {analysisResult.findings.map((finding, index) => (
-                <div key={index} className="border border-border rounded-lg p-4 sm:p-5 space-y-4">
-                  <div className="space-y-4">
-                    {/* Header with badges */}
-                    <div className="flex flex-col gap-3">
-                      <div className="flex items-center gap-2.5 flex-wrap">
-                        <Badge className={`${getEicrCodeColor(finding.eicr_code)} text-base sm:text-lg px-4 py-1.5 font-bold`}>
-                          {finding.eicr_code}
-                        </Badge>
-                        <Badge variant="outline" className="text-sm sm:text-base px-3 py-1.5">
-                          {Math.round(finding.confidence * 100)}% confident
-                        </Badge>
-                      </div>
-                      <span className="text-base sm:text-lg text-muted-foreground font-medium leading-relaxed">
-                        {getEicrCodeDescription(finding.eicr_code)}
-                      </span>
-                    </div>
+                <div key={index} className="border border-border rounded-lg p-5 sm:p-6 space-y-5">
+                  {/* EICR Code Badge - Large and Prominent */}
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <Badge className={`${getEicrCodeColor(finding.eicr_code)} text-xl sm:text-2xl px-5 py-2 font-bold min-h-[44px] items-center flex`}>
+                      {finding.eicr_code}
+                    </Badge>
+                    <Badge variant="outline" className="text-base sm:text-lg px-4 py-2 min-h-[44px] items-center flex font-semibold">
+                      {Math.round(finding.confidence * 100)}% confidence
+                    </Badge>
+                  </div>
 
-                    {/* Description */}
-                    <p className="font-medium text-foreground text-base sm:text-lg leading-relaxed">{finding.description}</p>
-                    
-                    {/* Location */}
-                    {finding.location && (
-                      <p className="text-sm sm:text-base text-muted-foreground">
-                        <span className="font-medium">Location:</span> {finding.location}
-                      </p>
-                    )}
-                    
-                    {/* BS 7671 Regulations */}
-                    {finding.bs7671_clauses.length > 0 && (
-                      <div className="space-y-2">
-                        <h4 className="text-sm sm:text-base font-semibold text-foreground">BS 7671 Regulations:</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {finding.bs7671_clauses.map((clause, idx) => (
-                            <Badge key={idx} variant="secondary" className="text-sm sm:text-base px-3 py-1.5 font-mono">
-                              Reg {clause}
-                            </Badge>
-                          ))}
-                        </div>
+                  {/* Code Description - Subtitle */}
+                  <div className="text-lg sm:text-xl font-semibold text-foreground leading-relaxed">
+                    {getEicrCodeDescription(finding.eicr_code)}
+                  </div>
+
+                  {/* Main Description */}
+                  <p className="text-base sm:text-lg text-foreground leading-relaxed">
+                    {finding.description}
+                  </p>
+                  
+                  {/* Location */}
+                  {finding.location && (
+                    <div className="flex items-start gap-2 text-sm sm:text-base text-muted-foreground">
+                      <Eye className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                      <span><strong className="text-foreground">Location:</strong> {finding.location}</span>
+                    </div>
+                  )}
+                  
+                  {/* BS 7671 Regulations - Clean List Format */}
+                  {finding.bs7671_clauses.length > 0 && (
+                    <div className="bg-accent/30 border border-border rounded-lg p-4 space-y-3">
+                      <div className="flex items-center gap-2">
+                        <FileText className="h-5 w-5 text-foreground" />
+                        <h4 className="text-base sm:text-lg font-semibold text-foreground">BS 7671 Regulations</h4>
                       </div>
-                    )}
-                    
-                    {/* Recommended Fix */}
-                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4 space-y-2">
-                      <h4 className="font-semibold text-sm sm:text-base text-blue-700 dark:text-blue-400">
+                      <ul className="space-y-2 ml-7">
+                        {finding.bs7671_clauses.map((clause, idx) => (
+                          <li key={idx} className="text-sm sm:text-base text-foreground font-mono">
+                            • Regulation {clause}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {/* Recommended Fix - Subtle Card Style */}
+                  <div className="bg-elec-card border border-elec-yellow/20 rounded-lg p-4 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <Wrench className="h-5 w-5 text-elec-yellow" />
+                      <h4 className="font-semibold text-base sm:text-lg text-foreground">
                         Recommended Fix
                       </h4>
-                      <p className="text-sm sm:text-base text-foreground leading-relaxed">{finding.fix_guidance}</p>
                     </div>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed ml-7">
+                      {finding.fix_guidance}
+                    </p>
                   </div>
                 </div>
               ))}
