@@ -249,6 +249,13 @@ async function handleConversationalMode(
       let costUpdates: any = null;
 
       try {
+        // Send immediate "thinking" event to start stream within 1s
+        const thinkingEvent = `data: ${JSON.stringify({
+          type: 'thinking',
+          message: 'Analysing your request and planning the approach...'
+        })}\n\n`;
+        controller.enqueue(encoder.encode(thinkingEvent));
+
         // Send initial event with agent plan
         const planEvent = `data: ${JSON.stringify({
           type: 'plan',
@@ -420,7 +427,7 @@ async function handleConversationalMode(
             controller.enqueue(encoder.encode(validationEvent));
           }
           
-          // Send all_agents_complete event
+          // Send all_agents_complete event with timing breakdown
           const executionTime = Date.now() - startTime;
           const finalEvent = `data: ${JSON.stringify({
             type: 'all_agents_complete',
@@ -435,7 +442,11 @@ async function handleConversationalMode(
             costUpdates,
             toolCalls: allToolCalls,
             executionTime,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            timing: {
+              total_ms: executionTime,
+              agents_count: agentOutputs.length
+            }
           })}\n\n`;
           controller.enqueue(encoder.encode(finalEvent));
         }

@@ -58,14 +58,18 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     try {
       const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/orchestrator-agent`;
       
-      // Timeout handling (120s total, 30s warning) with AbortController
-      const timeoutMs = 120000;
+      // Timeout handling (180s total, 30s and 90s warnings) with AbortController
+      const timeoutMs = 180000;
       const warningMs = 30000;
+      const secondWarningMs = 90000;
 
       const controller = new AbortController();
       const warningTimer = setTimeout(() => {
         options.onError?.('Still working on your request, this is taking longer than expected...');
       }, warningMs);
+      const secondWarningTimer = setTimeout(() => {
+        options.onError?.('Still processing... complex designs can take up to 3 minutes.');
+      }, secondWarningMs);
       const timeoutTimer = setTimeout(() => {
         controller.abort();
       }, timeoutMs);
@@ -89,13 +93,14 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
         });
       } catch (e: any) {
         if (e?.name === 'AbortError') {
-          throw new Error('Request timed out after 120 seconds');
+          throw new Error('Request timed out after 180 seconds');
         }
         throw e;
-      } finally {
-        clearTimeout(warningTimer);
-        clearTimeout(timeoutTimer);
-      }
+    } finally {
+      clearTimeout(warningTimer);
+      clearTimeout(secondWarningTimer);
+      clearTimeout(timeoutTimer);
+    }
 
       if (!response.ok) {
         if (response.status === 429) {

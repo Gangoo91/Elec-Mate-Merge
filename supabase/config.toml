@@ -14,15 +14,19 @@ verify_jwt = false
 
 [functions.orchestrator-agent]
 verify_jwt = false
+timeout_sec = 180
 
 [functions.designer-agent]
 verify_jwt = false
+timeout_sec = 120
 
 [functions.cost-engineer-agent]
 verify_jwt = false
+timeout_sec = 120
 
 [functions.installer-agent]
 verify_jwt = false
+timeout_sec = 120
 
 [functions.inspector-agent]
 verify_jwt = false
@@ -30,6 +34,7 @@ timeout_sec = 120
 
 [functions.commissioning-agent]
 verify_jwt = false
+timeout_sec = 120
 
 [functions.generate-professional-package]
 verify_jwt = false
