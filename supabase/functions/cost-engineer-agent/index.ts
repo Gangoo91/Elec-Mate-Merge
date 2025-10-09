@@ -208,36 +208,3 @@ function extractCircuitCount(message: string): number {
   
   return 6;
 }
-    
-    // Strip any design-related crossover content
-    const designKeywords = [
-      'circuit specification', 'voltage drop calculation', 'bs 7671 compliance', 
-      'cable specification:', 'design current', 'protection device:', 'correction factors',
-      'derated capacity', 'safety margin', 'tabulated capacity', 'load:', 'distance from board:',
-      'installation:', 'supply:', 'calculations'
-    ];
-    
-    // Find where MATERIALS BREAKDOWN starts and only keep from there onwards
-    const materialsIndex = responseContent.indexOf('MATERIALS BREAKDOWN');
-    if (materialsIndex > 0) {
-      responseContent = responseContent.substring(materialsIndex);
-    }
-    
-    return new Response(JSON.stringify({
-      response: responseContent,
-      confidence: 0.85
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
-  } catch (error) {
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Cost agent failed',
-      response: 'Unable to provide cost estimate.',
-      confidence: 0.3
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-  }
-});
