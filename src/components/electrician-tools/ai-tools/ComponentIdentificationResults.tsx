@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Download, Package, Zap, BookOpen, Wrench, Info, CheckCircle2 } from "lucide-react";
+import { Package, Zap, BookOpen, Wrench, Info, CheckCircle2 } from "lucide-react";
 
 interface ComponentIdentificationResultsProps {
   analysisResult: {
@@ -353,20 +352,6 @@ export default function ComponentIdentificationResults({ analysisResult }: Compo
         </Card>
       )}
 
-      {/* Export Button - Mobile Friendly */}
-      <div className="flex justify-center pt-2 sm:pt-4 sticky bottom-4 sm:static">
-        <Button 
-          size="lg"
-          className="bg-elec-yellow text-elec-grey hover:bg-elec-yellow/90 font-medium w-full sm:w-auto min-h-[44px] text-base shadow-lg"
-          onClick={() => {
-            // TODO: Implement component spec sheet export
-            console.log('Export component spec sheet');
-          }}
-        >
-          <Download className="h-5 w-5 mr-2" />
-          Export Component Details
-        </Button>
-      </div>
     </div>
   );
 }
