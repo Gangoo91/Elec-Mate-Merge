@@ -140,7 +140,7 @@ const SiteSafety = () => {
                 </div>
               </div>
               
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight">
                 Site Safety & Risk Assessment
               </h1>
               
