@@ -942,7 +942,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       </div>
 
       {/* Phase 1: Compact Input Area */}
-      <div className="flex-none bg-elec-dark border-t border-border/30 px-3 md:px-5 py-1.5 md:py-3">
+      <div className="flex-none bg-elec-dark border-t border-border/30 px-3 md:px-5 py-1.5 md:py-2">
         <div className="space-y-2">
           {/* Phase 1: Collapsed Export Menu */}
           {hasMeaningfulContent && (
@@ -1003,11 +1003,11 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             selectedAgent={selectedAgent}
             onAgentSelect={setSelectedAgent}
             activeAgents={activeAgents}
-            className="mb-2 md:mb-4"
+            className="mb-2 md:mb-3"
           />
 
           {/* Chat Input - Best-in-class design */}
-          <div className="flex flex-col gap-3 p-2 md:p-4 bg-elec-dark/50 backdrop-blur-sm rounded-2xl border border-white/8 shadow-inner">
+          <div className="flex flex-col gap-3 p-2 md:p-3 bg-elec-dark/50 backdrop-blur-sm rounded-2xl border border-white/8 shadow-inner">
             <Textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -1026,20 +1026,20 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   toast.success('Photo added to message');
                 }}
                 disabled={isLoading}
-                className="h-8 w-8 md:h-10 md:w-10 bg-white/5 hover:bg-white/10 active:scale-95 transition-all rounded-xl"
+                className="h-8 w-8 bg-white/5 hover:bg-white/10 active:scale-95 transition-all rounded-xl"
               />
               <div className="flex-1" />
               <Button 
                 onClick={handleSend}
                 disabled={isLoading || isStreaming || !input.trim()}
                 size="icon"
-                className="h-9 w-9 md:h-12 md:w-12 rounded-full shadow-lg shadow-elec-yellow/20 shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
+                className="h-9 w-9 rounded-full shadow-lg shadow-elec-yellow/20 shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
                 aria-label="Send message"
               >
                 {(isLoading || isStreaming) ? (
-                  <Loader2 className="h-4 w-4 md:h-5 md:w-5 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  <Send className="h-4 w-4 md:h-5 md:w-5" />
+                  <Send className="h-4 w-4" />
                 )}
               </Button>
             </div>
