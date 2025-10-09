@@ -160,32 +160,41 @@ serve(async (req) => {
       }
     }
 
-    // Build system prompt
+    // Build system prompt with better formatting
     const systemPrompt = `You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance knowledge.
 
-FORMAT YOUR RESPONSE AS:
+FORMAT YOUR RESPONSE EXACTLY AS SHOWN BELOW:
 
 CIRCUIT SPECIFICATION
+
 Load: ${circuitParams.power}W (${circuitParams.power/1000}kW)
 Distance from board: ${circuitParams.cableLength}m
-Installation: ${circuitParams.installationMethod}
+Installation method: ${circuitParams.installationMethod}
 Supply: ${circuitParams.voltage}V ${circuitParams.phases}-phase
+Circuit type: ${circuitParams.circuitType}
 
 CALCULATIONS
-${calculationResults?.cableCapacity ? `Design current (Ib): ${calculationResults.cableCapacity.Ib}A
-Protection device: ${calculationResults.cableCapacity.In}A MCB Type ${circuitParams.deviceType}
-Cable specification: ${circuitParams.cableSize}mm² twin & earth
-Tabulated capacity (It): ${calculationResults.cableCapacity.IzTabulated}A (${calculationResults.cableCapacity.tableReference})
-Correction factors: Ca=${calculationResults.cableCapacity.factors.temperatureFactor}, Cg=${calculationResults.cableCapacity.factors.groupingFactor}
-Derated capacity (Iz): ${calculationResults.cableCapacity.Iz}A
-Safety margin: ${calculationResults.cableCapacity.compliance.safetyMargin}% ${calculationResults.cableCapacity.compliance.overallCompliant ? 'COMPLIANT' : 'REVIEW REQUIRED'}
-Voltage drop: ${calculationResults.voltageDrop?.voltageDropVolts}V (${calculationResults.voltageDrop?.voltageDropPercent}%) ${calculationResults.voltageDrop?.compliant ? 'COMPLIANT' : 'EXCEEDS LIMIT'}
-Max Zs: ${calculationResults.maxZs?.maxZs}Ω (Table 41.3)` : 'Awaiting circuit parameters for detailed calculations'}
+
+Design current (Ib): ${calculationResults?.cableCapacity?.Ib || 'TBC'}A
+Protection device: ${calculationResults?.cableCapacity?.In || circuitParams.deviceRating}A MCB Type ${circuitParams.deviceType}
+Cable specification: ${circuitParams.cableSize}mm² twin & earth (6242Y)
+Tabulated capacity (It): ${calculationResults?.cableCapacity?.IzTabulated || 'TBC'}A (${calculationResults?.cableCapacity?.tableReference || 'Table 4D5'})
+Correction factors: Ca=${calculationResults?.cableCapacity?.factors?.temperatureFactor || '1.0'}, Cg=${calculationResults?.cableCapacity?.factors?.groupingFactor || '1.0'}
+Derated capacity (Iz): ${calculationResults?.cableCapacity?.Iz || 'TBC'}A
+${calculationResults?.cableCapacity?.equation || ''}
+Safety margin: ${calculationResults?.cableCapacity?.compliance?.safetyMargin || 'TBC'}% ${calculationResults?.cableCapacity?.compliance?.overallCompliant ? 'COMPLIANT ✓' : 'REVIEW REQUIRED'}
+
+Voltage drop: ${calculationResults?.voltageDrop?.voltageDropVolts || 'TBC'}V (${calculationResults?.voltageDrop?.voltageDropPercent || 'TBC'}%) ${calculationResults?.voltageDrop?.compliant ? 'COMPLIANT ✓' : 'EXCEEDS LIMIT'}
+Maximum Zs: ${calculationResults?.maxZs?.maxZs || 'TBC'}Ω (Table 41.3)
+Calculated Zs: ${calculationResults?.zs ? calculationResults.zs.toFixed(2) : 'TBC'}Ω
+Prospective fault current: ${calculationResults?.pscc || 'TBC'}A
 
 COMPLIANCE
-${calculationResults?.cableCapacity?.compliance?.overallCompliant ? 'Regulation 433.1 - Overload protection compliant' : 'Review required - protection device sizing'}
-${calculationResults?.voltageDrop?.compliant ? 'Regulation 525 - Voltage drop within limits' : 'Regulation 525 - Voltage drop exceeds 3%/5% limit'}
-${calculationResults?.cableCapacity?.tableReference ? calculationResults.cableCapacity.tableReference + ' - Cable sizing reference' : 'BS 7671 Table 4D5 - Cable sizing reference'}
+
+Regulation 433.1 - Overload protection: ${calculationResults?.cableCapacity?.compliance?.overallCompliant ? 'Ib ≤ In ≤ Iz satisfied. Cable rated correctly for protective device.' : 'Review required - verify cable capacity against protective device'}
+Regulation 525 - Voltage drop: ${calculationResults?.voltageDrop?.compliant ? 'Within permitted limits (3% lighting, 5% other uses)' : 'Exceeds BS 7671 voltage drop limits - consider larger cable'}
+${calculationResults?.rcdRequirements?.required ? `Regulation 411.3.3 - RCD protection required: ${calculationResults.rcdRequirements.reason}` : 'Regulation 411.3.3 - Standard protection adequate'}
+Table 41.3 - Earth fault protection: Zs (${calculationResults?.zs ? calculationResults.zs.toFixed(2) : 'TBC'}Ω) must not exceed ${calculationResults?.maxZs?.maxZs || 'TBC'}Ω for ${calculationResults?.cableCapacity?.In || circuitParams.deviceRating}A Type ${circuitParams.deviceType} MCB
 
     ${relevantRegsText ? `
 RELEVANT REGULATIONS (from BS 7671 database):

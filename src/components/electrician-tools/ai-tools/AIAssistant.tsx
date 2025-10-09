@@ -11,6 +11,61 @@ import { Label } from "@/components/ui/label";
 import RegulationSources from "./RegulationSources";
 import DrillDownSection from "./DrillDownSection";
 
+// Parser function for designer agent responses
+const parseDesignerResponse = (response: string) => {
+  const sections = {
+    specification: '',
+    calculations: '',
+    compliance: '',
+    practicalGuidance: ''
+  };
+  
+  // Split response by main section headers
+  const specMatch = response.match(/CIRCUIT SPECIFICATION([\s\S]*?)(?=CALCULATIONS|$)/i);
+  const calcMatch = response.match(/CALCULATIONS([\s\S]*?)(?=COMPLIANCE|$)/i);
+  const compMatch = response.match(/COMPLIANCE([\s\S]*?)(?=RELEVANT REGULATIONS|DESIGN GUIDANCE|$)/i);
+  
+  if (specMatch) sections.specification = specMatch[1].trim();
+  if (calcMatch) sections.calculations = calcMatch[1].trim();
+  if (compMatch) sections.compliance = compMatch[1].trim();
+  
+  // Generate practical guidance from circuit type
+  const circuitTypeMatch = response.toLowerCase();
+  let guidance = "**Installation Steps:**\n\n";
+  
+  if (circuitTypeMatch.includes('shower')) {
+    guidance += "1. Install isolator switch visible from shower location\n";
+    guidance += "2. Run cable via shortest safe route avoiding zones\n";
+    guidance += "3. Connect to dedicated 30mA RCD protection\n";
+    guidance += "4. Label circuit clearly at consumer unit\n\n";
+    guidance += "**Testing Required:**\n";
+    guidance += "- Continuity of protective conductors\n";
+    guidance += "- Insulation resistance ≥1.0MΩ\n";
+    guidance += "- Earth fault loop impedance\n";
+    guidance += "- RCD operation (30mA trip time)";
+  } else if (circuitTypeMatch.includes('cooker')) {
+    guidance += "1. Install control unit with isolator within 2m\n";
+    guidance += "2. Use heat-resistant cable for final connection\n";
+    guidance += "3. Ensure adequate ventilation clearances\n";
+    guidance += "4. Connect control unit load terminals correctly\n\n";
+    guidance += "**Testing Required:**\n";
+    guidance += "- Continuity checks on all conductors\n";
+    guidance += "- Polarity verification\n";
+    guidance += "- Insulation resistance test";
+  } else {
+    guidance += "1. Plan cable route avoiding buried depths <50mm\n";
+    guidance += "2. Install in safe zones or use 30mA RCD\n";
+    guidance += "3. Use appropriate cable clips/fixings\n";
+    guidance += "4. Ensure all connections are mechanically sound\n\n";
+    guidance += "**Testing Required:**\n";
+    guidance += "- R1+R2 continuity test\n";
+    guidance += "- Insulation resistance ≥1.0MΩ at 500V DC\n";
+    guidance += "- Zs earth fault loop test";
+  }
+  
+  return sections;
+};
+
 const AIAssistant = () => {
   const [prompt, setPrompt] = useState("");
   const [analysisResult, setAnalysisResult] = useState("");
@@ -38,6 +93,20 @@ const AIAssistant = () => {
     const elements: JSX.Element[] = [];
     
     paragraphs.forEach((paragraph, pIndex) => {
+      const trimmedPara = paragraph.trim();
+      
+      // Detect section headers with **bold** markdown
+      const headerMatch = trimmedPara.match(/^\*\*(.+?)\*\*$/);
+      if (headerMatch) {
+        elements.push(
+          <h3 key={`header-${pIndex}`} className="text-xl font-bold text-elec-yellow mb-3 mt-6 first:mt-0 flex items-center gap-2">
+            <div className="w-1.5 h-6 bg-elec-yellow rounded"></div>
+            {headerMatch[1]}
+          </h3>
+        );
+        return;
+      }
+      
       const lines = paragraph.split('\n').filter(l => l.trim());
       let listItems: string[] = [];
       let listType: 'ordered' | 'bullet' | null = null;
@@ -70,15 +139,29 @@ const AIAssistant = () => {
         const trimmed = line.trim();
         if (!trimmed) return;
         
-        // Detect regulation format (e.g., "701.512.2 - Description")
-        const regulationMatch = trimmed.match(/^(\d{3}\.\d+(?:\.\d+)?)\s*-\s*(.+)/);
+        // Detect key-value pairs (e.g., "Load: 9200W")
+        const kvMatch = trimmed.match(/^(.+?):\s*(.+)$/);
+        if (kvMatch && !trimmed.includes('**')) {
+          flushList();
+          const [, key, value] = kvMatch;
+          elements.push(
+            <div key={`kv-${elements.length}`} className="mb-2 flex gap-3 items-baseline">
+              <span className="text-gray-400 font-medium min-w-[140px]">{key}:</span>
+              <span className="text-white font-semibold">{value}</span>
+            </div>
+          );
+          return;
+        }
+        
+        // Detect regulation format (e.g., "Regulation 433.1 - Description")
+        const regulationMatch = trimmed.match(/^Reg(?:ulation)?\s*(\d{3}(?:\.\d+)?(?:\.\d+)?)\s*-\s*(.+)/i);
         if (regulationMatch) {
           flushList();
           const [, regNumber, regText] = regulationMatch;
           elements.push(
-            <div key={`reg-${elements.length}`} className="mb-6 p-4 bg-neutral-800/40 rounded-lg border-l-4 border-purple-500/50">
-              <div className="text-purple-400 font-bold text-lg mb-2">
-                {regNumber}
+            <div key={`reg-${elements.length}`} className="mb-4 p-4 bg-purple-500/10 rounded-lg border-l-4 border-purple-500/60">
+              <div className="inline-block px-3 py-1 bg-purple-500/20 rounded-full text-purple-300 font-bold text-sm mb-2">
+                Regulation {regNumber}
               </div>
               <div className="text-white leading-relaxed text-base">
                 {regText}
@@ -91,7 +174,7 @@ const AIAssistant = () => {
         // Detect numbered lists (1. 2. 3.)
         const numberedMatch = trimmed.match(/^(\d+)\.\s+(.+)/);
         if (numberedMatch) {
-          if (listType !== 'ordered') {
+        if (listType !== 'ordered') {
             flushList();
             listType = 'ordered';
           }
@@ -107,6 +190,27 @@ const AIAssistant = () => {
             listType = 'bullet';
           }
           listItems.push(bulletMatch[1]);
+          return;
+        }
+        
+        // Detect compliance indicators (COMPLIANT, EXCEEDS, etc.)
+        if (trimmed.match(/COMPLIANT|EXCEEDS|REVIEW REQUIRED/i)) {
+          flushList();
+          const isCompliant = trimmed.includes('COMPLIANT');
+          const isExceeds = trimmed.includes('EXCEEDS');
+          elements.push(
+            <div key={`status-${elements.length}`} className={`mb-3 p-3 rounded-lg border-l-4 ${
+              isCompliant ? 'bg-green-500/10 border-green-500/60' : 
+              isExceeds ? 'bg-amber-500/10 border-amber-500/60' : 
+              'bg-blue-500/10 border-blue-500/60'
+            }`}>
+              <span className={`font-semibold ${
+                isCompliant ? 'text-green-400' : 
+                isExceeds ? 'text-amber-400' : 
+                'text-blue-400'
+              }`}>{trimmed}</span>
+            </div>
+          );
           return;
         }
         
@@ -213,10 +317,17 @@ const AIAssistant = () => {
       
       // Handle designer agent response
       if (data.response && data.structuredData) {
-        // Designer agent returned structured data - display as conversational response
-        setAnalysisResult(data.response);
-        setRegulationsResult("Supporting regulations included in analysis above.");
-        setPracticalGuidanceResult("Installation guidance included in analysis above.");
+        const parsed = parseDesignerResponse(data.response);
+        
+        // Combine specification and calculations for Analysis box
+        const analysisContent = `**Circuit Specification**\n\n${parsed.specification}\n\n**Calculations & Sizing**\n\n${parsed.calculations}`;
+        setAnalysisResult(analysisContent);
+        
+        // Extract regulations for Regulations box
+        setRegulationsResult(parsed.compliance);
+        
+        // Set practical guidance
+        setPracticalGuidanceResult(parsed.practicalGuidance);
       }
       // Handle structured responses with three sections from inspector
       else if (data.analysis && data.regulations && data.practical_guidance) {
