@@ -284,7 +284,7 @@ IMPORTANT: Provide 3-5 SPECIFIC hazards relevant to this exact work. Not generic
             { role: 'user', content: `${latestMessage}\n\nIMPORTANT: Respond with valid JSON matching the specified format.` }
           ],
           response_format: { type: "json_object" },
-          max_completion_tokens: 10000
+          max_completion_tokens: calculateTokenLimit(extractCircuitCount(latestMessage)) // Phase 4: Adaptive tokens
         };
         
         console.log('📤 Lovable AI Request:', JSON.stringify({ model: requestBody.model, messageCount: requestBody.messages.length }));
@@ -430,6 +430,23 @@ function extractWorkType(message: string, currentDesign: any): string {
   if (lowerMessage.includes('refurb') || lowerMessage.includes('demolit') || lowerMessage.includes('strip out')) return 'refurbishment';
   
   return 'general';
+}
+
+// Phase 4: Adaptive Token Limits
+function calculateTokenLimit(circuitCount: number): number {
+  const baseTokens = 2000;
+  const perCircuitTokens = 350;
+  return Math.min(baseTokens + (circuitCount * perCircuitTokens), 10000);
+}
+
+function extractCircuitCount(message: string): number {
+  const wayMatch = message.match(/(\d+)[\s-]?way/i);
+  if (wayMatch) return parseInt(wayMatch[1]);
+  
+  const circuitMatch = message.match(/(\d+)\s+circuits?/i);
+  if (circuitMatch) return parseInt(circuitMatch[1]);
+  
+  return 6;
 }
 
 function extractCircuitDetails(message: string, currentDesign: any, context: any): string {

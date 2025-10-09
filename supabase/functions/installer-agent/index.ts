@@ -156,7 +156,7 @@ Use professional language with UK English spelling. Provide clear step-by-step g
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 10000 // INCREASED for comprehensive step-by-step installation guidance
+        max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage)) // Phase 4: Adaptive tokens
       }),
     });
 
@@ -177,3 +177,20 @@ Use professional language with UK English spelling. Provide clear step-by-step g
     });
   }
 });
+
+// Phase 4: Adaptive Token Limits
+function calculateTokenLimit(circuitCount: number): number {
+  const baseTokens = 2000;
+  const perCircuitTokens = 400;
+  return Math.min(baseTokens + (circuitCount * perCircuitTokens), 10000);
+}
+
+function extractCircuitCount(message: string): number {
+  const wayMatch = message.match(/(\d+)[\s-]?way/i);
+  if (wayMatch) return parseInt(wayMatch[1]);
+  
+  const circuitMatch = message.match(/(\d+)\s+circuits?/i);
+  if (circuitMatch) return parseInt(circuitMatch[1]);
+  
+  return 6;
+}

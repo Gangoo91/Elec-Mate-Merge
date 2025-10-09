@@ -225,7 +225,7 @@ Use professional language with UK English spelling. Present calculations clearly
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 10000 // INCREASED for comprehensive multi-circuit designs (18-way boards)
+        max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage), messages) // Phase 4: Adaptive tokens
       }),
     });
 
@@ -357,6 +357,29 @@ Use professional language with UK English spelling. Present calculations clearly
     });
   }
 });
+
+// Phase 4: Adaptive Token Limits
+function calculateTokenLimit(circuitCount: number, messages: any[]): number {
+  const baseTokens = 2000;
+  const perCircuitTokens = 400;
+  const conciseMode = circuitCount > 8;
+  
+  if (conciseMode) {
+    return Math.min(baseTokens + (circuitCount * 300), 8000); // Concise mode: fewer tokens
+  }
+  
+  return Math.min(baseTokens + (circuitCount * perCircuitTokens), 10000);
+}
+
+function extractCircuitCount(message: string): number {
+  const wayMatch = message.match(/(\d+)[\s-]?way/i);
+  if (wayMatch) return parseInt(wayMatch[1]);
+  
+  const circuitMatch = message.match(/(\d+)\s+circuits?/i);
+  if (circuitMatch) return parseInt(circuitMatch[1]);
+  
+  return 6; // Default assumption
+}
 
 function extractCircuitParams(userMessage: string, currentDesign: any): any {
   const loadMatch = userMessage.match(/(\d+\.?\d*)\s*(kW|W)/i);

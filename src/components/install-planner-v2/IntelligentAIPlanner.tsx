@@ -107,9 +107,26 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [lastSentMessage, setLastSentMessage] = useState<string>("");
   const [lastSendFailed, setLastSendFailed] = useState<boolean>(false);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  
+  // Phase 5: Progressive Disclosure UI
+  const [estimatedTime, setEstimatedTime] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [agentProgress, setAgentProgress] = useState<Record<string, 'pending' | 'active' | 'complete'>>({});
+  
   const navigate = useNavigate();
   
   const { sessionId, isSaving, lastSaved } = useConversationPersistence(messages, planData, activeAgents);
+
+  // Phase 5: Helper to extract circuit count from message
+  const extractCircuitCount = (message: string): number => {
+    const wayMatch = message.match(/(\d+)[\s-]?way/i);
+    if (wayMatch) return parseInt(wayMatch[1]);
+    
+    const circuitMatch = message.match(/(\d+)\s+circuits?/i);
+    if (circuitMatch) return parseInt(circuitMatch[1]);
+    
+    return 6; // Default assumption
+  };
 
   // Phase 2: Message pagination - only render last 50 messages for performance
   const visibleMessages = useMemo(() => {
@@ -163,6 +180,20 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     onPlan: (agents, complexity) => {
       console.log('Agent plan:', agents, complexity);
       setActiveAgents(agents);
+      
+      // Phase 5: Calculate estimated time
+      const circuitCount = extractCircuitCount(input || messages[messages.length - 1]?.content || '');
+      const baseTime = 60; // Designer base
+      const perCircuitTime = 4; // Seconds per circuit for other agents
+      const estimatedTotal = baseTime + (circuitCount * perCircuitTime) + (agents.length * 30);
+      setEstimatedTime(estimatedTotal);
+      setElapsedTime(0);
+      
+      // Initialize progress tracking
+      const progressMap: Record<string, 'pending' | 'active' | 'complete'> = {};
+      agents.forEach(agent => progressMap[agent] = 'pending');
+      setAgentProgress(progressMap);
+      
       setReasoningSteps(agents.map(agent => ({
         agent,
         status: 'pending' as const,
@@ -173,6 +204,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       console.log(`Agent ${agent} starting (${index + 1}/${total})`);
       setCurrentAction(`Consulting ${agent}...`);
       setCurrentAgent(agent);
+      
+      // Phase 5: Update progress
+      setAgentProgress(prev => ({ ...prev, [agent]: 'active' }));
       
       // Add "Analyzing..." message
       setMessages(prev => {
@@ -216,6 +250,10 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     },
     onAgentComplete: (agent, nextAgent) => {
       console.log(`Agent ${agent} complete, next: ${nextAgent}`);
+      
+      // Phase 5: Update progress
+      setAgentProgress(prev => ({ ...prev, [agent]: 'complete' }));
+      
       setReasoningSteps(prev => prev.map(step => 
         step.agent === agent 
           ? { ...step, status: 'complete' as const, reasoning: `Ready for questions` }

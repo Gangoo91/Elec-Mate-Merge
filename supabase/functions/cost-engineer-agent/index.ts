@@ -152,8 +152,62 @@ PRICING NOTES
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 10000 // INCREASED for detailed cost breakdowns
+        max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage)) // Phase 4: Adaptive tokens
       }),
+    });
+
+    const data = await response.json();
+    let responseContent = data.choices[0]?.message?.content || 'Cost estimate complete.';
+    
+    // Strip any design-related crossover content
+    const designKeywords = [
+      'circuit specification', 'voltage drop calculation', 'bs 7671 compliance', 
+      'cable specification:', 'design current', 'protection device:', 'correction factors',
+      'derated capacity', 'safety margin', 'tabulated capacity', 'load:', 'distance from board:',
+      'installation:', 'supply:', 'calculations'
+    ];
+    
+    // Find where MATERIALS BREAKDOWN starts and only keep from there onwards
+    const materialsIndex = responseContent.indexOf('MATERIALS BREAKDOWN');
+    if (materialsIndex > 0) {
+      responseContent = responseContent.substring(materialsIndex);
+    }
+    
+    return new Response(JSON.stringify({
+      response: responseContent,
+      confidence: 0.85
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    return new Response(JSON.stringify({ 
+      error: error instanceof Error ? error.message : 'Cost agent failed',
+      response: 'Unable to provide cost estimate.',
+      confidence: 0.3
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+});
+
+// Phase 4: Adaptive Token Limits
+function calculateTokenLimit(circuitCount: number): number {
+  const baseTokens = 2000;
+  const perCircuitTokens = 300;
+  return Math.min(baseTokens + (circuitCount * perCircuitTokens), 8000);
+}
+
+function extractCircuitCount(message: string): number {
+  const wayMatch = message.match(/(\d+)[\s-]?way/i);
+  if (wayMatch) return parseInt(wayMatch[1]);
+  
+  const circuitMatch = message.match(/(\d+)\s+circuits?/i);
+  if (circuitMatch) return parseInt(circuitMatch[1]);
+  
+  return 6;
+}
     });
 
     const data = await response.json();

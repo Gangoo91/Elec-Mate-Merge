@@ -265,35 +265,78 @@ async function handleConversationalMode(
         })}\n\n`;
         controller.enqueue(encoder.encode(planEvent));
 
-        // Execute agents sequentially
-        for (let i = 0; i < agentPlan.sequence.length; i++) {
-          const step = agentPlan.sequence[i];
-          const agentName = step.agent;
-          const isFirst = i === 0;
-          const isLast = i === agentPlan.sequence.length - 1;
+        // Detect workflow type
+        const workflowType = latestMessage.toLowerCase().includes('fault') || 
+                             latestMessage.toLowerCase().includes('defect') ||
+                             latestMessage.toLowerCase().includes('inspection')
+          ? 'fault-finding'
+          : 'new-installation';
+
+        // Build execution groups for parallel processing
+        const executionGroups = workflowType === 'new-installation'
+          ? [
+              [{ agent: 'designer', dependencies: [] }],
+              [
+                { agent: 'cost-engineer', dependencies: ['designer'] },
+                { agent: 'health-safety', dependencies: ['designer'] },
+                { agent: 'installer', dependencies: ['designer'] }
+              ],
+              [{ agent: 'commissioning', dependencies: ['designer'] }]
+            ]
+          : [
+              [{ agent: 'designer', dependencies: [] }],
+              [
+                { agent: 'cost-engineer', dependencies: ['designer'] },
+                { agent: 'health-safety', dependencies: ['designer'] },
+                { agent: 'installer', dependencies: ['designer'] }
+              ],
+              [{ agent: 'inspector', dependencies: ['designer', 'installer'] }],
+              [{ agent: 'commissioning', dependencies: ['designer', 'inspector'] }]
+            ];
+
+        // Filter execution groups based on agent plan sequence
+        const activeAgents = agentPlan.sequence.map((s: any) => s.agent);
+        const filteredGroups = executionGroups.map(group => 
+          group.filter(step => activeAgents.includes(step.agent))
+        ).filter(group => group.length > 0);
+
+        // Execute agents in parallel groups
+        for (let groupIndex = 0; groupIndex < filteredGroups.length; groupIndex++) {
+          const group = filteredGroups[groupIndex];
           
-          console.log(`🎨 Agent ${i + 1}/${agentPlan.sequence.length}: ${agentName} speaking...`);
+          // Execute all agents in this group in parallel
+          const groupPromises = group.map(async (step) => {
+            const agentName = step.agent;
+            const agentIndex = activeAgents.indexOf(agentName);
+            const isFirst = groupIndex === 0;
+            const isLast = groupIndex === filteredGroups.length - 1;
+            console.log(`🎨 Agent ${agentIndex + 1}/${activeAgents.length}: ${agentName} (Group ${groupIndex + 1}/${filteredGroups.length}, parallel with ${group.length} others)`);
 
-          // Send agent_start event
-          const startEvent = `data: ${JSON.stringify({
-            type: 'agent_start',
-            agent: agentName,
-            index: i,
-            total: agentPlan.sequence.length
-          })}\n\n`;
-          controller.enqueue(encoder.encode(startEvent));
+            // Send agent_start event
+            const startEvent = `data: ${JSON.stringify({
+              type: 'agent_start',
+              agent: agentName,
+              index: agentIndex,
+              total: activeAgents.length,
+              groupIndex,
+              parallelCount: group.length
+            })}\n\n`;
+            controller.enqueue(encoder.encode(startEvent));
 
-          try {
-            const agentFunctionName = getAgentFunctionName(agentName);
-            
-            // Build context-aware messages for this agent
-            const agentMessages = buildAgentMessages(
-              messages,
-              agentContext,
-              agentName,
-              isFirst,
-              isLast
-            );
+            try {
+              const agentFunctionName = getAgentFunctionName(agentName);
+              
+              // Build relevant context (Phase 3: Smart Context Reduction)
+              const relevantContext = buildRelevantContext(agentName, agentContext.previousAgentOutputs);
+              
+              // Build context-aware messages for this agent
+              const agentMessages = buildAgentMessages(
+                messages,
+                { ...agentContext, structuredKnowledge: relevantContext },
+                agentName,
+                isFirst,
+                isLast
+              );
 
             // Phase 4: Add retry logic with exponential backoff
             const timeoutMs = 120000;
@@ -382,23 +425,43 @@ async function handleConversationalMode(
             allToolCalls.push(...output.toolCalls);
             if (output.costUpdates) costUpdates = output.costUpdates;
 
-            // Send agent_complete event
-            const completeEvent = `data: ${JSON.stringify({
-              type: 'agent_complete',
-              agent: agentName,
-              nextAgent: !isLast ? agentPlan.sequence[i + 1].agent : null
-            })}\n\n`;
-            controller.enqueue(encoder.encode(completeEvent));
+              // Send agent_complete event
+              const nextGroupHasAgents = groupIndex < filteredGroups.length - 1;
+              const completeEvent = `data: ${JSON.stringify({
+                type: 'agent_complete',
+                agent: agentName,
+                nextAgent: nextGroupHasAgents ? filteredGroups[groupIndex + 1][0].agent : null
+              })}\n\n`;
+              controller.enqueue(encoder.encode(completeEvent));
 
-          } catch (error) {
-            console.error(`❌ Error executing ${agentName}:`, error);
-            const errorEvent = `data: ${JSON.stringify({
-              type: 'agent_error',
-              agent: agentName,
-              error: error instanceof Error ? error.message : 'Unknown error'
-            })}\n\n`;
-            controller.enqueue(encoder.encode(errorEvent));
-          }
+              return output;
+
+            } catch (error) {
+              console.error(`❌ Error executing ${agentName}:`, error);
+              const errorEvent = `data: ${JSON.stringify({
+                type: 'agent_error',
+                agent: agentName,
+                error: error instanceof Error ? error.message : 'Unknown error'
+              })}\n\n`;
+              controller.enqueue(encoder.encode(errorEvent));
+              return null;
+            }
+          });
+
+          // Wait for all agents in this group to complete
+          const groupResults = await Promise.all(groupPromises);
+          
+          // Add all successful results to context for next group
+          groupResults.filter(r => r !== null).forEach(output => {
+            agentOutputs.push(output);
+            agentContext.previousAgentOutputs = agentOutputs;
+            
+            // Add to conversation thread
+            agentContext.fullConversationThread.push({
+              role: 'assistant',
+              content: `[${getAgentDisplayName(output.agent)}]: ${output.response}`
+            });
+          });
         }
 
         // Only send completion if we got at least one agent response
@@ -585,6 +648,24 @@ You can see the full conversation history above, including what other specialist
   }
   
   return fullMessages;
+}
+
+// Phase 3: Smart Context Reduction - Only send relevant context to each agent
+function buildRelevantContext(agentName: string, previousOutputs: AgentOutput[]): string {
+  const contextMap: Record<string, string[]> = {
+    'cost-engineer': ['designer'],
+    'health-safety': ['designer'],
+    'installer': ['designer', 'cost-engineer'],
+    'inspector': ['designer', 'installer'],
+    'commissioning': ['designer', 'installer']
+  };
+  
+  const relevantAgents = contextMap[agentName] || [];
+  const filteredOutputs = previousOutputs.filter(o => 
+    relevantAgents.includes(o.agent)
+  );
+  
+  return buildStructuredContext(filteredOutputs);
 }
 
 // COMPACT CONTEXT: Build lightweight summaries for speed

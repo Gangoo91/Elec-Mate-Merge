@@ -198,8 +198,67 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
             content: context.structuredKnowledge
           }] : [])
         ],
-        max_completion_tokens: 10000 // INCREASED for comprehensive testing procedures (18-way boards)
+        max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage)) // Phase 4: Adaptive tokens
       }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Lovable AI error:', errorText);
+      throw new Error(`AI gateway error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const responseContent = data.choices[0]?.message?.content || 'Testing guidance complete.';
+
+    // Extract citations
+    const citations: any[] = [];
+    const regMatches = responseContent.matchAll(/(?:Reg|BS 7671)\s*(\d{3}(?:\.\d+)?)/gi);
+    for (const match of regMatches) {
+      citations.push({
+        number: `Reg ${match[1]}`,
+        title: `BS 7671 Regulation ${match[1]}`
+      });
+    }
+
+    return new Response(JSON.stringify({
+      response: responseContent,
+      citations,
+      confidence: 0.85,
+      timestamp: new Date().toISOString()
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    console.error('❌ Commissioning agent error:', error);
+    return new Response(JSON.stringify({ 
+      error: error instanceof Error ? error.message : 'Commissioning agent failed',
+      response: 'Unable to process testing request.',
+      confidence: 0.3
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+});
+
+// Phase 4: Adaptive Token Limits
+function calculateTokenLimit(circuitCount: number): number {
+  const baseTokens = 2000;
+  const perCircuitTokens = 350;
+  return Math.min(baseTokens + (circuitCount * perCircuitTokens), 10000);
+}
+
+function extractCircuitCount(message: string): number {
+  const wayMatch = message.match(/(\d+)[\s-]?way/i);
+  if (wayMatch) return parseInt(wayMatch[1]);
+  
+  const circuitMatch = message.match(/(\d+)\s+circuits?/i);
+  if (circuitMatch) return parseInt(circuitMatch[1]);
+  
+  return 6; // Default
+}
     });
 
     if (!response.ok) {
