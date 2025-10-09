@@ -5,7 +5,8 @@ import {
   Wrench, 
   CreditCard, 
   Settings,
-  Heart
+  Heart,
+  Database
 } from "lucide-react";
 
 export type NavItem = {
@@ -51,6 +52,12 @@ export const mainNavItems: NavItem[] = [
     path: "/settings",
     icon: <Settings className="h-5 w-5" />,
     roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
+  },
+  {
+    name: "Knowledge Uploader",
+    path: "/admin/knowledge-uploader",
+    icon: <Database className="h-5 w-5" />,
+    roles: ["admin"],
   },
 ];
 
