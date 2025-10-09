@@ -250,45 +250,45 @@ const AIAssistant = () => {
     <div className="min-h-screen bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-8">
         {/* Hero Section */}
-        <div className="text-center space-y-4 sm:space-y-6">
-          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500/30 to-purple-600/30 rounded-2xl border border-purple-400/30">
-            <Sparkles className="h-6 w-6 sm:h-8 sm:w-8 text-purple-400" />
+        <div className="text-center space-y-6 sm:space-y-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-elec-yellow/30 to-yellow-500/30 rounded-2xl border border-elec-yellow/30">
+            <Sparkles className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-white">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white">
             Intelligent Search
           </h1>
-          <p className="text-gray-300 text-sm sm:text-base lg:text-lg max-w-4xl mx-auto">
+          <p className="text-gray-300 text-base sm:text-lg lg:text-xl max-w-4xl mx-auto leading-relaxed">
             Ask questions about BS7671 electrical regulations in plain English. Get instant answers with relevant
             regulations, practical guidance, and safety tips.
           </p>
         </div>
 
         {/* AI Search Interface Component */}
-        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 max-w-6xl mx-auto">
-          <CardHeader className="p-4 sm:p-6">
-            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
-              <CardTitle className="text-lg sm:text-xl text-white">Intelligent Search</CardTitle>
+        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border-2 border-elec-yellow/20 max-w-6xl mx-auto">
+          <CardHeader className="p-6 sm:p-8">
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
+              <CardTitle className="text-2xl sm:text-3xl text-white font-bold">Intelligent Search</CardTitle>
             </div>
-            <CardDescription className="text-gray-300 text-sm sm:text-base">
+            <CardDescription className="text-gray-300 text-base sm:text-lg leading-relaxed">
               Ask about electrical regulations, testing procedures, or installation requirements:
             </CardDescription>
           </CardHeader>
           
-          <CardContent className="p-4 sm:p-6 pt-0 space-y-4 sm:space-y-6">
+          <CardContent className="p-6 sm:p-8 pt-0 space-y-6 sm:space-y-8">
             {/* Input Area */}
-              <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-4 sm:space-y-5">
                 <Textarea
                   placeholder="e.g. 'What are the RCD requirements for bathrooms?' or 'How do I test earth fault loop impedance?'"
-                  className="min-h-[80px] sm:min-h-[100px] bg-neutral-700/50 border-neutral-600 focus:border-purple-400 text-white placeholder:text-gray-400 resize-none text-sm sm:text-base"
+                  className="min-h-[100px] sm:min-h-[120px] bg-neutral-700/50 border-2 border-elec-yellow/40 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 text-white placeholder:text-gray-400 resize-none text-base sm:text-lg rounded-2xl p-5 sm:p-6 leading-relaxed transition-all duration-200"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                 />
                 
-                <div className="flex items-center justify-between p-3 bg-neutral-800/40 rounded-lg border border-purple-500/20">
-                  <div className="flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-purple-400" />
-                    <Label htmlFor="use-rag" className="text-white text-sm cursor-pointer">
+                <div className="flex items-center justify-between p-4 bg-neutral-800/40 rounded-xl border-2 border-elec-yellow/20">
+                  <div className="flex items-center gap-3">
+                    <BookOpen className="h-5 w-5 text-elec-yellow" />
+                    <Label htmlFor="use-rag" className="text-white text-base sm:text-lg cursor-pointer font-medium">
                       Search BS 7671 Database
                     </Label>
                   </div>
@@ -296,24 +296,24 @@ const AIAssistant = () => {
                     id="use-rag"
                     checked={useRAG}
                     onCheckedChange={setUseRAG}
-                    className="data-[state=checked]:bg-purple-600"
+                    className="data-[state=checked]:bg-elec-yellow"
                   />
                 </div>
                 
-                <div className="flex gap-2 sm:gap-3">
+                <div className="flex gap-3 sm:gap-4">
                 <Button 
-                  className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 sm:py-3 h-10 sm:h-12 text-sm sm:text-base" 
+                  className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold py-3 sm:py-4 h-12 sm:h-14 text-base sm:text-lg transition-all duration-200 hover:scale-102" 
                   onClick={handleAIQuery} 
                   disabled={isLoading}
                 >
                   {isLoading ? (
                     <>
-                      <Loader className="h-4 w-4 sm:h-5 sm:w-5 mr-2 animate-spin" /> 
-                      Search
+                      <Loader className="h-5 w-5 sm:h-6 sm:w-6 mr-2 animate-spin" /> 
+                      Searching...
                     </>
                   ) : (
                     <>
-                      <Search className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                      <Search className="h-5 w-5 sm:h-6 sm:w-6 mr-2" />
                       Search
                     </>
                   )}
@@ -321,10 +321,10 @@ const AIAssistant = () => {
                 
                 <Button 
                   variant="outline" 
-                  className="border-neutral-600 text-gray-300 hover:bg-neutral-700/50 px-4 sm:px-6 h-10 sm:h-12 text-sm sm:text-base"
+                  className="border-2 border-elec-yellow/30 text-gray-300 hover:bg-elec-yellow/10 hover:border-elec-yellow/50 px-5 sm:px-7 h-12 sm:h-14 text-base sm:text-lg transition-all duration-200"
                   onClick={() => setShowResults(!showResults)}
                 >
-                  {showResults ? <EyeOff className="h-4 w-4 sm:h-5 sm:w-5" /> : <Eye className="h-4 w-4 sm:h-5 sm:w-5" />}
+                  {showResults ? <EyeOff className="h-5 w-5 sm:h-6 sm:w-6" /> : <Eye className="h-5 w-5 sm:h-6 sm:w-6" />}
                   <span className="hidden sm:inline ml-2">
                     {showResults ? 'Hide' : 'Show'}
                   </span>
@@ -334,31 +334,31 @@ const AIAssistant = () => {
 
             {/* Loading State */}
             {isLoading && (
-              <div className="p-4 sm:p-6 bg-purple-900/30 rounded-lg border border-purple-500/20">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
-                    <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+              <div className="p-6 sm:p-8 bg-elec-yellow/10 rounded-2xl border-2 border-elec-yellow/20">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-elec-yellow/20 rounded-xl flex items-center justify-center">
+                    <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
                   </div>
-                  <span className="text-white font-medium text-sm sm:text-base">AI Assistant is thinking...</span>
+                  <span className="text-white font-semibold text-base sm:text-lg">AI Assistant is thinking...</span>
                 </div>
-                <div className="space-y-2 sm:space-y-3">
-                  <Skeleton className="h-3 sm:h-4 w-full bg-neutral-700/50" />
-                  <Skeleton className="h-3 sm:h-4 w-3/4 bg-neutral-700/50" />
-                  <Skeleton className="h-3 sm:h-4 w-5/6 bg-neutral-700/50" />
+                <div className="space-y-3 sm:space-y-4">
+                  <Skeleton className="h-5 sm:h-6 w-full bg-neutral-700/50" />
+                  <Skeleton className="h-5 sm:h-6 w-3/4 bg-neutral-700/50" />
+                  <Skeleton className="h-5 sm:h-6 w-5/6 bg-neutral-700/50" />
                 </div>
               </div>
             )}
 
             {/* Quick Examples Section */}
-            <div className="space-y-3 sm:space-y-4">
-              <h4 className="font-medium text-gray-300 text-sm sm:text-base">Try these questions:</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+            <div className="space-y-4 sm:space-y-5">
+              <h4 className="font-semibold text-gray-300 text-base sm:text-lg">Try these questions:</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {exampleQueries.map((query, index) => (
                   <Button
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="border-neutral-600/50 text-gray-300 hover:bg-neutral-700/50 hover:border-neutral-500 h-auto py-2 sm:py-3 px-3 sm:px-4 text-left justify-start text-xs sm:text-sm whitespace-normal"
+                    className="border-2 border-elec-yellow/30 text-gray-300 hover:bg-elec-yellow/10 hover:border-elec-yellow/50 h-auto py-4 sm:py-5 px-4 sm:px-5 text-left justify-start text-sm sm:text-base whitespace-normal transition-all duration-200"
                     onClick={() => setPrompt(query)}
                   >
                     {query}
@@ -382,18 +382,18 @@ const AIAssistant = () => {
             {/* Mobile: Vertical Stack */}
             <div className="md:hidden flex flex-col gap-6">
               {analysisResult && (
-                <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
-                  <CardHeader className="p-4">
-                    <CardTitle className="text-base flex items-center gap-2 text-white">
-                      <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                        <Search className="h-4 w-4 text-blue-400" />
+                <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border-2 border-elec-yellow/20">
+                  <CardHeader className="p-5">
+                    <CardTitle className="text-lg flex items-center gap-3 text-white font-bold">
+                      <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                        <Search className="h-5 w-5 text-blue-400" />
                       </div>
                       Analysis
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-4 pt-0">
+                  <CardContent className="p-5 pt-0">
                     <div className="prose prose-invert max-w-none">
-                      <div className="text-sm text-white leading-relaxed space-y-3">
+                      <div className="text-base text-white leading-relaxed space-y-4">
                         {processContent(analysisResult, 'blue')}
                       </div>
                     </div>
@@ -402,18 +402,18 @@ const AIAssistant = () => {
               )}
               
               {regulationsResult && (
-                <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
-                  <CardHeader className="p-4">
-                    <CardTitle className="text-base flex items-center gap-2 text-white">
-                      <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                        <BookOpen className="h-4 w-4 text-purple-400" />
+                <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border-2 border-elec-yellow/20">
+                  <CardHeader className="p-5">
+                    <CardTitle className="text-lg flex items-center gap-3 text-white font-bold">
+                      <div className="w-10 h-10 bg-elec-yellow/20 rounded-xl flex items-center justify-center">
+                        <BookOpen className="h-5 w-5 text-elec-yellow" />
                       </div>
                       Relevant Regulations
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-4 pt-0">
+                  <CardContent className="p-5 pt-0">
                     <div className="prose prose-invert max-w-none">
-                      <div className="text-sm text-white leading-relaxed space-y-3">
+                      <div className="text-base text-white leading-relaxed space-y-4">
                         {processContent(regulationsResult, 'purple')}
                       </div>
                     </div>
@@ -422,18 +422,18 @@ const AIAssistant = () => {
               )}
               
               {practicalGuidanceResult && (
-                <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
-                  <CardHeader className="p-4">
-                    <CardTitle className="text-base flex items-center gap-2 text-white">
-                      <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
-                        <Wrench className="h-4 w-4 text-green-400" />
+                <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border-2 border-elec-yellow/20">
+                  <CardHeader className="p-5">
+                    <CardTitle className="text-lg flex items-center gap-3 text-white font-bold">
+                      <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
+                        <Wrench className="h-5 w-5 text-green-400" />
                       </div>
                       Practical Guidance
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-4 pt-0">
+                  <CardContent className="p-5 pt-0">
                     <div className="prose prose-invert max-w-none">
-                      <div className="text-sm text-white leading-relaxed space-y-3">
+                      <div className="text-base text-white leading-relaxed space-y-4">
                         {processContent(practicalGuidanceResult, 'green')}
                       </div>
                     </div>
@@ -443,21 +443,21 @@ const AIAssistant = () => {
             </div>
             
             {/* Desktop: Vertical Layout */}
-            <div className="hidden md:flex md:flex-col gap-6">
+            <div className="hidden md:flex md:flex-col gap-8">
               {/* Analysis Section */}
               {analysisResult && (
-              <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
-                <CardHeader className="p-3 sm:p-4">
-                  <CardTitle className="text-base sm:text-lg flex items-center gap-2 sm:gap-3 text-white">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                      <Search className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
+              <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border-2 border-elec-yellow/20">
+                <CardHeader className="p-6 sm:p-8">
+                  <CardTitle className="text-xl sm:text-2xl flex items-center gap-4 text-white font-bold">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                      <Search className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400" />
                     </div>
                     Analysis
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-3 sm:p-4 pt-0">
+                <CardContent className="p-6 sm:p-8 pt-0">
                   <div className="prose prose-invert max-w-none">
-                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed space-y-3">
+                    <div className="text-base sm:text-lg text-gray-300 whitespace-pre-wrap leading-relaxed space-y-4">
                       {String(analysisResult || '').split('\n').map((line, index) => {
                         const trimmed = line.trim();
                         if (!trimmed) return null;
@@ -526,18 +526,18 @@ const AIAssistant = () => {
 
             {/* Relevant Regulations */}
             {regulationsResult && (
-              <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
-                <CardHeader className="p-3 sm:p-4">
-                  <CardTitle className="text-base sm:text-lg flex items-center gap-2 sm:gap-3 text-white">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                      <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400" />
+              <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border-2 border-elec-yellow/20">
+                <CardHeader className="p-6 sm:p-8">
+                  <CardTitle className="text-xl sm:text-2xl flex items-center gap-4 text-white font-bold">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-elec-yellow/20 rounded-xl flex items-center justify-center">
+                      <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
                     </div>
                     Relevant Regulations
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-3 sm:p-4 pt-0">
+                <CardContent className="p-6 sm:p-8 pt-0">
                   <div className="prose prose-invert max-w-none">
-                    <div className="text-xs sm:text-sm text-gray-300 leading-relaxed space-y-4">
+                    <div className="text-base sm:text-lg text-gray-300 leading-relaxed space-y-5">
                       {(() => {
                         // Fallback parsing: Auto-split regulations if AI didn't format correctly
                         let regulationsText = String(regulationsResult || '');
@@ -653,30 +653,30 @@ const AIAssistant = () => {
 
             {/* Practical Guidance Section */}
             {practicalGuidanceResult && (
-              <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
-                <CardHeader className="p-3 sm:p-4">
-                  <CardTitle className="text-base sm:text-lg flex items-center gap-2 sm:gap-3 text-white">
-                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
-                      <Wrench className="h-3 w-3 sm:h-4 sm:w-4 text-green-400" />
+              <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border-2 border-elec-yellow/20">
+                <CardHeader className="p-6 sm:p-8">
+                  <CardTitle className="text-xl sm:text-2xl flex items-center gap-4 text-white font-bold">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                      <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-green-400" />
                     </div>
                     Practical Guidance
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-3 sm:p-4 pt-0">
+                <CardContent className="p-6 sm:p-8 pt-0">
                   <div className="prose prose-invert max-w-none">
-                    <div className="text-xs sm:text-sm text-gray-300 whitespace-pre-wrap leading-relaxed space-y-3">
+                    <div className="text-base sm:text-lg text-gray-300 whitespace-pre-wrap leading-relaxed space-y-4">
                       {String(practicalGuidanceResult || '').split('\n').map((line, index) => {
                         const trimmed = line.trim();
                         if (!trimmed) return null;
                         
                         let processedText = trimmed;
                         
-                        // Section headers
+                         // Section headers
                         if (trimmed.match(/^(PRACTICAL|GUIDANCE|INSTALLATION|TESTING|PROCEDURE):?$/i)) {
                           return (
-                            <div key={index} className="mt-4 mb-3 first:mt-0 pb-2 border-b border-green-400/20">
-                              <h4 className="text-green-400 font-bold text-sm sm:text-base flex items-center gap-2">
-                                <span className="text-lg">🔧</span>
+                            <div key={index} className="mt-6 mb-4 first:mt-0 pb-3 border-b border-green-400/20">
+                              <h4 className="text-green-400 font-bold text-lg sm:text-xl flex items-center gap-3">
+                                <span className="text-xl">🔧</span>
                                 <span>{trimmed}</span>
                               </h4>
                             </div>
@@ -686,8 +686,8 @@ const AIAssistant = () => {
                         // Subsection headers
                         if (trimmed.endsWith(':') && trimmed.length < 60 && !trimmed.match(/^[\d\w\s]{1,3}:/)) {
                           return (
-                            <div key={index} className="mt-3 mb-2">
-                              <h5 className="font-semibold text-green-300 text-sm" dangerouslySetInnerHTML={{ __html: processedText }} />
+                            <div key={index} className="mt-4 mb-3">
+                              <h5 className="font-semibold text-green-300 text-base sm:text-lg" dangerouslySetInnerHTML={{ __html: processedText }} />
                             </div>
                           );
                         }
@@ -696,16 +696,16 @@ const AIAssistant = () => {
                         if (trimmed.match(/^[-•]\s+/)) {
                           const bulletText = processedText.replace(/^[-•]\s+/, '');
                           return (
-                            <div key={index} className="ml-4 mb-2 flex items-start gap-2">
-                              <span className="text-green-400 text-sm mt-1">•</span>
-                              <span className="text-gray-300 text-xs sm:text-sm" dangerouslySetInnerHTML={{ __html: bulletText }} />
+                            <div key={index} className="ml-5 mb-3 flex items-start gap-3">
+                              <span className="text-green-400 text-lg mt-1">•</span>
+                              <span className="text-gray-300 text-base sm:text-lg" dangerouslySetInnerHTML={{ __html: bulletText }} />
                             </div>
                           );
                         }
                         
                         // Regular paragraphs
                         return (
-                          <p key={index} className="text-gray-300 text-xs sm:text-sm my-2" dangerouslySetInnerHTML={{ __html: processedText }} />
+                          <p key={index} className="text-gray-300 text-base sm:text-lg my-3" dangerouslySetInnerHTML={{ __html: processedText }} />
                         );
                       }).filter(Boolean)}
                     </div>
@@ -739,14 +739,14 @@ const AIAssistant = () => {
         )}
 
         {/* Benefits Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-w-6xl mx-auto mt-8 sm:mt-12">
-          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                  <Sparkles className="h-4 w-4 text-purple-400" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto mt-12 sm:mt-16">
+          <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border-2 border-elec-yellow/20">
+            <CardContent className="p-5 sm:p-6">
+              <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                <div className="w-10 h-10 bg-elec-yellow/20 rounded-xl flex items-center justify-center">
+                  <Sparkles className="h-5 w-5 text-elec-yellow" />
                 </div>
-                <h3 className="font-semibold text-white text-sm sm:text-base">Instant Answers</h3>
+                <h3 className="font-semibold text-white text-base sm:text-lg">Instant Answers</h3>
               </div>
               <p className="text-gray-300 text-xs sm:text-sm">
                 Get immediate responses to complex electrical regulation questions using advanced AI.
