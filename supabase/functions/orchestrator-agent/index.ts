@@ -11,6 +11,7 @@ import { planAgentSequence, type AgentContext, type AgentOutput, type AgentPlan 
 import { validateResponse } from '../_shared/response-validation.ts';
 import { ResponseCache, isCacheable } from '../_shared/response-cache.ts';
 import { extractCircuitContext } from './extract-circuit-context.ts';
+import { validateAgentOutputs, formatValidationReport } from '../_shared/validation-layer.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -401,6 +402,24 @@ async function handleConversationalMode(
           })}\n\n`;
           controller.enqueue(encoder.encode(errorEvent));
         } else {
+          // VALIDATION LAYER: Cross-agent consistency checks
+          const validation = validateAgentOutputs(agentOutputs);
+          const validationReport = formatValidationReport(validation);
+          
+          // If validation found issues, send them as a separate message
+          if (validationReport) {
+            const validationEvent = `data: ${JSON.stringify({
+              type: 'agent_response',
+              agent: 'validation',
+              response: `**Design Validation:**\n\n${validationReport}`,
+              citations: [],
+              toolCalls: [],
+              confidence: 1.0,
+              structuredData: { validation }
+            })}\n\n`;
+            controller.enqueue(encoder.encode(validationEvent));
+          }
+          
           // Send all_agents_complete event
           const executionTime = Date.now() - startTime;
           const finalEvent = `data: ${JSON.stringify({
@@ -411,6 +430,7 @@ async function handleConversationalMode(
               citations: a.citations,
               confidence: a.confidence
             })),
+            validation,
             totalCitations: allCitations,
             costUpdates,
             toolCalls: allToolCalls,

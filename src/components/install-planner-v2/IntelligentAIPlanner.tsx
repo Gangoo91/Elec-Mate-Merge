@@ -24,6 +24,7 @@ import { InChatAgentSelector, AgentType } from "./InChatAgentSelector";
 import { PhotoUploadButton } from "./PhotoUploadButton";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import { DesignAlternatives } from "./DesignAlternatives";
 import { v4 as uuidv4 } from 'uuid';
 
 // Feature flag to toggle between orchestrator and legacy designer
@@ -907,6 +908,20 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             </div>
           ))}
           
+          {/* Design Alternatives Component */}
+          {messages.some(m => m.agentName === 'designer') && !isLoading && !isStreaming && (
+            <div className="flex justify-start">
+              <div className="max-w-[85%] md:max-w-[75%]">
+                <DesignAlternatives 
+                  messages={messages}
+                  onSelectAlternative={(alt, newMessages) => {
+                    setMessages(prev => [...prev, ...newMessages]);
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Loading indicator */}
           {(isLoading || isStreaming) && activeAgents.length > 0 && (
             <div className="flex justify-start gap-2">

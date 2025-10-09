@@ -335,3 +335,6 @@ verify_jwt = false
 
 [functions.wiring-diagram-generator-rag]
 verify_jwt = false
+
+[functions.generate-design-alternatives]
+verify_jwt = false

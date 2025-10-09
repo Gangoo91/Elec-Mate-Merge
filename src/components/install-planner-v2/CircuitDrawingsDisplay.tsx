@@ -9,6 +9,7 @@ import { generateSingleLineDiagram, generateConsumerUnitDiagram, CircuitData } f
 import { SVGDiagramRenderer } from "@/components/circuit-diagrams/SVGDiagramRenderer";
 import { exportDiagramsAsPDF, exportDiagramAsPNG } from "@/lib/diagramGenerator/exportDiagram";
 import { FloorPlanDisplay } from "./FloorPlanDisplay";
+import { SVGDiagramRenderer as LocalSVGRenderer } from "./SVGDiagramRenderer";
 
 interface Message {
   role: 'user' | 'assistant';
