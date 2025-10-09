@@ -241,14 +241,14 @@ const AIAssistant = () => {
     <div className="min-h-screen bg-neutral-900 text-white">
       <div className="max-w-7xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-8">
         {/* Hero Section */}
-        <div className="text-center space-y-6 sm:space-y-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-elec-yellow/30 to-yellow-500/30 rounded-2xl border border-elec-yellow/30">
-            <Sparkles className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
+        <div className="text-center space-y-3 sm:space-y-4">
+          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-elec-yellow/30 to-yellow-500/30 rounded-xl border border-elec-yellow/30">
+            <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
             Intelligent Search
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg lg:text-xl max-w-4xl mx-auto leading-relaxed">
+          <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Ask questions about BS7671 electrical regulations in plain English. Get instant answers with relevant
             regulations, practical guidance, and safety tips.
           </p>
