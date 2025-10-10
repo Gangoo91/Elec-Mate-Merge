@@ -59,7 +59,7 @@ serve(async (req) => {
     logger.info('Designer Agent processing with RAG + Lovable AI', { messageCount: messages?.length });
 
     const userMessage = messages[messages.length - 1]?.content || '';
-    const circuitParams = extractCircuitParams(userMessage, currentDesign);
+    const circuitParams = extractCircuitParams(userMessage, currentDesign, context);
 
     // Run enhanced BS 7671 calculations
     let calculationResults: any = null;
@@ -900,7 +900,7 @@ function detectProjectScope(userMessage: string): {
   };
 }
 
-function extractCircuitParams(userMessage: string, currentDesign: any): any {
+function extractCircuitParams(userMessage: string, currentDesign: any, context?: any): any {
   const loadMatch = userMessage.match(/(\d+\.?\d*)\s*(kW|W)/i);
   const voltageMatch = userMessage.match(/(\d+)\s*V/i);
   const lengthMatch = userMessage.match(/(\d+)\s*m(?:etre)?s?/i);
