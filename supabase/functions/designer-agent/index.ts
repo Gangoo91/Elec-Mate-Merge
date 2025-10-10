@@ -135,100 +135,142 @@ serve(async (req) => {
       };
     }
 
-    // RAG: Query BS 7671 regulations AND design knowledge via Supabase RPC
+    // RAG OPTIMIZATION: Calculation-first approach
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    const ragQuery = circuitParams.circuitType 
-      ? `${circuitParams.circuitType} circuit design overload protection voltage drop cable sizing installation methods`
-      : 'socket circuit design overload protection voltage drop cable sizing installation methods';
+    // Detect project scope for multi-circuit vs single circuit
+    const projectScope = detectProjectScope(userMessage);
     
-    console.log(`🔍 RAG: Searching BS 7671 + Design Knowledge for: ${ragQuery}`);
+    // Map circuit type for filtering
+    const circuitTypeMap: { [key: string]: string } = {
+      'cooker': 'cooker',
+      'shower': 'shower',
+      'ring-main': 'sockets',
+      'lighting': 'lighting',
+      'ev-charging': 'ev-charging',
+      'immersion': 'immersion'
+    };
+    const circuitFilter = circuitTypeMap[circuitParams.circuitType] || null;
     
-    // Generate embedding for RAG query using Lovable AI with retry + timeout
-    const embeddingResponse = await logger.time(
-      'Lovable AI embedding generation',
-      () => withRetry(
-        () => withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${lovableApiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model: 'text-embedding-3-small',
-              input: ragQuery,
-            }),
-          }),
-          Timeouts.STANDARD,
-          'Lovable AI embedding generation'
-        ),
-        RetryPresets.STANDARD
-      )
+    // Skip RAG for simple single-circuit requests with clear parameters
+    const canSkipRAG = (
+      !projectScope.isMultiCircuit && // Single circuit
+      circuitParams.power > 0 && // Has load
+      circuitParams.cableLength > 0 && // Has distance
+      !userMessage.match(/why|how|explain|guide|best practice|what about|consider|option/i) // Not asking exploratory questions
     );
-
+    
     let relevantRegsText = '';
     let designKnowledge = '';
     
-    if (embeddingResponse.ok) {
-      const embeddingData = await embeddingResponse.json();
-      const embedding = embeddingData.data[0].embedding;
+    if (canSkipRAG) {
+      logger.info('🚀 CALCULATION-ONLY mode (skipping RAG)', { 
+        reason: 'Simple single circuit with clear parameters',
+        power: circuitParams.power,
+        distance: circuitParams.cableLength,
+        circuitType: circuitParams.circuitType
+      });
+      console.log(`⚡ Fast-track: Using calculation engines only (no RAG needed)`);
+    } else {
+      const ragQuery = circuitParams.circuitType 
+        ? `${circuitParams.circuitType} circuit design overload protection voltage drop cable sizing installation methods`
+        : 'socket circuit design overload protection voltage drop cable sizing installation methods';
       
-      // Search BS 7671 regulations and design knowledge in parallel with timeout
-      const { successes, failures } = await safeAll([
-        {
-          name: 'BS7671 regulations',
-          execute: () => withTimeout(
-            supabase.rpc('search_bs7671', {
-              query_embedding: embedding,
-              match_threshold: 0.7,
-              match_count: 10
+      console.log(`🔍 RAG: Searching BS 7671 + Design Knowledge for: ${ragQuery}`);
+      
+      // Generate embedding for RAG query using Lovable AI with retry + timeout
+      const embeddingResponse = await logger.time(
+        'Lovable AI embedding generation',
+        () => withRetry(
+          () => withTimeout(
+            fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${lovableApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model: 'text-embedding-3-small',
+                input: ragQuery,
+              }),
             }),
             Timeouts.STANDARD,
-            'BS7671 vector search'
-          )
-        },
-        {
-          name: 'Design knowledge',
-          execute: () => withTimeout(
-            supabase.rpc('search_design_knowledge', {
-              query_embedding: embedding,
-              match_threshold: 0.7,
-              match_count: 5
-            }),
-            Timeouts.STANDARD,
-            'Design knowledge search'
-          )
+            'Lovable AI embedding generation'
+          ),
+          RetryPresets.STANDARD
+        )
+      );
+    
+      if (embeddingResponse.ok) {
+        const embeddingData = await embeddingResponse.json();
+        const embedding = embeddingData.data[0].embedding;
+        
+        // OPTIMIZED: Reduced match counts and added circuit_filter
+        const { successes, failures } = await safeAll([
+          {
+            name: 'BS7671 regulations',
+            execute: () => withTimeout(
+              supabase.rpc('search_bs7671', {
+                query_embedding: embedding,
+                match_threshold: 0.75, // Higher threshold for better relevance
+                match_count: 3 // Reduced from 10
+              }),
+              Timeouts.STANDARD,
+              'BS7671 vector search'
+            )
+          },
+          {
+            name: 'Design knowledge',
+            execute: () => withTimeout(
+              supabase.rpc('search_design_knowledge', {
+                query_embedding: embedding,
+                circuit_filter: circuitFilter, // NEW: Filter by circuit type
+                match_threshold: 0.75,
+                match_count: 2 // Reduced from 5
+              }),
+              Timeouts.STANDARD,
+              'Design knowledge search'
+            )
+          }
+        ]);
+
+        // Extract BS 7671 regulations
+        const regulationsResult = successes.find(s => s.name === 'BS7671 regulations');
+        const regulations = regulationsResult?.result?.data;
+
+        if (regulations && regulations.length > 0) {
+          relevantRegsText = regulations.map((r: any) => 
+            `Reg ${r.regulation_number} (${r.section}): ${r.content}`
+          ).join('\n\n');
+          logger.info('Found relevant regulations', { count: regulations.length });
         }
-      ]);
+        
+        // Extract design knowledge
+        const designResult = successes.find(s => s.name === 'Design knowledge');
+        const designDocs = designResult?.result?.data;
 
-      // Extract BS 7671 regulations
-      const regulationsResult = successes.find(s => s.name === 'BS7671 regulations');
-      const regulations = regulationsResult?.result?.data;
+        if (designDocs && designDocs.length > 0) {
+          designKnowledge = designDocs.map((d: any) => 
+            `${d.topic} (${d.source}): ${d.content}`
+          ).join('\n\n');
+          logger.info('Found design knowledge documents', { count: designDocs.length });
+        }
 
-      if (regulations && regulations.length > 0) {
-        relevantRegsText = regulations.map((r: any) => 
-          `Reg ${r.regulation_number} (${r.section}): ${r.content}`
-        ).join('\n\n');
-        logger.info('Found relevant regulations', { count: regulations.length });
-      }
-      
-      // Extract design knowledge
-      const designResult = successes.find(s => s.name === 'Design knowledge');
-      const designDocs = designResult?.result?.data;
+        // Log RAG performance metrics
+        const ragContextSize = relevantRegsText.length + designKnowledge.length;
+        logger.info('📚 RAG Performance', {
+          bs7671Chunks: regulations?.length || 0,
+          designChunks: designDocs?.length || 0,
+          totalSizeKB: Math.round(ragContextSize / 1024),
+          circuitFilter: circuitFilter || 'none'
+        });
 
-      if (designDocs && designDocs.length > 0) {
-        designKnowledge = designDocs.map((d: any) => 
-          `${d.topic} (${d.source}): ${d.content}`
-        ).join('\n\n');
-        logger.info('Found design knowledge documents', { count: designDocs.length });
-      }
-
-      // Log failures without blocking
-      if (failures.length > 0) {
-        logger.warn('Some knowledge base queries failed', { failures: failures.map(f => f.name) });
+        // Log failures without blocking
+        if (failures.length > 0) {
+          logger.warn('Some knowledge base queries failed', { failures: failures.map(f => f.name) });
+        }
       }
     }
 

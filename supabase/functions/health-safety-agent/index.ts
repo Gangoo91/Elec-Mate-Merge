@@ -38,72 +38,102 @@ serve(async (req) => {
     const circuitDetails = extractCircuitDetails(latestMessage, currentDesign, context);
     const workType = extractWorkType(latestMessage, currentDesign);
 
-    // RAG: Query health_safety_knowledge via Supabase RPC
+    // RAG OPTIMIZATION: Pre-filter by scale and skip when Designer provides full data
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    const ragQuery = `${workType} electrical work hazards safety risks controls PPE ACOP CDM EWR HASAWA`;
-    console.log(`🔍 RAG: Searching H&S knowledge for: ${ragQuery}`);
+    // Extract context from previous agents
+    const previousAgentOutputs = context?.previousAgentOutputs || [];
+    const designerOutput = previousAgentOutputs.find((a: any) => a.agent === 'designer');
+    const hasDesignerCircuitData = designerOutput && (
+      designerOutput.response?.includes('Cable:') || 
+      designerOutput.response?.includes('Protection:') ||
+      designerOutput.response?.includes('circuits')
+    );
+    
+    // Detect scale for filtering
+    const scaleMap: { [key: string]: string } = {
+      'domestic': 'domestic',
+      'commercial': 'commercial',
+      'industrial': 'industrial'
+    };
+    const scaleFilter = scaleMap[jobScale] || 'domestic';
     
     let ragContext = ''; // Initialize empty for graceful degradation
     
-    // Generate embedding for RAG query using Lovable AI with retry + timeout
-    const embeddingResponse = await logger.time(
-      'Lovable AI embedding generation',
-      () => withRetry(
-        () => withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${lovableApiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model: 'text-embedding-3-small',
-              input: ragQuery,
+    // Skip RAG if Designer provided complete circuit specification
+    if (hasDesignerCircuitData) {
+      logger.info('⏭️ Skipping H&S RAG - using Designer circuit data', { 
+        reason: 'Complete circuit spec available from Designer'
+      });
+      console.log('⚡ Fast-track: Using Designer circuit data (no H&S RAG needed)');
+    } else {
+      const ragQuery = `${workType} electrical work hazards safety risks controls PPE ACOP CDM EWR HASAWA`;
+      console.log(`🔍 RAG: Searching H&S knowledge (scale: ${scaleFilter}) for: ${ragQuery}`);
+      
+      // Generate embedding for RAG query using Lovable AI with retry + timeout
+      const embeddingResponse = await logger.time(
+        'Lovable AI embedding generation',
+        () => withRetry(
+          () => withTimeout(
+            fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${lovableApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model: 'text-embedding-3-small',
+                input: ragQuery,
+              }),
             }),
-          }),
-          Timeouts.STANDARD,
-          'Lovable AI embedding generation'
-        ),
-        RetryPresets.STANDARD
-      )
-    );
-
-    // Only use RAG if embedding generation succeeds
-    if (embeddingResponse.ok) {
-      const embeddingData = await embeddingResponse.json();
-      const queryEmbedding = embeddingData.data[0].embedding;
-      logger.debug('Embedding generated successfully');
-
-      // Query RAG database with timeout protection
-      const { data: ragResults, error: ragError } = await logger.time(
-        'Health & Safety vector search',
-        () => withTimeout(
-          supabase.rpc('search_health_safety', {
-            query_embedding: queryEmbedding,
-            match_threshold: 0.75,
-            match_count: 5
-          }),
-          Timeouts.STANDARD,
-          'Health & Safety vector search'
+            Timeouts.STANDARD,
+            'Lovable AI embedding generation'
+          ),
+          RetryPresets.STANDARD
         )
       );
 
-      if (!ragError && ragResults && ragResults.length > 0) {
-        ragContext = ragResults
-          .map((item: any, idx: number) => 
-            `${idx + 1}. ${item.topic} (Source: ${item.source}, Similarity: ${(item.similarity * 100).toFixed(0)}%)\n${item.content}`
-          ).join('\n\n');
-        logger.info('Found H&S knowledge entries', { count: ragResults.length });
+      // Only use RAG if embedding generation succeeds
+      if (embeddingResponse.ok) {
+        const embeddingData = await embeddingResponse.json();
+        const queryEmbedding = embeddingData.data[0].embedding;
+        logger.debug('Embedding generated successfully');
+
+        // OPTIMIZED: Query RAG with scale filter and reduced count
+        const { data: ragResults, error: ragError } = await logger.time(
+          'Health & Safety vector search',
+          () => withTimeout(
+            supabase.rpc('search_health_safety', {
+              query_embedding: queryEmbedding,
+              scale_filter: scaleFilter, // NEW: Filter by scale
+              match_threshold: 0.75,
+              match_count: 3 // Reduced from 5
+            }),
+            Timeouts.STANDARD,
+            'Health & Safety vector search'
+          )
+        );
+
+        if (!ragError && ragResults && ragResults.length > 0) {
+          ragContext = ragResults
+            .map((item: any, idx: number) => 
+              `${idx + 1}. ${item.topic} (Source: ${item.source}, Similarity: ${(item.similarity * 100).toFixed(0)}%)\n${item.content}`
+            ).join('\n\n');
+          logger.info('📚 H&S RAG Performance', { 
+            chunks: ragResults.length,
+            sizeKB: Math.round(ragContext.length / 1024),
+            scale: scaleFilter
+          });
+        } else {
+          logger.warn('No relevant H&S knowledge found in database');
+          ragContext = 'No specific guidelines found - using general electrical safety knowledge.';
+        }
       } else {
-        logger.warn('No relevant H&S knowledge found in database');
-        ragContext = 'No specific guidelines found - using general electrical safety knowledge.';
+        logger.error('Embedding generation failed, continuing without RAG');
+        ragContext = 'RAG system unavailable - using general electrical safety knowledge.';
       }
-    } else {
-      logger.error('Embedding generation failed, continuing without RAG');
-      ragContext = 'RAG system unavailable - using general electrical safety knowledge.';
     }
 
     // Extract context from previous agents

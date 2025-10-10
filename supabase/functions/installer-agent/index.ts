@@ -38,9 +38,34 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
     
     const userMessage = messages[messages.length - 1]?.content || '';
+    
+    // RAG OPTIMIZATION: Route by installation method
+    // Extract installation method from previous agents or user message
+    const previousAgentOutputs = context?.previousAgentOutputs || [];
+    const designerOutput = previousAgentOutputs.find((a: any) => a.agent === 'designer');
+    
+    // Parse installation method
+    let installationMethod = 'general';
+    const methodPatterns = {
+      'clipped-direct': /clipped\s+direct|surface\s+mount|twin\s+&\s+earth|T&E/i,
+      'swa': /SWA|steel\s+wire\s+armoured|armoured/i,
+      'cable-tray': /cable\s+tray|on\s+tray/i,
+      'conduit': /conduit/i,
+      'trunking': /trunking/i,
+      'buried': /buried|underground/i
+    };
+    
+    const combinedText = `${userMessage} ${designerOutput?.response || ''}`;
+    for (const [method, pattern] of Object.entries(methodPatterns)) {
+      if (pattern.test(combinedText)) {
+        installationMethod = method;
+        break;
+      }
+    }
+    
     const ragQuery = `${userMessage} cable installation methods safe zones support intervals termination practical guidance`;
     
-    console.log(`🔍 RAG: Searching installation + design knowledge for: ${ragQuery}`);
+    console.log(`🔍 RAG: Searching installation knowledge (method: ${installationMethod}) for: ${ragQuery}`);
     
     // Generate embedding for installation knowledge search with retry + timeout
     const embeddingResponse = await logger.time(
@@ -66,65 +91,38 @@ serve(async (req) => {
     );
 
     let installationKnowledge = '';
-    let designKnowledge = '';
     
     if (embeddingResponse.ok) {
       const embeddingDataRes = await embeddingResponse.json();
       const embedding = embeddingDataRes.data[0].embedding;
       
-      // Search installation knowledge and design knowledge in parallel with timeout
-      const { successes, failures } = await safeAll([
-        {
-          name: 'Installation knowledge',
-          execute: () => withTimeout(
-            supabase.rpc('search_installation_knowledge', {
-              query_embedding: embedding,
-              match_threshold: 0.7,
-              match_count: 8
-            }),
-            Timeouts.STANDARD,
-            'Installation knowledge search'
-          )
-        },
-        {
-          name: 'Design knowledge',
-          execute: () => withTimeout(
-            supabase.rpc('search_design_knowledge', {
-              query_embedding: embedding,
-              match_threshold: 0.7,
-              match_count: 5
-            }),
-            Timeouts.STANDARD,
-            'Design knowledge search'
-          )
-        }
-      ]);
+      // OPTIMIZED: Only search installation knowledge with method filter
+      const { data: instResults, error: instError } = await logger.time(
+        'Installation knowledge search',
+        () => withTimeout(
+          supabase.rpc('search_installation_knowledge', {
+            query_embedding: embedding,
+            method_filter: installationMethod, // NEW: Filter by method
+            match_threshold: 0.75,
+            match_count: 3 // Reduced from 8
+          }),
+          Timeouts.STANDARD,
+          'Installation knowledge search'
+        )
+      );
 
-      // Extract installation knowledge
-      const installResult = successes.find(s => s.name === 'Installation knowledge');
-      const knowledge = installResult?.result?.data;
-
-      if (knowledge && knowledge.length > 0) {
-        installationKnowledge = knowledge.map((k: any) => 
-          `${k.topic} (${k.source}): ${k.content}`
-        ).join('\n\n');
-        logger.info('Found installation guides', { count: knowledge.length });
-      }
-      
-      // Extract design knowledge
-      const designResult = successes.find(s => s.name === 'Design knowledge');
-      const designDocs = designResult?.result?.data;
-
-      if (designDocs && designDocs.length > 0) {
-        designKnowledge = designDocs.map((d: any) => 
+      if (!instError && instResults && instResults.length > 0) {
+        installationKnowledge = instResults.map((d: any) => 
           `${d.topic} (${d.source}): ${d.content}`
         ).join('\n\n');
-        logger.info('Found design documents', { count: designDocs.length });
-      }
-
-      // Log failures without blocking
-      if (failures.length > 0) {
-        logger.warn('Some knowledge base queries failed', { failures: failures.map(f => f.name) });
+        
+        logger.info('📚 Installer RAG Performance', { 
+          chunks: instResults.length,
+          sizeKB: Math.round(installationKnowledge.length / 1024),
+          method: installationMethod
+        });
+      } else {
+        logger.warn('No installation knowledge found, using static guidance');
       }
     }
 

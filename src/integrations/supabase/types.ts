@@ -5393,12 +5393,20 @@ export type Database = {
         }[]
       }
       search_design_knowledge: {
-        Args: {
-          match_count?: number
-          match_threshold?: number
-          query_embedding: string
-          source_filter?: string
-        }
+        Args:
+          | {
+              circuit_filter?: string
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+              source_filter?: string
+            }
+          | {
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+              source_filter?: string
+            }
         Returns: {
           content: string
           id: string
@@ -5408,12 +5416,20 @@ export type Database = {
         }[]
       }
       search_health_safety: {
-        Args: {
-          match_count?: number
-          match_threshold?: number
-          query_embedding: string
-          source_filter?: string
-        }
+        Args:
+          | {
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+              scale_filter?: string
+              source_filter?: string
+            }
+          | {
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+              source_filter?: string
+            }
         Returns: {
           content: string
           id: string
@@ -5438,12 +5454,20 @@ export type Database = {
         }[]
       }
       search_installation_knowledge: {
-        Args: {
-          match_count?: number
-          match_threshold?: number
-          query_embedding: string
-          source_filter?: string
-        }
+        Args:
+          | {
+              match_count?: number
+              match_threshold?: number
+              method_filter?: string
+              query_embedding: string
+              source_filter?: string
+            }
+          | {
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+              source_filter?: string
+            }
         Returns: {
           content: string
           id: string
