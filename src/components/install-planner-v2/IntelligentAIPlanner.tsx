@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase, Play, RotateCcw, Pause, ClipboardCheck, MoreVertical } from "lucide-react";
+import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase, Play, RotateCcw, Pause, ClipboardCheck, MoreVertical, Clock } from "lucide-react";
+import { AssumptionConfirmSheet } from "./AssumptionConfirmSheet";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { InstallPlanDataV2 } from "./types";
@@ -121,6 +123,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [lastSentMessage, setLastSentMessage] = useState<string>("");
   const [lastSendFailed, setLastSendFailed] = useState<boolean>(false);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [confirmationData, setConfirmationData] = useState<any>(null);
+  const [pendingConfirmation, setPendingConfirmation] = useState(false);
   
   // Phase 5: Progressive Disclosure UI
   const [estimatedTime, setEstimatedTime] = useState(0);
@@ -191,7 +196,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     }
   }, []);
 
-  const { streamMessage, isStreaming } = useStreamingChat({
+  const { streamMessage, streamConfirmation, isStreaming } = useStreamingChat({
     onQuestionAnalysis: (data) => {
       console.log('📊 Question Analysis received:', data);
       // Store in session storage for EnhancedResultsPage
@@ -199,12 +204,22 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     },
     onConfirmationRequired: (data) => {
       console.log('⏸️ Confirmation required:', data);
+      
       // Store in session with confirmationId
       sessionStorage.setItem('questionAnalysis', JSON.stringify({
         ...data.questionAnalysis,
         confirmationId: data.confirmationId,
         criticalMissing: data.criticalMissing
       }));
+      
+      // Open the confirmation sheet
+      setConfirmationData({
+        confirmationId: data.confirmationId,
+        interpretedRequirements: data.questionAnalysis?.interpretedRequirements || {},
+        criticalMissing: data.criticalMissing || []
+      });
+      setPendingConfirmation(true);
+      setConfirmationOpen(true);
       
       toast.info('Please review and confirm the assumptions', {
         description: data.message || 'Some parameters need verification'
@@ -385,6 +400,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       setCurrentAction('');
       setReasoningSteps(prev => prev.map(step => ({ ...step, status: 'complete' as const })));
       setShowProgress(false); // Hide progress bar when done
+      setPendingConfirmation(false);
     },
     onAgentUpdate: (agents) => {
       setActiveAgents(agents);
@@ -395,7 +411,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     onCitation: (citation) => {
       console.log('Citation received:', citation);
     },
-onError: (error) => {
+    onError: (error) => {
   const msg = String(error || '').toLowerCase();
   if (msg.includes('still working')) {
     toast.info(String(error));
@@ -405,8 +421,24 @@ onError: (error) => {
   } else {
     toast.error(String(error));
   }
+  setShowProgress(false);
 }
   });
+
+  const handleConfirmAssumptions = async (confirmedAnalysis: any) => {
+    if (!confirmationData?.confirmationId) {
+      toast.error("Missing confirmation session. Please try again.");
+      return;
+    }
+
+    setPendingConfirmation(false);
+    setShowProgress(true);
+    
+    await streamConfirmation({
+      confirmationId: confirmationData.confirmationId,
+      confirmedAnalysis
+    });
+  };
 
   // Smooth, throttled auto-scroll - only if user is near bottom
   useEffect(() => {
@@ -462,6 +494,7 @@ onError: (error) => {
 
     // Clear failure flag when attempting a new send
     setLastSendFailed(false);
+    setPendingConfirmation(false);
     setLastSentMessage(userMessage);
     setInput("");
     if (textareaRef.current) textareaRef.current.style.height = '44px';
@@ -1267,6 +1300,16 @@ onError: (error) => {
       {/* Phase 1: Compact Input Area - Sticky at bottom on mobile */}
       <div className="sticky md:relative bottom-0 md:bottom-auto left-0 right-0 z-50 md:z-auto bg-gradient-to-t from-elec-dark via-elec-dark to-transparent pt-4 pb-safe border-t border-border/30">
         <div className="max-w-5xl mx-auto px-3 md:px-5 space-y-2">
+          {/* Pending Confirmation Banner */}
+          {pendingConfirmation && (
+            <Alert className="border-elec-yellow/30 bg-elec-yellow/10">
+              <Clock className="h-4 w-4 text-elec-yellow" />
+              <AlertDescription className="text-xs text-elec-light">
+                Waiting for your confirmation… Review the assumptions above.
+              </AlertDescription>
+            </Alert>
+          )}
+
           {/* Phase 1: Collapsed Export Menu */}
           {hasMeaningfulContent && (
             <div className="flex gap-2 justify-center">
@@ -1369,6 +1412,14 @@ onError: (error) => {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Sheet */}
+      <AssumptionConfirmSheet
+        open={confirmationOpen}
+        onOpenChange={setConfirmationOpen}
+        confirmationData={confirmationData}
+        onConfirm={handleConfirmAssumptions}
+      />
 
       {/* Exit Confirmation Dialog */}
       <ConfirmationDialog
