@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Lightbulb, Calculator, Wrench, Shield, CheckCircle, ClipboardList,
-  ChevronLeft, ChevronRight
+  ChevronLeft, ChevronRight, ArrowRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -39,9 +39,43 @@ export const InChatAgentSelector = ({
 }: InChatAgentSelectorProps) => {
   const [scrollIndex, setScrollIndex] = useState(0);
   const visibleCount = 3;
+  
+  // Agent dependency chain
+  const agentOrder: AgentType[] = ['designer', 'installer', 'cost-engineer', 'health-safety', 'commissioning'];
 
   return (
     <div className={cn("relative", className)}>
+      {/* Agent Dependency Flow (Mobile & Desktop) */}
+      {activeAgents.length > 0 && (
+        <div className="flex items-center gap-1 mb-2 overflow-x-auto scrollbar-thin scrollbar-thumb-white/10 pb-1">
+          {agentOrder.map((agentId, idx) => {
+            const agent = AGENTS.find(a => a.id === agentId);
+            if (!agent) return null;
+            const Icon = agent.icon;
+            const isActive = activeAgents.includes(agentId);
+            const isComplete = isActive;
+            
+            return (
+              <div key={agentId} className="flex items-center flex-shrink-0">
+                <div className={cn(
+                  "flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] transition-all",
+                  isComplete ? "bg-green-500/10 text-green-400" : "bg-white/5 text-white/30"
+                )}>
+                  <Icon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+                  <span className="hidden sm:inline">{agent.name}</span>
+                </div>
+                {idx < agentOrder.length - 1 && (
+                  <ArrowRight className={cn(
+                    "h-2.5 w-2.5 mx-0.5 flex-shrink-0",
+                    isComplete ? "text-green-400/40" : "text-white/20"
+                  )} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+      
       {/* Desktop */}
       <div className="hidden md:flex items-center gap-1.5 flex-wrap">
         <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}

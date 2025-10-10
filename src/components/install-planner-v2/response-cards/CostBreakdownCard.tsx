@@ -56,8 +56,8 @@ export const CostBreakdownCard = ({ data }: CostBreakdownCardProps) => {
   ];
   
   return (
-    <Card className="border-elec-yellow/20 bg-gradient-to-br from-green-500/5 to-transparent hover:border-elec-yellow/30 transition-all">
-      <CardContent className="p-4 space-y-4">
+    <Card className="border-elec-yellow/20 bg-gradient-to-br from-green-500/5 to-transparent hover:border-elec-yellow/30 transition-all max-w-full overflow-hidden">
+      <CardContent className="p-3 sm:p-4 space-y-3 sm:space-y-4 max-w-full overflow-hidden break-words">
         {/* Header */}
         <div className="flex items-center justify-between">
           <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/30">
