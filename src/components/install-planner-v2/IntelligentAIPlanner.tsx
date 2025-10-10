@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase, Play, RotateCcw, Pause, ClipboardCheck, MoreVertical } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -447,10 +446,10 @@ onError: (error) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !isLoading && !isStreaming && input.trim()) {
       e.preventDefault();
       
-      // Phase 2: Debounce rapid Enter presses (500ms)
+      // Debounce rapid Enter presses
       if (debounceTimer) {
         clearTimeout(debounceTimer);
       }
@@ -1121,13 +1120,14 @@ onError: (error) => {
 
           {/* Chat Input - Modern Compact Design */}
           <div className="relative">
-            <Textarea
+            <input
+              type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="Type your message..."
               disabled={isLoading}
-              className="w-full h-11 md:h-12 text-base font-medium rounded-xl pl-11 pr-11 py-2 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-tight overflow-hidden transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20"
+              className="w-full h-11 md:h-12 text-base font-medium rounded-xl pl-11 pr-11 py-2 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-tight transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 focus-visible:outline-none"
               style={{ fontSize: '16px' }}
             />
             
