@@ -120,10 +120,33 @@ COMPREHENSIVE HAZARD IDENTIFICATION CHECKLIST:
 ✓ Equipment hazards (power tools, ladders, scaffold, MEWPs)
 ✓ Chemical hazards (COSHH - adhesives, cutting fluid, cable lubricant, sealants)
 
+⚠️ RISK RATING CALIBRATION (5×5 Matrix):
+Likelihood (L1-L5):
+L1 = Rare (once in career)
+L2 = Unlikely (with proper controls)
+L3 = Possible (if controls lapse)
+L4 = Likely (without controls)
+L5 = Almost Certain (imminent)
+
+Severity (S1-S5):
+S1 = Negligible (first aid only)
+S2 = Minor (lost time injury <3 days)
+S3 = Moderate (lost time injury 3-7 days)
+S4 = Major (hospitalisation, broken bones)
+S5 = Catastrophic (death, multiple casualties)
+
+TYPICAL ELECTRICAL RISK RATINGS:
+⚡ Electric shock (with isolation): L2 × S4 = 8 (MEDIUM)
+⚡ Electric shock (live work): L3 × S5 = 15 (HIGH)
+🔥 Arc flash (domestic): L2 × S3 = 6 (LOW-MEDIUM)
+🔥 Arc flash (commercial/HV): L3 × S5 = 15 (HIGH)
+💥 Manual handling: L3 × S2 = 6 (LOW-MEDIUM)
+🪜 Work at height: L2 × S4 = 8 (MEDIUM)
+
 FOR EACH HAZARD IDENTIFIED:
 - Likelihood (1-5): How often could this realistically occur?
 - Severity (1-5): What's the worst-case credible outcome?
-- Risk Rating: Likelihood × Severity
+- Risk Rating: Likelihood × Severity (DO NOT default to L4/S5)
 - Controls: SPECIFIC, ACTIONABLE controls (not generic "be careful")
 - Residual Risk: After controls applied
 
@@ -152,13 +175,17 @@ If you provide fewer than 5 hazards or 5 method steps, the assessment will be RE
 OUTPUT: 5-7 SPECIFIC HAZARDS
 Risk ratings typically: Low-Medium (customer comfort & property protection priority)
 
-TYPICAL DOMESTIC HAZARDS:
-⚡ Borrowed neutrals (common in older properties)
-🏠 Occupied premises (homeowner/tenant present during work)
-🧱 Hidden services in walls (water pipes, gas, old cables)
-🐕 Pets accessing work area
-👶 Children near work area
-🚗 Parking restrictions/access issues
+FOR DOMESTIC REWIRE:
+Initial risks should typically be MEDIUM (6-12)
+Residual risks (after controls) should be LOW-MEDIUM (2-6)
+
+TYPICAL DOMESTIC HAZARDS (with realistic risk ratings):
+⚡ Electric shock from existing circuits: L2 × S4 = 8 (with isolation) → Residual: 4
+🏠 Occupied premises disruption: L4 × S1 = 4 → Residual: 2
+🧱 Hidden services in walls: L3 × S3 = 9 → Residual: 6
+🐕 Pets accessing work area: L3 × S2 = 6 → Residual: 3
+👶 Children near work area: L3 × S2 = 6 → Residual: 3
+🚗 Manual handling (cable drums): L3 × S2 = 6 → Residual: 3
 
 RELEVANT H&S KNOWLEDGE FROM DATABASE (${workType}):
 ${ragContext}

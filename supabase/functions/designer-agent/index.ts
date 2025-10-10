@@ -160,8 +160,64 @@ serve(async (req) => {
       }
     }
 
-    // Build system prompt with better formatting
-    const systemPrompt = `You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance knowledge.
+    // PHASE 1: Detect multi-circuit projects
+    const projectScope = detectProjectScope(userMessage);
+    
+    let systemPrompt = '';
+    
+    if (projectScope.isMultiCircuit && projectScope.circuits) {
+      console.log(`🏗️ Multi-circuit project detected: ${projectScope.circuits.length} circuits for ${projectScope.propertyType}`);
+      
+      systemPrompt = `You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance knowledge.
+
+CRITICAL: You MUST provide detailed calculations for ALL ${projectScope.circuits.length} circuits below.
+
+STANDARD CIRCUIT SCHEDULE (${projectScope.propertyType}):
+${projectScope.circuits.map((c, i) => `${i+1}. ${c.name} - ${c.rating}A Type B MCB, ${c.power}W load, ${c.cable}mm² cable`).join('\n')}
+
+For EACH circuit above, provide:
+- Design current (Ib) calculation
+- Protection device selection (In)
+- Cable capacity calculation with correction factors (Iz)
+- Voltage drop calculation
+- Earth fault loop impedance (Zs)
+- RCD requirements
+- Compliance statement
+
+FORMAT AS JSON:
+{
+  "circuits": [
+    {
+      "id": "CKT-001",
+      "name": "Kitchen Ring Main",
+      "loadType": "ring-main",
+      "load": 7360,
+      "cableSize": "2.5mm²",
+      "protection": "32A Type B MCB",
+      "calculations": {
+        "Ib": 28.5,
+        "In": 32,
+        "Iz": 27.0,
+        "voltageDrop": { "volts": 3.2, "percent": 1.39, "compliant": true },
+        "zs": { "calculated": 0.68, "max": 1.37, "compliant": true }
+      },
+      "compliance": "Reg 433.1 satisfied (Ib ≤ In ≤ Iz)"
+    }
+  ],
+  "totalLoad": 35500,
+  "totalLoadKW": 35.5,
+  "diversityFactor": 0.6,
+  "diversifiedLoad": 21300,
+  "consumerUnitRequired": "10-way dual RCD (80A main switch)"
+}
+
+${relevantRegsText ? `RELEVANT REGULATIONS:\n${relevantRegsText}\n` : ''}
+${designKnowledge ? `DESIGN GUIDANCE:\n${designKnowledge}\n` : ''}
+
+Use UK English. Be thorough. Return valid JSON only.`;
+    } else {
+      // Single circuit mode
+      systemPrompt = `You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance knowledge.
 
 FORMAT YOUR RESPONSE EXACTLY AS SHOWN BELOW:
 
@@ -207,6 +263,7 @@ ${designKnowledge}
 ` : ''}
 
 Use professional language with UK English spelling. Present calculations clearly. Cite regulation numbers and technical guidance. No conversational filler or markdown formatting.`;
+    }
 
     // Call Lovable AI Gateway with tool-calling for RAG
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
@@ -242,9 +299,19 @@ Use professional language with UK English spelling. Present calculations clearly
 
     console.log('✅ Designer response generated');
 
-    // UPGRADE: Extract ALL structured data for next agents
+    // PHASE 1: Try to parse as JSON first for multi-circuit mode
     const structuredData: any = {};
     const reasoning: string[] = [];
+    
+    if (projectScope.isMultiCircuit) {
+      try {
+        const parsed = JSON.parse(responseContent);
+        console.log('✅ Parsed structured multi-circuit data:', parsed.circuits?.length, 'circuits');
+        Object.assign(structuredData, parsed);
+      } catch (e) {
+        console.warn('⚠️ Multi-circuit response is not valid JSON, falling back to text');
+      }
+    }
     
     if (calculationResults?.cableCapacity) {
       // Add circuit metadata for PDF generation
@@ -384,6 +451,79 @@ function extractCircuitCount(message: string): number {
   if (circuitMatch) return parseInt(circuitMatch[1]);
   
   return 6; // Default assumption
+}
+
+// PHASE 1: Multi-Circuit Detection
+function detectProjectScope(userMessage: string): {
+  isMultiCircuit: boolean;
+  propertyType?: string;
+  circuits?: any[];
+} {
+  const msgLower = userMessage.toLowerCase();
+  
+  // Detect full rewire keywords
+  const isFullRewire = /full\s+rewire|complete\s+rewire|consumer\s+unit\s+upgrade|new\s+installation|3[\s-]?bed|2[\s-]?bed|house\s+rewire/i.test(msgLower);
+  
+  if (!isFullRewire) {
+    return { isMultiCircuit: false };
+  }
+  
+  // Detect property type
+  let propertyType = 'standard';
+  let bedrooms = 3; // default
+  
+  const bedroomMatch = msgLower.match(/(\d+)[\s-]?bed/);
+  if (bedroomMatch) bedrooms = parseInt(bedroomMatch[1]);
+  
+  if (msgLower.includes('flat') || msgLower.includes('apartment')) propertyType = 'flat';
+  else if (msgLower.includes('bungalow')) propertyType = 'bungalow';
+  else if (msgLower.includes('detached')) propertyType = 'detached-house';
+  else if (msgLower.includes('semi') || msgLower.includes('terrace')) propertyType = 'semi-detached-house';
+  
+  // Generate standard circuit schedule
+  const circuits: any[] = [];
+  let circuitNum = 1;
+  
+  // Ring mains (1-2 depending on property size)
+  if (bedrooms >= 3 || propertyType === 'detached-house') {
+    circuits.push({ num: circuitNum++, name: 'Kitchen Ring Main', type: 'ring-main', rating: 32, power: 7360, cable: 2.5 });
+    circuits.push({ num: circuitNum++, name: 'General Sockets Ring Main', type: 'ring-main', rating: 32, power: 7360, cable: 2.5 });
+  } else {
+    circuits.push({ num: circuitNum++, name: 'Sockets Ring Main', type: 'ring-main', rating: 32, power: 7360, cable: 2.5 });
+  }
+  
+  // Lighting circuits (1-2)
+  if (bedrooms >= 3) {
+    circuits.push({ num: circuitNum++, name: 'Downstairs Lighting', type: 'lighting', rating: 6, power: 1000, cable: 1.5 });
+    circuits.push({ num: circuitNum++, name: 'Upstairs Lighting', type: 'lighting', rating: 6, power: 1000, cable: 1.5 });
+  } else {
+    circuits.push({ num: circuitNum++, name: 'Lighting Circuit', type: 'lighting', rating: 6, power: 1000, cable: 1.5 });
+  }
+  
+  // Fixed appliances
+  if (msgLower.includes('cooker') || bedrooms >= 2) {
+    circuits.push({ num: circuitNum++, name: 'Cooker Circuit', type: 'cooker', rating: 32, power: 9200, cable: 6 });
+  }
+  if (msgLower.includes('shower') || bedrooms >= 2) {
+    circuits.push({ num: circuitNum++, name: 'Electric Shower', type: 'shower', rating: 40, power: 8500, cable: 10 });
+  }
+  if (msgLower.includes('immersion') || !msgLower.includes('combi')) {
+    circuits.push({ num: circuitNum++, name: 'Immersion Heater', type: 'immersion', rating: 16, power: 3000, cable: 2.5 });
+  }
+  
+  // Additional circuits
+  if (msgLower.includes('smoke') || propertyType !== 'flat') {
+    circuits.push({ num: circuitNum++, name: 'Smoke/Heat Alarms', type: 'smoke-alarms', rating: 6, power: 50, cable: 1.0 });
+  }
+  if (msgLower.includes('outdoor') || msgLower.includes('garage')) {
+    circuits.push({ num: circuitNum++, name: 'Outdoor Socket', type: 'outdoor-socket', rating: 16, power: 3680, cable: 2.5 });
+  }
+  
+  return {
+    isMultiCircuit: true,
+    propertyType,
+    circuits
+  };
 }
 
 function extractCircuitParams(userMessage: string, currentDesign: any): any {

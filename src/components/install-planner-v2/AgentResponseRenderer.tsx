@@ -11,6 +11,7 @@ import {
   InstallationStepsCard,
   TestSequenceCard
 } from "./response-cards";
+import { DesignerCircuitCards } from "./DesignerCircuitCards";
 
 interface AgentResponseRendererProps {
   content: string;
@@ -62,8 +63,20 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData }:
       {/* Structured Visual Cards (if available) */}
       {hasStructuredData && (
         <div className="space-y-3">
-          {/* Designer Agent - Circuit Spec Card */}
-          {agentId === 'designer' && structuredData.cableSize && (
+          {/* Designer Agent - Multi-Circuit Cards */}
+          {agentId === 'designer' && structuredData.circuits && Array.isArray(structuredData.circuits) && structuredData.circuits.length > 0 && (
+            <div className="space-y-4">
+              <div className="text-sm text-muted-foreground mb-3">
+                {structuredData.circuits.length} circuits designed • 
+                Total Load: {structuredData.totalLoadKW || (structuredData.totalLoad/1000).toFixed(1)}kW
+                {structuredData.diversifiedLoad && ` • Diversified: ${(structuredData.diversifiedLoad/1000).toFixed(1)}kW`}
+              </div>
+              <DesignerCircuitCards circuits={structuredData.circuits} />
+            </div>
+          )}
+          
+          {/* Designer Agent - Single Circuit Spec Card (legacy) */}
+          {agentId === 'designer' && structuredData.cableSize && !structuredData.circuits && (
             <CircuitSpecCard 
               data={structuredData}
               planData={structuredData.planData}

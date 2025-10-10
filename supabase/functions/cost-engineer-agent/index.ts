@@ -84,8 +84,17 @@ Consumer Units (Metal, dual RCD):
 - 6-way: £55-85
 - 10-way: £95-130
 - 18-way: £280-420
-MCBs: £8-18 each (Type B/C, 6-63A)
-RCBOs: £28-45 each
+
+MCBs (Type B):
+- 6A-10A: £8-10 each
+- 16A-20A: £11-13 each
+- 25A-32A: £12-15 each
+- 40A-50A: £15-19 each
+- 63A+: £19-25 each
+
+MCBs (Type C): Add 25% to Type B prices
+RCBOs: £28-45 each (varies by amperage)
+
 Twin & Earth Cable (6242Y per metre):
 - 1.0mm²: £0.65-0.95
 - 1.5mm²: £0.85-1.20
@@ -106,7 +115,23 @@ MATERIALS BREAKDOWN
 Subtotal Materials: £[total]
 
 LABOUR ESTIMATE
+Use realistic circuit-based time estimates. DO NOT inflate hours.
+
+Typical UK electrician rates (2025):
+- Qualified electrician: £250-350/day (regional variation)
+- Mate (improver): £150-200/day
+
+Time per circuit type (includes first fix + second fix):
+- Ring main: 5hrs
+- Lighting circuit: 3.5hrs
+- Cooker circuit: 2.5hrs
+- Shower circuit: 3hrs
+- Consumer unit change: 3hrs
+- Testing & commissioning: scales with circuit count
+
+Format:
 Installation time: [X] hours / [Y] days
+Breakdown: [circuit-by-circuit time breakdown]
 Rate: £[rate]/day (qualified electrician)
 Labour cost: £[total]
 

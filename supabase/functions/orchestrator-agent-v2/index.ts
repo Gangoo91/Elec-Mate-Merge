@@ -544,12 +544,14 @@ async function handleConversationalMode(
               return; // Return early but don't stop the entire stream
             }
 
+            // PHASE 2: Include structuredData in AgentOutput
             const output: AgentOutput = {
               agent: agentName,
               response: result.data?.response || '',
               citations: result.data?.citations || [],
               toolCalls: result.data?.toolCalls || [],
               costUpdates: result.data?.costUpdates,
+              structuredData: result.data?.structuredData || null,
               confidence: result.data?.confidence || 0.8
             };
 

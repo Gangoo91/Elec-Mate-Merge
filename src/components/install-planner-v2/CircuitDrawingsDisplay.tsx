@@ -29,7 +29,7 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
   const [generatingAI, setGeneratingAI] = useState<number | null>(null);
   const [isLoadingStructuredData, setIsLoadingStructuredData] = useState(true);
 
-  // Phase 3: Parse circuits with loading state
+  // PHASE 6: Enhanced circuit parsing with multiple fallback strategies
   const parsedCircuits = useMemo(() => {
     setIsLoadingStructuredData(true);
     const designerMessages = messages.filter(m => m.agentName === 'designer');
@@ -38,30 +38,46 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
       return [];
     }
     
-    // Check if messages contain structured circuit data
-    const structuredCircuits: CircuitData[] = [];
-    designerMessages.forEach(msg => {
-      try {
-        const msgData = typeof msg === 'object' && 'structuredData' in msg ? (msg as any).structuredData : null;
-        if (msgData?.circuits) {
-          console.log('✅ Structured data found:', msgData.circuits);
-          structuredCircuits.push(...msgData.circuits);
-        }
-      } catch (e) {
-        console.warn('⚠️ Error parsing structured data:', e);
-      }
-    });
+    const lastDesignerMsg = designerMessages[designerMessages.length - 1];
     
-    if (structuredCircuits.length > 0) {
-      console.log('✅ Using structured circuit data:', structuredCircuits);
-      setIsLoadingStructuredData(false);
-      return structuredCircuits;
+    // STRATEGY 1: Check if message object has structuredData property directly
+    try {
+      if ((lastDesignerMsg as any).structuredData?.circuits) {
+        console.log('✅ Using structuredData from message object:', (lastDesignerMsg as any).structuredData.circuits.length, 'circuits');
+        setIsLoadingStructuredData(false);
+        return (lastDesignerMsg as any).structuredData.circuits;
+      }
+    } catch (e) {
+      console.warn('⚠️ Strategy 1 failed:', e);
     }
     
-    // Fallback: Parse from text
-    console.log('⚠️ No structured data, falling back to text parsing');
+    // STRATEGY 2: Try parsing content as JSON
+    try {
+      const parsed = JSON.parse(lastDesignerMsg.content);
+      if (parsed.structuredData?.circuits) {
+        console.log('✅ Using structuredData from JSON content:', parsed.structuredData.circuits.length, 'circuits');
+        setIsLoadingStructuredData(false);
+        return parsed.structuredData.circuits;
+      }
+      if (parsed.circuits) {
+        console.log('✅ Using circuits array from JSON:', parsed.circuits.length, 'circuits');
+        setIsLoadingStructuredData(false);
+        return parsed.circuits;
+      }
+    } catch (e) {
+      console.warn('⚠️ Strategy 2 failed (not JSON or no circuits):', e);
+    }
+    
+    // STRATEGY 3: Fallback to text parsing (legacy support)
+    console.log('⚠️ No structured data found, falling back to text parsing');
     const combinedContent = designerMessages.map(m => m.content).join('\n\n');
     const parsed = parseCircuitsFromDesigner(combinedContent);
+    
+    if (parsed.length === 0) {
+      console.warn('❌ No circuits parsed from any strategy - designer output may be in unexpected format');
+      console.log('Designer message sample:', lastDesignerMsg.content.substring(0, 200));
+    }
+    
     setIsLoadingStructuredData(false);
     return parsed;
   }, [messages]);
