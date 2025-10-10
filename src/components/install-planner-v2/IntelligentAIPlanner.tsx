@@ -1183,10 +1183,20 @@ onError: (error) => {
             onAgentSelect={setSelectedAgent}
             activeAgents={activeAgents}
             className="mb-2"
+            photoUploadSlot={
+              <PhotoUploadButton 
+                onPhotoUploaded={(url) => {
+                  setInput(prev => prev + ` [Photo attached: ${url}]`);
+                  toast.success('Photo added to message');
+                }}
+                disabled={isLoading}
+                className="bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
+              />
+            }
           />
 
-          {/* Chat Input - Compact Grid Layout */}
-          <div className="grid grid-cols-[1fr_auto_auto] items-end gap-2">
+          {/* Chat Input - Simplified 2-Column Layout */}
+          <div className="flex items-end gap-2">
             {/* Textarea - Grows */}
             <Textarea
               ref={textareaRef}
@@ -1199,18 +1209,6 @@ onError: (error) => {
               className="!min-h-[44px] sm:!min-h-[44px] md:!min-h-[44px] lg:!min-h-[44px] max-h-[88px] resize-none overflow-y-auto w-full text-base font-medium rounded-xl px-3 py-2 bg-white/5 border border-white/10 text-white placeholder:text-white/80 leading-tight transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 focus-visible:outline-none"
               style={{ fontSize: '16px', height: '44px' }}
             />
-
-            {/* Photo Upload - Stacked Vertical */}
-            <div className="flex flex-col gap-1 self-end">
-              <PhotoUploadButton 
-                onPhotoUploaded={(url) => {
-                  setInput(prev => prev + ` [Photo attached: ${url}]`);
-                  toast.success('Photo added to message');
-                }}
-                disabled={isLoading}
-                className="bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
-              />
-            </div>
 
             {/* Send Button */}
             <Button 

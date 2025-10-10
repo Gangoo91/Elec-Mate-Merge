@@ -31,10 +31,11 @@ interface InChatAgentSelectorProps {
   onAgentSelect: (agentId: AgentType | null) => void;
   activeAgents?: string[];
   className?: string;
+  photoUploadSlot?: React.ReactNode;
 }
 
 export const InChatAgentSelector = ({
-  selectedAgent, onAgentSelect, activeAgents = [], className
+  selectedAgent, onAgentSelect, activeAgents = [], className, photoUploadSlot
 }: InChatAgentSelectorProps) => {
   const [scrollIndex, setScrollIndex] = useState(0);
   const visibleCount = 3;
@@ -65,6 +66,12 @@ export const InChatAgentSelector = ({
             </Button>
           );
         })}
+        {photoUploadSlot && (
+          <>
+            <div className="w-px h-5 bg-white/10 mx-1" />
+            {photoUploadSlot}
+          </>
+        )}
       </div>
 
       {/* Phase 1: Compact Mobile - Icon-only buttons */}
@@ -92,6 +99,12 @@ export const InChatAgentSelector = ({
               </Button>
             );
           })}
+          {photoUploadSlot && (
+            <>
+              <div className="w-px h-4 bg-white/10 mx-1 self-center" />
+              {photoUploadSlot}
+            </>
+          )}
         </div>
       </div>
 
