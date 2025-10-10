@@ -24,6 +24,7 @@ import {
   reviewChallenge,
   type Challenge 
 } from '../_shared/agent-validation.ts';
+import { cleanupExpiredConfirmations } from './confirmation-handler.ts';
 
 // corsHeaders imported from shared deps
 
