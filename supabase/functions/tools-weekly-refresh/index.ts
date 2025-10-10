@@ -1,18 +1,19 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { handleError } from '../_shared/errors.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { safeAll } from '../_shared/safe-parallel.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'tools-weekly-refresh' });
+
   try {
-    console.log('🔄 Tools Weekly Refresh started');
+    logger.info('Tools Weekly Refresh started');
     
     // Parse request body to check for force refresh
     const body = req.method === 'POST' ? await req.json().catch(() => ({})) : {};

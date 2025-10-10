@@ -5,6 +5,9 @@ import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
 import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
 import { emergencyProcedures } from '../_shared/emergencyProcedures.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 interface HealthSafetyAgentRequest {
   messages: Array<{ role: string; content: string }>;
@@ -18,18 +21,18 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 240000); // 240s timeout (4 minutes)
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'health-safety-agent' });
 
   try {
     const { messages, currentDesign, context, jobScale = 'commercial' } = await req.json() as HealthSafetyAgentRequest;
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
 
     if (!lovableApiKey) {
-      throw new Error('LOVABLE_API_KEY not configured');
+      throw new ValidationError('LOVABLE_API_KEY not configured');
     }
 
-    console.log('🦺 Health & Safety Agent: Analyzing work with RAG knowledge base');
+    logger.info('Health & Safety Agent analyzing work', { jobScale, messageCount: messages?.length });
 
     const latestMessage = messages[messages.length - 1]?.content || '';
     const circuitDetails = extractCircuitDetails(latestMessage, currentDesign, context);
@@ -45,47 +48,60 @@ serve(async (req) => {
     
     let ragContext = ''; // Initialize empty for graceful degradation
     
-    // Generate embedding for RAG query using Lovable AI
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        input: ragQuery,
-      }),
-    });
+    // Generate embedding for RAG query using Lovable AI with retry + timeout
+    const embeddingResponse = await logger.time(
+      'Lovable AI embedding generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              input: ragQuery,
+            }),
+          }),
+          Timeouts.STANDARD,
+          'Lovable AI embedding generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     // Only use RAG if embedding generation succeeds
     if (embeddingResponse.ok) {
       const embeddingData = await embeddingResponse.json();
       const queryEmbedding = embeddingData.data[0].embedding;
-      console.log('✅ Embedding generated successfully');
+      logger.debug('Embedding generated successfully');
 
-      // Query RAG database (optimized for speed)
-      const ragStartTime = Date.now();
-      const { data: ragResults, error: ragError } = await supabase.rpc('search_health_safety', {
-        query_embedding: queryEmbedding,
-        match_threshold: 0.75,
-        match_count: 5
-      });
-
-      const ragDuration = Date.now() - ragStartTime;
-      console.log(`⏱️ RAG query completed in ${ragDuration}ms`);
+      // Query RAG database with timeout protection
+      const { data: ragResults, error: ragError } = await logger.time(
+        'Health & Safety vector search',
+        () => withTimeout(
+          supabase.rpc('search_health_safety', {
+            query_embedding: queryEmbedding,
+            match_threshold: 0.75,
+            match_count: 5
+          }),
+          Timeouts.STANDARD,
+          'Health & Safety vector search'
+        )
+      );
 
       if (!ragError && ragResults && ragResults.length > 0) {
         ragContext = ragResults
           .map((item: any, idx: number) => 
             `${idx + 1}. ${item.topic} (Source: ${item.source}, Similarity: ${(item.similarity * 100).toFixed(0)}%)\n${item.content}`
           ).join('\n\n');
-        console.log(`✅ Found ${ragResults.length} H&S knowledge entries (avg similarity: ${Math.round(ragResults.reduce((sum: number, r: any) => sum + r.similarity, 0) / ragResults.length * 100)}%)`);
+        logger.info('Found H&S knowledge entries', { count: ragResults.length });
       } else {
-        console.log('⚠️ No relevant H&S knowledge found in database');
+        logger.warn('No relevant H&S knowledge found in database');
         ragContext = 'No specific guidelines found - using general electrical safety knowledge.';
       }
     } else {
-      console.error('⚠️ Embedding generation failed, continuing without RAG:', await embeddingResponse.text());
+      logger.error('Embedding generation failed, continuing without RAG');
       ragContext = 'RAG system unavailable - using general electrical safety knowledge.';
     }
 
@@ -314,9 +330,8 @@ OUTPUT FORMAT:
 
 IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. Not generic checklists.`;
 
-    // Use structured tool calling for consistent JSON output
-    console.log('🤖 Calling Lovable AI with structured tool calling');
-    const openaiStartTime = Date.now();
+    // Use structured tool calling for consistent JSON output with retry + timeout (60s for complex risk assessments)
+    logger.debug('Calling Lovable AI with structured tool calling');
     
     const requestBody = {
       model: 'google/gemini-2.5-flash',
@@ -392,26 +407,34 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
       max_completion_tokens: calculateTokenLimit(extractCircuitCount(latestMessage))
     };
     
-    console.log('📤 Lovable AI Request:', JSON.stringify({ model: requestBody.model, messageCount: requestBody.messages.length }));
+    logger.debug('Lovable AI Request', { model: requestBody.model, messageCount: requestBody.messages.length });
     
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-      signal: controller.signal
-    });
+    const response = await logger.time(
+      'Lovable AI risk assessment generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+          }),
+          Timeouts.LONG,
+          'Lovable AI risk assessment generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('❌ Lovable AI error:', { status: response.status, error: errorText });
-      throw new Error(`Lovable AI error: ${response.status}`);
+      logger.error('Lovable AI error', { status: response.status, error: errorText });
+      throw new ValidationError(`Lovable AI error: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log(`✅ Lovable AI responded in ${Date.now() - openaiStartTime}ms`);
     
     // Extract structured data from tool call
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
@@ -422,7 +445,7 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     }
 
     let parsedResponse = JSON.parse(toolCall.function.arguments);
-    console.log('✅ Successfully parsed structured output with', parsedResponse.riskAssessment.hazards.length, 'hazards');
+    logger.info('Successfully parsed structured output', { hazards: parsedResponse.riskAssessment.hazards.length, requestId });
 
     // UK English enforcement function
     const enforceUKEnglish = (text: string): string => {

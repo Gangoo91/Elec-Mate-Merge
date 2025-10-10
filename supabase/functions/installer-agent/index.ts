@@ -4,6 +4,10 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
 import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { safeAll } from '../_shared/safe-parallel.ts';
 import { 
   CABLE_SUPPORT_INTERVALS, 
   SAFE_ZONES, 
@@ -18,10 +22,15 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'installer-agent' });
+
   try {
     const { messages, context, jobScale = 'commercial' } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+    if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
+
+    logger.info('Installer Agent processing', { jobScale, messageCount: messages?.length });
 
     // RAG - Get installation knowledge from database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -33,18 +42,28 @@ serve(async (req) => {
     
     console.log(`🔍 RAG: Searching installation + design knowledge for: ${ragQuery}`);
     
-    // Generate embedding for installation knowledge search
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: ragQuery,
-      }),
-    });
+    // Generate embedding for installation knowledge search with retry + timeout
+    const embeddingResponse = await logger.time(
+      'Lovable AI embedding generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: ragQuery,
+            }),
+          }),
+          Timeouts.STANDARD,
+          'Lovable AI embedding generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     let installationKnowledge = '';
     let designKnowledge = '';
@@ -53,32 +72,59 @@ serve(async (req) => {
       const embeddingDataRes = await embeddingResponse.json();
       const embedding = embeddingDataRes.data[0].embedding;
       
-      // Search installation knowledge
-      const { data: knowledge, error: ragError } = await supabase.rpc('search_installation_knowledge', {
-        query_embedding: embedding,
-        match_threshold: 0.7,
-        match_count: 8
-      });
+      // Search installation knowledge and design knowledge in parallel with timeout
+      const { successes, failures } = await safeAll([
+        {
+          name: 'Installation knowledge',
+          execute: () => withTimeout(
+            supabase.rpc('search_installation_knowledge', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 8
+            }),
+            Timeouts.STANDARD,
+            'Installation knowledge search'
+          )
+        },
+        {
+          name: 'Design knowledge',
+          execute: () => withTimeout(
+            supabase.rpc('search_design_knowledge', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 5
+            }),
+            Timeouts.STANDARD,
+            'Design knowledge search'
+          )
+        }
+      ]);
 
-      if (!ragError && knowledge && knowledge.length > 0) {
+      // Extract installation knowledge
+      const installResult = successes.find(s => s.name === 'Installation knowledge');
+      const knowledge = installResult?.result?.data;
+
+      if (knowledge && knowledge.length > 0) {
         installationKnowledge = knowledge.map((k: any) => 
           `${k.topic} (${k.source}): ${k.content}`
         ).join('\n\n');
-        console.log(`✅ Found ${knowledge.length} installation guides`);
+        logger.info('Found installation guides', { count: knowledge.length });
       }
       
-      // Search design knowledge for installation-relevant content
-      const { data: designDocs, error: designError } = await supabase.rpc('search_design_knowledge', {
-        query_embedding: embedding,
-        match_threshold: 0.7,
-        match_count: 5
-      });
+      // Extract design knowledge
+      const designResult = successes.find(s => s.name === 'Design knowledge');
+      const designDocs = designResult?.result?.data;
 
-      if (!designError && designDocs && designDocs.length > 0) {
+      if (designDocs && designDocs.length > 0) {
         designKnowledge = designDocs.map((d: any) => 
           `${d.topic} (${d.source}): ${d.content}`
         ).join('\n\n');
-        console.log(`✅ Found ${designDocs.length} design documents`);
+        logger.info('Found design documents', { count: designDocs.length });
+      }
+
+      // Log failures without blocking
+      if (failures.length > 0) {
+        logger.warn('Some knowledge base queries failed', { failures: failures.map(f => f.name) });
       }
     }
 
@@ -277,24 +323,28 @@ EXAMPLE PHASES:
 
     systemPrompt += `\n\n💬 Guide them step-by-step like you're walking an apprentice through their first install.`;
 
-    // Use structured tool calling for consistent method statement output
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: { 
-        'Authorization': `Bearer ${lovableApiKey}`, 
-        'Content-Type': 'application/json' 
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: systemPrompt }, 
-          ...messages,
-          ...(context?.structuredKnowledge ? [{
-            role: 'system',
-            content: context.structuredKnowledge
-          }] : [])
-        ],
-        tools: [{
+    // Use structured tool calling with retry + timeout (60s for complex installations)
+    const response = await logger.time(
+      'Lovable AI installation generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            method: 'POST',
+            headers: { 
+              'Authorization': `Bearer ${lovableApiKey}`, 
+              'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+              model: 'google/gemini-2.5-flash',
+              messages: [
+                { role: 'system', content: systemPrompt }, 
+                ...messages,
+                ...(context?.structuredKnowledge ? [{
+                  role: 'system',
+                  content: context.structuredKnowledge
+                }] : [])
+              ],
+              tools: [{
           type: "function",
           function: {
             name: "create_method_statement",
@@ -340,10 +390,16 @@ EXAMPLE PHASES:
             }
           }
         }],
-        tool_choice: { type: "function", function: { name: "create_method_statement" } },
-        max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage))
-      }),
-    });
+              tool_choice: { type: "function", function: { name: "create_method_statement" } },
+              max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage))
+            }),
+          }),
+          Timeouts.LONG,
+          'Lovable AI installation generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     const data = await response.json();
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
@@ -389,6 +445,8 @@ EXAMPLE PHASES:
       structuredData = JSON.parse(toolCall.function.arguments);
     }
     
+    logger.info('Installation guidance generated successfully', { requestId });
+
     return new Response(JSON.stringify({
       response: structuredData.response || 'Installation guidance complete.',
       structuredData: {
@@ -400,14 +458,8 @@ EXAMPLE PHASES:
     }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 
   } catch (error) {
-    console.error('Installer agent error:', error);
-    return new Response(JSON.stringify({ 
-      response: 'Unable to provide installation guidance.', 
-      confidence: 0.3 
-    }), {
-      status: 500, 
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    logger.error('Installer agent error', { error: getErrorMessage(error) });
+    return handleError(error);
   }
 });
 

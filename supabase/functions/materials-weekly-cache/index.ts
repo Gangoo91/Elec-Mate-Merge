@@ -1,11 +1,9 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { handleError, ValidationError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -162,10 +160,15 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'materials-weekly-cache' });
+
   try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     
-    console.log('🔍 Checking materials weekly cache...');
+    logger.info('Checking materials weekly cache');
     
     // Parse request body for filters
     const body = await req.json().catch(() => ({}));
@@ -231,21 +234,28 @@ serve(async (req) => {
     // If no cache or filters applied, fetch fresh data
     if (!fromCache) {
       console.log('🔄 Fetching fresh data from scraper...');
-    // Try to call the comprehensive scraper directly with proper error handling
+    // Call comprehensive scraper with timeout protection
     try {
-      const { data: liveData, error: liveError } = await supabase.functions.invoke(
-        'comprehensive-materials-scraper',
-        { 
-          body: { 
-            category, 
-            supplier, 
-            searchTerm: search 
-          }
-        }
+      const { data: liveData, error: liveError } = await logger.time(
+        'Comprehensive materials scraper',
+        () => withTimeout(
+          supabase.functions.invoke(
+            'comprehensive-materials-scraper',
+            { 
+              body: { 
+                category, 
+                supplier, 
+                searchTerm: search 
+              }
+            }
+          ),
+          Timeouts.LONG,
+          'Comprehensive materials scraper'
+        )
       );
 
       if (liveError) {
-        console.error('Live scraper error:', liveError);
+        logger.error('Live scraper error', { error: liveError });
         // Fall back to cached data or fallback
         const { data: fallbackCache } = await supabase
           .from('cables_materials_cache')
@@ -254,18 +264,18 @@ serve(async (req) => {
           .limit(1);
         
         if (fallbackCache && fallbackCache.length > 0) {
-          console.log('📦 Using fallback cache from cables_materials_cache');
+          logger.info('Using fallback cache from cables_materials_cache');
           rawMaterials = fallbackCache[0].cache_data || [];
         } else {
-          console.warn('⚠️ No fallback cache available, using empty data');
+          logger.warn('No fallback cache available, using empty data');
           rawMaterials = [];
         }
       } else {
         rawMaterials = liveData?.materials || [];
-        console.log(`📊 Serving ${rawMaterials.length} materials from live scraper`);
+        logger.info('Serving materials from live scraper', { count: rawMaterials.length });
       }
     } catch (invokeError) {
-      console.error('Function invoke error:', invokeError);
+      logger.error('Function invoke error', { error: invokeError });
       // Fall back to cached data
       const { data: fallbackCache } = await supabase
         .from('cables_materials_cache')
@@ -274,16 +284,13 @@ serve(async (req) => {
         .limit(1);
       
       if (fallbackCache && fallbackCache.length > 0) {
-        console.log('📦 Using fallback cache due to invoke error');
+        logger.info('Using fallback cache due to invoke error');
         rawMaterials = fallbackCache[0].cache_data || [];
       } else {
-        console.warn('⚠️ No fallback cache available, using empty data');
+        logger.warn('No fallback cache available, using empty data');
         rawMaterials = [];
       }
     }
-
-        rawMaterials = [];
-        console.log(`📊 Serving ${rawMaterials.length} materials from live scraper`);
       
       // Store the fresh data in cache for future requests
       if (rawMaterials.length > 0) {
@@ -421,7 +428,7 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Error in materials-weekly-cache:', error);
+    logger.error('Error in materials-weekly-cache', { error });
     
     // Return default data on error
     const fallbackResponse = {

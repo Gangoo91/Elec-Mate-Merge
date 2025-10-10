@@ -4,6 +4,10 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
 import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { safeAll } from '../_shared/safe-parallel.ts';
 import { calculateVoltageDrop, getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
 import { getMaxZs, checkRCDRequirement } from "../shared/bs7671ProtectionData.ts";
@@ -15,12 +19,15 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'designer-agent' });
+
   try {
     const { messages, currentDesign, context } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+    if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
-    console.log('🎨 Designer Agent: Processing with RAG + Lovable AI');
+    logger.info('Designer Agent processing with RAG + Lovable AI', { messageCount: messages?.length });
 
     const userMessage = messages[messages.length - 1]?.content || '';
     const circuitParams = extractCircuitParams(userMessage, currentDesign);
@@ -130,32 +137,59 @@ serve(async (req) => {
       const embeddingData = await embeddingResponse.json();
       const embedding = embeddingData.data[0].embedding;
       
-      // Search BS 7671 regulations using vector similarity
-      const { data: regulations, error: ragError } = await supabase.rpc('search_bs7671', {
-        query_embedding: embedding,
-        match_threshold: 0.7,
-        match_count: 10
-      });
+      // Search BS 7671 regulations and design knowledge in parallel with timeout
+      const { successes, failures } = await safeAll([
+        {
+          name: 'BS7671 regulations',
+          execute: () => withTimeout(
+            supabase.rpc('search_bs7671', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 10
+            }),
+            Timeouts.STANDARD,
+            'BS7671 vector search'
+          )
+        },
+        {
+          name: 'Design knowledge',
+          execute: () => withTimeout(
+            supabase.rpc('search_design_knowledge', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 5
+            }),
+            Timeouts.STANDARD,
+            'Design knowledge search'
+          )
+        }
+      ]);
 
-      if (!ragError && regulations && regulations.length > 0) {
+      // Extract BS 7671 regulations
+      const regulationsResult = successes.find(s => s.name === 'BS7671 regulations');
+      const regulations = regulationsResult?.result?.data;
+
+      if (regulations && regulations.length > 0) {
         relevantRegsText = regulations.map((r: any) => 
           `Reg ${r.regulation_number} (${r.section}): ${r.content}`
         ).join('\n\n');
-        console.log(`✅ Found ${regulations.length} relevant regulations`);
+        logger.info('Found relevant regulations', { count: regulations.length });
       }
       
-      // Search design knowledge database
-      const { data: designDocs, error: designError } = await supabase.rpc('search_design_knowledge', {
-        query_embedding: embedding,
-        match_threshold: 0.7,
-        match_count: 5
-      });
+      // Extract design knowledge
+      const designResult = successes.find(s => s.name === 'Design knowledge');
+      const designDocs = designResult?.result?.data;
 
-      if (!designError && designDocs && designDocs.length > 0) {
+      if (designDocs && designDocs.length > 0) {
         designKnowledge = designDocs.map((d: any) => 
           `${d.topic} (${d.source}): ${d.content}`
         ).join('\n\n');
-        console.log(`✅ Found ${designDocs.length} design knowledge documents`);
+        logger.info('Found design knowledge documents', { count: designDocs.length });
+      }
+
+      // Log failures without blocking
+      if (failures.length > 0) {
+        logger.warn('Some knowledge base queries failed', { failures: failures.map(f => f.name) });
       }
     }
 
@@ -264,31 +298,41 @@ ${designKnowledge}
 Use professional language with UK English spelling. Present calculations clearly. Cite regulation numbers and technical guidance. No conversational filler or markdown formatting.`;
     }
 
-    // Call Lovable AI Gateway with tool-calling for RAG
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          ...messages,
-          ...(context?.structuredKnowledge ? [{
-            role: 'system',
-            content: context.structuredKnowledge
-          }] : [])
-        ],
-        max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage), messages) // Phase 4: Adaptive tokens
-      }),
-    });
+    // Call Lovable AI Gateway with retry + timeout (60s for complex design calculations)
+    const response = await logger.time(
+      'Lovable AI design generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'google/gemini-2.5-flash',
+              messages: [
+                { role: 'system', content: systemPrompt },
+                ...messages,
+                ...(context?.structuredKnowledge ? [{
+                  role: 'system',
+                  content: context.structuredKnowledge
+                }] : [])
+              ],
+              max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage), messages)
+            }),
+          }),
+          Timeouts.LONG,
+          'Lovable AI design generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Lovable AI error:', response.status, errorText);
-      throw new Error(`AI gateway error: ${response.status}`);
+      logger.error('Lovable AI error', { status: response.status, error: errorText });
+      throw new ValidationError(`AI gateway error: ${response.status}`);
     }
 
     const data = await response.json();
@@ -296,7 +340,7 @@ Use professional language with UK English spelling. Present calculations clearly
 
     const citations = extractCitations(responseContent);
 
-    console.log('✅ Designer response generated');
+    logger.info('Designer response generated successfully', { requestId });
 
     // PHASE 1: Try to parse as JSON first for multi-circuit mode
     const structuredData: any = {};

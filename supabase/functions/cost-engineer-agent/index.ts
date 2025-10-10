@@ -4,6 +4,9 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
 import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 // corsHeaders imported from shared deps
 
@@ -12,10 +15,15 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'cost-engineer-agent' });
+
   try {
     const { messages, context } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+    if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
+
+    logger.info('Cost Engineer Agent processing', { messageCount: messages?.length });
 
     // RAG - Get pricing data from database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -27,40 +35,54 @@ serve(async (req) => {
     
     console.log(`🔍 RAG: Searching pricing data for: ${ragQuery} `);
     
-    // Generate embedding for pricing search
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: ragQuery,
-      }),
-    });
+    // Generate embedding for pricing search with retry + timeout
+    const embeddingResponse = await logger.time(
+      'Lovable AI embedding generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: ragQuery,
+            }),
+          }),
+          Timeouts.STANDARD,
+          'Lovable AI embedding generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     let pricingData = '';
     if (embeddingResponse.ok) {
       const embeddingDataRes = await embeddingResponse.json();
       const embedding = embeddingDataRes.data[0].embedding;
       
-      const { data: pricingResults, error: ragError } = await supabase.rpc('search_pricing', {
-        query_embedding: embedding,
-        match_threshold: 0.7,
-        match_count: 15
-      });
+      const { data: pricingResults, error: ragError } = await logger.time(
+        'Pricing vector search',
+        () => withTimeout(
+          supabase.rpc('search_pricing', {
+            query_embedding: embedding,
+            match_threshold: 0.7,
+            match_count: 15
+          }),
+          Timeouts.STANDARD,
+          'Pricing vector search'
+        )
+      );
 
-    if (!ragError && pricingResults && pricingResults.length > 0) {
-        console.log(`✅ Found ${pricingResults.length} pricing items`);
-        console.log('Top 3 items:', pricingResults.slice(0, 3).map((p: any) => 
-          `${p.item_name} - £${p.base_cost} @ ${p.wholesaler}`
-        ));
+      if (!ragError && pricingResults && pricingResults.length > 0) {
+        logger.info('Found pricing items', { count: pricingResults.length });
         pricingData = pricingResults.map((p: any) => 
           `${p.item_name} - £${p.base_cost} (${p.price_per_unit}) at ${p.wholesaler} ${p.in_stock ? '✓ In Stock' : '⚠ Out of Stock'}`
         ).join('\n');
       } else {
-        console.log('⚠️ No relevant pricing data found for query:', ragQuery);
+        logger.warn('No relevant pricing data found', { query: ragQuery });
       }
     }
 
@@ -161,25 +183,35 @@ PRICING NOTES
 
     systemPrompt += `\n\nCURRENT PRICING DATABASE (use these actual prices):\n${pricingData || 'No specific pricing found in database - estimate typical 2025 UK wholesale prices from CEF/Screwfix/TLC'}\n\nYou MUST end your response with the structured breakdown format above. Include all components needed for the installation.`;
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: systemPrompt }, 
-          ...messages,
-          ...(context?.structuredKnowledge ? [{
-            role: 'system',
-            content: context.structuredKnowledge
-          }] : [])
-        ],
-        max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage)) // Phase 4: Adaptive tokens
-      }),
-    });
+    const response = await logger.time(
+      'Lovable AI cost estimation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'google/gemini-2.5-flash',
+              messages: [
+                { role: 'system', content: systemPrompt }, 
+                ...messages,
+                ...(context?.structuredKnowledge ? [{
+                  role: 'system',
+                  content: context.structuredKnowledge
+                }] : [])
+              ],
+              max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage))
+            }),
+          }),
+          Timeouts.STANDARD,
+          'Lovable AI cost estimation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     const data = await response.json();
     let responseContent = data.choices[0]?.message?.content || 'Cost estimate complete.';
@@ -198,6 +230,8 @@ PRICING NOTES
       responseContent = responseContent.substring(materialsIndex);
     }
     
+    logger.info('Cost estimate generated successfully', { requestId });
+
     return new Response(JSON.stringify({
       response: responseContent,
       confidence: 0.85
@@ -206,14 +240,8 @@ PRICING NOTES
     });
 
   } catch (error) {
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Cost agent failed',
-      response: 'Unable to provide cost estimate.',
-      confidence: 0.3
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    logger.error('Cost engineer agent error', { error: getErrorMessage(error) });
+    return handleError(error);
   }
 });
 
