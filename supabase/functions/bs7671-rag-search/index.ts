@@ -1,59 +1,75 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-
-// BS 7671 RAG Search using OpenAI embeddings
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
+import { ValidationError, ExternalAPIError, handleError } from "../_shared/errors.ts";
+import { validateRequired } from "../_shared/validation.ts";
+import { withRetry, RetryPresets } from "../_shared/retry.ts";
+import { withTimeout, Timeouts } from "../_shared/timeout.ts";
+import { createLogger, generateRequestId } from "../_shared/logger.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'bs7671-rag-search' });
+
   try {
     const { query, matchThreshold = 0.4, matchCount = 8 } = await req.json();
 
-    if (!query || query.trim().length === 0) {
-      return new Response(
-        JSON.stringify({ error: 'Search query is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+    // Validate inputs
+    validateRequired(query, 'query');
+    
+    if (matchThreshold < 0.1 || matchThreshold > 0.9) {
+      throw new ValidationError('matchThreshold must be between 0.1 and 0.9');
+    }
+    
+    if (matchCount < 1 || matchCount > 50) {
+      throw new ValidationError('matchCount must be between 1 and 50');
     }
 
-    console.log('🔍 BS 7671 RAG Search initiated:', { query, matchThreshold, matchCount });
+    logger.info('BS 7671 RAG Search initiated', { query, matchThreshold, matchCount });
 
-    // Get embedding from OpenAI
+    // Get embedding from OpenAI with retry and timeout
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    console.log('📡 Generating embedding via OpenAI...');
-    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        input: query,
-        model: 'text-embedding-3-small',
-      }),
-    });
+    logger.debug('Generating embedding via OpenAI');
+    
+    const embeddingResponse = await logger.time(
+      'OpenAI embedding generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://api.openai.com/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              input: query,
+              model: 'text-embedding-3-small',
+            }),
+          }),
+          Timeouts.STANDARD,
+          'OpenAI embedding generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     if (!embeddingResponse.ok) {
       const errorText = await embeddingResponse.text();
-      console.error('❌ Embedding API error:', embeddingResponse.status, errorText);
+      logger.error('Embedding API error', { status: embeddingResponse.status, error: errorText });
       
       if (embeddingResponse.status === 429) {
-        throw new Error('OpenAI rate limit exceeded. Please try again in a moment.');
+        throw new ExternalAPIError('OpenAI', { reason: 'Rate limit exceeded. Please try again in a moment.' });
       }
       if (embeddingResponse.status === 402) {
-        throw new Error('OpenAI payment required. Please check your API credits.');
+        throw new ExternalAPIError('OpenAI', { reason: 'Payment required. Please check your API credits.' });
       }
-      throw new Error(`Failed to generate embedding: ${embeddingResponse.status}`);
+      throw new ExternalAPIError('OpenAI', { status: embeddingResponse.status, error: errorText });
     }
 
     const embeddingData = await embeddingResponse.json();
@@ -61,38 +77,45 @@ serve(async (req) => {
 
     // Validate embedding dimensions
     if (queryVector.length !== 1536) {
-      console.error('❌ Invalid embedding dimensions:', queryVector.length);
+      logger.error('Invalid embedding dimensions', { dimensions: queryVector.length });
       throw new Error(`Expected 1536 dimensions, got ${queryVector.length}`);
     }
 
-    console.log('✅ Query embedding generated:', queryVector.length, 'dimensions');
+    logger.info('Query embedding generated', { dimensions: queryVector.length });
 
     // Connect to Supabase
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Search using RPC function
-    console.log('🔎 Executing vector similarity search...');
-    const { data: results, error: searchError } = await supabase.rpc('search_bs7671', {
-      query_embedding: queryVector,
-      match_threshold: matchThreshold,
-      match_count: matchCount
-    });
+    // Search using RPC function with timeout
+    logger.debug('Executing vector similarity search');
+    const { data: results, error: searchError } = await logger.time(
+      'Vector search',
+      () => withTimeout(
+        supabase.rpc('search_bs7671', {
+          query_embedding: queryVector,
+          match_threshold: matchThreshold,
+          match_count: matchCount
+        }),
+        Timeouts.STANDARD,
+        'Vector search'
+      )
+    );
 
     if (searchError) {
-      console.error('❌ Vector search error:', searchError);
+      logger.error('Vector search error', { error: searchError });
       throw searchError;
     }
 
-    console.log('✅ Found', results?.length || 0, 'matching regulations');
+    logger.info('Vector search completed', { resultsCount: results?.length || 0 });
 
     let regulationsData = results || [];
     let searchMethod = 'vector';
 
     // Fallback to keyword search if no results
     if (regulationsData.length === 0) {
-      console.log('⚠️ No vector results found, trying keyword fallback search...');
+      logger.warn('No vector results found, trying keyword fallback search');
       
       const { data: keywordResults, error: keywordError } = await supabase
         .from('bs7671_embeddings')
@@ -101,7 +124,7 @@ serve(async (req) => {
         .limit(matchCount);
 
       if (!keywordError && keywordResults && keywordResults.length > 0) {
-        console.log('✅ Keyword search found', keywordResults.length, 'regulations');
+        logger.info('Keyword search found results', { count: keywordResults.length });
         regulationsData = keywordResults.map((item: any) => ({
           ...item,
           similarity: 0.5 // Mark as keyword match with lower confidence
@@ -121,7 +144,11 @@ serve(async (req) => {
       similarity: item.similarity,
     }));
 
-    console.log('📦 Returning', regulations.length, 'regulations');
+    logger.info('Returning results', { 
+      count: regulations.length, 
+      searchMethod,
+      requestId 
+    });
 
     return new Response(
       JSON.stringify({
@@ -130,6 +157,7 @@ serve(async (req) => {
         query,
         resultsCount: regulations.length,
         searchMethod,
+        requestId,
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -138,16 +166,7 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('❌ BS 7671 RAG Search error:', error);
-    return new Response(
-      JSON.stringify({ 
-        error: error.message || 'Failed to perform BS 7671 RAG search',
-        details: error.toString()
-      }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
+    logger.error('BS 7671 RAG Search error', { error: error.message });
+    return handleError(error);
   }
 });

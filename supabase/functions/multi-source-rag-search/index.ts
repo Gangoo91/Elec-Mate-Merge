@@ -1,10 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
+import { ValidationError, ExternalAPIError, handleError } from "../_shared/errors.ts";
+import { validateRequired } from "../_shared/validation.ts";
+import { withRetry, RetryPresets } from "../_shared/retry.ts";
+import { withTimeout, Timeouts } from "../_shared/timeout.ts";
+import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { safeAll } from "../_shared/safe-parallel.ts";
 
 // Electrical term expansion for better RAG matching
 const expandElectricalTerms = (query: string): string => {
@@ -70,114 +70,183 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'multi-source-rag-search' });
+
   try {
     const { query, matchThreshold = 0.4, matchCount = 8 } = await req.json();
 
-    if (!query || query.trim().length === 0) {
-      return new Response(
-        JSON.stringify({ error: 'Search query is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+    // Validate inputs
+    validateRequired(query, 'query');
+
+    if (matchThreshold < 0.1 || matchThreshold > 0.9) {
+      throw new ValidationError('matchThreshold must be between 0.1 and 0.9');
+    }
+    
+    if (matchCount < 1 || matchCount > 50) {
+      throw new ValidationError('matchCount must be between 1 and 50');
     }
 
-    console.log('🔍 Multi-source RAG search:', { query, matchThreshold, matchCount });
+    logger.info('Multi-source RAG search initiated', { query, matchThreshold, matchCount });
 
     // Detect intent and expand query
     const { queryType, knowledgeBases } = detectIntent(query);
     const expandedQuery = expandElectricalTerms(query);
     
-    console.log('🎯 Intent detected:', { queryType, knowledgeBases });
-    console.log('📝 Expanded query:', expandedQuery);
+    logger.info('Intent detected', { queryType, knowledgeBases, expandedQuery });
 
-    // Get embedding from OpenAI
+    // Get embedding from OpenAI with retry and timeout
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        input: expandedQuery,
-        model: 'text-embedding-3-small',
-      }),
-    });
+    const embeddingResponse = await logger.time(
+      'OpenAI embedding generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://api.openai.com/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              input: expandedQuery,
+              model: 'text-embedding-3-small',
+            }),
+          }),
+          Timeouts.STANDARD,
+          'OpenAI embedding generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     if (!embeddingResponse.ok) {
       const errorText = await embeddingResponse.text();
-      console.error('❌ Embedding API error:', embeddingResponse.status, errorText);
-      throw new Error(`Failed to generate embedding: ${embeddingResponse.status}`);
+      logger.error('Embedding API error', { status: embeddingResponse.status, error: errorText });
+      
+      if (embeddingResponse.status === 429) {
+        throw new ExternalAPIError('OpenAI', { reason: 'Rate limit exceeded' });
+      }
+      if (embeddingResponse.status === 402) {
+        throw new ExternalAPIError('OpenAI', { reason: 'Payment required' });
+      }
+      throw new ExternalAPIError('OpenAI', { status: embeddingResponse.status });
     }
 
     const embeddingData = await embeddingResponse.json();
     const queryVector = embeddingData.data[0].embedding;
 
-    console.log('✅ Query embedding generated');
+    logger.info('Query embedding generated');
 
     // Connect to Supabase
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Search all relevant knowledge bases in parallel
-    const searches = [];
+    // Build parallel search tasks with timeout protection
+    const searchTasks = [
+      {
+        name: 'bs7671',
+        execute: () => logger.time(
+          'BS7671 search',
+          () => withTimeout(
+            supabase.rpc('search_bs7671', {
+              query_embedding: queryVector,
+              match_threshold: matchThreshold,
+              match_count: matchCount
+            }),
+            Timeouts.STANDARD,
+            'BS7671 search'
+          )
+        )
+      }
+    ];
 
-    // Always search BS 7671 regulations (limit to 5-8 most relevant)
-    searches.push(
-      supabase.rpc('search_bs7671', {
-        query_embedding: queryVector,
-        match_threshold: matchThreshold,
-        match_count: matchCount
-      }).then(result => ({ type: 'regulations', ...result }))
-    );
-
-    // Search additional knowledge bases based on intent
+    // Add knowledge base searches based on intent
     if (knowledgeBases.includes('installation')) {
-      searches.push(
-        supabase.rpc('search_installation_knowledge', {
-          query_embedding: queryVector,
-          match_threshold: matchThreshold,
-          match_count: 5
-        }).then(result => ({ type: 'installation', ...result }))
-      );
+      searchTasks.push({
+        name: 'installation',
+        execute: () => logger.time(
+          'Installation search',
+          () => withTimeout(
+            supabase.rpc('search_installation_knowledge', {
+              query_embedding: queryVector,
+              match_threshold: matchThreshold,
+              match_count: 5
+            }),
+            Timeouts.STANDARD,
+            'Installation search'
+          )
+        )
+      });
     }
 
     if (knowledgeBases.includes('testing')) {
-      searches.push(
-        supabase.rpc('search_inspection_testing', {
-          query_embedding: queryVector,
-          match_threshold: matchThreshold,
-          match_count: 5
-        }).then(result => ({ type: 'testing', ...result }))
-      );
+      searchTasks.push({
+        name: 'testing',
+        execute: () => logger.time(
+          'Testing search',
+          () => withTimeout(
+            supabase.rpc('search_inspection_testing', {
+              query_embedding: queryVector,
+              match_threshold: matchThreshold,
+              match_count: 5
+            }),
+            Timeouts.STANDARD,
+            'Testing search'
+          )
+        )
+      });
     }
 
     if (knowledgeBases.includes('design')) {
-      searches.push(
-        supabase.rpc('search_design_knowledge', {
-          query_embedding: queryVector,
-          match_threshold: matchThreshold,
-          match_count: 5
-        }).then(result => ({ type: 'design', ...result }))
-      );
+      searchTasks.push({
+        name: 'design',
+        execute: () => logger.time(
+          'Design search',
+          () => withTimeout(
+            supabase.rpc('search_design_knowledge', {
+              query_embedding: queryVector,
+              match_threshold: matchThreshold,
+              match_count: 5
+            }),
+            Timeouts.STANDARD,
+            'Design search'
+          )
+        )
+      });
     }
 
     if (knowledgeBases.includes('safety')) {
-      searches.push(
-        supabase.rpc('search_health_safety', {
-          query_embedding: queryVector,
-          match_threshold: matchThreshold,
-          match_count: 5
-        }).then(result => ({ type: 'safety', ...result }))
-      );
+      searchTasks.push({
+        name: 'safety',
+        execute: () => logger.time(
+          'Safety search',
+          () => withTimeout(
+            supabase.rpc('search_health_safety', {
+              query_embedding: queryVector,
+              match_threshold: matchThreshold,
+              match_count: 5
+            }),
+            Timeouts.STANDARD,
+            'Safety search'
+          )
+        )
+      });
     }
 
-    // Execute all searches in parallel
-    const results = await Promise.all(searches);
+    // Execute all searches in parallel with safe error handling
+    const { successes, failures } = await safeAll(searchTasks);
+
+    // Log failures but continue with successes
+    if (failures.length > 0) {
+      logger.warn('Some knowledge base searches failed', { 
+        failures: failures.map(f => ({ name: f.name, error: f.error }))
+      });
+    }
 
     // Process results
     let regulations: any[] = [];
@@ -187,28 +256,32 @@ serve(async (req) => {
     let safetyContent: any[] = [];
     let searchMethod = 'vector';
 
-    for (const result of results) {
+    for (const success of successes) {
+      const result = success.result;
+      
       if (result.error) {
-        console.error(`❌ Error searching ${result.type}:`, result.error);
+        logger.error(`Error in ${success.name} results`, { error: result.error });
         continue;
       }
 
-      if (result.type === 'regulations') {
-        regulations = result.data || [];
-      } else if (result.type === 'installation') {
-        installationContent = result.data || [];
-      } else if (result.type === 'testing') {
-        testingContent = result.data || [];
-      } else if (result.type === 'design') {
-        designContent = result.data || [];
-      } else if (result.type === 'safety') {
-        safetyContent = result.data || [];
+      const data = result.data || [];
+      
+      if (success.name === 'bs7671') {
+        regulations = data;
+      } else if (success.name === 'installation') {
+        installationContent = data;
+      } else if (success.name === 'testing') {
+        testingContent = data;
+      } else if (success.name === 'design') {
+        designContent = data;
+      } else if (success.name === 'safety') {
+        safetyContent = data;
       }
     }
 
     // Fallback: If no regulations found, try keyword search
     if (regulations.length === 0) {
-      console.log('⚠️ No vector results, trying keyword search...');
+      logger.warn('No vector results, trying keyword search');
       
       const { data: keywordResults, error: keywordError } = await supabase
         .from('bs7671_embeddings')
@@ -217,7 +290,7 @@ serve(async (req) => {
         .limit(matchCount);
 
       if (!keywordError && keywordResults && keywordResults.length > 0) {
-        console.log('✅ Keyword search found', keywordResults.length, 'regulations');
+        logger.info('Keyword search found results', { count: keywordResults.length });
         regulations = keywordResults.map((item: any) => ({
           ...item,
           similarity: 0.5
@@ -226,12 +299,14 @@ serve(async (req) => {
       }
     }
 
-    console.log('📦 Results:', {
+    logger.info('Results collected', {
       regulations: regulations.length,
       installation: installationContent.length,
       testing: testingContent.length,
       design: designContent.length,
-      safety: safetyContent.length
+      safety: safetyContent.length,
+      failedSearches: failures.length,
+      requestId
     });
 
     return new Response(
@@ -248,6 +323,7 @@ serve(async (req) => {
         testing_content: testingContent,
         design_content: designContent,
         safety_content: safetyContent,
+        requestId,
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -256,16 +332,7 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('❌ Multi-source RAG search error:', error);
-    return new Response(
-      JSON.stringify({ 
-        error: error.message || 'Failed to perform multi-source RAG search',
-        details: error.toString()
-      }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
+    logger.error('Multi-source RAG search error', { error: error.message });
+    return handleError(error);
   }
 });
