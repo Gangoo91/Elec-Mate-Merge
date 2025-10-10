@@ -96,19 +96,20 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
       try {
         response = await fetch(FUNCTION_URL, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8'
-          },
-          body: JSON.stringify({ 
-            messages, 
-            currentDesign, 
-            selectedAgents, 
-            targetAgent,
-            ...(currentDesign?.userContext && { userContext: currentDesign.userContext })
-          }),
-          signal: controller.signal
+headers: {
+  'Content-Type': 'application/json',
+  'Accept': 'text/event-stream'
+},
+mode: 'cors',
+referrerPolicy: 'no-referrer',
+body: JSON.stringify({ 
+  messages, 
+  currentDesign, 
+  selectedAgents, 
+  targetAgent,
+  ...(currentDesign?.userContext && { userContext: currentDesign.userContext })
+}),
+signal: controller.signal
         });
       } catch (e: any) {
         if (e?.name === 'AbortError') {

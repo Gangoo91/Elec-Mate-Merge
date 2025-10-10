@@ -280,14 +280,17 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     onCitation: (citation) => {
       console.log('Citation received:', citation);
     },
-    onError: (error) => {
-      const msg = String(error || '').toLowerCase();
-      if (msg.includes('still working')) {
-        toast.info(String(error));
-      } else {
-        toast.error(String(error));
-      }
-    }
+onError: (error) => {
+  const msg = String(error || '').toLowerCase();
+  if (msg.includes('still working')) {
+    toast.info(String(error));
+  } else if (msg.includes('failed to fetch') || msg.includes('networkerror') || msg.includes('abort')) {
+    // Silent: fallback will handle UX
+    return;
+  } else {
+    toast.error(String(error));
+  }
+}
   });
 
   // Smooth, throttled auto-scroll - only if user is near bottom

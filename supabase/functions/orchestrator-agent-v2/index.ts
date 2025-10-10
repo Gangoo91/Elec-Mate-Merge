@@ -15,7 +15,7 @@ import { validateAgentOutputs, formatValidationReport } from '../_shared/validat
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, accept',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
@@ -41,12 +41,13 @@ interface OrchestratorRequest {
 }
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') {
+if (req.method === 'OPTIONS') {
+    console.log('[orchestrator-v2] CORS preflight');
     return new Response(null, { headers: corsHeaders });
   }
 
-  try {
-    const startTime = Date.now();
+try {
+    console.log('[orchestrator-v2] POST start');
     const { messages, currentDesign, conversationalMode = true, selectedAgents, targetAgent } = await req.json() as OrchestratorRequest;
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
