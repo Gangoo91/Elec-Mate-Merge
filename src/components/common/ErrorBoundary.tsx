@@ -33,8 +33,20 @@ class ErrorBoundary extends Component<Props, State> {
       errorInfo
     });
     
-    // Log the error to our logger
-    logger.error('Error caught by ErrorBoundary:', error, errorInfo);
+    // Enhanced error logging with context
+    logger.error('ErrorBoundary caught an error:', {
+      error: error.message,
+      stack: error.stack,
+      componentStack: errorInfo.componentStack,
+      url: window.location.href,
+      timestamp: new Date().toISOString()
+    });
+    
+    // Specific guidance for stream errors
+    if (error.message.includes('stream') || error.message.includes('controller') || error.message.includes('enqueue')) {
+      console.error('🚨 Stream error detected - this may be related to parallel agent execution');
+      console.error('💡 Try refreshing the page or starting a new conversation');
+    }
   }
 
   private handleRefresh = (): void => {

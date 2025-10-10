@@ -265,13 +265,42 @@ async function handleConversationalMode(
       const allToolCalls: any[] = [];
       let costUpdates: any = null;
 
+      // Stream write queue to prevent race conditions
+      const streamWriteQueue: Array<() => void> = [];
+      let isWriting = false;
+
+      const queueStreamWrite = (data: Uint8Array) => {
+        return new Promise<void>((resolve) => {
+          streamWriteQueue.push(() => {
+            try {
+              controller.enqueue(data);
+            } catch (error) {
+              console.error('❌ Stream write error:', error);
+            }
+            resolve();
+          });
+          processStreamQueue();
+        });
+      };
+
+      const processStreamQueue = async () => {
+        if (isWriting || streamWriteQueue.length === 0) return;
+        
+        isWriting = true;
+        while (streamWriteQueue.length > 0) {
+          const write = streamWriteQueue.shift();
+          if (write) await write();
+        }
+        isWriting = false;
+      };
+
       try {
         // Send immediate "thinking" event to start stream within 1s
         const thinkingEvent = `data: ${JSON.stringify({
           type: 'thinking',
           message: 'Analysing your request and planning the approach...'
         })}\n\n`;
-        controller.enqueue(encoder.encode(thinkingEvent));
+        await queueStreamWrite(encoder.encode(thinkingEvent));
 
         // Send initial event with agent plan
         const planEvent = `data: ${JSON.stringify({
@@ -280,7 +309,7 @@ async function handleConversationalMode(
           complexity: agentPlan.estimatedComplexity,
           reasoning: agentPlan.reasoning
         })}\n\n`;
-        controller.enqueue(encoder.encode(planEvent));
+        await queueStreamWrite(encoder.encode(planEvent));
 
         // Detect workflow type
         const workflowType = latestMessage.toLowerCase().includes('fault') || 
@@ -357,7 +386,7 @@ async function handleConversationalMode(
                 cached: true,
                 elapsed: 0
               })}\n\n`;
-              controller.enqueue(encoder.encode(completeEvent));
+              await queueStreamWrite(encoder.encode(completeEvent));
               return;
             }
 
@@ -371,7 +400,7 @@ async function handleConversationalMode(
               groupIndex,
               parallelCount: group.length
             })}\n\n`;
-            controller.enqueue(encoder.encode(startEvent));
+            await queueStreamWrite(encoder.encode(startEvent));
 
             try {
               const agentFunctionName = getAgentFunctionName(agentName);
@@ -440,7 +469,7 @@ async function handleConversationalMode(
                   partialResults: true
                 }
               })}\n\n`;
-              controller.enqueue(encoder.encode(errorEvent));
+              await queueStreamWrite(encoder.encode(errorEvent));
               
               // Store partial error output but continue with other agents
               agentOutputs.push({
@@ -492,7 +521,7 @@ async function handleConversationalMode(
               confidence: output.confidence,
               structuredData: result.data?.structuredData || null
             })}\n\n`;
-            controller.enqueue(encoder.encode(responseEvent));
+            await queueStreamWrite(encoder.encode(responseEvent));
 
             allCitations.push(...output.citations);
             allToolCalls.push(...output.toolCalls);
@@ -505,7 +534,7 @@ async function handleConversationalMode(
                 agent: agentName,
                 nextAgent: nextGroupHasAgents ? filteredGroups[groupIndex + 1][0].agent : null
               })}\n\n`;
-              controller.enqueue(encoder.encode(completeEvent));
+              await queueStreamWrite(encoder.encode(completeEvent));
 
             } catch (error) {
               console.error(`Error in agent ${agentName}:`, error);

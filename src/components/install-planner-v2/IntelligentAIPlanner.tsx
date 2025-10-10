@@ -1120,9 +1120,9 @@ onError: (error) => {
         </div>
       </div>
 
-      {/* Phase 1: Compact Input Area */}
-      <div className="flex-none bg-elec-dark border-t border-border/30 px-3 md:px-5 py-1.5 md:py-2">
-        <div className="space-y-2">
+      {/* Phase 1: Compact Input Area - Sticky at bottom on mobile */}
+      <div className="sticky bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-elec-dark via-elec-dark to-transparent pt-4 pb-safe border-t border-border/30">
+        <div className="max-w-5xl mx-auto px-3 md:px-5 space-y-2">
           {/* Phase 1: Collapsed Export Menu */}
           {hasMeaningfulContent && (
             <div className="flex gap-2 justify-center">
@@ -1163,7 +1163,7 @@ onError: (error) => {
           
           {/* Phase 1: Only 2 quick suggestions, auto-hide after first user message */}
           {messages.length === 1 && (
-            <div className="flex gap-1.5 pb-1">
+            <div className="flex gap-1.5">
               <button onClick={() => setInput("9.5kW shower, 15m from board")}
                 className="h-7 px-3 text-xs rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors flex items-center gap-1.5 flex-1">
                 <Sparkles className="h-3 w-3 text-elec-yellow" />
@@ -1182,7 +1182,6 @@ onError: (error) => {
             selectedAgent={selectedAgent}
             onAgentSelect={setSelectedAgent}
             activeAgents={activeAgents}
-            className="mb-2"
             photoUploadSlot={
               <PhotoUploadButton 
                 onPhotoUploaded={(url) => {
@@ -1196,9 +1195,8 @@ onError: (error) => {
             }
           />
 
-          {/* Chat Input - Simplified 2-Column Layout */}
-          <div className="flex items-end gap-2">
-            {/* Textarea - Grows */}
+          {/* Chat Input */}
+          <div className="flex items-end gap-2 pb-2">
             <Textarea
               ref={textareaRef}
               value={input}
@@ -1211,7 +1209,6 @@ onError: (error) => {
               style={{ fontSize: '16px', height: '44px' }}
             />
 
-            {/* Send Button */}
             <Button 
               onClick={handleSend}
               disabled={isLoading || isStreaming || !input.trim()}

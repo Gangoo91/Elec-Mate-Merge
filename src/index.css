@@ -339,6 +339,13 @@
     background: hsl(var(--elec-yellow) / 0.5);
   }
   
+  /* Safe area padding for mobile devices with notches */
+  @supports (padding: env(safe-area-inset-bottom)) {
+    .pb-safe {
+      padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+    }
+  }
+  
   /* Responsive Template Grid - Optimized for template cards */
   .responsive-template-grid {
     display: grid;
