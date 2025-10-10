@@ -621,9 +621,11 @@ async function handleConversationalMode(
               // WAVE 1 FIX: Use queue instead of direct enqueue
               await queueStreamWrite(encoder.encode(errorEvent));
             }
-          });
-
-          await Promise.all(groupPromises);
+          } catch (error) {
+            console.error(`❌ Agent ${agentName} execution failed:`, error);
+            throw error;
+          }
+          }));
         }
 
         // Phase 6: Quality Gate - Validate all agent outputs
