@@ -310,6 +310,19 @@ onError: (error) => {
     }
   }, [messages]);
 
+  const isInputMeaningful = (text: string): boolean => {
+    const t = text.trim();
+    if (t.length < 3) return false;
+    if (/(.)\1{4,}/.test(t)) return false; // repeated chars
+    const letters = t.replace(/[^a-z]/gi, '');
+    const vowels = letters.match(/[aeiou]/gi)?.length || 0;
+    const consonants = letters.length - vowels;
+    if (consonants > 5 && vowels > 0 && consonants / Math.max(vowels, 1) > 5) return false;
+    // allow if contains space, keywords, or numbers
+    if (/\s/.test(t) || /(install|cable|kw|amp|circuit|socket|shower|ev|board|meter|length|run)/i.test(t) || /\d/.test(t)) return true;
+    return true;
+  };
+
   const handleSend = async () => {
     if (!input.trim() || isLoading || isStreaming) return;
 
@@ -322,10 +335,25 @@ onError: (error) => {
       console.log('⏱️ Duplicate message detected, ignoring');
       return;
     }
+
+    // Client-side gibberish pre-validation
+    if (!isInputMeaningful(userMessage)) {
+      const guidance: Message = {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        content: "I’m not quite sure what you mean. Could you rephrase? For example:\n• I need to install a 9.5 kW shower\n• Calculate cable size for a 7 kW cooker\n• Best cable for an outdoor socket, 25 m run",
+        timestamp: new Date().toISOString(),
+        isValidationError: true
+      };
+      setMessages(prev => [...prev, guidance]);
+      return;
+    }
+
     // Clear failure flag when attempting a new send
     setLastSendFailed(false);
     setLastSentMessage(userMessage);
     setInput("");
+    if (textareaRef.current) textareaRef.current.style.height = '44px';
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
     setReasoningSteps([]);
@@ -470,7 +498,7 @@ onError: (error) => {
     setInput(textarea.value);
     
     // Reset height to recalculate
-    textarea.style.height = '44px';
+    textarea.style.height = 'auto';
     
     // Set new height based on scrollHeight, max 88px (2 lines)
     const newHeight = Math.min(textarea.scrollHeight, 88);
@@ -1139,12 +1167,12 @@ onError: (error) => {
               <button onClick={() => setInput("9.5kW shower, 15m from board")}
                 className="h-7 px-3 text-xs rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors flex items-center gap-1.5 flex-1">
                 <Sparkles className="h-3 w-3 text-elec-yellow" />
-                <span className="truncate text-foreground/70">Shower</span>
+                <span className="truncate text-white">Shower</span>
               </button>
               <button onClick={() => setInput("Full rewire 3-bed house")}
                 className="h-7 px-3 text-xs rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors flex items-center gap-1.5 flex-1">
                 <Sparkles className="h-3 w-3 text-elec-yellow" />
-                <span className="truncate text-foreground/70">Rewire</span>
+                <span className="truncate text-white">Rewire</span>
               </button>
             </div>
           )}
