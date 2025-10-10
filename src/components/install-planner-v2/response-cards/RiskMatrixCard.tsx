@@ -46,6 +46,20 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
   
   const riskColor = getRiskColor(highestRisk);
   
+  // Calculate compliance score based on residual vs initial risk reduction
+  const calculateComplianceScore = () => {
+    if (!data.riskAssessment?.hazards || data.riskAssessment.hazards.length === 0) return 0;
+    
+    const totalReduction = data.riskAssessment.hazards.reduce((sum, h) => {
+      const reduction = ((h.riskRating - h.residualRisk) / h.riskRating) * 100;
+      return sum + reduction;
+    }, 0);
+    
+    return Math.round(totalReduction / data.riskAssessment.hazards.length);
+  };
+  
+  const complianceScore = calculateComplianceScore();
+  
   return (
     <Card className="border-elec-yellow/20 bg-gradient-to-br from-red-500/5 to-transparent hover:border-elec-yellow/30 transition-all">
       <CardContent className="p-4 space-y-4">
@@ -54,6 +68,15 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
           <Badge variant="outline" className="bg-red-500/10 text-red-400 border-red-500/30">
             ⚠️ Risk Assessment
           </Badge>
+          {complianceScore > 0 && (
+            <Badge variant="outline" className={`text-xs ${
+              complianceScore >= 70 ? 'bg-green-500/10 border-green-500/30 text-green-400' :
+              complianceScore >= 50 ? 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400' :
+              'bg-orange-500/10 border-orange-500/30 text-orange-400'
+            }`}>
+              {complianceScore}% Risk Reduction
+            </Badge>
+          )}
         </div>
 
         {/* Risk Summary - Always Visible */}

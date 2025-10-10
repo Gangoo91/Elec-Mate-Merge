@@ -2,8 +2,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, CheckCircle2, XCircle } from "lucide-react";
 import { useState } from "react";
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 
 interface Material {
   item: string;
@@ -34,6 +35,25 @@ export const CostBreakdownCard = ({ data }: CostBreakdownCardProps) => {
   
   const materialsTotal = data.materials?.reduce((sum, m) => sum + m.total, 0) || 0;
   const labourTotal = data.labour?.total || 0;
+  
+  const chartData = [
+    { name: 'Materials', value: materialsTotal, color: 'hsl(var(--chart-1))' },
+    { name: 'Labour', value: labourTotal, color: 'hsl(var(--chart-2))' }
+  ];
+  
+  const included = [
+    'All materials listed',
+    'Labour hours estimated',
+    'Standard installation',
+    'Basic testing'
+  ];
+  
+  const notIncluded = [
+    'Structural modifications',
+    'Additional circuits',
+    'Premium finish materials',
+    'Out-of-hours work'
+  ];
   
   return (
     <Card className="border-elec-yellow/20 bg-gradient-to-br from-green-500/5 to-transparent hover:border-elec-yellow/30 transition-all">
@@ -67,6 +87,62 @@ export const CostBreakdownCard = ({ data }: CostBreakdownCardProps) => {
               <p className="text-base font-semibold text-foreground">
                 £{labourTotal.toFixed(2)}
               </p>
+            </div>
+          </div>
+
+          {/* Visual Breakdown Chart */}
+          <div className="h-48 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={chartData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={50}
+                  outerRadius={70}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {chartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Legend 
+                  verticalAlign="bottom" 
+                  height={36}
+                  formatter={(value, entry: any) => (
+                    <span className="text-xs text-foreground">
+                      {value}: £{entry.payload.value.toFixed(2)}
+                    </span>
+                  )}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* What's Included / Not Included */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="bg-green-500/5 border border-green-500/20 rounded p-3">
+              <p className="text-xs font-semibold text-green-400 mb-2">✓ What's Included</p>
+              <ul className="space-y-1">
+                {included.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-xs text-foreground/80">
+                    <CheckCircle2 className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-orange-500/5 border border-orange-500/20 rounded p-3">
+              <p className="text-xs font-semibold text-orange-400 mb-2">✗ What's Not Included</p>
+              <ul className="space-y-1">
+                {notIncluded.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-xs text-foreground/80">
+                    <XCircle className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>

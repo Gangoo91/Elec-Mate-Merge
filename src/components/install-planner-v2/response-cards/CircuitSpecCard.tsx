@@ -2,12 +2,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { CheckCircle2, ChevronDown, AlertCircle, Zap, RefreshCw } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { CheckCircle2, ChevronDown, AlertCircle, Zap, RefreshCw, HelpCircle, BookOpen } from "lucide-react";
 import { useState } from "react";
 import { EditableField } from "../EditableField";
 import { generateSingleLineDiagram } from "@/lib/diagramGenerator/layoutEngine";
 import { SVGDiagramRenderer } from "@/components/circuit-diagrams/SVGDiagramRenderer";
 import { useToast } from "@/hooks/use-toast";
+import { CitationBadge } from "../CitationBadge";
 
 interface CircuitSpecData {
   cableSize?: number;
@@ -38,9 +40,10 @@ interface CircuitSpecCardProps {
   data: CircuitSpecData;
   planData?: any;
   onSpecChange?: (newData: CircuitSpecData) => void;
+  citations?: any[];
 }
 
-export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCardProps) => {
+export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: CircuitSpecCardProps) => {
   const [showCalculations, setShowCalculations] = useState(false);
   const [showDiagram, setShowDiagram] = useState(false);
   const [diagram, setDiagram] = useState<any>(null);
@@ -152,7 +155,23 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCar
                 MCB: {localData.protectionDevice}
               </Badge>
               <div className="text-center">
-                <p className="text-sm text-muted-foreground">Cable Size</p>
+                <div className="flex items-center justify-center gap-1">
+                  <p className="text-sm text-muted-foreground">Cable Size</p>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <HelpCircle className="h-3 w-3 text-muted-foreground/70 cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs" side="top">
+                        <p className="text-xs">
+                          Selected based on design current ({localData.designCurrent?.toFixed(1)}A), 
+                          correction factors ({localData.correctionFactors?.overall || 'N/A'}), 
+                          and corrected capacity ({localData.correctedCapacity?.toFixed(1)}A)
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
                 {planData ? (
                   <EditableField
                     label="Cable Size"
@@ -169,15 +188,31 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCar
           </div>
 
           {/* Compliance Status */}
-          <div className="flex items-center gap-2 pt-2 border-t border-border/50">
-            {localData.voltageDrop?.compliant ? (
-              <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
-            ) : (
-              <AlertCircle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
-            )}
-            <span className="text-sm text-foreground">
-              BS 7671:2018 Compliant
-            </span>
+          <div className="flex items-center justify-between gap-2 pt-2 border-t border-border/50">
+            <div className="flex items-center gap-2">
+              {localData.voltageDrop?.compliant ? (
+                <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
+              ) : (
+                <AlertCircle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
+              )}
+              <span className="text-sm text-foreground">
+                BS 7671:2018 Compliant
+              </span>
+            </div>
+            <div className="flex items-center gap-1 flex-wrap">
+              {localData.voltageDrop?.compliant && (
+                <Badge variant="outline" className="text-[10px] bg-green-500/10 border-green-500/30 text-green-400">
+                  <BookOpen className="h-2.5 w-2.5 mr-1" />
+                  525.1 ✓
+                </Badge>
+              )}
+              {localData.earthFault?.maxZs && (
+                <Badge variant="outline" className="text-[10px] bg-blue-500/10 border-blue-500/30 text-blue-400">
+                  <BookOpen className="h-2.5 w-2.5 mr-1" />
+                  411.4 ✓
+                </Badge>
+              )}
+            </div>
           </div>
 
           {/* Key Metrics */}
@@ -308,6 +343,18 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCar
                 <p className="text-xs text-muted-foreground">
                   Installation Method: <span className="text-foreground">{data.installationMethod}</span>
                 </p>
+              </div>
+            )}
+
+            {/* Citations */}
+            {citations && citations.length > 0 && (
+              <div className="pt-2 border-t border-border/50">
+                <p className="text-xs font-semibold text-foreground mb-2">Regulation References</p>
+                <div className="flex flex-wrap gap-1">
+                  {citations.map((citation, idx) => (
+                    <CitationBadge key={idx} citation={citation} index={idx} />
+                  ))}
+                </div>
               </div>
             )}
           </CollapsibleContent>

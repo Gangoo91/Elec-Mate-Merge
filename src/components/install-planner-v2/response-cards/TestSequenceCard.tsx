@@ -4,6 +4,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ClipboardCheck } from "lucide-react";
 import { useState } from "react";
+import { CitationBadge } from "../CitationBadge";
 
 interface TestSequenceData {
   testSequence?: string[];
@@ -13,9 +14,10 @@ interface TestSequenceData {
 
 interface TestSequenceCardProps {
   data: TestSequenceData;
+  citations?: any[];
 }
 
-export const TestSequenceCard = ({ data }: TestSequenceCardProps) => {
+export const TestSequenceCard = ({ data, citations }: TestSequenceCardProps) => {
   const [showCriteria, setShowCriteria] = useState(false);
   const [showAllTests, setShowAllTests] = useState(false);
   
@@ -123,6 +125,18 @@ export const TestSequenceCard = ({ data }: TestSequenceCardProps) => {
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded p-2 text-xs text-foreground">
           <strong>Note:</strong> All results must be recorded on Electrical Installation Certificate (EIC) as per BS 7671 Part 6.
         </div>
+
+        {/* Citations */}
+        {citations && citations.length > 0 && (
+          <div className="border-t border-border/50 pt-3">
+            <p className="text-xs font-semibold text-foreground mb-2">Testing Standards Referenced</p>
+            <div className="flex flex-wrap gap-1">
+              {citations.map((citation, idx) => (
+                <CitationBadge key={idx} citation={citation} index={idx} />
+              ))}
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

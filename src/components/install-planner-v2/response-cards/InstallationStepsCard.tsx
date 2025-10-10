@@ -4,6 +4,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Button } from "@/components/ui/button";
 import { Wrench, CheckCircle2, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { CitationBadge } from "../CitationBadge";
 
 interface InstallationStep {
   stepNumber: number;
@@ -28,9 +29,10 @@ interface InstallationStepsData {
 
 interface InstallationStepsCardProps {
   data: InstallationStepsData;
+  citations?: any[];
 }
 
-export const InstallationStepsCard = ({ data }: InstallationStepsCardProps) => {
+export const InstallationStepsCard = ({ data, citations }: InstallationStepsCardProps) => {
   const [showAllSteps, setShowAllSteps] = useState(false);
   
   return (
@@ -166,6 +168,18 @@ export const InstallationStepsCard = ({ data }: InstallationStepsCardProps) => {
                 </li>
               ))}
             </ul>
+          </div>
+        )}
+
+        {/* Citations */}
+        {citations && citations.length > 0 && (
+          <div className="border-t border-border/50 pt-3">
+            <p className="text-xs font-semibold text-foreground mb-2">Installation Standards Referenced</p>
+            <div className="flex flex-wrap gap-1">
+              {citations.map((citation, idx) => (
+                <CitationBadge key={idx} citation={citation} index={idx} />
+              ))}
+            </div>
           </div>
         )}
       </CardContent>
