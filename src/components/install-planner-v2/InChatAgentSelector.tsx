@@ -7,7 +7,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-export type AgentType = 'designer' | 'cost-engineer' | 'installer' | 'health-safety' | 'commissioning' | 'project-manager';
+export type AgentType = 'designer' | 'installer' | 'health-safety' | 'commissioning' | 'project-manager';
 
 interface Agent {
   id: AgentType;
@@ -19,7 +19,6 @@ interface Agent {
 
 const AGENTS: Agent[] = [
   { id: 'designer', name: 'Designer', icon: Lightbulb, color: 'text-blue-400', description: 'Circuit design & cable sizing' },
-  { id: 'cost-engineer', name: 'Cost', icon: Calculator, color: 'text-green-400', description: 'Material costs & quotes' },
   { id: 'installer', name: 'Installer', icon: Wrench, color: 'text-orange-400', description: 'Practical installation advice' },
   { id: 'health-safety', name: 'H&S', icon: Shield, color: 'text-red-400', description: 'Safety requirements' },
   { id: 'commissioning', name: 'Testing', icon: CheckCircle, color: 'text-purple-400', description: 'Inspection & testing' },
@@ -41,7 +40,7 @@ export const InChatAgentSelector = ({
   const visibleCount = 3;
   
   // Agent dependency chain
-  const agentOrder: AgentType[] = ['designer', 'installer', 'cost-engineer', 'health-safety', 'commissioning'];
+  const agentOrder: AgentType[] = ['designer', 'installer', 'health-safety', 'commissioning'];
 
   return (
     <div className={cn("relative", className)}>

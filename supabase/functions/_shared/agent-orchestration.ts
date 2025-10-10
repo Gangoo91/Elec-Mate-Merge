@@ -11,7 +11,7 @@ export interface AgentPlan {
 }
 
 export interface AgentStep {
-  agent: 'designer' | 'cost-engineer' | 'installer' | 'health-safety' | 'commissioning';
+  agent: 'designer' | 'installer' | 'health-safety' | 'commissioning';
   priority: number;
   reasoning: string;
   dependencies: string[]; // Which previous agents must complete first
@@ -37,12 +37,10 @@ export interface AgentOutput {
 }
 
 // Normalise intent keys to agent IDs
-function normaliseIntentKey(k: string): 'designer' | 'cost-engineer' | 'installer' | 'health-safety' | 'commissioning' {
-  const map: Record<string, 'designer' | 'cost-engineer' | 'installer' | 'health-safety' | 'commissioning'> = {
+function normaliseIntentKey(k: string): 'designer' | 'installer' | 'health-safety' | 'commissioning' {
+  const map: Record<string, 'designer' | 'installer' | 'health-safety' | 'commissioning'> = {
     design: 'designer',
     designer: 'designer',
-    cost: 'cost-engineer',
-    'cost-engineer': 'cost-engineer',
     installation: 'installer',
     installer: 'installer',
     safety: 'health-safety',
@@ -75,7 +73,6 @@ export async function planAgentSequence(
     // Get intent scores (with safe defaults)
     const intents = intentAnalysis.intents || {};
     const designScore = intents.design || intents.designer || 0;
-    const costScore = intents.cost || intents['cost-engineer'] || 0;
     const installScore = intents.installation || intents.installer || 0;
     const commissionScore = intents.commissioning || 0;
 
@@ -99,7 +96,7 @@ export async function planAgentSequence(
     }
 
     // RULE 2: Testing/commissioning only query
-    if (commissionScore >= 0.6 && designScore < 0.4 && costScore < 0.4) {
+    if (commissionScore >= 0.6 && designScore < 0.4) {
       console.log('✅ Testing/commissioning query detected');
       return {
         sequence: [{
@@ -113,22 +110,7 @@ export async function planAgentSequence(
       };
     }
 
-    // RULE 3: Cost-only query (but not if design needed)
-    if (costScore >= 0.6 && designScore < 0.4 && installScore < 0.4) {
-      console.log('✅ Cost estimation query detected');
-      return {
-        sequence: [{
-          agent: 'cost-engineer',
-          priority: 1,
-          reasoning: 'Pricing and cost focus',
-          dependencies: []
-        }],
-        reasoning: 'Cost-only request',
-        estimatedComplexity: 'simple'
-      };
-    }
-
-    // RULE 4: Installation-only query (practical guidance)
+    // RULE 3: Installation-only query (practical guidance)
     if (installScore >= 0.6 && designScore < 0.4 && commissionScore < 0.4) {
       console.log('✅ Installation guidance query detected');
       return {
@@ -143,14 +125,14 @@ export async function planAgentSequence(
       };
     }
 
-    // RULE 5: New circuit design (full workflow)
-    // If design score is high, use standard sequence: designer → cost → installer → commissioning
+    // RULE 4: New circuit design (full workflow)
+    // If design score is high, use standard sequence: designer → installer → health-safety → commissioning
     if (designScore >= 0.5) {
       console.log('✅ Full circuit design detected - using standard sequence');
       return createStandardSequence('Complete circuit design workflow');
     }
 
-    // RULE 6: Multiple intents (partial workflow)
+    // RULE 5: Multiple intents (partial workflow)
     // Build sequence based on which intents are present
     const sequence: AgentStep[] = [];
     let priority = 1;
@@ -161,15 +143,6 @@ export async function planAgentSequence(
         priority: priority++,
         reasoning: 'Circuit design and calculations',
         dependencies: []
-      });
-    }
-
-    if (costScore >= 0.4) {
-      sequence.push({
-        agent: 'cost-engineer',
-        priority: priority++,
-        reasoning: 'Pricing and budgeting',
-        dependencies: designScore >= 0.4 ? ['designer'] : []
       });
     }
 
@@ -238,7 +211,6 @@ function createFallbackPlan(intentAnalysis: IntentAnalysis): AgentPlan {
   // Safe defaults if intents are missing or malformed
   const intents = intentAnalysis?.intents ?? { 
     design: 0.6, 
-    cost: 0.5, 
     installation: 0.5, 
     commissioning: 0.4 
   };

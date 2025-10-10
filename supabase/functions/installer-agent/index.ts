@@ -26,7 +26,7 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'installer-agent' });
 
   try {
-    const { messages, context, jobScale = 'commercial' } = await req.json();
+    const { messages, currentDesign, context, jobScale = 'commercial' } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 

@@ -685,17 +685,7 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     });
 
     // Build citations from RAG
-    const enhancedCitations = [];
-    if (healthSafetyKnowledge && healthSafetyKnowledge.length > 0) {
-      enhancedCitations.push(...healthSafetyKnowledge.slice(0, 5).map((item: any) => ({
-        source: item.source || 'Health & Safety Knowledge Base',
-        section: item.topic,
-        title: item.topic,
-        content: item.content?.slice(0, 150) + '...',
-        relevance: item.similarity,
-        type: 'knowledge'
-      })));
-    }
+    const enhancedCitations: any[] = [];
 
     // Add to structuredData
     structuredResponse.structuredData.reasoningSteps = reasoningSteps;

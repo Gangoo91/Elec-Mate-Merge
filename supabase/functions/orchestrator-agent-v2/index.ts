@@ -499,7 +499,6 @@ async function handleConversationalMode(
                 { agent: 'installer', dependencies: [] },
                 { agent: 'health-safety', dependencies: [] }
               ],
-              [{ agent: 'cost-engineer', dependencies: [] }],
               [{ agent: 'inspector', dependencies: ['designer', 'installer'] }],
               [{ agent: 'commissioning', dependencies: ['designer', 'inspector'] }]
             ];
@@ -571,7 +570,7 @@ async function handleConversationalMode(
             const thinkingEvent = `data: ${JSON.stringify({
               type: 'agent_thinking',
               agent: agentName,
-              message: `Analysing ${agentName === 'designer' ? 'circuit requirements' : agentName === 'cost-engineer' ? 'pricing and materials' : agentName === 'installer' ? 'installation approach' : agentName === 'health-safety' ? 'safety requirements' : 'testing procedures'}...`,
+              message: `Analysing ${agentName === 'designer' ? 'circuit requirements' : agentName === 'installer' ? 'installation approach' : agentName === 'health-safety' ? 'safety requirements' : 'testing procedures'}...`,
               step: groupIndex + 1,
               totalSteps: filteredGroups.length
             })}\n\n`;
