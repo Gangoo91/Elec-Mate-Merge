@@ -21,6 +21,9 @@ const corsHeaders = {
 
 const responseCache = new ResponseCache();
 
+// Agent-level response cache (in-memory, 1 hour TTL)
+const agentResultsCache = new Map<string, { data: any; timestamp: number }>();
+
 // Helper to extract circuit count from message
 function extractCircuitCount(message: string): number {
   const wayMatch = message.match(/(\d+)[\s-]?way/i);
@@ -314,19 +317,52 @@ async function handleConversationalMode(
           group.filter(step => activeAgents.includes(step.agent))
         ).filter(group => group.length > 0);
 
-        // Execute agents in parallel groups
+        // Execute agents in parallel groups using Promise.all
         for (let groupIndex = 0; groupIndex < filteredGroups.length; groupIndex++) {
           const group = filteredGroups[groupIndex];
           
-          // Execute all agents in this group in parallel
-          const groupPromises = group.map(async (step) => {
+          // Execute all agents in this group in TRUE parallel using Promise.all
+          await Promise.all(group.map(async (step) => {
             const agentName = step.agent;
             const agentIndex = activeAgents.indexOf(agentName);
             const isFirst = groupIndex === 0;
             const isLast = groupIndex === filteredGroups.length - 1;
             console.log(`🎨 Agent ${agentIndex + 1}/${activeAgents.length}: ${agentName} (Group ${groupIndex + 1}/${filteredGroups.length}, parallel with ${group.length} others)`);
 
+            // Check agent-level cache first
+            const lastMessage = messages[messages.length - 1]?.content || '';
+            const cacheKey = `agent:${agentName}:${lastMessage}:${JSON.stringify(currentDesign)}`;
+            const cached = agentResultsCache.get(cacheKey);
+            
+            if (cached && Date.now() - cached.timestamp < 3600000) { // 1 hour TTL
+              console.log(`⚡ ${agentName} cache hit - instant response`);
+              
+              const cachedOutput: AgentOutput = {
+                agent: agentName,
+                response: cached.data.response || '',
+                citations: cached.data.citations || [],
+                toolCalls: cached.data.toolCalls || [],
+                costUpdates: cached.data.costUpdates,
+                confidence: cached.data.confidence || 0.8
+              };
+              
+              agentOutputs.push(cachedOutput);
+              
+              // Send cached completion event
+              const completeEvent = `data: ${JSON.stringify({
+                type: 'agent_complete',
+                agent: agentName,
+                response: cachedOutput.response,
+                citations: cachedOutput.citations,
+                cached: true,
+                elapsed: 0
+              })}\n\n`;
+              controller.enqueue(encoder.encode(completeEvent));
+              return;
+            }
+
             // Send agent_start event
+            const startTime = Date.now();
             const startEvent = `data: ${JSON.stringify({
               type: 'agent_start',
               agent: agentName,
@@ -427,7 +463,16 @@ async function handleConversationalMode(
               confidence: result.data?.confidence || 0.8
             };
 
+            // Cache the result
+            agentResultsCache.set(cacheKey, {
+              data: result.data,
+              timestamp: Date.now()
+            });
+
             agentOutputs.push(output);
+            
+            const elapsed = Date.now() - startTime;
+            console.log(`✅ ${agentName} completed in ${elapsed}ms`);
             agentContext.previousAgentOutputs = agentOutputs;
             
             // Add agent's response to full conversation thread

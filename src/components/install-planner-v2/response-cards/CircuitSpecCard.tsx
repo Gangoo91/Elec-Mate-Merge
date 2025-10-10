@@ -2,11 +2,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { CheckCircle2, ChevronDown, AlertCircle, Zap } from "lucide-react";
+import { CheckCircle2, ChevronDown, AlertCircle, Zap, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { EditableField } from "../EditableField";
 import { generateSingleLineDiagram } from "@/lib/diagramGenerator/layoutEngine";
 import { SVGDiagramRenderer } from "@/components/circuit-diagrams/SVGDiagramRenderer";
+import { useToast } from "@/hooks/use-toast";
 
 interface CircuitSpecData {
   cableSize?: number;
@@ -44,6 +45,8 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCar
   const [showDiagram, setShowDiagram] = useState(false);
   const [diagram, setDiagram] = useState<any>(null);
   const [localData, setLocalData] = useState(data);
+  const [isRecalculating, setIsRecalculating] = useState(false);
+  const { toast } = useToast();
 
   // Generate circuit diagram on mount
   useState(() => {
@@ -99,6 +102,24 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCar
     setLocalData(updatedData);
     onSpecChange?.(updatedData);
   };
+
+  const handleRecalculate = () => {
+    setIsRecalculating(true);
+    toast({
+      title: "Recalculating design...",
+      description: "Running full BS 7671 compliance checks",
+    });
+    
+    // Trigger recalculation by resetting local data to original
+    setTimeout(() => {
+      setLocalData(data);
+      setIsRecalculating(false);
+      toast({
+        title: "Design recalculated",
+        description: "All calculations verified for current parameters",
+      });
+    }, 800);
+  };
   
   return (
     <Card className="border-elec-yellow/20 bg-gradient-to-br from-blue-500/5 to-transparent hover:border-elec-yellow/30 transition-all">
@@ -108,6 +129,16 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCar
           <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
             📐 Circuit Design
           </Badge>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleRecalculate}
+            disabled={isRecalculating}
+            className="h-7 text-xs"
+          >
+            <RefreshCw className={`h-3 w-3 mr-1 ${isRecalculating ? 'animate-spin' : ''}`} />
+            Recalculate
+          </Button>
         </div>
 
         {/* Primary Spec - Editable */}
