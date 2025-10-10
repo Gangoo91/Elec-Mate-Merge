@@ -1,9 +1,9 @@
 // HEALTH & SAFETY AGENT - Risk assessments and method statements
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { corsHeaders } from '../_shared/cors.ts';
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
+import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
 import { emergencyProcedures } from '../_shared/emergencyProcedures.ts';
 
 interface HealthSafetyAgentRequest {

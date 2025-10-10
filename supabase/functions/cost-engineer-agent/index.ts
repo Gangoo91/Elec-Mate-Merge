@@ -1,13 +1,11 @@
 // COST ENGINEER AGENT - Pricing estimates with RAG
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
+import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+// corsHeaders imported from shared deps
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {

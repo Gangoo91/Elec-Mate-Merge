@@ -3,8 +3,9 @@
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
+import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
 import type { Message, ConversationState, ConversationSummary } from '../_shared/conversation-memory.ts';
 import { buildConversationState, summarizeConversation } from '../_shared/conversation-memory.ts';
 import { detectIntents, type IntentAnalysis } from '../_shared/intent-detection.ts';
@@ -14,11 +15,7 @@ import { ResponseCache, isCacheable } from '../_shared/response-cache.ts';
 import { extractCircuitContext } from '../_shared/extract-circuit-context.ts';
 import { validateAgentOutputs, formatValidationReport } from '../_shared/validation-layer.ts';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, accept',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-};
+// corsHeaders imported from shared deps
 
 const responseCache = new ResponseCache();
 
@@ -81,7 +78,9 @@ try {
     // WAVE 2 FIX: Cleanup expired cache entries at start of each request
     cleanupExpiredCache();
     
-    const { messages, currentDesign, conversationalMode = true, selectedAgents, targetAgent } = await req.json() as OrchestratorRequest;
+    const body = await getRequestBody(req);
+    const validatedRequest = validateAgentRequest(body);
+    const { messages, currentDesign, conversationalMode = true, selectedAgents, targetAgent } = validatedRequest;
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
@@ -253,13 +252,7 @@ try {
 
   } catch (error) {
     console.error('❌ Error in orchestrator-agent-v2:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Orchestrator failed',
-      response: "I'm having trouble processing that mate. Can you give me a bit more detail about what you need help with?"
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return handleError(error);
   }
 });
 
