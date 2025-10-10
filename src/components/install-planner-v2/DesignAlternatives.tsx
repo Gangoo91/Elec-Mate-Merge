@@ -186,46 +186,46 @@ export const DesignAlternatives = ({ messages, onSelectAlternative }: DesignAlte
               </div>
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
-              <p className="text-muted-foreground">{alt.approach}</p>
+              <p className="text-foreground">{alt.approach}</p>
               
               <div className="grid grid-cols-2 gap-2 p-3 bg-muted/30 rounded-md">
                 <div>
                   <span className="text-xs text-muted-foreground">Cable Size</span>
-                  <p className="font-medium">{alt.cableSize}mm²</p>
+                  <p className="font-medium text-foreground">{alt.cableSize}mm²</p>
                 </div>
                 <div>
                   <span className="text-xs text-muted-foreground">Protection</span>
-                  <p className="font-medium text-xs">{alt.protectionDevice}</p>
+                  <p className="font-medium text-foreground text-xs">{alt.protectionDevice}</p>
                 </div>
                 <div>
                   <span className="text-xs text-muted-foreground">V-Drop</span>
-                  <p className="font-medium">{alt.voltageDrop}%</p>
+                  <p className="font-medium text-foreground">{alt.voltageDrop}%</p>
                 </div>
                 <div>
                   <span className="text-xs text-muted-foreground">Est. Cost</span>
-                  <p className="font-medium">£{alt.estimatedCost}</p>
+                  <p className="font-medium text-foreground">£{alt.estimatedCost}</p>
                 </div>
               </div>
 
               <div>
-                <p className="text-xs font-medium text-green-600 mb-1">Pros:</p>
-                <ul className="text-xs space-y-0.5">
+                <p className="text-xs font-medium text-green-600 mb-1.5">Pros:</p>
+                <ul className="text-xs space-y-1 text-foreground">
                   {alt.pros.map((pro, i) => (
-                    <li key={i} className="flex items-start gap-1">
-                      <span className="text-green-600">✓</span>
-                      <span>{pro}</span>
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-green-600 mt-0.5">✓</span>
+                      <span className="flex-1">{pro}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               <div>
-                <p className="text-xs font-medium text-amber-600 mb-1">Cons:</p>
-                <ul className="text-xs space-y-0.5">
+                <p className="text-xs font-medium text-amber-600 mb-1.5">Cons:</p>
+                <ul className="text-xs space-y-1 text-foreground">
                   {alt.cons.map((con, i) => (
-                    <li key={i} className="flex items-start gap-1">
-                      <span className="text-amber-600">•</span>
-                      <span>{con}</span>
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-amber-600 mt-0.5">•</span>
+                      <span className="flex-1">{con}</span>
                     </li>
                   ))}
                 </ul>

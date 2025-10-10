@@ -268,26 +268,34 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCar
               <div className="space-y-2 border-l-2 border-green-500/30 pl-3">
                 <p className="text-xs font-semibold text-foreground">Voltage Drop</p>
                 <div className="text-xs text-muted-foreground space-y-1">
-                  <p>Actual: {data.voltageDrop.actual.toFixed(1)}V</p>
-                  <p>Percentage: {data.voltageDrop.percentage.toFixed(2)}%</p>
-                  <p>Max Permitted: {data.voltageDrop.limit}%</p>
-                  <p className={data.voltageDrop.compliant ? "text-green-400" : "text-red-400"}>
-                    {data.voltageDrop.compliant ? "✓ Within limits" : "✗ Exceeds limits"}
-                  </p>
+                  {data.voltageDrop.actual !== undefined && (
+                    <p>Actual: {data.voltageDrop.actual.toFixed(1)}V</p>
+                  )}
+                  {data.voltageDrop.percentage !== undefined && (
+                    <p>Percentage: {data.voltageDrop.percentage.toFixed(2)}%</p>
+                  )}
+                  {data.voltageDrop.limit !== undefined && (
+                    <p>Max Permitted: {data.voltageDrop.limit}%</p>
+                  )}
+                  {data.voltageDrop.compliant !== undefined && (
+                    <p className={data.voltageDrop.compliant ? "text-green-400" : "text-red-400"}>
+                      {data.voltageDrop.compliant ? "✓ Within limits" : "✗ Exceeds limits"}
+                    </p>
+                  )}
                 </div>
               </div>
             )}
 
             {/* Earth Fault Protection */}
-            {data.earthFault && (
+            {data.earthFault && data.earthFault.maxZs !== undefined && (
               <div className="space-y-2 border-l-2 border-red-500/30 pl-3">
                 <p className="text-xs font-semibold text-foreground">Earth Fault Protection</p>
                 <div className="text-xs text-muted-foreground space-y-1">
                   <p>Max Zs: {data.earthFault.maxZs}Ω</p>
-                  {data.earthFault.actualZs && (
+                  {data.earthFault.actualZs !== undefined && (
                     <p>Actual Zs: {data.earthFault.actualZs}Ω</p>
                   )}
-                  {data.earthFault.r1r2 && (
+                  {data.earthFault.r1r2 !== undefined && (
                     <p>R1+R2: {data.earthFault.r1r2}Ω</p>
                   )}
                 </div>

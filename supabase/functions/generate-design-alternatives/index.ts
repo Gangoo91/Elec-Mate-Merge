@@ -31,8 +31,8 @@ ${messages?.map((m: any) => `${m.role}: ${m.content}`).join('\n\n') || 'None'}
 
 Generate 3 alternative design approaches for this installation. Each alternative should be technically sound, BS 7671 compliant, but use different strategies:
 
-1. **Cost-Optimized**: Minimum cost while meeting regulations
-2. **Performance-Optimized**: Best electrical performance (lowest voltage drop, highest safety margin)
+1. **Cost-Optimised**: Minimum cost while meeting regulations
+2. **Performance-Optimised**: Best electrical performance (lowest voltage drop, highest safety margin)
 3. **Balanced**: Middle ground between cost and performance
 
 For each alternative, provide:
@@ -50,7 +50,7 @@ Respond with valid JSON:
 {
   "alternatives": [
     {
-      "id": "cost-optimized",
+      "id": "cost-optimised",
       "title": "Cost-Effective Solution",
       "approach": "Uses minimum cable size...",
       "cableSize": 2.5,
