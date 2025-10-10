@@ -1127,9 +1127,8 @@ onError: (error) => {
               onKeyDown={handleKeyPress}
               placeholder="Type your message..."
               disabled={isLoading}
-              className="w-full min-h-[44px] max-h-24 resize-none text-base font-medium rounded-xl pl-11 pr-11 py-3 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-normal overflow-y-auto transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20"
+              className="w-full h-11 md:h-12 text-base font-medium rounded-xl pl-11 pr-11 py-2 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-tight overflow-hidden transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20"
               style={{ fontSize: '16px' }}
-              rows={1}
             />
             
             {/* Photo button - positioned inside textarea */}
@@ -1139,7 +1138,7 @@ onError: (error) => {
                 toast.success('Photo added to message');
               }}
               disabled={isLoading}
-              className="absolute left-2 top-1/2 -translate-y-1/2 h-8 w-8 bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
+              className="absolute left-2 top-2 h-8 w-8 bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
             />
             
             {/* Send button - positioned inside textarea */}
@@ -1147,7 +1146,7 @@ onError: (error) => {
               onClick={handleSend}
               disabled={isLoading || isStreaming || !input.trim()}
               size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
+              className="absolute right-2 top-2 h-8 w-8 rounded-lg shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
               aria-label="Send message"
             >
               {(isLoading || isStreaming) ? (
