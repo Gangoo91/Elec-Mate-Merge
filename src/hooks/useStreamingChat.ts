@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 
 interface StreamChunk {
-  type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error' | 'agent_skipped';
+  type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error' | 'agent_skipped' | 'question_analysis' | 'confirmation_required';
   content?: string;
   data?: any;
   agent?: string;
@@ -38,6 +38,8 @@ interface UseStreamingChatOptions {
   onEstimatedTime?: (seconds: number) => void;
   onElapsedTimeUpdate?: (seconds: number) => void;
   onAgentProgress?: (agent: string, status: 'pending' | 'active' | 'complete') => void;
+  onQuestionAnalysis?: (data: any) => void;
+  onConfirmationRequired?: (data: any) => void;
 }
 
 export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
@@ -246,6 +248,20 @@ signal: controller.signal
                       console.warn(`⏭️ ${chunk.agent} skipped: ${skipReason}`);
                       fullResponse += `\n\n*${chunk.agent} skipped — ${skipReason}. Other agents continuing...*\n`;
                       onToken(`\n\n*${chunk.agent} skipped — ${skipReason}*\n`);
+                    }
+                    break;
+                  
+                  case 'question_analysis':
+                    // Question understanding analysis received
+                    if (chunk.data) {
+                      options.onQuestionAnalysis?.(chunk.data);
+                    }
+                    break;
+                  
+                  case 'confirmation_required':
+                    // User confirmation required
+                    if (chunk.data) {
+                      options.onConfirmationRequired?.(chunk.data);
                     }
                     break;
 

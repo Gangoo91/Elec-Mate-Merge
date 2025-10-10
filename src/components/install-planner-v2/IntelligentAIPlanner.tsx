@@ -1078,9 +1078,22 @@ onError: (error) => {
                 )}
 
                 {/* Citations */}
-                {message.role === 'assistant' && message.citations && (
+                {message.role === 'assistant' && message.citations && message.citations.length > 0 && (
                   <div className="mt-4 pt-3 border-t border-white/10">
-                    <CitationBadge citations={message.citations} />
+                    <p className="text-xs font-semibold text-muted-foreground mb-2">References</p>
+                    <div className="flex flex-wrap gap-2">
+                      {message.citations.map((cite: any, idx: number) => (
+                        <CitationBadge 
+                          key={idx} 
+                          citation={{
+                            source: 'BS 7671',
+                            section: cite.number || cite.section || 'Unknown',
+                            title: cite.title || 'Regulation',
+                            type: 'regulation'
+                          }} 
+                        />
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>

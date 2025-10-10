@@ -6,6 +6,7 @@ interface ReasoningStep {
   agent: string;
   status: 'pending' | 'active' | 'complete';
   reasoning?: string;
+  thinkingSteps?: string[];
 }
 
 interface ReasoningPanelProps {
@@ -85,6 +86,18 @@ export const ReasoningPanel = ({ steps, isVisible }: ReasoningPanelProps) => {
                 }`}>
                   {step.reasoning}
                 </p>
+              )}
+              
+              {/* Real-time thinking steps */}
+              {step.status === 'active' && step.thinkingSteps && step.thinkingSteps.length > 0 && (
+                <div className="mt-2 space-y-1">
+                  {step.thinkingSteps.map((thinking, idx) => (
+                    <div key={idx} className="flex items-start gap-2">
+                      <Loader2 className="h-3 w-3 animate-spin text-elec-yellow flex-shrink-0 mt-0.5" />
+                      <span className="text-xs text-muted-foreground">{thinking}</span>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>

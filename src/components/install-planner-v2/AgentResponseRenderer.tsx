@@ -2,7 +2,7 @@ import { parseAgentResponse, ParsedSection } from "@/utils/agentTextProcessor";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Brain, BookOpen } from "lucide-react";
 import { useMemo, memo, useState } from "react";
 import {
   CircuitSpecCard,
@@ -12,6 +12,8 @@ import {
   TestSequenceCard
 } from "./response-cards";
 import { DesignerCircuitCards } from "./DesignerCircuitCards";
+import { AgentReasoningDrawer } from "./AgentReasoningDrawer";
+import { CitationBadge } from "./CitationBadge";
 
 interface AgentResponseRendererProps {
   content: string;
@@ -21,6 +23,7 @@ interface AgentResponseRendererProps {
 
 export const AgentResponseRenderer = memo(({ content, agentId, structuredData }: AgentResponseRendererProps) => {
   const [showFullText, setShowFullText] = useState(false);
+  const [showReasoningDrawer, setShowReasoningDrawer] = useState(false);
   
   // Detect opening line for visual separation
   const openingLine = useMemo(() => {
@@ -48,6 +51,14 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData }:
   
   // Determine which structured card to show based on agent and data
   const hasStructuredData = structuredData && Object.keys(structuredData).length > 0;
+  
+  const agentNames: Record<string, string> = {
+    'designer': 'Circuit Designer',
+    'cost-engineer': 'Cost Engineer',
+    'installer': 'Installation Planner',
+    'commissioning': 'Commissioning Expert',
+    'health-safety': 'Health & Safety Officer'
+  };
   
   return (
     <div className="space-y-4 text-left">
@@ -134,6 +145,44 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData }:
         sections.map((section, index) => (
           <SectionRenderer key={index} section={section} agentId={agentId} />
         ))
+      )}
+      
+      {/* Agent Reasoning Button */}
+      {hasStructuredData && (structuredData.reasoningSteps || structuredData.regulationsConsulted || structuredData.assumptionsMade) && (
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => setShowReasoningDrawer(true)}
+          className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10 mt-4"
+        >
+          <Brain className="h-3 w-3 mr-2" />
+          View Agent Reasoning & Citations
+        </Button>
+      )}
+      
+      {/* Citations Section */}
+      {structuredData?.citations && structuredData.citations.length > 0 && (
+        <div className="border-t border-border/50 pt-3 mt-4">
+          <p className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-2">
+            <BookOpen className="h-3 w-3" />
+            Regulations & Knowledge Consulted
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {structuredData.citations.map((cite: any, idx: number) => (
+              <CitationBadge key={idx} citation={cite} />
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {/* Agent Reasoning Drawer */}
+      {agentId && (
+        <AgentReasoningDrawer
+          open={showReasoningDrawer}
+          onClose={() => setShowReasoningDrawer(false)}
+          agentName={agentNames[agentId] || agentId}
+          data={structuredData || {}}
+        />
       )}
     </div>
   );

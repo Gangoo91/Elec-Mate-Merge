@@ -16,6 +16,7 @@ import { Quote } from "@/types/quote";
 import { ProjectDetailsForm } from "./ProjectDetailsForm";
 import { CircuitDrawingsDisplay } from "./CircuitDrawingsDisplay";
 import { CircuitSummaryCard } from "./CircuitSummaryCard";
+import { QuestionUnderstandingCard } from "./QuestionUnderstandingCard";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   MobileAccordion, 
@@ -90,6 +91,9 @@ export const EnhancedResultsPage = ({
   const [wiringSchematics, setWiringSchematics] = useState<Map<string, any>>(new Map());
   const [loadingSchematic, setLoadingSchematic] = useState<string | null>(null);
   const [isGeneratingAll, setIsGeneratingAll] = useState(false);
+  
+  // NEW: Question analysis state
+  const [questionAnalysis, setQuestionAnalysis] = useState<any>(null);
 
   // Load saved details and handle resize
   useEffect(() => {
@@ -359,6 +363,16 @@ export const EnhancedResultsPage = ({
 
   return (
     <div className="space-y-4 md:space-y-6">
+      {/* Question Understanding Card */}
+      {questionAnalysis && (
+        <QuestionUnderstandingCard 
+          data={questionAnalysis}
+          onEdit={() => {
+            toast.info("Edit functionality coming soon");
+          }}
+        />
+      )}
+      
       {/* Mobile-First Header */}
       <Card className="p-4 md:p-5 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border-elec-yellow/30">
         <div className="space-y-4">

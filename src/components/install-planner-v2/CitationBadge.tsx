@@ -1,30 +1,77 @@
-import { BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { BookOpen, ExternalLink } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 
 interface Citation {
-  number: string;
+  source: string;
+  section: string;
   title: string;
+  content?: string;
+  relevance?: number;
+  type?: 'regulation' | 'knowledge';
 }
 
 interface CitationBadgeProps {
-  citations: Citation[];
+  citation: Citation;
+  index?: number;
 }
 
-export const CitationBadge = ({ citations }: CitationBadgeProps) => {
-  if (!citations || citations.length === 0) return null;
-
+export const CitationBadge = ({ citation }: CitationBadgeProps) => {
+  const isRegulation = citation.type === 'regulation' || citation.source.includes('BS 7671');
+  
   return (
-    <div className="flex flex-wrap gap-1.5 mt-2">
-      {citations.map((citation, index) => (
+    <Popover>
+      <PopoverTrigger asChild>
         <Badge 
-          key={index}
           variant="outline" 
-          className="text-xs bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 transition-colors"
+          className={`text-xs cursor-pointer transition-colors ${
+            isRegulation 
+              ? 'bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20' 
+              : 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20'
+          }`}
         >
           <BookOpen className="h-3 w-3 mr-1" />
-          Reg {citation.number}
+          {citation.section}
         </Badge>
-      ))}
-    </div>
+      </PopoverTrigger>
+      <PopoverContent className="w-80">
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-foreground">
+              {citation.source}
+            </p>
+            <Badge variant="outline" className="text-[10px]">
+              {citation.section}
+            </Badge>
+          </div>
+          <p className="text-sm font-medium text-foreground">
+            {citation.title}
+          </p>
+          {citation.content && (
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              {citation.content}
+            </p>
+          )}
+          {citation.relevance && (
+            <p className="text-xs text-muted-foreground">
+              Relevance: {(citation.relevance * 100).toFixed(0)}%
+            </p>
+          )}
+          <Button 
+            variant="link" 
+            size="sm" 
+            className="p-0 h-auto text-xs"
+            onClick={() => window.open(`https://electrical.theiet.org/bs-7671/`, '_blank')}
+          >
+            View Full Regulation <ExternalLink className="h-3 w-3 ml-1" />
+          </Button>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 };
