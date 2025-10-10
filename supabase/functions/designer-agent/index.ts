@@ -436,6 +436,26 @@ Use professional language with UK English spelling. Present calculations clearly
           });
         }
         
+        // VALIDATE & COMPUTE: Ensure totalLoad and totalLoadKW exist
+        if (!parsed.totalLoad || !parsed.totalLoadKW) {
+          console.warn('⚠️ AI forgot totalLoad/totalLoadKW - computing from circuits');
+          
+          const computedTotalLoad = parsed.circuits.reduce((sum: number, c: any) => {
+            return sum + (c.load || 0);
+          }, 0);
+          
+          parsed.totalLoad = computedTotalLoad;
+          parsed.totalLoadKW = parseFloat((computedTotalLoad / 1000).toFixed(2));
+          
+          console.log(`✅ Computed totalLoad: ${parsed.totalLoad}W (${parsed.totalLoadKW}kW)`);
+        }
+
+        // VALIDATE: Ensure diversifiedLoad exists if diversityFactor is present
+        if (parsed.diversityFactor && !parsed.diversifiedLoad) {
+          parsed.diversifiedLoad = Math.round(parsed.totalLoad * parsed.diversityFactor);
+          console.log(`✅ Computed diversifiedLoad: ${parsed.diversifiedLoad}W using factor ${parsed.diversityFactor}`);
+        }
+        
         Object.assign(structuredData, parsed);
       } catch (e) {
         console.warn('⚠️ Multi-circuit response is not valid JSON, falling back to text');
