@@ -387,19 +387,26 @@ export const EnhancedResultsPage = ({
             toast.info("Confirming parameters...");
             
             try {
-              // Call confirmation endpoint
+              // Call confirmation endpoint with correct query parameter
               const { data, error } = await supabase.functions.invoke(
-                'orchestrator-agent-v2',
+                'orchestrator-agent-v2?action=confirm',
                 {
                   body: {
                     confirmationId: (questionAnalysis as any).confirmationId,
                     confirmedAnalysis: updatedData
-                  },
-                  method: 'POST'
+                  }
                 }
               );
               
-              if (error) throw error;
+              if (error) {
+                const status = (error as any).status;
+                if (status === 404) {
+                  throw new Error("Your confirmation session expired. Please start a new consultation.");
+                } else if (status === 400) {
+                  throw new Error("Missing confirmation data. Please try again.");
+                }
+                throw error;
+              }
               
               toast.success("Resuming with confirmed parameters...");
               

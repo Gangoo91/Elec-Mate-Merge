@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { toast } from 'sonner';
 
 interface StreamChunk {
   type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error' | 'agent_skipped' | 'question_analysis' | 'confirmation_required' | 'agent_thinking' | 'agent_challenge' | 'agent_revised' | 'agent_defended' | 'agent_consensus' | 'validation_warning';
@@ -259,17 +260,25 @@ signal: controller.signal
 
                   case 'agent_error':
                     const errorMsg = chunk.data?.error || chunk.content || 'Unknown error';
-                    console.error(`Agent ${chunk.agent} error:`, errorMsg);
-                    options.onError?.(`${chunk.agent} encountered an issue: ${errorMsg}`);
+                    const agentName = chunk.agent || 'Agent';
+                    console.error(`❌ ${agentName} error:`, errorMsg);
+                    options.onError?.(`${agentName} failed: ${errorMsg}`);
+                    // Append to response for visibility
+                    const errorLine = `\n\n*⚠️ ${agentName} encountered an error and was skipped. Other agents continuing...*\n`;
+                    fullResponse += errorLine;
+                    onToken(errorLine);
                     break;
                   
                   case 'agent_skipped':
                     // Agent was skipped due to missing dependencies
                     if (chunk.agent) {
-                      const skipReason = chunk.data?.reason || 'Missing prerequisite data';
+                      const skipReason = chunk.data?.reason || 'Dependency failed';
+                      const deps = chunk.data?.dependencies ? ` (needs: ${chunk.data.dependencies.join(', ')})` : '';
                       console.warn(`⏭️ ${chunk.agent} skipped: ${skipReason}`);
-                      fullResponse += `\n\n*${chunk.agent} skipped — ${skipReason}. Other agents continuing...*\n`;
-                      onToken(`\n\n*${chunk.agent} skipped — ${skipReason}*\n`);
+                      const skipLine = `\n\n*ℹ️ ${chunk.agent} skipped: ${skipReason}${deps}. Other agents continuing...*\n`;
+                      fullResponse += skipLine;
+                      onToken(skipLine);
+                      toast.info(`${chunk.agent} skipped: ${skipReason}`);
                     }
                     break;
                   

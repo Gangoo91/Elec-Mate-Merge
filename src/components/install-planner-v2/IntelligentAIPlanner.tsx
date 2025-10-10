@@ -126,6 +126,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [estimatedTime, setEstimatedTime] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [agentProgress, setAgentProgress] = useState<Record<string, 'pending' | 'active' | 'complete'>>({});
+  const [showProgress, setShowProgress] = useState(false);
   
   const navigate = useNavigate();
   
@@ -301,10 +302,14 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         status: 'pending' as const,
         reasoning: `Waiting to consult...`
       })));
+      
+      // Show progress bar immediately
+      setShowProgress(true);
     },
     onEstimatedTime: (seconds) => {
       setEstimatedTime(seconds);
       setElapsedTime(0);
+      setShowProgress(true);
     },
     onElapsedTimeUpdate: (seconds) => {
       setElapsedTime(seconds);
@@ -379,6 +384,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       console.log('All agents complete:', agentOutputs);
       setCurrentAction('');
       setReasoningSteps(prev => prev.map(step => ({ ...step, status: 'complete' as const })));
+      setShowProgress(false); // Hide progress bar when done
     },
     onAgentUpdate: (agents) => {
       setActiveAgents(agents);
@@ -1099,6 +1105,24 @@ onError: (error) => {
                     ))}
                   </div>
                 </Card>
+              </div>
+            </div>
+          )}
+
+          {/* Progress Bar */}
+          {showProgress && estimatedTime > 0 && (
+            <div className="mb-3 px-1">
+              <div className="bg-elec-card/50 rounded-lg p-3 border border-elec-yellow/20">
+                <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
+                  <span>Processing consultation...</span>
+                  <span>{Math.min(elapsedTime, estimatedTime)}s / {estimatedTime}s</span>
+                </div>
+                <div className="w-full h-1.5 bg-muted/20 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-elec-yellow transition-all duration-300 ease-linear"
+                    style={{ width: `${Math.min((elapsedTime / estimatedTime) * 100, 99)}%` }}
+                  />
+                </div>
               </div>
             </div>
           )}

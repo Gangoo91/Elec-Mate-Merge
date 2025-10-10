@@ -45,17 +45,20 @@ export const AgentReasoningDrawer = ({
 }: AgentReasoningDrawerProps) => {
   return (
     <Sheet open={open} onOpenChange={onClose}>
-      <SheetContent side="right" className="w-full sm:max-w-lg">
-        <SheetHeader>
-          <SheetTitle className="flex items-center gap-2">
+      <SheetContent 
+        side="bottom"
+        className="h-[85vh] sm:h-auto sm:max-w-md sm:right-0 sm:left-auto sm:top-0 sm:bottom-0 sm:rounded-l-2xl rounded-t-2xl overflow-hidden border-t border-border/50"
+      >
+        <SheetHeader className="sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/50 pb-3 z-10">
+          <SheetTitle className="text-base sm:text-lg flex items-center gap-2">
             {agentName} Reasoning
           </SheetTitle>
-          <SheetDescription>
+          <SheetDescription className="text-xs sm:text-sm">
             Step-by-step decision process and regulatory compliance
           </SheetDescription>
         </SheetHeader>
 
-        <ScrollArea className="h-[calc(100vh-120px)] mt-6 pr-4">
+        <ScrollArea className="h-[calc(85vh-6rem)] sm:h-[calc(100vh-6rem)] mt-4 pr-4 px-3 sm:px-6">
           <div className="space-y-6">
             {/* Reasoning Steps Timeline */}
             {data.reasoningSteps && data.reasoningSteps.length > 0 && (
