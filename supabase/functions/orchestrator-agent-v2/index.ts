@@ -269,6 +269,17 @@ async function handleConversationalMode(
       const streamWriteQueue: Array<() => void> = [];
       let isWriting = false;
 
+      const processStreamQueue = async () => {
+        if (isWriting || streamWriteQueue.length === 0) return;
+        
+        isWriting = true;
+        while (streamWriteQueue.length > 0) {
+          const write = streamWriteQueue.shift();
+          if (write) await write();
+        }
+        isWriting = false;
+      };
+
       const queueStreamWrite = (data: Uint8Array) => {
         return new Promise<void>((resolve) => {
           streamWriteQueue.push(() => {
@@ -281,17 +292,6 @@ async function handleConversationalMode(
           });
           processStreamQueue();
         });
-      };
-
-      const processStreamQueue = async () => {
-        if (isWriting || streamWriteQueue.length === 0) return;
-        
-        isWriting = true;
-        while (streamWriteQueue.length > 0) {
-          const write = streamWriteQueue.shift();
-          if (write) await write();
-        }
-        isWriting = false;
       };
 
       try {
