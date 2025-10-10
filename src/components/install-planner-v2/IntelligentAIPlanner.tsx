@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Send, Loader2, Sparkles, XCircle, Calculator, CheckCircle2, AlertCircle, FileDown, Upload, Briefcase, Play, RotateCcw, Pause, ClipboardCheck, MoreVertical } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -68,6 +69,9 @@ interface Message {
   hasError?: boolean;
   retryUserMessage?: string;
   structuredData?: any;
+  id?: string;
+  timestamp?: string;
+  isValidationError?: boolean;
 }
 
 interface IntelligentAIPlannerProps {
@@ -96,6 +100,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [showReasoning, setShowReasoning] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [consultationStarted, setConsultationStarted] = useState(!!resumeState?.resumeMessages);
@@ -394,6 +399,21 @@ onError: (error) => {
 
         if (fallbackError) throw fallbackError;
 
+        // Handle validation errors from fallback
+        if (fallbackData?.validationError) {
+          const validationMessage: Message = {
+            id: crypto.randomUUID(),
+            role: 'assistant',
+            content: fallbackData.response,
+            timestamp: new Date().toISOString(),
+            isValidationError: true
+          };
+          
+          setMessages(prev => [...prev, validationMessage]);
+          setIsLoading(false);
+          return;
+        }
+
         // Remove acknowledgment and add fallback response
         setMessages(prev => {
           const filtered = prev.filter((_, i) => i !== acknowledgmentIndex);
@@ -445,8 +465,20 @@ onError: (error) => {
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textarea = e.target;
+    setInput(textarea.value);
+    
+    // Reset height to recalculate
+    textarea.style.height = '44px';
+    
+    // Set new height based on scrollHeight, max 128px
+    const newHeight = Math.min(textarea.scrollHeight, 128);
+    textarea.style.height = `${newHeight}px`;
+  };
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !isLoading && !isStreaming && input.trim()) {
+    if (e.key === 'Enter' && !e.shiftKey && !isLoading && !isStreaming && input.trim()) {
       e.preventDefault();
       
       // Debounce rapid Enter presses
@@ -459,6 +491,13 @@ onError: (error) => {
       setDebounceTimer(timer);
     }
   };
+
+  // Reset textarea height when input is cleared
+  useEffect(() => {
+    if (!input && textareaRef.current) {
+      textareaRef.current.style.height = '44px';
+    }
+  }, [input]);
 
   const handleExportPackage = async () => {
     const hasCompleteDesign = messages.length >= 5 && planData.circuits && planData.circuits.length > 0;
@@ -1118,41 +1157,47 @@ onError: (error) => {
             className="mb-2"
           />
 
-          {/* Chat Input - Modern Compact Design */}
-          <div className="relative">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyPress}
-              placeholder="Type your message..."
-              disabled={isLoading}
-              className="w-full h-11 md:h-12 text-base font-medium rounded-xl pl-11 pr-11 py-2 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-tight transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 focus-visible:outline-none"
-              style={{ fontSize: '16px' }}
-            />
-            
-            {/* Photo button - positioned inside textarea */}
-            <PhotoUploadButton 
-              onPhotoUploaded={(url) => {
-                setInput(prev => prev + ` [Photo attached: ${url}]`);
-                toast.success('Photo added to message');
-              }}
-              disabled={isLoading}
-              className="absolute left-2 top-2 h-8 w-8 bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
-            />
-            
-            {/* Send button - positioned inside textarea */}
+          {/* Chat Input - Auto-expanding with External Controls */}
+          <div className="flex items-end gap-2">
+            {/* Photo Upload Button - Outside Left */}
+            <div className="mb-1">
+              <PhotoUploadButton 
+                onPhotoUploaded={(url) => {
+                  setInput(prev => prev + ` [Photo attached: ${url}]`);
+                  toast.success('Photo added to message');
+                }}
+                disabled={isLoading}
+                className="h-9 w-9 shrink-0 bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
+              />
+            </div>
+
+            {/* Textarea Container - Grows */}
+            <div className="relative flex-1">
+              <Textarea
+                ref={textareaRef}
+                value={input}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyPress}
+                placeholder="Type your message..."
+                disabled={isLoading}
+                rows={1}
+                className="min-h-[44px] max-h-32 resize-none overflow-y-auto w-full text-base font-medium rounded-xl px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-tight transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 focus-visible:outline-none"
+                style={{ fontSize: '16px', height: '44px' }}
+              />
+            </div>
+
+            {/* Send Button - Outside Right */}
             <Button 
               onClick={handleSend}
               disabled={isLoading || isStreaming || !input.trim()}
               size="icon"
-              className="absolute right-2 top-2 h-8 w-8 rounded-lg shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
+              className="mb-1 h-9 w-9 shrink-0 rounded-lg bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
               aria-label="Send message"
             >
               {(isLoading || isStreaming) ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                <Send className="h-3.5 w-3.5" />
+                <Send className="h-4 w-4" />
               )}
             </Button>
           </div>

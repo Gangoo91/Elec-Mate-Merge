@@ -16,6 +16,13 @@ CRITICAL RULES:
 5. Suggest typical values when relevant
 6. Only use tool calls when you have COMPLETE information for a circuit
 
+HANDLING UNCLEAR INPUTS:
+- If a message is unclear or vague, ask specific clarifying questions
+- Suggest common installation scenarios if the user seems uncertain
+- Provide examples: "For instance, are you working on: shower installation, rewire, EV charger, etc.?"
+- Guide users toward structured information collection
+- Be patient and helpful - some users may be new to design calculations
+
 WHAT YOU NEED TO COLLECT (for single circuits):
 - Circuit type (shower, cooker, EV charger, ring main, lighting, etc.)
 - Load in watts or amps
@@ -52,6 +59,34 @@ TONE:
 
 When you have complete information, use the set_installation_data tool to structure the data.`;
 
+// Input validation function
+function isValidInput(text: string): boolean {
+  const trimmed = text.trim();
+  
+  // Too short
+  if (trimmed.length < 3) return false;
+  
+  // Check for gibberish: High consonant-to-vowel ratio
+  const vowels = trimmed.match(/[aeiou]/gi)?.length || 0;
+  const consonants = trimmed.match(/[bcdfghjklmnpqrstvwxyz]/gi)?.length || 0;
+  const ratio = consonants / Math.max(vowels, 1);
+  
+  // If ratio > 5, likely gibberish (e.g., "hghfwjkegfh")
+  if (ratio > 5 && consonants > 5) return false;
+  
+  // Check for repeated characters (e.g., "aaaaaaa")
+  const repeatedChars = /(.)\1{4,}/;
+  if (repeatedChars.test(trimmed)) return false;
+  
+  // Check for minimum word-like patterns (spaces or common word patterns)
+  const hasSpaces = /\s/.test(trimmed);
+  const hasCommonPatterns = /\b(the|is|are|can|how|what|i|my|a|need|install|cable|circuit|wire|amp|volt|meter|shower|cooker|socket)\b/i.test(trimmed);
+  const hasNumbers = /\d+/.test(trimmed);
+  
+  // Valid if has spaces, common words, or numbers (measurements)
+  return hasSpaces || hasCommonPatterns || hasNumbers || trimmed.length > 15;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -59,6 +94,20 @@ serve(async (req) => {
 
   try {
     const { messages, currentData } = await req.json();
+    
+    // Validate last user message
+    const lastUserMessage = messages[messages.length - 1]?.content || '';
+    
+    if (!isValidInput(lastUserMessage)) {
+      console.log('Invalid input detected:', lastUserMessage);
+      return new Response(JSON.stringify({ 
+        response: "I'm not quite sure what you mean. Could you rephrase that? For example, you could say:\n\n• 'I need to install a 9.5kW shower'\n• 'How do I calculate cable size for a cooker?'\n• 'What's the best cable for an outdoor socket?'\n• '30 metre cable run for an EV charger'",
+        extractedData: null,
+        validationError: true
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
