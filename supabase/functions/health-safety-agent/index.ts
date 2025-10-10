@@ -473,7 +473,7 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
         { hazard: "Dust and debris inhalation during cutting operations", likelihood: 3, severity: 2, riskRating: 6, controls: ["Dust extraction equipment", "FFP3 respirator mask", "Dampen surfaces before cutting"], residualRisk: 2 }
       ];
       
-      whilst (parsedResponse.riskAssessment.hazards.length < minHazards) {
+      while (parsedResponse.riskAssessment.hazards.length < minHazards) {
         parsedResponse.riskAssessment.hazards.push(genericHazards[parsedResponse.riskAssessment.hazards.length % genericHazards.length]);
       }
     }
