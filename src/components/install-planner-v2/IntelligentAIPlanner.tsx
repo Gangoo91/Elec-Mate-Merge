@@ -1129,15 +1129,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               key={index}
               className={`flex gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              {/* AI Avatar - only for assistant messages */}
-              {message.role === 'assistant' && (
-                <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-lg">
-                  {message.activeAgents && message.activeAgents.length > 0 
-                    ? getAgentEmoji(message.activeAgents[0])
-                    : '✅'}
-                </div>
-              )}
-
               <div
                 className={`max-w-[90%] rounded-2xl shadow-sm ${
                   message.role === 'user'
@@ -1145,6 +1136,15 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                     : 'bg-elec-card text-white px-5 py-4'
                 }`}
               >
+                {/* Agent Name Badge for assistant messages */}
+                {message.role === 'assistant' && message.agentName && (
+                  <div className="mb-3 pb-2 border-b border-white/20">
+                    <Badge variant="outline" className="text-xs font-semibold bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                      {getAgentName(message.activeAgents?.[0] || message.agentName)}
+                    </Badge>
+                  </div>
+                )}
+                
                 {message.role === 'assistant' && message.content && !message.isTyping && (
                   <AgentResponseRenderer 
                     content={message.content} 
@@ -1236,14 +1236,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           {/* Loading indicator */}
           {(isLoading || isStreaming) && activeAgents.length > 0 && (
             <div className="flex justify-start gap-2">
-              <div className="flex-shrink-0 mt-1 w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-lg">
-                🤔
-              </div>
-              <div className="bg-elec-card rounded-2xl px-4 py-3 shadow-sm flex items-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin text-white" />
-                <span className="text-sm text-white">
-                  {activeAgents.map(a => a === 'designer' ? '🎨' : a === 'cost-engineer' ? '💰' : a === 'installer' ? '🔧' : '✅').join(' ')} Working...
-                </span>
+              <div className="bg-elec-card rounded-2xl px-4 py-3 shadow-sm">
+                <div className="mb-2 pb-2 border-b border-white/20">
+                  <Badge variant="outline" className="text-xs font-semibold bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                    {activeAgents.map(a => getAgentName(a)).join(', ')}
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin text-white" />
+                  <span className="text-sm text-white">Working...</span>
+                </div>
               </div>
             </div>
           )}

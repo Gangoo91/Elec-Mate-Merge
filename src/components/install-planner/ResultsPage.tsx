@@ -59,18 +59,13 @@ export const ResultsPage = ({ messages, selectedAgents, onExport, onNewConsultat
       {/* Compact Header */}
       <Card className="p-4 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border-elec-yellow/30">
         <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-              <Lightbulb className="w-5 h-5 text-elec-yellow" />
-            </div>
-            <div className="flex-1">
-              <h1 className="text-xl font-bold text-foreground">
-                Design Consultation Complete
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                {selectedAgents.length} specialist{selectedAgents.length !== 1 ? 's' : ''} consulted
-              </p>
-            </div>
+          <div className="flex-1">
+            <h1 className="text-xl font-bold text-foreground">
+              Design Consultation Complete
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {selectedAgents.length} specialist{selectedAgents.length !== 1 ? 's' : ''} consulted
+            </p>
           </div>
 
           <div className="flex flex-wrap gap-2">
@@ -112,9 +107,6 @@ export const ResultsPage = ({ messages, selectedAgents, onExport, onNewConsultat
                   <CollapsibleTrigger className="w-full">
                     <div className="p-4 flex items-center justify-between hover:bg-accent/50 transition-colors">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                          <span className="text-xl">{agent?.emoji || '👤'}</span>
-                        </div>
                         <div className="text-left">
                           <h3 className="font-semibold text-foreground">{agent?.name || agentId}</h3>
                           <p className="text-xs text-muted-foreground">

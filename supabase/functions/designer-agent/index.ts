@@ -971,12 +971,15 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
   }
   
   // Extract ambient temperature (including negative values)
-  const tempMatch = message.match(/([-\d]+)\s*°?C/i);
+  const tempMatch = userMessage.match(/([-\d]+)\s*°?C/i);
   const ambientTemp = tempMatch ? parseInt(tempMatch[1]) : (currentDesign?.environmentalProfile?.finalApplied?.ambientTemp || 30);
   
   if (tempMatch) {
     console.log(`🌡️ Detected ambient temp: ${ambientTemp}°C`);
   }
+  
+  // Detect outdoor installation
+  const isOutdoor = location === 'outdoor' || /outdoor|outside|garage|garden|external/i.test(userMessage);
   
   // Outdoor environment detected - log it and set defaults
   if (isOutdoor) {
