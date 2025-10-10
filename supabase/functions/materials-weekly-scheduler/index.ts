@@ -1,33 +1,51 @@
-import { corsHeaders } from '../_shared/cors.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
+import { corsHeaders, serve, createClient } from '../_shared/deps.ts';
+import { handleError, ValidationError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 Deno.serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log('📅 [MATERIALS-WEEKLY-SCHEDULER] Starting weekly materials refresh...');
+    const requestId = generateRequestId();
+    const logger = createLogger(requestId);
     
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    logger.info('📅 Materials weekly scheduler started');
+    
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    
+    if (!supabaseUrl || !supabaseServiceKey) {
+      throw new ValidationError('Supabase credentials not configured');
+    }
+    
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Check if cache refresh is needed (older than 6 days)
-    const { data: cacheStatus } = await supabase
-      .from('materials_weekly_cache')
-      .select('last_updated')
-      .order('last_updated', { ascending: false })
-      .limit(1)
-      .single();
+    // Check if cache refresh is needed (older than 6 days) with timeout
+    const { data: cacheStatus } = await withTimeout(
+      supabase
+        .from('materials_weekly_cache')
+        .select('last_updated')
+        .order('last_updated', { ascending: false })
+        .limit(1)
+        .single(),
+      Timeouts.QUICK,
+      'cache status check'
+    );
 
     const now = new Date();
     const sixDaysAgo = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000);
     const lastUpdate = cacheStatus?.last_updated ? new Date(cacheStatus.last_updated) : null;
 
     if (lastUpdate && lastUpdate > sixDaysAgo) {
-      console.log('✅ Cache is still fresh, skipping refresh');
+      logger.info('✅ Cache is still fresh, skipping refresh', { 
+        lastUpdate: lastUpdate.toISOString(),
+        nextRefresh: new Date(lastUpdate.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString()
+      });
+      
       return new Response(
         JSON.stringify({ 
           success: true, 
@@ -39,22 +57,29 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log('🔄 Cache is stale, starting refresh...');
+    logger.info('🔄 Cache is stale, starting refresh');
 
-    // Call the comprehensive materials weekly scraper
-    const scraperResponse = await supabase.functions.invoke('comprehensive-materials-weekly-scraper', {
-      body: { 
-        scheduler_trigger: true,
-        timestamp: now.toISOString()
-      }
-    });
+    // Call the comprehensive materials weekly scraper with retry and timeout
+    const scraperResponse = await withRetry(
+      () => withTimeout(
+        supabase.functions.invoke('comprehensive-materials-weekly-scraper', {
+          body: { 
+            scheduler_trigger: true,
+            timestamp: now.toISOString()
+          }
+        }),
+        Timeouts.CRITICAL, // 2 minutes for scraping operation
+        'materials scraper invocation'
+      ),
+      RetryPresets.STANDARD
+    );
 
     if (scraperResponse.error) {
-      console.error('❌ Error calling materials scraper:', scraperResponse.error);
+      logger.error('Error calling materials scraper', { error: scraperResponse.error });
       throw new Error(`Scraper failed: ${scraperResponse.error.message}`);
     }
 
-    console.log('✅ Materials weekly refresh completed successfully');
+    logger.info('✅ Materials weekly refresh completed successfully');
 
     const response = {
       success: true,
@@ -70,17 +95,6 @@ Deno.serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('❌ [MATERIALS-WEEKLY-SCHEDULER] Error:', error);
-    return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
-        success: false,
-        timestamp: new Date().toISOString()
-      }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
+    return handleError(error);
   }
 });

@@ -1,7 +1,7 @@
 # Backend Stability Improvements
 
-## Implementation Status: Week 3 Day 3 Complete ✅
-## Overall Progress: 27/140 functions (19.3%) migrated
+## Implementation Status: Week 3 Day 4 Complete ✅
+## Overall Progress: 29/140 functions (20.7%) migrated
 
 ### Phase 1: Core Infrastructure (Completed)
 
@@ -301,6 +301,42 @@ const result = await logger.time(
 - Wrap database operations with timeouts
 - Add structured logging improvements
 - Review parallel agent execution with `safeAll`
+
+---
+
+## Week 3 Day 4: Scheduler Functions (29/140 = 20.7% Complete) ✅
+
+### **materials-weekly-scheduler Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging with request IDs
+- ✅ Wrapped cache status check with 5s timeout
+- ✅ Wrapped scraper invocation: 3 retries + 120s timeout (critical operation)
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added `ValidationError` for missing credentials
+
+**Impact:**
+- 2-minute timeout for scraping operations prevents hanging
+- Automatic retry on scraper failures
+- Structured logging for debugging scheduler issues
+- Request ID tracking for multi-step workflows
+
+### **materials-cache-updater Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging throughout
+- ✅ Wrapped all database operations with 5s timeout (cache check, delete, insert)
+- ✅ Wrapped scraper invocation: 3 retries + 120s timeout
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added `ValidationError` for missing credentials
+- ✅ Improved logging for cache age and scraper responses
+
+**Impact:**
+- Critical timeout protection for long-running scraper
+- Database operations protected with timeouts
+- Automatic retry on scraper failures
+- Clean error messages with validation
+- Request ID tracking throughout cache update workflow
 
 ---
 
