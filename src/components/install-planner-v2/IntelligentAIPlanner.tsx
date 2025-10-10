@@ -1190,6 +1190,7 @@ onError: (error) => {
                   toast.success('Photo added to message');
                 }}
                 disabled={isLoading}
+                layout="horizontal"
                 className="bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
               />
             }

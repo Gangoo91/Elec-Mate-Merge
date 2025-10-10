@@ -9,9 +9,10 @@ interface PhotoUploadButtonProps {
   onPhotoUploaded: (photoUrl: string) => void;
   disabled?: boolean;
   className?: string;
+  layout?: 'vertical' | 'horizontal';
 }
 
-export const PhotoUploadButton = ({ onPhotoUploaded, disabled, className }: PhotoUploadButtonProps) => {
+export const PhotoUploadButton = ({ onPhotoUploaded, disabled, className, layout = 'vertical' }: PhotoUploadButtonProps) => {
   const [isUploading, setIsUploading] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -66,13 +67,17 @@ export const PhotoUploadButton = ({ onPhotoUploaded, disabled, className }: Phot
       <input ref={fileInputRef} type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])} className="hidden" />
       <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])} className="hidden" />
 
-      <div className="flex flex-col gap-1">
+      <div className={cn("flex gap-1", layout === 'horizontal' ? 'flex-row' : 'flex-col')}>
         <Button type="button" variant="ghost" size="icon" disabled={disabled || isUploading}
-          onClick={() => cameraInputRef.current?.click()} className="h-9 w-9 shrink-0" aria-label="Take photo">
+          onClick={() => cameraInputRef.current?.click()} 
+          className={cn("shrink-0", layout === 'horizontal' ? 'h-7 w-7' : 'h-9 w-9')} 
+          aria-label="Take photo">
           {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
         </Button>
         <Button type="button" variant="ghost" size="icon" disabled={disabled || isUploading}
-          onClick={() => fileInputRef.current?.click()} className="h-9 w-9 shrink-0" aria-label="Upload photo">
+          onClick={() => fileInputRef.current?.click()} 
+          className={cn("shrink-0", layout === 'horizontal' ? 'h-7 w-7' : 'h-9 w-9')} 
+          aria-label="Upload photo">
           <Upload className="h-4 w-4" />
         </Button>
       </div>
