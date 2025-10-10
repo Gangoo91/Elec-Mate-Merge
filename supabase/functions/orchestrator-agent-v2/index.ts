@@ -652,19 +652,19 @@ async function handleConversationalMode(
               });
 
               if (criticalFailedDeps.length > 0) {
-                console.warn(`⚠️ Skipping ${agentName} - dependencies failed:`, failedDeps);
+                console.warn(`⚠️ Skipping ${agentName} - dependencies failed:`, criticalFailedDeps);
                 agentOutputs.push({
                   agent: agentName,
-                  response: `⚠️ ${getAgentDisplayName(agentName)} was skipped because required data from ${failedDeps.map((d: string) => getAgentDisplayName(d)).join(', ')} is unavailable.`,
+                  response: `⚠️ ${getAgentDisplayName(agentName)} was skipped because required data from ${criticalFailedDeps.map((d: string) => getAgentDisplayName(d)).join(', ')} is unavailable.`,
                   citations: [],
-                  structuredData: { skipped: true, reason: 'dependency_failed', failedDeps }
+                  structuredData: { skipped: true, reason: 'dependency_failed', failedDeps: criticalFailedDeps }
                 });
                 
                 const skipEvent = `data: ${JSON.stringify({
                   type: 'agent_skipped',
                   agent: agentName,
                   reason: 'dependency_failed',
-                  failedDeps
+                  failedDeps: criticalFailedDeps
                 })}\n\n`;
                 await queueStreamWrite(encoder.encode(skipEvent));
                 return;

@@ -274,8 +274,7 @@ serve(async (req) => {
       }
     }
 
-    // PHASE 1: Detect multi-circuit projects
-    const projectScope = detectProjectScope(userMessage);
+    // Use the projectScope already detected at line 144
     
     let systemPrompt = '';
     

@@ -136,8 +136,7 @@ serve(async (req) => {
       }
     }
 
-    // Extract context from previous agents
-    const previousAgentOutputs = context?.previousAgentOutputs || [];
+    // Use previousAgentOutputs already extracted at line 47
     const previousContext = previousAgentOutputs.length > 0
       ? `\n\n**PREVIOUS AGENT RESPONSES:**\n${previousAgentOutputs.map((a: any) => 
           `[${a.agent}]: ${a.response.substring(0, 300)}...`

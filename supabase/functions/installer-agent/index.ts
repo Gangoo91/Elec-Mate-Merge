@@ -457,12 +457,12 @@ EXAMPLE PHASES:
     }
     
     // PHASE 2: Build Installer reasoning
-    const installationMethod = currentDesign?.installationMethod || 'clipped direct';
+    const selectedInstallationMethod = currentDesign?.installationMethod || installationMethod || 'clipped direct';
     
     const reasoningSteps = [
       {
         step: 'Installation method selection',
-        reasoning: `Selected ${installationMethod} based on circuit location and cable type`,
+        reasoning: `Selected ${selectedInstallationMethod} based on circuit location and cable type`,
         timestamp: new Date().toISOString()
       },
       {

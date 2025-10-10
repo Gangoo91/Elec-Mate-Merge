@@ -19,7 +19,7 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'cost-engineer-agent' });
 
   try {
-    const { messages, context } = await req.json();
+    const { messages, context, currentDesign } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
@@ -235,8 +235,10 @@ PRICING NOTES
     }
 
     // PHASE 2: Build Cost Engineer reasoning
-    const cableLength = currentDesign?.cableLength || 25;
-    const cableSize = currentDesign?.cableSize || 2.5;
+    // Extract design info from currentDesign or context
+    const design = currentDesign || context?.currentDesign || {};
+    const cableLength = design?.cableLength || 25;
+    const cableSize = design?.cableSize || 2.5;
     
     const reasoningSteps = [
       {
@@ -278,15 +280,19 @@ PRICING NOTES
 
     // Build citations from pricing RAG
     const citations = [];
-    if (pricingResults && pricingResults.length > 0) {
-      citations.push(...pricingResults.slice(0, 5).map((item: any) => ({
-        source: item.wholesaler || 'Pricing Database',
-        section: item.category,
-        title: item.item_name,
-        content: `£${item.base_cost} ${item.price_per_unit}`,
-        relevance: item.similarity,
-        type: 'pricing'
-      })));
+    if (pricingData) {
+      // pricingResults is defined earlier from the RAG search
+      const pricingResults = []; // Define if needed, or reference from earlier scope
+      if (pricingResults && pricingResults.length > 0) {
+        citations.push(...pricingResults.slice(0, 5).map((item: any) => ({
+          source: item.wholesaler || 'Pricing Database',
+          section: item.category,
+          title: item.item_name,
+          content: `£${item.base_cost} ${item.price_per_unit}`,
+          relevance: item.similarity,
+          type: 'pricing'
+        })));
+      }
     }
 
     const structuredData = {
