@@ -32,6 +32,7 @@ export interface AgentOutput {
   citations: any[];
   toolCalls: any[];
   costUpdates?: any;
+  structuredData?: any;
   confidence: number;
 }
 

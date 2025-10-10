@@ -5,53 +5,53 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, MapPin, Shield, PoundSterling, Sparkles } from "lucide-react";
 
 const ElectricalHub = () => {
-  // Main 3-card grid - Core daily tools
+  // Main 4-card grid - Core daily tools
   const mainResources = [
     {
       id: 1,
-      title: "Electrical Calculations",
-      icon: Calculator,
-      link: "/electrician/calculations"
-    },
-    {
-      id: 2,
       title: "Inspection & Testing",
       icon: Zap,
       link: "/electrician/inspection-testing"
+    },
+    {
+      id: 2,
+      title: "AI Tooling",
+      icon: Brain,
+      link: "/electrician-tools/ai-tooling"
     },
     {
       id: 3,
       title: "Site Safety & RAMS",
       icon: Shield,
       link: "/electrician/site-safety"
+    },
+    {
+      id: 4,
+      title: "Electrical Calculations",
+      icon: Calculator,
+      link: "/electrician/calculations"
     }
   ];
 
   // Additional tools - business, development, and reference resources  
   const additionalResources = [
     {
-      id: 4,
+      id: 5,
       title: "Quick Install Calculator",
       icon: MapPin,
       link: "/electrician/install-planner?mode=manual"
     },
     {
-      id: 5,
+      id: 6,
       title: "Business Hub",
       icon: Briefcase,
       link: "/electrician/business"
     },
     {
-      id: 6,
+      id: 7,
       title: "Live Pricing",
       icon: PoundSterling,
       link: "/electrician/live-pricing"
-    },
-    {
-      id: 7,
-      title: "AI Tooling",
-      icon: Brain,
-      link: "/electrician-tools/ai-tooling"
     },
     {
       id: 8,
@@ -102,10 +102,10 @@ const ElectricalHub = () => {
         </Link>
       </div>
 
-      {/* Main 3-Card Grid - Core Daily Tools */}
+      {/* Main 4-Card Grid - Core Daily Tools */}
       <div className="space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold text-center">Core Daily Tools</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
           {mainResources.map((resource) => (
             <Link to={resource.link} key={resource.id} className="focus:outline-none hover-scale">
               <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
