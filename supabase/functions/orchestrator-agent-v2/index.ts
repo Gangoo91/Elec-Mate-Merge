@@ -453,6 +453,25 @@ async function handleConversationalMode(
           data: questionAnalysisData
         })}\n\n`;
         await queueStreamWrite(encoder.encode(analysisEvent));
+        
+        // PRIORITY 1: Check if confirmation required (critical params missing)
+        const criticalMissing = [];
+        if (!questionAnalysisData.interpretedRequirements.load) criticalMissing.push('load');
+        if (!questionAnalysisData.interpretedRequirements.distance) criticalMissing.push('distance');
+        if (!questionAnalysisData.interpretedRequirements.voltage) criticalMissing.push('voltage');
+        
+        if (criticalMissing.length > 0) {
+          const confirmEvent = `data: ${JSON.stringify({
+            type: 'confirmation_required',
+            questionAnalysis: questionAnalysisData,
+            message: 'Please confirm these assumptions before we proceed',
+            criticalMissing
+          })}\n\n`;
+          await queueStreamWrite(encoder.encode(confirmEvent));
+          
+          // TODO: Wait for confirmation - for now just log
+          console.log('⏸️ Confirmation required for:', criticalMissing);
+        }
 
         // Send initial event with agent plan
         const planEvent = `data: ${JSON.stringify({
@@ -556,6 +575,16 @@ async function handleConversationalMode(
               parallelCount: group.length
             })}\n\n`;
             await queueStreamWrite(encoder.encode(startEvent));
+            
+            // PRIORITY 4: Send agent thinking event
+            const thinkingEvent = `data: ${JSON.stringify({
+              type: 'agent_thinking',
+              agent: agentName,
+              message: `Analysing ${agentName === 'designer' ? 'circuit requirements' : agentName === 'cost-engineer' ? 'pricing and materials' : agentName === 'installer' ? 'installation approach' : agentName === 'health-safety' ? 'safety requirements' : 'testing procedures'}...`,
+              step: groupIndex + 1,
+              totalSteps: filteredGroups.length
+            })}\n\n`;
+            await queueStreamWrite(encoder.encode(thinkingEvent));
 
             try {
               // WAVE 3 FIX: Only skip if critical dependency truly failed (not just missing data)

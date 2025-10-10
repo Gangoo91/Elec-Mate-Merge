@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 
 interface StreamChunk {
-  type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error' | 'agent_skipped' | 'question_analysis' | 'confirmation_required';
+  type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error' | 'agent_skipped' | 'question_analysis' | 'confirmation_required' | 'agent_thinking';
   content?: string;
   data?: any;
   agent?: string;
@@ -14,6 +14,9 @@ interface StreamChunk {
   index?: number;
   total?: number;
   structuredData?: any;
+  message?: string;
+  step?: number;
+  totalSteps?: number;
 }
 
 interface Message {
@@ -40,6 +43,7 @@ interface UseStreamingChatOptions {
   onAgentProgress?: (agent: string, status: 'pending' | 'active' | 'complete') => void;
   onQuestionAnalysis?: (data: any) => void;
   onConfirmationRequired?: (data: any) => void;
+  onAgentThinking?: (agent: string, message: string, step: number, totalSteps: number) => void;
 }
 
 export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
@@ -262,6 +266,18 @@ signal: controller.signal
                     // User confirmation required
                     if (chunk.data) {
                       options.onConfirmationRequired?.(chunk.data);
+                    }
+                    break;
+                  
+                  case 'agent_thinking':
+                    // Agent is thinking/processing
+                    if (chunk.agent && chunk.message) {
+                      options.onAgentThinking?.(
+                        chunk.agent, 
+                        chunk.message, 
+                        chunk.step || 1, 
+                        chunk.totalSteps || 1
+                      );
                     }
                     break;
 

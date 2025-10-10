@@ -182,6 +182,28 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   }, []);
 
   const { streamMessage, isStreaming } = useStreamingChat({
+    onQuestionAnalysis: (data) => {
+      console.log('📊 Question Analysis received:', data);
+      // Store in session storage for EnhancedResultsPage
+      sessionStorage.setItem('questionAnalysis', JSON.stringify(data));
+    },
+    onConfirmationRequired: (data) => {
+      console.log('⏸️ Confirmation required:', data);
+      toast.info('Please review and confirm the assumptions', {
+        description: data.message
+      });
+    },
+    onAgentThinking: (agent, message, step, totalSteps) => {
+      console.log(`💭 ${agent} thinking: ${message} (${step}/${totalSteps})`);
+      // Store for thinking panel display
+      sessionStorage.setItem('agentThinking', JSON.stringify({
+        agent,
+        message,
+        step,
+        totalSteps,
+        timestamp: Date.now()
+      }));
+    },
     onPlan: (agents, complexity) => {
       console.log('Agent plan:', agents, complexity);
       setActiveAgents(agents);

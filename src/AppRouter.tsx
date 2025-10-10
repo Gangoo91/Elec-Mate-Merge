@@ -26,6 +26,7 @@ import AdminRAGProcessor from "@/pages/AdminRAGProcessor";
 import ProcessOnsiteGuide from "@/pages/ProcessOnsiteGuide";
 import AutoProcessOnsite from "@/pages/AutoProcessOnsite";
 import KnowledgeUploader from "@/pages/Admin/KnowledgeUploader";
+import LearningReview from "@/pages/admin/LearningReview";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -64,6 +65,7 @@ const AppRouter = () => {
         <Route path="admin/rag-processor" element={<AdminRAGProcessor />} />
         <Route path="admin/process-onsite-guide" element={<ProcessOnsiteGuide />} />
         <Route path="admin/knowledge-uploader" element={<KnowledgeUploader />} />
+        <Route path="admin/learning-review" element={<LearningReview />} />
         
         {/* Top level routes for shared features */}
         <Route path="mental-health" element={<ApprenticeMentalHealth />} />

@@ -7,6 +7,7 @@ import { Download, RotateCcw, Lightbulb, MessageSquare, ChevronDown, FileDown, S
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { WhatsAppShareButton } from "./WhatsAppShareButton";
 import { AgentResponseRenderer } from "./AgentResponseRenderer";
+import { AgentThinkingPanel } from "./AgentThinkingPanel";
 import { generateDesignerPDF, generateRAMSFromAgents, prepareTestSheetData } from "@/utils/agent-pdf-generator";
 import { toast } from "sonner";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
@@ -94,6 +95,11 @@ export const EnhancedResultsPage = ({
   
   // NEW: Question analysis state
   const [questionAnalysis, setQuestionAnalysis] = useState<any>(null);
+  
+  // NEW: Real-time thinking state
+  const [thinkingSteps, setThinkingSteps] = useState<any[]>([]);
+  const [currentAgent, setCurrentAgent] = useState<string | null>(null);
+  const [showThinking, setShowThinking] = useState(false);
 
   // Load saved details and handle resize
   useEffect(() => {
@@ -104,6 +110,16 @@ export const EnhancedResultsPage = ({
       setClientDetails(savedClient);
       setCompanyDetails(savedCompany);
       setDetailsComplete(!!savedClient?.clientName && !!savedClient?.propertyAddress && !!savedCompany?.companyName);
+    }
+    
+    // Load question analysis from session storage
+    const analysisData = sessionStorage.getItem('questionAnalysis');
+    if (analysisData) {
+      try {
+        setQuestionAnalysis(JSON.parse(analysisData));
+      } catch (error) {
+        console.error('Failed to parse question analysis:', error);
+      }
     }
     
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -367,9 +383,23 @@ export const EnhancedResultsPage = ({
       {questionAnalysis && (
         <QuestionUnderstandingCard 
           data={questionAnalysis}
-          onEdit={() => {
-            toast.info("Edit functionality coming soon");
+          onConfirm={(updatedData) => {
+            toast.info("Sending confirmation...");
+            // TODO: Call confirmation endpoint
           }}
+          onCancel={() => {
+            toast.info("Cancelled - returning to chat");
+            onNewConsultation();
+          }}
+        />
+      )}
+      
+      {/* Real-Time Thinking Panel */}
+      {showThinking && (
+        <AgentThinkingPanel
+          steps={thinkingSteps}
+          currentAgent={currentAgent || undefined}
+          isVisible={showThinking}
         />
       )}
       
