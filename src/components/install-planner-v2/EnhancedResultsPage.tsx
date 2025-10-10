@@ -383,12 +383,44 @@ export const EnhancedResultsPage = ({
       {questionAnalysis && (
         <QuestionUnderstandingCard 
           data={questionAnalysis}
-          onConfirm={(updatedData) => {
-            toast.info("Sending confirmation...");
-            // TODO: Call confirmation endpoint
+          onConfirm={async (updatedData) => {
+            toast.info("Confirming parameters...");
+            
+            try {
+              // Call confirmation endpoint
+              const { data, error } = await supabase.functions.invoke(
+                'orchestrator-agent-v2',
+                {
+                  body: {
+                    confirmationId: (questionAnalysis as any).confirmationId,
+                    confirmedAnalysis: updatedData
+                  },
+                  method: 'POST'
+                }
+              );
+              
+              if (error) throw error;
+              
+              toast.success("Resuming with confirmed parameters...");
+              
+              // Clear question analysis and resume
+              setQuestionAnalysis(null);
+              sessionStorage.removeItem('questionAnalysis');
+              
+              // Trigger results refresh if needed
+              window.location.reload();
+              
+            } catch (error) {
+              console.error('Confirmation error:', error);
+              toast.error("Failed to confirm parameters", {
+                description: error instanceof Error ? error.message : "Please try again"
+              });
+            }
           }}
           onCancel={() => {
             toast.info("Cancelled - returning to chat");
+            setQuestionAnalysis(null);
+            sessionStorage.removeItem('questionAnalysis');
             onNewConsultation();
           }}
         />

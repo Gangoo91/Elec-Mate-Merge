@@ -26,6 +26,24 @@ const responseCache = new ResponseCache();
 const agentResultsCache = new Map<string, { data: any; timestamp: number }>();
 const AGENT_CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
+// PRIORITY 1: Pending confirmation sessions (in-memory, 30 min TTL)
+interface ConfirmationSession {
+  confirmationId: string;
+  sessionData: {
+    agentPlan: any;
+    messages: Message[];
+    currentDesign: any;
+    conversationSummary: ConversationSummary;
+    conversationState: ConversationState;
+    latestMessage: string;
+    questionAnalysis: any;
+  };
+  timestamp: number;
+}
+
+const pendingConfirmations = new Map<string, ConfirmationSession>();
+const CONFIRMATION_TTL = 30 * 60 * 1000; // 30 minutes
+
 // Helper to get from cache with TTL check
 function getFromAgentCache(key: string): any | null {
   const cached = agentResultsCache.get(key);
@@ -147,6 +165,12 @@ serve(async (req) => {
 if (req.method === 'OPTIONS') {
     console.log('[orchestrator-v2] CORS preflight');
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // PRIORITY 1: Handle confirmation endpoint
+  const url = new URL(req.url);
+  if (url.searchParams.get('action') === 'confirm') {
+    return handleConfirmation(req);
   }
 
 try {
@@ -461,16 +485,41 @@ async function handleConversationalMode(
         if (!questionAnalysisData.interpretedRequirements.voltage) criticalMissing.push('voltage');
         
         if (criticalMissing.length > 0) {
+          // Generate unique confirmation ID
+          const confirmationId = `confirm_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+          
+          // Store session for later resumption
+          pendingConfirmations.set(confirmationId, {
+            confirmationId,
+            sessionData: {
+              agentPlan,
+              messages,
+              currentDesign,
+              conversationSummary,
+              conversationState,
+              latestMessage,
+              questionAnalysis: questionAnalysisData
+            },
+            timestamp: Date.now()
+          });
+          
+          // Cleanup old sessions
+          cleanupExpiredConfirmations();
+          
           const confirmEvent = `data: ${JSON.stringify({
             type: 'confirmation_required',
+            confirmationId,
             questionAnalysis: questionAnalysisData,
             message: 'Please confirm these assumptions before we proceed',
             criticalMissing
           })}\n\n`;
           await queueStreamWrite(encoder.encode(confirmEvent));
           
-          // TODO: Wait for confirmation - for now just log
-          console.log('⏸️ Confirmation required for:', criticalMissing);
+          console.log(`⏸️ Confirmation required (ID: ${confirmationId}):`, criticalMissing);
+          
+          // Close stream and wait for confirmation
+          controller.close();
+          return;
         }
 
         // Send initial event with agent plan

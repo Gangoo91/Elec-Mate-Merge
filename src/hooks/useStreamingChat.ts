@@ -17,6 +17,9 @@ interface StreamChunk {
   message?: string;
   step?: number;
   totalSteps?: number;
+  confirmationId?: string;
+  questionAnalysis?: any;
+  criticalMissing?: string[];
 }
 
 interface Message {
@@ -263,10 +266,14 @@ signal: controller.signal
                     break;
                   
                   case 'confirmation_required':
-                    // User confirmation required
-                    if (chunk.data) {
-                      options.onConfirmationRequired?.(chunk.data);
-                    }
+                    // User confirmation required - pass full chunk with confirmationId
+                    options.onConfirmationRequired?.({
+                      ...chunk.data,
+                      confirmationId: chunk.confirmationId,
+                      questionAnalysis: chunk.questionAnalysis,
+                      criticalMissing: chunk.criticalMissing,
+                      message: chunk.message
+                    });
                     break;
                   
                   case 'agent_thinking':

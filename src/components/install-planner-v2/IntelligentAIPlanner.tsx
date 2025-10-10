@@ -189,8 +189,15 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     },
     onConfirmationRequired: (data) => {
       console.log('⏸️ Confirmation required:', data);
+      // Store in session with confirmationId
+      sessionStorage.setItem('questionAnalysis', JSON.stringify({
+        ...data.questionAnalysis,
+        confirmationId: data.confirmationId,
+        criticalMissing: data.criticalMissing
+      }));
+      
       toast.info('Please review and confirm the assumptions', {
-        description: data.message
+        description: data.message || 'Some parameters need verification'
       });
     },
     onAgentThinking: (agent, message, step, totalSteps) => {
