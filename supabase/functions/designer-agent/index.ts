@@ -283,9 +283,9 @@ Use professional language with UK English spelling. Present calculations clearly
       
       // EIC-ready test values
       structuredData.eicTestData = {
-        r1r2Expected: `${(calculationResults.zs - 0.35).toFixed(3)}Ω`,
-        zsExpected: `${calculationResults.zs.toFixed(2)}Ω`,
-        maxZs: `${calculationResults.maxZs.maxZs}Ω`,
+        r1r2Expected: calculationResults.zs ? `${(calculationResults.zs - 0.35).toFixed(3)}Ω` : 'TBC',
+        zsExpected: calculationResults.zs ? `${calculationResults.zs.toFixed(2)}Ω` : 'TBC',
+        maxZs: calculationResults.maxZs?.maxZs ? `${calculationResults.maxZs.maxZs}Ω` : 'TBC',
         insulationTest: '≥1.0 MΩ at 500V DC',
         polarity: 'Correct (verify on-site)',
         rcdTest: calculationResults.rcdRequirements?.required ? '30mA RCD required' : 'N/A'
@@ -311,8 +311,8 @@ Use professional language with UK English spelling. Present calculations clearly
         rcdRating: 30,
         ze: 0.35,
         calculationResults: {
-          zs: calculationResults.zs,
-          maxZs: calculationResults.maxZs.maxZs,
+          zs: calculationResults.zs || null,
+          maxZs: calculationResults.maxZs?.maxZs || null,
           installationMethod: circuitParams.installationMethod,
           deratedCapacity: calculationResults.cableCapacity.Iz,
           safetyMargin: calculationResults.cableCapacity.compliance.safetyMargin
@@ -321,7 +321,12 @@ Use professional language with UK English spelling. Present calculations clearly
       
       reasoning.push(`Selected ${circuitParams.cableSize}mm² cable: Iz (${Math.round(calculationResults.cableCapacity.Iz * 10) / 10}A) > In (${circuitParams.deviceRating}A)`);
       reasoning.push(`Correction factors: Ca=${calculationResults.cableCapacity.factors.temperatureFactor}, Cg=${calculationResults.cableCapacity.factors.groupingFactor}`);
-      reasoning.push(`Zs = ${calculationResults.zs.toFixed(2)}Ω (max ${calculationResults.maxZs.maxZs}Ω) - PSCC = ${calculationResults.pscc}A`);
+      if (calculationResults.zs && calculationResults.maxZs?.maxZs) {
+        reasoning.push(`Zs = ${calculationResults.zs.toFixed(2)}Ω (max ${calculationResults.maxZs.maxZs}Ω) - PSCC = ${calculationResults.pscc}A`);
+      } else {
+        console.warn('⚠️ Zs calculation incomplete - some protection data may be missing');
+        reasoning.push(`Earth fault protection: Verification required on-site`);
+      }
       
       if (calculationResults.voltageDrop?.compliant) {
         reasoning.push(`Voltage drop ${calculationResults.voltageDrop.percentage}% complies with 3% BS 7671 limit`);

@@ -398,10 +398,24 @@ async function handleConversationalMode(
               const errorEvent = `data: ${JSON.stringify({
                 type: 'agent_error',
                 agent: agentName,
-                data: { error: result.error.message || 'Agent failed' }
+                data: { 
+                  error: result.error.message || 'Agent failed',
+                  agent: agentName,
+                  partialResults: true
+                }
               })}\n\n`;
               controller.enqueue(encoder.encode(errorEvent));
-              return;
+              
+              // Store partial error output but continue with other agents
+              agentOutputs.push({
+                agent: agentName,
+                response: `⚠️ ${agentName} encountered an error and provided partial results. Other agents will continue.`,
+                citations: [],
+                structuredData: { error: result.error.message }
+              });
+              
+              console.log(`⚠️ Agent ${agentName} failed, but continuing with remaining agents`);
+              return; // Return early but don't stop the entire stream
             }
 
             const output: AgentOutput = {

@@ -5,8 +5,22 @@ import { Button } from "@/components/ui/button";
 import { Wrench, CheckCircle2, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
+interface InstallationStep {
+  stepNumber: number;
+  phase: string;
+  title: string;
+  description: string;
+  safetyRequirements?: string[];
+  equipmentNeeded?: string[];
+  criticalPoints?: string[];
+  regulationReferences?: string[];
+  riskLevel?: string;
+  qualifications?: string[];
+  estimatedDuration?: string;
+}
+
 interface InstallationStepsData {
-  installationSteps?: string[];
+  installationSteps?: InstallationStep[];
   supportIntervals?: string;
   safeZones?: string[];
   specialRequirements?: string[];
@@ -33,13 +47,34 @@ export const InstallationStepsCard = ({ data }: InstallationStepsCardProps) => {
         {data.installationSteps && data.installationSteps.length > 0 && (
           <div className="space-y-3">
             <p className="text-xs font-semibold text-foreground">Installation Sequence</p>
-            <ol className="space-y-2">
+            <ol className="space-y-3">
               {data.installationSteps.slice(0, 3).map((step, idx) => (
                 <li key={idx} className="flex items-start gap-3 text-sm">
                   <div className="flex items-center justify-center h-6 w-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0 mt-0.5">
-                    {idx + 1}
+                    {typeof step === 'string' ? idx + 1 : step.stepNumber || idx + 1}
                   </div>
-                  <span className="text-foreground flex-1 leading-relaxed">{step}</span>
+                  <div className="flex-1 space-y-1">
+                    {typeof step === 'string' ? (
+                      <span className="text-foreground leading-relaxed">{step}</span>
+                    ) : (
+                      <>
+                        <p className="font-semibold text-foreground">{step.phase || step.title}</p>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                        {step.estimatedDuration && (
+                          <p className="text-xs text-purple-400 mt-1">⏱️ {step.estimatedDuration}</p>
+                        )}
+                        {step.riskLevel && (
+                          <Badge variant="outline" className={`text-xs mt-1 ${
+                            step.riskLevel === 'high' ? 'border-red-500/30 text-red-400' :
+                            step.riskLevel === 'medium' ? 'border-yellow-500/30 text-yellow-400' :
+                            'border-green-500/30 text-green-400'
+                          }`}>
+                            {step.riskLevel.toUpperCase()} RISK
+                          </Badge>
+                        )}
+                      </>
+                    )}
+                  </div>
                 </li>
               ))}
             </ol>
@@ -56,13 +91,34 @@ export const InstallationStepsCard = ({ data }: InstallationStepsCardProps) => {
                   </Button>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pt-2">
-                  <ol className="space-y-2" start={4}>
+                  <ol className="space-y-3" start={4}>
                     {data.installationSteps.slice(3).map((step, idx) => (
                       <li key={idx + 3} className="flex items-start gap-3 text-sm">
                         <div className="flex items-center justify-center h-6 w-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0 mt-0.5">
-                          {idx + 4}
+                          {typeof step === 'string' ? idx + 4 : step.stepNumber || idx + 4}
                         </div>
-                        <span className="text-foreground flex-1 leading-relaxed">{step}</span>
+                        <div className="flex-1 space-y-1">
+                          {typeof step === 'string' ? (
+                            <span className="text-foreground leading-relaxed">{step}</span>
+                          ) : (
+                            <>
+                              <p className="font-semibold text-foreground">{step.phase || step.title}</p>
+                              <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                              {step.estimatedDuration && (
+                                <p className="text-xs text-purple-400 mt-1">⏱️ {step.estimatedDuration}</p>
+                              )}
+                              {step.riskLevel && (
+                                <Badge variant="outline" className={`text-xs mt-1 ${
+                                  step.riskLevel === 'high' ? 'border-red-500/30 text-red-400' :
+                                  step.riskLevel === 'medium' ? 'border-yellow-500/30 text-yellow-400' :
+                                  'border-green-500/30 text-green-400'
+                                }`}>
+                                  {step.riskLevel.toUpperCase()} RISK
+                                </Badge>
+                              )}
+                            </>
+                          )}
+                        </div>
                       </li>
                     ))}
                   </ol>
