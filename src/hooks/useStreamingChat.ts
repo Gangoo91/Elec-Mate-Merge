@@ -66,7 +66,11 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     }, 1000);
 
     try {
-      const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/orchestrator-agent`;
+      const FUNCTION_URL = "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/orchestrator-agent";
+      
+      if (!FUNCTION_URL) {
+        throw new Error('Invalid function URL configuration');
+      }
       
       // Timeout handling (300s total, 30s, 90s, and 180s warnings) with AbortController
       const timeoutMs = 300000; // 5 minutes for complex 18-way designs
@@ -94,7 +98,8 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8'
           },
           body: JSON.stringify({ 
             messages, 
