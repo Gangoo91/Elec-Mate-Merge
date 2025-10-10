@@ -23,6 +23,30 @@ const responseCache = new ResponseCache();
 
 // Agent-level response cache (in-memory, 1 hour TTL)
 const agentResultsCache = new Map<string, { data: any; timestamp: number }>();
+const AGENT_CACHE_TTL = 60 * 60 * 1000; // 1 hour
+
+// Helper to get from cache with TTL check
+function getFromAgentCache(key: string): any | null {
+  const cached = agentResultsCache.get(key);
+  if (!cached) return null;
+  
+  if (Date.now() - cached.timestamp > AGENT_CACHE_TTL) {
+    agentResultsCache.delete(key);  // Expired
+    return null;
+  }
+  
+  return cached.data;
+}
+
+// Periodic cleanup (run at start of each request)
+function cleanupExpiredCache() {
+  const now = Date.now();
+  for (const [key, value] of agentResultsCache.entries()) {
+    if (now - value.timestamp > AGENT_CACHE_TTL) {
+      agentResultsCache.delete(key);
+    }
+  }
+}
 
 // Helper to extract circuit count from message
 function extractCircuitCount(message: string): number {
@@ -52,6 +76,10 @@ if (req.method === 'OPTIONS') {
 try {
     console.log('[orchestrator-v2] POST start');
     const startTime = Date.now();
+    
+    // WAVE 2 FIX: Cleanup expired cache entries at start of each request
+    cleanupExpiredCache();
+    
     const { messages, currentDesign, conversationalMode = true, selectedAgents, targetAgent } = await req.json() as OrchestratorRequest;
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
@@ -269,13 +297,14 @@ async function handleConversationalMode(
       const streamWriteQueue: Array<() => void> = [];
       let isWriting = false;
 
-      const processStreamQueue = async () => {
+      // WAVE 1 FIX: Make synchronous to prevent floating promise
+      const processStreamQueue = () => {
         if (isWriting || streamWriteQueue.length === 0) return;
         
         isWriting = true;
         while (streamWriteQueue.length > 0) {
           const write = streamWriteQueue.shift();
-          if (write) await write();
+          if (write) write(); // Synchronous call - controller.enqueue is already sync
         }
         isWriting = false;
       };
@@ -358,12 +387,13 @@ async function handleConversationalMode(
             const isLast = groupIndex === filteredGroups.length - 1;
             console.log(`🎨 Agent ${agentIndex + 1}/${activeAgents.length}: ${agentName} (Group ${groupIndex + 1}/${filteredGroups.length}, parallel with ${group.length} others)`);
 
-            // Check agent-level cache first
+            // WAVE 2 FIX: Better cache key to prevent collisions
             const lastMessage = messages[messages.length - 1]?.content || '';
-            const cacheKey = `agent:${agentName}:${lastMessage}:${JSON.stringify(currentDesign)}`;
-            const cached = agentResultsCache.get(cacheKey);
+            const selectedAgentsStr = JSON.stringify(activeAgents.sort());
+            const cacheKey = `${agentName}:${lastMessage.slice(0, 100)}:${selectedAgentsStr}:${conversationState.stage}`;
+            const cached = getFromAgentCache(cacheKey);
             
-            if (cached && Date.now() - cached.timestamp < 3600000) { // 1 hour TTL
+            if (cached) { // TTL already checked in getFromAgentCache
               console.log(`⚡ ${agentName} cache hit - instant response`);
               
               const cachedOutput: AgentOutput = {
@@ -403,15 +433,45 @@ async function handleConversationalMode(
             await queueStreamWrite(encoder.encode(startEvent));
 
             try {
+              // WAVE 2 FIX: Check dependencies before executing
+              const dependencies = step.dependencies || [];
+              const failedDeps = dependencies.filter((dep: string) => 
+                !agentOutputs.find(o => o.agent === dep && !o.structuredData?.error)
+              );
+
+              if (failedDeps.length > 0) {
+                console.warn(`⚠️ Skipping ${agentName} - dependencies failed:`, failedDeps);
+                agentOutputs.push({
+                  agent: agentName,
+                  response: `⚠️ ${getAgentDisplayName(agentName)} was skipped because required data from ${failedDeps.map((d: string) => getAgentDisplayName(d)).join(', ')} is unavailable.`,
+                  citations: [],
+                  structuredData: { skipped: true, reason: 'dependency_failed', failedDeps }
+                });
+                
+                const skipEvent = `data: ${JSON.stringify({
+                  type: 'agent_skipped',
+                  agent: agentName,
+                  reason: 'dependency_failed',
+                  failedDeps
+                })}\n\n`;
+                await queueStreamWrite(encoder.encode(skipEvent));
+                return;
+              }
+
               const agentFunctionName = getAgentFunctionName(agentName);
               
-              // Build relevant context (Phase 3: Smart Context Reduction)
+              // WAVE 2 FIX: Build context once and reuse (remove redundant calls)
+              const structuredContext = buildStructuredContext(agentContext.previousAgentOutputs);
               const relevantContext = buildRelevantContext(agentName, agentContext.previousAgentOutputs);
               
               // Build context-aware messages for this agent
               const agentMessages = buildAgentMessages(
                 messages,
-                { ...agentContext, structuredKnowledge: relevantContext },
+                { 
+                  ...agentContext, 
+                  structuredKnowledge: structuredContext,
+                  relevantContext 
+                },
                 agentName,
                 isFirst,
                 isLast
@@ -438,7 +498,8 @@ async function handleConversationalMode(
                       currentDesign,
                       context: {
                         ...agentContext,
-                        structuredKnowledge: buildStructuredContext(agentContext.previousAgentOutputs)
+                        structuredKnowledge: structuredContext, // WAVE 2 FIX: Reuse already-built context
+                        relevantContext
                       }
                     }
                   }),
@@ -537,13 +598,32 @@ async function handleConversationalMode(
               await queueStreamWrite(encoder.encode(completeEvent));
 
             } catch (error) {
-              console.error(`Error in agent ${agentName}:`, error);
+              // WAVE 2 FIX: Add structured error telemetry
+              const errorContext = {
+                errorType: error instanceof Error ? error.constructor.name : 'UnknownError',
+                message: error instanceof Error ? error.message : String(error),
+                stack: error instanceof Error ? error.stack : undefined,
+                agentName,
+                streamPhase: 'agent_execution',
+                timestamp: new Date().toISOString(),
+                latestMessage: latestMessage.slice(0, 100),
+                groupIndex,
+                dependencies: step.dependencies
+              };
+              
+              console.error(`🚨 Agent ${agentName} error:`, JSON.stringify(errorContext, null, 2));
+              
               const errorEvent = `data: ${JSON.stringify({
                 type: 'agent_error',
                 agent: agentName,
-                data: { error: error instanceof Error ? error.message : 'Unknown error' }
+                data: { 
+                  error: errorContext.message,
+                  errorType: errorContext.errorType,
+                  context: errorContext
+                }
               })}\n\n`;
-              controller.enqueue(encoder.encode(errorEvent));
+              // WAVE 1 FIX: Use queue instead of direct enqueue
+              await queueStreamWrite(encoder.encode(errorEvent));
             }
           });
 
@@ -558,7 +638,8 @@ async function handleConversationalMode(
             type: 'validation_report',
             report: formatValidationReport(validationErrors)
           })}\n\n`;
-          controller.enqueue(encoder.encode(reportEvent));
+          // WAVE 1 FIX: Use queue instead of direct enqueue
+          await queueStreamWrite(encoder.encode(reportEvent));
         }
 
         // Send final complete event
@@ -571,16 +652,42 @@ async function handleConversationalMode(
           executionTime: Date.now() - startTime,
           timestamp: new Date().toISOString()
         })}\n\n`;
-        controller.enqueue(encoder.encode(doneEvent));
+        // WAVE 1 FIX: Use queue and wait for drain before closing
+        await queueStreamWrite(encoder.encode(doneEvent));
+        
+        // Wait for all queued writes to complete
+        while (streamWriteQueue.length > 0 || isWriting) {
+          await new Promise(resolve => setTimeout(resolve, 10));
+        }
 
         controller.close();
       } catch (error) {
-        console.error('Stream error:', error);
+        // WAVE 2 FIX: Add structured error telemetry for stream errors
+        const errorContext = {
+          errorType: error instanceof Error ? error.constructor.name : 'UnknownError',
+          message: error instanceof Error ? error.message : String(error),
+          stack: error instanceof Error ? error.stack : undefined,
+          streamPhase: 'stream_orchestration',
+          timestamp: new Date().toISOString(),
+          latestMessage: latestMessage.slice(0, 100)
+        };
+        
+        console.error('🚨 Stream orchestration error:', JSON.stringify(errorContext, null, 2));
+        
         const errorEvent = `data: ${JSON.stringify({
           type: 'error',
-          error: error instanceof Error ? error.message : 'Stream failed'
+          error: errorContext.message,
+          errorType: errorContext.errorType,
+          context: errorContext
         })}\n\n`;
-        controller.enqueue(encoder.encode(errorEvent));
+        // WAVE 1 FIX: Use queue instead of direct enqueue
+        await queueStreamWrite(encoder.encode(errorEvent));
+        
+        // Wait for queue to drain
+        while (streamWriteQueue.length > 0 || isWriting) {
+          await new Promise(resolve => setTimeout(resolve, 10));
+        }
+        
         controller.close();
       }
     }
