@@ -7,7 +7,6 @@ import { useMemo, memo, useState } from "react";
 import { AgentFeedbackButtons } from "./AgentFeedbackButtons";
 import {
   CircuitSpecCard,
-  CostBreakdownCard,
   RiskMatrixCard,
   InstallationStepsCard,
   TestSequenceCard
@@ -95,11 +94,6 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
               data={structuredData}
               planData={structuredData.planData}
             />
-          )}
-          
-          {/* Cost Engineer - Cost Breakdown Card */}
-          {agentId === 'cost-engineer' && (structuredData.materials || structuredData.totalCost) && (
-            <CostBreakdownCard data={structuredData} />
           )}
           
           {/* Health & Safety - Risk Matrix Card */}
