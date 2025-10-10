@@ -1,7 +1,7 @@
 # Backend Stability Improvements
 
-## Implementation Status: Week 3 Day 4 Complete ✅
-## Overall Progress: 29/140 functions (20.7%) migrated
+## Implementation Status: Week 3 Day 5 Complete ✅
+## Overall Progress: 30/140 functions (21.4%) migrated
 
 ### Phase 1: Core Infrastructure (Completed)
 
@@ -337,6 +337,28 @@ const result = await logger.time(
 - Automatic retry on scraper failures
 - Clean error messages with validation
 - Request ID tracking throughout cache update workflow
+
+---
+
+## Week 3 Day 5: Scraper Functions (30/140 = 21.4% Complete) ✅
+
+### **comprehensive-materials-weekly-scraper Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging with request IDs
+- ✅ Wrapped Firecrawl API calls: 3 retries + 60s timeout
+- ✅ Wrapped all database operations with 30s timeout (cache clear, insert, historical prices)
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added `ValidationError` for missing API key
+- ✅ Improved logging for background task execution
+
+**Impact:**
+- 60s timeout for external scraping API prevents hanging
+- Automatic retry on Firecrawl API failures
+- Database operations protected with timeouts
+- Clean error messages with validation
+- Request ID tracking throughout scraping workflow
+- Background task execution properly logged
 
 ---
 

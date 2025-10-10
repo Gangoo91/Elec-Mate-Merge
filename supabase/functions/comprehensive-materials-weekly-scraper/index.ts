@@ -1,5 +1,8 @@
-import { corsHeaders } from '../_shared/cors.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
+import { corsHeaders, createClient } from '../_shared/deps.ts';
+import { handleError, ValidationError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 const suppliers = [
   { name: "Screwfix", url: "https://www.screwfix.com/search?search=" },
@@ -119,7 +122,14 @@ async function fetchMaterialsFromSupplier(supplier: any, query: string, category
   };
 
   try {
-    const response = await fetch(firecrawl_url, options);
+    const response = await withRetry(
+      () => withTimeout(
+        fetch(firecrawl_url, options),
+        Timeouts.LONG,
+        'Firecrawl API call'
+      ),
+      RetryPresets.STANDARD
+    );
     if (!response.ok) {
       console.error(`❌ API request failed: ${response.status} ${response.statusText}`);
       return [];
@@ -230,11 +240,15 @@ async function saveMaterialsToCache(materials: any[]) {
   const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-  // Clear existing cache
-  const { error: deleteError } = await supabase
-    .from('materials_weekly_cache')
-    .delete()
-    .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all rows
+  // Clear existing cache with timeout protection
+  const { error: deleteError } = await withTimeout(
+    supabase
+      .from('materials_weekly_cache')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000'),
+    Timeouts.STANDARD,
+    'clear cache'
+  );
 
   if (deleteError) {
     console.error('❌ Error clearing cache:', deleteError);
@@ -267,9 +281,13 @@ async function saveMaterialsToCache(materials: any[]) {
     update_status: 'completed'
   }));
 
-  const { error: insertError } = await supabase
-    .from('materials_weekly_cache')
-    .insert(cacheEntries);
+  const { error: insertError } = await withTimeout(
+    supabase
+      .from('materials_weekly_cache')
+      .insert(cacheEntries),
+    Timeouts.STANDARD,
+    'save to cache'
+  );
 
   if (insertError) {
     console.error('❌ Error saving to cache:', insertError);
@@ -300,9 +318,13 @@ async function savePricesToHistory(materials: any[]) {
     }));
 
   if (historicalEntries.length > 0) {
-    const { error } = await supabase
-      .from('historical_prices')
-      .insert(historicalEntries);
+    const { error } = await withTimeout(
+      supabase
+        .from('historical_prices')
+        .insert(historicalEntries),
+      Timeouts.STANDARD,
+      'save historical prices'
+    );
 
     if (error) {
       console.error('❌ Error saving prices to history:', error);
@@ -313,36 +335,36 @@ async function savePricesToHistory(materials: any[]) {
 }
 
 Deno.serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId);
+
   try {
-    console.log('🔧 [MATERIALS-WEEKLY-SCRAPER] Starting weekly materials scraping...');
+    logger.info('🔧 Materials weekly scraper started');
     
     const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
     if (!FIRECRAWL_API_KEY) {
-      console.error('❌ FIRECRAWL_API_KEY not found in environment variables');
-      return new Response(
-        JSON.stringify({ error: 'Firecrawl API key not configured' }),
-        { 
-          status: 500, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      );
+      throw new ValidationError('FIRECRAWL_API_KEY not configured');
     }
 
     // Start the background task for scraping
     const scrapeTask = async () => {
       try {
-        console.log('🔄 Starting background scraping task...');
+        logger.info('Starting background scraping task');
         const materials = await getMaterials(FIRECRAWL_API_KEY);
         const cacheEntries = await saveMaterialsToCache(materials);
         await savePricesToHistory(materials);
-        console.log(`✅ Background task completed: ${materials.length} materials, ${cacheEntries.length} categories`);
+        logger.info('Background task completed', { 
+          materialsCount: materials.length, 
+          categoriesCount: cacheEntries.length 
+        });
       } catch (error) {
-        console.error('❌ Background scraping error:', error);
+        logger.error('Background scraping failed', { 
+          error: error instanceof Error ? error.message : String(error) 
+        });
       }
     };
 
@@ -362,16 +384,9 @@ Deno.serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('❌ [MATERIALS-WEEKLY-SCRAPER] Error:', error);
-    return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
-        success: false 
-      }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
+    logger.error('Materials scraper error', { 
+      error: error instanceof Error ? error.message : String(error) 
+    });
+    return handleError(error);
   }
 });
