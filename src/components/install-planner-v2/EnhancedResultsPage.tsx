@@ -651,7 +651,12 @@ export const EnhancedResultsPage = ({
                             <div className="px-4 pb-4 space-y-3 border-t pt-3">
                               {hasContent ? (
                                 <>
-                                  <AgentResponseRenderer content={lastResponse} agentId={agentId} />
+                                  <AgentResponseRenderer 
+                                    content={lastResponse} 
+                                    agentId={agentId}
+                                    conversationId={projectId}
+                                    question={projectDescription}
+                                  />
                                   {agentId === 'designer' && (
                                     <Button onClick={handleDownloadDesignPDF} className="w-full min-h-[44px]">
                                       <FileDown className="w-4 h-4 mr-2" />Download Design PDF
@@ -810,7 +815,12 @@ export const EnhancedResultsPage = ({
                         <div className="px-5 pb-5 space-y-4 border-t pt-4">
                           {hasContent ? (
                             <>
-                              <AgentResponseRenderer content={lastResponse} agentId={agentId} />
+                              <AgentResponseRenderer 
+                                content={lastResponse} 
+                                agentId={agentId}
+                                conversationId={projectId}
+                                question={projectDescription}
+                              />
                               <div className="flex flex-col sm:flex-row gap-2 mt-4 pt-4 border-t">
                                 {agentId === 'designer' && (
                                   <Button onClick={handleDownloadDesignPDF} className="flex-1">

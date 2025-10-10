@@ -14,6 +14,59 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_interaction_feedback: {
+        Row: {
+          agent_name: string
+          ai_response: string
+          conversation_id: string | null
+          created_at: string | null
+          feedback_type: string | null
+          id: string
+          question: string
+          structured_data: Json | null
+          user_correction: string | null
+          user_edit: Json | null
+          user_id: string
+          user_rating: number | null
+        }
+        Insert: {
+          agent_name: string
+          ai_response: string
+          conversation_id?: string | null
+          created_at?: string | null
+          feedback_type?: string | null
+          id?: string
+          question: string
+          structured_data?: Json | null
+          user_correction?: string | null
+          user_edit?: Json | null
+          user_id: string
+          user_rating?: number | null
+        }
+        Update: {
+          agent_name?: string
+          ai_response?: string
+          conversation_id?: string | null
+          created_at?: string | null
+          feedback_type?: string | null
+          id?: string
+          question?: string
+          structured_data?: Json | null
+          user_correction?: string | null
+          user_edit?: Json | null
+          user_id?: string
+          user_rating?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_interaction_feedback_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversation_memory"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ai_response_cache: {
         Row: {
           cache_key: string
@@ -1954,6 +2007,109 @@ export type Database = {
           unit?: string
         }
         Relationships: []
+      }
+      knowledge_base_changelog: {
+        Row: {
+          action: string
+          change_reason: string | null
+          changed_by: string | null
+          created_at: string | null
+          id: string
+          new_content: string | null
+          previous_content: string | null
+          record_id: string | null
+          source_feedback_id: string | null
+          table_name: string
+        }
+        Insert: {
+          action: string
+          change_reason?: string | null
+          changed_by?: string | null
+          created_at?: string | null
+          id?: string
+          new_content?: string | null
+          previous_content?: string | null
+          record_id?: string | null
+          source_feedback_id?: string | null
+          table_name: string
+        }
+        Update: {
+          action?: string
+          change_reason?: string | null
+          changed_by?: string | null
+          created_at?: string | null
+          id?: string
+          new_content?: string | null
+          previous_content?: string | null
+          record_id?: string | null
+          source_feedback_id?: string | null
+          table_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "knowledge_base_changelog_source_feedback_id_fkey"
+            columns: ["source_feedback_id"]
+            isOneToOne: false
+            referencedRelation: "ai_interaction_feedback"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      learning_review_queue: {
+        Row: {
+          agent_name: string
+          ai_answer: string
+          created_at: string | null
+          feedback_id: string | null
+          id: string
+          issue_type: string
+          pattern_frequency: number | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string | null
+          suggested_knowledge_update: Json | null
+          suggested_prompt_change: string | null
+          user_correction: string | null
+        }
+        Insert: {
+          agent_name: string
+          ai_answer: string
+          created_at?: string | null
+          feedback_id?: string | null
+          id?: string
+          issue_type: string
+          pattern_frequency?: number | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
+          suggested_knowledge_update?: Json | null
+          suggested_prompt_change?: string | null
+          user_correction?: string | null
+        }
+        Update: {
+          agent_name?: string
+          ai_answer?: string
+          created_at?: string | null
+          feedback_id?: string | null
+          id?: string
+          issue_type?: string
+          pattern_frequency?: number | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string | null
+          suggested_knowledge_update?: Json | null
+          suggested_prompt_change?: string | null
+          user_correction?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_review_queue_feedback_id_fkey"
+            columns: ["feedback_id"]
+            isOneToOne: false
+            referencedRelation: "ai_interaction_feedback"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       lfe_reports: {
         Row: {

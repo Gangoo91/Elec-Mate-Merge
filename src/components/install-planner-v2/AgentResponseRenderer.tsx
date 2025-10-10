@@ -4,6 +4,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Brain, BookOpen } from "lucide-react";
 import { useMemo, memo, useState } from "react";
+import { AgentFeedbackButtons } from "./AgentFeedbackButtons";
 import {
   CircuitSpecCard,
   CostBreakdownCard,
@@ -19,9 +20,11 @@ interface AgentResponseRendererProps {
   content: string;
   agentId?: string;
   structuredData?: any;
+  conversationId?: string;
+  question?: string;
 }
 
-export const AgentResponseRenderer = memo(({ content, agentId, structuredData }: AgentResponseRendererProps) => {
+export const AgentResponseRenderer = memo(({ content, agentId, structuredData, conversationId, question }: AgentResponseRendererProps) => {
   const [showFullText, setShowFullText] = useState(false);
   const [showReasoningDrawer, setShowReasoningDrawer] = useState(false);
   
@@ -182,6 +185,18 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData }:
           onClose={() => setShowReasoningDrawer(false)}
           agentName={agentNames[agentId] || agentId}
           data={structuredData || {}}
+        />
+      )}
+      
+      {/* Feedback Buttons */}
+      {agentId && question && (
+        <AgentFeedbackButtons
+          agentId={agentId}
+          agentName={agentNames[agentId] || agentId}
+          question={question}
+          response={content}
+          structuredData={structuredData}
+          conversationId={conversationId}
         />
       )}
     </div>

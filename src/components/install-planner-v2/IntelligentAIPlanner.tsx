@@ -1033,6 +1033,8 @@ onError: (error) => {
                     content={message.content} 
                     agentId={message.agentName}
                     structuredData={message.structuredData}
+                    conversationId={sessionId}
+                    question={messages.find(m => m.role === 'user')?.content}
                   />
                 )}
 

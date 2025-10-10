@@ -1,13 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { 
   Brain, 
   CheckCircle2, 
   AlertCircle, 
   ArrowRight, 
   ChevronDown,
-  Edit
+  Edit,
+  X,
+  Check
 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
@@ -35,6 +39,9 @@ interface QuestionAnalysisData {
 interface QuestionUnderstandingCardProps {
   data: QuestionAnalysisData;
   onEdit?: () => void;
+  onConfirm?: (updatedData: QuestionAnalysisData) => void;
+  onCancel?: () => void;
+  isEditable?: boolean;
 }
 
 const AGENT_EMOJI: Record<string, string> = {
@@ -45,8 +52,16 @@ const AGENT_EMOJI: Record<string, string> = {
   commissioning: '✅'
 };
 
-export const QuestionUnderstandingCard = ({ data, onEdit }: QuestionUnderstandingCardProps) => {
+export const QuestionUnderstandingCard = ({ 
+  data, 
+  onEdit, 
+  onConfirm, 
+  onCancel, 
+  isEditable = true 
+}: QuestionUnderstandingCardProps) => {
   const [showReasoning, setShowReasoning] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [editedData, setEditedData] = useState<QuestionAnalysisData>(data);
   
   const complexityColor = {
     simple: 'bg-green-500/10 text-green-400 border-green-500/30',
@@ -54,8 +69,35 @@ export const QuestionUnderstandingCard = ({ data, onEdit }: QuestionUnderstandin
     complex: 'bg-orange-500/10 text-orange-400 border-orange-500/30'
   }[data.estimatedComplexity] || 'bg-blue-500/10 text-blue-400 border-blue-500/30';
 
+  const handleEdit = (field: string, value: any) => {
+    setEditedData(prev => ({
+      ...prev,
+      interpretedRequirements: {
+        ...prev.interpretedRequirements,
+        [field]: value
+      }
+    }));
+  };
+
+  const handleConfirm = () => {
+    if (onConfirm) {
+      onConfirm(editedData);
+    }
+    setEditMode(false);
+  };
+
+  const handleCancel = () => {
+    setEditedData(data);
+    setEditMode(false);
+    if (onCancel) {
+      onCancel();
+    }
+  };
+
+  const displayData = editMode ? editedData : data;
+
   return (
-    <Card className="border-elec-yellow/30 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
+    <Card className={`border-elec-yellow/30 bg-gradient-to-br from-blue-500/5 to-purple-500/5 ${editMode ? 'border-elec-yellow/60 shadow-lg shadow-elec-yellow/20' : ''}`}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
@@ -71,56 +113,120 @@ export const QuestionUnderstandingCard = ({ data, onEdit }: QuestionUnderstandin
       <CardContent className="space-y-4">
         {/* Detected Parameters */}
         <div className="space-y-2">
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-            Detected Requirements
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              Detected Requirements
+            </p>
+            {isEditable && !editMode && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setEditMode(true)}
+                className="h-6 text-xs"
+              >
+                <Edit className="h-3 w-3 mr-1" />
+                Edit
+              </Button>
+            )}
+          </div>
           <div className="grid grid-cols-2 gap-2">
-            {data.interpretedRequirements.circuitType && (
+            {displayData.interpretedRequirements.circuitType && (
               <div className="bg-muted/30 rounded p-2">
-                <p className="text-xs text-muted-foreground">Circuit Type</p>
-                <p className="text-sm font-semibold text-foreground">
-                  {data.interpretedRequirements.circuitType}
-                </p>
+                <Label className="text-xs text-muted-foreground">Circuit Type</Label>
+                {editMode ? (
+                  <Input
+                    value={editedData.interpretedRequirements.circuitType || ''}
+                    onChange={(e) => handleEdit('circuitType', e.target.value)}
+                    className="h-7 mt-1 text-sm"
+                  />
+                ) : (
+                  <p className="text-sm font-semibold text-foreground">
+                    {displayData.interpretedRequirements.circuitType}
+                  </p>
+                )}
               </div>
             )}
-            {data.interpretedRequirements.load && (
+            {displayData.interpretedRequirements.load !== undefined && (
               <div className="bg-muted/30 rounded p-2">
-                <p className="text-xs text-muted-foreground">Load</p>
-                <p className="text-sm font-semibold text-foreground">
-                  {data.interpretedRequirements.load}kW
-                </p>
+                <Label className="text-xs text-muted-foreground">Load (kW)</Label>
+                {editMode ? (
+                  <Input
+                    type="number"
+                    value={editedData.interpretedRequirements.load || ''}
+                    onChange={(e) => handleEdit('load', parseFloat(e.target.value))}
+                    className="h-7 mt-1 text-sm"
+                  />
+                ) : (
+                  <p className="text-sm font-semibold text-foreground">
+                    {displayData.interpretedRequirements.load}kW
+                  </p>
+                )}
               </div>
             )}
-            {data.interpretedRequirements.distance && (
+            {displayData.interpretedRequirements.distance !== undefined && (
               <div className="bg-muted/30 rounded p-2">
-                <p className="text-xs text-muted-foreground">Distance</p>
-                <p className="text-sm font-semibold text-foreground">
-                  {data.interpretedRequirements.distance}m
-                </p>
+                <Label className="text-xs text-muted-foreground">Distance (m)</Label>
+                {editMode ? (
+                  <Input
+                    type="number"
+                    value={editedData.interpretedRequirements.distance || ''}
+                    onChange={(e) => handleEdit('distance', parseFloat(e.target.value))}
+                    className="h-7 mt-1 text-sm"
+                  />
+                ) : (
+                  <p className="text-sm font-semibold text-foreground">
+                    {displayData.interpretedRequirements.distance}m
+                  </p>
+                )}
               </div>
             )}
-            {data.interpretedRequirements.environment && (
+            {displayData.interpretedRequirements.environment && (
               <div className="bg-muted/30 rounded p-2">
-                <p className="text-xs text-muted-foreground">Environment</p>
-                <p className="text-sm font-semibold text-foreground capitalize">
-                  {data.interpretedRequirements.environment}
-                </p>
+                <Label className="text-xs text-muted-foreground">Environment</Label>
+                {editMode ? (
+                  <Input
+                    value={editedData.interpretedRequirements.environment || ''}
+                    onChange={(e) => handleEdit('environment', e.target.value)}
+                    className="h-7 mt-1 text-sm"
+                  />
+                ) : (
+                  <p className="text-sm font-semibold text-foreground capitalize">
+                    {displayData.interpretedRequirements.environment}
+                  </p>
+                )}
               </div>
             )}
-            {data.interpretedRequirements.voltage && (
+            {displayData.interpretedRequirements.voltage !== undefined && (
               <div className="bg-muted/30 rounded p-2">
-                <p className="text-xs text-muted-foreground">Voltage</p>
-                <p className="text-sm font-semibold text-foreground">
-                  {data.interpretedRequirements.voltage}V
-                </p>
+                <Label className="text-xs text-muted-foreground">Voltage (V)</Label>
+                {editMode ? (
+                  <Input
+                    type="number"
+                    value={editedData.interpretedRequirements.voltage || ''}
+                    onChange={(e) => handleEdit('voltage', parseInt(e.target.value))}
+                    className="h-7 mt-1 text-sm"
+                  />
+                ) : (
+                  <p className="text-sm font-semibold text-foreground">
+                    {displayData.interpretedRequirements.voltage}V
+                  </p>
+                )}
               </div>
             )}
-            {data.interpretedRequirements.phases && (
+            {displayData.interpretedRequirements.phases && (
               <div className="bg-muted/30 rounded p-2">
-                <p className="text-xs text-muted-foreground">Supply</p>
-                <p className="text-sm font-semibold text-foreground capitalize">
-                  {data.interpretedRequirements.phases}-phase
-                </p>
+                <Label className="text-xs text-muted-foreground">Supply</Label>
+                {editMode ? (
+                  <Input
+                    value={editedData.interpretedRequirements.phases || ''}
+                    onChange={(e) => handleEdit('phases', e.target.value)}
+                    className="h-7 mt-1 text-sm"
+                  />
+                ) : (
+                  <p className="text-sm font-semibold text-foreground capitalize">
+                    {displayData.interpretedRequirements.phases}-phase
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -186,8 +292,32 @@ export const QuestionUnderstandingCard = ({ data, onEdit }: QuestionUnderstandin
           </CollapsibleContent>
         </Collapsible>
 
-        {/* Edit Button (if provided) */}
-        {onEdit && (
+        {/* Confirm/Cancel Buttons (if in edit mode) */}
+        {editMode && (
+          <div className="flex gap-2">
+            <Button 
+              variant="outline"
+              size="sm" 
+              onClick={handleCancel}
+              className="flex-1 border-muted-foreground/30"
+            >
+              <X className="h-3 w-3 mr-2" />
+              Cancel
+            </Button>
+            <Button 
+              variant="default"
+              size="sm" 
+              onClick={handleConfirm}
+              className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+            >
+              <Check className="h-3 w-3 mr-2" />
+              Confirm & Continue
+            </Button>
+          </div>
+        )}
+        
+        {/* Edit Button (if provided and not in edit mode) */}
+        {onEdit && !editMode && (
           <Button 
             variant="outline" 
             size="sm" 
