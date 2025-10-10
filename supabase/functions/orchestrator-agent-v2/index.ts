@@ -17,6 +17,13 @@ import { validateAgentOutputs, formatValidationReport } from '../_shared/validat
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { 
+  validateDesignerOutput, 
+  validateCostOutput, 
+  validateInstallerOutput,
+  reviewChallenge,
+  type Challenge 
+} from '../_shared/agent-validation.ts';
 
 // corsHeaders imported from shared deps
 
@@ -795,6 +802,19 @@ async function handleConversationalMode(
             allToolCalls.push(...output.toolCalls);
             if (output.costUpdates) costUpdates = output.costUpdates;
 
+            // Phase 9: Inter-agent validation for critical agents
+            if (['designer', 'cost-engineer', 'installer'].includes(agentName)) {
+              await performInterAgentValidation(
+                agentName,
+                output,
+                agentContext,
+                encoder,
+                queueStreamWrite,
+                agentOutputs,
+                Deno.env.get('OPENAI_API_KEY')!
+              );
+            }
+
               // Send agent_complete event
               const nextGroupHasAgents = groupIndex < filteredGroups.length - 1;
               const completeEvent = `data: ${JSON.stringify({
@@ -966,6 +986,129 @@ function buildStructuredContext(previousOutputs: AgentOutput[]): any {
     agent: o.agent,
     summary: o.response.slice(0, 200)
   }));
+}
+
+// Phase 9: Inter-agent validation
+async function performInterAgentValidation(
+  agentName: string,
+  output: AgentOutput,
+  agentContext: any,
+  encoder: TextEncoder,
+  queueStreamWrite: (data: Uint8Array) => Promise<void>,
+  agentOutputs: AgentOutput[],
+  openAIApiKey: string
+): Promise<void> {
+  try {
+    let validationResult;
+    const challenges: Challenge[] = [];
+
+    // Run appropriate validation based on agent
+    if (agentName === 'designer') {
+      validationResult = validateDesignerOutput(output.response, agentContext);
+      challenges.push(...validationResult.challenges);
+      
+      // Send validation warnings if any
+      if (validationResult.warnings.length > 0) {
+        const warningEvent = `data: ${JSON.stringify({
+          type: 'validation_warning',
+          agent: agentName,
+          warnings: validationResult.warnings
+        })}\n\n`;
+        await queueStreamWrite(encoder.encode(warningEvent));
+      }
+    }
+    else if (agentName === 'cost-engineer') {
+      const designerOutput = agentOutputs.find(o => o.agent === 'designer');
+      if (designerOutput) {
+        validationResult = validateCostOutput(output.response, designerOutput.response);
+        challenges.push(...validationResult.challenges);
+      }
+    }
+    else if (agentName === 'installer') {
+      const designerOutput = agentOutputs.find(o => o.agent === 'designer');
+      if (designerOutput) {
+        validationResult = validateInstallerOutput(output.response, designerOutput.response);
+        challenges.push(...validationResult.challenges);
+      }
+    }
+
+    // Process challenges
+    for (const challenge of challenges) {
+      console.log(`⚠️ Challenge raised: ${challenge.issue}`);
+      
+      // Send challenge event
+      const challengeEvent = `data: ${JSON.stringify({
+        type: 'agent_challenge',
+        challenger: challenge.challenger,
+        target: challenge.target,
+        issue: challenge.issue,
+        recommendation: challenge.recommendation,
+        severity: challenge.severity,
+        regulation: challenge.regulation
+      })}\n\n`;
+      await queueStreamWrite(encoder.encode(challengeEvent));
+
+      // Get target agent to review challenge
+      const resolution = await reviewChallenge(
+        challenge.target,
+        challenge,
+        output.response,
+        agentContext,
+        openAIApiKey
+      );
+
+      console.log(`${challenge.target} ${resolution.action} the challenge`);
+
+      // Send resolution event
+      if (resolution.action === 'accepted' && resolution.revisedOutput) {
+        // Update the output with revised version
+        output.response = resolution.revisedOutput;
+        
+        const revisedEvent = `data: ${JSON.stringify({
+          type: 'agent_revised',
+          agent: challenge.target,
+          challenger: challenge.challenger,
+          issue: challenge.issue,
+          revisedOutput: resolution.revisedOutput,
+          reasoning: resolution.reasoning,
+          agentResponse: resolution.agentResponse
+        })}\n\n`;
+        await queueStreamWrite(encoder.encode(revisedEvent));
+      }
+      else if (resolution.action === 'defended') {
+        const defendedEvent = `data: ${JSON.stringify({
+          type: 'agent_defended',
+          agent: challenge.target,
+          challenger: challenge.challenger,
+          issue: challenge.issue,
+          reasoning: resolution.reasoning,
+          agentResponse: resolution.agentResponse
+        })}\n\n`;
+        await queueStreamWrite(encoder.encode(defendedEvent));
+      }
+      else if (resolution.action === 'compromised') {
+        // Partial revision
+        if (resolution.revisedOutput) {
+          output.response = resolution.revisedOutput;
+        }
+        
+        const compromiseEvent = `data: ${JSON.stringify({
+          type: 'agent_consensus',
+          agent: challenge.target,
+          challenger: challenge.challenger,
+          issue: challenge.issue,
+          revisedOutput: resolution.revisedOutput,
+          reasoning: resolution.reasoning,
+          agentResponse: resolution.agentResponse
+        })}\n\n`;
+        await queueStreamWrite(encoder.encode(compromiseEvent));
+      }
+    }
+
+  } catch (error) {
+    console.error('Error in inter-agent validation:', error);
+    // Don't fail the entire flow on validation errors
+  }
 }
 
 function buildAgentMessages(

@@ -1,13 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2, AlertTriangle, Shield, Handshake } from "lucide-react";
 
 interface ThinkingStep {
   agent: string;
   message: string;
   progress?: number;
   completed?: boolean;
+  challenge?: {
+    challenger: string;
+    issue: string;
+    resolution?: 'accepted' | 'defended' | 'compromised';
+  };
 }
 
 interface AgentThinkingPanelProps {
@@ -77,13 +82,45 @@ export const AgentThinkingPanel = ({
           <div className="space-y-1.5">
             <p className="text-xs font-semibold text-muted-foreground">Completed:</p>
             {completedSteps.map((step, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-2 text-xs text-muted-foreground"
-              >
-                <CheckCircle2 className="h-3 w-3 text-green-500" />
-                <span>{AGENT_EMOJI[step.agent]}</span>
-                <span>{step.message}</span>
+              <div key={idx} className="space-y-1">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <CheckCircle2 className="h-3 w-3 text-green-500" />
+                  <span>{AGENT_EMOJI[step.agent]}</span>
+                  <span>{step.message}</span>
+                </div>
+                
+                {/* Show challenge if present */}
+                {step.challenge && (
+                  <div className="ml-5 pl-3 border-l-2 border-elec-yellow/30 space-y-1">
+                    <div className="flex items-center gap-2 text-xs">
+                      <AlertTriangle className="h-3 w-3 text-amber-500" />
+                      <span className="text-amber-500">
+                        {AGENT_EMOJI[step.challenge.challenger]} challenged: {step.challenge.issue}
+                      </span>
+                    </div>
+                    
+                    {step.challenge.resolution === 'accepted' && (
+                      <div className="flex items-center gap-2 text-xs text-green-500">
+                        <CheckCircle2 className="h-3 w-3" />
+                        <span>Design revised ✓</span>
+                      </div>
+                    )}
+                    
+                    {step.challenge.resolution === 'defended' && (
+                      <div className="flex items-center gap-2 text-xs text-blue-500">
+                        <Shield className="h-3 w-3" />
+                        <span>Original design maintained</span>
+                      </div>
+                    )}
+                    
+                    {step.challenge.resolution === 'compromised' && (
+                      <div className="flex items-center gap-2 text-xs text-elec-yellow">
+                        <Handshake className="h-3 w-3" />
+                        <span>Consensus reached</span>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>

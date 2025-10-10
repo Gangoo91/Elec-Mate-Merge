@@ -96,7 +96,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [isLoading, setIsLoading] = useState(false);
   const [currentAction, setCurrentAction] = useState<string>("");
   const [activeAgents, setActiveAgents] = useState<string[]>([]);
-  const [reasoningSteps, setReasoningSteps] = useState<Array<{agent: string; status: 'pending' | 'active' | 'complete'; reasoning?: string}>>([]);
+  const [reasoningSteps, setReasoningSteps] = useState<Array<{
+    agent: string; 
+    status: 'pending' | 'active' | 'complete'; 
+    reasoning?: string;
+    challenge?: {
+      challenger: string;
+      issue: string;
+      resolution?: 'accepted' | 'defended' | 'compromised';
+    };
+  }>>([]);
   const [showReasoning, setShowReasoning] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -210,6 +219,73 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         totalSteps,
         timestamp: Date.now()
       }));
+    },
+    onAgentChallenge: (data) => {
+      console.log(`⚠️ ${data.challenger} challenges ${data.target}: ${data.issue}`);
+      toast.warning(`${getAgentName(data.challenger)} raised a concern`, {
+        description: data.issue
+      });
+      
+      // Update reasoning steps to show challenge
+      setReasoningSteps(prev => prev.map(step => 
+        step.agent === data.target
+          ? { 
+              ...step, 
+              challenge: {
+                challenger: data.challenger,
+                issue: data.issue
+              }
+            }
+          : step
+      ));
+    },
+    onAgentRevised: (data) => {
+      console.log(`✅ ${data.agent} revised design based on ${data.challenger} feedback`);
+      toast.success(`${getAgentName(data.agent)} updated design`, {
+        description: data.agentResponse
+      });
+      
+      // Update challenge resolution
+      setReasoningSteps(prev => prev.map(step => 
+        step.agent === data.agent && step.challenge
+          ? { 
+              ...step, 
+              challenge: { ...step.challenge, resolution: 'accepted' }
+            }
+          : step
+      ));
+    },
+    onAgentDefended: (data) => {
+      console.log(`🛡️ ${data.agent} defended design against ${data.challenger}`);
+      toast.info(`${getAgentName(data.agent)} maintained design`, {
+        description: data.agentResponse
+      });
+      
+      // Update challenge resolution
+      setReasoningSteps(prev => prev.map(step => 
+        step.agent === data.agent && step.challenge
+          ? { 
+              ...step, 
+              challenge: { ...step.challenge, resolution: 'defended' }
+            }
+          : step
+      ));
+    },
+    onAgentConsensus: (data) => {
+      console.log(`🤝 ${data.agent} and ${data.challenger} reached consensus`);
+      toast.success(`Design consensus reached`, {
+        description: data.agentResponse
+      });
+      
+      // Update challenge resolution
+      setReasoningSteps(prev => prev.map(step => 
+        step.agent === data.agent && step.challenge
+          ? { 
+              ...step, 
+              challenge: { ...step.challenge, resolution: 'compromised' }
+            }
+          : step
+      ));
     },
     onPlan: (agents, complexity) => {
       console.log('Agent plan:', agents, complexity);

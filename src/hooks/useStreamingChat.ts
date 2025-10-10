@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 
 interface StreamChunk {
-  type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error' | 'agent_skipped' | 'question_analysis' | 'confirmation_required' | 'agent_thinking';
+  type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error' | 'agent_skipped' | 'question_analysis' | 'confirmation_required' | 'agent_thinking' | 'agent_challenge' | 'agent_revised' | 'agent_defended' | 'agent_consensus' | 'validation_warning';
   content?: string;
   data?: any;
   agent?: string;
@@ -20,6 +20,16 @@ interface StreamChunk {
   confirmationId?: string;
   questionAnalysis?: any;
   criticalMissing?: string[];
+  challenger?: string;
+  target?: string;
+  issue?: string;
+  recommendation?: string;
+  severity?: string;
+  regulation?: string;
+  revisedOutput?: string;
+  reasoning?: string;
+  agentResponse?: string;
+  warnings?: string[];
 }
 
 interface Message {
@@ -47,6 +57,11 @@ interface UseStreamingChatOptions {
   onQuestionAnalysis?: (data: any) => void;
   onConfirmationRequired?: (data: any) => void;
   onAgentThinking?: (agent: string, message: string, step: number, totalSteps: number) => void;
+  onAgentChallenge?: (data: any) => void;
+  onAgentRevised?: (data: any) => void;
+  onAgentDefended?: (data: any) => void;
+  onAgentConsensus?: (data: any) => void;
+  onValidationWarning?: (data: any) => void;
 }
 
 export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
@@ -282,7 +297,7 @@ signal: controller.signal
                       options.onAgentThinking?.(
                         chunk.agent, 
                         chunk.message, 
-                        chunk.step || 1, 
+                        chunk.step || 1,
                         chunk.totalSteps || 1
                       );
                     }
@@ -314,6 +329,61 @@ signal: controller.signal
                       activeAgents = chunk.data.agents;
                       options.onAgentUpdate?.(activeAgents);
                     }
+                    break;
+
+                  case 'agent_challenge':
+                    // Inter-agent challenge raised
+                    options.onAgentChallenge?.({
+                      challenger: chunk.challenger,
+                      target: chunk.target,
+                      issue: chunk.issue,
+                      recommendation: chunk.recommendation,
+                      severity: chunk.severity,
+                      regulation: chunk.regulation
+                    });
+                    break;
+
+                  case 'agent_revised':
+                    // Agent accepted challenge and revised output
+                    options.onAgentRevised?.({
+                      agent: chunk.agent,
+                      challenger: chunk.challenger,
+                      issue: chunk.issue,
+                      revisedOutput: chunk.revisedOutput,
+                      reasoning: chunk.reasoning,
+                      agentResponse: chunk.agentResponse
+                    });
+                    break;
+
+                  case 'agent_defended':
+                    // Agent defended original design
+                    options.onAgentDefended?.({
+                      agent: chunk.agent,
+                      challenger: chunk.challenger,
+                      issue: chunk.issue,
+                      reasoning: chunk.reasoning,
+                      agentResponse: chunk.agentResponse
+                    });
+                    break;
+
+                  case 'agent_consensus':
+                    // Agents reached compromise
+                    options.onAgentConsensus?.({
+                      agent: chunk.agent,
+                      challenger: chunk.challenger,
+                      issue: chunk.issue,
+                      revisedOutput: chunk.revisedOutput,
+                      reasoning: chunk.reasoning,
+                      agentResponse: chunk.agentResponse
+                    });
+                    break;
+
+                  case 'validation_warning':
+                    // Non-critical validation warnings
+                    options.onValidationWarning?.({
+                      agent: chunk.agent,
+                      warnings: chunk.warnings
+                    });
                     break;
 
                   case 'error':
