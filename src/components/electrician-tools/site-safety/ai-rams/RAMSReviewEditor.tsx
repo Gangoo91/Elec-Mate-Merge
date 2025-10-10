@@ -143,8 +143,33 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     }
   };
 
+  const handleGenerateCombinedRAMS = async () => {
+    setIsGenerating(true);
+    try {
+      const { generateCombinedRAMSPDF } = await import('@/utils/rams-combined-pdf');
+      await generateCombinedRAMSPDF(ramsData, methodData as MethodStatementData, {
+        companyName: methodData.contractor || 'Professional Electrical Services',
+        documentReference: `RAMS-${Date.now()}`
+      });
+
+      toast({
+        title: 'Combined RAMS Generated',
+        description: 'Your complete RAMS document has been downloaded.'
+      });
+    } catch (error) {
+      console.error('Error generating combined RAMS:', error);
+      toast({
+        title: 'Generation Failed',
+        description: 'Failed to generate combined RAMS.',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   return (
-    <div className="space-y-5 md:space-y-6">
+    <div className="space-y-5 md:space-y-6 pb-safe">
       <Card className="border-elec-yellow/20 shadow-md bg-elec-grey">
         <CardHeader className="pb-5">
           <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 text-foreground">
@@ -180,35 +205,35 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-14 md:h-12 bg-elec-grey/80">
+            <TabsList className="grid w-full grid-cols-2 h-14 bg-elec-grey/80">
               <TabsTrigger value="rams" className="text-base md:text-base font-semibold">Risk Assessment</TabsTrigger>
               <TabsTrigger value="method" className="text-base md:text-base font-semibold">Method Statement</TabsTrigger>
             </TabsList>
 
             <TabsContent value="rams" className="space-y-5 mt-6">
               {/* Project Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5">
                 <div>
-                  <label className="text-base md:text-sm font-semibold text-elec-light tracking-wide">Project Name</label>
+                  <label className="text-lg sm:text-base md:text-sm font-semibold text-elec-light tracking-wide">Project Name</label>
                   <Input
                     value={ramsData.projectName}
                     onChange={(e) => setRamsData(prev => ({ ...prev, projectName: e.target.value }))}
-                    className="mt-2 h-14 text-base bg-elec-grey border-elec-yellow/20 text-foreground font-medium"
+                    className="mt-2 h-14 sm:h-12 text-base sm:text-sm bg-elec-grey border-elec-yellow/20 text-foreground font-medium"
                   />
                 </div>
                 <div>
-                  <label className="text-base md:text-sm font-semibold text-elec-light tracking-wide">Location</label>
+                  <label className="text-lg sm:text-base md:text-sm font-semibold text-elec-light tracking-wide">Location</label>
                   <Input
                     value={ramsData.location}
                     onChange={(e) => setRamsData(prev => ({ ...prev, location: e.target.value }))}
-                    className="mt-2 h-14 text-base bg-elec-grey border-elec-yellow/20 text-foreground font-medium"
+                    className="mt-2 h-14 sm:h-12 text-base sm:text-sm bg-elec-grey border-elec-yellow/20 text-foreground font-medium"
                   />
                 </div>
               </div>
 
               {/* Risks */}
               <div className="space-y-4">
-                <h4 className="text-lg md:text-base font-bold text-foreground flex items-center gap-2.5 tracking-tight leading-tight">
+                <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5 tracking-tight leading-tight">
                   <AlertTriangle className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
                   Identified Risks ({ramsData.risks.length})
                 </h4>
@@ -217,7 +242,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <Card key={risk.id} className="border-primary/20 bg-card/40">
                     <CardContent className="pt-4">
                       <div className="space-y-3">
-                        <div className="flex items-start justify-between gap-2">
+                        <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-2">
                           <Input
                             value={risk.hazard}
                             onChange={(e) => updateRisk(risk.id, { hazard: e.target.value })}
@@ -287,14 +312,34 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 ))}
               </div>
 
-              <Button
-                onClick={handleGenerateRAMSPDF}
-                disabled={isGenerating}
-                className="w-full h-12 md:h-auto bg-primary text-primary-foreground hover:bg-primary/90 text-base font-semibold"
-              >
-                <Download className="h-5 w-5 mr-2" />
-                {isGenerating ? 'Generating...' : 'Download Risk Assessment PDF'}
-              </Button>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pb-safe">
+                <Button
+                  onClick={handleGenerateRAMSPDF}
+                  disabled={isGenerating}
+                  className="h-14 sm:h-12 bg-primary text-primary-foreground hover:bg-primary/90 text-lg sm:text-base font-semibold"
+                >
+                  <Download className="h-5 w-5 mr-2" />
+                  Risk Assessment
+                </Button>
+                
+                <Button
+                  onClick={handleGenerateMethodPDF}
+                  disabled={isGenerating}
+                  className="h-14 sm:h-12 bg-primary text-primary-foreground hover:bg-primary/90 text-lg sm:text-base font-semibold"
+                >
+                  <Download className="h-5 w-5 mr-2" />
+                  Method Statement
+                </Button>
+                
+                <Button
+                  onClick={handleGenerateCombinedRAMS}
+                  disabled={isGenerating}
+                  className="h-14 sm:h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-lg sm:text-base font-bold"
+                >
+                  <Download className="h-5 w-5 mr-2" />
+                  Combined RAMS
+                </Button>
+              </div>
             </TabsContent>
 
             <TabsContent value="method" className="space-y-4 mt-6">
@@ -371,14 +416,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 ))}
               </div>
 
-              <Button
-                onClick={handleGenerateMethodPDF}
-                disabled={isGenerating}
-                className="w-full h-12 md:h-auto bg-primary text-primary-foreground hover:bg-primary/90 text-base font-semibold"
-              >
-                <Download className="h-5 w-5 mr-2" />
-                {isGenerating ? 'Generating...' : 'Download Method Statement PDF'}
-              </Button>
             </TabsContent>
           </Tabs>
         </CardContent>

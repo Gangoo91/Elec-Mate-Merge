@@ -619,7 +619,7 @@ async function handleConversationalMode(
                 data: { 
                   error: errorContext.message,
                   errorType: errorContext.errorType,
-                  context: errorContext
+                  context: errorContext,
                 }
               })}\n\n`;
               // WAVE 1 FIX: Use queue instead of direct enqueue

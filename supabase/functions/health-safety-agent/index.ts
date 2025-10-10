@@ -98,6 +98,13 @@ serve(async (req) => {
     const getScaleSpecificPrompt = (scale: 'domestic' | 'commercial' | 'industrial') => {
       const basePrompt = `You are a Level 3 Health & Safety Officer conducting a thorough risk assessment.
 
+**CRITICAL: ALL OUTPUT MUST BE IN UK ENGLISH**
+- Use UK spellings: analysing (not analyzing), realise (not realize), categorise (not categorize), minimise (not minimize)
+- Use UK terminology: spillage (not spill), tap (not faucet), pavement (not sidewalk), metre (not meter), labour (not labor)
+- Use UK measurements: metres (not meters), litres (not liters)
+- Use UK phrases: "whilst" (not "while"), "amongst" (not "among")
+- Reference UK standards: BS 7671, BS EN ISO, HSE guidance
+
 THINK LIKE A RISK ASSESSOR - WALK THROUGH THE JOB MENTALLY:
 - What could go wrong at EVERY stage?
 - What environmental factors apply? (weather, confined spaces, public access)
@@ -139,6 +146,9 @@ MANDATORY COVERAGE:
 - Parking/access to residential street
 - Neighbour considerations
 
+**MANDATORY MINIMUM OUTPUT: 5 HAZARDS, 5 METHOD STEPS**
+If you provide fewer than 5 hazards or 5 method steps, the assessment will be REJECTED.
+
 OUTPUT: 5-7 SPECIFIC HAZARDS
 Risk ratings typically: Low-Medium (customer comfort & property protection priority)
 
@@ -171,6 +181,9 @@ ${circuitDetails}`;
 - Multiple stakeholders (building manager, tenants, security)
 - Compliance documentation (method statements, permits to work)
 - Disabled access considerations
+
+**MANDATORY MINIMUM OUTPUT: 7 HAZARDS, 7 METHOD STEPS**
+If you provide fewer than 7 hazards or 7 method steps, the assessment will be REJECTED.
 
 OUTPUT: 7-10 SPECIFIC HAZARDS
 Risk ratings typically: Medium-High (public liability & business disruption)
@@ -206,6 +219,9 @@ ${circuitDetails}`;
 - Multiple trade coordination (mechanical, civils, process engineers)
 - Permit to Work systems (hot work, confined space, isolation permits)
 - Environmental controls (spillage, emissions, noise at boundary)
+
+**MANDATORY MINIMUM OUTPUT: 10 HAZARDS, 10 METHOD STEPS**
+If you provide fewer than 10 hazards or 10 method steps, the assessment will be REJECTED.
 
 OUTPUT: 10-15 SPECIFIC HAZARDS
 Risk ratings typically: High-Critical (major incident potential, regulatory scrutiny)
@@ -376,8 +392,80 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
       throw new Error('No tool call from AI');
     }
 
-    const parsedResponse = JSON.parse(toolCall.function.arguments);
+    let parsedResponse = JSON.parse(toolCall.function.arguments);
     console.log('✅ Successfully parsed structured output with', parsedResponse.riskAssessment.hazards.length, 'hazards');
+
+    // UK English enforcement function
+    const enforceUKEnglish = (text: string): string => {
+      if (!text) return text;
+      const americanToUK: Record<string, string> = {
+        'analyzing': 'analysing', 'analyze': 'analyse',
+        'minimizing': 'minimising', 'minimize': 'minimise',
+        'organizing': 'organising', 'organize': 'organise',
+        'realizing': 'realising', 'realize': 'realise',
+        'meter': 'metre', 'meters': 'metres',
+        'liter': 'litre', 'liters': 'litres',
+        'color': 'colour', 'labor': 'labour',
+        'while': 'whilst', 'among': 'amongst'
+      };
+      
+      let ukText = text;
+      Object.entries(americanToUK).forEach(([us, uk]) => {
+        ukText = ukText.replace(new RegExp(`\\b${us}\\b`, 'gi'), (match) => {
+          if (match === match.toUpperCase()) return uk.toUpperCase();
+          if (match[0] === match[0].toUpperCase()) return uk.charAt(0).toUpperCase() + uk.slice(1);
+          return uk;
+        });
+      });
+      return ukText;
+    };
+
+    // Apply UK English to all text fields
+    parsedResponse.response = enforceUKEnglish(parsedResponse.response || '');
+    parsedResponse.riskAssessment.hazards = parsedResponse.riskAssessment.hazards.map((h: any) => ({
+      ...h,
+      hazard: enforceUKEnglish(h.hazard),
+      controls: h.controls.map(enforceUKEnglish)
+    }));
+    parsedResponse.requiredPPE = parsedResponse.requiredPPE.map(enforceUKEnglish);
+    parsedResponse.methodStatement = parsedResponse.methodStatement.map(enforceUKEnglish);
+    parsedResponse.emergencyProcedures = parsedResponse.emergencyProcedures.map(enforceUKEnglish);
+
+    // Validate minimum hazards and steps
+    const minHazards = jobScale === 'domestic' ? 5 : jobScale === 'commercial' ? 7 : 10;
+    const minSteps = minHazards;
+
+    if (parsedResponse.riskAssessment.hazards.length < minHazards) {
+      console.warn(`⚠️ Only ${parsedResponse.riskAssessment.hazards.length} hazards generated, expected ${minHazards}. Padding with generic hazards.`);
+      
+      const genericHazards = [
+        { hazard: "Electric shock from live conductors", likelihood: 3, severity: 5, riskRating: 15, controls: ["Safe isolation to BS 7671", "Voltage testing to GS38", "Lock-off devices"], residualRisk: 6 },
+        { hazard: "Manual handling injuries from cable drums and equipment", likelihood: 2, severity: 3, riskRating: 6, controls: ["Lifting assessment before moving items", "Two-person lift for heavy equipment", "Use trolleys and mechanical aids"], residualRisk: 3 },
+        { hazard: "Falls from height during installation work", likelihood: 2, severity: 5, riskRating: 10, controls: ["Platform stepladder for work below 2m", "Harness and anchor if above 2m", "Clear area below work zone"], residualRisk: 4 },
+        { hazard: "Contact with hidden services when drilling or chasing", likelihood: 2, severity: 4, riskRating: 8, controls: ["Cable detector scan before drilling", "Consult building drawings if available", "Drill at safe angles and depths"], residualRisk: 3 },
+        { hazard: "Dust and debris inhalation during cutting operations", likelihood: 3, severity: 2, riskRating: 6, controls: ["Dust extraction equipment", "FFP3 respirator mask", "Dampen surfaces before cutting"], residualRisk: 2 }
+      ];
+      
+      whilst (parsedResponse.riskAssessment.hazards.length < minHazards) {
+        parsedResponse.riskAssessment.hazards.push(genericHazards[parsedResponse.riskAssessment.hazards.length % genericHazards.length]);
+      }
+    }
+
+    if (parsedResponse.methodStatement.length < minSteps) {
+      console.warn(`⚠️ Only ${parsedResponse.methodStatement.length} method steps generated, expected ${minSteps}. Padding with generic steps.`);
+      
+      const genericSteps = [
+        "Obtain necessary permits and notify building management or homeowner of work schedule",
+        "Establish safe working area with barriers, signage, and dust protection",
+        "Test for dead using approved voltage indicator and apply lock-off devices",
+        "Install circuit protection and cable runs according to BS 7671 requirements",
+        "Complete testing, inspection, and certification to BS 7671 standards"
+      ];
+      
+      whilst (parsedResponse.methodStatement.length < minSteps) {
+        parsedResponse.methodStatement.push(genericSteps[parsedResponse.methodStatement.length % genericSteps.length]);
+      }
+    }
 
     // Ensure structured output with ACOP citations
     const structuredResponse = {
