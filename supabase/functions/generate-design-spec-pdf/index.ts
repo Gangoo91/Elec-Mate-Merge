@@ -189,27 +189,45 @@ function mapCircuitsToTemplate(designData: any, planData: any): any[] {
     circuit_number: idx + 1,
     circuit_name: circuit.name || `Circuit ${idx + 1}`,
     load_type: circuit.loadType || 'General',
-    total_load_kw: (circuit.loadPower || 0) / 1000,
+    total_load_kw: ((circuit.load || circuit.loadPower || 0) / 1000).toFixed(2),
     cable_length: circuit.cableLength || 0,
-    ib: circuit.calculations?.Ib || 0,
-    protection: `${circuit.protectionDevice?.rating || 'TBC'}A Type ${circuit.protectionDevice?.curve || 'B'} MCB`,
-    cable_size: `${circuit.cableSize}mm²`,
-    cable_spec: `${circuit.cableSize}mm² twin & earth (6242Y)`,
-    table_ref: 'Table 4D5',
-    it: circuit.calculations?.IzTabulated || 0,
-    ca: circuit.calculations?.correctionFactors?.temperature || 1.0,
-    cg: circuit.calculations?.correctionFactors?.grouping || 1.0,
-    iz: circuit.calculations?.Iz || 0,
-    vd_percent: circuit.calculations?.voltageDrop?.percent || 0,
-    vd_volts: circuit.calculations?.voltageDrop?.volts || 0,
-    vd_max: planData?.installationType === 'domestic' ? 3 : 5,
-    max_zs: circuit.calculations?.zs?.max || 0,
-    zs_regulation: 'Reg 411.4.4',
-    compliance_status: circuit.calculations?.zs?.compliant && circuit.calculations?.voltageDrop?.compliant ? 'pass' : 'review',
-    rcd_rating: circuit.rcdProtected ? `${circuit.rcdRating}mA` : '',
-    rcd_reason: circuit.rcdProtected ? 'Additional protection required' : '',
-    reg_1: 'Reg 433.1 - Overload protection satisfied',
-    reg_2: `Reg 525 - Voltage drop ${circuit.calculations?.voltageDrop?.compliant ? 'within limits' : 'exceeds limits'}`,
-    reg_3: `Reg 411.3.2 - Earth fault protection ${circuit.calculations?.zs?.compliant ? 'adequate' : 'requires review'}`,
+    
+    // Design current & protection
+    ib: (circuit.calculations?.Ib || 0).toFixed(1),
+    in: circuit.calculations?.In || circuit.protectionDevice?.rating || 0,
+    protection: circuit.protection || `${circuit.calculations?.In || circuit.protectionDevice?.rating || 'TBC'}A Type ${circuit.protectionDevice?.curve || 'B'} MCB`,
+    
+    // Cable specifications
+    cable_size: (circuit.cableSize || '').replace('mm²', ''),
+    cable_spec: circuit.cableSpec || `${circuit.cableSize || 'TBC'} twin & earth (6242Y)`,
+    table_ref: circuit.calculations?.tableRef || 'Table 4D5',
+    
+    // Correction factors & capacity
+    it: (circuit.calculations?.IzTabulated || circuit.calculations?.Iz || 0).toFixed(1),
+    ca: (circuit.calculations?.correctionFactors?.Ca || 1.0).toFixed(2),
+    cg: (circuit.calculations?.correctionFactors?.Cg || 1.0).toFixed(2),
+    iz: (circuit.calculations?.Iz || 0).toFixed(1),
+    equation: circuit.calculations?.equation || `Iz = It × Ca × Cg`,
+    
+    // Voltage drop
+    vd_percent: (circuit.calculations?.voltageDrop?.percent || 0).toFixed(2),
+    vd_volts: (circuit.calculations?.voltageDrop?.volts || 0).toFixed(2),
+    vd_max: circuit.calculations?.voltageDrop?.max || (planData?.installationType === 'domestic' ? 3 : 5),
+    
+    // Earth fault loop impedance
+    max_zs: (circuit.calculations?.zs?.max || 0).toFixed(2),
+    zs_regulation: circuit.calculations?.zs?.regulation || 'Table 41.3',
+    
+    // Compliance
+    compliance_status: circuit.complianceStatus || (circuit.calculations?.zs?.compliant && circuit.calculations?.voltageDrop?.compliant ? 'pass' : 'review'),
+    
+    // RCD
+    rcd_rating: circuit.rcdRequirements?.rating || (circuit.rcdProtected ? `${circuit.rcdRating || 30}mA` : ''),
+    rcd_reason: circuit.rcdRequirements?.reason || (circuit.rcdProtected ? 'Additional protection required' : ''),
+    
+    // Regulations (3 bullets) - use from designer or fallback
+    reg_1: circuit.regulations?.[0] || 'Reg 433.1 - Overload protection: Ib ≤ In ≤ Iz satisfied',
+    reg_2: circuit.regulations?.[1] || `Reg 525 - Voltage drop ${circuit.calculations?.voltageDrop?.compliant ? 'within limits' : 'exceeds limits'}`,
+    reg_3: circuit.regulations?.[2] || `Reg 411.3.2 - Earth fault protection ${circuit.calculations?.zs?.compliant ? 'adequate' : 'requires review'}`,
   }));
 }

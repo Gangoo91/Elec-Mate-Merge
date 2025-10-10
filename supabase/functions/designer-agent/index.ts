@@ -297,7 +297,7 @@ For EACH circuit above, provide:
 - RCD requirements
 - Compliance statement
 
-FORMAT AS JSON:
+FORMAT AS JSON (EXACTLY AS SHOWN - ALL FIELDS REQUIRED):
 {
   "circuits": [
     {
@@ -306,15 +306,43 @@ FORMAT AS JSON:
       "loadType": "ring-main",
       "load": 7360,
       "cableSize": "2.5mm²",
+      "cableLength": 20,
+      "cableSpec": "2.5mm² twin & earth (6242Y)",
       "protection": "32A Type B MCB",
       "calculations": {
         "Ib": 28.5,
         "In": 32,
         "Iz": 27.0,
-        "voltageDrop": { "volts": 3.2, "percent": 1.39, "compliant": true },
-        "zs": { "calculated": 0.68, "max": 1.37, "compliant": true }
+        "IzTabulated": 27.0,
+        "equation": "Iz = It × Ca × Cg = 27.0A × 1.0 × 1.0 = 27.0A",
+        "tableRef": "Table 4D5",
+        "correctionFactors": {
+          "Ca": 1.0,
+          "Cg": 1.0
+        },
+        "voltageDrop": { 
+          "volts": 3.2, 
+          "percent": 1.39,
+          "max": 3.0,
+          "compliant": true 
+        },
+        "zs": { 
+          "calculated": 0.68, 
+          "max": 1.37,
+          "regulation": "Table 41.3",
+          "compliant": true 
+        }
       },
-      "compliance": "Reg 433.1 satisfied (Ib ≤ In ≤ Iz)"
+      "rcdRequirements": {
+        "rating": "30mA",
+        "reason": "Socket circuit requires 30mA RCD (Reg 411.3.3)"
+      },
+      "regulations": [
+        "Reg 433.1 - Overload protection: Ib ≤ In ≤ Iz satisfied",
+        "Reg 525 - Voltage drop within permitted limits",
+        "Reg 411.3.3 - 30mA RCD protection provided"
+      ],
+      "complianceStatus": "pass"
     }
   ],
   "totalLoad": 35500,
