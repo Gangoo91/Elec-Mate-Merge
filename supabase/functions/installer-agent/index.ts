@@ -456,6 +456,84 @@ EXAMPLE PHASES:
       structuredData = JSON.parse(toolCall.function.arguments);
     }
     
+    // PHASE 2: Build Installer reasoning
+    const installationMethod = currentDesign?.installationMethod || 'clipped direct';
+    
+    const reasoningSteps = [
+      {
+        step: 'Installation method selection',
+        reasoning: `Selected ${installationMethod} based on circuit location and cable type`,
+        timestamp: new Date().toISOString()
+      },
+      {
+        step: 'Tool and equipment planning',
+        reasoning: 'Compiled comprehensive tool list based on installation method and cable specifications',
+        timestamp: new Date().toISOString()
+      },
+      {
+        step: 'Installation sequence planning',
+        reasoning: 'Ordered tasks logically: isolation → cable routing → termination → testing',
+        timestamp: new Date().toISOString()
+      },
+      {
+        step: 'Quality checkpoints',
+        reasoning: 'Identified critical inspection points during installation process',
+        timestamp: new Date().toISOString()
+      }
+    ];
+
+    const regulationsConsulted = [
+      {
+        section: '522',
+        title: 'Selection and erection of wiring systems',
+        relevance: 'Requirements for cable installation methods',
+        source: 'BS 7671:2018+A2:2022'
+      },
+      {
+        section: '526',
+        title: 'Electrical connections',
+        relevance: 'Standards for conductor terminations',
+        source: 'BS 7671:2018+A2:2022'
+      },
+      {
+        section: '134',
+        title: 'Good workmanship and proper materials',
+        relevance: 'General installation quality requirements',
+        source: 'BS 7671:2018+A2:2022'
+      }
+    ];
+
+    const assumptionsMade = [];
+    const msgLower = userMessage.toLowerCase();
+
+    if (!msgLower.includes('outdoor') && !msgLower.includes('indoor') && !msgLower.includes('underground')) {
+      assumptionsMade.push({
+        parameter: 'Installation environment',
+        assumed: 'Standard indoor installation',
+        reason: 'Not specified in request',
+        impact: 'Affects cable type and mechanical protection requirements'
+      });
+    }
+
+    // Build citations from RAG
+    const citations = [];
+    if (installationKnowledge && installationKnowledge.length > 0) {
+      citations.push(...installationKnowledge.slice(0, 5).map((item: any) => ({
+        source: item.source || 'Installation Knowledge Base',
+        section: item.topic,
+        title: item.topic,
+        content: item.content?.slice(0, 150) + '...',
+        relevance: item.similarity,
+        type: 'knowledge'
+      })));
+    }
+
+    // Add to structuredData
+    structuredData.reasoningSteps = reasoningSteps;
+    structuredData.regulationsConsulted = regulationsConsulted;
+    structuredData.assumptionsMade = assumptionsMade;
+    structuredData.citations = citations;
+    
     logger.info('Installation guidance generated successfully', { requestId });
 
     return new Response(JSON.stringify({
@@ -463,7 +541,11 @@ EXAMPLE PHASES:
       structuredData: {
         installationSteps: structuredData.installationSteps || [],
         supportIntervals: structuredData.supportIntervals || "",
-        specialRequirements: structuredData.specialRequirements || []
+        specialRequirements: structuredData.specialRequirements || [],
+        reasoningSteps: structuredData.reasoningSteps || [],
+        regulationsConsulted: structuredData.regulationsConsulted || [],
+        assumptionsMade: structuredData.assumptionsMade || [],
+        citations: structuredData.citations || []
       },
       confidence: structuredData.confidence || 0.90
     }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });

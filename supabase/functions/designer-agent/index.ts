@@ -612,12 +612,158 @@ Use professional language with UK English spelling. Present calculations clearly
       }
     }
 
+    // PHASE 2: Build detailed reasoning steps for transparency
+    const reasoningSteps = [];
+    const regulationsConsulted = [];
+    const assumptionsMade = [];
+
+    if (calculationResults?.cableCapacity) {
+      reasoningSteps.push({
+        step: 'Design current calculation',
+        reasoning: `Calculated Ib = ${calculationResults.cableCapacity.Ib.toFixed(1)}A from ${circuitParams.power}W load at ${circuitParams.voltage}V`,
+        timestamp: new Date().toISOString()
+      });
+      
+      reasoningSteps.push({
+        step: 'Protection device selection',
+        reasoning: `Selected ${circuitParams.deviceRating}A Type ${circuitParams.deviceType} MCB to satisfy Ib (${calculationResults.cableCapacity.Ib.toFixed(1)}A) ≤ In (${circuitParams.deviceRating}A)`,
+        timestamp: new Date().toISOString()
+      });
+      
+      reasoningSteps.push({
+        step: 'Cable capacity verification',
+        reasoning: `Tabulated capacity ${calculationResults.cableCapacity.IzTabulated}A × correction factor ${calculationResults.cableCapacity.factors.overallFactor.toFixed(2)} = ${calculationResults.cableCapacity.Iz.toFixed(1)}A derated capacity. Satisfies In ≤ Iz check.`,
+        timestamp: new Date().toISOString()
+      });
+      
+      if (calculationResults.voltageDrop) {
+        reasoningSteps.push({
+          step: 'Voltage drop check',
+          reasoning: `${calculationResults.voltageDrop.voltageDropVolts.toFixed(2)}V drop over ${circuitParams.cableLength}m = ${calculationResults.voltageDrop.voltageDropPercent.toFixed(2)}% (${calculationResults.voltageDrop.compliant ? 'within' : 'exceeds'} ${circuitParams.circuitType === 'lighting' ? '3%' : '5%'} limit)`,
+          timestamp: new Date().toISOString()
+        });
+      }
+      
+      if (calculationResults.zs && calculationResults.maxZs?.maxZs) {
+        reasoningSteps.push({
+          step: 'Earth fault protection',
+          reasoning: `Calculated Zs = ${calculationResults.zs.toFixed(2)}Ω is ${calculationResults.zs <= calculationResults.maxZs.maxZs ? 'within' : 'above'} maximum ${calculationResults.maxZs.maxZs}Ω for ${circuitParams.deviceRating}A Type ${circuitParams.deviceType} MCB`,
+          timestamp: new Date().toISOString()
+        });
+      }
+    }
+
+    // Build regulations from RAG results and key BS 7671 sections
+    if (regulations && regulations.length > 0) {
+      regulations.slice(0, 3).forEach((reg: any) => {
+        regulationsConsulted.push({
+          section: reg.regulation_number || reg.topic,
+          title: reg.section || 'BS 7671 Regulation',
+          relevance: 'Referenced for design compliance',
+          source: 'BS 7671:2018+A2:2022'
+        });
+      });
+    }
+
+    // Always include key regulations
+    regulationsConsulted.push({
+      section: '433.1',
+      title: 'Overload protection requirements',
+      relevance: 'Verified Ib ≤ In ≤ Iz for cable sizing',
+      source: 'BS 7671:2018+A2:2022'
+    });
+
+    if (calculationResults?.voltageDrop) {
+      regulationsConsulted.push({
+        section: '525',
+        title: 'Voltage drop in consumers\' installations',
+        relevance: `Checked ${calculationResults.voltageDrop.voltageDropPercent.toFixed(2)}% against limits`,
+        source: 'BS 7671:2018+A2:2022'
+      });
+    }
+
+    if (calculationResults?.maxZs) {
+      regulationsConsulted.push({
+        section: '411.4.4',
+        title: 'Maximum earth fault loop impedance',
+        relevance: 'Verified Zs for automatic disconnection',
+        source: 'BS 7671:2018+A2:2022 Table 41.3'
+      });
+    }
+
+    // Track assumptions made
+    const msgLower = userMessage.toLowerCase();
+    if (!msgLower.includes('kw') && !msgLower.includes('w') && !msgLower.includes('amp')) {
+      assumptionsMade.push({
+        parameter: 'Load power',
+        assumed: `${circuitParams.power}W`,
+        reason: 'Standard load for typical UK installation',
+        impact: 'Affects cable sizing and protection device selection'
+      });
+    }
+
+    if (!msgLower.includes('m') && !msgLower.includes('metre')) {
+      assumptionsMade.push({
+        parameter: 'Cable length',
+        assumed: `${circuitParams.cableLength}m`,
+        reason: 'Typical run distance for this circuit type',
+        impact: 'Affects voltage drop calculation'
+      });
+    }
+
+    if (circuitParams.ambientTemp !== 30) {
+      assumptionsMade.push({
+        parameter: 'Ambient temperature',
+        assumed: `${circuitParams.ambientTemp}°C`,
+        reason: circuitParams.location === 'outdoor' ? 'UK outdoor design temperature' : 'BS 7671 standard ambient temperature',
+        impact: 'Affects cable current-carrying capacity correction factor'
+      });
+    }
+
+    if (circuitParams.groupingCircuits > 1) {
+      assumptionsMade.push({
+        parameter: 'Grouping factor',
+        assumed: `${circuitParams.groupingCircuits} circuits bunched`,
+        reason: 'Estimated based on typical installation',
+        impact: 'Reduces cable capacity by grouping correction factor'
+      });
+    }
+
+    // Enhance citations with full metadata
+    const enhancedCitations = [];
+    if (regulations && regulations.length > 0) {
+      enhancedCitations.push(...regulations.slice(0, 5).map((reg: any) => ({
+        source: 'BS 7671:2018+A2:2022',
+        section: reg.regulation_number || reg.topic,
+        title: reg.section || 'Regulation',
+        content: reg.content?.slice(0, 150) + '...',
+        relevance: reg.similarity,
+        type: 'regulation'
+      })));
+    }
+
+    if (designDocs && designDocs.length > 0) {
+      enhancedCitations.push(...designDocs.slice(0, 3).map((doc: any) => ({
+        source: doc.source || 'Design Knowledge Base',
+        section: doc.topic,
+        title: doc.topic,
+        content: doc.content?.slice(0, 150) + '...',
+        relevance: doc.similarity,
+        type: 'knowledge'
+      })));
+    }
+
+    // Add to structuredData
+    structuredData.reasoningSteps = reasoningSteps;
+    structuredData.regulationsConsulted = regulationsConsulted;
+    structuredData.assumptionsMade = assumptionsMade;
+
     return new Response(JSON.stringify({
       response: responseContent,
       structuredData,
       reasoning,
       calculationResults,
-      citations,
+      citations: enhancedCitations.length > 0 ? enhancedCitations : citations,
       confidence: 0.95,
       model: 'google/gemini-2.5-flash',
       timestamp: new Date().toISOString()

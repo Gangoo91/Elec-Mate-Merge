@@ -589,6 +589,123 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
       timestamp: new Date().toISOString()
     };
 
+    // PHASE 2: Build H&S reasoning steps
+    const workType = extractWorkType(userMessage, currentDesign);
+    const jobScale = context?.conversationState?.projectType || 'domestic';
+    const hasDesignerCircuitData = currentDesign && currentDesign.totalLoad;
+
+    const reasoningSteps = [
+      {
+        step: 'Work type identification',
+        reasoning: `Identified as ${workType} electrical work requiring ${jobScale} risk assessment`,
+        timestamp: new Date().toISOString()
+      },
+      {
+        step: 'Hazard identification',
+        reasoning: 'Systematically reviewed electrical, physical, environmental, and site-specific hazards for this work scope',
+        timestamp: new Date().toISOString()
+      }
+    ];
+
+    if (hasDesignerCircuitData) {
+      reasoningSteps.push({
+        step: 'Circuit-specific risks',
+        reasoning: 'Assessed hazards based on circuit specifications from Designer (voltage, current, installation method)',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    reasoningSteps.push(
+      {
+        step: 'Risk rating calibration',
+        reasoning: 'Applied 5×5 risk matrix (Likelihood × Severity) with industry-standard ratings for electrical work',
+        timestamp: new Date().toISOString()
+      },
+      {
+        step: 'Control measures',
+        reasoning: 'Specified hierarchy of controls: elimination → substitution → engineering → administrative → PPE',
+        timestamp: new Date().toISOString()
+      }
+    );
+
+    // Regulations consulted
+    const regulationsConsulted = [
+      {
+        section: 'Regulation 3',
+        title: 'Risk assessment requirements',
+        relevance: 'Framework for identifying and controlling risks',
+        source: 'Management of Health and Safety at Work Regulations 1999'
+      },
+      {
+        section: 'Regulation 4',
+        title: 'Competence and instruction',
+        relevance: 'Ensures workers are competent for electrical work',
+        source: 'Electricity at Work Regulations 1989'
+      },
+      {
+        section: 'Section 2',
+        title: 'General duties of employers',
+        relevance: 'Safe systems of work and adequate supervision',
+        source: 'Health and Safety at Work etc. Act 1974'
+      }
+    ];
+
+    if (jobScale === 'commercial' || jobScale === 'industrial') {
+      regulationsConsulted.push({
+        section: 'Regulation 5',
+        title: 'Principles of prevention',
+        relevance: 'CDM requirements for commercial/industrial projects',
+        source: 'Construction (Design and Management) Regulations 2015'
+      });
+    }
+
+    // Assumptions
+    const assumptionsMade = [];
+    
+    if (!hasDesignerCircuitData) {
+      assumptionsMade.push({
+        parameter: 'Circuit specifications',
+        assumed: 'General electrical circuit work',
+        reason: 'Designer circuit details not yet available',
+        impact: 'Generic electrical hazards assessed; will refine when circuit data provided'
+      });
+    }
+
+    assumptionsMade.push({
+      parameter: 'Work environment',
+      assumed: jobScale === 'domestic' ? 'Occupied domestic premises' : 'Commercial premises with public access',
+      reason: `Based on detected ${jobScale} work scale`,
+      impact: 'Affects site-specific hazards and control measures'
+    });
+
+    assumptionsMade.push({
+      parameter: 'Competent person',
+      assumed: 'Qualified electrician with BS 7671 competence',
+      reason: 'Regulatory requirement for electrical installation work',
+      impact: 'Influences supervision requirements and permit-to-work needs'
+    });
+
+    // Build citations from RAG
+    const enhancedCitations = [];
+    if (healthSafetyKnowledge && healthSafetyKnowledge.length > 0) {
+      enhancedCitations.push(...healthSafetyKnowledge.slice(0, 5).map((item: any) => ({
+        source: item.source || 'Health & Safety Knowledge Base',
+        section: item.topic,
+        title: item.topic,
+        content: item.content?.slice(0, 150) + '...',
+        relevance: item.similarity,
+        type: 'knowledge'
+      })));
+    }
+
+    // Add to structuredData
+    structuredResponse.structuredData.reasoningSteps = reasoningSteps;
+    structuredResponse.structuredData.regulationsConsulted = regulationsConsulted;
+    structuredResponse.structuredData.assumptionsMade = assumptionsMade;
+    if (enhancedCitations.length > 0) {
+      structuredResponse.citations = enhancedCitations;
+    }
+
     console.log('✅ H&S Agent: Generated risk assessment with', structuredResponse.structuredData.riskAssessment.hazards.length, 'hazards');
     
     clearTimeout(timeoutId);

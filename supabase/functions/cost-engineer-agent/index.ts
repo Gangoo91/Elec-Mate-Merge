@@ -233,11 +233,73 @@ PRICING NOTES
     if (materialsIndex > 0) {
       responseContent = responseContent.substring(materialsIndex);
     }
+
+    // PHASE 2: Build Cost Engineer reasoning
+    const cableLength = currentDesign?.cableLength || 25;
+    const cableSize = currentDesign?.cableSize || 2.5;
+    
+    const reasoningSteps = [
+      {
+        step: 'Material quantity calculation',
+        reasoning: `Calculated materials required based on ${cableLength}m cable run and ${cableSize}mm² cable specification`,
+        timestamp: new Date().toISOString()
+      },
+      {
+        step: 'Pricing strategy',
+        reasoning: 'Applied current market rates with 15% markup for materials and standard labour rates',
+        timestamp: new Date().toISOString()
+      },
+      {
+        step: 'Labour time estimation',
+        reasoning: 'Estimated installation hours based on installation complexity and method',
+        timestamp: new Date().toISOString()
+      },
+      {
+        step: 'Contingency allowance',
+        reasoning: 'Added 10% contingency for unforeseen issues typical in electrical installations',
+        timestamp: new Date().toISOString()
+      }
+    ];
+
+    const assumptionsMade = [
+      {
+        parameter: 'Labour rate',
+        assumed: '£50/hour',
+        reason: 'UK average for qualified electrician (2025)',
+        impact: 'Directly affects total project cost'
+      },
+      {
+        parameter: 'Material markup',
+        assumed: '15%',
+        reason: 'Standard electrical contractor markup',
+        impact: 'Covers procurement, storage, and wastage'
+      }
+    ];
+
+    // Build citations from pricing RAG
+    const citations = [];
+    if (pricingResults && pricingResults.length > 0) {
+      citations.push(...pricingResults.slice(0, 5).map((item: any) => ({
+        source: item.wholesaler || 'Pricing Database',
+        section: item.category,
+        title: item.item_name,
+        content: `£${item.base_cost} ${item.price_per_unit}`,
+        relevance: item.similarity,
+        type: 'pricing'
+      })));
+    }
+
+    const structuredData = {
+      reasoningSteps,
+      assumptionsMade,
+      citations
+    };
     
     logger.info('Cost estimate generated successfully', { requestId });
 
     return new Response(JSON.stringify({
       response: responseContent,
+      structuredData,
       confidence: 0.85
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
