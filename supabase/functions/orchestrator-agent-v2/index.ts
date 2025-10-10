@@ -60,6 +60,81 @@ function extractCircuitCount(message: string): number {
   return 6; // Default
 }
 
+// PHASE 1: Question analysis helper functions
+function extractLoadFromMessage(message: string): number | null {
+  const kwMatch = message.match(/(\d+(?:\.\d+)?)\s*kW/i);
+  if (kwMatch) return parseFloat(kwMatch[1]);
+  
+  const wMatch = message.match(/(\d+(?:\.\d+)?)\s*W/i);
+  if (wMatch) return parseFloat(wMatch[1]) / 1000;
+  
+  const ampMatch = message.match(/(\d+(?:\.\d+)?)\s*A/i);
+  if (ampMatch) {
+    const voltage = extractVoltageFromMessage(message) || 230;
+    return (parseFloat(ampMatch[1]) * voltage) / 1000;
+  }
+  
+  return null;
+}
+
+function extractDistanceFromMessage(message: string): number | null {
+  const match = message.match(/(\d+(?:\.\d+)?)\s*(?:m|metre|meter)s?/i);
+  return match ? parseFloat(match[1]) : null;
+}
+
+function extractEnvironmentFromMessage(message: string): string | null {
+  if (/outdoor|outside|external/i.test(message)) return 'outdoor';
+  if (/indoor|inside|internal/i.test(message)) return 'indoor';
+  if (/buried|underground/i.test(message)) return 'underground';
+  if (/loft|attic|roof\s*space/i.test(message)) return 'loft';
+  return null;
+}
+
+function extractVoltageFromMessage(message: string): number | null {
+  const match = message.match(/(\d+)\s*V/i);
+  if (match) return parseInt(match[1]);
+  
+  if (/3[\s-]?phase|three[\s-]?phase|400V/i.test(message)) return 400;
+  return 230;
+}
+
+function extractPhasesFromMessage(message: string): string {
+  if (/3[\s-]?phase|three[\s-]?phase|400V/i.test(message)) return 'three';
+  if (/single[\s-]?phase|230V|240V/i.test(message)) return 'single';
+  return 'single';
+}
+
+function extractCircuitTypeFromMessage(message: string): string | null {
+  const types: { [key: string]: RegExp } = {
+    'cooker': /cooker|oven|hob/i,
+    'shower': /shower|electric\s*shower/i,
+    'immersion': /immersion|water\s*heater/i,
+    'ev-charging': /ev\s*charg|electric\s*vehicle|car\s*charg/i,
+    'ring-main': /ring\s*main|socket\s*circuit|sockets/i,
+    'lighting': /light|lighting\s*circuit/i,
+    'heater': /heater|heating/i,
+    'motor': /motor|pump/i
+  };
+  
+  for (const [type, regex] of Object.entries(types)) {
+    if (regex.test(message)) return type;
+  }
+  
+  return null;
+}
+
+function identifyMissingInfo(message: string, intentAnalysis: any): string[] {
+  const missing: string[] = [];
+  
+  if (!extractLoadFromMessage(message)) missing.push('Load (kW/Amps)');
+  if (!extractDistanceFromMessage(message)) missing.push('Cable length (metres)');
+  if (!extractEnvironmentFromMessage(message)) missing.push('Installation environment');
+  if (!/mcb|rcbo|rcd|fuse/i.test(message)) missing.push('Protection device preference');
+  if (!/swa|twin.*earth|armoured|conduit|trunking/i.test(message)) missing.push('Cable type/installation method');
+  
+  return missing;
+}
+
 interface OrchestratorRequest {
   messages: Message[];
   currentDesign?: any;
@@ -350,6 +425,34 @@ async function handleConversationalMode(
           message: 'Analysing your request and planning the approach...'
         })}\n\n`;
         await queueStreamWrite(encoder.encode(thinkingEvent));
+
+        // Send question analysis event
+        const questionAnalysisData = {
+          userQuestion: latestMessage,
+          interpretedRequirements: {
+            circuitType: extractCircuitTypeFromMessage(latestMessage),
+            load: extractLoadFromMessage(latestMessage),
+            distance: extractDistanceFromMessage(latestMessage),
+            environment: extractEnvironmentFromMessage(latestMessage),
+            voltage: extractVoltageFromMessage(latestMessage),
+            phases: extractPhasesFromMessage(latestMessage)
+          },
+          missingInfo: identifyMissingInfo(latestMessage, {}),
+          agentPlan: agentPlan.sequence.map((step: any) => ({
+            agent: step.agent,
+            reason: step.reasoning,
+            priority: step.priority
+          })),
+          estimatedComplexity: agentPlan.estimatedComplexity || 'simple',
+          reasoning: agentPlan.reasoning || 'Standard electrical installation approach',
+          timestamp: new Date().toISOString()
+        };
+
+        const analysisEvent = `data: ${JSON.stringify({
+          type: 'question_analysis',
+          data: questionAnalysisData
+        })}\n\n`;
+        await queueStreamWrite(encoder.encode(analysisEvent));
 
         // Send initial event with agent plan
         const planEvent = `data: ${JSON.stringify({
