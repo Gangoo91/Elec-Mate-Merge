@@ -220,18 +220,17 @@ export async function planAgentSequence(
   }
 }
 
-// Helper: Create standard full sequence
+// Helper: Create standard sequence WITHOUT cost-engineer (faster, simpler)
 function createStandardSequence(reasoning: string): AgentPlan {
   return {
     sequence: [
-      { agent: 'designer', priority: 1, reasoning: 'Circuit design and calculations', dependencies: [] },
-      { agent: 'cost-engineer', priority: 2, reasoning: 'Material and labour pricing', dependencies: ['designer'] },
-      { agent: 'installer', priority: 3, reasoning: 'Practical installation guidance', dependencies: ['designer'] },
-      { agent: 'health-safety', priority: 4, reasoning: 'Risk assessment and PPE requirements', dependencies: ['installer'] },
-      { agent: 'commissioning', priority: 5, reasoning: 'Testing and certification', dependencies: [] }
+      { agent: 'designer', priority: 1, reasoning: 'Circuit design and calculations (with cost estimates)', dependencies: [] },
+      { agent: 'installer', priority: 2, reasoning: 'Practical installation guidance', dependencies: ['designer'] },
+      { agent: 'health-safety', priority: 3, reasoning: 'Risk assessment and PPE requirements', dependencies: ['installer'] },
+      { agent: 'commissioning', priority: 4, reasoning: 'Testing and certification', dependencies: [] }
     ],
     reasoning,
-    estimatedComplexity: 'complex' as const
+    estimatedComplexity: 'moderate' as const
   };
 }
 

@@ -56,7 +56,6 @@ interface UseStreamingChatOptions {
   onElapsedTimeUpdate?: (seconds: number) => void;
   onAgentProgress?: (agent: string, status: 'pending' | 'active' | 'complete') => void;
   onQuestionAnalysis?: (data: any) => void;
-  onConfirmationRequired?: (data: any) => void;
   onAgentThinking?: (agent: string, message: string, step: number, totalSteps: number) => void;
   onAgentChallenge?: (data: any) => void;
   onAgentRevised?: (data: any) => void;
@@ -289,17 +288,6 @@ signal: controller.signal
                     }
                     break;
                   
-                  case 'confirmation_required':
-                    // User confirmation required - pass full chunk with confirmationId
-                    options.onConfirmationRequired?.({
-                      ...chunk.data,
-                      confirmationId: chunk.confirmationId,
-                      questionAnalysis: chunk.questionAnalysis,
-                      criticalMissing: chunk.criticalMissing,
-                      message: chunk.message
-                    });
-                    break;
-                  
                   case 'agent_thinking':
                     // Agent is thinking/processing
                     if (chunk.agent && chunk.message) {
@@ -440,158 +428,5 @@ signal: controller.signal
     }
   }, [options]);
 
-  const streamConfirmation = useCallback(async (payload: {
-    confirmationId: string;
-    confirmedAnalysis: any;
-  }) => {
-    setIsStreaming(true);
-    let fullResponse = '';
-    let citations: any[] = [];
-    let activeAgents: string[] = [];
-    let structuredData: any = null;
-
-    const startTime = Date.now();
-    const elapsedInterval = setInterval(() => {
-      const elapsed = Math.floor((Date.now() - startTime) / 1000);
-      options.onElapsedTimeUpdate?.(elapsed);
-    }, 1000);
-
-    try {
-      const FUNCTION_URL = "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/orchestrator-agent-v2?action=confirm";
-
-      const controller = new AbortController();
-      const timeoutMs = 300000; // 5 minutes
-      const timeoutTimer = setTimeout(() => controller.abort(), timeoutMs);
-
-      const response = await fetch(FUNCTION_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'text/event-stream'
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal
-      });
-
-      clearTimeout(timeoutTimer);
-
-      if (!response.ok) {
-        if (response.status === 404) {
-          toast.error('Your confirmation session expired. Please send your message again.');
-          throw new Error('Confirmation session expired');
-        } else if (response.status === 400) {
-          toast.error('Missing confirmation details. Please fill the required fields.');
-          throw new Error('Missing confirmation data');
-        }
-        
-        const serverMessage = await response.text().catch(() => '');
-        toast.error(serverMessage || `Confirmation failed (${response.status})`);
-        throw new Error(serverMessage || 'Confirmation failed');
-      }
-
-      // Handle SSE streaming
-      const reader = response.body?.getReader();
-      if (!reader) throw new Error('No response body');
-
-      const decoder = new TextDecoder();
-      let buffer = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || '';
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6).trim();
-            if (data === '[DONE]') continue;
-
-            try {
-              const chunk: StreamChunk = JSON.parse(data);
-
-              switch (chunk.type) {
-                case 'plan':
-                  if (chunk.agents) {
-                    activeAgents = chunk.agents;
-                    options.onPlan?.(chunk.agents, chunk.data?.complexity || 'simple');
-                  }
-                  break;
-
-                case 'agent_start':
-                  if (chunk.agent) {
-                    options.onAgentStart?.(chunk.agent, chunk.index || 0, chunk.total || 1);
-                    options.onAgentProgress?.(chunk.agent, 'active');
-                  }
-                  break;
-
-                case 'agent_response':
-                  if (chunk.agent && chunk.response) {
-                    fullResponse += (fullResponse ? '\n\n' : '') + chunk.response;
-                    if (chunk.citations) citations.push(...chunk.citations);
-                    if (chunk.structuredData) structuredData = chunk.structuredData;
-                    options.onAgentResponse?.(chunk.agent, chunk.response, chunk.structuredData);
-                  }
-                  break;
-
-                case 'agent_complete':
-                  if (chunk.agent) {
-                    options.onAgentComplete?.(chunk.agent, chunk.nextAgent || null);
-                    options.onAgentProgress?.(chunk.agent, 'complete');
-                  }
-                  break;
-
-                case 'all_agents_complete':
-                  if (chunk.agentOutputs) {
-                    options.onAllAgentsComplete?.(chunk.agentOutputs);
-                  }
-                  break;
-
-                case 'agent_error':
-                  const errorMsg = chunk.data?.error || chunk.content || 'Unknown error';
-                  const agentName = chunk.agent || 'Agent';
-                  toast.error(`${agentName} failed: ${errorMsg}`);
-                  options.onError?.(`${agentName} failed: ${errorMsg}`);
-                  break;
-
-                case 'agent_skipped':
-                  if (chunk.agent) {
-                    const skipReason = chunk.data?.reason || 'Dependency failed';
-                    const deps = chunk.data?.dependencies ? ` (needs: ${chunk.data.dependencies.join(', ')})` : '';
-                    toast.info(`${chunk.agent} skipped: ${skipReason}`);
-                  }
-                  break;
-
-                case 'token':
-                  // Ignore individual tokens for confirmation resume
-                  break;
-
-                case 'error':
-                  throw new Error(chunk.content || 'Stream error');
-              }
-            } catch (e) {
-              console.warn('Failed to parse SSE chunk:', e);
-            }
-          }
-        }
-      }
-
-    } catch (error) {
-      console.error('Confirmation streaming error:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Confirmation failed';
-      options.onError?.(errorMessage);
-      throw error;
-    } finally {
-      clearInterval(elapsedInterval);
-      setIsStreaming(false);
-    }
-  }, [options]);
-
-  return {
-    streamMessage,
-    streamConfirmation,
-    isStreaming
-  };
+  return { streamMessage, isStreaming };
 };

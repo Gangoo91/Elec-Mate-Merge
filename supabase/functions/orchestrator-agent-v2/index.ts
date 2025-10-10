@@ -24,7 +24,6 @@ import {
   reviewChallenge,
   type Challenge 
 } from '../_shared/agent-validation.ts';
-import { cleanupExpiredConfirmations } from './confirmation-handler.ts';
 
 // corsHeaders imported from shared deps
 
@@ -34,23 +33,7 @@ const responseCache = new ResponseCache();
 const agentResultsCache = new Map<string, { data: any; timestamp: number }>();
 const AGENT_CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
-// PRIORITY 1: Pending confirmation sessions (in-memory, 30 min TTL)
-interface ConfirmationSession {
-  confirmationId: string;
-  sessionData: {
-    agentPlan: any;
-    messages: Message[];
-    currentDesign: any;
-    conversationSummary: ConversationSummary;
-    conversationState: ConversationState;
-    latestMessage: string;
-    questionAnalysis: any;
-  };
-  timestamp: number;
-}
-
-const pendingConfirmations = new Map<string, ConfirmationSession>();
-const CONFIRMATION_TTL = 30 * 60 * 1000; // 30 minutes
+// Removed confirmation sessions - direct execution only
 
 // Helper to get from cache with TTL check
 function getFromAgentCache(key: string): any | null {
@@ -170,18 +153,12 @@ interface OrchestratorRequest {
 }
 
 serve(async (req) => {
-if (req.method === 'OPTIONS') {
+  if (req.method === 'OPTIONS') {
     console.log('[orchestrator-v2] CORS preflight');
     return new Response(null, { headers: corsHeaders });
   }
 
-  // PRIORITY 1: Handle confirmation endpoint
-  const url = new URL(req.url);
-  if (url.searchParams.get('action') === 'confirm') {
-    return handleConfirmation(req);
-  }
-
-try {
+  try {
     console.log('[orchestrator-v2] POST start');
     const startTime = Date.now();
     
@@ -486,49 +463,8 @@ async function handleConversationalMode(
         })}\n\n`;
         await queueStreamWrite(encoder.encode(analysisEvent));
         
-        // PRIORITY 1: Check if confirmation required (critical params missing)
-        const criticalMissing = [];
-        if (!questionAnalysisData.interpretedRequirements.load) criticalMissing.push('load');
-        if (!questionAnalysisData.interpretedRequirements.distance) criticalMissing.push('distance');
-        if (!questionAnalysisData.interpretedRequirements.voltage) criticalMissing.push('voltage');
-        
-        if (criticalMissing.length > 0) {
-          // Generate unique confirmation ID
-          const confirmationId = `confirm_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-          
-          // Store session for later resumption
-          pendingConfirmations.set(confirmationId, {
-            confirmationId,
-            sessionData: {
-              agentPlan,
-              messages,
-              currentDesign,
-              conversationSummary,
-              conversationState,
-              latestMessage,
-              questionAnalysis: questionAnalysisData
-            },
-            timestamp: Date.now()
-          });
-          
-          // Cleanup old sessions
-          cleanupExpiredConfirmations();
-          
-          const confirmEvent = `data: ${JSON.stringify({
-            type: 'confirmation_required',
-            confirmationId,
-            questionAnalysis: questionAnalysisData,
-            message: 'Please confirm these assumptions before we proceed',
-            criticalMissing
-          })}\n\n`;
-          await queueStreamWrite(encoder.encode(confirmEvent));
-          
-          console.log(`⏸️ Confirmation required (ID: ${confirmationId}):`, criticalMissing);
-          
-          // Close stream and wait for confirmation
-          controller.close();
-          return;
-        }
+        // Use extracted params or safe defaults - no confirmation needed
+        // Agents will use BS 7671 standard assumptions if params are missing
 
         // Send initial event with agent plan
         const planEvent = `data: ${JSON.stringify({
@@ -547,8 +483,7 @@ async function handleConversationalMode(
           : 'new-installation';
 
         // Build execution groups for parallel processing
-        // CRITICAL: Installer and H&S can run even if Designer struggles (use partial data)
-        // Only Cost-Engineer and Commissioning truly depend on Designer success
+        // Removed cost-engineer for faster, simpler execution
         const executionGroups = workflowType === 'new-installation'
           ? [
               [{ agent: 'designer', dependencies: [] }],
@@ -556,7 +491,6 @@ async function handleConversationalMode(
                 { agent: 'installer', dependencies: [] },      // Can work from user description
                 { agent: 'health-safety', dependencies: [] }   // Can assess based on work type
               ],
-              [{ agent: 'cost-engineer', dependencies: [] }],  // Will state assumptions if no Designer
               [{ agent: 'commissioning', dependencies: ['designer'] }]
             ]
           : [
