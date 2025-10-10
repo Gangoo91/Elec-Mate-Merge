@@ -156,10 +156,10 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
           variant="outline" 
           size="sm" 
           onClick={() => setShowReasoningDrawer(true)}
-          className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10 mt-4"
+          className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10 mt-4 text-xs sm:text-sm"
         >
-          <Brain className="h-3 w-3 mr-2" />
-          View Agent Reasoning & Citations
+          <Brain className="h-3 w-3 mr-1.5 flex-shrink-0" />
+          <span className="truncate">Full Agent Reasoning</span>
         </Button>
       )}
       

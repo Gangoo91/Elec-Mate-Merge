@@ -589,14 +589,14 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     };
 
     // PHASE 2: Build H&S reasoning steps
-    const workType = extractWorkType(userMessage, currentDesign);
-    const jobScale = context?.conversationState?.projectType || 'domestic';
+    // workType already extracted at line 39
+    const hsJobScale = context?.conversationState?.projectType || 'domestic';
     const hasDesignerCircuitData = currentDesign && currentDesign.totalLoad;
 
     const reasoningSteps = [
       {
         step: 'Work type identification',
-        reasoning: `Identified as ${workType} electrical work requiring ${jobScale} risk assessment`,
+        reasoning: `Identified as ${workType} electrical work requiring ${hsJobScale} risk assessment`,
         timestamp: new Date().toISOString()
       },
       {

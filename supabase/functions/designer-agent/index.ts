@@ -796,11 +796,11 @@ function calculateTokenLimit(circuitCount: number, messages: any[]): number {
   return Math.min(baseTokens + (circuitCount * perCircuitTokens), 10000);
 }
 
-function extractCircuitCount(message: string): number {
-  const wayMatch = message.match(/(\d+)[\s-]?way/i);
+function extractCircuitCount(userMessage: string): number {
+  const wayMatch = userMessage.match(/(\d+)[\s-]?way/i);
   if (wayMatch) return parseInt(wayMatch[1]);
   
-  const circuitMatch = message.match(/(\d+)\s+circuits?/i);
+  const circuitMatch = userMessage.match(/(\d+)\s+circuits?/i);
   if (circuitMatch) return parseInt(circuitMatch[1]);
   
   return 6; // Default assumption
