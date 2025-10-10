@@ -466,9 +466,6 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
-      console.error('❌ No tool call in response');
-      throw new Error('No tool call from AI');
-    }
 
     let parsedResponse = JSON.parse(toolCall.function.arguments);
     logger.info('Successfully parsed structured output', { hazards: parsedResponse.riskAssessment.hazards.length, requestId });
