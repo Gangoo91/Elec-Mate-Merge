@@ -37,34 +37,39 @@ export const DesignerCircuitCards = ({ circuits }: { circuits: Circuit[] }) => {
       {circuits.map(circuit => (
         <Card key={circuit.id} className="border-blue-500/20 bg-card/40">
           <CardHeader className="pb-3 px-4 sm:px-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-3">
-              <div className="flex-1">
-                <h4 className="text-base sm:text-lg font-semibold text-foreground">{circuit.name}</h4>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Load: {circuit.load}W ({(circuit.load/1000).toFixed(1)}kW)
-                </p>
-              </div>
-              <div className="flex flex-row sm:flex-col gap-2 flex-wrap">
-                <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/30 text-xs sm:text-sm">
-                  {circuit.protection}
+            <div className="space-y-3">
+              <h4 className="text-xl sm:text-2xl font-bold text-foreground text-center">{circuit.name}</h4>
+              
+              <div className="flex items-center justify-center gap-4 flex-wrap">
+                <Badge className="bg-elec-yellow text-elec-dark text-base sm:text-lg px-4 py-1.5 font-bold">
+                  MCB: {circuit.protection}
                 </Badge>
-                <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/30 text-xs sm:text-sm">
-                  {circuit.cableSize}
-                </Badge>
+                <div className="text-center">
+                  <p className="text-xs text-muted-foreground">Cable Size</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-foreground">{circuit.cableSize}</p>
+                </div>
               </div>
+              
+              <p className="text-sm text-muted-foreground text-center">
+                Load: {circuit.load}W ({(circuit.load/1000).toFixed(1)}kW)
+              </p>
             </div>
           </CardHeader>
           
           <Collapsible open={expandedCircuits.has(circuit.id)}>
-            <CollapsibleTrigger 
-              onClick={() => toggleCircuit(circuit.id)}
-              className="w-full px-4 sm:px-6 py-2 flex items-center justify-between hover:bg-muted/50 transition-colors min-h-[44px]"
-            >
-              <span className="text-sm font-medium text-muted-foreground">
-                View Calculations
-              </span>
-              <ChevronDown className={`h-4 w-4 transition-transform ${expandedCircuits.has(circuit.id) ? 'rotate-180' : ''}`} />
-            </CollapsibleTrigger>
+            <div className="px-4 sm:px-6 pb-3">
+              <CollapsibleTrigger 
+                onClick={() => toggleCircuit(circuit.id)}
+                asChild
+              >
+                <button className="w-full px-4 py-2 flex items-center justify-center gap-2 border border-elec-yellow/30 rounded-lg hover:bg-elec-yellow/10 transition-colors min-h-[44px]">
+                  <span className="text-sm font-medium">
+                    View Working Out
+                  </span>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${expandedCircuits.has(circuit.id) ? 'rotate-180' : ''}`} />
+                </button>
+              </CollapsibleTrigger>
+            </div>
             
             <CollapsibleContent>
               <CardContent className="space-y-3 pt-3 px-4 sm:px-6">

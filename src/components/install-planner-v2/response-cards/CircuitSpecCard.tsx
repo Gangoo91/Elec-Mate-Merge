@@ -141,37 +141,30 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCar
           </Button>
         </div>
 
-        {/* Primary Spec - Editable */}
+        {/* Hero Section - Prominent Design */}
         <div className="space-y-3">
-          <div className="flex items-baseline gap-3 flex-wrap">
-            <div>
-              <p className="text-xs text-muted-foreground">Cable Size</p>
-              {planData ? (
-                <EditableField
-                  label="Cable Size"
-                  value={localData.cableSize || 0}
-                  fieldType="cable"
-                  context={{ planData, currentSpec: localData }}
-                  onValidated={(newValue, validation) => handleFieldUpdate('cableSize', newValue, validation)}
-                />
-              ) : (
-                <p className="text-2xl font-bold text-foreground">{localData.cableSize}mm²</p>
-              )}
-            </div>
-            <span className="text-2xl text-muted-foreground">+</span>
-            <div>
-              <p className="text-xs text-muted-foreground">Protection</p>
-              {planData ? (
-                <EditableField
-                  label="Protection Device"
-                  value={localData.protectionDevice || ''}
-                  fieldType="protection"
-                  context={{ planData, currentSpec: localData }}
-                  onValidated={(newValue, validation) => handleFieldUpdate('protectionDevice', newValue, validation)}
-                />
-              ) : (
-                <p className="text-xl font-bold text-foreground">{localData.protectionDevice}</p>
-              )}
+          <div className="text-center py-4 bg-gradient-to-br from-elec-yellow/5 to-blue-500/5 rounded-lg border border-elec-yellow/20">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+              {planData?.loadType || 'Circuit Design'}
+            </h2>
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+              <Badge className="bg-elec-yellow text-elec-dark text-lg px-4 py-1 font-bold">
+                MCB: {localData.protectionDevice}
+              </Badge>
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground">Cable Size</p>
+                {planData ? (
+                  <EditableField
+                    label="Cable Size"
+                    value={localData.cableSize || 0}
+                    fieldType="cable"
+                    context={{ planData, currentSpec: localData }}
+                    onValidated={(newValue, validation) => handleFieldUpdate('cableSize', newValue, validation)}
+                  />
+                ) : (
+                  <p className="text-3xl font-bold text-foreground">{localData.cableSize}mm²</p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -234,15 +227,15 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange }: CircuitSpecCar
           </div>
         )}
 
-        {/* Expandable Calculations */}
+        {/* Expandable Working Out */}
         <Collapsible open={showCalculations} onOpenChange={setShowCalculations}>
           <CollapsibleTrigger asChild>
             <Button 
-              variant="ghost" 
+              variant="outline" 
               size="sm" 
-              className="w-full justify-between text-xs h-8"
+              className="w-full justify-between text-xs h-9 border-elec-yellow/30 hover:bg-elec-yellow/10"
             >
-              <span>View Design Calculations</span>
+              <span className="font-medium">View Working Out</span>
               <ChevronDown className={`h-4 w-4 transition-transform ${showCalculations ? 'rotate-180' : ''}`} />
             </Button>
           </CollapsibleTrigger>
