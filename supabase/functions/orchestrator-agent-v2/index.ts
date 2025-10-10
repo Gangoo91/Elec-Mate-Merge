@@ -14,6 +14,9 @@ import { validateResponse } from '../_shared/response-validation.ts';
 import { ResponseCache, isCacheable } from '../_shared/response-cache.ts';
 import { extractCircuitContext } from '../_shared/extract-circuit-context.ts';
 import { validateAgentOutputs, formatValidationReport } from '../_shared/validation-layer.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 // corsHeaders imported from shared deps
 
@@ -87,7 +90,16 @@ try {
       throw new Error('OpenAI API key not configured');
     }
 
-    console.log('🎯 Conversational Orchestrator V2: Starting multi-agent consultation');
+    // Initialize structured logging with request ID
+    const requestId = generateRequestId();
+    const logger = createLogger(requestId, {
+      conversationalMode,
+      messageCount: messages.length,
+      hasSelectedAgents: !!selectedAgents,
+      hasTargetAgent: !!targetAgent,
+    });
+
+    logger.info('🎯 Conversational Orchestrator V2: Starting multi-agent consultation');
     
     const latestMessage = messages[messages.length - 1]?.content || '';
 
@@ -122,19 +134,26 @@ try {
       lastTopic: conversationSummary.lastTopic
     });
 
-    // AI-powered intent detection
-    console.log('🎯 AI intent detection...');
-    const intentAnalysis = await detectIntents(latestMessage, conversationSummary, openAIApiKey);
+    // AI-powered intent detection with retry protection
+    logger.info('🎯 AI intent detection...');
+    const intentAnalysis = await withRetry(
+      () => withTimeout(
+        detectIntents(latestMessage, conversationSummary, openAIApiKey),
+        Timeouts.STANDARD,
+        'detectIntents'
+      ),
+      RetryPresets.STANDARD
+    );
     
     // Validate intent analysis before logging
     if (intentAnalysis && intentAnalysis.intents) {
-      console.log('Intent Analysis:', {
+      logger.info('Intent Analysis:', {
         primary: intentAnalysis.primaryIntent,
         scores: intentAnalysis.intents,
         reasoning: intentAnalysis.reasoning
       });
     } else {
-      console.error('❌ Invalid intent analysis received:', intentAnalysis);
+      logger.error('❌ Invalid intent analysis received:', intentAnalysis);
     }
 
     // Handle clarification requests
@@ -154,9 +173,16 @@ try {
     const followUpMatch = latestMessage.match(/Continue to (designer|cost-engineer|installer|commissioning)/i);
     const isFollowUpToAgent = messages.length > 3 && !followUpMatch && !latestMessage.toLowerCase().includes('design') && !latestMessage.toLowerCase().includes('new');
     
-    // Plan agent sequence
+    // Plan agent sequence with retry protection
     console.log('📋 Planning agent conversation sequence...');
-    const agentPlan = await planAgentSequence(intentAnalysis, conversationSummary, latestMessage, openAIApiKey);
+    const agentPlan = await withRetry(
+      () => withTimeout(
+        planAgentSequence(intentAnalysis, conversationSummary, latestMessage, openAIApiKey),
+        Timeouts.STANDARD,
+        'planAgentSequence'
+      ),
+      RetryPresets.STANDARD
+    );
     
     // Safety check
     if (!agentPlan || !agentPlan.sequence || agentPlan.sequence.length === 0) {
