@@ -17,6 +17,7 @@ interface TestSequenceCardProps {
 
 export const TestSequenceCard = ({ data }: TestSequenceCardProps) => {
   const [showCriteria, setShowCriteria] = useState(false);
+  const [showAllTests, setShowAllTests] = useState(false);
   
   return (
     <Card className="border-elec-yellow/20 bg-gradient-to-br from-cyan-500/5 to-transparent hover:border-elec-yellow/30 transition-all">
@@ -28,12 +29,12 @@ export const TestSequenceCard = ({ data }: TestSequenceCardProps) => {
           </Badge>
         </div>
 
-        {/* Test Sequence */}
+        {/* Test Sequence Summary (First 3) */}
         {data.testSequence && data.testSequence.length > 0 && (
           <div className="space-y-3">
             <p className="text-xs font-semibold text-foreground">Test Sequence (BS 7671 Section 643)</p>
             <ol className="space-y-2">
-              {data.testSequence.map((test, idx) => (
+              {data.testSequence.slice(0, 3).map((test, idx) => (
                 <li key={idx} className="flex items-start gap-3 text-sm">
                   <div className="flex items-center justify-center h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-bold flex-shrink-0 mt-0.5">
                     {idx + 1}
@@ -42,6 +43,32 @@ export const TestSequenceCard = ({ data }: TestSequenceCardProps) => {
                 </li>
               ))}
             </ol>
+            {data.testSequence.length > 3 && (
+              <Collapsible open={showAllTests} onOpenChange={setShowAllTests}>
+                <CollapsibleTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="w-full justify-between text-xs h-8 mt-2"
+                  >
+                    <span>View All {data.testSequence.length} Tests</span>
+                    <ChevronDown className={`h-4 w-4 transition-transform ${showAllTests ? 'rotate-180' : ''}`} />
+                  </Button>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="pt-2">
+                  <ol className="space-y-2" start={4}>
+                    {data.testSequence.slice(3).map((test, idx) => (
+                      <li key={idx + 3} className="flex items-start gap-3 text-sm">
+                        <div className="flex items-center justify-center h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-bold flex-shrink-0 mt-0.5">
+                          {idx + 4}
+                        </div>
+                        <span className="text-foreground flex-1 leading-relaxed">{test}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </CollapsibleContent>
+              </Collapsible>
+            )}
           </div>
         )}
 
@@ -55,7 +82,7 @@ export const TestSequenceCard = ({ data }: TestSequenceCardProps) => {
             <div className="space-y-2">
               {Object.entries(data.expectedResults).map(([test, result], idx) => (
                 <div key={idx} className="flex justify-between items-start gap-2 text-xs">
-                  <span className="text-muted-foreground">{test}:</span>
+                  <span className="text-foreground/70">{test}:</span>
                   <span className="text-foreground font-semibold text-right">{result}</span>
                 </div>
               ))}
@@ -82,7 +109,7 @@ export const TestSequenceCard = ({ data }: TestSequenceCardProps) => {
                 {Object.entries(data.passFailCriteria).map(([test, criteria], idx) => (
                   <div key={idx} className="space-y-1">
                     <p className="text-xs font-semibold text-foreground">{test}</p>
-                    <p className="text-xs text-muted-foreground pl-3 border-l-2 border-cyan-500/30">
+                    <p className="text-xs text-foreground/90 pl-3 border-l-2 border-cyan-500/30">
                       {criteria}
                     </p>
                   </div>

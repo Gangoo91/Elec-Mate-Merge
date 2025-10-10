@@ -348,11 +348,46 @@ EXAMPLE PHASES:
     const data = await response.json();
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
     
+    // Robust fallback: If no tool call, extract from text response
+    let structuredData;
     if (!toolCall) {
-      throw new Error('No tool call from installer agent');
+      console.warn('⚠️ No tool call - falling back to text extraction');
+      const textResponse = data.choices?.[0]?.message?.content || '';
+      
+      // Extract basic installation steps from text
+      const lines = textResponse.split('\n').filter(l => l.trim());
+      const steps = lines
+        .filter(l => /^\d+\./.test(l.trim()) || /^[-•]/.test(l.trim()))
+        .map((line, idx) => ({
+          stepNumber: idx + 1,
+          phase: `Step ${idx + 1}`,
+          title: line.replace(/^[\d.•-]+\s*/, '').trim(),
+          description: line.replace(/^[\d.•-]+\s*/, '').trim(),
+          safetyRequirements: [],
+          equipmentNeeded: [],
+          criticalPoints: [],
+          riskLevel: 'medium'
+        }));
+      
+      structuredData = {
+        response: textResponse,
+        installationSteps: steps.length > 0 ? steps : [
+          {
+            stepNumber: 1,
+            phase: 'Installation',
+            title: 'Follow guidance above',
+            description: textResponse.substring(0, 200),
+            safetyRequirements: [],
+            equipmentNeeded: [],
+            criticalPoints: [],
+            riskLevel: 'medium'
+          }
+        ],
+        confidence: 0.7
+      };
+    } else {
+      structuredData = JSON.parse(toolCall.function.arguments);
     }
-
-    const structuredData = JSON.parse(toolCall.function.arguments);
     
     return new Response(JSON.stringify({
       response: structuredData.response || 'Installation guidance complete.',

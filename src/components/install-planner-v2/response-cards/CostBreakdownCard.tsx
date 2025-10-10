@@ -135,11 +135,11 @@ export const CostBreakdownCard = ({ data }: CostBreakdownCardProps) => {
                 <p className="text-xs font-semibold text-foreground">Labour Breakdown</p>
                 <div className="border border-border/50 rounded p-3 space-y-2 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Hours Required</span>
+                    <span className="text-foreground/70">Hours Required</span>
                     <span className="font-semibold text-foreground">{data.labour.hours}h</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Hourly Rate</span>
+                    <span className="text-foreground/70">Hourly Rate</span>
                     <span className="font-semibold text-foreground">£{data.labour.rate}/h</span>
                   </div>
                   <div className="flex justify-between pt-2 border-t border-border/50">

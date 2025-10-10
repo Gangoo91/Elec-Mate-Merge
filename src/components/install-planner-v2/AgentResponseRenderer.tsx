@@ -21,9 +21,6 @@ interface AgentResponseRendererProps {
 export const AgentResponseRenderer = memo(({ content, agentId, structuredData }: AgentResponseRendererProps) => {
   const [showFullText, setShowFullText] = useState(false);
   
-  // Memoize parsed sections - only re-parse if content changes
-  const sections = useMemo(() => parseAgentResponse(content), [content]);
-  
   // Detect opening line for visual separation
   const openingLine = useMemo(() => {
     if (agentId === 'commissioning') {
@@ -36,6 +33,17 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData }:
     }
     return null;
   }, [content, agentId]);
+  
+  // Strip opening line from content to avoid duplication
+  const contentWithoutOpening = useMemo(() => {
+    if (openingLine) {
+      return content.replace(openingLine, '').trim();
+    }
+    return content;
+  }, [content, openingLine]);
+  
+  // Memoize parsed sections - only re-parse if content changes (use stripped content)
+  const sections = useMemo(() => parseAgentResponse(contentWithoutOpening || content), [contentWithoutOpening, content]);
   
   // Determine which structured card to show based on agent and data
   const hasStructuredData = structuredData && Object.keys(structuredData).length > 0;

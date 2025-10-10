@@ -61,12 +61,12 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
           <div className={`${riskColor.bg} border ${riskColor.border} rounded p-3`}>
             <div className="flex items-center gap-2 mb-2">
               <AlertTriangle className={`h-5 w-5 ${riskColor.text}`} />
-              <p className="text-xs text-muted-foreground">Highest Risk Rating</p>
+              <p className="text-xs text-foreground/70">Highest Risk Rating</p>
             </div>
             <p className={`text-3xl font-bold ${riskColor.text}`}>
               {highestRisk}/25
             </p>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-foreground/70 mt-1">
               {highestRisk >= 15 ? "High Risk" : highestRisk >= 10 ? "Medium-High Risk" : highestRisk >= 5 ? "Medium Risk" : "Low Risk"}
             </p>
           </div>
@@ -74,8 +74,8 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
           {/* PPE Summary */}
           {data.requiredPPE && data.requiredPPE.length > 0 && (
             <div className="bg-muted/30 rounded p-3">
-              <p className="text-xs text-muted-foreground mb-2">Required PPE</p>
-              <div className="flex flex-wrap gap-1">
+              <p className="text-xs text-foreground/70 mb-2">Required PPE</p>
+              <div className="flex flex-wrap gap-2 gap-y-2">
                 {data.requiredPPE.map((ppe, idx) => (
                   <Badge key={idx} variant="outline" className="text-[10px] bg-background/50">
                     {ppe}
@@ -124,16 +124,16 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
                       </div>
                       
                       <div className="text-xs space-y-1">
-                        <div className="flex gap-4">
-                          <span className="text-muted-foreground">Likelihood: L{hazard.likelihood}</span>
-                          <span className="text-muted-foreground">Severity: S{hazard.severity}</span>
-                          <span className="text-muted-foreground">Risk: {hazard.riskRating}</span>
+                        <div className="flex gap-4 flex-wrap">
+                          <span className="text-foreground/70">Likelihood: L{hazard.likelihood}</span>
+                          <span className="text-foreground/70">Severity: S{hazard.severity}</span>
+                          <span className="text-foreground/70">Risk: {hazard.riskRating}</span>
                         </div>
                       </div>
                       
                       <div className="pt-2 border-t border-border/30">
                         <p className="text-xs font-semibold text-foreground mb-1">Control Measures:</p>
-                        <ul className="text-xs text-muted-foreground space-y-1">
+                        <ul className="text-xs text-foreground/90 space-y-1">
                           {hazard.controls.map((control, cidx) => (
                             <li key={cidx} className="flex items-start gap-2">
                               <span className="mt-1.5 h-1 w-1 rounded-full bg-elec-yellow flex-shrink-0" />
@@ -152,7 +152,7 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
             {data.methodStatement && data.methodStatement.length > 0 && (
               <div className="space-y-2 border-t border-border/50 pt-3">
                 <p className="text-xs font-semibold text-foreground">Method Statement</p>
-                <ol className="text-xs text-muted-foreground space-y-1 list-decimal list-inside">
+                <ol className="text-xs text-foreground/90 space-y-1 list-decimal list-inside">
                   {data.methodStatement.map((step, idx) => (
                     <li key={idx}>{step}</li>
                   ))}
@@ -164,7 +164,7 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
             {data.emergencyProcedures && data.emergencyProcedures.length > 0 && (
               <div className="space-y-2 border-t border-border/50 pt-3">
                 <p className="text-xs font-semibold text-red-400">Emergency Procedures</p>
-                <ul className="text-xs text-muted-foreground space-y-1">
+                <ul className="text-xs text-foreground/90 space-y-1">
                   {data.emergencyProcedures.map((procedure, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <AlertTriangle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />

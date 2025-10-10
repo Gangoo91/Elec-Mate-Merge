@@ -1127,9 +1127,9 @@ onError: (error) => {
               onKeyDown={handleKeyPress}
               placeholder="Type your message..."
               disabled={isLoading}
-              className="w-full min-h-[48px] max-h-[160px] resize-none text-base font-medium rounded-xl px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-normal overflow-y-auto transition-all duration-200 focus-visible:border-elec-yellow/50 focus-visible:ring-2 focus-visible:ring-elec-yellow/20 shadow-lg shadow-black/10"
+              className="w-full h-20 md:h-24 resize-none text-base font-medium rounded-xl px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-normal overflow-y-auto transition-all duration-200 focus-visible:border-elec-yellow/50 focus-visible:ring-2 focus-visible:ring-elec-yellow/20 shadow-lg shadow-black/10"
               style={{ fontSize: '16px' }}
-              rows={1}
+              rows={3}
             />
             
             <div className="flex justify-between items-center w-full gap-2">

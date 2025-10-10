@@ -1,6 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wrench, CheckCircle2 } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Button } from "@/components/ui/button";
+import { Wrench, CheckCircle2, ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 interface InstallationStepsData {
   installationSteps?: string[];
@@ -14,6 +17,8 @@ interface InstallationStepsCardProps {
 }
 
 export const InstallationStepsCard = ({ data }: InstallationStepsCardProps) => {
+  const [showAllSteps, setShowAllSteps] = useState(false);
+  
   return (
     <Card className="border-elec-yellow/20 bg-gradient-to-br from-purple-500/5 to-transparent hover:border-elec-yellow/30 transition-all">
       <CardContent className="p-4 space-y-4">
@@ -24,12 +29,12 @@ export const InstallationStepsCard = ({ data }: InstallationStepsCardProps) => {
           </Badge>
         </div>
 
-        {/* Installation Steps */}
+        {/* Installation Steps Summary (First 3) */}
         {data.installationSteps && data.installationSteps.length > 0 && (
           <div className="space-y-3">
             <p className="text-xs font-semibold text-foreground">Installation Sequence</p>
             <ol className="space-y-2">
-              {data.installationSteps.map((step, idx) => (
+              {data.installationSteps.slice(0, 3).map((step, idx) => (
                 <li key={idx} className="flex items-start gap-3 text-sm">
                   <div className="flex items-center justify-center h-6 w-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0 mt-0.5">
                     {idx + 1}
@@ -38,6 +43,32 @@ export const InstallationStepsCard = ({ data }: InstallationStepsCardProps) => {
                 </li>
               ))}
             </ol>
+            {data.installationSteps.length > 3 && (
+              <Collapsible open={showAllSteps} onOpenChange={setShowAllSteps}>
+                <CollapsibleTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="w-full justify-between text-xs h-8 mt-2"
+                  >
+                    <span>View All {data.installationSteps.length} Steps</span>
+                    <ChevronDown className={`h-4 w-4 transition-transform ${showAllSteps ? 'rotate-180' : ''}`} />
+                  </Button>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="pt-2">
+                  <ol className="space-y-2" start={4}>
+                    {data.installationSteps.slice(3).map((step, idx) => (
+                      <li key={idx + 3} className="flex items-start gap-3 text-sm">
+                        <div className="flex items-center justify-center h-6 w-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0 mt-0.5">
+                          {idx + 4}
+                        </div>
+                        <span className="text-foreground flex-1 leading-relaxed">{step}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </CollapsibleContent>
+              </Collapsible>
+            )}
           </div>
         )}
 
