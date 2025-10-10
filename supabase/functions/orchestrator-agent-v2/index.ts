@@ -621,10 +621,6 @@ async function handleConversationalMode(
               // WAVE 1 FIX: Use queue instead of direct enqueue
               await queueStreamWrite(encoder.encode(errorEvent));
             }
-          } catch (error) {
-            console.error(`❌ Agent ${agentName} execution failed:`, error);
-            throw error;
-          }
           }));
         }
 
