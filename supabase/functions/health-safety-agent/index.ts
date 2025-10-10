@@ -59,10 +59,10 @@ serve(async (req) => {
               'Authorization': `Bearer ${lovableApiKey}`,
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              input: ragQuery,
-            }),
-          }),
+      body: JSON.stringify({
+        model: 'text-embedding-3-small',
+        input: ragQuery,
+      }),
           Timeouts.STANDARD,
           'Lovable AI embedding generation'
         ),

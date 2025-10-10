@@ -117,18 +117,28 @@ serve(async (req) => {
     
     console.log(`🔍 RAG: Searching BS 7671 + Design Knowledge for: ${ragQuery}`);
     
-    // Generate embedding for RAG query using Lovable AI
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: ragQuery,
-      }),
-    });
+    // Generate embedding for RAG query using Lovable AI with retry + timeout
+    const embeddingResponse = await logger.time(
+      'Lovable AI embedding generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: ragQuery,
+            }),
+          }),
+          Timeouts.STANDARD,
+          'Lovable AI embedding generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     let relevantRegsText = '';
     let designKnowledge = '';
