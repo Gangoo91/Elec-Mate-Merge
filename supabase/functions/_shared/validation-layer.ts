@@ -148,12 +148,175 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
     }
   }
 
+  // WAVE 3 FIX - VALIDATION 7: Earth fault loop impedance (Zs) safety check
+  if (designerData?.earthFaultLoop?.zs !== undefined && designerData?.protectionDevice) {
+    const zs = designerData.earthFaultLoop.zs;
+    const mcbMatch = designerData.protectionDevice.match(/(\d+)A/);
+    const mcbRating = mcbMatch ? parseInt(mcbMatch[1]) : 0;
+    
+    if (mcbRating > 0) {
+      const maxZs = getMaxZsForMCB(mcbRating, designerData.protectionDevice);
+      
+      if (zs >= maxZs) {
+        criticalIssues.push({
+          type: 'zs_too_high',
+          message: `Earth fault loop impedance (${zs.toFixed(2)}Ω) exceeds maximum ${maxZs.toFixed(2)}Ω for ${mcbRating}A MCB - circuit will not disconnect safely under fault conditions`,
+          affectedData: { zs, maxZs, mcbRating, protectionDevice: designerData.protectionDevice },
+          requiresAttention: true
+        });
+      } else if (zs >= maxZs * 0.8) {
+        warnings.push({
+          severity: 'high',
+          message: `Earth fault loop impedance (${zs.toFixed(2)}Ω) is approaching limit of ${maxZs.toFixed(2)}Ω for ${mcbRating}A MCB`,
+          affectedAgents: ['designer'],
+          recommendation: 'Consider reducing cable length or improving earthing to provide safety margin'
+        });
+      }
+    }
+  }
+
+  // WAVE 3 FIX - VALIDATION 8: RCD requirement check (BS 7671 Reg 411.3.3)
+  if (designerData?.circuitType || designerData?.location) {
+    const circuitType = (designerData.circuitType || '').toLowerCase();
+    const location = (designerData.location || '').toLowerCase();
+    const protectionDevice = (designerData.protectionDevice || '').toLowerCase();
+    
+    const hasRCD = protectionDevice.includes('rcbo') || protectionDevice.includes('rcd');
+    
+    // Check locations requiring RCD protection
+    const requiresRCD = 
+      circuitType.includes('socket') && location.includes('outdoor') ||
+      location.includes('bathroom') ||
+      location.includes('outside') ||
+      location.includes('garden') ||
+      circuitType.includes('socket') && location.includes('kitchen') ||
+      designerData.supplyType === 'TT';
+    
+    if (requiresRCD && !hasRCD) {
+      criticalIssues.push({
+        type: 'missing_rcd',
+        message: `RCD protection required for ${circuitType} in ${location} (BS 7671 Reg 411.3.3) but ${designerData.protectionDevice} specified`,
+        affectedData: { 
+          circuitType, 
+          location, 
+          protectionDevice: designerData.protectionDevice,
+          regulation: 'BS 7671 Reg 411.3.3'
+        },
+        requiresAttention: true
+      });
+    }
+  }
+
+  // WAVE 3 FIX - VALIDATION 9: Diversity factor validation
+  if (designerData?.diversityFactor !== undefined) {
+    const diversity = designerData.diversityFactor;
+    
+    if (diversity > 1.0) {
+      criticalIssues.push({
+        type: 'invalid_diversity',
+        message: `Diversity factor ${diversity} is greater than 1.0 - this would increase simultaneous demand above total load, which is physically impossible`,
+        affectedData: { diversityFactor: diversity },
+        requiresAttention: true
+      });
+    }
+    
+    if (diversity < 0.3) {
+      warnings.push({
+        severity: 'medium',
+        message: `Very conservative diversity factor (${diversity}) may result in oversized installation`,
+        affectedAgents: ['designer'],
+        recommendation: 'Review diversity assumptions - typical values are 0.4-0.7 for domestic installations'
+      });
+    }
+  }
+
+  // WAVE 3 FIX - VALIDATION 10: Circuit breaker rating vs cable current-carrying capacity
+  if (designerData?.protectionDevice && designerData?.cableCurrentCapacity) {
+    const mcbMatch = designerData.protectionDevice.match(/(\d+)A/);
+    const mcbRating = mcbMatch ? parseInt(mcbMatch[1]) : 0;
+    const cableCapacity = designerData.cableCurrentCapacity;
+    
+    if (mcbRating > cableCapacity) {
+      criticalIssues.push({
+        type: 'mcb_exceeds_cable_capacity',
+        message: `${mcbRating}A MCB rating exceeds cable current capacity of ${cableCapacity}A - cable will not be protected from overload`,
+        affectedData: { mcbRating, cableCapacity },
+        requiresAttention: true
+      });
+    }
+  }
+
+  // WAVE 3 FIX - VALIDATION 11: Minimum cable size for ring final circuits
+  if (designerData?.circuitType?.toLowerCase().includes('ring') && designerData?.cableSize) {
+    if (designerData.cableSize < 2.5) {
+      criticalIssues.push({
+        type: 'ring_cable_undersized',
+        message: `Ring final circuit requires minimum 2.5mm² cable but ${designerData.cableSize}mm² specified (BS 7671 Reg 433.1.204)`,
+        affectedData: { cableSize: designerData.cableSize, circuitType: 'ring final' },
+        requiresAttention: true
+      });
+    }
+  }
+
   return {
     isValid: criticalIssues.length === 0,
     warnings,
     criticalIssues,
     suggestions
   };
+}
+
+/**
+ * Get maximum earth fault loop impedance for MCB rating (BS 7671 Table 41.3)
+ * Values for Type B MCBs at 0.4s disconnection time
+ */
+function getMaxZsForMCB(rating: number, deviceType: string): number {
+  const isTypeC = deviceType.toLowerCase().includes('type c');
+  const isTypeB = deviceType.toLowerCase().includes('type b') || !isTypeC;
+  
+  // BS 7671 Table 41.3 - Maximum Zs values for MCBs
+  // Type B values (5 x In for magnetic trip)
+  const typeBMaxZs: Record<number, number> = {
+    6: 7.67,
+    10: 4.60,
+    16: 2.87,
+    20: 2.30,
+    25: 1.84,
+    32: 1.44,
+    40: 1.15,
+    50: 0.92,
+    63: 0.73,
+    80: 0.57,
+    100: 0.46
+  };
+  
+  // Type C values (10 x In for magnetic trip)
+  const typeCMaxZs: Record<number, number> = {
+    6: 3.83,
+    10: 2.30,
+    16: 1.44,
+    20: 1.15,
+    25: 0.92,
+    32: 0.72,
+    40: 0.57,
+    50: 0.46,
+    63: 0.36,
+    80: 0.29,
+    100: 0.23
+  };
+  
+  const maxZsTable = isTypeB ? typeBMaxZs : typeCMaxZs;
+  
+  // Return exact value if available, otherwise calculate conservatively
+  if (maxZsTable[rating]) {
+    return maxZsTable[rating];
+  }
+  
+  // Conservative fallback: use next lower rating's value
+  const availableRatings = Object.keys(maxZsTable).map(Number).sort((a, b) => a - b);
+  const lowerRating = availableRatings.reverse().find(r => r < rating);
+  
+  return lowerRating ? maxZsTable[lowerRating] : 0.46; // 100A Type B as most conservative
 }
 
 /**
