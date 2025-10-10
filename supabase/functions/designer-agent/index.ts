@@ -327,6 +327,13 @@ FORMAT AS JSON:
 ${relevantRegsText ? `RELEVANT REGULATIONS:\n${relevantRegsText}\n` : ''}
 ${designKnowledge ? `DESIGN GUIDANCE:\n${designKnowledge}\n` : ''}
 
+COST ESTIMATE (add to JSON):
+Include a "costEstimate" field in the JSON with:
+- "materialsRange": "£XX-£YY" (cables, MCBs, consumer unit, accessories)
+- "labourRange": "£XX-£YY" (based on typical electrician day rates and project complexity)
+- "totalRange": "£XX-£YY + VAT"
+- "notes": "Brief explanation of cost drivers"
+
 Use UK English. Be thorough. Return valid JSON only.`;
     } else {
       // Single circuit mode
@@ -380,7 +387,21 @@ DESIGN GUIDANCE (from technical library):
 ${designKnowledge}
 ` : ''}
 
-Use professional language with UK English spelling. Present calculations clearly. Cite regulation numbers and technical guidance. No conversational filler or markdown formatting.`;
+COST ESTIMATE
+
+Provide a rough cost estimate at the end of your response using this format:
+
+**Estimated Materials Cost:** £XX-£YY
+Materials include: cable (${cableLabel}), MCB (${calculationResults?.cableCapacity?.In || circuitParams.deviceRating}A Type ${circuitParams.deviceType}), accessories (back boxes, faceplates, cable clips, etc.)
+
+**Estimated Labour:** £XX-£YY (X-Y hours at typical electrician rates)
+Based on installation complexity and cable run distance (${circuitParams.cableLength}m)
+
+**Total Rough Estimate:** £XX-£YY + VAT
+
+Note: These are ballpark estimates for planning purposes. Actual costs vary by region, supplier, and specific site conditions.
+
+Use professional language with UK English spelling. Present calculations clearly. Cite regulation numbers and technical guidance. Include the cost estimate at the end. No conversational filler or markdown formatting.`;
     }
 
     // Call Lovable AI Gateway with retry + timeout (60s for complex design calculations)
