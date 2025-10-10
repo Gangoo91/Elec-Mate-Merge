@@ -2,10 +2,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, MapPin, Shield, PoundSterling } from "lucide-react";
+import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, MapPin, Shield, PoundSterling, Sparkles } from "lucide-react";
 
 const ElectricalHub = () => {
-  // Main 2x2 grid - 4 most frequently used tools for daily electrical work
+  // Main 3-card grid - Core daily tools
   const mainResources = [
     {
       id: 1,
@@ -21,12 +21,6 @@ const ElectricalHub = () => {
     },
     {
       id: 3,
-      title: "Install Planner",
-      icon: MapPin,
-      link: "/electrician/install-planner"
-    },
-    {
-      id: 4,
       title: "Site Safety & RAMS",
       icon: Shield,
       link: "/electrician/site-safety"
@@ -35,6 +29,12 @@ const ElectricalHub = () => {
 
   // Additional tools - business, development, and reference resources  
   const additionalResources = [
+    {
+      id: 4,
+      title: "Quick Install Calculator",
+      icon: MapPin,
+      link: "/electrician/install-planner?mode=manual"
+    },
     {
       id: 5,
       title: "Business Hub",
@@ -81,10 +81,31 @@ const ElectricalHub = () => {
         </Link>
       </div>
 
-      {/* Main 2x2 Grid - Core Daily Tools */}
+      {/* Featured AI Installation Designer */}
+      <div className="space-y-4">
+        <Link to="/electrician/install-planner?mode=ai" className="focus:outline-none hover-scale block">
+          <Card className="border-primary/50 bg-gradient-to-br from-primary/20 to-primary/5 hover:border-primary hover:from-primary/25 hover:to-primary/10 transition-all duration-300 cursor-pointer">
+            <CardHeader className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-center md:text-left py-6 md:py-8 px-6 md:px-8">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
+                <Sparkles className="h-8 w-8 md:h-10 md:w-10 text-primary-foreground" />
+              </div>
+              <div className="flex-1">
+                <CardTitle className="text-xl md:text-2xl mb-2">
+                  AI Guided Installation Designer
+                </CardTitle>
+                <p className="text-sm md:text-base text-muted-foreground">
+                  Chat with our AI to design your installation — just describe what you need and we'll guide you through the process
+                </p>
+              </div>
+            </CardHeader>
+          </Card>
+        </Link>
+      </div>
+
+      {/* Main 3-Card Grid - Core Daily Tools */}
       <div className="space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold text-center">Core Daily Tools</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
           {mainResources.map((resource) => (
             <Link to={resource.link} key={resource.id} className="focus:outline-none hover-scale">
               <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">

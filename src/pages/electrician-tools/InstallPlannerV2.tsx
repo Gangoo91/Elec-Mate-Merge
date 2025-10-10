@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { EntrySelector } from "@/components/install-planner-v2/EntrySelector";
 import { ExpressMode } from "@/components/install-planner-v2/ExpressMode";
 import { ProfessionalMode } from "@/components/install-planner-v2/ProfessionalMode";
@@ -13,6 +13,9 @@ import { SaveManager } from "@/components/install-planner-v2/SaveManager";
 export type PlanMode = 'entry' | 'express' | 'professional' | 'multi' | 'ai-guided';
 
 const InstallPlannerV2 = () => {
+  const [searchParams] = useSearchParams();
+  const urlMode = searchParams.get('mode');
+  
   const [mode, setMode] = useState<PlanMode>('entry');
   const [planData, setPlanData] = useState<InstallPlanDataV2>({
     mode: 'express',
@@ -83,6 +86,15 @@ const InstallPlannerV2 = () => {
       }
     });
   };
+
+  // Handle URL mode parameter on mount
+  useEffect(() => {
+    if (urlMode === 'ai') {
+      setMode('ai-guided');
+    } else if (urlMode === 'manual') {
+      setMode('entry');
+    }
+  }, [urlMode]);
 
   // Full-screen for AI chat mode, container for other modes
   if (mode === 'ai-guided') {
