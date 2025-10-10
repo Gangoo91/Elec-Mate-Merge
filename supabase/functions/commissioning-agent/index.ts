@@ -4,6 +4,9 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
 import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { getTestSequence } from "../shared/bs7671TestingRequirements.ts";
 import { getMaxZs } from "../shared/bs7671ProtectionData.ts";
 
@@ -15,11 +18,14 @@ serve(async (req) => {
   }
 
   try {
+    const requestId = generateRequestId();
+    const logger = createLogger(requestId);
+    
     const { messages, currentDesign, context } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+    if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
-    console.log('✅ Commissioning Agent: Processing testing query');
+    logger.info('✅ Commissioning Agent: Processing testing query');
 
     const previousAgents = context?.previousAgentOutputs?.map((a: any) => a.agent) || [];
     const hasDesigner = previousAgents.includes('designer');
@@ -33,20 +39,27 @@ serve(async (req) => {
     const userMessage = messages[messages.length - 1]?.content || '';
     const ragQuery = `${userMessage} testing commissioning insulation resistance earth fault loop RCD Chapter 64`;
     
-    console.log(`🔍 RAG query: "${ragQuery}"`);
+    logger.info(`🔍 RAG query: "${ragQuery}"`);
     
-    // Generate embedding for testing regulations search
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: ragQuery,
-      }),
-    });
+    // Generate embedding for testing regulations search with retry and timeout
+    const embeddingResponse = await withRetry(
+      () => withTimeout(
+        fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${lovableApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'text-embedding-3-small',
+            input: ragQuery,
+          }),
+        }),
+        Timeouts.STANDARD,
+        'embeddings generation'
+      ),
+      RetryPresets.STANDARD
+    );
 
     let testingRegulations = '';
     if (embeddingResponse.ok) {
@@ -63,9 +76,9 @@ serve(async (req) => {
         testingRegulations = regulations.map((r: any) => 
           `Reg ${r.regulation_number} (${r.section}): ${r.content}`
         ).join('\n\n');
-        console.log(`✅ Found ${regulations.length} testing regulations`);
+        logger.info(`✅ Found ${regulations.length} testing regulations`);
       } else {
-        console.log('⚠️ No relevant regulations found');
+        logger.warn('⚠️ No relevant regulations found');
       }
     }
 
@@ -182,29 +195,36 @@ Always provide meter settings, target values, common mistakes, and troubleshooti
 
 Keep it friendly but technically accurate with exact regulation numbers and values.`;
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          ...messages,
-          ...(context?.structuredKnowledge ? [{
-            role: 'system',
-            content: context.structuredKnowledge
-          }] : [])
-        ],
-        max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage)) // Phase 4: Adaptive tokens
-      }),
-    });
+    const response = await withRetry(
+      () => withTimeout(
+        fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${lovableApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'google/gemini-2.5-flash',
+            messages: [
+              { role: 'system', content: systemPrompt },
+              ...messages,
+              ...(context?.structuredKnowledge ? [{
+                role: 'system',
+                content: context.structuredKnowledge
+              }] : [])
+            ],
+            max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage))
+          }),
+        }),
+        Timeouts.LONG, // Allow more time for complex testing analysis
+        'Lovable AI commissioning generation'
+      ),
+      RetryPresets.STANDARD
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Lovable AI error:', errorText);
+      logger.error('Lovable AI error:', { status: response.status, error: errorText });
       throw new Error(`AI gateway error: ${response.status}`);
     }
 
@@ -231,15 +251,7 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
     });
 
   } catch (error) {
-    console.error('❌ Commissioning agent error:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Commissioning agent failed',
-      response: 'Unable to process testing request.',
-      confidence: 0.3
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return handleError(error);
   }
 });
 

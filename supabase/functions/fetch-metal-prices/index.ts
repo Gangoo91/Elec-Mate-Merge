@@ -1,80 +1,67 @@
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { handleError, ValidationError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-
-// Force redeployment - Version 2.2 - Updated mobile display format
-// Updated: 2025-09-06T17:47:00Z
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+// Force redeployment - Version 2.3 - Stability improvements
+// Updated: 2025-10-10T12:05:00Z
 
 // MetalPriceAPI configuration
 const METAL_PRICE_API_BASE = 'https://api.metalpriceapi.com/v1'
 
 // Function to fetch live metal prices from MetalPriceAPI
-async function fetchLiveMetalPrices() {
-  try {
-    console.log('Fetching live metal prices from MetalPriceAPI...')
-    
-    const METAL_PRICE_API_KEY = Deno.env.get('METAL_PRICE_API_KEY')
-    console.log('API Key check:', METAL_PRICE_API_KEY ? 'Present' : 'Missing')
-    console.log('API Key length:', METAL_PRICE_API_KEY?.length || 0)
-    
-    if (!METAL_PRICE_API_KEY) {
-      console.error('METAL_PRICE_API_KEY environment variable not set')
-      throw new Error('METAL_PRICE_API_KEY environment variable not set')
-    }
-    
-    const apiUrl = `${METAL_PRICE_API_BASE}/latest?api_key=${METAL_PRICE_API_KEY}&base=USD&currencies=XCU,ALU,XPB,ZNC`
-    console.log('Making API call to:', apiUrl.replace(METAL_PRICE_API_KEY, '[REDACTED]'))
-    
-    // MetalPriceAPI uses specific symbols and returns rates as USDXXX format
-    // XCU = Copper, ALU = Aluminum, XPB = Lead, ZNC = Zinc
-    const response = await fetch(apiUrl, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      }
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error(`MetalPriceAPI HTTP Error ${response.status}:`, errorText)
-      throw new Error(`MetalPriceAPI returned ${response.status}: ${errorText}`)
-    }
-
-    const data = await response.json()
-    console.log('MetalPriceAPI raw response:', JSON.stringify(data, null, 2))
-    
-    // Check if response has success field or rates directly
-    console.log('Response structure check:')
-    console.log('- Has success field:', 'success' in data)
-    console.log('- Success value:', data.success)
-    console.log('- Has rates field:', 'rates' in data)
-    console.log('- Data keys:', Object.keys(data))
-    
-    // Some APIs don't use success field, check for rates directly
-    if (data.success === false) {
-      console.error('MetalPriceAPI returned success: false, error:', data.error)
-      throw new Error(`MetalPriceAPI error: ${JSON.stringify(data.error)}`)
-    }
-    
-    // If no success field but has rates, consider it successful
-    if (!('success' in data) && data.rates) {
-      console.log('No success field but rates found - treating as successful')
-      data.success = true
-    }
-    
-    console.log('MetalPriceAPI response received: Success')
-    console.log('Available rates:', Object.keys(data.rates || {}))
-    
-    return data
-  } catch (error) {
-    console.error('Error fetching from MetalPriceAPI:', error)
-    return null
+async function fetchLiveMetalPrices(logger: any) {
+  const METAL_PRICE_API_KEY = Deno.env.get('METAL_PRICE_API_KEY')
+  
+  if (!METAL_PRICE_API_KEY) {
+    throw new ValidationError('METAL_PRICE_API_KEY environment variable not set');
   }
+  
+  logger.info('Fetching live metal prices from MetalPriceAPI');
+  
+  const apiUrl = `${METAL_PRICE_API_BASE}/latest?api_key=${METAL_PRICE_API_KEY}&base=USD&currencies=XCU,ALU,XPB,ZNC`;
+  
+  // MetalPriceAPI uses specific symbols and returns rates as USDXXX format
+  // XCU = Copper, ALU = Aluminum, XPB = Lead, ZNC = Zinc
+  const response = await withRetry(
+    () => withTimeout(
+      fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      }),
+      Timeouts.STANDARD,
+      'MetalPriceAPI fetch'
+    ),
+    RetryPresets.STANDARD
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    logger.error(`MetalPriceAPI HTTP Error ${response.status}`, { error: errorText });
+    throw new Error(`MetalPriceAPI returned ${response.status}: ${errorText}`);
+  }
+
+  const data = await response.json();
+  logger.debug('MetalPriceAPI raw response', { data });
+  
+  // Some APIs don't use success field, check for rates directly
+  if (data.success === false) {
+    logger.error('MetalPriceAPI returned success: false', { error: data.error });
+    throw new Error(`MetalPriceAPI error: ${JSON.stringify(data.error)}`);
+  }
+  
+  // If no success field but has rates, consider it successful
+  if (!('success' in data) && data.rates) {
+    logger.info('No success field but rates found - treating as successful');
+    data.success = true;
+  }
+  
+  logger.info('MetalPriceAPI response received successfully', { ratesCount: Object.keys(data.rates || {}).length });
+  
+  return data;
 }
 
 // Function to convert metal symbols to display names and calculate per kg prices
@@ -161,18 +148,15 @@ function transformMetalData(apiData: any) {
 }
 
 serve(async (req) => {
-  console.log('=== FETCH-METAL-PRICES FUNCTION STARTED ===')
-  console.log('Request method:', req.method)
-  console.log('Request URL:', req.url)
-  console.log('Timestamp:', new Date().toISOString())
-  
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    console.log('Handling CORS preflight request')
-    return new Response('ok', { headers: corsHeaders })
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
+    const requestId = generateRequestId();
+    const logger = createLogger(requestId);
+    
+    logger.info('🔋 Metal prices fetch started');
     // Parse request body to get parameters
     let forceLive = false;
     let cacheBuster = '';
@@ -182,120 +166,107 @@ serve(async (req) => {
         const body = await req.json();
         forceLive = body.forceLive || false;
         cacheBuster = body.cacheBuster || '';
-        console.log('Request parameters:', { forceLive, cacheBuster });
+        logger.info('Request parameters', { forceLive, cacheBuster });
       } catch (e) {
-        console.log('No JSON body or failed to parse, using defaults');
+        logger.debug('No JSON body provided, using defaults');
       }
     }
 
     // Create Supabase client
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get API key for debug info with enhanced logging
-    console.log('=== ENVIRONMENT VARIABLE DEBUG ===')
-    const apiKey = Deno.env.get('METAL_PRICE_API_KEY')
-    console.log('METAL_PRICE_API_KEY exists:', !!apiKey)
-    console.log('METAL_PRICE_API_KEY length:', apiKey?.length || 0)
-    
-    // Debug: Show all environment variables that might be related
-    const envKeys = Object.keys(Deno.env.toObject()).filter(key => 
-      key.includes('METAL') || key.includes('API') || key.includes('KEY')
-    );
-    console.log('Available environment keys containing METAL/API/KEY:', envKeys)
-    
-    // Log a few other known environment variables to verify environment is working
-    console.log('SUPABASE_URL exists:', !!supabaseUrl)
-    console.log('SUPABASE_SERVICE_ROLE_KEY exists:', !!supabaseKey)
-    console.log('=== END ENVIRONMENT DEBUG ===')
-    
-    const apiKeySuffix = apiKey ? apiKey.slice(-4) : 'NONE'
-    console.log('API Key suffix for display:', apiKeySuffix)
-
-    console.log('Starting fetch-metal-prices function');
-
-    // Debug fields
-    let triedLive = false;
-    let liveAttemptError = null;
-    
-    // Try to fetch live metal prices from MetalPriceAPI first
-    let commodityData = []
-    let dataSource = 'live_api'
-    let lastUpdated = new Date().toISOString()
+    let commodityData = [];
+    let dataSource = 'live_api';
+    let lastUpdated = new Date().toISOString();
     
     try {
-      triedLive = true;
-      console.log('Attempting to fetch live data from MetalPriceAPI...')
-      const liveApiData = await fetchLiveMetalPrices()
+      logger.info('Attempting to fetch live data from MetalPriceAPI');
+      const liveApiData = await fetchLiveMetalPrices(logger);
       if (liveApiData && liveApiData.rates) {
-        commodityData = transformMetalData(liveApiData)
-        console.log(`Successfully fetched ${commodityData.length} metals from live API`)
+        commodityData = transformMetalData(liveApiData);
+        logger.info(`Successfully fetched ${commodityData.length} metals from live API`);
         
-        // Update database with live prices for caching
+        // Update database with live prices for caching (with timeout)
         for (const metal of commodityData) {
-          await supabase
-            .from('commodity_prices')
-            .upsert({
-              metal_type: metal.metal_type,
-              price_per_kg: parseFloat(metal.price_per_kg),
-              daily_change_percent: metal.daily_change_percent,
-              currency: 'GBP',
-              data_source: 'live_api',
-              last_updated: new Date().toISOString()
-            }, {
-              onConflict: 'metal_type,currency'
-            })
+          await withTimeout(
+            supabase
+              .from('commodity_prices')
+              .upsert({
+                metal_type: metal.metal_type,
+                price_per_kg: parseFloat(metal.price_per_kg),
+                daily_change_percent: metal.daily_change_percent,
+                currency: 'GBP',
+                data_source: 'live_api',
+                last_updated: new Date().toISOString()
+              }, {
+                onConflict: 'metal_type,currency'
+              }),
+            Timeouts.QUICK,
+            `database upsert for ${metal.metal_type}`
+          );
         }
       } else {
-        throw new Error('No valid data from MetalPriceAPI')
+        throw new Error('No valid data from MetalPriceAPI');
       }
     } catch (apiError) {
-      liveAttemptError = apiError instanceof Error ? apiError.message : 'Unknown API error';
-      console.error('MetalPriceAPI failed, falling back to database:', apiError)
+      logger.warn('MetalPriceAPI failed, falling back to database', { error: apiError });
       
-      // Fallback to database if API fails
-      const { data: dbData, error: commodityError } = await supabase
-        .from('commodity_prices')
-        .select('*')
-        .order('last_updated', { ascending: false });
+      // Fallback to database if API fails (with timeout)
+      const { data: dbData, error: commodityError } = await withTimeout(
+        supabase
+          .from('commodity_prices')
+          .select('*')
+          .order('last_updated', { ascending: false }),
+        Timeouts.QUICK,
+        'database fallback fetch'
+      );
 
       if (commodityError) {
-        console.error('Error fetching commodity prices from database:', commodityError);
+        logger.error('Error fetching commodity prices from database', { error: commodityError });
       }
       
-      commodityData = dbData || []
-      dataSource = commodityData?.[0]?.data_source || 'mock_fallback'
-      lastUpdated = commodityData?.[0]?.last_updated || new Date().toISOString()
+      commodityData = dbData || [];
+      dataSource = commodityData?.[0]?.data_source || 'mock_fallback';
+      lastUpdated = commodityData?.[0]?.last_updated || new Date().toISOString();
       
       if (commodityData.length === 0) {
-        console.log('No database data either, will use static fallback data')
-        dataSource = 'static_fallback'
+        logger.warn('No database data either, will use static fallback data');
+        dataSource = 'static_fallback';
       }
     }
 
-    // Fetch supplier prices from database
-    const { data: supplierData, error: supplierError } = await supabase
-      .from('supplier_price_snapshots')
-      .select('*')
-      .order('last_updated', { ascending: false });
+    // Fetch supplier prices from database (with timeout)
+    const { data: supplierData, error: supplierError } = await withTimeout(
+      supabase
+        .from('supplier_price_snapshots')
+        .select('*')
+        .order('last_updated', { ascending: false }),
+      Timeouts.QUICK,
+      'supplier prices fetch'
+    );
 
     if (supplierError) {
-      console.error('Error fetching supplier prices:', supplierError);
+      logger.error('Error fetching supplier prices', { error: supplierError });
     }
 
-    // Fetch regional job pricing data from database
-    const { data: regionalPricing, error: pricingError } = await supabase
-      .from('regional_job_pricing')
-      .select('*')
-      .eq('is_active', true)
-      .order('region', { ascending: true })
+    // Fetch regional job pricing data from database (with timeout)
+    const { data: regionalPricing, error: pricingError } = await withTimeout(
+      supabase
+        .from('regional_job_pricing')
+        .select('*')
+        .eq('is_active', true)
+        .order('region', { ascending: true }),
+      Timeouts.QUICK,
+      'regional pricing fetch'
+    );
 
     if (pricingError) {
-      console.error('Error fetching regional pricing:', pricingError)
+      logger.error('Error fetching regional pricing', { error: pricingError });
     }
 
-    console.log(`Fetched ${regionalPricing?.length || 0} regional job pricing records`);
+    logger.info(`Fetched ${regionalPricing?.length || 0} regional job pricing records`);
 
     // Debug: Log commodity data to see what metals we have
     console.log('Commodity data:', commodityData?.map(item => ({ 
@@ -775,20 +746,6 @@ serve(async (req) => {
       },
     )
   } catch (error) {
-    console.error('Error in fetch-metal-prices function:', error)
-    
-    return new Response(
-      JSON.stringify({ 
-        error: 'Failed to fetch UK pricing data',
-        details: error instanceof Error ? error.message : 'Unknown error occurred' 
-      }),
-      {
-        status: 500,
-        headers: { 
-          ...corsHeaders, 
-          'Content-Type': 'application/json' 
-        },
-      },
-    )
+    return handleError(error);
   }
-})
+});

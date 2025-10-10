@@ -1,6 +1,7 @@
 # Backend Stability Improvements
 
-## Implementation Status: Days 1-2 Complete ✅
+## Implementation Status: Week 3 Day 3 Complete ✅
+## Overall Progress: 27/140 functions (19.3%) migrated
 
 ### Phase 1: Core Infrastructure (Completed)
 
@@ -235,6 +236,71 @@ const result = await logger.time(
 - 60s timeout for diagram generation (complex AI task with SVG generation)
 - Proper timeout handling prevents hanging on long AI operations
 - Structured error responses with request IDs
+
+---
+
+## Week 3 Day 3: Critical Integration Functions (27/140 = 19.3% Complete) ✅
+
+### **commissioning-agent Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging with request IDs
+- ✅ Wrapped embeddings call: 3 retries + 30s timeout
+- ✅ Wrapped BS 7671 search with database timeout protection
+- ✅ Wrapped Lovable AI commissioning call: 3 retries + 60s timeout (complex testing analysis)
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added `ValidationError` for missing API key
+
+**Impact:**
+- 60s timeout for complex testing procedure generation
+- Automatic retry on AI API failures
+- Request ID tracking for multi-step operations
+- Proper error messages with validation
+
+### **fetch-metal-prices Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging throughout
+- ✅ Wrapped MetalPriceAPI fetch: 3 retries + 30s timeout
+- ✅ Wrapped all database operations with 5s timeout
+- ✅ Added retry protection for external API calls
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added `ValidationError` for missing API key
+- ✅ Removed excessive debug logging, kept structured logs
+
+**Impact:**
+- Resilient metal price fetching with automatic retry
+- Database fallback protected with timeouts
+- Clean logging with request IDs
+- No hanging on slow API responses
+- Graceful degradation to cached data
+
+### **check-subscription Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging with request IDs
+- ✅ Wrapped Stripe customer lookup: 3 retries + 30s timeout
+- ✅ Wrapped Stripe subscription lookup: 3 retries + 30s timeout
+- ✅ Wrapped Stripe price retrieval: 3 retries + 30s timeout
+- ✅ Wrapped all database updates with 5s timeout
+- ✅ Wrapped auth operations with 5s timeout
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added `ValidationError` for auth and Stripe key checks
+
+**Impact:**
+- Automatic retry on Stripe API failures
+- Protected against Stripe API timeouts
+- Faster database operations with timeouts
+- Request ID tracking for subscription checks
+- Proper validation errors for missing credentials
+
+### **orchestrator-agent-v2 Migration** (Partial - Large File)
+**Status:** Review pending
+**Planned Changes:**
+- Add retry/timeout to all external AI calls
+- Wrap database operations with timeouts
+- Add structured logging improvements
+- Review parallel agent execution with `safeAll`
 
 ---
 

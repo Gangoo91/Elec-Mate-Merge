@@ -1,60 +1,72 @@
-
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { handleError, ValidationError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import Stripe from "https://esm.sh/stripe@14.21.0";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
-
-// Helper logging function for enhanced debugging
-const logStep = (step: string, details?: any) => {
-  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
-  console.log(`[CHECK-SUBSCRIPTION] ${step}${detailsStr}`);
-};
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Use the service role key to perform writes (upsert) in Supabase
-  const supabaseClient = createClient(
-    Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
-    { auth: { persistSession: false } }
-  );
-
   try {
-    logStep("Function started");
+    const requestId = generateRequestId();
+    const logger = createLogger(requestId);
+    
+    logger.info("💳 Check subscription started");
+
+    // Use the service role key to perform writes (upsert) in Supabase
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      { auth: { persistSession: false } }
+    );
 
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
-    if (!stripeKey) throw new Error("STRIPE_SECRET_KEY is not set");
-    logStep("Stripe key verified");
-
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader) throw new Error("No authorization header provided");
-    logStep("Authorization header found");
-
-    const token = authHeader.replace("Bearer ", "");
-    logStep("Authenticating user with token");
+    if (!stripeKey) throw new ValidationError("STRIPE_SECRET_KEY is not set");
     
-    const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) throw new ValidationError("No authorization header provided");
+    
+    const token = authHeader.replace("Bearer ", "");
+    logger.debug("Authenticating user with token");
+    
+    const { data: userData, error: userError } = await withTimeout(
+      supabaseClient.auth.getUser(token),
+      Timeouts.QUICK,
+      'user authentication'
+    );
+    
     if (userError) throw new Error(`Authentication error: ${userError.message}`);
     const user = userData.user;
-    if (!user?.email) throw new Error("User not authenticated or email not available");
-    logStep("User authenticated", { userId: user.id, email: user.email });
+    if (!user?.email) throw new ValidationError("User not authenticated or email not available");
+    
+    logger.info("User authenticated", { userId: user.id, email: user.email });
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
-    const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+    
+    // Fetch Stripe customers with retry and timeout
+    const customers = await withRetry(
+      () => withTimeout(
+        stripe.customers.list({ email: user.email, limit: 1 }),
+        Timeouts.STANDARD,
+        'Stripe customer lookup'
+      ),
+      RetryPresets.STANDARD
+    );
     
     if (customers.data.length === 0) {
-      logStep("No customer found, updating unsubscribed state");
-      await supabaseClient.from("profiles").update({
-        subscribed: false,
-        updated_at: new Date().toISOString(),
-      }).eq('id', user.id);
+      logger.info("No customer found, updating unsubscribed state");
+      
+      await withTimeout(
+        supabaseClient.from("profiles").update({
+          subscribed: false,
+          updated_at: new Date().toISOString(),
+        }).eq('id', user.id),
+        Timeouts.QUICK,
+        'profile update (no customer)'
+      );
       
       return new Response(JSON.stringify({ subscribed: false }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -63,23 +75,39 @@ serve(async (req) => {
     }
 
     const customerId = customers.data[0].id;
-    logStep("Found Stripe customer", { customerId });
+    logger.info("Found Stripe customer", { customerId });
 
-    const subscriptions = await stripe.subscriptions.list({
-      customer: customerId,
-      status: "active",
-      limit: 1,
-    });
+    // Fetch Stripe subscriptions with retry and timeout
+    const subscriptions = await withRetry(
+      () => withTimeout(
+        stripe.subscriptions.list({
+          customer: customerId,
+          status: "active",
+          limit: 1,
+        }),
+        Timeouts.STANDARD,
+        'Stripe subscription lookup'
+      ),
+      RetryPresets.STANDARD
+    );
+    
     const hasActiveSub = subscriptions.data.length > 0;
     let subscriptionTier = null;
 
     if (hasActiveSub) {
       const subscription = subscriptions.data[0];
-      logStep("Active subscription found", { subscriptionId: subscription.id });
+      logger.info("Active subscription found", { subscriptionId: subscription.id });
       
       // Determine subscription tier from price
       const priceId = subscription.items.data[0].price.id;
-      const price = await stripe.prices.retrieve(priceId);
+      const price = await withRetry(
+        () => withTimeout(
+          stripe.prices.retrieve(priceId),
+          Timeouts.STANDARD,
+          'Stripe price retrieval'
+        ),
+        RetryPresets.STANDARD
+      );
       const amount = price.unit_amount || 0;
       
       if (amount <= 399) {
@@ -89,24 +117,32 @@ serve(async (req) => {
       } else {
         subscriptionTier = "Employer";
       }
-      logStep("Determined subscription tier", { priceId, amount, subscriptionTier });
+      logger.info("Determined subscription tier", { priceId, amount, subscriptionTier });
       
       // Update profile in database
-      await supabaseClient.from("profiles").update({
-        subscribed: true,
-        updated_at: new Date().toISOString(),
-      }).eq('id', user.id);
+      await withTimeout(
+        supabaseClient.from("profiles").update({
+          subscribed: true,
+          updated_at: new Date().toISOString(),
+        }).eq('id', user.id),
+        Timeouts.QUICK,
+        'profile update (subscribed)'
+      );
     } else {
-      logStep("No active subscription found");
+      logger.info("No active subscription found");
       
       // Update profile in database to show not subscribed
-      await supabaseClient.from("profiles").update({
-        subscribed: false,
-        updated_at: new Date().toISOString(),
-      }).eq('id', user.id);
+      await withTimeout(
+        supabaseClient.from("profiles").update({
+          subscribed: false,
+          updated_at: new Date().toISOString(),
+        }).eq('id', user.id),
+        Timeouts.QUICK,
+        'profile update (not subscribed)'
+      );
     }
 
-    logStep("Updated database with subscription info", { subscribed: hasActiveSub, subscriptionTier });
+    logger.info("Updated database with subscription info", { subscribed: hasActiveSub, subscriptionTier });
     return new Response(JSON.stringify({
       subscribed: hasActiveSub,
       subscription_tier: subscriptionTier
@@ -115,11 +151,6 @@ serve(async (req) => {
       status: 200,
     });
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    logStep("ERROR in check-subscription", { message: errorMessage });
-    return new Response(JSON.stringify({ error: errorMessage }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
-    });
+    return handleError(error);
   }
 });
