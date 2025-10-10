@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download, RotateCcw, Loader } from "lucide-react";
@@ -7,6 +7,8 @@ import { InstallPlanDataV2 } from "@/components/install-planner-v2/types";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useCompanyProfile } from "@/hooks/useCompanyProfile";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ProjectDetailsForm, ProjectDetailsData } from "@/components/install-planner/ProjectDetailsForm";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -27,8 +29,76 @@ const InstallPlannerResults = () => {
   const navigate = useNavigate();
   const { companyProfile } = useCompanyProfile();
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [activeTab, setActiveTab] = useState("results");
 
   const state = location.state as LocationState;
+  
+  // Project details form state
+  const [projectDetails, setProjectDetails] = useState<ProjectDetailsData>({
+    companyName: companyProfile?.company_name || 'Your Company',
+    companyLogoUrl: companyProfile?.logo_url,
+    companyAddress: companyProfile?.company_address || '',
+    companyPostcode: companyProfile?.company_postcode || '',
+    companyPhone: companyProfile?.company_phone || '',
+    companyEmail: companyProfile?.company_email || '',
+    companyWebsite: companyProfile?.company_website,
+    registrationNumber: companyProfile?.company_registration,
+    vatNumber: companyProfile?.vat_number,
+    clientName: '',
+    propertyAddress: '',
+    postcode: '',
+    contactNumber: '',
+    clientEmail: '',
+    projectName: '',
+    location: '',
+    designEngineer: '',
+    designDate: new Date().toISOString().split('T')[0],
+    installationType: 'domestic',
+  });
+
+  // Initialize project details from planData and companyProfile
+  useEffect(() => {
+    if (!state || !state.planData) return;
+    
+    const { planData } = state;
+    setProjectDetails(prev => ({
+      ...prev,
+      companyName: companyProfile?.company_name || prev.companyName,
+      companyLogoUrl: companyProfile?.logo_url || prev.companyLogoUrl,
+      companyAddress: companyProfile?.company_address || prev.companyAddress,
+      companyPostcode: companyProfile?.company_postcode || prev.companyPostcode,
+      companyPhone: companyProfile?.company_phone || prev.companyPhone,
+      companyEmail: companyProfile?.company_email || prev.companyEmail,
+      companyWebsite: companyProfile?.company_website || prev.companyWebsite,
+      registrationNumber: companyProfile?.company_registration || prev.registrationNumber,
+      vatNumber: companyProfile?.vat_number || prev.vatNumber,
+      clientName: planData.siteInfo?.clientName || prev.clientName,
+      propertyAddress: planData.siteInfo?.propertyAddress || prev.propertyAddress,
+      postcode: planData.siteInfo?.postcode || prev.postcode,
+      contactNumber: planData.siteInfo?.contactNumber || prev.contactNumber,
+      projectName: `${planData.installationType} Installation`,
+      location: planData.siteInfo?.propertyAddress || prev.location,
+      designEngineer: planData.projectInfo?.leadElectrician || prev.designEngineer,
+      installationType: planData.installationType,
+    }));
+  }, [companyProfile, state]);
+
+  // Save to localStorage
+  useEffect(() => {
+    localStorage.setItem('installPlanner_projectDetails', JSON.stringify(projectDetails));
+  }, [projectDetails]);
+  
+  // Load from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('installPlanner_projectDetails');
+    if (saved) {
+      try {
+        setProjectDetails(JSON.parse(saved));
+      } catch (e) {
+        console.error('Failed to parse saved project details', e);
+      }
+    }
+  }, []);
   
   if (!state || !state.messages) {
     navigate('/electrician/install-planner?mode=ai');
@@ -85,16 +155,30 @@ const InstallPlannerResults = () => {
         body: {
           designData: designerData,
           planData,
-          companyDetails: companyProfile ? {
-            company_name: companyProfile.company_name,
-            company_logo_url: companyProfile.logo_url,
-            company_address: `${companyProfile.company_address || ''}, ${companyProfile.company_postcode || ''}`,
-            company_phone: companyProfile.company_phone,
-            company_email: companyProfile.company_email,
-            company_website: companyProfile.company_website,
-            registration_number: companyProfile.company_registration,
-            vat_number: companyProfile.vat_number,
-          } : undefined,
+          companyDetails: {
+            company_name: projectDetails.companyName,
+            company_logo_url: projectDetails.companyLogoUrl,
+            company_address: `${projectDetails.companyAddress}, ${projectDetails.companyPostcode}`,
+            company_phone: projectDetails.companyPhone,
+            company_email: projectDetails.companyEmail,
+            company_website: projectDetails.companyWebsite,
+            registration_number: projectDetails.registrationNumber,
+            vat_number: projectDetails.vatNumber,
+          },
+          clientDetails: {
+            client_name: projectDetails.clientName,
+            property_address: projectDetails.propertyAddress,
+            postcode: projectDetails.postcode,
+            contact_number: projectDetails.contactNumber,
+            email: projectDetails.clientEmail,
+          },
+          projectInfo: {
+            project_name: projectDetails.projectName,
+            location: projectDetails.location,
+            design_engineer: projectDetails.designEngineer,
+            design_date: projectDetails.designDate,
+            installation_type: projectDetails.installationType,
+          },
           userId: user.id,
         }
       });
@@ -133,36 +217,43 @@ const InstallPlannerResults = () => {
 
   const designerData = getDesignerData();
 
+  // Check if required fields are filled
+  const requiredFieldsFilled = projectDetails.companyName && 
+    projectDetails.clientName && 
+    projectDetails.propertyAddress && 
+    projectDetails.projectName && 
+    projectDetails.designEngineer;
+
   return (
     <div className="min-h-screen bg-elec-dark">
-      <div className="container mx-auto px-6 lg:px-12 xl:px-20 py-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-6">
         <div className="space-y-6 animate-fade-in">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-start gap-3">
               <Link to="/electrician/install-planner?mode=ai">
                 <Button variant="outline" size="sm" className="gap-2">
-                  <ArrowLeft className="h-4 w-4" /> Back to AI Designer
+                  <ArrowLeft className="h-4 w-4" /> Back
                 </Button>
               </Link>
               
-              <div>
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+              <div className="flex-1">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                   Installation Design Results
                 </h1>
-                <p className="text-muted-foreground text-sm md:text-base mt-1">
+                <p className="text-muted-foreground text-sm mt-1">
                   BS 7671:2018+A3:2024 Compliant
                 </p>
               </div>
             </div>
 
             {/* Action buttons */}
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Button 
                 variant="outline" 
                 onClick={handleDownloadPDF}
-                disabled={isGeneratingPDF || !designerData}
-                className="gap-2"
+                disabled={isGeneratingPDF || !designerData || !requiredFieldsFilled}
+                className="gap-2 flex-1 sm:flex-none"
               >
                 {isGeneratingPDF ? (
                   <>
@@ -180,21 +271,48 @@ const InstallPlannerResults = () => {
               <Button 
                 variant="outline" 
                 onClick={handleNewConsultation}
-                className="gap-2"
+                className="gap-2 flex-1 sm:flex-none"
               >
                 <RotateCcw className="h-4 w-4" />
                 New Consultation
               </Button>
             </div>
+
+            {!requiredFieldsFilled && (
+              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 text-sm text-yellow-200">
+                ⚠️ Complete all required fields in "Project Details" tab to enable PDF download
+              </div>
+            )}
           </div>
 
-          {/* Results component */}
-          <ResultsPage
-            messages={messages}
-            selectedAgents={activeAgents}
-            onExport={handleExport}
-            onNewConsultation={handleNewConsultation}
-          />
+          {/* Tabs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="w-full grid grid-cols-2">
+              <TabsTrigger value="results">Design Results</TabsTrigger>
+              <TabsTrigger value="details">
+                Project Details
+                {requiredFieldsFilled && <span className="ml-2">✓</span>}
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="results">
+              <ResultsPage
+                messages={messages}
+                selectedAgents={activeAgents}
+                onExport={handleExport}
+                onNewConsultation={handleNewConsultation}
+              />
+            </TabsContent>
+            
+            <TabsContent value="details">
+              <ProjectDetailsForm
+                companyProfile={companyProfile}
+                planData={planData}
+                value={projectDetails}
+                onChange={setProjectDetails}
+              />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>
