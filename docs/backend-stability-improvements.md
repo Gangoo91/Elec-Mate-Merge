@@ -1,7 +1,7 @@
 # Backend Stability Improvements
 
 ## Implementation Status: Week 3 Day 5 Complete ✅
-## Overall Progress: 35/140 functions (25.0%) migrated
+## Overall Progress: 37/140 functions (26.4%) migrated
 
 ### Phase 1: Core Infrastructure (Completed)
 
@@ -417,6 +417,42 @@ const result = await logger.time(
 - Complete timeout/retry protection across all AI agents
 - Parallel knowledge base searches with graceful degradation
 - Request ID tracking throughout entire agent workflow
+
+---
+
+## Medium Priority Functions (37/140 = 26.4% Complete) ✅
+
+### **create-checkout Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging with request IDs
+- ✅ Wrapped Stripe customer lookup: 3 retries + 30s timeout
+- ✅ Wrapped Stripe customer creation: 3 retries + 30s timeout
+- ✅ Wrapped Stripe checkout session creation: 3 retries + 30s timeout
+- ✅ Wrapped Supabase auth call with 5s timeout
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added `ValidationError` for missing parameters and credentials
+
+**Impact:**
+- Resilient to Stripe API rate limits and network issues
+- User authentication protected with timeout
+- Clean error messages with validation
+- Request ID tracking throughout checkout flow
+
+### **fetch-job-listings Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging with request IDs
+- ✅ Wrapped job aggregator invocation: 3 retries + 60s timeout
+- ✅ Wrapped all database operations with timeout (cleanup 5s, upsert 30s, count 5s)
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added `ValidationError` for missing Supabase credentials
+
+**Impact:**
+- Critical timeout protection for long-running aggregator
+- Database operations protected with timeouts
+- Automatic retry on aggregator failures
+- Request ID tracking throughout job fetch workflow
 
 ---
 

@@ -1,40 +1,52 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4'
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+import { corsHeaders, serve, createClient } from '../_shared/deps.ts';
+import { handleError, ValidationError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 Deno.serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log('[FETCH-JOB-LISTINGS] Starting job fetch process');
+    const requestId = generateRequestId();
+    const logger = createLogger(requestId);
     
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    logger.info('📋 Fetch job listings started');
+    
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    
+    if (!supabaseUrl || !supabaseServiceKey) {
+      throw new ValidationError('Supabase credentials not configured');
+    }
+    
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Call the live job aggregator to get fresh job data with retry and timeout
+    logger.info('Calling live job aggregator');
+    const { data: aggregatedData, error: aggregatorError } = await withTimeout(
+      withRetry(
+        () => supabase.functions.invoke('live-job-aggregator', {
+          body: {
+            keywords: 'electrician electrical maintenance installation',
+            location: 'UK',
+            page: 1
+          }
+        }),
+        RetryPresets.STANDARD
+      ),
+      Timeouts.LONG,
+      'job aggregator invocation'
     );
 
-    // Call the live job aggregator to get fresh job data
-    console.log('[FETCH-JOB-LISTINGS] Calling live job aggregator');
-    const { data: aggregatedData, error: aggregatorError } = await supabase.functions.invoke('live-job-aggregator', {
-      body: {
-        keywords: 'electrician electrical maintenance installation',
-        location: 'UK',
-        page: 1
-      }
-    });
-
     if (aggregatorError) {
-      console.error('[FETCH-JOB-LISTINGS] Aggregator error:', aggregatorError);
+      logger.error('Aggregator error', { error: aggregatorError });
       throw new Error(`Job aggregation failed: ${aggregatorError.message}`);
     }
 
-    console.log('[FETCH-JOB-LISTINGS] Aggregated jobs received:', aggregatedData?.jobs?.length || 0);
+    logger.info('Aggregated jobs received', { count: aggregatedData?.jobs?.length || 0 });
 
     if (!aggregatedData?.jobs || aggregatedData.jobs.length === 0) {
       return new Response(
@@ -48,14 +60,18 @@ Deno.serve(async (req) => {
     }
 
     // Clear existing jobs that are older than 24 hours to keep data fresh
-    console.log('[FETCH-JOB-LISTINGS] Cleaning up old job listings');
-    const { error: deleteError } = await supabase
-      .from('job_listings')
-      .delete()
-      .lt('updated_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
+    logger.info('Cleaning up old job listings');
+    const { error: deleteError } = await withTimeout(
+      supabase
+        .from('job_listings')
+        .delete()
+        .lt('updated_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()),
+      Timeouts.QUICK,
+      'old jobs cleanup'
+    );
 
     if (deleteError) {
-      console.error('[FETCH-JOB-LISTINGS] Error cleaning old jobs:', deleteError);
+      logger.error('Error cleaning old jobs', { error: deleteError });
     }
 
     // Transform and insert new jobs
@@ -75,27 +91,38 @@ Deno.serve(async (req) => {
       count: 1
     }));
 
-    console.log('[FETCH-JOB-LISTINGS] Inserting', jobsToInsert.length, 'new jobs');
+    logger.info('Inserting new jobs', { count: jobsToInsert.length });
     
-    const { data: insertedJobs, error: insertError } = await supabase
-      .from('job_listings')
-      .upsert(jobsToInsert, { 
-        onConflict: 'title,company',
-        ignoreDuplicates: false 
-      })
-      .select('count');
+    const { data: insertedJobs, error: insertError } = await withTimeout(
+      supabase
+        .from('job_listings')
+        .upsert(jobsToInsert, { 
+          onConflict: 'title,company',
+          ignoreDuplicates: false 
+        })
+        .select('count'),
+      Timeouts.STANDARD,
+      'job listings upsert'
+    );
 
     if (insertError) {
-      console.error('[FETCH-JOB-LISTINGS] Insert error:', insertError);
+      logger.error('Insert error', { error: insertError });
       throw new Error(`Failed to store jobs: ${insertError.message}`);
     }
 
-    // Get total count after insert
-    const { count: totalJobs } = await supabase
-      .from('job_listings')
-      .select('*', { count: 'exact', head: true });
+    // Get total count after insert with timeout
+    const { count: totalJobs } = await withTimeout(
+      supabase
+        .from('job_listings')
+        .select('*', { count: 'exact', head: true }),
+      Timeouts.QUICK,
+      'total jobs count'
+    );
 
-    console.log('[FETCH-JOB-LISTINGS] Successfully stored', jobsToInsert.length, 'jobs. Total in database:', totalJobs);
+    logger.info('Successfully stored jobs', { 
+      newJobs: jobsToInsert.length, 
+      totalInDatabase: totalJobs 
+    });
 
     return new Response(
       JSON.stringify({ 
@@ -109,17 +136,6 @@ Deno.serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('[FETCH-JOB-LISTINGS] Error:', error);
-    return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
-        message: 'Failed to fetch job listings'
-      }),
-      { 
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
+    return handleError(error);
   }
 });
