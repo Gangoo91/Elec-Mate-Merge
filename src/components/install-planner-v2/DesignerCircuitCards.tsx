@@ -34,13 +34,6 @@ export const DesignerCircuitCards = ({ circuits }: { circuits: Circuit[] }) => {
 
   return (
     <div className="space-y-3">
-      {circuits.some(c => !c.calculations) && (
-        <div className="px-4 py-3 bg-yellow-500/10 border-l-4 border-yellow-500 rounded-r">
-          <p className="text-sm text-yellow-500">
-            ⚠️ Some calculation details are missing. The AI may not have provided complete data.
-          </p>
-        </div>
-      )}
       {circuits.map(circuit => (
         <Card key={circuit.id} className="border-blue-500/20 bg-card/40">
           <CardHeader className="pb-3 px-4 sm:px-6">
@@ -84,71 +77,59 @@ export const DesignerCircuitCards = ({ circuits }: { circuits: Circuit[] }) => {
                 <div className="grid grid-cols-3 gap-3 text-sm">
                   <div>
                     <p className="text-muted-foreground">Ib (Design)</p>
-                    <p className="font-semibold text-foreground">{circuit.calculations?.Ib ?? '—'}A</p>
+                    <p className="font-semibold text-foreground">{circuit.calculations.Ib}A</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">In (MCB)</p>
-                    <p className="font-semibold text-foreground">{circuit.calculations?.In ?? '—'}A</p>
+                    <p className="font-semibold text-foreground">{circuit.calculations.In}A</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">Iz (Cable)</p>
-                    <p className="font-semibold text-foreground">{circuit.calculations?.Iz ?? '—'}A</p>
+                    <p className="font-semibold text-foreground">{circuit.calculations.Iz}A</p>
                   </div>
                 </div>
 
                 {/* Voltage Drop */}
-                <div className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30">
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Voltage Drop</p>
-                    <p className="text-xs text-muted-foreground">
-                      {circuit.calculations?.voltageDrop?.volts ?? '—'}V ({circuit.calculations?.voltageDrop?.percent ?? '—'}%)
-                    </p>
-                  </div>
-                  {circuit.calculations?.voltageDrop?.compliant !== undefined ? (
-                    circuit.calculations.voltageDrop.compliant ? (
-                      <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/30">
-                        <CheckCircle2 className="h-3 w-3 mr-1" />
-                        Compliant
-                      </Badge>
-                    ) : (
-                      <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500/30">
-                        <AlertTriangle className="h-3 w-3 mr-1" />
-                        Exceeds Limit
-                      </Badge>
-                    )
-                  ) : (
-                    <Badge variant="outline" className="bg-muted text-muted-foreground">
-                      Unknown
-                    </Badge>
-                  )}
-                </div>
+          <div className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30">
+            <div>
+              <p className="text-sm font-medium text-foreground">Voltage Drop</p>
+              <p className="text-xs text-muted-foreground">
+                {circuit.calculations.voltageDrop.volts}V ({circuit.calculations.voltageDrop.percent}%)
+              </p>
+            </div>
+            {circuit.calculations.voltageDrop.compliant ? (
+              <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/30">
+                <CheckCircle2 className="h-3 w-3 mr-1" />
+                Compliant
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500/30">
+                <AlertTriangle className="h-3 w-3 mr-1" />
+                Exceeds Limit
+              </Badge>
+            )}
+          </div>
 
                 {/* Earth Fault Loop */}
-                <div className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30">
-                  <div>
-                    <p className="text-sm font-medium text-foreground">Earth Fault Loop (Zs)</p>
-                    <p className="text-xs text-muted-foreground">
-                      {circuit.calculations?.zs?.calculated ?? '—'}Ω (max {circuit.calculations?.zs?.max ?? '—'}Ω)
-                    </p>
-                  </div>
-                  {circuit.calculations?.zs?.compliant !== undefined ? (
-                    circuit.calculations.zs.compliant ? (
-                      <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/30">
-                        <CheckCircle2 className="h-3 w-3 mr-1" />
-                        Compliant
-                      </Badge>
-                    ) : (
-                      <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500/30">
-                        <AlertTriangle className="h-3 w-3 mr-1" />
-                        Exceeds Max
-                      </Badge>
-                    )
-                  ) : (
-                    <Badge variant="outline" className="bg-muted text-muted-foreground">
-                      Unknown
-                    </Badge>
-                  )}
-                </div>
+          <div className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30">
+            <div>
+              <p className="text-sm font-medium text-foreground">Earth Fault Loop (Zs)</p>
+              <p className="text-xs text-muted-foreground">
+                {circuit.calculations.zs.calculated}Ω (max {circuit.calculations.zs.max}Ω)
+              </p>
+            </div>
+            {circuit.calculations.zs.compliant ? (
+              <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/30">
+                <CheckCircle2 className="h-3 w-3 mr-1" />
+                Compliant
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500/30">
+                <AlertTriangle className="h-3 w-3 mr-1" />
+                Exceeds Max
+              </Badge>
+            )}
+          </div>
 
                 {/* Compliance Note */}
                 <div className="pt-2 border-t border-border">

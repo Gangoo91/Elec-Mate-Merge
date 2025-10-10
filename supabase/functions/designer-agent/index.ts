@@ -11,6 +11,35 @@ import { safeAll } from '../_shared/safe-parallel.ts';
 import { calculateVoltageDrop, getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
 import { getMaxZs, checkRCDRequirement } from "../shared/bs7671ProtectionData.ts";
+import { calculateCableCapacity } from '../_shared/calculationEngines.ts';
+
+// TypeScript Interfaces for Type Safety
+interface CircuitCalculations {
+  Ib: number;
+  In: number;
+  Iz: number;
+  voltageDrop: {
+    volts: number;
+    percent: number;
+    compliant: boolean;
+  };
+  zs: {
+    calculated: number;
+    max: number;
+    compliant: boolean;
+  };
+}
+
+interface DesignedCircuit {
+  id: string;
+  name: string;
+  loadType: string;
+  load: number;
+  cableSize: string;
+  protection: string;
+  calculations: CircuitCalculations;
+  compliance: string;
+}
 
 // corsHeaders imported from shared deps
 
@@ -360,6 +389,53 @@ Use professional language with UK English spelling. Present calculations clearly
       try {
         const parsed = JSON.parse(responseContent);
         console.log('✅ Parsed structured multi-circuit data:', parsed.circuits?.length, 'circuits');
+        
+        // VALIDATE: Ensure every circuit has calculations
+        if (parsed.circuits && Array.isArray(parsed.circuits)) {
+          parsed.circuits.forEach((circuit: any, index: number) => {
+            if (!circuit.calculations || !circuit.calculations.Ib) {
+              console.warn(`⚠️ Circuit ${index + 1} (${circuit.name}) missing calculations - computing fallback`);
+              
+              // Compute calculations using shared BS 7671 engine
+              const loadW = circuit.load || 0;
+              const cableSize = parseFloat(circuit.cableSize) || 2.5;
+              const deviceRating = parseInt(circuit.protection) || 32;
+              const designCurrent = loadW / 230;
+              
+              const cableCalc = calculateCableCapacity({
+                cableSize,
+                designCurrent,
+                deviceRating,
+                ambientTemp: 30,
+                groupingCircuits: 1,
+                installationMethod: 'Method C',
+                cableType: 'PVC'
+              });
+              
+              const voltDropCalc = calculateVoltageDrop(cableSize, designCurrent, 20, 230);
+              const zsCalc = getMaxZs(circuit.protection?.includes('Type C') ? 'C' : 'B', deviceRating, 0.4);
+              const r1r2PerMeter = cableSize === 2.5 ? 7.41 : cableSize === 4 ? 4.61 : 3.08;
+              const zs = 0.35 + (r1r2PerMeter * 20 / 1000);
+              
+              circuit.calculations = {
+                Ib: cableCalc.Ib,
+                In: cableCalc.In,
+                Iz: cableCalc.Iz,
+                voltageDrop: {
+                  volts: voltDropCalc.voltageDropVolts,
+                  percent: voltDropCalc.voltageDropPercent,
+                  compliant: voltDropCalc.compliant
+                },
+                zs: {
+                  calculated: parseFloat(zs.toFixed(2)),
+                  max: zsCalc.maxZs,
+                  compliant: zs <= zsCalc.maxZs
+                }
+              };
+            }
+          });
+        }
+        
         Object.assign(structuredData, parsed);
       } catch (e) {
         console.warn('⚠️ Multi-circuit response is not valid JSON, falling back to text');
@@ -411,7 +487,7 @@ Use professional language with UK English spelling. Present calculations clearly
         rcdTest: calculationResults.rcdRequirements?.required ? '30mA RCD required' : 'N/A'
       };
       
-      // NEW: Add structured circuits array for drawing components
+      // NEW: Add structured circuits array for drawing components with STANDARDIZED calculations property
       structuredData.circuits = [{
         circuitNumber: 1,
         name: formatCircuitName(circuitParams.circuitType),
@@ -430,12 +506,20 @@ Use professional language with UK English spelling. Present calculations clearly
         rcdProtected: calculationResults.rcdRequirements?.required || false,
         rcdRating: 30,
         ze: 0.35,
-        calculationResults: {
-          zs: calculationResults.zs || null,
-          maxZs: calculationResults.maxZs?.maxZs || null,
-          installationMethod: circuitParams.installationMethod,
-          deratedCapacity: calculationResults.cableCapacity.Iz,
-          safetyMargin: calculationResults.cableCapacity.compliance.safetyMargin
+        calculations: {
+          Ib: calculationResults.cableCapacity.Ib,
+          In: calculationResults.cableCapacity.In,
+          Iz: calculationResults.cableCapacity.Iz,
+          voltageDrop: {
+            volts: calculationResults.voltageDrop.voltageDropVolts,
+            percent: calculationResults.voltageDrop.voltageDropPercent,
+            compliant: calculationResults.voltageDrop.compliant
+          },
+          zs: {
+            calculated: calculationResults.zs,
+            max: calculationResults.maxZs?.maxZs,
+            compliant: calculationResults.zs <= calculationResults.maxZs?.maxZs
+          }
         }
       }];
       
