@@ -1,6 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { calculateCableCapacity, calculateVoltageDrop } from "../designer-agent/calculationEngines.ts";
+import { calculateCableCapacity, calculateVoltageDrop } from "../_shared/calculationEngines.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
