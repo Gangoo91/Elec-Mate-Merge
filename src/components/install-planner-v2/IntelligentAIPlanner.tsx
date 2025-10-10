@@ -1185,41 +1185,39 @@ onError: (error) => {
             className="mb-2"
           />
 
-          {/* Chat Input - Auto-expanding with External Controls */}
-          <div className="flex items-end gap-2">
-            {/* Photo Upload Button - Outside Left */}
-            <div className="shrink-0">
+          {/* Chat Input - Compact Grid Layout */}
+          <div className="grid grid-cols-[1fr_auto_auto] items-end gap-2">
+            {/* Textarea - Grows */}
+            <Textarea
+              ref={textareaRef}
+              value={input}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyPress}
+              placeholder="Type your message..."
+              disabled={isLoading}
+              rows={1}
+              className="!min-h-[44px] sm:!min-h-[44px] md:!min-h-[44px] lg:!min-h-[44px] max-h-[88px] resize-none overflow-y-auto w-full text-base font-medium rounded-xl px-3 py-2 bg-white/5 border border-white/10 text-white placeholder:text-white/80 leading-tight transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 focus-visible:outline-none"
+              style={{ fontSize: '16px', height: '44px' }}
+            />
+
+            {/* Photo Upload - Stacked Vertical */}
+            <div className="flex flex-col gap-1 self-end">
               <PhotoUploadButton 
                 onPhotoUploaded={(url) => {
                   setInput(prev => prev + ` [Photo attached: ${url}]`);
                   toast.success('Photo added to message');
                 }}
                 disabled={isLoading}
-                className="h-9 w-9 shrink-0 bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
+                className="bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
               />
             </div>
 
-            {/* Textarea Container - Grows */}
-            <div className="relative flex-1">
-              <Textarea
-                ref={textareaRef}
-                value={input}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyPress}
-                placeholder="Type your message..."
-                disabled={isLoading}
-                rows={1}
-                className="min-h-[44px] max-h-[88px] resize-none overflow-y-auto w-full text-base font-medium rounded-xl px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-white/80 leading-tight transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 focus-visible:outline-none"
-                style={{ fontSize: '16px', height: '44px' }}
-              />
-            </div>
-
-            {/* Send Button - Outside Right */}
+            {/* Send Button */}
             <Button 
               onClick={handleSend}
               disabled={isLoading || isStreaming || !input.trim()}
               size="icon"
-              className="mb-1 h-9 w-9 shrink-0 rounded-lg bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
+              className="self-end h-9 w-9 shrink-0 rounded-lg bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
               aria-label="Send message"
             >
               {(isLoading || isStreaming) ? (
