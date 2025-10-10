@@ -437,7 +437,7 @@ Use professional language with UK English spelling. Present calculations clearly
         }
         
         // VALIDATE & COMPUTE: Ensure totalLoad and totalLoadKW exist
-        if (!parsed.totalLoad || !parsed.totalLoadKW) {
+        if ((!parsed.totalLoad || !parsed.totalLoadKW) && Array.isArray(parsed.circuits)) {
           console.warn('⚠️ AI forgot totalLoad/totalLoadKW - computing from circuits');
           
           const computedTotalLoad = parsed.circuits.reduce((sum: number, c: any) => {
@@ -448,10 +448,14 @@ Use professional language with UK English spelling. Present calculations clearly
           parsed.totalLoadKW = parseFloat((computedTotalLoad / 1000).toFixed(2));
           
           console.log(`✅ Computed totalLoad: ${parsed.totalLoad}W (${parsed.totalLoadKW}kW)`);
+        } else if (!parsed.totalLoad && !Array.isArray(parsed.circuits)) {
+          console.warn('⚠️ No circuits array and no totalLoad - defaulting to 0');
+          parsed.totalLoad = 0;
+          parsed.totalLoadKW = 0;
         }
 
         // VALIDATE: Ensure diversifiedLoad exists if diversityFactor is present
-        if (parsed.diversityFactor && !parsed.diversifiedLoad) {
+        if (parsed.diversityFactor && !parsed.diversifiedLoad && parsed.totalLoad) {
           parsed.diversifiedLoad = Math.round(parsed.totalLoad * parsed.diversityFactor);
           console.log(`✅ Computed diversifiedLoad: ${parsed.diversifiedLoad}W using factor ${parsed.diversityFactor}`);
         }
