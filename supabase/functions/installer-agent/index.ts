@@ -1,6 +1,8 @@
+// INSTALLER AGENT - Practical installation guidance
+// Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { 
   CABLE_SUPPORT_INTERVALS, 
   SAFE_ZONES, 

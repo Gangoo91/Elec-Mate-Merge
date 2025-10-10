@@ -1,9 +1,10 @@
 // CONVERSATIONAL MULTI-AGENT ORCHESTRATOR V2
 // Sequential agent conversations where each specialist speaks directly to the user
+// Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import type { Message, ConversationState, ConversationSummary } from '../_shared/conversation-memory.ts';
 import { buildConversationState, summarizeConversation } from '../_shared/conversation-memory.ts';
 import { detectIntents, type IntentAnalysis } from '../_shared/intent-detection.ts';
