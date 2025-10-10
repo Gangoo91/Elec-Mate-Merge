@@ -346,3 +346,10 @@ verify_jwt = false
 
 [functions.generate-design-alternatives]
 verify_jwt = false
+
+[functions.orchestrator-agent-v2]
+verify_jwt = false
+timeout_sec = 300
+
+[functions.conversational-install-planner]
+verify_jwt = false

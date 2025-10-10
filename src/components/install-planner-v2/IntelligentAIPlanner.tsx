@@ -379,6 +379,41 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       );
 
     } catch (error) {
+      // Fallback: Try non-streaming conversational-install-planner if streaming fails quickly
+      console.error('Streaming error, attempting fallback:', error);
+      
+      try {
+        const { data: fallbackData, error: fallbackError } = await supabase.functions.invoke('conversational-install-planner', {
+          body: { 
+            messages: [...messages, { role: 'user', content: userMessage }],
+            currentData: planData
+          }
+        });
+
+        if (fallbackError) throw fallbackError;
+
+        // Remove acknowledgment and add fallback response
+        setMessages(prev => {
+          const filtered = prev.filter((_, i) => i !== acknowledgmentIndex);
+          return [...filtered, {
+            role: 'assistant',
+            content: fallbackData.response || 'Got your requirements. What else do you need?',
+            activeAgents: ['fallback']
+          }];
+        });
+
+        toast.info("Fallback mode used", {
+          description: "Streaming temporarily unavailable"
+        });
+
+        setLastSendFailed(false);
+        setReasoningSteps([]);
+        return;
+      } catch (fallbackError) {
+        console.error('Fallback also failed:', fallbackError);
+        // Continue to main error handler below
+        error = fallbackError;
+      }
       console.error('AI conversation error:', error);
       const errorMsg = error instanceof Error ? error.message : 'Unknown error';
       

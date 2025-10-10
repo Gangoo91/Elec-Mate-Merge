@@ -66,7 +66,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     }, 1000);
 
     try {
-      const FUNCTION_URL = "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/orchestrator-agent";
+      const FUNCTION_URL = "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/orchestrator-agent-v2";
       
       if (!FUNCTION_URL) {
         throw new Error('Invalid function URL configuration');
