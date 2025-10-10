@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 
 interface StreamChunk {
-  type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error';
+  type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error' | 'agent_skipped';
   content?: string;
   data?: any;
   agent?: string;
@@ -236,7 +236,17 @@ signal: controller.signal
                   case 'agent_error':
                     const errorMsg = chunk.data?.error || chunk.content || 'Unknown error';
                     console.error(`Agent ${chunk.agent} error:`, errorMsg);
-                    options.onError?.(`${chunk.agent} failed: ${errorMsg}`);
+                    options.onError?.(`${chunk.agent} encountered an issue: ${errorMsg}`);
+                    break;
+                  
+                  case 'agent_skipped':
+                    // Agent was skipped due to missing dependencies
+                    if (chunk.agent) {
+                      const skipReason = chunk.data?.reason || 'Missing prerequisite data';
+                      console.warn(`⏭️ ${chunk.agent} skipped: ${skipReason}`);
+                      fullResponse += `\n\n*${chunk.agent} skipped — ${skipReason}. Other agents continuing...*\n`;
+                      onToken(`\n\n*${chunk.agent} skipped — ${skipReason}*\n`);
+                    }
                     break;
 
                   case 'token':

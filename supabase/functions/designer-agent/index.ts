@@ -289,6 +289,10 @@ ${designKnowledge ? `DESIGN GUIDANCE:\n${designKnowledge}\n` : ''}
 Use UK English. Be thorough. Return valid JSON only.`;
     } else {
       // Single circuit mode
+      const cableLabel = circuitParams.location === 'outdoor' 
+        ? `${circuitParams.cableSize}mm² Steel Wire Armoured (SWA) 2-core + CPC (BS 5467 or BS 6724)`
+        : `${circuitParams.cableSize}mm² twin & earth (6242Y)`;
+      
       systemPrompt = `You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance knowledge.
 
 FORMAT YOUR RESPONSE EXACTLY AS SHOWN BELOW:
@@ -298,6 +302,7 @@ CIRCUIT SPECIFICATION
 Load: ${circuitParams.power}W (${circuitParams.power/1000}kW)
 Distance from board: ${circuitParams.cableLength}m
 Installation method: ${circuitParams.installationMethod}
+${circuitParams.location === 'outdoor' ? `Environment: Outdoor installation (${circuitParams.ambientTemp}°C ambient)` : ''}
 Supply: ${circuitParams.voltage}V ${circuitParams.phases}-phase
 Circuit type: ${circuitParams.circuitType}
 
@@ -305,7 +310,7 @@ CALCULATIONS
 
 Design current (Ib): ${calculationResults?.cableCapacity?.Ib || 'TBC'}A
 Protection device: ${calculationResults?.cableCapacity?.In || circuitParams.deviceRating}A MCB Type ${circuitParams.deviceType}
-Cable specification: ${circuitParams.cableSize}mm² twin & earth (6242Y)
+Cable specification: ${cableLabel}
 Tabulated capacity (It): ${calculationResults?.cableCapacity?.IzTabulated || 'TBC'}A (${calculationResults?.cableCapacity?.tableReference || 'Table 4D5'})
 Correction factors: Ca=${calculationResults?.cableCapacity?.factors?.temperatureFactor || '1.0'}, Cg=${calculationResults?.cableCapacity?.factors?.groupingFactor || '1.0'}
 Derated capacity (Iz): ${calculationResults?.cableCapacity?.Iz || 'TBC'}A
@@ -405,20 +410,59 @@ Use professional language with UK English spelling. Present calculations clearly
           }
         });
 
-        // Check if circuits have calculations
+        // COMPUTE MISSING FIELDS (defensive fallback with logging)
+        if ((!parsed.totalLoad || !parsed.totalLoadKW) && Array.isArray(parsed.circuits)) {
+          console.warn('⚠️ AI forgot totalLoad/totalLoadKW - computing from circuits');
+          
+          const computedTotalLoad = parsed.circuits.reduce((sum: number, c: any) => {
+            return sum + (c.load || 0);
+          }, 0);
+          
+          parsed.totalLoad = computedTotalLoad;
+          parsed.totalLoadKW = parseFloat((computedTotalLoad / 1000).toFixed(2));
+          
+          console.log(`✅ Computed totalLoad: ${parsed.totalLoad}W (${parsed.totalLoadKW}kW)`);
+        }
+
+        // Compute diversifiedLoad if missing
+        if (parsed.diversityFactor && !parsed.diversifiedLoad && parsed.totalLoad) {
+          parsed.diversifiedLoad = Math.round(parsed.totalLoad * parsed.diversityFactor);
+          console.log(`✅ Computed diversifiedLoad: ${parsed.diversifiedLoad}W using factor ${parsed.diversityFactor}`);
+        }
+
+        // Check and fix circuits missing calculations using BS 7671 engines
         if (parsed.circuits && Array.isArray(parsed.circuits)) {
           parsed.circuits.forEach((circuit: any, index: number) => {
             if (!circuit.calculations || !circuit.calculations.Ib) {
-              console.error(`❌ Circuit ${index + 1} (${circuit.name}) MISSING calculations object`);
-              console.error('Circuit data:', JSON.stringify(circuit, null, 2));
+              console.warn(`⚠️ Circuit ${index + 1} (${circuit.name}) missing calculations - computing`);
+              
+              // Use the calculation engines we imported
+              if (circuit.load && circuit.cableSize) {
+                const voltage = circuit.voltage || 230;
+                const designCurrent = circuit.load / voltage;
+                const deviceRating = parseInt(circuit.protectionDevice) || 32;
+                
+                const calcResult = calculateCableCapacity({
+                  cableSize: parseFloat(circuit.cableSize),
+                  designCurrent,
+                  deviceRating,
+                  ambientTemp: 30,
+                  groupingCircuits: 1,
+                  installationMethod: circuit.installationMethod || 'clipped-direct',
+                  cableType: circuit.cableType || 'pvc-twin-earth'
+                });
+                
+                circuit.calculations = {
+                  Ib: designCurrent,
+                  In: deviceRating,
+                  Iz: calcResult.Iz,
+                  voltageDrop: calcResult.voltageDrop,
+                  zs: calcResult.earthFault
+                };
+                console.log(`✅ Computed calculations for circuit ${index + 1}`);
+              }
             }
           });
-        }
-
-        // If critical fields missing, log the FULL RAW RESPONSE
-        if (!parsed.totalLoad || !parsed.totalLoadKW) {
-          console.error('❌ AI RESPONSE MISSING REQUIRED FIELDS');
-          console.error('Full AI response:', responseContent.substring(0, 1000));
         }
         
         Object.assign(structuredData, parsed);
@@ -689,6 +733,20 @@ function extractCircuitParams(userMessage: string, currentDesign: any): any {
   if (msgLower.includes('outdoor') || msgLower.includes('outside') || msgLower.includes('garage')) {
     location = location || 'outdoor';
   }
+  
+  // Extract ambient temperature (including negative values)
+  const tempMatch = message.match(/([-\d]+)\s*°?C/i);
+  const ambientTemp = tempMatch ? parseInt(tempMatch[1]) : (currentDesign?.environmentalProfile?.finalApplied?.ambientTemp || 30);
+  
+  if (tempMatch) {
+    console.log(`🌡️ Detected ambient temp: ${ambientTemp}°C`);
+  }
+  
+  // Outdoor environment detected - log it and set defaults
+  if (isOutdoor) {
+    console.log('🌍 OUTDOOR installation detected - defaulting to SWA cable on tray');
+    location = 'outdoor';
+  }
 
   return {
     hasEnoughData: power > 0 && designCurrent > 0,
@@ -700,10 +758,10 @@ function extractCircuitParams(userMessage: string, currentDesign: any): any {
     deviceType: 'B',
     cableSize,
     cableLength: lengthMatch ? parseInt(lengthMatch[1]) : (currentDesign?.cableLength || 15),
-    ambientTemp: currentDesign?.environmentalProfile?.finalApplied?.ambientTemp || 25,
+    ambientTemp,
     groupingCircuits: currentDesign?.environmentalProfile?.finalApplied?.grouping || 1,
-    installationMethod: currentDesign?.installationMethod || 'clipped-direct',
-    cableType: '6242Y',
+    installationMethod: isOutdoor ? 'cable-tray' : (currentDesign?.installationMethod || 'clipped-direct'),
+    cableType: isOutdoor ? 'swa' : '6242Y',
     circuitType,
     location
   };

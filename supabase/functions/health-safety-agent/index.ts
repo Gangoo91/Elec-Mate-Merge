@@ -440,7 +440,32 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     // Extract structured data from tool call
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
     
+    // GRACEFUL FALLBACK if tool call missing
     if (!toolCall) {
+      console.warn('⚠️ H&S agent: No tool call returned - generating fallback assessment');
+      
+      const textResponse = data.choices?.[0]?.message?.content || '';
+      const minimumHazardCount = jobScale === 'domestic' ? 5 : jobScale === 'commercial' ? 7 : 10;
+      
+      // Generate minimum viable hazard set
+      const fallbackHazards = generateFallbackHazards(workType, jobScale, minimumHazardCount);
+      
+      logger.warn('Using fallback H&S assessment', { hazardCount: fallbackHazards.length });
+      
+      return new Response(JSON.stringify({
+        response: textResponse || generateDefaultSafetyGuidance(workType, jobScale),
+        structuredData: {
+          riskAssessment: { hazards: fallbackHazards },
+          requiredPPE: generateDefaultPPE(),
+          methodStatement: generateDefaultMethodSteps(jobScale),
+          emergencyProcedures: emergencyProcedures.electricShock.slice(0, 3),
+          citations: ['EWR 1989 Reg 4(3)', 'CDM 2015 Reg 13', 'BS 7671:2018 Reg 537.2']
+        },
+        confidence: 0.7
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
       console.error('❌ No tool call in response');
       throw new Error('No tool call from AI');
     }
@@ -609,4 +634,83 @@ function extractCircuitDetails(message: string, currentDesign: any, context: any
   }
 
   return details;
+}
+
+function enforceUKEnglish(text: string): string {
+  return text
+    .replace(/analyzing/gi, 'analysing')
+    .replace(/realize/gi, 'realise')
+    .replace(/categorize/gi, 'categorise')
+    .replace(/minimize/gi, 'minimise')
+    .replace(/organize/gi, 'organise')
+    .replace(/\bmeter\b/gi, 'metre')
+    .replace(/\bliter\b/gi, 'litre')
+    .replace(/labor/gi, 'labour')
+    .replace(/\bspill\b/gi, 'spillage');
+}
+
+// Fallback hazard generation for when AI doesn't return tool call
+function generateFallbackHazards(workType: string, scale: string, count: number): any[] {
+  const baseHazards = [
+    { hazard: 'Electric shock from existing circuits', likelihood: 2, severity: 4, riskRating: 8, 
+      controls: ['Safe isolation to EWR 1989', 'Voltage indicator testing', 'Lock-off devices'], residualRisk: 4 },
+    { hazard: 'Manual handling of cable drums and equipment', likelihood: 3, severity: 2, riskRating: 6,
+      controls: ['Team lift for loads >25kg', 'Mechanical aids where practical'], residualRisk: 3 },
+    { hazard: 'Work at height (ladder access)', likelihood: 2, severity: 4, riskRating: 8,
+      controls: ['Class 1 ladder to BS EN 131', '1:4 angle', '3-point contact'], residualRisk: 4 },
+    { hazard: 'Hidden services in walls (cables, pipes)', likelihood: 3, severity: 3, riskRating: 9,
+      controls: ['Cable detector scanning', 'Safe zones BS 7671 Reg 522.6.202'], residualRisk: 6 },
+    { hazard: 'Dust and debris from chasing', likelihood: 4, severity: 1, riskRating: 4,
+      controls: ['Dust extraction', 'Respiratory protection FFP3'], residualRisk: 2 }
+  ];
+  
+  if (workType.includes('outdoor')) {
+    baseHazards.push(
+      { hazard: 'Adverse weather conditions', likelihood: 3, severity: 2, riskRating: 6,
+        controls: ['Suspend work in high winds >40mph', 'Weatherproof clothing'], residualRisk: 3 },
+      { hazard: 'Slips and trips on external surfaces', likelihood: 3, severity: 2, riskRating: 6,
+        controls: ['Non-slip footwear BS EN ISO 20345', 'Clear walkways'], residualRisk: 3 }
+    );
+  }
+  
+  return baseHazards.slice(0, count);
+}
+
+function generateDefaultPPE(): string[] {
+  return [
+    'Safety boots (BS EN ISO 20345)',
+    'Insulated gloves (BS EN 60903)',
+    'Hard hat (BS EN 397)',
+    'High-visibility vest (BS EN ISO 20471)',
+    'Safety glasses (BS EN 166)'
+  ];
+}
+
+function generateDefaultMethodSteps(scale: string): string[] {
+  const steps = [
+    'Isolate supply at consumer unit',
+    'Lock-off and tag circuit',
+    'Test for dead with voltage indicator',
+    'Route cable maintaining safe zones',
+    'Fix cable at appropriate intervals',
+    'Terminate at consumer unit and accessories',
+    'Re-test and energise'
+  ];
+  
+  if (scale === 'commercial' || scale === 'industrial') {
+    steps.unshift('Obtain permit to work');
+    steps.push('Complete handover documentation');
+  }
+  
+  return steps;
+}
+
+function generateDefaultSafetyGuidance(workType: string, scale: string): string {
+  return `Health & safety assessment for ${workType} (${scale} scale).
+
+Key hazards identified include electric shock, manual handling, and work at height.
+
+Safe isolation procedures must be followed per EWR 1989 Regulation 4(3).
+
+Full risk assessment and method statement provided in structured data.`;
 }

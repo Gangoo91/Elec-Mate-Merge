@@ -90,6 +90,10 @@ serve(async (req) => {
     const hasDesigner = previousAgents.includes('designer');
     const hasInstaller = previousAgents.includes('installer');
 
+    const lowerMsg = userMessage.toLowerCase();
+    const isOutdoor = lowerMsg.includes('outside') || lowerMsg.includes('outdoor') || 
+                      lowerMsg.includes('external') || lowerMsg.includes('tray');
+    
     let systemPrompt = `You are a cost estimator providing itemised UK electrical installation pricing (2025 rates).
 
 CRITICAL RULES:
@@ -99,7 +103,7 @@ CRITICAL RULES:
 4. Use design specs ONLY to identify which materials to price - never repeat the specifications
 5. Use bullet points (•) for each material line item
 
-CRITICAL: Use the pricing data from our database below. Reference actual suppliers and stock status.
+${isOutdoor ? '⚠️ OUTDOOR INSTALLATION DETECTED:\n- DO NOT price Twin & Earth for outdoor runs\n- Use SWA (BS 5467/BS 6724) or Hi-Tuff cable\n- Include SWA glands, IP-rated enclosures, and weatherproof accessories\n\n' : ''}CRITICAL: Use the pricing data from our database below. Reference actual suppliers and stock status.
 
 ⚠️ 2025 MARKET RATE VALIDATION:
 Consumer Units (Metal, dual RCD):

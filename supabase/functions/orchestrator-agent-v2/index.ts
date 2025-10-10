@@ -368,23 +368,25 @@ async function handleConversationalMode(
           : 'new-installation';
 
         // Build execution groups for parallel processing
+        // CRITICAL: Installer and H&S can run even if Designer struggles (use partial data)
+        // Only Cost-Engineer and Commissioning truly depend on Designer success
         const executionGroups = workflowType === 'new-installation'
           ? [
               [{ agent: 'designer', dependencies: [] }],
               [
-                { agent: 'cost-engineer', dependencies: ['designer'] },
-                { agent: 'health-safety', dependencies: ['designer'] },
-                { agent: 'installer', dependencies: ['designer'] }
+                { agent: 'installer', dependencies: [] },      // Can work from user description
+                { agent: 'health-safety', dependencies: [] }   // Can assess based on work type
               ],
+              [{ agent: 'cost-engineer', dependencies: [] }],  // Will state assumptions if no Designer
               [{ agent: 'commissioning', dependencies: ['designer'] }]
             ]
           : [
               [{ agent: 'designer', dependencies: [] }],
               [
-                { agent: 'cost-engineer', dependencies: ['designer'] },
-                { agent: 'health-safety', dependencies: ['designer'] },
-                { agent: 'installer', dependencies: ['designer'] }
+                { agent: 'installer', dependencies: [] },
+                { agent: 'health-safety', dependencies: [] }
               ],
+              [{ agent: 'cost-engineer', dependencies: [] }],
               [{ agent: 'inspector', dependencies: ['designer', 'installer'] }],
               [{ agent: 'commissioning', dependencies: ['designer', 'inspector'] }]
             ];
@@ -453,13 +455,15 @@ async function handleConversationalMode(
             await queueStreamWrite(encoder.encode(startEvent));
 
             try {
-              // WAVE 2 FIX: Check dependencies before executing
+              // WAVE 3 FIX: Only skip if critical dependency truly failed (not just missing data)
               const dependencies = step.dependencies || [];
-              const failedDeps = dependencies.filter((dep: string) => 
-                !agentOutputs.find(o => o.agent === dep && !o.structuredData?.error)
-              );
+              const criticalFailedDeps = dependencies.filter((dep: string) => {
+                const depOutput = agentOutputs.find(o => o.agent === dep);
+                // Only consider it "failed" if agent threw an error, not just missing structured data
+                return depOutput && depOutput.structuredData?.error;
+              });
 
-              if (failedDeps.length > 0) {
+              if (criticalFailedDeps.length > 0) {
                 console.warn(`⚠️ Skipping ${agentName} - dependencies failed:`, failedDeps);
                 agentOutputs.push({
                   agent: agentName,

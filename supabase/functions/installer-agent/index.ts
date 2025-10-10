@@ -311,6 +311,10 @@ EXAMPLE PHASES:
       return basePrompt;
     };
 
+    const lowerMsg = userMessage.toLowerCase();
+    const isOutdoor = lowerMsg.includes('outside') || lowerMsg.includes('outdoor') || 
+                      lowerMsg.includes('external') || lowerMsg.includes('tray');
+    
     let systemPrompt = getScaleSpecificInstallerPrompt(jobScale);
 
     if (hasDesigner) {
@@ -319,6 +323,15 @@ EXAMPLE PHASES:
 - WHAT fixing methods to use (steel clips for fire rating)
 - Termination procedure (strip lengths, torque settings)
 - Common installation MISTAKES to avoid`;
+    }
+    
+    if (isOutdoor) {
+      systemPrompt += `\n\n🌍 OUTDOOR INSTALLATION GUIDANCE:
+- SWA cable terminations (glands, earth tags per BS 7671 Reg 543.3.2)
+- IP rating requirements for enclosures (minimum IP54 for outdoor, IP65 for exposed)
+- Cable support on tray (spacing per BS EN 61537)
+- Weatherproofing and UV protection
+- Reference BS 7671 Section 522 (External influences)`;
     }
 
     systemPrompt += `\n\n💬 Guide them step-by-step like you're walking an apprentice through their first install.`;
