@@ -472,8 +472,8 @@ onError: (error) => {
     // Reset height to recalculate
     textarea.style.height = '44px';
     
-    // Set new height based on scrollHeight, max 128px
-    const newHeight = Math.min(textarea.scrollHeight, 128);
+    // Set new height based on scrollHeight, max 88px (2 lines)
+    const newHeight = Math.min(textarea.scrollHeight, 88);
     textarea.style.height = `${newHeight}px`;
   };
 
@@ -1160,7 +1160,7 @@ onError: (error) => {
           {/* Chat Input - Auto-expanding with External Controls */}
           <div className="flex items-end gap-2">
             {/* Photo Upload Button - Outside Left */}
-            <div className="mb-1">
+            <div className="shrink-0">
               <PhotoUploadButton 
                 onPhotoUploaded={(url) => {
                   setInput(prev => prev + ` [Photo attached: ${url}]`);
@@ -1181,7 +1181,7 @@ onError: (error) => {
                 placeholder="Type your message..."
                 disabled={isLoading}
                 rows={1}
-                className="min-h-[44px] max-h-32 resize-none overflow-y-auto w-full text-base font-medium rounded-xl px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-tight transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 focus-visible:outline-none"
+                className="min-h-[44px] max-h-[88px] resize-none overflow-y-auto w-full text-base font-medium rounded-xl px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-white/80 leading-tight transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 focus-visible:outline-none"
                 style={{ fontSize: '16px', height: '44px' }}
               />
             </div>

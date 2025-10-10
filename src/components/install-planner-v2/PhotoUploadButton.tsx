@@ -66,7 +66,7 @@ export const PhotoUploadButton = ({ onPhotoUploaded, disabled, className }: Phot
       <input ref={fileInputRef} type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])} className="hidden" />
       <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={(e) => e.target.files?.[0] && handleFileSelect(e.target.files[0])} className="hidden" />
 
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-1">
         <Button type="button" variant="ghost" size="icon" disabled={disabled || isUploading}
           onClick={() => cameraInputRef.current?.click()} className="h-9 w-9 shrink-0" aria-label="Take photo">
           {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
