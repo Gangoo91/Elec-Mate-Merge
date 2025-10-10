@@ -48,6 +48,7 @@ if (req.method === 'OPTIONS') {
 
 try {
     console.log('[orchestrator-v2] POST start');
+    const startTime = Date.now();
     const { messages, currentDesign, conversationalMode = true, selectedAgents, targetAgent } = await req.json() as OrchestratorRequest;
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
