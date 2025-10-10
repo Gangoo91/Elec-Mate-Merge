@@ -42,9 +42,9 @@ export const InChatAgentSelector = ({
   return (
     <div className={cn("relative", className)}>
       {/* Desktop */}
-      <div className="hidden md:flex items-center gap-2 flex-wrap">
+      <div className="hidden md:flex items-center gap-1.5 flex-wrap">
         <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
-          className={cn("h-8 text-xs", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}>
+          className={cn("h-7 text-xs px-2.5", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}>
           Auto
         </Button>
         {AGENTS.map((agent) => {
@@ -54,10 +54,10 @@ export const InChatAgentSelector = ({
           return (
             <Button key={agent.id} variant="ghost" size="sm"
               onClick={() => onAgentSelect(isSelected ? null : agent.id)}
-              className={cn("h-8 gap-2 text-xs relative",
+              className={cn("h-7 gap-1.5 text-xs px-2.5 relative",
                 isSelected && "bg-elec-yellow/20 text-elec-yellow",
                 isComplete && "bg-green-500/10 text-green-400")}>
-              <Icon className={cn("h-3.5 w-3.5", agent.color)} />
+              <Icon className={cn("h-3 w-3", agent.color)} />
               <span>{agent.name}</span>
               {isComplete && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -top-1 -right-1">
                 <CheckCircle className="h-3 w-3 text-green-400 fill-current" />
@@ -69,9 +69,9 @@ export const InChatAgentSelector = ({
 
       {/* Phase 1: Compact Mobile - Icon-only buttons */}
       <div className="md:hidden overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-        <div className="flex gap-1.5 snap-x snap-mandatory pb-0.5">
+        <div className="flex gap-1 snap-x snap-mandatory pb-0.5">
           <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
-            className={cn("h-8 text-xs flex-shrink-0 snap-center px-2", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}
+            className={cn("h-7 text-xs flex-shrink-0 snap-center px-2", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}
             aria-label="Auto select agent">
             Auto
           </Button>
@@ -82,31 +82,19 @@ export const InChatAgentSelector = ({
             return (
               <Button key={agent.id} variant="ghost" size="sm"
                 onClick={() => onAgentSelect(isSelected ? null : agent.id)}
-                className={cn("h-8 gap-1.5 text-xs flex-shrink-0 relative snap-center px-2",
+                className={cn("h-7 gap-1 text-xs flex-shrink-0 relative snap-center px-2",
                   isSelected && "bg-elec-yellow/20 text-elec-yellow",
                   isComplete && "bg-green-500/10 text-green-400")}
                 aria-label={`Select ${agent.name} agent`}
                 title={agent.description}>
-                <Icon className={cn("h-3.5 w-3.5", agent.color)} />
-                <span className="hidden sm:inline">{agent.name}</span>
+                <Icon className={cn("h-3 w-3", agent.color)} />
+                <span className="hidden sm:inline text-[11px]">{agent.name}</span>
               </Button>
             );
           })}
         </div>
       </div>
 
-      {/* Phase 1: Compact indicator */}
-      <AnimatePresence>
-        {selectedAgent && (
-          <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}
-            className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
-            <div className="h-1 w-1 rounded-full bg-elec-yellow animate-pulse" />
-            <span className="text-elec-yellow font-medium">
-              {AGENTS.find(a => a.id === selectedAgent)?.name}
-            </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

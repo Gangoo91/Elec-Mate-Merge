@@ -1097,17 +1097,17 @@ onError: (error) => {
           
           {/* Phase 1: Only 2 quick suggestions, auto-hide after first user message */}
           {messages.length === 1 && (
-            <div className="flex gap-1.5 pb-0">
-              <Button variant="outline" size="sm" onClick={() => setInput("9.5kW shower, 15m from board")}
-                className="text-xs h-7 px-2 bg-white/5 border-white/10 text-white/80 flex-1">
-                <Sparkles className="h-3 w-3 mr-1" />
-                <span className="truncate">Shower</span>
-              </Button>
-              <Button variant="outline" size="sm" onClick={() => setInput("Full rewire 3-bed house")}
-                className="text-xs h-7 px-2 bg-white/5 border-white/10 text-white/80 flex-1">
-                <Sparkles className="h-3 w-3 mr-1" />
-                <span className="truncate">Rewire</span>
-              </Button>
+            <div className="flex gap-1.5 pb-1">
+              <button onClick={() => setInput("9.5kW shower, 15m from board")}
+                className="h-7 px-3 text-xs rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors flex items-center gap-1.5 flex-1">
+                <Sparkles className="h-3 w-3 text-elec-yellow" />
+                <span className="truncate text-foreground/70">Shower</span>
+              </button>
+              <button onClick={() => setInput("Full rewire 3-bed house")}
+                className="h-7 px-3 text-xs rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors flex items-center gap-1.5 flex-1">
+                <Sparkles className="h-3 w-3 text-elec-yellow" />
+                <span className="truncate text-foreground/70">Rewire</span>
+              </button>
             </div>
           )}
           
@@ -1116,46 +1116,46 @@ onError: (error) => {
             selectedAgent={selectedAgent}
             onAgentSelect={setSelectedAgent}
             activeAgents={activeAgents}
-            className="mb-2 md:mb-3"
+            className="mb-2"
           />
 
-          {/* Chat Input - Best-in-class design */}
-          <div className="flex flex-col gap-3 p-2 md:p-3 bg-elec-dark/50 backdrop-blur-sm rounded-2xl border border-white/8 shadow-inner">
+          {/* Chat Input - Modern Compact Design */}
+          <div className="relative">
             <Textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="Type your message..."
               disabled={isLoading}
-              className="w-full h-20 md:h-24 resize-none text-base font-medium rounded-xl px-4 py-2.5 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-normal overflow-y-auto transition-all duration-200 focus-visible:border-elec-yellow/50 focus-visible:ring-2 focus-visible:ring-elec-yellow/20 shadow-lg shadow-black/10"
+              className="w-full min-h-[44px] max-h-24 resize-none text-base font-medium rounded-xl pl-11 pr-11 py-3 bg-white/5 border border-white/10 text-white placeholder:text-muted-foreground/60 leading-normal overflow-y-auto transition-all duration-150 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20"
               style={{ fontSize: '16px' }}
-              rows={3}
+              rows={1}
             />
             
-            <div className="flex justify-between items-center w-full gap-2">
-              <PhotoUploadButton 
-                onPhotoUploaded={(url) => {
-                  setInput(prev => prev + ` [Photo attached: ${url}]`);
-                  toast.success('Photo added to message');
-                }}
-                disabled={isLoading}
-                className="h-8 w-8 bg-white/5 hover:bg-white/10 active:scale-95 transition-all rounded-xl"
-              />
-              <div className="flex-1" />
-              <Button 
-                onClick={handleSend}
-                disabled={isLoading || isStreaming || !input.trim()}
-                size="icon"
-                className="h-9 w-9 rounded-full shadow-lg shadow-elec-yellow/20 shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
-                aria-label="Send message"
-              >
-                {(isLoading || isStreaming) ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Send className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
+            {/* Photo button - positioned inside textarea */}
+            <PhotoUploadButton 
+              onPhotoUploaded={(url) => {
+                setInput(prev => prev + ` [Photo attached: ${url}]`);
+                toast.success('Photo added to message');
+              }}
+              disabled={isLoading}
+              className="absolute left-2 top-1/2 -translate-y-1/2 h-8 w-8 bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
+            />
+            
+            {/* Send button - positioned inside textarea */}
+            <Button 
+              onClick={handleSend}
+              disabled={isLoading || isStreaming || !input.trim()}
+              size="icon"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
+              aria-label="Send message"
+            >
+              {(isLoading || isStreaming) ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Send className="h-3.5 w-3.5" />
+              )}
+            </Button>
           </div>
         </div>
       </div>
