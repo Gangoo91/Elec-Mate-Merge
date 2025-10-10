@@ -1,28 +1,32 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-
-// RAG Search using Lovable AI embeddings - Updated September 2025
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
+import { ValidationError, ExternalAPIError, handleError } from "../_shared/errors.ts";
+import { withRetry, RetryPresets } from "../_shared/retry.ts";
+import { withTimeout, Timeouts } from "../_shared/timeout.ts";
+import { createLogger, generateRequestId } from "../_shared/logger.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'search-pricing-rag' });
+
   try {
     const { query, categoryFilter, supplierFilter, matchThreshold = 0.6, matchCount = 50 } = await req.json();
 
+    // Input validation
     if (!query || query.trim().length === 0) {
-      return new Response(
-        JSON.stringify({ error: 'Search query is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      throw new ValidationError('Search query is required');
+    }
+    if (matchThreshold < 0.1 || matchThreshold > 0.9) {
+      throw new ValidationError('Match threshold must be between 0.1 and 0.9');
+    }
+    if (matchCount < 1 || matchCount > 100) {
+      throw new ValidationError('Match count must be between 1 and 100');
     }
 
-    console.log('🔍 RAG Search initiated:', { query, categoryFilter, supplierFilter, matchThreshold, matchCount });
+    logger.info('RAG Search initiated', { query, categoryFilter, supplierFilter, matchThreshold, matchCount });
 
     // Get embedding from OpenAI directly
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -30,42 +34,44 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    console.log('📡 Generating embedding via OpenAI...');
-    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        input: query,
-        model: 'text-embedding-3-small',
-      }),
-    });
+    const embeddingData = await logger.time(
+      'OpenAI embedding generation',
+      async () => await withRetry(
+        () => withTimeout(
+          fetch('https://api.openai.com/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              input: query,
+              model: 'text-embedding-3-small',
+            }),
+          }).then(async (res) => {
+            if (!res.ok) {
+              const errorText = await res.text();
+              if (res.status === 429) throw new ExternalAPIError('OpenAI', 'Rate limit exceeded');
+              if (res.status === 402) throw new ExternalAPIError('OpenAI', 'Payment required');
+              throw new ExternalAPIError('OpenAI', `Status ${res.status}: ${errorText}`);
+            }
+            return res.json();
+          }),
+          Timeouts.STANDARD,
+          'OpenAI embedding API'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
-    if (!embeddingResponse.ok) {
-      const errorText = await embeddingResponse.text();
-      console.error('❌ Embedding API error:', embeddingResponse.status, errorText);
-      
-      if (embeddingResponse.status === 429) {
-        throw new Error('OpenAI rate limit exceeded. Please try again in a moment.');
-      }
-      if (embeddingResponse.status === 402) {
-        throw new Error('OpenAI payment required. Please check your API credits.');
-      }
-      throw new Error(`Failed to generate embedding: ${embeddingResponse.status} ${errorText}`);
-    }
-
-    const embeddingData = await embeddingResponse.json();
     const queryVector = embeddingData.data[0].embedding;
 
     // Validate embedding dimensions
     if (queryVector.length !== 1536) {
-      console.error('❌ Invalid embedding dimensions:', queryVector.length);
-      throw new Error(`Expected 1536 dimensions, got ${queryVector.length}`);
+      throw new ValidationError(`Invalid embedding dimensions: expected 1536, got ${queryVector.length}`);
     }
 
-    console.log('✅ Query embedding generated:', queryVector.length, 'dimensions');
+    logger.debug('Query embedding generated', { dimensions: queryVector.length });
 
     // Connect to Supabase
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -80,15 +86,21 @@ serve(async (req) => {
       match_count: matchCount
     });
 
-    console.log('🔎 Executing vector similarity search...');
-    const { data: results, error: searchError } = await rpcQuery;
+    const { data: results, error: searchError } = await logger.time(
+      'Vector similarity search',
+      async () => await withTimeout(
+        rpcQuery,
+        Timeouts.STANDARD,
+        'Supabase vector search'
+      )
+    );
 
     if (searchError) {
-      console.error('❌ Vector search error:', searchError);
+      logger.error('Vector search failed', { error: searchError });
       throw searchError;
     }
 
-    console.log('✅ Found', results?.length || 0, 'matching products');
+    logger.info('Vector search completed', { resultsCount: results?.length || 0 });
 
     // Apply supplier filter if provided (client-side filtering)
     let filteredResults = results || [];
@@ -101,7 +113,7 @@ serve(async (req) => {
 
     // Fallback to keyword search if no results
     if (filteredResults.length === 0) {
-      console.log('⚠️ No vector results found, trying keyword fallback search...');
+      logger.warn('No vector results found, trying keyword fallback');
       
       const { data: keywordResults, error: keywordError } = await supabase
         .from('pricing_embeddings')
@@ -110,7 +122,7 @@ serve(async (req) => {
         .limit(matchCount);
 
       if (!keywordError && keywordResults && keywordResults.length > 0) {
-        console.log('✅ Keyword search found', keywordResults.length, 'products');
+        logger.info('Keyword fallback successful', { resultsCount: keywordResults.length });
         filteredResults = keywordResults.map((item: any) => ({
           ...item,
           similarity: 0.5 // Mark as keyword match with lower confidence
@@ -121,7 +133,7 @@ serve(async (req) => {
           filteredResults = filteredResults.filter(
             item => item.wholesaler?.toLowerCase() === supplierFilter.toLowerCase()
           );
-          console.log('🏷️ Filtered keyword results to', filteredResults.length, 'products from', supplierFilter);
+          logger.debug('Applied supplier filter to keyword results', { count: filteredResults.length, supplier: supplierFilter });
         }
       }
     }
@@ -146,7 +158,10 @@ serve(async (req) => {
       specifications: item.metadata?.specifications,
     }));
 
-    console.log('📦 Returning', materials.length, 'products');
+    logger.info('RAG search completed successfully', { 
+      materialsCount: materials.length,
+      requestId 
+    });
 
     return new Response(
       JSON.stringify({
@@ -158,7 +173,8 @@ serve(async (req) => {
         filters: {
           category: categoryFilter,
           supplier: supplierFilter
-        }
+        },
+        requestId
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -167,16 +183,7 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('❌ RAG Search error:', error);
-    return new Response(
-      JSON.stringify({ 
-        error: error.message || 'Failed to perform RAG search',
-        details: error.toString()
-      }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
+    logger.error('RAG search failed', { error });
+    return handleError(error);
   }
 });

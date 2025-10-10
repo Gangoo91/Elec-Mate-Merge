@@ -1,23 +1,30 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
+import { ValidationError, ExternalAPIError, handleError } from "../_shared/errors.ts";
+import { withRetry, RetryPresets } from "../_shared/retry.ts";
+import { withTimeout, Timeouts } from "../_shared/timeout.ts";
+import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { safeAll } from "../_shared/safe-parallel.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'wiring-diagram-generator-rag' });
+
   try {
     const { component_type, circuit_params, installation_context } = await req.json();
 
-    console.log('📐 Wiring Diagram Generator RAG: Creating schematic');
-    console.log('Component:', component_type);
-    console.log('Params:', circuit_params);
+    if (!component_type) {
+      throw new ValidationError('component_type is required');
+    }
+
+    logger.info('Wiring Diagram Generator RAG initiated', { 
+      component_type, 
+      circuit_params 
+    });
 
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
@@ -30,57 +37,91 @@ serve(async (req) => {
     const ragQuery = `${component_type} wiring procedure terminal connections cable installation methods UK colour codes safe isolation testing`;
 
     // Generate embedding
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: ragQuery,
-      }),
-    });
+    const embeddingData = await logger.time(
+      'Lovable AI embedding generation',
+      async () => await withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: ragQuery,
+            }),
+          }).then(async (res) => {
+            if (!res.ok) {
+              throw new ExternalAPIError('Lovable AI', `Embedding failed: ${res.status}`);
+            }
+            return res.json();
+          }),
+          Timeouts.STANDARD,
+          'Lovable AI embedding'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
-    if (!embeddingResponse.ok) {
-      throw new Error('Failed to generate embedding');
-    }
-
-    const embeddingData = await embeddingResponse.json();
     const embedding = embeddingData.data[0].embedding;
 
-    // Query installation knowledge
-    const { data: installationDocs, error: instError } = await supabase.rpc('search_installation_knowledge', {
-      query_embedding: embedding,
-      match_threshold: 0.7,
-      match_count: 5
-    });
+    // Query all knowledge bases in parallel with safe failure handling
+    const { successes, failures } = await logger.time(
+      'Knowledge base searches',
+      async () => await safeAll([
+        {
+          name: 'installation',
+          execute: () => withTimeout(
+            supabase.rpc('search_installation_knowledge', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 5
+            }),
+            Timeouts.STANDARD,
+            'Installation knowledge search'
+          )
+        },
+        {
+          name: 'bs7671',
+          execute: () => withTimeout(
+            supabase.rpc('search_bs7671', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 5
+            }),
+            Timeouts.STANDARD,
+            'BS 7671 search'
+          )
+        },
+        {
+          name: 'health_safety',
+          execute: () => withTimeout(
+            supabase.rpc('search_health_safety', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 3
+            }),
+            Timeouts.STANDARD,
+            'Safety knowledge search'
+          )
+        }
+      ])
+    );
 
-    // Query BS 7671 for wiring requirements
-    const { data: regulations, error: regError } = await supabase.rpc('search_bs7671', {
-      query_embedding: embedding,
-      match_threshold: 0.7,
-      match_count: 5
-    });
-
-    // Query health & safety for safe working
-    const { data: safetyDocs, error: safetyError } = await supabase.rpc('search_health_safety', {
-      query_embedding: embedding,
-      match_threshold: 0.7,
-      match_count: 3
-    });
-
-    if (instError) {
-      console.error('❌ Installation knowledge search failed:', instError);
+    if (failures.length > 0) {
+      logger.warn('Some knowledge base searches failed', { failures });
     }
-    if (regError) {
-      console.error('❌ BS 7671 search failed:', regError);
-    }
-    if (safetyError) {
-      console.error('❌ Safety knowledge search failed:', safetyError);
-    }
 
-    console.log(`✅ RAG Results: ${installationDocs?.length || 0} installation docs, ${regulations?.length || 0} regs, ${safetyDocs?.length || 0} safety docs`);
+    const installationDocs = successes.find(s => s.name === 'installation')?.result?.data || [];
+    const regulations = successes.find(s => s.name === 'bs7671')?.result?.data || [];
+    const safetyDocs = successes.find(s => s.name === 'health_safety')?.result?.data || [];
+
+    logger.info('Knowledge base search completed', { 
+      installationCount: installationDocs.length, 
+      regulationsCount: regulations.length,
+      safetyCount: safetyDocs.length 
+    });
 
     const ragContext = `
 INSTALLATION KNOWLEDGE:
@@ -142,31 +183,41 @@ Respond with valid JSON:
   "safety_warnings": ["Always isolate before working", "Use appropriate PPE", "Double-check polarity"]
 }`;
 
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: schematicPrompt },
-          { role: 'user', content: 'Generate the wiring schematic and procedure based on the installation knowledge provided.' }
-        ],
-        max_tokens: 3000,
-        response_format: { type: 'json_object' }
-      }),
-    });
+    const aiData = await logger.time(
+      'AI schematic generation',
+      async () => await withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'google/gemini-2.5-flash',
+              messages: [
+                { role: 'system', content: schematicPrompt },
+                { role: 'user', content: 'Generate the wiring schematic and procedure based on the installation knowledge provided.' }
+              ],
+              max_tokens: 3000,
+              response_format: { type: 'json_object' }
+            }),
+          }).then(async (res) => {
+            if (!res.ok) {
+              throw new ExternalAPIError('Lovable AI', `Schematic generation failed: ${res.status}`);
+            }
+            return res.json();
+          }),
+          Timeouts.LONG,
+          'AI schematic generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
-    if (!aiResponse.ok) {
-      throw new Error('AI schematic generation failed');
-    }
-
-    const aiData = await aiResponse.json();
     const result = JSON.parse(aiData.choices[0].message.content);
 
-    console.log('✅ Schematic diagram generated');
+    logger.info('Schematic diagram generated successfully');
 
     return new Response(JSON.stringify({
       schematic_svg: result.schematic_svg || '<svg><text>Schematic generation in progress</text></svg>',
@@ -186,12 +237,7 @@ Respond with valid JSON:
     });
 
   } catch (error) {
-    console.error('❌ Wiring diagram generator RAG error:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Diagram generation failed'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    logger.error('Wiring diagram generator RAG failed', { error });
+    return handleError(error);
   }
 });

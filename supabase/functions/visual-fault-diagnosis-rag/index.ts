@@ -1,11 +1,10 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
+import { ValidationError, ExternalAPIError, handleError } from "../_shared/errors.ts";
+import { withRetry, RetryPresets } from "../_shared/retry.ts";
+import { withTimeout, Timeouts } from "../_shared/timeout.ts";
+import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { safeAll } from "../_shared/safe-parallel.ts";
 
 // EICR Fault Classification Decision Tree
 const EICR_DECISION_TREE: Record<string, any> = {
@@ -50,13 +49,21 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'visual-fault-diagnosis-rag' });
+
   try {
     const { fault_description, location_context, visible_indicators } = await req.json();
 
-    console.log('🔍 Visual Fault Diagnosis RAG: Verifying EICR classification');
-    console.log('Fault:', fault_description);
-    console.log('Location:', location_context);
-    console.log('Indicators:', visible_indicators);
+    if (!fault_description) {
+      throw new ValidationError('fault_description is required');
+    }
+
+    logger.info('Visual Fault Diagnosis RAG initiated', { 
+      fault_description, 
+      location_context, 
+      visible_indicators 
+    });
 
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
@@ -69,57 +76,91 @@ serve(async (req) => {
     const ragQuery = `${fault_description} ${location_context} EICR fault classification GN3 guidance BS 7671 compliance immediate danger potential danger improvement`;
 
     // Generate embedding using Lovable AI
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: ragQuery,
-      }),
-    });
+    const embeddingData = await logger.time(
+      'Lovable AI embedding generation',
+      async () => await withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: ragQuery,
+            }),
+          }).then(async (res) => {
+            if (!res.ok) {
+              throw new ExternalAPIError('Lovable AI', `Embedding failed: ${res.status}`);
+            }
+            return res.json();
+          }),
+          Timeouts.STANDARD,
+          'Lovable AI embedding'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
-    if (!embeddingResponse.ok) {
-      throw new Error('Failed to generate embedding for fault classification');
-    }
-
-    const embeddingData = await embeddingResponse.json();
     const embedding = embeddingData.data[0].embedding;
 
-    // Query BS 7671 regulations
-    const { data: regulations, error: regError } = await supabase.rpc('search_bs7671', {
-      query_embedding: embedding,
-      match_threshold: 0.7,
-      match_count: 5
-    });
+    // Query all knowledge bases in parallel with safe failure handling
+    const { successes, failures } = await logger.time(
+      'Knowledge base searches',
+      async () => await safeAll([
+        {
+          name: 'bs7671',
+          execute: () => withTimeout(
+            supabase.rpc('search_bs7671', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 5
+            }),
+            Timeouts.STANDARD,
+            'BS 7671 search'
+          )
+        },
+        {
+          name: 'inspection_testing',
+          execute: () => withTimeout(
+            supabase.rpc('search_inspection_testing', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 3
+            }),
+            Timeouts.STANDARD,
+            'Inspection knowledge search'
+          )
+        },
+        {
+          name: 'health_safety',
+          execute: () => withTimeout(
+            supabase.rpc('search_health_safety', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 3
+            }),
+            Timeouts.STANDARD,
+            'Safety knowledge search'
+          )
+        }
+      ])
+    );
 
-    // Query inspection/testing knowledge (includes GN3)
-    const { data: inspectionKnowledge, error: inspError } = await supabase.rpc('search_inspection_testing', {
-      query_embedding: embedding,
-      match_threshold: 0.7,
-      match_count: 3
-    });
-
-    // Query health & safety knowledge
-    const { data: safetyKnowledge, error: safetyError } = await supabase.rpc('search_health_safety', {
-      query_embedding: embedding,
-      match_threshold: 0.7,
-      match_count: 3
-    });
-
-    if (regError) {
-      console.error('❌ BS 7671 search failed:', regError);
+    if (failures.length > 0) {
+      logger.warn('Some knowledge base searches failed', { failures });
     }
-    if (inspError) {
-      console.error('❌ Inspection knowledge search failed:', inspError);
-    }
-    if (safetyError) {
-      console.error('❌ Safety knowledge search failed:', safetyError);
-    }
 
-    console.log(`✅ RAG Results: ${regulations?.length || 0} regs, ${inspectionKnowledge?.length || 0} inspection docs, ${safetyKnowledge?.length || 0} safety docs`);
+    const regulations = successes.find(s => s.name === 'bs7671')?.result?.data || [];
+    const inspectionKnowledge = successes.find(s => s.name === 'inspection_testing')?.result?.data || [];
+    const safetyKnowledge = successes.find(s => s.name === 'health_safety')?.result?.data || [];
+
+    logger.info('Knowledge base search completed', { 
+      regulationsCount: regulations.length, 
+      inspectionCount: inspectionKnowledge.length,
+      safetyCount: safetyKnowledge.length 
+    });
 
     // Determine EICR code using AI with RAG context
     const ragContext = `
@@ -166,30 +207,43 @@ YOU MUST respond with valid JSON only:
   "reasoning": "Detailed explanation of why this code was assigned based on BS 7671 and GN3"
 }`;
 
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: classificationPrompt },
-          { role: 'user', content: 'Classify this fault according to EICR standards using the regulations provided.' }
-        ],
-        response_format: { type: 'json_object' }
-      }),
-    });
+    const aiData = await logger.time(
+      'AI fault classification',
+      async () => await withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'google/gemini-2.5-flash',
+              messages: [
+                { role: 'system', content: classificationPrompt },
+                { role: 'user', content: 'Classify this fault according to EICR standards using the regulations provided.' }
+              ],
+              response_format: { type: 'json_object' }
+            }),
+          }).then(async (res) => {
+            if (!res.ok) {
+              throw new ExternalAPIError('Lovable AI', `Classification failed: ${res.status}`);
+            }
+            return res.json();
+          }),
+          Timeouts.LONG,
+          'AI classification'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
-    if (!aiResponse.ok) {
-      throw new Error('AI classification failed');
-    }
-
-    const aiData = await aiResponse.json();
     const classification = JSON.parse(aiData.choices[0].message.content);
 
-    console.log(`✅ Fault classified as: ${classification.fault_code} (confidence: ${classification.confidence})`);
+    logger.info('Fault classification completed', { 
+      faultCode: classification.fault_code, 
+      confidence: classification.confidence 
+    });
 
     return new Response(JSON.stringify({
       fault_code: classification.fault_code,
@@ -208,13 +262,20 @@ YOU MUST respond with valid JSON only:
     });
 
   } catch (error) {
-    console.error('❌ Visual fault diagnosis RAG error:', error);
+    logger.error('Visual fault diagnosis RAG failed', { error });
+    
+    // Return FI (Further Investigation) on error with proper error handling
+    if (error instanceof ValidationError || error instanceof ExternalAPIError) {
+      return handleError(error);
+    }
+    
     return new Response(JSON.stringify({ 
       error: error instanceof Error ? error.message : 'Fault classification failed',
       fault_code: 'FI',
-      confidence: 0.3
+      confidence: 0.3,
+      requestId
     }), {
-      status: 500,
+      status: 200, // Return 200 with FI code as fallback
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }

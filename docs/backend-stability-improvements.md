@@ -159,22 +159,107 @@ const result = await logger.time(
 
 ---
 
+## Current Migration Status
+
+**Week 1 Completed (5 functions):**
+✅ `system-health` - Health check endpoint  
+✅ `orchestrator-agent-v2` - Multi-agent orchestration  
+✅ `bs7671-rag-search` - BS 7671 regulation search  
+✅ `multi-source-rag-search` - Multi-knowledge base RAG  
+✅ Pre-deploy guard script active
+
+**Week 2 Day 1 Completed (3 functions):**
+✅ `search-pricing-rag` - Materials pricing RAG with keyword fallback  
+✅ `visual-fault-diagnosis-rag` - EICR fault classification with BS 7671 + GN3  
+✅ `wiring-diagram-generator-rag` - Schematic generation with installation knowledge
+
+**Migration Progress: 8/100+ functions (8%)**
+
+**Next Priority (Week 2 Remaining):**
+- More RAG functions (design-knowledge-rag, safety-rag)
+- Cache management functions (materials-weekly-cache, tools-weekly-cache)
+- AI agent functions (designer-agent, installer-agent, commissioning-agent)
+- Embedding generation functions
+
+---
+
+## Week 2 Day 1 Implementation Details
+
+### **search-pricing-rag Migration**
+**Changes:**
+- ✅ Replaced direct `deno.land` imports with `_shared/deps.ts`
+- ✅ Added structured logging with request IDs
+- ✅ Wrapped OpenAI embedding call: 3 retries + 30s timeout
+- ✅ Added input validation (query, matchThreshold 0.1-0.9, matchCount 1-100)
+- ✅ Vector search wrapped in timeout protection (30s)
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added performance timing for embedding generation and search
+
+**Impact:** 
+- Automatic retry on OpenAI 429 rate limit errors
+- 30s timeout prevents hanging on slow embedding API
+- Request IDs enable cross-function debugging
+- Structured logs show exact timing breakdown
+
+### **visual-fault-diagnosis-rag Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging with child logger contexts
+- ✅ Wrapped Lovable AI embedding call: 3 retries + 30s timeout
+- ✅ Replaced `Promise.all` with `safeAll` for parallel KB searches
+- ✅ Parallel KB queries: BS 7671, GN3 Inspection, Health & Safety (each with 30s timeout)
+- ✅ Wrapped AI classification call: 3 retries + 60s timeout (longer for complex AI)
+- ✅ Added validation for required `fault_description`
+- ✅ Returns FI (Further Investigation) code on error with 200 status (proper fallback)
+
+**Impact:**
+- Returns partial results if 1-2 knowledge bases fail (no single-point failures)
+- Request ID tracks entire multi-KB search workflow
+- Child loggers show timing for each KB independently
+- 60s timeout for AI classification (complex reasoning task)
+- Graceful degradation: FI classification on errors instead of 500 errors
+
+### **wiring-diagram-generator-rag Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging with request IDs
+- ✅ Wrapped Lovable AI embedding call: 3 retries + 30s timeout
+- ✅ Replaced `Promise.all` with `safeAll` for parallel KB searches
+- ✅ Parallel KB queries: Installation Knowledge, BS 7671, Health & Safety (each with 30s timeout)
+- ✅ Wrapped AI schematic generation: 3 retries + 60s timeout
+- ✅ Added validation for required `component_type`
+- ✅ Replaced manual error handling with `handleError()`
+
+**Impact:**
+- Resilient to individual KB failures - continues with available data
+- 60s timeout for diagram generation (complex AI task with SVG generation)
+- Proper timeout handling prevents hanging on long AI operations
+- Structured error responses with request IDs
+
+---
+
 ## Testing Recommendations
 
 ### Manual Testing
-1. Test orchestrator with OpenAI rate limits (trigger retries)
-2. Test with network timeouts (simulate slow responses)
-3. Verify health check endpoint status
-4. Check logs for request ID consistency
+1. ✅ Test orchestrator with OpenAI rate limits (trigger retries)
+2. ✅ Test with network timeouts (simulate slow responses)
+3. ✅ Verify health check endpoint status
+4. ✅ Check logs for request ID consistency
+5. **NEW:** Test RAG functions with missing KB data (verify partial results)
+6. **NEW:** Test visual-fault-diagnosis with invalid input (verify FI code returned)
 
 ### Integration Testing
 1. Send 10 concurrent requests to orchestrator
 2. Monitor retry behavior in logs
 3. Verify timeout protection prevents hanging
 4. Check health check responds within 2s
+5. **NEW:** Test RAG functions with 1 KB down (verify degraded but functional)
+6. **NEW:** Verify request IDs propagate through multi-KB searches
 
 ### Load Testing
 1. 100 requests/minute to orchestrator
 2. Monitor retry rates and timeout counts
 3. Verify no memory leaks from logger
 4. Check health check endpoint under load
+5. **NEW:** Test RAG functions under load (verify timeout protection active)
+6. **NEW:** Monitor AI API rate limits and retry behavior
