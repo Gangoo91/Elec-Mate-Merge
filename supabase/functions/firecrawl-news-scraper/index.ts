@@ -1,32 +1,33 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
+import { handleError, ValidationError } from "../_shared/errors.ts";
+import { withRetry, RetryPresets } from "../_shared/retry.ts";
+import { withTimeout, Timeouts } from "../_shared/timeout.ts";
+import { createLogger, generateRequestId } from "../_shared/logger.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'firecrawl-news-scraper' });
+
   try {
-    console.log('🔧 Starting Firecrawl news scraping process...');
+    logger.info('Starting Firecrawl news scraping process');
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
 
     if (!firecrawlApiKey) {
-      throw new Error('FIRECRAWL_API_KEY not found');
+      throw new ValidationError('FIRECRAWL_API_KEY not found');
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     async function getNews() {
-      console.log('🚀 Starting news scraping with Firecrawl v2 batch API...');
+      logger.info('Starting news scraping with Firecrawl v2 batch API');
       
       const url = "https://api.firecrawl.dev/v2/batch/scrape";
       const urls = [
@@ -74,17 +75,24 @@ serve(async (req) => {
       };
 
       try {
-        console.log('📡 Creating batch scraping job...');
-        const response = await fetch(url, options);
+        logger.debug('Creating batch scraping job');
+        const response = await withRetry(
+          () => withTimeout(
+            fetch(url, options),
+            Timeouts.LONG,
+            'Firecrawl batch job creation'
+          ),
+          RetryPresets.STANDARD
+        );
         
         if (!response.ok) {
           const errorText = await response.text();
-          console.error(`❌ HTTP error creating batch job: ${response.status} ${response.statusText}`, errorText);
+          logger.error('HTTP error creating batch job', { status: response.status, error: errorText });
           throw new Error(`Failed to create batch job: ${response.status} ${response.statusText}`);
         }
 
         const job = await response.json();
-        console.log("✅ Batch job created:", job.id);
+        logger.info("Batch job created", { jobId: job.id });
 
         if (!job.url) {
           throw new Error('No job URL returned from batch creation');
@@ -93,40 +101,44 @@ serve(async (req) => {
         // Poll for completion
         let status;
         let pollCount = 0;
-        const maxPolls = 60; // 5 minutes timeout (5 seconds * 60)
+        const maxPolls = 60; // 5 minutes timeout
         
-        console.log('🔄 Polling for batch job completion...');
+        logger.debug('Polling for batch job completion');
         
         do {
           await new Promise((r) => setTimeout(r, 5000)); // 5 second intervals
           
-          const pollResponse = await fetch(job.url, {
-            headers: { Authorization: `Bearer ${firecrawlApiKey}` },
-          });
+          const pollResponse = await withTimeout(
+            fetch(job.url, {
+              headers: { Authorization: `Bearer ${firecrawlApiKey}` },
+            }),
+            Timeouts.STANDARD,
+            'Firecrawl batch job poll'
+          );
 
           if (!pollResponse.ok) {
-            console.error(`❌ Error polling job status: ${pollResponse.status}`);
+            logger.error('Error polling job status', { status: pollResponse.status });
             break;
           }
 
           status = await pollResponse.json();
-          console.log(`📊 Polling status (${pollCount + 1}/${maxPolls}):`, status.status);
+          logger.debug(`Polling status (${pollCount + 1}/${maxPolls})`, { status: status.status });
           
           pollCount++;
           
           if (pollCount >= maxPolls) {
-            console.error('❌ Batch job timeout after 5 minutes');
+            logger.error('Batch job timeout after 5 minutes');
             throw new Error('Batch job timeout');
           }
           
         } while (status.status !== "completed" && status.status !== "failed");
 
         if (status.status === "failed") {
-          console.error('❌ Batch job failed:', status);
+          logger.error('Batch job failed', { status });
           throw new Error('Batch job failed');
         }
 
-        console.log('🎉 Batch job completed successfully');
+        logger.info('Batch job completed successfully');
         
         // Process the results
         const allArticles = [];
@@ -158,22 +170,22 @@ serve(async (req) => {
                 }));
               
               allArticles.push(...processedArticles);
-              console.log(`✅ Processed ${processedArticles.length} articles from ${sourceInfo.source}`);
+              logger.info(`Processed articles from ${sourceInfo.source}`, { count: processedArticles.length });
             }
           }
         }
 
-        console.log(`📰 Total articles collected: ${allArticles.length}`);
+        logger.info('Total articles collected', { count: allArticles.length });
         return allArticles;
         
       } catch (error) {
-        console.error('❌ Error in batch scraping:', error);
+        logger.error('Error in batch scraping', { error: error instanceof Error ? error.message : String(error) });
         throw error;
       }
     }
 
-    const articles = await getNews();
-    console.log(`📊 Total articles found: ${articles.length}`);
+    const articles = await logger.time('News scraping', () => getNews());
+    logger.info('Total articles found', { count: articles.length });
 
     if (articles.length === 0) {
       return new Response(
@@ -256,7 +268,7 @@ serve(async (req) => {
       article => !existingHashSet.has(article.content_hash)
     );
 
-    console.log(`📥 New articles to insert: ${newArticles.length}`);
+    logger.info('New articles to insert', { count: newArticles.length });
 
     let insertedCount = 0;
     if (newArticles.length > 0) {
@@ -264,20 +276,22 @@ serve(async (req) => {
       const batchSize = 10;
       for (let i = 0; i < newArticles.length; i += batchSize) {
         const batch = newArticles.slice(i, i + batchSize);
-        const { error } = await supabase
-          .from('industry_news')
-          .insert(batch);
+        const { error } = await withTimeout(
+          supabase.from('industry_news').insert(batch),
+          Timeouts.STANDARD,
+          'Insert news batch'
+        );
 
         if (error) {
-          console.error(`❌ Error inserting batch ${i}-${i + batch.length}:`, error);
+          logger.error(`Error inserting batch ${i}-${i + batch.length}`, { error });
         } else {
           insertedCount += batch.length;
-          console.log(`✅ Inserted batch ${i}-${i + batch.length}`);
+          logger.debug(`Inserted batch ${i}-${i + batch.length}`);
         }
       }
     }
 
-    console.log(`🎉 News scraping completed: ${insertedCount} articles inserted`);
+    logger.info('News scraping completed', { insertedCount });
 
     return new Response(
       JSON.stringify({ 
@@ -286,23 +300,14 @@ serve(async (req) => {
         totalFound: articles.length,
         articlesInserted: insertedCount,
         sources: ['Electrical Times', 'Professional Electrician', 'Electrical Contracting News'],
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        requestId
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
-    console.error('❌ Error in Firecrawl news scraping function:', error);
-    return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
-        articlesProcessed: 0 
-      }),
-      { 
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
+    logger.error('Firecrawl news scraping error', { error: error instanceof Error ? error.message : String(error) });
+    return handleError(error);
   }
 });

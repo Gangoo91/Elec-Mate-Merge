@@ -1,11 +1,9 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
+import { handleError } from "../_shared/errors.ts";
+import { withRetry, RetryPresets } from "../_shared/retry.ts";
+import { withTimeout, Timeouts } from "../_shared/timeout.ts";
+import { createLogger, generateRequestId } from "../_shared/logger.ts";
 
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -119,30 +117,41 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'live-market-insights' });
+
   try {
-    console.log('🚀 Starting live market insights aggregation...');
+    logger.info('Starting live market insights aggregation');
     
     const { forceRefresh = false } = await req.json().catch(() => ({}));
     
     // Check for cached data first unless forcing refresh
     if (!forceRefresh) {
-      console.log('🔍 Checking for cached market insights...');
-      const { data: cached } = await supabase
-        .from('market_insights_cache')
-        .select('*')
-        .eq('keywords', 'electrician')
-        .eq('location', 'UK')
-        .gte('expires_at', new Date().toISOString())
-        .maybeSingle();
+      logger.debug('Checking for cached market insights');
+      const { data: cached } = await logger.time(
+        'Cache lookup',
+        () => withTimeout(
+          supabase
+            .from('market_insights_cache')
+            .select('*')
+            .eq('keywords', 'electrician')
+            .eq('location', 'UK')
+            .gte('expires_at', new Date().toISOString())
+            .maybeSingle(),
+          Timeouts.QUICK,
+          'Cache lookup'
+        )
+      );
         
       if (cached) {
-        console.log('✅ Returning cached market insights');
+        logger.info('Returning cached market insights');
         return new Response(JSON.stringify({
           success: true,
           data: cached.data,
           lastUpdated: cached.last_updated,
           source: cached.data_source,
-          cached: true
+          cached: true,
+          requestId
         }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
@@ -150,43 +159,56 @@ serve(async (req) => {
     }
     
     // Scrape fresh data
-    console.log('📊 Aggregating fresh market insights data...');
-    const marketData = await scrapeMarketData();
+    logger.info('Aggregating fresh market insights data');
+    const marketData = await logger.time(
+      'Market data aggregation',
+      () => withRetry(
+        () => scrapeMarketData(),
+        RetryPresets.STANDARD
+      )
+    );
     
     if (!marketData) {
+      logger.warn('Market data aggregation failed, trying fallback cache');
       // Try to get any existing cached data as fallback
-      const { data: fallbackCache } = await supabase
-        .from('market_insights_cache')
-        .select('*')
-        .eq('keywords', 'electrician')
-        .eq('location', 'UK')
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .maybeSingle();
+      const { data: fallbackCache } = await withTimeout(
+        supabase
+          .from('market_insights_cache')
+          .select('*')
+          .eq('keywords', 'electrician')
+          .eq('location', 'UK')
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+        Timeouts.QUICK,
+        'Fallback cache lookup'
+      );
         
       if (fallbackCache) {
-        console.log('⚠️ Using stale cached data as fallback');
+        logger.warn('Using stale cached data as fallback');
         return new Response(JSON.stringify({
           success: true,
           data: fallbackCache.data,
           lastUpdated: fallbackCache.last_updated,
           source: fallbackCache.data_source,
           cached: true,
-          stale: true
+          stale: true,
+          requestId
         }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
       }
       
       // Last resort: return static fallback
-      console.log('🔄 Returning static fallback data');
+      logger.warn('Returning static fallback data');
       const fallbackData = getFallbackMarketData();
       return new Response(JSON.stringify({
         success: true,
         data: fallbackData,
         lastUpdated: new Date().toISOString(),
         source: 'fallback',
-        cached: false
+        cached: false,
+        requestId
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
@@ -194,46 +216,39 @@ serve(async (req) => {
     
     // Cache the fresh data for 7 days
     const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7); // Cache for 7 days
+    expiresAt.setDate(expiresAt.getDate() + 7);
     
-    await supabase
-      .from('market_insights_cache')
-      .upsert({
-        keywords: 'electrician',
-        location: 'UK',
-        data: marketData,
-        data_source: 'live_aggregation',
-        last_updated: new Date().toISOString(),
-        expires_at: expiresAt.toISOString()
-      });
+    logger.debug('Caching market insights for 7 days');
+    await withTimeout(
+      supabase
+        .from('market_insights_cache')
+        .upsert({
+          keywords: 'electrician',
+          location: 'UK',
+          data: marketData,
+          data_source: 'live_aggregation',
+          last_updated: new Date().toISOString(),
+          expires_at: expiresAt.toISOString()
+        }),
+      Timeouts.STANDARD,
+      'Cache upsert'
+    );
     
-    console.log('💾 Market insights cached successfully');
+    logger.info('Market insights cached successfully');
     
     return new Response(JSON.stringify({
       success: true,
       data: marketData,
       lastUpdated: new Date().toISOString(),
       source: 'live_aggregation',
-      cached: false
+      cached: false,
+      requestId
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
     
   } catch (error) {
-    console.error('❌ Market insights error:', error);
-    
-    // Return fallback data on error
-    const fallbackData = getFallbackMarketData();
-    return new Response(JSON.stringify({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error occurred',
-      data: fallbackData,
-      lastUpdated: new Date().toISOString(),
-      source: 'error_fallback',
-      cached: false
-    }), {
-      status: 200, // Return 200 with fallback data instead of error
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    logger.error('Market insights error', { error: error instanceof Error ? error.message : String(error) });
+    return handleError(error);
   }
 });

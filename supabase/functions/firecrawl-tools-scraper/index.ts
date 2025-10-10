@@ -1,9 +1,8 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+import { serve, corsHeaders } from "../_shared/deps.ts";
+import { handleError, ValidationError } from "../_shared/errors.ts";
+import { withRetry, RetryPresets } from "../_shared/retry.ts";
+import { withTimeout, Timeouts } from "../_shared/timeout.ts";
+import { createLogger, generateRequestId } from "../_shared/logger.ts";
 
 const productSchema = {
   type: "array",
@@ -65,11 +64,11 @@ const productSchema = {
   },
 };
 
-async function fetchElectricalTools() {
+async function fetchElectricalTools(logger: any) {
   const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
   
   if (!FIRECRAWL_API_KEY) {
-    throw new Error('FIRECRAWL_API_KEY not found in environment variables');
+    throw new ValidationError('FIRECRAWL_API_KEY not found in environment variables');
   }
 
   const url = "https://api.firecrawl.dev/v2/scrape";
@@ -108,37 +107,49 @@ async function fetchElectricalTools() {
   };
 
   try {
-    console.log('🔧 Starting Firecrawl scrape for electrical tools...');
-    const response = await fetch(url, options);
+    logger.info('Starting Firecrawl scrape for electrical tools');
+    const response = await withRetry(
+      () => withTimeout(
+        fetch(url, options),
+        Timeouts.LONG,
+        'Firecrawl tools scrape'
+      ),
+      RetryPresets.STANDARD
+    );
 
     if (!response.ok) {
-      throw new Error(`❌ API request failed: ${response.status}`);
+      throw new Error(`API request failed: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log('✅ Firecrawl scrape successful, processing results...');
+    logger.info('Firecrawl scrape successful, processing results');
 
     return data.data.json || [];
   } catch (error) {
-    console.error(`⚠️ Error fetching electrical tools:`, error);
+    logger.error('Error fetching electrical tools', { error: error instanceof Error ? error.message : String(error) });
     return [];
   }
 }
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
-  try {
-    console.log('🚀 Firecrawl Tools Scraper function invoked');
-    
-    const tools = await fetchElectricalTools();
-    
-    console.log(`📊 Retrieved ${tools.length} electrical tools from Screwfix`);
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'firecrawl-tools-scraper' });
 
-    return new Response(JSON.stringify(tools), {
+  try {
+    logger.info('Firecrawl Tools Scraper invoked');
+    
+    const tools = await logger.time(
+      'Tools scraping',
+      () => fetchElectricalTools(logger)
+    );
+    
+    logger.info('Retrieved electrical tools from Screwfix', { count: tools.length });
+
+    return new Response(JSON.stringify({ tools, requestId }), {
       headers: { 
         ...corsHeaders,
         'Content-Type': 'application/json' 
@@ -146,20 +157,7 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('❌ Error in firecrawl-tools-scraper:', error);
-    
-    return new Response(
-      JSON.stringify({ 
-        error: 'Failed to scrape tools', 
-        details: error instanceof Error ? error.message : 'Unknown error occurred'
-      }),
-      {
-        status: 500,
-        headers: { 
-          ...corsHeaders,
-          'Content-Type': 'application/json' 
-        },
-      }
-    );
+    logger.error('Firecrawl tools scraper error', { error: error instanceof Error ? error.message : String(error) });
+    return handleError(error);
   }
 });

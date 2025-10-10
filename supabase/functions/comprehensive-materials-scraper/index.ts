@@ -1,5 +1,9 @@
-import { corsHeaders } from '../_shared/cors.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
+import { createClient, corsHeaders } from '../_shared/deps.ts';
+import { handleError, ValidationError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { safeAll } from '../_shared/safe-parallel.ts';
 
 const suppliers = [
   { name: "Screwfix", url: "https://www.screwfix.com/search?search=" },
@@ -64,8 +68,14 @@ const productSchema = {
 };
 
 // --- Scraper Function ---
-async function fetchProductsFromSupplier(supplier: any, query: string, category: string, FIRECRAWL_API_KEY: string) {
-  console.log(`🔍 Fetching ${query} from ${supplier.name}`);
+async function fetchProductsFromSupplier(
+  supplier: any, 
+  query: string, 
+  category: string, 
+  FIRECRAWL_API_KEY: string,
+  logger: any
+) {
+  logger.debug(`Fetching ${query} from ${supplier.name}`);
 
   const firecrawl_url = "https://api.firecrawl.dev/v2/scrape";
 
@@ -90,17 +100,23 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
   };
 
   try {
-    const response = await fetch(firecrawl_url, options);
+    const response = await withRetry(
+      () => withTimeout(
+        fetch(firecrawl_url, options),
+        Timeouts.LONG,
+        `Firecrawl scrape ${supplier.name}`
+      ),
+      RetryPresets.STANDARD
+    );
     if (!response.ok) {
-      console.error(`❌ API request failed: ${response.status} ${response.statusText}`);
+      logger.error(`API request failed for ${supplier.name}`, { status: response.status });
       const errorText = await response.text();
-      console.error(`❌ Error response: ${errorText}`);
       throw new Error(`API request failed: ${response.status}`);
     }
     
     const responseText = await response.text();
     if (!responseText || responseText.trim() === '') {
-      console.error(`❌ Empty response from Firecrawl API for ${supplier.name}`);
+      logger.warn(`Empty response from Firecrawl API for ${supplier.name}`);
       return [];
     }
     
@@ -108,8 +124,7 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
     try {
       data = JSON.parse(responseText);
     } catch (parseError) {
-      console.error(`❌ JSON parse error for ${supplier.name}:`, parseError);
-      console.error(`❌ Response text: ${responseText.substring(0, 500)}...`);
+      logger.error(`JSON parse error for ${supplier.name}`, { error: parseError });
       return [];
     }
 
@@ -150,14 +165,20 @@ async function fetchProductsFromSupplier(supplier: any, query: string, category:
       isOnSale: false
     }));
   } catch (error) {
-    console.error(`⚠️ Error fetching ${query} from ${supplier.name}:`, error);
+    logger.warn(`Error fetching ${query} from ${supplier.name}`, { error: error instanceof Error ? error.message : String(error) });
     return [];
   }
 }
 
 // --- Main Function with Grouped Output ---
-async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, supplierFilter?: string, searchTerm?: string) {
-  console.log('🚀 Starting comprehensive materials scraping...');
+async function getMaterials(
+  FIRECRAWL_API_KEY: string, 
+  logger: any,
+  categoryFilter?: string, 
+  supplierFilter?: string, 
+  searchTerm?: string
+) {
+  logger.info('Starting comprehensive materials scraping', { categoryFilter, supplierFilter, searchTerm });
   
   const jobs = [];
   const filteredSuppliers = supplierFilter
@@ -167,7 +188,10 @@ async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, 
   // If searchTerm is provided, use it directly instead of predefined queries
   if (searchTerm && searchTerm.trim()) {
     for (const supplier of filteredSuppliers) {
-      jobs.push(fetchProductsFromSupplier(supplier, searchTerm.trim(), 'search', FIRECRAWL_API_KEY));
+      jobs.push({
+        name: `${supplier.name}-${searchTerm}`,
+        execute: () => fetchProductsFromSupplier(supplier, searchTerm.trim(), 'search', FIRECRAWL_API_KEY, logger)
+      });
     }
   } else {
     // Use predefined product queries
@@ -178,19 +202,24 @@ async function getMaterials(FIRECRAWL_API_KEY: string, categoryFilter?: string, 
     for (const group of filteredProductList) {
       for (const product of group.items) {
         for (const supplier of filteredSuppliers) {
-          jobs.push(fetchProductsFromSupplier(supplier, product, group.category, FIRECRAWL_API_KEY));
+          jobs.push({
+            name: `${supplier.name}-${product}`,
+            execute: () => fetchProductsFromSupplier(supplier, product, group.category, FIRECRAWL_API_KEY, logger)
+          });
         }
       }
     }
   }
 
-  console.log(`📋 Processing ${jobs.length} scraping jobs...`);
-  const results = await Promise.allSettled(jobs);
-  const materials = results
-    .map((material) => (material.status === "fulfilled" ? material.value : []))
-    .flat();
+  logger.info(`Processing ${jobs.length} scraping jobs`);
+  const { successes, failures } = await safeAll(jobs);
   
-  console.log(`✅ Successfully fetched ${materials.length} products`);
+  if (failures.length > 0) {
+    logger.warn(`${failures.length} scraping jobs failed`, { failures: failures.map(f => f.name) });
+  }
+  
+  const materials = successes.map(s => s.result).flat();
+  logger.info(`Successfully fetched ${materials.length} products`);
   return materials;
 }
 
@@ -228,24 +257,19 @@ async function savePricesToHistory(materials: any[]) {
 }
 
 Deno.serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'comprehensive-materials-scraper' });
+
   try {
-    console.log('🔧 [COMPREHENSIVE-MATERIALS-SCRAPER] Starting request...');
+    logger.info('Starting comprehensive materials scraper');
     
     const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
     if (!FIRECRAWL_API_KEY) {
-      console.error('❌ FIRECRAWL_API_KEY not found in environment variables');
-      return new Response(
-        JSON.stringify({ error: 'Firecrawl API key not configured' }),
-        { 
-          status: 500, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      );
+      throw new ValidationError('Firecrawl API key not configured');
     }
 
     // Parse request body for filters
@@ -258,15 +282,18 @@ Deno.serve(async (req) => {
         const body = await req.json();
         categoryFilter = body.category;
         supplierFilter = body.supplier;
-        searchTerm = body.searchTerm || body.search; // Handle both naming conventions
+        searchTerm = body.searchTerm || body.search;
       } catch (jsonError) {
-        console.warn('⚠️ Failed to parse request body, using defaults');
+        logger.warn('Failed to parse request body, using defaults');
       }
     }
 
-    console.log(`📋 Request filters - Category: ${categoryFilter || 'all'}, Supplier: ${supplierFilter || 'all'}, SearchTerm: ${searchTerm || 'none'}`);
+    logger.info('Request filters', { categoryFilter: categoryFilter || 'all', supplierFilter: supplierFilter || 'all', searchTerm: searchTerm || 'none' });
 
-    const materials = await getMaterials(FIRECRAWL_API_KEY, categoryFilter, supplierFilter, searchTerm);
+    const materials = await logger.time(
+      'Materials scraping',
+      () => getMaterials(FIRECRAWL_API_KEY, logger, categoryFilter, supplierFilter, searchTerm)
+    );
 
     // Save prices to historical database
     await savePricesToHistory(materials);
@@ -277,8 +304,11 @@ Deno.serve(async (req) => {
       materials: materials,
       categories: productList.map(p => p.category),
       suppliers: suppliers.map(s => s.name),
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      requestId
     };
+
+    logger.info('Materials scraping completed', { count: materials.length });
 
     return new Response(
       JSON.stringify(response),
@@ -288,16 +318,7 @@ Deno.serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('❌ [COMPREHENSIVE-MATERIALS-SCRAPER] Error:', error);
-    return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
-        success: false 
-      }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
+    logger.error('Materials scraper error', { error: error instanceof Error ? error.message : String(error) });
+    return handleError(error);
   }
 });
