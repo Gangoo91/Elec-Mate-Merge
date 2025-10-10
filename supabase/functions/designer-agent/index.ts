@@ -390,74 +390,35 @@ Use professional language with UK English spelling. Present calculations clearly
         const parsed = JSON.parse(responseContent);
         console.log('✅ Parsed structured multi-circuit data:', parsed.circuits?.length, 'circuits');
         
-        // VALIDATE: Ensure every circuit has calculations
+        // LOG WHAT WE ACTUALLY GOT from AI
+        console.log('📊 AI Response Structure:', {
+          hasTotalLoad: !!parsed.totalLoad,
+          hasTotalLoadKW: !!parsed.totalLoadKW,
+          hasDiversityFactor: !!parsed.diversityFactor,
+          hasDiversifiedLoad: !!parsed.diversifiedLoad,
+          circuitCount: parsed.circuits?.length,
+          actualValues: {
+            totalLoad: parsed.totalLoad,
+            totalLoadKW: parsed.totalLoadKW,
+            diversityFactor: parsed.diversityFactor,
+            diversifiedLoad: parsed.diversifiedLoad
+          }
+        });
+
+        // Check if circuits have calculations
         if (parsed.circuits && Array.isArray(parsed.circuits)) {
           parsed.circuits.forEach((circuit: any, index: number) => {
             if (!circuit.calculations || !circuit.calculations.Ib) {
-              console.warn(`⚠️ Circuit ${index + 1} (${circuit.name}) missing calculations - computing fallback`);
-              
-              // Compute calculations using shared BS 7671 engine
-              const loadW = circuit.load || 0;
-              const cableSize = parseFloat(circuit.cableSize) || 2.5;
-              const deviceRating = parseInt(circuit.protection) || 32;
-              const designCurrent = loadW / 230;
-              
-              const cableCalc = calculateCableCapacity({
-                cableSize,
-                designCurrent,
-                deviceRating,
-                ambientTemp: 30,
-                groupingCircuits: 1,
-                installationMethod: 'Method C',
-                cableType: 'PVC'
-              });
-              
-              const voltDropCalc = calculateVoltageDrop(cableSize, designCurrent, 20, 230);
-              const zsCalc = getMaxZs(circuit.protection?.includes('Type C') ? 'C' : 'B', deviceRating, 0.4);
-              const r1r2PerMeter = cableSize === 2.5 ? 7.41 : cableSize === 4 ? 4.61 : 3.08;
-              const zs = 0.35 + (r1r2PerMeter * 20 / 1000);
-              
-              circuit.calculations = {
-                Ib: cableCalc.Ib,
-                In: cableCalc.In,
-                Iz: cableCalc.Iz,
-                voltageDrop: {
-                  volts: voltDropCalc.voltageDropVolts,
-                  percent: voltDropCalc.voltageDropPercent,
-                  compliant: voltDropCalc.compliant
-                },
-                zs: {
-                  calculated: parseFloat(zs.toFixed(2)),
-                  max: zsCalc.maxZs,
-                  compliant: zs <= zsCalc.maxZs
-                }
-              };
+              console.error(`❌ Circuit ${index + 1} (${circuit.name}) MISSING calculations object`);
+              console.error('Circuit data:', JSON.stringify(circuit, null, 2));
             }
           });
         }
-        
-        // VALIDATE & COMPUTE: Ensure totalLoad and totalLoadKW exist
-        if ((!parsed.totalLoad || !parsed.totalLoadKW) && Array.isArray(parsed.circuits)) {
-          console.warn('⚠️ AI forgot totalLoad/totalLoadKW - computing from circuits');
-          
-          const computedTotalLoad = parsed.circuits.reduce((sum: number, c: any) => {
-            return sum + (c.load || 0);
-          }, 0);
-          
-          parsed.totalLoad = computedTotalLoad;
-          parsed.totalLoadKW = parseFloat((computedTotalLoad / 1000).toFixed(2));
-          
-          console.log(`✅ Computed totalLoad: ${parsed.totalLoad}W (${parsed.totalLoadKW}kW)`);
-        } else if (!parsed.totalLoad && !Array.isArray(parsed.circuits)) {
-          console.warn('⚠️ No circuits array and no totalLoad - defaulting to 0');
-          parsed.totalLoad = 0;
-          parsed.totalLoadKW = 0;
-        }
 
-        // VALIDATE: Ensure diversifiedLoad exists if diversityFactor is present
-        if (parsed.diversityFactor && !parsed.diversifiedLoad && parsed.totalLoad) {
-          parsed.diversifiedLoad = Math.round(parsed.totalLoad * parsed.diversityFactor);
-          console.log(`✅ Computed diversifiedLoad: ${parsed.diversifiedLoad}W using factor ${parsed.diversityFactor}`);
+        // If critical fields missing, log the FULL RAW RESPONSE
+        if (!parsed.totalLoad || !parsed.totalLoadKW) {
+          console.error('❌ AI RESPONSE MISSING REQUIRED FIELDS');
+          console.error('Full AI response:', responseContent.substring(0, 1000));
         }
         
         Object.assign(structuredData, parsed);

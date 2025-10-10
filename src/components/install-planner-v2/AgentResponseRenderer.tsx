@@ -68,7 +68,7 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData }:
           <div className="space-y-4">
             <div className="text-sm text-muted-foreground mb-3">
               {structuredData.circuits.length} circuits designed • 
-              Total Load: {structuredData.totalLoadKW || (structuredData.totalLoad/1000).toFixed(1)}kW
+              Total Load: {structuredData.totalLoadKW ? `${structuredData.totalLoadKW}kW` : 'Data missing'}
               {structuredData.diversifiedLoad && ` • Diversified: ${(structuredData.diversifiedLoad/1000).toFixed(1)}kW`}
             </div>
             <DesignerCircuitCards circuits={structuredData.circuits.filter(c => c.id && c.name && c.calculations)} />
