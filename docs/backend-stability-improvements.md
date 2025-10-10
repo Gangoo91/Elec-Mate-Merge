@@ -1,7 +1,7 @@
 # Backend Stability Improvements
 
 ## Implementation Status: Week 3 Day 5 Complete ✅
-## Overall Progress: 30/140 functions (21.4%) migrated
+## Overall Progress: 32/140 functions (22.9%) migrated
 
 ### Phase 1: Core Infrastructure (Completed)
 
@@ -359,6 +359,42 @@ const result = await logger.time(
 - Clean error messages with validation
 - Request ID tracking throughout scraping workflow
 - Background task execution properly logged
+
+---
+
+## Week 3 Day 5 (Continued): Additional Agent Functions (32/140 = 22.9% Complete) ✅
+
+### **inspector-agent Migration**
+**Changes:**
+- ✅ Replaced direct imports with shared framework
+- ✅ Added structured logging with request IDs
+- ✅ Wrapped Lovable AI embedding call: 3 retries + 30s timeout
+- ✅ Replaced sequential KB queries with `safeAll` (parallel with timeout)
+- ✅ Parallel searches: Inspection Knowledge + BS 7671 (each with 30s timeout)
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added `ValidationError` for missing API key
+
+**Impact:**
+- Resilient to individual KB failures
+- Parallel knowledge queries reduce latency
+- Request ID tracking for multi-KB workflows
+- Proper timeout protection for vector searches
+
+### **project-manager-agent Migration**
+**Changes:**
+- ✅ Replaced JSR imports with shared framework
+- ✅ Added structured logging with request IDs
+- ✅ Wrapped OpenAI embedding call: 3 retries + 30s timeout
+- ✅ Wrapped project management KB search with 30s timeout
+- ✅ Replaced manual error handling with `handleError()`
+- ✅ Added `ValidationError` for missing API key
+- ✅ Improved error logging for embedding failures
+
+**Impact:**
+- Automatic retry on OpenAI API failures
+- Protected against embedding API timeouts
+- Database vector search with timeout protection
+- Request ID tracking for PM workflows
 
 ---
 

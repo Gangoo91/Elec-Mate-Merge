@@ -2,20 +2,27 @@
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
-import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
-import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
-
-// corsHeaders imported from shared deps
+import { handleError, ValidationError } from '../_shared/errors.ts';
+import { validateAgentRequest } from '../_shared/validation.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { safeAll } from '../_shared/safe-parallel.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'inspector-agent' });
+
   try {
     const { messages, context, userContext } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+    if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
+
+    logger.info('Inspector Agent processing', { messageCount: messages?.length });
 
     // RAG - Get inspection & testing knowledge from database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -25,20 +32,30 @@ serve(async (req) => {
     const userMessage = messages[messages.length - 1]?.content || '';
     const ragQuery = `${userMessage} inspection testing EICR fault diagnosis BS 7671 Part 6 test procedures`;
     
-    console.log(`🔍 RAG: Searching inspection knowledge for: ${ragQuery}`);
+    logger.debug('RAG query for inspection knowledge', { query: ragQuery });
     
-    // Generate embedding for inspection knowledge search
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: ragQuery,
-      }),
-    });
+    // Generate embedding for inspection knowledge search with retry + timeout
+    const embeddingResponse = await logger.time(
+      'Lovable AI embedding generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: ragQuery,
+            }),
+          }),
+          Timeouts.STANDARD,
+          'Lovable AI embedding generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     let inspectionKnowledge = '';
     let bs7671Knowledge = '';
@@ -47,32 +64,59 @@ serve(async (req) => {
       const embeddingDataRes = await embeddingResponse.json();
       const embedding = embeddingDataRes.data[0].embedding;
       
-      // Search inspection & testing knowledge
-      const { data: knowledge, error: ragError } = await supabase.rpc('search_inspection_testing', {
-        query_embedding: embedding,
-        match_threshold: 0.7,
-        match_count: 8
-      });
+      // Search inspection & testing knowledge and BS 7671 in parallel with timeout
+      const { successes, failures } = await safeAll([
+        {
+          name: 'Inspection knowledge',
+          execute: () => withTimeout(
+            supabase.rpc('search_inspection_testing', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 8
+            }),
+            Timeouts.STANDARD,
+            'Inspection knowledge search'
+          )
+        },
+        {
+          name: 'BS 7671 regulations',
+          execute: () => withTimeout(
+            supabase.rpc('search_bs7671', {
+              query_embedding: embedding,
+              match_threshold: 0.6,
+              match_count: 5
+            }),
+            Timeouts.STANDARD,
+            'BS 7671 search'
+          )
+        }
+      ]);
 
-      if (!ragError && knowledge && knowledge.length > 0) {
+      // Extract inspection knowledge
+      const inspectionResult = successes.find(s => s.name === 'Inspection knowledge');
+      const knowledge = inspectionResult?.result?.data;
+
+      if (knowledge && knowledge.length > 0) {
         inspectionKnowledge = knowledge.map((k: any) => 
           `${k.topic} (${k.source}): ${k.content}`
         ).join('\n\n');
-        console.log(`✅ Found ${knowledge.length} inspection guides`);
+        logger.info('Found inspection guides', { count: knowledge.length });
       }
       
-      // Search BS 7671 for regulation details
-      const { data: bs7671Docs, error: bs7671Error } = await supabase.rpc('search_bs7671', {
-        query_embedding: embedding,
-        match_threshold: 0.6,
-        match_count: 5
-      });
+      // Extract BS 7671 regulations
+      const bs7671Result = successes.find(s => s.name === 'BS 7671 regulations');
+      const bs7671Docs = bs7671Result?.result?.data;
 
-      if (!bs7671Error && bs7671Docs && bs7671Docs.length > 0) {
+      if (bs7671Docs && bs7671Docs.length > 0) {
         bs7671Knowledge = bs7671Docs.map((d: any) => 
           `Regulation ${d.regulation_number} (${d.section}): ${d.content}`
         ).join('\n\n');
-        console.log(`✅ Found ${bs7671Docs.length} BS 7671 regulations`);
+        logger.info('Found BS 7671 regulations', { count: bs7671Docs.length });
+      }
+
+      // Log failures without blocking
+      if (failures.length > 0) {
+        logger.warn('Some knowledge base queries failed', { failures: failures.map(f => f.name) });
       }
     }
 

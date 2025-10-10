@@ -1,10 +1,9 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from 'jsr:@supabase/supabase-js@2';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { handleError, ValidationError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 interface ProjectPhase {
   phaseName: string;
@@ -35,14 +34,17 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'project-manager-agent' });
+
   try {
     const { userInput, bulkData } = await req.json();
     
-    console.log('[PROJECT-MANAGER] Received request:', { userInput, bulkDataLength: bulkData?.length });
+    logger.info('Project Manager Agent processing', { userInput, bulkDataLength: bulkData?.length });
 
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY not configured');
+      throw new ValidationError('OPENAI_API_KEY not configured');
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -54,43 +56,61 @@ Deno.serve(async (req) => {
       ? `Project phasing ${bulkData.length} circuits dependencies resource planning critical path scheduling electrical installation`
       : `${userInput} electrical project management phasing dependencies scheduling risk identification resource planning`;
 
-    console.log('[PROJECT-MANAGER] RAG query:', ragQuery);
+    logger.debug('RAG query', { query: ragQuery });
 
-    // Get embedding for RAG search
-    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: ragQuery,
-      }),
-    });
+    // Get embedding for RAG search with retry + timeout
+    const embeddingResponse = await logger.time(
+      'OpenAI embedding generation',
+      () => withRetry(
+        () => withTimeout(
+          fetch('https://api.openai.com/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: ragQuery,
+            }),
+          }),
+          Timeouts.STANDARD,
+          'OpenAI embedding generation'
+        ),
+        RetryPresets.STANDARD
+      )
+    );
 
     if (!embeddingResponse.ok) {
-      console.error('[PROJECT-MANAGER] Embedding error:', await embeddingResponse.text());
+      logger.error('Embedding generation failed', { status: embeddingResponse.status });
+      throw new ValidationError('Failed to generate embedding');
     }
 
     const embeddingData = await embeddingResponse.json();
     const embedding = embeddingData.data[0].embedding;
 
-    // Search project management knowledge base
-    const { data: pmKnowledge, error: ragError } = await supabase.rpc('search_project_mgmt', {
-      query_embedding: embedding,
-      match_threshold: 0.7,
-      match_count: 10
-    });
+    // Search project management knowledge base with timeout
+    const { data: pmKnowledge, error: ragError } = await logger.time(
+      'Project management vector search',
+      () => withTimeout(
+        supabase.rpc('search_project_mgmt', {
+          query_embedding: embedding,
+          match_threshold: 0.7,
+          match_count: 10
+        }),
+        Timeouts.STANDARD,
+        'Project management vector search'
+      )
+    );
 
     let ragContext = '';
     if (!ragError && pmKnowledge && pmKnowledge.length > 0) {
       ragContext = `\n\nRELEVANT PROJECT MANAGEMENT KNOWLEDGE FROM 784 REAL PROJECTS:\n${pmKnowledge.map((k: any) => 
         `• ${k.topic} (${k.source}): ${k.content}`
       ).join('\n')}`;
-      console.log(`[PROJECT-MANAGER] RAG found ${pmKnowledge.length} relevant guides (similarity: ${pmKnowledge[0]?.similarity?.toFixed(2)})`);
+      logger.info('Found project management guides', { count: pmKnowledge.length, topSimilarity: pmKnowledge[0]?.similarity?.toFixed(2) });
     } else {
-      console.log('[PROJECT-MANAGER] No RAG results or error:', ragError);
+      logger.warn('No project management knowledge found', { ragError });
     }
 
     // System prompt for Project Manager Agent
