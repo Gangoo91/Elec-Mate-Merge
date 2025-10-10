@@ -34,14 +34,14 @@ export const TestSequenceCard = ({ data, citations }: TestSequenceCardProps) => 
         {/* Test Sequence Summary (First 3) */}
         {data.testSequence && data.testSequence.length > 0 && (
           <div className="space-y-3">
-            <p className="text-xs font-semibold text-foreground">Test Sequence (BS 7671 Section 643)</p>
+            <p className="text-[10px] sm:text-xs font-semibold text-foreground">Test Sequence (BS 7671 Section 643)</p>
             <ol className="space-y-2">
               {data.testSequence.slice(0, 3).map((test, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm">
-                  <div className="flex items-center justify-center h-6 w-6 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-bold flex-shrink-0 mt-0.5">
+                <li key={idx} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm">
+                  <div className="flex items-center justify-center h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-cyan-500/20 text-cyan-400 text-[10px] sm:text-xs font-bold flex-shrink-0 mt-0.5">
                     {idx + 1}
                   </div>
-                  <span className="text-foreground flex-1 leading-relaxed">{test}</span>
+                  <span className="text-foreground flex-1 leading-relaxed break-words">{test}</span>
                 </li>
               ))}
             </ol>

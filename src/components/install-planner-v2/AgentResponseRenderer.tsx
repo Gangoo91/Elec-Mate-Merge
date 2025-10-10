@@ -64,7 +64,7 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
   };
   
   return (
-    <div className="space-y-4 text-left">
+    <div className="space-y-4 text-left max-w-full overflow-hidden">
       {/* Opening Line Badge */}
       {openingLine && (
         <div className="px-4 py-3 bg-elec-yellow/10 border-l-4 border-elec-yellow rounded-r">
@@ -76,7 +76,7 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
       
       {/* Structured Visual Cards (if available) */}
       {hasStructuredData && (
-        <div className="space-y-3">
+        <div className="space-y-3 max-w-full overflow-hidden">
           {/* Designer Agent - Multi-Circuit Cards */}
         {agentId === 'designer' && structuredData.circuits && Array.isArray(structuredData.circuits) && structuredData.circuits.length > 0 && (
           <div className="space-y-4">
@@ -132,8 +132,8 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
               size="sm" 
               className="w-full justify-between text-xs h-8 text-muted-foreground"
             >
-              <span>View Full Agent Response & Reasoning</span>
-              <ChevronDown className={`h-4 w-4 transition-transform ${showFullText ? 'rotate-180' : ''}`} />
+              <span className="truncate"><span className="hidden sm:inline">View Full Agent Response & Reasoning</span><span className="sm:hidden">Details</span></span>
+              <ChevronDown className={`h-4 w-4 transition-transform ${showFullText ? 'rotate-180' : ''} flex-shrink-0`} />
             </Button>
           </CollapsibleTrigger>
           
@@ -158,8 +158,9 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
           onClick={() => setShowReasoningDrawer(true)}
           className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10 mt-4 text-xs sm:text-sm"
         >
-          <Brain className="h-3 w-3 mr-1.5 flex-shrink-0" />
-          <span className="truncate">Full Agent Reasoning</span>
+          <Brain className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+          <span className="hidden sm:inline ml-1.5 truncate">Full Agent Reasoning</span>
+          <span className="sr-only">Agent Reasoning</span>
         </Button>
       )}
       

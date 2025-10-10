@@ -91,7 +91,7 @@ export const CostBreakdownCard = ({ data }: CostBreakdownCardProps) => {
           </div>
 
           {/* Visual Breakdown Chart */}
-          <div className="h-48 w-full">
+          <div className="h-32 sm:h-48 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -121,25 +121,25 @@ export const CostBreakdownCard = ({ data }: CostBreakdownCardProps) => {
           </div>
 
           {/* What's Included / Not Included */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="bg-green-500/5 border border-green-500/20 rounded p-3">
-              <p className="text-xs font-semibold text-green-400 mb-2">✓ What's Included</p>
+          <div className="grid grid-cols-1 gap-3">
+            <div className="bg-green-500/5 border border-green-500/20 rounded p-2 sm:p-3">
+              <p className="text-[10px] sm:text-xs font-semibold text-green-400 mb-1.5 sm:mb-2">✓ What's Included</p>
               <ul className="space-y-1">
                 {included.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-xs text-foreground/80">
-                    <CheckCircle2 className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                    {item}
+                  <li key={idx} className="flex items-start gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-foreground/80">
+                    <CheckCircle2 className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span className="break-words">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="bg-orange-500/5 border border-orange-500/20 rounded p-3">
-              <p className="text-xs font-semibold text-orange-400 mb-2">✗ What's Not Included</p>
+            <div className="bg-orange-500/5 border border-orange-500/20 rounded p-2 sm:p-3">
+              <p className="text-[10px] sm:text-xs font-semibold text-orange-400 mb-1.5 sm:mb-2">✗ What's Not Included</p>
               <ul className="space-y-1">
                 {notIncluded.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-xs text-foreground/80">
-                    <XCircle className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
-                    {item}
+                  <li key={idx} className="flex items-start gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-foreground/80">
+                    <XCircle className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-orange-400 mt-0.5 flex-shrink-0" />
+                    <span className="break-words">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -165,8 +165,8 @@ export const CostBreakdownCard = ({ data }: CostBreakdownCardProps) => {
             {data.materials && data.materials.length > 0 && (
               <div className="space-y-2">
                 <p className="text-xs font-semibold text-foreground">Materials Breakdown</p>
-                <div className="border border-border/50 rounded overflow-hidden">
-                  <table className="w-full text-xs">
+                <div className="border border-border/50 rounded overflow-x-auto">
+                  <table className="w-full text-[10px] sm:text-xs min-w-[300px]">
                     <thead className="bg-muted/50">
                       <tr>
                         <th className="text-left p-2 text-muted-foreground font-medium">Item</th>

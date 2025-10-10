@@ -48,25 +48,25 @@ export const InstallationStepsCard = ({ data, citations }: InstallationStepsCard
         {/* Installation Steps Summary (First 3) */}
         {data.installationSteps && data.installationSteps.length > 0 && (
           <div className="space-y-3">
-            <p className="text-xs font-semibold text-foreground">Installation Sequence</p>
-            <ol className="space-y-3">
+            <p className="text-[10px] sm:text-xs font-semibold text-foreground">Installation Sequence</p>
+            <ol className="space-y-2 sm:space-y-3">
               {data.installationSteps.slice(0, 3).map((step, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm">
-                  <div className="flex items-center justify-center h-6 w-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0 mt-0.5">
+                <li key={idx} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm">
+                  <div className="flex items-center justify-center h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-purple-500/20 text-purple-400 text-[10px] sm:text-xs font-bold flex-shrink-0 mt-0.5">
                     {typeof step === 'string' ? idx + 1 : step.stepNumber || idx + 1}
                   </div>
                   <div className="flex-1 space-y-1">
                     {typeof step === 'string' ? (
-                      <span className="text-foreground leading-relaxed">{step}</span>
+                      <span className="text-foreground leading-relaxed break-words">{step}</span>
                     ) : (
                       <>
-                        <p className="font-semibold text-foreground">{step.phase || step.title}</p>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                        <p className="font-semibold text-foreground break-words">{step.phase || step.title}</p>
+                        <p className="text-[11px] sm:text-sm text-muted-foreground leading-relaxed break-words">{step.description}</p>
                         {step.estimatedDuration && (
-                          <p className="text-xs text-purple-400 mt-1">⏱️ {step.estimatedDuration}</p>
+                          <p className="text-[10px] sm:text-xs text-purple-400 mt-1">⏱️ {step.estimatedDuration}</p>
                         )}
                         {step.riskLevel && (
-                          <Badge variant="outline" className={`text-xs mt-1 ${
+                          <Badge variant="outline" className={`text-[9px] sm:text-xs mt-1 ${
                             step.riskLevel === 'high' ? 'border-red-500/30 text-red-400' :
                             step.riskLevel === 'medium' ? 'border-yellow-500/30 text-yellow-400' :
                             'border-green-500/30 text-green-400'

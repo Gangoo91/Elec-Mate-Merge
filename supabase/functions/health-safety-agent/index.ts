@@ -591,7 +591,7 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     // PHASE 2: Build H&S reasoning steps
     // workType already extracted at line 39
     const hsJobScale = context?.conversationState?.projectType || 'domestic';
-    const hasDesignerCircuitData = currentDesign && currentDesign.totalLoad;
+    const hasDesignerCircuitDataPhase2 = currentDesign && currentDesign.totalLoad;
 
     const reasoningSteps = [
       {
@@ -606,7 +606,7 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
       }
     ];
 
-    if (hasDesignerCircuitData) {
+    if (hasDesignerCircuitDataPhase2) {
       reasoningSteps.push({
         step: 'Circuit-specific risks',
         reasoning: 'Assessed hazards based on circuit specifications from Designer (voltage, current, installation method)',
@@ -661,7 +661,7 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     // Assumptions
     const assumptionsMade = [];
     
-    if (!hasDesignerCircuitData) {
+    if (!hasDesignerCircuitDataPhase2) {
       assumptionsMade.push({
         parameter: 'Circuit specifications',
         assumed: 'General electrical circuit work',

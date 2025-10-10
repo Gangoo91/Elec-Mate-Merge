@@ -128,6 +128,7 @@ serve(async (req) => {
 
     const previousAgents = context?.previousAgentOutputs?.map((a: any) => a.agent) || [];
     const hasDesigner = previousAgents.includes('designer');
+    const designKnowledge = installationKnowledge; // Reference to RAG data
     
     const getScaleSpecificInstallerPrompt = (scale: 'domestic' | 'commercial' | 'industrial') => {
       const basePrompt = `You are an installation supervisor breaking down work into LOGICAL PHASES.

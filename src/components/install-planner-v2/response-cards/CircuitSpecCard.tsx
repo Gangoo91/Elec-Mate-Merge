@@ -146,17 +146,17 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
 
         {/* Hero Section - Prominent Design */}
         <div className="space-y-3">
-          <div className="text-center py-4 bg-gradient-to-br from-elec-yellow/5 to-blue-500/5 rounded-lg border border-elec-yellow/20">
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+          <div className="text-center py-3 sm:py-4 bg-gradient-to-br from-elec-yellow/5 to-blue-500/5 rounded-lg border border-elec-yellow/20">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-foreground mb-2 px-2 break-words">
               {planData?.loadType || 'Circuit Design'}
             </h2>
-            <div className="flex items-center justify-center gap-4 flex-wrap">
-              <Badge className="bg-elec-yellow text-elec-dark text-lg px-4 py-1 font-bold">
+            <div className="flex items-center justify-center gap-2 sm:gap-4 flex-wrap px-2">
+              <Badge className="bg-elec-yellow text-elec-dark text-xs sm:text-base md:text-lg px-2 sm:px-4 py-0.5 sm:py-1 font-bold">
                 MCB: {localData.protectionDevice}
               </Badge>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1">
-                  <p className="text-sm text-muted-foreground">Cable Size</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Cable Size</p>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -181,34 +181,34 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
                     onValidated={(newValue, validation) => handleFieldUpdate('cableSize', newValue, validation)}
                   />
                 ) : (
-                  <p className="text-3xl font-bold text-foreground">{localData.cableSize}mm²</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">{localData.cableSize}mm²</p>
                 )}
               </div>
             </div>
           </div>
 
           {/* Compliance Status */}
-          <div className="flex items-center justify-between gap-2 pt-2 border-t border-border/50">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-2 border-t border-border/50">
             <div className="flex items-center gap-2">
               {localData.voltageDrop?.compliant ? (
                 <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
               ) : (
                 <AlertCircle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
               )}
-              <span className="text-sm text-foreground">
+              <span className="text-xs sm:text-sm text-foreground">
                 BS 7671:2018 Compliant
               </span>
             </div>
             <div className="flex items-center gap-1 flex-wrap">
               {localData.voltageDrop?.compliant && (
-                <Badge variant="outline" className="text-[10px] bg-green-500/10 border-green-500/30 text-green-400">
-                  <BookOpen className="h-2.5 w-2.5 mr-1" />
+                <Badge variant="outline" className="text-[9px] sm:text-[10px] bg-green-500/10 border-green-500/30 text-green-400">
+                  <BookOpen className="h-2 w-2 sm:h-2.5 sm:w-2.5 mr-0.5 sm:mr-1" />
                   525.1 ✓
                 </Badge>
               )}
               {localData.earthFault?.maxZs && (
-                <Badge variant="outline" className="text-[10px] bg-blue-500/10 border-blue-500/30 text-blue-400">
-                  <BookOpen className="h-2.5 w-2.5 mr-1" />
+                <Badge variant="outline" className="text-[9px] sm:text-[10px] bg-blue-500/10 border-blue-500/30 text-blue-400">
+                  <BookOpen className="h-2 w-2 sm:h-2.5 sm:w-2.5 mr-0.5 sm:mr-1" />
                   411.4 ✓
                 </Badge>
               )}
@@ -216,10 +216,10 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
           </div>
 
           {/* Key Metrics */}
-          <div className="grid grid-cols-2 gap-3 pt-2">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-2">
             <div className="bg-muted/30 rounded p-2">
-              <p className="text-xs text-muted-foreground">Voltage Drop</p>
-              <p className="text-base font-semibold text-foreground">
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Voltage Drop</p>
+              <p className="text-sm sm:text-base font-semibold text-foreground">
                 {localData.voltageDrop?.percentage.toFixed(1)}%
                 {localData.voltageDrop?.compliant && (
                   <span className="text-green-400 ml-1">✓</span>
@@ -227,8 +227,8 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
               </p>
             </div>
             <div className="bg-muted/30 rounded p-2">
-              <p className="text-xs text-muted-foreground">Design Current</p>
-              <p className="text-base font-semibold text-foreground">
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Design Current</p>
+              <p className="text-sm sm:text-base font-semibold text-foreground">
                 {localData.designCurrent?.toFixed(1)}A
               </p>
             </div>

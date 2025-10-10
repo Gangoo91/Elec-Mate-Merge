@@ -96,11 +96,11 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
 
           {/* PPE Summary */}
           {data.requiredPPE && data.requiredPPE.length > 0 && (
-            <div className="bg-muted/30 rounded p-3">
-              <p className="text-xs text-foreground/70 mb-2">Required PPE</p>
-              <div className="flex flex-wrap gap-2 gap-y-2">
+            <div className="bg-muted/30 rounded p-2 sm:p-3">
+              <p className="text-[10px] sm:text-xs text-foreground/70 mb-1.5 sm:mb-2">Required PPE</p>
+              <div className="flex flex-wrap gap-1 sm:gap-2">
                 {data.requiredPPE.map((ppe, idx) => (
-                  <Badge key={idx} variant="outline" className="text-[10px] bg-background/50">
+                  <Badge key={idx} variant="outline" className="text-[9px] sm:text-[10px] bg-background/50 break-words">
                     {ppe}
                   </Badge>
                 ))}
@@ -125,29 +125,29 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
           <CollapsibleContent className="space-y-4 pt-3">
             {/* Hazards Breakdown */}
             {data.riskAssessment?.hazards && data.riskAssessment.hazards.length > 0 && (
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {data.riskAssessment.hazards.map((hazard, idx) => {
                   const hazardColor = getRiskColor(hazard.riskRating);
                   const residualColor = getRiskColor(hazard.residualRisk);
                   
                   return (
-                    <div key={idx} className="border border-border/50 rounded p-3 space-y-2">
-                      <div className="flex items-start justify-between gap-2">
-                        <p className="text-sm font-semibold text-foreground flex-1">
+                    <div key={idx} className="border border-border/50 rounded p-2 sm:p-3 space-y-2">
+                      <div className="flex flex-col sm:flex-row items-start sm:justify-between gap-2">
+                        <p className="text-xs sm:text-sm font-semibold text-foreground flex-1">
                           {hazard.hazard}
                         </p>
-                        <div className="flex gap-2">
-                          <Badge className={`${hazardColor.bg} ${hazardColor.text} border-none text-[10px]`}>
+                        <div className="flex gap-1 sm:gap-2 flex-wrap">
+                          <Badge className={`${hazardColor.bg} ${hazardColor.text} border-none text-[9px] sm:text-[10px]`}>
                             Initial: {hazard.riskRating}
                           </Badge>
-                          <Badge className={`${residualColor.bg} ${residualColor.text} border-none text-[10px]`}>
+                          <Badge className={`${residualColor.bg} ${residualColor.text} border-none text-[9px] sm:text-[10px]`}>
                             Residual: {hazard.residualRisk}
                           </Badge>
                         </div>
                       </div>
                       
-                      <div className="text-xs space-y-1">
-                        <div className="flex gap-4 flex-wrap">
+                      <div className="text-[10px] sm:text-xs space-y-1">
+                        <div className="flex gap-2 sm:gap-4 flex-wrap">
                           <span className="text-foreground/70">Likelihood: L{hazard.likelihood}</span>
                           <span className="text-foreground/70">Severity: S{hazard.severity}</span>
                           <span className="text-foreground/70">Risk: {hazard.riskRating}</span>
@@ -155,12 +155,12 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
                       </div>
                       
                       <div className="pt-2 border-t border-border/30">
-                        <p className="text-xs font-semibold text-foreground mb-1">Control Measures:</p>
-                        <ul className="text-xs text-foreground/90 space-y-1">
+                        <p className="text-[10px] sm:text-xs font-semibold text-foreground mb-1">Control Measures:</p>
+                        <ul className="text-[10px] sm:text-xs text-foreground/90 space-y-1">
                           {hazard.controls.map((control, cidx) => (
-                            <li key={cidx} className="flex items-start gap-2">
+                            <li key={cidx} className="flex items-start gap-1.5 sm:gap-2">
                               <span className="mt-1.5 h-1 w-1 rounded-full bg-elec-yellow flex-shrink-0" />
-                              {control}
+                              <span className="break-words">{control}</span>
                             </li>
                           ))}
                         </ul>
