@@ -130,7 +130,7 @@ ${hsContext}${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
-  "response": "Natural language summary of key safety risks and control measures",
+  "response": "COMPREHENSIVE risk assessment summary (200-300 words) covering: Primary electrical hazards identified (shock, burns, arc flash) with severity ratings, secondary hazards (working at height, manual handling), control measures hierarchy (elimination, substitution, engineering controls, PPE), specific isolation procedures with lock-off requirements, emergency response procedures for electric shock and fire, permit-to-work requirements if applicable, competency requirements for personnel, environmental considerations (confined spaces, weather). Reference HASAWA 1974, Electricity at Work Regulations 1989, and relevant HSE guidance (HSG85, GS38). Include specific PPE specifications.",
   "riskAssessment": {
     "hazards": [
       {"hazard": "Electric shock", "severity": "High", "likelihood": "Medium", "risk": "High"}

@@ -146,7 +146,7 @@ ${designContext ? `DESIGN GUIDANCE:\n${designContext}\n` : ''}${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
-  "response": "Natural language summary explaining the design decisions and key considerations",
+  "response": "COMPREHENSIVE design explanation (200-300 words) covering: Full voltage drop calculation with formula and steps shown, cable current capacity analysis (Iz, In, Ib relationship), protection device selection reasoning (Type B/C/D justification with discrimination), installation method impact on capacity, BS 7671 regulation references with specific clause numbers (e.g., 433.1.1, 525.1), any derating factors applied with percentages. Write as if documenting for an Electrical Installation Certificate, being specific and technical.",
   "design": {
     "cableSize": 2.5,
     "cableType": "6242Y Twin & Earth",

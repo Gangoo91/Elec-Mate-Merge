@@ -126,7 +126,7 @@ ${region ? `REGION: ${region}\n` : ''}${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
-  "response": "Natural language summary of the cost breakdown and key pricing insights",
+  "response": "DETAILED cost analysis (150-250 words) including: Material costs breakdown with quantities and unit prices (e.g., 16mm² cable at £X.XX/m × 45m = £XXX), protection device costs with specific model numbers, labour breakdown by task with time estimates (e.g., cable installation 2 hours at £XX/hr), regional pricing variations if applicable, VAT explanation, potential cost savings opportunities, supplier recommendations. Include markup percentages and any market factors affecting pricing.",
   "materials": {
     "items": [
       {"description": "Item name", "quantity": 1, "unit": "each", "unitPrice": 10.50, "total": 10.50, "supplier": "Wholesaler"}

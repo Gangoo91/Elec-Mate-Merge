@@ -121,8 +121,12 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
       
       {/* Full Text Response (collapsible if structured data exists) */}
       {hasStructuredData && agentId === 'designer' ? (
-        // Designer with structured data: ONLY show cards, hide text completely
-        null
+        // Designer with structured data: Show fallback if response is empty
+        !content.trim() ? (
+          <p className="text-sm text-muted-foreground">
+            ✅ Circuit design complete. Review the technical specifications in the card above.
+          </p>
+        ) : null
       ) : hasStructuredData ? (
         // Other agents with structured data: show collapsible full text
         <Collapsible open={showFullText} onOpenChange={setShowFullText}>

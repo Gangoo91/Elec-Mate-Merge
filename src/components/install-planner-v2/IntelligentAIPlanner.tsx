@@ -1273,15 +1273,24 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   </div>
                 )}
                 
-                {/* Agent Suggestions - show on last assistant message */}
-                {message.role === 'assistant' && 
-                 index === messages.length - 1 && 
-                 message.structuredData?.suggestedNextAgents?.length > 0 && (
-                  <AgentSuggestions
-                    suggestions={message.structuredData.suggestedNextAgents}
-                    onSelectAgent={handleSwitchAgent}
-                  />
-                )}
+                {/* Agent Suggestions - show most recent valid suggestions */}
+                {message.role === 'assistant' && index === messages.length - 1 && (() => {
+                  // Find most recent message with suggestions (walk backwards from current)
+                  const messageWithSuggestions = [...messages].reverse().find(m => 
+                    m.role === 'assistant' && 
+                    m.structuredData?.suggestedNextAgents?.length > 0
+                  );
+                  
+                  if (messageWithSuggestions?.structuredData?.suggestedNextAgents) {
+                    return (
+                      <AgentSuggestions
+                        suggestions={messageWithSuggestions.structuredData.suggestedNextAgents}
+                        onSelectAgent={handleSwitchAgent}
+                      />
+                    );
+                  }
+                  return null;
+                })()}
               </div>
             </div>
           ))}

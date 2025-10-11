@@ -127,9 +127,17 @@ CURRENT DATE: September 2025
 RELEVANT INSTALLATION KNOWLEDGE:
 ${installContext}${contextSection}
 
-Respond ONLY with valid JSON in this exact format:
+CRITICAL: Respond ONLY with valid JSON. Follow these rules strictly:
+1. All strings must use double quotes, not single quotes
+2. No trailing commas after last array/object element
+3. No line breaks inside string values - use \\n for new lines
+4. Escape special characters: " becomes \\"
+5. All property names must be double-quoted
+6. No comments in JSON
+
+Respond in this exact format:
 {
-  "response": "Natural language summary of the installation process and key practical points",
+  "response": "DETAILED installation method statement (250-350 words) covering: Site preparation and access requirements, step-by-step physical installation process with sequence order, fixing methods and support spacing per BS 7671 Table 4A2 (cable cleats every Xm), penetration sealing methods and fire barrier requirements, practical tips from field experience (e.g., labelling before termination, testing continuity at each stage), common mistakes to avoid (over-tightening terminals, inadequate bending radius), quality checkpoints at each stage, special considerations for installation environment (tray/conduit/buried). Include specific torque settings and tool requirements.",
   "installationSteps": [
     {
       "step": 1,
@@ -179,7 +187,32 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     });
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    const installResult = JSON.parse(aiResponse);
+    // Parse the response with JSON repair fallback
+    let installResult;
+    try {
+      installResult = JSON.parse(aiResponse);
+    } catch (parseError) {
+      logger.warn('Initial JSON parse failed, attempting repair', { error: parseError.message });
+      
+      // Attempt common JSON fixes
+      let repairedJson = aiResponse
+        .replace(/,(\s*[}\]])/g, '$1')  // Remove trailing commas
+        .replace(/([{,]\s*)(\w+):/g, '$1"$2":')  // Quote unquoted keys
+        .replace(/'/g, '"')  // Replace single quotes with double quotes
+        .replace(/\n/g, '\\n');  // Escape literal newlines in strings
+      
+      try {
+        installResult = JSON.parse(repairedJson);
+        logger.info('JSON repair successful');
+      } catch (repairError) {
+        logger.error('JSON repair failed', { 
+          originalError: parseError.message,
+          repairError: repairError.message,
+          sample: aiResponse.substring(0, 500)
+        });
+        throw new Error(`Invalid JSON from AI: ${parseError.message}. Repair failed: ${repairError.message}`);
+      }
+    }
 
     logger.info('Installation guidance completed', { 
       stepsCount: installResult.installationSteps?.length,
