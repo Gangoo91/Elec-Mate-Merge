@@ -94,6 +94,7 @@ serve(async (req) => {
       try {
         const { data, error } = await supabase.functions.invoke(endpoint, {
           body: {
+            query: userMessage,
             messages: [
               ...messages,
               { role: 'user', content: userMessage }
