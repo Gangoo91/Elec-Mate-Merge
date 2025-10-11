@@ -113,14 +113,52 @@ serve(async (req) => {
       ).slice(-5).join('\n');
     }
 
-    const systemPrompt = `You are an expert cost engineer specialising in UK electrical installations.
+    const systemPrompt = `You are an expert VALUE ENGINEER specialising in UK electrical installations.
 
-Your task is to provide accurate material and labour cost estimates.
+YOUR UNIQUE VALUE: You are a VALUE ENGINEER, not just a price calculator
+- Compare prices across MULTIPLE wholesalers (CEF, TLC Direct, Edmundson, RS Components, Screwfix Trade)
+- Suggest cost-saving alternatives WITHOUT compromising compliance
+- Identify economies of scale (bulk buy discounts, bundle deals)
+- Flag overspecification opportunities (e.g., "10mm² would comply and save £150")
+- Consider total cost of ownership (initial + maintenance)
+- Provide supplier recommendations with availability status
 
 CURRENT DATE: September 2025
 
-AVAILABLE PRICING DATA:
+PRICING DATABASE RESULTS (YOU MUST USE THIS DATA - DO NOT ESTIMATE):
 ${pricingContext}
+
+🔴 CRITICAL INSTRUCTIONS FOR PRICING:
+1. MATCH materials to pricing database entries FIRST
+   Example: User asks for "16mm² cable" → Search above for "16mm² 6242Y Twin & Earth Cable - £5.50/m at City Electrical Factors"
+   
+2. EXTRACT the EXACT price, NOT an estimate:
+   ✓ CORRECT: {"description": "16mm² 6242Y T&E Cable", "unitPrice": 5.50, "supplier": "City Electrical Factors"}
+   ✗ WRONG: {"description": "16mm² cable", "unitPrice": 6.00, "supplier": "Generic"}
+   
+3. If material NOT in database, mark it clearly:
+   {"description": "Unusual item XYZ", "unitPrice": 25.00, "supplier": "Estimated (not in database)", "notes": "Market average - confirm with supplier"}
+   
+4. COMPARE SUPPLIERS when multiple options exist:
+   Include alternatives array showing price range across wholesalers
+   
+5. Labour rates for September 2025 UK:
+   - Qualified Electrician: £45-65/hr (standard)
+   - Supervisor/Senior: £65-85/hr
+   - Apprentice: £20-30/hr
+   - Include regional variations if applicable
+
+6. VAT is ALWAYS 20% in UK (standard rate)
+
+7. Match cable sizes, MCBs, RCDs, and accessories to database entries using the item_name field
+
+VALUE ENGINEERING OPPORTUNITIES TO IDENTIFY:
+- Alternative products with better value (e.g., "SWA instead of T&E for outdoor - no conduit needed")
+- Timing optimization (supplier promotions, lead times)
+- Bundle deals (CU + MCBs from same supplier = trade discount)
+- Overspecification checks (is the specified cable size larger than necessary?)
+
+The pricing database contains ${pricingResults?.length || 0} relevant items for this query.
 
 ${region ? `REGION: ${region}\n` : ''}${contextSection}
 
@@ -163,7 +201,22 @@ ${query}
 ${materials ? `Materials required: ${JSON.stringify(materials)}` : ''}
 ${labourHours ? `Estimated labour: ${labourHours} hours` : ''}
 
-Include accurate UK pricing, VAT at 20%, and any relevant notes.`;
+STEP-BY-STEP PROCESS (FOLLOW THIS EXACTLY):
+1. Review the PRICING DATABASE RESULTS above line-by-line
+2. For each material needed:
+   a) Find the matching item_name in the database (e.g., "16mm² cable" matches "16mm² 6242Y Twin & Earth Cable")
+   b) Extract the base_cost as unitPrice
+   c) Extract the wholesaler as supplier
+   d) If multiple suppliers available, list alternatives with price comparison
+   e) If in_stock is false, add note about availability and lead times
+3. Build materials.items array with database prices (NOT estimates)
+4. Calculate labour by task (cable installation, termination, testing, certification)
+5. Add 20% VAT to both materials and labour
+6. Identify VALUE ENGINEERING opportunities (cost savings without compromising compliance)
+7. Provide itemized breakdown with supplier recommendations and notes
+
+IMPORTANT: The pricing database above contains ${pricingResults?.length || 0} relevant items. Use them!
+Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engineering recommendations.`;
 
     // Step 4: Call Lovable AI (with timeout)
     logger.debug('Calling Lovable AI');
@@ -174,7 +227,50 @@ Include accurate UK pricing, VAT at 20%, and any relevant notes.`;
     });
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    const costResult = JSON.parse(aiResponse);
+    // Robust JSON parsing with repair
+    let costResult;
+    try {
+      costResult = JSON.parse(aiResponse);
+    } catch (parseError) {
+      logger.warn('Initial JSON parse failed, attempting repair', { 
+        error: parseError.message
+      });
+      
+      // Common JSON repair strategies
+      let repairedJson = aiResponse
+        .replace(/,(\s*[}\]])/g, '$1')              // Remove trailing commas
+        .replace(/([{,]\s*)(\w+):/g, '$1"$2":')    // Quote unquoted keys
+        .replace(/'/g, '"')                         // Single to double quotes
+        .replace(/\n/g, '\\n')                      // Escape actual newlines in strings
+        .replace(/\t/g, '\\t');                     // Escape tabs
+      
+      try {
+        costResult = JSON.parse(repairedJson);
+        logger.info('JSON repair successful');
+      } catch (repairError) {
+        logger.error('JSON repair failed', { 
+          originalSample: aiResponse.substring(0, 500),
+          repairedSample: repairedJson.substring(0, 500)
+        });
+        throw new Error(`Invalid JSON from AI (even after repair): ${parseError.message}`);
+      }
+    }
+
+    // Validate RAG usage
+    if (pricingResults && pricingResults.length > 0) {
+      const usedPricingData = costResult.materials?.items?.some((item: any) => 
+        pricingResults.some((p: any) => 
+          item.description?.toLowerCase().includes(p.item_name?.toLowerCase().split(' ')[0])
+        )
+      );
+      
+      if (!usedPricingData) {
+        logger.warn('AI did not use any pricing database results', { 
+          availableItems: pricingResults.length,
+          generatedItems: costResult.materials?.items?.length 
+        });
+      }
+    }
 
     logger.info('Cost estimate completed', { 
       grandTotal: costResult.summary?.grandTotal,

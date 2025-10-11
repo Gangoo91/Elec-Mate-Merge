@@ -120,30 +120,85 @@ serve(async (req) => {
       ).slice(-5).join('\n');
     }
 
-    const systemPrompt = `You are an expert electrical project manager specialising in UK installations.
+    const systemPrompt = `You are an expert electrical project manager applying PRINCE2/APM methodology.
+
+YOUR UNIQUE VALUE: You apply PRINCE2/APM methodology to electrical projects
+- Use the PRINCE2/APM knowledge in RAG for project structure
+- Provide ACCELERATION tips (how to speed up without cutting corners)
+- Apply electrical-specific project sequencing (you can't commission before installation!)
+- Include Part P notification timelines, DNO coordination, building control
+- Identify CRITICAL PATH items (what delays the whole project)
+- Coordinate all specialist outputs into a coherent delivery plan
 
 Your task is to provide comprehensive project planning and coordination guidance.
 
 CURRENT DATE: September 2025
 
-RELEVANT PROJECT MANAGEMENT KNOWLEDGE:
-${pmContext}${contextSection}
+PROJECT MANAGEMENT KNOWLEDGE DATABASE (YOU MUST USE THIS DATA):
+${pmContext}
+
+🔴 CRITICAL INSTRUCTIONS FOR PROJECT PLANNING:
+1. EXTRACT typical durations from knowledge base:
+   Example from database: "Consumer unit installation: 1-2 days for 10-way board"
+   Your output: {"phase": "CU Installation", "duration": 1.5, "unit": "days"}
+   
+2. APPLY UK notification requirements from knowledge:
+   - Building Control (Part P notification within 48 hours)
+   - DNO notification (for supply modifications - 2 weeks notice)
+   - CDM regulations (if >30 days or >500 person-days)
+   
+3. SEQUENCE phases based on electrical installation workflow:
+   Phase 1: Design & Certification
+   Phase 2: Material Procurement (identify long-lead items)
+   Phase 3: First Fix (containment, cables) - MUST finish before plastering
+   → INSPECTION HOLD POINT (building control)
+   Phase 4: Second Fix (accessories, terminations)
+   Phase 5: Dead Testing (before energisation)
+   → COMPLIANCE HOLD POINT (EIC completion)
+   Phase 6: Energisation & Live Testing
+   Phase 7: Handover & Demonstration
+   
+4. RESOURCE all specialist outputs:
+   ${previousAgentOutputs?.length || 0} specialists have provided data - coordinate them in your plan
+   
+5. INCLUDE compliance checkpoints:
+   - First fix inspection (before covering)
+   - Pre-energisation tests (dead tests)
+   - Live testing (earth loop, RCD)
+   - Final EIC completion
+   
+6. IDENTIFY PROJECT ACCELERATION OPPORTUNITIES:
+   - Fast-track design and procurement in parallel
+   - Pre-fabricate panels offsite
+   - Coordinate building trades sequencing
+   - Batch similar tasks to reduce tool changes
+   - Overlap phases where safe (different areas)
+   
+7. DEFINE CRITICAL PATH clearly (what delays everything)
+
+The PM knowledge contains ${pmKnowledge?.length || 0} verified planning practices. Apply them!
+
+${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
-  "response": "Natural language summary of the project plan and key coordination points",
+  "response": "PRINCE2/APM project plan summary (200-300 words) covering business case, work breakdown, critical path, acceleration tips, compliance milestones, risk register, and resource plan",
   "projectPlan": {
     "phases": [
       {
         "phase": "Design & Planning",
         "duration": 5,
-        "tasks": ["Task 1", "Task 2"],
+        "durationUnit": "days",
+        "tasks": ["Circuit design", "Part P notification"],
         "dependencies": [],
-        "milestones": ["Milestone 1"]
+        "milestones": ["Design sign-off"],
+        "criticalPath": true
       }
     ],
     "totalDuration": 20,
-    "criticalPath": ["Phase 1", "Phase 2"]
+    "totalDurationUnit": "days",
+    "criticalPath": ["Material delivery", "First fix", "Inspection"],
+    "acceleration": ["Fast-track procurement", "Pre-fabricate offsite"]
   },
   "resources": {
     "team": [
@@ -181,7 +236,32 @@ Include phases, resources, compliance requirements, and risk management.`;
     });
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    const pmResult = JSON.parse(aiResponse);
+    // Robust JSON parsing with repair
+    let pmResult;
+    try {
+      pmResult = JSON.parse(aiResponse);
+    } catch (parseError) {
+      logger.warn('Initial JSON parse failed, attempting repair', { 
+        error: parseError.message
+      });
+      
+      let repairedJson = aiResponse
+        .replace(/,(\s*[}\]])/g, '$1')
+        .replace(/([{,]\s*)(\w+):/g, '$1"$2":')
+        .replace(/'/g, '"')
+        .replace(/\n/g, '\\n')
+        .replace(/\t/g, '\\t');
+      
+      try {
+        pmResult = JSON.parse(repairedJson);
+        logger.info('JSON repair successful');
+      } catch (repairError) {
+        logger.error('JSON repair failed', { 
+          originalSample: aiResponse.substring(0, 500)
+        });
+        throw new Error(`Invalid JSON from AI (even after repair): ${parseError.message}`);
+      }
+    }
 
     logger.info('Project plan completed', { 
       phasesCount: pmResult.projectPlan?.phases?.length,

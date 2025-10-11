@@ -121,25 +121,89 @@ serve(async (req) => {
 
     const systemPrompt = `You are an expert Health & Safety advisor specialising in UK electrical installations.
 
+YOUR UNIQUE VALUE: You produce BS 8800-compliant risk assessments with 5×5 RISK MATRIX
+- Generate a proper 5×5 risk matrix (Likelihood 1-5 × Severity 1-5 = Risk Score)
+- Reference SPECIFIC regulations from H&S knowledge (not generic "EWR 1989")
+- Apply CONTEXTUAL awareness (e.g., "working at height" only if installer mentioned ladders)
+- Provide PRACTICAL control measures from the knowledge base (not textbook answers)
+- Calculate before-and-after risk scores to demonstrate control effectiveness
+
 Your task is to provide comprehensive risk assessments and safety guidance.
 
 CURRENT DATE: September 2025
 
-RELEVANT H&S GUIDANCE:
-${hsContext}${contextSection}
+HEALTH & SAFETY KNOWLEDGE DATABASE (YOU MUST USE THIS DATA):
+${hsContext}
+
+🔴 CRITICAL INSTRUCTIONS FOR RISK ASSESSMENT:
+1. EXTRACT hazards from knowledge base FIRST:
+   Example from database: "Working at height above 2m requires scaffolding or MEWP per Working at Height Regulations 2005"
+   Your output: {"hazard": "Working at height (>2m)", "control": "Use scaffolding or MEWP", "regulation": "WAHR 2005"}
+   
+2. REFERENCE specific regulations from knowledge:
+   - Electricity at Work Regulations 1989 (EWR) with regulation numbers (e.g., "EWR 1989 Reg 4(1)")
+   - Health & Safety at Work Act 1974 (HASAWA)
+   - BS 7671 isolation requirements (Section 462)
+   - HSE Guidance (HSG85, GS38, INDG231)
+   
+3. APPLY control measures hierarchy from knowledge base:
+   1st: Elimination, 2nd: Substitution, 3rd: Engineering controls, 4th: Administrative, 5th: PPE
+   
+4. INCLUDE emergency procedures from knowledge base:
+   Example: "Electric shock first aid per HSE INDG231 - Do not touch casualty until isolated"
+   
+5. CROSS-REFERENCE with installer's work description:
+   ${previousAgentOutputs?.find((o: any) => o.agent === 'installer')?.response?.structuredData?.steps?.length || 0} installation steps to assess
+   
+6. USE 5×5 RISK MATRIX (MANDATORY):
+   Likelihood: 1=Rare, 2=Unlikely, 3=Possible, 4=Likely, 5=Almost Certain
+   Severity: 1=Negligible, 2=Minor, 3=Moderate, 4=Major, 5=Catastrophic
+   Risk Score = Likelihood × Severity
+   - 1-4: Low (green)
+   - 5-9: Medium (amber)  
+   - 10-14: High (orange)
+   - 15-25: Very High (red)
+
+7. Calculate BEFORE and AFTER controls risk scores
+
+The H&S knowledge contains ${hsKnowledge?.length || 0} verified safety practices. Apply them!
+
+${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
-  "response": "COMPREHENSIVE risk assessment summary (200-300 words) covering: Primary electrical hazards identified (shock, burns, arc flash) with severity ratings, secondary hazards (working at height, manual handling), control measures hierarchy (elimination, substitution, engineering controls, PPE), specific isolation procedures with lock-off requirements, emergency response procedures for electric shock and fire, permit-to-work requirements if applicable, competency requirements for personnel, environmental considerations (confined spaces, weather). Reference HASAWA 1974, Electricity at Work Regulations 1989, and relevant HSE guidance (HSG85, GS38). Include specific PPE specifications.",
+  "response": "COMPREHENSIVE 5×5 risk assessment summary (250-350 words) covering: All hazards identified with 5×5 matrix scores (Likelihood × Severity = Risk), specific regulations cited by number (e.g., EWR 1989 Reg 4(1), WAHR 2005 Reg 6), control measures applied following hierarchy (elimination first, PPE last), residual risk scores after controls showing risk reduction, emergency procedures for electric shock per HSE INDG231, isolation procedures per BS 7671 Section 462 with lock-off requirements, competent person requirements, environmental considerations. Include before/after risk matrix summary showing controls effectiveness.",
   "riskAssessment": {
     "hazards": [
-      {"hazard": "Electric shock", "severity": "High", "likelihood": "Medium", "risk": "High"}
+      {
+        "hazard": "Electric shock from 230V live conductors",
+        "likelihood": 2,
+        "likelihoodReason": "Unlikely if isolation followed, possible if lock-off fails",
+        "severity": 5,
+        "severityReason": "Potential fatality at 230V AC",
+        "riskScore": 10,
+        "riskLevel": "High",
+        "regulation": "Electricity at Work Regulations 1989 Regulation 4(3)"
+      }
     ],
     "controls": [
-      {"hazard": "Electric shock", "control": "Isolate and lock off", "residualRisk": "Low"}
+      {
+        "hazard": "Electric shock",
+        "controlMeasure": "Isolation per BS 7671 Section 462 with lock-off",
+        "residualLikelihood": 1,
+        "residualSeverity": 5,
+        "residualRisk": 5,
+        "residualRiskLevel": "Medium",
+        "regulation": "BS 7671:2018 Section 462.1",
+        "practicalImplementation": "Use lockable isolator with unique key, GS38 proving device"
+      }
     ],
-    "ppe": ["Safety boots", "Insulated gloves", "Safety glasses"],
-    "emergencyProcedures": ["First aid for electric shock", "Fire procedures"]
+    "riskMatrix": {
+      "beforeControls": {"low": 0, "medium": 0, "high": 1, "veryHigh": 1},
+      "afterControls": {"low": 1, "medium": 1, "high": 0, "veryHigh": 0}
+    },
+    "ppe": ["Safety boots EN ISO 20345", "Insulated gloves EN 60903", "Safety glasses EN 166"],
+    "emergencyProcedures": ["Electric shock: HSE INDG231 - isolate supply, call 999", "Fire: CO2 extinguisher for electrical"]
   },
   "methodStatement": {
     "steps": [
@@ -176,7 +240,32 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     });
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    const safetyResult = JSON.parse(aiResponse);
+    // Robust JSON parsing with repair
+    let safetyResult;
+    try {
+      safetyResult = JSON.parse(aiResponse);
+    } catch (parseError) {
+      logger.warn('Initial JSON parse failed, attempting repair', { 
+        error: parseError.message
+      });
+      
+      let repairedJson = aiResponse
+        .replace(/,(\s*[}\]])/g, '$1')
+        .replace(/([{,]\s*)(\w+):/g, '$1"$2":')
+        .replace(/'/g, '"')
+        .replace(/\n/g, '\\n')
+        .replace(/\t/g, '\\t');
+      
+      try {
+        safetyResult = JSON.parse(repairedJson);
+        logger.info('JSON repair successful');
+      } catch (repairError) {
+        logger.error('JSON repair failed', { 
+          originalSample: aiResponse.substring(0, 500)
+        });
+        throw new Error(`Invalid JSON from AI (even after repair): ${parseError.message}`);
+      }
+    }
 
     logger.info('Risk assessment completed', { 
       hazardsIdentified: safetyResult.riskAssessment?.hazards?.length,
