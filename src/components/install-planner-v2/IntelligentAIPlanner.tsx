@@ -122,8 +122,17 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   
   // Agent suggestions from responses
   const [suggestedAgents, setSuggestedAgents] = useState<Array<{agent: string; reason: string; priority?: string}>>([]);
-  const [currentConversationId] = useState<string>(() => uuidv4());
+  const [currentConversationId] = useState<string>(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const resumeId = urlParams.get('conversationId');
+    return resumeId || uuidv4();
+  });
   const [completedAgentsCount, setCompletedAgentsCount] = useState(0);
+  const [agentOutputHistory, setAgentOutputHistory] = useState<Array<{
+    agent: string;
+    output: any;
+    timestamp: string;
+  }>>([]);
   
   const navigate = useNavigate();
   
@@ -292,6 +301,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       if (structuredData) {
         console.log('✅ Structured data received:', structuredData);
         
+        // Track agent output for context passing
+        setAgentOutputHistory(prev => [
+          ...prev,
+          {
+            agent,
+            output: structuredData,
+            timestamp: new Date().toISOString()
+          }
+        ]);
+        
         // Extract suggested agents if present
         if (structuredData.suggestedNextAgents) {
           setSuggestedAgents(structuredData.suggestedNextAgents);
@@ -428,7 +447,11 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     try {
       await streamMessage(
         [...messages, { role: 'user', content: userMessage }],
-        { circuits: planData.circuits || [] },
+        { 
+          circuits: planData.circuits || [],
+          conversationHistory: messages,
+          agentOutputHistory
+        },
         // On each token (legacy, not used in multi-agent mode)
         (token) => {
           // Tokens are now handled by onAgentResponse
@@ -1238,7 +1261,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => navigate(`/install-planner/results/${currentConversationId}`)}
+                onClick={() => navigate(`/electrician/install-planner/results/${currentConversationId}`)}
                 className="gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10 relative"
               >
                 <ClipboardCheck className="h-4 w-4" />

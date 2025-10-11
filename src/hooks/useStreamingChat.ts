@@ -90,7 +90,22 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     }, 1000);
 
     try {
-      const FUNCTION_URL = "https://jtwygbeceundfgnkirof.supabase.co/functions/v1/orchestrator-agent-v2";
+      // Map agent IDs to edge function names
+      const AGENT_ENDPOINT_MAP: Record<string, string> = {
+        'designer': 'designer-agent',
+        'cost-engineer': 'cost-engineer-agent',
+        'installer': 'installer-agent',
+        'health-safety': 'health-safety-agent',
+        'commissioning': 'commissioning-agent',
+        'project-manager': 'project-manager-agent'
+      };
+
+      // Determine endpoint: single agent or orchestrator
+      const agentEndpoint = selectedAgents && selectedAgents.length === 1
+        ? AGENT_ENDPOINT_MAP[selectedAgents[0]]
+        : 'orchestrator-agent-v2';
+      
+      const FUNCTION_URL = `https://jtwygbeceundfgnkirof.supabase.co/functions/v1/${agentEndpoint}`;
       
       if (!FUNCTION_URL) {
         throw new Error('Invalid function URL configuration');
@@ -131,6 +146,8 @@ body: JSON.stringify({
   currentDesign, 
   selectedAgents, 
   targetAgent,
+  conversationHistory: currentDesign?.conversationHistory || [],
+  previousAgentOutputs: currentDesign?.agentOutputHistory || [],
   ...(currentDesign?.userContext && { userContext: currentDesign.userContext })
 }),
 signal: controller.signal
@@ -393,15 +410,28 @@ signal: controller.signal
           }
         }
       } else {
-        // Handle regular JSON response (fallback for non-streaming)
+        // Handle regular JSON response from single agent
         const data = await response.json();
         
         if (data.error) throw new Error(data.error);
         
         fullResponse = data.response || '';
         citations = data.citations || [];
-        toolCalls = data.toolCalls || [];
-        activeAgents = data.activeAgents || [];
+        structuredData = data.structuredData || null;
+        
+        // Notify agent response
+        if (selectedAgents && selectedAgents.length === 1) {
+          options.onAgentResponse?.(selectedAgents[0], fullResponse, structuredData);
+          
+          // Check for suggested next agents
+          if (data.suggestedNextAgents) {
+            // Store suggestions for UI to display
+            structuredData = {
+              ...structuredData,
+              suggestedNextAgents: data.suggestedNextAgents
+            };
+          }
+        }
         
         // Simulate streaming for smoother UX
         const words = fullResponse.split(' ');
