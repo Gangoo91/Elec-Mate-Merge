@@ -14,6 +14,7 @@ import {
 import { DesignerCircuitCards } from "./DesignerCircuitCards";
 import { AgentReasoningDrawer } from "./AgentReasoningDrawer";
 import { CitationBadge } from "./CitationBadge";
+import { MultiCircuitRenderer } from "./MultiCircuitRenderer";
 
 interface AgentResponseRendererProps {
   content: string;
@@ -76,11 +77,16 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
       {/* Structured Visual Cards (if available) */}
       {hasStructuredData && (
         <div className="space-y-3 max-w-full overflow-hidden">
-          {/* Designer Agent - Multi-Circuit Cards */}
-        {agentId === 'designer' && structuredData.circuits && Array.isArray(structuredData.circuits) && structuredData.circuits.length > 0 && (
+          {/* Designer Agent - Multi-Circuit Renderer (NEW) */}
+          {agentId === 'designer' && structuredData.circuits && Array.isArray(structuredData.circuits) && structuredData.circuits.length > 1 && (
+            <MultiCircuitRenderer data={structuredData} />
+          )}
+          
+          {/* Designer Agent - Legacy Multi-Circuit Cards (fallback for single structured circuit) */}
+        {agentId === 'designer' && structuredData.circuits && Array.isArray(structuredData.circuits) && structuredData.circuits.length === 1 && (
           <div className="space-y-4">
             <div className="text-sm text-muted-foreground mb-3">
-              {structuredData.circuits.length} circuits designed • 
+              {structuredData.circuits.length} circuit designed • 
               Total Load: {structuredData.totalLoadKW ? `${structuredData.totalLoadKW}kW` : 'Data missing'}
               {structuredData.diversifiedLoad && ` • Diversified: ${(structuredData.diversifiedLoad/1000).toFixed(1)}kW`}
             </div>

@@ -41,7 +41,7 @@ export const AgentFeedbackButtons = ({
         .insert({
           user_id: user.id,
           conversation_id: conversationId,
-          agent_name: agentId,
+          agent_name: agentName,
           question,
           ai_response: response,
           structured_data: structuredData || {},

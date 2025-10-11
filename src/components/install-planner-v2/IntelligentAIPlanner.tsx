@@ -1130,7 +1130,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               className={`flex gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[90%] rounded-2xl shadow-sm ${
+                className={`${message.role === 'user' ? 'max-w-[90%]' : 'max-w-full w-full'} rounded-2xl shadow-sm ${
                   message.role === 'user'
                     ? 'bg-elec-yellow text-elec-dark px-5 py-3'
                     : 'bg-elec-card text-white px-5 py-4'

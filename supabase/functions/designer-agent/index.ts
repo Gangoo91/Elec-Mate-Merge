@@ -294,7 +294,45 @@ serve(async (req) => {
     if (projectScope.isMultiCircuit && projectScope.circuits) {
       console.log(`🏗️ Multi-circuit project detected: ${projectScope.circuits.length} circuits for ${projectScope.propertyType}`);
       
-      systemPrompt = `You MUST return ONLY valid JSON. No text before or after. All fields are REQUIRED.
+      // Check if this is an initial vague request (e.g., just "Full rewire 3-bed house")
+      const isVagueRequest = userMessage.length < 100 && !userMessage.match(/\d+m/) && !userMessage.toLowerCase().includes('outdoor');
+      
+      if (isVagueRequest) {
+        // Phase 1: Ask clarifying questions first
+        systemPrompt = `You are an electrical circuit designer helping plan a ${projectScope.propertyType} rewire.
+
+The user has requested: "${userMessage}"
+
+RESPOND WITH FRIENDLY CLARIFYING QUESTIONS in this format:
+
+**Right, let's get the details sorted for your ${projectScope.propertyType} rewire!**
+
+I need to ask a few quick questions to design this properly:
+
+🏠 **Property Details**
+• Is this a new build or rewire of an existing property?
+• Approximate age of the property? (This affects earthing arrangements)
+• Single-storey, two-storey, or more?
+
+⚡ **Special Requirements**
+• Do you need an EV charger point?
+• Outdoor sockets or garden lighting?
+• Combi boiler or immersion heater?
+• Any three-phase equipment needed?
+
+📏 **Installation Specifics**
+• Approximate distance from consumer unit to furthest point? (helps with cable sizing)
+• Loft conversion or basement to wire?
+• Any particular areas with special requirements (e.g., bathroom, kitchen island)?
+
+Once you provide these details, I'll design all ${projectScope.circuits?.length || 'required'} circuits with full BS 7671 calculations, cable specs, and protection devices for each one.
+
+Sound good? 👍
+
+FORMAT: Return this as plain text (NOT JSON). Be conversational but professional.`;
+      } else {
+        // Phase 2: Full multi-circuit design with all calculations
+        systemPrompt = `You MUST return ONLY valid JSON. No text before or after. All fields are REQUIRED.
 
 You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance knowledge.
 
