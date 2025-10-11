@@ -121,8 +121,8 @@ serve(async (req) => {
 
     const systemPrompt = `You are an expert Health & Safety advisor specialising in UK electrical installations.
 
-YOUR UNIQUE VALUE: You produce BS 8800-compliant risk assessments with 5×5 RISK MATRIX
-- Generate a proper 5×5 risk matrix (Likelihood 1-5 × Severity 1-5 = Risk Score)
+YOUR UNIQUE VALUE: You produce BS 8800-compliant risk assessments with 5x5 RISK MATRIX
+- Generate a proper 5x5 risk matrix (Likelihood 1-5 x Severity 1-5 = Risk Score)
 - Reference SPECIFIC regulations from H&S knowledge (not generic "EWR 1989")
 - Apply CONTEXTUAL awareness (e.g., "working at height" only if installer mentioned ladders)
 - Provide PRACTICAL control measures from the knowledge base (not textbook answers)
@@ -155,10 +155,10 @@ ${hsContext}
 5. CROSS-REFERENCE with installer's work description:
    ${previousAgentOutputs?.find((o: any) => o.agent === 'installer')?.response?.structuredData?.steps?.length || 0} installation steps to assess
    
-6. USE 5×5 RISK MATRIX (MANDATORY):
+6. USE 5x5 RISK MATRIX (MANDATORY):
    Likelihood: 1=Rare, 2=Unlikely, 3=Possible, 4=Likely, 5=Almost Certain
    Severity: 1=Negligible, 2=Minor, 3=Moderate, 4=Major, 5=Catastrophic
-   Risk Score = Likelihood × Severity
+   Risk Score = Likelihood x Severity
    - 1-4: Low (green)
    - 5-9: Medium (amber)  
    - 10-14: High (orange)
@@ -172,7 +172,7 @@ ${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
-  "response": "COMPREHENSIVE 5×5 risk assessment summary (250-350 words) covering: All hazards identified with 5×5 matrix scores (Likelihood × Severity = Risk), specific regulations cited by number (e.g., EWR 1989 Reg 4(1), WAHR 2005 Reg 6), control measures applied following hierarchy (elimination first, PPE last), residual risk scores after controls showing risk reduction, emergency procedures for electric shock per HSE INDG231, isolation procedures per BS 7671 Section 462 with lock-off requirements, competent person requirements, environmental considerations. Include before/after risk matrix summary showing controls effectiveness.",
+  "response": "COMPREHENSIVE 5x5 risk assessment summary (250-350 words) covering: All hazards identified with 5x5 matrix scores (Likelihood x Severity = Risk), specific regulations cited by number (e.g., EWR 1989 Reg 4(1), WAHR 2005 Reg 6), control measures applied following hierarchy (elimination first, PPE last), residual risk scores after controls showing risk reduction, emergency procedures for electric shock per HSE INDG231, isolation procedures per BS 7671 Section 462 with lock-off requirements, competent person requirements, environmental considerations. Include before/after risk matrix summary showing controls effectiveness.",
   "riskAssessment": {
     "hazards": [
       {
