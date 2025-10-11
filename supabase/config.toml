@@ -361,3 +361,20 @@ timeout_sec = 30
 [functions.designer-v3]
 verify_jwt = false
 timeout_sec = 60
+
+[functions.cost-engineer-v3]
+verify_jwt = false
+timeout_sec = 60
+
+[functions.health-safety-v3]
+verify_jwt = false
+timeout_sec = 60
+
+[functions.installer-v3]
+verify_jwt = false
+timeout_sec = 60
+
+[functions.project-mgmt-v3]
+verify_jwt = false
+timeout_sec = 60
+timeout_sec = 60

@@ -1,6 +1,13 @@
-import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
-import { handleError, ValidationError } from "../_shared/errors.ts";
-import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { 
+  corsHeaders, 
+  createLogger, 
+  generateRequestId, 
+  handleError, 
+  ValidationError,
+  createClient
+} from '../_shared/v3-core.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
