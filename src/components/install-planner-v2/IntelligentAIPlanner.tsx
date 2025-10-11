@@ -57,6 +57,110 @@ const getAgentName = (agent: string) => {
   return names[agent] || agent;
 };
 
+const AGENT_WELCOME_MESSAGES: Record<string, string> = {
+  'designer': `👋 **Circuit Designer here!**
+
+I specialise in BS 7671-compliant circuit design and cable sizing. I can help you with:
+
+⚡ **Circuit design** - Ring finals, radials, lighting circuits
+⚡ **Cable sizing** - Calculating conductor sizes based on load, length, and installation method  
+⚡ **Protection devices** - Selecting MCBs, RCBOs, and RCDs
+⚡ **Voltage drop calculations** - Ensuring compliance with regulations
+⚡ **Earthing & bonding** - TN-S, TN-C-S, and TT system designs
+
+**Example questions:**
+- "I need a 32A radial for a kitchen"
+- "Design a 6-way consumer unit for a flat"
+- "What cable size for a 9.5kW shower at 18m?"
+
+What can I design for you today?`,
+
+  'cost-engineer': `👋 **Cost Engineer here!**
+
+I provide accurate material and labour pricing for electrical installations. I can help you with:
+
+💷 **Material costs** - Cables, accessories, protection devices
+💷 **Labour estimates** - Installation time and rates
+💷 **Supplier pricing** - CEF, Edmundson, City Electrical Factors
+💷 **Project budgets** - Complete installation cost breakdowns
+💷 **Material schedules** - Detailed quantities and specifications
+
+**Example questions:**
+- "What's the cost for a full rewire?"
+- "Price up materials for a 10-way board upgrade"
+- "Labour costs for installing 15 sockets?"
+
+What pricing do you need?`,
+
+  'installer': `👋 **Installation Specialist here!**
+
+I provide practical, step-by-step installation guidance based on real-world experience. I can help you with:
+
+🔧 **Installation methods** - Best practices for different scenarios
+🔧 **Tool requirements** - What you'll need for the job
+🔧 **Material handling** - Cable routing, accessory fitting
+🔧 **Time estimates** - Realistic job duration planning
+🔧 **Practical tips** - Trade secrets and efficiency tricks
+
+**Example questions:**
+- "How do I install a consumer unit upgrade?"
+- "Best way to run cables in a solid wall?"
+- "Installation sequence for a kitchen rewire?"
+
+What installation advice do you need?`,
+
+  'health-safety': `👋 **Health & Safety Advisor here!**
+
+I ensure your installations meet all safety requirements and regulations. I can help you with:
+
+🛡️ **Risk assessments** - Identifying and controlling hazards
+🛡️ **Method statements** - Safe working procedures
+🛡️ **PPE requirements** - Personal protective equipment
+🛡️ **Emergency procedures** - Incident response planning
+🛡️ **Regulatory compliance** - BS 7671, CDM, HSE guidance
+
+**Example questions:**
+- "Risk assessment for working in a occupied building"
+- "PPE needed for a distribution board change?"
+- "Emergency procedures for electrical fire?"
+
+What safety information do you need?`,
+
+  'commissioning': `👋 **Testing & Inspection Specialist here!**
+
+I guide you through proper testing, inspection, and certification. I can help you with:
+
+✅ **Test procedures** - Insulation, continuity, earth fault loop
+✅ **Certification** - EIC, MEIWC, EICR requirements
+✅ **Test equipment** - Multifunction testers, proving units
+✅ **Fault finding** - Diagnosing test failures
+✅ **Compliance verification** - Meeting BS 7671 standards
+
+**Example questions:**
+- "Testing sequence for a new circuit?"
+- "What Zs value do I need for a 32A MCB?"
+- "How to complete an EIC for a consumer unit change?"
+
+What testing guidance do you need?`,
+
+  'project-manager': `👋 **Project Manager here!**
+
+I help you plan, coordinate, and deliver electrical projects on time and on budget. I can help you with:
+
+📋 **Project planning** - Timelines and resource allocation
+📋 **Team coordination** - Scheduling trades and specialists
+📋 **Documentation** - Quotes, invoices, variation orders
+📋 **Client communication** - Progress updates and change management
+📋 **Quality control** - Ensuring standards are met
+
+**Example questions:**
+- "Timeline for a 3-bed house rewire?"
+- "How to structure a quote for a commercial job?"
+- "Managing a project with multiple subcontractors?"
+
+What project support do you need?`
+};
+
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -915,6 +1019,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     setConsultationStarted(true);
     // Clear any existing suggestions when starting fresh
     setSuggestedAgents([]);
+    
+    // Add welcome message from the selected agent
+    const welcomeMessage = AGENT_WELCOME_MESSAGES[agentId];
+    if (welcomeMessage) {
+      setMessages([{
+        role: 'assistant',
+        content: welcomeMessage,
+        agentName: agentId
+      }]);
+    }
   };
   
   const handleSwitchAgent = (agentId: string) => {
@@ -922,6 +1036,17 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     setCurrentAgent(agentId);
     // Clear suggestions after switching
     setSuggestedAgents([]);
+    
+    // Add welcome message when switching agents
+    const welcomeMessage = AGENT_WELCOME_MESSAGES[agentId];
+    if (welcomeMessage) {
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: welcomeMessage,
+        agentName: agentId
+      }]);
+    }
+    
     toast.info(`Switched to ${getAgentName(agentId)}`, {
       description: "Ask your question"
     });
