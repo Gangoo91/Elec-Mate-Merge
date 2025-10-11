@@ -125,8 +125,8 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
   };
   
   return (
-    <Card className="border-elec-yellow/20 bg-gradient-to-br from-blue-500/5 to-transparent hover:border-elec-yellow/30 transition-all max-w-full overflow-hidden">
-      <CardContent className="p-3 sm:p-4 space-y-3 sm:space-y-4 max-w-full overflow-hidden break-words">
+    <Card className="border-elec-yellow/20 bg-gradient-to-br from-blue-500/5 to-transparent hover:border-elec-yellow/30 transition-all w-full">
+      <CardContent className="p-2 sm:p-3 md:p-4 space-y-2 sm:space-y-3 md:space-y-4">
         {/* Header */}
         <div className="flex items-center justify-between">
           <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
@@ -215,8 +215,8 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
             </div>
           </div>
 
-          {/* Key Metrics */}
-          <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-2">
+          {/* Key Metrics - Stack on mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
             <div className="bg-muted/30 rounded p-2">
               <p className="text-[10px] sm:text-xs text-muted-foreground">Voltage Drop</p>
               <p className="text-sm sm:text-base font-semibold text-foreground">
@@ -263,15 +263,15 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
         )}
 
         {/* Expandable Working Out */}
-        <Collapsible open={showCalculations} onOpenChange={setShowCalculations}>
+        <Collapsible open={showCalculations} onOpenChange={setShowCalculations} className="w-full">
           <CollapsibleTrigger asChild>
             <Button 
               variant="outline" 
               size="sm" 
-              className="w-full justify-between text-xs h-9 border-elec-yellow/30 hover:bg-elec-yellow/10"
+              className="w-full justify-between text-[10px] sm:text-xs h-8 sm:h-9 border-elec-yellow/30 hover:bg-elec-yellow/10"
             >
               <span className="font-medium">View Working Out</span>
-              <ChevronDown className={`h-4 w-4 transition-transform ${showCalculations ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${showCalculations ? 'rotate-180' : ''}`} />
             </Button>
           </CollapsibleTrigger>
           

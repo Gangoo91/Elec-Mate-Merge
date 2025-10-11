@@ -45,14 +45,14 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex flex-col gap-2 mt-3 p-3 rounded-lg bg-elec-card/30 border border-elec-yellow/20"
+      className="flex flex-col gap-2 mt-2 sm:mt-3 p-2 sm:p-3 rounded-lg bg-elec-card/30 border border-elec-yellow/20"
     >
-      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-        <Lightbulb className="h-3.5 w-3.5 text-elec-yellow" />
+      <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-muted-foreground">
+        <Lightbulb className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-elec-yellow flex-shrink-0" />
         <span className="font-medium">Suggested next steps:</span>
       </div>
       
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-1.5 sm:gap-2">
         {suggestions.map((suggestion, index) => (
           <motion.div
             key={suggestion.agent}
@@ -65,20 +65,20 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
               size="sm"
               onClick={() => onSelectAgent(suggestion.agent)}
               className={cn(
-                "h-auto py-2 px-3 flex-col items-start gap-1 hover:bg-elec-yellow/10 hover:border-elec-yellow transition-all",
+                "h-auto w-full sm:w-auto py-1.5 sm:py-2 px-2 sm:px-3 flex-col items-start gap-0.5 sm:gap-1 hover:bg-elec-yellow/10 hover:border-elec-yellow transition-all",
                 suggestion.priority === 'high' && "border-elec-yellow/40"
               )}
             >
-              <div className="flex items-center gap-2">
-                <span className="text-base">{getAgentEmoji(suggestion.agent)}</span>
-                <span className="text-xs font-semibold">{getAgentName(suggestion.agent)}</span>
+              <div className="flex items-center gap-1.5 sm:gap-2 w-full">
+                <span className="text-sm sm:text-base">{getAgentEmoji(suggestion.agent)}</span>
+                <span className="text-[10px] sm:text-xs font-semibold">{getAgentName(suggestion.agent)}</span>
                 {suggestion.priority === 'high' && (
-                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium">
+                  <span className="text-[8px] sm:text-[9px] px-1 sm:px-1.5 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium ml-auto">
                     Recommended
                   </span>
                 )}
               </div>
-              <p className="text-[10px] text-muted-foreground text-left leading-snug">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground text-left leading-tight sm:leading-snug">
                 {suggestion.reason}
               </p>
             </Button>

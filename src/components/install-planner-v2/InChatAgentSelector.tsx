@@ -110,12 +110,14 @@ export const InChatAgentSelector = ({
 
       {/* Phase 1: Compact Mobile - Icon-only buttons */}
       <div className="md:hidden overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-        <div className="flex gap-1 snap-x snap-mandatory pb-0.5">
-          <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
-            className={cn("h-7 text-xs flex-shrink-0 snap-center px-2", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}
-            aria-label="Auto select agent">
-            Auto
-          </Button>
+        <div className="flex gap-0.5 snap-x snap-mandatory pb-0.5">
+          <div className="sticky left-0 z-10 bg-elec-dark pr-0.5">
+            <Button variant="ghost" size="sm" onClick={() => onAgentSelect(null)}
+              className={cn("h-6 text-[10px] flex-shrink-0 snap-center px-1.5", selectedAgent === null && "bg-elec-yellow/20 text-elec-yellow")}
+              aria-label="Auto select agent">
+              Auto
+            </Button>
+          </div>
           {AGENTS.map((agent) => {
             const Icon = agent.icon;
             const isSelected = selectedAgent === agent.id;
@@ -123,19 +125,19 @@ export const InChatAgentSelector = ({
             return (
               <Button key={agent.id} variant="ghost" size="sm"
                 onClick={() => onAgentSelect(isSelected ? null : agent.id)}
-                className={cn("h-7 gap-1 text-xs flex-shrink-0 relative snap-center px-2",
+                className={cn("h-6 gap-0.5 text-[10px] flex-shrink-0 relative snap-center px-1.5",
                   isSelected && "bg-elec-yellow/20 text-elec-yellow",
                   isComplete && "bg-green-500/10 text-green-400")}
                 aria-label={`Select ${agent.name} agent`}
                 title={agent.description}>
-                <Icon className={cn("h-3 w-3", agent.color)} />
-                <span className="hidden sm:inline text-[11px]">{agent.name}</span>
+                <Icon className={cn("h-2.5 w-2.5", agent.color)} />
+                <span className="hidden sm:inline text-[10px]">{agent.name}</span>
               </Button>
             );
           })}
           {photoUploadSlot && (
             <>
-              <div className="w-px h-4 bg-white/10 mx-1 self-center" />
+              <div className="w-px h-4 bg-white/10 mx-0.5 self-center" />
               {photoUploadSlot}
             </>
           )}

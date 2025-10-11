@@ -244,12 +244,32 @@ STEP 8: SELECT PROTECTION DEVICE TYPE
 - Type D (10-20x In): High inrush loads
 - Justify selection based on load characteristics
 
-STEP 9: DOCUMENT EVERYTHING
-- Write comprehensive explanation (200-300 words)
-- Show ALL calculations with formulas
-- Cite EVERY regulation/table used
-- Populate JSON structure with results
-- Flag any warnings (tight voltage drop, high Zs, derating significant)
+STEP 9: DOCUMENT EVERYTHING - 🚨 CRITICAL MINIMUM REQUIREMENTS:
+- Write comprehensive explanation MINIMUM 250 words (count them!)
+- Show EVERY calculation with complete formulas AND numbers
+- Example: "Design current Ib = P/V = 9500W/230V = 41.3A" (NOT just "Ib = 41.3A")
+- Cite SPECIFIC regulation numbers for EVERY decision
+- Reference TABLE numbers with actual values looked up
+- Explain correction factor applications with sources
+- Show voltage drop calculation: "(mV/A/m) x Ib x L = [values] = X.XX volts = Y.Y%"
+- Verify 433.1.1: "Ib (XXA) ≤ In (XXA) ≤ Iz (XXA) ✓"
+- Populate ALL JSON fields with calculations shown
+- Flag warnings if voltage drop >4%, Zs tight, heavy derating applied
+
+🚨 RESPONSE QUALITY ENFORCEMENT:
+Your response will be REJECTED if it does not include:
+✓ MINIMUM 250 words of detailed explanation
+✓ EVERY formula written out with actual numbers substituted
+✓ At least 5 specific BS 7671 regulation numbers cited
+✓ At least 2 Table references with actual values
+✓ Complete voltage drop calculation showing all steps
+✓ Complete 433.1.1 verification with all three values
+
+Example BAD response (UNACCEPTABLE):
+"Selected 10mm² cable with 50A MCB. Voltage drop is 2.1% which is compliant."
+
+Example GOOD response (REQUIRED):
+"Design current calculation: Ib = P/V = 9500W/230V = 41.3A per fundamental calculation. Selected 50A Type B MCB (In = 50A) per load characteristic requiring general protection. From BS 7671 Table 4D5 (Appendix 4), 10mm² twin and earth cable (6242Y) installed using Method C (clipped direct) has a current-carrying capacity Iz = 64A at reference conditions of 30°C ambient. Applied correction factor Ca = 0.94 for 25°C ambient from Table 4B1. No grouping or insulation factors required. Effective capacity: Iz_effective = 64A × 0.94 = 60.2A. Verification per Regulation 433.1.1: Ib (41.3A) ≤ In (50A) ≤ Iz (60.2A) ✓ COMPLIANT. Voltage drop calculation: From Table 4D5, (mV/A/m) = 4.4 for 10mm². Vd = (mV/A/m) × Ib × L = 4.4 × 41.3A × 15m = 2,725.8mV = 2.73V = 1.19% which is well within the 5% limit (11.5V) for power circuits per Regulation 525. Maximum earth fault loop impedance: From Table 41.3, for 50A Type B MCB, maximum Zs = 0.91Ω. Assuming typical TN-S external impedance Ze = 0.35Ω, available for cable (R1+R2) = 0.91 - 0.35 = 0.56Ω. From Table I1, 10mm² copper at 15m gives approximate (R1+R2) = 0.11Ω, providing adequate margin. Design complies with BS 7671:2018+A2:2022 regulations 433.1.1, 525, 411.4.4, and utilises values from Tables 4D5, 4B1, 41.3, and I1."
 
 CURRENT DATE: September 2025
 
@@ -304,6 +324,7 @@ Provide a complete, BS 7671 compliant design.`;
       },
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
+        temperature: 0.3,
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
@@ -318,7 +339,7 @@ Provide a complete, BS 7671 compliant design.`;
               properties: {
                 response: {
                   type: 'string',
-                  description: 'Comprehensive UK English explanation (250-350 words) with ALL calculations shown'
+                  description: 'MINIMUM 250 words. MUST include: every formula with numbers, specific regulation numbers (e.g., 433.1.1), table references with values (e.g., Table 4D5: Iz=64A), complete voltage drop calculation showing all steps, 433.1.1 verification with all three values'
                 },
                 design: {
                   type: 'object',
@@ -361,6 +382,33 @@ Provide a complete, BS 7671 compliant design.`;
                     maxZs: { type: 'number', description: 'Maximum earth fault loop impedance in ohms' }
                   }
                 },
+                detailedCalculations: {
+                  type: 'object',
+                  description: 'Complete step-by-step calculation breakdown showing formulas and working',
+                  properties: {
+                    designCurrent: { 
+                      type: 'string', 
+                      description: 'Formula and calculation for Ib, e.g., "Ib = P/V = 9500W/230V = 41.3A"'
+                    },
+                    cableSizing: { 
+                      type: 'string', 
+                      description: 'Table lookup and correction factors, e.g., "Table 4D5: 10mm² has Iz=64A. With Ca=0.94, effective Iz=60.2A"'
+                    },
+                    voltageDrop: { 
+                      type: 'string', 
+                      description: 'Full Vd calculation with formula, e.g., "Vd = (mV/A/m) × Ib × L = 4.4 × 41.3 × 15 = 2.73V = 1.19%"'
+                    },
+                    earthFault: { 
+                      type: 'string', 
+                      description: 'Zs calculation and verification, e.g., "Max Zs from Table 41.3 = 0.91Ω. Ze=0.35Ω, R1+R2=0.11Ω, Total=0.46Ω < 0.91Ω ✓"'
+                    },
+                    verification433: {
+                      type: 'string',
+                      description: 'Explicit 433.1.1 check, e.g., "Ib (41.3A) ≤ In (50A) ≤ Iz (60.2A) ✓ COMPLIANT"'
+                    }
+                  },
+                  required: ['designCurrent', 'cableSizing', 'voltageDrop', 'verification433']
+                },
                 suggestedNextAgents: {
                   type: 'array',
                   items: {
@@ -374,13 +422,13 @@ Provide a complete, BS 7671 compliant design.`;
                   }
                 }
               },
-              required: ['response', 'design', 'compliance'],
+              required: ['response', 'design', 'compliance', 'detailedCalculations'],
               additionalProperties: false
             }
           }
         }],
         tool_choice: { type: 'function', function: { name: 'produce_circuit_design' } },
-        max_tokens: 2000
+        max_tokens: 3000
       })
     });
 
