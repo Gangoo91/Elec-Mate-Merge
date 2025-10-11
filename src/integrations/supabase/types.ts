@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      agent_conversations: {
+        Row: {
+          consultation_mode: string | null
+          consulted_agents: string[] | null
+          created_at: string | null
+          id: string
+          messages: Json[] | null
+          plan_data: Json | null
+          session_id: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          consultation_mode?: string | null
+          consulted_agents?: string[] | null
+          created_at?: string | null
+          id?: string
+          messages?: Json[] | null
+          plan_data?: Json | null
+          session_id: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          consultation_mode?: string | null
+          consulted_agents?: string[] | null
+          created_at?: string | null
+          id?: string
+          messages?: Json[] | null
+          plan_data?: Json | null
+          session_id?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       ai_interaction_feedback: {
         Row: {
           agent_name: string

@@ -27,11 +27,8 @@ import { PhotoUploadButton } from "./PhotoUploadButton";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { DesignAlternatives } from "./DesignAlternatives";
-import { AgentProgressIndicator } from "./AgentProgressIndicator";
+import { ConsultationTeamSelector, ConsultationMode } from "./ConsultationTeamSelector";
 import { v4 as uuidv4 } from 'uuid';
-
-// Feature flag to toggle between orchestrator and legacy designer
-const USE_ORCHESTRATOR = true;
 
 // Helper functions for agent display
 const getAgentEmoji = (agent: string) => {
@@ -115,8 +112,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [consultationStarted, setConsultationStarted] = useState(!!resumeState?.resumeMessages);
-  const [currentAgent, setCurrentAgent] = useState<string | null>(null);
-  const [nextAgent, setNextAgent] = useState<string | null>(null);
   const [selectedAgent, setSelectedAgent] = useState<AgentType | null>(null);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
@@ -124,11 +119,10 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [lastSendFailed, setLastSendFailed] = useState<boolean>(false);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
   
-  // Phase 5: Progressive Disclosure UI
-  const [estimatedTime, setEstimatedTime] = useState(0);
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const [agentProgress, setAgentProgress] = useState<Record<string, 'pending' | 'active' | 'complete'>>({});
-  const [showProgress, setShowProgress] = useState(false);
+  // User-driven consultation state
+  const [consultationMode, setConsultationMode] = useState<ConsultationMode>(null);
+  const [consultedAgents, setConsultedAgents] = useState<string[]>([]);
+  const [suggestedAgents, setSuggestedAgents] = useState<Array<{agent: string; reason: string}>>([]);
   
   const navigate = useNavigate();
   

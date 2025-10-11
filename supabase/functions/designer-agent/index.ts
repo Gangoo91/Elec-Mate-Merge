@@ -67,7 +67,14 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'designer-agent' });
 
   try {
-    const { messages, currentDesign, context: incomingContext } = await req.json();
+    const { 
+      messages, 
+      currentDesign, 
+      context: incomingContext,
+      conversationSummary,
+      previousAgentOutputs = [],
+      requestSuggestions = false
+    } = await req.json();
     
     // Input validation
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
@@ -83,7 +90,9 @@ serve(async (req) => {
       messageCount: messages.length, 
       messageLength: userMessage.length,
       hasCurrentDesign: !!currentDesign,
-      hasContext: !!incomingContext 
+      hasContext: !!incomingContext,
+      hasConversationSummary: !!conversationSummary,
+      previousAgents: previousAgentOutputs.map((a: any) => a.agent)
     });
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
