@@ -421,6 +421,7 @@ VALIDATION REQUIREMENTS:
 - Return ONLY the JSON object, no markdown, no explanations
 
 Use UK English. Be thorough. Return valid JSON only.`;
+      }
     } else {
       // Single circuit mode
       const cableLabel = circuitParams.location === 'outdoor' 
