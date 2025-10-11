@@ -60,13 +60,7 @@ const getAgentName = (agent: string) => {
 const AGENT_WELCOME_MESSAGES: Record<string, string> = {
   'designer': `👋 **Circuit Designer here!**
 
-I specialise in BS 7671-compliant circuit design and cable sizing. I can help you with:
-
-⚡ **Circuit design** - Ring finals, radials, lighting circuits
-⚡ **Cable sizing** - Calculating conductor sizes based on load, length, and installation method  
-⚡ **Protection devices** - Selecting MCBs, RCBOs, and RCDs
-⚡ **Voltage drop calculations** - Ensuring compliance with regulations
-⚡ **Earthing & bonding** - TN-S, TN-C-S, and TT system designs
+I specialise in BS 7671-compliant circuit design and cable sizing.
 
 **Example questions:**
 - "I need a 32A radial for a kitchen"
@@ -1315,7 +1309,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           ))}
           
           {/* Design Alternatives Component */}
-          {messages.some(m => m.agentName === 'designer') && !isLoading && !isStreaming && (
+          {messages.some(m => m.agentName === 'designer' && m.structuredData && (m.structuredData.cableSize || m.structuredData.protectionDevice)) && !isLoading && !isStreaming && (
             <div className="flex justify-start">
               <div className="max-w-[85%] md:max-w-[75%]">
                 <DesignAlternatives 
