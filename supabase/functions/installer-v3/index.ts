@@ -95,15 +95,27 @@ serve(async (req) => {
         ).join('\n\n')
       : 'Apply general BS 7671 installation methods and best practices.';
 
-    // Build conversation context
+    // Build conversation context with PREVIOUS WORK SUMMARY
     let contextSection = '';
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      const designerOutput = previousAgentOutputs.find((o: any) => o.agent === 'designer');
+      const costOutput = previousAgentOutputs.find((o: any) => o.agent === 'cost-engineer');
+      
+      contextSection += '\n\nPREVIOUS SPECIALIST OUTPUTS:\n';
+      if (designerOutput?.response?.structuredData) {
+        const d = designerOutput.response.structuredData;
+        contextSection += `DESIGNER: ${d.cableSize} cable, ${d.circuitBreaker} breaker, ${d.installationMethod}\n`;
+      }
+      if (costOutput?.response?.structuredData) {
+        const c = costOutput.response.structuredData;
+        contextSection += `COST ENGINEER: Total £${c.totalCost}, ${c.materials?.length || 0} materials\n`;
+      }
+      contextSection += '\n\nFULL DATA:\n' + JSON.stringify(previousAgentOutputs, null, 2);
+    }
     if (messages && messages.length > 0) {
-      contextSection = '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
       ).slice(-5).join('\n');
-    }
-    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
-      contextSection += '\n\nPREVIOUS WORK (reference design/costs):\n' + JSON.stringify(previousAgentOutputs, null, 2);
     }
 
     const systemPrompt = `You are an expert installation specialist with years of practical electrical experience.

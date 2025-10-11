@@ -92,15 +92,25 @@ serve(async (req) => {
         ).join('\n')
       : 'No specific pricing data found. Use typical UK electrical wholesale prices.';
 
-    // Build conversation context
+    // Build conversation context with DESIGNER OUTPUT FIRST
     let contextSection = '';
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      const designerOutput = previousAgentOutputs.find((o: any) => o.agent === 'designer');
+      if (designerOutput?.response?.structuredData) {
+        const design = designerOutput.response.structuredData;
+        contextSection += `\n\nDESIGNER OUTPUT (USE THIS DATA):\n`;
+        contextSection += `- Cable Size: ${design.cableSize || 'N/A'}\n`;
+        contextSection += `- Circuit Type: ${design.circuitType || 'N/A'}\n`;
+        contextSection += `- Circuit Breaker: ${design.circuitBreaker || 'N/A'}\n`;
+        contextSection += `- Cable Length: ${design.cableLength || 'N/A'}m\n`;
+        contextSection += `- Full Design: ${JSON.stringify(design)}\n`;
+      }
+      contextSection += '\n\nALL PREVIOUS WORK:\n' + JSON.stringify(previousAgentOutputs, null, 2);
+    }
     if (messages && messages.length > 0) {
-      contextSection = '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
       ).slice(-5).join('\n');
-    }
-    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
-      contextSection += '\n\nPREVIOUS AGENT OUTPUTS (use cable size, circuit type from designer):\n' + JSON.stringify(previousAgentOutputs, null, 2);
     }
 
     const systemPrompt = `You are an expert cost engineer specialising in UK electrical installations.

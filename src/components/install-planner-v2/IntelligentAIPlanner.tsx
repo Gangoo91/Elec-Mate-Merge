@@ -408,7 +408,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         }
       }
       
-      // Remove "Analyzing..." and add actual response (without agent name prefix)
+      // Remove "Analyzing..." and add actual response with structured data
       setMessages(prev => {
         const filtered = prev.filter(m => !(m.agentName === agent && m.isTyping));
         
@@ -417,7 +417,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           content: response,
           activeAgents: [agent],
           agentName: agent,
-          structuredData
+          structuredData: structuredData || null
         }];
       });
     },

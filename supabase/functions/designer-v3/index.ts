@@ -114,10 +114,18 @@ serve(async (req) => {
         ).join('\n\n')
       : '';
 
-    // Build conversation context for agent awareness
+    // Build conversation context with previous agent outputs
     let contextSection = '';
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      const prevWork = previousAgentOutputs.map((output: any) => {
+        const agent = output.agent || 'previous agent';
+        const data = output.response?.structuredData || output.response?.result || {};
+        return `${agent}: ${JSON.stringify(data)}`;
+      }).join('\n');
+      contextSection += `\n\nPREVIOUS SPECIALIST WORK:\n${prevWork}\n`;
+    }
     if (messages && messages.length > 0) {
-      contextSection = '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
       ).slice(-5).join('\n');
     }

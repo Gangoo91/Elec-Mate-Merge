@@ -105,7 +105,20 @@ serve(async (req) => {
     }
 
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
-      contextParts.push(`PREVIOUS WORK (test based on this design):\n${JSON.stringify(previousAgentOutputs, null, 2)}`);
+      const designerOutput = previousAgentOutputs.find((o: any) => o.agent === 'designer');
+      const hsOutput = previousAgentOutputs.find((o: any) => o.agent === 'health-safety');
+      
+      let prevSummary = 'PREVIOUS SPECIALIST OUTPUTS:\n';
+      if (designerOutput?.response?.structuredData) {
+        const d = designerOutput.response.structuredData;
+        prevSummary += `CIRCUIT: ${d.circuitType}, ${d.voltage}V, ${d.cableSize}\n`;
+        prevSummary += `PROTECTION: ${d.circuitBreaker}, Zs max ${d.maxZs}Ω\n`;
+      }
+      if (hsOutput?.response?.structuredData) {
+        const h = hsOutput.response.structuredData;
+        prevSummary += `SAFETY CONTROLS: ${h.controls?.length || 0} control measures\n`;
+      }
+      contextParts.push(prevSummary + '\n\nFULL DATA:\n' + JSON.stringify(previousAgentOutputs, null, 2));
     }
 
     if (knowledgeResults && knowledgeResults.length > 0) {

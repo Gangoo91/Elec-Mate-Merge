@@ -95,15 +95,29 @@ serve(async (req) => {
         ).join('\n\n')
       : 'Apply general UK electrical project management best practices.';
 
-    // Build conversation context
+    // Build conversation context with ALL SPECIALIST OUTPUTS
     let contextSection = '';
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      contextSection += '\n\nPROJECT DELIVERABLES TO COORDINATE:\n';
+      
+      const designer = previousAgentOutputs.find((o: any) => o.agent === 'designer');
+      const cost = previousAgentOutputs.find((o: any) => o.agent === 'cost-engineer');
+      const installer = previousAgentOutputs.find((o: any) => o.agent === 'installer');
+      const hs = previousAgentOutputs.find((o: any) => o.agent === 'health-safety');
+      const comm = previousAgentOutputs.find((o: any) => o.agent === 'commissioning');
+      
+      if (designer) contextSection += `✓ Design: ${designer.response?.structuredData?.circuitType || 'completed'}\n`;
+      if (cost) contextSection += `✓ Costing: £${cost.response?.structuredData?.totalCost || 'TBC'}\n`;
+      if (installer) contextSection += `✓ Installation: ${installer.response?.structuredData?.steps?.length || 0} steps\n`;
+      if (hs) contextSection += `✓ H&S: ${hs.response?.structuredData?.risks?.length || 0} risks assessed\n`;
+      if (comm) contextSection += `✓ Testing: ${comm.response?.structuredData?.tests?.length || 0} tests\n`;
+      
+      contextSection += '\n\nFULL SPECIALIST DATA:\n' + JSON.stringify(previousAgentOutputs, null, 2);
+    }
     if (messages && messages.length > 0) {
-      contextSection = '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
       ).slice(-5).join('\n');
-    }
-    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
-      contextSection += '\n\nCOMPLETE PROJECT WORK (coordinate all outputs):\n' + JSON.stringify(previousAgentOutputs, null, 2);
     }
 
     const systemPrompt = `You are an expert electrical project manager specialising in UK installations.

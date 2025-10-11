@@ -95,15 +95,28 @@ serve(async (req) => {
         ).join('\n\n')
       : 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
 
-    // Build conversation context
+    // Build conversation context with INSTALLATION PLAN
     let contextSection = '';
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      const installerOutput = previousAgentOutputs.find((o: any) => o.agent === 'installer');
+      const designerOutput = previousAgentOutputs.find((o: any) => o.agent === 'designer');
+      
+      contextSection += '\n\nWORK TO ASSESS FOR RISKS:\n';
+      if (installerOutput?.response?.structuredData) {
+        const inst = installerOutput.response.structuredData;
+        contextSection += `INSTALLATION STEPS: ${inst.steps?.length || 0} steps\n`;
+        contextSection += `Methods: ${JSON.stringify(inst.steps?.map((s: any) => s.action))}\n`;
+      }
+      if (designerOutput?.response?.structuredData) {
+        const d = designerOutput.response.structuredData;
+        contextSection += `DESIGN: ${d.voltage}V, ${d.cableType}, ${d.environment}\n`;
+      }
+      contextSection += '\n\nFULL CONTEXT:\n' + JSON.stringify(previousAgentOutputs, null, 2);
+    }
     if (messages && messages.length > 0) {
-      contextSection = '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
       ).slice(-5).join('\n');
-    }
-    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
-      contextSection += '\n\nPREVIOUS WORK (identify hazards from installation plan):\n' + JSON.stringify(previousAgentOutputs, null, 2);
     }
 
     const systemPrompt = `You are an expert Health & Safety advisor specialising in UK electrical installations.
