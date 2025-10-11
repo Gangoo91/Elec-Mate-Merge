@@ -284,53 +284,6 @@ Respond ONLY with valid JSON in this exact format:
     {"agent": "cost-engineer", "reason": "Get accurate material and labour cost estimate for this design", "priority": "high"},
     {"agent": "installer", "reason": "Get practical installation method and step-by-step guidance", "priority": "medium"}
   ]
-}`
-
-CRITICAL - RESPONSE QUALITY ENFORCEMENT:
-Your response will be REJECTED if it does not include:
-- MINIMUM 250 words of detailed explanation
-- EVERY formula written out with actual numbers substituted
-- At least 5 specific BS 7671 regulation numbers cited
-- At least 2 Table references with actual values
-- Complete voltage drop calculation showing all steps
-- Complete 433.1.1 verification with all three values
-
-Example BAD response (UNACCEPTABLE):
-"Selected 10mm² cable with 50A MCB. Voltage drop is 2.1% which is compliant."
-
-Example GOOD response (REQUIRED):
-"Design current calculation: Ib = P/V = 9500W/230V = 41.3A per fundamental calculation. Selected 50A Type B MCB (In = 50A) per load characteristic requiring general protection. From BS 7671 Table 4D5 (Appendix 4), 10mm² twin and earth cable (6242Y) installed using Method C (clipped direct) has a current-carrying capacity Iz = 64A at reference conditions of 30°C ambient. Applied correction factor Ca = 0.94 for 25°C ambient from Table 4B1. No grouping or insulation factors required. Effective capacity: Iz_effective = 64A × 0.94 = 60.2A. Verification per Regulation 433.1.1: Ib (41.3A) ≤ In (50A) ≤ Iz (60.2A) ✓ COMPLIANT. Voltage drop calculation: From Table 4D5, (mV/A/m) = 4.4 for 10mm². Vd = (mV/A/m) × Ib × L = 4.4 × 41.3A × 15m = 2,725.8mV = 2.73V = 1.19% which is well within the 5% limit (11.5V) for power circuits per Regulation 525. Maximum earth fault loop impedance: From Table 41.3, for 50A Type B MCB, maximum Zs = 0.91Ω. Assuming typical TN-S external impedance Ze = 0.35Ω, available for cable (R1+R2) = 0.91 - 0.35 = 0.56Ω. From Table I1, 10mm² copper at 15m gives approximate (R1+R2) = 0.11Ω, providing adequate margin. Design complies with BS 7671:2018+A2:2022 regulations 433.1.1, 525, 411.4.4, and utilises values from Tables 4D5, 4B1, 41.3, and I1."
-
-CURRENT DATE: September 2025
-
-${contextSection}
-
-Respond ONLY with valid JSON in this exact format:
-{
-  "response": "COMPREHENSIVE design explanation (250-350 words) with ALL CALCULATIONS SHOWN: Design current calculation (Ib = P/V with numbers), cable capacity analysis showing Iz from specific Table (e.g., Table 4D5), correction factors applied (Ca, Cg, Ci with values), verification of 433.1.1 relationship (Ib ≤ In ≤ Iz with actual numbers), voltage drop calculation with formula (mV/A/m x Ib x L showing steps and percentage), earth fault loop impedance calculation (Ze + R1+R2 vs maximum Zs from Table 41.3), protection device selection with specific justification (Type B/C/D based on load characteristics), specific BS 7671 regulation citations by number (433.1.1, 525, Table 4D5, etc.), installation method impact on capacity. Write as if documenting for an Electrical Installation Certificate with verifiable calculations.",
-  "design": {
-    "cableSize": 2.5,
-    "cableType": "6242Y Twin & Earth",
-    "protectionDevice": "32A MCB Type B",
-    "voltageDrop": 2.1,
-    "maxLength": 27,
-    "earthingArrangement": "TN-S",
-    "considerations": ["Point 1", "Point 2"]
-  },
-  "compliance": {
-    "status": "compliant",
-    "regulations": ["522.6.101", "433.1.1"],
-    "warnings": []
-  },
-  "calculations": {
-    "designCurrent": 20,
-    "correctionFactors": 0.87,
-    "maxZs": 1.44
-  },
-  "suggestedNextAgents": [
-    {"agent": "cost-engineer", "reason": "Get accurate material and labour cost estimate for this design", "priority": "high"},
-    {"agent": "installer", "reason": "Get practical installation method and step-by-step guidance", "priority": "medium"}
-  ]
 }`;
 
     const userPrompt = `Design a circuit with these requirements:
