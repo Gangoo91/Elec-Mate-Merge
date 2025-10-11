@@ -982,43 +982,46 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     }
   };
 
+  // Handle initial agent selection - show welcome message
   const handleAgentSelection = (agentId: string) => {
-    console.log('Selected agent:', agentId);
+    console.log(`👤 User selected agent: ${agentId}`);
     setCurrentAgent(agentId);
     setConsultationStarted(true);
-    // Clear any existing suggestions when starting fresh
-    setSuggestedAgents([]);
     
-    // Add welcome message from the selected agent
-    const welcomeMessage = AGENT_WELCOME_MESSAGES[agentId];
-    if (welcomeMessage) {
-      setMessages([{
-        role: 'assistant',
-        content: welcomeMessage,
-        agentName: agentId
-      }]);
-    }
+    // Show welcome message from selected agent
+    const welcomeMessage = AGENT_WELCOME_MESSAGES[agentId] || 
+      `👋 I'm your ${getAgentName(agentId)}. How can I help?`;
+    
+    setMessages([{
+      role: 'assistant',
+      content: welcomeMessage,
+      agentName: agentId,
+      activeAgents: [agentId]
+    }]);
+    
+    // Clear any suggestions from initial screen
+    setSuggestedAgents([]);
   };
-  
-  const handleSwitchAgent = (agentId: string) => {
-    console.log('Switching to agent:', agentId);
-    setCurrentAgent(agentId);
-    // Clear suggestions after switching
+
+  // Handle switching to suggested agent - includes handoff message
+  const handleSwitchAgent = (newAgentId: string) => {
+    console.log(`🔄 Switching from ${currentAgent} to ${newAgentId}`);
+    
+    const previousAgent = currentAgent;
+    setCurrentAgent(newAgentId);
+    
+    // Contextual handoff message with context awareness
+    const handoffMessage = `👋 ${getAgentName(newAgentId)} here! I can see ${getAgentName(previousAgent || 'the previous agent')} has shared their work with me. How can I help build on that?`;
+    
+    setMessages(prev => [...prev, {
+      role: 'assistant',
+      content: handoffMessage,
+      agentName: newAgentId,
+      activeAgents: [newAgentId]
+    }]);
+    
+    // Clear suggestions after switch
     setSuggestedAgents([]);
-    
-    // Add welcome message when switching agents
-    const welcomeMessage = AGENT_WELCOME_MESSAGES[agentId];
-    if (welcomeMessage) {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: welcomeMessage,
-        agentName: agentId
-      }]);
-    }
-    
-    toast.info(`Switched to ${getAgentName(agentId)}`, {
-      description: "Ask your question"
-    });
   };
 
   const handleViewResults = () => {
