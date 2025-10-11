@@ -43,9 +43,12 @@ export interface ConversationSummary {
   openQuestions: string[];
   keyFacts: string[];
   lastTopic: string;
+  circuits?: any[];
+  calculations?: any;
+  constraints?: any;
 }
 
-export function buildConversationState(messages: Message[]): ConversationState {
+export function buildConversationState(messages: Message[], context?: any): ConversationState {
   const state: ConversationState = {
     projectType: 'unknown',
     circuits: [],

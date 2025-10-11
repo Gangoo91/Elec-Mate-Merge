@@ -62,9 +62,18 @@ interface MultiCircuitRendererProps {
       notes?: string;
     };
   };
+  // PHASE 4: Enhanced metadata
+  foundRegulations?: any[];
+  ragMetadata?: {
+    totalRAGCalls: number;
+    regulationCount: number;
+    searchMethod: string;
+    responseTime?: number;
+  };
+  agentChain?: string[];
 }
 
-export const MultiCircuitRenderer = ({ data }: MultiCircuitRendererProps) => {
+export const MultiCircuitRenderer = ({ data, foundRegulations, ragMetadata, agentChain }: MultiCircuitRendererProps) => {
   const [expandedCircuits, setExpandedCircuits] = useState<Set<string>>(new Set());
 
   const toggleCircuit = (circuitId: string) => {

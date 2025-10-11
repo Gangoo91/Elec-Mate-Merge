@@ -39,12 +39,14 @@ interface AvailableAgent {
   priority: number;
 }
 
+// PHASE 5: Add Project Manager Agent
 const availableAgents: AvailableAgent[] = [
   { name: 'designer', endpoint: 'designer-agent', capabilities: ['design', 'calculations', 'cable-sizing'], priority: 1 },
   { name: 'health-safety', endpoint: 'health-safety-agent', capabilities: ['safety', 'risk-assessment', 'method-statements'], priority: 2 },
   { name: 'installer', endpoint: 'installer-agent', capabilities: ['installation', 'practical-guidance', 'tools'], priority: 3 },
   { name: 'inspector', endpoint: 'inspector-agent', capabilities: ['testing', 'inspection', 'certification'], priority: 4 },
-  { name: 'cost', endpoint: 'cost-agent', capabilities: ['pricing', 'materials', 'labour'], priority: 5 }
+  { name: 'cost', endpoint: 'cost-agent', capabilities: ['pricing', 'materials', 'labour'], priority: 5 },
+  { name: 'project-mgmt', endpoint: 'project-mgmt-agent', capabilities: ['timeline', 'planning', 'coordination', 'scheduling'], priority: 6 }
 ];
 
 function getCacheKey(messages: Message[], selectedAgents?: string[]): string {
@@ -143,10 +145,35 @@ serve(async (req) => {
       projectType: conversationSummary?.projectType || conversationState?.projectType || 'domestic',
       lastTopic: conversationSummary?.lastTopic || conversationState?.lastTopic || 'general electrical work',
       keyFacts: conversationSummary?.keyFacts || [],
-      decisions: conversationSummary?.decisions || []
+      decisions: conversationSummary?.decisions || [],
+      requirements: conversationSummary?.requirements || [],
+      openQuestions: conversationSummary?.openQuestions || []
     };
     
-    const intents = detectIntents(messages[messages.length - 1]?.content || '', safeSummary);
+    // PHASE 1: FIX - await detectIntents and pass openAIApiKey
+    const intents = await detectIntents(messages[messages.length - 1]?.content || '', safeSummary, openAIApiKey);
+    
+    // PHASE 2: Check if clarification is needed BEFORE calling agents
+    if (intents.requiresClarification && intents.suggestedFollowUp) {
+      logger.info('Clarification required', { suggestedFollowUp: intents.suggestedFollowUp });
+      
+      const clarificationResponse = {
+        agent: 'orchestrator',
+        agentPlan: [],
+        agentOutputs: [],
+        combinedResponse: `I need a bit more information to create an accurate design:\n\n${intents.suggestedFollowUp}\n\nOnce you provide these details, I can give you a comprehensive BS 7671-compliant design with exact cable sizes, protection devices, and cost estimates.`,
+        confidence: 0.9,
+        conversationState,
+        conversationSummary,
+        requiresClarification: true,
+        executionTime: Date.now() - startTime,
+        agentContext
+      };
+      
+      return new Response(JSON.stringify(clarificationResponse), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
     
     logger.info('Intents detected', {
       primary: intents.primary,
@@ -169,6 +196,8 @@ serve(async (req) => {
 
     // Execute agent sequence with context passing
     const agentOutputs: AgentOutput[] = [];
+    let totalRAGCalls = 0;
+    let designerFoundRegulations: any[] = [];
     
     for (const agentStep of agentPlan.sequence) {
       const agent = availableAgents.find(a => a.name === agentStep.agent);
@@ -195,6 +224,9 @@ serve(async (req) => {
           }
         }
 
+        // PHASE 3: RAG Context Sharing - After designer completes, share regulations with other agents
+        const shouldSkipRAG = agent.name !== 'designer' && designerFoundRegulations.length > 0;
+        
         const agentResponse = await logger.time(
           `${agent.name} agent call`,
           () => withRetry(
@@ -207,11 +239,17 @@ serve(async (req) => {
                     conversationState,
                     conversationSummary: safeSummary,
                     circuitContext,
-                    previousAgentOutputs: agentOutputs
+                    previousAgentOutputs: agentOutputs,
+                    // PHASE 3: Pass shared RAG context
+                    skipRAG: shouldSkipRAG,
+                    sharedRegulations: designerFoundRegulations
                   },
                   currentDesign,
                   jobScale,
-                  incomingContext: agentContext
+                  incomingContext: shouldSkipRAG ? {
+                    ...agentContext,
+                    foundRegulations: designerFoundRegulations
+                  } : agentContext
                 }
               }),
               Timeouts.LONG,
@@ -240,9 +278,22 @@ serve(async (req) => {
           // Merge context from agent
           if (parsedData.agentContext) {
             agentContext = mergeContext(agentContext, parsedData.agentContext);
+            
+            // PHASE 3: After designer completes, extract regulations for sharing
+            if (agent.name === 'designer' && agentContext.foundRegulations) {
+              designerFoundRegulations = agentContext.foundRegulations;
+              totalRAGCalls++;
+              logger.info(`🚀 RAG: Designer searched ${designerFoundRegulations.length} regulations`, {
+                ragCallCount: 1
+              });
+            } else if (shouldSkipRAG) {
+              logger.info(`♻️ ${agent.name} reused designer's ${designerFoundRegulations.length} regulations (0ms RAG)`);
+            }
+            
             logger.info(`Context updated by ${agent.name}`, {
               ragCalls: agentContext.ragCallCount,
-              regulations: agentContext.foundRegulations?.length || 0
+              regulations: agentContext.foundRegulations?.length || 0,
+              totalRAGCalls
             });
           }
 
@@ -270,25 +321,24 @@ serve(async (req) => {
       issues: validationResults.filter(r => !r.isValid).length
     });
 
-    // Combine responses
-    let combinedResponse = '';
+    // PHASE 4: Intelligent Response Synthesis
+    const { synthesizeAgentOutputs } = await import('../_shared/response-synthesizer.ts');
     
-    if (conversationalMode) {
-      // Natural conversation flow
-      combinedResponse = agentOutputs
-        .map(output => output.response)
-        .join('\n\n');
-    } else {
-      // Structured output
-      combinedResponse = agentOutputs
-        .map(output => `**${output.agent.toUpperCase()}:**\n${output.response}`)
-        .join('\n\n---\n\n');
-    }
-
-    // Add validation warnings if any
-    if (!validationResults.every(r => r.isValid)) {
-      combinedResponse += '\n\n⚠️ **Validation Notes:**\n' + validationReport;
-    }
+    const synthesizedResponse = await synthesizeAgentOutputs({
+      intents,
+      agentOutputs,
+      conversationState,
+      foundRegulations: designerFoundRegulations,
+      ragMetadata: {
+        totalRAGCalls,
+        regulationCount: designerFoundRegulations.length,
+        searchMethod: agentContext.foundRegulations?.[0]?.source || 'hybrid'
+      },
+      agentChain: agentPlan.sequence.map(s => s.agent),
+      validationReport: !validationResults.every(r => r.isValid) ? validationReport : undefined
+    });
+    
+    const combinedResponse = synthesizedResponse;
 
     // Build final response
     const finalResponse = {

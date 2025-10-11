@@ -53,8 +53,19 @@ Return JSON with:
 
 Rules:
 - If user is just acknowledging (e.g., "sounds great", "okay", "yes"), check conversation context to determine next logical step
-- If message is vague or requires more info, set requiresClarification=true
-- Confidence scores: >0.7 = definitely relevant, 0.4-0.7 = possibly relevant, <0.4 = not relevant`;
+- CRITICAL: If message is vague or multi-circuit (e.g., "wire a 3-bed house", "full rewire"), set requiresClarification=true
+- For vague multi-circuit requests, generate suggestedFollowUp with specific questions: boiler type (combi/immersion), outdoor sockets, EV charger, kitchen appliances, underfloor heating, etc.
+- Confidence scores: >0.7 = definitely relevant, 0.4-0.7 = possibly relevant, <0.4 = not relevant
+
+EXAMPLES:
+❌ VAGUE (requiresClarification=true):
+- "I need to wire a 3-bed house" → Ask about boiler, EV charger, kitchen appliances, outdoor sockets
+- "Full rewire needed" → Ask about property type, special requirements, existing installations
+- "Design circuits for new build" → Ask about number of rooms, heating system, special requirements
+
+✅ SPECIFIC (requiresClarification=false):
+- "10.5kW shower, 32A kitchen ring, 6A lighting, all standard domestic" → Proceed with design
+- "Design a shower circuit for 10.5kW load" → Proceed with design`;
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
