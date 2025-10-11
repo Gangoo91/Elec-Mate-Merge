@@ -5,7 +5,17 @@
  */
 
 import { createClient } from './deps.ts';
-import { createHash } from 'https://deno.land/std@0.168.0/hash/mod.ts';
+
+/**
+ * Create a deterministic hash using Web Crypto API
+ */
+async function createPatternHash(key: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(key);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 export interface DesignPattern {
   circuitType: string;
@@ -77,9 +87,7 @@ export async function storeDesignPattern(
 
   // Create deterministic hash
   const patternKey = `${pattern.circuitType}-${pattern.powerRating}-${pattern.voltage}-${pattern.cableLength || 0}`;
-  const hash = createHash('md5');
-  hash.update(patternKey);
-  const patternHash = hash.toString();
+  const patternHash = await createPatternHash(patternKey);
 
   const { data, error } = await supabase.rpc('upsert_design_pattern', {
     p_pattern_hash: patternHash,
