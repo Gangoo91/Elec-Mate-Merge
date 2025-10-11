@@ -1,4 +1,4 @@
-// DESIGNER AGENT - RAG-enabled with Lovable AI Gateway
+// DESIGNER AGENT - RAG-enabled with Lovable AI Gateway - v2.1
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
@@ -48,18 +48,53 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Health check endpoint
+  if (req.url.endsWith('/health')) {
+    return new Response(JSON.stringify({ 
+      status: 'healthy', 
+      version: '2.1',
+      timestamp: new Date().toISOString() 
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200
+    });
+  }
+
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'designer-agent' });
 
   try {
     const { messages, currentDesign, context } = await req.json();
+    
+    // Input validation
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      throw new ValidationError('messages array is required and must not be empty');
+    }
+
+    const userMessage = messages[messages.length - 1]?.content;
+    if (!userMessage || typeof userMessage !== 'string') {
+      throw new ValidationError('Latest message must have string content');
+    }
+
+    logger.info('Input validated', { 
+      messageCount: messages.length, 
+      messageLength: userMessage.length,
+      hasCurrentDesign: !!currentDesign,
+      hasContext: !!context 
+    });
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
-    logger.info('Designer Agent processing with RAG + Lovable AI', { messageCount: messages?.length });
+    logger.info('Designer Agent processing with RAG + Lovable AI', { messageCount: messages.length });
 
-    const userMessage = messages[messages.length - 1]?.content || '';
     const circuitParams = extractCircuitParams(userMessage, currentDesign, context);
+    
+    logger.info('Circuit parameters extracted', {
+      circuitType: circuitParams.circuitType,
+      power: circuitParams.power,
+      cableLength: circuitParams.cableLength,
+      hasEnoughData: circuitParams.hasEnoughData
+    });
 
     // Run enhanced BS 7671 calculations
     let calculationResults: any = null;
@@ -174,38 +209,40 @@ serve(async (req) => {
       });
       console.log(`⚡ Fast-track: Using calculation engines only (no RAG needed)`);
     } else {
-      const ragQuery = circuitParams.circuitType 
-        ? `${circuitParams.circuitType} circuit design overload protection voltage drop cable sizing installation methods`
-        : 'socket circuit design overload protection voltage drop cable sizing installation methods';
-      
-      console.log(`🔍 RAG: Searching BS 7671 + Design Knowledge for: ${ragQuery}`);
-      
-      // Generate embedding for RAG query using Lovable AI with retry + timeout
-      const embeddingResponse = await logger.time(
-        'Lovable AI embedding generation',
-        () => withRetry(
-          () => withTimeout(
-            fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${lovableApiKey}`,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                model: 'text-embedding-3-small',
-                input: ragQuery,
+      // RAG pipeline with error recovery
+      try {
+        const ragQuery = circuitParams.circuitType 
+          ? `${circuitParams.circuitType} circuit design overload protection voltage drop cable sizing installation methods`
+          : 'socket circuit design overload protection voltage drop cable sizing installation methods';
+        
+        console.log(`🔍 RAG: Searching BS 7671 + Design Knowledge for: ${ragQuery}`);
+        
+        // Generate embedding for RAG query using Lovable AI with retry + timeout
+        const embeddingResponse = await logger.time(
+          'Lovable AI embedding generation',
+          () => withRetry(
+            () => withTimeout(
+              fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${lovableApiKey}`,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  model: 'text-embedding-3-small',
+                  input: ragQuery,
+                }),
               }),
-            }),
-            Timeouts.STANDARD,
-            'Lovable AI embedding generation'
-          ),
-          RetryPresets.STANDARD
-        )
-      );
-    
-      if (embeddingResponse.ok) {
-        const embeddingData = await embeddingResponse.json();
-        const embedding = embeddingData.data[0].embedding;
+              Timeouts.STANDARD,
+              'Lovable AI embedding generation'
+            ),
+            RetryPresets.STANDARD
+          )
+        );
+      
+        if (embeddingResponse.ok) {
+          const embeddingData = await embeddingResponse.json();
+          const embedding = embeddingData.data[0].embedding;
         
         // OPTIMIZED: Reduced match counts and added circuit_filter
         const { successes, failures } = await safeAll([
@@ -267,10 +304,18 @@ serve(async (req) => {
           circuitFilter: circuitFilter || 'none'
         });
 
-        // Log failures without blocking
-        if (failures.length > 0) {
-          logger.warn('Some knowledge base queries failed', { failures: failures.map(f => f.name) });
+          // Log failures without blocking
+          if (failures.length > 0) {
+            logger.warn('Some knowledge base queries failed', { failures: failures.map(f => f.name) });
+          }
+        } else {
+          logger.warn('Embedding generation failed, continuing without RAG', { status: embeddingResponse.status });
         }
+      } catch (error) {
+        logger.error('RAG pipeline failed, falling back to calculation-only mode', { 
+          error: error instanceof Error ? error.message : String(error) 
+        });
+        // Continue execution - calculations don't need RAG
       }
     }
 
@@ -473,7 +518,29 @@ Use professional language with UK English spelling. Present calculations clearly
     if (!response.ok) {
       const errorText = await response.text();
       logger.error('Lovable AI error', { status: response.status, error: errorText });
-      throw new ValidationError(`AI gateway error: ${response.status}`);
+      
+      // Specific error messages for common failures
+      if (response.status === 429) {
+        return new Response(JSON.stringify({ 
+          error: 'AI service rate limit exceeded. Please try again in 30 seconds.',
+          retryAfter: 30 
+        }), {
+          status: 429,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
+      if (response.status === 402) {
+        return new Response(JSON.stringify({ 
+          error: 'AI service quota exceeded. Please contact support.',
+          code: 'QUOTA_EXCEEDED'
+        }), {
+          status: 402,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
+      throw new ValidationError(`AI gateway error: ${response.status} - ${errorText}`);
     }
 
     const data = await response.json();
