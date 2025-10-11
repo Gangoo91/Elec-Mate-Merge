@@ -91,10 +91,10 @@ const ElectricalHub = () => {
               </div>
               <div className="flex-1">
                 <CardTitle className="text-xl md:text-2xl mb-2">
-                  AI Guided Installation Designer
+                  AI Design Consultation
                 </CardTitle>
                 <p className="text-sm md:text-base text-muted-foreground">
-                  Chat with our AI to design your installation — just describe what you need and we'll guide you through the process
+                  Talk to specialist agents one-on-one. Get expert advice on design, costing, installation, safety, testing, and project management — with smart handoffs between agents.
                 </p>
               </div>
             </CardHeader>
