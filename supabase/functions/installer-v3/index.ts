@@ -1,14 +1,15 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { 
-  corsHeaders, 
-  createLogger, 
-  generateRequestId, 
-  handleError, 
+  corsHeaders,
+  createLogger,
+  generateRequestId,
+  handleError,
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
-  callLovableAIWithTimeout
+  callLovableAIWithTimeout,
+  parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 
 serve(async (req) => {
@@ -120,6 +121,8 @@ serve(async (req) => {
 
     const systemPrompt = `You are an expert ONSITE INSTALLATION SPECIALIST with years of practical electrical experience.
 
+Write all responses in UK English (British spelling and terminology). Do not use American spellings.
+
 YOUR UNIQUE VALUE: You translate design into PRACTICAL onsite work
 - Follow the onsite installation guides in the knowledge base EXACTLY
 - Apply the safety notes from installation knowledge (not generic advice)
@@ -222,11 +225,8 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     });
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    // Parse the response with JSON repair fallback
-    let installResult;
-    try {
-      installResult = JSON.parse(aiResponse);
-    } catch (parseError) {
+    // Use shared JSON parser with repair
+    const installResult = parseJsonWithRepair(aiResponse, logger, 'installer');
       logger.warn('Initial JSON parse failed, attempting repair', { error: parseError.message });
       
       // Attempt common JSON fixes

@@ -8,7 +8,8 @@ import {
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
-  callLovableAIWithTimeout
+  callLovableAIWithTimeout,
+  parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 
 serve(async (req) => {
@@ -114,6 +115,8 @@ serve(async (req) => {
     }
 
     const systemPrompt = `You are an expert VALUE ENGINEER specialising in UK electrical installations.
+
+Write all responses in UK English (British spelling and terminology). Do not use American spellings.
 
 YOUR UNIQUE VALUE: You are a VALUE ENGINEER, not just a price calculator
 - Compare prices across MULTIPLE wholesalers (CEF, TLC Direct, Edmundson, RS Components, Screwfix Trade)
@@ -227,34 +230,8 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
     });
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    // Robust JSON parsing with repair
-    let costResult;
-    try {
-      costResult = JSON.parse(aiResponse);
-    } catch (parseError) {
-      logger.warn('Initial JSON parse failed, attempting repair', { 
-        error: parseError.message
-      });
-      
-      // Common JSON repair strategies
-      let repairedJson = aiResponse
-        .replace(/,(\s*[}\]])/g, '$1')              // Remove trailing commas
-        .replace(/([{,]\s*)(\w+):/g, '$1"$2":')    // Quote unquoted keys
-        .replace(/'/g, '"')                         // Single to double quotes
-        .replace(/\n/g, '\\n')                      // Escape actual newlines in strings
-        .replace(/\t/g, '\\t');                     // Escape tabs
-      
-      try {
-        costResult = JSON.parse(repairedJson);
-        logger.info('JSON repair successful');
-      } catch (repairError) {
-        logger.error('JSON repair failed', { 
-          originalSample: aiResponse.substring(0, 500),
-          repairedSample: repairedJson.substring(0, 500)
-        });
-        throw new Error(`Invalid JSON from AI (even after repair): ${parseError.message}`);
-      }
-    }
+    // Use shared JSON parser with repair
+    const costResult = parseJsonWithRepair(aiResponse, logger, 'cost-engineer');
 
     // Validate RAG usage
     if (pricingResults && pricingResults.length > 0) {

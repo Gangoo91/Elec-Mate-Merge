@@ -8,7 +8,8 @@ import {
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
-  callLovableAIWithTimeout
+  callLovableAIWithTimeout,
+  parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 
 serve(async (req) => {
@@ -121,6 +122,8 @@ serve(async (req) => {
     }
 
     const systemPrompt = `You are an expert electrical project manager applying PRINCE2/APM methodology.
+
+Write all responses in UK English (British spelling and terminology). Do not use American spellings.
 
 YOUR UNIQUE VALUE: You apply PRINCE2/APM methodology to electrical projects
 - Use the PRINCE2/APM knowledge in RAG for project structure
@@ -236,32 +239,8 @@ Include phases, resources, compliance requirements, and risk management.`;
     });
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    // Robust JSON parsing with repair
-    let pmResult;
-    try {
-      pmResult = JSON.parse(aiResponse);
-    } catch (parseError) {
-      logger.warn('Initial JSON parse failed, attempting repair', { 
-        error: parseError.message
-      });
-      
-      let repairedJson = aiResponse
-        .replace(/,(\s*[}\]])/g, '$1')
-        .replace(/([{,]\s*)(\w+):/g, '$1"$2":')
-        .replace(/'/g, '"')
-        .replace(/\n/g, '\\n')
-        .replace(/\t/g, '\\t');
-      
-      try {
-        pmResult = JSON.parse(repairedJson);
-        logger.info('JSON repair successful');
-      } catch (repairError) {
-        logger.error('JSON repair failed', { 
-          originalSample: aiResponse.substring(0, 500)
-        });
-        throw new Error(`Invalid JSON from AI (even after repair): ${parseError.message}`);
-      }
-    }
+    // Use shared JSON parser with repair
+    const pmResult = parseJsonWithRepair(aiResponse, logger, 'project-mgmt');
 
     logger.info('Project plan completed', { 
       phasesCount: pmResult.projectPlan?.phases?.length,

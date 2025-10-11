@@ -76,21 +76,30 @@ export class ExternalAPIError extends Error {
 export function handleError(error: unknown): Response {
   let statusCode = 500;
   let message = 'Unknown error';
+  let userMessage = message;
   
   if (error instanceof ValidationError) {
     statusCode = 400;
     message = error.message;
+    userMessage = message;
   } else if (error instanceof ExternalAPIError) {
     statusCode = 502;
     message = `${error.service} error: ${error.message}`;
+    userMessage = `External service issue with ${error.service}. Please try again.`;
   } else if (error instanceof Error) {
     message = error.message;
+    // Provide user-friendly message for JSON parsing errors
+    if (message.includes('Invalid JSON')) {
+      userMessage = 'AI response formatting issue. Please try again.';
+    } else {
+      userMessage = message;
+    }
   }
   
   console.error('Error handled:', { statusCode, message });
   
   return new Response(
-    JSON.stringify({ error: message }),
+    JSON.stringify({ error: userMessage, _rawError: message }),
     { 
       status: statusCode,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -176,6 +185,57 @@ export async function callLovableAI(
 }
 
 // ============= V3 ENHANCEMENTS =============
+
+/**
+ * Parse JSON with robust repair logic for LLM outputs
+ */
+export function parseJsonWithRepair(raw: string, logger: Logger, context: string): any {
+  logger.debug(`Parsing JSON for ${context}`, { rawLength: raw.length });
+  
+  // Step 1: Trim and strip code fences
+  let cleaned = raw.trim();
+  cleaned = cleaned.replace(/```[a-z]*\n([\s\S]*?)```/gi, '$1');
+  
+  // Step 2: Extract JSON body (find first { to last })
+  const start = cleaned.indexOf('{');
+  const end = cleaned.lastIndexOf('}');
+  if (start >= 0 && end > start) {
+    cleaned = cleaned.slice(start, end + 1);
+  }
+  
+  // Step 3: Normalise symbols
+  cleaned = cleaned
+    .replace(/[\u2018\u2019]/g, "'")      // Smart single quotes → '
+    .replace(/[\u201C\u201D]/g, '"')      // Smart double quotes → "
+    .replace(/[\u2013\u2014]/g, '-')      // En/em dashes → -
+    .replace(/\u00D7/g, 'x');             // Multiplication sign → x
+  
+  // Step 4: Apply existing repair strategies
+  cleaned = cleaned
+    .replace(/,(\s*[}\]])/g, '$1')              // Remove trailing commas
+    .replace(/([{,]\s*)(\w+):/g, '$1"$2":')    // Quote unquoted keys
+    .replace(/'/g, '"');                        // Single to double quotes
+  
+  // Step 5: Try parsing
+  try {
+    const parsed = JSON.parse(cleaned);
+    if (cleaned.length < raw.length) {
+      logger.debug(`JSON trimmed during repair`, { 
+        beforeLen: raw.length, 
+        afterLen: cleaned.length,
+        trimmed: true,
+        context 
+      });
+    }
+    return parsed;
+  } catch (parseError: any) {
+    logger.warn(`JSON parse failed for ${context}`, { 
+      error: parseError.message,
+      sample: cleaned.substring(0, 500)
+    });
+    throw new Error(`Invalid JSON from AI: ${parseError.message}. Repair failed: ${cleaned.substring(0, 100)}...`);
+  }
+}
 
 /**
  * Call Lovable AI with timeout protection (55s before Supabase 60s limit)

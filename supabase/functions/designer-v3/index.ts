@@ -8,7 +8,8 @@ import {
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
-  callLovableAIWithTimeout
+  callLovableAIWithTimeout,
+  parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 
 serve(async (req) => {
@@ -134,6 +135,8 @@ serve(async (req) => {
     }
 
     const systemPrompt = `You are the DESIGN AUTHORITY for electrical installations, specialising in BS 7671:2018+A2:2022 compliance.
+
+Write all responses in UK English (British spelling and terminology). Do not use American spellings.
 
 YOUR UNIQUE VALUE: You are the DESIGN AUTHORITY for electrical installations
 - You CALCULATE cable sizes, voltage drops, earth fault loop impedances (Zs)
@@ -295,12 +298,8 @@ Provide a complete, BS 7671 compliant design.`;
     });
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    // Parse JSON with repair logic for robustness
-    let designResult;
-    try {
-      designResult = JSON.parse(aiResponse);
-    } catch (parseError) {
-      logger.warn('JSON parse failed, attempting repair', { error: parseError.message });
+    // Use shared JSON parser with repair
+    const designResult = parseJsonWithRepair(aiResponse, logger, 'designer');
       
       // Attempt to repair common JSON issues
       let repairedJson = aiResponse

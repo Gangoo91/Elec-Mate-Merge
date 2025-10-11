@@ -9,7 +9,8 @@ import {
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
-  callLovableAIWithTimeout
+  callLovableAIWithTimeout,
+  parseJsonWithRepair
 } from "../_shared/v3-core.ts";
 
 serve(async (req) => {
@@ -120,6 +121,8 @@ serve(async (req) => {
     }
 
     const systemPrompt = `You are a GN3 PRACTICAL TESTING GURU - BS 7671:2018+A2:2022 Chapter 64 specialist.
+
+Write all responses in UK English (British spelling and terminology). Do not use American spellings.
 
 YOUR UNIQUE VALUE: You teach people HOW to perform each test (GN3 practical guidance)
 - Not just "do continuity test" → Explain where to put leads, what buttons to press, what to expect
@@ -275,32 +278,8 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     });
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    // Robust JSON parsing with repair
-    let commResult;
-    try {
-      commResult = JSON.parse(aiResponse);
-    } catch (parseError) {
-      logger.warn('Initial JSON parse failed, attempting repair', { 
-        error: parseError.message
-      });
-      
-      let repairedJson = aiResponse
-        .replace(/,(\s*[}\]])/g, '$1')
-        .replace(/([{,]\s*)(\w+):/g, '$1"$2":')
-        .replace(/'/g, '"')
-        .replace(/\n/g, '\\n')
-        .replace(/\t/g, '\\t');
-      
-      try {
-        commResult = JSON.parse(repairedJson);
-        logger.info('JSON repair successful');
-      } catch (repairError) {
-        logger.error('JSON repair failed', { 
-          originalSample: aiResponse.substring(0, 500)
-        });
-        throw new Error(`Invalid JSON from AI (even after repair): ${parseError.message}`);
-      }
-    }
+    // Use shared JSON parser with repair
+    const commResult = parseJsonWithRepair(aiResponse, logger, 'commissioning');
 
     logger.info('Testing guidance completed', { 
       deadTests: commResult.testingProcedure?.deadTests?.length,

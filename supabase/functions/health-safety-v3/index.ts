@@ -8,7 +8,8 @@ import {
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
-  callLovableAIWithTimeout
+  callLovableAIWithTimeout,
+  parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 
 serve(async (req) => {
@@ -120,6 +121,8 @@ serve(async (req) => {
     }
 
     const systemPrompt = `You are an expert Health & Safety adviser specialising in UK electrical installations.
+
+Write all responses in UK English (British spelling and terminology). Do not use American spellings.
 
 YOUR UNIQUE VALUE: You produce BS 8800-compliant risk assessments with 5x5 RISK MATRIX
 - Generate a proper 5x5 risk matrix (Likelihood 1-5 x Severity 1-5 = Risk Score)

@@ -90,22 +90,8 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     }, 1000);
 
     try {
-      // Map agent IDs to V3 edge function names
-      const AGENT_ENDPOINT_MAP: Record<string, string> = {
-        'designer': 'designer-v3',
-        'cost-engineer': 'cost-engineer-v3',
-        'installer': 'installer-v3',
-        'health-safety': 'health-safety-v3',
-        'commissioning': 'commissioning-v3',
-        'project-manager': 'project-mgmt-v3'
-      };
-
-      // Determine endpoint: single agent or orchestrator
-      const agentEndpoint = selectedAgents && selectedAgents.length === 1
-        ? AGENT_ENDPOINT_MAP[selectedAgents[0]]
-        : 'orchestrator-agent-v2';
-      
-      const FUNCTION_URL = `https://jtwygbeceundfgnkirof.supabase.co/functions/v1/${agentEndpoint}`;
+      // ALWAYS use agent-router for consistency, deduplication, and proper flow
+      const FUNCTION_URL = `https://jtwygbeceundfgnkirof.supabase.co/functions/v1/agent-router`;
       
       if (!FUNCTION_URL) {
         throw new Error('Invalid function URL configuration');
@@ -131,13 +117,15 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
         controller.abort();
       }, timeoutMs);
 
-      // Determine if single-agent or multi-agent
-      const isSingleAgent = selectedAgents && selectedAgents.length === 1;
-
-      // Extract latest user message for V3 agents (required parameter)
+      // Extract latest user message
       const lastUserMessage = messages
         .filter(m => m.role === 'user')
         .pop()?.content || '';
+
+      // Default to Designer if no agents selected
+      const agentsToCall = selectedAgents && selectedAgents.length > 0 
+        ? selectedAgents 
+        : ['designer'];
 
       let response: Response;
       try {
@@ -145,19 +133,17 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Accept': isSingleAgent ? 'application/json' : 'text/event-stream'
+            'Accept': 'application/json'  // Router returns JSON
           },
           mode: 'cors',
           referrerPolicy: 'no-referrer',
           body: JSON.stringify({ 
-            query: lastUserMessage,  // V3 agents require this for RAG search
-            messages,                 // Full conversation context
-            currentDesign, 
-            selectedAgents, 
-            targetAgent,
-            conversationHistory: currentDesign?.conversationHistory || [],
-            previousAgentOutputs: currentDesign?.agentOutputHistory || [],
-            ...(currentDesign?.userContext && { userContext: currentDesign.userContext })
+            conversationId: currentDesign?.conversationId,
+            userMessage: lastUserMessage,
+            selectedAgents: agentsToCall,
+            consultationMode: 'user-driven',
+            messages,
+            currentDesign
           }),
           signal: controller.signal
         });
@@ -419,41 +405,60 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
           }
         }
       } else {
-        // Handle regular JSON response from V3 single agent
+        // Handle JSON response from agent-router
         const data = await response.json();
         
-        if (data.error) throw new Error(data.error);
+        if (!data.success) {
+          throw new Error(data.error || 'Agent router failed');
+        }
         
-        // Adapt V3 response format: {success, result, metadata} → {response, structuredData, suggestedNextAgents}
-        if (data.success && data.result) {
-          // Extract natural language response from result
-          fullResponse = data.result.response || data.result.summary || data.result.explanation || JSON.stringify(data.result, null, 2);
+        // Agent-router returns: { success, responses: [{ agent, response: {response, structuredData, suggestedNextAgents} }], suggestedNextAgents, consultedAgents }
+        if (data.responses && Array.isArray(data.responses)) {
+          // Process each agent's response
+          for (const agentOutput of data.responses) {
+            const agentName = agentOutput.agent;
+            const agentResponse = agentOutput.response;
+            
+            // Extract response text
+            const responseText = agentResponse.response || agentResponse.summary || '';
+            fullResponse += (fullResponse ? '\n\n' : '') + responseText;
+            
+            // Notify agent response with structured data
+            options.onAgentResponse?.(agentName, responseText, agentResponse.structuredData);
+            
+            // Merge structured data (last agent wins, but collect suggestedNextAgents)
+            if (agentResponse.structuredData) {
+              structuredData = agentResponse.structuredData;
+            }
+            
+            // Simulate streaming for each agent response
+            const words = responseText.split(' ');
+            for (const word of words) {
+              onToken(word + ' ');
+              await new Promise(resolve => setTimeout(resolve, 20));
+            }
+          }
           
-          // V3 agents return structured data in result
-          structuredData = {
-            ...data.result,
-            suggestedNextAgents: data.result.suggestedNextAgents || []
-          };
+          // Set suggested next agents from router (already deduped and prioritized)
+          if (structuredData) {
+            structuredData.suggestedNextAgents = data.suggestedNextAgents || [];
+          } else {
+            structuredData = {
+              suggestedNextAgents: data.suggestedNextAgents || []
+            };
+          }
           
-          citations = data.metadata?.regulationsUsed ? 
-            [{ number: 'BS 7671', title: `${data.metadata.regulationsUsed} regulations referenced` }] : [];
+          // Mark all consulted agents as complete
+          if (data.consultedAgents) {
+            for (const agent of data.consultedAgents) {
+              options.onAgentComplete?.(agent, null);
+            }
+          }
+          
+          // Notify completion
+          options.onAllAgentsComplete?.(data.responses);
         } else {
-          // Fallback for non-V3 format
-          fullResponse = data.response || '';
-          citations = data.citations || [];
-          structuredData = data.structuredData || null;
-        }
-        
-        // Notify agent response
-        if (selectedAgents && selectedAgents.length === 1) {
-          options.onAgentResponse?.(selectedAgents[0], fullResponse, structuredData);
-        }
-        
-        // Simulate streaming for smoother UX
-        const words = fullResponse.split(' ');
-        for (const word of words) {
-          onToken(word + ' ');
-          await new Promise(resolve => setTimeout(resolve, 30));
+          throw new Error('Invalid response format from agent-router');
         }
       }
 
