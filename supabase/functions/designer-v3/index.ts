@@ -431,9 +431,9 @@ Provide a complete, BS 7671 compliant design.`;
           }
         }],
         tool_choice: { type: 'function', function: { name: 'produce_circuit_design' } },
-        max_tokens: 3000
+        max_tokens: 4000
       })
-    });
+    }, 60000); // 60 second timeout for RAG processing + AI generation
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
@@ -453,31 +453,57 @@ Provide a complete, BS 7671 compliant design.`;
     const toolCall = aiData.choices[0].message.tool_calls[0];
     const designResult = JSON.parse(toolCall.function.arguments);
 
-    // Extract regulation numbers from the response text using regex
-    const responseText = designResult.response || '';
-    const regulationMatches = responseText.match(/\b(\d{3}(?:\.\d+){0,2})\b/g) || [];
-    const tableMatches = responseText.match(/Table\s+(\d+[A-Z]?\d*(?:\.\d+)*)/gi) || [];
+    // Extract regulation numbers from the response text using bulletproof regex
+    const responseText = String(designResult.response || '');
     
-    // Build a set of unique regulation/table references
+    // Extract regulation numbers in multiple formats
+    const regPatterns = [
+      /\b(\d{3}(?:\.\d+){1,2})\b/g,                    // 433.1.1, 522.6.101
+      /Regulation\s+(\d{3}(?:\.\d+){0,2})/gi,          // "Regulation 433.1.1"
+      /reg\.?\s+(\d{3}(?:\.\d+){0,2})/gi,              // "reg 433.1" or "reg. 433.1"
+      /BS\s*7671[:\s]+(\d{3}(?:\.\d+){0,2})/gi         // "BS 7671: 433.1.1"
+    ];
+
+    const regulationMatches = [];
+    for (const pattern of regPatterns) {
+      const matches = responseText.matchAll(pattern);
+      for (const match of matches) {
+        if (match[1]) regulationMatches.push(match[1]);
+      }
+    }
+
+    // Extract table references in multiple formats
+    const tablePatterns = [
+      /Table\s+(\d+[A-Z]?\d*(?:\.\d+)*)/gi,           // "Table 4D5", "Table 41.3"
+      /Table\s+([A-Z]\d+)/gi,                         // "Table I1", "Table B2"
+      /BS\s*7671\s+Table\s+(\d+[A-Z]?\d*(?:\.\d+)*)/gi, // "BS 7671 Table 4D5"
+      /Appendix\s+\d+\s+Table\s+(\d+[A-Z]?\d*)/gi     // "Appendix 4 Table 4D5"
+    ];
+
+    const tableMatches = [];
+    for (const pattern of tablePatterns) {
+      const matches = responseText.matchAll(pattern);
+      for (const match of matches) {
+        if (match[1]) tableMatches.push(`Table ${match[1]}`);
+      }
+    }
+
+    // De-duplicate and limit to first 15 unique references
     const extractedRefs = new Set([
-      ...regulationMatches,
-      ...tableMatches.map(t => t.replace(/^Table\s+/i, 'Table '))
+      ...new Set(regulationMatches),
+      ...new Set(tableMatches)
     ]);
     
-    // Populate compliance.regulations if empty
+    const uniqueRefs = Array.from(extractedRefs).slice(0, 15);
+    
+    // Always populate compliance.regulations from extracted refs
     if (!designResult.compliance) designResult.compliance = {};
-    if (!designResult.compliance.regulations || designResult.compliance.regulations.length === 0) {
-      designResult.compliance.regulations = Array.from(extractedRefs);
-      logger.info('Extracted regulations from response text', { 
-        count: extractedRefs.size, 
-        regulations: Array.from(extractedRefs) 
-      });
-    } else {
-      logger.info('Designer provided regulations in tool call', { 
-        count: designResult.compliance.regulations.length, 
-        regulations: designResult.compliance.regulations 
-      });
-    }
+    designResult.compliance.regulations = uniqueRefs;
+    
+    logger.info('Extracted regulations from response text', { 
+      count: uniqueRefs.length, 
+      regulations: uniqueRefs 
+    });
     
     // Log RAG usage
     if (regulations && regulations.length > 0) {
@@ -503,45 +529,38 @@ Provide a complete, BS 7671 compliant design.`;
       compliant: designResult.compliance?.status === 'compliant'
     });
 
-    // Step 5: Build citations array from compliance.regulations
+    // Step 5: Build citations array - create citation for EVERY extracted reference
     const citations = [];
     const citedRegNumbers = designResult.compliance?.regulations || [];
     
-    if (citedRegNumbers.length > 0 && regulations && regulations.length > 0) {
-      for (const regNum of citedRegNumbers) {
-        // Try to match against fetched regulations
-        const regRow = regulations.find(r => 
-          r.regulation_number === regNum || 
-          regNum.includes(r.regulation_number)
-        );
-        
-        if (regRow) {
-          citations.push({
-            source: 'BS 7671',
-            section: regNum,
-            title: regRow.section || `Regulation ${regNum}`,
-            content: regRow.content?.slice(0, 240) || '',
-            type: 'regulation'
-          });
-        } else if (regNum.toLowerCase().includes('table')) {
-          // Table reference without matching regulation data
-          citations.push({
-            source: 'BS 7671',
-            section: regNum,
-            title: regNum,
-            content: 'Referenced in design calculations',
-            type: 'table'
-          });
-        } else {
-          // Regulation number without matching data
-          citations.push({
-            source: 'BS 7671',
-            section: regNum,
-            title: `Regulation ${regNum}`,
-            content: 'Cited in design',
-            type: 'regulation'
-          });
-        }
+    for (const regNum of citedRegNumbers) {
+      // Try to match against fetched RAG data
+      const regRow = regulations?.find(r => 
+        r.regulation_number === regNum || 
+        regNum.includes(r.regulation_number) ||
+        r.regulation_number.includes(regNum)
+      );
+      
+      if (regRow) {
+        // Enriched citation from RAG data
+        citations.push({
+          source: 'BS 7671:2018+A2:2022',
+          section: regNum,
+          title: regRow.section || `Regulation ${regNum}`,
+          content: regRow.content?.slice(0, 240) || '',
+          relevance: regRow.similarity || 0.8,
+          type: regNum.toLowerCase().includes('table') ? 'table' : 'regulation'
+        });
+      } else {
+        // Fallback citation (still shows in UI even without RAG match)
+        citations.push({
+          source: 'BS 7671:2018+A2:2022',
+          section: regNum,
+          title: regNum.toLowerCase().includes('table') ? regNum : `Regulation ${regNum}`,
+          content: 'Referenced in design calculations',
+          relevance: 0.5,
+          type: regNum.toLowerCase().includes('table') ? 'table' : 'regulation'
+        });
       }
     }
     
