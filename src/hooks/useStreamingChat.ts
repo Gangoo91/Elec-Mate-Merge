@@ -131,26 +131,29 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
         controller.abort();
       }, timeoutMs);
 
+      // Determine if single-agent or multi-agent
+      const isSingleAgent = selectedAgents && selectedAgents.length === 1;
+
       let response: Response;
       try {
         response = await fetch(FUNCTION_URL, {
           method: 'POST',
-headers: {
-  'Content-Type': 'application/json',
-  'Accept': 'text/event-stream'
-},
-mode: 'cors',
-referrerPolicy: 'no-referrer',
-body: JSON.stringify({ 
-  messages, 
-  currentDesign, 
-  selectedAgents, 
-  targetAgent,
-  conversationHistory: currentDesign?.conversationHistory || [],
-  previousAgentOutputs: currentDesign?.agentOutputHistory || [],
-  ...(currentDesign?.userContext && { userContext: currentDesign.userContext })
-}),
-signal: controller.signal
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': isSingleAgent ? 'application/json' : 'text/event-stream'
+          },
+          mode: 'cors',
+          referrerPolicy: 'no-referrer',
+          body: JSON.stringify({ 
+            messages, 
+            currentDesign, 
+            selectedAgents, 
+            targetAgent,
+            conversationHistory: currentDesign?.conversationHistory || [],
+            previousAgentOutputs: currentDesign?.agentOutputHistory || [],
+            ...(currentDesign?.userContext && { userContext: currentDesign.userContext })
+          }),
+          signal: controller.signal
         });
       } catch (e: any) {
         if (e?.name === 'AbortError') {

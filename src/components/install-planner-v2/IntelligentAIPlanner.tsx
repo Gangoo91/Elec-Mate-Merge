@@ -402,7 +402,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   };
 
   const handleSend = async () => {
-    if (!input.trim() || isLoading || isStreaming) return;
+    if (!input.trim() || isLoading || isStreaming || !currentAgent) return;
 
     const userMessage = input.trim();
     const lastAssistant = [...messages].slice().reverse().find(m => m.role === 'assistant');
@@ -436,12 +436,14 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     setIsLoading(true);
     setReasoningSteps([]);
 
-    // Add immediate acknowledgment message
-    const acknowledgmentIndex = messages.length + 1; // +1 for user message
+    // Add agent-specific typing indicator
+    const agentDisplayName = getAgentName(currentAgent);
     setMessages(prev => [...prev, { 
       role: 'assistant', 
-      content: "Thanks! Let me get you the right specialist...",
-      activeAgents: []
+      content: `Talking to ${agentDisplayName}… setting up your installation data…`,
+      activeAgents: [currentAgent],
+      agentName: currentAgent,
+      isTyping: true
     }]);
 
     try {
@@ -452,9 +454,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           conversationHistory: messages,
           agentOutputHistory
         },
-        // On each token (legacy, not used in multi-agent mode)
+        // On each token
         (token) => {
-          // Tokens are now handled by onAgentResponse
+          // Tokens handled by onAgentResponse or simulated for single-agent
         },
         // On complete
         (fullMessage, data) => {
@@ -516,13 +518,14 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           return;
         }
 
-        // Remove acknowledgment and add fallback response
+        // Remove typing message and add fallback response
         setMessages(prev => {
-          const filtered = prev.filter((_, i) => i !== acknowledgmentIndex);
+          const filtered = prev.filter(m => !(m.agentName === currentAgent && m.isTyping));
           return [...filtered, {
             role: 'assistant',
             content: fallbackData.response || 'Got your requirements. What else do you need?',
-            activeAgents: ['fallback']
+            activeAgents: ['fallback'],
+            agentName: currentAgent
           }];
         });
 
@@ -541,19 +544,18 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       console.error('AI conversation error:', error);
       const errorMsg = error instanceof Error ? error.message : 'Unknown error';
       
-      // Remove acknowledgment message and "Analyzing..." messages
+      // Remove typing and error messages
       setMessages(prev => {
-        const filtered = prev.filter((_, i) => {
-          // Keep user message but remove acknowledgment, analyzing, and previous error messages
-          if (i === acknowledgmentIndex) return false;
-          const msg = prev[i];
+        const filtered = prev.filter(msg => {
+          // Remove typing and previous error messages
           if (msg.role === 'assistant' && (msg.isTyping || msg.hasError)) return false;
           return true;
         });
         return [...filtered, { 
           role: 'assistant', 
           content: `Sorry mate, hit a snag: ${errorMsg}. Click below to try again.`,
-          hasError: true
+          hasError: true,
+          agentName: currentAgent
         } as any];
       });
       setLastSendFailed(true);
@@ -1301,7 +1303,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
 
             <Button 
               onClick={handleSend}
-              disabled={isLoading || isStreaming || !input.trim()}
+              disabled={isLoading || isStreaming || !input.trim() || !currentAgent}
               size="icon"
               className="self-end h-9 w-9 shrink-0 rounded-lg bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-95 transition-all"
               aria-label="Send message"
