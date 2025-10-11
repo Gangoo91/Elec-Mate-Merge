@@ -281,7 +281,9 @@ serve(async (req) => {
     if (projectScope.isMultiCircuit && projectScope.circuits) {
       console.log(`🏗️ Multi-circuit project detected: ${projectScope.circuits.length} circuits for ${projectScope.propertyType}`);
       
-      systemPrompt = `You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance knowledge.
+      systemPrompt = `You MUST return ONLY valid JSON. No text before or after. All fields are REQUIRED.
+
+You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance knowledge.
 
 CRITICAL: You MUST provide detailed calculations for ALL ${projectScope.circuits.length} circuits below.
 
@@ -361,6 +363,11 @@ Include a "costEstimate" field in the JSON with:
 - "labourRange": "£XX-£YY" (based on typical electrician day rates and project complexity)
 - "totalRange": "£XX-£YY + VAT"
 - "notes": "Brief explanation of cost drivers"
+
+VALIDATION REQUIREMENTS:
+- Every circuit MUST have: id, name, loadType, load, cableSize, protection, calculations
+- calculations MUST include: Ib, In, Iz, voltageDrop, zs
+- Return ONLY the JSON object, no markdown, no explanations
 
 Use UK English. Be thorough. Return valid JSON only.`;
     } else {
@@ -530,7 +537,8 @@ Use professional language with UK English spelling. Present calculations clearly
               if (circuit.load && circuit.cableSize) {
                 const voltage = circuit.voltage || 230;
                 const designCurrent = circuit.load / voltage;
-                const deviceRating = parseInt(circuit.protectionDevice) || 32;
+                const deviceRating = parseInt(circuit.protection?.match(/\d+/)?.[0]) || 32;
+                const cableLength = circuit.cableLength || 15;
                 
                 const calcResult = calculateCableCapacity({
                   cableSize: parseFloat(circuit.cableSize),
@@ -539,15 +547,31 @@ Use professional language with UK English spelling. Present calculations clearly
                   ambientTemp: 30,
                   groupingCircuits: 1,
                   installationMethod: circuit.installationMethod || 'clipped-direct',
-                  cableType: circuit.cableType || 'pvc-twin-earth'
+                  cableType: circuit.cableType || 'pvc-twin-earth',
+                  cableLength,
+                  voltage
                 });
                 
+                // VALIDATION: Check if calculations were successful
+                if (!calcResult || !calcResult.Iz) {
+                  console.error(`❌ Failed to compute calculations for ${circuit.name}`);
+                  throw new Error(`Circuit ${circuit.name} missing critical calculation data`);
+                }
+                
                 circuit.calculations = {
-                  Ib: designCurrent,
+                  Ib: Math.round(designCurrent * 10) / 10,
                   In: deviceRating,
                   Iz: calcResult.Iz,
-                  voltageDrop: calcResult.voltageDrop,
-                  zs: calcResult.earthFault
+                  voltageDrop: {
+                    volts: calcResult.voltageDrop.voltageDropVolts,
+                    percent: calcResult.voltageDrop.voltageDropPercent,
+                    compliant: calcResult.voltageDrop.compliant
+                  },
+                  zs: {
+                    calculated: calcResult.earthFault.calculated,
+                    max: calcResult.earthFault.max,
+                    compliant: calcResult.earthFault.compliant
+                  }
                 };
                 console.log(`✅ Computed calculations for circuit ${index + 1}`);
               }
@@ -555,9 +579,22 @@ Use professional language with UK English spelling. Present calculations clearly
           });
         }
         
+        // FINAL VALIDATION before returning
+        if (projectScope.isMultiCircuit && parsed.circuits) {
+          const invalidCircuits = parsed.circuits.filter((c: any) => 
+            !c.calculations || !c.calculations.Ib || !c.calculations.Iz
+          );
+          if (invalidCircuits.length > 0) {
+            console.error('❌ Invalid circuits detected:', invalidCircuits.map((c: any) => c.name));
+            throw new Error('Some circuits missing required calculations');
+          }
+        }
+        
         Object.assign(structuredData, parsed);
       } catch (e) {
         console.warn('⚠️ Multi-circuit response is not valid JSON, falling back to text');
+        console.error('Parse error:', e instanceof Error ? e.message : String(e));
+        console.log('Response preview:', responseContent.substring(0, 500));
       }
     }
     

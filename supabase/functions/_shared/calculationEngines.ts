@@ -18,6 +18,17 @@ export interface CableCapacityResult {
     safetyMargin: number;
   };
   equation: string;
+  voltageDrop: {
+    voltageDropVolts: number;
+    voltageDropPercent: number;
+    compliant: boolean;
+    maxAllowed: number;
+  };
+  earthFault: {
+    calculated: number;
+    max: number;
+    compliant: boolean;
+  };
 }
 
 export interface VoltageDropResult {
@@ -36,8 +47,10 @@ export function calculateCableCapacity(params: {
   groupingCircuits: number;
   installationMethod: string;
   cableType: string;
+  cableLength?: number;
+  voltage?: number;
 }): CableCapacityResult {
-  const { cableSize, designCurrent, deviceRating, ambientTemp, groupingCircuits, installationMethod, cableType } = params;
+  const { cableSize, designCurrent, deviceRating, ambientTemp, groupingCircuits, installationMethod, cableType, cableLength = 15, voltage = 230 } = params;
 
   // Get base capacity from BS 7671 tables (simplified)
   const baseCapacities: Record<number, number> = {
@@ -79,6 +92,21 @@ export function calculateCableCapacity(params: {
   const InLeIz = deviceRating <= Iz;
   const safetyMargin = ((Iz - deviceRating) / deviceRating) * 100;
 
+  // Calculate voltage drop
+  const voltDrop = calculateVoltageDrop({
+    current: designCurrent,
+    cableLength,
+    cableSize,
+    voltage,
+    phases: 'single'
+  });
+
+  // Calculate earth fault
+  const earthFault = calculateMaxZs({
+    deviceRating,
+    deviceType: 'B'
+  });
+
   return {
     Ib: designCurrent,
     In: deviceRating,
@@ -96,6 +124,12 @@ export function calculateCableCapacity(params: {
       safetyMargin: Math.round(safetyMargin * 10) / 10,
     },
     equation: `Iz = It × Ca × Cg = ${IzTabulated} × ${tempFactor.toFixed(2)} × ${groupingFactor.toFixed(2)} = ${Iz.toFixed(1)}A`,
+    voltageDrop: voltDrop,
+    earthFault: {
+      calculated: 0.35 + (0.01 * cableLength), // Simplified calculation
+      max: earthFault.maxZs,
+      compliant: (0.35 + (0.01 * cableLength)) <= earthFault.maxZs
+    }
   };
 }
 
