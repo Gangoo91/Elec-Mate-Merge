@@ -114,7 +114,10 @@ serve(async (req) => {
 
     let agentContext: ContextEnvelope = incomingContext || createContextEnvelope(requestId, queryIntent);
     agentContext.agentChain.push('designer-agent');
-    agentContext.previousAgent = incomingContext?.agentChain[incomingContext.agentChain.length - 1];
+    agentContext.previousAgent = 
+      incomingContext?.agentChain && incomingContext.agentChain.length > 0
+        ? incomingContext.agentChain[incomingContext.agentChain.length - 1]
+        : undefined;
 
     // Check for cached design pattern
     const patternStartTime = Date.now();
