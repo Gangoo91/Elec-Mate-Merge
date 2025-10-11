@@ -558,7 +558,13 @@ Use professional language with UK English spelling. Present calculations clearly
     
     if (projectScope.isMultiCircuit) {
       try {
-        const parsed = JSON.parse(responseContent);
+        // Pre-clean JSON response to handle code fences
+        const fenced = responseContent.match(/```(?:json)?([\s\S]*?)```/i);
+        const cleanedContent = fenced 
+          ? fenced[1].trim() 
+          : responseContent.replace(/```(?:json)?/gi, '').replace(/```/g, '').trim();
+        
+        const parsed = JSON.parse(cleanedContent);
         console.log('✅ Parsed structured multi-circuit data:', parsed.circuits?.length, 'circuits');
         
         // LOG WHAT WE ACTUALLY GOT from AI
@@ -758,7 +764,7 @@ Use professional language with UK English spelling. Present calculations clearly
       }
       
       if (calculationResults.voltageDrop?.compliant) {
-        reasoning.push(`Voltage drop ${calculationResults.voltageDrop.percentage}% complies with 3% BS 7671 limit`);
+        reasoning.push(`Voltage drop ${calculationResults.voltageDrop.voltageDropPercent}% complies with 3% BS 7671 limit`);
       }
       
       if (calculationResults.motorData) {
