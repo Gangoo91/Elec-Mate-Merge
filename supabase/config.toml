@@ -357,3 +357,7 @@ verify_jwt = false
 [functions.system-health]
 verify_jwt = false
 timeout_sec = 30
+
+[functions.designer-v3]
+verify_jwt = false
+timeout_sec = 60
