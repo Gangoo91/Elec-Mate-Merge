@@ -134,6 +134,11 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
       // Determine if single-agent or multi-agent
       const isSingleAgent = selectedAgents && selectedAgents.length === 1;
 
+      // Extract latest user message for V3 agents (required parameter)
+      const lastUserMessage = messages
+        .filter(m => m.role === 'user')
+        .pop()?.content || '';
+
       let response: Response;
       try {
         response = await fetch(FUNCTION_URL, {
@@ -145,7 +150,8 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
           mode: 'cors',
           referrerPolicy: 'no-referrer',
           body: JSON.stringify({ 
-            messages, 
+            query: lastUserMessage,  // V3 agents require this for RAG search
+            messages,                 // Full conversation context
             currentDesign, 
             selectedAgents, 
             targetAgent,
