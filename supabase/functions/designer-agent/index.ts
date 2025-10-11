@@ -189,30 +189,19 @@ serve(async (req) => {
     };
     const circuitFilter = circuitTypeMap[circuitParams.circuitType] || null;
     
-    // Skip RAG for simple single-circuit requests with clear parameters
-    const canSkipRAG = (
-      !projectScope.isMultiCircuit && // Single circuit
-      circuitParams.power > 0 && // Has load
-      circuitParams.cableLength > 0 && // Has distance
-      !userMessage.match(/why|how|explain|guide|best practice|what about|consider|option/i) // Not asking exploratory questions
-    );
+    // PHASE 1: Always run RAG for compliance - removed fast-path optimization
+    // RAG provides critical citations and regulatory context for all queries
+    const canSkipRAG = false; // Force RAG for all queries
     
     let relevantRegsText = '';
+    logger.info('RAG mode: always enabled for compliance', { requestId });
     let designKnowledge = '';
     let regulations: any[] | null = null;
     let designDocs: any[] | null = null;
     
-    if (canSkipRAG) {
-      logger.info('🚀 CALCULATION-ONLY mode (skipping RAG)', { 
-        reason: 'Simple single circuit with clear parameters',
-        power: circuitParams.power,
-        distance: circuitParams.cableLength,
-        circuitType: circuitParams.circuitType
-      });
-      console.log(`⚡ Fast-track: Using calculation engines only (no RAG needed)`);
-    } else {
-      // RAG pipeline with error recovery
-      try {
+    // PHASE 1: RAG always enabled for regulatory compliance
+    // RAG pipeline with error recovery
+    try {
         const ragQuery = circuitParams.circuitType 
           ? `${circuitParams.circuitType} circuit design overload protection voltage drop cable sizing installation methods`
           : 'socket circuit design overload protection voltage drop cable sizing installation methods';
@@ -313,12 +302,12 @@ serve(async (req) => {
         } else {
           logger.warn('Embedding generation failed, continuing without RAG', { status: embeddingResponse.status });
         }
-      } catch (error) {
-        logger.error('RAG pipeline failed, falling back to calculation-only mode', { 
-          error: error instanceof Error ? error.message : String(error) 
-        });
-        // Continue execution - calculations don't need RAG
-      }
+    } catch (error) {
+      logger.error('RAG pipeline failed gracefully', { 
+        error: error instanceof Error ? error.message : String(error),
+        requestId 
+      });
+      // Continue with empty RAG results - AI can still provide design
     }
 
     // Use the projectScope already detected at line 144
@@ -558,13 +547,30 @@ Use professional language with UK English spelling. Present calculations clearly
     
     if (projectScope.isMultiCircuit) {
       try {
-        // Pre-clean JSON response to handle code fences
-        const fenced = responseContent.match(/```(?:json)?([\s\S]*?)```/i);
-        const cleanedContent = fenced 
-          ? fenced[1].trim() 
-          : responseContent.replace(/```(?:json)?/gi, '').replace(/```/g, '').trim();
+        // PHASE 4: Enhanced JSON parsing to handle multiple formats
+        let cleanedContent = responseContent;
+        
+        // Extract first JSON code fence if present
+        const fenceMatch = responseContent.match(/```(?:json)?\s*([\s\S]*?)```/i);
+        if (fenceMatch) {
+          cleanedContent = fenceMatch[1].trim();
+          logger.debug('Extracted JSON from code fence', { requestId });
+        } else {
+          // No fence - clean up any stray markdown
+          cleanedContent = responseContent
+            .replace(/```(?:json)?/gi, '')
+            .replace(/```/g, '')
+            .trim();
+        }
+        
+        // Try to find JSON object if there's surrounding text
+        const jsonMatch = cleanedContent.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          cleanedContent = jsonMatch[0];
+        }
         
         const parsed = JSON.parse(cleanedContent);
+        logger.info('Successfully parsed multi-circuit JSON', { circuitCount: parsed.circuits?.length, requestId });
         console.log('✅ Parsed structured multi-circuit data:', parsed.circuits?.length, 'circuits');
         
         // LOG WHAT WE ACTUALLY GOT from AI
@@ -602,74 +608,86 @@ Use professional language with UK English spelling. Present calculations clearly
           console.log(`✅ Computed diversifiedLoad: ${parsed.diversifiedLoad}W using factor ${parsed.diversityFactor}`);
         }
 
-        // Check and fix circuits missing calculations using BS 7671 engines
+        // PHASE 3: Check and fix circuits missing calculations with graceful degradation
         if (parsed.circuits && Array.isArray(parsed.circuits)) {
           parsed.circuits.forEach((circuit: any, index: number) => {
-            if (!circuit.calculations || !circuit.calculations.Ib) {
-              console.warn(`⚠️ Circuit ${index + 1} (${circuit.name}) missing calculations - computing`);
-              
-              // Use the calculation engines we imported
-              if (circuit.load && circuit.cableSize) {
-                const voltage = circuit.voltage || 230;
-                const designCurrent = circuit.load / voltage;
-                const deviceRating = parseInt(circuit.protection?.match(/\d+/)?.[0]) || 32;
-                const cableLength = circuit.cableLength || 15;
+            try {
+              if (!circuit.calculations || !circuit.calculations.Ib) {
+                logger.warn(`Circuit ${index + 1} (${circuit.name}) missing calculations - computing`, { requestId });
                 
-                const calcResult = calculateCableCapacity({
-                  cableSize: parseFloat(circuit.cableSize),
-                  designCurrent,
-                  deviceRating,
-                  ambientTemp: 30,
-                  groupingCircuits: 1,
-                  installationMethod: circuit.installationMethod || 'clipped-direct',
-                  cableType: circuit.cableType || 'pvc-twin-earth',
-                  cableLength,
-                  voltage
-                });
-                
-                // VALIDATION: Check if calculations were successful
-                if (!calcResult || !calcResult.Iz) {
-                  console.error(`❌ Failed to compute calculations for ${circuit.name}`);
-                  throw new Error(`Circuit ${circuit.name} missing critical calculation data`);
-                }
-                
-                circuit.calculations = {
-                  Ib: Math.round(designCurrent * 10) / 10,
-                  In: deviceRating,
-                  Iz: calcResult.Iz,
-                  voltageDrop: {
-                    volts: calcResult.voltageDrop.voltageDropVolts,
-                    percent: calcResult.voltageDrop.voltageDropPercent,
-                    compliant: calcResult.voltageDrop.compliant
-                  },
-                  zs: {
-                    calculated: calcResult.earthFault.calculated,
-                    max: calcResult.earthFault.max,
-                    compliant: calcResult.earthFault.compliant
+                // Use the calculation engines we imported
+                if (circuit.load && circuit.cableSize) {
+                  const voltage = circuit.voltage || 230;
+                  const designCurrent = circuit.load / voltage;
+                  const deviceRating = parseInt(circuit.protection?.match(/\d+/)?.[0]) || 32;
+                  const cableLength = circuit.cableLength || 15;
+                  
+                  const calcResult = calculateCableCapacity({
+                    cableSize: parseFloat(circuit.cableSize),
+                    designCurrent,
+                    deviceRating,
+                    ambientTemp: 30,
+                    groupingCircuits: 1,
+                    installationMethod: circuit.installationMethod || 'clipped-direct',
+                    cableType: circuit.cableType || 'pvc-twin-earth',
+                    cableLength,
+                    voltage
+                  });
+                  
+                  // PHASE 3: Graceful degradation - mark as incomplete instead of throwing
+                  if (!calcResult || !calcResult.Iz) {
+                    logger.error(`Failed to compute calculations for ${circuit.name}`, { requestId });
+                    circuit.status = 'incomplete';
+                    circuit.warnings = circuit.warnings || [];
+                    circuit.warnings.push('Calculations could not be completed - verify manually');
+                  } else {
+                    circuit.calculations = {
+                      Ib: Math.round(designCurrent * 10) / 10,
+                      In: deviceRating,
+                      Iz: calcResult.Iz,
+                      voltageDrop: {
+                        volts: calcResult.voltageDrop.voltageDropVolts,
+                        percent: calcResult.voltageDrop.voltageDropPercent,
+                        compliant: calcResult.voltageDrop.compliant
+                      },
+                      zs: {
+                        calculated: calcResult.earthFault?.calculated || 0,
+                        max: calcResult.earthFault?.max || 0,
+                        compliant: calcResult.earthFault?.compliant || false
+                      }
+                    };
+                    circuit.status = 'complete';
+                    logger.info(`Computed calculations for circuit ${index + 1}`, { requestId });
                   }
-                };
-                console.log(`✅ Computed calculations for circuit ${index + 1}`);
+                } else {
+                  logger.warn(`Circuit ${index + 1} missing load or cable size data`, { requestId });
+                  circuit.status = 'incomplete';
+                  circuit.warnings = circuit.warnings || [];
+                  circuit.warnings.push('Insufficient data for calculations');
+                }
               }
+            } catch (circuitError) {
+              // PHASE 3: Catch per-circuit errors instead of crashing entire request
+              logger.error(`Error processing circuit ${index + 1}`, { 
+                error: circuitError instanceof Error ? circuitError.message : String(circuitError),
+                requestId 
+              });
+              circuit.status = 'incomplete';
+              circuit.warnings = circuit.warnings || [];
+              circuit.warnings.push('Calculation error - verify manually');
             }
           });
         }
         
-        // FINAL VALIDATION before returning
-        if (projectScope.isMultiCircuit && parsed.circuits) {
-          const invalidCircuits = parsed.circuits.filter((c: any) => 
-            !c.calculations || !c.calculations.Ib || !c.calculations.Iz
-          );
-          if (invalidCircuits.length > 0) {
-            console.error('❌ Invalid circuits detected:', invalidCircuits.map((c: any) => c.name));
-            throw new Error('Some circuits missing required calculations');
-          }
-        }
-        
         Object.assign(structuredData, parsed);
       } catch (e) {
-        console.warn('⚠️ Multi-circuit response is not valid JSON, falling back to text');
-        console.error('Parse error:', e instanceof Error ? e.message : String(e));
-        console.log('Response preview:', responseContent.substring(0, 500));
+        // PHASE 4: Enhanced error logging for JSON parse failures
+        logger.error('Multi-circuit JSON parse failure', { 
+          error: e instanceof Error ? e.message : String(e),
+          responsePreview: responseContent.substring(0, 500),
+          requestId
+        });
+        // Continue with text-only response
       }
     }
     

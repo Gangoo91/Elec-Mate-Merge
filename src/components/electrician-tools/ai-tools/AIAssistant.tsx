@@ -281,6 +281,28 @@ const AIAssistant = () => {
         });
         data = designResponse.data;
         error = designResponse.error;
+        
+        // PHASE 5: Enhanced error handling for specific edge function errors
+        if (designResponse.error) {
+          const status = (designResponse.error as any)?.status;
+          if (status === 429) {
+            toast({
+              title: "Rate Limit Exceeded",
+              description: "Too many requests. Please wait 30 seconds and try again.",
+              variant: "destructive",
+            });
+            return;
+          }
+          if (status === 402) {
+            toast({
+              title: "Service Quota Exceeded",
+              description: "AI service credits exhausted. Please contact support.",
+              variant: "destructive",
+            });
+            return;
+          }
+          throw new Error(designResponse.error.message || 'Designer agent error');
+        }
       } else {
         // Route to general AI assistant
         const assistantResponse = await supabase.functions.invoke('electrician-ai-assistant', {
@@ -292,6 +314,28 @@ const AIAssistant = () => {
         });
         data = assistantResponse.data;
         error = assistantResponse.error;
+        
+        // PHASE 5: Enhanced error handling for assistant errors
+        if (assistantResponse.error) {
+          const status = (assistantResponse.error as any)?.status;
+          if (status === 429) {
+            toast({
+              title: "Rate Limit Exceeded",
+              description: "Too many requests. Please wait 30 seconds and try again.",
+              variant: "destructive",
+            });
+            return;
+          }
+          if (status === 402) {
+            toast({
+              title: "Service Quota Exceeded",
+              description: "AI service credits exhausted. Please contact support.",
+              variant: "destructive",
+            });
+            return;
+          }
+          throw new Error(assistantResponse.error.message || 'Assistant error');
+        }
       }
       
       if (error) {
@@ -299,6 +343,23 @@ const AIAssistant = () => {
       }
       
       if (data.error) {
+        // Check for specific error codes from edge function
+        if (data.code === 'QUOTA_EXCEEDED') {
+          toast({
+            title: "Service Quota Exceeded",
+            description: "AI service credits exhausted. Please contact support.",
+            variant: "destructive",
+          });
+          return;
+        }
+        if (data.retryAfter) {
+          toast({
+            title: "Rate Limit Exceeded",
+            description: `Please wait ${data.retryAfter} seconds and try again.`,
+            variant: "destructive",
+          });
+          return;
+        }
         throw new Error(data.error);
       }
       
