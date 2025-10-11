@@ -1010,7 +1010,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   };
 
   return (
-    <div className="flex flex-col h-screen bg-elec-dark">
+    <div className="flex flex-col min-h-screen bg-elec-dark">
       {/* Minimal Header - Non-sticky */}
       <div className="flex-none px-3 md:px-4 py-1.5 md:py-2 border-b border-border/30 bg-elec-dark">
         <div className="flex items-center justify-between">
@@ -1039,7 +1039,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       {/* Messages Area - WhatsApp style */}
       <div 
         ref={scrollRef}
-        className="flex-1 overflow-y-auto bg-elec-dark"
+        className="flex-1 bg-elec-dark"
       >
         <div className="px-3 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4">
           {/* Simple loading indicator */}
@@ -1071,7 +1071,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               className={`flex gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`${message.role === 'user' ? 'max-w-[90%]' : 'max-w-full w-full'} rounded-2xl shadow-sm ${
+                className={`${message.role === 'user' ? 'max-w-[95%] md:max-w-[90%]' : 'max-w-full w-full'} rounded-2xl shadow-sm ${
                   message.role === 'user'
                     ? 'bg-elec-yellow text-elec-dark px-5 py-3'
                     : 'bg-elec-card text-white px-5 py-4'
