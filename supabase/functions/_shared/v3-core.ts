@@ -174,3 +174,71 @@ export async function callLovableAI(
   const data = await response.json();
   return data.choices[0].message.content;
 }
+
+// ============= V3 ENHANCEMENTS =============
+
+/**
+ * Call Lovable AI with timeout protection (55s before Supabase 60s limit)
+ */
+export async function callLovableAIWithTimeout(
+  systemPrompt: string,
+  userPrompt: string,
+  apiKey: string,
+  options: {
+    model?: string;
+    temperature?: number;
+    maxTokens?: number;
+    responseFormat?: 'json_object' | 'text';
+    timeoutMs?: number;
+  } = {}
+): Promise<string> {
+  const { timeoutMs = 55000, ...aiOptions } = options;
+  
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    setTimeout(() => {
+      reject(new Error(`AI request timed out after ${timeoutMs}ms`));
+    }, timeoutMs);
+  });
+  
+  try {
+    return await Promise.race([
+      callLovableAI(systemPrompt, userPrompt, apiKey, aiOptions),
+      timeoutPromise
+    ]);
+  } catch (error) {
+    if (error instanceof Error && error.message.includes('timed out')) {
+      throw new ExternalAPIError('AI request exceeded time limit', 'Lovable AI');
+    }
+    throw error;
+  }
+}
+
+/**
+ * Generate embedding with retry logic (3 attempts with exponential backoff)
+ */
+export async function generateEmbeddingWithRetry(
+  text: string,
+  apiKey: string,
+  maxRetries: number = 3
+): Promise<number[]> {
+  let lastError: Error | null = null;
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await generateEmbedding(text, apiKey);
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      
+      if (attempt < maxRetries) {
+        const delayMs = Math.min(1000 * Math.pow(2, attempt - 1), 5000);
+        console.warn(`Embedding attempt ${attempt} failed, retrying in ${delayMs}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delayMs));
+      }
+    }
+  }
+  
+  throw new ExternalAPIError(
+    `Failed to generate embedding after ${maxRetries} attempts: ${lastError?.message}`,
+    'OpenAI'
+  );
+}

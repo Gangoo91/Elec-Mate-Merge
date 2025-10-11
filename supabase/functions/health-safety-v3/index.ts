@@ -7,8 +7,8 @@ import {
   handleError, 
   ValidationError,
   createClient,
-  generateEmbedding,
-  callLovableAI
+  generateEmbeddingWithRetry,
+  callLovableAIWithTimeout
 } from '../_shared/v3-core.ts';
 
 serve(async (req) => {
@@ -16,17 +16,40 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Health check endpoint
+  if (req.method === 'GET') {
+    const requestId = generateRequestId();
+    return new Response(
+      JSON.stringify({ status: 'healthy', function: 'health-safety-v3', requestId, timestamp: new Date().toISOString() }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+    );
+  }
+
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'health-safety-v3' });
 
   try {
-    const { query, workType, location, hazards } = await req.json();
+    const body = await req.json();
+    const { query, workType, location, hazards } = body;
 
-    if (!query || typeof query !== 'string') {
-      throw new ValidationError('query is required and must be a string');
+    // Enhanced input validation
+    if (!query || typeof query !== 'string' || query.trim().length === 0) {
+      throw new ValidationError('query is required and must be a non-empty string');
+    }
+    if (query.length > 1000) {
+      throw new ValidationError('query must be less than 1000 characters');
+    }
+    if (workType && typeof workType !== 'string') {
+      throw new ValidationError('workType must be a string');
+    }
+    if (location && typeof location !== 'string') {
+      throw new ValidationError('location must be a string');
+    }
+    if (hazards && !Array.isArray(hazards)) {
+      throw new ValidationError('hazards must be an array');
     }
 
-    logger.info('Health & Safety V3 request received', { query, workType });
+    logger.info('Health & Safety V3 request received', { query: query.substring(0, 50), workType });
 
     // Get API keys
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -39,12 +62,14 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Step 1: Generate embedding for H&S knowledge search
+    // Step 1: Generate embedding for H&S knowledge search (with retry)
     logger.debug('Generating query embedding');
-    const queryEmbedding = await generateEmbedding(
+    const embeddingStart = Date.now();
+    const queryEmbedding = await generateEmbeddingWithRetry(
       `${query} ${workType || ''} electrical hazards safety risks controls`,
       OPENAI_API_KEY
     );
+    logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
     // Step 2: Search H&S knowledge database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -113,11 +138,14 @@ ${hazards ? `Known Hazards: ${hazards.join(', ')}` : ''}
 
 Include all safety controls, PPE requirements, and emergency procedures.`;
 
-    // Step 4: Call Lovable AI
+    // Step 4: Call Lovable AI (with timeout)
     logger.debug('Calling Lovable AI');
-    const aiResponse = await callLovableAI(systemPrompt, userPrompt, LOVABLE_API_KEY, {
-      responseFormat: 'json_object'
+    const aiStart = Date.now();
+    const aiResponse = await callLovableAIWithTimeout(systemPrompt, userPrompt, LOVABLE_API_KEY, {
+      responseFormat: 'json_object',
+      timeoutMs: 55000
     });
+    logger.debug('AI response received', { duration: Date.now() - aiStart });
 
     const safetyResult = JSON.parse(aiResponse);
 

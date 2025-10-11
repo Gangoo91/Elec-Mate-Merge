@@ -7,8 +7,8 @@ import {
   handleError, 
   ValidationError,
   createClient,
-  generateEmbedding,
-  callLovableAI
+  generateEmbeddingWithRetry,
+  callLovableAIWithTimeout
 } from '../_shared/v3-core.ts';
 
 serve(async (req) => {
@@ -16,17 +16,40 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Health check endpoint
+  if (req.method === 'GET') {
+    const requestId = generateRequestId();
+    return new Response(
+      JSON.stringify({ status: 'healthy', function: 'cost-engineer-v3', requestId, timestamp: new Date().toISOString() }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+    );
+  }
+
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'cost-engineer-v3' });
 
   try {
-    const { query, materials, labourHours, region } = await req.json();
+    const body = await req.json();
+    const { query, materials, labourHours, region } = body;
 
-    if (!query || typeof query !== 'string') {
-      throw new ValidationError('query is required and must be a string');
+    // Enhanced input validation
+    if (!query || typeof query !== 'string' || query.trim().length === 0) {
+      throw new ValidationError('query is required and must be a non-empty string');
+    }
+    if (query.length > 1000) {
+      throw new ValidationError('query must be less than 1000 characters');
+    }
+    if (materials && !Array.isArray(materials)) {
+      throw new ValidationError('materials must be an array');
+    }
+    if (labourHours && (typeof labourHours !== 'number' || labourHours < 0)) {
+      throw new ValidationError('labourHours must be a non-negative number');
+    }
+    if (region && typeof region !== 'string') {
+      throw new ValidationError('region must be a string');
     }
 
-    logger.info('Cost Engineer V3 request received', { query, materialsCount: materials?.length });
+    logger.info('Cost Engineer V3 request received', { query: query.substring(0, 50), materialsCount: materials?.length });
 
     // Get API keys
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -39,9 +62,11 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Step 1: Generate embedding for pricing search
+    // Step 1: Generate embedding for pricing search (with retry)
     logger.debug('Generating query embedding');
-    const queryEmbedding = await generateEmbedding(query, OPENAI_API_KEY);
+    const embeddingStart = Date.now();
+    const queryEmbedding = await generateEmbeddingWithRetry(query, OPENAI_API_KEY);
+    logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
     // Step 2: Search pricing database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -114,11 +139,14 @@ ${labourHours ? `Estimated labour: ${labourHours} hours` : ''}
 
 Include accurate UK pricing, VAT at 20%, and any relevant notes.`;
 
-    // Step 4: Call Lovable AI
+    // Step 4: Call Lovable AI (with timeout)
     logger.debug('Calling Lovable AI');
-    const aiResponse = await callLovableAI(systemPrompt, userPrompt, LOVABLE_API_KEY, {
-      responseFormat: 'json_object'
+    const aiStart = Date.now();
+    const aiResponse = await callLovableAIWithTimeout(systemPrompt, userPrompt, LOVABLE_API_KEY, {
+      responseFormat: 'json_object',
+      timeoutMs: 55000
     });
+    logger.debug('AI response received', { duration: Date.now() - aiStart });
 
     const costResult = JSON.parse(aiResponse);
 

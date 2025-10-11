@@ -7,8 +7,8 @@ import {
   handleError, 
   ValidationError,
   createClient,
-  generateEmbedding,
-  callLovableAI
+  generateEmbeddingWithRetry,
+  callLovableAIWithTimeout
 } from '../_shared/v3-core.ts';
 
 serve(async (req) => {
@@ -16,18 +16,43 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Health check endpoint
+  if (req.method === 'GET') {
+    const requestId = generateRequestId();
+    return new Response(
+      JSON.stringify({ status: 'healthy', function: 'designer-v3', requestId, timestamp: new Date().toISOString() }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+    );
+  }
+
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'designer-v3' });
 
   try {
-    const { query, circuitType, power, voltage, cableLength } = await req.json();
+    const body = await req.json();
+    const { query, circuitType, power, voltage, cableLength } = body;
 
-    // Validate input
-    if (!query || typeof query !== 'string') {
-      throw new ValidationError('query is required and must be a string');
+    // Enhanced input validation
+    if (!query || typeof query !== 'string' || query.trim().length === 0) {
+      throw new ValidationError('query is required and must be a non-empty string');
+    }
+    if (query.length > 1000) {
+      throw new ValidationError('query must be less than 1000 characters');
+    }
+    if (circuitType && typeof circuitType !== 'string') {
+      throw new ValidationError('circuitType must be a string');
+    }
+    if (power && (typeof power !== 'number' || power <= 0)) {
+      throw new ValidationError('power must be a positive number');
+    }
+    if (voltage && (typeof voltage !== 'number' || voltage <= 0)) {
+      throw new ValidationError('voltage must be a positive number');
+    }
+    if (cableLength && (typeof cableLength !== 'number' || cableLength <= 0)) {
+      throw new ValidationError('cableLength must be a positive number');
     }
 
-    logger.info('Designer V3 request received', { query, circuitType, power });
+    logger.info('Designer V3 request received', { query: query.substring(0, 50), circuitType, power });
 
     // Get OpenAI API key for embeddings
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -41,9 +66,11 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Step 1: Generate embedding for RAG search
+    // Step 1: Generate embedding for RAG search (with retry)
     logger.debug('Generating query embedding');
-    const queryEmbedding = await generateEmbedding(query, OPENAI_API_KEY);
+    const embeddingStart = Date.now();
+    const queryEmbedding = await generateEmbeddingWithRetry(query, OPENAI_API_KEY);
+    logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
     // Step 2: Fetch RAG context
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -130,11 +157,14 @@ Respond ONLY with valid JSON in this exact format:
 
 Provide a complete, BS 7671 compliant design.`;
 
-    // Step 4: Call Lovable AI
+    // Step 4: Call Lovable AI (with timeout)
     logger.debug('Calling Lovable AI');
-    const aiResponse = await callLovableAI(systemPrompt, userPrompt, LOVABLE_API_KEY, {
-      responseFormat: 'json_object'
+    const aiStart = Date.now();
+    const aiResponse = await callLovableAIWithTimeout(systemPrompt, userPrompt, LOVABLE_API_KEY, {
+      responseFormat: 'json_object',
+      timeoutMs: 55000
     });
+    logger.debug('AI response received', { duration: Date.now() - aiStart });
 
     const designResult = JSON.parse(aiResponse);
 

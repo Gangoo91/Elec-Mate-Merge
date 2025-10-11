@@ -32,39 +32,3 @@ verify_jwt = false
 
 [functions.market-insights-scheduler]
 verify_jwt = false
-
-[functions.tools-weekly-scheduler]
-verify_jwt = false
-
-[functions.safety-scheduler]
-verify_jwt = false
-
-[functions.cables-materials-scheduler]
-verify_jwt = false
-
-[functions.stripe-webhooks]
-verify_jwt = false
-
-[functions.tools-guide-scheduler]
-verify_jwt = false
-
-[functions.live-courses-scheduler]
-verify_jwt = false
-
-[functions.scraper-scheduler]
-verify_jwt = false
-
-[functions.live-jobs-scheduler]
-verify_jwt = false
-
-[functions.pricing-scraper]
-verify_jwt = false
-
-[functions.courses-price-scraper]
-verify_jwt = false
-
-[functions.send-welcome-email]
-verify_jwt = false
-
-[functions.weekly-safety-digest]
-verify_jwt = false
