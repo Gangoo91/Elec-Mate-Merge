@@ -78,27 +78,27 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
       {hasStructuredData && (
         <div className="space-y-3 max-w-full overflow-hidden">
           {/* Designer Agent - Multi-Circuit Renderer (NEW) */}
-          {agentId === 'designer' && structuredData.circuits && Array.isArray(structuredData.circuits) && structuredData.circuits.length > 1 && (
-            <MultiCircuitRenderer data={structuredData} />
+          {agentId === 'designer' && structuredData.design?.circuits && Array.isArray(structuredData.design.circuits) && structuredData.design.circuits.length > 1 && (
+            <MultiCircuitRenderer data={structuredData.design} />
           )}
           
           {/* Designer Agent - Legacy Multi-Circuit Cards (fallback for single structured circuit) */}
-        {agentId === 'designer' && structuredData.circuits && Array.isArray(structuredData.circuits) && structuredData.circuits.length === 1 && (
+        {agentId === 'designer' && structuredData.design?.circuits && Array.isArray(structuredData.design.circuits) && structuredData.design.circuits.length === 1 && (
           <div className="space-y-4">
             <div className="text-sm text-muted-foreground mb-3">
-              {structuredData.circuits.length} circuit designed • 
-              Total Load: {structuredData.totalLoadKW ? `${structuredData.totalLoadKW}kW` : 'Data missing'}
-              {structuredData.diversifiedLoad && ` • Diversified: ${(structuredData.diversifiedLoad/1000).toFixed(1)}kW`}
+              {structuredData.design.circuits.length} circuit designed • 
+              Total Load: {structuredData.design.totalLoadKW ? `${structuredData.design.totalLoadKW}kW` : 'Data missing'}
+              {structuredData.design.diversifiedLoad && ` • Diversified: ${(structuredData.design.diversifiedLoad/1000).toFixed(1)}kW`}
             </div>
-            <DesignerCircuitCards circuits={structuredData.circuits.filter(c => c.id && c.name && c.calculations)} />
+            <DesignerCircuitCards circuits={structuredData.design.circuits.filter(c => c.id && c.name && c.calculations)} />
           </div>
         )}
           
-          {/* Designer Agent - Single Circuit Spec Card (legacy) */}
-          {agentId === 'designer' && structuredData.cableSize && !structuredData.circuits && (
+          {/* Designer Agent - Single Circuit Spec Card */}
+          {agentId === 'designer' && structuredData.design?.cableSize && !structuredData.design?.circuits && (
             <CircuitSpecCard 
-              data={structuredData}
-              planData={structuredData.planData}
+              data={structuredData.design}
+              planData={structuredData.design?.planData}
             />
           )}
           
