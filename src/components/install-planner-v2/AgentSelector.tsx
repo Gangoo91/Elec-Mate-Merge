@@ -75,20 +75,20 @@ export const AgentSelector = ({ onSelectAgent }: AgentSelectorProps) => {
           <Card
             key={agent.id}
             onClick={() => onSelectAgent(agent.id)}
-            className="group cursor-pointer p-5 md:p-6 hover:border-elec-yellow/50 hover:bg-elec-card/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            className="group cursor-pointer p-4 md:p-6 hover:border-elec-yellow/50 hover:bg-elec-card/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
           >
-            <div className="flex flex-col items-center text-center space-y-3">
-              <div className="text-5xl md:text-6xl transition-transform group-hover:scale-110">
+            <div className="flex flex-col items-center text-center space-y-2 md:space-y-3">
+              <div className="text-4xl md:text-5xl lg:text-6xl transition-transform group-hover:scale-110">
                 {agent.emoji}
               </div>
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 <h3 className="text-base md:text-lg font-semibold text-foreground group-hover:text-elec-yellow transition-colors">
                   {agent.name}
                 </h3>
-                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+                <p className="text-xs md:text-sm text-muted-foreground leading-tight truncate">
                   {agent.description}
                 </p>
-                <p className="text-[10px] md:text-xs text-muted-foreground/70 italic pt-1">
+                <p className="text-[10px] md:text-xs text-muted-foreground/70 italic pt-1 hidden sm:block">
                   {agent.expertise}
                 </p>
               </div>

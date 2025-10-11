@@ -78,7 +78,7 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
                   </span>
                 )}
               </div>
-              <p className="text-[9px] sm:text-[10px] text-muted-foreground text-left leading-tight sm:leading-snug">
+              <p className="text-[9px] sm:text-[10px] text-muted-foreground text-left leading-tight sm:leading-snug truncate sm:whitespace-normal">
                 {suggestion.reason}
               </p>
             </Button>

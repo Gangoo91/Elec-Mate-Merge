@@ -99,6 +99,16 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
             <CircuitSpecCard 
               data={{
                 ...structuredData.design,
+                designCurrent: structuredData.calculations?.designCurrent || structuredData.design?.designCurrent,
+                deviceRating: structuredData.design?.protectionDevice 
+                  ? parseInt(structuredData.design.protectionDevice.match(/(\d+)A/)?.[1] || '0', 10) || undefined
+                  : structuredData.design?.deviceRating,
+                correctionFactors: structuredData.calculations?.correctionFactors
+                  ? { overall: structuredData.calculations.correctionFactors }
+                  : structuredData.design?.correctionFactors,
+                earthFault: structuredData.calculations?.maxZs
+                  ? { maxZs: structuredData.calculations.maxZs }
+                  : structuredData.design?.earthFault,
                 voltageDrop: typeof structuredData.design.voltageDrop === 'number' 
                   ? {
                       percentage: structuredData.design.voltageDrop,
@@ -109,6 +119,7 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
                   : structuredData.design.voltageDrop
               }}
               planData={structuredData.design?.planData}
+              citations={structuredData.citations}
             />
           )}
           

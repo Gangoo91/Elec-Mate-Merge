@@ -482,13 +482,34 @@ Provide a complete, BS 7671 compliant design.`;
       compliant: designResult.compliance?.status === 'compliant'
     });
 
-    // Step 5: Return response - flat format for router/UI
-    const { response, suggestedNextAgents, design, compliance, calculations } = designResult;
+    // Step 5: Build citations array from compliance.regulations
+    const citations = [];
+    const citedRegNumbers = designResult.compliance?.regulations || [];
+    
+    if (citedRegNumbers.length > 0 && regulations && regulations.length > 0) {
+      for (const regNum of citedRegNumbers) {
+        const regRow = regulations.find(r => r.regulation_number === regNum);
+        if (regRow) {
+          citations.push({
+            source: 'BS 7671',
+            section: regNum,
+            title: regRow.section || `Regulation ${regNum}`,
+            content: regRow.content?.slice(0, 240) || '',
+            type: 'regulation'
+          });
+        }
+      }
+    }
+    
+    logger.info('Citations built', { count: citations.length, regulations: citedRegNumbers });
+    
+    // Step 6: Return response - flat format for router/UI
+    const { response, suggestedNextAgents, design, compliance, calculations, detailedCalculations } = designResult;
     
     return new Response(
       JSON.stringify({
         response,
-        structuredData: { design, compliance, calculations },
+        structuredData: { design, compliance, calculations, detailedCalculations, citations },
         suggestedNextAgents: suggestedNextAgents || []
       }),
       { 
