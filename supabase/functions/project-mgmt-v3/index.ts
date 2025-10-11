@@ -230,17 +230,129 @@ ${timeline ? `Timeline: ${timeline}` : ''}
 
 Include phases, resources, compliance requirements, and risk management.`;
 
-    // Step 4: Call Lovable AI (with timeout)
-    logger.debug('Calling Lovable AI');
+    // Step 4: Call Lovable AI with tool calling
+    logger.debug('Calling Lovable AI with tool calling');
     const aiStart = Date.now();
-    const aiResponse = await callLovableAIWithTimeout(systemPrompt, userPrompt, LOVABLE_API_KEY, {
-      responseFormat: 'json_object',
-      timeoutMs: 55000
+    
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        tools: [{
+          type: 'function',
+          function: {
+            name: 'provide_project_plan',
+            description: 'Return comprehensive PRINCE2/APM project plan with phases and resources',
+            parameters: {
+              type: 'object',
+              properties: {
+                response: {
+                  type: 'string',
+                  description: 'PRINCE2/APM project plan summary (200-300 words)'
+                },
+                projectPlan: {
+                  type: 'object',
+                  properties: {
+                    phases: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          phase: { type: 'string' },
+                          duration: { type: 'number' },
+                          durationUnit: { type: 'string' },
+                          tasks: { type: 'array', items: { type: 'string' } },
+                          dependencies: { type: 'array', items: { type: 'string' } },
+                          milestones: { type: 'array', items: { type: 'string' } },
+                          criticalPath: { type: 'boolean' }
+                        },
+                        required: ['phase', 'duration', 'tasks']
+                      }
+                    },
+                    totalDuration: { type: 'number' },
+                    totalDurationUnit: { type: 'string' },
+                    criticalPath: { type: 'array', items: { type: 'string' } },
+                    acceleration: { type: 'array', items: { type: 'string' } }
+                  }
+                },
+                resources: {
+                  type: 'object',
+                  properties: {
+                    team: { type: 'array', items: { type: 'object' } },
+                    equipment: { type: 'array', items: { type: 'string' } }
+                  }
+                },
+                compliance: {
+                  type: 'object',
+                  properties: {
+                    notifications: { type: 'array', items: { type: 'string' } },
+                    certifications: { type: 'array', items: { type: 'string' } },
+                    inspections: { type: 'array', items: { type: 'string' } }
+                  }
+                },
+                risks: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      risk: { type: 'string' },
+                      mitigation: { type: 'string' },
+                      severity: { type: 'string' }
+                    },
+                    required: ['risk', 'mitigation']
+                  }
+                },
+                recommendations: {
+                  type: 'array',
+                  items: { type: 'string' }
+                },
+                suggestedNextAgents: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      agent: { type: 'string' },
+                      reason: { type: 'string' },
+                      priority: { type: 'string', enum: ['high', 'medium', 'low'] }
+                    },
+                    required: ['agent', 'reason', 'priority']
+                  }
+                }
+              },
+              required: ['response', 'projectPlan'],
+              additionalProperties: false
+            }
+          }
+        }],
+        tool_choice: { type: 'function', function: { name: 'provide_project_plan' } },
+        max_tokens: 2000
+      })
     });
+
+    if (!aiResponse.ok) {
+      const errorText = await aiResponse.text();
+      logger.error('Lovable AI error', { status: aiResponse.status, error: errorText });
+      throw new Error(`AI API error: ${aiResponse.status}`);
+    }
+
+    const aiData = await aiResponse.json();
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    // Use shared JSON parser with repair
-    const pmResult = parseJsonWithRepair(aiResponse, logger, 'project-mgmt');
+    if (!aiData.choices?.[0]?.message?.tool_calls?.[0]) {
+      logger.error('No tool call in AI response', { response: aiData });
+      throw new Error('AI did not return tool call response');
+    }
+
+    const toolCall = aiData.choices[0].message.tool_calls[0];
+    const pmResult = JSON.parse(toolCall.function.arguments);
 
     logger.info('Project plan completed', { 
       phasesCount: pmResult.projectPlan?.phases?.length,

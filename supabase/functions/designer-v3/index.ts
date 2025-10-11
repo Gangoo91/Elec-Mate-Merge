@@ -291,17 +291,115 @@ Respond ONLY with valid JSON in this exact format:
 
 Provide a complete, BS 7671 compliant design.`;
 
-    // Step 4: Call Lovable AI (with timeout)
-    logger.debug('Calling Lovable AI');
+    // Step 4: Call Lovable AI with tool calling
+    logger.debug('Calling Lovable AI with tool calling');
     const aiStart = Date.now();
-    const aiResponse = await callLovableAIWithTimeout(systemPrompt, userPrompt, LOVABLE_API_KEY, {
-      responseFormat: 'json_object',
-      timeoutMs: 55000
+    
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        tools: [{
+          type: 'function',
+          function: {
+            name: 'produce_circuit_design',
+            description: 'Return a complete BS 7671-compliant circuit design with calculations',
+            parameters: {
+              type: 'object',
+              properties: {
+                response: {
+                  type: 'string',
+                  description: 'Comprehensive UK English explanation (250-350 words) with ALL calculations shown'
+                },
+                design: {
+                  type: 'object',
+                  properties: {
+                    cableSize: { type: 'number', description: 'Cable conductor size in mm²' },
+                    cableType: { type: 'string', description: 'Cable type specification' },
+                    protectionDevice: { type: 'string', description: 'Protection device specification' },
+                    voltageDrop: { type: 'number', description: 'Voltage drop percentage' },
+                    maxLength: { type: 'number', description: 'Maximum cable length in meters' },
+                    earthingArrangement: { type: 'string', description: 'Earthing system (TN-S, TN-C-S, TT)' },
+                    considerations: {
+                      type: 'array',
+                      items: { type: 'string' },
+                      description: 'Additional design considerations'
+                    }
+                  },
+                  required: ['cableSize', 'cableType', 'protectionDevice', 'voltageDrop']
+                },
+                compliance: {
+                  type: 'object',
+                  properties: {
+                    status: { type: 'string', enum: ['compliant', 'requires_attention'] },
+                    regulations: {
+                      type: 'array',
+                      items: { type: 'string' },
+                      description: 'BS 7671 regulation numbers cited'
+                    },
+                    warnings: {
+                      type: 'array',
+                      items: { type: 'string' }
+                    }
+                  },
+                  required: ['status', 'regulations']
+                },
+                calculations: {
+                  type: 'object',
+                  properties: {
+                    designCurrent: { type: 'number', description: 'Design current (Ib) in amps' },
+                    correctionFactors: { type: 'number', description: 'Combined correction factors' },
+                    maxZs: { type: 'number', description: 'Maximum earth fault loop impedance in ohms' }
+                  }
+                },
+                suggestedNextAgents: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      agent: { type: 'string' },
+                      reason: { type: 'string' },
+                      priority: { type: 'string', enum: ['high', 'medium', 'low'] }
+                    },
+                    required: ['agent', 'reason', 'priority']
+                  }
+                }
+              },
+              required: ['response', 'design', 'compliance'],
+              additionalProperties: false
+            }
+          }
+        }],
+        tool_choice: { type: 'function', function: { name: 'produce_circuit_design' } },
+        max_tokens: 2000
+      })
     });
-    logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    // Use shared JSON parser with repair
-    const designResult = parseJsonWithRepair(aiResponse, logger, 'designer');
+    if (!aiResponse.ok) {
+      const errorText = await aiResponse.text();
+      logger.error('Lovable AI error', { status: aiResponse.status, error: errorText });
+      throw new Error(`AI API error: ${aiResponse.status}`);
+    }
+
+    const aiData = await aiResponse.json();
+    logger.debug('AI response received', { duration: Date.now() - aiStart, hasChoices: !!aiData.choices?.[0] });
+
+    // Extract structured data from tool call
+    if (!aiData.choices?.[0]?.message?.tool_calls?.[0]) {
+      logger.error('No tool call in AI response', { response: aiData });
+      throw new Error('AI did not return tool call response');
+    }
+
+    const toolCall = aiData.choices[0].message.tool_calls[0];
+    const designResult = JSON.parse(toolCall.function.arguments);
 
     // Validate RAG usage - verify agent actually used the knowledge base
     if (regulations && regulations.length > 0) {

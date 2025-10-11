@@ -221,17 +221,133 @@ STEP-BY-STEP PROCESS (FOLLOW THIS EXACTLY):
 IMPORTANT: The pricing database above contains ${pricingResults?.length || 0} relevant items. Use them!
 Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engineering recommendations.`;
 
-    // Step 4: Call Lovable AI (with timeout)
-    logger.debug('Calling Lovable AI');
+    // Step 4: Call Lovable AI with tool calling
+    logger.debug('Calling Lovable AI with tool calling');
     const aiStart = Date.now();
-    const aiResponse = await callLovableAIWithTimeout(systemPrompt, userPrompt, LOVABLE_API_KEY, {
-      responseFormat: 'json_object',
-      timeoutMs: 55000
+    
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        tools: [{
+          type: 'function',
+          function: {
+            name: 'provide_cost_estimate',
+            description: 'Return detailed cost estimate with materials and labour breakdown',
+            parameters: {
+              type: 'object',
+              properties: {
+                response: {
+                  type: 'string',
+                  description: 'Detailed cost analysis (150-250 words) with value engineering recommendations'
+                },
+                materials: {
+                  type: 'object',
+                  properties: {
+                    items: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          description: { type: 'string' },
+                          quantity: { type: 'number' },
+                          unit: { type: 'string' },
+                          unitPrice: { type: 'number' },
+                          total: { type: 'number' },
+                          supplier: { type: 'string' }
+                        },
+                        required: ['description', 'quantity', 'unitPrice', 'total']
+                      }
+                    },
+                    subtotal: { type: 'number' },
+                    vat: { type: 'number' },
+                    total: { type: 'number' }
+                  },
+                  required: ['items', 'subtotal', 'vat', 'total']
+                },
+                labour: {
+                  type: 'object',
+                  properties: {
+                    tasks: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          description: { type: 'string' },
+                          hours: { type: 'number' },
+                          rate: { type: 'number' },
+                          total: { type: 'number' }
+                        },
+                        required: ['description', 'hours', 'rate', 'total']
+                      }
+                    },
+                    subtotal: { type: 'number' },
+                    vat: { type: 'number' },
+                    total: { type: 'number' }
+                  }
+                },
+                summary: {
+                  type: 'object',
+                  properties: {
+                    materialsTotal: { type: 'number' },
+                    labourTotal: { type: 'number' },
+                    subtotal: { type: 'number' },
+                    vat: { type: 'number' },
+                    grandTotal: { type: 'number' }
+                  },
+                  required: ['grandTotal']
+                },
+                notes: {
+                  type: 'array',
+                  items: { type: 'string' }
+                },
+                suggestedNextAgents: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      agent: { type: 'string' },
+                      reason: { type: 'string' },
+                      priority: { type: 'string', enum: ['high', 'medium', 'low'] }
+                    },
+                    required: ['agent', 'reason', 'priority']
+                  }
+                }
+              },
+              required: ['response', 'materials', 'summary'],
+              additionalProperties: false
+            }
+          }
+        }],
+        tool_choice: { type: 'function', function: { name: 'provide_cost_estimate' } },
+        max_tokens: 2000
+      })
     });
+
+    if (!aiResponse.ok) {
+      const errorText = await aiResponse.text();
+      logger.error('Lovable AI error', { status: aiResponse.status, error: errorText });
+      throw new Error(`AI API error: ${aiResponse.status}`);
+    }
+
+    const aiData = await aiResponse.json();
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    // Use shared JSON parser with repair
-    const costResult = parseJsonWithRepair(aiResponse, logger, 'cost-engineer');
+    if (!aiData.choices?.[0]?.message?.tool_calls?.[0]) {
+      logger.error('No tool call in AI response', { response: aiData });
+      throw new Error('AI did not return tool call response');
+    }
+
+    const toolCall = aiData.choices[0].message.tool_calls[0];
+    const costResult = JSON.parse(toolCall.function.arguments);
 
     // Validate RAG usage
     if (pricingResults && pricingResults.length > 0) {

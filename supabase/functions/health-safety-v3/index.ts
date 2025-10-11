@@ -236,17 +236,137 @@ ${hazards ? `Known Hazards: ${hazards.join(', ')}` : ''}
 
 Include all safety controls, PPE requirements, and emergency procedures.`;
 
-    // Step 4: Call Lovable AI (with timeout)
-    logger.debug('Calling Lovable AI');
+    // Step 4: Call Lovable AI with tool calling
+    logger.debug('Calling Lovable AI with tool calling');
     const aiStart = Date.now();
-    const aiResponse = await callLovableAIWithTimeout(systemPrompt, userPrompt, LOVABLE_API_KEY, {
-      responseFormat: 'json_object',
-      timeoutMs: 55000
+    
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        tools: [{
+          type: 'function',
+          function: {
+            name: 'provide_safety_assessment',
+            description: 'Return comprehensive health and safety assessment with risk mitigation',
+            parameters: {
+              type: 'object',
+              properties: {
+                response: {
+                  type: 'string',
+                  description: 'Comprehensive UK English explanation (200-300 words)'
+                },
+                riskAssessment: {
+                  type: 'object',
+                  properties: {
+                    hazards: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          hazard: { type: 'string' },
+                          likelihood: { type: 'number', minimum: 1, maximum: 5 },
+                          likelihoodReason: { type: 'string' },
+                          severity: { type: 'number', minimum: 1, maximum: 5 },
+                          severityReason: { type: 'string' },
+                          riskScore: { type: 'number' },
+                          riskLevel: { type: 'string' },
+                          regulation: { type: 'string' }
+                        },
+                        required: ['hazard', 'likelihood', 'severity', 'riskScore', 'riskLevel']
+                      }
+                    },
+                    controls: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          hazard: { type: 'string' },
+                          controlMeasure: { type: 'string' },
+                          residualLikelihood: { type: 'number' },
+                          residualSeverity: { type: 'number' },
+                          residualRisk: { type: 'number' },
+                          residualRiskLevel: { type: 'string' },
+                          regulation: { type: 'string' },
+                          practicalImplementation: { type: 'string' }
+                        },
+                        required: ['hazard', 'controlMeasure', 'residualRisk', 'residualRiskLevel']
+                      }
+                    },
+                    riskMatrix: {
+                      type: 'object',
+                      properties: {
+                        beforeControls: { type: 'object' },
+                        afterControls: { type: 'object' }
+                      }
+                    },
+                    ppe: { type: 'array', items: { type: 'string' } },
+                    emergencyProcedures: { type: 'array', items: { type: 'string' } }
+                  },
+                  required: ['hazards', 'controls']
+                },
+                methodStatement: {
+                  type: 'object',
+                  properties: {
+                    steps: { type: 'array', items: { type: 'object' } },
+                    permitRequired: { type: 'boolean' },
+                    competentPerson: { type: 'boolean' }
+                  }
+                },
+                compliance: {
+                  type: 'object',
+                  properties: {
+                    regulations: { type: 'array', items: { type: 'string' } },
+                    warnings: { type: 'array', items: { type: 'string' } }
+                  }
+                },
+                suggestedNextAgents: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      agent: { type: 'string' },
+                      reason: { type: 'string' },
+                      priority: { type: 'string', enum: ['high', 'medium', 'low'] }
+                    },
+                    required: ['agent', 'reason', 'priority']
+                  }
+                }
+              },
+              required: ['response', 'riskAssessment'],
+              additionalProperties: false
+            }
+          }
+        }],
+        tool_choice: { type: 'function', function: { name: 'provide_safety_assessment' } },
+        max_tokens: 2000
+      })
     });
+
+    if (!aiResponse.ok) {
+      const errorText = await aiResponse.text();
+      logger.error('Lovable AI error', { status: aiResponse.status, error: errorText });
+      throw new Error(`AI API error: ${aiResponse.status}`);
+    }
+
+    const aiData = await aiResponse.json();
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    // Robust JSON parsing with repair
-    const safetyResult = parseJsonWithRepair(aiResponse, logger, 'health-safety');
+    if (!aiData.choices?.[0]?.message?.tool_calls?.[0]) {
+      logger.error('No tool call in AI response', { response: aiData });
+      throw new Error('AI did not return tool call response');
+    }
+
+    const toolCall = aiData.choices[0].message.tool_calls[0];
+    const safetyResult = JSON.parse(toolCall.function.arguments);
 
     logger.info('Risk assessment completed', {
       hazardsIdentified: safetyResult.riskAssessment?.hazards?.length,

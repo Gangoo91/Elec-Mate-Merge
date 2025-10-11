@@ -247,17 +247,119 @@ ${location ? `Location: ${location}` : ''}
 
 Include step-by-step instructions, practical tips, and things to avoid.`;
 
-    // Step 4: Call Lovable AI (with timeout)
-    logger.debug('Calling Lovable AI');
+    // Step 4: Call Lovable AI with tool calling
+    logger.debug('Calling Lovable AI with tool calling');
     const aiStart = Date.now();
-    const aiResponse = await callLovableAIWithTimeout(systemPrompt, userPrompt, LOVABLE_API_KEY, {
-      responseFormat: 'json_object',
-      timeoutMs: 55000
+    
+    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        tools: [{
+          type: 'function',
+          function: {
+            name: 'provide_installation_guidance',
+            description: 'Return comprehensive installation guidance with safety and compliance focus',
+            parameters: {
+              type: 'object',
+              properties: {
+                response: {
+                  type: 'string',
+                  description: 'Comprehensive UK English explanation (200-300 words)'
+                },
+                installationSteps: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      step: { type: 'number' },
+                      title: { type: 'string' },
+                      description: { type: 'string' },
+                      tools: { type: 'array', items: { type: 'string' } },
+                      materials: { type: 'array', items: { type: 'string' } },
+                      safetyNotes: { type: 'array', items: { type: 'string' } },
+                      estimatedTime: { type: 'number' }
+                    },
+                    required: ['step', 'title', 'description', 'tools', 'materials', 'safetyNotes', 'estimatedTime']
+                  },
+                  description: 'Step-by-step installation procedures'
+                },
+                practicalTips: {
+                  type: 'array',
+                  items: { type: 'string' },
+                  description: 'Practical field tips'
+                },
+                commonMistakes: {
+                  type: 'array',
+                  items: { type: 'string' },
+                  description: 'Common mistakes to avoid'
+                },
+                toolsRequired: {
+                  type: 'array',
+                  items: { type: 'string' },
+                  description: 'Required tools and equipment'
+                },
+                materialsRequired: {
+                  type: 'array',
+                  items: { type: 'string' },
+                  description: 'Required materials'
+                },
+                totalEstimatedTime: { type: 'number' },
+                difficultyLevel: { type: 'string' },
+                compliance: {
+                  type: 'object',
+                  properties: {
+                    regulations: { type: 'array', items: { type: 'string' } },
+                    inspectionPoints: { type: 'array', items: { type: 'string' } }
+                  }
+                },
+                suggestedNextAgents: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      agent: { type: 'string' },
+                      reason: { type: 'string' },
+                      priority: { type: 'string', enum: ['high', 'medium', 'low'] }
+                    },
+                    required: ['agent', 'reason', 'priority']
+                  }
+                }
+              },
+              required: ['response', 'installationSteps'],
+              additionalProperties: false
+            }
+          }
+        }],
+        tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } },
+        max_tokens: 2000
+      })
     });
+
+    if (!aiResponse.ok) {
+      const errorText = await aiResponse.text();
+      logger.error('Lovable AI error', { status: aiResponse.status, error: errorText });
+      throw new Error(`AI API error: ${aiResponse.status}`);
+    }
+
+    const aiData = await aiResponse.json();
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
-    // Use shared JSON parser with repair
-    const installResult = parseJsonWithRepair(aiResponse, logger, 'installer');
+    if (!aiData.choices?.[0]?.message?.tool_calls?.[0]) {
+      logger.error('No tool call in AI response', { response: aiData });
+      throw new Error('AI did not return tool call response');
+    }
+
+    const toolCall = aiData.choices[0].message.tool_calls[0];
+    const installResult = JSON.parse(toolCall.function.arguments);
 
     // Validate installationSteps structure - convert any strings to objects
     if (installResult.installationSteps && Array.isArray(installResult.installationSteps)) {
