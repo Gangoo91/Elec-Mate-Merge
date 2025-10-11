@@ -27,6 +27,7 @@ import { PhotoUploadButton } from "./PhotoUploadButton";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { DesignAlternatives } from "./DesignAlternatives";
+import { AgentProgressIndicator } from "./AgentProgressIndicator";
 import { v4 as uuidv4 } from 'uuid';
 
 // Feature flag to toggle between orchestrator and legacy designer
@@ -1233,20 +1234,14 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             </div>
           )}
 
-          {/* Loading indicator */}
-          {(isLoading || isStreaming) && activeAgents.length > 0 && (
-            <div className="flex justify-start gap-2">
-              <div className="bg-elec-card rounded-2xl px-4 py-3 shadow-sm">
-                <div className="mb-2 pb-2 border-b border-white/20">
-                  <Badge variant="outline" className="text-xs font-semibold bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
-                    {activeAgents.map(a => getAgentName(a)).join(', ')}
-                  </Badge>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Loader2 className="h-4 w-4 animate-spin text-white" />
-                  <span className="text-sm text-white">Working...</span>
-                </div>
-              </div>
+          {/* Progress Indicator */}
+          {(isLoading || isStreaming) && (
+            <div className="flex justify-start">
+              <AgentProgressIndicator 
+                elapsedTime={elapsedTime}
+                estimatedTime={estimatedTime}
+                currentAgent={currentAgent ? getAgentName(currentAgent) : undefined}
+              />
             </div>
           )}
           

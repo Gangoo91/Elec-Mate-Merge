@@ -138,21 +138,20 @@ serve(async (req) => {
       lastTopic: conversationSummary.lastTopic
     });
 
-    // Detect intents
-    const intents = detectIntents(messages[messages.length - 1]?.content || '', conversationState);
+    // Detect intents - build proper ConversationSummary with safe defaults
+    const safeSummary: ConversationSummary = {
+      projectType: conversationSummary?.projectType || conversationState?.projectType || 'domestic',
+      lastTopic: conversationSummary?.lastTopic || conversationState?.lastTopic || 'general electrical work',
+      keyFacts: conversationSummary?.keyFacts || [],
+      decisions: conversationSummary?.decisions || []
+    };
+    
+    const intents = detectIntents(messages[messages.length - 1]?.content || '', safeSummary);
     
     logger.info('Intents detected', {
       primary: intents.primary,
       secondary: intents.secondary,
       confidence: intents.confidence
-    });
-
-    // Extract circuit context
-    const circuitContext = extractCircuitContext(messages, currentDesign);
-    
-    logger.debug('Circuit context extracted', {
-      hasCircuitType: !!circuitContext.circuitType,
-      hasLoad: !!circuitContext.load
     });
 
     // Plan agent sequence
@@ -186,6 +185,16 @@ serve(async (req) => {
           continue;
         }
 
+        // Extract circuit context for H&S agent if designer has already provided circuit details
+        let circuitContext = 'General electrical installation (circuit type unknown)';
+        if (agent.name === 'health-safety' && agentOutputs.length > 0) {
+          try {
+            circuitContext = extractCircuitContext({ previousAgentOutputs: agentOutputs });
+          } catch (error) {
+            logger.warn('Failed to extract circuit context for H&S agent', { error: error.message });
+          }
+        }
+
         const agentResponse = await logger.time(
           `${agent.name} agent call`,
           () => withRetry(
@@ -196,7 +205,7 @@ serve(async (req) => {
                   context: {
                     ...context,
                     conversationState,
-                    conversationSummary,
+                    conversationSummary: safeSummary,
                     circuitContext,
                     previousAgentOutputs: agentOutputs
                   },
