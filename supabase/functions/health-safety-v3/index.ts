@@ -119,7 +119,7 @@ serve(async (req) => {
       ).slice(-5).join('\n');
     }
 
-    const systemPrompt = `You are an expert Health & Safety advisor specialising in UK electrical installations.
+    const systemPrompt = `You are an expert Health & Safety adviser specialising in UK electrical installations.
 
 YOUR UNIQUE VALUE: You produce BS 8800-compliant risk assessments with 5x5 RISK MATRIX
 - Generate a proper 5x5 risk matrix (Likelihood 1-5 x Severity 1-5 = Risk Score)
