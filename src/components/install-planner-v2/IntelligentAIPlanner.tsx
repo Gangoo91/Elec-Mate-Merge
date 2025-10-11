@@ -180,7 +180,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       updatePlanData(resumeState.resumePlanData);
     }
     if (resumeState?.targetAgent) {
-      setCurrentAgent(resumeState.targetAgent);
       toast.info(`Resuming consultation with ${resumeState.targetAgent}`, {
         description: "Ask your follow-up question"
       });
@@ -270,64 +269,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           : step
       ));
     },
-    onPlan: (agents, complexity) => {
-      console.log('Agent plan:', agents, complexity);
-      setActiveAgents(agents);
-      
-      // Initialize progress tracking
-      const progressMap: Record<string, 'pending' | 'active' | 'complete'> = {};
-      agents.forEach(agent => progressMap[agent] = 'pending');
-      setAgentProgress(progressMap);
-      
-      setReasoningSteps(agents.map(agent => ({
-        agent,
-        status: 'pending' as const,
-        reasoning: `Waiting to consult...`
-      })));
-      
-      // Show progress bar immediately
-      setShowProgress(true);
-    },
-    onEstimatedTime: (seconds) => {
-      setEstimatedTime(seconds);
-      setElapsedTime(0);
-      setShowProgress(true);
-    },
-    onElapsedTimeUpdate: (seconds) => {
-      setElapsedTime(seconds);
-    },
-    onAgentProgress: (agent, status) => {
-      setAgentProgress(prev => ({ ...prev, [agent]: status }));
-    },
-    onAgentStart: (agent, index, total) => {
-      console.log(`Agent ${agent} starting (${index + 1}/${total})`);
-      setCurrentAction(`Consulting ${agent}...`);
-      setCurrentAgent(agent);
-      
-      // Phase 5: Update progress
-      setAgentProgress(prev => ({ ...prev, [agent]: 'active' }));
-      
-      // Add "Analyzing..." message
-      setMessages(prev => {
-        const withoutAck = prev.filter((m, i) => {
-          return !(m.role === 'assistant' && m.content.includes("Let me get you the right specialist"));
-        });
-        
-        return [...withoutAck, {
-          role: 'assistant',
-          content: `${getAgentName(agent)}: Analyzing your requirements...`,
-          activeAgents: [agent],
-          agentName: agent,
-          isTyping: true
-        }];
-      });
-      
-      setReasoningSteps(prev => prev.map(step => 
-        step.agent === agent 
-          ? { ...step, status: 'active' as const, reasoning: `Now speaking...` }
-          : step
-      ));
-    },
     onAgentResponse: (agent, response, structuredData) => {
       console.log(`Agent ${agent} responded:`, response.slice(0, 100));
       if (structuredData) {
@@ -347,27 +288,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         }];
       });
     },
-    onAgentComplete: (agent, nextAgent) => {
-      console.log(`Agent ${agent} complete, next: ${nextAgent}`);
-      
-      // Phase 5: Update progress
-      setAgentProgress(prev => ({ ...prev, [agent]: 'complete' }));
-      
-      setReasoningSteps(prev => prev.map(step => 
-        step.agent === agent 
-          ? { ...step, status: 'complete' as const, reasoning: `Ready for questions` }
-          : step
-      ));
-      setCurrentAgent(agent);
-      setNextAgent(nextAgent);
-      setCurrentAction('');
-    },
-    onAllAgentsComplete: (agentOutputs) => {
-      console.log('All agents complete:', agentOutputs);
-      setCurrentAction('');
-      setReasoningSteps(prev => prev.map(step => ({ ...step, status: 'complete' as const })));
-      setShowProgress(false);
-    },
     onAgentUpdate: (agents) => {
       setActiveAgents(agents);
     },
@@ -378,17 +298,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       console.log('Citation received:', citation);
     },
     onError: (error) => {
-  const msg = String(error || '').toLowerCase();
-  if (msg.includes('still working')) {
-    toast.info(String(error));
-  } else if (msg.includes('failed to fetch') || msg.includes('networkerror') || msg.includes('abort')) {
-    // Silent: fallback will handle UX
-    return;
-  } else {
-    toast.error(String(error));
-  }
-  setShowProgress(false);
-}
+      const msg = String(error || '').toLowerCase();
+      if (msg.includes('still working')) {
+        toast.info(String(error));
+      } else if (msg.includes('failed to fetch') || msg.includes('networkerror') || msg.includes('abort')) {
+        // Silent: fallback will handle UX
+        return;
+      } else {
+        toast.error(String(error));
+      }
+    }
   });
 
   // Smooth, throttled auto-scroll - only if user is near bottom
@@ -473,14 +392,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           // Final message updates handled by onAgentResponse
           // Mark reasoning steps as complete
           setReasoningSteps(prev => prev.map(step => ({ ...step, status: 'complete' as const })));
-          
-          // Log client-side performance metrics
-          console.log(`📊 CLIENT METRICS:
-  - Perceived wait time: ${elapsedTime}s
-  - Estimated time: ${estimatedTime}s
-  - Accuracy: ${Math.abs(elapsedTime - estimatedTime) < 30 ? '✅ Good (<30s variance)' : '⚠️ Needs calibration'}
-  - Active agents: ${activeAgents.join(', ')}
-`);
 
           // Handle tool calls
           if (data.toolCalls && data.toolCalls.length > 0) {
@@ -1051,67 +962,22 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         className="flex-1 overflow-y-auto bg-elec-dark"
       >
         <div className="px-3 md:px-4 py-3 md:py-4 space-y-3 md:space-y-4">
-          {/* Progress indicator with time estimate */}
-          {isLoading && estimatedTime > 0 && (
+          {/* Simple loading indicator */}
+          {isLoading && (
             <div className="flex gap-2 justify-start animate-fade-in mb-4">
               <div className="max-w-[95%] w-full">
                 <Card className="p-4 bg-elec-card border-elec-yellow/20">
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-3">
+                    <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
                     <span className="text-sm font-medium text-white">Processing your design...</span>
-                    <span className="text-sm text-white/60">
-                      {elapsedTime}s / ~{estimatedTime}s
-                    </span>
-                  </div>
-                  <div className="w-full bg-elec-dark/50 rounded-full h-2 mb-3">
-                    <div 
-                      className="bg-elec-yellow h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${Math.min((elapsedTime / estimatedTime) * 100, 100)}%` }}
-                    />
-                  </div>
-                  <div className="flex gap-2 flex-wrap">
-                    {Object.entries(agentProgress).map(([agent, status]) => (
-                      <Badge 
-                        key={agent} 
-                        variant={status === 'complete' ? 'default' : 'outline'}
-                        className={
-                          status === 'complete' 
-                            ? 'bg-elec-yellow text-elec-dark border-elec-yellow' 
-                            : status === 'active'
-                            ? 'border-elec-yellow/50 text-elec-yellow bg-elec-yellow/10'
-                            : 'border-white/20 text-white/50'
-                        }
-                      >
-                        {getAgentEmoji(agent)} {getAgentName(agent)}
-                        {status === 'active' && <Loader2 className="ml-1 h-3 w-3 animate-spin" />}
-                        {status === 'complete' && <CheckCircle2 className="ml-1 h-3 w-3" />}
-                      </Badge>
-                    ))}
                   </div>
                 </Card>
               </div>
             </div>
           )}
 
-          {/* Progress Bar */}
-          {showProgress && estimatedTime > 0 && (
-            <div className="mb-3 px-1">
-              <div className="bg-elec-card/50 rounded-lg p-3 border border-elec-yellow/20">
-                <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
-                  <span>Processing consultation...</span>
-                  <span>{Math.min(elapsedTime, estimatedTime)}s / {estimatedTime}s</span>
-                </div>
-                <div className="w-full h-1.5 bg-muted/20 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-elec-yellow transition-all duration-300 ease-linear"
-                    style={{ width: `${Math.min((elapsedTime / estimatedTime) * 100, 99)}%` }}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Reasoning Panel (fallback for when no estimate) */}
-          {showReasoning && reasoningSteps.length > 0 && estimatedTime === 0 && (
+          {/* Reasoning Panel */}
+          {showReasoning && reasoningSteps.length > 0 && (
             <div className="flex justify-start mb-2">
               <div className="max-w-[95%]">
                 <ReasoningPanel steps={reasoningSteps} isVisible={true} />
@@ -1228,16 +1094,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             </div>
           )}
 
-          {/* Progress Indicator */}
-          {(isLoading || isStreaming) && (
-            <div className="flex justify-start">
-              <AgentProgressIndicator 
-                elapsedTime={elapsedTime}
-                estimatedTime={estimatedTime}
-                currentAgent={currentAgent ? getAgentName(currentAgent) : undefined}
-              />
-            </div>
-          )}
           
           <div ref={messagesEndRef} />
         </div>
