@@ -563,57 +563,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       );
 
     } catch (error) {
-      // Fallback: Try non-streaming conversational-install-planner if streaming fails quickly
-      console.error('Streaming error, attempting fallback:', error);
-      
-      try {
-        const { data: fallbackData, error: fallbackError } = await supabase.functions.invoke('conversational-install-planner', {
-          body: { 
-            messages: [...messages, { role: 'user', content: userMessage }],
-            currentData: planData
-          }
-        });
-
-        if (fallbackError) throw fallbackError;
-
-        // Handle validation errors from fallback
-        if (fallbackData?.validationError) {
-          const validationMessage: Message = {
-            id: crypto.randomUUID(),
-            role: 'assistant',
-            content: fallbackData.response,
-            timestamp: new Date().toISOString(),
-            isValidationError: true
-          };
-          
-          setMessages(prev => [...prev, validationMessage]);
-          setIsLoading(false);
-          return;
-        }
-
-        // Remove typing message and add fallback response
-        setMessages(prev => {
-          const filtered = prev.filter(m => !(m.agentName === currentAgent && m.isTyping));
-          return [...filtered, {
-            role: 'assistant',
-            content: fallbackData.response || 'Got your requirements. What else do you need?',
-            activeAgents: ['fallback'],
-            agentName: currentAgent
-          }];
-        });
-
-        toast.info("Fallback mode used", {
-          description: "Streaming temporarily unavailable"
-        });
-
-        setLastSendFailed(false);
-        setReasoningSteps([]);
-        return;
-      } catch (fallbackError) {
-        console.error('Fallback also failed:', fallbackError);
-        // Continue to main error handler below
-        error = fallbackError;
-      }
+      // Handle streaming errors
       console.error('AI conversation error:', error);
       const errorMsg = error instanceof Error ? error.message : 'Unknown error';
       

@@ -45,28 +45,39 @@ export const AIGuidedPlanner = ({ planData, updatePlanData, onReset }: AIGuidedP
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('conversational-install-planner', {
+      console.log('🔍 AIGuidedPlanner: Calling agent-router with project-manager');
+      const { data, error } = await supabase.functions.invoke('agent-router', {
         body: { 
+          userMessage,
+          selectedAgents: ['project-manager'],
           messages: [...messages, { role: 'user', content: userMessage }],
-          currentData: planData 
+          currentDesign: planData 
         }
       });
 
       if (error) throw error;
 
-      if (data.error) {
-        throw new Error(data.error);
+      if (data.error || !data.success) {
+        throw new Error(data.error || 'Agent routing failed');
+      }
+
+      // Extract response from agent-router structure
+      const agentResponse = data.responses?.[0]?.response?.response;
+      const structuredData = data.responses?.[0]?.response?.structuredData;
+      
+      if (!agentResponse) {
+        throw new Error('No response from agent');
       }
 
       // Add assistant response
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: data.response 
+        content: agentResponse 
       }]);
 
       // Update plan data if AI extracted structured data
-      if (data.extractedData) {
-        updatePlanData({ ...planData, ...data.extractedData });
+      if (structuredData) {
+        updatePlanData({ ...planData, ...structuredData });
         toast.success("Installation details updated");
       }
 
