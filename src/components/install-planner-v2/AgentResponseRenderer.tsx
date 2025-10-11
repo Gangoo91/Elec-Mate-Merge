@@ -76,7 +76,7 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
       )}
       
       {/* Designer Explanation Section - Show response text prominently */}
-      {agentId === 'designer' && structuredData?.response && structuredData.response.trim().length > 50 && (
+      {agentId === 'designer' && content && content.trim().length > 50 && (
         <Card className="border-elec-yellow/20 bg-elec-card/50">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
@@ -87,7 +87,7 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
           <CardContent className="space-y-3">
             <div className="prose prose-sm max-w-none text-foreground">
               <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                {structuredData.response}
+                {content}
               </div>
             </div>
           </CardContent>
