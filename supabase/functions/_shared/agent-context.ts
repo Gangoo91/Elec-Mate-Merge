@@ -39,20 +39,8 @@ export interface DesignDecision {
 }
 
 /**
- * IMPROVEMENT #4: Context Confidence Tracking
- * Tracks which agent contributed which information with confidence
- */
-export interface ContextContribution {
-  agent: string;
-  contribution: string;
-  confidence: number;
-  timestamp: number;
-  data?: any;
-}
-
-/**
  * IMPROVEMENT #4: Context Contribution Tracking
- * Track which agent contributed which information
+ * Track which agent contributed which information with confidence
  */
 export interface ContextContribution {
   agent: string;

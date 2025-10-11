@@ -118,14 +118,28 @@ export async function recordPatternFeedback(
   
   console.log(`📊 Pattern feedback: ${wasSuccessful ? 'SUCCESS' : 'FAILURE'} (adjustment: ${adjustment})`);
   
-  // Update pattern confidence (clamped between 0.3 and 1.0)
+  // Fetch current values
+  const { data: pattern, error: fetchError } = await supabase
+    .from('design_patterns')
+    .select('confidence_score, success_count')
+    .eq('id', patternId)
+    .single();
+  
+  if (fetchError) {
+    console.error('❌ Failed to fetch pattern:', fetchError);
+    return;
+  }
+  
+  // Calculate new values (clamped between 0.3 and 1.0)
+  const newConfidence = Math.max(0.3, Math.min(1.0, (pattern?.confidence_score ?? 0.3) + adjustment));
+  const newSuccessCount = wasSuccessful ? (pattern?.success_count ?? 0) + 1 : (pattern?.success_count ?? 0);
+  
+  // Update pattern
   const { error } = await supabase
     .from('design_patterns')
     .update({
-      confidence_score: supabase.raw(`GREATEST(0.3, LEAST(1.0, confidence_score + ${adjustment}))`),
-      success_count: wasSuccessful 
-        ? supabase.raw('success_count + 1') 
-        : supabase.raw('success_count'),
+      confidence_score: newConfidence,
+      success_count: newSuccessCount,
       last_used: new Date().toISOString(),
     })
     .eq('id', patternId);
@@ -140,40 +154,6 @@ export async function recordPatternFeedback(
   if (userComment) {
     console.log(`💬 User feedback: "${userComment}"`);
     // Could store in learning_review_queue for manual review
-  }
-}
-
-/**
- * IMPROVEMENT #5: Pattern Feedback Loop
- * Record whether a pattern was successfully used
- */
-export async function recordPatternFeedback(
-  patternId: string,
-  wasSuccessful: boolean
-): Promise<void> {
-  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-  const supabase = createClient(supabaseUrl, supabaseKey);
-  
-  // Adjust confidence: +5% for success, -10% for failure (but stay in 0.3-1.0 range)
-  const adjustment = wasSuccessful ? 0.05 : -0.1;
-  
-  const { error } = await supabase
-    .from('design_patterns')
-    .update({
-      confidence_score: supabase.raw(`GREATEST(0.3, LEAST(1.0, confidence_score + ${adjustment}))`),
-      success_count: wasSuccessful 
-        ? supabase.raw('success_count + 1') 
-        : supabase.raw('success_count'), // Don't increment on failure
-      last_used: new Date().toISOString(),
-    })
-    .eq('id', patternId);
-  
-  if (error) {
-    console.error('❌ Failed to record pattern feedback:', error);
-  } else {
-    const emoji = wasSuccessful ? '✅' : '❌';
-    console.log(`${emoji} Pattern feedback recorded: ${wasSuccessful ? 'SUCCESS' : 'FAILURE'} (confidence ${wasSuccessful ? '+5%' : '-10%'})`);
   }
 }
 
