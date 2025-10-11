@@ -170,80 +170,107 @@ serve(async (req) => {
       };
     }
 
-    // RAG OPTIMIZATION: Calculation-first approach
+    // ========================================
+    // INTELLIGENT MULTI-TIER RAG SYSTEM v3.0
+    // ========================================
+    
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
+    const openaiApiKey = Deno.env.get('OPENAI_API_KEY')!;
     
-    // Detect project scope for multi-circuit vs single circuit
     const projectScope = detectProjectScope(userMessage);
     
-    // Map circuit type for filtering
-    const circuitTypeMap: { [key: string]: string } = {
-      'cooker': 'cooker',
-      'shower': 'shower',
-      'ring-main': 'sockets',
-      'lighting': 'lighting',
-      'ev-charging': 'ev-charging',
-      'immersion': 'immersion'
-    };
-    const circuitFilter = circuitTypeMap[circuitParams.circuitType] || null;
-    
-    // PHASE 1: Always run RAG for compliance - removed fast-path optimization
-    // RAG provides critical citations and regulatory context for all queries
-    const canSkipRAG = false; // Force RAG for all queries
-    
+    // Initialize RAG results
     let relevantRegsText = '';
-    logger.info('RAG mode: always enabled for compliance', { requestId });
     let designKnowledge = '';
-    let regulations: any[] | null = null;
-    let designDocs: any[] | null = null;
+    let regulations: any[] = [];
+    let designDocs: any[] = [];
     
-    // PHASE 1: RAG always enabled for regulatory compliance
-    // RAG pipeline with error recovery
-    try {
-        const ragQuery = circuitParams.circuitType 
-          ? `${circuitParams.circuitType} circuit design overload protection voltage drop cable sizing installation methods`
-          : 'socket circuit design overload protection voltage drop cable sizing installation methods';
-        
-        console.log(`🔍 RAG: Searching BS 7671 + Design Knowledge for: ${ragQuery}`);
-        
-        // Generate embedding for RAG query using Lovable AI with retry + timeout
-        const embeddingResponse = await logger.time(
-          'Lovable AI embedding generation',
-          () => withRetry(
-            () => withTimeout(
-              fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${lovableApiKey}`,
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  model: 'text-embedding-3-small',
-                  input: ragQuery,
-                }),
-              }),
-              Timeouts.STANDARD,
-              'Lovable AI embedding generation'
-            ),
-            RetryPresets.STANDARD
-          )
-        );
+    // PHASE 1: Build Intelligent RAG Query
+    function buildIntelligentRAGQuery(circuitType: string, power: number): {
+      regulationNumbers: string[];
+      designQuery: string;
+      keywordTerms: string[];
+    } {
+      // Map circuit types to specific BS 7671 regulation numbers
+      const regulationMap: { [key: string]: string[] } = {
+        'shower': ['433.1', '433.2.2', '411.3.3', '701.512.3', '415.1.1'],
+        'cooker': ['433.1', '433.3.3', '432.1', '433.1.204'],
+        'ev-charging': ['722.531.2', '722.411.4.1', '433.1', '411.3.3'],
+        'ring-main': ['433.1.204', '411.3.3', '433.1', '522.6.6'],
+        'lighting': ['433.1', '525', '411.3.2', '522.6.6'],
+        'immersion': ['433.1', '554.1', '411.3.3'],
+        'motor': ['433.1', '552.1', '433.3.3']
+      };
       
-        if (embeddingResponse.ok) {
-          const embeddingData = await embeddingResponse.json();
-          const embedding = embeddingData.data[0].embedding;
+      // Expand query with synonyms and related terms
+      const queryExpansions: { [key: string]: string } = {
+        'shower': 'electric shower instantaneous water heater bathroom wet room 9kW 9.5kW 10kW',
+        'cooker': 'cooking appliance hob oven range diversity cooker control unit',
+        'ev-charging': 'electric vehicle charging point wallbox car charger Mode 3',
+        'ring-main': 'socket outlet ring circuit radial final circuit 13A sockets',
+        'lighting': 'lighting circuit luminaire lamp artificial lighting',
+        'immersion': 'immersion heater water heating cylinder storage',
+        'motor': 'motor circuit DOL starter direct-on-line three-phase induction'
+      };
+      
+      const regs = regulationMap[circuitType] || ['433.1', '411.3.2', '525'];
+      const expansion = queryExpansions[circuitType] || circuitType;
+      const powerKW = (power / 1000).toFixed(1);
+      
+      return {
+        regulationNumbers: regs,
+        designQuery: `${expansion} ${powerKW}kW circuit design cable sizing overload protection voltage drop earth fault loop impedance installation method`,
+        keywordTerms: [circuitType, `${powerKW}kW`, 'circuit', 'cable', 'protection']
+      };
+    }
+    
+    // Build intelligent query
+    const ragQuery = buildIntelligentRAGQuery(circuitParams.circuitType, circuitParams.power);
+    logger.info('🔍 Intelligent RAG Query Built', {
+      circuitType: circuitParams.circuitType,
+      regulationNumbers: ragQuery.regulationNumbers,
+      queryLength: ragQuery.designQuery.length
+    });
+    
+    // PHASE 2: Generate Embedding with OpenAI (matching working agents)
+    try {
+      const embeddingResponse = await logger.time(
+        'OpenAI embedding generation',
+        () => withRetry(
+          () => withTimeout(
+            fetch('https://api.openai.com/v1/embeddings', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${openaiApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                input: ragQuery.designQuery,
+                model: 'text-embedding-3-small',
+              }),
+            }),
+            Timeouts.STANDARD,
+            'OpenAI embedding generation'
+          ),
+          RetryPresets.STANDARD
+        )
+      );
+      
+      if (embeddingResponse.ok) {
+        const embeddingData = await embeddingResponse.json();
+        const embedding = embeddingData.data[0].embedding;
         
-        // OPTIMIZED: Reduced match counts and added circuit_filter
+        // TIER 1: Vector Search with Lowered Thresholds
         const { successes, failures } = await safeAll([
           {
             name: 'BS7671 regulations',
             execute: () => withTimeout(
               supabase.rpc('search_bs7671', {
                 query_embedding: embedding,
-                match_threshold: 0.75, // Higher threshold for better relevance
-                match_count: 3 // Reduced from 10
+                match_threshold: 0.55,  // Lowered from 0.75
+                match_count: 10         // Increased from 3
               }),
               Timeouts.STANDARD,
               'BS7671 vector search'
@@ -254,60 +281,94 @@ serve(async (req) => {
             execute: () => withTimeout(
               supabase.rpc('search_design_knowledge', {
                 query_embedding: embedding,
-                circuit_filter: circuitFilter, // NEW: Filter by circuit type
-                match_threshold: 0.75,
-                match_count: 2 // Reduced from 5
+                // circuit_filter removed - too restrictive
+                match_threshold: 0.50,  // Lowered from 0.75
+                match_count: 12         // Increased from 2
               }),
               Timeouts.STANDARD,
               'Design knowledge search'
             )
           }
         ]);
-
-        // Extract BS 7671 regulations
+        
+        // Extract results
         const regulationsResult = successes.find(s => s.name === 'BS7671 regulations');
-        regulations = regulationsResult?.result?.data;
-
-        if (regulations && regulations.length > 0) {
+        regulations = regulationsResult?.result?.data || [];
+        
+        const designResult = successes.find(s => s.name === 'Design knowledge');
+        designDocs = designResult?.result?.data || [];
+        
+        logger.info('Vector search completed', {
+          bs7671Found: regulations.length,
+          designFound: designDocs.length
+        });
+        
+        // TIER 2: Keyword Fallback if insufficient results
+        if (regulations.length < 3) {
+          logger.warn('Vector search insufficient for BS7671, triggering keyword fallback');
+          
+          const regNumbers = ragQuery.regulationNumbers.map(r => `'${r}'`).join(',');
+          const { data: keywordRegs } = await supabase
+            .from('bs7671_embeddings')
+            .select('*')
+            .or(`regulation_number.in.(${regNumbers}),content.ilike.%${circuitParams.circuitType}%`)
+            .limit(8);
+          
+          if (keywordRegs && keywordRegs.length > 0) {
+            regulations = [...regulations, ...keywordRegs];
+            logger.info('Keyword fallback successful for BS7671', { addedCount: keywordRegs.length });
+          }
+        }
+        
+        if (designDocs.length < 3) {
+          logger.warn('Vector search insufficient for design docs, triggering keyword fallback');
+          
+          const { data: keywordDesign } = await supabase
+            .from('design_knowledge')
+            .select('*')
+            .ilike('content', `%${circuitParams.circuitType}%`)
+            .limit(10);
+          
+          if (keywordDesign && keywordDesign.length > 0) {
+            designDocs = [...designDocs, ...keywordDesign];
+            logger.info('Keyword fallback successful for design docs', { addedCount: keywordDesign.length });
+          }
+        }
+        
+        // Build context text
+        if (regulations.length > 0) {
           relevantRegsText = regulations.map((r: any) => 
             `Reg ${r.regulation_number} (${r.section}): ${r.content}`
           ).join('\n\n');
-          logger.info('Found relevant regulations', { count: regulations.length });
         }
         
-        // Extract design knowledge
-        const designResult = successes.find(s => s.name === 'Design knowledge');
-        designDocs = designResult?.result?.data;
-
-        if (designDocs && designDocs.length > 0) {
+        if (designDocs.length > 0) {
           designKnowledge = designDocs.map((d: any) => 
             `${d.topic} (${d.source}): ${d.content}`
           ).join('\n\n');
-          logger.info('Found design knowledge documents', { count: designDocs.length });
         }
-
-        // Log RAG performance metrics
-        const ragContextSize = relevantRegsText.length + designKnowledge.length;
-        logger.info('📚 RAG Performance', {
-          bs7671Chunks: regulations?.length || 0,
-          designChunks: designDocs?.length || 0,
-          totalSizeKB: Math.round(ragContextSize / 1024),
-          circuitFilter: circuitFilter || 'none'
+        
+        // Log final RAG results
+        logger.info('📚 RAG Results', {
+          bs7671Count: regulations.length,
+          designDocsCount: designDocs.length,
+          regulationsFound: regulations.map(r => r.regulation_number).join(', '),
+          searchMethod: regulations.length > 0 ? 'vector+keyword' : 'keyword-only',
+          requestId
         });
-
-          // Log failures without blocking
-          if (failures.length > 0) {
-            logger.warn('Some knowledge base queries failed', { failures: failures.map(f => f.name) });
-          }
-        } else {
-          logger.warn('Embedding generation failed, continuing without RAG', { status: embeddingResponse.status });
+        
+        if (failures.length > 0) {
+          logger.warn('Some RAG queries failed', { failures: failures.map(f => f.name) });
         }
+      } else {
+        logger.error('Embedding generation failed', { status: embeddingResponse.status });
+      }
     } catch (error) {
-      logger.error('RAG pipeline failed gracefully', { 
+      logger.error('RAG pipeline failed', { 
         error: error instanceof Error ? error.message : String(error),
         requestId 
       });
-      // Continue with empty RAG results - AI can still provide design
+      // Continue with empty RAG - AI can still provide design
     }
 
     // Use the projectScope already detected at line 144
