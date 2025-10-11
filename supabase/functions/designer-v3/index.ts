@@ -433,16 +433,14 @@ Provide a complete, BS 7671 compliant design.`;
       compliant: designResult.compliance?.status === 'compliant'
     });
 
-    // Step 5: Return clean response
+    // Step 5: Return response - flat format for router/UI
+    const { response, suggestedNextAgents, design, compliance, calculations } = designResult;
+    
     return new Response(
       JSON.stringify({
-        success: true,
-        result: designResult,
-        metadata: {
-          requestId,
-          regulationsUsed: regulations?.length || 0,
-          timestamp: new Date().toISOString()
-        }
+        response,
+        structuredData: { design, compliance, calculations },
+        suggestedNextAgents: suggestedNextAgents || []
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

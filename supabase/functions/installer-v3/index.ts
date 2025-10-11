@@ -419,16 +419,14 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       estimatedTime: installResult.totalEstimatedTime
     });
 
-    // Step 5: Return response
+    // Step 5: Return response - flat format for router/UI
+    const { response, suggestedNextAgents, installationSteps, practicalTips, commonMistakes, toolsRequired, materialsRequired, totalEstimatedTime, difficultyLevel, compliance } = installResult;
+    
     return new Response(
       JSON.stringify({
-        success: true,
-        result: installResult,
-        metadata: {
-          requestId,
-          knowledgeItemsUsed: installKnowledge?.length || 0,
-          timestamp: new Date().toISOString()
-        }
+        response,
+        structuredData: { installationSteps, practicalTips, commonMistakes, toolsRequired, materialsRequired, totalEstimatedTime, difficultyLevel, compliance },
+        suggestedNextAgents: suggestedNextAgents || []
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

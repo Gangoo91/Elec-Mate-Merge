@@ -370,16 +370,14 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
       itemsCount: costResult.materials?.items?.length
     });
 
-    // Step 5: Return response
+    // Step 5: Return response - flat format for router/UI
+    const { response, suggestedNextAgents, materials, labour, summary, notes } = costResult;
+    
     return new Response(
       JSON.stringify({
-        success: true,
-        result: costResult,
-        metadata: {
-          requestId,
-          pricingItemsFound: pricingResults?.length || 0,
-          timestamp: new Date().toISOString()
-        }
+        response,
+        structuredData: { materials, labour, summary, notes },
+        suggestedNextAgents: suggestedNextAgents || []
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

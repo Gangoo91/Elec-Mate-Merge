@@ -373,16 +373,14 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       controlsApplied: safetyResult.riskAssessment?.controls?.length
     });
 
-    // Step 5: Return response
+    // Step 5: Return response - flat format for router/UI
+    const { response, suggestedNextAgents, riskAssessment, methodStatement, compliance } = safetyResult;
+    
     return new Response(
       JSON.stringify({
-        success: true,
-        result: safetyResult,
-        metadata: {
-          requestId,
-          knowledgeItemsUsed: hsKnowledge?.length || 0,
-          timestamp: new Date().toISOString()
-        }
+        response,
+        structuredData: { riskAssessment, methodStatement, compliance },
+        suggestedNextAgents: suggestedNextAgents || []
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

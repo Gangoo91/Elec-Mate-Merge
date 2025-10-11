@@ -411,16 +411,14 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       liveTests: commResult.testingProcedure?.liveTests?.length
     });
 
-    // Step 5: Return response
+    // Step 5: Return response - flat format for router/UI
+    const { response, suggestedNextAgents, testingProcedure, certification } = commResult;
+    
     return new Response(
       JSON.stringify({
-        success: true,
-        result: commResult,
-        metadata: {
-          requestId,
-          knowledgeItemsUsed: testKnowledge?.length || 0,
-          timestamp: new Date().toISOString()
-        }
+        response,
+        structuredData: { testingProcedure, certification },
+        suggestedNextAgents: suggestedNextAgents || []
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

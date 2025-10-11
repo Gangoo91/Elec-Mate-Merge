@@ -359,16 +359,14 @@ Include phases, resources, compliance requirements, and risk management.`;
       totalDuration: pmResult.projectPlan?.totalDuration
     });
 
-    // Step 5: Return response
+    // Step 5: Return response - flat format for router/UI
+    const { response, suggestedNextAgents, projectPlan, resources, compliance, risks, recommendations } = pmResult;
+    
     return new Response(
       JSON.stringify({
-        success: true,
-        result: pmResult,
-        metadata: {
-          requestId,
-          knowledgeItemsUsed: pmKnowledge?.length || 0,
-          timestamp: new Date().toISOString()
-        }
+        response,
+        structuredData: { projectPlan, resources, compliance, risks, recommendations },
+        suggestedNextAgents: suggestedNextAgents || []
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
