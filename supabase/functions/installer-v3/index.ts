@@ -227,29 +227,8 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
 
     // Use shared JSON parser with repair
     const installResult = parseJsonWithRepair(aiResponse, logger, 'installer');
-      logger.warn('Initial JSON parse failed, attempting repair', { error: parseError.message });
-      
-      // Attempt common JSON fixes
-      let repairedJson = aiResponse
-        .replace(/,(\s*[}\]])/g, '$1')  // Remove trailing commas
-        .replace(/([{,]\s*)(\w+):/g, '$1"$2":')  // Quote unquoted keys
-        .replace(/'/g, '"')  // Replace single quotes with double quotes
-        .replace(/\n/g, '\\n');  // Escape literal newlines in strings
-      
-      try {
-        installResult = JSON.parse(repairedJson);
-        logger.info('JSON repair successful');
-      } catch (repairError) {
-        logger.error('JSON repair failed', { 
-          originalError: parseError.message,
-          repairError: repairError.message,
-          sample: aiResponse.substring(0, 500)
-        });
-        throw new Error(`Invalid JSON from AI: ${parseError.message}. Repair failed: ${repairError.message}`);
-      }
-    }
 
-    logger.info('Installation guidance completed', { 
+    logger.info('Installation guidance completed', {
       stepsCount: installResult.installationSteps?.length,
       estimatedTime: installResult.totalEstimatedTime
     });

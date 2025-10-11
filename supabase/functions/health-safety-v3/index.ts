@@ -244,33 +244,9 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     logger.debug('AI response received', { duration: Date.now() - aiStart });
 
     // Robust JSON parsing with repair
-    let safetyResult;
-    try {
-      safetyResult = JSON.parse(aiResponse);
-    } catch (parseError) {
-      logger.warn('Initial JSON parse failed, attempting repair', { 
-        error: parseError.message
-      });
-      
-      let repairedJson = aiResponse
-        .replace(/,(\s*[}\]])/g, '$1')
-        .replace(/([{,]\s*)(\w+):/g, '$1"$2":')
-        .replace(/'/g, '"')
-        .replace(/\n/g, '\\n')
-        .replace(/\t/g, '\\t');
-      
-      try {
-        safetyResult = JSON.parse(repairedJson);
-        logger.info('JSON repair successful');
-      } catch (repairError) {
-        logger.error('JSON repair failed', { 
-          originalSample: aiResponse.substring(0, 500)
-        });
-        throw new Error(`Invalid JSON from AI (even after repair): ${parseError.message}`);
-      }
-    }
+    const safetyResult = parseJsonWithRepair(aiResponse, logger, 'health-safety');
 
-    logger.info('Risk assessment completed', { 
+    logger.info('Risk assessment completed', {
       hazardsIdentified: safetyResult.riskAssessment?.hazards?.length,
       controlsApplied: safetyResult.riskAssessment?.controls?.length
     });

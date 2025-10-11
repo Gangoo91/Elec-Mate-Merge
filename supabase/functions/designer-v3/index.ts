@@ -300,23 +300,6 @@ Provide a complete, BS 7671 compliant design.`;
 
     // Use shared JSON parser with repair
     const designResult = parseJsonWithRepair(aiResponse, logger, 'designer');
-      
-      // Attempt to repair common JSON issues
-      let repairedJson = aiResponse
-        .replace(/,(\s*[}\]])/g, '$1')              // Remove trailing commas
-        .replace(/([{,]\s*)(\w+):/g, '$1"$2":')     // Quote unquoted keys
-        .replace(/'/g, '"')                          // Replace single quotes
-        .replace(/\n/g, '\\n')                       // Escape newlines
-        .replace(/\t/g, '\\t');                      // Escape tabs
-      
-      try {
-        designResult = JSON.parse(repairedJson);
-        logger.info('JSON repair successful');
-      } catch (repairError) {
-        logger.error('JSON repair failed', { originalError: parseError.message, repairError: repairError.message });
-        throw new Error(`Invalid JSON from AI: ${parseError.message}`);
-      }
-    }
 
     // Validate RAG usage - verify agent actually used the knowledge base
     if (regulations && regulations.length > 0) {
