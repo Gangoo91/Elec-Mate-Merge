@@ -15,6 +15,7 @@ import { DesignerCircuitCards } from "./DesignerCircuitCards";
 import { AgentReasoningDrawer } from "./AgentReasoningDrawer";
 import { CitationBadge } from "./CitationBadge";
 import { MultiCircuitRenderer } from "./MultiCircuitRenderer";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface AgentResponseRendererProps {
   content: string;
@@ -72,6 +73,25 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
             {openingLine}
           </p>
         </div>
+      )}
+      
+      {/* Designer Explanation Section - Show response text prominently */}
+      {agentId === 'designer' && structuredData?.response && structuredData.response.trim().length > 50 && (
+        <Card className="border-elec-yellow/20 bg-elec-card/50">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+              <Brain className="h-5 w-5" />
+              Design Explanation & Calculations
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="prose prose-sm max-w-none text-foreground">
+              <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                {structuredData.response}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       )}
       
       {/* Structured Visual Cards (if available) */}
