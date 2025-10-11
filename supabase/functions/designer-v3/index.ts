@@ -164,38 +164,40 @@ ${regulationContext}
 DESIGN KNOWLEDGE FROM DATABASE (YOU MUST APPLY THIS):
 ${designContext}
 
-🔴 CRITICAL INSTRUCTIONS FOR USING BS 7671:
-1. CITE regulations by SPECIFIC NUMBER in your calculations:
-   Example: "Per Regulation 433.1.1, the device rating (In) must not exceed the cable current-carrying capacity (Iz)"
-   NOT: "Cable must be sized per BS 7671" (too vague)
+🔴 CRITICAL: WRITE ALL CALCULATIONS AND WORKING IN YOUR NARRATIVE RESPONSE
+The "response" field is your PRIMARY OUTPUT - it must contain:
+
+1. CITE regulations by SPECIFIC NUMBER:
+   ✓ Example: "Per Regulation 433.1.1, the device rating (In) must not exceed the cable current-carrying capacity (Iz)"
+   ✗ NOT: "Cable must be sized per BS 7671" (too vague)
 
 2. REFERENCE TABLES by name and value:
-   Example: "From Table 4D5 (Appendix 4), 16mm² PVC cable in Method E (clipped direct) has Iz = 85A at 30°C ambient"
-   NOT: "Cable capacity is 85A" (where did this come from?)
+   ✓ Example: "From Table 4D5 (Appendix 4), 16mm² PVC cable in Method C has Iz = 85A at 30°C ambient"
+   ✗ NOT: "Cable capacity is 85A" (where did this come from?)
 
-3. SHOW CALCULATION STEPS (not just results):
+3. SHOW COMPLETE CALCULATION STEPS (not just results):
    ✓ CORRECT: "Design current Ib = P / V = 12000W / 230V = 52.2A"
    ✗ WRONG: "Design current is 52A"
 
-4. APPLY CORRECTION FACTORS with explanation:
-   Example: "Cable grouped with 2 others, apply Cg = 0.80 from Table 4C1. Ambient temp 35°C, apply Ca = 0.87 from Table 4B1. Effective Iz = 85A x 0.80 x 0.87 = 59.2A"
+4. APPLY CORRECTION FACTORS with full explanation:
+   ✓ Example: "Cable grouped with 2 others, apply Cg = 0.80 from Table 4C1. Ambient temp 35°C, apply Ca = 0.87 from Table 4B1. Effective Iz = 85A × 0.80 × 0.87 = 59.2A"
 
 5. VERIFY 433.1.1 RELATIONSHIP explicitly:
-   Example: "Design current Ib = 52.2A. Selected 63A MCB (In = 63A). Cable capacity Iz = 85A after derating. Verification: Ib (52.2A) ≤ In (63A) ≤ Iz (85A) ✓ COMPLIANT"
+   ✓ Example: "Design current Ib = 52.2A. Selected 63A MCB (In = 63A). Cable capacity Iz = 85A after derating. Verification per Regulation 433.1.1: Ib (52.2A) ≤ In (63A) ≤ Iz (85A) ✓ COMPLIANT"
 
-6. CALCULATE VOLTAGE DROP with formula:
-   Example: "Voltage drop = (mV/A/m) x Ib x L = 2.8 x 52.2 x 45 = 6.56V = 2.85% (< 5% limit for power circuits per Regulation 525) ✓"
+6. CALCULATE VOLTAGE DROP with complete formula:
+   ✓ Example: "From Table 4D5, (mV/A/m) = 2.8 for 10mm². Voltage drop = (mV/A/m) × Ib × L = 2.8 × 52.2 × 45 = 6,559mV = 6.56V = 2.85% which is within the 5% limit (11.5V) for power circuits per Regulation 525 ✓"
 
 7. CALCULATE MAXIMUM Zs for protection device:
-   Example: "For 63A Type B MCB, maximum Zs = 1.44Ω per Table 41.3. Typical Ze for TN-S = 0.35Ω. Available for cable (R1+R2) = 1.44 - 0.35 = 1.09Ω"
+   ✓ Example: "For 63A Type B MCB, maximum Zs = 1.44Ω per Table 41.3. Typical Ze for TN-S = 0.35Ω. Available for cable (R1+R2) = 1.44 - 0.35 = 1.09Ω. From Table I1, 10mm² copper CPC gives (R1+R2) ≈ 0.37Ω for 45m run, well within limit per Regulation 411.4.4 ✓"
 
-8. POPULATE compliance.regulations ARRAY with numbers you cited:
-   Example: "regulations": ["433.1.1", "525", "Table 4D5", "Table 41.3", "411.3.2"]
+8. USE ACTUAL REGULATION NUMBERS IN YOUR TEXT:
+   Write things like "433.1.1", "525", "Table 4D5", "Table 41.3", "411.4.4", "522.6" etc. directly in your narrative response so they can be extracted and displayed as citations.
 
-The regulation context above contains ${regulations?.length || 0} specific BS 7671 regulations. USE THEM!
-The design knowledge contains ${designKnowledge?.length || 0} practical design guides. APPLY THEM!
+The regulation context above contains ${regulations?.length || 0} specific BS 7671 regulations. USE THEM IN YOUR RESPONSE TEXT!
+The design knowledge contains ${designKnowledge?.length || 0} practical design guides. APPLY THEM IN YOUR RESPONSE TEXT!
 
-YOUR DESIGN PROCESS (FOLLOW THIS SEQUENCE):
+YOUR DESIGN PROCESS (FOLLOW THIS SEQUENCE IN YOUR NARRATIVE):
 
 STEP 1: UNDERSTAND THE JOB
 - What is being powered? (heater, sockets, lighting, motor)
@@ -203,58 +205,86 @@ STEP 1: UNDERSTAND THE JOB
 - Where is it installed? (indoor/outdoor, method, environment)
 - How far is the cable run? (affects voltage drop and Zs)
 
-STEP 2: CALCULATE DESIGN CURRENT (Ib)
-- For resistive loads: Ib = P / V
-- For motor loads: Ib = P / (V x √3 x pf x eff)
-- For diversity: Apply BS 7671 Appendix 15 factors if multiple loads
+STEP 2: CALCULATE DESIGN CURRENT (Ib) - SHOW FORMULA
+- For resistive loads: Ib = P / V (show with actual numbers)
+- For motor loads: Ib = P / (V × √3 × pf × eff)
 
 STEP 3: SELECT INSTALLATION METHOD
-- Review installer requirements from previous agent (if available)
-- Check environment: indoor/outdoor, accessible/buried, ambient temp
-- Determine method: A (conduit), B (trunking), C (clipped direct), E (tray), etc.
-- Note method impacts current capacity (different Iz values)
+- Determine method: C (clipped direct), E (cable tray), etc.
+- State the table you'll use (e.g., "Table 4D5 for twin & earth")
 
-STEP 4: APPLY CORRECTION FACTORS
-- Ca (ambient temperature) - Table 4B1/4B2
-- Cg (grouping) - Table 4C1
-- Ci (thermal insulation) - Table 52.2
-- Calculate effective capacity needed: Iz_required = In / (Ca x Cg x Ci)
+STEP 4: APPLY CORRECTION FACTORS - SHOW EACH FACTOR
+- Ca (ambient temperature) - cite Table 4B1/4B2 with value
+- Cg (grouping) - cite Table 4C1 with value
+- Ci (thermal insulation) - cite Table 52.2 with value
+- Show multiplication: Iz_effective = Iz_tabulated × Ca × Cg × Ci
 
-STEP 5: SELECT CABLE SIZE
-- Look up cable capacity in relevant table (4D5, 4E4A, etc.)
-- Ensure tabulated Iz x correction factors ≥ In
-- Verify In ≥ Ib (Regulation 433.1.1)
-- Consider mechanical protection requirements (Regulation 522.6)
+STEP 5: SELECT CABLE SIZE - SHOW TABLE LOOKUP
+- State the table (e.g., "Table 4D5")
+- State the cable size and its tabulated Iz
+- Show effective Iz after correction factors
+- Verify In ≥ Ib and Iz ≥ In (cite Regulation 433.1.1)
 
-STEP 6: VERIFY VOLTAGE DROP
-- Get (mV/A/m) value from Table 4D5 or similar
-- Calculate: Vd = (mV/A/m) x Ib x L / 1000
-- Check: Vd ≤ 3% (6.9V) for lighting, 5% (11.5V) for other at 230V
-- Cite Regulation 525
+STEP 6: VERIFY VOLTAGE DROP - SHOW COMPLETE CALCULATION
+- Get (mV/A/m) value from table (state which table)
+- Show: Vd = (mV/A/m) × Ib × L = [numbers] = X.XXV = Y.Y%
+- Compare to limit (3% for lighting, 5% for other per Regulation 525)
 
-STEP 7: CALCULATE EARTH FAULT PROTECTION
-- Determine maximum Zs from Table 41.3 (MCB) or 41.5 (Fuse)
+STEP 7: CALCULATE EARTH FAULT PROTECTION - SHOW WORKING
+- State maximum Zs from Table 41.3 or 41.5
+- State assumed Ze (e.g., 0.35Ω for TN-S)
 - Calculate cable (R1+R2) from Table I1
-- Verify Ze + (R1+R2) ≤ Maximum Zs
-- Consider prospective fault current if very low Zs
+- Verify total ≤ max Zs (cite Regulation 411.4.4 or similar)
 
-STEP 8: SELECT PROTECTION DEVICE TYPE
-- Type B (3-5x In): General domestic/commercial
-- Type C (5-10x In): Motors, transformers (high inrush)
-- Type D (10-20x In): High inrush loads
-- Justify selection based on load characteristics
+STEP 8: SELECT PROTECTION DEVICE TYPE - JUSTIFY
+- Type B (3-5× In): General domestic/commercial
+- Type C (5-10× In): Motors, transformers
+- State your selection and why
 
-STEP 9: DOCUMENT EVERYTHING - 🚨 CRITICAL MINIMUM REQUIREMENTS:
-- Write comprehensive explanation MINIMUM 250 words (count them!)
-- Show EVERY calculation with complete formulas AND numbers
-- Example: "Design current Ib = P/V = 9500W/230V = 41.3A" (NOT just "Ib = 41.3A")
-- Cite SPECIFIC regulation numbers for EVERY decision
-- Reference TABLE numbers with actual values looked up
-- Explain correction factor applications with sources
-- Show voltage drop calculation: "(mV/A/m) x Ib x L = [values] = X.XX volts = Y.Y%"
-- Verify 433.1.1: "Ib (XXA) ≤ In (XXA) ≤ Iz (XXA) ✓"
-- Populate ALL JSON fields with calculations shown
-- Flag warnings if voltage drop >4%, Zs tight, heavy derating applied
+🚨 RESPONSE QUALITY REQUIREMENTS:
+Your "response" field MUST include:
+✓ MINIMUM 300 words of detailed explanation with embedded calculations
+✓ EVERY formula written out with actual numbers substituted (e.g., "Ib = 9500W / 230V = 41.3A")
+✓ At least 5 specific BS 7671 regulation numbers cited (e.g., 433.1.1, 525, 411.4.4, 522.6)
+✓ At least 2 Table references with actual values (e.g., "Table 4D5: Iz=64A", "Table 41.3: max Zs=0.91Ω")
+✓ Complete voltage drop calculation showing all steps
+✓ Complete 433.1.1 verification showing all three values: Ib ≤ In ≤ Iz
+✓ Write as a professional technical narrative (like documenting for an Electrical Installation Certificate)
+
+Example GOOD response (REQUIRED STYLE):
+"Design current calculation: Ib = P/V = 9500W / 230V = 41.3A per fundamental Ohm's law. Selected 50A Type B MCB (In = 50A) based on load characteristic requiring standard domestic protection. From BS 7671 Table 4D5 (Appendix 4), 10mm² twin and earth cable (6242Y) installed using Method C (clipped direct to surface) has a current-carrying capacity Iz = 64A at reference conditions of 30°C ambient temperature. Applied correction factor Ca = 0.94 for actual 25°C ambient from Table 4B1. No grouping or thermal insulation factors required for this installation. Effective capacity: Iz_effective = 64A × 0.94 = 60.2A. Verification per Regulation 433.1.1: Ib (41.3A) ≤ In (50A) ≤ Iz (60.2A) ✓ COMPLIANT. Voltage drop calculation: From Table 4D5, (mV/A/m) = 4.4 for 10mm² copper. Vd = (mV/A/m) × Ib × L = 4.4 × 41.3A × 15m = 2,725.8mV = 2.73V = 1.19% which is well within the 5% limit (11.5V at 230V) for power circuits per Regulation 525. Maximum earth fault loop impedance: From Table 41.3, for 50A Type B MCB, maximum Zs = 0.91Ω to achieve 0.4s disconnection per Regulation 411.3.2. Assuming typical TN-S external impedance Ze = 0.35Ω, available for cable resistance (R1+R2) = 0.91 - 0.35 = 0.56Ω. From Table I1, 10mm² copper conductor with 6mm² CPC at 15m gives approximate (R1+R2) = 0.11Ω, providing adequate safety margin per Regulation 411.4.4. Design fully complies with BS 7671:2018+A2:2022 requirements and utilises values from Tables 4D5, 4B1, 41.3, and I1. Cable sized per Regulation 522.6 provides mechanical protection appropriate for domestic installation."
+
+CURRENT DATE: September 2025
+
+${contextSection}
+
+Respond ONLY with valid JSON in this exact format:
+{
+  "response": "COMPREHENSIVE design explanation (300-400 words) with ALL CALCULATIONS EMBEDDED IN THE NARRATIVE TEXT. Include complete formulas with numbers, cite specific regulation numbers (433.1.1, 525, etc.), reference tables with values (Table 4D5, Table 41.3), show voltage drop calculation steps, verify 433.1.1 relationship explicitly. Write as professional technical documentation.",
+  "design": {
+    "cableSize": 2.5,
+    "cableType": "6242Y Twin & Earth",
+    "protectionDevice": "32A MCB Type B",
+    "voltageDrop": 2.1,
+    "maxLength": 27,
+    "earthingArrangement": "TN-S",
+    "considerations": ["Point 1", "Point 2"]
+  },
+  "compliance": {
+    "status": "compliant",
+    "regulations": [],
+    "warnings": []
+  },
+  "calculations": {
+    "designCurrent": 20,
+    "correctionFactors": 0.87,
+    "maxZs": 1.44
+  },
+  "suggestedNextAgents": [
+    {"agent": "cost-engineer", "reason": "Get accurate material and labour cost estimate for this design", "priority": "high"},
+    {"agent": "installer", "reason": "Get practical installation method and step-by-step guidance", "priority": "medium"}
+  ]
+}`
 
 🚨 RESPONSE QUALITY ENFORCEMENT:
 Your response will be REJECTED if it does not include:
@@ -339,7 +369,7 @@ Provide a complete, BS 7671 compliant design.`;
               properties: {
                 response: {
                   type: 'string',
-                  description: 'MINIMUM 250 words. MUST include: every formula with numbers, specific regulation numbers (e.g., 433.1.1), table references with values (e.g., Table 4D5: Iz=64A), complete voltage drop calculation showing all steps, 433.1.1 verification with all three values'
+                  description: 'MINIMUM 300 words. Professional technical narrative embedding ALL calculations, formulas with actual numbers, specific regulation citations (433.1.1, 525, 411.4.4, etc.), table references with values (Table 4D5, Table 41.3), complete voltage drop calculation showing all working, 433.1.1 verification with all three values. Write as Electrical Installation Certificate documentation.'
                 },
                 design: {
                   type: 'object',
@@ -382,33 +412,6 @@ Provide a complete, BS 7671 compliant design.`;
                     maxZs: { type: 'number', description: 'Maximum earth fault loop impedance in ohms' }
                   }
                 },
-                detailedCalculations: {
-                  type: 'object',
-                  description: 'Complete step-by-step calculation breakdown showing formulas and working',
-                  properties: {
-                    designCurrent: { 
-                      type: 'string', 
-                      description: 'Formula and calculation for Ib, e.g., "Ib = P/V = 9500W/230V = 41.3A"'
-                    },
-                    cableSizing: { 
-                      type: 'string', 
-                      description: 'Table lookup and correction factors, e.g., "Table 4D5: 10mm² has Iz=64A. With Ca=0.94, effective Iz=60.2A"'
-                    },
-                    voltageDrop: { 
-                      type: 'string', 
-                      description: 'Full Vd calculation with formula, e.g., "Vd = (mV/A/m) × Ib × L = 4.4 × 41.3 × 15 = 2.73V = 1.19%"'
-                    },
-                    earthFault: { 
-                      type: 'string', 
-                      description: 'Zs calculation and verification, e.g., "Max Zs from Table 41.3 = 0.91Ω. Ze=0.35Ω, R1+R2=0.11Ω, Total=0.46Ω < 0.91Ω ✓"'
-                    },
-                    verification433: {
-                      type: 'string',
-                      description: 'Explicit 433.1.1 check, e.g., "Ib (41.3A) ≤ In (50A) ≤ Iz (60.2A) ✓ COMPLIANT"'
-                    }
-                  },
-                  required: ['designCurrent', 'cableSizing', 'voltageDrop', 'verification433']
-                },
                 suggestedNextAgents: {
                   type: 'array',
                   items: {
@@ -422,7 +425,7 @@ Provide a complete, BS 7671 compliant design.`;
                   }
                 }
               },
-              required: ['response', 'design', 'compliance', 'detailedCalculations'],
+              required: ['response', 'design', 'compliance'],
               additionalProperties: false
             }
           }
@@ -450,21 +453,39 @@ Provide a complete, BS 7671 compliant design.`;
     const toolCall = aiData.choices[0].message.tool_calls[0];
     const designResult = JSON.parse(toolCall.function.arguments);
 
-    // Validate RAG usage - verify agent actually used the knowledge base
+    // Extract regulation numbers from the response text using regex
+    const responseText = designResult.response || '';
+    const regulationMatches = responseText.match(/\b(\d{3}(?:\.\d+){0,2})\b/g) || [];
+    const tableMatches = responseText.match(/Table\s+(\d+[A-Z]?\d*(?:\.\d+)*)/gi) || [];
+    
+    // Build a set of unique regulation/table references
+    const extractedRefs = new Set([
+      ...regulationMatches,
+      ...tableMatches.map(t => t.replace(/^Table\s+/i, 'Table '))
+    ]);
+    
+    // Populate compliance.regulations if empty
+    if (!designResult.compliance) designResult.compliance = {};
+    if (!designResult.compliance.regulations || designResult.compliance.regulations.length === 0) {
+      designResult.compliance.regulations = Array.from(extractedRefs);
+      logger.info('Extracted regulations from response text', { 
+        count: extractedRefs.size, 
+        regulations: Array.from(extractedRefs) 
+      });
+    } else {
+      logger.info('Designer provided regulations in tool call', { 
+        count: designResult.compliance.regulations.length, 
+        regulations: designResult.compliance.regulations 
+      });
+    }
+    
+    // Log RAG usage
     if (regulations && regulations.length > 0) {
       const citedRegs = designResult.compliance?.regulations || [];
-      if (citedRegs.length === 0) {
-        logger.warn('Designer did not cite any regulations', { 
-          availableRegulations: regulations.length,
-          query: query.substring(0, 50)
-        });
-        // Add warning to response
-        if (!designResult.compliance) designResult.compliance = {};
-        if (!designResult.compliance.warnings) designResult.compliance.warnings = [];
-        designResult.compliance.warnings.push('Note: Additional BS 7671 regulations may apply - consult qualified person for verification');
-      } else {
-        logger.info('Designer cited regulations', { count: citedRegs.length, regulations: citedRegs });
-      }
+      logger.info('RAG context usage', { 
+        availableRegulations: regulations.length,
+        citedCount: citedRegs.length
+      });
     }
 
     // Validate design knowledge usage
@@ -488,13 +509,36 @@ Provide a complete, BS 7671 compliant design.`;
     
     if (citedRegNumbers.length > 0 && regulations && regulations.length > 0) {
       for (const regNum of citedRegNumbers) {
-        const regRow = regulations.find(r => r.regulation_number === regNum);
+        // Try to match against fetched regulations
+        const regRow = regulations.find(r => 
+          r.regulation_number === regNum || 
+          regNum.includes(r.regulation_number)
+        );
+        
         if (regRow) {
           citations.push({
             source: 'BS 7671',
             section: regNum,
             title: regRow.section || `Regulation ${regNum}`,
             content: regRow.content?.slice(0, 240) || '',
+            type: 'regulation'
+          });
+        } else if (regNum.toLowerCase().includes('table')) {
+          // Table reference without matching regulation data
+          citations.push({
+            source: 'BS 7671',
+            section: regNum,
+            title: regNum,
+            content: 'Referenced in design calculations',
+            type: 'table'
+          });
+        } else {
+          // Regulation number without matching data
+          citations.push({
+            source: 'BS 7671',
+            section: regNum,
+            title: `Regulation ${regNum}`,
+            content: 'Cited in design',
             type: 'regulation'
           });
         }
@@ -504,12 +548,12 @@ Provide a complete, BS 7671 compliant design.`;
     logger.info('Citations built', { count: citations.length, regulations: citedRegNumbers });
     
     // Step 6: Return response - flat format for router/UI
-    const { response, suggestedNextAgents, design, compliance, calculations, detailedCalculations } = designResult;
+    const { response, suggestedNextAgents, design, compliance, calculations } = designResult;
     
     return new Response(
       JSON.stringify({
         response,
-        structuredData: { design, compliance, calculations, detailedCalculations, citations },
+        structuredData: { design, compliance, calculations, citations },
         suggestedNextAgents: suggestedNextAgents || []
       }),
       { 
