@@ -1009,6 +1009,25 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     return sections;
   };
 
+  const handleNewChat = () => {
+    // Clear all state but stay in AI mode
+    setMessages([]);
+    setInput("");
+    setCurrentAgent(null);
+    setConsultationStarted(false); // This shows agent selector
+    setSuggestedAgents([]);
+    setActiveAgents([]);
+    setReasoningSteps([]);
+    setAgentOutputHistory([]);
+    setCompletedAgentsCount(0);
+    setStreamingMessageIndex(null);
+    setLastSentMessage("");
+    setLastSendFailed(false);
+    
+    // Clear conversation ID from URL if present
+    window.history.replaceState({}, '', '/electrician/install-planner?mode=ai');
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-elec-dark">
       {/* Minimal Header - Non-sticky */}
@@ -1025,7 +1044,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               if (hasMeaningfulContent) {
                 setShowExitConfirm(true);
               } else {
-                onReset();
+                handleNewChat();
               }
             }}
             className="text-xs h-6 px-2 text-elec-yellow hover:bg-elec-yellow/10"
@@ -1322,13 +1341,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       <ConfirmationDialog
         open={showExitConfirm}
         onOpenChange={setShowExitConfirm}
-        title="Leave Consultation?"
-        description="You have an active consultation with design work in progress. Starting a new chat will clear the current session. Are you sure?"
+        title="Start New Chat?"
+        description="You have an active consultation with design work in progress. This will clear the current conversation and return you to agent selection. Are you sure?"
         confirmText="Start New Chat"
         cancelText="Stay Here"
         onConfirm={() => {
           setShowExitConfirm(false);
-          onReset();
+          handleNewChat();
         }}
         variant="destructive"
       />
