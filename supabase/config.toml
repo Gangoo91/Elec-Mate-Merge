@@ -23,6 +23,10 @@ timeout_sec = 60
 verify_jwt = false
 timeout_sec = 60
 
+[functions.commissioning-v3]
+verify_jwt = false
+timeout_sec = 60
+
 # Subscription & Core Functions - Active
 [functions.check-subscription]
 verify_jwt = true

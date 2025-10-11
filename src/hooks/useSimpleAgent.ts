@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
-export type AgentType = 'designer' | 'cost-engineer' | 'health-safety' | 'installer' | 'project-manager';
+export type AgentType = 'designer' | 'cost-engineer' | 'health-safety' | 'installer' | 'project-manager' | 'commissioning';
 
 interface AgentRequest {
   query: string;
@@ -31,7 +31,8 @@ const AGENT_FUNCTIONS: Record<AgentType, string> = {
   'cost-engineer': 'cost-engineer-v3',
   'health-safety': 'health-safety-v3',
   'installer': 'installer-v3',
-  'project-manager': 'project-mgmt-v3'
+  'project-manager': 'project-mgmt-v3',
+  'commissioning': 'commissioning-v3'
 };
 
 const AGENT_NAMES: Record<AgentType, string> = {
@@ -39,7 +40,8 @@ const AGENT_NAMES: Record<AgentType, string> = {
   'cost-engineer': 'Cost Engineer',
   'health-safety': 'Health & Safety Advisor',
   'installer': 'Installation Specialist',
-  'project-manager': 'Project Manager'
+  'project-manager': 'Project Manager',
+  'commissioning': 'Commissioning Specialist'
 };
 
 export const useSimpleAgent = (): UseSimpleAgentReturn => {

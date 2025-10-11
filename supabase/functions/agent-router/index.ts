@@ -20,12 +20,12 @@ interface AgentResponse {
 }
 
 const AGENT_ENDPOINTS: Record<string, string> = {
-  'designer': 'designer-agent',
-  'cost-engineer': 'cost-engineer-agent',
-  'installer': 'installer-agent',
-  'health-safety': 'health-safety-agent',
-  'commissioning': 'commissioning-agent',
-  'project-manager': 'project-manager-agent'
+  'designer': 'designer-v3',
+  'cost-engineer': 'cost-engineer-v3',
+  'installer': 'installer-v3',
+  'health-safety': 'health-safety-v3',
+  'commissioning': 'commissioning-v3',
+  'project-manager': 'project-mgmt-v3'
 };
 
 serve(async (req) => {
