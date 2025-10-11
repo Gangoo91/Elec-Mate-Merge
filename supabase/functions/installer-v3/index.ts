@@ -161,6 +161,33 @@ ${installContext}
 
 8. PROVIDE time estimates to help apprentices pace themselves
 
+⚠️ STEP FORMATTING RULES (CRITICAL):
+   ✅ CORRECT: Each step MUST be a structured JSON object:
+   {
+     "step": 1,
+     "title": "Connect to the Shower",
+     "description": "Follow manufacturer's instructions for connecting the supply cable to the shower unit terminals. Ensure correct polarity and tight connections.",
+     "tools": ["Wire strippers", "Terminal screwdriver"],
+     "materials": ["Cable"],
+     "safetyNotes": ["Verify isolation before touching terminals"],
+     "estimatedTime": 15
+   }
+   
+   ❌ WRONG: NEVER use plain strings like this:
+   "installationSteps": [
+     "Connect to the Shower:",
+     "Follow manufacturer's instructions...",
+     "Test the Circuit:",
+     "Perform continuity and insulation resistance tests..."
+   ]
+   
+   🎯 HOW TO STRUCTURE STEPS:
+   - Section headings (e.g., "Connect to the Shower") → Use as step.title
+   - Detailed instructions → Use as step.description
+   - Keep titles concise (3-6 words)
+   - Put full details in description field
+   - Always include all 7 required fields per step
+
 The installation knowledge contains ${installKnowledge?.length || 0} verified practices. Apply them!
 
 ${contextSection}
@@ -188,24 +215,26 @@ Respond in this exact format:
     }
   ],
   "practicalTips": [
-    "Practical tip from experience"
+    "Practical tip from field experience with specific actionable advice"
   ],
   "commonMistakes": [
-    "Common mistake to avoid"
+    "Common mistake to avoid with explanation of consequences"
   ],
-  "toolsRequired": ["Complete tool list"],
-  "materialsRequired": ["Complete materials list"],
+  "toolsRequired": ["Specific tool 1 with size/spec", "Specific tool 2"],
+  "materialsRequired": ["Material 1 with exact spec", "Material 2"],
   "totalEstimatedTime": 120,
   "difficultyLevel": "Intermediate",
   "compliance": {
-    "regulations": ["BS 7671 references"],
-    "inspectionPoints": ["What to check"]
+    "regulations": ["BS 7671:2018+A2:2022 Section XXX", "Specific regulation reference"],
+    "inspectionPoints": ["Specific test/check required", "Verification method"]
   },
   "suggestedNextAgents": [
     {"agent": "health-safety", "reason": "Create risk assessment and method statement for this installation", "priority": "high"},
     {"agent": "commissioning", "reason": "Prepare testing and commissioning schedule", "priority": "medium"}
   ]
-}`;
+}
+
+⚠️ REMEMBER: installationSteps MUST be an array of objects with all 7 fields (step, title, description, tools, materials, safetyNotes, estimatedTime). NEVER use plain strings!`;
 
     const userPrompt = `Provide detailed installation guidance for:
 ${query}
@@ -227,6 +256,59 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
 
     // Use shared JSON parser with repair
     const installResult = parseJsonWithRepair(aiResponse, logger, 'installer');
+
+    // Validate installationSteps structure - convert any strings to objects
+    if (installResult.installationSteps && Array.isArray(installResult.installationSteps)) {
+      const hasStringSteps = installResult.installationSteps.some((step: any) => typeof step === 'string');
+      
+      if (hasStringSteps) {
+        logger.warn('Detected string steps in response - converting to structured objects');
+        
+        const structuredSteps: any[] = [];
+        let currentStep: any = null;
+        let stepNumber = 1;
+        
+        for (const item of installResult.installationSteps) {
+          if (typeof item === 'string') {
+            // If string ends with ":", it's a new step title
+            if (item.trim().endsWith(':')) {
+              if (currentStep) {
+                structuredSteps.push(currentStep);
+                stepNumber++;
+              }
+              currentStep = {
+                step: stepNumber,
+                title: item.replace(':', '').trim(),
+                description: '',
+                tools: [],
+                materials: [],
+                safetyNotes: [],
+                estimatedTime: 15
+              };
+            } else if (currentStep) {
+              // Append to description
+              currentStep.description += (currentStep.description ? ' ' : '') + item.trim();
+            }
+          } else {
+            // Already an object, use it directly
+            if (currentStep) {
+              structuredSteps.push(currentStep);
+              stepNumber++;
+            }
+            structuredSteps.push({ ...item, step: stepNumber });
+            currentStep = null;
+            stepNumber++;
+          }
+        }
+        
+        if (currentStep) {
+          structuredSteps.push(currentStep);
+        }
+        
+        installResult.installationSteps = structuredSteps;
+        logger.info('Converted string steps to structured format', { stepsCount: structuredSteps.length });
+      }
+    }
 
     logger.info('Installation guidance completed', {
       stepsCount: installResult.installationSteps?.length,
