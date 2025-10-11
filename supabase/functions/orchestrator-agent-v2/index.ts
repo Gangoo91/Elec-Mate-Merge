@@ -133,7 +133,7 @@ serve(async (req) => {
 
     // Build conversation state
     const conversationState = buildConversationState(messages, context);
-    const conversationSummary = summarizeConversation(messages);
+    const conversationSummary = await summarizeConversation(messages, openAIApiKey);
     
     logger.debug('Conversation state built', {
       messageCount: conversationState.messageCount,

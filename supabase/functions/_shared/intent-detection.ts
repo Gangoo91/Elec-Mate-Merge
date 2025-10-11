@@ -28,8 +28,8 @@ User message: "${latestMessage}"
 Conversation context:
 - Project type: ${conversationSummary.projectType}
 - Last topic: ${conversationSummary.lastTopic}
-- Key facts: ${conversationSummary.keyFacts.join(', ')}
-- Recent decisions: ${conversationSummary.decisions.join(', ')}
+- Key facts: ${conversationSummary.keyFacts?.join(', ') || 'None yet'}
+- Recent decisions: ${conversationSummary.decisions?.join(', ') || 'None yet'}
 
 Available specialists:
 - DESIGN agent: Circuit design, cable sizing, voltage drop calculations, BS 7671 regulations, protection devices
