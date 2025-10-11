@@ -1,363 +1,8 @@
+# Only list functions in active use to avoid deploy failures
+# Legacy V2 agents are not listed here
 project_id = "jtwygbeceundfgnkirof"
 
-[functions.parse-abb-equipment]
-verify_jwt = false
-
-[functions.parse-schneider-mv]
-verify_jwt = false
-
-[functions.parse-bs7671]
-verify_jwt = false
-
-[functions.parse-bs7671-tables]
-verify_jwt = false
-
-[functions.orchestrator-agent]
-verify_jwt = false
-timeout_sec = 300
-
-[functions.designer-agent]
-verify_jwt = false
-timeout_sec = 240
-
-[functions.cost-engineer-agent]
-verify_jwt = false
-timeout_sec = 240
-
-[functions.installer-agent]
-verify_jwt = false
-timeout_sec = 240
-
-[functions.inspector-agent]
-verify_jwt = false
-timeout_sec = 240
-
-[functions.commissioning-agent]
-verify_jwt = false
-timeout_sec = 240
-
-[functions.generate-professional-package]
-verify_jwt = false
-
-[functions.project-manager-agent]
-verify_jwt = false
-
-[functions.process-pdf-embeddings]
-verify_jwt = false
-
-[functions.scrape-screwfix]
-verify_jwt = false
-
-[functions.scrape-cef]
-verify_jwt = false
-
-[functions.scrape-toolstation]
-verify_jwt = false
-
-[functions.generate-briefing-content]
-verify_jwt = false
-
-[functions.latex-pdf-generator]
-verify_jwt = false
-
-[functions.firecrawl-education-scraper]
-verify_jwt = false
-
-[functions.google-places-autocomplete]
-verify_jwt = false
-
-[functions.google-place-details]
-verify_jwt = false
-
-[functions.comprehensive-materials-scraper]
-verify_jwt = false
-
-[functions.search-pricing-rag]
-verify_jwt = false
-
-[functions.comprehensive-materials-weekly-scraper]
-verify_jwt = false
-
-[functions.materials-weekly-scheduler]
-verify_jwt = false
-
-[functions.materials-weekly-cache]
-verify_jwt = false
-
-[functions.materials-cache-updater]
-verify_jwt = false
-
-[functions.find-training-providers]
-verify_jwt = false
-
-[functions.get-google-maps-key]
-verify_jwt = false
-
-[functions.find-scrap-merchants]
-verify_jwt = false
-
-[functions.scrape-supplier-products]
-verify_jwt = false
-
-[functions.fetch-metal-prices]
-verify_jwt = false
-
-[functions.regional-pricing]
-verify_jwt = false
-
-[functions.geocode-location]
-verify_jwt = false
-
-[functions.nightly-job-pricing-ingest]
-verify_jwt = false
-
-[functions.submit-community-price]
-verify_jwt = false
-
-[functions.fetch-industry-news]
-verify_jwt = false
-
-[functions.fetch-news]
-verify_jwt = false
-
-[functions.fetch-projects]
-verify_jwt = false
-
-[functions.comprehensive-news-scraper]
-verify_jwt = false
-
-[functions.schedule-news-updates]
-verify_jwt = false
-
-[functions.market-insights-scheduler]
-verify_jwt = false
-
-[functions.reed-job-listings]
-verify_jwt = false
-
-[functions.indeed-job-listings]
-verify_jwt = false
-
-[functions.totaljobs-job-listings]
-verify_jwt = false
-
-[functions.cvlibrary-job-listings]
-verify_jwt = false
-
-[functions.jobscouk-job-listings]
-verify_jwt = false
-
-[functions.live-job-aggregator]
-verify_jwt = false
-
-[functions.reed-courses-search]
-verify_jwt = false
-
-[functions.firecrawl-courses-scraper]
-verify_jwt = false
-
-[functions.live-course-aggregator]
-verify_jwt = false
-
-[functions.live-education-aggregator]
-verify_jwt = false
-
-[functions.ai-materials-counter]
-verify_jwt = false
-
-[functions.ai-electrical-tools]
-verify_jwt = false
-
-[functions.ai-material-recommendations]
-verify_jwt = false
-
-[functions.price-history-alerts]
-verify_jwt = false
-
-[functions.generate-tool-guide]
-verify_jwt = false
-
-[functions.weekly-cache-refresh]
-verify_jwt = false
-
-[functions.firecrawl-tools-scraper]
-verify_jwt = false
-
-[functions.refresh-guide-cache]
-verify_jwt = false
-
-[functions.weekly-education-cache-refresh]
-verify_jwt = false
-
-[functions.live-market-insights]
-verify_jwt = false
-
-[functions.visual-analysis]
-verify_jwt = false
-timeout_sec = 60
-
-[functions.comprehensive-tools-scraper]
-verify_jwt = false
-
-[functions.comprehensive-firecrawl-scraper]
-verify_jwt = false
-
-[functions.tools-data-processor]
-verify_jwt = false
-
-[functions.tools-weekly-refresh]
-verify_jwt = false
-
-[functions.firecrawl-debug-test]
-verify_jwt = false
-
-[functions.firecrawl-v2-tools-batch]
-verify_jwt = false
-
-[functions.firecrawl-tools-webhook]
-verify_jwt = false
-
-[functions.firecrawl-news-scraper]
-verify_jwt = false
-
-[functions.live-courses-scraper]
-verify_jwt = false
-
-[functions.fetch-job-listings]
-verify_jwt = false
-
-[functions.generate-pdf-monkey]
-verify_jwt = false
-
-[functions.parse-circuit-description]
-verify_jwt = false
-
-[functions.validate-installation]
-verify_jwt = false
-
-[functions.validate-spec-change]
-verify_jwt = false
-
-[functions.explain-regulation]
-verify_jwt = false
-
-[functions.generate-install-plan-pdf]
-verify_jwt = false
-
-[functions.generate-briefing-from-near-miss]
-verify_jwt = false
-
-[functions.intelligent-install-designer]
-verify_jwt = false
-
-[functions.parse-onsite-guide]
-verify_jwt = false
-
-[functions.parse-guidance-note-3]
-verify_jwt = false
-
-[functions.parse-emergency-lighting]
-verify_jwt = false
-
-[functions.parse-city-guilds-book-1]
-verify_jwt = false
-
-[functions.parse-city-guilds-book-2]
-verify_jwt = false
-
-[functions.parse-design-guide]
-verify_jwt = false
-
-[functions.parse-wiring-diagrams]
-verify_jwt = false
-
-[functions.parse-ev-charging]
-verify_jwt = false
-
-[functions.parse-calculations-basic]
-verify_jwt = false
-
-[functions.parse-inservice-testing]
-verify_jwt = false
-
-[functions.parse-health-safety-management]
-verify_jwt = false
-
-[functions.health-safety-agent]
-verify_jwt = false
-timeout_sec = 240
-
-[functions.parse-nebosh-igc]
-verify_jwt = false
-
-[functions.parse-city-guilds-level-2]
-verify_jwt = false
-
-[functions.parse-city-guilds-level-3]
-verify_jwt = false
-
-[functions.parse-supplier-pricing]
-verify_jwt = false
-timeout_sec = 60
-
-[functions.populate-pricing-embeddings]
-verify_jwt = false
-timeout_sec = 60
-
-[functions.parse-project-management]
-verify_jwt = false
-
-[functions.parse-health-safety]
-verify_jwt = false
-
-[functions.parse-inspection-testing]
-verify_jwt = false
-
-[functions.ai-materials-agent]
-verify_jwt = false
-
-[functions.generate-design-spec-pdf]
-verify_jwt = false
-
-[functions.generate-circuit-diagrams]
-verify_jwt = false
-timeout_sec = 180
-
-[functions.generate-eic-schedule]
-verify_jwt = true
-
-[functions.check-subscription]
-verify_jwt = true
-
-[functions.bs7671-rag-search]
-verify_jwt = false
-
-[functions.multi-source-rag-search]
-verify_jwt = false
-
-[functions.electrician-ai-assistant]
-verify_jwt = false
-
-[functions.visual-fault-diagnosis-rag]
-verify_jwt = false
-
-[functions.wiring-diagram-generator-rag]
-verify_jwt = false
-
-[functions.generate-design-alternatives]
-verify_jwt = false
-
-[functions.orchestrator-agent-v2]
-verify_jwt = false
-timeout_sec = 300
-
-[functions.conversational-install-planner]
-verify_jwt = false
-
-[functions.system-health]
-verify_jwt = false
-timeout_sec = 30
-
+# V3 Agent Functions - Active
 [functions.designer-v3]
 verify_jwt = false
 timeout_sec = 60
@@ -377,4 +22,49 @@ timeout_sec = 60
 [functions.project-mgmt-v3]
 verify_jwt = false
 timeout_sec = 60
-timeout_sec = 60
+
+# Subscription & Core Functions - Active
+[functions.check-subscription]
+verify_jwt = true
+
+[functions.materials-weekly-scheduler]
+verify_jwt = false
+
+[functions.market-insights-scheduler]
+verify_jwt = false
+
+[functions.tools-weekly-scheduler]
+verify_jwt = false
+
+[functions.safety-scheduler]
+verify_jwt = false
+
+[functions.cables-materials-scheduler]
+verify_jwt = false
+
+[functions.stripe-webhooks]
+verify_jwt = false
+
+[functions.tools-guide-scheduler]
+verify_jwt = false
+
+[functions.live-courses-scheduler]
+verify_jwt = false
+
+[functions.scraper-scheduler]
+verify_jwt = false
+
+[functions.live-jobs-scheduler]
+verify_jwt = false
+
+[functions.pricing-scraper]
+verify_jwt = false
+
+[functions.courses-price-scraper]
+verify_jwt = false
+
+[functions.send-welcome-email]
+verify_jwt = false
+
+[functions.weekly-safety-digest]
+verify_jwt = false

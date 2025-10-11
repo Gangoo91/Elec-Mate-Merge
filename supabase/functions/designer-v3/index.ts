@@ -6,7 +6,9 @@ import {
   generateRequestId, 
   handleError, 
   ValidationError,
-  createClient
+  createClient,
+  generateEmbedding,
+  callLovableAI
 } from '../_shared/v3-core.ts';
 
 serve(async (req) => {
@@ -41,24 +43,7 @@ serve(async (req) => {
 
     // Step 1: Generate embedding for RAG search
     logger.debug('Generating query embedding');
-    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        input: query,
-        model: 'text-embedding-3-small',
-      }),
-    });
-
-    if (!embeddingResponse.ok) {
-      throw new Error(`Embedding generation failed: ${embeddingResponse.status}`);
-    }
-
-    const embeddingData = await embeddingResponse.json();
-    const queryEmbedding = embeddingData.data[0].embedding;
+    const queryEmbedding = await generateEmbedding(query, OPENAI_API_KEY);
 
     // Step 2: Fetch RAG context
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -147,32 +132,11 @@ Provide a complete, BS 7671 compliant design.`;
 
     // Step 4: Call Lovable AI
     logger.debug('Calling Lovable AI');
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        response_format: { type: 'json_object' },
-        max_tokens: 2000,
-        temperature: 0.7
-      }),
+    const aiResponse = await callLovableAI(systemPrompt, userPrompt, LOVABLE_API_KEY, {
+      responseFormat: 'json_object'
     });
 
-    if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      logger.error('Lovable AI error', { status: aiResponse.status, error: errorText });
-      throw new Error(`AI completion failed: ${aiResponse.status}`);
-    }
-
-    const aiData = await aiResponse.json();
-    const designResult = JSON.parse(aiData.choices[0].message.content);
+    const designResult = JSON.parse(aiResponse);
 
     logger.info('Design completed successfully', { 
       cableSize: designResult.design?.cableSize,
