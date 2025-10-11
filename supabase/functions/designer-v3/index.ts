@@ -286,14 +286,14 @@ Respond ONLY with valid JSON in this exact format:
   ]
 }`
 
-🚨 RESPONSE QUALITY ENFORCEMENT:
+CRITICAL - RESPONSE QUALITY ENFORCEMENT:
 Your response will be REJECTED if it does not include:
-✓ MINIMUM 250 words of detailed explanation
-✓ EVERY formula written out with actual numbers substituted
-✓ At least 5 specific BS 7671 regulation numbers cited
-✓ At least 2 Table references with actual values
-✓ Complete voltage drop calculation showing all steps
-✓ Complete 433.1.1 verification with all three values
+- MINIMUM 250 words of detailed explanation
+- EVERY formula written out with actual numbers substituted
+- At least 5 specific BS 7671 regulation numbers cited
+- At least 2 Table references with actual values
+- Complete voltage drop calculation showing all steps
+- Complete 433.1.1 verification with all three values
 
 Example BAD response (UNACCEPTABLE):
 "Selected 10mm² cable with 50A MCB. Voltage drop is 2.1% which is compliant."
