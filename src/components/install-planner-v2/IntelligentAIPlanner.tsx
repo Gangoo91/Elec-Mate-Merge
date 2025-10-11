@@ -1189,8 +1189,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         </div>
       </div>
 
-      {/* Phase 1: Compact Input Area - Sticky at bottom on mobile */}
-      <div className="sticky md:relative bottom-0 md:bottom-auto left-0 right-0 z-50 md:z-auto bg-gradient-to-t from-elec-dark via-elec-dark to-transparent pt-4 pb-safe border-t border-border/30">
+      {/* Phase 1: Compact Input Area - Sticky at bottom on both mobile and desktop */}
+      <div className="sticky bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-elec-dark via-elec-dark to-transparent pt-4 pb-safe border-t border-border/30">
         <div className="max-w-5xl mx-auto px-3 md:px-5 space-y-2">
 
           {/* Phase 1: Collapsed Export Menu */}
