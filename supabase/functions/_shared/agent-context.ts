@@ -38,6 +38,18 @@ export interface DesignDecision {
   confidence: number;
 }
 
+/**
+ * IMPROVEMENT #4: Context Contribution Tracking
+ * Track which agent contributed which information
+ */
+export interface ContextContribution {
+  agent: string;
+  contribution: string;
+  confidence: number;
+  timestamp: number;
+  data?: any; // Optional structured data
+}
+
 export interface ContextEnvelope {
   // Core tracking
   requestId: string;
@@ -67,6 +79,9 @@ export interface ContextEnvelope {
   // Performance
   totalTokens?: number;
   ragCallCount?: number;
+  
+  // IMPROVEMENT #4: Context history tracking
+  contextHistory?: ContextContribution[];
 }
 
 export function createContextEnvelope(
@@ -83,7 +98,33 @@ export function createContextEnvelope(
     agentChain: [],
     ragCallCount: 0,
     totalTokens: 0,
+    contextHistory: [], // IMPROVEMENT #4
   };
+}
+
+/**
+ * IMPROVEMENT #4: Add context contribution
+ */
+export function addContextContribution(
+  context: ContextEnvelope,
+  agent: string,
+  contribution: string,
+  confidence: number,
+  data?: any
+): void {
+  if (!context.contextHistory) {
+    context.contextHistory = [];
+  }
+  
+  context.contextHistory.push({
+    agent,
+    contribution,
+    confidence,
+    timestamp: Date.now(),
+    data,
+  });
+  
+  console.log(`📝 Context contribution from ${agent}: ${contribution} (${confidence}% confidence)`);
 }
 
 export function inferRAGPriority(intent: QueryIntent): RAGPriority {

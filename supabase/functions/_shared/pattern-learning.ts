@@ -97,3 +97,51 @@ export async function storeDesignPattern(
     console.log(`💾 Pattern stored/updated: ${patternHash}`);
   }
 }
+
+/**
+ * IMPROVEMENT #5: Pattern Feedback Loop
+ * Record whether a pattern was successfully used
+ */
+export async function recordPatternFeedback(
+  patternId: string,
+  wasSuccessful: boolean
+): Promise<void> {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  
+  // Adjust confidence: +5% for success, -10% for failure (but stay in 0.3-1.0 range)
+  const adjustment = wasSuccessful ? 0.05 : -0.1;
+  
+  const { error } = await supabase
+    .from('design_patterns')
+    .update({
+      confidence_score: supabase.raw(`GREATEST(0.3, LEAST(1.0, confidence_score + ${adjustment}))`),
+      success_count: wasSuccessful 
+        ? supabase.raw('success_count + 1') 
+        : supabase.raw('success_count'), // Don't increment on failure
+      last_used: new Date().toISOString(),
+    })
+    .eq('id', patternId);
+  
+  if (error) {
+    console.error('❌ Failed to record pattern feedback:', error);
+  } else {
+    const emoji = wasSuccessful ? '✅' : '❌';
+    console.log(`${emoji} Pattern feedback recorded: ${wasSuccessful ? 'SUCCESS' : 'FAILURE'} (confidence ${wasSuccessful ? '+5%' : '-10%'})`);
+  }
+}
+
+/**
+ * Record pattern usage (when pattern is retrieved, before knowing if successful)
+ */
+export async function recordPatternUsage(patternId: string): Promise<void> {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  
+  await supabase
+    .from('design_patterns')
+    .update({ last_used: new Date().toISOString() })
+    .eq('id', patternId);
+}

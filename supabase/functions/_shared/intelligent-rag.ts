@@ -1,6 +1,7 @@
 /**
  * Intelligent Hybrid RAG Search
  * 3-Tier Cascade: Exact → Vector → Keyword
+ * WITH Query Expansion & Re-ranking (Improvements #2 & #3)
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
@@ -23,6 +24,100 @@ export interface HybridSearchResult {
   searchMethod: 'exact' | 'vector' | 'keyword' | 'hybrid';
   searchTimeMs: number;
   embedding?: number[];
+}
+
+/**
+ * IMPROVEMENT #2: Query Expansion Intelligence
+ * Expands user queries with domain-specific synonyms
+ */
+function expandSearchTerms(query: string): string[] {
+  const synonyms: Record<string, string[]> = {
+    'shower': ['electric shower', 'instantaneous water heater', 'high load', 'shower circuit', '9.5kW', '10.5kW'],
+    'socket': ['power outlet', 'ring main', 'radial circuit', '13A outlet', 'socket outlet', 'power point'],
+    'protection': ['overload', 'short circuit', 'fault protection', 'MCB', 'RCBO', 'RCD', 'protective device'],
+    'cable': ['conductor', 'wiring', 'cable sizing', 'current capacity', 'cable selection', 'T&E', 'SWA'],
+    'lighting': ['light circuit', 'illumination', 'lighting point', 'ceiling rose', 'downlight', 'LED'],
+    'earth': ['earthing', 'ground', 'CPC', 'protective conductor', 'bonding', 'earth wire'],
+    'cooker': ['oven', 'cooking appliance', 'electric cooker', 'range', 'hob'],
+    'immersion': ['water heater', 'cylinder', 'hot water', 'immersion heater'],
+    'consumer unit': ['CU', 'distribution board', 'DB', 'fuse box', 'main panel'],
+    'voltage drop': ['volt drop', 'VD', 'voltage loss', 'conductor resistance'],
+  };
+  
+  const terms = query.toLowerCase().split(/\s+/);
+  const expanded = new Set(terms);
+  
+  // Add original query
+  expanded.add(query.toLowerCase());
+  
+  // Expand with synonyms
+  terms.forEach(term => {
+    Object.entries(synonyms).forEach(([key, values]) => {
+      if (term.includes(key) || key.includes(term)) {
+        values.forEach(v => expanded.add(v));
+      }
+    });
+  });
+  
+  // Extract regulation numbers (e.g., "433.1", "525", "701")
+  const regNumberMatch = query.match(/\b(\d{3}|\d{3}\.\d{1,2})\b/g);
+  if (regNumberMatch) {
+    regNumberMatch.forEach(num => expanded.add(num));
+  }
+  
+  return Array.from(expanded);
+}
+
+/**
+ * IMPROVEMENT #3: Regulation Re-ranking
+ * Boosts priority of critical regulations
+ */
+function reRankRegulations(regulations: any[]): any[] {
+  return regulations.map(reg => {
+    let boostScore = 1.0;
+    const regNum = reg.regulation_number || '';
+    const amendment = reg.amendment || '';
+    
+    // Boost Amendment 3 (2024) regulations
+    if (amendment.includes('A3:2024') || amendment.includes('Amendment 3')) {
+      boostScore *= 1.3;
+    }
+    
+    // Boost protective regulations (Chapter 41, 43)
+    if (regNum.match(/^(41|43)/)) {
+      boostScore *= 1.2;
+    }
+    
+    // Boost voltage drop (525)
+    if (regNum.includes('525')) {
+      boostScore *= 1.15;
+    }
+    
+    // Boost RCD protection (531, 411.3)
+    if (regNum.match(/^(531|411\.3)/)) {
+      boostScore *= 1.2;
+    }
+    
+    // Boost earthing & bonding (542, 543, 544)
+    if (regNum.match(/^(542|543|544)/)) {
+      boostScore *= 1.15;
+    }
+    
+    // Boost special locations (Part 7)
+    if (regNum.match(/^(70\d)/)) {
+      boostScore *= 1.1;
+    }
+    
+    // Boost cable sizing (Appendix 4, 433, 523)
+    if (regNum.match(/^(A4|433|523)/)) {
+      boostScore *= 1.15;
+    }
+    
+    return {
+      ...reg,
+      relevance: (reg.relevance || reg.similarity || 80) * boostScore,
+    };
+  }).sort((a, b) => (b.relevance || 0) - (a.relevance || 0));
 }
 
 /**
@@ -211,6 +306,7 @@ async function keywordFallback(
 
 /**
  * Main Intelligent RAG Search
+ * WITH Query Expansion (IMPROVEMENT #2)
  */
 export async function intelligentRAGSearch(
   params: HybridSearchParams
@@ -223,8 +319,18 @@ export async function intelligentRAGSearch(
   let searchMethod: 'exact' | 'vector' | 'keyword' | 'hybrid' = 'exact';
   let embedding: number[] | undefined;
 
-  // Tier 1: Exact search
-  const exactResults = await exactRegulationSearch(supabase, params);
+  // IMPROVEMENT #2: Expand search terms with synonyms
+  const expandedTerms = expandSearchTerms(params.expandedQuery);
+  console.log(`🔍 Query expansion: ${params.searchTerms.length} → ${expandedTerms.length} terms`);
+  
+  // Use expanded terms for exact search
+  const enhancedParams = {
+    ...params,
+    searchTerms: expandedTerms,
+  };
+
+  // Tier 1: Exact search (with expanded terms)
+  const exactResults = await exactRegulationSearch(supabase, enhancedParams);
   console.log(`✅ Tier 1 (Exact): ${exactResults.regulations.length} regulations in ${exactResults.timeMs}ms`);
 
   // Tier 2: Vector search (if needed)
@@ -236,8 +342,8 @@ export async function intelligentRAGSearch(
     embedding = vectorResults.embedding;
   }
 
-  // Merge results
-  let allRegulations = [...exactResults.regulations, ...vectorResults.regulations];
+  // Merge and re-rank results (IMPROVEMENT #3)
+  let allRegulations = reRankRegulations([...exactResults.regulations, ...vectorResults.regulations]);
   let allDesignDocs = vectorResults.designDocs;
   let allHealthSafetyDocs = vectorResults.healthSafetyDocs;
 
