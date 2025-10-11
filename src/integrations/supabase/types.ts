@@ -699,6 +699,39 @@ export type Database = {
         }
         Relationships: []
       }
+      consultation_results: {
+        Row: {
+          agent_type: string
+          completed_at: string
+          conversation_id: string
+          created_at: string
+          id: string
+          output_data: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agent_type: string
+          completed_at?: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          output_data?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          agent_type?: string
+          completed_at?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          output_data?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       conversation_memory: {
         Row: {
           active_agents: string[] | null

@@ -342,7 +342,9 @@ PRICING NOTES
       response: responseContent,
       structuredData,
       confidence: 0.85,
-      suggestedNextAgents
+      suggestedNextAgents,
+      isComplete: true,
+      exportReady: true
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

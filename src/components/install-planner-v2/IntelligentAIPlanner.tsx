@@ -122,10 +122,29 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   
   // Agent suggestions from responses
   const [suggestedAgents, setSuggestedAgents] = useState<Array<{agent: string; reason: string; priority?: string}>>([]);
+  const [currentConversationId] = useState<string>(() => uuidv4());
+  const [completedAgentsCount, setCompletedAgentsCount] = useState(0);
   
   const navigate = useNavigate();
   
   const { sessionId, isSaving, lastSaved } = useConversationPersistence(messages, planData, activeAgents);
+  
+  // Fetch completed agents count
+  useEffect(() => {
+    const fetchCompletedCount = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      
+      const { count } = await supabase
+        .from('consultation_results')
+        .select('*', { count: 'exact', head: true })
+        .eq('conversation_id', currentConversationId);
+      
+      if (count) setCompletedAgentsCount(count);
+    };
+    
+    fetchCompletedCount();
+  }, [currentConversationId]);
 
   // Phase 5: Helper to extract circuit count from message
   const extractCircuitCount = (message: string): number => {
@@ -268,7 +287,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           : step
       ));
     },
-    onAgentResponse: (agent, response, structuredData) => {
+    onAgentResponse: async (agent, response, structuredData) => {
       console.log(`Agent ${agent} responded:`, response.slice(0, 100));
       if (structuredData) {
         console.log('✅ Structured data received:', structuredData);
@@ -276,6 +295,29 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         // Extract suggested agents if present
         if (structuredData.suggestedNextAgents) {
           setSuggestedAgents(structuredData.suggestedNextAgents);
+        }
+        
+        // Phase 4: Save to Results if exportReady
+        if (structuredData.exportReady && currentAgent) {
+          try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+              await supabase.from('consultation_results').insert({
+                conversation_id: currentConversationId,
+                agent_type: currentAgent,
+                output_data: structuredData,
+                user_id: session.user.id
+              });
+              
+              setCompletedAgentsCount(prev => prev + 1);
+              
+              toast.success("Results Saved", {
+                description: `${getAgentName(currentAgent)} results saved to Results page`
+              });
+            }
+          } catch (error) {
+            console.error('Failed to save results:', error);
+          }
         }
       }
       
@@ -1180,15 +1222,35 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             </div>
           )}
           
-          {/* Current Agent Display */}
-          {currentAgent && (
-            <div className="flex items-center gap-2 px-3 py-2 bg-elec-card/30 rounded-lg border border-elec-yellow/20">
-              <span className="text-xl">{getAgentEmoji(currentAgent)}</span>
-              <span className="text-xs font-medium text-foreground">
-                Talking to: {getAgentName(currentAgent)}
-              </span>
-            </div>
-          )}
+          {/* Current Agent Display + View Results */}
+          <div className="flex items-center gap-2">
+            {currentAgent && (
+              <div className="flex-1 flex items-center gap-2 px-3 py-2 bg-elec-card/30 rounded-lg border border-elec-yellow/20">
+                <span className="text-xl">{getAgentEmoji(currentAgent)}</span>
+                <span className="text-xs font-medium text-foreground">
+                  Talking to: {getAgentName(currentAgent)}
+                </span>
+              </div>
+            )}
+            
+            {/* Phase 7: View Results Button */}
+            {completedAgentsCount > 0 && (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => navigate(`/install-planner/results/${currentConversationId}`)}
+                className="gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10 relative"
+              >
+                <ClipboardCheck className="h-4 w-4" />
+                View Results
+                {completedAgentsCount > 1 && (
+                  <Badge variant="secondary" className="ml-1 h-5 min-w-[1.25rem] px-1">
+                    {completedAgentsCount}
+                  </Badge>
+                )}
+              </Button>
+            )}
+          </div>
           
           <PhotoUploadButton 
             onPhotoUploaded={(url) => {

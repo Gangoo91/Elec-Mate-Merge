@@ -274,7 +274,9 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
       citations,
       confidence: 0.85,
       timestamp: new Date().toISOString(),
-      suggestedNextAgents
+      suggestedNextAgents,
+      isComplete: true,
+      exportReady: true
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

@@ -433,7 +433,7 @@ Use UK English. Be thorough. Return valid JSON only.`;
       }
     }
   } else {
-      // Single circuit mode
+    // Single circuit mode
       const cableLabel = circuitParams.location === 'outdoor' 
         ? `${circuitParams.cableSize}mm² Steel Wire Armoured (SWA) 2-core + CPC (BS 5467 or BS 6724)`
         : `${circuitParams.cableSize}mm² twin & earth (6242Y)`;
@@ -1004,6 +1004,8 @@ Use professional language with UK English spelling. Present calculations clearly
       model: 'google/gemini-2.5-flash',
       timestamp: new Date().toISOString(),
       context: agentContext,
+      isComplete: true,
+      exportReady: true
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

@@ -23,6 +23,7 @@ import LaTeXPDFGeneratorPage from "@/pages/LaTeXPDFGeneratorPage";
 import InvoiceQuoteBuilder from "@/pages/electrician/InvoiceQuoteBuilder";
 import InvoiceViewPage from "@/pages/electrician/InvoiceViewPage";
 import AdminRAGProcessor from "@/pages/AdminRAGProcessor";
+import { ConsultationResults } from "@/components/install-planner-v2/ConsultationResults";
 import ProcessOnsiteGuide from "@/pages/ProcessOnsiteGuide";
 import AutoProcessOnsite from "@/pages/AutoProcessOnsite";
 import KnowledgeUploader from "@/pages/Admin/KnowledgeUploader";
@@ -73,6 +74,7 @@ const AppRouter = () => {
         {/* Electrician Tools Routes */}
         <Route path="electrician-tools" element={<Navigate to="/electrician" replace />} />
         <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
+        <Route path="install-planner/results/:conversationId" element={<ConsultationResults />} />
         
         {/* Legacy Materials Routes -> Redirect to canonical electrician paths */}
         <Route path="materials" element={<LegacyRedirect from="/materials" to="/electrician/materials" />} />

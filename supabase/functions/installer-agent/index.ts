@@ -621,7 +621,9 @@ EXAMPLE PHASES:
         citations: structuredData.citations || []
       },
       confidence: structuredData.confidence || 0.90,
-      suggestedNextAgents
+      suggestedNextAgents,
+      isComplete: true,
+      exportReady: true
     }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 
   } catch (error) {

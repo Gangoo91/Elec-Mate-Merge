@@ -271,7 +271,9 @@ IMPORTANT: Use the real-world project knowledge above to inform your phasing str
         response: naturalLanguageResponse,
         projectBreakdown,
         activeAgents: ['project-manager'],
-        suggestedNextAgents
+        suggestedNextAgents,
+        isComplete: true,
+        exportReady: true
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

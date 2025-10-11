@@ -771,6 +771,10 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
     
     console.log('✅ H&S Agent: Generated risk assessment with', structuredResponse.structuredData.riskAssessment.hazards.length, 'hazards');
 
+    // Add export flags
+    structuredResponse.isComplete = true;
+    structuredResponse.exportReady = true;
+    
     return new Response(JSON.stringify(structuredResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
