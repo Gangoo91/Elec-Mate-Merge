@@ -16,10 +16,6 @@ verify_jwt = false
 verify_jwt = false
 timeout_sec = 300
 
-[functions.agent-router]
-verify_jwt = false
-timeout_sec = 300
-
 [functions.designer-agent]
 verify_jwt = false
 timeout_sec = 240

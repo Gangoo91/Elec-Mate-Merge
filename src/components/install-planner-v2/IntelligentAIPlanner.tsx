@@ -12,6 +12,7 @@ import { useStreamingChat } from "@/hooks/useStreamingChat";
 import { ReasoningPanel } from "./ReasoningPanel";
 import { CitationBadge } from "./CitationBadge";
 import { AgentSelector } from "./AgentSelector";
+import { AgentSuggestions } from "./AgentSuggestions";
 import { AgentResponseRenderer } from "./AgentResponseRenderer";
 import { useNavigate, useLocation } from "react-router-dom";
 import { transformAgentOutputToEIC } from "@/utils/eic-transformer";
@@ -112,17 +113,15 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [consultationStarted, setConsultationStarted] = useState(!!resumeState?.resumeMessages);
-  const [selectedAgent, setSelectedAgent] = useState<AgentType | null>(null);
+  const [currentAgent, setCurrentAgent] = useState<string | null>(null);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [lastSentMessage, setLastSentMessage] = useState<string>("");
   const [lastSendFailed, setLastSendFailed] = useState<boolean>(false);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
   
-  // User-driven consultation state
-  const [consultationMode, setConsultationMode] = useState<ConsultationMode>(null);
-  const [consultedAgents, setConsultedAgents] = useState<string[]>([]);
-  const [suggestedAgents, setSuggestedAgents] = useState<Array<{agent: string; reason: string}>>([]);
+  // Agent suggestions from responses
+  const [suggestedAgents, setSuggestedAgents] = useState<Array<{agent: string; reason: string; priority?: string}>>([]);
   
   const navigate = useNavigate();
   
@@ -273,6 +272,11 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       console.log(`Agent ${agent} responded:`, response.slice(0, 100));
       if (structuredData) {
         console.log('✅ Structured data received:', structuredData);
+        
+        // Extract suggested agents if present
+        if (structuredData.suggestedNextAgents) {
+          setSuggestedAgents(structuredData.suggestedNextAgents);
+        }
       }
       
       // Remove "Analyzing..." and add actual response (without agent name prefix)
@@ -412,8 +416,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
 
           setStreamingMessageIndex(null);
         },
-        // Pass selected agents (override with manually selected agent if specified)
-        selectedAgent ? [selectedAgent] : planData.selectedAgents,
+        // Pass current agent as single-agent array
+        currentAgent ? [currentAgent] : undefined,
         // Pass target agent if resuming
         resumeState?.targetAgent
       );
@@ -838,13 +842,22 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     }
   };
 
-  const handleAgentSelection = (selectedAgents: string[]) => {
-    console.log('Selected agents:', selectedAgents);
-    updatePlanData({
-      ...planData,
-      selectedAgents
-    });
+  const handleAgentSelection = (agentId: string) => {
+    console.log('Selected agent:', agentId);
+    setCurrentAgent(agentId);
     setConsultationStarted(true);
+    // Clear any existing suggestions when starting fresh
+    setSuggestedAgents([]);
+  };
+  
+  const handleSwitchAgent = (agentId: string) => {
+    console.log('Switching to agent:', agentId);
+    setCurrentAgent(agentId);
+    // Clear suggestions after switching
+    setSuggestedAgents([]);
+    toast.info(`Switched to ${getAgentName(agentId)}`, {
+      description: "Ask your question"
+    });
   };
 
   const handleViewResults = () => {
@@ -869,7 +882,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     return (
       <div className="flex flex-col h-screen bg-elec-dark">
         <div className="flex-1 flex items-center justify-center p-4">
-          <AgentSelector onStartConsultation={handleAgentSelection} />
+          <AgentSelector onSelectAgent={handleAgentSelection} />
         </div>
       </div>
     );
@@ -1076,6 +1089,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                     </div>
                   </div>
                 )}
+                
+                {/* Agent Suggestions - show on last assistant message */}
+                {message.role === 'assistant' && 
+                 index === messages.length - 1 && 
+                 message.structuredData?.suggestedNextAgents?.length > 0 && (
+                  <AgentSuggestions
+                    suggestions={message.structuredData.suggestedNextAgents}
+                    onSelectAgent={handleSwitchAgent}
+                  />
+                )}
               </div>
             </div>
           ))}
@@ -1157,22 +1180,24 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             </div>
           )}
           
-          {/* Agent Selector */}
-          <InChatAgentSelector 
-            selectedAgent={selectedAgent}
-            onAgentSelect={setSelectedAgent}
-            activeAgents={activeAgents}
-            photoUploadSlot={
-              <PhotoUploadButton 
-                onPhotoUploaded={(url) => {
-                  setInput(prev => prev + ` [Photo attached: ${url}]`);
-                  toast.success('Photo added to message');
-                }}
-                disabled={isLoading}
-                layout="horizontal"
-                className="bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
-              />
-            }
+          {/* Current Agent Display */}
+          {currentAgent && (
+            <div className="flex items-center gap-2 px-3 py-2 bg-elec-card/30 rounded-lg border border-elec-yellow/20">
+              <span className="text-xl">{getAgentEmoji(currentAgent)}</span>
+              <span className="text-xs font-medium text-foreground">
+                Talking to: {getAgentName(currentAgent)}
+              </span>
+            </div>
+          )}
+          
+          <PhotoUploadButton 
+            onPhotoUploaded={(url) => {
+              setInput(prev => prev + ` [Photo attached: ${url}]`);
+              toast.success('Photo added to message');
+            }}
+            disabled={isLoading}
+            layout="horizontal"
+            className="bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
           />
 
           {/* Chat Input */}

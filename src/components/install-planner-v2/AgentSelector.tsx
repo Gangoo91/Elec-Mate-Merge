@@ -1,9 +1,4 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 
 interface Agent {
   id: string;
@@ -50,146 +45,56 @@ const AVAILABLE_AGENTS: Agent[] = [
     expertise: 'Test sequences, acceptable values, certification requirements'
   },
   {
-    id: 'compliance',
-    name: 'Compliance Specialist',
+    id: 'project-manager',
+    name: 'Project Manager',
     emoji: '📋',
-    description: 'Building regs & statutory compliance',
-    expertise: 'Part P, EICR requirements, notification procedures'
+    description: 'Project coordination & handover',
+    expertise: 'Scheduling, documentation, certification handover'
   }
 ];
 
 interface AgentSelectorProps {
-  onStartConsultation: (selectedAgents: string[]) => void;
+  onSelectAgent: (agentId: string) => void;
 }
 
-export const AgentSelector = ({ onStartConsultation }: AgentSelectorProps) => {
-  const [mode, setMode] = useState<'full' | 'quick' | 'custom'>('full');
-  const [customAgents, setCustomAgents] = useState<string[]>([
-    'designer',
-    'cost-engineer',
-    'installer'
-  ]);
-
-  const handleAgentToggle = (agentId: string) => {
-    setCustomAgents(prev =>
-      prev.includes(agentId)
-        ? prev.filter(id => id !== agentId)
-        : [...prev, agentId]
-    );
-  };
-
-  const handleStart = () => {
-    let agents: string[];
-    
-    if (mode === 'full') {
-      agents = AVAILABLE_AGENTS.map(a => a.id);
-    } else if (mode === 'quick') {
-      agents = ['designer', 'cost-engineer'];
-    } else {
-      agents = customAgents;
-    }
-
-    if (agents.length === 0) {
-      return; // Prevent starting with no agents
-    }
-
-    onStartConsultation(agents);
-  };
-
+export const AgentSelector = ({ onSelectAgent }: AgentSelectorProps) => {
   return (
-    <div className="max-w-4xl mx-auto space-y-4 animate-fade-in">
-      <div className="text-center space-y-1">
-        <div className="text-4xl mb-2">💡</div>
-        <h2 className="text-xl md:text-2xl font-bold text-foreground">
-          Choose Your Consultation Team
+    <div className="max-w-5xl mx-auto space-y-6 animate-fade-in">
+      <div className="text-center space-y-2">
+        <div className="text-5xl mb-3">👋</div>
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+          Who do you want to talk to?
         </h2>
-        <p className="text-sm text-white/70">
-          Select which specialist agents will help design your installation
+        <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
+          Select a specialist agent to begin your consultation. They'll guide you through their expertise and suggest who to speak with next.
         </p>
       </div>
 
-      <RadioGroup value={mode} onValueChange={(val) => setMode(val as any)}>
-        <div className="space-y-2">
-          {/* Full Consultation */}
-          <div className="flex items-start gap-2.5 p-3 rounded-lg border border-border bg-elec-grey hover:bg-elec-grey/80 transition-colors">
-            <RadioGroupItem value="full" id="full" className="mt-0.5 flex-shrink-0" />
-            <div className="flex-1 min-w-0 space-y-0.5">
-              <Label htmlFor="full" className="text-sm font-semibold cursor-pointer block leading-tight">
-                Full Consultation (All 6 Agents)
-              </Label>
-              <p className="text-xs text-foreground/70 leading-relaxed">
-                Complete design package: design → costing → installation → safety → testing → compliance
-              </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+        {AVAILABLE_AGENTS.map(agent => (
+          <Card
+            key={agent.id}
+            onClick={() => onSelectAgent(agent.id)}
+            className="group cursor-pointer p-5 md:p-6 hover:border-elec-yellow/50 hover:bg-elec-card/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <div className="flex flex-col items-center text-center space-y-3">
+              <div className="text-5xl md:text-6xl transition-transform group-hover:scale-110">
+                {agent.emoji}
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="text-base md:text-lg font-semibold text-foreground group-hover:text-elec-yellow transition-colors">
+                  {agent.name}
+                </h3>
+                <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+                  {agent.description}
+                </p>
+                <p className="text-[10px] md:text-xs text-muted-foreground/70 italic pt-1">
+                  {agent.expertise}
+                </p>
+              </div>
             </div>
-          </div>
-
-          {/* Quick Design */}
-          <div className="flex items-start gap-2.5 p-3 rounded-lg border border-border bg-elec-grey hover:bg-elec-grey/80 transition-colors">
-            <RadioGroupItem value="quick" id="quick" className="mt-0.5 flex-shrink-0" />
-            <div className="flex-1 min-w-0 space-y-0.5">
-              <Label htmlFor="quick" className="text-sm font-semibold cursor-pointer block leading-tight">
-                Quick Design (Designer + Cost Engineer)
-              </Label>
-              <p className="text-xs text-foreground/70 leading-relaxed">
-                Fast design + pricing estimate only
-              </p>
-            </div>
-          </div>
-
-          {/* Custom Selection */}
-          <div className="flex items-start gap-2.5 p-3 rounded-lg border border-border bg-elec-grey hover:bg-elec-grey/80 transition-colors">
-            <RadioGroupItem value="custom" id="custom" className="mt-0.5 flex-shrink-0" />
-            <div className="flex-1 min-w-0 space-y-0.5">
-              <Label htmlFor="custom" className="text-sm font-semibold cursor-pointer block leading-tight">
-                Custom Selection
-              </Label>
-              <p className="text-xs text-foreground/70 leading-relaxed">
-                Choose specific agents for your needs
-              </p>
-
-              {mode === 'custom' && (
-                <div className="grid grid-cols-1 gap-2 mt-2 pt-2 border-t border-border/50">
-                  {AVAILABLE_AGENTS.map(agent => (
-                    <div
-                      key={agent.id}
-                      className="flex items-start gap-2 p-2.5 rounded-lg bg-elec-card border border-border hover:bg-elec-card/80 transition-colors"
-                    >
-                      <Checkbox
-                        id={agent.id}
-                        checked={customAgents.includes(agent.id)}
-                        onCheckedChange={() => handleAgentToggle(agent.id)}
-                        className="mt-0.5 flex-shrink-0"
-                      />
-                      <div className="flex-1 min-w-0 space-y-0.5">
-                        <Label
-                          htmlFor={agent.id}
-                          className="text-xs font-medium cursor-pointer flex items-center gap-2 leading-tight"
-                        >
-                          <span className="text-sm">{agent.emoji}</span>
-                          <span className="flex-1">{agent.name}</span>
-                        </Label>
-                        <p className="text-xs text-white/70 leading-relaxed">
-                          {agent.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </RadioGroup>
-
-      <div className="flex justify-center pt-2">
-        <Button
-          size="lg"
-          onClick={handleStart}
-          disabled={mode === 'custom' && customAgents.length === 0}
-          className="px-8"
-        >
-          Start Consultation
-        </Button>
+          </Card>
+        ))}
       </div>
     </div>
   );
