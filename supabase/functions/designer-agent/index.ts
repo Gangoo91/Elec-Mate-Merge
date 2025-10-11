@@ -434,9 +434,8 @@ VALIDATION REQUIREMENTS:
 
 Use UK English. Be thorough. Return valid JSON only.`;
       }
-    }
-  } else {
-    // Single circuit mode
+    } else {
+      // Single circuit mode
       const cableLabel = circuitParams.location === 'outdoor' 
         ? `${circuitParams.cableSize}mm² Steel Wire Armoured (SWA) 2-core + CPC (BS 5467 or BS 6724)`
         : `${circuitParams.cableSize}mm² twin & earth (6242Y)`;
