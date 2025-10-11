@@ -199,6 +199,8 @@ serve(async (req) => {
     
     let relevantRegsText = '';
     let designKnowledge = '';
+    let regulations: any[] | null = null;
+    let designDocs: any[] | null = null;
     
     if (canSkipRAG) {
       logger.info('🚀 CALCULATION-ONLY mode (skipping RAG)', { 
@@ -275,7 +277,7 @@ serve(async (req) => {
 
         // Extract BS 7671 regulations
         const regulationsResult = successes.find(s => s.name === 'BS7671 regulations');
-        const regulations = regulationsResult?.result?.data;
+        regulations = regulationsResult?.result?.data;
 
         if (regulations && regulations.length > 0) {
           relevantRegsText = regulations.map((r: any) => 
@@ -286,7 +288,7 @@ serve(async (req) => {
         
         // Extract design knowledge
         const designResult = successes.find(s => s.name === 'Design knowledge');
-        const designDocs = designResult?.result?.data;
+        designDocs = designResult?.result?.data;
 
         if (designDocs && designDocs.length > 0) {
           designKnowledge = designDocs.map((d: any) => 
