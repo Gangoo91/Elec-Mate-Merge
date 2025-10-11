@@ -94,6 +94,8 @@ serve(async (req) => {
     // Fetch design knowledge
     const { data: designKnowledge, error: designError } = await supabase.rpc('search_design_knowledge', {
       query_embedding: queryEmbedding,
+      circuit_filter: circuitType || null,
+      source_filter: null,
       match_threshold: 0.6,
       match_count: 3
     });

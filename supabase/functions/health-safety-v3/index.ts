@@ -81,6 +81,8 @@ serve(async (req) => {
 
     const { data: hsKnowledge, error: hsError } = await supabase.rpc('search_health_safety', {
       query_embedding: queryEmbedding,
+      scale_filter: workType || null,
+      source_filter: null,
       match_threshold: 0.7,
       match_count: 8
     });

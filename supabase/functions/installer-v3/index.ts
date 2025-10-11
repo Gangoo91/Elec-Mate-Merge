@@ -81,6 +81,8 @@ serve(async (req) => {
 
     const { data: installKnowledge, error: installError } = await supabase.rpc('search_installation_knowledge', {
       query_embedding: queryEmbedding,
+      method_filter: installationMethod || null,
+      source_filter: null,
       match_threshold: 0.7,
       match_count: 8
     });
