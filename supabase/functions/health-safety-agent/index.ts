@@ -8,12 +8,14 @@ import { emergencyProcedures } from '../_shared/emergencyProcedures.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { ContextEnvelope, mergeContext } from '../_shared/agent-context.ts';
 
 interface HealthSafetyAgentRequest {
   messages: Array<{ role: string; content: string }>;
   currentDesign?: any;
   context?: any;
   jobScale?: 'domestic' | 'commercial' | 'industrial';
+  incomingContext?: ContextEnvelope;
 }
 
 serve(async (req) => {
@@ -25,14 +27,25 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'health-safety-agent' });
 
   try {
-    const { messages, currentDesign, context, jobScale = 'commercial' } = await req.json() as HealthSafetyAgentRequest;
+    const { messages, currentDesign, context, jobScale = 'commercial', incomingContext } = await req.json() as HealthSafetyAgentRequest;
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
 
     if (!lovableApiKey) {
       throw new ValidationError('LOVABLE_API_KEY not configured');
     }
 
-    logger.info('Health & Safety Agent analyzing work', { jobScale, messageCount: messages?.length });
+    logger.info('Health & Safety Agent analyzing work', { 
+      jobScale, 
+      messageCount: messages?.length,
+      hasIncomingContext: !!incomingContext 
+    });
+
+    // Use incoming context or start fresh
+    let agentContext: ContextEnvelope | undefined = incomingContext;
+    if (agentContext) {
+      agentContext.agentChain.push('health-safety');
+      agentContext.previousAgent = agentContext.agentChain[agentContext.agentChain.length - 2];
+    }
 
     const latestMessage = messages[messages.length - 1]?.content || '';
     const circuitDetails = extractCircuitDetails(latestMessage, currentDesign, context);
@@ -72,8 +85,17 @@ serve(async (req) => {
       const ragQuery = `${workType} electrical work hazards safety risks controls PPE ACOP CDM EWR HASAWA`;
       console.log(`🔍 RAG: Searching H&S knowledge (scale: ${scaleFilter}) for: ${ragQuery}`);
       
-      // Generate embedding for RAG query using Lovable AI with retry + timeout
-      const embeddingResponse = await logger.time(
+      // Check if embedding is already cached
+      const cachedEmbedding = agentContext?.embeddingCache?.query === ragQuery ? agentContext.embeddingCache.embedding : null;
+      
+      let queryEmbedding: number[];
+      
+      if (cachedEmbedding) {
+        queryEmbedding = cachedEmbedding;
+        logger.info('⚡ Using cached embedding', { cacheAge: Date.now() - (agentContext?.embeddingCache?.generatedAt || 0) });
+      } else {
+        // Generate embedding for RAG query using Lovable AI with retry + timeout
+        const embeddingResponse = await logger.time(
         'Lovable AI embedding generation',
         () => withRetry(
           () => withTimeout(
@@ -95,11 +117,28 @@ serve(async (req) => {
         )
       );
 
-      // Only use RAG if embedding generation succeeds
-      if (embeddingResponse.ok) {
-        const embeddingData = await embeddingResponse.json();
-        const queryEmbedding = embeddingData.data[0].embedding;
-        logger.debug('Embedding generated successfully');
+        if (embeddingResponse.ok) {
+          const embeddingData = await embeddingResponse.json();
+          queryEmbedding = embeddingData.data[0].embedding;
+          
+          // Cache for next agent
+          if (agentContext) {
+            agentContext.embeddingCache = {
+              query: ragQuery,
+              embedding: queryEmbedding,
+              generatedAt: Date.now()
+            };
+          }
+          logger.debug('Embedding generated and cached');
+        } else {
+          logger.error('Embedding generation failed, skipping RAG');
+          ragContext = 'RAG system unavailable - using general electrical safety knowledge.';
+          queryEmbedding = [];
+        }
+      }
+
+      // Only use RAG if we have an embedding
+      if (queryEmbedding && queryEmbedding.length > 0) {
 
         // OPTIMIZED: Query RAG with scale filter and reduced count
         const { data: ragResults, error: ragError } = await logger.time(
@@ -130,9 +169,6 @@ serve(async (req) => {
           logger.warn('No relevant H&S knowledge found in database');
           ragContext = 'No specific guidelines found - using general electrical safety knowledge.';
         }
-      } else {
-        logger.error('Embedding generation failed, continuing without RAG');
-        ragContext = 'RAG system unavailable - using general electrical safety knowledge.';
       }
     }
 

@@ -14,6 +14,7 @@ import {
   FIRE_RATED_SUPPORT,
   TERMINATION_GUIDANCE
 } from '../shared/bs7671InstallationMethods.ts';
+import { ContextEnvelope, mergeContext } from '../_shared/agent-context.ts';
 
 // corsHeaders imported from shared deps
 
@@ -26,11 +27,22 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'installer-agent' });
 
   try {
-    const { messages, currentDesign, context, jobScale = 'commercial' } = await req.json();
+    const { messages, currentDesign, context, jobScale = 'commercial', incomingContext } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
-    logger.info('Installer Agent processing', { jobScale, messageCount: messages?.length });
+    logger.info('Installer Agent processing', { 
+      jobScale, 
+      messageCount: messages?.length,
+      hasIncomingContext: !!incomingContext 
+    });
+
+    // Use incoming context
+    let agentContext: ContextEnvelope | undefined = incomingContext;
+    if (agentContext) {
+      agentContext.agentChain.push('installer');
+      agentContext.previousAgent = agentContext.agentChain[agentContext.agentChain.length - 2];
+    }
 
     // RAG - Get installation knowledge from database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -67,8 +79,17 @@ serve(async (req) => {
     
     console.log(`🔍 RAG: Searching installation knowledge (method: ${installationMethod}) for: ${ragQuery}`);
     
-    // Generate embedding for installation knowledge search with retry + timeout
-    const embeddingResponse = await logger.time(
+    // Check for cached embedding
+    const cachedEmbedding = agentContext?.embeddingCache?.query === ragQuery ? agentContext.embeddingCache.embedding : null;
+    
+    let embedding: number[];
+    
+    if (cachedEmbedding) {
+      embedding = cachedEmbedding;
+      logger.info('⚡ Reusing cached embedding from previous agent');
+    } else {
+      // Generate embedding for installation knowledge search with retry + timeout
+      const embeddingResponse = await logger.time(
       'Lovable AI embedding generation',
       () => withRetry(
         () => withTimeout(
@@ -90,11 +111,27 @@ serve(async (req) => {
       )
     );
 
+      if (embeddingResponse.ok) {
+        const embeddingDataRes = await embeddingResponse.json();
+        embedding = embeddingDataRes.data[0].embedding;
+        
+        // Cache embedding
+        if (agentContext) {
+          agentContext.embeddingCache = {
+            query: ragQuery,
+            embedding,
+            generatedAt: Date.now()
+          };
+        }
+      } else {
+        logger.warn('Embedding generation failed, skipping RAG');
+        embedding = [];
+      }
+    }
+    
     let installationKnowledge = '';
     
-    if (embeddingResponse.ok) {
-      const embeddingDataRes = await embeddingResponse.json();
-      const embedding = embeddingDataRes.data[0].embedding;
+    if (embedding && embedding.length > 0) {
       
       // OPTIMIZED: Only search installation knowledge with method filter
       const { data: instResults, error: instError } = await logger.time(
