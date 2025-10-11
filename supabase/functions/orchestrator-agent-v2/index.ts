@@ -182,7 +182,12 @@ serve(async (req) => {
     });
 
     // Plan agent sequence
-    const agentPlan = planAgentSequence(intents, conversationState, selectedAgents);
+    const agentPlan = await planAgentSequence(
+      intents,
+      safeSummary,
+      latestMessage,
+      openAIApiKey
+    );
     
     logger.info('Agent plan created', {
       sequence: agentPlan.sequence.map(s => s.agent),
