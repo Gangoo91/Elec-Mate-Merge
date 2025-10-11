@@ -1,6 +1,7 @@
 /**
  * Design Pattern Learning & Caching
  * Phase 3: Learning Loop
+ * UPGRADE: Feedback-driven confidence adjustment
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
@@ -95,6 +96,50 @@ export async function storeDesignPattern(
     console.error('❌ Failed to store pattern:', error);
   } else {
     console.log(`💾 Pattern stored/updated: ${patternHash}`);
+  }
+}
+
+/**
+ * IMPROVEMENT #5: Pattern Feedback Loop
+ * Adjusts pattern confidence based on actual usage success/failure
+ */
+export async function recordPatternFeedback(
+  patternId: string,
+  wasSuccessful: boolean,
+  userComment?: string
+): Promise<void> {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  
+  // Positive feedback: small confidence boost
+  // Negative feedback: larger confidence penalty
+  const adjustment = wasSuccessful ? 0.05 : -0.10;
+  
+  console.log(`📊 Pattern feedback: ${wasSuccessful ? 'SUCCESS' : 'FAILURE'} (adjustment: ${adjustment})`);
+  
+  // Update pattern confidence (clamped between 0.3 and 1.0)
+  const { error } = await supabase
+    .from('design_patterns')
+    .update({
+      confidence_score: supabase.raw(`GREATEST(0.3, LEAST(1.0, confidence_score + ${adjustment}))`),
+      success_count: wasSuccessful 
+        ? supabase.raw('success_count + 1') 
+        : supabase.raw('success_count'),
+      last_used: new Date().toISOString(),
+    })
+    .eq('id', patternId);
+  
+  if (error) {
+    console.error('❌ Failed to record pattern feedback:', error);
+  } else {
+    console.log(`✅ Pattern confidence updated: ${wasSuccessful ? '+5%' : '-10%'}`);
+  }
+  
+  // Optional: Store feedback comment for learning review
+  if (userComment) {
+    console.log(`💬 User feedback: "${userComment}"`);
+    // Could store in learning_review_queue for manual review
   }
 }
 

@@ -39,6 +39,18 @@ export interface DesignDecision {
 }
 
 /**
+ * IMPROVEMENT #4: Context Confidence Tracking
+ * Tracks which agent contributed which information with confidence
+ */
+export interface ContextContribution {
+  agent: string;
+  contribution: string;
+  confidence: number;
+  timestamp: number;
+  data?: any;
+}
+
+/**
  * IMPROVEMENT #4: Context Contribution Tracking
  * Track which agent contributed which information
  */
@@ -191,6 +203,10 @@ export function mergeContext(
     agentChain: [
       ...existing.agentChain,
       ...(newData.agentChain || []),
+    ],
+    contextHistory: [
+      ...existing.contextHistory,
+      ...(newData.contextHistory || []),
     ],
     ragCallCount: (existing.ragCallCount || 0) + (newData.ragCallCount || 0),
     totalTokens: (existing.totalTokens || 0) + (newData.totalTokens || 0),
