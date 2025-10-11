@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 interface StreamChunk {
   type: 'token' | 'citation' | 'tool_call' | 'agent_update' | 'done' | 'error' | 'plan' | 'agent_start' | 'agent_response' | 'agent_complete' | 'all_agents_complete' | 'agent_error' | 'agent_skipped' | 'question_analysis' | 'confirmation_required' | 'agent_thinking' | 'agent_challenge' | 'agent_revised' | 'agent_defended' | 'agent_consensus' | 'validation_warning';
@@ -129,11 +130,18 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
 
       let response: Response;
       try {
+        // Get current session for authorization
+        const { data: { session } } = await supabase.auth.getSession();
+        
         response = await fetch(FUNCTION_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'  // Router returns JSON
+            'Accept': 'application/json',
+            ...(session?.access_token ? {
+              'Authorization': `Bearer ${session.access_token}`,
+              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8'
+            } : {})
           },
           mode: 'cors',
           referrerPolicy: 'no-referrer',
