@@ -1034,6 +1034,57 @@ export type Database = {
         }
         Relationships: []
       }
+      design_patterns: {
+        Row: {
+          avg_response_time: number | null
+          cable_length: number | null
+          circuit_type: string
+          confidence_score: number | null
+          created_at: string
+          design_solution: Json
+          id: string
+          last_used: string
+          pattern_hash: string
+          power_rating: number
+          regulations_cited: string[]
+          success_count: number | null
+          updated_at: string
+          voltage: number
+        }
+        Insert: {
+          avg_response_time?: number | null
+          cable_length?: number | null
+          circuit_type: string
+          confidence_score?: number | null
+          created_at?: string
+          design_solution: Json
+          id?: string
+          last_used?: string
+          pattern_hash: string
+          power_rating: number
+          regulations_cited?: string[]
+          success_count?: number | null
+          updated_at?: string
+          voltage: number
+        }
+        Update: {
+          avg_response_time?: number | null
+          cable_length?: number | null
+          circuit_type?: string
+          confidence_score?: number | null
+          created_at?: string
+          design_solution?: Json
+          id?: string
+          last_used?: string
+          pattern_hash?: string
+          power_rating?: number
+          regulations_cited?: string[]
+          success_count?: number | null
+          updated_at?: string
+          voltage?: number
+        }
+        Relationships: []
+      }
       document_field_schemas: {
         Row: {
           created_at: string | null
@@ -3882,6 +3933,51 @@ export type Database = {
         }
         Relationships: []
       }
+      regulation_index: {
+        Row: {
+          bs7671_section: string | null
+          category: string
+          circuit_types: string[]
+          created_at: string
+          id: string
+          natural_language_terms: string[]
+          power_range_max: number | null
+          power_range_min: number | null
+          priority_score: number | null
+          regulation_number: string
+          semantic_tags: string[]
+          updated_at: string
+        }
+        Insert: {
+          bs7671_section?: string | null
+          category: string
+          circuit_types?: string[]
+          created_at?: string
+          id?: string
+          natural_language_terms?: string[]
+          power_range_max?: number | null
+          power_range_min?: number | null
+          priority_score?: number | null
+          regulation_number: string
+          semantic_tags?: string[]
+          updated_at?: string
+        }
+        Update: {
+          bs7671_section?: string | null
+          category?: string
+          circuit_types?: string[]
+          created_at?: string
+          id?: string
+          natural_language_terms?: string[]
+          power_range_max?: number | null
+          power_range_min?: number | null
+          priority_score?: number | null
+          regulation_number?: string
+          semantic_tags?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       safety_alerts: {
         Row: {
           average_rating: number | null
@@ -5693,6 +5789,20 @@ export type Database = {
           topic: string
         }[]
       }
+      search_regulation_index: {
+        Args: {
+          search_circuit_type?: string
+          search_power?: number
+          search_terms?: string[]
+        }
+        Returns: {
+          bs7671_section: string
+          category: string
+          match_score: number
+          priority_score: number
+          regulation_number: string
+        }[]
+      }
       sparsevec_out: {
         Args: { "": unknown }
         Returns: unknown
@@ -5708,6 +5818,19 @@ export type Database = {
       trigger_materials_weekly_refresh: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      upsert_design_pattern: {
+        Args: {
+          p_cable_length: number
+          p_circuit_type: string
+          p_design_solution: Json
+          p_pattern_hash: string
+          p_power_rating: number
+          p_regulations_cited: string[]
+          p_response_time: number
+          p_voltage: number
+        }
+        Returns: string
       }
       vector_avg: {
         Args: { "": number[] }

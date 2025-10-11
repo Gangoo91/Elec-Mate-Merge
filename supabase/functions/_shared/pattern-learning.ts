@@ -1,0 +1,99 @@
+/**
+ * Design Pattern Learning & Caching
+ * Phase 3: Learning Loop
+ */
+
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { createHash } from 'https://deno.land/std@0.168.0/hash/mod.ts';
+
+export interface DesignPattern {
+  circuitType: string;
+  powerRating: number;
+  voltage: number;
+  cableLength?: number;
+  designSolution: any;
+  regulationsCited: string[];
+}
+
+export async function searchDesignPattern(
+  circuitType: string,
+  powerRating: number,
+  voltage: number,
+  cableLength?: number
+): Promise<{ found: boolean; pattern?: any; confidence: number }> {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  // Search for similar patterns
+  const { data, error } = await supabase
+    .from('design_patterns')
+    .select('*')
+    .eq('circuit_type', circuitType)
+    .gte('power_rating', powerRating * 0.95) // ±5% tolerance
+    .lte('power_rating', powerRating * 1.05)
+    .eq('voltage', voltage)
+    .order('success_count', { ascending: false })
+    .order('confidence_score', { ascending: false })
+    .limit(1);
+
+  if (error || !data || data.length === 0) {
+    return { found: false, confidence: 0 };
+  }
+
+  const pattern = data[0];
+  
+  // Check if cable length is similar (if provided)
+  if (cableLength && pattern.cable_length) {
+    const lengthDiff = Math.abs(cableLength - pattern.cable_length) / cableLength;
+    if (lengthDiff > 0.2) { // More than 20% different
+      return { found: false, confidence: 0 };
+    }
+  }
+
+  // Calculate confidence based on success count and recency
+  const daysSinceLastUse = (Date.now() - new Date(pattern.last_used).getTime()) / (1000 * 60 * 60 * 24);
+  const recencyFactor = Math.max(0, 1 - (daysSinceLastUse / 365)); // Decay over 1 year
+  const successFactor = Math.min(1, pattern.success_count / 10); // Cap at 10 uses
+  const confidence = (pattern.confidence_score * 0.5) + (recencyFactor * 0.3) + (successFactor * 0.2);
+
+  console.log(`🎯 Found pattern match: ${pattern.success_count} uses, ${confidence.toFixed(2)} confidence`);
+
+  return {
+    found: true,
+    pattern: pattern.design_solution,
+    confidence: Math.round(confidence * 100),
+  };
+}
+
+export async function storeDesignPattern(
+  pattern: DesignPattern,
+  responseTimeMs: number
+): Promise<void> {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  // Create deterministic hash
+  const patternKey = `${pattern.circuitType}-${pattern.powerRating}-${pattern.voltage}-${pattern.cableLength || 0}`;
+  const hash = createHash('md5');
+  hash.update(patternKey);
+  const patternHash = hash.toString();
+
+  const { data, error } = await supabase.rpc('upsert_design_pattern', {
+    p_pattern_hash: patternHash,
+    p_circuit_type: pattern.circuitType,
+    p_power_rating: pattern.powerRating,
+    p_voltage: pattern.voltage,
+    p_cable_length: pattern.cableLength || null,
+    p_design_solution: pattern.designSolution,
+    p_regulations_cited: pattern.regulationsCited,
+    p_response_time: responseTimeMs,
+  });
+
+  if (error) {
+    console.error('❌ Failed to store pattern:', error);
+  } else {
+    console.log(`💾 Pattern stored/updated: ${patternHash}`);
+  }
+}

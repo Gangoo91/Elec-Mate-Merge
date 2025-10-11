@@ -1,5 +1,5 @@
-// CONVERSATIONAL MULTI-AGENT ORCHESTRATOR V2
-// Sequential agent conversations where each specialist speaks directly to the user
+// CONVERSATIONAL MULTI-AGENT ORCHESTRATOR V3
+// Intelligent context-sharing orchestration with RAG optimization
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
@@ -24,6 +24,7 @@ import {
   reviewChallenge,
   type Challenge 
 } from '../_shared/agent-validation.ts';
+import { createContextEnvelope, mergeContext, type ContextEnvelope, type QueryIntent, inferRAGPriority } from '../_shared/agent-context.ts';
 
 // corsHeaders imported from shared deps
 

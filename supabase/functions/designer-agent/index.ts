@@ -1,4 +1,4 @@
-// DESIGNER AGENT - RAG-enabled with Lovable AI Gateway - v2.1
+// DESIGNER AGENT - RAG-enabled with Intelligent Multi-Tier Hybrid Search - v3.0
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
@@ -8,6 +8,9 @@ import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { safeAll } from '../_shared/safe-parallel.ts';
+import { createContextEnvelope, mergeContext, type ContextEnvelope, type QueryIntent } from '../_shared/agent-context.ts';
+import { intelligentRAGSearch, type HybridSearchParams } from '../_shared/intelligent-rag.ts';
+import { searchDesignPattern, storeDesignPattern } from '../_shared/pattern-learning.ts';
 import { calculateVoltageDrop, getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
 import { getMaxZs, checkRCDRequirement } from "../shared/bs7671ProtectionData.ts";
@@ -64,7 +67,7 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'designer-agent' });
 
   try {
-    const { messages, currentDesign, context } = await req.json();
+    const { messages, currentDesign, context: incomingContext } = await req.json();
     
     // Input validation
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
@@ -80,14 +83,52 @@ serve(async (req) => {
       messageCount: messages.length, 
       messageLength: userMessage.length,
       hasCurrentDesign: !!currentDesign,
-      hasContext: !!context 
+      hasContext: !!incomingContext 
     });
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
-    logger.info('Designer Agent processing with RAG + Lovable AI', { messageCount: messages.length });
+    logger.info('Designer Agent v3.0 processing with Intelligent Hybrid RAG', { messageCount: messages.length });
 
-    const circuitParams = extractCircuitParams(userMessage, currentDesign, context);
+    const circuitParams = extractCircuitParams(userMessage, currentDesign, incomingContext);
+    
+    // Create or merge agent context
+    const queryIntent: QueryIntent = {
+      primaryGoal: 'design',
+      circuitType: circuitParams.circuitType,
+      powerRating: circuitParams.power,
+      complexity: 'medium',
+      requiresCalculations: true,
+      requiresRegulations: true,
+      keywords: [circuitParams.circuitType, 'overload', 'voltage drop', 'cable sizing'],
+    };
+
+    let agentContext: ContextEnvelope = incomingContext || createContextEnvelope(requestId, queryIntent);
+    agentContext.agentChain.push('designer-agent');
+    agentContext.previousAgent = incomingContext?.agentChain[incomingContext.agentChain.length - 1];
+
+    // Check for cached design pattern
+    const patternStartTime = Date.now();
+    const cachedPattern = await searchDesignPattern(
+      circuitParams.circuitType,
+      circuitParams.power,
+      circuitParams.voltage,
+      circuitParams.cableLength
+    );
+
+    if (cachedPattern.found && cachedPattern.confidence > 80) {
+      logger.info(`🎯 Using cached pattern (${cachedPattern.confidence}% confidence) in ${Date.now() - patternStartTime}ms`);
+      
+      return new Response(JSON.stringify({
+        circuit: cachedPattern.pattern,
+        requestId,
+        cached: true,
+        confidence: cachedPattern.confidence,
+        context: agentContext,
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
     
     logger.info('Circuit parameters extracted', {
       circuitType: circuitParams.circuitType,
@@ -171,13 +212,9 @@ serve(async (req) => {
     }
 
     // ========================================
-    // INTELLIGENT MULTI-TIER RAG SYSTEM v3.0
+    // INTELLIGENT HYBRID RAG SYSTEM v3.0
+    // Phase 2: 3-Tier Cascade Search
     // ========================================
-    
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    const openaiApiKey = Deno.env.get('OPENAI_API_KEY')!;
     
     const projectScope = detectProjectScope(userMessage);
     
@@ -187,182 +224,61 @@ serve(async (req) => {
     let regulations: any[] = [];
     let designDocs: any[] = [];
     
-    // PHASE 1: Build Intelligent RAG Query
-    function buildIntelligentRAGQuery(circuitType: string, power: number): {
-      regulationNumbers: string[];
-      designQuery: string;
-      keywordTerms: string[];
-    } {
-      // Map circuit types to specific BS 7671 regulation numbers
-      const regulationMap: { [key: string]: string[] } = {
-        'shower': ['433.1', '433.2.2', '411.3.3', '701.512.3', '415.1.1'],
-        'cooker': ['433.1', '433.3.3', '432.1', '433.1.204'],
-        'ev-charging': ['722.531.2', '722.411.4.1', '433.1', '411.3.3'],
-        'ring-main': ['433.1.204', '411.3.3', '433.1', '522.6.6'],
-        'lighting': ['433.1', '525', '411.3.2', '522.6.6'],
-        'immersion': ['433.1', '554.1', '411.3.3'],
-        'motor': ['433.1', '552.1', '433.3.3']
-      };
-      
-      // Expand query with synonyms and related terms
-      const queryExpansions: { [key: string]: string } = {
-        'shower': 'electric shower instantaneous water heater bathroom wet room 9kW 9.5kW 10kW',
-        'cooker': 'cooking appliance hob oven range diversity cooker control unit',
-        'ev-charging': 'electric vehicle charging point wallbox car charger Mode 3',
-        'ring-main': 'socket outlet ring circuit radial final circuit 13A sockets',
-        'lighting': 'lighting circuit luminaire lamp artificial lighting',
-        'immersion': 'immersion heater water heating cylinder storage',
-        'motor': 'motor circuit DOL starter direct-on-line three-phase induction'
-      };
-      
-      const regs = regulationMap[circuitType] || ['433.1', '411.3.2', '525'];
-      const expansion = queryExpansions[circuitType] || circuitType;
-      const powerKW = (power / 1000).toFixed(1);
-      
-      return {
-        regulationNumbers: regs,
-        designQuery: `${expansion} ${powerKW}kW circuit design cable sizing overload protection voltage drop earth fault loop impedance installation method`,
-        keywordTerms: [circuitType, `${powerKW}kW`, 'circuit', 'cable', 'protection']
-      };
-    }
-    
-    // Build intelligent query
-    const ragQuery = buildIntelligentRAGQuery(circuitParams.circuitType, circuitParams.power);
-    logger.info('🔍 Intelligent RAG Query Built', {
-      circuitType: circuitParams.circuitType,
-      regulationNumbers: ragQuery.regulationNumbers,
-      queryLength: ragQuery.designQuery.length
-    });
-    
-    // PHASE 2: Generate Embedding with OpenAI (matching working agents)
+    // Run intelligent hybrid search
     try {
-      const embeddingResponse = await logger.time(
-        'OpenAI embedding generation',
-        () => withRetry(
-          () => withTimeout(
-            fetch('https://api.openai.com/v1/embeddings', {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                input: ragQuery.designQuery,
-                model: 'text-embedding-3-small',
-              }),
-            }),
-            Timeouts.STANDARD,
-            'OpenAI embedding generation'
-          ),
-          RetryPresets.STANDARD
-        )
-      );
+      const searchParams: HybridSearchParams = {
+        circuitType: circuitParams.circuitType,
+        powerRating: circuitParams.power,
+        searchTerms: [circuitParams.circuitType, 'overload', 'voltage drop', 'cable sizing'],
+        expandedQuery: `${circuitParams.circuitType} circuit ${circuitParams.power}W design cable sizing overload protection voltage drop earth fault`,
+        context: agentContext,
+      };
+
+      const ragResults = await intelligentRAGSearch(searchParams);
       
-      if (embeddingResponse.ok) {
-        const embeddingData = await embeddingResponse.json();
-        const embedding = embeddingData.data[0].embedding;
-        
-        // TIER 1: Vector Search with Lowered Thresholds
-        const { successes, failures } = await safeAll([
-          {
-            name: 'BS7671 regulations',
-            execute: () => withTimeout(
-              supabase.rpc('search_bs7671', {
-                query_embedding: embedding,
-                match_threshold: 0.55,  // Lowered from 0.75
-                match_count: 10         // Increased from 3
-              }),
-              Timeouts.STANDARD,
-              'BS7671 vector search'
-            )
-          },
-          {
-            name: 'Design knowledge',
-            execute: () => withTimeout(
-              supabase.rpc('search_design_knowledge', {
-                query_embedding: embedding,
-                // circuit_filter removed - too restrictive
-                match_threshold: 0.50,  // Lowered from 0.75
-                match_count: 12         // Increased from 2
-              }),
-              Timeouts.STANDARD,
-              'Design knowledge search'
-            )
-          }
-        ]);
-        
-        // Extract results
-        const regulationsResult = successes.find(s => s.name === 'BS7671 regulations');
-        regulations = regulationsResult?.result?.data || [];
-        
-        const designResult = successes.find(s => s.name === 'Design knowledge');
-        designDocs = designResult?.result?.data || [];
-        
-        logger.info('Vector search completed', {
-          bs7671Found: regulations.length,
-          designFound: designDocs.length
-        });
-        
-        // TIER 2: Keyword Fallback if insufficient results
-        if (regulations.length < 3) {
-          logger.warn('Vector search insufficient for BS7671, triggering keyword fallback');
-          
-          const regNumbers = ragQuery.regulationNumbers.map(r => `'${r}'`).join(',');
-          const { data: keywordRegs } = await supabase
-            .from('bs7671_embeddings')
-            .select('*')
-            .or(`regulation_number.in.(${regNumbers}),content.ilike.%${circuitParams.circuitType}%`)
-            .limit(8);
-          
-          if (keywordRegs && keywordRegs.length > 0) {
-            regulations = [...regulations, ...keywordRegs];
-            logger.info('Keyword fallback successful for BS7671', { addedCount: keywordRegs.length });
-          }
-        }
-        
-        if (designDocs.length < 3) {
-          logger.warn('Vector search insufficient for design docs, triggering keyword fallback');
-          
-          const { data: keywordDesign } = await supabase
-            .from('design_knowledge')
-            .select('*')
-            .ilike('content', `%${circuitParams.circuitType}%`)
-            .limit(10);
-          
-          if (keywordDesign && keywordDesign.length > 0) {
-            designDocs = [...designDocs, ...keywordDesign];
-            logger.info('Keyword fallback successful for design docs', { addedCount: keywordDesign.length });
-          }
-        }
-        
-        // Build context text
-        if (regulations.length > 0) {
-          relevantRegsText = regulations.map((r: any) => 
-            `Reg ${r.regulation_number} (${r.section}): ${r.content}`
-          ).join('\n\n');
-        }
-        
-        if (designDocs.length > 0) {
-          designKnowledge = designDocs.map((d: any) => 
-            `${d.topic} (${d.source}): ${d.content}`
-          ).join('\n\n');
-        }
-        
-        // Log final RAG results
-        logger.info('📚 RAG Results', {
-          bs7671Count: regulations.length,
-          designDocsCount: designDocs.length,
-          regulationsFound: regulations.map(r => r.regulation_number).join(', '),
-          searchMethod: regulations.length > 0 ? 'vector+keyword' : 'keyword-only',
-          requestId
-        });
-        
-        if (failures.length > 0) {
-          logger.warn('Some RAG queries failed', { failures: failures.map(f => f.name) });
-        }
-      } else {
-        logger.error('Embedding generation failed', { status: embeddingResponse.status });
+      regulations = ragResults.regulations;
+      designDocs = ragResults.designDocs;
+      
+      // Update context with embedding for reuse
+      if (ragResults.embedding) {
+        agentContext.embeddingCache = {
+          query: searchParams.expandedQuery,
+          embedding: ragResults.embedding,
+          generatedAt: Date.now(),
+        };
       }
+      
+      // Store found regulations in context
+      agentContext.foundRegulations = regulations.slice(0, 5).map(r => ({
+        regulation_number: r.regulation_number,
+        section: r.section,
+        content: r.content,
+        relevance: r.relevance,
+        source: r.source,
+      }));
+      
+      agentContext.ragCallCount = (agentContext.ragCallCount || 0) + 1;
+      
+      // Build context text
+      if (regulations.length > 0) {
+        relevantRegsText = regulations.map((r: any) => 
+          `Reg ${r.regulation_number} (${r.section}): ${r.content}`
+        ).join('\n\n');
+      }
+      
+      if (designDocs.length > 0) {
+        designKnowledge = designDocs.map((d: any) => 
+          `${d.topic} (${d.source}): ${d.content}`
+        ).join('\n\n');
+      }
+      
+      logger.info('✅ Intelligent RAG Complete', {
+        bs7671Count: regulations.length,
+        designDocsCount: designDocs.length,
+        method: ragResults.searchMethod,
+        timeMs: ragResults.searchTimeMs,
+      });
+      
     } catch (error) {
       logger.error('RAG pipeline failed', { 
         error: error instanceof Error ? error.message : String(error),
@@ -997,6 +913,38 @@ Use professional language with UK English spelling. Present calculations clearly
     structuredData.regulationsConsulted = regulationsConsulted;
     structuredData.assumptionsMade = assumptionsMade;
 
+    // Phase 3: Store successful design pattern for learning
+    if (structuredData.circuits && structuredData.circuits.length > 0) {
+      const mainCircuit = structuredData.circuits[0];
+      const responseTimeMs = Date.now() - patternStartTime;
+      
+      try {
+        await storeDesignPattern(
+          {
+            circuitType: circuitParams.circuitType,
+            powerRating: circuitParams.power,
+            voltage: circuitParams.voltage,
+            cableLength: circuitParams.cableLength,
+            designSolution: mainCircuit,
+            regulationsCited: regulations.map(r => r.regulation_number).filter(Boolean),
+          },
+          responseTimeMs
+        );
+        logger.info('💾 Design pattern stored for future reuse');
+      } catch (error) {
+        logger.warn('Failed to store pattern', { error: error instanceof Error ? error.message : String(error) });
+      }
+    }
+
+    // Update context with design decisions
+    agentContext.designDecisions.push({
+      parameter: 'cable_size',
+      value: `${circuitParams.cableSize}mm²`,
+      reasoning: `Selected based on Iz > In requirement`,
+      regulation: '433.1',
+      confidence: 95,
+    });
+
     return new Response(JSON.stringify({
       response: responseContent,
       structuredData,
@@ -1005,7 +953,8 @@ Use professional language with UK English spelling. Present calculations clearly
       citations: enhancedCitations.length > 0 ? enhancedCitations : citations,
       confidence: 0.95,
       model: 'google/gemini-2.5-flash',
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      context: agentContext,
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
