@@ -1245,8 +1245,18 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             </div>
           )}
           
-          {/* Current Agent Display + View Results */}
+          {/* Photo Upload + Current Agent + View Results - All in one row */}
           <div className="flex items-center gap-2">
+            <PhotoUploadButton 
+              onPhotoUploaded={(url) => {
+                setInput(prev => prev + ` [Photo attached: ${url}]`);
+                toast.success('Photo added to message');
+              }}
+              disabled={isLoading}
+              layout="horizontal"
+              className="bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
+            />
+            
             {currentAgent && (
               <div className="flex-1 flex items-center gap-2 px-3 py-2 bg-elec-card/30 rounded-lg border border-elec-yellow/20">
                 <span className="text-xl">{getAgentEmoji(currentAgent)}</span>
@@ -1262,7 +1272,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 size="sm"
                 variant="outline"
                 onClick={() => navigate(`/electrician/install-planner/results/${currentConversationId}`)}
-                className="gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10 relative"
+                className="gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10 relative shrink-0"
               >
                 <ClipboardCheck className="h-4 w-4" />
                 View Results
@@ -1274,16 +1284,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
               </Button>
             )}
           </div>
-          
-          <PhotoUploadButton 
-            onPhotoUploaded={(url) => {
-              setInput(prev => prev + ` [Photo attached: ${url}]`);
-              toast.success('Photo added to message');
-            }}
-            disabled={isLoading}
-            layout="horizontal"
-            className="bg-transparent hover:bg-white/10 active:scale-95 transition-all rounded-lg"
-          />
 
           {/* Chat Input */}
           <div className="flex items-end gap-2 pb-2">

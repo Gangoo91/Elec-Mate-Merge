@@ -403,9 +403,9 @@ EXAMPLE PHASES:
               messages: [
                 { role: 'system', content: systemPrompt }, 
                 ...messages,
-                ...(context?.structuredKnowledge ? [{
+                ...(agentContext?.structuredKnowledge ? [{
                   role: 'system',
-                  content: context.structuredKnowledge
+                  content: agentContext.structuredKnowledge
                 }] : [])
               ],
               tools: [{

@@ -263,9 +263,9 @@ Use professional language with UK English spelling. Cite specific regulations an
         messages: [
           { role: 'system', content: systemPrompt }, 
           ...messages,
-          ...(context?.structuredKnowledge ? [{
+          ...(agentContext?.structuredKnowledge ? [{
             role: 'system',
-            content: context.structuredKnowledge
+            content: agentContext.structuredKnowledge
           }] : [])
         ],
         max_completion_tokens: 10000

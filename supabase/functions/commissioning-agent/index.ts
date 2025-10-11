@@ -223,9 +223,9 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
             messages: [
               { role: 'system', content: systemPrompt },
               ...messages,
-              ...(context?.structuredKnowledge ? [{
+              ...(agentContext?.structuredKnowledge ? [{
                 role: 'system',
-                content: context.structuredKnowledge
+                content: agentContext.structuredKnowledge
               }] : [])
             ],
             max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage))
