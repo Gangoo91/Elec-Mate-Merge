@@ -71,13 +71,7 @@ What can I design for you today?`,
 
   'cost-engineer': `👋 **Cost Engineer here!**
 
-I provide accurate material and labour pricing for electrical installations. I can help you with:
-
-💷 **Material costs** - Cables, accessories, protection devices
-💷 **Labour estimates** - Installation time and rates
-💷 **Supplier pricing** - CEF, Edmundson, City Electrical Factors
-💷 **Project budgets** - Complete installation cost breakdowns
-💷 **Material schedules** - Detailed quantities and specifications
+I provide accurate material and labour pricing for electrical installations.
 
 **Example questions:**
 - "What's the cost for a full rewire?"
@@ -88,13 +82,7 @@ What pricing do you need?`,
 
   'installer': `👋 **Installation Specialist here!**
 
-I provide practical, step-by-step installation guidance based on real-world experience. I can help you with:
-
-🔧 **Installation methods** - Best practices for different scenarios
-🔧 **Tool requirements** - What you'll need for the job
-🔧 **Material handling** - Cable routing, accessory fitting
-🔧 **Time estimates** - Realistic job duration planning
-🔧 **Practical tips** - Trade secrets and efficiency tricks
+I provide practical, step-by-step installation guidance based on real-world experience.
 
 **Example questions:**
 - "How do I install a consumer unit upgrade?"
@@ -105,13 +93,7 @@ What installation advice do you need?`,
 
   'health-safety': `👋 **Health & Safety Advisor here!**
 
-I ensure your installations meet all safety requirements and regulations. I can help you with:
-
-🛡️ **Risk assessments** - Identifying and controlling hazards
-🛡️ **Method statements** - Safe working procedures
-🛡️ **PPE requirements** - Personal protective equipment
-🛡️ **Emergency procedures** - Incident response planning
-🛡️ **Regulatory compliance** - BS 7671, CDM, HSE guidance
+I ensure your installations meet all safety requirements and regulations.
 
 **Example questions:**
 - "Risk assessment for working in a occupied building"
@@ -122,13 +104,7 @@ What safety information do you need?`,
 
   'commissioning': `👋 **Testing & Inspection Specialist here!**
 
-I guide you through proper testing, inspection, and certification. I can help you with:
-
-✅ **Test procedures** - Insulation, continuity, earth fault loop
-✅ **Certification** - EIC, MEIWC, EICR requirements
-✅ **Test equipment** - Multifunction testers, proving units
-✅ **Fault finding** - Diagnosing test failures
-✅ **Compliance verification** - Meeting BS 7671 standards
+I guide you through proper testing, inspection, and certification.
 
 **Example questions:**
 - "Testing sequence for a new circuit?"
@@ -139,13 +115,7 @@ What testing guidance do you need?`,
 
   'project-manager': `👋 **Project Manager here!**
 
-I help you plan, coordinate, and deliver electrical projects on time and on budget. I can help you with:
-
-📋 **Project planning** - Timelines and resource allocation
-📋 **Team coordination** - Scheduling trades and specialists
-📋 **Documentation** - Quotes, invoices, variation orders
-📋 **Client communication** - Progress updates and change management
-📋 **Quality control** - Ensuring standards are met
+I help you plan, coordinate, and deliver electrical projects on time and on budget.
 
 **Example questions:**
 - "Timeline for a 3-bed house rewire?"
