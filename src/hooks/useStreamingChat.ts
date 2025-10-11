@@ -90,14 +90,14 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
     }, 1000);
 
     try {
-      // Map agent IDs to edge function names
+      // Map agent IDs to V3 edge function names
       const AGENT_ENDPOINT_MAP: Record<string, string> = {
-        'designer': 'designer-agent',
-        'cost-engineer': 'cost-engineer-agent',
-        'installer': 'installer-agent',
-        'health-safety': 'health-safety-agent',
-        'commissioning': 'commissioning-agent',
-        'project-manager': 'project-manager-agent'
+        'designer': 'designer-v3',
+        'cost-engineer': 'cost-engineer-v3',
+        'installer': 'installer-v3',
+        'health-safety': 'health-safety-v3',
+        'commissioning': 'commissioning-v3',
+        'project-manager': 'project-mgmt-v3'
       };
 
       // Determine endpoint: single agent or orchestrator
@@ -413,27 +413,34 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
           }
         }
       } else {
-        // Handle regular JSON response from single agent
+        // Handle regular JSON response from V3 single agent
         const data = await response.json();
         
         if (data.error) throw new Error(data.error);
         
-        fullResponse = data.response || '';
-        citations = data.citations || [];
-        structuredData = data.structuredData || null;
+        // Adapt V3 response format: {success, result, metadata} → {response, structuredData, suggestedNextAgents}
+        if (data.success && data.result) {
+          // Extract natural language response from result
+          fullResponse = data.result.response || data.result.summary || data.result.explanation || JSON.stringify(data.result, null, 2);
+          
+          // V3 agents return structured data in result
+          structuredData = {
+            ...data.result,
+            suggestedNextAgents: data.result.suggestedNextAgents || []
+          };
+          
+          citations = data.metadata?.regulationsUsed ? 
+            [{ number: 'BS 7671', title: `${data.metadata.regulationsUsed} regulations referenced` }] : [];
+        } else {
+          // Fallback for non-V3 format
+          fullResponse = data.response || '';
+          citations = data.citations || [];
+          structuredData = data.structuredData || null;
+        }
         
         // Notify agent response
         if (selectedAgents && selectedAgents.length === 1) {
           options.onAgentResponse?.(selectedAgents[0], fullResponse, structuredData);
-          
-          // Check for suggested next agents
-          if (data.suggestedNextAgents) {
-            // Store suggestions for UI to display
-            structuredData = {
-              ...structuredData,
-              suggestedNextAgents: data.suggestedNextAgents
-            };
-          }
         }
         
         // Simulate streaming for smoother UX

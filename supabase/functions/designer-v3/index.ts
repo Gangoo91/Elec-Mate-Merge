@@ -30,7 +30,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, circuitType, power, voltage, cableLength } = body;
+    const { query, circuitType, power, voltage, cableLength, messages, previousAgentOutputs } = body;
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -114,6 +114,17 @@ serve(async (req) => {
         ).join('\n\n')
       : '';
 
+    // Build conversation context for agent awareness
+    let contextSection = '';
+    if (messages && messages.length > 0) {
+      contextSection = '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+        `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
+      ).slice(-5).join('\n');
+    }
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      contextSection += '\n\nPREVIOUS AGENT OUTPUTS:\n' + JSON.stringify(previousAgentOutputs, null, 2);
+    }
+
     const systemPrompt = `You are an expert electrical circuit designer specialising in BS 7671:2018+A2:2022 compliant installations.
 
 Your task is to design safe, compliant electrical circuits for UK installations.
@@ -123,10 +134,11 @@ CURRENT DATE: September 2025
 RELEVANT BS 7671 REGULATIONS:
 ${regulationContext}
 
-${designContext ? `DESIGN GUIDANCE:\n${designContext}\n` : ''}
+${designContext ? `DESIGN GUIDANCE:\n${designContext}\n` : ''}${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
+  "response": "Natural language summary explaining the design decisions and key considerations",
   "design": {
     "cableSize": 2.5,
     "cableType": "6242Y Twin & Earth",
@@ -145,7 +157,11 @@ Respond ONLY with valid JSON in this exact format:
     "designCurrent": 20,
     "correctionFactors": 0.87,
     "maxZs": 1.44
-  }
+  },
+  "suggestedNextAgents": [
+    {"agent": "cost-engineer", "reason": "Get accurate material and labour cost estimate for this design", "priority": "high"},
+    {"agent": "installer", "reason": "Get practical installation method and step-by-step guidance", "priority": "medium"}
+  ]
 }`;
 
     const userPrompt = `Design a circuit with these requirements:

@@ -30,7 +30,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, projectType, scope, timeline } = body;
+    const { query, projectType, scope, timeline, messages, previousAgentOutputs } = body;
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -95,6 +95,17 @@ serve(async (req) => {
         ).join('\n\n')
       : 'Apply general UK electrical project management best practices.';
 
+    // Build conversation context
+    let contextSection = '';
+    if (messages && messages.length > 0) {
+      contextSection = '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+        `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
+      ).slice(-5).join('\n');
+    }
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      contextSection += '\n\nCOMPLETE PROJECT WORK (coordinate all outputs):\n' + JSON.stringify(previousAgentOutputs, null, 2);
+    }
+
     const systemPrompt = `You are an expert electrical project manager specialising in UK installations.
 
 Your task is to provide comprehensive project planning and coordination guidance.
@@ -102,10 +113,11 @@ Your task is to provide comprehensive project planning and coordination guidance
 CURRENT DATE: September 2025
 
 RELEVANT PROJECT MANAGEMENT KNOWLEDGE:
-${pmContext}
+${pmContext}${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
+  "response": "Natural language summary of the project plan and key coordination points",
   "projectPlan": {
     "phases": [
       {
@@ -133,7 +145,8 @@ Respond ONLY with valid JSON in this exact format:
   "risks": [
     {"risk": "Risk description", "mitigation": "Mitigation strategy", "severity": "Medium"}
   ],
-  "recommendations": ["Key recommendation"]
+  "recommendations": ["Key recommendation"],
+  "suggestedNextAgents": []
 }`;
 
     const userPrompt = `Provide a comprehensive project plan for:

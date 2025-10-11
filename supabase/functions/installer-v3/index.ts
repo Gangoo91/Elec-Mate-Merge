@@ -30,7 +30,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, cableType, installationMethod, location } = body;
+    const { query, cableType, installationMethod, location, messages, previousAgentOutputs } = body;
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -95,6 +95,17 @@ serve(async (req) => {
         ).join('\n\n')
       : 'Apply general BS 7671 installation methods and best practices.';
 
+    // Build conversation context
+    let contextSection = '';
+    if (messages && messages.length > 0) {
+      contextSection = '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+        `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
+      ).slice(-5).join('\n');
+    }
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      contextSection += '\n\nPREVIOUS WORK (reference design/costs):\n' + JSON.stringify(previousAgentOutputs, null, 2);
+    }
+
     const systemPrompt = `You are an expert installation specialist with years of practical electrical experience.
 
 Your task is to provide step-by-step installation guidance for UK electrical work.
@@ -102,10 +113,11 @@ Your task is to provide step-by-step installation guidance for UK electrical wor
 CURRENT DATE: September 2025
 
 RELEVANT INSTALLATION KNOWLEDGE:
-${installContext}
+${installContext}${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
+  "response": "Natural language summary of the installation process and key practical points",
   "installationSteps": [
     {
       "step": 1,
@@ -130,7 +142,11 @@ Respond ONLY with valid JSON in this exact format:
   "compliance": {
     "regulations": ["BS 7671 references"],
     "inspectionPoints": ["What to check"]
-  }
+  },
+  "suggestedNextAgents": [
+    {"agent": "health-safety", "reason": "Create risk assessment and method statement for this installation", "priority": "high"},
+    {"agent": "commissioning", "reason": "Prepare testing and commissioning schedule", "priority": "medium"}
+  ]
 }`;
 
     const userPrompt = `Provide detailed installation guidance for:

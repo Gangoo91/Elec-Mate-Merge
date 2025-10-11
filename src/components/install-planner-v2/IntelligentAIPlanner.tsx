@@ -28,7 +28,7 @@ import { PhotoUploadButton } from "./PhotoUploadButton";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { DesignAlternatives } from "./DesignAlternatives";
-import { ConsultationTeamSelector, ConsultationMode } from "./ConsultationTeamSelector";
+
 import { v4 as uuidv4 } from 'uuid';
 
 // Helper functions for agent display
@@ -547,6 +547,11 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 });
               }
             }
+          }
+
+          // Extract and display agent suggestions from V3 structured data
+          if (data.structuredData?.suggestedNextAgents) {
+            setSuggestedAgents(data.structuredData.suggestedNextAgents);
           }
 
           setStreamingMessageIndex(null);

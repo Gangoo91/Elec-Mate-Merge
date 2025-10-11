@@ -1,6 +1,6 @@
 // Simplified consultation handler for IntelligentAIPlanner
 import { supabase } from "@/integrations/supabase/client";
-import { ConsultationMode, AgentType } from "./ConsultationTeamSelector";
+import { AgentType } from "./InChatAgentSelector";
 
 interface AgentSuggestion {
   agent: string;
@@ -11,20 +11,11 @@ interface AgentSuggestion {
 export const handleConsultation = async (
   userMessage: string,
   messages: any[],
-  consultationMode: ConsultationMode,
   selectedAgents: AgentType[],
   currentDesign: any
 ) => {
-  // Determine which agents to call
-  let agentsToCall: AgentType[] = [];
-  
-  if (consultationMode === 'full') {
-    agentsToCall = ['designer', 'cost-engineer', 'installer', 'health-safety', 'commissioning', 'project-manager'];
-  } else if (consultationMode === 'quick') {
-    agentsToCall = ['designer', 'cost-engineer'];
-  } else {
-    agentsToCall = selectedAgents;
-  }
+  // Single-agent conversational flow - no mode needed
+  const agentsToCall = selectedAgents;
 
   // Call agent-router edge function
   const { data, error } = await supabase.functions.invoke('agent-router', {
@@ -32,7 +23,6 @@ export const handleConsultation = async (
       conversationId: crypto.randomUUID(),
       userMessage,
       selectedAgents: agentsToCall,
-      consultationMode,
       messages,
       currentDesign
     }

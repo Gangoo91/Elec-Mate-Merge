@@ -30,7 +30,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, workType, location, hazards } = body;
+    const { query, workType, location, hazards, messages, previousAgentOutputs } = body;
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -95,6 +95,17 @@ serve(async (req) => {
         ).join('\n\n')
       : 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
 
+    // Build conversation context
+    let contextSection = '';
+    if (messages && messages.length > 0) {
+      contextSection = '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+        `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
+      ).slice(-5).join('\n');
+    }
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      contextSection += '\n\nPREVIOUS WORK (identify hazards from installation plan):\n' + JSON.stringify(previousAgentOutputs, null, 2);
+    }
+
     const systemPrompt = `You are an expert Health & Safety advisor specialising in UK electrical installations.
 
 Your task is to provide comprehensive risk assessments and safety guidance.
@@ -102,10 +113,11 @@ Your task is to provide comprehensive risk assessments and safety guidance.
 CURRENT DATE: September 2025
 
 RELEVANT H&S GUIDANCE:
-${hsContext}
+${hsContext}${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
+  "response": "Natural language summary of key safety risks and control measures",
   "riskAssessment": {
     "hazards": [
       {"hazard": "Electric shock", "severity": "High", "likelihood": "Medium", "risk": "High"}
@@ -126,7 +138,11 @@ Respond ONLY with valid JSON in this exact format:
   "compliance": {
     "regulations": ["HASAWA 1974", "EWR 1989", "BS 7671"],
     "warnings": []
-  }
+  },
+  "suggestedNextAgents": [
+    {"agent": "commissioning", "reason": "Get testing procedures that comply with safety requirements", "priority": "high"},
+    {"agent": "project-manager", "reason": "Coordinate safety documentation and compliance records", "priority": "medium"}
+  ]
 }`;
 
     const userPrompt = `Provide a risk assessment and method statement for:

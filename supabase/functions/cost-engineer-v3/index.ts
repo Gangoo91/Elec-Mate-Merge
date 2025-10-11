@@ -30,7 +30,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, materials, labourHours, region } = body;
+    const { query, materials, labourHours, region, messages, previousAgentOutputs } = body;
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -92,6 +92,17 @@ serve(async (req) => {
         ).join('\n')
       : 'No specific pricing data found. Use typical UK electrical wholesale prices.';
 
+    // Build conversation context
+    let contextSection = '';
+    if (messages && messages.length > 0) {
+      contextSection = '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+        `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
+      ).slice(-5).join('\n');
+    }
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      contextSection += '\n\nPREVIOUS AGENT OUTPUTS (use cable size, circuit type from designer):\n' + JSON.stringify(previousAgentOutputs, null, 2);
+    }
+
     const systemPrompt = `You are an expert cost engineer specialising in UK electrical installations.
 
 Your task is to provide accurate material and labour cost estimates.
@@ -101,10 +112,11 @@ CURRENT DATE: September 2025
 AVAILABLE PRICING DATA:
 ${pricingContext}
 
-${region ? `REGION: ${region}\n` : ''}
+${region ? `REGION: ${region}\n` : ''}${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
+  "response": "Natural language summary of the cost breakdown and key pricing insights",
   "materials": {
     "items": [
       {"description": "Item name", "quantity": 1, "unit": "each", "unitPrice": 10.50, "total": 10.50, "supplier": "Wholesaler"}
@@ -128,7 +140,11 @@ Respond ONLY with valid JSON in this exact format:
     "vat": 72.00,
     "grandTotal": 432.00
   },
-  "notes": ["Additional cost information"]
+  "notes": ["Additional cost information"],
+  "suggestedNextAgents": [
+    {"agent": "installer", "reason": "Verify labour time estimates with practical installation method", "priority": "high"},
+    {"agent": "health-safety", "reason": "Review safety requirements and risk assessment", "priority": "medium"}
+  ]
 }`;
 
     const userPrompt = `Provide a detailed cost estimate for:

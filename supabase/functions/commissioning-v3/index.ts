@@ -49,7 +49,7 @@ serve(async (req) => {
     // Parse and validate request
     const rawBody = await req.json();
     const validatedInput = RequestSchema.parse(rawBody);
-    const { query, conversationSummary, currentDesign } = validatedInput;
+    const { query, conversationSummary, currentDesign, messages, previousAgentOutputs } = validatedInput;
 
     // Get API keys
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
@@ -96,6 +96,16 @@ serve(async (req) => {
     
     if (currentDesign) {
       contextParts.push(`CURRENT DESIGN:\n${JSON.stringify(currentDesign, null, 2)}`);
+    }
+
+    if (messages && messages.length > 0) {
+      contextParts.push(`CONVERSATION HISTORY:\n` + messages.map((m: any) => 
+        `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
+      ).slice(-5).join('\n'));
+    }
+
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      contextParts.push(`PREVIOUS WORK (test based on this design):\n${JSON.stringify(previousAgentOutputs, null, 2)}`);
     }
 
     if (knowledgeResults && knowledgeResults.length > 0) {
