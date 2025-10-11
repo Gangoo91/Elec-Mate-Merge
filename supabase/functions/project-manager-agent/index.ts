@@ -38,9 +38,9 @@ Deno.serve(async (req) => {
   const logger = createLogger(requestId, { function: 'project-manager-agent' });
 
   try {
-    const { userInput, bulkData } = await req.json();
+    const { userInput, bulkData, conversationSummary, previousAgentOutputs, requestSuggestions, messages } = await req.json();
     
-    logger.info('Project Manager Agent processing', { userInput, bulkDataLength: bulkData?.length });
+    logger.info('Project Manager Agent processing', { userInput, bulkDataLength: bulkData?.length, requestSuggestions });
 
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
@@ -50,6 +50,20 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
+    
+    // Prepend conversation context if available
+    let contextPrefix = '';
+    if (conversationSummary) {
+      contextPrefix = `\n\nCONVERSATION CONTEXT:\nProject: ${conversationSummary.projectType || 'electrical project'}\n`;
+      if (conversationSummary.circuits) {
+        contextPrefix += `Circuits: ${conversationSummary.circuits.join(', ')}\n`;
+      }
+    }
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${previousAgentOutputs.map((a: any) => 
+        `[${a.agent}]: ${a.response?.substring(0, 200)}...`
+      ).join('\n\n')}\n`;
+    }
 
     // Generate RAG query from user input and bulk data
     const ragQuery = bulkData && bulkData.length > 0
@@ -248,12 +262,16 @@ IMPORTANT: Use the real-world project knowledge above to inform your phasing str
 
     console.log('[PROJECT-MANAGER] Analysis complete');
 
+    // No suggestions after PM - they're typically the final step
+    const suggestedNextAgents: any[] = [];
+    
     return new Response(
       JSON.stringify({
         agent: 'project-manager',
         response: naturalLanguageResponse,
         projectBreakdown,
-        activeAgents: ['project-manager']
+        activeAgents: ['project-manager'],
+        suggestedNextAgents
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

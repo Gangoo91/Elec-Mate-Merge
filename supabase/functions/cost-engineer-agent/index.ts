@@ -19,11 +19,11 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'cost-engineer-agent' });
 
   try {
-    const { messages, context, currentDesign } = await req.json();
+    const { messages, context, currentDesign, conversationSummary, previousAgentOutputs, requestSuggestions } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
-    logger.info('Cost Engineer Agent processing', { messageCount: messages?.length });
+    logger.info('Cost Engineer Agent processing', { messageCount: messages?.length, requestSuggestions });
 
     // RAG - Get pricing data from database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -86,9 +86,24 @@ serve(async (req) => {
       }
     }
 
-    const previousAgents = context?.previousAgentOutputs?.map((a: any) => a.agent) || [];
+    const agentOutputs = previousAgentOutputs || context?.previousAgentOutputs || [];
+    const previousAgents = agentOutputs.map((a: any) => a.agent) || [];
     const hasDesigner = previousAgents.includes('designer');
     const hasInstaller = previousAgents.includes('installer');
+    
+    // Prepend conversation context if available
+    let contextPrefix = '';
+    if (conversationSummary) {
+      contextPrefix = `\n\nCONVERSATION CONTEXT:\nProject: ${conversationSummary.projectType || 'electrical installation'}\n`;
+      if (conversationSummary.circuits && conversationSummary.circuits.length > 0) {
+        contextPrefix += `Circuits discussed: ${conversationSummary.circuits.join(', ')}\n`;
+      }
+    }
+    if (agentOutputs.length > 0) {
+      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${agentOutputs.map((a: any) => 
+        `[${a.agent}]: ${a.response?.substring(0, 200)}...`
+      ).join('\n\n')}\n`;
+    }
 
     const lowerMsg = userMessage.toLowerCase();
     const isOutdoor = lowerMsg.includes('outside') || lowerMsg.includes('outdoor') || 
@@ -301,12 +316,33 @@ PRICING NOTES
       citations
     };
     
+    // Generate suggestions for next agents
+    const suggestedNextAgents: Array<{agent: string; reason: string; priority?: string}> = [];
+    
+    if (requestSuggestions) {
+      if (!previousAgents.includes('installer')) {
+        suggestedNextAgents.push({
+          agent: 'installer',
+          reason: 'Get practical installation guidance and method statements',
+          priority: 'high'
+        });
+      }
+      if (!previousAgents.includes('project-manager') && cableLength > 50) {
+        suggestedNextAgents.push({
+          agent: 'project-manager',
+          reason: 'Large installation - coordinate scheduling and phasing',
+          priority: 'medium'
+        });
+      }
+    }
+    
     logger.info('Cost estimate generated successfully', { requestId });
 
     return new Response(JSON.stringify({
       response: responseContent,
       structuredData,
-      confidence: 0.85
+      confidence: 0.85,
+      suggestedNextAgents
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

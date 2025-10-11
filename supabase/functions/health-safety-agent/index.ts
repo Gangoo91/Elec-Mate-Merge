@@ -27,7 +27,7 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'health-safety-agent' });
 
   try {
-    const { messages, currentDesign, context, jobScale = 'commercial', incomingContext } = await req.json() as HealthSafetyAgentRequest;
+    const { messages, currentDesign, context, jobScale = 'commercial', incomingContext, conversationSummary, previousAgentOutputs, requestSuggestions } = await req.json() as HealthSafetyAgentRequest;
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
 
     if (!lovableApiKey) {
@@ -37,7 +37,8 @@ serve(async (req) => {
     logger.info('Health & Safety Agent analyzing work', { 
       jobScale, 
       messageCount: messages?.length,
-      hasIncomingContext: !!incomingContext 
+      hasIncomingContext: !!incomingContext,
+      requestSuggestions
     });
 
     // Use incoming context or start fresh
@@ -57,8 +58,22 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
     
     // Extract context from previous agents
-    const previousAgentOutputs = context?.previousAgentOutputs || [];
-    const designerOutput = previousAgentOutputs.find((a: any) => a.agent === 'designer');
+    const agentOutputs = previousAgentOutputs || context?.previousAgentOutputs || [];
+    const designerOutput = agentOutputs.find((a: any) => a.agent === 'designer');
+    
+    // Prepend conversation context if available
+    let contextPrefix = '';
+    if (conversationSummary) {
+      contextPrefix = `\n\nCONVERSATION CONTEXT:\nProject: ${conversationSummary.projectType || 'electrical work'}\n`;
+      if (conversationSummary.circuits) {
+        contextPrefix += `Circuits: ${conversationSummary.circuits.join(', ')}\n`;
+      }
+    }
+    if (agentOutputs.length > 0) {
+      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${agentOutputs.map((a: any) => 
+        `[${a.agent}]: ${a.response?.substring(0, 200)}...`
+      ).join('\n\n')}\n`;
+    }
     const hasDesignerCircuitData = designerOutput && (
       designerOutput.response?.includes('Cable:') || 
       designerOutput.response?.includes('Protection:') ||
@@ -731,6 +746,29 @@ IMPORTANT: Provide SPECIFIC hazards relevant to this exact work and job scale. N
       structuredResponse.citations = enhancedCitations;
     }
 
+    // Generate suggestions for next agents
+    const suggestedNextAgents: Array<{agent: string; reason: string; priority?: string}> = [];
+    
+    if (requestSuggestions) {
+      const agentOutputsList = agentOutputs.map((a: any) => a.agent);
+      if (!agentOutputsList.includes('commissioning')) {
+        suggestedNextAgents.push({
+          agent: 'commissioning',
+          reason: 'Get testing procedures that comply with safety requirements',
+          priority: 'high'
+        });
+      }
+      if (!agentOutputsList.includes('project-manager')) {
+        suggestedNextAgents.push({
+          agent: 'project-manager',
+          reason: 'Coordinate safety documentation and compliance records',
+          priority: 'medium'
+        });
+      }
+    }
+    
+    structuredResponse.suggestedNextAgents = suggestedNextAgents;
+    
     console.log('✅ H&S Agent: Generated risk assessment with', structuredResponse.structuredData.riskAssessment.hazards.length, 'hazards');
 
     return new Response(JSON.stringify(structuredResponse), {

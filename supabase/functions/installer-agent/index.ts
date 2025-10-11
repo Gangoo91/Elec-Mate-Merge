@@ -27,14 +27,15 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'installer-agent' });
 
   try {
-    const { messages, currentDesign, context, jobScale = 'commercial', incomingContext } = await req.json();
+    const { messages, currentDesign, context, jobScale = 'commercial', incomingContext, conversationSummary, previousAgentOutputs, requestSuggestions } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
     logger.info('Installer Agent processing', { 
       jobScale, 
       messageCount: messages?.length,
-      hasIncomingContext: !!incomingContext 
+      hasIncomingContext: !!incomingContext,
+      requestSuggestions
     });
 
     // Use incoming context
@@ -53,8 +54,22 @@ serve(async (req) => {
     
     // RAG OPTIMIZATION: Route by installation method
     // Extract installation method from previous agents or user message
-    const previousAgentOutputs = context?.previousAgentOutputs || [];
-    const designerOutput = previousAgentOutputs.find((a: any) => a.agent === 'designer');
+    const agentOutputs = previousAgentOutputs || context?.previousAgentOutputs || [];
+    const designerOutput = agentOutputs.find((a: any) => a.agent === 'designer');
+    
+    // Prepend conversation context if available
+    let contextPrefix = '';
+    if (conversationSummary) {
+      contextPrefix = `\n\nCONVERSATION CONTEXT:\nProject: ${conversationSummary.projectType || 'electrical installation'}\n`;
+      if (conversationSummary.circuits && conversationSummary.circuits.length > 0) {
+        contextPrefix += `Circuits: ${conversationSummary.circuits.join(', ')}\n`;
+      }
+    }
+    if (agentOutputs.length > 0) {
+      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${agentOutputs.map((a: any) => 
+        `[${a.agent}]: ${a.response?.substring(0, 200)}...`
+      ).join('\n\n')}\n`;
+    }
     
     // Parse installation method
     let installationMethod = 'general';
@@ -572,6 +587,26 @@ EXAMPLE PHASES:
     structuredData.assumptionsMade = assumptionsMade;
     structuredData.citations = citations;
     
+    // Generate suggestions for next agents
+    const suggestedNextAgents: Array<{agent: string; reason: string; priority?: string}> = [];
+    
+    if (requestSuggestions) {
+      if (!previousAgents.includes('health-safety')) {
+        suggestedNextAgents.push({
+          agent: 'health-safety',
+          reason: 'Create risk assessment and method statement for this installation',
+          priority: 'high'
+        });
+      }
+      if (!previousAgents.includes('commissioning')) {
+        suggestedNextAgents.push({
+          agent: 'commissioning',
+          reason: 'Prepare testing and commissioning schedule',
+          priority: 'medium'
+        });
+      }
+    }
+    
     logger.info('Installation guidance generated successfully', { requestId });
 
     return new Response(JSON.stringify({
@@ -585,7 +620,8 @@ EXAMPLE PHASES:
         assumptionsMade: structuredData.assumptionsMade || [],
         citations: structuredData.citations || []
       },
-      confidence: structuredData.confidence || 0.90
+      confidence: structuredData.confidence || 0.90,
+      suggestedNextAgents
     }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
 
   } catch (error) {

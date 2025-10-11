@@ -21,15 +21,30 @@ serve(async (req) => {
     const requestId = generateRequestId();
     const logger = createLogger(requestId);
     
-    const { messages, currentDesign, context } = await req.json();
+    const { messages, currentDesign, context, conversationSummary, previousAgentOutputs, requestSuggestions } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
-    logger.info('✅ Commissioning Agent: Processing testing query');
+    logger.info('✅ Commissioning Agent: Processing testing query', { requestSuggestions });
 
-    const previousAgents = context?.previousAgentOutputs?.map((a: any) => a.agent) || [];
+    const agentOutputs = previousAgentOutputs || context?.previousAgentOutputs || [];
+    const previousAgents = agentOutputs.map((a: any) => a.agent) || [];
     const hasDesigner = previousAgents.includes('designer');
     const hasInstaller = previousAgents.includes('installer');
+    
+    // Prepend conversation context if available
+    let contextPrefix = '';
+    if (conversationSummary) {
+      contextPrefix = `\n\nCONVERSATION CONTEXT:\nProject: ${conversationSummary.projectType || 'electrical installation'}\n`;
+      if (conversationSummary.circuits) {
+        contextPrefix += `Circuits: ${conversationSummary.circuits.join(', ')}\n`;
+      }
+    }
+    if (agentOutputs.length > 0) {
+      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${agentOutputs.map((a: any) => 
+        `[${a.agent}]: ${a.response?.substring(0, 200)}...`
+      ).join('\n\n')}\n`;
+    }
 
     // RAG - Get testing regulations from database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -241,11 +256,25 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
       });
     }
 
+    // Generate suggestions for next agents
+    const suggestedNextAgents: Array<{agent: string; reason: string; priority?: string}> = [];
+    
+    if (requestSuggestions) {
+      if (!previousAgents.includes('project-manager')) {
+        suggestedNextAgents.push({
+          agent: 'project-manager',
+          reason: 'Coordinate handover documentation and final certification',
+          priority: 'high'
+        });
+      }
+    }
+    
     return new Response(JSON.stringify({
       response: responseContent,
       citations,
       confidence: 0.85,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      suggestedNextAgents
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
