@@ -97,7 +97,17 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
           {/* Designer Agent - Single Circuit Spec Card */}
           {agentId === 'designer' && structuredData.design?.cableSize && !structuredData.design?.circuits && (
             <CircuitSpecCard 
-              data={structuredData.design}
+              data={{
+                ...structuredData.design,
+                voltageDrop: typeof structuredData.design.voltageDrop === 'number' 
+                  ? {
+                      percentage: structuredData.design.voltageDrop,
+                      actual: (structuredData.design.voltageDrop / 100) * (structuredData.design?.voltage || 230),
+                      limit: 5,
+                      compliant: structuredData.design.voltageDrop <= 5
+                    }
+                  : structuredData.design.voltageDrop
+              }}
               planData={structuredData.design?.planData}
             />
           )}
