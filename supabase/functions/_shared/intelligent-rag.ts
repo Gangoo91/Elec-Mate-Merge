@@ -4,7 +4,7 @@
  * UPGRADE: Query expansion + Re-ranking intelligence
  */
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { createClient } from './deps.ts';
 import type { ContextEnvelope, FoundRegulation } from './agent-context.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');

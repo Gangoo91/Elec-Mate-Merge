@@ -4,7 +4,7 @@
  * UPGRADE: Feedback-driven confidence adjustment
  */
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { createClient } from './deps.ts';
 import { createHash } from 'https://deno.land/std@0.168.0/hash/mod.ts';
 
 export interface DesignPattern {

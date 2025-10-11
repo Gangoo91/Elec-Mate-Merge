@@ -1,7 +1,7 @@
 // Phase 8: Response Caching for Performance Optimization
 // Caches common queries to speed up responses by 10x
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { createClient } from './deps.ts';
 
 export interface CacheEntry {
   query: string;
