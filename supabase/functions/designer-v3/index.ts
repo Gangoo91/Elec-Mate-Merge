@@ -109,14 +109,15 @@ serve(async (req) => {
       });
       
       if (!design.success) {
+        const advisory = `This load looks impractical on single-phase at ${entities.voltage || 230}V. Consider a three-phase supply or splitting the load. Details: ${design.warnings.join(', ')}`;
         return new Response(JSON.stringify({
           success: false,
-          error: design.warnings.join(', '),
-          response: `Unable to calculate circuit design: ${design.warnings.join(', ')}`,
-          structuredData: null,
-          suggestedNextAgents: []
+          response: advisory,
+          error: null,
+          structuredData: { entities },
+          suggestedNextAgents: ['installer', 'project-manager']
         }), { 
-          status: 400,
+          status: 200,
           headers: corsHeaders 
         });
       }
