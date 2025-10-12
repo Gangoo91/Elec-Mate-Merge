@@ -12,6 +12,7 @@ import {
   callLovableAIWithTimeout,
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
+import { parseQueryEntities, type ParsedEntities } from '../_shared/query-parser.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
@@ -58,9 +59,50 @@ const FALLBACK_PRICES = {
   '1.5mm_t&e_per_m': { price: 0.80, supplier: 'CEF/TLC average', inStock: true },  // £80 per 100m
   '6mm_t&e_per_m': { price: 2.20, supplier: 'CEF/TLC average', inStock: true },    // £110 per 50m
   '10mm_t&e_per_m': { price: 3.90, supplier: 'CEF/TLC average', inStock: true },   // £195 per 50m
+  '2.5mm_swa_per_m': { price: 3.50, supplier: 'CEF/TLC average', inStock: true },  // 3-core SWA
+  '4mm_swa_per_m': { price: 4.80, supplier: 'CEF/TLC average', inStock: true },    // 3-core SWA
+  '6mm_swa_per_m': { price: 6.20, supplier: 'CEF/TLC average', inStock: true },    // 3-core SWA
+  '10mm_swa_per_m': { price: 9.50, supplier: 'CEF/TLC average', inStock: true },   // 3-core SWA
+  'swa_gland_20mm': { price: 10.00, supplier: 'CW/MK gland', inStock: true },
   '8_way_consumer_unit': { price: 136.36, supplier: 'Standard 8-way RCD', inStock: true },
   '40a_rcbo': { price: 28.50, supplier: 'Hager/MK', inStock: true }
 };
+
+// ===== RAG QUERY ENHANCEMENT =====
+function buildEnhancedRAGQuery(userQuery: string, entities: ParsedEntities): string {
+  const contextTerms: string[] = [userQuery];
+  
+  // Add location-specific terms
+  if (entities.location === 'outdoor' || entities.location === 'garden') {
+    contextTerms.push('SWA steel wire armoured outdoor cable installation');
+    contextTerms.push('Section 522 external influences weatherproof');
+    contextTerms.push('IP rating outdoor equipment');
+  }
+  
+  if (entities.installMethod === 'buried' || /buried|underground/.test(userQuery)) {
+    contextTerms.push('underground buried cable 600mm depth');
+    contextTerms.push('direct burial cable protection');
+    contextTerms.push('warning tape cable route marking');
+  }
+  
+  // Add load-specific terms
+  if (entities.loadType === 'ev_charger') {
+    contextTerms.push('Section 722 EV charging installation');
+    contextTerms.push('electric vehicle supply equipment');
+  }
+  
+  if (entities.location === 'bathroom') {
+    contextTerms.push('Section 701 bathroom zones IP rating');
+  }
+  
+  // Add factory/industrial terms
+  if (/factory|industrial|warehouse/.test(userQuery)) {
+    contextTerms.push('SWA cable mechanical protection industrial');
+    contextTerms.push('exposed cable runs armoured protection');
+  }
+  
+  return contextTerms.join(' ');
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -113,13 +155,24 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Step 1: Generate embedding for pricing search (with retry)
+    // Step 1: Parse entities and build enhanced RAG query
+    logger.debug('Parsing query entities');
+    const parsedEntities = parseQueryEntities(query);
+    const enhancedQuery = buildEnhancedRAGQuery(query, parsedEntities);
+    logger.debug('Enhanced query built', { 
+      original: query.substring(0, 50),
+      enhanced: enhancedQuery.substring(0, 100),
+      location: parsedEntities.location,
+      loadType: parsedEntities.loadType
+    });
+
+    // Step 2: Generate embedding for pricing search (with retry)
     logger.debug('Generating query embedding');
     const embeddingStart = Date.now();
-    const queryEmbedding = await generateEmbeddingWithRetry(query, OPENAI_API_KEY);
+    const queryEmbedding = await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY);
     logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
-    // Step 2: Parallel RAG search (OPTIMIZED FOR SPEED)
+    // Step 3: Parallel RAG search (OPTIMIZED FOR SPEED + CONTEXT)
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
@@ -141,22 +194,51 @@ serve(async (req) => {
       }),
       supabase.rpc('search_installation_knowledge', {
         query_embedding: queryEmbedding,
-        match_threshold: 0.70,
-        match_count: 3
+        match_threshold: 0.55,  // Lowered from 0.70 for better RAG retrieval
+        match_count: 8          // Increased from 3 for more context
       }),
       supabase.rpc('search_project_mgmt', {
         query_embedding: queryEmbedding,
         match_threshold: 0.65,
         match_count: 2
       }),
-      // Explicit keyword search for common electrical materials
+      // Explicit keyword search for common electrical materials + SWA
       supabase
         .from('pricing_embeddings')
         .select('*')
-        .or('item_name.ilike.%2.5mm%,item_name.ilike.%1.5mm%,item_name.ilike.%6mm%,item_name.ilike.%10mm%,item_name.ilike.%consumer unit%,item_name.ilike.%RCBO%,item_name.ilike.%MCB%,item_name.ilike.%socket outlet%,item_name.ilike.%switch%,item_name.ilike.%downlight%')
+        .or('item_name.ilike.%2.5mm%,item_name.ilike.%1.5mm%,item_name.ilike.%6mm%,item_name.ilike.%10mm%,item_name.ilike.%SWA%,item_name.ilike.%armoured%,item_name.ilike.%gland%,item_name.ilike.%consumer unit%,item_name.ilike.%RCBO%,item_name.ilike.%MCB%,item_name.ilike.%socket outlet%,item_name.ilike.%switch%,item_name.ilike.%downlight%')
         .order('base_cost', { ascending: true })
         .limit(12)
     ]);
+
+    // Keyword fallback for installation knowledge if vector search insufficient
+    if (!installationResults || installationResults.length < 3) {
+      const installKeywords = ['SWA', 'armoured', 'outdoor', 'buried', 'underground', 'Section 522', 'Section 701', 'Section 722'];
+      const keywordTerms = installKeywords.filter(k => 
+        query.toLowerCase().includes(k.toLowerCase()) || 
+        enhancedQuery.toLowerCase().includes(k.toLowerCase())
+      );
+      
+      if (keywordTerms.length > 0) {
+        const { data: keywordInstallResults } = await supabase
+          .from('installation_knowledge')
+          .select('*')
+          .or(keywordTerms.map(k => `content.ilike.%${k}%`).join(','))
+          .limit(5);
+        
+        if (keywordInstallResults && keywordInstallResults.length > 0) {
+          installationResults = [
+            ...(installationResults || []),
+            ...keywordInstallResults
+          ].filter((v, i, a) => a.findIndex(t => t.id === v.id) === i); // dedupe
+          logger.info('Installation keyword fallback used', { 
+            terms: keywordTerms,
+            found: keywordInstallResults.length,
+            totalResults: installationResults.length
+          });
+        }
+      }
+    }
 
     // Merge vector + keyword results (dedupe by id)
     let finalPricingResults = [
@@ -201,12 +283,12 @@ serve(async (req) => {
         ).join('\n');
     }
     
-    pricingContext += `\n\nFALLBACK MARKET RATES (use if not in database):\n- 2.5mm² T&E cable: £0.98/metre (£95-£100 per 100m roll)\n- 1.5mm² T&E cable: £0.80/metre (£80 per 100m roll)\n- 6mm² T&E cable: £2.20/metre (£110 per 50m roll)\n- 10mm² T&E cable: £3.90/metre (£195 per 50m roll)\n- 8-way consumer unit (RCD): £136.36\n- 40A RCBO: £28.50`;
+    pricingContext += `\n\nFALLBACK MARKET RATES (use if not in database):\n- 2.5mm² T&E cable: £0.98/metre (£95-£100 per 100m roll)\n- 1.5mm² T&E cable: £0.80/metre (£80 per 100m roll)\n- 6mm² T&E cable: £2.20/metre (£110 per 50m roll)\n- 10mm² T&E cable: £3.90/metre (£195 per 50m roll)\n- 2.5mm² SWA cable: £3.50/metre (3-core armoured)\n- 4mm² SWA cable: £4.80/metre (3-core armoured)\n- 6mm² SWA cable: £6.20/metre (3-core armoured)\n- 10mm² SWA cable: £9.50/metre (3-core armoured)\n- SWA gland 20mm: £10.00 (x2 per cable run)\n- 8-way consumer unit (RCD): £136.36\n- 40A RCBO: £28.50`;
 
-    // Build compact installation context (100 chars max per snippet)
+    // Build installation context with LONGER snippets (250 chars for critical context)
     const installationContext = installationResults && installationResults.length > 0
       ? installationResults.map((r: any) => 
-          `- ${r.topic}: ${r.content.substring(0, 100)}...`
+          `- ${r.topic}: ${r.content.substring(0, 250)}...`
         ).join('\n')
       : '';
 
@@ -242,7 +324,27 @@ serve(async (req) => {
 
 ${pricingContext}
 
-${installationContext ? `\nINSTALLATION METHODS:\n${installationContext}\n` : ''}${pmContext ? `PM INSIGHTS:\n${pmContext}\n` : ''}
+CABLE SELECTION RULES (BS 7671 Section 522):
+- INDOOR installations (house, flat): T&E cable (2.5mm², 1.5mm², 6mm², 10mm²)
+- OUTDOOR/GARDEN/EXTERNAL: MUST use SWA (Steel Wire Armoured) cable - T&E NOT permitted
+  * EV chargers to garden: SWA cable
+  * Garden sockets/lighting: SWA cable
+  * Runs between buildings: SWA cable
+- UNDERGROUND/BURIED: MUST use SWA cable at 600mm depth + warning tape
+- FACTORY/INDUSTRIAL: SWA cable for exposed runs (mechanical protection)
+- LOFT with thermal insulation: Use 90°C rated cable (or derate by 0.5x)
+- FIRE CIRCUITS (alarm/emergency): Use FP200 Gold or equivalent
+
+When specifying SWA cable:
+- Use equivalent CSA to T&E (e.g., 2.5mm² T&E → 2.5mm² 3-core SWA)
+- Add termination glands to material list (£8-£12 per gland x 2)
+- SWA pricing: 2.5mm² ~£3.50/m, 4mm² ~£4.80/m, 6mm² ~£6.20/m, 10mm² ~£9.50/m
+
+⚠️ CRITICAL: Check installation context from RAG knowledge below.
+If RAG mentions "SWA", "armoured", "outdoor", "Section 522", "buried", or "external influences":
+→ YOU MUST use SWA cable, NOT T&E cable
+
+${installationContext ? `\nINSTALLATION CONTEXT FROM RAG:\n${installationContext}\n` : ''}${pmContext ? `PM INSIGHTS:\n${pmContext}\n` : ''}
 
 LABOUR CALCULATION RULES (NO CONTINGENCY LINE ITEMS):
 - Rewire (3-bed, 8 circuits): 
