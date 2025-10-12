@@ -165,24 +165,15 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
             <CircuitSpecCard 
               data={{
                 ...structuredData.design,
-                designCurrent: structuredData.calculations?.designCurrent || structuredData.design?.designCurrent,
-                deviceRating: structuredData.design?.protectionDevice 
-                  ? parseInt(structuredData.design.protectionDevice.match(/(\d+)A/)?.[1] || '0', 10) || undefined
-                  : structuredData.design?.deviceRating,
-                correctionFactors: structuredData.calculations?.correctionFactors
-                  ? { overall: structuredData.calculations.correctionFactors }
-                  : structuredData.design?.correctionFactors,
-                earthFault: structuredData.calculations?.maxZs
-                  ? { maxZs: structuredData.calculations.maxZs }
-                  : structuredData.design?.earthFault,
-                voltageDrop: typeof structuredData.design.voltageDrop === 'number' 
-                  ? {
-                      percentage: structuredData.design.voltageDrop,
-                      actual: (structuredData.design.voltageDrop / 100) * (structuredData.design?.voltage || 230),
-                      limit: 5,
-                      compliant: structuredData.design.voltageDrop <= 5
-                    }
-                  : structuredData.design.voltageDrop
+                designCurrent: structuredData.design?.designCurrent || structuredData.calculations?.Ib,
+                deviceRating: structuredData.design?.mcbRating || 
+                  (structuredData.design?.protectionDevice 
+                    ? parseInt(structuredData.design.protectionDevice.match(/(\d+)A/)?.[1] || '0', 10) || undefined
+                    : structuredData.design?.deviceRating),
+                correctedCapacity: structuredData.calculations?.Iz || structuredData.design?.correctedCapacity,
+                correctionFactors: structuredData.design?.correctionFactors,
+                earthFault: structuredData.design?.earthFault,
+                voltageDrop: structuredData.design?.voltageDrop
               }}
               planData={structuredData.design?.planData}
               citations={structuredData.citations}

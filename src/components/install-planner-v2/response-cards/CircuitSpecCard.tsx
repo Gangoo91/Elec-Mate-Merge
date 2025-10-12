@@ -23,10 +23,12 @@ interface CircuitSpecData {
     overall?: number;
   };
   voltageDrop?: {
-    actual: number;
-    percentage: number;
-    limit: number;
-    compliant: boolean;
+    volts?: number;
+    percent?: number;
+    actual?: number;
+    percentage?: number;
+    limit?: number;
+    compliant?: boolean;
   };
   earthFault?: {
     maxZs: number;
@@ -220,7 +222,7 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
             <div className="bg-muted/30 rounded p-2">
               <p className="text-[10px] sm:text-xs text-muted-foreground">Voltage Drop</p>
               <p className="text-sm sm:text-base font-semibold text-foreground">
-                {localData.voltageDrop?.percentage.toFixed(1)}%
+                {localData.voltageDrop?.percent?.toFixed(1)}%
                 {localData.voltageDrop?.compliant && (
                   <span className="text-green-400 ml-1">✓</span>
                 )}
@@ -303,11 +305,11 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
               <div className="space-y-2 border-l-2 border-green-500/30 pl-3">
                 <p className="text-xs font-semibold text-foreground">Voltage Drop</p>
                 <div className="text-xs text-muted-foreground space-y-1">
-                  {data.voltageDrop.actual !== undefined && (
-                    <p>Actual: {data.voltageDrop.actual.toFixed(1)}V</p>
+                  {data.voltageDrop.volts !== undefined && (
+                    <p>Actual: {data.voltageDrop.volts?.toFixed(1)}V</p>
                   )}
-                  {data.voltageDrop.percentage !== undefined && (
-                    <p>Percentage: {data.voltageDrop.percentage.toFixed(2)}%</p>
+                  {data.voltageDrop.percent !== undefined && (
+                    <p>Percentage: {data.voltageDrop.percent?.toFixed(2)}%</p>
                   )}
                   {data.voltageDrop.limit !== undefined && (
                     <p>Max Permitted: {data.voltageDrop.limit}%</p>
