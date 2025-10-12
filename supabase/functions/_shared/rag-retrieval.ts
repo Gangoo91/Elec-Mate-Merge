@@ -99,7 +99,7 @@ export async function retrieveRegulations(
     ? rerankRegulations(results, entities, query)
     : results;
   
-  console.log(`✅ Returning ${reranked.length} reranked regulations`);
+  console.log(`✅ Returning ${reranked.length} reranked regulations with FULL content`);
   return reranked;
 }
 

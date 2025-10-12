@@ -42,6 +42,9 @@ export function designCircuit(params: {
   installMethod?: string;
   ambientTemp?: number;
   grouping?: number;
+  location?: string;
+  loadType?: string;
+  earthingSystem?: string;
 }): DesignResult {
   const {
     power,
@@ -140,6 +143,10 @@ export function designCircuit(params: {
     warnings.push('Earth fault loop impedance exceeds maximum value');
   }
 
+  // NEW: Edge case validation
+  const edgeCaseWarnings = validateEdgeCases(params, selectedCable);
+  warnings.push(...edgeCaseWarnings);
+
   return {
     designCurrent: Math.round(Ib * 10) / 10,
     mcbRating: In,
@@ -164,4 +171,74 @@ export function designCircuit(params: {
     success: selectedCable.result.compliance.overallCompliant && selectedCable.result.voltageDrop.compliant,
     warnings
   };
+}
+
+/**
+ * Edge Case Validation - Real-world installation constraints
+ * Catches issues that pure calculations might miss
+ */
+function validateEdgeCases(params: any, cable: any): string[] {
+  const warnings: string[] = [];
+  
+  // 1. BATHROOM REQUIREMENTS (Section 701)
+  if (params.location === 'bathroom') {
+    warnings.push('⚠️ BATHROOM: RCD protection mandatory (Section 701.411.3.3)');
+    warnings.push('⚠️ BATHROOM: Check IP rating for zones - IPX4 minimum in Zone 2');
+    warnings.push('⚠️ BATHROOM: Verify equipment locations comply with zones 0, 1, 2');
+  }
+  
+  // 2. HIGH-POWER APPLIANCES
+  if (params.power > 3000 && params.loadType !== 'socket') {
+    warnings.push('⚠️ APPLIANCE >3kW: Local isolation required (Regulation 537.2.1.1)');
+  }
+  
+  // 3. OUTDOOR CIRCUITS (Section 522)
+  if (params.location === 'outdoor') {
+    warnings.push('⚠️ OUTDOOR: Buried cable needs 600mm depth + warning tape (522.8.10)');
+    warnings.push('⚠️ OUTDOOR: Use SWA or armoured cable for mechanical protection');
+    warnings.push('⚠️ OUTDOOR: RCD protection mandatory for outdoor sockets (411.3.3)');
+  }
+  
+  // 4. TT EARTHING SYSTEMS
+  if (params.earthingSystem === 'TT') {
+    warnings.push('⚠️ TT SYSTEM: RCD mandatory for all circuits (411.5.2)');
+    warnings.push('⚠️ TT SYSTEM: Check earth electrode resistance (Ra × Ia ≤ 50V)');
+  }
+  
+  // 5. VOLTAGE DROP MARGIN
+  if (cable.result.voltageDrop.voltageDropPercent > 2.5 && cable.result.voltageDrop.voltageDropPercent <= 3.0) {
+    warnings.push('⚠️ Voltage drop near 3% limit - consider next cable size for safety margin');
+  }
+  
+  // 6. HIGH AMBIENT TEMPERATURE
+  if (params.ambientTemp > 35) {
+    warnings.push('⚠️ High ambient temp - verify derating factors from Table 4B1');
+  }
+  
+  // 7. KITCHEN CIRCUITS
+  if (params.location === 'kitchen' && params.loadType === 'socket') {
+    warnings.push('💡 KITCHEN: Socket outlets above worktop should be >450mm from sink');
+    warnings.push('💡 KITCHEN: Consider dedicated circuits for major appliances');
+  }
+  
+  // 8. LOFT/ATTIC INSTALLATIONS
+  if (params.location === 'loft') {
+    warnings.push('⚠️ LOFT: Check insulation contact - may need higher derating');
+    warnings.push('⚠️ LOFT: Consider mechanical protection for cables in accessible areas');
+  }
+  
+  // 9. SHOWER SPECIFIC (Section 701)
+  if (params.loadType === 'shower') {
+    warnings.push('💡 SHOWER: 30mA RCD protection required (701.411.3.3)');
+    warnings.push('💡 SHOWER: Supplementary bonding may be required - check Section 701.415.2');
+  }
+  
+  // 10. EV CHARGER SPECIFIC (Section 722)
+  if (params.loadType === 'ev_charger') {
+    warnings.push('⚠️ EV CHARGER: Dedicated circuit required (Section 722)');
+    warnings.push('⚠️ EV CHARGER: Type A or Type B RCD required for DC fault protection');
+    warnings.push('⚠️ EV CHARGER: O-PEN device recommended for TN-C-S systems');
+  }
+  
+  return warnings;
 }

@@ -95,7 +95,10 @@ serve(async (req) => {
         distance: entities.distance,
         voltage: entities.voltage || 230,
         installMethod: 'A',
-        ambientTemp: 25
+        ambientTemp: entities.ambientTemp || 30,
+        location: entities.location,
+        loadType: entities.loadType,
+        earthingSystem: entities.earthingSystem
       });
       
       if (!design.success) {
@@ -111,10 +114,10 @@ serve(async (req) => {
         });
       }
       
-      // STEP 2: Get detailed RAG regulations (parallel with GPT call)
+      // STEP 2: Get detailed RAG regulations (INCREASED DEPTH)
       const regulations = await retrieveRegulations(
         `${design.regulations.join(' ')} ${query}`,
-        12, // Get MORE regulations for depth
+        15, // INCREASED: 15 regulations for deeper context
         OPENAI_API_KEY,
         entities
       );
@@ -157,11 +160,11 @@ serve(async (req) => {
             compliant: design.earthFault.compliant
           }
         },
-        regulations: regulations.slice(0, 8).map(r => ({
+        regulations: regulations.slice(0, 10).map(r => ({
           number: r.regulation_number,
           title: r.section,
           relevance: getRegulationRelevance(r.regulation_number),
-          excerpt: r.content.slice(0, 300)
+          content: r.content  // FULL CONTENT - not truncated!
         })),
         warnings: design.warnings
       };
@@ -182,26 +185,36 @@ serve(async (req) => {
               model: 'openai/gpt-5',
               messages: [{
                 role: 'system',
-                content: `You are an expert UK electrical design assistant. 
+                content: `You are a MASTER ELECTRICIAN with 20+ years BS 7671:2018+A2:2022 experience.
 
-CRITICAL RULES:
-1. The calculations provided are GROUND TRUTH - never recalculate or change them
-2. Use the exact numbers given: Ib, MCB rating, cable size, voltage drop
-3. Your job is to EXPLAIN the design clearly, not compute it
-4. Reference the BS 7671 regulations provided to add context
-5. Write in a professional but conversational tone
-6. Structure your response with clear headings
-7. Highlight compliance with ✅ and issues with ⚠️
-8. Include the "why" behind each decision
+Your job: Explain this electrical design like you're mentoring an apprentice on-site.
 
-Format as markdown with:
-- ## Circuit Design Result (main title)
-- ### sections for each aspect
-- Clear explanations of what each calculation means
-- Practical guidance based on the regulations
-- Any warnings or considerations
+MANDATORY REQUIREMENTS:
+1. NEVER recalculate - the numbers provided are from BS 7671 tables (GROUND TRUTH)
+2. For EACH regulation cited, explain:
+   - What it says (in plain English)
+   - Why it matters for THIS specific installation
+   - Real consequences if ignored (safety, compliance, warranty)
+3. Give PRACTICAL on-site guidance:
+   - Installation tips (cable routing, fixing methods, spacing)
+   - Testing checkpoints (what values to verify, when to test)
+   - Common mistakes apprentices make (and how to avoid them)
+4. Warn about EDGE CASES and special requirements:
+   - Special locations (bathroom zones, outdoor burial depths, etc.)
+   - High-risk scenarios (TT systems, high power loads, etc.)
+   - Borderline compliance (near voltage drop limit, tight Zs margins)
+5. Structure your response clearly:
+   - **Executive summary** (2 sentences max - "Here's what you need")
+   - **Design decisions** with reasoning (explain the "why")
+   - **Practical installation notes** (step-by-step guidance)
+   - **Testing requirements** (what to test, expected values)
+   - **Warnings and considerations** (things that could go wrong)
 
-Remember: The user asked "${query}" - address that directly.`
+The regulations provided are COMPLETE with full text - reference them specifically by number and explain their relevance.
+
+Write like a mentor, not a textbook. Use "we" and "you". Be conversational but authoritative. Make it useful for someone installing this circuit tomorrow.
+
+Remember: The user asked "${query}" - address that directly and completely.`
               }, {
                 role: 'user',
                 content: `Here are the FACTS (do not recalculate, just explain):
@@ -209,11 +222,13 @@ Remember: The user asked "${query}" - address that directly.`
 ${JSON.stringify(structuredFacts, null, 2)}
 
 Write a comprehensive electrical design response that:
-1. Confirms the design meets the user's requirements
-2. Explains each calculation in context of BS 7671
-3. Provides practical guidance
-4. Highlights any considerations or warnings
-5. References the regulations naturally in your explanation`
+1. Confirms the design meets "${query}"
+2. Explains each calculation in plain English with BS 7671 context
+3. For EACH regulation: What it says, why it matters here, consequences if ignored
+4. Provides practical installation guidance (routing, fixing, testing)
+5. Highlights warnings, edge cases, and special requirements
+6. Uses the FULL regulation content provided - not just excerpts
+7. Makes this answer actually useful for someone installing this circuit`
               }],
               max_completion_tokens: 2000
             })

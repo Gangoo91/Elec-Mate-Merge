@@ -11,6 +11,11 @@ export interface ParsedEntities {
   installMethod?: string;
   ambientTemp?: number;
   grouping?: number;
+  // NEW: Enhanced context detection
+  location?: 'bathroom' | 'kitchen' | 'outdoor' | 'loft' | 'garage' | 'general';
+  specialRequirements?: string[];
+  installationConstraints?: string[];
+  earthingSystem?: 'TN-S' | 'TN-C-S' | 'TT' | 'IT';
 }
 
 export function parseQueryEntities(query: string): ParsedEntities {
@@ -18,7 +23,9 @@ export function parseQueryEntities(query: string): ParsedEntities {
     voltage: 230, 
     phases: 'single', 
     ambientTemp: 30, 
-    grouping: 1 
+    grouping: 1,
+    specialRequirements: [],
+    installationConstraints: []
   };
   
   // Power extraction (9.5kW, 9500W, 9.5 kW)
@@ -43,15 +50,68 @@ export function parseQueryEntities(query: string): ParsedEntities {
   if (/ev charger|electric vehicle/i.test(query)) entities.loadType = 'ev_charger';
   if (/heat pump/i.test(query)) entities.loadType = 'heat_pump';
   
+  // NEW: Location context detection
+  if (/bathroom|shower room|wet room/i.test(query)) {
+    entities.location = 'bathroom';
+    entities.specialRequirements?.push('RCD protection mandatory (Section 701)');
+    entities.specialRequirements?.push('IP rating for zones (IPX4 minimum in Zone 2)');
+    entities.specialRequirements?.push('Check zones 0, 1, 2 for equipment selection');
+  }
+  if (/kitchen/i.test(query)) {
+    entities.location = 'kitchen';
+    entities.specialRequirements?.push('Socket height regulations (above worktop)');
+    entities.specialRequirements?.push('Dedicated appliance circuits recommended');
+  }
+  if (/outdoor|garden|external|outside/i.test(query)) {
+    entities.location = 'outdoor';
+    entities.specialRequirements?.push('Buried cable: 600mm depth + warning tape (522.8.10)');
+    entities.specialRequirements?.push('IP65+ rating required for outdoor equipment');
+    entities.specialRequirements?.push('RCD protection mandatory (411.3.3)');
+  }
+  if (/loft|attic/i.test(query)) {
+    entities.location = 'loft';
+    entities.ambientTemp = 40; // Override default temp
+    entities.installationConstraints?.push('High ambient temperature (40°C+)');
+    entities.installationConstraints?.push('Cable derating required (Table 4B1)');
+  }
+  if (/garage|workshop/i.test(query)) {
+    entities.location = 'garage';
+    entities.specialRequirements?.push('RCD protection recommended');
+    entities.specialRequirements?.push('Consider mechanical protection for cables');
+  }
+  
+  // NEW: Installation constraints
+  if (/solid wall|brick|masonry/i.test(query)) {
+    entities.installationConstraints?.push('Difficult chasing in solid walls');
+    entities.installationConstraints?.push('Consider surface trunking or conduit');
+  }
+  if (/buried|underground/i.test(query)) {
+    entities.installMethod = 'buried';
+    entities.installationConstraints?.push('Direct burial requires SWA cable or ducting');
+    entities.installationConstraints?.push('Warning tape required 150mm above cable');
+  }
+  
+  // NEW: Earthing system detection
+  if (/TT system|earth rod|no earth/i.test(query)) {
+    entities.earthingSystem = 'TT';
+    entities.specialRequirements?.push('RCD mandatory for TT system (411.5.2)');
+    entities.specialRequirements?.push('Higher Zs values permitted with RCD');
+  }
+  if (/TN-S|separate earth/i.test(query)) {
+    entities.earthingSystem = 'TN-S';
+  }
+  if (/TN-C-S|PME/i.test(query)) {
+    entities.earthingSystem = 'TN-C-S';
+  }
+  
   // Voltage override
   if (/400V|three.?phase|3.?phase/i.test(query)) {
     entities.voltage = 400;
     entities.phases = 'three';
   }
   
-  // Installation method detection
+  // Installation method detection (refined)
   if (/clipped|direct|surface/i.test(query)) entities.installMethod = 'clipped-direct';
-  if (/buried|underground/i.test(query)) entities.installMethod = 'buried';
   if (/conduit/i.test(query)) entities.installMethod = 'in-conduit';
   if (/trunking/i.test(query)) entities.installMethod = 'in-trunking';
   
