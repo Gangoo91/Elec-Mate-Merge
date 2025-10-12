@@ -11,10 +11,14 @@ import { safeAll } from '../_shared/safe-parallel.ts';
 import { createContextEnvelope, mergeContext, type ContextEnvelope, type QueryIntent } from '../_shared/agent-context.ts';
 import { intelligentRAGSearch, type HybridSearchParams } from '../_shared/intelligent-rag.ts';
 import { searchDesignPattern, storeDesignPattern } from '../_shared/pattern-learning.ts';
-import { calculateVoltageDrop, getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
+import { getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
 import { getMaxZs, checkRCDRequirement } from "../shared/bs7671ProtectionData.ts";
 import { calculateCableCapacity } from '../_shared/calculationEngines.ts';
+import { 
+  calculateVoltageDrop as calculateVoltageDropUnified, 
+  calculateEarthFaultLoop 
+} from '../_shared/bs7671-unified-calculations.ts';
 
 // TypeScript Interfaces for Type Safety
 interface CircuitCalculations {
@@ -182,20 +186,39 @@ serve(async (req) => {
         tableReference: 'Table 4D5'
       };
 
-      const voltDropCalc = calculateVoltageDrop(
-        circuitParams.cableSize,
-        circuitParams.designCurrent,
-        circuitParams.cableLength,
-        circuitParams.voltage
-      );
+      // Use unified BS 7671 calculation library for accurate voltage drop
+      const voltDropCalc = calculateVoltageDropUnified({
+        cableType: 'pvc-twin-earth',
+        cableSize: circuitParams.cableSize,
+        current: circuitParams.designCurrent,
+        length: circuitParams.cableLength,
+        voltage: circuitParams.voltage,
+        powerFactor: 0.95,
+        phaseConfig: 'single',
+        temperature: circuitParams.ambientTemp || 30,
+        loadType: circuitParams.circuitType?.toLowerCase().includes('light') ? 'lighting' : 'power'
+      });
 
       const zsCalc = getMaxZs(circuitParams.deviceType, circuitParams.deviceRating, 0.4);
       const rcdRequirements = checkRCDRequirement(circuitParams.circuitType, circuitParams.location);
 
-      // Calculate prospective short-circuit current (PSCC)
-      const r1r2PerMeter = circuitParams.cableSize === 2.5 ? 7.41 : circuitParams.cableSize === 4 ? 4.61 : 3.08;
-      const zs = 0.35 + (r1r2PerMeter * circuitParams.cableLength / 1000);
-      const pscc = Math.round((0.95 * circuitParams.voltage) / zs);
+      // Use unified BS 7671 calculation library for earth fault loop impedance
+      const earthFaultResult = calculateEarthFaultLoop({
+        externalZe: 0.35,
+        cableType: 'pvc-twin-earth',
+        cableSize: circuitParams.cableSize,
+        cpcSize: circuitParams.cableSize, // Same as live for T&E
+        length: circuitParams.cableLength,
+        temperature: 70, // Operating temperature
+        protectiveDevice: {
+          type: circuitParams.deviceType || 'MCB-B',
+          rating: circuitParams.deviceRating,
+          disconnectionTime: 0.4
+        }
+      });
+      
+      const zs = earthFaultResult.zs;
+      const pscc = earthFaultResult.pscc;
 
       // Motor circuit detection
       const isMotorCircuit = circuitParams.circuitType?.toLowerCase().includes('motor');
