@@ -66,23 +66,29 @@ export function parseQueryEntities(query: string): ParsedEntities {
 
 export type QueryType = 'design' | 'lookup' | 'compare' | 'explain' | 'general';
 
-export function classifyQuery(query: string): QueryType {
-  // Design patterns
+export function classifyQuery(query: string, entities?: ParsedEntities): QueryType {
+  // PRIORITY 1: Structural design query detection
+  // If we have power AND distance, it's ALWAYS a design query
+  if (entities?.power && entities?.distance) {
+    return 'design';
+  }
+  
+  // PRIORITY 2: Explicit design keywords
   if (/design|size|calculate|select|what (cable|mcb|breaker)|recommend/i.test(query)) {
     return 'design';
   }
   
-  // Direct lookup patterns
+  // PRIORITY 3: Regulation lookup patterns
   if (/regulation \d+|section \d+|what (does|is)|BS ?7671|table \d+/i.test(query)) {
     return 'lookup';
   }
   
-  // Comparison patterns
+  // PRIORITY 4: Comparison patterns
   if (/compare|vs|versus|difference between/i.test(query)) {
     return 'compare';
   }
   
-  // Explanation patterns
+  // PRIORITY 5: Explanation patterns
   if (/explain|why|how (does|do)/i.test(query)) {
     return 'explain';
   }

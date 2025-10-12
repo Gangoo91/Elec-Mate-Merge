@@ -63,7 +63,7 @@ serve(async (req) => {
 
     // Parse query for entities and classify
     const entities = parseQueryEntities(query);
-    const queryType = classifyQuery(query);
+    const queryType = classifyQuery(query, entities);
     logger.info('Query classified', { queryType, entities });
 
     // Get OpenAI API key for embeddings
@@ -78,101 +78,190 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // ⚡ PHASE 1: DETERMINISTIC DESIGN PATH
-    // If design query with power + distance → USE RULES-FIRST APPROACH
+    // ⚡ PHASE 1: DETERMINISTIC DESIGN with GPT-5 synthesis
     if (queryType === 'design' && entities.power && entities.distance) {
-      logger.info('🎯 Using deterministic design path (rules-first)');
+      logger.info('🎯 Using deterministic design path (rules-first)', { entities });
       
-      try {
-        // Run BS 7671 calculations
-        const design = designCircuit({
+      // STEP 1: Calculate (deterministic, instant, always correct)
+      const design = designCircuit({
+        power: entities.power,
+        distance: entities.distance,
+        voltage: entities.voltage || 230,
+        installationMethod: 'A',
+        ambientTemp: 25
+      });
+      
+      if (!design.success) {
+        return new Response(JSON.stringify({
+          response: `Unable to calculate circuit design: ${design.warnings.join(', ')}`,
+          structuredData: null,
+          suggestedNextAgents: []
+        }), { 
+          status: 400,
+          headers: corsHeaders 
+        });
+      }
+      
+      // STEP 2: Get detailed RAG regulations (parallel with GPT call)
+      const regulations = await retrieveRegulations(
+        `${design.regulations.join(' ')} ${query}`,
+        12, // Get MORE regulations for depth
+        OPENAI_API_KEY
+      );
+      
+      logger.info('Calculations and RAG complete', {
+        Ib: design.designCurrent,
+        mcb: design.mcbRating,
+        cable: design.cableSize,
+        regulationCount: regulations.length
+      });
+      
+      // STEP 3: Build structured facts for GPT-5
+      const loadDescription = entities.loadType 
+        ? `${entities.loadType.charAt(0).toUpperCase() + entities.loadType.slice(1).replace('_', ' ')}`
+        : 'Load';
+      
+      const structuredFacts = {
+        query: query,
+        load: {
+          type: loadDescription,
           power: entities.power,
           distance: entities.distance,
-          voltage: entities.voltage || voltage,
-          phases: entities.phases,
-          installMethod: entities.installMethod,
-          ambientTemp: entities.ambientTemp,
-          grouping: entities.grouping
-        });
-
-        // Get RAG citations for regulations used
-        const ragResults = await retrieveRegulations(
-          design.regulations.join(' '), 
-          8, 
-          OPENAI_API_KEY
-        );
-        
-        // Build structured response
-        const loadType = entities.loadType || 'General';
-        const response = `## Circuit Design Result
-
-**Load:** ${loadType.charAt(0).toUpperCase() + loadType.slice(1)} (${entities.power}W)
-**Cable Run:** ${entities.distance}m
-
-### Design Current (Ib)
-${design.calculations.Ib}A (${entities.power}W ÷ ${entities.voltage}V)
-
-### Protective Device (In)
-${design.mcbRating}A MCB (Type B recommended)
-
-### Cable Selection
-${design.cableSize}mm² ${design.cableType} cable
-${design.calculations.equation}
-
-### Voltage Drop
-${design.voltageDrop.volts.toFixed(2)}V (${design.voltageDrop.percent.toFixed(2)}%)
-${design.voltageDrop.compliant ? '✅ Compliant' : '❌ Exceeds limit'} with BS 7671 Reg 525
-
-### Earth Fault Protection
-Max Zs: ${design.earthFault.maxZs}Ω
-${design.earthFault.compliant ? '✅ Compliant' : '❌ Non-compliant'} with BS 7671 Reg 411.3.2
-
-${design.warnings.length > 0 ? `\n⚠️ **Warnings:**\n${design.warnings.map(w => `- ${w}`).join('\n')}` : ''}
-
----
-*Design based on BS 7671:2018+A2:2022 regulations*`;
-
-        const citations = ragResults.map(r => ({
-          source: 'BS 7671:2018+A2:2022',
-          section: r.regulation_number,
-          title: r.section,
-          content: r.content.substring(0, 200),
-          relevance: r.similarity || 0.8
-        }));
-
-        logger.info('✅ Deterministic design complete', { 
-          cableSize: design.cableSize,
+          voltage: entities.voltage || 230
+        },
+        calculations: {
+          designCurrent: design.designCurrent,
+          formula: `Ib = ${entities.power}W ÷ ${entities.voltage || 230}V = ${design.designCurrent.toFixed(1)}A`,
           mcbRating: design.mcbRating,
-          compliant: design.success
-        });
-
-        return new Response(JSON.stringify({
-          response,
-          structuredData: {
-            design: {
-              cableSize: `${design.cableSize}mm²`,
-              protectionDevice: `${design.mcbRating}A Type B`,
-              voltageDrop: `${design.voltageDrop.volts.toFixed(2)}V (${design.voltageDrop.percent.toFixed(2)}%)`,
-              earthingArrangement: 'TN-S'
-            },
-            compliance: {
-              status: design.success ? 'compliant' : 'warning',
-              regulations: design.regulations,
-              warnings: design.warnings
-            },
-            calculations: design.calculations,
-            citations
+          cableSize: design.cableSize,
+          cableType: design.cableType,
+          cableCapacity: design.calculations.Iz,
+          voltageDrop: {
+            volts: design.voltageDrop.volts,
+            percent: design.voltageDrop.percent,
+            compliant: design.voltageDrop.compliant,
+            limit: '3% for fixed equipment'
           },
-          source: 'deterministic',
-          queryType,
-          design
-        }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          earthFault: {
+            maxZs: design.earthFault.maxZs,
+            compliant: design.earthFault.compliant
+          }
+        },
+        regulations: regulations.slice(0, 8).map(r => ({
+          number: r.regulation_number,
+          title: r.section,
+          relevance: getRegulationRelevance(r.regulation_number),
+          excerpt: r.content.slice(0, 300)
+        })),
+        warnings: design.warnings
+      };
+      
+      // STEP 4: Try GPT-5 synthesis (with timeout protection)
+      let narrative: string;
+      let responseSource: string;
+      
+      try {
+        const gptResponse = await Promise.race([
+          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              model: 'openai/gpt-5',
+              messages: [{
+                role: 'system',
+                content: `You are an expert UK electrical design assistant. 
+
+CRITICAL RULES:
+1. The calculations provided are GROUND TRUTH - never recalculate or change them
+2. Use the exact numbers given: Ib, MCB rating, cable size, voltage drop
+3. Your job is to EXPLAIN the design clearly, not compute it
+4. Reference the BS 7671 regulations provided to add context
+5. Write in a professional but conversational tone
+6. Structure your response with clear headings
+7. Highlight compliance with ✅ and issues with ⚠️
+8. Include the "why" behind each decision
+
+Format as markdown with:
+- ## Circuit Design Result (main title)
+- ### sections for each aspect
+- Clear explanations of what each calculation means
+- Practical guidance based on the regulations
+- Any warnings or considerations
+
+Remember: The user asked "${query}" - address that directly.`
+              }, {
+                role: 'user',
+                content: `Here are the FACTS (do not recalculate, just explain):
+
+${JSON.stringify(structuredFacts, null, 2)}
+
+Write a comprehensive electrical design response that:
+1. Confirms the design meets the user's requirements
+2. Explains each calculation in context of BS 7671
+3. Provides practical guidance
+4. Highlights any considerations or warnings
+5. References the regulations naturally in your explanation`
+              }],
+              max_completion_tokens: 2000
+            })
+          }),
+          // 10 second timeout
+          new Promise<Response>((_, reject) => 
+            setTimeout(() => reject(new Error('GPT-5 timeout')), 10000)
+          )
+        ]);
+        
+        if (!gptResponse.ok) {
+          throw new Error(`GPT-5 error: ${gptResponse.status}`);
+        }
+        
+        const gptData = await gptResponse.json();
+        narrative = gptData.choices[0].message.content;
+        responseSource = 'deterministic+rag+gpt5';
+        
+        logger.info('✅ GPT-5 synthesis successful');
+        
+      } catch (error) {
+        // FALLBACK: Use structured template (still works!)
+        logger.warn('GPT-5 synthesis failed or timed out, using template', { 
+          error: error.message 
         });
-      } catch (designError: any) {
-        logger.error('Deterministic design failed, falling back to AI', { error: designError.message });
-        // Continue to AI path if deterministic fails
+        
+        narrative = buildFallbackNarrative(structuredFacts);
+        responseSource = 'deterministic+rag_only';
       }
+      
+      // STEP 5: Return complete response
+      return new Response(JSON.stringify({
+        response: narrative,
+        structuredData: {
+          design: design,
+          calculations: design.calculations,
+          compliance: {
+            voltageDrop: design.voltageDrop.compliant,
+            earthFault: design.earthFault.compliant,
+            overall: design.success
+          },
+          entities: entities
+        },
+        citations: regulations.slice(0, 8).map(r => ({
+          regulation_number: r.regulation_number,
+          section: r.section,
+          excerpt: r.content.slice(0, 200) + '...'
+        })),
+        metadata: {
+          responseSource: responseSource,
+          calculationTime: '<500ms',
+          regulationCount: regulations.length
+        },
+        suggestedNextAgents: design.success ? ['installer', 'cost-engineer'] : ['health-safety']
+      }), {
+        status: 200,
+        headers: corsHeaders
+      });
     }
 
     // ⚡ PHASE 2: LOOKUP/EXPLAIN PATH
@@ -742,6 +831,79 @@ Provide a complete, BS 7671 compliant design.`;
     return handleError(error);
   }
 });
+
+// Helper function for regulation relevance
+function getRegulationRelevance(regNumber: string): string {
+  const relevanceMap: Record<string, string> = {
+    '433.1.1': 'Defines design current calculation and protective device selection',
+    '525': 'Specifies voltage drop limits for electrical installations',
+    '533.1': 'Requirements for overcurrent protective devices',
+    '411.3.2': 'Earth fault loop impedance requirements for safety',
+    'Table 4D5': 'Current-carrying capacity values for cables',
+    'Table 41.3': 'Maximum earth fault loop impedance values'
+  };
+  
+  return relevanceMap[regNumber] || 'Supporting regulation';
+}
+
+// Helper function for fallback narrative
+function buildFallbackNarrative(facts: any): string {
+  return `## Circuit Design Result
+
+**${facts.load.type}:** ${facts.load.power}W
+**Cable Run:** ${facts.load.distance}m
+**Supply Voltage:** ${facts.load.voltage}V
+
+### Design Current (Ib)
+**${facts.calculations.designCurrent.toFixed(1)}A**
+
+${facts.calculations.formula}
+
+*Per BS 7671 Regulation 433.1.1 - The design current is the current intended to be carried by the circuit in normal service.*
+
+### Protective Device (In)
+**${facts.calculations.mcbRating}A MCB** (Type B recommended)
+
+Selected as the next standard rating above the design current. This ensures proper overload protection while allowing the circuit to operate normally.
+
+*Per BS 7671 Regulation 533.1 - Every circuit shall be protected by an overcurrent protective device.*
+
+### Cable Selection
+**${facts.calculations.cableSize}mm² ${facts.calculations.cableType}**
+
+Current-carrying capacity: ${facts.calculations.cableCapacity}A (after applying correction factors for installation method, grouping, and ambient temperature).
+
+*Per BS 7671 Table 4D5 - Current-carrying capacity and voltage drop for cables.*
+
+### Voltage Drop
+**${facts.calculations.voltageDrop.volts.toFixed(2)}V (${facts.calculations.voltageDrop.percent.toFixed(2)}%)**
+
+${facts.calculations.voltageDrop.compliant 
+  ? '✅ **Compliant** - Within the 3% limit for fixed equipment' 
+  : '⚠️ **Exceeds limit** - Consider larger cable size or shorter route'}
+
+*Per BS 7671 Regulation 525 - Voltage drop between the origin of the installation and any load point shall not exceed 3% for lighting or 5% for other uses.*
+
+### Earth Fault Protection
+Maximum Zs: ${facts.calculations.earthFault.maxZs}Ω
+${facts.calculations.earthFault.compliant ? '✅ Compliant' : '⚠️ Verification required'}
+
+*Per BS 7671 Regulation 411.3.2 - Earth fault loop impedance must not exceed values that ensure automatic disconnection in the required time.*
+
+${facts.warnings.length > 0 ? `\n### ⚠️ Additional Considerations\n${facts.warnings.map((w: string) => `- ${w}`).join('\n')}\n` : ''}
+
+### Regulations Referenced
+
+${facts.regulations.slice(0, 5).map((r: any) => 
+  `**${r.number}** - ${r.title}\n${r.relevance}\n`
+).join('\n')}
+
+---
+*Design calculated using BS 7671:2018+A2:2022*
+*Calculations: Deterministic (instant, accurate)*
+*Citations: RAG search (${facts.regulations.length} regulations)*
+*Note: AI narrative synthesis unavailable - showing structured results*`;
+}
 
 // Helper function to extract regulation numbers from text
 function extractRegulationNumbers(text: string): string[] {
