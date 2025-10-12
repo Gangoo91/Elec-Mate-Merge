@@ -64,13 +64,41 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
+    // Helper: Build context-enriched RAG query (Phase 2)
+    const buildEnhancedInstallQuery = (query: string, method?: string): string => {
+      const terms = [query];
+      
+      // Add installation method specifics
+      if (method === 'clipped_direct') {
+        terms.push('clip spacing cable support horizontal vertical BS 7671 Table 4A2');
+      } else if (method === 'conduit') {
+        terms.push('conduit installation bending radius cable pulling capacities');
+      } else if (method === 'trunking') {
+        terms.push('trunking cable capacity segregation fixing methods');
+      } else if (method === 'buried') {
+        terms.push('direct burial depth 600mm SWA cable protection warning tape');
+      }
+      
+      // Add job type specifics
+      if (/rewire|house wiring/.test(query)) {
+        terms.push('first fix second fix cable routing notching joists');
+        terms.push('consumer unit installation testing sequence');
+      }
+      if (/shower|bathroom/.test(query)) {
+        terms.push('Section 701 bathroom zones IP rating supplementary bonding');
+      }
+      if (/EV|charger/.test(query)) {
+        terms.push('Section 722 EV charging outdoor installation');
+      }
+      
+      return terms.join(' ');
+    };
+
     // Step 1: Generate embedding for installation knowledge search (with retry)
     logger.debug('Generating query embedding');
     const embeddingStart = Date.now();
-    const queryEmbedding = await generateEmbeddingWithRetry(
-      `${query} ${installationMethod || ''} cable installation practical guidance`,
-      OPENAI_API_KEY
-    );
+    const enhancedQuery = buildEnhancedInstallQuery(query, installationMethod);
+    const queryEmbedding = await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY);
     logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
     // Step 2: Search installation knowledge database
@@ -80,22 +108,53 @@ serve(async (req) => {
 
     logger.debug('Searching installation knowledge');
 
-    const { data: installKnowledge, error: installError } = await supabase.rpc('search_installation_knowledge', {
+    let { data: installKnowledge, error: installError } = await supabase.rpc('search_installation_knowledge', {
       query_embedding: queryEmbedding,
       method_filter: installationMethod || null,
       source_filter: null,
-      match_threshold: 0.7,
-      match_count: 8
+      match_threshold: 0.55,  // Phase 2: Lower threshold for more results
+      match_count: 12          // Phase 2: Increase match count
     });
 
     if (installError) {
       logger.warn('Installation search failed', { error: installError });
     }
 
-    // Step 3: Build installation context
+    // Phase 2: Keyword fallback if vector search returns < 5 results
+    if (!installKnowledge || installKnowledge.length < 5) {
+      const keywords = ['clip spacing', 'cable support', 'installation method', 
+                       'fixing', 'trunking', 'conduit', 'first fix', 'second fix',
+                       'notching', 'drilling', 'cable routing', 'termination'];
+      
+      const relevantKeywords = keywords.filter(k => 
+        query.toLowerCase().includes(k.split(' ')[0])
+      );
+      
+      if (relevantKeywords.length > 0) {
+        const { data: keywordResults } = await supabase
+          .from('installation_knowledge')
+          .select('*')
+          .or(relevantKeywords.map(k => `content.ilike.%${k}%`).join(','))
+          .limit(8);
+        
+        if (keywordResults) {
+          installKnowledge = [
+            ...(installKnowledge || []),
+            ...keywordResults
+          ].filter((v, i, a) => a.findIndex(t => t.id === v.id) === i);
+          
+          logger.info('Installation keyword fallback used', { 
+            terms: relevantKeywords,
+            found: keywordResults.length 
+          });
+        }
+      }
+    }
+
+    // Step 3: Build installation context (Phase 2: Focused snippets)
     const installContext = installKnowledge && installKnowledge.length > 0
       ? installKnowledge.map((inst: any) => 
-          `${inst.topic}: ${inst.content}`
+          `${inst.topic}: ${inst.content.substring(0, 400)}...`
         ).join('\n\n')
       : 'Apply general BS 7671 installation methods and best practices.';
 
@@ -122,122 +181,31 @@ serve(async (req) => {
       ).slice(-5).join('\n');
     }
 
-    const systemPrompt = `You are an expert ONSITE INSTALLATION SPECIALIST with years of practical electrical experience.
+    const systemPrompt = `You are an expert UK Installation Specialist with 15+ years onsite experience.
 
-Write all responses in UK English (British spelling and terminology). Do not use American spellings.
+Write in UK English (British spelling). Current date: September 2025.
 
-YOUR UNIQUE VALUE: You translate design into PRACTICAL onsite work
-- Follow the onsite installation guides in the knowledge base EXACTLY
-- Apply the safety notes from installation knowledge (not generic advice)
-- Reference specific BS 7671 Table 4A2 support spacing from RAG
-- Include the field tips and "lessons learned" from the installation knowledge
-- Anticipate practical problems (access, existing services, cable routing challenges)
-- Provide apprentice-friendly guidance with clear measurements and sequences
+🎯 YOUR ROLE: Translate electrical designs into PRACTICAL step-by-step installation guidance
 
-Your task is to provide step-by-step installation guidance for UK electrical work.
-
-CURRENT DATE: September 2025
-
-INSTALLATION BEST PRACTICES DATABASE (YOU MUST APPLY THESE):
+INSTALLATION KNOWLEDGE DATABASE (${installKnowledge?.length || 0} verified guides):
 ${installContext}
 
-🔴 CRITICAL INSTRUCTIONS FOR INSTALLATION GUIDANCE:
-1. EXTRACT specific values from knowledge base:
-   ✓ If database says "Clip spacing for 16mm² horizontal: every 400mm", use 400mm in your steps
-   ✗ Don't say "regular intervals" - be specific!
-   
-2. REFERENCE installation methods by name:
-   Example: "Per Method E (cables clipped direct to non-metallic surface), derating factor Ca = 0.94..."
-   
-3. INCLUDE practical tips from knowledge base in safetyNotes:
-   Example from database: "Avoid sharp bends - minimum bending radius is 4× cable diameter"
-   Your step: {"safetyNotes": ["Maintain 4× cable diameter bending radius (64mm for 16mm² cable)"]}
-   
-4. CROSS-REFERENCE with designer's installation method:
-   ${previousAgentOutputs?.find((o: any) => o.agent === 'designer')?.response?.structuredData?.installationMethod || 'Check designer output'}
-   
-5. APPLY BS 7671 Table 4A2 support spacing requirements exactly as stated in knowledge base
+⚠️ CRITICAL: Extract specific values from knowledge base above:
+✓ If database states "Clip spacing 2.5mm² horizontal: 400mm" → use 400mm in your steps
+✓ If database mentions "Notching joists: max 0.125× joist depth" → include exact fraction
+✓ If database references "BS 7671 Table 4A2" → cite the table number
+✗ Never use vague terms like "regular intervals" or "appropriate spacing"
 
-6. ADD quality checkpoints at each stage (photograph cable routes, test continuity before covering)
-
-7. INCLUDE specific tool sizes (e.g., "4mm masonry bit", "100mm hole saw", "3-in-1 cable stripper")
-
-8. PROVIDE time estimates to help apprentices pace themselves
-
-⚠️ STEP FORMATTING RULES (CRITICAL):
-   ✅ CORRECT: Each step MUST be a structured JSON object:
-   {
-     "step": 1,
-     "title": "Connect to the Shower",
-     "description": "Follow manufacturer's instructions for connecting the supply cable to the shower unit terminals. Ensure correct polarity and tight connections.",
-     "tools": ["Wire strippers", "Terminal screwdriver"],
-     "materials": ["Cable"],
-     "safetyNotes": ["Verify isolation before touching terminals"],
-     "estimatedTime": 15
-   }
-   
-   ❌ WRONG: NEVER use plain strings like this:
-   "installationSteps": [
-     "Connect to the Shower:",
-     "Follow manufacturer's instructions...",
-     "Test the Circuit:",
-     "Perform continuity and insulation resistance tests..."
-   ]
-   
-   🎯 HOW TO STRUCTURE STEPS:
-   - Section headings (e.g., "Connect to the Shower") → Use as step.title
-   - Detailed instructions → Use as step.description
-   - Keep titles concise (3-6 words)
-   - Put full details in description field
-   - Always include all 7 required fields per step
-
-The installation knowledge contains ${installKnowledge?.length || 0} verified practices. Apply them!
+📋 RESPONSE REQUIREMENTS:
+1. **Be specific**: Use actual measurements from RAG (e.g., "400mm clip spacing", not "regular spacing")
+2. **Reference regulations**: Cite BS 7671 section numbers from RAG
+3. **Include practical tips**: Use field wisdom from knowledge base (e.g., "Label cables before termination")
+4. **Anticipate problems**: Mention common mistakes from RAG (e.g., "Don't over-tighten terminals - max 1.2Nm")
+5. **Quality checkpoints**: Add verification steps at each stage
 
 ${contextSection}
 
-CRITICAL: Respond ONLY with valid JSON. Follow these rules strictly:
-1. All strings must use double quotes, not single quotes
-2. No trailing commas after last array/object element
-3. No line breaks inside string values - use \\n for new lines
-4. Escape special characters: " becomes \\"
-5. All property names must be double-quoted
-6. No comments in JSON
-
-Respond in this exact format:
-{
-  "response": "DETAILED installation method statement (250-350 words) covering: Site preparation and access requirements, step-by-step physical installation process with sequence order, fixing methods and support spacing per BS 7671 Table 4A2 (cable cleats every Xm), penetration sealing methods and fire barrier requirements, practical tips from field experience (e.g., labelling before termination, testing continuity at each stage), common mistakes to avoid (over-tightening terminals, inadequate bending radius), quality checkpoints at each stage, special considerations for installation environment (tray/conduit/buried). Include specific torque settings and tool requirements.",
-  "installationSteps": [
-    {
-      "step": 1,
-      "title": "Preparation",
-      "description": "Detailed step description",
-      "tools": ["Tool 1", "Tool 2"],
-      "materials": ["Material 1"],
-      "safetyNotes": ["Safety point"],
-      "estimatedTime": 30
-    }
-  ],
-  "practicalTips": [
-    "Practical tip from field experience with specific actionable advice"
-  ],
-  "commonMistakes": [
-    "Common mistake to avoid with explanation of consequences"
-  ],
-  "toolsRequired": ["Specific tool 1 with size/spec", "Specific tool 2"],
-  "materialsRequired": ["Material 1 with exact spec", "Material 2"],
-  "totalEstimatedTime": 120,
-  "difficultyLevel": "Intermediate",
-  "compliance": {
-    "regulations": ["BS 7671:2018+A2:2022 Section XXX", "Specific regulation reference"],
-    "inspectionPoints": ["Specific test/check required", "Verification method"]
-  },
-  "suggestedNextAgents": [
-    {"agent": "health-safety", "reason": "Create risk assessment and method statement for this installation", "priority": "high"},
-    {"agent": "commissioning", "reason": "Prepare testing and commissioning schedule", "priority": "medium"}
-  ]
-}
-
-⚠️ REMEMBER: installationSteps MUST be an array of objects with all 7 fields (step, title, description, tools, materials, safetyNotes, estimatedTime). NEVER use plain strings!`;
+Respond using the tool schema provided. Each installation step must include all 7 required fields.`;
 
     const userPrompt = `Provide detailed installation guidance for:
 ${query}
@@ -256,13 +224,13 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       model: 'google/gemini-2.5-flash',
       systemPrompt,
       userPrompt,
-      maxTokens: 2000,
-      timeoutMs: 55000,
+      maxTokens: 1500,   // Phase 1: Reduce from 2000
+      timeoutMs: 70000,  // Phase 1: Increase from 55000
       tools: [{
         type: 'function',
         function: {
           name: 'provide_installation_guidance',
-          description: 'Return comprehensive installation guidance with safety and compliance focus',
+          description: 'Return comprehensive installation guidance with safety and compliance focus. MUST extract specific measurements and values from the installation knowledge database provided in system prompt.',
           parameters: {
             type: 'object',
             properties: {
