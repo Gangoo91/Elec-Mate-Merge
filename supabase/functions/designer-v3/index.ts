@@ -248,6 +248,7 @@ Write a comprehensive electrical design response that:
       
       // STEP 5: Return complete response
       return new Response(JSON.stringify({
+        success: true,
         response: narrative,
         structuredData: {
           design: design,
@@ -285,6 +286,7 @@ Write a comprehensive electrical design response that:
       
       if (ragResults.length === 0) {
         return new Response(JSON.stringify({
+          success: true,
           response: 'No relevant BS 7671 regulations found for this query.',
           citations: [],
           source: 'rag_empty'
@@ -326,6 +328,7 @@ Write a comprehensive electrical design response that:
         const explanation = gptData.choices?.[0]?.message?.content || context;
 
         return new Response(JSON.stringify({
+          success: true,
           response: explanation,
           citations: ragResults.map(r => ({
             source: 'BS 7671:2018+A2:2022',
@@ -344,6 +347,7 @@ Write a comprehensive electrical design response that:
         logger.warn('GPT-5 failed for lookup, returning raw RAG', { error: e.message });
         
         return new Response(JSON.stringify({
+          success: true,
           response: `## ${ragResults[0].section}\n\n${ragResults[0].content}`,
           citations: ragResults.map(r => ({
             source: 'BS 7671:2018+A2:2022',
@@ -822,8 +826,9 @@ Provide a complete, BS 7671 compliant design.`;
     
     return new Response(
       JSON.stringify({
+        success: true,
         response,
-        structuredData: { 
+        structuredData: {
           design, 
           compliance, 
           calculations, 
