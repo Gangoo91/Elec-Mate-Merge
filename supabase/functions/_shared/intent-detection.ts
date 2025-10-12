@@ -101,8 +101,6 @@ EXAMPLES:
           { role: 'system', content: 'You are an intent classification system for electrical installation conversations. Always return valid JSON.' },
           { role: 'user', content: intentPrompt },
         ],
-        max_completion_tokens: 1500, // GPT-5 parameter
-        ],
         response_format: { type: "json_object" },
         max_completion_tokens: 400
       }),

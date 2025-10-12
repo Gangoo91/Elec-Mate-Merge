@@ -102,9 +102,7 @@ serve(async (req) => {
               { role: 'system', content: 'You are an expert electrical materials categorizer. Return only valid JSON.' },
               { role: 'user', content: analysisPrompt },
             ],
-            max_completion_tokens: 1000, // GPT-5 parameter
-            ],
-            max_completion_tokens: 500,
+            max_completion_tokens: 500
           }),
         });
 
