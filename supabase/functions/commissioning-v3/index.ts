@@ -270,145 +270,119 @@ ${voltage ? `Voltage: ${voltage}V` : ''}
 
 Include instrument setup, lead placement, step-by-step procedures, expected results, and troubleshooting.`;
 
-    // Step 4: Call Lovable AI with tool calling
-    logger.debug('Calling Lovable AI with tool calling');
-    const aiStart = Date.now();
+    // Step 4: Call Lovable AI with universal wrapper
+    logger.debug('Calling AI with wrapper');
+    const { callAI } = await import('../_shared/ai-wrapper.ts');
     
-    // AbortController for timeout protection
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 90000); // 90s timeout
-    
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      signal: controller.signal,
-      body: JSON.stringify({
-        model: 'openai/gpt-5-mini',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        tools: [{
-          type: 'function',
-          function: {
-            name: 'provide_testing_guidance',
-            description: 'Return comprehensive GN3 testing procedures with instrument setup',
-            parameters: {
-              type: 'object',
-              properties: {
-                response: {
-                  type: 'string',
-                  description: 'COMPREHENSIVE GN3 testing guidance (300-400 words)'
-                },
-                testingProcedure: {
-                  type: 'object',
-                  properties: {
-                    visualInspection: {
-                      type: 'object',
-                      properties: {
-                        checkpoints: {
-                          type: 'array',
-                          items: {
-                            type: 'object',
-                            properties: {
-                              item: { type: 'string' },
-                              procedure: { type: 'string' },
-                              passCriteria: { type: 'string' },
-                              expectedOutcome: { type: 'string' }
-                            }
+    const aiResult = await callAI(LOVABLE_API_KEY!, {
+      model: 'google/gemini-2.5-flash',
+      systemPrompt,
+      userPrompt,
+      maxTokens: 2000,
+      timeoutMs: 55000,
+      tools: [{
+        type: 'function',
+        function: {
+          name: 'provide_testing_guidance',
+          description: 'Return comprehensive GN3 testing procedures with instrument setup',
+          parameters: {
+            type: 'object',
+            properties: {
+              response: {
+                type: 'string',
+                description: 'COMPREHENSIVE GN3 testing guidance (300-400 words)'
+              },
+              testingProcedure: {
+                type: 'object',
+                properties: {
+                  visualInspection: {
+                    type: 'object',
+                    properties: {
+                      checkpoints: {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          properties: {
+                            item: { type: 'string' },
+                            procedure: { type: 'string' },
+                            passCriteria: { type: 'string' },
+                            expectedOutcome: { type: 'string' }
                           }
                         }
                       }
-                    },
-                    deadTests: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          testName: { type: 'string' },
-                          regulation: { type: 'string' },
-                          testSequence: { type: 'number' },
-                          instrumentSetup: { type: 'string' },
-                          leadPlacement: { type: 'string' },
-                          procedure: { type: 'array', items: { type: 'string' } },
-                          expectedResult: { type: 'object' },
-                          troubleshooting: { type: 'array', items: { type: 'string' } },
-                          safetyNotes: { type: 'array', items: { type: 'string' } }
-                        },
-                        required: ['testName', 'regulation', 'procedure', 'expectedResult']
-                      }
-                    },
-                    liveTests: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          testName: { type: 'string' },
-                          regulation: { type: 'string' },
-                          testSequence: { type: 'number' },
-                          prerequisite: { type: 'string' },
-                          instrumentSetup: { type: 'string' },
-                          leadPlacement: { type: 'string' },
-                          calculation: { type: 'object' },
-                          procedure: { type: 'array', items: { type: 'string' } },
-                          expectedResult: { type: 'object' },
-                          interpretation: { type: 'string' },
-                          safetyNotes: { type: 'array', items: { type: 'string' } }
-                        },
-                        required: ['testName', 'regulation', 'procedure', 'expectedResult']
-                      }
                     }
-                  }
-                },
-                certification: {
-                  type: 'object',
-                  properties: {
-                    form: { type: 'string' },
-                    schedules: { type: 'array', items: { type: 'string' } },
-                    requiredData: { type: 'array', items: { type: 'string' } },
-                    nextInspection: { type: 'string' }
-                  }
-                },
-                suggestedNextAgents: {
-                  type: 'array',
-                  items: {
-                    type: 'object',
-                    properties: {
-                      agent: { type: 'string' },
-                      reason: { type: 'string' },
-                      priority: { type: 'string', enum: ['high', 'medium', 'low'] }
-                    },
-                    required: ['agent', 'reason', 'priority']
+                  },
+                  deadTests: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        testName: { type: 'string' },
+                        regulation: { type: 'string' },
+                        testSequence: { type: 'number' },
+                        instrumentSetup: { type: 'string' },
+                        leadPlacement: { type: 'string' },
+                        procedure: { type: 'array', items: { type: 'string' } },
+                        expectedResult: { type: 'object' },
+                        troubleshooting: { type: 'array', items: { type: 'string' } },
+                        safetyNotes: { type: 'array', items: { type: 'string' } }
+                      },
+                      required: ['testName', 'regulation', 'procedure', 'expectedResult']
+                    }
+                  },
+                  liveTests: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        testName: { type: 'string' },
+                        regulation: { type: 'string' },
+                        testSequence: { type: 'number' },
+                        prerequisite: { type: 'string' },
+                        instrumentSetup: { type: 'string' },
+                        leadPlacement: { type: 'string' },
+                        calculation: { type: 'object' },
+                        procedure: { type: 'array', items: { type: 'string' } },
+                        expectedResult: { type: 'object' },
+                        interpretation: { type: 'string' },
+                        safetyNotes: { type: 'array', items: { type: 'string' } }
+                      },
+                      required: ['testName', 'regulation', 'procedure', 'expectedResult']
+                    }
                   }
                 }
               },
-              required: ['response', 'testingProcedure'],
-              additionalProperties: false
-            }
+              certification: {
+                type: 'object',
+                properties: {
+                  form: { type: 'string' },
+                  schedules: { type: 'array', items: { type: 'string' } },
+                  requiredData: { type: 'array', items: { type: 'string' } },
+                  nextInspection: { type: 'string' }
+                }
+              },
+              suggestedNextAgents: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    agent: { type: 'string' },
+                    reason: { type: 'string' },
+                    priority: { type: 'string', enum: ['high', 'medium', 'low'] }
+                  },
+                  required: ['agent', 'reason', 'priority']
+                }
+              }
+            },
+            required: ['response', 'testingProcedure'],
+            additionalProperties: false
           }
-        }],
-        tool_choice: { type: 'function', function: { name: 'provide_testing_guidance' } },
-        max_completion_tokens: 2000
-      })
-    }).finally(() => clearTimeout(timeoutId));
+        }
+      }],
+      toolChoice: { type: 'function', function: { name: 'provide_testing_guidance' } }
+    });
 
-    if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      logger.error('Lovable AI error', { status: aiResponse.status, error: errorText });
-      throw new Error(`AI API error: ${aiResponse.status}`);
-    }
-
-    const aiData = await aiResponse.json();
-    logger.debug('AI response received', { duration: Date.now() - aiStart });
-
-    if (!aiData.choices?.[0]?.message?.tool_calls?.[0]) {
-      logger.error('No tool call in AI response', { response: aiData });
-      throw new Error('AI did not return tool call response');
-    }
-
+    const aiData = JSON.parse(aiResult.content);
     const toolCall = aiData.choices[0].message.tool_calls[0];
     const commResult = JSON.parse(toolCall.function.arguments);
 

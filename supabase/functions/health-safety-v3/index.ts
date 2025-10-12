@@ -237,140 +237,114 @@ ${hazards ? `Known Hazards: ${hazards.join(', ')}` : ''}
 
 Include all safety controls, PPE requirements, and emergency procedures.`;
 
-    // Step 4: Call Lovable AI with tool calling
-    logger.debug('Calling Lovable AI with tool calling');
-    const aiStart = Date.now();
+    // Step 4: Call AI with universal wrapper
+    logger.debug('Calling AI with wrapper');
+    const { callAI } = await import('../_shared/ai-wrapper.ts');
     
-    // AbortController for timeout protection
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 90000); // 90s timeout
-    
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      signal: controller.signal,
-      body: JSON.stringify({
-        model: 'openai/gpt-5-mini',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        tools: [{
-          type: 'function',
-          function: {
-            name: 'provide_safety_assessment',
-            description: 'Return comprehensive health and safety assessment with risk mitigation',
-            parameters: {
-              type: 'object',
-              properties: {
-                response: {
-                  type: 'string',
-                  description: 'Comprehensive UK English explanation (200-300 words)'
-                },
-                riskAssessment: {
-                  type: 'object',
-                  properties: {
-                    hazards: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          hazard: { type: 'string' },
-                          likelihood: { type: 'number', minimum: 1, maximum: 5 },
-                          likelihoodReason: { type: 'string' },
-                          severity: { type: 'number', minimum: 1, maximum: 5 },
-                          severityReason: { type: 'string' },
-                          riskScore: { type: 'number' },
-                          riskLevel: { type: 'string' },
-                          regulation: { type: 'string' }
-                        },
-                        required: ['hazard', 'likelihood', 'severity', 'riskScore', 'riskLevel']
-                      }
-                    },
-                    controls: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          hazard: { type: 'string' },
-                          controlMeasure: { type: 'string' },
-                          residualLikelihood: { type: 'number' },
-                          residualSeverity: { type: 'number' },
-                          residualRisk: { type: 'number' },
-                          residualRiskLevel: { type: 'string' },
-                          regulation: { type: 'string' },
-                          practicalImplementation: { type: 'string' }
-                        },
-                        required: ['hazard', 'controlMeasure', 'residualRisk', 'residualRiskLevel']
-                      }
-                    },
-                    riskMatrix: {
+    const aiResult = await callAI(LOVABLE_API_KEY!, {
+      model: 'google/gemini-2.5-flash',
+      systemPrompt,
+      userPrompt,
+      maxTokens: 2000,
+      timeoutMs: 55000,
+      tools: [{
+        type: 'function',
+        function: {
+          name: 'provide_safety_assessment',
+          description: 'Return comprehensive health and safety assessment with risk mitigation',
+          parameters: {
+            type: 'object',
+            properties: {
+              response: {
+                type: 'string',
+                description: 'Comprehensive UK English explanation (200-300 words)'
+              },
+              riskAssessment: {
+                type: 'object',
+                properties: {
+                  hazards: {
+                    type: 'array',
+                    items: {
                       type: 'object',
                       properties: {
-                        beforeControls: { type: 'object' },
-                        afterControls: { type: 'object' }
-                      }
-                    },
-                    ppe: { type: 'array', items: { type: 'string' } },
-                    emergencyProcedures: { type: 'array', items: { type: 'string' } }
+                        hazard: { type: 'string' },
+                        likelihood: { type: 'number', minimum: 1, maximum: 5 },
+                        likelihoodReason: { type: 'string' },
+                        severity: { type: 'number', minimum: 1, maximum: 5 },
+                        severityReason: { type: 'string' },
+                        riskScore: { type: 'number' },
+                        riskLevel: { type: 'string' },
+                        regulation: { type: 'string' }
+                      },
+                      required: ['hazard', 'likelihood', 'severity', 'riskScore', 'riskLevel']
+                    }
                   },
-                  required: ['hazards', 'controls']
-                },
-                methodStatement: {
-                  type: 'object',
-                  properties: {
-                    steps: { type: 'array', items: { type: 'object' } },
-                    permitRequired: { type: 'boolean' },
-                    competentPerson: { type: 'boolean' }
-                  }
-                },
-                compliance: {
-                  type: 'object',
-                  properties: {
-                    regulations: { type: 'array', items: { type: 'string' } },
-                    warnings: { type: 'array', items: { type: 'string' } }
-                  }
-                },
-                suggestedNextAgents: {
-                  type: 'array',
-                  items: {
+                  controls: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        hazard: { type: 'string' },
+                        controlMeasure: { type: 'string' },
+                        residualLikelihood: { type: 'number' },
+                        residualSeverity: { type: 'number' },
+                        residualRisk: { type: 'number' },
+                        residualRiskLevel: { type: 'string' },
+                        regulation: { type: 'string' },
+                        practicalImplementation: { type: 'string' }
+                      },
+                      required: ['hazard', 'controlMeasure', 'residualRisk', 'residualRiskLevel']
+                    }
+                  },
+                  riskMatrix: {
                     type: 'object',
                     properties: {
-                      agent: { type: 'string' },
-                      reason: { type: 'string' },
-                      priority: { type: 'string', enum: ['high', 'medium', 'low'] }
-                    },
-                    required: ['agent', 'reason', 'priority']
-                  }
+                      beforeControls: { type: 'object' },
+                      afterControls: { type: 'object' }
+                    }
+                  },
+                  ppe: { type: 'array', items: { type: 'string' } },
+                  emergencyProcedures: { type: 'array', items: { type: 'string' } }
+                },
+                required: ['hazards', 'controls']
+              },
+              methodStatement: {
+                type: 'object',
+                properties: {
+                  steps: { type: 'array', items: { type: 'object' } },
+                  permitRequired: { type: 'boolean' },
+                  competentPerson: { type: 'boolean' }
                 }
               },
-              required: ['response', 'riskAssessment'],
-              additionalProperties: false
-            }
+              compliance: {
+                type: 'object',
+                properties: {
+                  regulations: { type: 'array', items: { type: 'string' } },
+                  warnings: { type: 'array', items: { type: 'string' } }
+                }
+              },
+              suggestedNextAgents: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    agent: { type: 'string' },
+                    reason: { type: 'string' },
+                    priority: { type: 'string', enum: ['high', 'medium', 'low'] }
+                  },
+                  required: ['agent', 'reason', 'priority']
+                }
+              }
+            },
+            required: ['response', 'riskAssessment'],
+            additionalProperties: false
           }
-        }],
-        tool_choice: { type: 'function', function: { name: 'provide_safety_assessment' } },
-        max_completion_tokens: 2000
-      })
-    }).finally(() => clearTimeout(timeoutId));
+        }
+      }],
+      toolChoice: { type: 'function', function: { name: 'provide_safety_assessment' } }
+    });
 
-    if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      logger.error('Lovable AI error', { status: aiResponse.status, error: errorText });
-      throw new Error(`AI API error: ${aiResponse.status}`);
-    }
-
-    const aiData = await aiResponse.json();
-    logger.debug('AI response received', { duration: Date.now() - aiStart });
-
-    if (!aiData.choices?.[0]?.message?.tool_calls?.[0]) {
-      logger.error('No tool call in AI response', { response: aiData });
-      throw new Error('AI did not return tool call response');
-    }
-
+    const aiData = JSON.parse(aiResult.content);
     const toolCall = aiData.choices[0].message.tool_calls[0];
     const safetyResult = JSON.parse(toolCall.function.arguments);
 

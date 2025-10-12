@@ -231,15 +231,22 @@ ${timeline ? `Timeline: ${timeline}` : ''}
 
 Include phases, resources, compliance requirements, and risk management.`;
 
-    // Step 4: Call Lovable AI with tool calling
-    logger.debug('Calling Lovable AI with tool calling');
-    const aiStart = Date.now();
+    // Step 4: Call AI with universal wrapper
+    logger.debug('Calling AI with wrapper');
+    const { callAI } = await import('../_shared/ai-wrapper.ts');
     
-    // AbortController for timeout protection
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 90000); // 90s timeout
-    
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const aiResult = await callAI(LOVABLE_API_KEY!, {
+      model: 'google/gemini-2.5-flash',
+      systemPrompt,
+      userPrompt,
+      maxTokens: 2000,
+      timeoutMs: 55000,
+      tools: [{
+        type: 'function',
+        function: {
+          name: 'provide_project_plan',
+          description: 'Return comprehensive PRINCE2/APM project plan with phases and resources',
+          parameters: {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${LOVABLE_API_KEY}`,
@@ -338,168 +345,10 @@ Include phases, resources, compliance requirements, and risk management.`;
             }
           }
         }],
-        tool_choice: { type: 'function', function: { name: 'provide_project_plan' } },
-        max_completion_tokens: 2000
-      })
-    }).finally(() => clearTimeout(timeoutId));
+      toolChoice: { type: 'function', function: { name: 'provide_project_plan' } }
+    });
 
-    if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      logger.error('Lovable AI error', { status: aiResponse.status, error: errorText });
-      
-      // Auto-retry with corrected params if it's a max_tokens error
-      if (aiResponse.status === 400 && errorText.includes('max_tokens')) {
-        logger.warn('⚠️ Retrying with max_completion_tokens parameter');
-        const retryResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'google/gemini-2.5-flash',
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: userPrompt }
-            ],
-            tools: [{
-              type: 'function',
-              function: {
-                name: 'provide_project_plan',
-                description: 'Return comprehensive PRINCE2/APM project plan with phases and resources',
-                parameters: {
-                  type: 'object',
-                  properties: {
-                    response: {
-                      type: 'string',
-                      description: 'PRINCE2/APM project plan summary (200-300 words)'
-                    },
-                    projectPlan: {
-                      type: 'object',
-                      properties: {
-                        phases: {
-                          type: 'array',
-                          items: {
-                            type: 'object',
-                            properties: {
-                              phase: { type: 'string' },
-                              duration: { type: 'number' },
-                              durationUnit: { type: 'string' },
-                              tasks: { type: 'array', items: { type: 'string' } },
-                              dependencies: { type: 'array', items: { type: 'string' } },
-                              milestones: { type: 'array', items: { type: 'string' } },
-                              criticalPath: { type: 'boolean' }
-                            },
-                            required: ['phase', 'duration', 'tasks']
-                          }
-                        },
-                        totalDuration: { type: 'number' },
-                        totalDurationUnit: { type: 'string' },
-                        criticalPath: { type: 'array', items: { type: 'string' } },
-                        acceleration: { type: 'array', items: { type: 'string' } }
-                      }
-                    },
-                    resources: {
-                      type: 'object',
-                      properties: {
-                        team: { type: 'array', items: { type: 'object' } },
-                        equipment: { type: 'array', items: { type: 'string' } }
-                      }
-                    },
-                    compliance: {
-                      type: 'object',
-                      properties: {
-                        notifications: { type: 'array', items: { type: 'string' } },
-                        certifications: { type: 'array', items: { type: 'string' } },
-                        inspections: { type: 'array', items: { type: 'string' } }
-                      }
-                    },
-                    risks: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          risk: { type: 'string' },
-                          mitigation: { type: 'string' },
-                          severity: { type: 'string' }
-                        },
-                        required: ['risk', 'mitigation']
-                      }
-                    },
-                    recommendations: {
-                      type: 'array',
-                      items: { type: 'string' }
-                    },
-                    suggestedNextAgents: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          agent: { type: 'string' },
-                          reason: { type: 'string' },
-                          priority: { type: 'string', enum: ['high', 'medium', 'low'] }
-                        },
-                        required: ['agent', 'reason', 'priority']
-                      }
-                    }
-                  },
-                  required: ['response', 'projectPlan'],
-                  additionalProperties: false
-                }
-              }
-            }],
-            tool_choice: { type: 'function', function: { name: 'provide_project_plan' } },
-            max_completion_tokens: 2000 // Use GPT-5 compatible param
-          })
-        });
-        
-        if (!retryResponse.ok) {
-          const retryError = await retryResponse.text();
-          throw new Error(`AI API retry failed: ${retryResponse.status} - ${retryError}`);
-        }
-        
-        const aiData = await retryResponse.json();
-        logger.debug('AI retry response received');
-        
-        if (!aiData.choices?.[0]?.message?.tool_calls?.[0]) {
-          logger.error('No tool call in retry AI response', { response: aiData });
-          throw new Error('AI did not return tool call response after retry');
-        }
-
-        const toolCall = aiData.choices[0].message.tool_calls[0];
-        const pmResult = JSON.parse(toolCall.function.arguments);
-
-        logger.info('Project plan completed (retry)', { 
-          phasesCount: pmResult.projectPlan?.phases?.length,
-          totalDuration: pmResult.projectPlan?.totalDuration
-        });
-
-        const { response, suggestedNextAgents, projectPlan, resources, compliance, risks, recommendations } = pmResult;
-        
-        return new Response(
-          JSON.stringify({
-            response,
-            structuredData: { projectPlan, resources, compliance, risks, recommendations },
-            suggestedNextAgents: suggestedNextAgents || []
-          }),
-          { 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-            status: 200 
-          }
-        );
-      }
-      
-      throw new Error(`AI API error: ${aiResponse.status} - ${errorText}`);
-    }
-
-    const aiData = await aiResponse.json();
-    logger.debug('AI response received', { duration: Date.now() - aiStart });
-
-    if (!aiData.choices?.[0]?.message?.tool_calls?.[0]) {
-      logger.error('No tool call in AI response', { response: aiData });
-      throw new Error('AI did not return tool call response');
-    }
-
+    const aiData = JSON.parse(aiResult.content);
     const toolCall = aiData.choices[0].message.tool_calls[0];
     const pmResult = JSON.parse(toolCall.function.arguments);
 

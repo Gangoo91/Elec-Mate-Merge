@@ -176,30 +176,14 @@ serve(async (req) => {
         warnings: design.warnings
       };
       
-      // STEP 4: Try Gemini synthesis with robust fallback
-      let narrative: string;
-      let responseSource: string;
-
-      try {
-        logger.info('Attempting Gemini synthesis...');
-        
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => {
-          controller.abort();
-          logger.warn('Gemini request timed out after 10s');
-        }, 10000); // 10 second timeout
-        
-        const gptResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            model: 'google/gemini-2.5-flash', // Using free Gemini instead of GPT-5
-            messages: [{
-              role: 'system',
-              content: `You are a MASTER ELECTRICIAN with 20+ years BS 7671:2018+A2:2022 experience.
+      // STEP 4: AI synthesis with universal wrapper
+      const { callAIWithFallback } = await import('../_shared/ai-wrapper.ts');
+      
+      const aiResult = await callAIWithFallback(
+        LOVABLE_API_KEY!,
+        {
+          model: 'google/gemini-2.5-flash',
+          systemPrompt: `You are a MASTER ELECTRICIAN with 20+ years BS 7671:2018+A2:2022 experience.
 
 Your job: Explain this electrical design like you're mentoring an apprentice on-site.
 
@@ -218,47 +202,26 @@ MANDATORY REQUIREMENTS:
 
 Write like a mentor, not a textbook. Use "we" and "you". Be conversational but authoritative.
 
-Remember: The user asked "${query}" - address that directly and completely.`
-            }, {
-              role: 'user',
-              content: `Here are the FACTS (do not recalculate, just explain):
+Remember: The user asked "${query}" - address that directly and completely.`,
+          userPrompt: `Here are the FACTS (do not recalculate, just explain):
 
 ${JSON.stringify(structuredFacts, null, 2)}
 
-Write a comprehensive electrical design response that addresses "${query}" completely.`
-            }],
-            max_tokens: 2000
-          }),
-          signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId);
-        
-        if (!gptResponse.ok) {
-          const errorText = await gptResponse.text();
-          throw new Error(`AI Gateway returned ${gptResponse.status}: ${errorText}`);
-        }
-        
-        const gptData = await gptResponse.json();
-        
-        if (!gptData.choices?.[0]?.message?.content) {
-          throw new Error('AI Gateway returned empty response');
-        }
-        
-        narrative = gptData.choices[0].message.content;
-        responseSource = 'deterministic+rag+ai';
-        
-        logger.info('✅ AI synthesis successful');
-        
-      } catch (error) {
-        // ROBUST FALLBACK - Always works
-        logger.warn('AI synthesis failed, using template fallback', { 
-          error: error instanceof Error ? error.message : String(error)
-        });
-        
-        narrative = buildFallbackNarrative(structuredFacts);
-        responseSource = 'deterministic+rag_only';
-      }
+Write a comprehensive electrical design response that addresses "${query}" completely.`,
+          maxTokens: 2000,
+          timeoutMs: 55000
+        },
+        () => buildFallbackNarrative(structuredFacts)
+      );
+
+      const narrative = aiResult.content;
+      const responseSource = aiResult.source === 'ai' ? 'deterministic+rag+ai' : 'deterministic+rag_only';
+
+      logger.info('AI synthesis complete', { 
+        source: aiResult.source, 
+        duration: aiResult.duration,
+        model: aiResult.model 
+      });
       
       // STEP 5: Return complete response
       return new Response(JSON.stringify({
