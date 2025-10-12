@@ -30,6 +30,58 @@ serve(async (req) => {
 
     logger.info('BS 7671 RAG Search initiated', { query, matchThreshold, matchCount });
 
+    // Connect to Supabase early for direct lookup
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Fast-path: Extract regulation numbers and try direct match first
+    const extractRegulationNumbers = (query: string): string[] => {
+      const regPattern = /\b(\d{3}(?:\.\d+){0,2})\b/g;
+      const matches = query.match(regPattern) || [];
+      return [...new Set(matches)];
+    };
+
+    const regNumbers = extractRegulationNumbers(query);
+    if (regNumbers.length > 0) {
+      logger.debug('Trying direct regulation lookup first', { regNumbers });
+      
+      const { data: directResults, error: directError } = await supabase
+        .from('bs7671_embeddings')
+        .select('*')
+        .or(regNumbers.map(n => `regulation_number.ilike.%${n}%`).join(','))
+        .limit(matchCount);
+      
+      if (!directError && directResults && directResults.length > 0) {
+        logger.info('✅ Direct lookup succeeded', { count: directResults.length });
+        
+        const regulations = directResults.map((item: any) => ({
+          id: item.id,
+          regulation_number: item.regulation_number,
+          section: item.section,
+          content: item.content,
+          amendment: item.amendment,
+          metadata: item.metadata || {},
+          similarity: 0.95,
+        }));
+        
+        return new Response(
+          JSON.stringify({
+            success: true,
+            regulations,
+            query,
+            resultsCount: regulations.length,
+            searchMethod: 'direct',
+            requestId,
+          }),
+          { 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 200 
+          }
+        );
+      }
+    }
+
     // ⚡ CHECK CACHE FIRST for instant responses
     const cache = new ResponseCache();
     const cached = await cache.get(query);
@@ -110,11 +162,6 @@ serve(async (req) => {
     }
 
     logger.info('Query embedding generated', { dimensions: queryVector.length });
-
-    // Connect to Supabase
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Search using RPC function with timeout
     logger.debug('Executing vector similarity search');

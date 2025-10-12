@@ -89,7 +89,61 @@ serve(async (req) => {
 
     logger.info('Multi-source RAG search initiated', { query, matchThreshold, matchCount });
 
-    // Detect intent and expand query
+    // Connect to Supabase early for direct lookup
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Fast-path: Extract regulation numbers and try direct match first
+    const extractRegulationNumbers = (query: string): string[] => {
+      const regPattern = /\b(\d{3}(?:\.\d+){0,2})\b/g;
+      const matches = query.match(regPattern) || [];
+      return [...new Set(matches)];
+    };
+
+    const regNumbers = extractRegulationNumbers(query);
+    if (regNumbers.length > 0) {
+      logger.debug('Trying direct regulation lookup first', { regNumbers });
+      
+      const { data: directResults, error: directError } = await supabase
+        .from('bs7671_embeddings')
+        .select('*')
+        .or(regNumbers.map(n => `regulation_number.ilike.%${n}%`).join(','))
+        .limit(matchCount);
+      
+      if (!directError && directResults && directResults.length > 0) {
+        logger.info('✅ Direct lookup succeeded', { count: directResults.length });
+        
+        const regulations = directResults.map((item: any) => ({
+          ...item,
+          similarity: 0.95
+        }));
+        
+        return new Response(
+          JSON.stringify({
+            success: true,
+            queryType: 'general',
+            searchMethod: 'direct',
+            regulations,
+            has_installation_content: false,
+            has_testing_content: false,
+            has_design_content: false,
+            has_safety_content: false,
+            installation_content: [],
+            testing_content: [],
+            design_content: [],
+            safety_content: [],
+            requestId,
+          }),
+          { 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 200 
+          }
+        );
+      }
+    }
+
+    // Detect intent and expand query (fallback to vector search)
     const { queryType, knowledgeBases } = detectIntent(query);
     const expandedQuery = expandElectricalTerms(query);
     
@@ -140,11 +194,6 @@ serve(async (req) => {
     const queryVector = embeddingData.data[0].embedding;
 
     logger.info('Query embedding generated');
-
-    // Connect to Supabase
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Build parallel search tasks with timeout protection
     const searchTasks = [

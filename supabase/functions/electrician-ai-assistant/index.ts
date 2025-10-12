@@ -31,8 +31,10 @@ serve(async (req) => {
     
     // Helper function to extract regulation numbers from query
     const extractRegulationNumbers = (query: string): string[] => {
-      const regPattern = /\b\d{3}(?:\.\d+)?(?:\.\d+)?\b/g;
-      return (query.match(regPattern) || []);
+      // More robust regex to handle multiple numbers with various separators
+      const regPattern = /\b(\d{3}(?:\.\d+){0,2})\b/g;
+      const matches = query.match(regPattern) || [];
+      return [...new Set(matches)]; // Deduplicate
     };
     
     // Helper function to detect pure regulation lookup queries
@@ -68,16 +70,24 @@ serve(async (req) => {
       };
     };
     
-    // NEW: Check for pure regulation lookup (skip AI processing)
+    // NEW: Check for regulation numbers and try direct lookup first
     const regNumbers = extractRegulationNumbers(prompt || '');
-    if (prompt && !primary_image && isPureRegulationLookup(prompt) && regNumbers.length > 0) {
-      console.log(`🔍 Direct regulation lookup detected: ${regNumbers.join(', ')}`);
+    if (prompt && !primary_image && regNumbers.length > 0) {
+      console.log(`🔍 Detected ${regNumbers.length} regulation number(s): ${regNumbers.join(', ')}`);
       try {
         const result = await getRegulationsDirect(regNumbers);
-        return new Response(
-          JSON.stringify(result),
-          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+        
+        // If we found results, return them immediately
+        if (result.regulations && result.regulations.length > 0) {
+          console.log(`✅ Direct lookup returned ${result.regulations.length} regulation(s)`);
+          return new Response(
+            JSON.stringify(result),
+            { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+        
+        // If no direct matches, fall through to RAG + AI
+        console.log('⚠️ No direct matches found, falling back to RAG + AI');
       } catch (lookupError) {
         console.error('Direct lookup error:', lookupError);
         // Fall through to normal AI processing if direct lookup fails
