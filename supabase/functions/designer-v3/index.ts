@@ -176,23 +176,30 @@ serve(async (req) => {
         warnings: design.warnings
       };
       
-      // STEP 4: Try GPT-5 synthesis (with timeout protection)
+      // STEP 4: Try Gemini synthesis with robust fallback
       let narrative: string;
       let responseSource: string;
-      
+
       try {
-        const gptResponse = await Promise.race([
-          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              model: 'openai/gpt-5',
-              messages: [{
-                role: 'system',
-                content: `You are a MASTER ELECTRICIAN with 20+ years BS 7671:2018+A2:2022 experience.
+        logger.info('Attempting Gemini synthesis...');
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => {
+          controller.abort();
+          logger.warn('Gemini request timed out after 10s');
+        }, 10000); // 10 second timeout
+        
+        const gptResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'google/gemini-2.5-flash', // Using free Gemini instead of GPT-5
+            messages: [{
+              role: 'system',
+              content: `You are a MASTER ELECTRICIAN with 20+ years BS 7671:2018+A2:2022 experience.
 
 Your job: Explain this electrical design like you're mentoring an apprentice on-site.
 
@@ -206,66 +213,47 @@ MANDATORY REQUIREMENTS:
    - Installation tips (cable routing, fixing methods, spacing)
    - Testing checkpoints (what values to verify, when to test)
    - Common mistakes apprentices make (and how to avoid them)
-4. Warn about EDGE CASES and special requirements:
-   - Special locations (bathroom zones, outdoor burial depths, etc.)
-   - High-risk scenarios (TT systems, high power loads, etc.)
-   - Borderline compliance (near voltage drop limit, tight Zs margins)
-5. Structure your response clearly:
-   - **Executive summary** (2 sentences max - "Here's what you need")
-   - **Design decisions** with reasoning (explain the "why")
-   - **Practical installation notes** (step-by-step guidance)
-   - **Testing requirements** (what to test, expected values)
-   - **Warnings and considerations** (things that could go wrong)
+4. Warn about EDGE CASES and special requirements
+5. Structure your response clearly with headers and bullet points
 
-The regulations provided are COMPLETE with full text - reference them specifically by number and explain their relevance.
-
-Write like a mentor, not a textbook. Use "we" and "you". Be conversational but authoritative. Make it useful for someone installing this circuit tomorrow.
+Write like a mentor, not a textbook. Use "we" and "you". Be conversational but authoritative.
 
 Remember: The user asked "${query}" - address that directly and completely.`
-              }, {
-                role: 'user',
-                content: `Here are the FACTS (do not recalculate, just explain):
+            }, {
+              role: 'user',
+              content: `Here are the FACTS (do not recalculate, just explain):
 
 ${JSON.stringify(structuredFacts, null, 2)}
 
-Write a comprehensive electrical design response that:
-1. Confirms the design meets "${query}"
-2. Explains each calculation in plain English with BS 7671 context
-3. For EACH regulation: What it says, why it matters here, consequences if ignored
-4. Provides practical installation guidance (routing, fixing, testing)
-5. Highlights warnings, edge cases, and special requirements
-6. Uses the FULL regulation content provided - not just excerpts
-7. Makes this answer actually useful for someone installing this circuit`
-              }],
-              max_completion_tokens: 2000
-            })
+Write a comprehensive electrical design response that addresses "${query}" completely.`
+            }],
+            max_tokens: 2000
           }),
-          // 12 second timeout
-          new Promise<Response>((_, reject) => 
-            setTimeout(() => reject(new Error('GPT-5 timeout')), 12000)
-          )
-        ]);
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
         
         if (!gptResponse.ok) {
-          throw new Error(`GPT-5 error: ${gptResponse.status}`);
+          const errorText = await gptResponse.text();
+          throw new Error(`AI Gateway returned ${gptResponse.status}: ${errorText}`);
         }
         
         const gptData = await gptResponse.json();
         
-        // Safety check: Ensure GPT-5 returned a valid response
-        if (!gptData.choices || gptData.choices.length === 0 || !gptData.choices[0]?.message?.content) {
-          throw new Error('GPT-5 returned empty or malformed response');
+        if (!gptData.choices?.[0]?.message?.content) {
+          throw new Error('AI Gateway returned empty response');
         }
         
         narrative = gptData.choices[0].message.content;
-        responseSource = 'deterministic+rag+gpt5';
+        responseSource = 'deterministic+rag+ai';
         
-        logger.info('✅ GPT-5 synthesis successful');
+        logger.info('✅ AI synthesis successful');
         
       } catch (error) {
-        // FALLBACK: Use structured template (still works!)
-        logger.warn('GPT-5 synthesis failed or timed out, using template', { 
-          error: error.message 
+        // ROBUST FALLBACK - Always works
+        logger.warn('AI synthesis failed, using template fallback', { 
+          error: error instanceof Error ? error.message : String(error)
         });
         
         narrative = buildFallbackNarrative(structuredFacts);
