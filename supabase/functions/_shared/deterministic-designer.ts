@@ -78,22 +78,27 @@ export function designCircuit(params: {
   let selectedCable: { size: number; result: any } | null = null;
   
   for (const size of standardCableSizes) {
-    const result = calculateCableCapacity({
-      cableSize: size,
-      designCurrent: Ib,
-      deviceRating: In,
-      ambientTemp,
-      groupingCircuits: grouping,
-      installationMethod: installMethod,
-      cableType,
-      cableLength: distance,
-      voltage
-    });
+    try {
+      const result = calculateCableCapacity({
+        cableSize: size,
+        designCurrent: Ib,
+        deviceRating: In,
+        ambientTemp,
+        groupingCircuits: grouping,
+        installationMethod: installMethod,
+        cableType,
+        cableLength: distance,
+        voltage
+      });
 
-    // Check if cable satisfies BS 7671 fundamental rule
-    if (result.compliance.overallCompliant && result.voltageDrop.compliant) {
-      selectedCable = { size, result };
-      break;
+      // Check if cable satisfies BS 7671 fundamental rule
+      if (result.compliance.overallCompliant && result.voltageDrop.compliant) {
+        selectedCable = { size, result };
+        break;
+      }
+    } catch (error) {
+      console.warn(`⚠️ Cable calculation failed for size ${size}mm²:`, error.message);
+      continue; // Try next size
     }
   }
 

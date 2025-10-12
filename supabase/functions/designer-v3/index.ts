@@ -98,7 +98,7 @@ serve(async (req) => {
         power: entities.power,
         distance: entities.distance,
         voltage: entities.voltage || 230,
-        installationMethod: 'A',
+        installMethod: 'A',
         ambientTemp: 25
       });
       
@@ -231,6 +231,12 @@ Write a comprehensive electrical design response that:
         }
         
         const gptData = await gptResponse.json();
+        
+        // Safety check: Ensure GPT-5 returned a valid response
+        if (!gptData.choices || gptData.choices.length === 0 || !gptData.choices[0]?.message?.content) {
+          throw new Error('GPT-5 returned empty or malformed response');
+        }
+        
         narrative = gptData.choices[0].message.content;
         responseSource = 'deterministic+rag+gpt5';
         
