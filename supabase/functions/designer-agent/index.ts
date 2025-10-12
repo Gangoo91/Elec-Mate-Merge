@@ -912,14 +912,46 @@ Use professional language with UK English spelling. Present calculations clearly
         }
         
         Object.assign(structuredData, parsed);
-      } catch (e) {
-        // PHASE 4: Enhanced error logging for JSON parse failures
-        logger.error('Multi-circuit JSON parse failure', { 
-          error: e instanceof Error ? e.message : String(e),
-          responsePreview: responseContent.substring(0, 500),
+      } catch (parseError) {
+        // PHASE 4: Enhanced error logging with circuit extraction debug
+        logger.error('❌ Failed to parse Gemini response as JSON', {
+          error: parseError instanceof Error ? parseError.message : String(parseError),
+          rawResponsePreview: responseContent.substring(0, 300),
+          systemPromptMode: isVagueRequest ? 'Phase 1 (conversational)' : 'Phase 2 (JSON)',
+          extractedParams: {
+            circuitType: circuitParams.circuitType,
+            power: circuitParams.power,
+            distance: circuitParams.cableLength,
+            hasEnoughData: circuitParams.hasEnoughData,
+            ambientTemp: circuitParams.ambientTemp,
+            grouping: circuitParams.groupingCircuits
+          },
           requestId
         });
-        // Continue with text-only response
+        
+        // If this was supposed to be a JSON response but parsing failed, return user-friendly error
+        if (!isVagueRequest && circuitParams.hasEnoughData) {
+          return new Response(JSON.stringify({
+            error: 'Failed to process circuit design. The AI response was not in the expected format.',
+            debug: {
+              detected: {
+                circuitType: circuitParams.circuitType,
+                power: `${circuitParams.power}W`,
+                distance: `${circuitParams.cableLength}m`,
+                ambientTemp: `${circuitParams.ambientTemp}°C`,
+                grouping: `${circuitParams.groupingCircuits} circuits`
+              },
+              suggestion: circuitParams.circuitType === 'socket' 
+                ? 'Circuit type not recognized. Try being more specific (e.g., "32kW space heater" instead of just "heater")'
+                : 'AI response format error. Please try rephrasing your query or contact support if this persists.'
+            },
+            requestId
+          }), {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+        // Continue with text-only response for conversational mode
       }
     }
     
@@ -1350,9 +1382,27 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
   let location = '';
   const msgLower = userMessage.toLowerCase();
   
+  // Enhanced circuit type detection
   if (msgLower.includes('shower')) circuitType = 'shower';
-  else if (msgLower.includes('cooker')) circuitType = 'cooker';
+  else if (msgLower.includes('cooker') || msgLower.includes('oven') || msgLower.includes('hob')) circuitType = 'cooker';
   else if (msgLower.includes('light')) circuitType = 'lighting';
+  else if (msgLower.includes('heater') || msgLower.includes('heating') || msgLower.includes('radiator') || msgLower.includes('heat pump')) {
+    circuitType = 'heating';
+    location = location || (msgLower.includes('outdoor') || msgLower.includes('heat pump') ? 'outdoor' : 'general');
+  }
+  else if (msgLower.includes('immersion') || msgLower.includes('water heater')) {
+    circuitType = 'immersion-heater';
+  }
+  else if (msgLower.includes('storage heater')) {
+    circuitType = 'storage-heater';
+  }
+  else if (msgLower.includes('underfloor')) {
+    circuitType = 'underfloor-heating';
+  }
+  else if (msgLower.includes('air con') || msgLower.includes('hvac') || msgLower.includes('conditioning') || msgLower.includes('a/c')) {
+    circuitType = 'hvac';
+    location = 'indoor';
+  }
   
   if (msgLower.includes('ev') || msgLower.includes('charger') || msgLower.includes('charging point')) {
     circuitType = 'ev-charger';
@@ -1384,8 +1434,25 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
     location = 'outdoor';
   }
 
+  // Detect packed/bunched cables on cable tray
+  let detectedGrouping = currentDesign?.environmentalProfile?.finalApplied?.grouping || 1;
+  const groupingKeywords = /packed|bunched|grouped|multiple cables|shared tray|crowded|alongside other|other circuits|several cables|other cables/i;
+
+  if (groupingKeywords.test(userMessage)) {
+    // Conservative assumption: if user mentions "packed", assume 6 circuits bunched
+    detectedGrouping = 6; // Cg = 0.57 for 6 circuits (Table 4C1)
+    console.log(`📦 PACKED CABLE TRAY detected - setting grouping factor to ${detectedGrouping} circuits`);
+    
+    // If they explicitly mention a number, use it
+    const groupCountMatch = userMessage.match(/(\d+)\s+(?:cables|circuits|ways)/i);
+    if (groupCountMatch) {
+      detectedGrouping = parseInt(groupCountMatch[1]);
+      console.log(`🔢 Explicit grouping count: ${detectedGrouping} circuits`);
+    }
+  }
+
   return {
-    hasEnoughData: power > 0 && designCurrent > 0,
+    hasEnoughData: power > 0 && designCurrent > 0 && circuitType !== 'socket',
     power,
     voltage,
     phases,
@@ -1395,7 +1462,7 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
     cableSize,
     cableLength: lengthMatch ? parseInt(lengthMatch[1]) : (currentDesign?.cableLength || 15),
     ambientTemp,
-    groupingCircuits: currentDesign?.environmentalProfile?.finalApplied?.grouping || 1,
+    groupingCircuits: detectedGrouping,
     installationMethod: isOutdoor ? 'cable-tray' : (currentDesign?.installationMethod || 'clipped-direct'),
     cableType: isOutdoor ? 'swa' : '6242Y',
     circuitType,
