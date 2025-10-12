@@ -2,6 +2,7 @@
 // Caches common queries to speed up responses by 10x
 
 import { createClient } from './deps.ts';
+import { parseQueryEntities } from './query-parser.ts';
 
 export interface CacheEntry {
   query: string;
@@ -33,7 +34,6 @@ export class ResponseCache {
   // Extract canonical entities for semantic caching using query-parser
   private extractCanonicalEntities(query: string, context?: any): any {
     // Use parseQueryEntities for consistency across the system
-    const { parseQueryEntities } = await import('./query-parser.ts');
     const parsed = parseQueryEntities(query);
     
     return {
