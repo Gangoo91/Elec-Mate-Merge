@@ -60,12 +60,30 @@ serve(async (req) => {
       
       if (error) throw error;
       
+      // Format for RAG panel compatibility
+      const regulations = (data || []).map((reg: any) => ({
+        ...reg,
+        id: reg.id || crypto.randomUUID(),
+        similarity: 0.95 // Direct match confidence
+      }));
+      
       return {
         success: true,
         lookup_mode: true,
-        regulations: data || [],
-        message: data && data.length > 0 
-          ? `Found ${data.length} regulation(s) matching your request.`
+        regulations: regulations,
+        
+        // Include RAG fields for panel population
+        rag_regulations: regulations,
+        rag_metadata: {
+          search_method: 'direct',
+          has_installation: false,
+          has_testing: false,
+          has_design: false,
+          query_type: 'lookup'
+        },
+        
+        message: regulations.length > 0 
+          ? `Found ${regulations.length} regulation(s) matching your request.`
           : 'No regulations found matching those numbers.'
       };
     };
