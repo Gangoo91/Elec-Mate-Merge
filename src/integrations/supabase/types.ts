@@ -2033,6 +2033,7 @@ export type Database = {
           embedding: string | null
           id: string
           metadata: Json | null
+          search_vector: unknown | null
           source: string
           topic: string
         }
@@ -2042,6 +2043,7 @@ export type Database = {
           embedding?: string | null
           id?: string
           metadata?: Json | null
+          search_vector?: unknown | null
           source: string
           topic: string
         }
@@ -2051,6 +2053,7 @@ export type Database = {
           embedding?: string | null
           id?: string
           metadata?: Json | null
+          search_vector?: unknown | null
           source?: string
           topic?: string
         }
@@ -3870,6 +3873,36 @@ export type Database = {
         }
         Relationships: []
       }
+      rag_cache: {
+        Row: {
+          agent_name: string
+          created_at: string | null
+          expires_at: string | null
+          hit_count: number | null
+          query_hash: string
+          query_text: string
+          results: Json
+        }
+        Insert: {
+          agent_name: string
+          created_at?: string | null
+          expires_at?: string | null
+          hit_count?: number | null
+          query_hash: string
+          query_text: string
+          results: Json
+        }
+        Update: {
+          agent_name?: string
+          created_at?: string | null
+          expires_at?: string | null
+          hit_count?: number | null
+          query_hash?: string
+          query_text?: string
+          results?: Json
+        }
+        Relationships: []
+      }
       rams_documents: {
         Row: {
           activities: string[] | null
@@ -5673,6 +5706,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      cleanup_rag_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       extract_postcode_district: {
         Args: { full_postcode: string }
         Returns: string
@@ -5823,6 +5860,21 @@ export type Database = {
           content: string
           id: string
           similarity: number
+          source: string
+          topic: string
+        }[]
+      }
+      search_installation_hybrid: {
+        Args: {
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          content: string
+          hybrid_score: number
+          id: string
+          metadata: Json
           source: string
           topic: string
         }[]
