@@ -226,14 +226,19 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
     logger.debug('Calling Lovable AI with tool calling');
     const aiStart = Date.now();
     
+    // AbortController for timeout protection
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
+    
     const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${LOVABLE_API_KEY}`,
         'Content-Type': 'application/json',
       },
+      signal: controller.signal,
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+        model: 'openai/gpt-5-mini',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
@@ -329,9 +334,9 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
           }
         }],
         tool_choice: { type: 'function', function: { name: 'provide_cost_estimate' } },
-        max_tokens: 2000
+        max_completion_tokens: 2000
       })
-    });
+    }).finally(() => clearTimeout(timeoutId));
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
