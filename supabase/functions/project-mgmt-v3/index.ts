@@ -247,104 +247,86 @@ Include phases, resources, compliance requirements, and risk management.`;
           name: 'provide_project_plan',
           description: 'Return comprehensive PRINCE2/APM project plan with phases and resources',
           parameters: {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      signal: controller.signal,
-      body: JSON.stringify({
-        model: 'openai/gpt-5-mini',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        tools: [{
-          type: 'function',
-          function: {
-            name: 'provide_project_plan',
-            description: 'Return comprehensive PRINCE2/APM project plan with phases and resources',
-            parameters: {
-              type: 'object',
-              properties: {
-                response: {
-                  type: 'string',
-                  description: 'PRINCE2/APM project plan summary (200-300 words)'
-                },
-                projectPlan: {
-                  type: 'object',
-                  properties: {
-                    phases: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          phase: { type: 'string' },
-                          duration: { type: 'number' },
-                          durationUnit: { type: 'string' },
-                          tasks: { type: 'array', items: { type: 'string' } },
-                          dependencies: { type: 'array', items: { type: 'string' } },
-                          milestones: { type: 'array', items: { type: 'string' } },
-                          criticalPath: { type: 'boolean' }
-                        },
-                        required: ['phase', 'duration', 'tasks']
-                      }
-                    },
-                    totalDuration: { type: 'number' },
-                    totalDurationUnit: { type: 'string' },
-                    criticalPath: { type: 'array', items: { type: 'string' } },
-                    acceleration: { type: 'array', items: { type: 'string' } }
-                  }
-                },
-                resources: {
-                  type: 'object',
-                  properties: {
-                    team: { type: 'array', items: { type: 'object' } },
-                    equipment: { type: 'array', items: { type: 'string' } }
-                  }
-                },
-                compliance: {
-                  type: 'object',
-                  properties: {
-                    notifications: { type: 'array', items: { type: 'string' } },
-                    certifications: { type: 'array', items: { type: 'string' } },
-                    inspections: { type: 'array', items: { type: 'string' } }
-                  }
-                },
-                risks: {
-                  type: 'array',
-                  items: {
-                    type: 'object',
-                    properties: {
-                      risk: { type: 'string' },
-                      mitigation: { type: 'string' },
-                      severity: { type: 'string' }
-                    },
-                    required: ['risk', 'mitigation']
-                  }
-                },
-                recommendations: {
-                  type: 'array',
-                  items: { type: 'string' }
-                },
-                suggestedNextAgents: {
-                  type: 'array',
-                  items: {
-                    type: 'object',
-                    properties: {
-                      agent: { type: 'string' },
-                      reason: { type: 'string' },
-                      priority: { type: 'string', enum: ['high', 'medium', 'low'] }
-                    },
-                    required: ['agent', 'reason', 'priority']
-                  }
+            type: 'object',
+            properties: {
+              response: {
+                type: 'string',
+                description: 'PRINCE2/APM project plan summary (200-300 words)'
+              },
+              projectPlan: {
+                type: 'object',
+                properties: {
+                  phases: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        phase: { type: 'string' },
+                        duration: { type: 'number' },
+                        durationUnit: { type: 'string' },
+                        tasks: { type: 'array', items: { type: 'string' } },
+                        dependencies: { type: 'array', items: { type: 'string' } },
+                        milestones: { type: 'array', items: { type: 'string' } },
+                        criticalPath: { type: 'boolean' }
+                      },
+                      required: ['phase', 'duration', 'tasks']
+                    }
+                  },
+                  totalDuration: { type: 'number' },
+                  totalDurationUnit: { type: 'string' },
+                  criticalPath: { type: 'array', items: { type: 'string' } },
+                  acceleration: { type: 'array', items: { type: 'string' } }
                 }
               },
-              required: ['response', 'projectPlan'],
-              additionalProperties: false
-            }
+              resources: {
+                type: 'object',
+                properties: {
+                  team: { type: 'array', items: { type: 'object' } },
+                  equipment: { type: 'array', items: { type: 'string' } }
+                }
+              },
+              compliance: {
+                type: 'object',
+                properties: {
+                  notifications: { type: 'array', items: { type: 'string' } },
+                  certifications: { type: 'array', items: { type: 'string' } },
+                  inspections: { type: 'array', items: { type: 'string' } }
+                }
+              },
+              risks: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    risk: { type: 'string' },
+                    mitigation: { type: 'string' },
+                    severity: { type: 'string' }
+                  },
+                  required: ['risk', 'mitigation']
+                }
+              },
+              recommendations: {
+                type: 'array',
+                items: { type: 'string' }
+              },
+              suggestedNextAgents: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    agent: { type: 'string' },
+                    reason: { type: 'string' },
+                    priority: { type: 'string', enum: ['high', 'medium', 'low'] }
+                  },
+                  required: ['agent', 'reason', 'priority']
+                }
+              }
+            },
+            required: ['response', 'projectPlan'],
+            additionalProperties: false
           }
-        }],
+        }
+      }],
       toolChoice: { type: 'function', function: { name: 'provide_project_plan' } }
     });
 
