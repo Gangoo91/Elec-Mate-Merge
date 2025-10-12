@@ -16,6 +16,9 @@ export interface ParsedEntities {
   specialRequirements?: string[];
   installationConstraints?: string[];
   earthingSystem?: 'TN-S' | 'TN-C-S' | 'TT' | 'IT';
+  consumerUnitWays?: number;  // 8, 10, 12, 16, 18 way
+  circuitCount?: number;      // Number of circuits needed
+  jobType?: 'rewire' | 'board_change' | 'extension' | 'new_circuit' | 'testing';
 }
 
 export function parseQueryEntities(query: string): ParsedEntities {
@@ -119,6 +122,33 @@ export function parseQueryEntities(query: string): ParsedEntities {
   const tempMatch = query.match(/(\d+)°?C/i);
   if (tempMatch) {
     entities.ambientTemp = parseInt(tempMatch[1], 10);
+  }
+  
+  // Consumer unit way detection (18 way, 16-way, 10 way board)
+  const cuWaysMatch = query.match(/(\d+)[\s-]?way(?:\s+(?:board|unit|consumer unit|cu))?/i);
+  if (cuWaysMatch) {
+    entities.consumerUnitWays = parseInt(cuWaysMatch[1], 10);
+  }
+  
+  // Circuit count detection (8 circuits, 12 circuits needed)
+  const circuitMatch = query.match(/(\d+)\s+circuits?/i);
+  if (circuitMatch) {
+    entities.circuitCount = parseInt(circuitMatch[1], 10);
+    // If no explicit "way" mentioned, assume ways = circuits + 2 spares
+    if (!entities.consumerUnitWays) {
+      entities.consumerUnitWays = parseInt(circuitMatch[1], 10) + 2;
+    }
+  }
+
+  // Job type detection
+  if (/board change|consumer unit change|CU change|board replacement|board swap/i.test(query)) {
+    entities.jobType = 'board_change';
+  } else if (/rewire|full rewire|house rewire|complete rewire/i.test(query)) {
+    entities.jobType = 'rewire';
+  } else if (/extension|add circuit|new circuit|additional circuit/i.test(query)) {
+    entities.jobType = 'extension';
+  } else if (/testing|test and inspect|EICR|periodic inspection/i.test(query)) {
+    entities.jobType = 'testing';
   }
   
   return entities;
