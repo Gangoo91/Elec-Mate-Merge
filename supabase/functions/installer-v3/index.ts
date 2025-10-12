@@ -274,7 +274,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
 
     // Phase 1: Call AI with dual-provider support (Gemini default, Claude if ANTHROPIC_API_KEY set)
     const useAnthropicDirect = Deno.env.get('ANTHROPIC_API_KEY');
-    const model = useAnthropicDirect ? 'anthropic/claude-3-7-sonnet-20250219' : 'google/gemini-2.5-flash';
+    const model = useAnthropicDirect ? 'claude-sonnet-4-20250514' : 'google/gemini-2.5-flash';
     
     logger.debug(`Calling ${model}`, { hasAnthropicKey: !!useAnthropicDirect });
     const { callAI } = await import('../_shared/ai-wrapper.ts');
