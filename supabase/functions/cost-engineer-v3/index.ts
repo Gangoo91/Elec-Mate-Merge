@@ -351,12 +351,12 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
     });
 
     // Step 5: Return response - flat format for router/UI
-    const { response, suggestedNextAgents, materials, labour, summary, notes } = costResult;
+    const { response, suggestedNextAgents, materials: costMaterials, labour, summary, notes } = costResult;
     
     return new Response(
       JSON.stringify({
         response,
-        structuredData: { materials, labour, summary, notes },
+        structuredData: { materials: costMaterials, labour, summary, notes },
         suggestedNextAgents: suggestedNextAgents || []
       }),
       { 
