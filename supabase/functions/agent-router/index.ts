@@ -21,12 +21,28 @@ interface AgentResponse {
 
 const AGENT_ENDPOINTS: Record<string, string> = {
   'designer': 'designer-v3',
+  'designer-multi': 'designer-agent', // Multi-circuit designer
   'cost-engineer': 'cost-engineer-v3',
   'installer': 'installer-v3',
   'health-safety': 'health-safety-v3',
   'commissioning': 'commissioning-v3',
   'project-manager': 'project-mgmt-v3'
 };
+
+/**
+ * Detect multi-circuit queries in user message
+ */
+function isMultiCircuitQuery(query: string): boolean {
+  const patterns = [
+    /multi.?circuit/i,
+    /multiple circuits/i,
+    /(\d+\s*circuits?)/i,
+    /circuit \d+.*circuit \d+/i,  // "circuit 1... circuit 2"
+    /(?:ring|radial|cooker|shower|lighting|heater).*?(?:and|,|plus|\+).*?(?:ring|radial|cooker|shower|lighting|heater)/i  // "ring main and cooker circuit"
+  ];
+  
+  return patterns.some(p => p.test(query));
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -61,6 +77,12 @@ serve(async (req) => {
       throw new ValidationError('selectedAgents array is required and must not be empty');
     }
 
+    // Multi-circuit routing: Automatically route to designer-agent for multi-circuit queries
+    if (selectedAgents.includes('designer') && isMultiCircuitQuery(userMessage)) {
+      logger.info('Multi-circuit detected, routing to designer-agent');
+      const designerIndex = selectedAgents.indexOf('designer');
+      selectedAgents[designerIndex] = 'designer-multi';
+    }
 
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAIApiKey) throw new ValidationError('OPENAI_API_KEY not configured');
