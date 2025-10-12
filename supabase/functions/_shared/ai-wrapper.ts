@@ -1,11 +1,13 @@
 /**
- * Universal AI Wrapper - Single Source of Truth for All AI Calls
+ * Universal AI Wrapper - Multi-Provider Support
  * 
  * Features:
+ * - Anthropic direct API (when ANTHROPIC_API_KEY present)
+ * - Gemini via Lovable AI Gateway (default, fast + free)
+ * - OpenAI direct API support
  * - 60s timeout (safe for Supabase)
  * - Automatic retry with exponential backoff
- * - Gemini by default (fast + free)
- * - Consistent parameter handling (max_tokens vs max_completion_tokens)
+ * - Consistent parameter handling
  * - Robust error handling with fallback support
  */
 
@@ -46,6 +48,74 @@ export interface AICallResult {
 }
 
 /**
+ * Detect provider from model name
+ */
+function detectProvider(model: string): 'anthropic' | 'openai' | 'gemini' {
+  if (model.startsWith('anthropic/') || model.startsWith('claude-')) {
+    return 'anthropic';
+  }
+  if (model.startsWith('openai/') || model.startsWith('gpt-')) {
+    return 'openai';
+  }
+  return 'gemini'; // google/* or default
+}
+
+/**
+ * Call Anthropic API directly (bypasses gateway)
+ */
+async function callAnthropicDirect(
+  model: string,
+  systemPrompt: string,
+  userPrompt: string,
+  options: Partial<AICallOptions>
+): Promise<{ content: string; toolCalls?: any[] }> {
+  const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
+  if (!anthropicKey) {
+    throw new AIError('ANTHROPIC_API_KEY not configured', 'Anthropic', undefined, false);
+  }
+
+  const { maxTokens = 2600, temperature = 0.2 } = options;
+  
+  // Map model name: anthropic/claude-3-7-sonnet-20250219 → claude-3-7-sonnet-20250219
+  const cleanModel = model.replace('anthropic/', '');
+
+  const body: any = {
+    model: cleanModel,
+    max_tokens: maxTokens,
+    temperature,
+    system: systemPrompt,
+    messages: [{ role: 'user', content: userPrompt }]
+  };
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': anthropicKey,
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new AIError(
+      `Anthropic API error: ${response.status} ${errorText}`,
+      'Anthropic',
+      response.status,
+      response.status === 429 || response.status >= 500
+    );
+  }
+
+  const data = await response.json();
+  
+  // Map Anthropic response to our format
+  const content = data.content?.[0]?.text || '';
+  
+  return { content, toolCalls: undefined };
+}
+
+/**
  * UNIVERSAL AI WRAPPER - Use this for ALL AI calls
  * 
  * @param apiKey - Lovable AI key or OpenAI key
@@ -62,7 +132,7 @@ export async function callAI(
     temperature,
     maxTokens = 2000,
     responseFormat = 'text',
-    timeoutMs = 55000, // 55s to stay under 60s Supabase limit
+    timeoutMs = 70000, // 70s for complex tasks
     systemPrompt,
     userPrompt,
     requireJSON = false,
@@ -71,52 +141,66 @@ export async function callAI(
   } = options;
 
   const startTime = Date.now();
-  const isGPT5 = model.includes('gpt-5');
-  const isOpenAI = model.startsWith('openai/') || model.startsWith('gpt-');
-  const provider = isOpenAI ? 'OpenAI' : 'Lovable AI';
+  const provider = detectProvider(model);
+  
+  // Check if we should use Anthropic direct API
+  const useAnthropicDirect = provider === 'anthropic' && Deno.env.get('ANTHROPIC_API_KEY');
 
-  // Build request body with correct parameters for model type
-  const body: any = {
-    model,
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: userPrompt }
-    ]
-  };
-
-  // Handle token parameter differences between models
-  if (isGPT5) {
-    body.max_completion_tokens = maxTokens;
-    // Don't set temperature for GPT-5 (not supported)
-  } else {
-    body.max_tokens = maxTokens;
-    if (temperature !== undefined) {
-      body.temperature = temperature;
-    }
-  }
-
-  // Add response format if specified
-  if (responseFormat === 'json_object') {
-    body.response_format = { type: 'json_object' };
-  }
-
-  // Add tool calling if specified
-  if (tools && tools.length > 0) {
-    body.tools = tools;
-    if (toolChoice) {
-      body.tool_choice = toolChoice;
-    }
-  }
-
-  console.log(`🤖 AI Call: ${model} (timeout: ${timeoutMs}ms, provider: ${provider})`);
+  const providerName = useAnthropicDirect 
+    ? 'Anthropic Direct' 
+    : (provider === 'openai' ? 'OpenAI' : 'Lovable AI');
+  
+  console.log(`🤖 AI Call: ${model} (timeout: ${timeoutMs}ms, provider: ${providerName})`);
 
   // Wrap with timeout + retry for resilience
   try {
     const result = await withTimeout(
       withRetry(async () => {
+        // Route to Anthropic direct API if available and model is Claude
+        if (useAnthropicDirect) {
+          return await callAnthropicDirect(model, systemPrompt, userPrompt, options);
+        }
+
+        // Otherwise use Lovable AI Gateway or OpenAI
+        const isOpenAI = provider === 'openai';
+        const isGPT5 = model.includes('gpt-5');
+
         const endpoint = isOpenAI 
           ? 'https://api.openai.com/v1/chat/completions'
           : 'https://ai.gateway.lovable.dev/v1/chat/completions';
+
+        // Build request body with correct parameters for model type
+        const body: any = {
+          model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ]
+        };
+
+        // Handle token parameter differences between models
+        if (isGPT5) {
+          body.max_completion_tokens = maxTokens;
+          // Don't set temperature for GPT-5 (not supported)
+        } else {
+          body.max_tokens = maxTokens;
+          if (temperature !== undefined) {
+            body.temperature = temperature;
+          }
+        }
+
+        // Add response format if specified
+        if (responseFormat === 'json_object') {
+          body.response_format = { type: 'json_object' };
+        }
+
+        // Add tool calling if specified
+        if (tools && tools.length > 0) {
+          body.tools = tools;
+          if (toolChoice) {
+            body.tool_choice = toolChoice;
+          }
+        }
 
         const response = await fetch(endpoint, {
           method: 'POST',
@@ -130,23 +214,28 @@ export async function callAI(
         if (!response.ok) {
           const errorText = await response.text();
           
+          // Check for invalid model error from gateway → suggest fallback
+          if (errorText.includes('invalid model') && provider === 'anthropic') {
+            console.warn(`⚠️ Gateway rejected ${model}, suggest using Anthropic direct API or Gemini`);
+          }
+          
           // Handle specific error cases with appropriate retry behavior
           if (response.status === 429) {
-            throw new AIError('Rate limit exceeded', provider, 429, true); // Retryable
+            throw new AIError('Rate limit exceeded', providerName, 429, true); // Retryable
           }
           if (response.status === 402) {
-            throw new AIError('Payment required - credits exhausted', provider, 402, false);
+            throw new AIError('Payment required - credits exhausted', providerName, 402, false);
           }
           if (response.status === 503 || response.status === 502) {
-            throw new AIError('Service temporarily unavailable', provider, response.status, true); // Retryable
+            throw new AIError('Service temporarily unavailable', providerName, response.status, true);
           }
           if (response.status === 500) {
-            throw new AIError('Internal server error', provider, 500, true); // Retryable
+            throw new AIError('Internal server error', providerName, 500, true);
           }
           
           throw new AIError(
             `AI call failed: ${errorText}`,
-            provider,
+            providerName,
             response.status,
             false
           );
@@ -166,7 +255,7 @@ export async function callAI(
         const content = data.choices?.[0]?.message?.content;
         
         if (!content) {
-          throw new AIError('Empty response from AI', provider, undefined, true); // Retryable
+          throw new AIError('Empty response from AI', providerName, undefined, true);
         }
 
         // Validate JSON if required
@@ -174,7 +263,7 @@ export async function callAI(
           try {
             JSON.parse(content);
           } catch {
-            throw new AIError('AI returned invalid JSON', provider, undefined, true); // Retryable
+            throw new AIError('AI returned invalid JSON', providerName, undefined, true);
           }
         }
 
@@ -200,7 +289,7 @@ export async function callAI(
     );
 
     const duration = Date.now() - startTime;
-    console.log(`✅ AI call succeeded (${duration}ms)`);
+    console.log(`✅ AI call succeeded (${duration}ms, provider: ${providerName})`);
 
     return {
       content: result.content,
@@ -221,7 +310,7 @@ export async function callAI(
     
     throw new AIError(
       error instanceof Error ? error.message : 'AI call failed',
-      provider,
+      providerName,
       undefined,
       false
     );

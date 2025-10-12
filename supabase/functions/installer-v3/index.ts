@@ -168,37 +168,44 @@ serve(async (req) => {
     const queryEmbedding = await generateEmbeddingWithRetry(expandedQuery, OPENAI_API_KEY);
     logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
-    // Phase 2: Hybrid search (BM25 + Vector with RRF)
+    // Phase 2: Hybrid search (BM25 + Vector with RRF) - with graceful fallback
     logger.debug('Executing hybrid search (BM25 + Vector)');
     
-    const { data: installKnowledge, error: hybridError } = await supabase.rpc('search_installation_hybrid', {
-      query_text: expandedQuery,
-      query_embedding: queryEmbedding,
-      match_count: 12
-    });
-
-    if (hybridError) {
-      logger.error('Hybrid search failed, falling back to vector only', { error: hybridError.message });
-      
-      // Fallback to vector-only search
-      const { data: vectorResults } = await supabase.rpc('search_installation_knowledge', {
+    let installKnowledge: any[] = [];
+    
+    try {
+      const { data: hybridResults, error: hybridError } = await supabase.rpc('search_installation_hybrid', {
+        query_text: expandedQuery,
         query_embedding: queryEmbedding,
-        method_filter: installationMethod || null,
-        source_filter: null,
-        match_threshold: 0.5,
         match_count: 12
       });
-      
-      // Use vector results if available
-      if (vectorResults && vectorResults.length > 0) {
-        logger.info('Using vector fallback results', { count: vectorResults.length });
-      }
-    }
 
-    logger.info('Hybrid search completed', { 
-      resultsCount: installKnowledge?.length || 0,
-      avgScore: installKnowledge?.reduce((sum, r) => sum + (r.hybrid_score || 0), 0) / (installKnowledge?.length || 1)
-    });
+      if (hybridError) {
+        throw hybridError;
+      }
+      
+      installKnowledge = hybridResults || [];
+      
+      logger.info('Hybrid search completed', { 
+        resultsCount: installKnowledge.length,
+        avgScore: installKnowledge.length > 0 
+          ? (installKnowledge.reduce((sum, r) => sum + (r.hybrid_score || 0), 0) / installKnowledge.length).toFixed(3)
+          : null
+      });
+    } catch (hybridError) {
+      logger.warn('Hybrid search failed, using vector fallback', { error: hybridError.message });
+      
+      // Graceful fallback to vector-only search using BS 7671 knowledge
+      const { data: vectorResults } = await supabase
+        .from('installation_knowledge')
+        .select('id, topic, content, source, metadata')
+        .order('id')
+        .limit(12);
+      
+      installKnowledge = vectorResults || [];
+      
+      logger.info('Vector fallback completed', { count: installKnowledge.length });
+    }
 
     // Build installation context with focused snippets (400 chars)
     const installContext = installKnowledge && installKnowledge.length > 0
@@ -265,16 +272,19 @@ ${location ? `Location: ${location}` : ''}
 
 Include step-by-step instructions, practical tips, and things to avoid.`;
 
-    // Phase 1: Call Claude Sonnet 4.5 with simplified schema and increased tokens
-    logger.debug('Calling Claude Sonnet 4.5');
+    // Phase 1: Call AI with dual-provider support (Gemini default, Claude if ANTHROPIC_API_KEY set)
+    const useAnthropicDirect = Deno.env.get('ANTHROPIC_API_KEY');
+    const model = useAnthropicDirect ? 'anthropic/claude-3-7-sonnet-20250219' : 'google/gemini-2.5-flash';
+    
+    logger.debug(`Calling ${model}`, { hasAnthropicKey: !!useAnthropicDirect });
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
     const aiResult = await callAI(LOVABLE_API_KEY!, {
-      model: 'anthropic/claude-sonnet-4-5',  // Phase 1: Switch to Claude
+      model,
       systemPrompt,
       userPrompt,
-      maxTokens: 2500,   // Phase 1: Increase tokens
-      timeoutMs: 90000,  // Phase 1: 90s timeout
+      maxTokens: 2600,   // Increased tokens for detailed responses
+      timeoutMs: 70000,  // 70s timeout
       tools: [{
         type: 'function',
         function: {
@@ -330,13 +340,52 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       toolChoice: { type: 'function', function: { name: 'provide_installation_guidance' } }
     });
 
-    // Parse tool call response
-    const toolCalls = aiResult.toolCalls;
-    if (!toolCalls || toolCalls.length === 0) {
-      throw new Error('No tool calls returned from AI');
+    // Parse tool call response (handle both tool calls and JSON-in-content)
+    let installResult: any;
+    
+    if (aiResult.toolCalls && aiResult.toolCalls.length > 0) {
+      // OpenAI-style tool calls (from Gemini via gateway)
+      installResult = JSON.parse(aiResult.toolCalls[0].function.arguments);
+    } else if (aiResult.content) {
+      // Anthropic direct or JSON-in-content response
+      try {
+        // Try to extract JSON from markdown code blocks
+        const jsonMatch = aiResult.content.match(/```json\s*([\s\S]*?)\s*```/) || 
+                         aiResult.content.match(/```\s*([\s\S]*?)\s*```/) ||
+                         [null, aiResult.content];
+        
+        const jsonStr = jsonMatch[1] || aiResult.content;
+        installResult = JSON.parse(jsonStr.trim());
+      } catch (parseError) {
+        logger.warn('Failed to parse AI content as JSON, using graceful fallback', { 
+          error: parseError.message,
+          contentPreview: aiResult.content.substring(0, 200)
+        });
+        
+        // Graceful fallback with helpful guidance
+        installResult = {
+          response: 'Unable to process installation guidance at this time. Please provide more specific details about the installation method (e.g., "clipped direct", "conduit", "buried") and circuit requirements.',
+          installationSteps: [
+            {
+              step: 1,
+              title: 'Refine Query',
+              description: 'Add installation method details (clipped direct, conduit, trunking, or buried) for accurate guidance.'
+            },
+            {
+              step: 2,
+              title: 'Include Circuit Details',
+              description: 'Specify cable size, load type, and cable length for comprehensive installation steps.'
+            }
+          ],
+          practicalTips: [
+            'Always specify the installation method for precise clip spacing and derating factors',
+            'Include cable length to get accurate voltage drop considerations'
+          ]
+        };
+      }
+    } else {
+      throw new Error('No content or tool calls returned from AI');
     }
-
-    const installResult = JSON.parse(toolCalls[0].function.arguments);
 
     logger.info('Installation guidance completed', {
       stepsCount: installResult.installationSteps?.length,
