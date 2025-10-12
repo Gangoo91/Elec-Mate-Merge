@@ -13,6 +13,7 @@ import {
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 import { summarizeConversation } from '../_shared/conversation-memory.ts';
+import { ResponseCache, isCacheable } from '../_shared/response-cache.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -69,46 +70,82 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Step 1: Generate embedding for RAG search (with retry)
-    logger.debug('Generating query embedding');
-    const embeddingStart = Date.now();
-    const queryEmbedding = await generateEmbeddingWithRetry(query, OPENAI_API_KEY);
-    logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
+    // Initialize cache for instant responses
+    const cache = new ResponseCache();
+    let allRegulations = [];
+    let designKnowledge = [];
+    let cacheHit = false;
 
-    // Step 2: Fetch RAG context
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    logger.debug('Fetching RAG context');
-
-    // Fetch BS 7671 regulations (optimized to 5 for speed)
-    const { data: regulations, error: regError } = await supabase.rpc('search_bs7671', {
-      query_embedding: queryEmbedding,
-      match_threshold: 0.5,
-      match_count: 5
-    });
-
-    if (regError) {
-      logger.warn('BS 7671 search failed', { error: regError });
+    // ⚡ TIER 1: CHECK CACHE FIRST (0-2s response for 60% of queries)
+    if (isCacheable(query)) {
+      logger.debug('Query is cacheable, checking cache');
+      const cached = await cache.get(query, { circuitType, power, voltage, cableLength });
+      
+      if (cached && cached.confidence >= 0.75) {
+        logger.info('✅ Cache hit - using cached regulations', { 
+          cachedQuery: cached.query.slice(0, 50),
+          hits: cached.hits,
+          age: Math.round((Date.now() - new Date(cached.timestamp).getTime()) / 1000 / 60) + ' mins'
+        });
+        
+        // Use cached regulations, skip RAG entirely
+        allRegulations = JSON.parse(cached.citations);
+        cacheHit = true;
+      }
     }
 
-    // Fetch design knowledge (optimized to 5 for speed)
-    const { data: designKnowledge, error: designError } = await supabase.rpc('search_design_knowledge', {
-      query_embedding: queryEmbedding,
-      circuit_filter: circuitType || null,
-      source_filter: null,
-      match_threshold: 0.6,
-      match_count: 5
-    });
+    // ⚡ TIER 2: RAG SEARCH WITH HIGH RELEVANCE THRESHOLD (3-10s for cache miss)
+    if (!cacheHit) {
+      // Step 1: Generate embedding for RAG search (with retry)
+      logger.debug('Cache miss - generating query embedding');
+      const embeddingStart = Date.now();
+      const queryEmbedding = await generateEmbeddingWithRetry(query, OPENAI_API_KEY);
+      logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
-    if (designError) {
-      logger.warn('Design knowledge search failed', { error: designError });
+      // Step 2: Fetch RAG context
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const supabase = createClient(supabaseUrl, supabaseKey);
+
+      logger.debug('Fetching RAG context with high relevance filter');
+
+      // Fetch BS 7671 regulations with 0.75 threshold (only highly relevant)
+      const { data: regulations, error: regError } = await supabase.rpc('search_bs7671', {
+        query_embedding: queryEmbedding,
+        match_threshold: 0.75, // ⚡ INCREASED from 0.5 - only pass highly relevant regs to GPT-5
+        match_count: 8
+      });
+
+      if (regError) {
+        logger.warn('BS 7671 search failed', { error: regError });
+      }
+
+      // Fetch design knowledge
+      const { data: designKnowledgeData, error: designError } = await supabase.rpc('search_design_knowledge', {
+        query_embedding: queryEmbedding,
+        circuit_filter: circuitType || null,
+        source_filter: null,
+        match_threshold: 0.7, // ⚡ INCREASED from 0.6
+        match_count: 5
+      });
+
+      if (designError) {
+        logger.warn('Design knowledge search failed', { error: designError });
+      }
+
+      // ⚡ FILTER: Only pass regulations with similarity > 0.75 to GPT-5
+      const rawRegs = regulations || [];
+      allRegulations = rawRegs.filter((reg: any) => reg.similarity >= 0.75);
+      designKnowledge = designKnowledgeData || [];
+      
+      logger.info('RAG filtering applied', { 
+        rawCount: rawRegs.length,
+        filteredCount: allRegulations.length,
+        avgSimilarity: allRegulations.length > 0 
+          ? (allRegulations.reduce((sum: number, r: any) => sum + r.similarity, 0) / allRegulations.length).toFixed(2)
+          : 0
+      });
     }
-
-    // ⚡ PROACTIVE CHECKLIST REMOVED - Was causing 60s timeouts
-    // Designer now uses only the initial RAG fetch for speed
-    const allRegulations = regulations || [];
 
     // Step 3: Build context-aware prompt (use allRegulations from proactive checklist)
     const regulationContext = allRegulations && allRegulations.length > 0
@@ -401,9 +438,9 @@ Provide a complete, BS 7671 compliant design.`;
     logger.debug('Calling Lovable AI with tool calling');
     const aiStart = Date.now();
     
-    // Timeout 90s via AbortController (increased from 60s for GPT-5 reasoning)
+    // Timeout 270s via AbortController (increased for GPT-5 complex reasoning)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 90000);
+    const timeoutId = setTimeout(() => controller.abort(), 270000);
 
     let aiResponse: Response;
     try {
@@ -598,6 +635,26 @@ Provide a complete, BS 7671 compliant design.`;
     }
     
     logger.info('Citations built', { count: citations.length, regulations: citedRegNumbers });
+    
+    // ⚡ CACHE THE RESULT (for future instant responses)
+    if (!cacheHit && isCacheable(query) && allRegulations.length > 0) {
+      const confidence = allRegulations.length > 0 
+        ? allRegulations.reduce((sum: number, r: any) => sum + r.similarity, 0) / allRegulations.length
+        : 0.5;
+      
+      await cache.set(
+        query, 
+        designResult.response, 
+        allRegulations, 
+        confidence,
+        { circuitType, power, voltage, cableLength }
+      );
+      
+      logger.info('💾 Response cached for future queries', { 
+        confidence: confidence.toFixed(2),
+        regCount: allRegulations.length 
+      });
+    }
     
     // Step 6: Return response - flat format for router/UI
     let { response, suggestedNextAgents, design, compliance, calculations } = designResult;

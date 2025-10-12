@@ -4,6 +4,7 @@ import { validateRequired } from "../_shared/validation.ts";
 import { withRetry, RetryPresets } from "../_shared/retry.ts";
 import { withTimeout, Timeouts } from "../_shared/timeout.ts";
 import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { ResponseCache } from "../_shared/response-cache.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -28,6 +29,33 @@ serve(async (req) => {
     }
 
     logger.info('BS 7671 RAG Search initiated', { query, matchThreshold, matchCount });
+
+    // ⚡ CHECK CACHE FIRST for instant responses
+    const cache = new ResponseCache();
+    const cached = await cache.get(query);
+    
+    if (cached && cached.confidence >= 0.7) {
+      logger.info('✅ Cache hit in RAG search', { 
+        hits: cached.hits,
+        confidence: cached.confidence 
+      });
+      
+      return new Response(
+        JSON.stringify({
+          success: true,
+          regulations: JSON.parse(cached.citations),
+          query,
+          resultsCount: JSON.parse(cached.citations).length,
+          searchMethod: 'cache',
+          cached: true,
+          requestId,
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200 
+        }
+      );
+    }
 
     // Get embedding from OpenAI with retry and timeout
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');

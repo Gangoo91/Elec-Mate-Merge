@@ -5,27 +5,27 @@ project_id = "jtwygbeceundfgnkirof"
 # V3 Agent Functions - Active
 [functions.designer-v3]
 verify_jwt = false
-timeout_sec = 60
+timeout_sec = 300
 
 [functions.cost-engineer-v3]
 verify_jwt = false
-timeout_sec = 60
+timeout_sec = 300
 
 [functions.health-safety-v3]
 verify_jwt = false
-timeout_sec = 60
+timeout_sec = 300
 
 [functions.installer-v3]
 verify_jwt = false
-timeout_sec = 60
+timeout_sec = 300
 
 [functions.project-mgmt-v3]
 verify_jwt = false
-timeout_sec = 60
+timeout_sec = 300
 
 [functions.commissioning-v3]
 verify_jwt = false
-timeout_sec = 60
+timeout_sec = 300
 
 # Agent Router - Must be public since it routes to public V3 agents
 [functions.agent-router]
