@@ -392,6 +392,14 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       tipsCount: installResult.practicalTips?.length
     });
 
+    // Build RAG preview for UI display
+    const ragPreview = installKnowledge.slice(0, 6).map(item => ({
+      id: item.id,
+      number: item.regulation_number || item.number,
+      section: item.section,
+      excerpt: (item.content || '').slice(0, 220) + '…'
+    }));
+
     // Build final response
     const finalResponse = {
       response: installResult.response,
@@ -403,7 +411,12 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         materialsRequired: installResult.materialsRequired || [],
         totalEstimatedTime: installResult.totalEstimatedTime,
         difficultyLevel: installResult.difficultyLevel,
-        compliance: installResult.compliance
+        compliance: installResult.compliance,
+        ragPreview,
+        citations: ragPreview.map((r, i) => ({ 
+          number: r.number || `Ref ${i+1}`, 
+          title: r.section || 'BS 7671' 
+        }))
       },
       suggestedNextAgents: installResult.suggestedNextAgents || []
     };

@@ -4,6 +4,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Brain, BookOpen, Loader2 } from "lucide-react";
 import { useMemo, memo, useState } from "react";
+import { toast } from "sonner";
 import { AgentFeedbackButtons } from "./AgentFeedbackButtons";
 import {
   CircuitSpecCard,
@@ -186,10 +187,53 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
             <RiskMatrixCard data={structuredData} />
           )}
           
-          {/* Installer - Installation Steps Card */}
-          {agentId === 'installer' && structuredData.installationSteps && (
-            <InstallationStepsCard data={structuredData} />
-          )}
+      {/* Installer - Installation Steps Card */}
+      {agentId === 'installer' && structuredData.installationSteps && (
+        <InstallationStepsCard data={structuredData} />
+      )}
+      
+      {/* Installer - RAG Sources Preview */}
+      {agentId === 'installer' && structuredData.ragPreview && structuredData.ragPreview.length > 0 && (
+        <Collapsible className="mt-3">
+          <CollapsibleTrigger asChild>
+            <Button variant="outline" size="sm" className="w-full justify-between text-xs border-elec-yellow/30">
+              <span className="flex items-center gap-2">
+                <BookOpen className="h-3 w-3" />
+                Sources from BS 7671 ({structuredData.ragPreview.length})
+              </span>
+              <ChevronDown className="h-3 w-3" />
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-2 space-y-2">
+            {structuredData.ragPreview.map((source: any, idx: number) => (
+              <Card key={idx} className="border-muted/30 bg-muted/10">
+                <CardContent className="p-3 space-y-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold text-elec-yellow truncate">
+                        {source.number || `Reference ${idx + 1}`}
+                      </p>
+                      <p className="text-xs text-muted-foreground">{source.section}</p>
+                      <p className="text-xs text-foreground/80 mt-1 leading-relaxed">{source.excerpt}</p>
+                    </div>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className="h-6 px-2 text-xs flex-shrink-0"
+                      onClick={() => {
+                        navigator.clipboard.writeText(`${source.number} - ${source.section}\n${source.excerpt}`);
+                        toast.success('Copied to clipboard');
+                      }}
+                    >
+                      Copy
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
           
           {/* Commissioning - Test Sequence Card */}
           {agentId === 'commissioning' && structuredData.testSequence && (

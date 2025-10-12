@@ -1,10 +1,30 @@
-// AGENT ROUTER - User-Driven Consultation Architecture
-// Replaces complex orchestrator with simple routing based on user selection
+// AGENT ROUTER - Self-Contained User-Driven Architecture (No shared deps)
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
-import { handleError, ValidationError } from '../_shared/errors.ts';
-import { createLogger, generateRequestId } from '../_shared/logger.ts';
-import { summarizeConversation, type Message as ConvMessage } from '../_shared/conversation-memory.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+
+// Inline CORS headers
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+// Inline requestId generator
+function generateRequestId(): string {
+  const arr = new Uint8Array(8);
+  crypto.getRandomValues(arr);
+  return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Minimal inline logger
+function createLogger(requestId: string) {
+  return {
+    info: (msg: string, data?: any) => console.log(`[${requestId}] ${msg}`, data || ''),
+    warn: (msg: string, data?: any) => console.warn(`[${requestId}] ${msg}`, data || ''),
+    error: (msg: string, data?: any) => console.error(`[${requestId}] ${msg}`, data || ''),
+    debug: (msg: string, data?: any) => console.debug(`[${requestId}] ${msg}`, data || '')
+  };
+}
 
 interface AgentSuggestion {
   agent: string;
@@ -21,7 +41,7 @@ interface AgentResponse {
 
 const AGENT_ENDPOINTS: Record<string, string> = {
   'designer': 'designer-v3',
-  'designer-multi': 'designer-agent', // Multi-circuit designer
+  'designer-multi': 'designer-agent',
   'cost-engineer': 'cost-engineer-v3',
   'installer': 'installer-v3',
   'health-safety': 'health-safety-v3',
@@ -29,18 +49,14 @@ const AGENT_ENDPOINTS: Record<string, string> = {
   'project-manager': 'project-mgmt-v3'
 };
 
-/**
- * Detect multi-circuit queries in user message
- */
 function isMultiCircuitQuery(query: string): boolean {
   const patterns = [
     /multi.?circuit/i,
     /multiple circuits/i,
     /(\d+\s*circuits?)/i,
-    /circuit \d+.*circuit \d+/i,  // "circuit 1... circuit 2"
-    /(?:ring|radial|cooker|shower|lighting|heater).*?(?:and|,|plus|\+).*?(?:ring|radial|cooker|shower|lighting|heater)/i  // "ring main and cooker circuit"
+    /circuit \d+.*circuit \d+/i,
+    /(?:ring|radial|cooker|shower|lighting|heater).*?(?:and|,|plus|\+).*?(?:ring|radial|cooker|shower|lighting|heater)/i
   ];
-  
   return patterns.some(p => p.test(query));
 }
 
@@ -49,15 +65,22 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Health check
+  if (req.method === 'GET') {
+    return new Response(
+      JSON.stringify({ status: 'healthy', function: 'agent-router' }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+    );
+  }
+
   const requestId = generateRequestId();
-  const logger = createLogger(requestId, { function: 'agent-router' });
+  const logger = createLogger(requestId);
 
   try {
     const { 
       conversationId, 
       userMessage, 
       selectedAgents,
-      consultationMode,
       messages = [],
       currentDesign
     } = await req.json();
@@ -70,33 +93,24 @@ serve(async (req) => {
     });
 
     if (!userMessage) {
-      throw new ValidationError('userMessage is required');
+      return new Response(
+        JSON.stringify({ success: false, error: 'userMessage is required' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
     }
 
     if (!selectedAgents || !Array.isArray(selectedAgents) || selectedAgents.length === 0) {
-      throw new ValidationError('selectedAgents array is required and must not be empty');
+      return new Response(
+        JSON.stringify({ success: false, error: 'selectedAgents array is required' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
     }
 
-    // Multi-circuit routing: Automatically route to designer-agent for multi-circuit queries
+    // Multi-circuit routing
     if (selectedAgents.includes('designer') && isMultiCircuitQuery(userMessage)) {
       logger.info('Multi-circuit detected, routing to designer-agent');
       const designerIndex = selectedAgents.indexOf('designer');
       selectedAgents[designerIndex] = 'designer-multi';
-    }
-
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-    if (!openAIApiKey) throw new ValidationError('OPENAI_API_KEY not configured');
-
-    // Get conversation context
-    let conversationSummary = null;
-    if (messages.length > 3) {
-      logger.info('Summarizing conversation', { messageCount: messages.length });
-      conversationSummary = await summarizeConversation(messages as ConvMessage[], openAIApiKey);
-      logger.info('Conversation summarized', { 
-        projectType: conversationSummary.projectType,
-        circuits: conversationSummary.circuits?.length || 0,
-        decisions: conversationSummary.decisions?.length || 0
-      });
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -115,7 +129,6 @@ serve(async (req) => {
 
       logger.info(`Calling ${agentType} agent`);
       
-      // Invoke with retry logic
       const response = await invokeAgentWithRetry(
         agentType,
         endpoint,
@@ -125,7 +138,6 @@ serve(async (req) => {
             ...messages,
             { role: 'user', content: userMessage }
           ],
-          conversationSummary,
           conversationId,
           currentDesign,
           previousAgentOutputs: agentResponses,
@@ -154,7 +166,7 @@ serve(async (req) => {
       });
     }
     
-    // Helper function: Invoke agent with retry logic
+    // Helper: Invoke agent with retry
     async function invokeAgentWithRetry(
       agentType: string,
       endpoint: string,
@@ -171,13 +183,11 @@ serve(async (req) => {
             return { data, hadError: false };
           }
           
-          // Don't retry validation errors
           if (error.message?.includes('ValidationError') || error.message?.includes('400')) {
             logger.error(`${agentType} validation error (no retry)`, { error });
             throw error;
           }
           
-          // Retry transient errors with exponential backoff
           if (attempt < maxRetries) {
             const delay = 1000 * Math.pow(2, attempt);
             logger.warn(`${agentType} attempt ${attempt + 1} failed, retrying in ${delay}ms`, { error });
@@ -189,12 +199,11 @@ serve(async (req) => {
           
         } catch (error) {
           if (attempt === maxRetries) {
-            // Return partial success instead of crashing entire consultation
             logger.error(`${agentType} failed after ${maxRetries + 1} attempts`, { error });
             return {
               hadError: true,
               partialResponse: {
-                response: `⚠️ ${agentType} encountered an error but other agents can still help. Please try again or contact support if this persists.`,
+                response: `⚠️ ${agentType} encountered an error but other agents can still help.`,
                 structuredData: null,
                 suggestedNextAgents: [],
                 error: true
@@ -204,7 +213,6 @@ serve(async (req) => {
         }
       }
       
-      // Fallback (should never reach here)
       return {
         hadError: true,
         partialResponse: {
@@ -215,7 +223,7 @@ serve(async (req) => {
       };
     }
 
-    // Aggregate suggestions from all agents
+    // Aggregate suggestions
     const allSuggestions: AgentSuggestion[] = [];
     agentResponses.forEach(({ response }) => {
       if (response.suggestedNextAgents) {
@@ -223,7 +231,6 @@ serve(async (req) => {
       }
     });
 
-    // Remove duplicates and already-consulted agents
     const uniqueSuggestions = allSuggestions
       .filter((s, index, self) => 
         index === self.findIndex(t => t.agent === s.agent) &&
@@ -234,83 +241,19 @@ serve(async (req) => {
         return (priorityOrder[a.priority || 'medium'] - priorityOrder[b.priority || 'medium']);
       });
 
-    // Check Accept header for SSE vs JSON
-    const acceptHeader = req.headers.get('Accept') || '';
-    const wantsSSE = acceptHeader.includes('text/event-stream');
-
-    if (wantsSSE) {
-      // SSE Streaming Response
-      const encoder = new TextEncoder();
-      const stream = new ReadableStream({
-        async start(controller) {
-          try {
-            // Send plan
-            const planChunk = `data: ${JSON.stringify({
-              type: 'plan',
-              agents: selectedAgents,
-              total: selectedAgents.length
-            })}\n\n`;
-            controller.enqueue(encoder.encode(planChunk));
-
-            // Send agent responses
-            for (let i = 0; i < agentResponses.length; i++) {
-              const { agent, response } = agentResponses[i];
-              
-              const responseChunk = `data: ${JSON.stringify({
-                type: 'agent_response',
-                agent,
-                index: i + 1,
-                total: agentResponses.length,
-                response: response.response,
-                structuredData: response.structuredData,
-                suggestedNextAgents: response.suggestedNextAgents
-              })}\n\n`;
-              controller.enqueue(encoder.encode(responseChunk));
-            }
-
-            // Send completion
-            const doneChunk = `data: ${JSON.stringify({
-              type: 'all_agents_complete',
-              suggestedNextAgents: uniqueSuggestions,
-              consultedAgents: selectedAgents
-            })}\n\n`;
-            controller.enqueue(encoder.encode(doneChunk));
-
-            controller.close();
-          } catch (error) {
-            const errorChunk = `data: ${JSON.stringify({
-              type: 'error',
-              error: error instanceof Error ? error.message : 'Unknown error'
-            })}\n\n`;
-            controller.enqueue(encoder.encode(errorChunk));
-            controller.close();
-          }
-        }
-      });
-
-      return new Response(stream, {
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive'
-        }
-      });
-    } else {
-      // JSON Response (backwards compatibility)
-      return new Response(
-        JSON.stringify({
-          success: true,
-          responses: agentResponses,
-          suggestedNextAgents: uniqueSuggestions,
-          consultedAgents: selectedAgents
-        }),
-        {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200
-        }
-      );
-    }
+    // JSON Response
+    return new Response(
+      JSON.stringify({
+        success: true,
+        responses: agentResponses,
+        suggestedNextAgents: uniqueSuggestions,
+        consultedAgents: selectedAgents
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200
+      }
+    );
 
   } catch (error) {
     logger.error('Router error', { error });

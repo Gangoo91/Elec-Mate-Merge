@@ -159,6 +159,9 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
         if (e?.name === 'AbortError') {
           throw new Error('Request timed out after 5 minutes. For very large designs (18+ circuits), please break into smaller sections.');
         }
+        if (e?.name === 'TypeError' && e?.message?.includes('Failed to fetch')) {
+          throw new Error('Router unavailable. Please wait a few seconds and Retry.');
+        }
         throw e;
     } finally {
       clearTimeout(warningTimer);
