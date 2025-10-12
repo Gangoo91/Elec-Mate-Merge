@@ -1,4 +1,4 @@
-import { parseAgentResponse, ParsedSection } from "@/utils/agentTextProcessor";
+import { parseAgentResponse, ParsedSection, cleanAgentText } from "@/utils/agentTextProcessor";
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
@@ -31,7 +31,7 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
   const [showFullText, setShowFullText] = useState(false);
   const [showReasoningDrawer, setShowReasoningDrawer] = useState(false);
   
-  // ROBUST NARRATIVE TEXT - Try multiple sources with clear priority
+  // ROBUST NARRATIVE TEXT - Try multiple sources with clear priority and clean markdown
   const narrativeText = useMemo(() => {
     const sources = [
       content?.trim(),
@@ -48,7 +48,8 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
         structuredDataKeys: Object.keys(structuredData || {})
       });
     }
-    return found || '';
+    // Clean markdown asterisks and formatting
+    return cleanAgentText(found || '');
   }, [content, structuredData, agentId]);
   
   // Detect opening line for visual separation
@@ -174,31 +175,6 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
         </div>
       )}
       
-      {/* Collapsible "How I Worked This Out" for Designer */}
-      {agentId === 'designer' && narrativeText.length > 10 && (
-        <Collapsible defaultOpen={false} open={showFullText} onOpenChange={setShowFullText}>
-          <CollapsibleTrigger asChild>
-            <Button variant="outline" size="sm" className="w-full justify-between hover:bg-elec-yellow/10">
-              <span className="flex items-center gap-2">
-                <Brain className="h-4 w-4" />
-                How I Worked This Out
-              </span>
-              <ChevronDown className={`h-4 w-4 transition-transform ${showFullText ? 'rotate-180' : ''}`} />
-            </Button>
-          </CollapsibleTrigger>
-          <CollapsibleContent className="space-y-3 pt-3">
-            <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
-              <CardContent className="pt-4 space-y-3">
-                <div className="prose prose-sm max-w-none text-foreground">
-                  <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                    {narrativeText}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </CollapsibleContent>
-        </Collapsible>
-      )}
       
       {/* Full Text Response (collapsible if structured data exists) */}
       {hasStructuredData && agentId !== 'designer' ? (

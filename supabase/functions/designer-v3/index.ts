@@ -81,24 +81,24 @@ serve(async (req) => {
 
     logger.debug('Fetching RAG context');
 
-    // Fetch BS 7671 regulations
+    // Fetch BS 7671 regulations (increased to 15 for complex designs)
     const { data: regulations, error: regError } = await supabase.rpc('search_bs7671', {
       query_embedding: queryEmbedding,
       match_threshold: 0.5,
-      match_count: 5
+      match_count: 15
     });
 
     if (regError) {
       logger.warn('BS 7671 search failed', { error: regError });
     }
 
-    // Fetch design knowledge
+    // Fetch design knowledge (increased to 10 for complex designs)
     const { data: designKnowledge, error: designError } = await supabase.rpc('search_design_knowledge', {
       query_embedding: queryEmbedding,
       circuit_filter: circuitType || null,
       source_filter: null,
       match_threshold: 0.6,
-      match_count: 3
+      match_count: 10
     });
 
     if (designError) {
@@ -141,12 +141,29 @@ serve(async (req) => {
 
 Write all responses in UK English (British spelling and terminology). Do not use American spellings.
 
+🏠 MULTI-CIRCUIT DESIGN CAPABILITY:
+When the user asks for designs like "3-bed house rewire", "full consumer unit", or mentions multiple loads/rooms:
+- BREAK DOWN the request into individual circuits (lighting, sockets, cooker, shower, etc.)
+- DESIGN EACH CIRCUIT separately with complete calculations
+- APPLY DIVERSITY FACTORS across the whole installation per BS 7671 Appendix 1
+- RECOMMEND appropriate consumer unit size based on total diversified load
+- RETURN a "circuits" array with 8-12+ individual circuit designs
+
+Example: "Design full rewire for 3-bed house" should produce:
+- 2× lighting circuits (ground floor, first floor)
+- 4× socket circuits (kitchen, living, bedrooms, utility)
+- 1× cooker circuit
+- 1× shower circuit
+- 1× outdoor circuit
+Each with full cable sizing, protection, voltage drop, and Zs calculations.
+
 YOUR UNIQUE VALUE: You are the DESIGN AUTHORITY for electrical installations
 - You CALCULATE cable sizes, voltage drops, earth fault loop impedances (Zs)
 - You APPLY BS 7671 regulations by specific number (not generic compliance statements)
 - You JUSTIFY every design decision with calculations and regulation references
 - You ENSURE safety through proper sizing and protection coordination
 - You CREATE designs that installers can follow and inspectors can verify
+- You HANDLE both single circuits AND complete multi-circuit installations
 
 YOUR CORE RESPONSIBILITIES:
 1. Understand the electrical load requirements (power, voltage, circuit type)
@@ -157,6 +174,7 @@ YOUR CORE RESPONSIBILITIES:
 6. Calculate maximum earth fault loop impedance (Zs) for protection device
 7. Specify protection device type (B/C/D) based on load characteristics
 8. Reference SPECIFIC BS 7671 regulations and tables by number
+9. For multi-circuit designs: apply diversity, size distribution board, coordinate protection
 
 BS 7671:2018+A2:2022 REGULATIONS (YOU MUST USE THIS DATA):
 ${regulationContext}
@@ -306,7 +324,7 @@ Provide a complete, BS 7671 compliant design.`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+        model: 'google/gemini-2.5-pro',
         temperature: 0.3,
         messages: [
           { role: 'system', content: systemPrompt },
