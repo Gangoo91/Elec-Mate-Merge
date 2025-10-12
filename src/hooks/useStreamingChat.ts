@@ -425,17 +425,28 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
           // Process each agent's response
           for (const agentOutput of data.responses) {
             const agentName = agentOutput.agent;
-            const agentResponse = agentOutput.response;
+            let agentResponse: any = agentOutput.response;
+            
+            // If response is a stringified JSON, parse it
+            if (typeof agentResponse === 'string' && agentResponse.startsWith('{')) {
+              try {
+                agentResponse = JSON.parse(agentResponse);
+              } catch (e) {
+                // If parsing fails, treat as plain string
+                agentResponse = { response: agentResponse };
+              }
+            }
             
             // Extract response text
-            const responseText = agentResponse.response || agentResponse.summary || '';
+            const responseText = agentResponse?.response || agentResponse?.summary || 
+                                (typeof agentOutput.response === 'string' ? agentOutput.response : '');
             fullResponse += (fullResponse ? '\n\n' : '') + responseText;
             
             // Notify agent response with structured data
-            options.onAgentResponse?.(agentName, responseText, agentResponse.structuredData);
+            options.onAgentResponse?.(agentName, responseText, agentResponse?.structuredData);
             
             // Merge structured data (last agent wins, but collect suggestedNextAgents)
-            if (agentResponse.structuredData) {
+            if (agentResponse?.structuredData) {
               structuredData = agentResponse.structuredData;
             }
             
