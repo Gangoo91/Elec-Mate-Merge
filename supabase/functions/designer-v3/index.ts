@@ -319,7 +319,7 @@ ${design.warnings.length > 0 ? `\n⚠️ **Warnings:**\n${design.warnings.map(w 
         logger.debug('Generating embedding for vector fallback');
         const embeddingStart = Date.now();
         const queryEmbedding = await generateEmbeddingWithRetry(query, OPENAI_API_KEY);
-        logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
+        logger.debug('Embedding generated');
 
         // Try 0.6 threshold first
         const { data: regulations, error: regError } = await supabase.rpc('search_bs7671', {
@@ -544,8 +544,7 @@ Provide a complete, BS 7671 compliant design.`;
       }
 
       const aiData = await aiResponse.json();
-      const duration = Date.now() - aiStart;
-      logger.debug('GPT-5 response received', { duration, hasChoices: !!aiData.choices?.[0] });
+      logger.debug('GPT-5 response received', { hasChoices: !!aiData.choices?.[0] });
 
       const aiContent = aiData.choices?.[0]?.message?.content || '';
       
