@@ -15,6 +15,7 @@ import { DesignerCircuitCards } from "./DesignerCircuitCards";
 import { AgentReasoningDrawer } from "./AgentReasoningDrawer";
 import { CitationBadge } from "./CitationBadge";
 import { MultiCircuitRenderer } from "./MultiCircuitRenderer";
+import { AgentSuggestions } from "./AgentSuggestions";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface AgentResponseRendererProps {
@@ -23,9 +24,10 @@ interface AgentResponseRendererProps {
   structuredData?: any;
   conversationId?: string;
   question?: string;
+  onSelectAgent?: (agentId: string) => void;
 }
 
-export const AgentResponseRenderer = memo(({ content, agentId, structuredData, conversationId, question }: AgentResponseRendererProps) => {
+export const AgentResponseRenderer = memo(({ content, agentId, structuredData, conversationId, question, onSelectAgent }: AgentResponseRendererProps) => {
   const [showFullText, setShowFullText] = useState(false);
   const [showReasoningDrawer, setShowReasoningDrawer] = useState(false);
   
@@ -95,33 +97,15 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
         </div>
       )}
       
-      {/* Designer Explanation Section - Show narrative prominently */}
-      {agentId === 'designer' && (
-        narrativeText.length > 10 ? (
-          <Card className="border-elec-yellow/20 bg-elec-card/50">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
-                <Brain className="h-5 w-5" />
-                Design Explanation & Calculations
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="prose prose-sm max-w-none text-foreground">
-                <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                  {narrativeText}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ) : (
-          <Card className="border-orange-500/20 bg-orange-500/5">
-            <CardContent className="py-3">
-              <p className="text-sm text-orange-500">
-                ⚠️ No detailed explanation returned from designer. Check edge function logs.
-              </p>
-            </CardContent>
-          </Card>
-        )
+      {/* Designer: Warning if no narrative */}
+      {agentId === 'designer' && narrativeText.length <= 10 && (
+        <Card className="border-orange-500/20 bg-orange-500/5">
+          <CardContent className="py-3">
+            <p className="text-sm text-orange-500">
+              ⚠️ No detailed explanation returned from designer. Check edge function logs.
+            </p>
+          </CardContent>
+        </Card>
       )}
       
       {/* Structured Visual Cards (if available) */}
@@ -190,25 +174,34 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
         </div>
       )}
       
+      {/* Collapsible "How I Worked This Out" for Designer */}
+      {agentId === 'designer' && narrativeText.length > 10 && (
+        <Collapsible defaultOpen={false} open={showFullText} onOpenChange={setShowFullText}>
+          <CollapsibleTrigger asChild>
+            <Button variant="outline" size="sm" className="w-full justify-between hover:bg-elec-yellow/10">
+              <span className="flex items-center gap-2">
+                <Brain className="h-4 w-4" />
+                How I Worked This Out
+              </span>
+              <ChevronDown className={`h-4 w-4 transition-transform ${showFullText ? 'rotate-180' : ''}`} />
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="space-y-3 pt-3">
+            <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
+              <CardContent className="pt-4 space-y-3">
+                <div className="prose prose-sm max-w-none text-foreground">
+                  <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                    {narrativeText}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </CollapsibleContent>
+        </Collapsible>
+      )}
+      
       {/* Full Text Response (collapsible if structured data exists) */}
-      {hasStructuredData && agentId === 'designer' ? (
-        // Designer: only show if narrative is completely missing
-        narrativeText.length === 0 && (
-          <Collapsible open={showFullText} onOpenChange={setShowFullText}>
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="w-full justify-between text-xs h-8 text-muted-foreground">
-                <span>View Full Response</span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${showFullText ? 'rotate-180' : ''}`} />
-              </Button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-4 pt-3">
-              {sections.map((section, index) => (
-                <SectionRenderer key={index} section={section} agentId={agentId} />
-              ))}
-            </CollapsibleContent>
-          </Collapsible>
-        )
-      ) : hasStructuredData ? (
+      {hasStructuredData && agentId !== 'designer' ? (
         // Other agents with structured data: show collapsible full text
         <Collapsible open={showFullText} onOpenChange={setShowFullText}>
           <CollapsibleTrigger asChild>
@@ -249,18 +242,13 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
         </Button>
       )}
       
-      {/* Citations Section */}
-      {structuredData?.citations && structuredData.citations.length > 0 && (
-        <div className="border-t border-border/50 pt-3 mt-4">
-          <p className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-2">
-            <BookOpen className="h-3 w-3" />
-            Regulations & Knowledge Consulted
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {structuredData.citations.map((cite: any, idx: number) => (
-              <CitationBadge key={idx} citation={cite} />
-            ))}
-          </div>
+      {/* Agent Suggestions - Next Steps */}
+      {agentId === 'designer' && structuredData?.suggestedNextAgents && structuredData.suggestedNextAgents.length > 0 && onSelectAgent && (
+        <div className="mt-4">
+          <AgentSuggestions 
+            suggestions={structuredData.suggestedNextAgents} 
+            onSelectAgent={onSelectAgent}
+          />
         </div>
       )}
       

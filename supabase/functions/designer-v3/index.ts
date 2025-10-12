@@ -540,7 +540,13 @@ Provide a complete, BS 7671 compliant design.`;
     return new Response(
       JSON.stringify({
         response,
-        structuredData: { design, compliance, calculations, citations },
+        structuredData: { 
+          design, 
+          compliance, 
+          calculations, 
+          citations,
+          suggestedNextAgents: suggestedNextAgents || []
+        },
         suggestedNextAgents: suggestedNextAgents || []
       }),
       { 

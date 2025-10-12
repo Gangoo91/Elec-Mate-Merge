@@ -1166,6 +1166,16 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                     structuredData={message.structuredData}
                     conversationId={sessionId}
                     question={messages.find(m => m.role === 'user')?.content}
+                    onSelectAgent={(selectedAgentId: string) => {
+                      // Directly switch to the selected agent
+                      setCurrentAgent(selectedAgentId);
+                      setInput(`I'd like help from the ${getAgentName(selectedAgentId)}`);
+                      
+                      // Focus the input
+                      setTimeout(() => {
+                        textareaRef.current?.focus();
+                      }, 100);
+                    }}
                   />
                 )}
 
