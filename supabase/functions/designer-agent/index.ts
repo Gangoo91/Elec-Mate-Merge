@@ -1,4 +1,5 @@
-// DESIGNER AGENT - RAG-enabled with Intelligent Multi-Tier Hybrid Search - v3.0
+// DESIGNER AGENT - RAG-enabled with Intelligent Multi-Tier Hybrid Search - v3.1
+// Phase 1: Full RAG Integration - 100% Knowledge-Driven
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
@@ -11,6 +12,7 @@ import { safeAll } from '../_shared/safe-parallel.ts';
 import { createContextEnvelope, mergeContext, type ContextEnvelope, type QueryIntent } from '../_shared/agent-context.ts';
 import { intelligentRAGSearch, type HybridSearchParams } from '../_shared/intelligent-rag.ts';
 import { searchDesignPattern, storeDesignPattern } from '../_shared/pattern-learning.ts';
+import { buildEnhancedRAGQuery } from './ragQueryBuilder.ts';
 import { getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
 import { getMaxZs, checkRCDRequirement } from "../shared/bs7671ProtectionData.ts";
@@ -104,6 +106,9 @@ serve(async (req) => {
     logger.info('Designer Agent v3.0 processing with Intelligent Hybrid RAG', { messageCount: messages.length });
 
     const circuitParams = extractCircuitParams(userMessage, currentDesign, incomingContext);
+    
+    // NEW: Build context-enriched RAG query for better retrieval
+    const contextEnrichedQuery = buildEnhancedRAGQuery(userMessage, circuitParams);
     
     // Create or merge agent context
     const queryIntent: QueryIntent = {
@@ -256,6 +261,7 @@ serve(async (req) => {
     // Initialize RAG results
     let relevantRegsText = '';
     let designKnowledge = '';
+    let installationGuidance = '';
     let regulations: any[] = [];
     let designDocs: any[] = [];
     
@@ -266,17 +272,18 @@ serve(async (req) => {
         powerRating: circuitParams.power,
         searchTerms: [
           circuitParams.circuitType, 
-          'overload', 
+          'overload protection', 
           'voltage drop', 
           'cable sizing',
-          'cable selection',
+          'earth fault loop',
+          'RCD protection',
           'installation method',
-          'twin and earth',
-          'SWA',
-          'fire-rated cable',
-          'outdoor installation'
+          circuitParams.location || 'general',
+          // Add cable type context
+          ...(circuitParams.location === 'outdoor' || circuitParams.circuitType?.includes('outdoor') ? ['SWA', 'armoured cable'] : ['twin & earth', 'T&E']),
+          ...(circuitParams.circuitType?.includes('fire') ? ['FP200', 'fire-rated'] : []),
         ],
-        expandedQuery: `${circuitParams.circuitType} circuit ${circuitParams.power}W design cable type selection twin earth SWA outdoor indoor installation method overload protection voltage drop earth fault`,
+        expandedQuery: contextEnrichedQuery,
         context: agentContext,
       };
 
@@ -318,9 +325,17 @@ serve(async (req) => {
         ).join('\n\n');
       }
       
+      // NEW: Installation knowledge formatting
+      if (ragResults.installationDocs && ragResults.installationDocs.length > 0) {
+        installationGuidance = ragResults.installationDocs.map((i: any) =>
+          `${i.topic} (${i.source}): ${i.content}`
+        ).join('\n\n');
+      }
+      
       logger.info('✅ Intelligent RAG Complete', {
         bs7671Count: regulations.length,
         designDocsCount: designDocs.length,
+        installationDocsCount: ragResults.installationDocs?.length || 0,
         method: ragResults.searchMethod,
         timeMs: ragResults.searchTimeMs,
       });
@@ -428,41 +443,11 @@ For EACH circuit above, provide:
 - RCD requirements
 - Compliance statement
 
-CABLE TYPE SELECTION RULES (CRITICAL - UK BS 7671):
+DESIGN GUIDANCE FROM KNOWLEDGE BASE:
+${designKnowledge ? `\n**DESIGN KNOWLEDGE (Cable Selection, Voltage Drop, Sizing):**\n${designKnowledge}\n` : ''}
 
-🏠 **Domestic Indoor Circuits:**
-- Ring mains, radial sockets, lighting: Twin & Earth (6242Y) - cost-effective for protected routes
-- Practical T&E limit: 10mm² (16mm² very rare, awkward to terminate)
-- Above 10mm²: Use SWA or singles in conduit/trunking
-
-🌳 **Outdoor/External Circuits:**
-- ALWAYS use SWA 3-core armoured cable (BS 5467)
-- UV resistant, weatherproof, mechanical protection
-- EV chargers, garden sockets, outbuildings, heat pumps
-- Minimum 2.5mm² for sockets (Reg 522.6)
-
-🔥 **Fire & Safety Circuits:**
-- Fire alarms: FP200 Gold fire-rated cable (BS 5839-1)
-- Emergency lighting: FP200 Gold
-- Smoke alarms in full rewire: Interconnected system required (BS 5839-6)
-
-💡 **Lighting Intelligence:**
-- Standard lighting: 1.5mm² T&E
-- Two-way switching: 3-core + earth (L, L1, L2, CPC)
-- Intermediate switching (3+ locations, multi-storey): 4-core + earth
-- Ask user if two-way/intermediate needed for landing/stairwell lights
-
-⚡ **High-Power Circuits:**
-- Showers >9kW indoor: 10mm² T&E (if short run <15m)
-- Showers outdoor: 10mm² SWA
-- Cookers >10kW: 6-10mm² SWA preferred (or T&E if internal)
-- Immersion heaters: 2.5mm² T&E typically sufficient
-
-🔧 **Installation Method Context:**
-- Surface clipped: T&E or SWA
-- Buried in wall: T&E in safe zones
-- Conduit/trunking: Singles (not T&E)
-- Cable tray: SWA preferred
+INSTALLATION BEST PRACTICES FROM KNOWLEDGE BASE:
+${installationGuidance ? `\n**INSTALLATION GUIDANCE (Methods, Safe Zones, Burial Depths, IP Ratings):**\n${installationGuidance}\n` : ''}
 
 FORMAT AS JSON (EXACTLY AS SHOWN - ALL FIELDS REQUIRED):
 {
@@ -581,8 +566,9 @@ FORMAT AS JSON (EXACTLY AS SHOWN - ALL FIELDS REQUIRED):
   "consumerUnitRequired": "10-way dual RCD (80A main switch)"
 }
 
-${relevantRegsText ? `RELEVANT REGULATIONS:\n${relevantRegsText}\n` : ''}
-${designKnowledge ? `DESIGN GUIDANCE:\n${designKnowledge}\n` : ''}
+${relevantRegsText ? `RELEVANT BS 7671 REGULATIONS:\n${relevantRegsText}\n` : ''}
+${designKnowledge ? `DESIGN GUIDANCE (Cable Selection, Voltage Drop Tables):\n${designKnowledge}\n` : ''}
+${installationGuidance ? `INSTALLATION GUIDANCE (Safe Zones, Burial Depths, IP Ratings):\n${installationGuidance}\n` : ''}
 
 COST ESTIMATE (add to JSON):
 Include a "costEstimate" field in the JSON with:
@@ -641,13 +627,18 @@ ${calculationResults?.rcdRequirements?.required ? `Regulation 411.3.3 - RCD prot
 Table 41.3 - Earth fault protection: Zs (${calculationResults?.zs ? calculationResults.zs.toFixed(2) : 'TBC'}Ω) must not exceed ${calculationResults?.maxZs?.maxZs || 'TBC'}Ω for ${calculationResults?.cableCapacity?.In || circuitParams.deviceRating}A Type ${circuitParams.deviceType} MCB
 
     ${relevantRegsText ? `
-RELEVANT REGULATIONS (from BS 7671 database):
+RELEVANT BS 7671 REGULATIONS (from database):
 ${relevantRegsText}
 ` : ''}
 
 ${designKnowledge ? `
-DESIGN GUIDANCE (from technical library):
+DESIGN GUIDANCE (Cable Selection, Voltage Drop Calculations):
 ${designKnowledge}
+` : ''}
+
+${installationGuidance ? `
+INSTALLATION GUIDANCE (Safe Zones, Burial Depths, IP Ratings):
+${installationGuidance}
 ` : ''}
 
 COST ESTIMATE

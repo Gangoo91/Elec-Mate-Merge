@@ -102,6 +102,7 @@ export interface HybridSearchResult {
   regulations: FoundRegulation[];
   designDocs: any[];
   healthSafetyDocs: any[];
+  installationDocs: any[]; // NEW: Installation knowledge
   searchMethod: 'exact' | 'vector' | 'keyword' | 'hybrid';
   searchTimeMs: number;
   embedding?: number[];
@@ -196,7 +197,7 @@ async function vectorSearchWithEmbedding(
   params: HybridSearchParams,
   embedding: number[],
   startTime: number
-): Promise<{ regulations: any[]; designDocs: any[]; healthSafetyDocs: any[]; embedding: number[]; timeMs: number }> {
+): Promise<{ regulations: any[]; designDocs: any[]; healthSafetyDocs: any[]; installationDocs: any[]; embedding: number[]; timeMs: number }> {
   
   const priority = params.context?.ragPriority;
   const searches: Promise<any>[] = [];
@@ -234,12 +235,23 @@ async function vectorSearchWithEmbedding(
     );
   }
 
+  // NEW: Installation knowledge search (ALWAYS search - practical guidance)
+  searches.push(
+    supabase.rpc('search_installation_knowledge', {
+      query_embedding: embedding,
+      method_filter: params.context?.entities?.installMethod || null,
+      match_threshold: 0.50,
+      match_count: 8,
+    })
+  );
+
   const results = await Promise.all(searches);
 
   return {
     regulations: results[0]?.data || [],
     designDocs: results[1]?.data || [],
     healthSafetyDocs: results[2]?.data || [],
+    installationDocs: results[3]?.data || [],
     embedding,
     timeMs: Date.now() - startTime,
   };
@@ -315,12 +327,12 @@ export async function intelligentRAGSearch(
   console.log(`🔍 Query expanded: "${params.expandedQuery}" → ${expandedTerms.length} terms`);
 
   // Tier 2: Vector search (if needed)
-  let vectorResults = { regulations: [], designDocs: [], healthSafetyDocs: [], embedding: [], timeMs: 0 };
+  let vectorResults = { regulations: [], designDocs: [], healthSafetyDocs: [], installationDocs: [], embedding: [], timeMs: 0 };
   if (exactResults.regulations.length < 5) {
     // Use enriched query for better vector matching
     const enrichedParams = { ...params, expandedQuery: enrichedQuery };
     vectorResults = await vectorSearch(supabase, enrichedParams);
-    console.log(`✅ Tier 2 (Vector): ${vectorResults.regulations.length} regs, ${vectorResults.designDocs.length} design docs in ${vectorResults.timeMs}ms`);
+    console.log(`✅ Tier 2 (Vector): ${vectorResults.regulations.length} regs, ${vectorResults.designDocs.length} design, ${vectorResults.installationDocs.length} installation docs in ${vectorResults.timeMs}ms`);
     searchMethod = exactResults.regulations.length > 0 ? 'hybrid' : 'vector';
     embedding = vectorResults.embedding;
   }
@@ -329,6 +341,7 @@ export async function intelligentRAGSearch(
   let allRegulations = [...exactResults.regulations, ...vectorResults.regulations];
   let allDesignDocs = vectorResults.designDocs;
   let allHealthSafetyDocs = vectorResults.healthSafetyDocs;
+  let allInstallationDocs = vectorResults.installationDocs;
   
   // IMPROVEMENT #3: Apply re-ranking to boost important regulations
   if (allRegulations.length > 0) {
@@ -357,9 +370,13 @@ export async function intelligentRAGSearch(
     new Map(allDesignDocs.map(d => [d.id, d])).values()
   ).slice(0, 12);
 
+  const uniqueInstallationDocs = Array.from(
+    new Map(allInstallationDocs.map(d => [d.id, d])).values()
+  ).slice(0, 10);
+
   const totalTime = Date.now() - totalStartTime;
 
-  console.log(`📊 Total RAG Results: ${uniqueRegulations.length} regs, ${uniqueDesignDocs.length} design, ${allHealthSafetyDocs.length} H&S in ${totalTime}ms via ${searchMethod}`);
+  console.log(`📊 Total RAG Results: ${uniqueRegulations.length} regs, ${uniqueDesignDocs.length} design, ${allHealthSafetyDocs.length} H&S, ${uniqueInstallationDocs.length} installation in ${totalTime}ms via ${searchMethod}`);
 
   return {
     regulations: uniqueRegulations.map(reg => ({
@@ -371,6 +388,7 @@ export async function intelligentRAGSearch(
     })),
     designDocs: uniqueDesignDocs,
     healthSafetyDocs: allHealthSafetyDocs,
+    installationDocs: uniqueInstallationDocs,
     searchMethod,
     searchTimeMs: totalTime,
     embedding,
