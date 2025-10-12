@@ -38,9 +38,9 @@ export async function synthesizeAgentOutputs(config: SynthesisConfig): Promise<s
 
   // Add introduction
   if (isMultiCircuit) {
-    synthesizedResponse += `I've designed a complete ${conversationState.projectType || 'electrical'} installation with ${designerOutput.data.structuredData.circuits.length} circuits, all compliant with BS 7671:2018+A2:2022.\n\n`;
+    synthesizedResponse += `Right, I've designed all ${designerOutput.data.structuredData.circuits.length} circuits for your ${conversationState.projectType || 'installation'}, fully BS 7671:2018+A3:2024 compliant:\n\n`;
   } else {
-    synthesizedResponse += `Here's your BS 7671-compliant design:\n\n`;
+    synthesizedResponse += `Here's your circuit design (BS 7671:2018+A3:2024):\n\n`;
   }
 
   // For multi-circuit designs, create a structured narrative
@@ -86,8 +86,8 @@ export async function synthesizeAgentOutputs(config: SynthesisConfig): Promise<s
 
   // Add regulation citations footer (compact - no content dumps)
   if (foundRegulations.length > 0) {
-    synthesizedResponse += `\n\n📚 This design references ${foundRegulations.length} BS 7671 regulations\n`;
-    synthesizedResponse += `*Full regulation details are in each circuit card under "View Working Out"*\n`;
+    synthesizedResponse += `\n\n📚 Design based on ${foundRegulations.length} BS 7671:2018+A3:2024 regulations\n`;
+    synthesizedResponse += `*Full calculations and reg references under "View Working Out" for each circuit*\n`;
   }
 
   // Add performance metadata
