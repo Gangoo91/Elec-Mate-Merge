@@ -14,11 +14,15 @@ interface MaterialItem {
   total: number;
   supplier: string;
   inStock?: boolean;
+  inDatabase?: boolean;
 }
 
 interface LabourTask {
   description: string;
   hours: number;
+  workers?: number;
+  electricianHours?: number;
+  apprenticeHours?: number;
   rate: number;
   total: number;
 }
@@ -160,7 +164,13 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
                     <td className="py-2 px-2">
                       <div>
                         <p className="font-medium text-foreground">{item.description}</p>
-                        <p className="text-xs text-muted-foreground">{item.supplier}</p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          {item.inDatabase ? (
+                            <span className="text-xs text-green-600 dark:text-green-400">✓ {item.supplier}</span>
+                          ) : (
+                            <span className="text-xs text-yellow-600 dark:text-yellow-400">⚠ Market rate</span>
+                          )}
+                        </div>
                         {item.inStock === false && (
                           <Badge variant="outline" className="text-xs mt-1 bg-orange-500/10 text-orange-500 border-orange-500/30">
                             Out of Stock
@@ -216,9 +226,17 @@ export const CostEngineerCards = ({ data }: { data: CostData }) => {
             <div key={idx} className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/30">
               <div className="flex-1">
                 <p className="text-sm font-medium text-foreground">{task.description}</p>
-                <p className="text-xs text-muted-foreground">
-                  {task.hours} {task.hours === 1 ? 'hour' : 'hours'} @ £{task.rate.toFixed(2)}/hr
-                </p>
+                {task.workers === 2 && task.electricianHours && task.apprenticeHours ? (
+                  <div className="text-xs text-muted-foreground space-y-0.5">
+                    <p>Electrician: {task.electricianHours.toFixed(1)}hrs @ £50/hr</p>
+                    <p>Apprentice: {task.apprenticeHours.toFixed(1)}hrs @ £25/hr</p>
+                    <p className="text-green-600 dark:text-green-400">2-person team (30% faster)</p>
+                  </div>
+                ) : (
+                  <p className="text-xs text-muted-foreground">
+                    {task.hours} {task.hours === 1 ? 'hour' : 'hours'} @ £{task.rate.toFixed(2)}/hr
+                  </p>
+                )}
               </div>
               <p className="text-sm font-semibold text-foreground">
                 £{task.total.toFixed(2)}

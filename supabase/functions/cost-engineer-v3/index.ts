@@ -15,9 +15,50 @@ import {
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
-  LABOUR_RATE_PER_HOUR: 50.00,  // Standard UK electrician rate
-  MATERIAL_MARKUP_PERCENT: 10,   // Contractor margin on wholesale
-  VAT_RATE: 20                   // UK VAT
+  ELECTRICIAN_RATE_PER_HOUR: 50.00,
+  APPRENTICE_RATE_PER_HOUR: 25.00,
+  MATERIAL_MARKUP_PERCENT: 10,
+  VAT_RATE: 20
+};
+
+// ===== LABOUR CALCULATION HEURISTICS =====
+const LABOUR_HEURISTICS = {
+  rewire: {
+    firstFixPerCircuit: 2.0,
+    firstFixBase: 4.0,
+    secondFixPerCircuit: 1.5,
+    secondFixBase: 2.0,
+    testingBase: 8.0
+  },
+  extension: {
+    socketsPerHour: 2,
+    lightsPerHour: 3,
+    showerInstall: 4.0,
+    cookerInstall: 3.0
+  }
+};
+
+// ===== MATERIAL TAKEOFF HEURISTICS =====
+const MATERIAL_TAKEOFF = {
+  rewire_cable_per_bed: {
+    '2.5mm_t&e': 50,
+    '1.5mm_t&e': 35,
+    '10mm_t&e': 15
+  },
+  rewire_accessories_per_bed: {
+    sockets: 8,
+    switches: 3,
+    downlights: 4
+  }
+};
+
+// ===== FALLBACK PRICES (when database search fails) =====
+const FALLBACK_PRICES = {
+  '2.5mm_t&e_per_m': { price: 0.95, supplier: 'CEF/TLC average', inStock: true },
+  '1.5mm_t&e_per_m': { price: 0.80, supplier: 'CEF/TLC average', inStock: true },
+  '10mm_t&e_per_m': { price: 1.35, supplier: 'CEF/TLC average', inStock: true },
+  '8_way_consumer_unit': { price: 136.36, supplier: 'Standard 8-way RCD', inStock: true },
+  '40a_rcbo': { price: 28.50, supplier: 'Hager/MK', inStock: true }
 };
 
 serve(async (req) => {
@@ -85,38 +126,53 @@ serve(async (req) => {
     logger.debug('Starting parallel RAG searches');
     const ragStart = Date.now();
 
-    // Parallelize all RAG calls
+    // Parallelize all RAG calls + keyword search
     const [
       { data: pricingResults, error: pricingError },
       { data: installationResults },
-      { data: pmResults }
+      { data: pmResults },
+      { data: commonMaterials }
     ] = await Promise.all([
       supabase.rpc('search_pricing', {
         query_embedding: queryEmbedding,
-        match_threshold: 0.7,
-        match_count: 8  // Reduced from 15 to 8
+        match_threshold: 0.65,
+        match_count: 8
       }),
       supabase.rpc('search_installation_knowledge', {
         query_embedding: queryEmbedding,
         match_threshold: 0.70,
-        match_count: 3  // Reduced from 5 to 3
+        match_count: 3
       }),
       supabase.rpc('search_project_mgmt', {
         query_embedding: queryEmbedding,
         match_threshold: 0.65,
-        match_count: 2  // Reduced from 3 to 2
-      })
+        match_count: 2
+      }),
+      // Explicit keyword search for common electrical materials
+      supabase
+        .from('pricing_embeddings')
+        .select('*')
+        .or('item_name.ilike.%2.5mm%cable%,item_name.ilike.%1.5mm%cable%,item_name.ilike.%10mm%cable%,item_name.ilike.%consumer unit%,item_name.ilike.%RCBO%,item_name.ilike.%socket%,item_name.ilike.%switch%')
+        .order('base_cost', { ascending: true })
+        .limit(12)
     ]);
 
-    // Fallback: if vector search fails or returns nothing, use search-pricing-rag
-    let finalPricingResults = pricingResults;
-    if (pricingError || !pricingResults || pricingResults.length === 0) {
-      logger.warn('Vector search failed or empty, using search-pricing-rag fallback', { pricingError });
+    // Merge vector + keyword results (dedupe by id)
+    let finalPricingResults = [
+      ...(pricingResults || []),
+      ...(commonMaterials || [])
+    ]
+      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
+      .slice(0, 15);
+
+    // Fallback: if still no results, use search-pricing-rag
+    if (finalPricingResults.length === 0) {
+      logger.warn('No pricing results from vector+keyword, using search-pricing-rag fallback');
       const { data: ragData, error: ragError } = await supabase.functions.invoke('search-pricing-rag', {
-        body: { query, matchThreshold: 0.6, matchCount: 8, supplierFilter: 'all' }
+        body: { query, matchThreshold: 0.6, matchCount: 12, supplierFilter: 'all' }
       });
       if (!ragError && ragData?.materials) {
-        finalPricingResults = ragData.materials.slice(0, 8).map((m: any) => ({
+        finalPricingResults = ragData.materials.slice(0, 12).map((m: any) => ({
           item_name: m.item_name,
           base_cost: m.unit_price,
           price_per_unit: m.unit,
@@ -135,12 +191,16 @@ serve(async (req) => {
       pmGuides: pmResults?.length || 0
     });
 
-    // Step 3: Build compact pricing context (OPTIMIZED)
-    const pricingContext = finalPricingResults && finalPricingResults.length > 0
-      ? finalPricingResults.map((p: any) => 
+    // Step 3: Build pricing context with database + fallbacks
+    let pricingContext = '';
+    if (finalPricingResults && finalPricingResults.length > 0) {
+      pricingContext = `DATABASE PRICES (${finalPricingResults.length} items):\n` +
+        finalPricingResults.map((p: any) => 
           `- ${p.item_name}: £${p.base_cost} (${p.wholesaler}${p.in_stock ? '' : ' - awaiting stock'})`
-        ).join('\n')
-      : 'No pricing data. Estimate from market rates.';
+        ).join('\n');
+    }
+    
+    pricingContext += `\n\nFALLBACK MARKET RATES (use if not in database):\n- 2.5mm² T&E cable: £0.95/metre\n- 1.5mm² T&E cable: £0.80/metre\n- 10mm² T&E cable: £1.35/metre\n- 8-way consumer unit (RCD): £136.36\n- 40A RCBO: £28.50`;
 
     // Build compact installation context (100 chars max per snippet)
     const installationContext = installationResults && installationResults.length > 0
@@ -179,27 +239,48 @@ serve(async (req) => {
 
     const systemPrompt = `UK Electrical VALUE ENGINEER. September 2025. UK English.
 
-PRICING DATABASE (${finalPricingResults?.length || 0} items - USE THESE EXACT PRICES):
 ${pricingContext}
 
-${installationContext ? `INSTALLATION METHODS:\n${installationContext}\n` : ''}${pmContext ? `PM INSIGHTS:\n${pmContext}\n` : ''}
+${installationContext ? `\nINSTALLATION METHODS:\n${installationContext}\n` : ''}${pmContext ? `PM INSIGHTS:\n${pmContext}\n` : ''}
+
+LABOUR CALCULATION RULES:
+- Rewire (3-bed, 8 circuits): First fix 2 days (16hrs), Second fix 2 days (16hrs), Testing 1 day (8hrs) = 40hrs total
+- Extensions: 0.5hr per socket, 0.35hr per light, +1hr setup/testing
+- Showers: 4hrs install + testing
+- Scale by property: 1-bed (0.6x), 2-bed (0.7x), 4-bed (1.3x), 5-bed (1.6x)
+
+MATERIAL QUANTITY RULES (3-bed house rewire):
+- 2.5mm² T&E: 150-200m (50-65m per bedroom + common areas)
+- 1.5mm² T&E: 100-150m (35-50m per bedroom + common areas)
+- 10mm² T&E: 15-20m (shower + cooker circuits only)
+- Consumer unit: 8-10 way with RCD protection
+- Sockets: 24-30 (8-10 per bedroom + common)
+- Light switches: 10-12
+- Downlights: 12-16 (if LED refit)
+Scale by bedrooms: 1-bed (0.5x), 2-bed (0.7x), 4-bed (1.3x), 5-bed (1.6x)
+
+LABOUR RATES:
+- Qualified Electrician: £50.00/hour
+- Apprentice/Improver: £25.00/hour
+For jobs >40 hours, consider 2-person team (electrician + apprentice = £75/hr combined, reduces time by 30%)
 
 PRICING RULES:
-- Labour: £${COST_ENGINEER_PRICING.LABOUR_RATE_PER_HOUR}/hr (all tasks)
 - Material markup: +${COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT}% on wholesale
 - VAT: ${COST_ENGINEER_PRICING.VAT_RATE}%
 
 INSTRUCTIONS:
-1. Match materials to database items (exact prices + supplier)
-2. If not in database: mark "Estimated (not in database)"
-3. Calculate labour by task (installation, termination, testing)
-4. Identify value engineering opportunities (cost savings without compromising BS 7671)
+1. Match materials to database (prefer database over fallback)
+2. Use realistic quantities (see rules above)
+3. Calculate labour realistically (see timescales above)
+4. For large jobs (>40hrs), suggest 2-person team
+5. Mark items as "inDatabase: true/false"
+6. Identify value engineering opportunities
 
 ${region ? `Region: ${region}\n` : ''}${contextSection}
 
 Output compact JSON (max 1500 tokens):
 {
-  "response": "Cost analysis (150 words): materials breakdown, labour tasks, VAT, value engineering suggestions",
+  "response": "Cost analysis with materials, labour, VAT, value engineering",
   "materials": { "items": [...], "subtotal": 0, "vat": 0, "total": 0 },
   "labour": { "tasks": [...], "subtotal": 0, "vat": 0, "total": 0 },
   "summary": { "materialsTotal": 0, "labourTotal": 0, "subtotal": 0, "vat": 0, "grandTotal": 0 },
@@ -252,7 +333,8 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                         unit: { type: 'string' },
                         unitPrice: { type: 'number' },
                         total: { type: 'number' },
-                        supplier: { type: 'string' }
+                        supplier: { type: 'string' },
+                        inDatabase: { type: 'boolean' }
                       },
                       required: ['description', 'quantity', 'unitPrice', 'total', 'supplier']
                     }
@@ -273,6 +355,9 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                       properties: {
                         description: { type: 'string' },
                         hours: { type: 'number' },
+                        workers: { type: 'number' },
+                        electricianHours: { type: 'number' },
+                        apprenticeHours: { type: 'number' },
                         rate: { type: 'number' },
                         total: { type: 'number' }
                       },
@@ -377,13 +462,50 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       costResult.materials.total = Number((subtotalWithMarkup + materialsVat).toFixed(2));
     }
 
-    // Enforce labour pricing
+    // Enforce labour pricing with team logic
     if (costResult.labour?.tasks) {
-      costResult.labour.tasks = costResult.labour.tasks.map((task: any) => ({
-        ...task,
-        rate: COST_ENGINEER_PRICING.LABOUR_RATE_PER_HOUR,
-        total: Number((task.hours * COST_ENGINEER_PRICING.LABOUR_RATE_PER_HOUR).toFixed(2))
-      }));
+      const totalLabourHours = costResult.labour.tasks.reduce((sum: number, task: any) => sum + (task.hours || 0), 0);
+      const useTeam = totalLabourHours > 40;
+
+      costResult.labour.tasks = costResult.labour.tasks.map((task: any) => {
+        const totalHours = task.hours;
+        
+        // If AI already specified team breakdown, use it
+        if (task.workers === 2 || (task.electricianHours && task.apprenticeHours)) {
+          const elecHours = task.electricianHours || (totalHours * 0.7);
+          const appHours = task.apprenticeHours || (totalHours * 0.3);
+          return {
+            ...task,
+            workers: 2,
+            electricianHours: elecHours,
+            apprenticeHours: appHours,
+            rate: (elecHours * COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR) + (appHours * COST_ENGINEER_PRICING.APPRENTICE_RATE_PER_HOUR),
+            total: Number(((elecHours * COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR) + (appHours * COST_ENGINEER_PRICING.APPRENTICE_RATE_PER_HOUR)).toFixed(2))
+          };
+        }
+        
+        // If job >40hrs and AI didn't specify team, suggest it
+        if (useTeam && !task.workers) {
+          const elecHours = totalHours * 0.7;
+          const appHours = totalHours * 0.3;
+          return {
+            ...task,
+            workers: 2,
+            electricianHours: elecHours,
+            apprenticeHours: appHours,
+            rate: (elecHours * COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR) + (appHours * COST_ENGINEER_PRICING.APPRENTICE_RATE_PER_HOUR),
+            total: Number(((elecHours * COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR) + (appHours * COST_ENGINEER_PRICING.APPRENTICE_RATE_PER_HOUR)).toFixed(2))
+          };
+        }
+        
+        // Solo electrician (default)
+        return {
+          ...task,
+          workers: 1,
+          rate: COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR,
+          total: Number((totalHours * COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR).toFixed(2))
+        };
+      });
 
       // Recalculate labour totals
       const labourSubtotal = costResult.labour.tasks.reduce((sum: number, task: any) => sum + task.total, 0);
