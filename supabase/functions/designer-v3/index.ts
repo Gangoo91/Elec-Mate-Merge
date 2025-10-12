@@ -527,7 +527,7 @@ Provide a complete, BS 7671 compliant design.`;
           }
         }],
         tool_choice: { type: 'function', function: { name: 'produce_circuit_design' } },
-        max_tokens: 4000
+        max_completion_tokens: 4000
       })
     }, 60000); // 60 second timeout for RAG processing + AI generation
 
