@@ -12,6 +12,7 @@ import {
   TestSequenceCard
 } from "./response-cards";
 import { DesignerCircuitCards } from "./DesignerCircuitCards";
+import { CostEngineerCards } from "./CostEngineerCards";
 import { AgentReasoningDrawer } from "./AgentReasoningDrawer";
 import { CitationBadge } from "./CitationBadge";
 import { MultiCircuitRenderer } from "./MultiCircuitRenderer";
@@ -193,6 +194,16 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
           {/* Commissioning - Test Sequence Card */}
           {agentId === 'commissioning' && structuredData.testSequence && (
             <TestSequenceCard data={structuredData} />
+          )}
+          
+          {/* Cost Engineer - Cost Breakdown Cards */}
+          {agentId === 'cost-engineer' && structuredData.materials && structuredData.labour && structuredData.summary && (
+            <CostEngineerCards data={{
+              materials: structuredData.materials,
+              labour: structuredData.labour,
+              valueEngineering: structuredData.valueEngineering,
+              summary: structuredData.summary
+            }} />
           )}
         </div>
       )}

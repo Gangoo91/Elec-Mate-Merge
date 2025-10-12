@@ -13,6 +13,13 @@ import {
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 
+// ===== COST ENGINEER PRICING CONSTANTS =====
+const COST_ENGINEER_PRICING = {
+  LABOUR_RATE_PER_HOUR: 50.00,  // Standard UK electrician rate
+  MATERIAL_MARKUP_PERCENT: 10,   // Contractor margin on wholesale
+  VAT_RATE: 20                   // UK VAT
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -183,6 +190,11 @@ ${pricingContext}
 ${installationContext ? `INSTALLATION GUIDANCE (for labour time estimation and practical methods):\n${installationContext}\n` : ''}
 ${pmContext ? `PROJECT MANAGEMENT CONSIDERATIONS (lead times, bundling, prelims):\n${pmContext}\n` : ''}
 
+🔴 CRITICAL PRICING RULES (MANDATORY):
+1. Labour Rate: £${COST_ENGINEER_PRICING.LABOUR_RATE_PER_HOUR.toFixed(2)} per hour for ALL tasks (no exceptions)
+2. Material Markup: Add ${COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT}% to all wholesale prices from database
+3. VAT: ${COST_ENGINEER_PRICING.VAT_RATE}% on final totals (materials + labour)
+
 🔴 CRITICAL INSTRUCTIONS FOR PRICING:
 1. MATCH materials to pricing database entries FIRST
    Example: User asks for "16mm² cable" → Search above for "16mm² 6242Y Twin & Earth Cable - £5.50/m at City Electrical Factors"
@@ -306,14 +318,19 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
                         description: { type: 'string' },
                         quantity: { type: 'number' },
                         unit: { type: 'string' },
+                        wholesalePrice: { type: 'number' },
+                        markup: { type: 'number' },
                         unitPrice: { type: 'number' },
                         total: { type: 'number' },
-                        supplier: { type: 'string' }
+                        supplier: { type: 'string' },
+                        inStock: { type: 'boolean' }
                       },
-                      required: ['description', 'quantity', 'unitPrice', 'total']
+                      required: ['description', 'quantity', 'wholesalePrice', 'markup', 'unitPrice', 'total', 'supplier']
                     }
                   },
                   subtotal: { type: 'number' },
+                  totalMarkup: { type: 'number' },
+                  subtotalWithMarkup: { type: 'number' },
                   vat: { type: 'number' },
                   total: { type: 'number' }
                 },
@@ -343,6 +360,8 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
               summary: {
                 type: 'object',
                 properties: {
+                  materialsSubtotal: { type: 'number' },
+                  materialsMarkup: { type: 'number' },
                   materialsTotal: { type: 'number' },
                   labourTotal: { type: 'number' },
                   subtotal: { type: 'number' },
@@ -350,6 +369,17 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
                   grandTotal: { type: 'number' }
                 },
                 required: ['grandTotal']
+              },
+              valueEngineering: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    suggestion: { type: 'string' },
+                    potentialSaving: { type: 'number' }
+                  },
+                  required: ['suggestion', 'potentialSaving']
+                }
               },
               notes: {
                 type: 'array',
@@ -385,6 +415,77 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
       // Fallback: repair-parse the entire body
       costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-v3');
     }
+
+    // ===== POST-PROCESSING: ENFORCE PRICING RULES =====
+    logger.debug('Enforcing pricing rules');
+
+    // Enforce material pricing
+    if (costResult.materials?.items) {
+      costResult.materials.items = costResult.materials.items.map((item: any) => {
+        // Calculate wholesale price (if AI didn't provide it, back-calculate from unitPrice)
+        const wholesalePrice = item.wholesalePrice || (item.unitPrice / 1.1);
+        const markup = wholesalePrice * (COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT / 100);
+        const unitPrice = wholesalePrice + markup;
+        const total = unitPrice * item.quantity;
+
+        return {
+          ...item,
+          wholesalePrice: Number(wholesalePrice.toFixed(2)),
+          markup: Number(markup.toFixed(2)),
+          unitPrice: Number(unitPrice.toFixed(2)),
+          total: Number(total.toFixed(2)),
+          inStock: item.inStock ?? true
+        };
+      });
+
+      // Recalculate materials totals
+      const materialsSubtotal = costResult.materials.items.reduce((sum: number, item: any) => 
+        sum + (item.wholesalePrice * item.quantity), 0);
+      const totalMarkup = materialsSubtotal * (COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT / 100);
+      const subtotalWithMarkup = materialsSubtotal + totalMarkup;
+      const materialsVat = subtotalWithMarkup * (COST_ENGINEER_PRICING.VAT_RATE / 100);
+      
+      costResult.materials.subtotal = Number(materialsSubtotal.toFixed(2));
+      costResult.materials.totalMarkup = Number(totalMarkup.toFixed(2));
+      costResult.materials.subtotalWithMarkup = Number(subtotalWithMarkup.toFixed(2));
+      costResult.materials.vat = Number(materialsVat.toFixed(2));
+      costResult.materials.total = Number((subtotalWithMarkup + materialsVat).toFixed(2));
+    }
+
+    // Enforce labour pricing
+    if (costResult.labour?.tasks) {
+      costResult.labour.tasks = costResult.labour.tasks.map((task: any) => ({
+        ...task,
+        rate: COST_ENGINEER_PRICING.LABOUR_RATE_PER_HOUR,
+        total: Number((task.hours * COST_ENGINEER_PRICING.LABOUR_RATE_PER_HOUR).toFixed(2))
+      }));
+
+      // Recalculate labour totals
+      const labourSubtotal = costResult.labour.tasks.reduce((sum: number, task: any) => sum + task.total, 0);
+      const labourVat = labourSubtotal * (COST_ENGINEER_PRICING.VAT_RATE / 100);
+      
+      costResult.labour.subtotal = Number(labourSubtotal.toFixed(2));
+      costResult.labour.vat = Number(labourVat.toFixed(2));
+      costResult.labour.total = Number((labourSubtotal + labourVat).toFixed(2));
+    }
+
+    // Recalculate summary
+    const materialsSubtotal = costResult.materials?.subtotal || 0;
+    const materialsMarkup = costResult.materials?.totalMarkup || 0;
+    const labourSubtotal = costResult.labour?.subtotal || 0;
+    const subtotal = materialsSubtotal + materialsMarkup + labourSubtotal;
+    const vat = subtotal * (COST_ENGINEER_PRICING.VAT_RATE / 100);
+    const grandTotal = subtotal + vat;
+
+    costResult.summary = {
+      materialsSubtotal: Number(materialsSubtotal.toFixed(2)),
+      materialsMarkup: Number(materialsMarkup.toFixed(2)),
+      materialsTotal: costResult.materials?.total || 0,
+      labourTotal: costResult.labour?.total || 0,
+      subtotal: Number(subtotal.toFixed(2)),
+      vat: Number(vat.toFixed(2)),
+      grandTotal: Number(grandTotal.toFixed(2))
+    };
 
     // Validate RAG usage
     if (pricingResults && pricingResults.length > 0) {
