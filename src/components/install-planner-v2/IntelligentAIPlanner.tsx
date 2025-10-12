@@ -470,9 +470,9 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         }
       }
       
-      // Remove "Analyzing..." and add actual response with enriched structured data
+      // Remove "Analyzing..." and thinking cards, add actual response with enriched structured data
       setMessages(prev => {
-        const filtered = prev.filter(m => !(m.agentName === agent && m.isTyping));
+        const filtered = prev.filter(m => !(m.agentName === agent && (m.isTyping || m.isThinking)));
         
         return [...filtered, {
           role: 'assistant',

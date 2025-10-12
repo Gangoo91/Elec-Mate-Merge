@@ -109,12 +109,32 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
         </div>
       )}
       
-      {/* Designer: Warning if no narrative */}
-      {agentId === 'designer' && narrativeText.length <= 10 && (
+      {/* Designer: Show RAG results if no narrative but citations exist */}
+      {agentId === 'designer' && narrativeText.length <= 10 && structuredData?.citations && structuredData.citations.length > 0 && (
+        <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+          <CardHeader>
+            <CardTitle className="text-sm flex items-center gap-2">
+              <BookOpen className="h-4 w-4" />
+              RAG Results - Referenced Regulations
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            {structuredData.citations.slice(0, 5).map((citation: any, idx: number) => (
+              <div key={idx} className="text-sm border-l-2 border-elec-yellow/40 pl-3 py-1">
+                <p className="font-semibold text-elec-yellow">{citation.section}</p>
+                <p className="text-xs text-muted-foreground">{citation.content?.slice(0, 150)}...</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+      
+      {/* Designer: Warning if no narrative AND no citations */}
+      {agentId === 'designer' && narrativeText.length <= 10 && (!structuredData?.citations || structuredData.citations.length === 0) && (
         <Card className="border-orange-500/20 bg-orange-500/5">
           <CardContent className="py-3">
             <p className="text-sm text-orange-500">
-              ⚠️ No detailed explanation returned from designer. Check edge function logs.
+              ⚠️ No response returned from designer. Check edge function logs.
             </p>
           </CardContent>
         </Card>

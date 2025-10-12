@@ -76,74 +76,113 @@ serve(async (req) => {
     let designKnowledge = [];
     let cacheHit = false;
 
-    // ⚡ TIER 1: CHECK CACHE FIRST (0-2s response for 60% of queries)
-    if (isCacheable(query)) {
-      logger.debug('Query is cacheable, checking cache');
-      const cached = await cache.get(query, { circuitType, power, voltage, cableLength });
+    // ⚡ TIER 1: CHECK CACHE FIRST (0-2s response for 60% of queries) - ALWAYS
+    logger.debug('Checking cache (un-gated)');
+    const cached = await cache.get(query, { circuitType, power, voltage, cableLength });
+    
+    if (cached && cached.confidence >= 0.75) {
+      logger.info('✅ cache:hit - using cached regulations', { 
+        cachedQuery: cached.query.slice(0, 50),
+        hits: cached.hits,
+        age: Math.round((Date.now() - new Date(cached.timestamp).getTime()) / 1000 / 60) + ' mins'
+      });
       
-      if (cached && cached.confidence >= 0.75) {
-        logger.info('✅ Cache hit - using cached regulations', { 
-          cachedQuery: cached.query.slice(0, 50),
-          hits: cached.hits,
-          age: Math.round((Date.now() - new Date(cached.timestamp).getTime()) / 1000 / 60) + ' mins'
-        });
-        
-        // Use cached regulations, skip RAG entirely
-        allRegulations = JSON.parse(cached.citations);
-        cacheHit = true;
-      }
+      // Use cached regulations, skip RAG entirely
+      allRegulations = JSON.parse(cached.citations);
+      cacheHit = true;
+    } else {
+      logger.debug('❌ cache:miss');
     }
 
-    // ⚡ TIER 2: RAG SEARCH WITH HIGH RELEVANCE THRESHOLD (3-10s for cache miss)
+    // ⚡ TIER 2: RAG SEARCH - ALWAYS CALL (cache or no cache)
     if (!cacheHit) {
-      // Step 1: Generate embedding for RAG search (with retry)
-      logger.debug('Cache miss - generating query embedding');
-      const embeddingStart = Date.now();
-      const queryEmbedding = await generateEmbeddingWithRetry(query, OPENAI_API_KEY);
-      logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
-
-      // Step 2: Fetch RAG context
       const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
       const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
       const supabase = createClient(supabaseUrl, supabaseKey);
 
-      logger.debug('Fetching RAG context with high relevance filter');
+      // 🚀 RAG FIRST: Call bs7671-rag-search edge function BEFORE embedding
+      logger.debug('Calling bs7671-rag-search edge function');
+      try {
+        const { data: ragSearchData, error: ragSearchError } = await supabase.functions.invoke('bs7671-rag-search', {
+          body: {
+            query,
+            matchThreshold: 0.6,
+            matchCount: 8
+          }
+        });
 
-      // Fetch BS 7671 regulations with 0.75 threshold (only highly relevant)
-      const { data: regulations, error: regError } = await supabase.rpc('search_bs7671', {
-        query_embedding: queryEmbedding,
-        match_threshold: 0.75, // ⚡ INCREASED from 0.5 - only pass highly relevant regs to GPT-5
-        match_count: 8
-      });
-
-      if (regError) {
-        logger.warn('BS 7671 search failed', { error: regError });
+        if (ragSearchError) {
+          logger.warn('rag:edge_function_error', { error: ragSearchError });
+        } else if (ragSearchData?.regulations && ragSearchData.regulations.length > 0) {
+          allRegulations = ragSearchData.regulations;
+          logger.info('✅ rag:cache|keyword success', { 
+            count: allRegulations.length,
+            source: ragSearchData.source || 'unknown'
+          });
+        } else {
+          logger.debug('rag:edge_function returned empty, falling back to vector');
+        }
+      } catch (ragError) {
+        logger.warn('rag:edge_function_catch', { error: ragError });
       }
 
-      // Fetch design knowledge
+      // Fallback to vector search if RAG search returned nothing
+      if (allRegulations.length === 0) {
+        logger.debug('Generating embedding for vector fallback');
+        const embeddingStart = Date.now();
+        const queryEmbedding = await generateEmbeddingWithRetry(query, OPENAI_API_KEY);
+        logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
+
+        // Try 0.6 threshold first
+        const { data: regulations, error: regError } = await supabase.rpc('search_bs7671', {
+          query_embedding: queryEmbedding,
+          match_threshold: 0.6,
+          match_count: 8
+        });
+
+        if (regError) {
+          logger.warn('rag:vector_0.6_error', { error: regError });
+        } else {
+          allRegulations = regulations || [];
+          logger.info(`✅ rag:vector (0.6)`, { count: allRegulations.length });
+        }
+
+        // If still empty, try 0.55
+        if (allRegulations.length === 0) {
+          const { data: regs55, error: regError55 } = await supabase.rpc('search_bs7671', {
+            query_embedding: queryEmbedding,
+            match_threshold: 0.55,
+            match_count: 8
+          });
+
+          if (regError55) {
+            logger.warn('rag:vector_0.55_error', { error: regError55 });
+          } else {
+            allRegulations = regs55 || [];
+            logger.info(`✅ rag:vector (0.55)`, { count: allRegulations.length });
+          }
+        }
+      }
+
+      // Fetch design knowledge (separate from BS7671)
+      logger.debug('Fetching design knowledge');
+      const queryEmbedding = await generateEmbeddingWithRetry(query, OPENAI_API_KEY);
       const { data: designKnowledgeData, error: designError } = await supabase.rpc('search_design_knowledge', {
         query_embedding: queryEmbedding,
         circuit_filter: circuitType || null,
         source_filter: null,
-        match_threshold: 0.7, // ⚡ INCREASED from 0.6
+        match_threshold: 0.6,
         match_count: 5
       });
 
       if (designError) {
         logger.warn('Design knowledge search failed', { error: designError });
       }
-
-      // ⚡ FILTER: Only pass regulations with similarity > 0.75 to GPT-5
-      const rawRegs = regulations || [];
-      allRegulations = rawRegs.filter((reg: any) => reg.similarity >= 0.75);
       designKnowledge = designKnowledgeData || [];
       
-      logger.info('RAG filtering applied', { 
-        rawCount: rawRegs.length,
-        filteredCount: allRegulations.length,
-        avgSimilarity: allRegulations.length > 0 
-          ? (allRegulations.reduce((sum: number, r: any) => sum + r.similarity, 0) / allRegulations.length).toFixed(2)
-          : 0
+      logger.info('RAG complete', { 
+        regulations: allRegulations.length,
+        designKnowledge: designKnowledge.length
       });
     }
 
@@ -276,17 +315,22 @@ If a field doesn't apply, use null. ALWAYS include answer and regulations_cited.
 
 Provide a complete, BS 7671 compliant design.`;
 
-    // Step 4: Call GPT-5 for simple JSON response (NO TOOL CALLING)
+    // Step 4: Call GPT-5 with 30s timeout, fallback to RAG narrative if empty/timeout
     logger.debug('Calling GPT-5 for JSON response');
     const aiStart = Date.now();
     
-    // Timeout 270s via AbortController
+    let parsedResponse: any;
+    let aiTimedOut = false;
+    
+    // Timeout 30s via AbortController
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 270000);
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+      aiTimedOut = true;
+    }, 30000);
 
-    let aiResponse: Response;
     try {
-      aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${LOVABLE_API_KEY}`,
@@ -302,35 +346,84 @@ Provide a complete, BS 7671 compliant design.`;
         }),
         signal: controller.signal
       });
-    } finally {
+
       clearTimeout(timeoutId);
-    }
 
-    if (!aiResponse.ok) {
-      const errorText = await aiResponse.text();
-      logger.error('GPT-5 error', { status: aiResponse.status, error: errorText });
-      throw new Error(`AI API error: ${aiResponse.status}`);
-    }
+      if (!aiResponse.ok) {
+        const errorText = await aiResponse.text();
+        logger.error('GPT-5 error', { status: aiResponse.status, error: errorText });
+        throw new Error(`AI API error: ${aiResponse.status}`);
+      }
 
-    const aiData = await aiResponse.json();
-    const duration = Date.now() - aiStart;
-    logger.debug('GPT-5 response received', { duration, hasChoices: !!aiData.choices?.[0] });
+      const aiData = await aiResponse.json();
+      const duration = Date.now() - aiStart;
+      logger.debug('GPT-5 response received', { duration, hasChoices: !!aiData.choices?.[0] });
 
-    // Parse response - handle both JSON and plain text gracefully
-    const aiContent = aiData.choices?.[0]?.message?.content || '';
-    let parsedResponse: any;
-    
-    try {
-      // Try to parse as JSON
-      parsedResponse = JSON.parse(aiContent);
-      logger.info('✅ Parsed JSON response', { hasAnswer: !!parsedResponse.answer });
-    } catch (parseError) {
-      // Fallback: wrap plain text response
-      logger.warn('Failed to parse JSON, using text fallback', { contentLength: aiContent.length });
+      const aiContent = aiData.choices?.[0]?.message?.content || '';
+      
+      if (!aiContent || aiContent.trim().length === 0) {
+        logger.warn('ai:empty - no content returned');
+        throw new Error('Empty AI response');
+      }
+      
+      try {
+        parsedResponse = JSON.parse(aiContent);
+        logger.info('✅ ai:json parsed', { hasAnswer: !!parsedResponse.answer });
+      } catch (parseError) {
+        logger.warn('ai:text_fallback - JSON parse failed', { contentLength: aiContent.length });
+        parsedResponse = {
+          answer: aiContent,
+          regulations_cited: extractRegulationNumbers(aiContent),
+          confidence: 0.7
+        };
+      }
+    } catch (aiError: any) {
+      clearTimeout(timeoutId);
+      
+      if (aiError.name === 'AbortError' || aiTimedOut) {
+        logger.warn('ai:timeout (30s) - falling back to RAG narrative');
+      } else {
+        logger.error('ai:error', { error: aiError.message });
+      }
+      
+      // 🆘 FALLBACK: Generate RAG-only narrative from regulations found
+      logger.info('response:source (rag_fallback) - synthesizing narrative');
+      
+      // Extract basic params from query
+      const powerMatch = query.match(/(\d+\.?\d*)\s*kW/i);
+      const lengthMatch = query.match(/(\d+)\s*m/i);
+      const powerKW = powerMatch ? parseFloat(powerMatch[1]) : power ? power / 1000 : null;
+      const lengthM = lengthMatch ? parseInt(lengthMatch[1], 10) : cableLength || null;
+      const voltageV = voltage || 230;
+      
+      let fallbackNarrative = `Based on the regulations found, here's the design approach:\n\n`;
+      
+      if (powerKW && lengthM) {
+        const Ib = (powerKW * 1000) / voltageV;
+        fallbackNarrative += `**Design Current (Ib):** ${Ib.toFixed(1)}A (${powerKW}kW ÷ ${voltageV}V)\n\n`;
+        fallbackNarrative += `This requires cable selection meeting:\n`;
+        fallbackNarrative += `- Regulation 433.1.1: Ib ≤ In ≤ Iz\n`;
+        fallbackNarrative += `- Regulation 525: Voltage drop ≤ 5%\n`;
+        fallbackNarrative += `- Table 41.3: Max Zs for fault protection\n`;
+        fallbackNarrative += `- Table 4D5: Cable current capacity (typical)\n\n`;
+      } else {
+        fallbackNarrative += `The key regulations for this circuit are:\n\n`;
+      }
+      
+      // List found regulations
+      if (allRegulations.length > 0) {
+        fallbackNarrative += `**Referenced Regulations:**\n`;
+        allRegulations.slice(0, 5).forEach((reg: any) => {
+          fallbackNarrative += `- ${reg.regulation_number}: ${reg.content?.slice(0, 120) || 'N/A'}...\n`;
+        });
+      } else {
+        fallbackNarrative += `No specific regulations retrieved. Please consult BS 7671:2018+A2:2022 for full compliance.\n`;
+      }
+      
       parsedResponse = {
-        answer: aiContent,
-        regulations_cited: extractRegulationNumbers(aiContent),
-        confidence: 0.7
+        answer: fallbackNarrative,
+        regulations_cited: allRegulations.map((r: any) => r.regulation_number).slice(0, 8),
+        confidence: 0.6
       };
     }
 
@@ -392,8 +485,8 @@ Provide a complete, BS 7671 compliant design.`;
     
     logger.info('Citations built', { count: citations.length, regulations: citedRegNumbers });
     
-    // ⚡ CACHE THE RESULT (for future instant responses)
-    if (!cacheHit && isCacheable(query) && allRegulations.length > 0) {
+    // ⚡ CACHE THE RESULT - Always cache successful responses with citations
+    if (!cacheHit && allRegulations.length > 0 && citations.length > 0) {
       const confidence = parsedResponse.confidence || 0.8;
       
       await cache.set(
@@ -404,7 +497,7 @@ Provide a complete, BS 7671 compliant design.`;
         { circuitType, power, voltage, cableLength }
       );
       
-      logger.info('💾 Response cached', { 
+      logger.info('💾 Response cached (un-gated)', { 
         confidence: confidence.toFixed(2),
         regCount: allRegulations.length 
       });
