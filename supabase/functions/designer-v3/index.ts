@@ -520,7 +520,22 @@ Provide a complete, BS 7671 compliant design.`;
     logger.info('Citations built', { count: citations.length, regulations: citedRegNumbers });
     
     // Step 6: Return response - flat format for router/UI
-    const { response, suggestedNextAgents, design, compliance, calculations } = designResult;
+    let { response, suggestedNextAgents, design, compliance, calculations } = designResult;
+    
+    // CRITICAL: Log narrative snippet for debugging
+    logger.info('Narrative snippet', { 
+      len: response?.length || 0, 
+      sample: String(response || '').slice(0, 120) 
+    });
+    
+    // Safety guard: if narrative is missing or very short, synthesize from design
+    if (!response || response.length < 30) {
+      logger.warn('Narrative too short or missing, synthesizing fallback', { 
+        originalLength: response?.length || 0 
+      });
+      
+      response = `Design Summary: ${design?.cableSize || '?'}mm² ${design?.cableType || 'cable'} protected by ${design?.protectionDevice || 'MCB'}. Design current ${calculations?.designCurrent || '?'}A. Voltage drop ${design?.voltageDrop || '?'}%. Maximum Zs ${calculations?.maxZs || '?'}Ω. ${compliance?.status === 'compliant' ? 'Compliant with BS 7671:2018+A2:2022.' : 'Review compliance notes.'} ${(compliance?.regulations || []).slice(0, 3).join(', ')}`;
+    }
     
     return new Response(
       JSON.stringify({

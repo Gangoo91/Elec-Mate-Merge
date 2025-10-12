@@ -366,33 +366,40 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     },
     onAgentResponse: async (agent, response, structuredData) => {
       console.log(`Agent ${agent} responded:`, response.slice(0, 100));
-      if (structuredData) {
-        console.log('✅ Structured data received:', structuredData);
+      
+      // Pass response into structuredData for fallback rendering
+      const enrichedStructuredData = structuredData ? {
+        ...structuredData,
+        response: response // Ensure narrative is always available
+      } : null;
+      
+      if (enrichedStructuredData) {
+        console.log('✅ Structured data received:', enrichedStructuredData);
         
         // Track agent output for context passing
         setAgentOutputHistory(prev => [
           ...prev,
           {
             agent,
-            output: structuredData,
+            output: enrichedStructuredData,
             timestamp: new Date().toISOString()
           }
         ]);
         
         // Extract suggested agents if present
-        if (structuredData.suggestedNextAgents) {
-          setSuggestedAgents(structuredData.suggestedNextAgents);
+        if (enrichedStructuredData.suggestedNextAgents) {
+          setSuggestedAgents(enrichedStructuredData.suggestedNextAgents);
         }
         
         // Phase 4: Save to Results if exportReady
-        if (structuredData.exportReady && currentAgent) {
+        if (enrichedStructuredData.exportReady && currentAgent) {
           try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
               await supabase.from('consultation_results').insert({
                 conversation_id: currentConversationId,
                 agent_type: currentAgent,
-                output_data: structuredData,
+                output_data: enrichedStructuredData,
                 user_id: session.user.id
               });
               
@@ -408,7 +415,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         }
       }
       
-      // Remove "Analyzing..." and add actual response with structured data
+      // Remove "Analyzing..." and add actual response with enriched structured data
       setMessages(prev => {
         const filtered = prev.filter(m => !(m.agentName === agent && m.isTyping));
         
@@ -417,7 +424,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           content: response,
           activeAgents: [agent],
           agentName: agent,
-          structuredData: structuredData || null
+          structuredData: enrichedStructuredData
         }];
       });
     },

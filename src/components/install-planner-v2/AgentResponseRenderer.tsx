@@ -29,29 +29,49 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
   const [showFullText, setShowFullText] = useState(false);
   const [showReasoningDrawer, setShowReasoningDrawer] = useState(false);
   
+  // ROBUST NARRATIVE TEXT - Try multiple sources with clear priority
+  const narrativeText = useMemo(() => {
+    const sources = [
+      content?.trim(),
+      structuredData?.response?.trim(),
+      structuredData?.design?.narrative?.trim(),
+      structuredData?.explanation?.trim()
+    ];
+    
+    const found = sources.find(s => s && s.length > 0);
+    if (!found && agentId === 'designer') {
+      console.warn('⚠️ AgentResponseRenderer: No narrative text found for designer', { 
+        hasContent: !!content, 
+        hasStructuredResponse: !!structuredData?.response,
+        structuredDataKeys: Object.keys(structuredData || {})
+      });
+    }
+    return found || '';
+  }, [content, structuredData, agentId]);
+  
   // Detect opening line for visual separation
   const openingLine = useMemo(() => {
     if (agentId === 'commissioning') {
-      const match = content.match(/^(Right then.*?(?:\.|$))/i);
+      const match = narrativeText.match(/^(Right then.*?(?:\.|$))/i);
       return match ? match[1] : null;
     }
     if (agentId === 'health-safety') {
-      const match = content.match(/^(Alright team.*?(?:\.|$))/i);
+      const match = narrativeText.match(/^(Alright team.*?(?:\.|$))/i);
       return match ? match[1] : null;
     }
     return null;
-  }, [content, agentId]);
+  }, [narrativeText, agentId]);
   
   // Strip opening line from content to avoid duplication
   const contentWithoutOpening = useMemo(() => {
     if (openingLine) {
-      return content.replace(openingLine, '').trim();
+      return narrativeText.replace(openingLine, '').trim();
     }
-    return content;
-  }, [content, openingLine]);
+    return narrativeText;
+  }, [narrativeText, openingLine]);
   
-  // Memoize parsed sections - only re-parse if content changes (use stripped content)
-  const sections = useMemo(() => parseAgentResponse(contentWithoutOpening || content), [contentWithoutOpening, content]);
+  // Memoize parsed sections - use narrativeText, not content
+  const sections = useMemo(() => parseAgentResponse(contentWithoutOpening || narrativeText), [contentWithoutOpening, narrativeText]);
   
   // Determine which structured card to show based on agent and data
   const hasStructuredData = structuredData && Object.keys(structuredData).length > 0;
@@ -75,23 +95,33 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
         </div>
       )}
       
-      {/* Designer Explanation Section - Show response text prominently */}
-      {agentId === 'designer' && content && content.trim().length > 50 && (
-        <Card className="border-elec-yellow/20 bg-elec-card/50">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
-              <Brain className="h-5 w-5" />
-              Design Explanation & Calculations
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="prose prose-sm max-w-none text-foreground">
-              <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                {content}
+      {/* Designer Explanation Section - Show narrative prominently */}
+      {agentId === 'designer' && (
+        narrativeText.length > 10 ? (
+          <Card className="border-elec-yellow/20 bg-elec-card/50">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+                <Brain className="h-5 w-5" />
+                Design Explanation & Calculations
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="prose prose-sm max-w-none text-foreground">
+                <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                  {narrativeText}
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card className="border-orange-500/20 bg-orange-500/5">
+            <CardContent className="py-3">
+              <p className="text-sm text-orange-500">
+                ⚠️ No detailed explanation returned from designer. Check edge function logs.
+              </p>
+            </CardContent>
+          </Card>
+        )
       )}
       
       {/* Structured Visual Cards (if available) */}
@@ -162,12 +192,22 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
       
       {/* Full Text Response (collapsible if structured data exists) */}
       {hasStructuredData && agentId === 'designer' ? (
-        // Designer with structured data: Show fallback if response is empty
-        !content.trim() ? (
-          <p className="text-sm text-muted-foreground">
-            ✅ Circuit design complete. Review the technical specifications in the card above.
-          </p>
-        ) : null
+        // Designer: only show if narrative is completely missing
+        narrativeText.length === 0 && (
+          <Collapsible open={showFullText} onOpenChange={setShowFullText}>
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="w-full justify-between text-xs h-8 text-muted-foreground">
+                <span>View Full Response</span>
+                <ChevronDown className={`h-4 w-4 transition-transform ${showFullText ? 'rotate-180' : ''}`} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-4 pt-3">
+              {sections.map((section, index) => (
+                <SectionRenderer key={index} section={section} agentId={agentId} />
+              ))}
+            </CollapsibleContent>
+          </Collapsible>
+        )
       ) : hasStructuredData ? (
         // Other agents with structured data: show collapsible full text
         <Collapsible open={showFullText} onOpenChange={setShowFullText}>
