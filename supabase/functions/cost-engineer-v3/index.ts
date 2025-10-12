@@ -77,15 +77,49 @@ serve(async (req) => {
 
     logger.debug('Searching pricing data');
 
-    const { data: pricingResults, error: pricingError } = await supabase.rpc('search_pricing', {
+    let { data: pricingResults, error: pricingError } = await supabase.rpc('search_pricing', {
       query_embedding: queryEmbedding,
       match_threshold: 0.7,
       match_count: 15
     });
 
-    if (pricingError) {
-      logger.warn('Pricing search failed', { error: pricingError });
+    // Fallback: if vector search fails or returns nothing, use search-pricing-rag
+    if (pricingError || !pricingResults || pricingResults.length === 0) {
+      logger.warn('Vector search failed or empty, using search-pricing-rag fallback', { pricingError });
+      const { data: ragData, error: ragError } = await supabase.functions.invoke('search-pricing-rag', {
+        body: { query, matchThreshold: 0.6, matchCount: 20, supplierFilter: 'all' }
+      });
+      if (!ragError && ragData?.materials) {
+        pricingResults = ragData.materials.map((m: any) => ({
+          item_name: m.item_name,
+          base_cost: m.unit_price,
+          price_per_unit: m.unit,
+          wholesaler: m.supplier,
+          in_stock: m.in_stock
+        }));
+        logger.info('Fallback pricing RAG used', { itemsFound: pricingResults.length });
+      }
     }
+
+    // Step 2b: Search Installation Guidance (like Designer V3)
+    const { data: installationResults } = await supabase.rpc('search_installation_knowledge', {
+      query_embedding: queryEmbedding,
+      match_threshold: 0.70,
+      match_count: 5
+    });
+
+    // Step 2c: Search Project Management knowledge
+    const { data: pmResults } = await supabase.rpc('search_project_mgmt', {
+      query_embedding: queryEmbedding,
+      match_threshold: 0.65,
+      match_count: 3
+    });
+
+    logger.info('RAG search complete', {
+      pricingItems: pricingResults?.length || 0,
+      installationGuides: installationResults?.length || 0,
+      pmGuides: pmResults?.length || 0
+    });
 
     // Step 3: Build pricing context
     const pricingContext = pricingResults && pricingResults.length > 0
@@ -93,6 +127,20 @@ serve(async (req) => {
           `${p.item_name} - £${p.base_cost} (${p.price_per_unit}) at ${p.wholesaler} ${p.in_stock ? '✓ In Stock' : '⚠ Out of Stock'}`
         ).join('\n')
       : 'No specific pricing data found. Use typical UK electrical wholesale prices.';
+
+    // Build installation guidance context
+    const installationContext = installationResults && installationResults.length > 0
+      ? installationResults.map((r: any) => 
+          `${r.topic} — ${r.content.substring(0, 180)}...`
+        ).join('\n')
+      : '';
+
+    // Build project management context
+    const pmContext = pmResults && pmResults.length > 0
+      ? pmResults.map((r: any) => 
+          `${r.topic} — ${r.content.substring(0, 140)}...`
+        ).join('\n')
+      : '';
 
     // Build conversation context with DESIGNER OUTPUT FIRST
     let contextSection = '';
@@ -131,6 +179,9 @@ CURRENT DATE: September 2025
 
 PRICING DATABASE RESULTS (YOU MUST USE THIS DATA - DO NOT ESTIMATE):
 ${pricingContext}
+
+${installationContext ? `INSTALLATION GUIDANCE (for labour time estimation and practical methods):\n${installationContext}\n` : ''}
+${pmContext ? `PROJECT MANAGEMENT CONSIDERATIONS (lead times, bundling, prelims):\n${pmContext}\n` : ''}
 
 🔴 CRITICAL INSTRUCTIONS FOR PRICING:
 1. MATCH materials to pricing database entries FIRST
@@ -325,9 +376,15 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
       toolChoice: { type: 'function', function: { name: 'provide_cost_estimate' } }
     });
 
-    const aiData = JSON.parse(aiResult.content);
-    const toolCall = aiData.choices[0].message.tool_calls[0];
-    const costResult = JSON.parse(toolCall.function.arguments);
+    // Robust tool-call parsing (matches universal wrapper contract)
+    let costResult: any;
+    if (aiResult.toolCalls && aiResult.toolCalls.length > 0) {
+      // AI wrapper already extracted tool call args into content
+      costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-v3');
+    } else {
+      // Fallback: repair-parse the entire body
+      costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-v3');
+    }
 
     // Validate RAG usage
     if (pricingResults && pricingResults.length > 0) {
