@@ -598,22 +598,45 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       );
 
     } catch (error) {
-      // Handle streaming errors
+      // Handle streaming errors with detailed inline error cards
       console.error('AI conversation error:', error);
       const errorMsg = error instanceof Error ? error.message : 'Unknown error';
       
-      // Remove typing and error messages
+      // Determine error type and provide helpful message
+      let userFriendlyMessage = '';
+      let errorType = 'general';
+      
+      if (errorMsg.includes('429') || errorMsg.includes('rate limit')) {
+        userFriendlyMessage = '⏱️ **Rate Limit Reached**\n\nToo many requests in a short time. Please wait 30 seconds and try again.';
+        errorType = 'rate-limit';
+      } else if (errorMsg.includes('402') || errorMsg.includes('payment')) {
+        userFriendlyMessage = '💳 **Credits Required**\n\nYour workspace needs more AI credits. Top up in Settings → Workspace → Usage.';
+        errorType = 'payment';
+      } else if (errorMsg.includes('max_tokens') || errorMsg.includes('max_completion_tokens')) {
+        userFriendlyMessage = '⚙️ **AI Configuration Issue**\n\nModel parameter issue detected. This has been logged. Please try again.';
+        errorType = 'config';
+      } else if (errorMsg.includes('timeout') || errorMsg.includes('timed out')) {
+        userFriendlyMessage = '⏱️ **Request Timed Out**\n\nThe AI is taking longer than expected. Try again or simplify your query.';
+        errorType = 'timeout';
+      } else {
+        userFriendlyMessage = `⚠️ **Something Went Wrong**\n\n${errorMsg}\n\nClick "Retry" below to try again.`;
+        errorType = 'general';
+      }
+      
+      // Remove typing and thinking messages
       setMessages(prev => {
         const filtered = prev.filter(msg => {
-          // Remove typing and previous error messages
-          if (msg.role === 'assistant' && (msg.isTyping || msg.hasError)) return false;
+          // Remove typing, thinking, and previous error messages
+          if (msg.role === 'assistant' && (msg.isTyping || msg.isThinking || msg.hasError)) return false;
           return true;
         });
         return [...filtered, { 
           role: 'assistant', 
-          content: `Sorry mate, hit a snag: ${errorMsg}. Click below to try again.`,
+          content: userFriendlyMessage,
           hasError: true,
-          agentName: currentAgent
+          agentName: currentAgent,
+          timestamp: new Date().toISOString(),
+          structuredData: { errorType, rawError: errorMsg }
         } as any];
       });
       setLastSendFailed(true);

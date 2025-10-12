@@ -173,7 +173,9 @@ CRITICAL: Extract ALL technical specifications and reasoning chains, not just su
         model: 'gpt-5-2025-08-07',
         messages: [
           { role: 'system', content: 'You extract ALL structured information from electrical conversations. Return comprehensive JSON with every technical detail.' },
-          { role: 'user', content: summaryPrompt }
+          { role: 'user', content: summaryPrompt },
+        ],
+        max_completion_tokens: 2000, // GPT-5 parameter
         ],
         response_format: { type: "json_object" },
         max_completion_tokens: 2000 // INCREASED for detailed extraction

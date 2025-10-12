@@ -100,7 +100,9 @@ serve(async (req) => {
             model: 'gpt-5-mini-2025-08-07',
             messages: [
               { role: 'system', content: 'You are an expert electrical materials categorizer. Return only valid JSON.' },
-              { role: 'user', content: analysisPrompt }
+              { role: 'user', content: analysisPrompt },
+            ],
+            max_completion_tokens: 1000, // GPT-5 parameter
             ],
             max_completion_tokens: 500,
           }),

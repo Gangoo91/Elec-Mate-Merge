@@ -77,29 +77,42 @@ export function handleError(error: unknown): Response {
   let statusCode = 500;
   let message = 'Unknown error';
   let userMessage = message;
+  let detailedError = '';
   
   if (error instanceof ValidationError) {
     statusCode = 400;
     message = error.message;
     userMessage = message;
+    detailedError = message;
   } else if (error instanceof ExternalAPIError) {
     statusCode = 502;
     message = `${error.service} error: ${error.message}`;
-    userMessage = `External service issue with ${error.service}. Please try again.`;
+    detailedError = message;
+    // Include actual AI error message for better debugging
+    userMessage = error.message.includes('max_tokens') 
+      ? 'AI model configuration issue. Please try again.'
+      : `External service issue with ${error.service}. Please try again.`;
   } else if (error instanceof Error) {
     message = error.message;
+    detailedError = error.stack || message;
     // Provide user-friendly message for JSON parsing errors
     if (message.includes('Invalid JSON')) {
       userMessage = 'AI response formatting issue. Please try again.';
+    } else if (message.includes('max_tokens') || message.includes('max_completion_tokens')) {
+      userMessage = 'AI model parameter issue. This has been logged and will be fixed.';
     } else {
       userMessage = message;
     }
   }
   
-  console.error('Error handled:', { statusCode, message });
+  console.error('Error handled:', { statusCode, message, detailedError });
   
   return new Response(
-    JSON.stringify({ error: userMessage, _rawError: message }),
+    JSON.stringify({ 
+      error: userMessage, 
+      _rawError: message,
+      _details: detailedError.substring(0, 500) // Include partial stack for debugging
+    }),
     { 
       status: statusCode,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -147,41 +160,78 @@ export async function callLovableAI(
 ): Promise<string> {
   const {
     model = 'google/gemini-2.5-flash',
-    temperature = 0.7,
+    temperature,
     maxTokens = 2000,
     responseFormat = 'text'
   } = options;
 
+  // CRITICAL: GPT-5 parameter compatibility
+  const isGPT5 = model.toLowerCase().includes('gpt-5') || model.toLowerCase().includes('openai/gpt-5');
+  
   const body: any = {
     model,
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt }
-    ],
-    max_tokens: maxTokens,
-    temperature
+    ]
   };
+
+  // Use correct token parameter based on model
+  if (isGPT5) {
+    body.max_completion_tokens = maxTokens;
+    // GPT-5 doesn't support temperature parameter - omit it
+    console.debug(`Using max_completion_tokens for GPT-5 model: ${model}`);
+  } else {
+    body.max_tokens = maxTokens;
+    body.temperature = temperature ?? 0.7;
+  }
 
   if (responseFormat === 'json_object') {
     body.response_format = { type: 'json_object' };
   }
 
-  const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
+  console.debug('Calling Lovable AI', { model, tokenParam: isGPT5 ? 'max_completion_tokens' : 'max_tokens' });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new ExternalAPIError(`AI completion failed: ${response.status} - ${errorText}`, 'Lovable AI');
+  // Auto-retry mechanism for parameter mismatch
+  let lastError: Error | null = null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        
+        // Check for max_tokens parameter error and auto-fix
+        if (response.status === 400 && errorText.includes('max_tokens') && errorText.includes('not supported')) {
+          if (attempt === 0) {
+            console.warn('⚠️ Detected max_tokens parameter error, retrying with max_completion_tokens');
+            // Swap parameters and retry
+            delete body.max_tokens;
+            body.max_completion_tokens = maxTokens;
+            delete body.temperature; // Also remove temperature for safety
+            continue;
+          }
+        }
+        
+        throw new ExternalAPIError(`AI completion failed: ${response.status} - ${errorText}`, 'Lovable AI');
+      }
+
+      const data = await response.json();
+      return data.choices[0].message.content;
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      if (attempt === 1) throw lastError;
+    }
   }
-
-  const data = await response.json();
-  return data.choices[0].message.content;
+  
+  throw lastError!;
 }
 
 // ============= V3 ENHANCEMENTS =============

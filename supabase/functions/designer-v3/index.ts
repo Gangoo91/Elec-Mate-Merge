@@ -450,7 +450,6 @@ Provide a complete, BS 7671 compliant design.`;
       },
       body: JSON.stringify({
         model: 'openai/gpt-5',
-        temperature: 0.3,
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
@@ -459,75 +458,11 @@ Provide a complete, BS 7671 compliant design.`;
           type: 'function',
           function: {
             name: 'produce_circuit_design',
-            description: 'Return a complete BS 7671-compliant circuit design with calculations',
-            parameters: {
-              type: 'object',
-              properties: {
-                response: {
-                  type: 'string',
-                  description: 'MINIMUM 300 words. Professional technical narrative embedding ALL calculations, formulas with actual numbers, specific regulation citations (433.1.1, 525, 411.4.4, etc.), table references with values (Table 4D5, Table 41.3), complete voltage drop calculation showing all working, 433.1.1 verification with all three values. Write as Electrical Installation Certificate documentation.'
-                },
-                design: {
-                  type: 'object',
-                  properties: {
-                    cableSize: { type: 'number', description: 'Cable conductor size in mm²' },
-                    cableType: { type: 'string', description: 'Cable type specification' },
-                    protectionDevice: { type: 'string', description: 'Protection device specification' },
-                    voltageDrop: { type: 'number', description: 'Voltage drop percentage' },
-                    maxLength: { type: 'number', description: 'Maximum cable length in meters' },
-                    earthingArrangement: { type: 'string', description: 'Earthing system (TN-S, TN-C-S, TT)' },
-                    considerations: {
-                      type: 'array',
-                      items: { type: 'string' },
-                      description: 'Additional design considerations'
-                    }
-                  },
-                  required: ['cableSize', 'cableType', 'protectionDevice', 'voltageDrop']
-                },
-                compliance: {
-                  type: 'object',
-                  properties: {
-                    status: { type: 'string', enum: ['compliant', 'requires_attention'] },
-                    regulations: {
-                      type: 'array',
-                      items: { type: 'string' },
-                      description: 'BS 7671 regulation numbers cited'
-                    },
-                    warnings: {
-                      type: 'array',
-                      items: { type: 'string' }
-                    }
-                  },
-                  required: ['status', 'regulations']
-                },
-                calculations: {
-                  type: 'object',
-                  properties: {
-                    designCurrent: { type: 'number', description: 'Design current (Ib) in amps' },
-                    correctionFactors: { type: 'number', description: 'Combined correction factors' },
-                    maxZs: { type: 'number', description: 'Maximum earth fault loop impedance in ohms' }
-                  }
-                },
-                suggestedNextAgents: {
-                  type: 'array',
-                  items: {
-                    type: 'object',
-                    properties: {
-                      agent: { type: 'string' },
-                      reason: { type: 'string' },
-                      priority: { type: 'string', enum: ['high', 'medium', 'low'] }
-                    },
-                    required: ['agent', 'reason', 'priority']
-                  }
-                }
-              },
-              required: ['response', 'design', 'compliance'],
-              additionalProperties: false
-            }
-          }
+...
         }],
         tool_choice: { type: 'function', function: { name: 'produce_circuit_design' } },
-        max_completion_tokens: 4000
+        max_completion_tokens: 4000,
+        // GPT-5 doesn't support temperature - omitted
       })
     }, 60000); // 60 second timeout for RAG processing + AI generation
 
