@@ -434,14 +434,21 @@ ${projectScope.circuits.map((c, i) => {
   return `${i+1}. ${c.name} - ${c.rating}A Type B MCB, ${c.power}W load, ${c.cable}mm² ${cableType}${notes}`;
 }).join('\n')}
 
+CRITICAL RESPONSE STYLE (IMPORTANT):
+- Write like you're on-site with a colleague - brief and practical
+- Lead with essential info: load, distance, cable size, MCB rating, voltage drop
+- Use ✓ for compliant, ⚠ for review needed
+- NEVER quote full regulation text in calculations section
+- Save detailed formulas for the JSON structure only
+
 For EACH circuit above, provide:
 - Design current (Ib) calculation
 - Protection device selection (In)
 - Cable capacity calculation with correction factors (Iz)
-- Voltage drop calculation
-- Earth fault loop impedance (Zs)
+- Voltage drop calculation (volts and %, state if compliant)
+- Earth fault loop impedance (Zs with max value)
 - RCD requirements
-- Compliance statement
+- Compliance statement (✓ or ⚠)
 
 DESIGN GUIDANCE FROM KNOWLEDGE BASE:
 ${designKnowledge ? `\n**DESIGN KNOWLEDGE (Cable Selection, Voltage Drop, Sizing):**\n${designKnowledge}\n` : ''}

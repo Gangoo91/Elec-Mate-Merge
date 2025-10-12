@@ -184,32 +184,46 @@ export const MultiCircuitResultsDisplay = ({
                 </Button>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <div className="border-t pt-3 mt-3">
-                  <div className="text-sm font-semibold mb-2">Calculations</div>
-                  <div className="font-mono text-sm text-muted-foreground space-y-1">
-                    <div>Ib: {circuit.calculations.Ib}A | In: {circuit.calculations.In}A | Iz: {circuit.calculations.Iz}A</div>
-                    {circuit.calculations.equation && (
-                      <div className="text-xs">{circuit.calculations.equation}</div>
-                    )}
-                    {circuit.calculations.tableRef && (
-                      <div className="text-xs">Reference: {circuit.calculations.tableRef}</div>
-                    )}
+                <div className="border-t pt-3 mt-3 space-y-3">
+                  <div>
+                    <div className="text-sm font-semibold mb-2">Calculations</div>
+                    <div className="font-mono text-sm text-muted-foreground space-y-1">
+                      <div>Ib: {circuit.calculations.Ib}A | In: {circuit.calculations.In}A | Iz: {circuit.calculations.Iz}A</div>
+                      {circuit.calculations.equation && (
+                        <div className="text-xs">{circuit.calculations.equation}</div>
+                      )}
+                      {circuit.calculations.tableRef && (
+                        <div className="text-xs">Reference: {circuit.calculations.tableRef}</div>
+                      )}
+                    </div>
+                    
+                    {/* Voltage Drop Detail */}
+                    <div className="mt-2 text-xs text-muted-foreground">
+                      Voltage Drop: {circuit.calculations.voltageDrop.volts.toFixed(2)}V 
+                      ({circuit.calculations.voltageDrop.percent.toFixed(2)}%)
+                      {circuit.calculations.voltageDrop.max && ` - Max: ${circuit.calculations.voltageDrop.max}%`}
+                    </div>
+                    
+                    {/* Zs Detail */}
+                    <div className="mt-1 text-xs text-muted-foreground">
+                      Earth Fault Loop (Zs): {circuit.calculations.zs.calculated.toFixed(2)}Ω 
+                      (Max: {circuit.calculations.zs.max.toFixed(2)}Ω)
+                      {circuit.calculations.zs.regulation && ` - ${circuit.calculations.zs.regulation}`}
+                      {circuit.calculations.zs.compliant ? ' ✓' : ' ✗'}
+                    </div>
                   </div>
                   
-                  {/* Voltage Drop Detail */}
-                  <div className="mt-2 text-xs text-muted-foreground">
-                    Voltage Drop: {circuit.calculations.voltageDrop.volts.toFixed(2)}V 
-                    ({circuit.calculations.voltageDrop.percent.toFixed(2)}%)
-                    {circuit.calculations.voltageDrop.max && ` - Max: ${circuit.calculations.voltageDrop.max}%`}
-                  </div>
-                  
-                  {/* Zs Detail */}
-                  <div className="mt-1 text-xs text-muted-foreground">
-                    Earth Fault Loop (Zs): {circuit.calculations.zs.calculated.toFixed(2)}Ω 
-                    (Max: {circuit.calculations.zs.max.toFixed(2)}Ω)
-                    {circuit.calculations.zs.regulation && ` - ${circuit.calculations.zs.regulation}`}
-                    {circuit.calculations.zs.compliant ? ' ✓' : ' ✗'}
-                  </div>
+                  {/* Regulations Referenced - MOVED HERE from main view */}
+                  {circuit.regulations && circuit.regulations.length > 0 && (
+                    <div className="border-t pt-3">
+                      <div className="text-sm font-semibold mb-2">BS 7671 References</div>
+                      <div className="text-xs text-muted-foreground space-y-1">
+                        {circuit.regulations.slice(0, 5).map((reg, i) => (
+                          <div key={i}>• {reg}</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </CollapsibleContent>
             </Collapsible>
@@ -224,17 +238,6 @@ export const MultiCircuitResultsDisplay = ({
               </div>
             )}
 
-            {/* Regulations Referenced */}
-            {circuit.regulations && circuit.regulations.length > 0 && (
-              <div className="border-t pt-3">
-                <div className="text-sm font-semibold mb-2">Regulations</div>
-                <div className="text-xs text-muted-foreground space-y-1">
-                  {circuit.regulations.slice(0, 3).map((reg, i) => (
-                    <div key={i}>• {reg}</div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         </Card>
       ))}

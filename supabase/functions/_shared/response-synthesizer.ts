@@ -84,25 +84,10 @@ export async function synthesizeAgentOutputs(config: SynthesisConfig): Promise<s
       .join('\n\n');
   }
 
-  // Add regulation citations footer
+  // Add regulation citations footer (compact - no content dumps)
   if (foundRegulations.length > 0) {
-    synthesizedResponse += `\n\n---\n\n`;
-    synthesizedResponse += `**📚 Regulations Applied:** This design references ${foundRegulations.length} BS 7671 regulations`;
-    
-    if (ragMetadata.searchMethod) {
-      synthesizedResponse += ` (Search: ${ragMetadata.searchMethod === 'exact' ? 'Exact match' : ragMetadata.searchMethod === 'vector' ? 'Semantic search' : 'Hybrid exact + semantic'})`;
-    }
-    
-    synthesizedResponse += `\n\n`;
-    
-    // List top 5 most relevant regulations
-    const topRegs = foundRegulations
-      .sort((a, b) => (b.relevance || 0) - (a.relevance || 0))
-      .slice(0, 5);
-    
-    topRegs.forEach(reg => {
-      synthesizedResponse += `- **${reg.regulation_number}** ${reg.section}: ${reg.content.substring(0, 100)}...\n`;
-    });
+    synthesizedResponse += `\n\n📚 This design references ${foundRegulations.length} BS 7671 regulations\n`;
+    synthesizedResponse += `*Full regulation details are in each circuit card under "View Working Out"*\n`;
   }
 
   // Add performance metadata
