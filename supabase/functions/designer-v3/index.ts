@@ -464,7 +464,40 @@ Provide a complete, BS 7671 compliant design.`;
             type: 'function',
             function: {
               name: 'produce_circuit_design',
-...
+              description: 'Return a full BS 7671 compliant single or multi-circuit design with calculations and regulation references.',
+              parameters: {
+                type: 'object',
+                properties: {
+                  response: { type: 'string', description: 'Narrative with calculations and BS 7671 citations.' },
+                  circuits: {
+                    type: 'array',
+                    description: 'Array of per-circuit designs.',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        name: { type: 'string' },
+                        circuit_type: { type: 'string' },
+                        load_power_w: { type: 'number' },
+                        voltage_v: { type: 'number' },
+                        cable_size_mm2: { type: 'number' },
+                        cable_type: { type: 'string' },
+                        protective_device: { type: 'string' },
+                        in_amps: { type: 'number' },
+                        iz_amps: { type: 'number' },
+                        ib_amps: { type: 'number' },
+                        max_zs_ohms: { type: 'number' },
+                        calculated_zs_ohms: { type: 'number' },
+                        rcd_required: { type: 'boolean' },
+                        regulations: { type: 'array', items: { type: 'string' } }
+                      },
+                      required: ['name','circuit_type','cable_size_mm2','protective_device']
+                    }
+                  },
+                  compliance_summary: { type: 'array', items: { type: 'string' } }
+                },
+                required: ['response']
+              }
+            }
           }],
           tool_choice: { type: 'function', function: { name: 'produce_circuit_design' } },
           max_completion_tokens: 4000,
