@@ -302,25 +302,30 @@ export async function callLovableAIWithTimeout(
     timeoutMs?: number;
   } = {}
 ): Promise<string> {
-  const { timeoutMs = 55000, ...aiOptions } = options;
+  // Use circuit breaker to prevent overwhelming failing service
+  const { lovableAICircuit } = await import('./circuit-breaker.ts');
   
-  const timeoutPromise = new Promise<never>((_, reject) => {
-    setTimeout(() => {
-      reject(new Error(`AI request timed out after ${timeoutMs}ms`));
-    }, timeoutMs);
-  });
-  
-  try {
-    return await Promise.race([
-      callLovableAI(systemPrompt, userPrompt, apiKey, aiOptions),
-      timeoutPromise
-    ]);
-  } catch (error) {
-    if (error instanceof Error && error.message.includes('timed out')) {
-      throw new ExternalAPIError('AI request exceeded time limit', 'Lovable AI');
+  return await lovableAICircuit.execute(async () => {
+    const { timeoutMs = 55000, ...aiOptions } = options;
+    
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => {
+        reject(new Error(`AI request timed out after ${timeoutMs}ms`));
+      }, timeoutMs);
+    });
+    
+    try {
+      return await Promise.race([
+        callLovableAI(systemPrompt, userPrompt, apiKey, aiOptions),
+        timeoutPromise
+      ]);
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('timed out')) {
+        throw new ExternalAPIError('AI request exceeded time limit', 'Lovable AI');
+      }
+      throw error;
     }
-    throw error;
-  }
+  });
 }
 
 /**
@@ -331,24 +336,29 @@ export async function generateEmbeddingWithRetry(
   apiKey: string,
   maxRetries: number = 3
 ): Promise<number[]> {
-  let lastError: Error | null = null;
+  // Use circuit breaker to prevent overwhelming failing service
+  const { embeddingCircuit } = await import('./circuit-breaker.ts');
   
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      return await generateEmbedding(text, apiKey);
-    } catch (error) {
-      lastError = error instanceof Error ? error : new Error(String(error));
-      
-      if (attempt < maxRetries) {
-        const delayMs = Math.min(1000 * Math.pow(2, attempt - 1), 5000);
-        console.warn(`Embedding attempt ${attempt} failed, retrying in ${delayMs}ms...`);
-        await new Promise(resolve => setTimeout(resolve, delayMs));
+  return await embeddingCircuit.execute(async () => {
+    let lastError: Error | null = null;
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        return await generateEmbedding(text, apiKey);
+      } catch (error) {
+        lastError = error instanceof Error ? error : new Error(String(error));
+        
+        if (attempt < maxRetries) {
+          const delayMs = Math.min(1000 * Math.pow(2, attempt - 1), 5000);
+          console.warn(`Embedding attempt ${attempt} failed, retrying in ${delayMs}ms...`);
+          await new Promise(resolve => setTimeout(resolve, delayMs));
+        }
       }
     }
-  }
-  
-  throw new ExternalAPIError(
-    `Failed to generate embedding after ${maxRetries} attempts: ${lastError?.message}`,
-    'OpenAI'
-  );
+    
+    throw new ExternalAPIError(
+      `Failed to generate embedding after ${maxRetries} attempts: ${lastError?.message}`,
+      'OpenAI'
+    );
+  });
 }

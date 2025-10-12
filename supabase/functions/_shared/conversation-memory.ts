@@ -131,17 +131,33 @@ export async function summarizeConversation(
     return extractSimpleSummary(messages);
   }
 
-  // UPGRADE: Use FULL conversation with compression for older messages
-  // Keep last 20 messages full, compress older ones
+  // UPGRADE: Use FULL conversation with smart compression for older messages
+  // Keep last 20 messages full, compress older ones BUT preserve technical specs
   const recentMessages = messages.slice(-20);
   const olderMessages = messages.slice(0, -20);
   
-  const compressedOlder = olderMessages.length > 0 
-    ? `[Earlier conversation: ${olderMessages.length} messages about ${detectLastTopic(olderMessages)}]`
-    : '';
+  // Import query parser to detect technical content
+  const { parseQueryEntities } = await import('./query-parser.ts');
+  
+  // Compress older messages but preserve technical specs
+  const compressedOlder = olderMessages.map(msg => {
+    const entities = parseQueryEntities(msg.content);
+    
+    // NEVER compress messages with technical parameters
+    if (entities.power || entities.distance || entities.loadType) {
+      return `${msg.role}: ${msg.content}`; // Keep full message
+    }
+    
+    // Only compress conversational fluff
+    if (msg.role === 'user' && msg.content.length > 200) {
+      return `${msg.role}: [User query about electrical installation]`;
+    }
+    
+    return `${msg.role}: ${msg.content}`;
+  });
   
   const conversationText = [
-    compressedOlder,
+    ...compressedOlder,
     ...recentMessages.map(m => `${m.role}: ${m.content}`)
   ].filter(Boolean).join('\n');
 

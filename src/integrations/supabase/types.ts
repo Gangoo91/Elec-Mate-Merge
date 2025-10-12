@@ -50,6 +50,60 @@ export type Database = {
         }
         Relationships: []
       }
+      agent_metrics: {
+        Row: {
+          cache_hit: boolean | null
+          calculation_time: number | null
+          created_at: string | null
+          error_type: string | null
+          function_name: string
+          gpt5_time: number | null
+          id: string
+          parse_time: number | null
+          query_type: string | null
+          rag_time: number | null
+          regulation_count: number | null
+          request_id: string
+          success: boolean | null
+          timestamp: string | null
+          total_time: number
+        }
+        Insert: {
+          cache_hit?: boolean | null
+          calculation_time?: number | null
+          created_at?: string | null
+          error_type?: string | null
+          function_name: string
+          gpt5_time?: number | null
+          id?: string
+          parse_time?: number | null
+          query_type?: string | null
+          rag_time?: number | null
+          regulation_count?: number | null
+          request_id: string
+          success?: boolean | null
+          timestamp?: string | null
+          total_time: number
+        }
+        Update: {
+          cache_hit?: boolean | null
+          calculation_time?: number | null
+          created_at?: string | null
+          error_type?: string | null
+          function_name?: string
+          gpt5_time?: number | null
+          id?: string
+          parse_time?: number | null
+          query_type?: string | null
+          rag_time?: number | null
+          regulation_count?: number | null
+          request_id?: string
+          success?: boolean | null
+          timestamp?: string | null
+          total_time?: number
+        }
+        Relationships: []
+      }
       ai_interaction_feedback: {
         Row: {
           agent_name: string
