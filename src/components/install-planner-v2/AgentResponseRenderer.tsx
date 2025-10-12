@@ -2,7 +2,7 @@ import { parseAgentResponse, ParsedSection, cleanAgentText } from "@/utils/agent
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Brain, BookOpen } from "lucide-react";
+import { ChevronDown, Brain, BookOpen, Loader2 } from "lucide-react";
 import { useMemo, memo, useState } from "react";
 import { AgentFeedbackButtons } from "./AgentFeedbackButtons";
 import {
@@ -25,11 +25,22 @@ interface AgentResponseRendererProps {
   conversationId?: string;
   question?: string;
   onSelectAgent?: (agentId: string) => void;
+  isThinking?: boolean;  // NEW: For thinking display
 }
 
-export const AgentResponseRenderer = memo(({ content, agentId, structuredData, conversationId, question, onSelectAgent }: AgentResponseRendererProps) => {
+export const AgentResponseRenderer = memo(({ content, agentId, structuredData, conversationId, question, onSelectAgent, isThinking }: AgentResponseRendererProps) => {
   const [showFullText, setShowFullText] = useState(false);
   const [showReasoningDrawer, setShowReasoningDrawer] = useState(false);
+  
+  // PHASE 4: Render thinking message
+  if (isThinking) {
+    return (
+      <div className="flex items-start gap-3 p-4 bg-primary/5 border-l-4 border-primary/40 rounded-r-lg animate-pulse">
+        <Loader2 className="w-4 h-4 animate-spin text-primary mt-1" />
+        <p className="text-sm text-muted-foreground italic">{content}</p>
+      </div>
+    );
+  }
   
   // ROBUST NARRATIVE TEXT - Try multiple sources with clear priority and clean markdown
   const narrativeText = useMemo(() => {

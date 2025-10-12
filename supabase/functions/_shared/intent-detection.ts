@@ -9,8 +9,11 @@ export interface IntentAnalysis {
     cost: number;
     installation: number;
     commissioning: number;
+    refinement: number;      // NEW: User refining previous design
+    clarification: number;   // NEW: User asking for clarification
+    followUp: number;        // NEW: User acknowledging/confirming
   };
-  primaryIntent: 'design' | 'cost' | 'installation' | 'commissioning' | 'general';
+  primaryIntent: 'design' | 'cost' | 'installation' | 'commissioning' | 'refinement' | 'clarification' | 'followUp' | 'general';
   reasoning: string;
   requiresClarification: boolean;
   suggestedFollowUp?: string;
@@ -43,9 +46,12 @@ Return JSON with:
     "design": 0.0-1.0,
     "cost": 0.0-1.0,
     "installation": 0.0-1.0,
-    "commissioning": 0.0-1.0
+    "commissioning": 0.0-1.0,
+    "refinement": 0.0-1.0,
+    "clarification": 0.0-1.0,
+    "followUp": 0.0-1.0
   },
-  "primaryIntent": "design" | "cost" | "installation" | "commissioning" | "general",
+  "primaryIntent": "design" | "cost" | "installation" | "commissioning" | "refinement" | "clarification" | "followUp" | "general",
   "reasoning": "Brief explanation of why these intents were selected",
   "requiresClarification": boolean,
   "suggestedFollowUp": "Question to ask if clarification needed (optional)"
@@ -56,6 +62,21 @@ Rules:
 - CRITICAL: If message is vague or multi-circuit (e.g., "wire a 3-bed house", "full rewire"), set requiresClarification=true
 - For vague multi-circuit requests, generate suggestedFollowUp with specific questions: boiler type (combi/immersion), outdoor sockets, EV charger, kitchen appliances, underfloor heating, etc.
 - Confidence scores: >0.7 = definitely relevant, 0.4-0.7 = possibly relevant, <0.4 = not relevant
+
+INTENT TYPE DETECTION:
+- **refinement**: User is modifying/refining a previous design choice
+  * Patterns: "I'm going to use X instead", "What if I use Y", "Can I use Z", "I'll go with", "I prefer"
+  * Example: "I'm going to use SWA", "What if I use 10mm²", "Can I use Type C MCB"
+  * Set refinement=0.9 if detected
+  
+- **clarification**: User asking about specific aspect of previous design
+  * Patterns: "What about X?", "Do I need Y?", "Is Z required?", "Where does X go?", "How do I install Y?"
+  * Example: "What about an isolator?", "Do I need RCD protection?", "Where does the cable terminate?"
+  * Set clarification=0.9 if detected
+  
+- **followUp**: User acknowledging or confirming (minimal content)
+  * Patterns: "okay", "sounds good", "yes", "thanks", "got it", "perfect"
+  * Set followUp=0.9 if detected
 
 EXAMPLES:
 ❌ VAGUE (requiresClarification=true):
@@ -97,7 +118,7 @@ EXAMPLES:
     
     // Ensure well-formed structure with all required fields
     return {
-      intents: intentData?.intents ?? { design: 0.6, cost: 0.4, installation: 0.4, commissioning: 0.3 },
+      intents: intentData?.intents ?? { design: 0.6, cost: 0.4, installation: 0.4, commissioning: 0.3, refinement: 0, clarification: 0, followUp: 0 },
       primaryIntent: intentData?.primaryIntent ?? 'design',
       reasoning: intentData?.reasoning ?? 'AI analysis',
       requiresClarification: !!intentData?.requiresClarification,
@@ -125,8 +146,25 @@ function fallbackIntentDetection(message: string): IntentAnalysis {
   
   const commissionScore = ['test', 'certificate', 'verify', 'inspect', 'commission']
     .filter(kw => lower.includes(kw)).length / 5;
+  
+  const refinementScore = ['going to use', 'what if i use', 'can i use', "i'll use", 'instead']
+    .filter(kw => lower.includes(kw)).length / 5;
+  
+  const clarificationScore = ['what about', 'do i need', 'is there', 'where does', 'how do i']
+    .filter(kw => lower.includes(kw)).length / 5;
+  
+  const followUpScore = ['okay', 'sounds good', 'yes', 'thanks', 'got it', 'perfect']
+    .filter(kw => lower.includes(kw)).length / 6;
 
-  const scores = { design: designScore, cost: costScore, installation: installScore, commissioning: commissionScore };
+  const scores = { 
+    design: designScore, 
+    cost: costScore, 
+    installation: installScore, 
+    commissioning: commissionScore,
+    refinement: refinementScore,
+    clarification: clarificationScore,
+    followUp: followUpScore
+  };
   const primaryIntent = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b)[0] as any;
 
   return {

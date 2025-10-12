@@ -12,6 +12,7 @@ import {
   callLovableAIWithTimeout,
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
+import { summarizeConversation } from '../_shared/conversation-memory.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -105,9 +106,54 @@ serve(async (req) => {
       logger.warn('Design knowledge search failed', { error: designError });
     }
 
-    // Step 3: Build context-aware prompt
-    const regulationContext = regulations && regulations.length > 0
-      ? regulations.map((reg: any) => 
+    // PHASE 2: Proactive Design Checklist - Multi-stage RAG
+    logger.debug('Running proactive design checklist');
+    
+    const checklistQueries = [];
+    
+    // For high-power fixed appliances (>3kW), check isolation requirements
+    if (power && power > 3000) {
+      checklistQueries.push('local isolation switch fixed appliance');
+      checklistQueries.push('emergency isolation requirement');
+    }
+    
+    // For kitchen/bathroom circuits, check special location requirements
+    if (query.toLowerCase().includes('kitchen') || query.toLowerCase().includes('bathroom')) {
+      checklistQueries.push('special locations supplementary bonding');
+      checklistQueries.push('RCD protection special locations');
+    }
+    
+    // For outdoor circuits, check IP ratings and cable types
+    if (query.toLowerCase().includes('outdoor') || query.toLowerCase().includes('garden') || query.toLowerCase().includes('outside')) {
+      checklistQueries.push('outdoor cable protection IP rating');
+      checklistQueries.push('SWA cable gland earthing outdoor');
+    }
+    
+    // Run parallel checklist searches
+    const checklistResults = await Promise.all(
+      checklistQueries.map(async (checkQuery) => {
+        const embedding = await generateEmbeddingWithRetry(checkQuery, OPENAI_API_KEY);
+        const { data } = await supabase.rpc('search_bs7671', {
+          query_embedding: embedding,
+          match_threshold: 0.6,
+          match_count: 3
+        });
+        return data || [];
+      })
+    );
+    
+    const additionalRegs = checklistResults.flat();
+    const allRegulations = [...(regulations || []), ...additionalRegs];
+    
+    logger.info('Proactive checklist complete', { 
+      originalRegs: regulations?.length || 0,
+      additionalRegs: additionalRegs.length,
+      totalRegs: allRegulations.length
+    });
+
+    // Step 3: Build context-aware prompt (use allRegulations from proactive checklist)
+    const regulationContext = allRegulations && allRegulations.length > 0
+      ? allRegulations.map((reg: any) => 
           `${reg.regulation_number} (${reg.section}): ${reg.content}`
         ).join('\n\n')
       : 'No specific regulations found. Apply general BS 7671:2018+A2:2022 principles.';
@@ -118,8 +164,34 @@ serve(async (req) => {
         ).join('\n\n')
       : '';
 
-    // Build conversation context with previous agent outputs
+    // PHASE 1: Build structured conversation context
     let contextSection = '';
+    let conversationSummary = null;
+    
+    if (messages && messages.length > 3) {
+      // Use conversation memory for structured state
+      try {
+        conversationSummary = await summarizeConversation(messages, OPENAI_API_KEY);
+        
+        contextSection += `\n\n📋 CONVERSATION STATE:
+Project Type: ${conversationSummary.projectType}
+Previous Designs: ${conversationSummary.circuits?.map((c: any) => `${c.type} - ${c.cableSize}mm² ${c.protection}`).join(', ') || 'None yet'}
+Key Decisions: ${conversationSummary.decisions?.join('; ') || 'None yet'}
+Recent Topic: ${conversationSummary.lastTopic}
+
+🔄 HANDLING MODE:
+${query.toLowerCase().includes('going to use') || query.toLowerCase().includes('instead') || query.toLowerCase().includes('what if') ? 
+  '⚠️ USER IS REFINING A PREVIOUS DESIGN - Give a quick conversational response (150-200 words) validating their choice and noting any considerations. Reference the previous design context. No need for full recalculation unless specs changed significantly.' : 
+  ''}
+${query.toLowerCase().includes('what about') || query.toLowerCase().includes('do i need') || query.toLowerCase().includes('is there') ? 
+  '⚠️ USER IS ASKING FOR CLARIFICATION - Answer their specific question (100-150 words) with reference to previous design context. Keep response focused and conversational. Cite relevant regulations.' : 
+  ''}
+`;
+      } catch (error) {
+        logger.warn('Conversation summarization failed, using simple context', { error });
+      }
+    }
+    
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
       const prevWork = previousAgentOutputs.map((output: any) => {
         const agent = output.agent || 'previous agent';
@@ -128,13 +200,11 @@ serve(async (req) => {
       }).join('\n');
       contextSection += `\n\nPREVIOUS SPECIALIST WORK:\n${prevWork}\n`;
     }
+    
     if (messages && messages.length > 0) {
-      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+      contextSection += '\n\nRECENT CONVERSATION:\n' + messages.map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
       ).slice(-5).join('\n');
-    }
-    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
-      contextSection += '\n\nPREVIOUS AGENT OUTPUTS:\n' + JSON.stringify(previousAgentOutputs, null, 2);
     }
 
     const systemPrompt = `You are the DESIGN AUTHORITY for electrical installations, specialising in BS 7671:2018+A2:2022 compliance.
@@ -212,8 +282,35 @@ The "response" field is your PRIMARY OUTPUT - it must contain:
 8. USE ACTUAL REGULATION NUMBERS IN YOUR TEXT:
    Write things like "433.1.1", "525", "Table 4D5", "Table 41.3", "411.4.4", "522.6" etc. directly in your narrative response so they can be extracted and displayed as citations.
 
-The regulation context above contains ${regulations?.length || 0} specific BS 7671 regulations. USE THEM IN YOUR RESPONSE TEXT!
+The regulation context above contains ${allRegulations?.length || 0} specific BS 7671 regulations (including proactive checklist items). USE THEM IN YOUR RESPONSE TEXT!
 The design knowledge contains ${designKnowledge?.length || 0} practical design guides. APPLY THEM IN YOUR RESPONSE TEXT!
+
+🔍 DESIGN COMPLETENESS CHECKLIST:
+
+For EVERY design, verify these considerations are addressed in your response:
+
+**Fixed Appliances (>3kW):**
+- ✓ Local isolation switch per Regulation 537.3.2.5
+- ✓ Emergency switching if required per Regulation 465
+- ✓ Cable suitable for appliance temperature
+
+**Special Locations (kitchens, bathrooms, outdoors):**
+- ✓ RCD protection (30mA) per Regulation 411.3.3
+- ✓ Supplementary bonding if required per Regulation 701/702
+- ✓ IP rating appropriate for location per Regulation 522.3
+
+**Outdoor/Garden Circuits:**
+- ✓ Cable type suitable for burial/exposure (SWA recommended)
+- ✓ Mechanical protection per Regulation 522.6
+- ✓ Depth of burial per Regulation 522.8.10
+- ✓ RCD protection mandatory
+
+**Motor Circuits:**
+- ✓ Starting current consideration (Type C/D MCB)
+- ✓ Motor protection coordination
+- ✓ Local isolation near motor
+
+You have been provided with ${allRegulations?.length || 0} regulations including proactive checklist items. USE THEM to ensure design completeness.
 
 YOUR DESIGN PROCESS (FOLLOW THIS SEQUENCE IN YOUR NARRATIVE):
 
@@ -258,6 +355,28 @@ STEP 8: SELECT PROTECTION DEVICE TYPE - JUSTIFY
 - Type B (3-5× In): General domestic/commercial
 - Type C (5-10× In): Motors, transformers
 - State your selection and why
+
+🔄 HANDLING FOLLOW-UP CONVERSATIONS:
+
+When the user is REFINING a previous design (e.g., "I'm going to use SWA instead"):
+1. Acknowledge their choice: "Great choice! SWA is actually ideal here because..."
+2. Reference the PREVIOUS design context: "For your [load]kW [circuit type] we specified..."
+3. Validate compatibility: "Your [new choice] will work fine - it handles the same [specs]..."
+4. Note key differences: "Main changes: [gland requirements/earthing/installation method]..."
+5. Cite relevant regulations: "Per Regulation [XXX], SWA provides [benefit]..."
+6. Keep response 150-200 words (conversational, not full design doc)
+
+When the user asks for CLARIFICATION (e.g., "What about an isolator?"):
+1. Check if the question relates to PREVIOUS design context
+2. If yes: "Good catch! For your [spec] circuit, you'll need..."
+3. Cite specific regulation: "Regulation [XXX] requires..."
+4. Explain practical application: "In your case, this means..."
+5. Keep response focused (100-150 words)
+
+Only do FULL DESIGN CALCULATIONS when:
+- It's a genuinely new circuit request
+- Specs have changed significantly (power, length, method)
+- User explicitly asks for "full design" or "recalculate"
 
 🚨 RESPONSE QUALITY REQUIREMENTS:
 Your "response" field MUST include:
@@ -324,7 +443,7 @@ Provide a complete, BS 7671 compliant design.`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-pro',
+        model: 'openai/gpt-5',
         temperature: 0.3,
         messages: [
           { role: 'system', content: systemPrompt },
@@ -476,12 +595,13 @@ Provide a complete, BS 7671 compliant design.`;
       regulations: uniqueRefs 
     });
     
-    // Log RAG usage
-    if (regulations && regulations.length > 0) {
+    // Log RAG usage (use allRegulations)
+    if (allRegulations && allRegulations.length > 0) {
       const citedRegs = designResult.compliance?.regulations || [];
       logger.info('RAG context usage', { 
-        availableRegulations: regulations.length,
-        citedCount: citedRegs.length
+        availableRegulations: allRegulations.length,
+        citedCount: citedRegs.length,
+        proactiveChecklistCount: additionalRegs.length
       });
     }
 
@@ -505,8 +625,8 @@ Provide a complete, BS 7671 compliant design.`;
     const citedRegNumbers = designResult.compliance?.regulations || [];
     
     for (const regNum of citedRegNumbers) {
-      // Try to match against fetched RAG data
-      const regRow = regulations?.find(r => 
+      // Try to match against fetched RAG data (use allRegulations)
+      const regRow = allRegulations?.find(r => 
         r.regulation_number === regNum || 
         regNum.includes(r.regulation_number) ||
         r.regulation_number.includes(regNum)

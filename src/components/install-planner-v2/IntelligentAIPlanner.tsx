@@ -140,6 +140,8 @@ interface Message {
   id?: string;
   timestamp?: string;
   isValidationError?: boolean;
+  isThinking?: boolean;  // NEW: For proactive thinking display
+  thinkingMessage?: string;  // NEW: What the agent is thinking about
 }
 
 interface IntelligentAIPlannerProps {
@@ -520,6 +522,32 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       agentName: currentAgent,
       isTyping: true
     }]);
+    
+    // PHASE 4: Add thinking message for proactive checklist (Designer only)
+    if (currentAgent === 'designer') {
+      // Detect what kind of thinking to show
+      const lowerQuery = userMessage.toLowerCase();
+      let thinkingMsg = '';
+      
+      if (parseInt(userMessage.match(/(\d+)\s*kw/i)?.[1] || '0') > 3) {
+        thinkingMsg = '🤔 Checking isolation requirements for high-power appliances...';
+      } else if (lowerQuery.includes('kitchen') || lowerQuery.includes('bathroom')) {
+        thinkingMsg = '🤔 Verifying special location regulations...';
+      } else if (lowerQuery.includes('outdoor') || lowerQuery.includes('garden') || lowerQuery.includes('outside')) {
+        thinkingMsg = '🤔 Looking up outdoor cable protection requirements...';
+      }
+      
+      if (thinkingMsg) {
+        setTimeout(() => {
+          setMessages(prev => [...prev, {
+            role: 'assistant',
+            content: thinkingMsg,
+            agentName: currentAgent,
+            isThinking: true
+          }]);
+        }, 500);
+      }
+    }
 
     try {
       await streamMessage(
@@ -1166,6 +1194,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                     structuredData={message.structuredData}
                     conversationId={sessionId}
                     question={messages.find(m => m.role === 'user')?.content}
+                    isThinking={message.isThinking}
                     onSelectAgent={(selectedAgentId: string) => {
                       // Directly switch to the selected agent
                       setCurrentAgent(selectedAgentId);
