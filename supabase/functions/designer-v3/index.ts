@@ -442,29 +442,39 @@ Provide a complete, BS 7671 compliant design.`;
     logger.debug('Calling Lovable AI with tool calling');
     const aiStart = Date.now();
     
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'openai/gpt-5',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        tools: [{
-          type: 'function',
-          function: {
-            name: 'produce_circuit_design',
+    // Timeout 60s via AbortController
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000);
+
+    let aiResponse: Response;
+    try {
+      aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'openai/gpt-5',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ],
+          tools: [{
+            type: 'function',
+            function: {
+              name: 'produce_circuit_design',
 ...
-        }],
-        tool_choice: { type: 'function', function: { name: 'produce_circuit_design' } },
-        max_completion_tokens: 4000,
-        // GPT-5 doesn't support temperature - omitted
-      })
-    }, 60000); // 60 second timeout for RAG processing + AI generation
+          }],
+          tool_choice: { type: 'function', function: { name: 'produce_circuit_design' } },
+          max_completion_tokens: 4000,
+          // GPT-5 doesn't support temperature - omitted
+        }),
+        signal: controller.signal
+      });
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
