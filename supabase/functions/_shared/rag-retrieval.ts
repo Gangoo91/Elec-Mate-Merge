@@ -4,7 +4,7 @@
  */
 
 import { createClient } from './deps.ts';
-import { extractRegulationNumbers } from './query-parser.ts';
+import { extractRegulationNumbers, ParsedEntities } from './query-parser.ts';
 import { generateEmbeddingWithRetry } from './v3-core.ts';
 
 export interface RegulationResult {
@@ -26,7 +26,8 @@ export interface RegulationResult {
 export async function retrieveRegulations(
   query: string, 
   limit = 8,
-  openAiKey?: string
+  openAiKey?: string,
+  entities?: ParsedEntities
 ): Promise<RegulationResult[]> {
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -94,7 +95,9 @@ export async function retrieveRegulations(
   
   // 6. Rerank results for better relevance
   const results = vectorResults || [];
-  const reranked = rerankRegulations(results, entities, query);
+  const reranked = entities 
+    ? rerankRegulations(results, entities, query)
+    : results;
   
   console.log(`✅ Returning ${reranked.length} reranked regulations`);
   return reranked;

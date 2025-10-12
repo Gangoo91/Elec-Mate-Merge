@@ -1,4 +1,6 @@
-// Deployed: 2025-10-12T12:45 - Rules-First Architecture - Force Redeploy
+// 🚀 DEPLOYMENT VERSION: 2024-10-12-HOTFIX-V1
+const DEPLOYMENT_VERSION = '2024-10-12-hotfix-v1';
+
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import {
@@ -27,7 +29,13 @@ serve(async (req) => {
   if (req.method === 'GET') {
     const requestId = generateRequestId();
     return new Response(
-      JSON.stringify({ status: 'healthy', function: 'designer-v3', requestId, timestamp: new Date().toISOString() }),
+      JSON.stringify({ 
+        status: 'healthy', 
+        function: 'designer-v3', 
+        version: DEPLOYMENT_VERSION,
+        requestId, 
+        timestamp: new Date().toISOString() 
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   }
@@ -80,7 +88,10 @@ serve(async (req) => {
 
     // ⚡ PHASE 1: DETERMINISTIC DESIGN with GPT-5 synthesis
     if (queryType === 'design' && entities.power && entities.distance) {
-      logger.info('🎯 Using deterministic design path (rules-first)', { entities });
+      logger.info('🎯 DETERMINISTIC PATH [HOTFIX-2024-10-12]', { 
+        entities, 
+        version: DEPLOYMENT_VERSION 
+      });
       
       // STEP 1: Calculate (deterministic, instant, always correct)
       const design = designCircuit({
@@ -106,7 +117,8 @@ serve(async (req) => {
       const regulations = await retrieveRegulations(
         `${design.regulations.join(' ')} ${query}`,
         12, // Get MORE regulations for depth
-        OPENAI_API_KEY
+        OPENAI_API_KEY,
+        entities
       );
       
       logger.info('Calculations and RAG complete', {
@@ -208,9 +220,9 @@ Write a comprehensive electrical design response that:
               max_completion_tokens: 2000
             })
           }),
-          // 10 second timeout
+          // 12 second timeout
           new Promise<Response>((_, reject) => 
-            setTimeout(() => reject(new Error('GPT-5 timeout')), 10000)
+            setTimeout(() => reject(new Error('GPT-5 timeout')), 12000)
           )
         ]);
         
