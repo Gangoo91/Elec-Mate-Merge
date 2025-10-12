@@ -1227,12 +1227,6 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             </div>
           )}
 
-          {/* Health Check Banner */}
-          {healthCheckDone && (
-            <div className="mb-4">
-              <AgentHealthBanner unhealthyAgents={unhealthyAgents} />
-            </div>
-          )}
 
           {messages.map((message, index) => (
             <div
