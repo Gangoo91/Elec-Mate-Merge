@@ -241,8 +241,19 @@ serve(async (req) => {
       const searchParams: HybridSearchParams = {
         circuitType: circuitParams.circuitType,
         powerRating: circuitParams.power,
-        searchTerms: [circuitParams.circuitType, 'overload', 'voltage drop', 'cable sizing'],
-        expandedQuery: `${circuitParams.circuitType} circuit ${circuitParams.power}W design cable sizing overload protection voltage drop earth fault`,
+        searchTerms: [
+          circuitParams.circuitType, 
+          'overload', 
+          'voltage drop', 
+          'cable sizing',
+          'cable selection',
+          'installation method',
+          'twin and earth',
+          'SWA',
+          'fire-rated cable',
+          'outdoor installation'
+        ],
+        expandedQuery: `${circuitParams.circuitType} circuit ${circuitParams.power}W design cable type selection twin earth SWA outdoor indoor installation method overload protection voltage drop earth fault`,
         context: agentContext,
       };
 
@@ -351,7 +362,39 @@ You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance
 CRITICAL: You MUST provide detailed calculations for ALL ${projectScope.circuits.length} circuits below.
 
 STANDARD CIRCUIT SCHEDULE (${projectScope.propertyType}):
-${projectScope.circuits.map((c, i) => `${i+1}. ${c.name} - ${c.rating}A Type B MCB, ${c.power}W load, ${c.cable}mm² cable`).join('\n')}
+${projectScope.circuits.map((c, i) => {
+  const circuitName = c.name.toLowerCase();
+  let cableType = 'twin & earth (6242Y)';
+  let notes = '';
+  
+  // Fire circuits → FP200 Gold
+  if (circuitName.includes('fire') || circuitName.includes('emergency light')) {
+    cableType = 'FP200 Gold fire-rated cable';
+    notes = ' [BS 5839 - enhanced fire performance]';
+  }
+  // Outdoor/EV/Garden → SWA
+  else if (circuitName.includes('outdoor') || circuitName.includes('ev') || 
+           circuitName.includes('garden') || circuitName.includes('outside') ||
+           circuitName.includes('heat pump')) {
+    cableType = 'SWA 3-core armoured cable (BS 5467)';
+    notes = ' [outdoor installation]';
+  }
+  // Large cables → SWA or singles
+  else if (c.cable > 10) {
+    cableType = 'SWA 3-core or singles in conduit';
+    notes = ' [T&E limited to 10mm²]';
+  }
+  // Smoke alarms → mention interconnection
+  else if (circuitName.includes('smoke')) {
+    notes = ' [BS 5839-6 - interconnected required]';
+  }
+  // Lighting with multi-way → mention 3-core/4-core
+  else if (circuitName.includes('light') && (circuitName.includes('two-way') || circuitName.includes('landing'))) {
+    notes = ' [consider 3-core for two-way switching]';
+  }
+  
+  return `${i+1}. ${c.name} - ${c.rating}A Type B MCB, ${c.power}W load, ${c.cable}mm² ${cableType}${notes}`;
+}).join('\n')}
 
 For EACH circuit above, provide:
 - Design current (Ib) calculation
@@ -361,6 +404,42 @@ For EACH circuit above, provide:
 - Earth fault loop impedance (Zs)
 - RCD requirements
 - Compliance statement
+
+CABLE TYPE SELECTION RULES (CRITICAL - UK BS 7671):
+
+🏠 **Domestic Indoor Circuits:**
+- Ring mains, radial sockets, lighting: Twin & Earth (6242Y) - cost-effective for protected routes
+- Practical T&E limit: 10mm² (16mm² very rare, awkward to terminate)
+- Above 10mm²: Use SWA or singles in conduit/trunking
+
+🌳 **Outdoor/External Circuits:**
+- ALWAYS use SWA 3-core armoured cable (BS 5467)
+- UV resistant, weatherproof, mechanical protection
+- EV chargers, garden sockets, outbuildings, heat pumps
+- Minimum 2.5mm² for sockets (Reg 522.6)
+
+🔥 **Fire & Safety Circuits:**
+- Fire alarms: FP200 Gold fire-rated cable (BS 5839-1)
+- Emergency lighting: FP200 Gold
+- Smoke alarms in full rewire: Interconnected system required (BS 5839-6)
+
+💡 **Lighting Intelligence:**
+- Standard lighting: 1.5mm² T&E
+- Two-way switching: 3-core + earth (L, L1, L2, CPC)
+- Intermediate switching (3+ locations, multi-storey): 4-core + earth
+- Ask user if two-way/intermediate needed for landing/stairwell lights
+
+⚡ **High-Power Circuits:**
+- Showers >9kW indoor: 10mm² T&E (if short run <15m)
+- Showers outdoor: 10mm² SWA
+- Cookers >10kW: 6-10mm² SWA preferred (or T&E if internal)
+- Immersion heaters: 2.5mm² T&E typically sufficient
+
+🔧 **Installation Method Context:**
+- Surface clipped: T&E or SWA
+- Buried in wall: T&E in safe zones
+- Conduit/trunking: Singles (not T&E)
+- Cable tray: SWA preferred
 
 FORMAT AS JSON (EXACTLY AS SHOWN - ALL FIELDS REQUIRED):
 {
@@ -406,6 +485,68 @@ FORMAT AS JSON (EXACTLY AS SHOWN - ALL FIELDS REQUIRED):
         "Reg 433.1 - Overload protection: Ib ≤ In ≤ Iz satisfied",
         "Reg 525 - Voltage drop within permitted limits",
         "Reg 411.3.3 - 30mA RCD protection provided"
+      ],
+      "complianceStatus": "pass"
+    },
+    {
+      "id": "CKT-002",
+      "name": "EV Charger",
+      "loadType": "ev-charger",
+      "load": 7200,
+      "cableSize": "6mm²",
+      "cableLength": 25,
+      "cableSpec": "6mm² SWA 3-core armoured cable (BS 5467)",
+      "protection": "32A Type B RCBO",
+      "calculations": {
+        "Ib": 31.3,
+        "In": 32,
+        "Iz": 36.0,
+        "IzTabulated": 46.0,
+        "equation": "Iz = It × Ca × Cg = 46.0A × 0.94 × 0.85 = 36.8A",
+        "tableRef": "Table 4E2A",
+        "correctionFactors": { "Ca": 0.94, "Cg": 0.85 },
+        "voltageDrop": { "volts": 4.5, "percent": 1.96, "max": 3.0, "compliant": true },
+        "zs": { "calculated": 0.72, "max": 1.37, "regulation": "Table 41.3", "compliant": true }
+      },
+      "rcdRequirements": {
+        "rating": "30mA",
+        "reason": "Outdoor socket requires 30mA RCD (Reg 411.3.3)"
+      },
+      "regulations": [
+        "Reg 433.1 - Overload protection: Ib ≤ In ≤ Iz satisfied",
+        "Reg 525 - Voltage drop within permitted limits",
+        "Reg 411.3.3 - 30mA RCD protection for outdoor installation"
+      ],
+      "complianceStatus": "pass"
+    },
+    {
+      "id": "CKT-003",
+      "name": "Fire Alarm Circuit",
+      "loadType": "fire-alarm",
+      "load": 500,
+      "cableSize": "1.5mm²",
+      "cableLength": 30,
+      "cableSpec": "1.5mm² FP200 Gold fire-rated cable",
+      "protection": "6A Type B MCB",
+      "calculations": {
+        "Ib": 2.2,
+        "In": 6,
+        "Iz": 19.5,
+        "IzTabulated": 19.5,
+        "equation": "Iz = It × Ca × Cg = 19.5A × 1.0 × 1.0 = 19.5A",
+        "tableRef": "Table 4D5",
+        "correctionFactors": { "Ca": 1.0, "Cg": 1.0 },
+        "voltageDrop": { "volts": 0.8, "percent": 0.35, "max": 3.0, "compliant": true },
+        "zs": { "calculated": 0.45, "max": 7.67, "regulation": "Table 41.3", "compliant": true }
+      },
+      "rcdRequirements": {
+        "rating": "None required",
+        "reason": "Fire alarm circuit - direct MCB protection adequate"
+      },
+      "regulations": [
+        "BS 5839-1 - Fire-rated cable with enhanced fire performance required",
+        "Reg 433.1 - Overload protection satisfied",
+        "Reg 525 - Voltage drop within limits"
       ],
       "complianceStatus": "pass"
     }
