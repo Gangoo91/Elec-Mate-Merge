@@ -92,7 +92,60 @@ export async function retrieveRegulations(
     }
   }
   
-  // 6. Return whatever we found (even if empty)
-  console.log(`⚠️ Limited results: ${vectorResults?.length || 0} regulations`);
-  return vectorResults || [];
+  // 6. Rerank results for better relevance
+  const results = vectorResults || [];
+  const reranked = rerankRegulations(results, entities, query);
+  
+  console.log(`✅ Returning ${reranked.length} reranked regulations`);
+  return reranked;
+}
+
+/**
+ * Rerank regulations based on contextual relevance
+ */
+function rerankRegulations(
+  regulations: RegulationResult[],
+  entities: any,
+  query: string
+): RegulationResult[] {
+  return regulations.map(reg => ({
+    ...reg,
+    relevanceScore: calculateRelevance(reg, entities, query)
+  }))
+  .sort((a, b) => (b.relevanceScore || b.similarity || 0) - (a.relevanceScore || a.similarity || 0));
+}
+
+function calculateRelevance(
+  reg: RegulationResult,
+  entities: any,
+  query: string
+): number {
+  let score = reg.similarity || 0.5;
+  
+  // Boost if regulation number mentioned in query
+  if (query.includes(reg.regulation_number)) {
+    score += 0.3;
+  }
+  
+  // Context-aware boosts based on load type
+  if (entities.loadType === 'shower' && reg.regulation_number.startsWith('701')) {
+    score += 0.2; // Section 701 = bathrooms
+  }
+  
+  if (entities.loadType === 'ev_charger' && reg.regulation_number.startsWith('722')) {
+    score += 0.2; // Section 722 = EV charging
+  }
+  
+  // Core design regulations always relevant
+  const coreRegs = ['433.1.1', '525', '533.1', '411.3.2', '543.1.1'];
+  if (coreRegs.includes(reg.regulation_number)) {
+    score += 0.1;
+  }
+  
+  // Cable sizing tables
+  if (reg.regulation_number.startsWith('Table 4') && entities.power) {
+    score += 0.15;
+  }
+  
+  return score;
 }

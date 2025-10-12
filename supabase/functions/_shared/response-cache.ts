@@ -30,40 +30,19 @@ export class ResponseCache {
     return this.hashString(JSON.stringify(canonical));
   }
 
-  // Extract canonical entities for semantic caching
+  // Extract canonical entities for semantic caching using query-parser
   private extractCanonicalEntities(query: string, context?: any): any {
-    const entities: any = {
-      type: 'general',
-      voltage: context?.voltage || 230
+    // Use parseQueryEntities for consistency across the system
+    const { parseQueryEntities } = await import('./query-parser.ts');
+    const parsed = parseQueryEntities(query);
+    
+    return {
+      type: parsed.loadType || context?.circuitType || 'general',
+      power: parsed.power ? Math.round(parsed.power / 100) * 100 : (context?.power ? Math.round(context.power / 100) * 100 : null),
+      distance: parsed.distance ? Math.round(parsed.distance) : (context?.cableLength ? Math.round(context.cableLength) : null),
+      voltage: parsed.voltage || context?.voltage || 230,
+      phases: parsed.phases || 'single'
     };
-
-    // Extract load type
-    if (/shower/i.test(query)) entities.type = 'shower';
-    if (/cooker|oven/i.test(query)) entities.type = 'cooker';
-    if (/socket/i.test(query)) entities.type = 'socket';
-    if (/light/i.test(query)) entities.type = 'lighting';
-    if (/ev charger/i.test(query)) entities.type = 'ev_charger';
-
-    // Extract power (round to nearest 100W for caching)
-    const powerMatch = query.match(/(\d+\.?\d*)\s*(kW|kw|W|w)/i);
-    if (powerMatch) {
-      const power = powerMatch[2].toLowerCase().includes('k') 
-        ? parseFloat(powerMatch[1]) * 1000 
-        : parseFloat(powerMatch[1]);
-      entities.power = Math.round(power / 100) * 100; // Round to nearest 100W
-    } else if (context?.power) {
-      entities.power = Math.round(context.power / 100) * 100;
-    }
-
-    // Extract distance (round to nearest meter)
-    const distanceMatch = query.match(/(\d+\.?\d*)\s*(m|meters?|metres?)/i);
-    if (distanceMatch) {
-      entities.distance = Math.round(parseFloat(distanceMatch[1]));
-    } else if (context?.cableLength) {
-      entities.distance = Math.round(context.cableLength);
-    }
-
-    return entities;
   }
 
   // Simple hash function

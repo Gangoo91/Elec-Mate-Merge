@@ -79,7 +79,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Call agents sequentially
+    // Call agents sequentially with retry logic
     const agentResponses: Array<{ agent: string; response: AgentResponse }> = [];
     
     for (const agentType of selectedAgents) {
@@ -91,55 +91,104 @@ serve(async (req) => {
 
       logger.info(`Calling ${agentType} agent`);
       
-      try {
-        const { data, error } = await supabase.functions.invoke(endpoint, {
-          body: {
-            query: userMessage,
-            messages: [
-              ...messages,
-              { role: 'user', content: userMessage }
-            ],
-            conversationSummary,
-            conversationId,
-            currentDesign,
-            previousAgentOutputs: agentResponses,
-            requestSuggestions: true
-          }
-        });
+      // Invoke with retry logic
+      const response = await invokeAgentWithRetry(
+        agentType,
+        endpoint,
+        {
+          query: userMessage,
+          messages: [
+            ...messages,
+            { role: 'user', content: userMessage }
+          ],
+          conversationSummary,
+          conversationId,
+          currentDesign,
+          previousAgentOutputs: agentResponses,
+          requestSuggestions: true
+        },
+        supabase,
+        logger
+      );
 
-        if (error) {
-          logger.error(`${agentType} agent error`, { error });
-          throw error;
+      if (response.data?.autoRedirect) {
+        logger.info(`${agentType} redirecting to ${response.data.autoRedirect}`);
+        const redirectAgent = response.data.autoRedirect;
+        if (!selectedAgents.includes(redirectAgent)) {
+          selectedAgents.push(redirectAgent);
         }
-
-        if (data.autoRedirect) {
-          logger.info(`${agentType} redirecting to ${data.autoRedirect}`);
-          // Auto-redirect case: wrong agent selected
-          const redirectAgent = data.autoRedirect;
-          if (!selectedAgents.includes(redirectAgent)) {
-            selectedAgents.push(redirectAgent);
-          }
-        }
-
-        agentResponses.push({ 
-          agent: agentType, 
-          response: data 
-        });
-
-        logger.info(`${agentType} completed`, { 
-          hasSuggestions: !!data.suggestedNextAgents?.length 
-        });
-      } catch (error) {
-        logger.error(`${agentType} failed`, { error });
-        agentResponses.push({
-          agent: agentType,
-          response: {
-            response: `❌ ${agentType} agent encountered an error. Please try again.`,
-            structuredData: null,
-            suggestedNextAgents: []
-          }
-        });
       }
+
+      agentResponses.push({ 
+        agent: agentType, 
+        response: response.data || response.partialResponse
+      });
+
+      logger.info(`${agentType} completed`, { 
+        hasSuggestions: !!(response.data?.suggestedNextAgents?.length),
+        hadError: response.hadError
+      });
+    }
+    
+    // Helper function: Invoke agent with retry logic
+    async function invokeAgentWithRetry(
+      agentType: string,
+      endpoint: string,
+      body: any,
+      supabase: any,
+      logger: any,
+      maxRetries = 2
+    ): Promise<{ data?: any; hadError: boolean; partialResponse?: any }> {
+      for (let attempt = 0; attempt <= maxRetries; attempt++) {
+        try {
+          const { data, error } = await supabase.functions.invoke(endpoint, { body });
+          
+          if (!error) {
+            return { data, hadError: false };
+          }
+          
+          // Don't retry validation errors
+          if (error.message?.includes('ValidationError') || error.message?.includes('400')) {
+            logger.error(`${agentType} validation error (no retry)`, { error });
+            throw error;
+          }
+          
+          // Retry transient errors with exponential backoff
+          if (attempt < maxRetries) {
+            const delay = 1000 * Math.pow(2, attempt);
+            logger.warn(`${agentType} attempt ${attempt + 1} failed, retrying in ${delay}ms`, { error });
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+          
+          throw error;
+          
+        } catch (error) {
+          if (attempt === maxRetries) {
+            // Return partial success instead of crashing entire consultation
+            logger.error(`${agentType} failed after ${maxRetries + 1} attempts`, { error });
+            return {
+              hadError: true,
+              partialResponse: {
+                response: `⚠️ ${agentType} encountered an error but other agents can still help. Please try again or contact support if this persists.`,
+                structuredData: null,
+                suggestedNextAgents: [],
+                error: true
+              }
+            };
+          }
+        }
+      }
+      
+      // Fallback (should never reach here)
+      return {
+        hadError: true,
+        partialResponse: {
+          response: `❌ ${agentType} is temporarily unavailable.`,
+          structuredData: null,
+          suggestedNextAgents: []
+        }
+      };
     }
 
     // Aggregate suggestions from all agents
