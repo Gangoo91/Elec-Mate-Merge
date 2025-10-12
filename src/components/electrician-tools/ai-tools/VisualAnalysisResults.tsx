@@ -139,7 +139,7 @@ This analysis is for guidance only and must be verified by a qualified electrici
   }
 
   return (
-    <Card className="bg-card border-border max-w-5xl mx-auto">
+    <Card className="bg-card border-border w-full">
       <CardHeader className="p-4 sm:p-6">
         <div className="flex flex-col gap-4 mb-2">
           <CardTitle className="text-xl sm:text-2xl text-foreground">Visual Analysis Results</CardTitle>
@@ -220,9 +220,9 @@ This analysis is for guidance only and must be verified by a qualified electrici
         {analysisResult.findings.length > 0 && (
           <div className="space-y-5 sm:space-y-6">
             <h3 className="text-base sm:text-lg font-semibold text-foreground">Findings</h3>
-            <div className="space-y-4 sm:space-y-5">
+            <div className="space-y-5 sm:space-y-6">
               {analysisResult.findings.map((finding, index) => (
-                <div key={index} className="border border-border rounded-lg p-5 sm:p-6 space-y-5">
+                <div key={index} className="border border-border rounded-lg p-4 sm:p-6 space-y-4 sm:space-y-5">
                   {/* EICR Code Badge - Large and Prominent */}
                   <div className="flex items-center gap-3 flex-wrap">
                     <Badge className={`${getEicrCodeColor(finding.eicr_code)} text-xl sm:text-2xl px-5 py-2 font-bold min-h-[44px] items-center flex`}>
@@ -258,10 +258,11 @@ This analysis is for guidance only and must be verified by a qualified electrici
                         <FileText className="h-5 w-5 text-foreground" />
                         <h4 className="text-base sm:text-lg font-semibold text-foreground">BS 7671 Regulations</h4>
                       </div>
-                      <ul className="space-y-2 ml-7">
+                      <ul className="space-y-2 pl-2">
                         {finding.bs7671_clauses.map((clause, idx) => (
-                          <li key={idx} className="text-sm sm:text-base text-foreground font-mono">
-                            • Regulation {clause}
+                          <li key={idx} className="text-sm sm:text-base text-foreground font-mono flex items-center gap-2">
+                            <span className="text-elec-yellow">•</span>
+                            <span>Regulation {clause}</span>
                           </li>
                         ))}
                       </ul>
@@ -269,14 +270,14 @@ This analysis is for guidance only and must be verified by a qualified electrici
                   )}
                   
                   {/* Recommended Fix - Subtle Card Style */}
-                  <div className="bg-elec-card border border-elec-yellow/20 rounded-lg p-4 space-y-3">
+                  <div className="bg-elec-card border border-elec-yellow/20 rounded-lg p-4 space-y-2">
                     <div className="flex items-center gap-2">
                       <Wrench className="h-5 w-5 text-elec-yellow" />
                       <h4 className="font-semibold text-base sm:text-lg text-foreground">
                         Recommended Fix
                       </h4>
                     </div>
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed ml-7">
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed pl-2">
                       {finding.fix_guidance}
                     </p>
                   </div>
