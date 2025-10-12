@@ -23,11 +23,47 @@ export class ResponseCache {
     this.supabase = createClient(supabaseUrl, supabaseKey);
   }
 
-  // Generate cache key from query
+  // Generate semantic cache key from entities
   private generateKey(query: string, context?: any): string {
-    const normalized = query.toLowerCase().trim();
-    const contextStr = context ? JSON.stringify(context) : '';
-    return this.hashString(normalized + contextStr);
+    // Try to extract semantic entities for better cache hits
+    const canonical = this.extractCanonicalEntities(query, context);
+    return this.hashString(JSON.stringify(canonical));
+  }
+
+  // Extract canonical entities for semantic caching
+  private extractCanonicalEntities(query: string, context?: any): any {
+    const entities: any = {
+      type: 'general',
+      voltage: context?.voltage || 230
+    };
+
+    // Extract load type
+    if (/shower/i.test(query)) entities.type = 'shower';
+    if (/cooker|oven/i.test(query)) entities.type = 'cooker';
+    if (/socket/i.test(query)) entities.type = 'socket';
+    if (/light/i.test(query)) entities.type = 'lighting';
+    if (/ev charger/i.test(query)) entities.type = 'ev_charger';
+
+    // Extract power (round to nearest 100W for caching)
+    const powerMatch = query.match(/(\d+\.?\d*)\s*(kW|kw|W|w)/i);
+    if (powerMatch) {
+      const power = powerMatch[2].toLowerCase().includes('k') 
+        ? parseFloat(powerMatch[1]) * 1000 
+        : parseFloat(powerMatch[1]);
+      entities.power = Math.round(power / 100) * 100; // Round to nearest 100W
+    } else if (context?.power) {
+      entities.power = Math.round(context.power / 100) * 100;
+    }
+
+    // Extract distance (round to nearest meter)
+    const distanceMatch = query.match(/(\d+\.?\d*)\s*(m|meters?|metres?)/i);
+    if (distanceMatch) {
+      entities.distance = Math.round(parseFloat(distanceMatch[1]));
+    } else if (context?.cableLength) {
+      entities.distance = Math.round(context.cableLength);
+    }
+
+    return entities;
   }
 
   // Simple hash function

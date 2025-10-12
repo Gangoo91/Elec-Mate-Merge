@@ -102,6 +102,19 @@ export async function getRequestBody(req: Request): Promise<any> {
 }
 
 /**
+ * Validate Required Field
+ */
+export function validateRequired<T>(value: T, name: string): T {
+  if (value === undefined || value === null) {
+    throw new ValidationError(`${name} is required`);
+  }
+  if (typeof value === 'string' && value.trim().length === 0) {
+    throw new ValidationError(`${name} must be a non-empty string`);
+  }
+  return value;
+}
+
+/**
  * Common Field Validators
  */
 export const validators = {

@@ -1,4 +1,4 @@
-// Deployed: 2025-10-11 21:30 UTC
+// Deployed: 2025-10-12 - Rules-First Architecture
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import {
@@ -14,6 +14,9 @@ import {
 } from '../_shared/v3-core.ts';
 import { summarizeConversation } from '../_shared/conversation-memory.ts';
 import { ResponseCache, isCacheable } from '../_shared/response-cache.ts';
+import { parseQueryEntities, classifyQuery, QueryType } from '../_shared/query-parser.ts';
+import { designCircuit } from '../_shared/deterministic-designer.ts';
+import { retrieveRegulations } from '../_shared/rag-retrieval.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -58,6 +61,11 @@ serve(async (req) => {
 
     logger.info('Designer V3 request received', { query: query.substring(0, 50), circuitType, power });
 
+    // Parse query for entities and classify
+    const entities = parseQueryEntities(query);
+    const queryType = classifyQuery(query);
+    logger.info('Query classified', { queryType, entities });
+
     // Get OpenAI API key for embeddings
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
@@ -68,6 +76,186 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     if (!LOVABLE_API_KEY) {
       throw new Error('LOVABLE_API_KEY not configured');
+    }
+
+    // ⚡ PHASE 1: DETERMINISTIC DESIGN PATH
+    // If design query with power + distance → USE RULES-FIRST APPROACH
+    if (queryType === 'design' && entities.power && entities.distance) {
+      logger.info('🎯 Using deterministic design path (rules-first)');
+      
+      try {
+        // Run BS 7671 calculations
+        const design = designCircuit({
+          power: entities.power,
+          distance: entities.distance,
+          voltage: entities.voltage || voltage,
+          phases: entities.phases,
+          installMethod: entities.installMethod,
+          ambientTemp: entities.ambientTemp,
+          grouping: entities.grouping
+        });
+
+        // Get RAG citations for regulations used
+        const ragResults = await retrieveRegulations(
+          design.regulations.join(' '), 
+          8, 
+          OPENAI_API_KEY
+        );
+        
+        // Build structured response
+        const loadType = entities.loadType || 'General';
+        const response = `## Circuit Design Result
+
+**Load:** ${loadType.charAt(0).toUpperCase() + loadType.slice(1)} (${entities.power}W)
+**Cable Run:** ${entities.distance}m
+
+### Design Current (Ib)
+${design.calculations.Ib}A (${entities.power}W ÷ ${entities.voltage}V)
+
+### Protective Device (In)
+${design.mcbRating}A MCB (Type B recommended)
+
+### Cable Selection
+${design.cableSize}mm² ${design.cableType} cable
+${design.calculations.equation}
+
+### Voltage Drop
+${design.voltageDrop.volts.toFixed(2)}V (${design.voltageDrop.percent.toFixed(2)}%)
+${design.voltageDrop.compliant ? '✅ Compliant' : '❌ Exceeds limit'} with BS 7671 Reg 525
+
+### Earth Fault Protection
+Max Zs: ${design.earthFault.maxZs}Ω
+${design.earthFault.compliant ? '✅ Compliant' : '❌ Non-compliant'} with BS 7671 Reg 411.3.2
+
+${design.warnings.length > 0 ? `\n⚠️ **Warnings:**\n${design.warnings.map(w => `- ${w}`).join('\n')}` : ''}
+
+---
+*Design based on BS 7671:2018+A2:2022 regulations*`;
+
+        const citations = ragResults.map(r => ({
+          source: 'BS 7671:2018+A2:2022',
+          section: r.regulation_number,
+          title: r.section,
+          content: r.content.substring(0, 200),
+          relevance: r.similarity || 0.8
+        }));
+
+        logger.info('✅ Deterministic design complete', { 
+          cableSize: design.cableSize,
+          mcbRating: design.mcbRating,
+          compliant: design.success
+        });
+
+        return new Response(JSON.stringify({
+          response,
+          structuredData: {
+            design: {
+              cableSize: `${design.cableSize}mm²`,
+              protectionDevice: `${design.mcbRating}A Type B`,
+              voltageDrop: `${design.voltageDrop.volts.toFixed(2)}V (${design.voltageDrop.percent.toFixed(2)}%)`,
+              earthingArrangement: 'TN-S'
+            },
+            compliance: {
+              status: design.success ? 'compliant' : 'warning',
+              regulations: design.regulations,
+              warnings: design.warnings
+            },
+            calculations: design.calculations,
+            citations
+          },
+          source: 'deterministic',
+          queryType,
+          design
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      } catch (designError: any) {
+        logger.error('Deterministic design failed, falling back to AI', { error: designError.message });
+        // Continue to AI path if deterministic fails
+      }
+    }
+
+    // ⚡ PHASE 2: LOOKUP/EXPLAIN PATH
+    // For regulation lookups or explanations → RAG + optional GPT-5
+    if (queryType === 'lookup' || queryType === 'explain') {
+      logger.info('📖 Using lookup/explain path');
+      
+      const ragResults = await retrieveRegulations(query, 8, OPENAI_API_KEY);
+      
+      if (ragResults.length === 0) {
+        return new Response(JSON.stringify({
+          response: 'No relevant BS 7671 regulations found for this query.',
+          citations: [],
+          source: 'rag_empty'
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Build context from RAG
+      const context = ragResults.map(r => 
+        `${r.regulation_number}: ${r.content}`
+      ).join('\n\n');
+
+      // Optional: Use GPT-5 to explain (with timeout)
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+        const gptResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'openai/gpt-5',
+            messages: [
+              { role: 'system', content: 'You explain BS 7671 regulations in plain English for electricians.' },
+              { role: 'user', content: `Regulation text:\n${context}\n\nQuestion: ${query}\n\nExplain clearly:` }
+            ],
+            max_completion_tokens: 800
+          }),
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        const gptData = await gptResponse.json();
+        const explanation = gptData.choices?.[0]?.message?.content || context;
+
+        return new Response(JSON.stringify({
+          response: explanation,
+          citations: ragResults.map(r => ({
+            source: 'BS 7671:2018+A2:2022',
+            section: r.regulation_number,
+            title: r.section,
+            content: r.content.substring(0, 200),
+            relevance: r.similarity || 0.8
+          })),
+          source: 'rag_with_gpt'
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+
+      } catch (e: any) {
+        // GPT timeout/failure → return raw RAG results
+        logger.warn('GPT-5 failed for lookup, returning raw RAG', { error: e.message });
+        
+        return new Response(JSON.stringify({
+          response: `## ${ragResults[0].section}\n\n${ragResults[0].content}`,
+          citations: ragResults.map(r => ({
+            source: 'BS 7671:2018+A2:2022',
+            section: r.regulation_number,
+            title: r.section,
+            content: r.content.substring(0, 200),
+            relevance: r.similarity || 0.8
+          })),
+          source: 'rag_fallback'
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
     }
 
     // Initialize cache for instant responses
@@ -529,8 +717,7 @@ Provide a complete, BS 7671 compliant design.`;
     
     logger.info('✅ Design completed', { 
       responseLength: response.length,
-      citationCount: citations.length,
-      duration
+      citationCount: citations.length
     });
     
     return new Response(
