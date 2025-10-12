@@ -1,6 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
 
 interface Circuit {
   id: string;
@@ -106,8 +109,8 @@ export const MultiCircuitResultsDisplay = ({
             {/* Header */}
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-semibold text-lg">{circuit.name}</h3>
-                <p className="text-sm text-muted-foreground">Circuit {index + 1}</p>
+                <h3 className="font-semibold text-lg">Way {index + 1}</h3>
+                <p className="text-sm text-muted-foreground">{circuit.name}</p>
               </div>
               <Badge 
                 className={
@@ -124,6 +127,13 @@ export const MultiCircuitResultsDisplay = ({
               </Badge>
             </div>
 
+            {/* MCB Badge - prominent like single circuit */}
+            <div className="flex justify-center">
+              <Badge className="bg-yellow-200 text-yellow-900 hover:bg-yellow-300 font-bold px-4 py-1.5 text-base">
+                MCB: {circuit.protection}
+              </Badge>
+            </div>
+
             {/* Parameters - Stacked 1/1/1/1 EXACTLY LIKE SINGLE CIRCUIT */}
             <div className="space-y-2">
               <div className="flex justify-between p-3 bg-muted/30 rounded-md">
@@ -133,8 +143,13 @@ export const MultiCircuitResultsDisplay = ({
                 </span>
               </div>
               <div className="flex justify-between p-3 bg-muted/30 rounded-md">
-                <span className="text-sm text-muted-foreground">Cable</span>
-                <span className="font-bold text-primary">{circuit.cableSpec}</span>
+                <span className="text-sm text-muted-foreground">Cable Size</span>
+                <span className="font-bold text-primary text-base">
+                  {circuit.cableSize}
+                  <span className="text-xs text-muted-foreground ml-1">
+                    ({circuit.cableSpec})
+                  </span>
+                </span>
               </div>
               {circuit.cableLength && (
                 <div className="flex justify-between p-3 bg-muted/30 rounded-md">
@@ -146,43 +161,58 @@ export const MultiCircuitResultsDisplay = ({
                 <span className="text-sm text-muted-foreground">Protection</span>
                 <span className="font-bold text-primary">{circuit.protection}</span>
               </div>
-              <div className="flex justify-between p-3 bg-muted/30 rounded-md">
-                <span className="text-sm text-muted-foreground">Voltage Drop</span>
-                <span className={`font-bold ${circuit.calculations.voltageDrop.compliant ? 'text-primary' : 'text-red-500'}`}>
-                  {circuit.calculations.voltageDrop.percent.toFixed(2)}%
-                  {!circuit.calculations.voltageDrop.compliant && ' ⚠ EXCEEDS LIMIT'}
-                </span>
+              <div className="space-y-1">
+                <div className="flex justify-between items-center p-3 bg-muted/30 rounded-md">
+                  <span className="text-sm text-muted-foreground">Voltage Drop</span>
+                  <div className="flex items-center gap-2">
+                    <span className={`font-bold text-lg ${circuit.calculations.voltageDrop.compliant ? 'text-green-500' : 'text-red-500'}`}>
+                      {circuit.calculations.voltageDrop.percent.toFixed(1)}%
+                    </span>
+                    {circuit.calculations.voltageDrop.compliant && <span className="text-green-500">✓</span>}
+                    {!circuit.calculations.voltageDrop.compliant && <span className="text-red-500">⚠</span>}
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Calculations Section */}
-            <div className="border-t pt-3">
-              <div className="text-sm font-semibold mb-2">Calculations</div>
-              <div className="font-mono text-sm text-muted-foreground space-y-1">
-                <div>Ib: {circuit.calculations.Ib}A | In: {circuit.calculations.In}A | Iz: {circuit.calculations.Iz}A</div>
-                {circuit.calculations.equation && (
-                  <div className="text-xs">{circuit.calculations.equation}</div>
-                )}
-                {circuit.calculations.tableRef && (
-                  <div className="text-xs">Reference: {circuit.calculations.tableRef}</div>
-                )}
-              </div>
-              
-              {/* Voltage Drop Detail */}
-              <div className="mt-2 text-xs text-muted-foreground">
-                Voltage Drop: {circuit.calculations.voltageDrop.volts.toFixed(2)}V 
-                ({circuit.calculations.voltageDrop.percent.toFixed(2)}%)
-                {circuit.calculations.voltageDrop.max && ` - Max: ${circuit.calculations.voltageDrop.max}%`}
-              </div>
-              
-              {/* Zs Detail */}
-              <div className="mt-1 text-xs text-muted-foreground">
-                Earth Fault Loop (Zs): {circuit.calculations.zs.calculated.toFixed(2)}Ω 
-                (Max: {circuit.calculations.zs.max.toFixed(2)}Ω)
-                {circuit.calculations.zs.regulation && ` - ${circuit.calculations.zs.regulation}`}
-                {circuit.calculations.zs.compliant ? ' ✓' : ' ✗'}
-              </div>
-            </div>
+            {/* View Working Out - Collapsible calculations */}
+            <Collapsible>
+              <CollapsibleTrigger asChild>
+                <Button variant="outline" className="w-full justify-between">
+                  View Working Out
+                  <ChevronDown className="h-4 w-4 transition-transform" />
+                </Button>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="border-t pt-3 mt-3">
+                  <div className="text-sm font-semibold mb-2">Calculations</div>
+                  <div className="font-mono text-sm text-muted-foreground space-y-1">
+                    <div>Ib: {circuit.calculations.Ib}A | In: {circuit.calculations.In}A | Iz: {circuit.calculations.Iz}A</div>
+                    {circuit.calculations.equation && (
+                      <div className="text-xs">{circuit.calculations.equation}</div>
+                    )}
+                    {circuit.calculations.tableRef && (
+                      <div className="text-xs">Reference: {circuit.calculations.tableRef}</div>
+                    )}
+                  </div>
+                  
+                  {/* Voltage Drop Detail */}
+                  <div className="mt-2 text-xs text-muted-foreground">
+                    Voltage Drop: {circuit.calculations.voltageDrop.volts.toFixed(2)}V 
+                    ({circuit.calculations.voltageDrop.percent.toFixed(2)}%)
+                    {circuit.calculations.voltageDrop.max && ` - Max: ${circuit.calculations.voltageDrop.max}%`}
+                  </div>
+                  
+                  {/* Zs Detail */}
+                  <div className="mt-1 text-xs text-muted-foreground">
+                    Earth Fault Loop (Zs): {circuit.calculations.zs.calculated.toFixed(2)}Ω 
+                    (Max: {circuit.calculations.zs.max.toFixed(2)}Ω)
+                    {circuit.calculations.zs.regulation && ` - ${circuit.calculations.zs.regulation}`}
+                    {circuit.calculations.zs.compliant ? ' ✓' : ' ✗'}
+                  </div>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
 
             {/* RCD Requirements */}
             {circuit.rcdRequirements && (
