@@ -46,6 +46,13 @@ serve(async (req) => {
       currentDesign
     } = await req.json();
 
+    logger.info('🚀 Agent router invoked', { 
+      conversationId, 
+      userMessage: userMessage?.slice(0, 50), 
+      agents: selectedAgents,
+      messageCount: messages.length 
+    });
+
     if (!userMessage) {
       throw new ValidationError('userMessage is required');
     }
@@ -54,11 +61,6 @@ serve(async (req) => {
       throw new ValidationError('selectedAgents array is required and must not be empty');
     }
 
-    logger.info('Agent routing', { 
-      mode: consultationMode, 
-      agents: selectedAgents.length,
-      hasConversationId: !!conversationId 
-    });
 
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAIApiKey) throw new ValidationError('OPENAI_API_KEY not configured');
@@ -210,18 +212,83 @@ serve(async (req) => {
         return (priorityOrder[a.priority || 'medium'] - priorityOrder[b.priority || 'medium']);
       });
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        responses: agentResponses,
-        suggestedNextAgents: uniqueSuggestions,
-        consultedAgents: selectedAgents
-      }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
-      }
-    );
+    // Check Accept header for SSE vs JSON
+    const acceptHeader = req.headers.get('Accept') || '';
+    const wantsSSE = acceptHeader.includes('text/event-stream');
+
+    if (wantsSSE) {
+      // SSE Streaming Response
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        async start(controller) {
+          try {
+            // Send plan
+            const planChunk = `data: ${JSON.stringify({
+              type: 'plan',
+              agents: selectedAgents,
+              total: selectedAgents.length
+            })}\n\n`;
+            controller.enqueue(encoder.encode(planChunk));
+
+            // Send agent responses
+            for (let i = 0; i < agentResponses.length; i++) {
+              const { agent, response } = agentResponses[i];
+              
+              const responseChunk = `data: ${JSON.stringify({
+                type: 'agent_response',
+                agent,
+                index: i + 1,
+                total: agentResponses.length,
+                response: response.response,
+                structuredData: response.structuredData,
+                suggestedNextAgents: response.suggestedNextAgents
+              })}\n\n`;
+              controller.enqueue(encoder.encode(responseChunk));
+            }
+
+            // Send completion
+            const doneChunk = `data: ${JSON.stringify({
+              type: 'all_agents_complete',
+              suggestedNextAgents: uniqueSuggestions,
+              consultedAgents: selectedAgents
+            })}\n\n`;
+            controller.enqueue(encoder.encode(doneChunk));
+
+            controller.close();
+          } catch (error) {
+            const errorChunk = `data: ${JSON.stringify({
+              type: 'error',
+              error: error instanceof Error ? error.message : 'Unknown error'
+            })}\n\n`;
+            controller.enqueue(encoder.encode(errorChunk));
+            controller.close();
+          }
+        }
+      });
+
+      return new Response(stream, {
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive'
+        }
+      });
+    } else {
+      // JSON Response (backwards compatibility)
+      return new Response(
+        JSON.stringify({
+          success: true,
+          responses: agentResponses,
+          suggestedNextAgents: uniqueSuggestions,
+          consultedAgents: selectedAgents
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200
+        }
+      );
+    }
 
   } catch (error) {
     logger.error('Router error', { error });

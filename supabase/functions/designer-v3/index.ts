@@ -43,6 +43,13 @@ serve(async (req) => {
     const body = await req.json();
     const { query, circuitType, power, voltage, cableLength, messages, previousAgentOutputs } = body;
 
+    logger.info('🎨 Designer V3 invoked', { 
+      query: query?.slice(0, 50),
+      circuitType,
+      power,
+      messageCount: messages?.length || 0 
+    });
+
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
       throw new ValidationError('query is required and must be a non-empty string');

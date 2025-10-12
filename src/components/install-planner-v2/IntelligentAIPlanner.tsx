@@ -214,47 +214,32 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   
   const { sessionId, isSaving, lastSaved } = useConversationPersistence(messages, planData, activeAgents);
   
-  // Health check on mount
+  // Health check on mount - use system-health function
   useEffect(() => {
     const checkAgentHealth = async () => {
-      const AGENT_ENDPOINTS = ['designer-v3', 'cost-engineer-v3', 'installer-v3', 'health-safety-v3', 'commissioning-v3', 'project-mgmt-v3', 'agent-router'];
-      const AGENT_IDS: Record<string, string> = {
-        'designer-v3': 'designer',
-        'cost-engineer-v3': 'cost-engineer',
-        'installer-v3': 'installer',
-        'health-safety-v3': 'health-safety',
-        'commissioning-v3': 'commissioning',
-        'project-mgmt-v3': 'project-manager'
-      };
-      
-      const unhealthy: string[] = [];
-      
-      for (const endpoint of AGENT_ENDPOINTS) {
-        try {
-          const response = await fetch(`https://jtwygbeceundfgnkirof.supabase.co/functions/v1/${endpoint}`, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8'}`
-            }
-          });
-          
-          if (!response.ok) {
-            const agentId = AGENT_IDS[endpoint];
-            if (agentId) unhealthy.push(agentId);
+      try {
+        const response = await fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/system-health', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8'}`
           }
-        } catch (error) {
-          const agentId = AGENT_IDS[endpoint];
-          if (agentId) unhealthy.push(agentId);
+        });
+        
+        const healthData = await response.json();
+        
+        // Mark system as unhealthy if overall status is degraded or down
+        if (healthData.overall === 'down' || healthData.overall === 'degraded') {
+          console.warn('⚠️ System health check:', healthData);
+          setUnhealthyAgents(['system']); // Generic system warning
+        } else {
+          console.log('✅ All systems healthy');
+          setUnhealthyAgents([]);
         }
-      }
-      
-      setUnhealthyAgents(unhealthy);
-      setHealthCheckDone(true);
-      
-      if (unhealthy.length > 0) {
-        console.warn('⚠️ Unhealthy agents:', unhealthy);
-      } else {
-        console.log('✅ All agents healthy');
+      } catch (error) {
+        console.error('❌ Health check failed:', error);
+        setUnhealthyAgents(['system']);
+      } finally {
+        setHealthCheckDone(true);
       }
     };
     
