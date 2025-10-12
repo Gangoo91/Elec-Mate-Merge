@@ -357,15 +357,23 @@ Write a comprehensive electrical design response that addresses "${query}" compl
       }), { status: 200, headers: corsHeaders });
     }
 
-    // Simple Gemini synthesis using Lovable AI
-    const simplePrompt = `You're a BS 7671:2018+A2:2022 expert. Answer this question concisely using these regulations:
+    // Conversational Gemini synthesis
+    const conversationalPrompt = `You're a friendly, experienced electrician (20+ years in the trade) chatting with a mate over a brew on-site.
 
-REGULATIONS:
-${regulations.slice(0, 5).map(r => `${r.regulation_number} (${r.section}): ${r.content.substring(0, 300)}`).join('\n\n')}
+The question is: "${query}"
 
-QUESTION: ${query}
+Here's what BS 7671:2018+A2:2022 says about this:
 
-Provide a clear answer citing regulation numbers. Keep it under 300 words.`;
+${regulations.slice(0, 5).map(r => `📋 **${r.regulation_number}** - ${r.section}\n${r.content.substring(0, 350)}`).join('\n\n')}
+
+NOW - answer the question like you're explaining it to someone who knows their stuff but wants practical, real-world advice:
+
+✅ What does this mean in plain English?
+✅ Why does it matter for THIS specific job?
+✅ Any gotchas or common mistakes to avoid?
+✅ What would you do on-site?
+
+Be conversational ("Right, so here's what you need to know..."), cite the reg numbers naturally, give PRACTICAL advice (not just theory), and keep it friendly but professional. About 250-350 words.`;
 
     try {
       const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
@@ -377,10 +385,27 @@ Provide a clear answer citing regulation numbers. Keep it under 300 words.`;
         body: JSON.stringify({
           model: 'google/gemini-2.5-flash',
           messages: [
-            { role: 'system', content: 'You are a BS 7671 electrical regulations expert. Answer clearly and cite regulation numbers.' },
-            { role: 'user', content: simplePrompt }
+            { 
+              role: 'system', 
+              content: `You're a master electrician with 20+ years experience. You explain BS 7671 regulations in a friendly, conversational way - like chatting with a colleague on a tea break. 
+
+You ALWAYS:
+- Start with a friendly opener ("Right, so...", "Okay mate...", "Here's the thing...")
+- Cite regulation numbers naturally in conversation
+- Give PRACTICAL advice (not just theory)
+- Explain WHY things matter (safety, compliance, practicality)
+- Mention common mistakes or gotchas
+- Keep it real and down-to-earth
+
+You NEVER:
+- Sound robotic or formal
+- Just dump regulation text
+- Give vague or unhelpful answers
+- Ignore the specific question asked` 
+            },
+            { role: 'user', content: conversationalPrompt }
           ],
-          max_completion_tokens: 800
+          max_completion_tokens: 900
         })
       });
 
