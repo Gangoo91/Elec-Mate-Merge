@@ -376,8 +376,23 @@ const AIAssistant = () => {
         setCurrentQuery(prompt);
       }
       
+      // NEW: Handle direct regulation lookups (no AI processing)
+      if (data.lookup_mode && data.regulations) {
+        const regText = data.regulations.map((reg: any) => 
+          `**${reg.regulation_number}** - ${reg.section}\n\n${reg.content}\n\n${reg.amendment ? `_Amendment: ${reg.amendment}_` : ''}`
+        ).join('\n\n---\n\n');
+        
+        setAnalysisResult(data.message || 'Regulation Lookup Results');
+        setRegulationsResult(regText);
+        setPracticalGuidanceResult('For detailed interpretation and application guidance, try asking: "Explain [regulation number]" or "How does [regulation number] apply to [your situation]?"');
+        
+        toast({
+          title: "Regulations Retrieved",
+          description: `Found ${data.regulations.length} regulation(s)`,
+        });
+      }
       // Handle designer agent response
-      if (data.response && data.structuredData) {
+      else if (data.response && data.structuredData) {
         const parsed = parseDesignerResponse(data.response);
         
         // Combine specification and calculations for Analysis box

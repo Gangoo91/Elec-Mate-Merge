@@ -29,6 +29,61 @@ serve(async (req) => {
     const requestBody = await req.json();
     const { prompt, type = "general", primary_image, additional_images = [], context = {}, use_rag = false } = requestBody;
     
+    // Helper function to extract regulation numbers from query
+    const extractRegulationNumbers = (query: string): string[] => {
+      const regPattern = /\b\d{3}(?:\.\d+)?(?:\.\d+)?\b/g;
+      return (query.match(regPattern) || []);
+    };
+    
+    // Helper function to detect pure regulation lookup queries
+    const isPureRegulationLookup = (query: string): boolean => {
+      const cleaned = query.replace(/[,\s\n]+/g, ' ').trim();
+      const words = cleaned.split(' ').filter(w => w.length > 0);
+      const regNumbers = words.filter(w => /^\d{3}(?:\.\d+)?(?:\.\d+)?$/.test(w));
+      return regNumbers.length === words.length && words.length > 0;
+    };
+    
+    // Helper function to get regulations directly from database
+    const getRegulationsDirect = async (regNumbers: string[]): Promise<any> => {
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+      const supabase = createClient(supabaseUrl, supabaseKey);
+      
+      const { data, error } = await supabase
+        .from('bs7671_embeddings')
+        .select('regulation_number, section, content, amendment, metadata')
+        .or(regNumbers.map(n => `regulation_number.ilike.%${n}%`).join(','))
+        .order('regulation_number');
+      
+      if (error) throw error;
+      
+      return {
+        success: true,
+        lookup_mode: true,
+        regulations: data || [],
+        message: data && data.length > 0 
+          ? `Found ${data.length} regulation(s) matching your request.`
+          : 'No regulations found matching those numbers.'
+      };
+    };
+    
+    // NEW: Check for pure regulation lookup (skip AI processing)
+    const regNumbers = extractRegulationNumbers(prompt || '');
+    if (prompt && !primary_image && isPureRegulationLookup(prompt) && regNumbers.length > 0) {
+      console.log(`🔍 Direct regulation lookup detected: ${regNumbers.join(', ')}`);
+      try {
+        const result = await getRegulationsDirect(regNumbers);
+        return new Response(
+          JSON.stringify(result),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      } catch (lookupError) {
+        console.error('Direct lookup error:', lookupError);
+        // Fall through to normal AI processing if direct lookup fails
+      }
+    }
+    
     // Fetch regulations from RAG if requested
     let ragRegulations: any[] = [];
     let ragMetadata: any = {};
