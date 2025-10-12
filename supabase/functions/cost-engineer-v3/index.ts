@@ -77,75 +77,82 @@ serve(async (req) => {
     const queryEmbedding = await generateEmbeddingWithRetry(query, OPENAI_API_KEY);
     logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
-    // Step 2: Search pricing database
+    // Step 2: Parallel RAG search (OPTIMIZED FOR SPEED)
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    logger.debug('Searching pricing data');
+    logger.debug('Starting parallel RAG searches');
+    const ragStart = Date.now();
 
-    let { data: pricingResults, error: pricingError } = await supabase.rpc('search_pricing', {
-      query_embedding: queryEmbedding,
-      match_threshold: 0.7,
-      match_count: 15
-    });
+    // Parallelize all RAG calls
+    const [
+      { data: pricingResults, error: pricingError },
+      { data: installationResults },
+      { data: pmResults }
+    ] = await Promise.all([
+      supabase.rpc('search_pricing', {
+        query_embedding: queryEmbedding,
+        match_threshold: 0.7,
+        match_count: 8  // Reduced from 15 to 8
+      }),
+      supabase.rpc('search_installation_knowledge', {
+        query_embedding: queryEmbedding,
+        match_threshold: 0.70,
+        match_count: 3  // Reduced from 5 to 3
+      }),
+      supabase.rpc('search_project_mgmt', {
+        query_embedding: queryEmbedding,
+        match_threshold: 0.65,
+        match_count: 2  // Reduced from 3 to 2
+      })
+    ]);
 
     // Fallback: if vector search fails or returns nothing, use search-pricing-rag
+    let finalPricingResults = pricingResults;
     if (pricingError || !pricingResults || pricingResults.length === 0) {
       logger.warn('Vector search failed or empty, using search-pricing-rag fallback', { pricingError });
       const { data: ragData, error: ragError } = await supabase.functions.invoke('search-pricing-rag', {
-        body: { query, matchThreshold: 0.6, matchCount: 20, supplierFilter: 'all' }
+        body: { query, matchThreshold: 0.6, matchCount: 8, supplierFilter: 'all' }
       });
       if (!ragError && ragData?.materials) {
-        pricingResults = ragData.materials.map((m: any) => ({
+        finalPricingResults = ragData.materials.slice(0, 8).map((m: any) => ({
           item_name: m.item_name,
           base_cost: m.unit_price,
           price_per_unit: m.unit,
           wholesaler: m.supplier,
           in_stock: m.in_stock
         }));
-        logger.info('Fallback pricing RAG used', { itemsFound: pricingResults.length });
+        logger.info('Fallback pricing RAG used', { itemsFound: finalPricingResults.length });
       }
     }
 
-    // Step 2b: Search Installation Guidance (like Designer V3)
-    const { data: installationResults } = await supabase.rpc('search_installation_knowledge', {
-      query_embedding: queryEmbedding,
-      match_threshold: 0.70,
-      match_count: 5
-    });
-
-    // Step 2c: Search Project Management knowledge
-    const { data: pmResults } = await supabase.rpc('search_project_mgmt', {
-      query_embedding: queryEmbedding,
-      match_threshold: 0.65,
-      match_count: 3
-    });
+    logger.debug('RAG searches completed', { duration: Date.now() - ragStart });
 
     logger.info('RAG search complete', {
-      pricingItems: pricingResults?.length || 0,
+      pricingItems: finalPricingResults?.length || 0,
       installationGuides: installationResults?.length || 0,
       pmGuides: pmResults?.length || 0
     });
 
-    // Step 3: Build pricing context
-    const pricingContext = pricingResults && pricingResults.length > 0
-      ? pricingResults.map((p: any) => 
-          `${p.item_name} - £${p.base_cost} (${p.price_per_unit}) at ${p.wholesaler} ${p.in_stock ? '✓ In Stock' : '⚠ Out of Stock'}`
+    // Step 3: Build compact pricing context (OPTIMIZED)
+    const pricingContext = finalPricingResults && finalPricingResults.length > 0
+      ? finalPricingResults.map((p: any) => 
+          `- ${p.item_name}: £${p.base_cost} (${p.wholesaler}${p.in_stock ? '' : ' - awaiting stock'})`
         ).join('\n')
-      : 'No specific pricing data found. Use typical UK electrical wholesale prices.';
+      : 'No pricing data. Estimate from market rates.';
 
-    // Build installation guidance context
+    // Build compact installation context (100 chars max per snippet)
     const installationContext = installationResults && installationResults.length > 0
       ? installationResults.map((r: any) => 
-          `${r.topic} — ${r.content.substring(0, 180)}...`
+          `- ${r.topic}: ${r.content.substring(0, 100)}...`
         ).join('\n')
       : '';
 
-    // Build project management context
+    // Build compact PM context (80 chars max per snippet)
     const pmContext = pmResults && pmResults.length > 0
       ? pmResults.map((r: any) => 
-          `${r.topic} — ${r.content.substring(0, 140)}...`
+          `- ${r.topic}: ${r.content.substring(0, 80)}...`
         ).join('\n')
       : '';
 
@@ -170,120 +177,44 @@ serve(async (req) => {
       ).slice(-5).join('\n');
     }
 
-    const systemPrompt = `You are an expert VALUE ENGINEER specialising in UK electrical installations.
+    const systemPrompt = `UK Electrical VALUE ENGINEER. September 2025. UK English.
 
-Write all responses in UK English (British spelling and terminology). Do not use American spellings.
-
-YOUR UNIQUE VALUE: You are a VALUE ENGINEER, not just a price calculator
-- Compare prices across MULTIPLE wholesalers (CEF, TLC Direct, Edmundson, RS Components, Screwfix Trade)
-- Suggest cost-saving alternatives WITHOUT compromising compliance
-- Identify economies of scale (bulk buy discounts, bundle deals)
-- Flag overspecification opportunities (e.g., "10mm² would comply and save £150")
-- Consider total cost of ownership (initial + maintenance)
-- Provide supplier recommendations with availability status
-
-CURRENT DATE: September 2025
-
-PRICING DATABASE RESULTS (YOU MUST USE THIS DATA - DO NOT ESTIMATE):
+PRICING DATABASE (${finalPricingResults?.length || 0} items - USE THESE EXACT PRICES):
 ${pricingContext}
 
-${installationContext ? `INSTALLATION GUIDANCE (for labour time estimation and practical methods):\n${installationContext}\n` : ''}
-${pmContext ? `PROJECT MANAGEMENT CONSIDERATIONS (lead times, bundling, prelims):\n${pmContext}\n` : ''}
+${installationContext ? `INSTALLATION METHODS:\n${installationContext}\n` : ''}${pmContext ? `PM INSIGHTS:\n${pmContext}\n` : ''}
 
-🔴 CRITICAL PRICING RULES (MANDATORY):
-1. Labour Rate: £${COST_ENGINEER_PRICING.LABOUR_RATE_PER_HOUR.toFixed(2)} per hour for ALL tasks (no exceptions)
-2. Material Markup: Add ${COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT}% to all wholesale prices from database
-3. VAT: ${COST_ENGINEER_PRICING.VAT_RATE}% on final totals (materials + labour)
+PRICING RULES:
+- Labour: £${COST_ENGINEER_PRICING.LABOUR_RATE_PER_HOUR}/hr (all tasks)
+- Material markup: +${COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT}% on wholesale
+- VAT: ${COST_ENGINEER_PRICING.VAT_RATE}%
 
-🔴 CRITICAL INSTRUCTIONS FOR PRICING:
-1. MATCH materials to pricing database entries FIRST
-   Example: User asks for "16mm² cable" → Search above for "16mm² 6242Y Twin & Earth Cable - £5.50/m at City Electrical Factors"
-   
-2. EXTRACT the EXACT price, NOT an estimate:
-   ✓ CORRECT: {"description": "16mm² 6242Y T&E Cable", "unitPrice": 5.50, "supplier": "City Electrical Factors"}
-   ✗ WRONG: {"description": "16mm² cable", "unitPrice": 6.00, "supplier": "Generic"}
-   
-3. If material NOT in database, mark it clearly:
-   {"description": "Unusual item XYZ", "unitPrice": 25.00, "supplier": "Estimated (not in database)", "notes": "Market average - confirm with supplier"}
-   
-4. COMPARE SUPPLIERS when multiple options exist:
-   Include alternatives array showing price range across wholesalers
-   
-5. Labour rates for September 2025 UK:
-   - Qualified Electrician: £45-65/hr (standard)
-   - Supervisor/Senior: £65-85/hr
-   - Apprentice: £20-30/hr
-   - Include regional variations if applicable
+INSTRUCTIONS:
+1. Match materials to database items (exact prices + supplier)
+2. If not in database: mark "Estimated (not in database)"
+3. Calculate labour by task (installation, termination, testing)
+4. Identify value engineering opportunities (cost savings without compromising BS 7671)
 
-6. VAT is ALWAYS 20% in UK (standard rate)
+${region ? `Region: ${region}\n` : ''}${contextSection}
 
-7. Match cable sizes, MCBs, RCDs, and accessories to database entries using the item_name field
-
-VALUE ENGINEERING OPPORTUNITIES TO IDENTIFY:
-- Alternative products with better value (e.g., "SWA instead of T&E for outdoor - no conduit needed")
-- Timing optimization (supplier promotions, lead times)
-- Bundle deals (CU + MCBs from same supplier = trade discount)
-- Overspecification checks (is the specified cable size larger than necessary?)
-
-The pricing database contains ${pricingResults?.length || 0} relevant items for this query.
-
-${region ? `REGION: ${region}\n` : ''}${contextSection}
-
-Respond ONLY with valid JSON in this exact format:
+Output compact JSON (max 1500 tokens):
 {
-  "response": "DETAILED cost analysis (150-250 words) including: Material costs breakdown with quantities and unit prices (e.g., 16mm² cable at £X.XX/m × 45m = £XXX), protection device costs with specific model numbers, labour breakdown by task with time estimates (e.g., cable installation 2 hours at £XX/hr), regional pricing variations if applicable, VAT explanation, potential cost savings opportunities, supplier recommendations. Include markup percentages and any market factors affecting pricing.",
-  "materials": {
-    "items": [
-      {"description": "Item name", "quantity": 1, "unit": "each", "unitPrice": 10.50, "total": 10.50, "supplier": "Wholesaler"}
-    ],
-    "subtotal": 100.00,
-    "vat": 20.00,
-    "total": 120.00
-  },
-  "labour": {
-    "tasks": [
-      {"description": "Task name", "hours": 2, "rate": 45.00, "total": 90.00}
-    ],
-    "subtotal": 200.00,
-    "vat": 40.00,
-    "total": 240.00
-  },
-  "summary": {
-    "materialsTotal": 120.00,
-    "labourTotal": 240.00,
-    "subtotal": 360.00,
-    "vat": 72.00,
-    "grandTotal": 432.00
-  },
-  "notes": ["Additional cost information"],
-  "suggestedNextAgents": [
-    {"agent": "installer", "reason": "Verify labour time estimates with practical installation method", "priority": "high"},
-    {"agent": "health-safety", "reason": "Review safety requirements and risk assessment", "priority": "medium"}
-  ]
+  "response": "Cost analysis (150 words): materials breakdown, labour tasks, VAT, value engineering suggestions",
+  "materials": { "items": [...], "subtotal": 0, "vat": 0, "total": 0 },
+  "labour": { "tasks": [...], "subtotal": 0, "vat": 0, "total": 0 },
+  "summary": { "materialsTotal": 0, "labourTotal": 0, "subtotal": 0, "vat": 0, "grandTotal": 0 },
+  "valueEngineering": [{"suggestion": "...", "potentialSaving": 0}],
+  "suggestedNextAgents": [{"agent": "...", "reason": "...", "priority": "high"}]
 }`;
 
-    const userPrompt = `Provide a detailed cost estimate for:
-${query}
+    const userPrompt = `Cost estimate for: ${query}
+${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `\nLabour: ${labourHours}hrs` : ''}
 
-${materials ? `Materials required: ${JSON.stringify(materials)}` : ''}
-${labourHours ? `Estimated labour: ${labourHours} hours` : ''}
-
-STEP-BY-STEP PROCESS (FOLLOW THIS EXACTLY):
-1. Review the PRICING DATABASE RESULTS above line-by-line
-2. For each material needed:
-   a) Find the matching item_name in the database (e.g., "16mm² cable" matches "16mm² 6242Y Twin & Earth Cable")
-   b) Extract the base_cost as unitPrice
-   c) Extract the wholesaler as supplier
-   d) If multiple suppliers available, list alternatives with price comparison
-   e) If in_stock is false, add note about availability and lead times
-3. Build materials.items array with database prices (NOT estimates)
-4. Calculate labour by task (cable installation, termination, testing, certification)
-5. Add 20% VAT to both materials and labour
-6. Identify VALUE ENGINEERING opportunities (cost savings without compromising compliance)
-7. Provide itemized breakdown with supplier recommendations and notes
-
-IMPORTANT: The pricing database above contains ${pricingResults?.length || 0} relevant items. Use them!
-Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engineering recommendations.`;
+1. Match materials to database (${finalPricingResults?.length || 0} items above)
+2. Extract exact prices + suppliers
+3. Calculate labour tasks
+4. Add value engineering suggestions
+5. Include VAT (20%)`;
 
     // Step 4: Call AI with universal wrapper
     logger.debug('Calling AI with wrapper');
@@ -293,8 +224,9 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
       model: 'google/gemini-2.5-flash',
       systemPrompt,
       userPrompt,
-      maxTokens: 2000,
-      timeoutMs: 55000,
+      maxTokens: 1500,
+      timeoutMs: 30000,
+      temperature: 0.2,
       tools: [{
         type: 'function',
         function: {
@@ -318,19 +250,14 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
                         description: { type: 'string' },
                         quantity: { type: 'number' },
                         unit: { type: 'string' },
-                        wholesalePrice: { type: 'number' },
-                        markup: { type: 'number' },
                         unitPrice: { type: 'number' },
                         total: { type: 'number' },
-                        supplier: { type: 'string' },
-                        inStock: { type: 'boolean' }
+                        supplier: { type: 'string' }
                       },
-                      required: ['description', 'quantity', 'wholesalePrice', 'markup', 'unitPrice', 'total', 'supplier']
+                      required: ['description', 'quantity', 'unitPrice', 'total', 'supplier']
                     }
                   },
                   subtotal: { type: 'number' },
-                  totalMarkup: { type: 'number' },
-                  subtotalWithMarkup: { type: 'number' },
                   vat: { type: 'number' },
                   total: { type: 'number' }
                 },
@@ -360,8 +287,6 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
               summary: {
                 type: 'object',
                 properties: {
-                  materialsSubtotal: { type: 'number' },
-                  materialsMarkup: { type: 'number' },
                   materialsTotal: { type: 'number' },
                   labourTotal: { type: 'number' },
                   subtotal: { type: 'number' },
@@ -488,16 +413,16 @@ Include accurate UK pricing, VAT at 20%, alternatives analysis, and value engine
     };
 
     // Validate RAG usage
-    if (pricingResults && pricingResults.length > 0) {
+    if (finalPricingResults && finalPricingResults.length > 0) {
       const usedPricingData = costResult.materials?.items?.some((item: any) => 
-        pricingResults.some((p: any) => 
+        finalPricingResults.some((p: any) => 
           item.description?.toLowerCase().includes(p.item_name?.toLowerCase().split(' ')[0])
         )
       );
       
       if (!usedPricingData) {
         logger.warn('AI did not use any pricing database results', { 
-          availableItems: pricingResults.length,
+          availableItems: finalPricingResults.length,
           generatedItems: costResult.materials?.items?.length 
         });
       }
