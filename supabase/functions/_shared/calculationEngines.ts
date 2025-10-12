@@ -68,7 +68,10 @@ export function calculateCableCapacity(params: {
     120: 299,
   };
 
-  const IzTabulated = baseCapacities[cableSize] || 0;
+  const IzTabulated = baseCapacities[cableSize];
+  if (!IzTabulated) {
+    throw new Error(`Unsupported cable size: ${cableSize}mm². Supported sizes: ${Object.keys(baseCapacities).join(', ')}`);
+  }
 
   // Temperature derating (BS 7671 Table 4B1)
   const tempFactor = ambientTemp <= 25 ? 1.0 :
@@ -159,7 +162,10 @@ export function calculateVoltageDrop(params: {
     120: 0.38,
   };
 
-  const mvPerAPerMValue = mvPerAPerM[cableSize] || 0;
+  const mvPerAPerMValue = mvPerAPerM[cableSize];
+  if (!mvPerAPerMValue) {
+    throw new Error(`No voltage drop data for cable size ${cableSize}mm². Supported: ${Object.keys(mvPerAPerM).join(', ')}`);
+  }
   const voltageDropVolts = (mvPerAPerMValue * current * cableLength) / 1000;
   const voltageDropPercent = (voltageDropVolts / voltage) * 100;
 
@@ -225,7 +231,10 @@ export function calculateMaxZs(params: {
     },
   };
 
-  const maxZs = zsTable[deviceType]?.[deviceRating] || 0;
+  const maxZs = zsTable[deviceType]?.[deviceRating];
+  if (!maxZs) {
+    throw new Error(`No Zs data for ${deviceType}-type MCB rated ${deviceRating}A. Supported ratings: ${Object.keys(zsTable[deviceType] || {}).join(', ')}`);
+  }
 
   return {
     maxZs: Math.round(maxZs * 100) / 100,
