@@ -82,74 +82,33 @@ serve(async (req) => {
 
     logger.debug('Fetching RAG context');
 
-    // Fetch BS 7671 regulations (increased to 15 for complex designs)
+    // Fetch BS 7671 regulations (optimized to 5 for speed)
     const { data: regulations, error: regError } = await supabase.rpc('search_bs7671', {
       query_embedding: queryEmbedding,
       match_threshold: 0.5,
-      match_count: 15
+      match_count: 5
     });
 
     if (regError) {
       logger.warn('BS 7671 search failed', { error: regError });
     }
 
-    // Fetch design knowledge (increased to 10 for complex designs)
+    // Fetch design knowledge (optimized to 5 for speed)
     const { data: designKnowledge, error: designError } = await supabase.rpc('search_design_knowledge', {
       query_embedding: queryEmbedding,
       circuit_filter: circuitType || null,
       source_filter: null,
       match_threshold: 0.6,
-      match_count: 10
+      match_count: 5
     });
 
     if (designError) {
       logger.warn('Design knowledge search failed', { error: designError });
     }
 
-    // PHASE 2: Proactive Design Checklist - Multi-stage RAG
-    logger.debug('Running proactive design checklist');
-    
-    const checklistQueries = [];
-    
-    // For high-power fixed appliances (>3kW), check isolation requirements
-    if (power && power > 3000) {
-      checklistQueries.push('local isolation switch fixed appliance');
-      checklistQueries.push('emergency isolation requirement');
-    }
-    
-    // For kitchen/bathroom circuits, check special location requirements
-    if (query.toLowerCase().includes('kitchen') || query.toLowerCase().includes('bathroom')) {
-      checklistQueries.push('special locations supplementary bonding');
-      checklistQueries.push('RCD protection special locations');
-    }
-    
-    // For outdoor circuits, check IP ratings and cable types
-    if (query.toLowerCase().includes('outdoor') || query.toLowerCase().includes('garden') || query.toLowerCase().includes('outside')) {
-      checklistQueries.push('outdoor cable protection IP rating');
-      checklistQueries.push('SWA cable gland earthing outdoor');
-    }
-    
-    // Run parallel checklist searches
-    const checklistResults = await Promise.all(
-      checklistQueries.map(async (checkQuery) => {
-        const embedding = await generateEmbeddingWithRetry(checkQuery, OPENAI_API_KEY);
-        const { data } = await supabase.rpc('search_bs7671', {
-          query_embedding: embedding,
-          match_threshold: 0.6,
-          match_count: 3
-        });
-        return data || [];
-      })
-    );
-    
-    const additionalRegs = checklistResults.flat();
-    const allRegulations = [...(regulations || []), ...additionalRegs];
-    
-    logger.info('Proactive checklist complete', { 
-      originalRegs: regulations?.length || 0,
-      additionalRegs: additionalRegs.length,
-      totalRegs: allRegulations.length
-    });
+    // ⚡ PROACTIVE CHECKLIST REMOVED - Was causing 60s timeouts
+    // Designer now uses only the initial RAG fetch for speed
+    const allRegulations = regulations || [];
 
     // Step 3: Build context-aware prompt (use allRegulations from proactive checklist)
     const regulationContext = allRegulations && allRegulations.length > 0
@@ -442,9 +401,9 @@ Provide a complete, BS 7671 compliant design.`;
     logger.debug('Calling Lovable AI with tool calling');
     const aiStart = Date.now();
     
-    // Timeout 60s via AbortController
+    // Timeout 90s via AbortController (increased from 60s for GPT-5 reasoning)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 60000);
+    const timeoutId = setTimeout(() => controller.abort(), 90000);
 
     let aiResponse: Response;
     try {
@@ -584,8 +543,7 @@ Provide a complete, BS 7671 compliant design.`;
       const citedRegs = designResult.compliance?.regulations || [];
       logger.info('RAG context usage', { 
         availableRegulations: allRegulations.length,
-        citedCount: citedRegs.length,
-        proactiveChecklistCount: additionalRegs.length
+        citedCount: citedRegs.length
       });
     }
 

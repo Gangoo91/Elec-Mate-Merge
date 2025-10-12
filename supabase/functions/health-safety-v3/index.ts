@@ -243,7 +243,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     
     // AbortController for timeout protection
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 90000); // 90s timeout
     
     const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',

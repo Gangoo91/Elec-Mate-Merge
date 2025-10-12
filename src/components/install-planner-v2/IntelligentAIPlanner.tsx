@@ -28,6 +28,8 @@ import { PhotoUploadButton } from "./PhotoUploadButton";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { DesignAlternatives } from "./DesignAlternatives";
+import { AgentChatErrorBoundary } from "./AgentChatErrorBoundary";
+import { AgentHealthBanner } from "./AgentHealthBanner";
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -204,9 +206,60 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     timestamp: string;
   }>>([]);
   
+  // Health check state
+  const [unhealthyAgents, setUnhealthyAgents] = useState<string[]>([]);
+  const [healthCheckDone, setHealthCheckDone] = useState(false);
+  
   const navigate = useNavigate();
   
   const { sessionId, isSaving, lastSaved } = useConversationPersistence(messages, planData, activeAgents);
+  
+  // Health check on mount
+  useEffect(() => {
+    const checkAgentHealth = async () => {
+      const AGENT_ENDPOINTS = ['designer-v3', 'cost-engineer-v3', 'installer-v3', 'health-safety-v3', 'commissioning-v3', 'project-mgmt-v3', 'agent-router'];
+      const AGENT_IDS: Record<string, string> = {
+        'designer-v3': 'designer',
+        'cost-engineer-v3': 'cost-engineer',
+        'installer-v3': 'installer',
+        'health-safety-v3': 'health-safety',
+        'commissioning-v3': 'commissioning',
+        'project-mgmt-v3': 'project-manager'
+      };
+      
+      const unhealthy: string[] = [];
+      
+      for (const endpoint of AGENT_ENDPOINTS) {
+        try {
+          const response = await fetch(`https://jtwygbeceundfgnkirof.supabase.co/functions/v1/${endpoint}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8'}`
+            }
+          });
+          
+          if (!response.ok) {
+            const agentId = AGENT_IDS[endpoint];
+            if (agentId) unhealthy.push(agentId);
+          }
+        } catch (error) {
+          const agentId = AGENT_IDS[endpoint];
+          if (agentId) unhealthy.push(agentId);
+        }
+      }
+      
+      setUnhealthyAgents(unhealthy);
+      setHealthCheckDone(true);
+      
+      if (unhealthy.length > 0) {
+        console.warn('⚠️ Unhealthy agents:', unhealthy);
+      } else {
+        console.log('✅ All agents healthy');
+      }
+    };
+    
+    checkAgentHealth();
+  }, []);
   
   // Fetch completed agents count
   useEffect(() => {
@@ -1189,6 +1242,13 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             </div>
           )}
 
+          {/* Health Check Banner */}
+          {healthCheckDone && (
+            <div className="mb-4">
+              <AgentHealthBanner unhealthyAgents={unhealthyAgents} />
+            </div>
+          )}
+
           {messages.map((message, index) => (
             <div
               key={index}
@@ -1211,24 +1271,26 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 )}
                 
                 {message.role === 'assistant' && message.content && !message.isTyping && (
-                  <AgentResponseRenderer 
-                    content={message.content} 
-                    agentId={message.agentName}
-                    structuredData={message.structuredData}
-                    conversationId={sessionId}
-                    question={messages.find(m => m.role === 'user')?.content}
-                    isThinking={message.isThinking}
-                    onSelectAgent={(selectedAgentId: string) => {
-                      // Directly switch to the selected agent
-                      setCurrentAgent(selectedAgentId);
-                      setInput(`I'd like help from the ${getAgentName(selectedAgentId)}`);
-                      
-                      // Focus the input
-                      setTimeout(() => {
-                        textareaRef.current?.focus();
-                      }, 100);
-                    }}
-                  />
+                  <AgentChatErrorBoundary>
+                    <AgentResponseRenderer 
+                      content={message.content} 
+                      agentId={message.agentName}
+                      structuredData={message.structuredData}
+                      conversationId={sessionId}
+                      question={messages.find(m => m.role === 'user')?.content}
+                      isThinking={message.isThinking}
+                      onSelectAgent={(selectedAgentId: string) => {
+                        // Directly switch to the selected agent
+                        setCurrentAgent(selectedAgentId);
+                        setInput(`I'd like help from the ${getAgentName(selectedAgentId)}`);
+                        
+                        // Focus the input
+                        setTimeout(() => {
+                          textareaRef.current?.focus();
+                        }, 100);
+                      }}
+                    />
+                  </AgentChatErrorBoundary>
                 )}
 
                 {message.role === 'assistant' && message.isTyping && (

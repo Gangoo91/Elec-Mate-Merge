@@ -29,19 +29,9 @@ interface AgentResponseRendererProps {
 }
 
 export const AgentResponseRenderer = memo(({ content, agentId, structuredData, conversationId, question, onSelectAgent, isThinking }: AgentResponseRendererProps) => {
+  // ✅ ALL HOOKS FIRST - before any conditional logic
   const [showFullText, setShowFullText] = useState(false);
   const [showReasoningDrawer, setShowReasoningDrawer] = useState(false);
-  
-  // PHASE 4: Render thinking message
-  if (isThinking) {
-    return (
-      <div className="flex items-start gap-3 p-4 bg-primary/5 border-l-4 border-primary/40 rounded-r-lg animate-pulse">
-        <Loader2 className="w-4 h-4 animate-spin text-primary mt-1" />
-        <p className="text-sm text-muted-foreground italic">{content}</p>
-      </div>
-    );
-  }
-  
   // ROBUST NARRATIVE TEXT - Try multiple sources with clear priority and clean markdown
   const narrativeText = useMemo(() => {
     const sources = [
@@ -97,6 +87,16 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
     'commissioning': 'Commissioning Expert',
     'health-safety': 'Health & Safety Officer'
   };
+  
+  // ✅ CONDITIONAL RENDER - After all hooks
+  if (isThinking) {
+    return (
+      <div className="flex items-start gap-3 p-4 bg-primary/5 border-l-4 border-primary/40 rounded-r-lg animate-pulse">
+        <Loader2 className="w-4 h-4 animate-spin text-primary mt-1" />
+        <p className="text-sm text-muted-foreground italic">{content}</p>
+      </div>
+    );
+  }
   
   return (
     <div className="space-y-4 text-left max-w-full overflow-hidden">
