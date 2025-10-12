@@ -5,6 +5,7 @@ import { Download, RotateCcw, Lightbulb, MessageSquare } from "lucide-react";
 import { AgentCard } from "./AgentCard";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
+import { parseAgentResponse } from "@/utils/agentTextProcessor";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -124,8 +125,45 @@ export const ResultsPage = ({ messages, selectedAgents, onExport, onNewConsultat
                     <div className="px-4 pb-4 space-y-3 border-t border-border pt-3">
                       {hasContent ? (
                         <>
-                          <div className="prose prose-sm dark:prose-invert max-w-none text-sm text-foreground whitespace-pre-wrap">
-                            {lastResponse}
+                          <div className="max-w-none text-sm space-y-3">
+                            {parseAgentResponse(lastResponse).map((section, idx) => {
+                              switch (section.type) {
+                                case 'header':
+                                  return (
+                                    <h3 key={idx} className="text-base font-semibold text-foreground mt-4 first:mt-0 mb-2">
+                                      {section.content}
+                                    </h3>
+                                  );
+                                case 'paragraph':
+                                  return (
+                                    <p key={idx} className="text-sm text-muted-foreground mb-3 leading-relaxed">
+                                      {section.content}
+                                    </p>
+                                  );
+                                case 'list':
+                                  return (
+                                    <ul key={idx} className="text-sm text-muted-foreground mb-3 space-y-1 pl-5">
+                                      {section.items?.map((item, i) => (
+                                        <li key={i} className="list-disc">{item}</li>
+                                      ))}
+                                    </ul>
+                                  );
+                                case 'calculation':
+                                  return (
+                                    <div key={idx} className="text-sm font-mono bg-muted/30 rounded px-3 py-2 mb-3 text-foreground">
+                                      {section.content}
+                                    </div>
+                                  );
+                                case 'citation':
+                                  return (
+                                    <p key={idx} className="text-xs italic text-muted-foreground border-l-2 border-elec-yellow/50 pl-3 mb-3">
+                                      {section.content}
+                                    </p>
+                                  );
+                                default:
+                                  return null;
+                              }
+                            })}
                           </div>
                           
                           {onReEngageAgent && (
