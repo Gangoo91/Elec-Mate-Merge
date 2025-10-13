@@ -17,6 +17,7 @@ import { detectEdgeCases } from './edgeCaseDetection.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
+import { getCachedQuery, cacheQuery, hashQuery } from '../_shared/query-cache.ts';
 import { getMaxZs, checkRCDRequirement } from "../shared/bs7671ProtectionData.ts";
 import { calculateCableCapacity } from '../_shared/calculationEngines.ts';
 import { 
@@ -108,6 +109,31 @@ serve(async (req) => {
     logger.info('Designer Agent v3.0 processing with Intelligent Hybrid RAG', { messageCount: messages.length });
 
     const circuitParams = extractCircuitParams(userMessage, currentDesign, incomingContext);
+    
+    // PHASE 1: Check query cache for instant responses (100ms)
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    
+    const queryHash = hashQuery(userMessage, circuitParams);
+    const cached = await getCachedQuery(supabase, queryHash);
+    
+    if (cached) {
+      logger.info('✨ Cache hit!', { queryHash, age: Date.now() - cached.timestamp });
+      
+      return new Response(JSON.stringify({
+        success: true,
+        response: cached.response,
+        structuredData: cached.structured_data,
+        enrichment: cached.enrichment,
+        citations: cached.citations,
+        rendering: cached.rendering,
+        cached: true,
+        cacheAge: Date.now() - cached.timestamp
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
     
     // PHASE 2: Detect edge cases BEFORE calling AI
     const edgeCase = detectEdgeCases(circuitParams, userMessage, currentDesign);
@@ -1452,12 +1478,24 @@ IMPORTANT - RESPONSE FORMAT:
       entities
     );
 
+    // Cache the response for future queries (fire and forget)
+    cacheQuery(supabase, {
+      queryHash,
+      regulations,
+      response: responseContent,
+      structuredData,
+      enrichment: enrichedResponse.enrichment,
+      citations: enrichedResponse.citations,
+      rendering: enrichedResponse.rendering,
+      timestamp: Date.now()
+    }).catch(err => logger.warn('Failed to cache query', { error: err.message }));
+
     return new Response(JSON.stringify({
       response: responseContent,
       structuredData,
       reasoning,
       calculationResults,
-      citations: enhancedCitations.length > 0 ? enhancedCitations : citations,
+      citations: enrichedResponse.citations, // FIX: Use enriched citations with full metadata
       enrichment: enrichedResponse.enrichment,
       rendering: enrichedResponse.rendering,
       confidence: 0.95,

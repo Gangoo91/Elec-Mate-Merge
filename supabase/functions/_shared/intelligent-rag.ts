@@ -375,6 +375,46 @@ async function vectorSearchWithEmbedding(
     console.warn('⚠️ Low quality RAG results - fewer than minimum threshold');
   }
 
+  // PHASE 4: Conditional Cross-Encoder (skip if high confidence)
+  const bs7671Results = resultMap.bs7671 || [];
+  if (bs7671Results.length > 0) {
+    const topResultConfidence = bs7671Results[0]?.hybrid_score || 0;
+    const searchMethod = bs7671Results[0]?.search_method || 'hybrid';
+    
+    // Only run cross-encoder if confidence is below threshold
+    if (topResultConfidence > 0.75 || searchMethod === 'exact') {
+      console.log('⚡ Skipping cross-encoder (high confidence)', { 
+        topResultConfidence, 
+        searchMethod 
+      });
+      
+      // Assign final scores without reranking
+      resultMap.bs7671 = bs7671Results.map((reg: any, idx: number) => ({
+        ...reg,
+        crossEncoderScore: topResultConfidence,
+        finalScore: reg.hybrid_score,
+        rank: idx + 1
+      }));
+    } else if (OPENAI_API_KEY) {
+      // Only rerank if we have API key
+      console.log('🔍 Running cross-encoder reranking');
+      const { rerankWithCrossEncoder } = await import('./cross-encoder-reranker.ts');
+      const logger = { info: console.log, warn: console.warn, error: console.error, debug: console.debug };
+      
+      try {
+        resultMap.bs7671 = await rerankWithCrossEncoder(
+          query,
+          bs7671Results,
+          OPENAI_API_KEY,
+          logger
+        );
+      } catch (error) {
+        console.warn('Cross-encoder failed, using hybrid scores', { error });
+        resultMap.bs7671 = bs7671Results;
+      }
+    }
+  }
+
   return {
     regulations: resultMap.bs7671 || [],
     designDocs: resultMap.design || [],
