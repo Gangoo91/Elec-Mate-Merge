@@ -39,14 +39,14 @@ interface AvailableAgent {
   priority: number;
 }
 
-// PHASE 5: Add Project Manager Agent
+// PHASE 5: Complete V3 Integration - All agents use world-class RAG
 const availableAgents: AvailableAgent[] = [
-  { name: 'designer', endpoint: 'designer-agent', capabilities: ['design', 'calculations', 'cable-sizing'], priority: 1 },
-  { name: 'health-safety', endpoint: 'health-safety-agent', capabilities: ['safety', 'risk-assessment', 'method-statements'], priority: 2 },
-  { name: 'installer', endpoint: 'installer-agent', capabilities: ['installation', 'practical-guidance', 'tools'], priority: 3 },
-  { name: 'inspector', endpoint: 'inspector-agent', capabilities: ['testing', 'inspection', 'certification'], priority: 4 },
-  { name: 'cost', endpoint: 'cost-agent', capabilities: ['pricing', 'materials', 'labour'], priority: 5 },
-  { name: 'project-mgmt', endpoint: 'project-mgmt-agent', capabilities: ['timeline', 'planning', 'coordination', 'scheduling'], priority: 6 }
+  { name: 'designer', endpoint: 'designer-v3', capabilities: ['design', 'calculations', 'cable-sizing'], priority: 1 },
+  { name: 'health-safety', endpoint: 'health-safety-v3', capabilities: ['safety', 'risk-assessment', 'method-statements'], priority: 2 },
+  { name: 'installer', endpoint: 'installer-v3', capabilities: ['installation', 'practical-guidance', 'tools'], priority: 3 },
+  { name: 'inspector', endpoint: 'inspector-v3', capabilities: ['testing', 'inspection', 'certification'], priority: 4 },
+  { name: 'cost', endpoint: 'cost-engineer-v3', capabilities: ['pricing', 'materials', 'labour'], priority: 5 },
+  { name: 'project-mgmt', endpoint: 'project-mgmt-v3', capabilities: ['timeline', 'planning', 'coordination', 'scheduling'], priority: 6 }
 ];
 
 function getCacheKey(messages: Message[], selectedAgents?: string[]): string {

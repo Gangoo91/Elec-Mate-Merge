@@ -12,6 +12,7 @@ import {
   callLovableAIWithTimeout,
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
+import { enrichResponse } from '../_shared/response-enricher.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -339,12 +340,24 @@ Include phases, resources, compliance requirements, and risk management.`;
       totalDuration: pmResult.projectPlan?.totalDuration
     });
 
-    // Step 5: Return response - flat format for router/UI
+    // Step 5: Enrich response with UI metadata
+    const enrichedResponse = enrichResponse(
+      pmResult,
+      pmKnowledge, // Already has confidence scores from rag-project-mgmt.ts
+      'project-mgmt',
+      { projectType, scope, timeline }
+    );
+
+    // Return enriched response
     const { response, suggestedNextAgents, projectPlan, resources, compliance, risks, recommendations } = pmResult;
     
     return new Response(
       JSON.stringify({
-        response,
+        success: true,
+        response: enrichedResponse.response,
+        enrichment: enrichedResponse.enrichment,
+        citations: enrichedResponse.citations,
+        rendering: enrichedResponse.rendering,
         structuredData: { projectPlan, resources, compliance, risks, recommendations },
         suggestedNextAgents: suggestedNextAgents || []
       }),

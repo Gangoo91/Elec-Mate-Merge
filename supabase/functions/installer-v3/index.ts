@@ -10,6 +10,8 @@ import {
   createClient,
   generateEmbeddingWithRetry,
 } from '../_shared/v3-core.ts';
+import { retrieveInstallationKnowledge } from '../_shared/rag-installation.ts';
+import { enrichResponse } from '../_shared/response-enricher.ts';
 
 /**
  * Phase 3: Query Expansion - Add technical synonyms and variations
@@ -168,44 +170,21 @@ serve(async (req) => {
     const queryEmbedding = await generateEmbeddingWithRetry(expandedQuery, OPENAI_API_KEY);
     logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
-    // Phase 2: Hybrid search (BM25 + Vector with RRF) - with graceful fallback
-    logger.debug('Executing hybrid search (BM25 + Vector)');
-    
-    let installKnowledge: any[] = [];
-    
-    try {
-      const { data: hybridResults, error: hybridError } = await supabase.rpc('search_installation_hybrid', {
-        query_text: expandedQuery,
-        query_embedding: queryEmbedding,
-        match_count: 12
-      });
+    // Get installation knowledge with reranking + confidence
+    const installKnowledge = await retrieveInstallationKnowledge(
+      expandedQuery,
+      12,
+      OPENAI_API_KEY,
+      { installationMethod, cableType, location },
+      logger
+    );
 
-      if (hybridError) {
-        throw hybridError;
-      }
-      
-      installKnowledge = hybridResults || [];
-      
-      logger.info('Hybrid search completed', { 
-        resultsCount: installKnowledge.length,
-        avgScore: installKnowledge.length > 0 
-          ? (installKnowledge.reduce((sum, r) => sum + (r.hybrid_score || 0), 0) / installKnowledge.length).toFixed(3)
-          : null
-      });
-    } catch (hybridError) {
-      logger.warn('Hybrid search failed, using vector fallback', { error: hybridError.message });
-      
-      // Graceful fallback to vector-only search using BS 7671 knowledge
-      const { data: vectorResults } = await supabase
-        .from('installation_knowledge')
-        .select('id, topic, content, source, metadata')
-        .order('id')
-        .limit(12);
-      
-      installKnowledge = vectorResults || [];
-      
-      logger.info('Vector fallback completed', { count: installKnowledge.length });
-    }
+    logger.info('Installation knowledge retrieved', {
+      count: installKnowledge.length,
+      avgConfidence: installKnowledge.length > 0
+        ? (installKnowledge.reduce((s, k) => s + (k.confidence?.overall || 0.7), 0) / installKnowledge.length).toFixed(2)
+        : 'N/A'
+    });
 
     // Build installation context with focused snippets (400 chars)
     const installContext = installKnowledge && installKnowledge.length > 0
@@ -400,9 +379,21 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       excerpt: (item.content || '').slice(0, 220) + '…'
     }));
 
+    // Enrich response with UI metadata
+    const enrichedResponse = enrichResponse(
+      installResult,
+      installKnowledge,
+      'installation',
+      { installationMethod, cableType, location }
+    );
+
     // Build final response
     const finalResponse = {
-      response: installResult.response,
+      success: true,
+      response: enrichedResponse.response,
+      enrichment: enrichedResponse.enrichment,
+      citations: enrichedResponse.citations,
+      rendering: enrichedResponse.rendering,
       structuredData: {
         installationSteps: installResult.installationSteps || [],
         practicalTips: installResult.practicalTips || [],
@@ -411,12 +402,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         materialsRequired: installResult.materialsRequired || [],
         totalEstimatedTime: installResult.totalEstimatedTime,
         difficultyLevel: installResult.difficultyLevel,
-        compliance: installResult.compliance,
-        ragPreview,
-        citations: ragPreview.map((r, i) => ({ 
-          number: r.number || `Ref ${i+1}`, 
-          title: r.section || 'BS 7671' 
-        }))
+        compliance: installResult.compliance
       },
       suggestedNextAgents: installResult.suggestedNextAgents || []
     };
