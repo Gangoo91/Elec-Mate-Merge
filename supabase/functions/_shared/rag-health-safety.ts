@@ -2,13 +2,16 @@
  * RAG Module for Health & Safety
  * Hybrid search (BM25 + Vector RRF) for health_safety_knowledge
  * - Query expansion for safety terms
- * - Semantic caching (60min TTL)
- * - Parallel vector + keyword search
+ * - Semantic caching (dynamic TTL based on confidence)
+ * - Cross-encoder reranking
+ * - Confidence scoring
  */
 
 import { createClient } from './deps.ts';
 import { generateEmbeddingWithRetry } from './v3-core.ts';
 import type { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { rerankWithCrossEncoder, type RegulationResult } from './cross-encoder-reranker.ts';
+import { calculateConfidence } from './confidence-scorer.ts';
 
 interface HealthSafetyResult {
   id: string;
@@ -96,17 +99,29 @@ async function checkSemanticCache(
 }
 
 /**
- * Store in semantic cache
+ * Calculate dynamic cache TTL
+ */
+function calculateCacheTTL(avgConfidence: number): number {
+  if (avgConfidence > 0.9) return 24 * 60 * 60 * 1000;
+  if (avgConfidence > 0.75) return 12 * 60 * 60 * 1000;
+  if (avgConfidence > 0.6) return 4 * 60 * 60 * 1000;
+  return 60 * 60 * 1000;
+}
+
+/**
+ * Store in semantic cache with confidence-based TTL
  */
 async function storeSemanticCache(
   supabase: SupabaseClient,
   queryHash: string,
   query: string,
   results: HealthSafetyResult[],
+  avgConfidence: number,
   logger: any
 ): Promise<void> {
   try {
-    const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+    const ttlMs = calculateCacheTTL(avgConfidence);
+    const expiresAt = new Date(Date.now() + ttlMs);
     
     await supabase
       .from('rag_cache')
@@ -116,11 +131,17 @@ async function storeSemanticCache(
         agent_name: 'health-safety',
         results,
         hit_count: 0,
+        cache_confidence: avgConfidence,
         created_at: new Date().toISOString(),
         expires_at: expiresAt.toISOString()
       });
 
-    logger.debug('Stored in cache', { queryHash, resultCount: results.length });
+    logger.debug('Stored in cache', { 
+      queryHash, 
+      resultCount: results.length,
+      confidence: avgConfidence.toFixed(2),
+      ttlHours: (ttlMs / (60 * 60 * 1000)).toFixed(1)
+    });
   } catch (err) {
     logger.warn('Cache store failed', { error: err instanceof Error ? err.message : String(err) });
   }
@@ -165,20 +186,73 @@ export async function searchHealthSafetyKnowledge(
 
     if (error) throw error;
 
-    const results = data || [];
+    let results = data || [];
+
+    // Cross-encoder reranking
+    if (results.length > 0) {
+      logger.debug('Reranking H&S knowledge with cross-encoder');
+      const rerankStart = Date.now();
+      
+      // Convert to RegulationResult format for reranking
+      const asRegulations: RegulationResult[] = results.map(r => ({
+        id: r.id,
+        regulation_number: r.topic,
+        section: r.source,
+        content: r.content,
+        metadata: r.metadata
+      }));
+      
+      const reranked = await rerankWithCrossEncoder(
+        query,
+        asRegulations,
+        openAiKey,
+        logger
+      );
+      
+      // Convert back to HealthSafetyResult format
+      results = reranked.map((r, idx) => ({
+        ...results[idx],
+        finalScore: r.finalScore,
+        crossEncoderScore: r.crossEncoderScore
+      }));
+      
+      logger.info('Cross-encoder reranking complete', {
+        duration: Date.now() - rerankStart
+      });
+    }
+
+    // Calculate confidence scores
+    const resultsWithConfidence = results.map(r => {
+      const asReg: RegulationResult = {
+        id: r.id,
+        regulation_number: r.topic,
+        section: r.source,
+        content: r.content
+      };
+      return {
+        ...r,
+        confidence: calculateConfidence(asReg, query, { scale })
+      };
+    });
+
+    // Calculate average confidence
+    const avgConfidence = resultsWithConfidence.length > 0
+      ? resultsWithConfidence.reduce((sum, r) => sum + (r.confidence?.overall || 0.7), 0) / resultsWithConfidence.length
+      : 0.7;
 
     logger.info('Hybrid H&S search complete', {
       duration: Date.now() - searchStart,
       resultsCount: results.length,
+      avgConfidence: avgConfidence.toFixed(2),
       avgScore: results.length > 0 
         ? (results.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) / results.length).toFixed(3)
         : 0
     });
 
-    // Store in cache
-    await storeSemanticCache(supabase, cacheKey, query, results, logger);
+    // Store in cache with dynamic TTL
+    await storeSemanticCache(supabase, cacheKey, query, resultsWithConfidence, avgConfidence, logger);
 
-    return results;
+    return resultsWithConfidence;
   } catch (error) {
     logger.error('Hybrid H&S search failed', {
       error: error instanceof Error ? error.message : String(error),

@@ -2,13 +2,17 @@
  * RAG Module for Designer Agent
  * Hybrid search (BM25 + Vector RRF) for BS7671 regulations + design knowledge
  * - Query expansion for electrical terms
- * - Semantic caching (60min TTL)
+ * - Semantic caching (dynamic TTL based on confidence)
  * - Parallel BS7671 + Design Knowledge searches
+ * - Cross-encoder reranking
+ * - Confidence scoring
  */
 
 import { createClient } from './deps.ts';
 import { generateEmbeddingWithRetry } from './v3-core.ts';
 import type { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { rerankWithCrossEncoder, type RegulationResult as CrossEncoderRegulation } from './cross-encoder-reranker.ts';
+import { calculateConfidence } from './confidence-scorer.ts';
 
 interface RegulationResult {
   id: string;
@@ -110,17 +114,29 @@ async function checkSemanticCache(
 }
 
 /**
- * Store results in semantic cache
+ * Calculate dynamic cache TTL based on confidence
+ */
+function calculateCacheTTL(avgConfidence: number): number {
+  if (avgConfidence > 0.9) return 24 * 60 * 60 * 1000; // 24h
+  if (avgConfidence > 0.75) return 12 * 60 * 60 * 1000; // 12h
+  if (avgConfidence > 0.6) return 4 * 60 * 60 * 1000; // 4h
+  return 60 * 60 * 1000; // 1h (default)
+}
+
+/**
+ * Store results in semantic cache with confidence-based TTL
  */
 async function storeSemanticCache(
   supabase: SupabaseClient,
   queryHash: string,
   query: string,
   results: any[],
+  avgConfidence: number,
   logger: any
 ): Promise<void> {
   try {
-    const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 60 minutes
+    const ttlMs = calculateCacheTTL(avgConfidence);
+    const expiresAt = new Date(Date.now() + ttlMs);
     
     await supabase
       .from('rag_cache')
@@ -130,11 +146,17 @@ async function storeSemanticCache(
         agent_name: 'designer',
         results,
         hit_count: 0,
+        cache_confidence: avgConfidence,
         created_at: new Date().toISOString(),
         expires_at: expiresAt.toISOString()
       });
 
-    logger.debug('Stored in cache', { queryHash, resultCount: results.length });
+    logger.debug('Stored in cache', { 
+      queryHash, 
+      resultCount: results.length,
+      confidence: avgConfidence.toFixed(2),
+      ttlHours: (ttlMs / (60 * 60 * 1000)).toFixed(1)
+    });
   } catch (err) {
     logger.warn('Cache store failed', { error: err instanceof Error ? err.message : String(err) });
   }
@@ -186,22 +208,56 @@ export async function retrieveDesignKnowledge(
       })
     ]);
 
-    const regulations = bs7671Results.data || [];
+    let regulations = bs7671Results.data || [];
     const designKnowledge = designResults.data || [];
+
+    // Cross-encoder reranking for regulations
+    if (regulations.length > 0) {
+      logger.debug('Reranking regulations with cross-encoder');
+      const rerankStart = Date.now();
+      
+      regulations = await rerankWithCrossEncoder(
+        query,
+        regulations as CrossEncoderRegulation[],
+        openAiKey,
+        logger
+      );
+      
+      logger.info('Cross-encoder reranking complete', {
+        duration: Date.now() - rerankStart,
+        topScore: regulations[0]?.finalScore?.toFixed(3),
+        bottomScore: regulations[regulations.length - 1]?.finalScore?.toFixed(3)
+      });
+    }
+
+    // Calculate confidence scores for each regulation
+    const regulationsWithConfidence = regulations.map(reg => ({
+      ...reg,
+      confidence: calculateConfidence(reg as any, query, { circuitType })
+    }));
+
+    // Calculate average confidence for cache TTL
+    const avgConfidence = regulationsWithConfidence.length > 0
+      ? regulationsWithConfidence.reduce((sum, r) => sum + (r.confidence?.overall || 0.7), 0) / regulationsWithConfidence.length
+      : 0.7;
 
     logger.info('Hybrid design search complete', {
       duration: Date.now() - searchStart,
       regulationsCount: regulations.length,
       designKnowledgeCount: designKnowledge.length,
+      avgConfidence: avgConfidence.toFixed(2),
       avgRegScore: regulations.length > 0 
         ? (regulations.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) / regulations.length).toFixed(3)
         : 0
     });
 
-    const results = { regulations, designKnowledge };
+    const results = { 
+      regulations: regulationsWithConfidence, 
+      designKnowledge 
+    };
 
-    // Store in cache
-    await storeSemanticCache(supabase, cacheKey, query, results, logger);
+    // Store in cache with dynamic TTL
+    await storeSemanticCache(supabase, cacheKey, query, results, avgConfidence, logger);
 
     return results;
   } catch (error) {

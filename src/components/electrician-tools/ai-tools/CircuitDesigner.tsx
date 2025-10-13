@@ -9,10 +9,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import ReactMarkdown from "react-markdown";
 import { Badge } from "@/components/ui/badge";
+import { EnhancedAgentResponse } from "@/components/agent-response/EnhancedAgentResponse";
 
 const CircuitDesigner = () => {
   const [prompt, setPrompt] = useState("");
   const [analysisResult, setAnalysisResult] = useState("");
+  const [agentResponse, setAgentResponse] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -117,6 +119,7 @@ Please provide exhaustive detail for materials - include everything from the sma
       }
       
       setAnalysisResult(data.response || "No analysis result received");
+      setAgentResponse(data); // Store full agent response for enhanced UI
       setProgress(100);
       
       clearInterval(progressInterval);
@@ -465,35 +468,46 @@ Please provide exhaustive detail for materials - include everything from the sma
               </CardHeader>
               
               <CardContent className="p-4 sm:p-6 pt-0">
-                <div className="prose prose-invert prose-lg max-w-none text-gray-300">
-                  <ReactMarkdown 
-                    components={{
-                      h1: ({children}) => (
-                        <h1 className="text-elec-yellow font-bold text-2xl mb-4 mt-6 first:mt-0 flex items-center gap-3">
-                          <div className="w-8 h-8 bg-elec-yellow/20 rounded-lg flex items-center justify-center">
-                            <FileText className="h-4 w-4 text-elec-yellow" />
-                          </div>
-                          {children}
-                        </h1>
-                      ),
-                      h2: ({children}) => (
-                        <h2 className="text-elec-yellow font-bold text-xl mb-3 mt-5 first:mt-0 border-b border-elec-yellow/20 pb-2">
-                          {children}
-                        </h2>
-                      ),
-                      h3: ({children}) => <h3 className="text-elec-yellow/90 font-semibold text-lg mb-2 mt-4">{children}</h3>,
-                      p: ({children}) => <p className="text-muted-foreground mb-3 leading-relaxed text-base">{children}</p>,
-                      ul: ({children}) => <ul className="text-gray-300 mb-4 ml-6 space-y-1">{children}</ul>,
-                      ol: ({children}) => <ol className="text-gray-300 mb-4 ml-6 space-y-1">{children}</ol>,
-                      li: ({children}) => <li className="leading-relaxed">{children}</li>,
-                      strong: ({children}) => <strong className="text-white font-semibold">{children}</strong>,
-                      em: ({children}) => <em className="text-elec-yellow/80">{children}</em>,
-                      code: ({children}) => <code className="bg-elec-dark/80 px-2 py-1 rounded-md text-elec-yellow text-sm border border-elec-yellow/20">{children}</code>,
-                    }}
-                  >
-                    {analysisResult}
-                  </ReactMarkdown>
-                </div>
+                {agentResponse?.enrichment ? (
+                  // NEW: Enhanced structured response
+                  <EnhancedAgentResponse 
+                    response={agentResponse.response}
+                    enrichment={agentResponse.enrichment}
+                    citations={agentResponse.citations}
+                    rendering={agentResponse.rendering}
+                  />
+                ) : (
+                  // FALLBACK: Legacy markdown for backward compatibility
+                  <div className="prose prose-invert prose-lg max-w-none text-gray-300">
+                    <ReactMarkdown 
+                      components={{
+                        h1: ({children}) => (
+                          <h1 className="text-elec-yellow font-bold text-2xl mb-4 mt-6 first:mt-0 flex items-center gap-3">
+                            <div className="w-8 h-8 bg-elec-yellow/20 rounded-lg flex items-center justify-center">
+                              <FileText className="h-4 w-4 text-elec-yellow" />
+                            </div>
+                            {children}
+                          </h1>
+                        ),
+                        h2: ({children}) => (
+                          <h2 className="text-elec-yellow font-bold text-xl mb-3 mt-5 first:mt-0 border-b border-elec-yellow/20 pb-2">
+                            {children}
+                          </h2>
+                        ),
+                        h3: ({children}) => <h3 className="text-elec-yellow/90 font-semibold text-lg mb-2 mt-4">{children}</h3>,
+                        p: ({children}) => <p className="text-muted-foreground mb-3 leading-relaxed text-base">{children}</p>,
+                        ul: ({children}) => <ul className="text-gray-300 mb-4 ml-6 space-y-1">{children}</ul>,
+                        ol: ({children}) => <ol className="text-gray-300 mb-4 ml-6 space-y-1">{children}</ol>,
+                        li: ({children}) => <li className="leading-relaxed">{children}</li>,
+                        strong: ({children}) => <strong className="text-white font-semibold">{children}</strong>,
+                        em: ({children}) => <em className="text-elec-yellow/80">{children}</em>,
+                        code: ({children}) => <code className="bg-elec-dark/80 px-2 py-1 rounded-md text-elec-yellow text-sm border border-elec-yellow/20">{children}</code>,
+                      }}
+                    >
+                      {analysisResult}
+                    </ReactMarkdown>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
