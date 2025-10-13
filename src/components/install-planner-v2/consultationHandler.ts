@@ -12,38 +12,68 @@ export const handleConsultation = async (
   userMessage: string,
   messages: any[],
   selectedAgents: AgentType[],
-  currentDesign: any
+  currentDesign: any,
+  maxRetries = 2,
+  onProgress?: (message: string) => void
 ) => {
   // Single-agent conversational flow - no mode needed
   const agentsToCall = selectedAgents;
+  
+  let lastError: Error | null = null;
 
-  try {
-    // Call agent-router edge function
-    const { data, error } = await supabase.functions.invoke('agent-router', {
-      body: {
-        conversationId: crypto.randomUUID(),
-        userMessage,
-        selectedAgents: agentsToCall,
-        messages,
-        currentDesign
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      // Show RAG progress indicator for H&S agent
+      if (agentsToCall.includes('health-safety') && onProgress) {
+        if (attempt === 0) {
+          onProgress('🔍 Searching health & safety knowledge base...');
+        } else {
+          onProgress(`🔄 Retrying H&S knowledge search (attempt ${attempt + 1})...`);
+        }
       }
-    });
+      
+      // Call agent-router edge function
+      const { data, error } = await supabase.functions.invoke('agent-router', {
+        body: {
+          conversationId: crypto.randomUUID(),
+          userMessage,
+          selectedAgents: agentsToCall,
+          messages,
+          currentDesign
+        }
+      });
 
-    if (error) {
-      // Wrap errors with friendly context
-      console.error('Agent router error:', error);
-      throw new Error(`Agent call failed: ${error.message || 'Unknown error'}`);
+      if (error) {
+        throw new Error(`Agent call failed: ${error.message || 'Unknown error'}`);
+      }
+      
+      // Success - show completion message
+      if (agentsToCall.includes('health-safety') && onProgress) {
+        onProgress('✅ H&S knowledge retrieved - generating risk assessment...');
+      }
+
+      return {
+        responses: data.responses || [],
+        suggestedNextAgents: data.suggestedNextAgents || [],
+        consultedAgents: data.consultedAgents || []
+      };
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error('Agent consultation failed');
+      console.error(`Consultation attempt ${attempt + 1} failed:`, lastError);
+      
+      // Don't retry if we've exhausted attempts
+      if (attempt === maxRetries) {
+        break;
+      }
+      
+      // Exponential backoff: 1s, 2s, 4s
+      const delay = 1000 * Math.pow(2, attempt);
+      console.log(`⏳ Waiting ${delay}ms before retry...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
     }
-
-    return {
-      responses: data.responses || [],
-      suggestedNextAgents: data.suggestedNextAgents || [],
-      consultedAgents: data.consultedAgents || []
-    };
-  } catch (err) {
-    // Ensure errors are always structured for UI display
-    const message = err instanceof Error ? err.message : 'Agent consultation failed';
-    console.error('Consultation handler error:', message);
-    throw new Error(message);
   }
+  
+  // All retries exhausted
+  console.error('Consultation handler error:', lastError);
+  throw lastError || new Error('Agent consultation failed');
 };

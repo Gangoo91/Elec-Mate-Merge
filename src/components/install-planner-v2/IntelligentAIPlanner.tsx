@@ -551,11 +551,15 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     setIsLoading(true);
     setReasoningSteps([]);
 
-    // Add agent-specific typing indicator
+    // Add agent-specific typing indicator with RAG progress
     const agentDisplayName = getAgentName(currentAgent);
+    const initialMessage = currentAgent === 'health-safety' 
+      ? `🔍 ${agentDisplayName} searching knowledge base…`
+      : `Talking to ${agentDisplayName}… setting up your installation data…`;
+      
     setMessages(prev => [...prev, { 
       role: 'assistant', 
-      content: `Talking to ${agentDisplayName}… setting up your installation data…`,
+      content: initialMessage,
       activeAgents: [currentAgent],
       agentName: currentAgent,
       isTyping: true

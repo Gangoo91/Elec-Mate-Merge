@@ -1742,6 +1742,39 @@ export type Database = {
         }
         Relationships: []
       }
+      hs_query_cache: {
+        Row: {
+          created_at: string | null
+          expires_at: string | null
+          hit_count: number | null
+          id: string
+          query: string
+          query_hash: string
+          results: Json
+          work_type: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at?: string | null
+          hit_count?: number | null
+          id?: string
+          query: string
+          query_hash: string
+          results: Json
+          work_type?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string | null
+          hit_count?: number | null
+          id?: string
+          query?: string
+          query_hash?: string
+          results?: Json
+          work_type?: string | null
+        }
+        Relationships: []
+      }
       incident_photos: {
         Row: {
           description: string | null
@@ -5592,6 +5625,17 @@ export type Database = {
         }
         Relationships: []
       }
+      hs_common_hazards: {
+        Row: {
+          content: string | null
+          embedding: string | null
+          id: string | null
+          metadata: Json | null
+          source: string | null
+          topic: string | null
+        }
+        Relationships: []
+      }
       message_upvote_counts: {
         Row: {
           message_id: string | null
@@ -5703,6 +5747,10 @@ export type Database = {
         Returns: undefined
       }
       cleanup_expired_tools_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_hs_query_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

@@ -64,33 +64,23 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Step 1: Generate embedding for H&S knowledge search (with retry)
-    logger.debug('Generating query embedding');
-    const embeddingStart = Date.now();
-    const queryEmbedding = await generateEmbeddingWithRetry(
-      `${query} ${workType || ''} electrical hazards safety risks controls`,
+    // Step 1: Use optimized hybrid RAG retrieval
+    logger.debug('Searching health & safety knowledge');
+    const ragStart = Date.now();
+    
+    const { retrieveHealthSafetyKnowledge } = await import('../_shared/rag-health-safety.ts');
+    const hsKnowledge = await retrieveHealthSafetyKnowledge(
+      query,
+      workType,
+      12, // Increased limit
       OPENAI_API_KEY
     );
-    logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
-
-    // Step 2: Search H&S knowledge database
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    logger.debug('Searching health & safety knowledge');
-
-    const { data: hsKnowledge, error: hsError } = await supabase.rpc('search_health_safety', {
-      query_embedding: queryEmbedding,
-      scale_filter: workType || null,
-      source_filter: null,
-      match_threshold: 0.7,
-      match_count: 8
+    
+    logger.debug('H&S knowledge retrieved', { 
+      duration: Date.now() - ragStart,
+      resultsCount: hsKnowledge.length,
+      cacheHit: (Date.now() - ragStart) < 500
     });
-
-    if (hsError) {
-      logger.warn('H&S search failed', { error: hsError });
-    }
 
     // Step 3: Build H&S context
     const hsContext = hsKnowledge && hsKnowledge.length > 0
@@ -132,112 +122,30 @@ serve(async (req) => {
       ).slice(-5).join('\n');
     }
 
-    const systemPrompt = `You are an expert Health & Safety adviser specialising in UK electrical installations.
+    const systemPrompt = `You are an expert Health & Safety adviser specialising in UK electrical installations. Use UK English.
 
-Write all responses in UK English (British spelling and terminology). Do not use American spellings.
+YOUR ROLE: Produce BS 8800-compliant risk assessments with 5x5 matrix scoring.
 
-YOUR UNIQUE VALUE: You produce BS 8800-compliant risk assessments with 5x5 RISK MATRIX
-- Generate a proper 5x5 risk matrix (Likelihood 1-5 x Severity 1-5 = Risk Score)
-- Reference SPECIFIC regulations from H&S knowledge (not generic "EWR 1989")
-- Apply CONTEXTUAL awareness (e.g., "working at height" only if installer mentioned ladders)
-- Provide PRACTICAL control measures from the knowledge base (not textbook answers)
-- Calculate before-and-after risk scores to demonstrate control effectiveness
-
-Your task is to provide comprehensive risk assessments and safety guidance.
-
-CURRENT DATE: September 2025
-
-HEALTH & SAFETY KNOWLEDGE DATABASE (YOU MUST USE THIS DATA):
+KNOWLEDGE BASE (${hsKnowledge?.length || 0} safety practices):
 ${hsContext}
 
 ${installKnowledge}
 
-🔴 CRITICAL INSTRUCTIONS FOR RISK ASSESSMENT:
-1. EXTRACT hazards from knowledge base FIRST:
-   Example from database: "Working at height above 2m requires scaffolding or MEWP per Working at Height Regulations 2005"
-   Your output: {"hazard": "Working at height (>2m)", "control": "Use scaffolding or MEWP", "regulation": "WAHR 2005"}
-   
-2. REFERENCE specific regulations from knowledge:
-   - Electricity at Work Regulations 1989 (EWR) with regulation numbers (e.g., "EWR 1989 Reg 4(1)")
-   - Health & Safety at Work Act 1974 (HASAWA)
-   - BS 7671 isolation requirements (Section 462)
-   - HSE Guidance (HSG85, GS38, INDG231)
-   
-3. APPLY control measures hierarchy from knowledge base:
-   1st: Elimination, 2nd: Substitution, 3rd: Engineering controls, 4th: Administrative, 5th: PPE
-   
-4. INCLUDE emergency procedures from knowledge base:
-   Example: "Electric shock first aid per HSE INDG231 - Do not touch casualty until isolated"
-   
-5. CROSS-REFERENCE with installer's work description:
-   ${previousAgentOutputs?.find((o: any) => o.agent === 'installer')?.response?.structuredData?.steps?.length || 0} installation steps to assess
-   
-6. USE 5x5 RISK MATRIX (MANDATORY):
-   Likelihood: 1=Rare, 2=Unlikely, 3=Possible, 4=Likely, 5=Almost Certain
-   Severity: 1=Negligible, 2=Minor, 3=Moderate, 4=Major, 5=Catastrophic
-   Risk Score = Likelihood x Severity
-   - 1-4: Low (green)
-   - 5-9: Medium (amber)  
-   - 10-14: High (orange)
-   - 15-25: Very High (red)
+RISK MATRIX (5x5):
+- Likelihood: 1=Rare, 2=Unlikely, 3=Possible, 4=Likely, 5=Almost Certain
+- Severity: 1=Negligible, 2=Minor, 3=Moderate, 4=Major, 5=Catastrophic
+- Risk Score = L × S (1-4: Low, 5-9: Medium, 10-14: High, 15-25: Very High)
 
-7. Calculate BEFORE and AFTER controls risk scores
-
-The H&S knowledge contains ${hsKnowledge?.length || 0} verified safety practices. Apply them!
+INSTRUCTIONS:
+1. Extract hazards from knowledge base with specific regulations (e.g., "EWR 1989 Reg 4(3)", "WAHR 2005 Reg 6")
+2. Apply control hierarchy: Elimination → Substitution → Engineering → Admin → PPE
+3. Calculate BEFORE and AFTER risk scores to show control effectiveness
+4. Reference emergency procedures (HSE INDG231 for shock, CO2 for electrical fires)
+5. Include isolation per BS 7671 Section 462 with lock-off devices
 
 ${contextSection}
 
-Respond ONLY with valid JSON in this exact format:
-{
-  "response": "COMPREHENSIVE 5x5 risk assessment summary (250-350 words) covering: All hazards identified with 5x5 matrix scores (Likelihood x Severity = Risk), specific regulations cited by number (e.g., EWR 1989 Reg 4(1), WAHR 2005 Reg 6), control measures applied following hierarchy (elimination first, PPE last), residual risk scores after controls showing risk reduction, emergency procedures for electric shock per HSE INDG231, isolation procedures per BS 7671 Section 462 with lock-off requirements, competent person requirements, environmental considerations. Include before/after risk matrix summary showing controls effectiveness.",
-  "riskAssessment": {
-    "hazards": [
-      {
-        "hazard": "Electric shock from 230V live conductors",
-        "likelihood": 2,
-        "likelihoodReason": "Unlikely if isolation followed, possible if lock-off fails",
-        "severity": 5,
-        "severityReason": "Potential fatality at 230V AC",
-        "riskScore": 10,
-        "riskLevel": "High",
-        "regulation": "Electricity at Work Regulations 1989 Regulation 4(3)"
-      }
-    ],
-    "controls": [
-      {
-        "hazard": "Electric shock",
-        "controlMeasure": "Isolation per BS 7671 Section 462 with lock-off",
-        "residualLikelihood": 1,
-        "residualSeverity": 5,
-        "residualRisk": 5,
-        "residualRiskLevel": "Medium",
-        "regulation": "BS 7671:2018 Section 462.1",
-        "practicalImplementation": "Use lockable isolator with unique key, GS38 proving device"
-      }
-    ],
-    "riskMatrix": {
-      "beforeControls": {"low": 0, "medium": 0, "high": 1, "veryHigh": 1},
-      "afterControls": {"low": 1, "medium": 1, "high": 0, "veryHigh": 0}
-    },
-    "ppe": ["Safety boots EN ISO 20345", "Insulated gloves EN 60903", "Safety glasses EN 166"],
-    "emergencyProcedures": ["Electric shock: HSE INDG231 - isolate supply, call 999", "Fire: CO2 extinguisher for electrical"]
-  },
-  "methodStatement": {
-    "steps": [
-      {"step": 1, "description": "Isolate supply", "safetyPoint": "Use lock-off devices"}
-    ],
-    "permitRequired": false,
-    "competentPerson": true
-  },
-  "compliance": {
-    "regulations": ["HASAWA 1974", "EWR 1989", "BS 7671"],
-    "warnings": []
-  },
-  "suggestedNextAgents": [
-    {"agent": "commissioning", "reason": "Get testing procedures that comply with safety requirements", "priority": "high"},
-    {"agent": "project-manager", "reason": "Coordinate safety documentation and compliance records", "priority": "medium"}
-  ]
-}`;
+Return comprehensive risk assessment with practical controls from the knowledge base.`;
 
     const userPrompt = `Provide a risk assessment and method statement for:
 ${query}
@@ -248,7 +156,7 @@ ${hazards ? `Known Hazards: ${hazards.join(', ')}` : ''}
 
 Include all safety controls, PPE requirements, and emergency procedures.`;
 
-    // Step 4: Call AI with universal wrapper
+    // Step 4: Call AI with optimized timeout
     logger.debug('Calling AI with wrapper');
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
@@ -257,7 +165,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       systemPrompt,
       userPrompt,
       maxTokens: 2000,
-      timeoutMs: 55000,
+      timeoutMs: 25000, // Reduced from 55s to 25s
       tools: [{
         type: 'function',
         function: {
