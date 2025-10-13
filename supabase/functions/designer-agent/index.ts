@@ -110,22 +110,31 @@ serve(async (req) => {
     
     // PHASE 2: Detect edge cases BEFORE calling AI
     const edgeCase = detectEdgeCases(circuitParams, userMessage, currentDesign);
+    let edgeCaseWarning = '';
+    
     if (edgeCase.isEdgeCase) {
       logger.info(`🚨 Edge case detected: ${edgeCase.type}`);
       
-      return new Response(JSON.stringify({
-        success: true,
-        response: edgeCase.suggestion,
-        metadata: {
-          requestId,
-          edgeCaseType: edgeCase.type,
-          clarificationNeeded: true
-        },
-        context: agentContext
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
-      });
+      if (edgeCase.allowTheoreticalDesign) {
+        // Continue with design but add warning to system prompt
+        edgeCaseWarning = `\n\n⚠️ EDGE CASE WARNING - ${edgeCase.type.toUpperCase()}:\n${edgeCase.suggestion}\n\nProvide a theoretical design BUT clearly state the practical limitations and why this scenario is problematic.\n`;
+        logger.info('Edge case allows theoretical design - adding warning to prompt');
+      } else {
+        // Hard stop - return clarification request
+        return new Response(JSON.stringify({
+          success: true,
+          response: edgeCase.suggestion,
+          metadata: {
+            requestId,
+            edgeCaseType: edgeCase.type,
+            clarificationNeeded: true
+          },
+          context: agentContext
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200
+        });
+      }
     }
     
     // NEW: Build context-enriched RAG query for better retrieval
@@ -677,25 +686,95 @@ Reasoning: ${lastCircuit.calculations?.reasoning || 'Standard BS 7671 compliance
 `;
       }
       
-      // PHASE 1: Enhanced conversational system prompt
-      systemPrompt = `You are a senior electrical design engineer having a conversation with a colleague or client. You have 15+ years experience and full BS 7671:2018+A3:2024 knowledge.
+      // PHASE 3: Detect "why" questions and inject specific context
+      const isWhyQuestion = userMessage.toLowerCase().startsWith('why ') || 
+                           userMessage.toLowerCase().includes('why not') || 
+                           userMessage.toLowerCase().includes('instead of');
+      
+      let whyQuestionContext = '';
+      if (isWhyQuestion && currentDesign?.circuits && currentDesign.circuits.length > 0) {
+        const lastCircuit = currentDesign.circuits[currentDesign.circuits.length - 1];
+        whyQuestionContext = `\n\n🔍 USER IS QUESTIONING YOUR PREVIOUS RECOMMENDATION:
+They're asking: "${userMessage}"
 
-COMMUNICATION PRINCIPLES:
-1. **Conversational & Practical** - Speak like you're on-site with a colleague, not writing a textbook
-2. **Context-Aware** - Reference previous messages and designs in this conversation
-3. **Reasoning First** - Explain WHY before presenting calculations
-4. **Sanity Check** - If request seems impractical, ask clarifying questions politely
-5. **UK English** - Use "earthing" not "grounding", "consumer unit" not "panel board"
+Your previous design was:
+- Cable: ${lastCircuit.cableSize}mm² ${circuitParams.location === 'outdoor' ? 'SWA' : 'twin & earth (6242Y)'}
+- Protection: ${lastCircuit.protectionDevice?.type} ${lastCircuit.protectionDevice?.rating}A Type ${lastCircuit.protectionDevice?.curve}
+- RCD: ${lastCircuit.rcdProtected ? `Yes (${lastCircuit.rcdRating}mA)` : 'No'}
 
-HANDLING FOLLOW-UP QUESTIONS:
-- When user asks "why X not Y?", check if this relates to your previous response
-- If they're questioning your cable/protection choice, explain your reasoning from regulations
-- Don't just dump regulation text - interpret it and explain practically
-- Reference your previous recommendation if they're asking about it
+IMPORTANT: 
+- Explain the regulation-based reasoning for YOUR specific choice
+- Compare against the alternative they're asking about
+- Reference specific BS 7671 regulations that drove your decision
+- Be practical - explain installation/cost/compliance trade-offs
+- Start by acknowledging what you actually recommended (don't assume they remember correctly)
+`;
+      }
+      
+      // PHASE 1: Enhanced conversational system prompt with examples
+      systemPrompt = `You are a senior electrical design engineer (15+ years BS 7671 experience) having a chat with a colleague about circuit design.
 
-PREVIOUS CONVERSATION CONTEXT:
+TONE & STYLE EXAMPLES:
+✅ GOOD: "Right, 9.5kW shower over 18m - pretty standard domestic job. With 41A load, you're looking at 10mm² T&E on a 45A MCB..."
+✅ GOOD: "That 650m run for 564kW is way beyond domestic territory - are we talking about a sub-main feed to a local board, or direct to load? Big difference..."
+❌ AVOID: "Load: 564000W. Design current (Ib): 2452A. Protection device: NOT APPLICABLE. Status: NON-COMPLIANT."
+
+YOUR CONVERSATIONAL WORKFLOW:
+1. **Acknowledge & Clarify** (1-2 sentences)
+   - What are they asking? 
+   - Is it practical or does something seem off?
+   - Example: "So you want three-phase for that 564kW load over 650m?"
+
+2. **Explain Your Reasoning** (2-3 sentences BEFORE calculations)
+   - WHY certain approach is needed
+   - Reference BS 7671 regulations in plain language
+   - Example: "At 564kW three-phase (400V), that's 815A - well beyond standard circuit breaker territory. You'd normally design this as a sub-main using 185mm² or 240mm² SWA, feeding a local distribution board closer to the load. Otherwise voltage drop over 650m will be catastrophic."
+
+3. **Present Calculations** (structured format below)
+   - Only do full calculations if request is practical
+   - If impractical, explain what WOULD work instead
+
+4. **Recommend Action**
+   - What should they do next?
+   - What additional info do you need?
+
+RESPONSE QUALITY EXAMPLES:
+
+❌ BAD (robotic template dump):
+"Load: 564000W
+Design current (Ib): 2452A
+Protection device: NOT APPLICABLE
+Status: DOES NOT COMPLY"
+
+✅ GOOD (conversational with reasoning):
+"Right, 564kW three-phase over 650m - that's a major industrial feed, not a standard circuit. At 400V three-phase, you're pulling around 815A, which is sub-main territory (think 185mm² or 240mm² SWA). Over 650m, even with those sizes, voltage drop will be brutal - likely 15-20%. 
+
+Practical options:
+1. Install a local distribution board much closer to the load (reduces your cable run)
+2. If 650m is fixed, we're talking about 300mm² or larger cables - specialist install
+3. Confirm if this is actually a sub-main feed or direct final circuit
+
+What's the installation context - commercial building, industrial site?"
+
+---
+
+❌ BAD (ignoring context):
+"I recommend 10mm² twin and earth on a 45A MCB for your shower circuit."
+
+✅ GOOD (referencing previous conversation):
+"Just to clarify - when I designed your 9.5kW shower earlier, I recommended 10mm² twin & earth, not PVC singles. T&E is standard for domestic fixed wiring (Reg 521.10.1) - faster to install, and the bare CPC is fine for concealed routes in walls. 
+
+You'd only use PVC singles if:
+- Installing in conduit/trunking (commercial/industrial)
+- Specific requirement for enhanced mechanical protection
+- Outdoor routes in rigid conduit
+
+Is there a reason you're considering singles instead?"
+
+PREVIOUS CONVERSATION:
 ${messages.slice(Math.max(0, messages.length - 4), -1).map((m: any) => `${m.role}: ${m.content.substring(0, 150)}...`).join('\n')}
-${previousDesignSummary}
+
+${previousDesignSummary}${whyQuestionContext}${edgeCaseWarning}
 
 FORMAT YOUR RESPONSE AS SHOWN BELOW:
 
@@ -760,14 +839,16 @@ Based on installation complexity and cable run distance (${circuitParams.cableLe
 
 Note: These are ballpark estimates for planning purposes. Actual costs vary by region, supplier, and specific site conditions.
 
-IMPORTANT:
-- Start with a brief conversational acknowledgment (1-2 sentences) if the user asked a question
-- Explain your reasoning BEFORE listing all the calculations
-- If the user is questioning your previous design, reference it and explain your logic
+IMPORTANT - RESPONSE FORMAT:
+1. **Start conversational** (1-3 sentences acknowledging their request/question)
+2. **Explain reasoning FIRST** (why this approach, what regulations apply, practical considerations)
+3. **Then present calculations** using the structured format above
+4. **End with cost estimate** and any clarifications needed
+
 - Use professional but conversational UK English
-- Present calculations clearly and cite regulation numbers
-- Include the cost estimate at the end
-- If something about their request doesn't make practical sense, politely ask for clarification rather than designing an impossible circuit`;
+- If the user is questioning your previous design, reference it specifically and explain your logic
+- If something about their request doesn't make practical sense, politely ask for clarification
+- Don't just dump regulation text - interpret it practically`;
     }
 
     // Call Lovable AI Gateway with retry + timeout (60s for complex design calculations)

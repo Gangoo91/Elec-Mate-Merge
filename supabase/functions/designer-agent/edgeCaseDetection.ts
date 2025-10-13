@@ -7,6 +7,7 @@ export interface EdgeCaseResult {
   isEdgeCase: boolean;
   type?: string;
   suggestion?: string;
+  allowTheoreticalDesign?: boolean; // Allow AI to continue with warnings
 }
 
 export function detectEdgeCases(
@@ -25,6 +26,7 @@ export function detectEdgeCases(
     return {
       isEdgeCase: true,
       type: 'excessive-single-phase-load',
+      allowTheoreticalDesign: false,
       suggestion: `That's ${kW}kW on single-phase 230V - that would draw ${(power / voltage).toFixed(0)}A which is well beyond typical domestic installations. 
 
 Did you mean:
@@ -44,6 +46,7 @@ Please clarify the load or supply type so I can design this properly.`
       return {
         isEdgeCase: true,
         type: 'long-distance-high-power',
+        allowTheoreticalDesign: true, // Can provide theoretical design with warnings
         suggestion: `A ${cableLength}m cable run for ${(power/1000).toFixed(1)}kW is going to have significant voltage drop issues - I estimate around ${estimatedVD.toFixed(0)}% which exceeds BS 7671 limits (5% max for power circuits).
 
 Practical options:
@@ -51,7 +54,7 @@ Practical options:
 2. **Verify distance** - Is ${cableLength}m definitely correct? That's quite a run.
 3. **Use larger cable** - Even with 16mm² or 25mm², voltage drop will be marginal.
 
-Which approach makes sense for your installation?`
+I can provide a theoretical design showing why it won't work, or you can clarify the installation context first.`
       };
     }
   }
@@ -61,6 +64,7 @@ Which approach makes sense for your installation?`
     return {
       isEdgeCase: true,
       type: 'excessive-cable-length',
+      allowTheoreticalDesign: true,
       suggestion: `That's a ${cableLength}m cable run - quite unusual for a domestic installation. 
 
 Just to confirm:
@@ -68,7 +72,7 @@ Just to confirm:
 • Are you running from the main consumer unit, or could there be a sub-distribution board closer?
 • Is this a commercial/industrial site with long cable routes?
 
-Once I know the context, I can design the circuit properly with appropriate voltage drop considerations.`
+I can show you the theoretical design, but the voltage drop calculations might indicate you need a different approach.`
     };
   }
   
@@ -79,6 +83,7 @@ Once I know the context, I can design the circuit properly with appropriate volt
     return {
       isEdgeCase: true,
       type: 'context-question-no-design',
+      allowTheoreticalDesign: false,
       suggestion: `I'd be happy to explain, but I don't have a previous design to reference. Could you either:
 
 1. Ask me to design a circuit first (e.g., "9.5kW shower, 18m run")
@@ -93,6 +98,7 @@ Then I can explain the cable selection, protection choices, and BS 7671 reasonin
     return {
       isEdgeCase: true,
       type: 'non-standard-voltage',
+      allowTheoreticalDesign: false,
       suggestion: `You've specified ${voltage}V three-phase, which is non-standard for UK installations (we typically use 400V line-to-line, or 230V line-to-neutral).
 
 Could you confirm:
