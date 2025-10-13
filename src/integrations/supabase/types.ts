@@ -399,6 +399,92 @@ export type Database = {
           },
         ]
       }
+      briefing_status_history: {
+        Row: {
+          briefing_id: string | null
+          changed_by: string | null
+          created_at: string | null
+          id: string
+          new_status: string | null
+          old_status: string | null
+          reason: string | null
+        }
+        Insert: {
+          briefing_id?: string | null
+          changed_by?: string | null
+          created_at?: string | null
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          reason?: string | null
+        }
+        Update: {
+          briefing_id?: string | null
+          changed_by?: string | null
+          created_at?: string | null
+          id?: string
+          new_status?: string | null
+          old_status?: string | null
+          reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefing_status_history_briefing_id_fkey"
+            columns: ["briefing_id"]
+            isOneToOne: false
+            referencedRelation: "team_briefings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      briefing_templates: {
+        Row: {
+          ai_prompt_template: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          is_default: boolean | null
+          is_public: boolean | null
+          name: string
+          pdf_layout_config: Json | null
+          template_schema: Json
+          template_type: string
+          updated_at: string | null
+          usage_count: number | null
+          user_id: string | null
+        }
+        Insert: {
+          ai_prompt_template?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_default?: boolean | null
+          is_public?: boolean | null
+          name: string
+          pdf_layout_config?: Json | null
+          template_schema: Json
+          template_type: string
+          updated_at?: string | null
+          usage_count?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          ai_prompt_template?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_default?: boolean | null
+          is_public?: boolean | null
+          name?: string
+          pdf_layout_config?: Json | null
+          template_schema?: Json
+          template_type?: string
+          updated_at?: string | null
+          usage_count?: number | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       bs7671_embeddings: {
         Row: {
           amendment: string | null
@@ -5033,6 +5119,8 @@ export type Database = {
         Row: {
           ai_generated: boolean | null
           ai_prompt_data: Json | null
+          ai_quality_score: number | null
+          attendee_signatures: Json | null
           attendees: Json
           briefing_date: string
           briefing_description: string | null
@@ -5048,6 +5136,7 @@ export type Database = {
           created_by_name: string | null
           custom_hazards: string | null
           duration_minutes: number | null
+          dynamic_fields: Json | null
           environment_type: string | null
           equipment_required: string[] | null
           hazards: string | null
@@ -5062,6 +5151,8 @@ export type Database = {
           pdf_generated_at: string | null
           pdf_url: string | null
           photos: Json | null
+          presentation_ended_at: string | null
+          presentation_started_at: string | null
           risk_level: string | null
           safety_points: string[] | null
           safety_warning: string | null
@@ -5070,13 +5161,17 @@ export type Database = {
           status: string | null
           team_size: number | null
           template_id: string
+          template_used_id: string | null
           updated_at: string
+          user_edits_count: number | null
           user_id: string
           work_scope: string | null
         }
         Insert: {
           ai_generated?: boolean | null
           ai_prompt_data?: Json | null
+          ai_quality_score?: number | null
+          attendee_signatures?: Json | null
           attendees?: Json
           briefing_date: string
           briefing_description?: string | null
@@ -5092,6 +5187,7 @@ export type Database = {
           created_by_name?: string | null
           custom_hazards?: string | null
           duration_minutes?: number | null
+          dynamic_fields?: Json | null
           environment_type?: string | null
           equipment_required?: string[] | null
           hazards?: string | null
@@ -5106,6 +5202,8 @@ export type Database = {
           pdf_generated_at?: string | null
           pdf_url?: string | null
           photos?: Json | null
+          presentation_ended_at?: string | null
+          presentation_started_at?: string | null
           risk_level?: string | null
           safety_points?: string[] | null
           safety_warning?: string | null
@@ -5114,13 +5212,17 @@ export type Database = {
           status?: string | null
           team_size?: number | null
           template_id: string
+          template_used_id?: string | null
           updated_at?: string
+          user_edits_count?: number | null
           user_id: string
           work_scope?: string | null
         }
         Update: {
           ai_generated?: boolean | null
           ai_prompt_data?: Json | null
+          ai_quality_score?: number | null
+          attendee_signatures?: Json | null
           attendees?: Json
           briefing_date?: string
           briefing_description?: string | null
@@ -5136,6 +5238,7 @@ export type Database = {
           created_by_name?: string | null
           custom_hazards?: string | null
           duration_minutes?: number | null
+          dynamic_fields?: Json | null
           environment_type?: string | null
           equipment_required?: string[] | null
           hazards?: string | null
@@ -5150,6 +5253,8 @@ export type Database = {
           pdf_generated_at?: string | null
           pdf_url?: string | null
           photos?: Json | null
+          presentation_ended_at?: string | null
+          presentation_started_at?: string | null
           risk_level?: string | null
           safety_points?: string[] | null
           safety_warning?: string | null
@@ -5158,7 +5263,9 @@ export type Database = {
           status?: string | null
           team_size?: number | null
           template_id?: string
+          template_used_id?: string | null
           updated_at?: string
+          user_edits_count?: number | null
           user_id?: string
           work_scope?: string | null
         }
@@ -5168,6 +5275,13 @@ export type Database = {
             columns: ["linked_near_miss_id"]
             isOneToOne: false
             referencedRelation: "near_miss_reports"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "team_briefings_template_used_id_fkey"
+            columns: ["template_used_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_templates"
             referencedColumns: ["id"]
           },
         ]
