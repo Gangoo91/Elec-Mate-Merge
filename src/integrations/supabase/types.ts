@@ -842,6 +842,36 @@ export type Database = {
           },
         ]
       }
+      cost_query_cache: {
+        Row: {
+          created_at: string | null
+          expires_at: string | null
+          hit_count: number | null
+          job_type: string | null
+          query: string
+          query_hash: string
+          results: Json
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at?: string | null
+          hit_count?: number | null
+          job_type?: string | null
+          query: string
+          query_hash: string
+          results: Json
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string | null
+          hit_count?: number | null
+          job_type?: string | null
+          query?: string
+          query_hash?: string
+          results?: Json
+        }
+        Relationships: []
+      }
       course_dates_cache: {
         Row: {
           course_id: string
@@ -5707,6 +5737,10 @@ export type Database = {
         Returns: boolean
       }
       cleanup_ai_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_cost_query_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

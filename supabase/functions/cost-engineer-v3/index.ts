@@ -13,6 +13,7 @@ import {
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 import { parseQueryEntities, type ParsedEntities } from '../_shared/query-parser.ts';
+import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
@@ -170,52 +171,59 @@ serve(async (req) => {
       loadType: parsedEntities.loadType
     });
 
-    // Step 2: Generate embedding for pricing search (with retry)
-    logger.debug('Generating query embedding');
-    const embeddingStart = Date.now();
-    const queryEmbedding = await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY);
-    logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
-
-    // Step 3: Parallel RAG search (OPTIMIZED FOR SPEED + CONTEXT)
+    // Step 2: Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    logger.debug('Starting parallel RAG searches');
-    const ragStart = Date.now();
-
-    // Parallelize all RAG calls + keyword search
-    const [
-      { data: pricingResults, error: pricingError },
-      { data: installationResults },
-      { data: pmResults },
-      { data: commonMaterials }
-    ] = await Promise.all([
-      supabase.rpc('search_pricing', {
-        query_embedding: queryEmbedding,
-        match_threshold: 0.65,
+    // Step 3: Parallel execution - embedding + RAG searches
+    logger.debug('Starting parallel embedding + RAG');
+    const parallelStart = Date.now();
+    
+    const [queryEmbedding, { data: installationResults }, { data: pmResults }] = await Promise.all([
+      // Generate embedding
+      generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
+      
+      // Installation knowledge search
+      supabase.rpc('search_installation_knowledge', {
+        query_embedding: null, // Will be filled after embedding
+        match_threshold: 0.55,
         match_count: 8
-      }),
+      }).then(() => ({ data: null })), // Placeholder
+      
+      // PM knowledge search  
+      supabase.rpc('search_project_mgmt', {
+        query_embedding: null,
+        match_threshold: 0.65,
+        match_count: 2
+      }).then(() => ({ data: null })) // Placeholder
+    ]);
+
+    // Step 4: Now execute RAG searches with embedding
+    const ragStart = Date.now();
+    const [pricingResults, actualInstallResults, actualPmResults] = await Promise.all([
+      // Use optimized pricing RAG module
+      searchPricingKnowledge(enhancedQuery, queryEmbedding, supabase, logger, parsedEntities.jobType),
+      
+      // Installation knowledge
       supabase.rpc('search_installation_knowledge', {
         query_embedding: queryEmbedding,
-        match_threshold: 0.55,  // Lowered from 0.70 for better RAG retrieval
-        match_count: 8          // Increased from 3 for more context
-      }),
+        match_threshold: 0.55,
+        match_count: 8
+      }).then(r => r.data),
+      
+      // PM knowledge
       supabase.rpc('search_project_mgmt', {
         query_embedding: queryEmbedding,
         match_threshold: 0.65,
         match_count: 2
-      }),
-      // Explicit keyword search for common electrical materials + SWA
-      supabase
-        .from('pricing_embeddings')
-        .select('*')
-        .or('item_name.ilike.%2.5mm%,item_name.ilike.%1.5mm%,item_name.ilike.%6mm%,item_name.ilike.%10mm%,item_name.ilike.%SWA%,item_name.ilike.%armoured%,item_name.ilike.%gland%,item_name.ilike.%consumer unit%,item_name.ilike.%RCBO%,item_name.ilike.%MCB%,item_name.ilike.%socket outlet%,item_name.ilike.%switch%,item_name.ilike.%downlight%')
-        .order('base_cost', { ascending: true })
-        .limit(12)
+      }).then(r => r.data)
     ]);
+    
+    logger.debug('All RAG searches completed', { duration: Date.now() - ragStart });
 
     // Keyword fallback for installation knowledge if vector search insufficient
+    let installationResults = actualInstallResults;
     if (!installationResults || installationResults.length < 3) {
       const installKeywords = ['SWA', 'armoured', 'outdoor', 'buried', 'underground', 'Section 522', 'Section 701', 'Section 722'];
       const keywordTerms = installKeywords.filter(k => 
@@ -244,33 +252,8 @@ serve(async (req) => {
       }
     }
 
-    // Merge vector + keyword results (dedupe by id)
-    let finalPricingResults = [
-      ...(pricingResults || []),
-      ...(commonMaterials || [])
-    ]
-      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i)
-      .slice(0, 15);
-
-    // Fallback: if still no results, use search-pricing-rag
-    if (finalPricingResults.length === 0) {
-      logger.warn('No pricing results from vector+keyword, using search-pricing-rag fallback');
-      const { data: ragData, error: ragError } = await supabase.functions.invoke('search-pricing-rag', {
-        body: { query, matchThreshold: 0.6, matchCount: 12, supplierFilter: 'all' }
-      });
-      if (!ragError && ragData?.materials) {
-        finalPricingResults = ragData.materials.slice(0, 12).map((m: any) => ({
-          item_name: m.item_name,
-          base_cost: m.unit_price,
-          price_per_unit: m.unit,
-          wholesaler: m.supplier,
-          in_stock: m.in_stock
-        }));
-        logger.info('Fallback pricing RAG used', { itemsFound: finalPricingResults.length });
-      }
-    }
-
-    logger.debug('RAG searches completed', { duration: Date.now() - ragStart });
+    const finalPricingResults = pricingResults;
+    const pmResults = actualPmResults;
 
     logger.info('RAG search complete', {
       pricingItems: finalPricingResults?.length || 0,
@@ -278,16 +261,9 @@ serve(async (req) => {
       pmGuides: pmResults?.length || 0
     });
 
-    // Step 3: Build pricing context with database + fallbacks
-    let pricingContext = '';
-    if (finalPricingResults && finalPricingResults.length > 0) {
-      pricingContext = `DATABASE PRICES (${finalPricingResults.length} items):\n` +
-        finalPricingResults.map((p: any) => 
-          `- ${p.item_name}: £${p.base_cost} (${p.wholesaler}${p.in_stock ? '' : ' - awaiting stock'})`
-        ).join('\n');
-    }
-    
-    pricingContext += `\n\nFALLBACK MARKET RATES (use if not in database):\n- 2.5mm² T&E cable: £0.98/metre (£95-£100 per 100m roll)\n- 1.5mm² T&E cable: £0.80/metre (£80 per 100m roll)\n- 6mm² T&E cable: £2.20/metre (£110 per 50m roll)\n- 10mm² T&E cable: £3.90/metre (£195 per 50m roll)\n- 2.5mm² SWA cable: £3.50/metre (3-core armoured)\n- 4mm² SWA cable: £4.80/metre (3-core armoured)\n- 6mm² SWA cable: £6.20/metre (3-core armoured)\n- 10mm² SWA cable: £9.50/metre (3-core armoured)\n- SWA gland 20mm: £10.00 (x2 per cable run)\n- 8-way consumer unit (RCD): £136.36\n- 10-way consumer unit (RCD): £156.00\n- 12-way consumer unit (RCD): £185.00\n- 16-way consumer unit (RCD): £245.00\n- 18-way consumer unit (RCD): £285.00\n- 40A RCBO: £28.50`;
+    // Step 5: Build pricing context using RAG module formatter
+    const pricingContext = formatPricingContext(finalPricingResults) +
+      `\n\nFALLBACK MARKET RATES (use if not in database):\n- 2.5mm² T&E cable: £0.98/metre\n- 1.5mm² T&E cable: £0.80/metre\n- 6mm² T&E cable: £2.20/metre\n- 10mm² T&E cable: £3.90/metre\n- 2.5mm² SWA: £3.50/m, 4mm² SWA: £4.80/m, 6mm² SWA: £6.20/m, 10mm² SWA: £9.50/m\n- SWA gland 20mm: £10 (x2)\n- Consumer units: 8-way £136, 10-way £156, 12-way £185, 16-way £245\n- 40A RCBO: £28.50`;
 
     // Build installation context with LONGER snippets (250 chars for critical context)
     const installationContext = installationResults && installationResults.length > 0
@@ -324,31 +300,16 @@ serve(async (req) => {
       ).slice(-5).join('\n');
     }
 
-    const systemPrompt = `UK Electrical VALUE ENGINEER. September 2025. UK English.
+    const systemPrompt = `UK Electrical Cost Engineer. September 2025.
 
 ${pricingContext}
 
-CABLE SELECTION RULES (BS 7671 Section 522):
-- INDOOR installations (house, flat): T&E cable (2.5mm², 1.5mm², 6mm², 10mm²)
-- OUTDOOR/GARDEN/EXTERNAL: MUST use SWA (Steel Wire Armoured) cable - T&E NOT permitted
-  * EV chargers to garden: SWA cable
-  * Garden sockets/lighting: SWA cable
-  * Runs between buildings: SWA cable
-- UNDERGROUND/BURIED: MUST use SWA cable at 600mm depth + warning tape
-- FACTORY/INDUSTRIAL: SWA cable for exposed runs (mechanical protection)
-- LOFT with thermal insulation: Use 90°C rated cable (or derate by 0.5x)
-- FIRE CIRCUITS (alarm/emergency): Use FP200 Gold or equivalent
-
-When specifying SWA cable:
-- Use equivalent CSA to T&E (e.g., 2.5mm² T&E → 2.5mm² 3-core SWA)
-- Add termination glands to material list (£8-£12 per gland x 2)
-- SWA pricing: 2.5mm² ~£3.50/m, 4mm² ~£4.80/m, 6mm² ~£6.20/m, 10mm² ~£9.50/m
-
-⚠️ CRITICAL: Check installation context from RAG knowledge below.
-If RAG mentions "SWA", "armoured", "outdoor", "Section 522", "buried", or "external influences":
-→ YOU MUST use SWA cable, NOT T&E cable
-
-${installationContext ? `\nINSTALLATION CONTEXT FROM RAG:\n${installationContext}\n` : ''}${pmContext ? `PM INSIGHTS:\n${pmContext}\n` : ''}
+CABLE RULES:
+- Indoor: T&E cable
+- Outdoor/garden: SWA cable (armoured)
+- Underground: SWA at 600mm depth
+- Factory: SWA for exposed runs
+${installationContext ? `\nINSTALLATION NOTES:\n${installationContext.substring(0, 400)}...\n` : ''}${pmContext ? `\nPM NOTES:\n${pmContext.substring(0, 200)}...\n` : ''}
 
 LABOUR CALCULATION RULES (NO CONTINGENCY LINE ITEMS):
 ${parsedEntities.jobType === 'board_change' ?
@@ -441,7 +402,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       systemPrompt,
       userPrompt,
       maxTokens: 1500,
-      timeoutMs: 30000,
+      timeoutMs: 25000,
       temperature: 0.2,
       tools: [{
         type: 'function',
