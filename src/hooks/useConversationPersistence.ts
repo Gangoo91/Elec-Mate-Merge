@@ -1,6 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner';
 
 interface Message {
@@ -9,60 +8,56 @@ interface Message {
   timestamp?: string;
 }
 
-interface ConversationMemory {
-  id: string;
-  session_id: string;
-  project_name: string | null;
-  conversation_data: Message[];
-  plan_data: any;
-  active_agents: string[];
-  message_count: number;
-  created_at: string;
-  updated_at: string;
+interface ContextEnvelope {
+  requestId: string;
+  sessionId?: string;
+  timestamp: number;
+  queryIntent: any;
+  foundRegulations: any[];
+  designDecisions: any[];
+  sharedRegulations?: any[];
+  sharedKnowledge?: any;
+  designSummary?: any;
+  ragPriority: any;
+  embeddingCache?: any;
+  previousAgent?: string;
+  nextAgent?: string;
+  agentChain: string[];
+  totalTokens?: number;
+  ragCallCount?: number;
+  contextHistory?: any[];
 }
 
-export const useConversationPersistence = (
-  messages: Message[],
-  planData: any,
-  activeAgents: string[]
-) => {
-  const [sessionId] = useState(() => uuidv4());
+export const useConversationPersistence = () => {
+  const [conversationId, setConversationId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
-  const [conversationId, setConversationId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (messages.length === 0) return;
-
-    const timer = setTimeout(() => {
-      saveConversation();
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, [messages, planData, activeAgents]);
-
-  const saveConversation = useCallback(async () => {
+  // Auto-save conversation state
+  const saveConversation = useCallback(async (
+    title: string,
+    contextEnvelope: ContextEnvelope
+  ) => {
     try {
       setIsSaving(true);
 
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) return null;
 
       const conversationData = {
         user_id: user.id,
-        session_id: sessionId,
-        project_name: planData.installationType || 'Untitled Project',
-        conversation_data: messages as any,
-        plan_data: planData as any,
-        active_agents: activeAgents,
-        message_count: messages.length,
+        title,
+        context_envelope: contextEnvelope as any,
+        last_agent: contextEnvelope.agentChain[contextEnvelope.agentChain.length - 1] || null,
+        message_count: contextEnvelope.contextHistory?.length || 0,
         updated_at: new Date().toISOString()
       };
 
+      // Upsert conversation
       const { data, error } = await supabase
-        .from('conversation_memory')
-        .upsert([conversationData], {
-          onConflict: 'session_id'
+        .from('conversations')
+        .upsert([{ id: conversationId, ...conversationData }], {
+          onConflict: 'id'
         })
         .select()
         .single();
@@ -71,67 +66,96 @@ export const useConversationPersistence = (
 
       setConversationId(data.id);
       setLastSaved(new Date());
+
+      return data.id;
     } catch (error) {
       console.error('Failed to save conversation:', error);
+      return null;
     } finally {
       setIsSaving(false);
     }
-  }, [messages, planData, activeAgents, sessionId]);
+  }, [conversationId]);
 
-  const resumeConversation = useCallback(async (targetSessionId: string) => {
+  // Load conversation by ID
+  const loadConversation = useCallback(async (id: string) => {
     try {
       const { data, error } = await supabase
-        .from('conversation_memory')
+        .from('conversations')
         .select('*')
-        .eq('session_id', targetSessionId)
+        .eq('id', id)
         .single();
 
       if (error) throw error;
 
-      await supabase
-        .from('conversation_memory')
-        .update({ resumed_at: new Date().toISOString() })
-        .eq('id', data.id);
-
+      setConversationId(data.id);
       return {
-        messages: (data.conversation_data as any) as Message[],
-        planData: data.plan_data,
-        activeAgents: data.active_agents as string[]
+        id: data.id,
+        title: data.title,
+        contextEnvelope: data.context_envelope as ContextEnvelope,
+        lastAgent: data.last_agent,
+        messageCount: data.message_count,
+        createdAt: data.created_at,
+        updatedAt: data.updated_at
       };
     } catch (error) {
-      console.error('Failed to resume conversation:', error);
+      console.error('Failed to load conversation:', error);
       toast.error('Failed to load conversation');
       return null;
     }
   }, []);
 
+  // Get recent conversations list
   const getRecentConversations = useCallback(async (limit = 10) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return [];
 
       const { data, error } = await supabase
-        .from('conversation_memory')
-        .select('*')
+        .from('conversations')
+        .select('id, title, last_agent, message_count, updated_at, created_at')
         .eq('user_id', user.id)
+        .is('archived_at', null)
         .order('updated_at', { ascending: false })
         .limit(limit);
 
       if (error) throw error;
-      return (data as any) as ConversationMemory[];
+      return data || [];
     } catch (error) {
       console.error('Failed to fetch conversations:', error);
       return [];
     }
   }, []);
 
+  // Archive conversation
+  const archiveConversation = useCallback(async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('conversations')
+        .update({ archived_at: new Date().toISOString() })
+        .eq('id', id);
+
+      if (error) throw error;
+      toast.success('Conversation archived');
+    } catch (error) {
+      console.error('Failed to archive conversation:', error);
+      toast.error('Failed to archive conversation');
+    }
+  }, []);
+
+  // Create new conversation
+  const createNewConversation = useCallback(() => {
+    setConversationId(null);
+    setLastSaved(null);
+  }, []);
+
   return {
-    sessionId,
     conversationId,
     isSaving,
     lastSaved,
     saveConversation,
-    resumeConversation,
-    getRecentConversations
+    loadConversation,
+    getRecentConversations,
+    archiveConversation,
+    createNewConversation
   };
 };

@@ -899,6 +899,42 @@ export type Database = {
           },
         ]
       }
+      conversations: {
+        Row: {
+          archived_at: string | null
+          context_envelope: Json
+          created_at: string | null
+          id: string
+          last_agent: string | null
+          message_count: number | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          archived_at?: string | null
+          context_envelope?: Json
+          created_at?: string | null
+          id?: string
+          last_agent?: string | null
+          message_count?: number | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          archived_at?: string | null
+          context_envelope?: Json
+          created_at?: string | null
+          id?: string
+          last_agent?: string | null
+          message_count?: number | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       cost_query_cache: {
         Row: {
           created_at: string | null
@@ -3184,6 +3220,54 @@ export type Database = {
           type?: Database["public"]["Enums"]["document_type"]
           updated_at?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      performance_analytics: {
+        Row: {
+          agent_name: string
+          ai_time_ms: number | null
+          cache_hit: boolean | null
+          id: string
+          metadata: Json | null
+          quality_score: number | null
+          query_hash: string
+          query_text: string
+          rag_time_ms: number | null
+          regulation_count: number | null
+          timestamp: string | null
+          total_time_ms: number
+          user_id: string | null
+        }
+        Insert: {
+          agent_name: string
+          ai_time_ms?: number | null
+          cache_hit?: boolean | null
+          id?: string
+          metadata?: Json | null
+          quality_score?: number | null
+          query_hash: string
+          query_text: string
+          rag_time_ms?: number | null
+          regulation_count?: number | null
+          timestamp?: string | null
+          total_time_ms: number
+          user_id?: string | null
+        }
+        Update: {
+          agent_name?: string
+          ai_time_ms?: number | null
+          cache_hit?: boolean | null
+          id?: string
+          metadata?: Json | null
+          quality_score?: number | null
+          query_hash?: string
+          query_text?: string
+          rag_time_ms?: number | null
+          regulation_count?: number | null
+          timestamp?: string | null
+          total_time_ms?: number
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -5959,7 +6043,7 @@ export type Database = {
       }
       l2_normalize: {
         Args: { "": string } | { "": unknown } | { "": unknown }
-        Returns: string
+        Returns: unknown
       }
       search_bs7671: {
         Args: {

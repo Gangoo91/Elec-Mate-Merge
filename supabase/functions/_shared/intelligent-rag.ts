@@ -500,32 +500,34 @@ export async function intelligentRAGSearch(
     searchMethod = 'hybrid';
   }
 
-  // PHASE 6: Semantic deduplication - keep highest relevance version
-  function semanticDeduplicate(regulations: any[]): any[] {
-    const seen = new Map<string, any>();
-    
-    for (const reg of regulations) {
-      // Create semantic key (regulation + section prefix)
-      const key = `${reg.regulation_number}_${reg.section.substring(0, 30)}`;
-      
-      if (!seen.has(key)) {
-        seen.set(key, reg);
-      } else {
-        // Keep higher relevance version
-        const existing = seen.get(key)!;
-        if ((reg.relevance || 0) > (existing.relevance || 0)) {
-          seen.set(key, reg);
-        }
-      }
-    }
-    
-    return Array.from(seen.values());
+  // PHASE 6: Semantic deduplication using dedicated utility
+  const { deduplicateRegulations } = await import('./semantic-deduplication.ts');
+  const { rerankWithCrossEncoder } = await import('./cross-encoder-reranker.ts');
+  
+  // Step 1: Deduplicate using semantic similarity
+  const dedupedRegulations = deduplicateRegulations(allRegulations, {
+    similarityThreshold: 0.9,
+    keepHighestScore: true
+  });
+  
+  // Step 2: Cross-Encoder Reranking (ALWAYS applied for best quality)
+  const OPENAI_KEY = Deno.env.get('OPENAI_API_KEY');
+  const logger = { info: console.log, warn: console.warn, error: console.error, debug: console.log };
+  
+  let finalRegulations: any[];
+  if (OPENAI_KEY && dedupedRegulations.length > 0) {
+    console.log(`🎯 Applying cross-encoder reranking to ${dedupedRegulations.length} regulations`);
+    finalRegulations = await rerankWithCrossEncoder(
+      params.expandedQuery,
+      dedupedRegulations,
+      OPENAI_KEY,
+      logger
+    );
+  } else {
+    finalRegulations = dedupedRegulations;
   }
   
-  // Deduplicate and sort
-  const uniqueRegulations = semanticDeduplicate(
-    Array.from(new Map(allRegulations.map(r => [r.id, r])).values())
-  ).slice(0, 15);
+  const uniqueRegulations = finalRegulations.slice(0, 15);
 
   const uniqueDesignDocs = Array.from(
     new Map(allDesignDocs.map(d => [d.id, d])).values()
