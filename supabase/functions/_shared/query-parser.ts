@@ -211,3 +211,29 @@ export function extractRegulationNumbers(query: string): string[] {
   
   return [...new Set(matches)]; // Deduplicate
 }
+
+/**
+ * Detect if query is compound (multiple parts)
+ */
+export function isCompoundQuery(query: string): boolean {
+  const indicators = [
+    /\band\b.*\b(with|in|plus|also)\b/i,
+    /,.*,/,  // Multiple clauses
+    /;\s/,    // Semicolon separation
+  ];
+  
+  return indicators.some(pattern => pattern.test(query));
+}
+
+/**
+ * Split compound queries intelligently
+ */
+export function splitCompoundQuery(query: string): string[] {
+  if (!isCompoundQuery(query)) return [query];
+  
+  // Split on conjunctions but preserve semantic units
+  const parts = query.split(/\b(and|with|plus|also)\b/i);
+  return parts
+    .filter(p => p.trim().length > 5)
+    .map(p => p.trim());
+}

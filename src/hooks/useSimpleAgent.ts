@@ -1,29 +1,23 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { RichAgentRequest, AgentResponse, AgentType } from '@/types/agent-request';
 
-export type AgentType = 'designer' | 'cost-engineer' | 'health-safety' | 'installer' | 'project-manager' | 'commissioning';
-
-interface AgentRequest {
+// Legacy interface for backward compatibility
+interface LegacyAgentRequest {
   query: string;
   [key: string]: any;
 }
 
-interface AgentResponse {
-  success: boolean;
-  result: any;
-  metadata?: {
-    requestId: string;
-    timestamp: string;
-    [key: string]: any;
-  };
-}
-
 export interface UseSimpleAgentReturn {
-  callAgent: (agent: AgentType, request: AgentRequest) => Promise<AgentResponse | null>;
+  callAgent: (agent: AgentType, request: RichAgentRequest | LegacyAgentRequest) => Promise<AgentResponse | null>;
   isLoading: boolean;
   error: string | null;
   clearError: () => void;
+  progress: {
+    stage: 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
+    message: string;
+  } | null;
 }
 
 const AGENT_FUNCTIONS: Record<AgentType, string> = {
@@ -47,10 +41,15 @@ const AGENT_NAMES: Record<AgentType, string> = {
 export const useSimpleAgent = (): UseSimpleAgentReturn => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState<{
+    stage: 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
+    message: string;
+  } | null>(null);
 
-  const callAgent = async (agent: AgentType, request: AgentRequest): Promise<AgentResponse | null> => {
+  const callAgent = async (agent: AgentType, request: RichAgentRequest | LegacyAgentRequest): Promise<AgentResponse | null> => {
     setIsLoading(true);
     setError(null);
+    setProgress({ stage: 'parsing', message: 'Understanding your query...' });
 
     const functionName = AGENT_FUNCTIONS[agent];
     const agentName = AGENT_NAMES[agent];
@@ -58,6 +57,8 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
     console.log(`🤖 Calling ${agentName} (${functionName})`, request);
 
     try {
+      setProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
+      
       const { data, error: invokeError } = await supabase.functions.invoke(functionName, {
         body: request
       });
@@ -70,6 +71,7 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
         throw new Error(data.error || 'Agent returned unsuccessful response');
       }
 
+      setProgress({ stage: 'complete', message: 'Response ready!' });
       console.log(`✅ ${agentName} response:`, data);
       
       toast.success(`${agentName} completed`, {
@@ -92,6 +94,7 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
 
     } finally {
       setIsLoading(false);
+      setTimeout(() => setProgress(null), 2000);
     }
   };
 
@@ -101,6 +104,7 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
     callAgent,
     isLoading,
     error,
-    clearError
+    clearError,
+    progress
   };
 };
