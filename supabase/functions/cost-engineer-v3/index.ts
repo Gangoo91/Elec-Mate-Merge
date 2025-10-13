@@ -13,7 +13,7 @@ import {
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 import { parseQueryEntities, type ParsedEntities } from '../_shared/query-parser.ts';
-import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
+import { searchPricingKnowledge, formatPricingContext, searchLabourTimeKnowledge, formatLabourTimeContext } from '../_shared/rag-cost-engineer.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
@@ -192,30 +192,37 @@ serve(async (req) => {
     
     const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
     
-    const [queryEmbedding, pricingResults, ragResults] = await Promise.all([
+    // Build labour-specific query
+    const labourQuery = `labour time standards installation time ${parsedEntities.jobType || 'circuit'} ${parsedEntities.circuitCount ? parsedEntities.circuitCount + ' circuits' : ''}`;
+    
+    const [queryEmbedding, pricingResults, ragResults, labourTimeResults] = await Promise.all([
       // Generate embedding
       generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
       
-      // Use optimized pricing RAG module (already optimized)
+      // Use optimized pricing RAG module
       searchPricingKnowledge(enhancedQuery, await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType),
       
-      // Combined installation + PM knowledge with intelligent RAG
+      // Combined installation + design knowledge with intelligent RAG
       intelligentRAGSearch({
         circuitType: parsedEntities.jobType,
         searchTerms: enhancedQuery.split(' ').filter(w => w.length > 3),
         expandedQuery: enhancedQuery
-      })
+      }),
+      
+      // NEW: Search project_mgmt_knowledge for labour time standards
+      searchLabourTimeKnowledge(labourQuery, await generateEmbeddingWithRetry(labourQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType)
     ]);
     
     logger.debug('Intelligent RAG complete', { duration: Date.now() - ragStart });
     
     const installationResults = ragResults?.installationDocs || [];
-    const pmResults = ragResults?.designDocs || []; // Reuse design docs for PM guidance
+    const pmResults = ragResults?.designDocs || [];
     
     logger.info('RAG search complete', {
       pricingItems: pricingResults?.length || 0,
       installationGuides: installationResults.length,
       pmGuides: pmResults.length,
+      labourTimeEntries: labourTimeResults.length,
       avgInstallScore: installationResults.length > 0 ? (installationResults.reduce((s: number, r: any) => s + (r.finalScore || 0), 0) / installationResults.length).toFixed(3) : 'N/A'
     });
 
@@ -257,6 +264,8 @@ serve(async (req) => {
       ).slice(-3).join('\n');
     }
 
+    const labourTimeContext = formatLabourTimeContext(labourTimeResults);
+    
     const systemPrompt = `UK Electrical Cost Engineer. September 2025.
 
 ${pricingContext}
@@ -266,27 +275,31 @@ CABLE RULES:
 - Outdoor/garden: SWA cable (armoured)
 - Underground: SWA at 600mm depth
 - Factory: SWA for exposed runs
-${installationContext ? `\nINSTALLATION NOTES:\n${installationContext.substring(0, 400)}...\n` : ''}${pmContext ? `\nPM NOTES:\n${pmContext.substring(0, 200)}...\n` : ''}
+${installationContext ? `\nINSTALLATION NOTES:\n${installationContext.substring(0, 400)}...\n` : ''}
+${labourTimeContext ? `\n${labourTimeContext}\n` : ''}
 
-LABOUR CALCULATION RULES (NO CONTINGENCY LINE ITEMS):
+LABOUR CALCULATION RULES:
+${labourTimeResults.length > 0 ? `
+**PRIORITY: Use labour time standards from PROJECT-AND-COST-ENGINEERS-HANDBOOK above**
+
+If specific task found in handbook:
+- Use exact time from handbook
+- Adjust for complexity, access, team size
+- Show breakdown: setup + installation + testing
+
+If NOT found in handbook, use these fallback estimates:
+` : ''}
 ${parsedEntities.jobType === 'board_change' ?
-  `- BOARD CHANGE JOB (Consumer Unit Replacement): 
-  * Consumer unit replacement and wiring: 7 hours
-  * Testing and certification (EIC): 3 hours
-  * TOTAL: 10 hours @ £50/hour = £500
-  * DO NOT include first-fix or second-fix labour unless new circuits are being added
-  * This is ONLY replacing the consumer unit - existing circuits remain` :
-  `- Rewire (3-bed, 8 circuits): 
-  * First fix: 24 hours (2-3 days chasing, cabling runs)
-  * Second fix: 16 hours (2 days accessories, consumer unit)
-  * Testing: 5 hours (EICR testing, certification)
-  * TOTAL: 45 hours
+  `- Consumer unit replacement: 7hrs install + 3hrs testing = 10hrs @ £50/hr = £500` :
+  `- Rewire (3-bed): 24hrs first fix + 16hrs second fix + 5hrs testing = 45hrs
 - Extensions: 0.5hr per socket, 0.35hr per light, +1hr setup/testing
 - Showers: 4hrs install + testing
 - Cooker circuits: 3hrs install + testing
 - Scale by property: 1-bed (0.6x), 2-bed (0.7x), 4-bed (1.3x), 5-bed (1.6x)`
 }
 - DO NOT add "Contingency" as a labour line item
+
+${labourTimeResults.length > 0 ? `**REMINDER**: Prioritise handbook data above before using fallback estimates!\n` : ''}
 
 MATERIAL QUANTITY RULES:
 ${parsedEntities.consumerUnitWays ? 

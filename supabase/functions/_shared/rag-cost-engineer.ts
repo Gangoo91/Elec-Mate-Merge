@@ -192,3 +192,89 @@ export function formatPricingContext(results: PricingResult[]): string {
       `- ${p.item_name}: £${p.base_cost} (${p.wholesaler}${p.in_stock ? '' : ' - awaiting stock'})`
     ).join('\n');
 }
+
+/**
+ * Search project management knowledge for labour time standards
+ */
+export async function searchLabourTimeKnowledge(
+  query: string,
+  embedding: number[],
+  supabase: SupabaseClient,
+  logger: any,
+  jobType?: string
+): Promise<any[]> {
+  const searchStart = Date.now();
+  
+  // Check cache first
+  const cacheKey = generateCacheKey(`labour_${query}`, jobType);
+  const cached = await checkQueryCache(supabase, cacheKey, logger);
+  if (cached) {
+    logger.info('Labour time cache hit', { duration: Date.now() - searchStart });
+    return cached as any[];
+  }
+
+  logger.debug('Starting labour time search', { query, jobType });
+
+  try {
+    // Parallel execution: vector search + keyword search on project_mgmt_knowledge
+    const [vectorResults, keywordResults] = await Promise.all([
+      // Vector search using the project_mgmt_hybrid RPC function
+      supabase.rpc('search_project_mgmt_hybrid', {
+        query_text: query,
+        query_embedding: embedding,
+        match_count: 10
+      }),
+      
+      // Keyword search for labour/time/hours
+      supabase
+        .from('project_mgmt_knowledge')
+        .select('*')
+        .or(`topic.ilike.%labour%,topic.ilike.%time%,content.ilike.%hours%,content.ilike.%installation%`)
+        .limit(8)
+    ]);
+
+    // Merge results (dedupe by id)
+    const allResults = [
+      ...(vectorResults.data || []),
+      ...(keywordResults.data || [])
+    ];
+
+    const uniqueResults = allResults
+      .filter((item, index, self) => 
+        index === self.findIndex(t => t.id === item.id)
+      )
+      .slice(0, 12); // Top 12 labour time results
+
+    logger.info('Labour time search complete', {
+      duration: Date.now() - searchStart,
+      vectorResults: vectorResults.data?.length || 0,
+      keywordResults: keywordResults.data?.length || 0,
+      totalUnique: uniqueResults.length
+    });
+
+    // Store in cache (60 min TTL)
+    await storeQueryCache(supabase, cacheKey, query, uniqueResults as any, jobType, logger);
+
+    return uniqueResults;
+  } catch (error) {
+    logger.error('Labour time search failed', {
+      error: error instanceof Error ? error.message : String(error),
+      duration: Date.now() - searchStart
+    });
+    return []; // Return empty array on error (fallback to hardcoded values)
+  }
+}
+
+/**
+ * Format labour time results for AI context
+ */
+export function formatLabourTimeContext(results: any[]): string {
+  if (!results || results.length === 0) {
+    return 'No labour time data found in handbook. Use fallback estimates.';
+  }
+
+  return `LABOUR TIME STANDARDS (from PROJECT-AND-COST-ENGINEERS-HANDBOOK):\n` +
+    results.map(r => 
+      `- ${r.topic}: ${r.content.substring(0, 150)}...`
+    ).join('\n');
+}
