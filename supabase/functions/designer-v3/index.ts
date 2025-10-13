@@ -151,14 +151,15 @@ serve(async (req) => {
       
       // STEP 2: Use intelligent RAG pipeline with cross-encoder
       const ragStartTime = Date.now();
-      const { retrieveRegulationsWithIntelligentRAG } = await import('../_shared/intelligent-rag.ts');
+      const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
       
-      const regulations = await retrieveRegulationsWithIntelligentRAG(
-        `${design.regulations.join(' ')} ${query}`,
+      const ragResults = await intelligentRAGSearch({
+        expandedQuery: `${design.regulations.join(' ')} ${query}`,
         entities,
-        OPENAI_API_KEY,
-        logger
-      );
+        context: undefined,
+        apiKey: OPENAI_API_KEY
+      });
+      const regulations = ragResults.regulations;
       
       const ragEndTime = Date.now();
       
@@ -433,8 +434,14 @@ Provide a comprehensive electrical design response that addresses the query comp
     if (queryType === 'lookup' || queryType === 'explain') {
       logger.info('📖 Using lookup/explain path');
       
-      const { retrieveRegulationsWithIntelligentRAG } = await import('../_shared/intelligent-rag.ts');
-      const ragResults = await retrieveRegulationsWithIntelligentRAG(query, {}, OPENAI_API_KEY, logger);
+      const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
+      const ragSearchResults = await intelligentRAGSearch({
+        expandedQuery: query,
+        entities: {},
+        context: undefined,
+        apiKey: OPENAI_API_KEY
+      });
+      const ragResults = ragSearchResults.regulations;
       
       if (ragResults.length === 0) {
         return new Response(JSON.stringify({
