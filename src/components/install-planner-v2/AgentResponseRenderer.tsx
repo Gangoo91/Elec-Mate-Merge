@@ -342,6 +342,33 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, e
               summary: structuredData.summary
             }} />
           )}
+          
+          {(() => {
+            // Filter citations to only include regulations with required fields
+            const regulationCitations = (citations || []).filter((c: any) => 
+              typeof c?.regulation_number === 'string' && 
+              typeof c?.content === 'string' && 
+              c.content.length > 0
+            );
+            
+            if (regulationCitations.length === 0) return null;
+            
+            return (
+              <Card className="bg-elec-dark-lighter border-elec-yellow/20 overflow-hidden">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <BookOpen className="h-4 w-4 text-elec-yellow" />
+                    Regulations Referenced
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {regulationCitations.map((citation: any, i: number) => (
+                    <RegulationCitationTooltip key={i} citation={citation} index={i} />
+                  ))}
+                </CardContent>
+              </Card>
+            );
+          })()}
         </div>
       )}
       

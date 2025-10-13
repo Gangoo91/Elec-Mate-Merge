@@ -1212,11 +1212,11 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
 
 
       {/* Messages Area - WhatsApp style with mobile padding */}
-      <div 
+      <div
         ref={scrollRef}
         className="flex-1 bg-elec-dark overflow-y-auto"
       >
-        <div className="px-3 md:px-4 py-3 md:py-4 pb-[calc(env(safe-area-inset-bottom)+104px)] sm:pb-24 space-y-3 md:space-y-4">
+        <div className="px-3 md:px-4 py-3 md:py-4 pb-[calc(env(safe-area-inset-bottom)+132px)] sm:pb-24 space-y-3 md:space-y-4">
           {/* Simple loading indicator */}
           {isLoading && (
             <div className="flex gap-2 justify-start animate-fade-in mb-4">

@@ -384,7 +384,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       }
     }
 
-    // Step 4b: Call AI with provider failover
+    // Step 4b: Call AI with provider failover - FAST FAIL for mobile
     logger.debug('Calling AI', { provider: useOpenAI ? 'OpenAI' : 'Lovable AI' });
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     const aiStart = Date.now();
@@ -396,7 +396,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         systemPrompt,
         userPrompt,
         maxTokens: 1500,
-        timeoutMs: 25000,
+        timeoutMs: 20000, // Reduced from 25s to 20s
       tools: [{
         type: 'function',
         function: {
@@ -728,11 +728,18 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       return new Response(
         JSON.stringify({
           success: true,
-          response: `Quick cost estimate: ${query}`,
+          response: fallbackEstimate.response,
           structuredData: fallbackEstimate,
           citations: [],
           enrichment: { displayHints: { primaryView: 'cost-breakdown' }},
-          rendering: { layout: 'cost-estimate' },
+          rendering: { 
+            layout: 'cost-estimate',
+            callouts: [{
+              type: 'warning',
+              placement: 'top',
+              content: 'Quick estimate using deterministic pricing - AI services unavailable'
+            }]
+          },
           metadata: {
             requestId,
             timestamp: new Date().toISOString(),
@@ -892,6 +899,24 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       parsedEntities
     );
 
+    // Filter citations to ONLY regulation-shaped objects
+    const regulationCitations = (enrichedResponse.citations || []).filter((c: any) => 
+      c?.regulation_number && c?.section && c?.content
+    );
+    
+    // Add callout if we have pricing/labour sources but no regulations
+    const hasNonRegulationSources = (finalPricingResults?.length || 0) > 0 || (labourTimeResults?.length || 0) > 0;
+    const rendering = {
+      ...enrichedResponse.rendering,
+      callouts: regulationCitations.length === 0 && hasNonRegulationSources
+        ? [{
+            type: 'info',
+            placement: 'top',
+            content: 'This estimate uses pricing and labour time standards from our database.'
+          }]
+        : []
+    };
+
     // Log RAG metrics for observability
     const totalTime = Date.now() - functionStart;
     await supabase.from('agent_metrics').insert({
@@ -910,9 +935,9 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         success: true,
         response: enrichedResponse.response,           // Narrative text
         structuredData: costResult,                    // Full structured breakdown
-        citations: enrichedResponse.citations,         // Regulation references
+        citations: regulationCitations,                // ONLY regulations with required fields
         enrichment: enrichedResponse.enrichment,       // UI metadata
-        rendering: enrichedResponse.rendering,         // Display hints
+        rendering,                                     // Display hints + callouts
         metadata: {
           requestId,
           provider: useOpenAI ? 'openai' : 'lovable-ai',
