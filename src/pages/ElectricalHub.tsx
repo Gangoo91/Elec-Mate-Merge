@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, MapPin, Shield, PoundSterling, Sparkles } from "lucide-react";
+import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, Shield, PoundSterling, Sparkles, FileText, Receipt } from "lucide-react";
 
 const ElectricalHub = () => {
   // Main 4-card grid - Core daily tools
@@ -37,30 +37,36 @@ const ElectricalHub = () => {
   const additionalResources = [
     {
       id: 5,
-      title: "Quick Install Calculator",
-      icon: MapPin,
-      link: "/electrician/install-planner?mode=manual"
+      title: "Quote Builder",
+      icon: FileText,
+      link: "/electrician/quote-builder"
     },
     {
       id: 6,
+      title: "Invoices",
+      icon: Receipt,
+      link: "/electrician/invoices"
+    },
+    {
+      id: 7,
       title: "Business Hub",
       icon: Briefcase,
       link: "/electrician/business"
     },
     {
-      id: 7,
+      id: 8,
       title: "Live Pricing",
       icon: PoundSterling,
       link: "/electrician/live-pricing"
     },
     {
-      id: 8,
+      id: 9,
       title: "Industry Updates",
       icon: Wrench,
       link: "/electrician/safety-shares/news"
     },
     {
-      id: 9,
+      id: 10,
       title: "Career Progression", 
       icon: GraduationCap,
       link: "/electrician/career-progression"
