@@ -3,6 +3,10 @@
 project_id = "jtwygbeceundfgnkirof"
 
 # V3 Agent Functions - Active
+[functions.designer-agent]
+verify_jwt = false
+timeout_sec = 300
+
 [functions.designer-v3]
 verify_jwt = false
 timeout_sec = 300

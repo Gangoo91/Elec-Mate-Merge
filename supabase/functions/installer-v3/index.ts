@@ -104,6 +104,9 @@ serve(async (req) => {
     aiGeneration: 0,
     total: 0
   };
+  
+  // Declare timing variables in function scope
+  let embeddingStart: number | null = null;
 
   try {
     const body = await req.json();
@@ -211,7 +214,7 @@ serve(async (req) => {
       });
 
       // Phase 4: Generate embedding with optimized text-embedding-3-small (already in v3-core.ts)
-      const embeddingStart = Date.now();
+      embeddingStart = Date.now();
       const queryEmbedding = await generateEmbeddingWithRetry(expandedQuery, OPENAI_API_KEY);
       logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
