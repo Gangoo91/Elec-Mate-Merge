@@ -23,7 +23,7 @@ function expandInstallationQuery(query: string): string {
     'notch': ['joisting', 'structural', 'building regs', 'floor joists'],
     'buried': ['direct burial', 'SWA', 'protection', 'warning tape', '600mm depth'],
     'bathroom': ['zones', 'Section 701', 'IP rating', 'supplementary bonding'],
-    'shower': ['high current', 'pull cord', 'double pole isolation', ''bathroom'],
+    'shower': ['high current', 'pull cord', 'double pole isolation', 'bathroom'],
     'socket': ['ring final', 'radial', 'spurs', '2.5mm²', '32A'],
     'light': ['lighting circuit', 'switch drops', '1.5mm²', '6A'],
     'ev': ['EV charging', 'Section 722', 'outdoor socket', 'RCD protection'],
