@@ -212,7 +212,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   
   const navigate = useNavigate();
   
-  const { sessionId, isSaving, lastSaved } = useConversationPersistence(messages, planData, activeAgents);
+  const { sessionId, isSaving, lastSaved } = useConversationPersistence();
   
   // Health check on mount - use system-health function
   useEffect(() => {

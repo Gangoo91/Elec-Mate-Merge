@@ -30,6 +30,7 @@ interface ContextEnvelope {
 
 export const useConversationPersistence = () => {
   const [conversationId, setConversationId] = useState<string | null>(null);
+  const [sessionId] = useState<string>(() => crypto.randomUUID());
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
 
@@ -91,7 +92,7 @@ export const useConversationPersistence = () => {
       return {
         id: data.id,
         title: data.title,
-        contextEnvelope: data.context_envelope as ContextEnvelope,
+        contextEnvelope: data.context_envelope as unknown as ContextEnvelope,
         lastAgent: data.last_agent,
         messageCount: data.message_count,
         createdAt: data.created_at,
@@ -150,6 +151,7 @@ export const useConversationPersistence = () => {
 
   return {
     conversationId,
+    sessionId,
     isSaving,
     lastSaved,
     saveConversation,
