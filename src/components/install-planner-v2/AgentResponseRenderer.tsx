@@ -330,7 +330,11 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, e
           )}
           
           {/* Cost Engineer - Cost Breakdown Cards */}
-          {agentId === 'cost-engineer' && structuredData.materials && structuredData.labour && structuredData.summary && (
+          {agentId === 'cost-engineer'
+            && structuredData
+            && structuredData.materials
+            && structuredData.labour
+            && structuredData.summary && (
             <CostEngineerCards data={{
               materials: structuredData.materials,
               labour: structuredData.labour,

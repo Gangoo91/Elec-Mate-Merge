@@ -102,13 +102,13 @@ const NotificationDropdown = () => {
             </div>
           ) : (
             notifications.map(notification => (
-              <React.Fragment key={notification.id}>
+              <div key={notification.id}>
                 <NotificationItem 
                   notification={notification} 
                   onRead={() => markAsRead(notification.id)} 
                 />
                 <DropdownMenuSeparator />
-              </React.Fragment>
+              </div>
             ))
           )}
         </DropdownMenuGroup>

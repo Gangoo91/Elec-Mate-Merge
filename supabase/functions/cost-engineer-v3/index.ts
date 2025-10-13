@@ -884,11 +884,11 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       itemsCount: costResult.materials?.items?.length
     });
 
-    // Step 5: Enrich response with UI metadata
+    // Step 5: Enrich response with UI metadata (Designer-v3 pattern)
     const enrichedResponse = enrichResponse(
       costResult,
-      finalPricingResults,
-      'cost-engineer',
+      [...(finalPricingResults || []), ...(labourTimeResults || [])],
+      'cost-estimate',
       parsedEntities
     );
 
@@ -904,25 +904,22 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       query_type: parsedEntities.jobType || 'general'
     }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
 
-    // Return enriched response (Designer-v3 structure)
-    const { response, suggestedNextAgents, materials: costMaterials, labour, summary, notes } = costResult;
-    
+    // Return enriched response (EXACT Designer-v3 structure)
     return new Response(
       JSON.stringify({
         success: true,
-        response: enrichedResponse.response,
-        enrichment: enrichedResponse.enrichment,
-        citations: enrichedResponse.citations,
-        rendering: enrichedResponse.rendering,
-        structuredData: { materials: costMaterials, labour, summary, notes },
-        suggestedNextAgents: suggestedNextAgents || [],
+        response: enrichedResponse.response,           // Narrative text
+        structuredData: costResult,                    // Full structured breakdown
+        citations: enrichedResponse.citations,         // Regulation references
+        enrichment: enrichedResponse.enrichment,       // UI metadata
+        rendering: enrichedResponse.rendering,         // Display hints
         metadata: {
           requestId,
           provider: useOpenAI ? 'openai' : 'lovable-ai',
-          model: useOpenAI ? 'gpt-5-nano' : 'gemini-2.5-flash',
+          model: useOpenAI ? 'gpt-5-2025-08-07' : 'gemini-2.5-flash',
           totalMs: Date.now() - functionStart,
           ragMs: Date.now() - ragStart,
-          aiMs: aiResult?.duration || 0,
+          aiMs: aiResult?.duration || (Date.now() - aiStart),
           pricingItems: finalPricingResults?.length || 0,
           labourTimeItems: labourTimeResults?.length || 0
         }
