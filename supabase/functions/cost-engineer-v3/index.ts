@@ -396,8 +396,8 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         systemPrompt,
         userPrompt,
         maxTokens: 1500,
-        timeoutMs: 20000, // Reduced from 25s to 20s
-      tools: [{
+        timeoutMs: 20000,
+        tools: [{
         type: 'function',
         function: {
           name: 'provide_cost_estimate',
@@ -891,30 +891,24 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       itemsCount: costResult.materials?.items?.length
     });
 
-    // Step 5: Enrich response with UI metadata (Designer-v3 pattern)
-    const enrichedResponse = enrichResponse(
-      costResult,
-      [...(finalPricingResults || []), ...(labourTimeResults || [])],
-      'cost-estimate',
-      parsedEntities
-    );
-
-    // Filter citations to ONLY regulation-shaped objects
-    const regulationCitations = (enrichedResponse.citations || []).filter((c: any) => 
-      c?.regulation_number && c?.section && c?.content
-    );
-    
-    // Add callout if we have pricing/labour sources but no regulations
-    const hasNonRegulationSources = (finalPricingResults?.length || 0) > 0 || (labourTimeResults?.length || 0) > 0;
+    // Step 5: Build response metadata (cost-specific, no regulations needed)
     const rendering = {
-      ...enrichedResponse.rendering,
-      callouts: regulationCitations.length === 0 && hasNonRegulationSources
-        ? [{
-            type: 'info',
-            placement: 'top',
-            content: 'This estimate uses pricing and labour time standards from our database.'
-          }]
-        : []
+      layout: 'cost-estimate' as const,
+      priority: 'design-first' as const,
+      callouts: [{
+        type: 'info' as const,
+        placement: 'top' as const,
+        content: 'Pricing from 2025 UK electrical suppliers database. Labour times from PROJECT-AND-COST-ENGINEERS-HANDBOOK.'
+      }]
+    };
+
+    const enrichment = {
+      displayHints: {
+        primaryView: 'structured' as const,
+        expandableSections: ['valueEngineering', 'materials', 'labour'],
+        highlightTerms: []
+      },
+      interactiveElements: []
     };
 
     // Log RAG metrics for observability
@@ -929,15 +923,15 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       query_type: parsedEntities.jobType || 'general'
     }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
 
-    // Return enriched response (EXACT Designer-v3 structure)
+    // Return response (Designer-v3 compatible structure, no regulations)
     return new Response(
       JSON.stringify({
         success: true,
-        response: enrichedResponse.response,           // Narrative text
+        response: costResult.response,                 // Narrative text from AI
         structuredData: costResult,                    // Full structured breakdown
-        citations: regulationCitations,                // ONLY regulations with required fields
-        enrichment: enrichedResponse.enrichment,       // UI metadata
-        rendering,                                     // Display hints + callouts
+        citations: [],                                 // Cost Engineer doesn't cite regulations
+        enrichment,                                    // UI metadata
+        rendering,                                     // Display hints + sources callout
         metadata: {
           requestId,
           provider: useOpenAI ? 'openai' : 'lovable-ai',
