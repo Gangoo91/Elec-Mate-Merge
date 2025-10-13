@@ -82,9 +82,9 @@ const QuotesPage = () => {
               </p>
             </div>
             <div className="flex gap-3 w-full sm:w-auto">
-              <Link to="/electrician/quote-builder" className="w-full sm:w-auto">
+              <Link to="/electrician" className="w-full sm:w-auto">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Back to Quote Builder
+                  <ArrowLeft className="mr-2 h-4 w-4" /> Back to Electrical Hub
                 </Button>
               </Link>
             </div>
