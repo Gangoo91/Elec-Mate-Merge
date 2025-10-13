@@ -46,6 +46,7 @@ const AGENT_ENDPOINTS: Record<string, string> = {
   'installer': 'installer-v3',
   'health-safety': 'health-safety-v3',
   'commissioning': 'commissioning-v3',
+  'inspector': 'inspector-v3',
   'project-manager': 'project-mgmt-v3'
 };
 

@@ -192,9 +192,9 @@ serve(async (req) => {
 
     logger.debug('Searching inspection & testing knowledge');
 
-    const { data: testKnowledge, error: testError } = await supabase.rpc('search_inspection_testing', {
+    const { data: testKnowledge, error: testError } = await supabase.rpc('search_inspection_testing_hybrid', {
+      query_text: `${query} inspection testing verification certification BS 7671 Chapter 64`,
       query_embedding: queryEmbedding,
-      match_threshold: 0.7,
       match_count: 10
     });
 

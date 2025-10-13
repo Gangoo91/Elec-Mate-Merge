@@ -6057,6 +6057,21 @@ export type Database = {
           topic: string
         }[]
       }
+      search_inspection_testing_hybrid: {
+        Args: {
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          content: string
+          hybrid_score: number
+          id: string
+          metadata: Json
+          source: string
+          topic: string
+        }[]
+      }
       search_installation_hybrid: {
         Args: {
           match_count?: number
