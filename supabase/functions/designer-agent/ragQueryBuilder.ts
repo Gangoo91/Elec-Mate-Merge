@@ -3,7 +3,27 @@
  * Phase 1: Full RAG Integration
  */
 
-export function buildEnhancedRAGQuery(userMessage: string, circuitParams: any): string {
+export function buildEnhancedRAGQuery(userMessage: string, circuitParams: any, previousMessages?: any[]): string {
+  const msgLower = userMessage.toLowerCase();
+  
+  // PHASE 3: Detect contextual/follow-up questions that need specific regulation guidance
+  if (msgLower.startsWith('why ') || msgLower.includes('why not') || msgLower.includes('instead of')) {
+    // Extract what they're asking about
+    const cableQuestion = /why.*(pvc|twin.*earth|swa|t&e|single|cable|armoured)/i.test(userMessage);
+    const protectionQuestion = /why.*(mcb|rcbo|rcd|breaker|protection)/i.test(userMessage);
+    const voltageDropQuestion = /why.*(voltage.*drop|vd|volt.*drop)/i.test(userMessage);
+    
+    if (cableQuestion) {
+      return 'cable selection criteria regulation 521 twin and earth versus singles versus SWA armoured cable domestic commercial installations wiring systems fixed';
+    }
+    if (protectionQuestion) {
+      return 'protective device selection MCB RCBO RCD requirements regulation 411 531 overcurrent protection earth fault';
+    }
+    if (voltageDropQuestion) {
+      return 'voltage drop calculation limits regulation 525 appendix 4 maximum permitted voltage drop';
+    }
+  }
+  
   const parts = [userMessage];
   
   // Circuit type context

@@ -13,6 +13,7 @@ import { createContextEnvelope, mergeContext, type ContextEnvelope, type QueryIn
 import { intelligentRAGSearch, type HybridSearchParams } from '../_shared/intelligent-rag.ts';
 import { searchDesignPattern, storeDesignPattern } from '../_shared/pattern-learning.ts';
 import { buildEnhancedRAGQuery } from './ragQueryBuilder.ts';
+import { detectEdgeCases } from './edgeCaseDetection.ts';
 import { getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
 import { getMaxZs, checkRCDRequirement } from "../shared/bs7671ProtectionData.ts";
@@ -107,8 +108,28 @@ serve(async (req) => {
 
     const circuitParams = extractCircuitParams(userMessage, currentDesign, incomingContext);
     
+    // PHASE 2: Detect edge cases BEFORE calling AI
+    const edgeCase = detectEdgeCases(circuitParams, userMessage, currentDesign);
+    if (edgeCase.isEdgeCase) {
+      logger.info(`🚨 Edge case detected: ${edgeCase.type}`);
+      
+      return new Response(JSON.stringify({
+        success: true,
+        response: edgeCase.suggestion,
+        metadata: {
+          requestId,
+          edgeCaseType: edgeCase.type,
+          clarificationNeeded: true
+        },
+        context: agentContext
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200
+      });
+    }
+    
     // NEW: Build context-enriched RAG query for better retrieval
-    const contextEnrichedQuery = buildEnhancedRAGQuery(userMessage, circuitParams);
+    const contextEnrichedQuery = buildEnhancedRAGQuery(userMessage, circuitParams, messages);
     
     // Create or merge agent context
     const queryIntent: QueryIntent = {
@@ -639,9 +660,44 @@ Use UK English. Be thorough. Return valid JSON only.`;
         ? `${circuitParams.cableSize}mm² Steel Wire Armoured (SWA) 2-core + CPC (BS 5467 or BS 6724)`
         : `${circuitParams.cableSize}mm² twin & earth (6242Y)`;
       
-      systemPrompt = `You are an electrical circuit designer with full BS 7671:2018+A3:2024 compliance knowledge.
+      // PHASE 4: Extract previous design context for conversational memory
+      let previousDesignSummary = '';
+      if (currentDesign?.circuits && currentDesign.circuits.length > 0) {
+        const lastCircuit = currentDesign.circuits[currentDesign.circuits.length - 1];
+        previousDesignSummary = `
+══════════════════════════════════════════════════════════════
+YOUR PREVIOUS DESIGN RECOMMENDATION:
+Circuit: ${lastCircuit.name}
+Cable: ${lastCircuit.cableSize}mm² ${circuitParams.location === 'outdoor' ? 'SWA' : 'twin & earth (6242Y)'}
+Protection: ${lastCircuit.protectionDevice?.type} ${lastCircuit.protectionDevice?.rating}A Type ${lastCircuit.protectionDevice?.curve}
+RCD: ${lastCircuit.rcdProtected ? `Yes (${lastCircuit.rcdRating}mA)` : 'No'}
+Voltage Drop: ${lastCircuit.calculations?.voltageDrop?.voltageDropPercent?.toFixed(2)}%
+Reasoning: ${lastCircuit.calculations?.reasoning || 'Standard BS 7671 compliance'}
+══════════════════════════════════════════════════════════════
+`;
+      }
+      
+      // PHASE 1: Enhanced conversational system prompt
+      systemPrompt = `You are a senior electrical design engineer having a conversation with a colleague or client. You have 15+ years experience and full BS 7671:2018+A3:2024 knowledge.
 
-FORMAT YOUR RESPONSE EXACTLY AS SHOWN BELOW:
+COMMUNICATION PRINCIPLES:
+1. **Conversational & Practical** - Speak like you're on-site with a colleague, not writing a textbook
+2. **Context-Aware** - Reference previous messages and designs in this conversation
+3. **Reasoning First** - Explain WHY before presenting calculations
+4. **Sanity Check** - If request seems impractical, ask clarifying questions politely
+5. **UK English** - Use "earthing" not "grounding", "consumer unit" not "panel board"
+
+HANDLING FOLLOW-UP QUESTIONS:
+- When user asks "why X not Y?", check if this relates to your previous response
+- If they're questioning your cable/protection choice, explain your reasoning from regulations
+- Don't just dump regulation text - interpret it and explain practically
+- Reference your previous recommendation if they're asking about it
+
+PREVIOUS CONVERSATION CONTEXT:
+${messages.slice(Math.max(0, messages.length - 4), -1).map((m: any) => `${m.role}: ${m.content.substring(0, 150)}...`).join('\n')}
+${previousDesignSummary}
+
+FORMAT YOUR RESPONSE AS SHOWN BELOW:
 
 CIRCUIT SPECIFICATION
 
@@ -704,7 +760,14 @@ Based on installation complexity and cable run distance (${circuitParams.cableLe
 
 Note: These are ballpark estimates for planning purposes. Actual costs vary by region, supplier, and specific site conditions.
 
-Use professional language with UK English spelling. Present calculations clearly. Cite regulation numbers and technical guidance. Include the cost estimate at the end. No conversational filler or markdown formatting.`;
+IMPORTANT:
+- Start with a brief conversational acknowledgment (1-2 sentences) if the user asked a question
+- Explain your reasoning BEFORE listing all the calculations
+- If the user is questioning your previous design, reference it and explain your logic
+- Use professional but conversational UK English
+- Present calculations clearly and cite regulation numbers
+- Include the cost estimate at the end
+- If something about their request doesn't make practical sense, politely ask for clarification rather than designing an impossible circuit`;
     }
 
     // Call Lovable AI Gateway with retry + timeout (60s for complex design calculations)
