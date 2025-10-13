@@ -40,13 +40,14 @@ export const DesignerCircuitCards = ({ circuits }: { circuits: Circuit[] }) => {
             <div className="space-y-3">
               <h4 className="text-xl sm:text-2xl font-bold text-foreground text-center">{circuit.name}</h4>
               
-              <div className="flex items-center justify-center gap-4 flex-wrap">
-                <Badge className="bg-elec-yellow text-elec-dark text-base sm:text-lg px-4 py-1.5 font-bold">
-                  MCB: {circuit.protection}
-                </Badge>
+              <div className="flex items-center justify-center gap-4 sm:gap-6 flex-wrap">
+                <div className="text-center">
+                  <p className="text-xs text-muted-foreground">MCB Rating</p>
+                  <p className="text-3xl sm:text-4xl font-bold text-elec-yellow">{circuit.protection}</p>
+                </div>
                 <div className="text-center">
                   <p className="text-xs text-muted-foreground">Cable Size</p>
-                  <p className="text-2xl sm:text-3xl font-bold text-foreground">{circuit.cableSize}</p>
+                  <p className="text-3xl sm:text-4xl font-bold text-foreground">{circuit.cableSize}</p>
                 </div>
               </div>
               

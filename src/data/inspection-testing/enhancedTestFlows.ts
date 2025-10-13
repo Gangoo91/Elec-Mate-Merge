@@ -14,7 +14,7 @@ export const enhancedTestFlows: TestFlow[] = [
   {
     id: 'enhanced-comprehensive-testing',
     title: 'Enhanced Comprehensive Testing',
-    description: 'Complete electrical testing suite with enhanced procedures and documentation following BS 7671:2018+A2:2022 requirements',
+    description: 'Complete electrical testing suite with enhanced procedures and documentation following BS 7671:2018+A3:2024 requirements',
     type: 'comprehensive',
     difficulty: 'advanced',
     isComprehensive: true,
@@ -26,7 +26,7 @@ export const enhancedTestFlows: TestFlow[] = [
       'Safe isolation procedures training'
     ],
     regulatoryStandards: [
-      'BS 7671:2018+A2:2022',
+      'BS 7671:2018+A3:2024',
       'IET Guidance Note 3',
       'IET Code of Practice',
       'BS EN 61557 series'
@@ -45,7 +45,7 @@ export const enhancedTestFlows: TestFlow[] = [
       'Zs tester operation knowledge'
     ],
     regulatoryStandards: [
-      'BS 7671:2018+A2:2022 Chapter 61',
+      'BS 7671:2018+A3:2024 Chapter 61',
       'IET Guidance Note 3 Section 2.7'
     ],
     steps: enhancedZsTestingSteps
@@ -62,7 +62,7 @@ export const enhancedTestFlows: TestFlow[] = [
       'Understanding of test voltages'
     ],
     regulatoryStandards: [
-      'BS 7671:2018+A2:2022 Regulation 612.3',
+      'BS 7671:2018+A3:2024 Regulation 612.3',
       'IET Guidance Note 3 Section 2.6'
     ],
     steps: enhancedInsulationSteps
@@ -79,7 +79,7 @@ export const enhancedTestFlows: TestFlow[] = [
       'Understanding of RCD principles'
     ],
     regulatoryStandards: [
-      'BS 7671:2018+A2:2022 Regulation 612.13',
+      'BS 7671:2018+A3:2024 Regulation 612.13',
       'IET Guidance Note 3 Section 2.8'
     ],
     steps: enhancedRCDTestingSteps
@@ -96,7 +96,7 @@ export const enhancedTestFlows: TestFlow[] = [
       'Understanding of circuit arrangements'
     ],
     regulatoryStandards: [
-      'BS 7671:2018+A2:2022 Regulation 612.2',
+      'BS 7671:2018+A3:2024 Regulation 612.2',
       'IET Guidance Note 3 Section 2.5'
     ],
     steps: enhancedContinuitySteps
@@ -114,7 +114,7 @@ export const enhancedTestFlows: TestFlow[] = [
     ],
     regulatoryStandards: [
       'HSE GS38',
-      'BS 7671:2018+A2:2022 Section 462',
+      'BS 7671:2018+A3:2024 Section 462',
       'IET Code of Practice'
     ],
     steps: enhancedSafeIsolationSteps

@@ -103,10 +103,11 @@ Based on your assessment of the installation type:
 
 Please provide exhaustive detail for materials - include everything from the smallest cable tie to major components.`;
 
-      const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
+      // Call designer-agent for proper multi-circuit support
+      const { data, error } = await supabase.functions.invoke('designer-agent', {
         body: { 
-          prompt: enhancedPrompt,
-          type: "circuit_summary" 
+          query: prompt,
+          messages: []
         },
       });
       
@@ -118,8 +119,10 @@ Please provide exhaustive detail for materials - include everything from the sma
         throw new Error(data.error);
       }
       
-      setAnalysisResult(data.response || "No analysis result received");
-      setAgentResponse(data); // Store full agent response for enhanced UI
+      // Handle both single circuit and multi-circuit responses
+      const responseText = data.response || data.naturalLanguageResponse || "No analysis result received";
+      setAnalysisResult(responseText);
+      setAgentResponse(data); // Store full agent response for enhanced UI (includes structuredData with circuits array)
       setProgress(100);
       
       clearInterval(progressInterval);

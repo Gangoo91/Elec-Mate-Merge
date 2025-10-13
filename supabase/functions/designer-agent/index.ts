@@ -1102,7 +1102,7 @@ Use professional language with UK English spelling. Present calculations clearly
           section: reg.regulation_number || reg.topic,
           title: reg.section || 'BS 7671 Regulation',
           relevance: 'Referenced for design compliance',
-          source: 'BS 7671:2018+A2:2022'
+          source: 'BS 7671:2018+A3:2024'
         });
       });
     }
@@ -1112,7 +1112,7 @@ Use professional language with UK English spelling. Present calculations clearly
       section: '433.1',
       title: 'Overload protection requirements',
       relevance: 'Verified Ib ≤ In ≤ Iz for cable sizing',
-      source: 'BS 7671:2018+A2:2022'
+      source: 'BS 7671:2018+A3:2024'
     });
 
     if (calculationResults?.voltageDrop) {
@@ -1120,7 +1120,7 @@ Use professional language with UK English spelling. Present calculations clearly
         section: '525',
         title: 'Voltage drop in consumers\' installations',
         relevance: `Checked ${calculationResults.voltageDrop.voltageDropPercent.toFixed(2)}% against limits`,
-        source: 'BS 7671:2018+A2:2022'
+        source: 'BS 7671:2018+A3:2024'
       });
     }
 
@@ -1129,7 +1129,7 @@ Use professional language with UK English spelling. Present calculations clearly
         section: '411.4.4',
         title: 'Maximum earth fault loop impedance',
         relevance: 'Verified Zs for automatic disconnection',
-        source: 'BS 7671:2018+A2:2022 Table 41.3'
+        source: 'BS 7671:2018+A3:2024 Table 41.3'
       });
     }
 
@@ -1175,7 +1175,7 @@ Use professional language with UK English spelling. Present calculations clearly
     const enhancedCitations = [];
     if (regulations && regulations.length > 0) {
       enhancedCitations.push(...regulations.slice(0, 5).map((reg: any) => ({
-        source: 'BS 7671:2018+A2:2022',
+        source: 'BS 7671:2018+A3:2024',
         section: reg.regulation_number || reg.topic,
         title: reg.section || 'Regulation',
         content: reg.content?.slice(0, 150) + '...',

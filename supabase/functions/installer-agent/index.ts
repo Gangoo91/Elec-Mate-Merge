@@ -540,19 +540,19 @@ EXAMPLE PHASES:
         section: '522',
         title: 'Selection and erection of wiring systems',
         relevance: 'Requirements for cable installation methods',
-        source: 'BS 7671:2018+A2:2022'
+        source: 'BS 7671:2018+A3:2024'
       },
       {
         section: '526',
         title: 'Electrical connections',
         relevance: 'Standards for conductor terminations',
-        source: 'BS 7671:2018+A2:2022'
+        source: 'BS 7671:2018+A3:2024'
       },
       {
         section: '134',
         title: 'Good workmanship and proper materials',
         relevance: 'General installation quality requirements',
-        source: 'BS 7671:2018+A2:2022'
+        source: 'BS 7671:2018+A3:2024'
       }
     ];
 

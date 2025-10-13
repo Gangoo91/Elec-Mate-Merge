@@ -32,7 +32,7 @@ export const referenceMaterials: ReferenceDocument[] = [
   // Official Standards
   {
     id: "bs7671-2018",
-    title: "BS 7671:2018+A2:2022",
+    title: "BS 7671:2018+A3:2024",
     type: "Standard",
     category: "Official Standards",
     description: "18th Edition IET Wiring Regulations - Complete standard",

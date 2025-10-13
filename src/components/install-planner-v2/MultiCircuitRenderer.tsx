@@ -26,10 +26,11 @@ interface MultiCircuitRendererProps {
 }
 
 export const MultiCircuitRenderer = ({ data, foundRegulations, ragMetadata, agentChain }: MultiCircuitRendererProps) => {
-  // Transform circuits to ensure cableSpec is present (fallback to cableSize)
+  // Transform circuits to ensure cableSpec and protection are present
   const transformedCircuits = (data.circuits || []).map(circuit => ({
     ...circuit,
     cableSpec: circuit.cableSpec || `${circuit.cableSize} cable`,
+    protection: circuit.protection || circuit.mcbRating || 'TBD',
     complianceStatus: circuit.complianceStatus === 'review' ? 'warning' : circuit.complianceStatus || 'pass'
   }));
 

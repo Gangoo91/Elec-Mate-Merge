@@ -271,7 +271,7 @@ const PostResultGuidance: React.FC<PostResultGuidanceProps> = ({
 
   const getRegulatoryReferences = () => [
     {
-      title: "BS 7671:2018+A2:2022",
+      title: "BS 7671:2018+A3:2024",
       subtitle: "Requirements for Electrical Installations (IET Wiring Regulations)",
       description: "The fundamental standard for electrical installation design, selection and verification in the UK",
       keyClauses: [

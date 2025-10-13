@@ -1,7 +1,7 @@
 // ============================================
 // BS 7671 UNIFIED CALCULATION LIBRARY
 // Single source of truth for electrical calculations
-// Compliant with BS 7671:2018+A2:2022 (18th Edition)
+// Compliant with BS 7671:2018+A3:2024 (18th Edition)
 // ============================================
 
 export type CableType = 

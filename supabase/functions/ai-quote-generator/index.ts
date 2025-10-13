@@ -46,7 +46,7 @@ serve(async (req) => {
 
 CRITICAL REQUIREMENTS:
 - Generate UNIQUE quotes with realistic price variations for each request
-- Follow UK electrical standards (BS 7671:2018+A2:2022, Part P Building Regulations)
+- Follow UK electrical standards (BS 7671:2018+A3:2024, Part P Building Regulations)
 - Use current UK pricing with realistic market variations (±15-25%)
 - Include proper cable specifications: 1.5mm² for lighting, 2.5mm² for socket circuits, 6mm² for showers/cookers
 - Vary material brands, quantities, and specifications for realistic diversity
@@ -102,7 +102,7 @@ RESPONSE FORMAT (JSON):
     "description": "Labour breakdown with property-specific factors"
   },
   "compliance": {
-    "standards": ["BS 7671:2018+A2:2022", "Part P Building Regulations"],
+    "standards": ["BS 7671:2018+A3:2024", "Part P Building Regulations"],
     "certificates": ["Electrical Installation Certificate", "Schedule of Test Results"],
     "inspectionRequired": true
   },

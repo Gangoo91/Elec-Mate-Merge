@@ -253,7 +253,7 @@ serve(async (req) => {
         LOVABLE_API_KEY!,
         {
           model: 'google/gemini-2.5-flash',
-          systemPrompt: `You are a MASTER ELECTRICIAN with 20+ years BS 7671:2018+A2:2022 experience.
+          systemPrompt: `You are a MASTER ELECTRICIAN with 20+ years BS 7671:2018+A3:2024 experience.
 Return a structured JSON response using the provided schema.
 NEVER recalculate - use provided facts as GROUND TRUTH.
 For EACH regulation provide: what (plain English), why (for THIS job), consequence (if ignored).
@@ -483,7 +483,7 @@ Provide a comprehensive electrical design response that addresses the query comp
           success: true,
           response: explanation,
           citations: ragResults.map(r => ({
-            source: 'BS 7671:2018+A2:2022',
+            source: 'BS 7671:2018+A3:2024',
             section: r.regulation_number,
             title: r.section,
             content: r.content.substring(0, 200),
@@ -502,7 +502,7 @@ Provide a comprehensive electrical design response that addresses the query comp
           success: true,
           response: `## ${ragResults[0].section}\n\n${ragResults[0].content}`,
           citations: ragResults.map(r => ({
-            source: 'BS 7671:2018+A2:2022',
+            source: 'BS 7671:2018+A3:2024',
             section: r.regulation_number,
             title: r.section,
             content: r.content.substring(0, 200),
@@ -536,7 +536,7 @@ Provide a comprehensive electrical design response that addresses the query comp
 
 The question is: "${query}"
 
-Here's what BS 7671:2018+A2:2022 says about this:
+Here's what BS 7671:2018+A3:2024 says about this:
 
 ${regulations.slice(0, 5).map(r => `📋 **${r.regulation_number}** - ${r.section}\n${r.content.substring(0, 350)}`).join('\n\n')}
 
@@ -599,7 +599,7 @@ You NEVER:
         success: true,
         response: narrative,
         citations: regulations.slice(0, 5).map(r => ({
-          source: 'BS 7671:2018+A2:2022',
+          source: 'BS 7671:2018+A3:2024',
           section: r.regulation_number,
           title: r.section,
           content: r.content.substring(0, 200),
@@ -616,7 +616,7 @@ You NEVER:
         success: true,
         response: `## ${regulations[0].section}\n\n${regulations[0].content.substring(0, 500)}...\n\n*[See additional regulations in citations]*`,
         citations: regulations.slice(0, 5).map(r => ({
-          source: 'BS 7671:2018+A2:2022',
+          source: 'BS 7671:2018+A3:2024',
           section: r.regulation_number,
           title: r.section,
           content: r.content.substring(0, 200),
@@ -699,7 +699,7 @@ ${facts.regulations.slice(0, 5).map((r: any) =>
 ).join('\n')}
 
 ---
-*Design calculated using BS 7671:2018+A2:2022*
+*Design calculated using BS 7671:2018+A3:2024*
 *Calculations: Deterministic (instant, accurate)*
 *Citations: RAG search (${facts.regulations.length} regulations)*
 *Note: AI narrative synthesis unavailable - showing structured results*`;

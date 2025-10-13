@@ -352,7 +352,7 @@ export const CircuitDrawingsDisplay = ({ messages, projectName }: CircuitDrawing
           <div className="bg-muted/50 p-3 md:p-4 rounded-lg border border-border">
             <h3 className="font-semibold text-sm mb-2 text-white">About These Drawings</h3>
             <div className="flex flex-col gap-1 text-xs md:text-sm text-white/90">
-              <span>✓ BS 7671:2018+A2:2022 compliant</span>
+              <span>✓ BS 7671:2018+A3:2024 compliant</span>
               <span>✓ Professional single-line diagrams</span>
               <span>✓ Ready for Building Control</span>
               <span>✓ AI-generated photorealistic previews available</span>

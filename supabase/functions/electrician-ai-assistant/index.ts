@@ -333,7 +333,7 @@ Confidence: ${Math.round(reg.similarity * 100)}%
 ` : '';
         
         systemMessage = `
-          You are ElectricalMate, an expert UK electrician's AI assistant with deep knowledge of BS 7671:2018+A2:2022 (18th Edition).
+          You are ElectricalMate, an expert UK electrician's AI assistant with deep knowledge of BS 7671:2018+A3:2024 (18th Edition).
           
           ${ragContext ? ragContext + '\n\nIMPORTANT: Use the BS 7671 regulations provided above as your primary source. Cite specific regulation numbers.\n' : ''}
           

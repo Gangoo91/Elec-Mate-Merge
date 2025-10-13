@@ -455,7 +455,7 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
       <Alert className="bg-amber-500/10 border-amber-500/30">
         <Lightbulb className="h-4 w-4 text-amber-300" />
         <AlertDescription className="text-amber-200">
-          <strong>Professional Verification Required:</strong> This tool provides guidance based on BS 7671:2018+A2:2022 requirements and simplified calculations. 
+          <strong>Professional Verification Required:</strong> This tool provides guidance based on BS 7671:2018+A3:2024 requirements and simplified calculations. 
           Always verify results with current regulations, manufacturer specifications, and site-specific conditions. 
           Professional design verification and testing is recommended for all electrical installations.
         </AlertDescription>

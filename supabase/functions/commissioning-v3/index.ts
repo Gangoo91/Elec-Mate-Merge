@@ -130,7 +130,7 @@ serve(async (req) => {
       ).slice(-5).join('\n');
     }
 
-    const systemPrompt = `You are a GN3 PRACTICAL TESTING GURU - BS 7671:2018+A2:2022 Chapter 64 specialist.
+    const systemPrompt = `You are a GN3 PRACTICAL TESTING GURU - BS 7671:2018+A3:2024 Chapter 64 specialist.
 
 Write all responses in UK English (British spelling and terminology). Do not use American spellings.
 
