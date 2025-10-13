@@ -144,6 +144,8 @@ interface Message {
   isValidationError?: boolean;
   isThinking?: boolean;  // NEW: For proactive thinking display
   thinkingMessage?: string;  // NEW: What the agent is thinking about
+  enrichment?: any;  // Frontend Response Enrichment
+  rendering?: any;   // Frontend Response Enrichment
 }
 
 interface IntelligentAIPlannerProps {
@@ -1257,11 +1259,14 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                 )}
                 
                 {message.role === 'assistant' && message.content && !message.isTyping && (
-                  <AgentChatErrorBoundary>
+                <AgentChatErrorBoundary>
                     <AgentResponseRenderer 
                       content={message.content} 
                       agentId={message.agentName}
                       structuredData={message.structuredData}
+                      enrichment={message.enrichment}
+                      citations={message.citations}
+                      rendering={message.rendering}
                       conversationId={sessionId}
                       question={messages.find(m => m.role === 'user')?.content}
                       isThinking={message.isThinking}
