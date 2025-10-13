@@ -104,6 +104,63 @@ export type Database = {
         }
         Relationships: []
       }
+      agent_performance_metrics: {
+        Row: {
+          agent_name: string
+          ai_duration_ms: number | null
+          citation_confidence: number | null
+          created_at: string | null
+          entities_extracted: number | null
+          error_type: string | null
+          id: string
+          query_complexity: string | null
+          query_type: string | null
+          rag_avg_score: number | null
+          rag_cache_hit: boolean | null
+          rag_duration_ms: number | null
+          rag_result_count: number | null
+          request_id: string
+          success: boolean
+          total_duration_ms: number | null
+        }
+        Insert: {
+          agent_name: string
+          ai_duration_ms?: number | null
+          citation_confidence?: number | null
+          created_at?: string | null
+          entities_extracted?: number | null
+          error_type?: string | null
+          id?: string
+          query_complexity?: string | null
+          query_type?: string | null
+          rag_avg_score?: number | null
+          rag_cache_hit?: boolean | null
+          rag_duration_ms?: number | null
+          rag_result_count?: number | null
+          request_id: string
+          success: boolean
+          total_duration_ms?: number | null
+        }
+        Update: {
+          agent_name?: string
+          ai_duration_ms?: number | null
+          citation_confidence?: number | null
+          created_at?: string | null
+          entities_extracted?: number | null
+          error_type?: string | null
+          id?: string
+          query_complexity?: string | null
+          query_type?: string | null
+          rag_avg_score?: number | null
+          rag_cache_hit?: boolean | null
+          rag_duration_ms?: number | null
+          rag_result_count?: number | null
+          request_id?: string
+          success?: boolean
+          total_duration_ms?: number | null
+        }
+        Relationships: []
+      }
       ai_interaction_feedback: {
         Row: {
           agent_name: string
@@ -3939,6 +3996,7 @@ export type Database = {
       rag_cache: {
         Row: {
           agent_name: string
+          cache_hits: number | null
           created_at: string | null
           expires_at: string | null
           hit_count: number | null
@@ -3948,6 +4006,7 @@ export type Database = {
         }
         Insert: {
           agent_name: string
+          cache_hits?: number | null
           created_at?: string | null
           expires_at?: string | null
           hit_count?: number | null
@@ -3957,6 +4016,7 @@ export type Database = {
         }
         Update: {
           agent_name?: string
+          cache_hits?: number | null
           created_at?: string | null
           expires_at?: string | null
           hit_count?: number | null
