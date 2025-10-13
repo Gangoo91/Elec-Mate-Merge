@@ -341,6 +341,18 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       { workType, location, hazards }
     );
 
+    // Log RAG metrics for observability
+    const totalTime = Date.now() - requestId;
+    await supabase.from('agent_metrics').insert({
+      function_name: 'health-safety-v3',
+      request_id: requestId,
+      rag_time: ragStart ? Date.now() - ragStart : null,
+      total_time: totalTime,
+      regulation_count: hsKnowledge?.length || 0,
+      success: true,
+      query_type: workType || 'general'
+    }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
+
     // Return enriched response
     const { response, suggestedNextAgents, riskAssessment, methodStatement, compliance } = safetyResult;
     

@@ -235,20 +235,16 @@ serve(async (req) => {
             totalResults: installationResults.length
           });
         }
-      }
-    }
-
-    const finalPricingResults = pricingResults;
-    const pmResults = actualPmResults;
-
+    
     logger.info('RAG search complete', {
-      pricingItems: finalPricingResults?.length || 0,
+      pricingItems: pricingResults?.length || 0,
       installationGuides: installationResults?.length || 0,
-      pmGuides: pmResults?.length || 0
+      pmGuides: pmResults?.length || 0,
+      avgInstallScore: installationResults.length > 0 ? (installationResults.reduce((s: number, r: any) => s + (r.finalScore || 0), 0) / installationResults.length).toFixed(3) : 'N/A'
     });
 
     // Step 5: Build pricing context using RAG module formatter
-    const pricingContext = formatPricingContext(finalPricingResults) +
+    const pricingContext = formatPricingContext(pricingResults) +
       `\n\nFALLBACK MARKET RATES (use if not in database):\n- 2.5mm² T&E cable: £0.98/metre\n- 1.5mm² T&E cable: £0.80/metre\n- 6mm² T&E cable: £2.20/metre\n- 10mm² T&E cable: £3.90/metre\n- 2.5mm² SWA: £3.50/m, 4mm² SWA: £4.80/m, 6mm² SWA: £6.20/m, 10mm² SWA: £9.50/m\n- SWA gland 20mm: £10 (x2)\n- Consumer units: 8-way £136, 10-way £156, 12-way £185, 16-way £245\n- 40A RCBO: £28.50`;
 
     // Build installation context (trimmed: 120 chars max)
@@ -901,6 +897,18 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       'cost-engineer',
       parsedEntities
     );
+
+    // Log RAG metrics for observability
+    const totalTime = Date.now() - requestId;
+    await supabase.from('agent_metrics').insert({
+      function_name: 'cost-engineer-v3',
+      request_id: requestId,
+      rag_time: ragStart ? Date.now() - ragStart : null,
+      total_time: totalTime,
+      regulation_count: (installationResults?.length || 0) + (pmResults?.length || 0),
+      success: true,
+      query_type: parsedEntities.jobType || 'general'
+    }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
 
     // Return enriched response
     const { response, suggestedNextAgents, materials: costMaterials, labour, summary, notes } = costResult;

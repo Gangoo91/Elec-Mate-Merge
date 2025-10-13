@@ -356,6 +356,18 @@ Include phases, resources, compliance requirements, and risk management.`;
       { projectType, scope, timeline }
     );
 
+    // Log RAG metrics for observability
+    const totalTime = Date.now() - requestId;
+    await supabase.from('agent_metrics').insert({
+      function_name: 'project-mgmt-v3',
+      request_id: requestId,
+      rag_time: ragStart ? Date.now() - ragStart : null,
+      total_time: totalTime,
+      regulation_count: pmKnowledge?.length || 0,
+      success: true,
+      query_type: projectType || 'general'
+    }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
+
     // Return enriched response
     const { response, suggestedNextAgents, projectPlan, resources, compliance, risks, recommendations } = pmResult;
     

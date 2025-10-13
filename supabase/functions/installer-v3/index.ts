@@ -443,6 +443,18 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
 
     logger.info('Results cached', { queryHash, expiresIn: '1 hour' });
 
+    // Log RAG metrics for observability
+    const totalTime = Date.now() - requestId;
+    await supabase.from('agent_metrics').insert({
+      function_name: 'installer-v3',
+      request_id: requestId,
+      rag_time: embeddingStart ? Date.now() - embeddingStart : null,
+      total_time: totalTime,
+      regulation_count: installKnowledge?.length || 0,
+      success: true,
+      query_type: installationMethod || 'general'
+    }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
+
     return new Response(
       JSON.stringify(finalResponse),
       { 
