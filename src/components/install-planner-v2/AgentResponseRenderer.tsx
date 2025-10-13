@@ -102,6 +102,32 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
   
   return (
     <div className="space-y-4 text-left max-w-full overflow-hidden">
+      {/* PHASE 3: Safety Warnings */}
+      {structuredData?.safetyWarnings && structuredData.safetyWarnings.length > 0 && (
+        <div className="space-y-2">
+          {structuredData.safetyWarnings.map((warning: any, idx: number) => (
+            <div 
+              key={idx}
+              className={`px-4 py-3 border-l-4 rounded-r ${
+                warning.severity === 'critical' ? 'bg-red-500/10 border-red-500' :
+                warning.severity === 'warning' ? 'bg-orange-500/10 border-orange-500' :
+                'bg-blue-500/10 border-blue-500'
+              }`}
+            >
+              <p className="text-sm font-semibold mb-1">{warning.title}</p>
+              <p className="text-xs text-muted-foreground mb-2">{warning.message}</p>
+              {warning.checklistItems && (
+                <ul className="text-xs space-y-1 mt-2">
+                  {warning.checklistItems.slice(0, 3).map((item: string, i: number) => (
+                    <li key={i} className="text-foreground/80">{item}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+      
       {/* Opening Line Badge */}
       {openingLine && (
         <div className="px-4 py-3 bg-elec-yellow/10 border-l-4 border-elec-yellow rounded-r">

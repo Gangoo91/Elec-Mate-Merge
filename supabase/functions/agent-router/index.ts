@@ -61,6 +61,10 @@ function isMultiCircuitQuery(query: string): boolean {
   return patterns.some(p => p.test(query));
 }
 
+// PHASE 2: Cross-Agent Knowledge Sharing - Conversation-level RAG cache
+const conversationRAGCache = new Map<string, { regulations: any[]; timestamp: number }>();
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -118,8 +122,19 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
+    // PHASE 2: Get shared regulations from cache (if available)
+    let sharedRegulations: any[] = [];
+    if (conversationId) {
+      const cached = conversationRAGCache.get(conversationId);
+      if (cached && (Date.now() - cached.timestamp) < CACHE_TTL) {
+        sharedRegulations = cached.regulations;
+        logger.info(`♻️ Found ${sharedRegulations.length} shared regulations from cache`);
+      }
+    }
+
     // Call agents sequentially with retry logic
     const agentResponses: Array<{ agent: string; response: AgentResponse }> = [];
+    let totalRAGCalls = 0;
     
     for (const agentType of selectedAgents) {
       const endpoint = AGENT_ENDPOINTS[agentType];
@@ -129,6 +144,9 @@ serve(async (req) => {
       }
 
       logger.info(`Calling ${agentType} agent`);
+      
+      // PHASE 2: Pass shared regulations to non-designer agents
+      const shouldUseSharedRegs = agentType !== 'designer' && agentType !== 'designer-multi' && sharedRegulations.length > 0;
       
       const response = await invokeAgentWithRetry(
         agentType,
@@ -142,7 +160,9 @@ serve(async (req) => {
           conversationId,
           currentDesign,
           previousAgentOutputs: agentResponses,
-          requestSuggestions: true
+          requestSuggestions: true,
+          // PHASE 2: Include shared knowledge
+          sharedRegulations: shouldUseSharedRegs ? sharedRegulations : undefined
         },
         supabase,
         logger
@@ -161,9 +181,31 @@ serve(async (req) => {
         response: response.data || response.partialResponse
       });
 
+      // PHASE 2: Store regulations from designer for sharing with other agents
+      if ((agentType === 'designer' || agentType === 'designer-multi') && response.data?.citations && conversationId) {
+        const regulations = response.data.citations.map((c: any) => ({
+          regulation_number: c.section || c.regulation_number,
+          section: c.title || c.section,
+          content: c.content || c.excerpt,
+          relevance: c.relevance || 0.8
+        }));
+        
+        conversationRAGCache.set(conversationId, {
+          regulations,
+          timestamp: Date.now()
+        });
+        
+        sharedRegulations = regulations;
+        totalRAGCalls++;
+        logger.info(`🚀 Cached ${regulations.length} regulations from designer for conversation ${conversationId}`);
+      } else if (shouldUseSharedRegs && sharedRegulations.length > 0) {
+        logger.info(`♻️ ${agentType} reused ${sharedRegulations.length} shared regulations (0ms RAG)`);
+      }
+
       logger.info(`${agentType} completed`, { 
         hasSuggestions: !!(response.data?.suggestedNextAgents?.length),
-        hadError: response.hadError
+        hadError: response.hadError,
+        usedSharedRegs: shouldUseSharedRegs
       });
     }
     
@@ -248,7 +290,13 @@ serve(async (req) => {
         success: true,
         responses: agentResponses,
         suggestedNextAgents: uniqueSuggestions,
-        consultedAgents: selectedAgents
+        consultedAgents: selectedAgents,
+        // PHASE 2: Return RAG efficiency metrics
+        metadata: {
+          totalRAGCalls,
+          cachedRegulations: sharedRegulations.length,
+          ragEfficiency: totalRAGCalls > 0 ? `Saved ${selectedAgents.length - totalRAGCalls} RAG calls` : undefined
+        }
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

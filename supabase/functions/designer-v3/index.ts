@@ -44,13 +44,22 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, circuitType, power, voltage, cableLength, messages, previousAgentOutputs } = body;
+    const { query, circuitType, power, voltage, cableLength, messages, previousAgentOutputs, sharedRegulations } = body;
+
+    // PHASE 1: Query Enhancement
+    const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
+    const enhancement = enhanceQuery(query, messages || []);
+    logEnhancement(enhancement, logger);
+    
+    const effectiveQuery = enhancement.enhanced;
 
     logger.info('🎨 Designer V3 invoked', { 
       query: query?.slice(0, 50),
+      enhanced: enhancement.addedContext.length > 0,
       circuitType,
       power,
-      messageCount: messages?.length || 0 
+      messageCount: messages?.length || 0,
+      hasSharedRegs: !!sharedRegulations?.length
     });
 
     // Enhanced input validation
@@ -73,12 +82,27 @@ serve(async (req) => {
       throw new ValidationError('cableLength must be a positive number');
     }
 
-    logger.info('Designer V3 request received', { query: query.substring(0, 50), circuitType, power });
+    logger.info('Designer V3 request received', { query: effectiveQuery.substring(0, 50), circuitType, power });
 
     // Parse query for entities and classify
-    const entities = parseQueryEntities(query);
-    const queryType = classifyQuery(query, entities);
+    const entities = parseQueryEntities(effectiveQuery);
+    const queryType = classifyQuery(effectiveQuery, entities);
     logger.info('Query classified', { queryType, entities });
+
+    // PHASE 3: Safety Guardian - Detect special requirements
+    const { detectSafetyRequirements } = await import('../_shared/safety-guardian.ts');
+    const safetyWarnings = detectSafetyRequirements(
+      effectiveQuery,
+      circuitType || entities.loadType,
+      power || entities.power,
+      entities.location,
+      voltage || entities.voltage,
+      cableLength || entities.distance
+    );
+    
+    if (safetyWarnings.criticalCount > 0) {
+      logger.info(`⚠️ ${safetyWarnings.criticalCount} critical safety warnings detected`);
+    }
 
     // Get OpenAI API key for embeddings
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -267,13 +291,14 @@ Provide a comprehensive electrical design response that addresses the query comp
         model: aiResult.model 
       });
       
-      // STEP 5: Return enriched response
+      // STEP 5: Return enriched response with safety warnings
       return new Response(JSON.stringify({
         success: true,
         response: enrichedResponse.response,
         enrichment: enrichedResponse.enrichment,
         citations: enrichedResponse.citations,
         rendering: enrichedResponse.rendering,
+        safetyWarnings: safetyWarnings.warnings.length > 0 ? safetyWarnings.warnings : undefined,
         structuredData: {
           design: design,
           calculations: design.calculations,
@@ -289,7 +314,9 @@ Provide a comprehensive electrical design response that addresses the query comp
           calculationTime: '<500ms',
           regulationCount: regulations.length,
           citationConfidence: citationValidation.citationConfidence,
-          validatedCitations: citationValidation.isValid
+          validatedCitations: citationValidation.isValid,
+          queryEnhanced: enhancement.addedContext.length > 0,
+          safetyWarningsCount: safetyWarnings.warnings.length
         },
         suggestedNextAgents: design.success ? ['installer', 'cost-engineer'] : ['health-safety']
       }), {
