@@ -81,14 +81,14 @@ serve(async (req) => {
     const ragStart = Date.now();
     
     const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
-    const testKnowledge = await intelligentRAGSearch(
-      `${query} testing commissioning GN3 Chapter 64 inspection procedures`,
-      'commissioning_knowledge',
-      10,
-      OPENAI_API_KEY,
-      supabase,
-      logger
-    );
+    const ragResults = await intelligentRAGSearch({
+      circuitType: circuitType || 'general',
+      searchTerms: `${query} testing commissioning GN3 Chapter 64 inspection procedures`.split(' ').filter(w => w.length > 3),
+      expandedQuery: `${query} testing commissioning GN3 Chapter 64 inspection procedures`
+    });
+    
+    // Use regulations (Chapter 64) for testing knowledge
+    const testKnowledge = ragResults?.regulations || [];
     
     logger.debug('Testing knowledge retrieved', { 
       duration: Date.now() - ragStart,

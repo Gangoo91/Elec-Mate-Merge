@@ -101,15 +101,11 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
     
     const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
-    const hsKnowledge = await intelligentRAGSearch(
-      query,
-      'health_safety_knowledge',
-      12,
-      OPENAI_API_KEY,
-      supabase,
-      logger,
-      { workType }
-    );
+    const hsKnowledge = await intelligentRAGSearch({
+      circuitType: workType,
+      searchTerms: query.split(' ').filter(w => w.length > 3),
+      expandedQuery: query
+    });
     
     logger.debug('H&S knowledge retrieved', { 
       duration: Date.now() - ragStart,
@@ -118,8 +114,8 @@ serve(async (req) => {
     });
 
     // Step 3: Build H&S context
-    const hsContext = hsKnowledge && hsKnowledge.length > 0
-      ? hsKnowledge.map((hs: any) => 
+    const hsContext = hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0
+      ? hsKnowledge.healthSafetyDocs.map((hs: any) => 
           `${hs.topic}: ${hs.content}`
         ).join('\n\n')
       : 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
@@ -319,8 +315,8 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     });
 
     // Step 5: Build RAG preview from H&S knowledge
-    const ragPreview = hsKnowledge && hsKnowledge.length > 0
-      ? hsKnowledge.slice(0, 5).map((item: any) => ({
+    const ragPreview = hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0
+      ? hsKnowledge.healthSafetyDocs.slice(0, 5).map((item: any) => ({
           id: item.id,
           topic: item.topic || 'Safety Guidance',
           scale: item.scale,
@@ -336,7 +332,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     // Step 6: Enrich response with UI metadata
     const enrichedResponse = enrichResponse(
       safetyResult,
-      hsKnowledge,
+      hsKnowledge?.healthSafetyDocs || [],
       'health-safety',
       { workType, location, hazards }
     );
@@ -348,7 +344,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       request_id: requestId,
       rag_time: ragStart ? Date.now() - ragStart : null,
       total_time: totalTime,
-      regulation_count: hsKnowledge?.length || 0,
+      regulation_count: hsKnowledge?.healthSafetyDocs?.length || 0,
       success: true,
       query_type: workType || 'general'
     }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));

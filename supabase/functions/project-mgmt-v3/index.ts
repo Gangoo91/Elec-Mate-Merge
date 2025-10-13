@@ -85,14 +85,14 @@ serve(async (req) => {
     const ragStart = Date.now();
     
     const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
-    const pmKnowledge = await intelligentRAGSearch(
-      `${query} ${projectType || ''} project planning timeline coordination`,
-      'project_mgmt_knowledge',
-      8,
-      OPENAI_API_KEY,
-      supabase,
-      logger
-    );
+    const ragResults = await intelligentRAGSearch({
+      circuitType: projectType || 'general',
+      searchTerms: `${query} ${projectType || ''} project planning timeline coordination`.split(' ').filter(w => w.length > 3),
+      expandedQuery: `${query} ${projectType || ''} project planning timeline coordination`
+    });
+    
+    // Use design docs for PM knowledge (project management guides)
+    const pmKnowledge = ragResults?.designDocs || [];
     
     logger.debug('PM knowledge retrieved', { 
       duration: Date.now() - ragStart,

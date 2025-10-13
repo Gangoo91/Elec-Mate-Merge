@@ -192,54 +192,30 @@ serve(async (req) => {
     
     const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
     
-    const [queryEmbedding, pricingResults, installationResults, pmResults] = await Promise.all([
+    const [queryEmbedding, pricingResults, ragResults] = await Promise.all([
       // Generate embedding
       generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
       
       // Use optimized pricing RAG module (already optimized)
       searchPricingKnowledge(enhancedQuery, await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType),
       
-      // Installation knowledge with intelligent RAG
-      intelligentRAGSearch(enhancedQuery, 'installation_knowledge', 8, OPENAI_API_KEY, supabase, logger),
-      
-      // PM knowledge with intelligent RAG
-      intelligentRAGSearch(enhancedQuery, 'project_mgmt_knowledge', 2, OPENAI_API_KEY, supabase, logger)
+      // Combined installation + PM knowledge with intelligent RAG
+      intelligentRAGSearch({
+        circuitType: parsedEntities.jobType,
+        searchTerms: enhancedQuery.split(' ').filter(w => w.length > 3),
+        expandedQuery: enhancedQuery
+      })
     ]);
     
     logger.debug('Intelligent RAG complete', { duration: Date.now() - ragStart });
-
-    // Keyword fallback for installation knowledge if vector search insufficient
-    let installationResults = actualInstallResults;
-    if (!installationResults || installationResults.length < 3) {
-      const installKeywords = ['SWA', 'armoured', 'outdoor', 'buried', 'underground', 'Section 522', 'Section 701', 'Section 722'];
-      const keywordTerms = installKeywords.filter(k => 
-        query.toLowerCase().includes(k.toLowerCase()) || 
-        enhancedQuery.toLowerCase().includes(k.toLowerCase())
-      );
-      
-      if (keywordTerms.length > 0) {
-        const { data: keywordInstallResults } = await supabase
-          .from('installation_knowledge')
-          .select('*')
-          .or(keywordTerms.map(k => `content.ilike.%${k}%`).join(','))
-          .limit(5);
-        
-        if (keywordInstallResults && keywordInstallResults.length > 0) {
-          installationResults = [
-            ...(installationResults || []),
-            ...keywordInstallResults
-          ].filter((v, i, a) => a.findIndex(t => t.id === v.id) === i); // dedupe
-          logger.info('Installation keyword fallback used', { 
-            terms: keywordTerms,
-            found: keywordInstallResults.length,
-            totalResults: installationResults.length
-          });
-        }
+    
+    const installationResults = ragResults?.installationDocs || [];
+    const pmResults = ragResults?.designDocs || []; // Reuse design docs for PM guidance
     
     logger.info('RAG search complete', {
       pricingItems: pricingResults?.length || 0,
-      installationGuides: installationResults?.length || 0,
-      pmGuides: pmResults?.length || 0,
+      installationGuides: installationResults.length,
+      pmGuides: pmResults.length,
       avgInstallScore: installationResults.length > 0 ? (installationResults.reduce((s: number, r: any) => s + (r.finalScore || 0), 0) / installationResults.length).toFixed(3) : 'N/A'
     });
 

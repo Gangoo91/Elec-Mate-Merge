@@ -190,15 +190,13 @@ serve(async (req) => {
 
     // Use intelligent RAG with cross-encoder reranking
     const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
-    const installKnowledge = await intelligentRAGSearch(
-      expandedQuery,
-      'installation_knowledge',
-      12,
-      OPENAI_API_KEY,
-      supabase,
-      logger,
-      { installationMethod, cableType, location }
-    );
+    const ragResults = await intelligentRAGSearch({
+      circuitType: installationMethod,
+      searchTerms: expandedQuery.split(' ').filter(w => w.length > 3),
+      expandedQuery
+    });
+    
+    const installKnowledge = ragResults?.installationDocs || [];
 
     logger.info('Installation knowledge retrieved', {
       count: installKnowledge.length,
