@@ -204,6 +204,43 @@ serve(async (req) => {
         warnings: design.warnings
       };
       
+      // Check if we have everything we need - skip AI for simple deterministic queries
+      const hasCompleteDesign = design && regulations.length >= 5;
+      const isSimpleQuery = !query.toLowerCase().includes('bathroom') && 
+                            !query.toLowerCase().includes('special') &&
+                            !query.toLowerCase().includes('outdoor') &&
+                            !query.toLowerCase().includes('swimming');
+
+      if (hasCompleteDesign && isSimpleQuery) {
+        logger.info('⚡ Fast deterministic response (skipping AI)');
+        
+        return new Response(JSON.stringify({
+          success: true,
+          response: buildFallbackNarrative(structuredFacts),
+          structuredData: {
+            design: design,
+            calculations: design.calculations,
+            compliance: {
+              voltageDrop: design.voltageDrop.compliant,
+              earthFault: design.earthFault.compliant,
+              overall: design.success
+            },
+            entities: entities
+          },
+          metadata: {
+            responseSource: 'deterministic_fast',
+            calculationTime: '<500ms',
+            regulationCount: regulations.length,
+            queryEnhanced: enhancement.addedContext.length > 0,
+            safetyWarningsCount: safetyWarnings.warnings.length
+          },
+          suggestedNextAgents: ['installer', 'cost-engineer']
+        }), {
+          status: 200,
+          headers: corsHeaders
+        });
+      }
+      
       // STEP 4: AI synthesis with universal wrapper - STRUCTURED OUTPUT
       const { callAIWithFallback } = await import('../_shared/ai-wrapper.ts');
       
@@ -222,7 +259,7 @@ User query: "${query}"
 
 Provide a comprehensive electrical design response that addresses the query completely.`,
           maxTokens: 2000,
-          timeoutMs: 55000,
+          timeoutMs: 25000,
           tools: [{
             type: "function",
             function: {
@@ -250,10 +287,54 @@ Provide a comprehensive electrical design response that addresses the query comp
         })
       );
 
-      // Parse structured response
-      const structuredResponse = typeof aiResult.content === 'string'
-        ? JSON.parse(aiResult.content)
-        : aiResult.content;
+      // Validate AI response format before parsing
+      if (aiResult.source === 'ai' && typeof aiResult.content === 'string') {
+        const trimmed = aiResult.content.trim();
+        if (!trimmed.startsWith('{') && !trimmed.startsWith('[')) {
+          logger.warn('AI returned non-JSON text, forcing fallback');
+          aiResult.source = 'fallback';
+        }
+      }
+
+      // Parse structured response with error handling
+      let structuredResponse;
+      try {
+        structuredResponse = typeof aiResult.content === 'string'
+          ? JSON.parse(aiResult.content)
+          : aiResult.content;
+      } catch (parseError) {
+        logger.warn('AI returned non-JSON response, using fallback', {
+          error: parseError.message,
+          contentPreview: typeof aiResult.content === 'string' 
+            ? aiResult.content.substring(0, 100) 
+            : 'non-string content'
+        });
+        
+        // Use deterministic fallback structure
+        structuredResponse = {
+          summary: buildFallbackNarrative(structuredFacts),
+          design: {
+            cable: design.cableSize,
+            mcb: `${design.mcbRating}A ${design.mcbType || 'Type B'}`,
+            rcd: design.rcdRequired ? `${design.rcdRating}mA Type A` : 'Not required',
+            method: design.installMethod
+          },
+          regulations: regulations.slice(0, 5).map(r => ({
+            number: r.regulation_number,
+            title: r.section,
+            explanation: {
+              what: r.content.split('\n')[0],
+              why: `Required for ${query}`,
+              consequence: 'Non-compliance with BS 7671'
+            }
+          })),
+          practicalGuidance: {
+            installation: [`Install ${design.cableSize}mm² cable using installation method ${design.installMethod}`],
+            testing: ['Verify earth fault loop impedance (Zs)', 'RCD trip test if applicable', 'Insulation resistance test'],
+            commonMistakes: ['Undersized cable for cable length', 'Missing RCD protection', 'Incorrect MCB type']
+          }
+        };
+      }
 
       // Validate citations
       const citationValidation = validateCitations(
