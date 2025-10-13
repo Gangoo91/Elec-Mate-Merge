@@ -3880,6 +3880,42 @@ export type Database = {
         }
         Relationships: []
       }
+      query_cache: {
+        Row: {
+          citations: Json
+          enrichment: Json
+          hit_count: number | null
+          query_hash: string
+          regulations: Json
+          rendering: Json
+          response: string
+          structured_data: Json
+          timestamp: number
+        }
+        Insert: {
+          citations: Json
+          enrichment: Json
+          hit_count?: number | null
+          query_hash: string
+          regulations: Json
+          rendering: Json
+          response: string
+          structured_data: Json
+          timestamp: number
+        }
+        Update: {
+          citations?: Json
+          enrichment?: Json
+          hit_count?: number | null
+          query_hash?: string
+          regulations?: Json
+          rendering?: Json
+          response?: string
+          structured_data?: Json
+          timestamp?: number
+        }
+        Relationships: []
+      }
       quiz_attempts: {
         Row: {
           created_at: string | null
