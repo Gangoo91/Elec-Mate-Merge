@@ -662,6 +662,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       }
       
       materialSubtotal = materialItems.reduce((sum, item) => sum + item.total, 0);
+      const materialMarkup = materialSubtotal * 0.3; // 30% markup
       const materialVAT = materialSubtotal * 0.2;
       const materialTotal = materialSubtotal + materialVAT;
       
@@ -706,11 +707,13 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
           total: labourTotal
         },
         summary: {
-          materialsTotal: materialTotal,
-          labourTotal: labourTotal,
-          subtotal: materialSubtotal + labourSubtotal,
-          vat: materialVAT + labourVAT,
-          grandTotal
+          materialsSubtotal: Number(materialSubtotal.toFixed(2)),
+          materialsMarkup: Number(materialMarkup.toFixed(2)),
+          materialsTotal: Number(materialTotal.toFixed(2)),
+          labourTotal: Number(labourTotal.toFixed(2)),
+          subtotal: Number((materialSubtotal + labourSubtotal).toFixed(2)),
+          vat: Number((materialVAT + labourVAT).toFixed(2)),
+          grandTotal: Number(grandTotal.toFixed(2))
         },
         valueEngineering: [
           { suggestion: 'Quick estimate mode - detailed value engineering unavailable', potentialSaving: 0 }
