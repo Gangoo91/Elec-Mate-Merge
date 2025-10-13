@@ -107,10 +107,30 @@ serve(async (req) => {
       expandedQuery: query
     });
     
+    // PHASE 2: Reuse BS 7671 regulations from Designer (filter for H&S relevant ones)
+    const sharedRegs = sharedRegulations || [];
+    if (sharedRegs.length >= 8) {
+      logger.info('📦 Filtering shared regulations from Designer for H&S relevance');
+      
+      // Filter for H&S chapters: 41 (Protection), 70 (Special locations), 54 (Earthing), 531 (Devices)
+      const hsRelevantRegs = sharedRegs.filter((r: any) => 
+        /^(41|70|54|531)/.test(r.regulation_number)
+      );
+      
+      if (hsRelevantRegs.length >= 3) {
+        logger.info(`Reused ${hsRelevantRegs.length} regulations from Designer`);
+        // Merge with RAG results
+        hsKnowledge.regulations = [
+          ...hsRelevantRegs,
+          ...(hsKnowledge.regulations || [])
+        ].slice(0, 15); // Top 15 unique
+      }
+    }
+    
     logger.debug('H&S knowledge retrieved', { 
       duration: Date.now() - ragStart,
-      resultsCount: hsKnowledge.length,
-      avgScore: hsKnowledge.length > 0 ? (hsKnowledge.reduce((s: number, k: any) => s + (k.finalScore || 0), 0) / hsKnowledge.length).toFixed(3) : 'N/A'
+      resultsCount: hsKnowledge.regulations?.length || 0,
+      avgScore: hsKnowledge.healthSafetyDocs?.length > 0 ? (hsKnowledge.healthSafetyDocs.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / hsKnowledge.healthSafetyDocs.length).toFixed(3) : 'N/A'
     });
 
     // Step 3: Build H&S context

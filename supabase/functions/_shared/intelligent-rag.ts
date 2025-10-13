@@ -10,6 +10,36 @@ import type { ContextEnvelope, FoundRegulation } from './agent-context.ts';
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
 /**
+ * PHASE 1: Build context-enriched query using conversation state
+ */
+function buildContextEnrichedQuery(
+  baseQuery: string,
+  params: HybridSearchParams
+): string {
+  const contextPieces: string[] = [baseQuery];
+  
+  // Inject previous design context
+  if (params.context?.designSummary) {
+    const d = params.context.designSummary;
+    if (d.cableType) contextPieces.push(d.cableType);
+    if (d.location) contextPieces.push(`${d.location} location`);
+    if (d.circuitType) contextPieces.push(d.circuitType);
+    if (d.load) contextPieces.push(`${d.load}W load`);
+  }
+  
+  // Inject previous agent outputs
+  if (params.context?.contextHistory) {
+    const recentContributions = params.context.contextHistory
+      .slice(-3) // Last 3 contributions
+      .filter(c => c.confidence > 70)
+      .map(c => c.contribution);
+    contextPieces.push(...recentContributions);
+  }
+  
+  return contextPieces.join(' ');
+}
+
+/**
  * IMPROVEMENT #2: Query Expansion Intelligence
  * Expands search terms with synonyms and electrical domain terms
  */
@@ -206,9 +236,39 @@ async function vectorSearchWithEmbedding(
   
   const priority = params.context?.ragPriority;
   
+  // PHASE 4: Detect "why" questions for explanation retrieval
+  const { detectWhyQuestion } = await import('./query-decomposer.ts');
+  const whyAnalysis = detectWhyQuestion(params.expandedQuery);
+  
   // PHASE 5: Build all search promises upfront for parallel execution
   const searches: Promise<any>[] = [];
   const searchTypes: string[] = [];
+  
+  // PHASE 5: Calculate query specificity for dynamic match count
+  const { calculateQuerySpecificity, parseQueryEntities } = await import('./query-parser.ts');
+  const entities = parseQueryEntities(params.expandedQuery);
+  const specificity = calculateQuerySpecificity(entities);
+  const matchCount = specificity > 70 ? 10 : specificity > 40 ? 15 : 25;
+  
+  console.log(`📊 Query specificity: ${specificity}% → retrieving ${matchCount} regulations`);
+  
+  // PHASE 4: "Why" question - add specific regulation lookup
+  if (whyAnalysis.isWhy) {
+    console.log(`❓ Why question detected: ${whyAnalysis.topic}`, {
+      inferredReg: whyAnalysis.inferredRegulation
+    });
+    
+    if (whyAnalysis.inferredRegulation) {
+      searches.push(
+        supabase
+          .from('bs7671_embeddings')
+          .select('*')
+          .ilike('regulation_number', `${whyAnalysis.inferredRegulation}%`)
+          .limit(3)
+      );
+      searchTypes.push('exact_regulation');
+    }
+  }
 
   // BS 7671 search - PHASE 2: Use cached version for 120x speedup
   if (!priority || priority.bs7671 > 50) {
@@ -216,7 +276,7 @@ async function vectorSearchWithEmbedding(
       supabase.rpc('search_bs7671_hybrid_cached', {
         query_text: params.expandedQuery,
         query_embedding: embedding,
-        match_count: 10,
+        match_count: matchCount, // PHASE 5: Dynamic match count
       })
     );
     searchTypes.push('bs7671');
@@ -246,16 +306,20 @@ async function vectorSearchWithEmbedding(
     searchTypes.push('health_safety');
   }
 
-  // Installation knowledge search (ALWAYS search - practical guidance)
-  searches.push(
-    supabase.rpc('search_installation_knowledge', {
-      query_embedding: embedding,
-      method_filter: params.context?.entities?.installMethod || null,
-      match_threshold: 0.50,
-      match_count: 8,
-    })
-  );
-  searchTypes.push('installation');
+  // PHASE 3: Installation knowledge search - skip if low priority
+  if (!priority || priority.installation >= 50) {
+    searches.push(
+      supabase.rpc('search_installation_knowledge', {
+        query_embedding: embedding,
+        method_filter: params.context?.entities?.installMethod || null,
+        match_threshold: 0.50,
+        match_count: 8,
+      })
+    );
+    searchTypes.push('installation');
+  } else {
+    console.log('⏭️ Skipping installation search (low priority)');
+  }
 
   // PHASE 5: Execute all searches in PARALLEL (150ms vs 400ms sequential)
   const results = await Promise.all(searches);
@@ -342,7 +406,12 @@ export async function intelligentRAGSearch(
 
   // IMPROVEMENT #2: Apply query expansion before vector search
   const expandedTerms = expandSearchTerms(params.expandedQuery);
-  const enrichedQuery = expandedTerms.join(' ');
+  
+  // PHASE 1: Context enrichment using conversation state
+  const enrichedQuery = buildContextEnrichedQuery(
+    expandedTerms.join(' '),
+    params
+  );
   console.log(`🔍 Query expanded: "${params.expandedQuery}" → ${expandedTerms.length} terms`);
 
   // Tier 2: Vector search (if needed)
@@ -380,9 +449,31 @@ export async function intelligentRAGSearch(
     searchMethod = 'hybrid';
   }
 
+  // PHASE 6: Semantic deduplication - keep highest relevance version
+  function semanticDeduplicate(regulations: any[]): any[] {
+    const seen = new Map<string, any>();
+    
+    for (const reg of regulations) {
+      // Create semantic key (regulation + section prefix)
+      const key = `${reg.regulation_number}_${reg.section.substring(0, 30)}`;
+      
+      if (!seen.has(key)) {
+        seen.set(key, reg);
+      } else {
+        // Keep higher relevance version
+        const existing = seen.get(key)!;
+        if ((reg.relevance || 0) > (existing.relevance || 0)) {
+          seen.set(key, reg);
+        }
+      }
+    }
+    
+    return Array.from(seen.values());
+  }
+  
   // Deduplicate and sort
-  const uniqueRegulations = Array.from(
-    new Map(allRegulations.map(r => [r.regulation_number || r.id, r])).values()
+  const uniqueRegulations = semanticDeduplicate(
+    Array.from(new Map(allRegulations.map(r => [r.id, r])).values())
   ).slice(0, 15);
 
   const uniqueDesignDocs = Array.from(

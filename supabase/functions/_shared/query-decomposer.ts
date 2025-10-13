@@ -127,3 +127,44 @@ function identifySecondaryConcerns(
   
   return concerns.sort((a, b) => b.priority - a.priority);
 }
+
+/**
+ * PHASE 4: Detect "why" questions and infer regulations
+ */
+export function detectWhyQuestion(query: string): {
+  isWhy: boolean;
+  topic: string;
+  inferredRegulation: string | null;
+} {
+  const lowerQuery = query.toLowerCase();
+  
+  if (!lowerQuery.startsWith('why ') && 
+      !lowerQuery.includes('why not') &&
+      !lowerQuery.includes('instead of') &&
+      !lowerQuery.includes('better to')) {
+    return { isWhy: false, topic: '', inferredRegulation: null };
+  }
+  
+  const topic = query.substring(4, 50).toLowerCase();
+  
+  // Infer regulation from topic
+  const regulationMap: Record<string, string> = {
+    'rcd': '411.3.3',
+    'cable size': '433.1.1',
+    'voltage drop': '525',
+    'bathroom': '701',
+    'outdoor': '522.8.10',
+    'earthing': '411.3.1.1',
+    'bonding': '411.3.1.2',
+    'mcb': '433.1.1',
+    'shower': '701.410.3.5'
+  };
+  
+  for (const [key, reg] of Object.entries(regulationMap)) {
+    if (topic.includes(key)) {
+      return { isWhy: true, topic, inferredRegulation: reg };
+    }
+  }
+  
+  return { isWhy: true, topic, inferredRegulation: null };
+}

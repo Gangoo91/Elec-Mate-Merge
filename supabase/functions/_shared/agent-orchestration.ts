@@ -4,6 +4,34 @@
 import { Message, ConversationSummary, ConversationState } from './conversation-memory.ts';
 import { IntentAnalysis } from './intent-detection.ts';
 
+// PHASE 3: Intent-Aware RAG Prioritization
+export const RAG_PRIORITIES: Record<string, any> = {
+  designer: { 
+    bs7671: 100, 
+    design: 90, 
+    installation: 20, 
+    health_safety: 30 
+  },
+  installer: { 
+    bs7671: 60, 
+    design: 40, 
+    installation: 100, 
+    health_safety: 70 
+  },
+  'health-safety': { 
+    bs7671: 80, 
+    design: 20, 
+    installation: 60, 
+    health_safety: 100 
+  },
+  commissioning: { 
+    bs7671: 90, 
+    design: 30, 
+    installation: 70, 
+    health_safety: 50 
+  }
+};
+
 export interface AgentPlan {
   sequence: AgentStep[];
   reasoning: string;

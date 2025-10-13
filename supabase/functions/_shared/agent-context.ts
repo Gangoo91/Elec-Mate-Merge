@@ -63,6 +63,24 @@ export interface ContextEnvelope {
   foundRegulations: FoundRegulation[];
   designDecisions: DesignDecision[];
   
+  // PHASE 2: Cross-Agent Knowledge Sharing
+  sharedRegulations?: FoundRegulation[]; // BS 7671 regs from Designer
+  sharedKnowledge?: {
+    designDocs?: any[];
+    installationDocs?: any[];
+    healthSafetyDocs?: any[];
+  };
+  
+  // PHASE 1: Conversation insights
+  designSummary?: {
+    cableType?: string;
+    cableSize?: string;
+    voltage?: number;
+    location?: string;
+    load?: number;
+    circuitType?: string;
+  };
+  
   // RAG optimization
   ragPriority: RAGPriority;
   embeddingCache?: {

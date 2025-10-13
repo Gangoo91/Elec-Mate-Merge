@@ -340,6 +340,31 @@ serve(async (req) => {
         source: r.source,
       }));
       
+      // PHASE 2: Share knowledge with downstream agents (prevent re-retrieval)
+      agentContext.sharedRegulations = regulations.slice(0, 12); // Top 12
+      agentContext.sharedKnowledge = {
+        designDocs: designDocs.slice(0, 8),
+        installationDocs: ragResults.installationDocs?.slice(0, 8) || []
+      };
+      
+      logger.info('📦 Shared knowledge stored for downstream agents', {
+        regulations: agentContext.sharedRegulations.length,
+        designDocs: agentContext.sharedKnowledge.designDocs.length,
+        installationDocs: agentContext.sharedKnowledge.installationDocs.length
+      });
+      
+      // PHASE 1: Store design summary for context enrichment
+      if (circuitParams.hasEnoughData) {
+        agentContext.designSummary = {
+          cableType: circuitParams.cableType || 'PVC Twin & Earth',
+          cableSize: circuitParams.cableSize,
+          voltage: circuitParams.voltage,
+          location: circuitParams.location,
+          load: circuitParams.power,
+          circuitType: circuitParams.circuitType
+        };
+      }
+      
       agentContext.ragCallCount = (agentContext.ragCallCount || 0) + 1;
       
       // Build context text

@@ -188,32 +188,47 @@ serve(async (req) => {
 
     logger.debug('RAG cache MISS - executing full pipeline', { queryHash });
 
-    // Phase 3: Expand query with technical synonyms
-    const queryVariations = expandInstallQuery(query, installationMethod);
-    const expandedQuery = queryVariations.join(' ');
+    // PHASE 2: Check for shared knowledge from Designer
+    let installKnowledge: any[] = [];
     
-    logger.debug('Query expanded', { 
-      original: query,
-      variations: queryVariations.length,
-      expanded: expandedQuery.substring(0, 100)
-    });
+    if (body.agentContext?.sharedKnowledge?.installationDocs?.length >= 5) {
+      installKnowledge = body.agentContext.sharedKnowledge.installationDocs;
+      logger.info('📦 Reusing shared installation knowledge from Designer', {
+        count: installKnowledge.length
+      });
+    } else {
+      // Only call RAG if insufficient shared knowledge
+      logger.info('RAG call needed - insufficient shared knowledge');
+      
+      // Phase 3: Expand query with technical synonyms
+      const queryVariations = expandInstallQuery(query, installationMethod);
+      const expandedQuery = queryVariations.join(' ');
+      
+      logger.debug('Query expanded', { 
+        original: query,
+        variations: queryVariations.length,
+        expanded: expandedQuery.substring(0, 100)
+      });
 
-    // Phase 4: Generate embedding with optimized text-embedding-3-small (already in v3-core.ts)
-    const embeddingStart = Date.now();
-    const queryEmbedding = await generateEmbeddingWithRetry(expandedQuery, OPENAI_API_KEY);
-    logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
+      // Phase 4: Generate embedding with optimized text-embedding-3-small (already in v3-core.ts)
+      const embeddingStart = Date.now();
+      const queryEmbedding = await generateEmbeddingWithRetry(expandedQuery, OPENAI_API_KEY);
+      logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
-    // Use intelligent RAG with cross-encoder reranking
-    const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
-    const ragResults = await intelligentRAGSearch({
-      circuitType: installationMethod,
-      searchTerms: expandedQuery.split(' ').filter(w => w.length > 3),
-      expandedQuery
-    });
-    
-    const installKnowledge = ragResults?.installationDocs || [];
+      // Use intelligent RAG with cross-encoder reranking
+      const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
+      const ragResults = await intelligentRAGSearch({
+        circuitType: installationMethod,
+        searchTerms: expandedQuery.split(' ').filter(w => w.length > 3),
+        expandedQuery
+      });
+      
+      installKnowledge = ragResults?.installationDocs || [];
 
-    timings.ragRetrieval = Date.now() - timings.start - timings.cacheCheck;
+      timings.ragRetrieval = Date.now() - timings.start - timings.cacheCheck;
+    }
+
+    // Close the else block from PHASE 2
 
     logger.info('Installation knowledge retrieved', {
       count: installKnowledge.length,

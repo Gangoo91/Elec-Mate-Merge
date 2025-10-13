@@ -237,3 +237,16 @@ export function splitCompoundQuery(query: string): string[] {
     .filter(p => p.trim().length > 5)
     .map(p => p.trim());
 }
+
+/**
+ * PHASE 5: Calculate how specific a query is (0-100)
+ */
+export function calculateQuerySpecificity(entities: ParsedEntities): number {
+  let score = 0;
+  if (entities.power) score += 30;
+  if (entities.distance) score += 25;
+  if (entities.loadType) score += 20;
+  if (entities.location) score += 15;
+  if (entities.installMethod) score += 10;
+  return Math.min(score, 100);
+}
