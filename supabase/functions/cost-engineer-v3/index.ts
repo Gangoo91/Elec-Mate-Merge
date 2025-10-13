@@ -149,16 +149,13 @@ serve(async (req) => {
 
     logger.info('Cost Engineer V3 request received', { query: query.substring(0, 50), materialsCount: materials?.length });
 
-    // Get API keys
+    // Get API keys - OpenAI primary, Lovable AI fallback
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY not configured');
-    }
 
     // Step 1: Parse entities and build enhanced RAG query
     logger.debug('Parsing query entities');
@@ -265,21 +262,21 @@ serve(async (req) => {
     const pricingContext = formatPricingContext(finalPricingResults) +
       `\n\nFALLBACK MARKET RATES (use if not in database):\n- 2.5mm² T&E cable: £0.98/metre\n- 1.5mm² T&E cable: £0.80/metre\n- 6mm² T&E cable: £2.20/metre\n- 10mm² T&E cable: £3.90/metre\n- 2.5mm² SWA: £3.50/m, 4mm² SWA: £4.80/m, 6mm² SWA: £6.20/m, 10mm² SWA: £9.50/m\n- SWA gland 20mm: £10 (x2)\n- Consumer units: 8-way £136, 10-way £156, 12-way £185, 16-way £245\n- 40A RCBO: £28.50`;
 
-    // Build installation context with LONGER snippets (250 chars for critical context)
+    // Build installation context (trimmed: 120 chars max)
     const installationContext = installationResults && installationResults.length > 0
       ? installationResults.map((r: any) => 
-          `- ${r.topic}: ${r.content.substring(0, 250)}...`
+          `- ${r.topic}: ${r.content.substring(0, 120)}...`
         ).join('\n')
       : '';
 
-    // Build compact PM context (80 chars max per snippet)
+    // Build compact PM context (60 chars max)
     const pmContext = pmResults && pmResults.length > 0
       ? pmResults.map((r: any) => 
-          `- ${r.topic}: ${r.content.substring(0, 80)}...`
+          `- ${r.topic}: ${r.content.substring(0, 60)}...`
         ).join('\n')
       : '';
 
-    // Build conversation context with DESIGNER OUTPUT FIRST
+    // Build conversation context with DESIGNER OUTPUT FIRST (trimmed)
     let contextSection = '';
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
       const designerOutput = previousAgentOutputs.find((o: any) => o.agent === 'designer');
@@ -290,14 +287,13 @@ serve(async (req) => {
         contextSection += `- Circuit Type: ${design.circuitType || 'N/A'}\n`;
         contextSection += `- Circuit Breaker: ${design.circuitBreaker || 'N/A'}\n`;
         contextSection += `- Cable Length: ${design.cableLength || 'N/A'}m\n`;
-        contextSection += `- Full Design: ${JSON.stringify(design)}\n`;
       }
-      contextSection += '\n\nALL PREVIOUS WORK:\n' + JSON.stringify(previousAgentOutputs, null, 2);
     }
+    // Keep only last 3 conversation messages
     if (messages && messages.length > 0) {
-      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
-        `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
-      ).slice(-5).join('\n');
+      contextSection += '\n\nRECENT CONTEXT:\n' + messages.map((m: any) => 
+        `${m.role === 'user' ? 'User' : 'AI'}: ${m.content.substring(0, 150)}`
+      ).slice(-3).join('\n');
     }
 
     const systemPrompt = `UK Electrical Cost Engineer. September 2025.
@@ -393,17 +389,39 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 4. Add value engineering suggestions
 5. Include VAT (20%)`;
 
-    // Step 4: Call AI with universal wrapper
-    logger.debug('Calling AI with wrapper');
-    const { callAI } = await import('../_shared/ai-wrapper.ts');
+    // Step 4a: Check system health to determine provider
+    let useOpenAI = true; // Default to OpenAI
+    let lovableAIHealthy = false;
     
-    const aiResult = await callAI(LOVABLE_API_KEY!, {
-      model: 'google/gemini-2.5-flash',
-      systemPrompt,
-      userPrompt,
-      maxTokens: 1500,
-      timeoutMs: 25000,
-      temperature: 0.2,
+    if (LOVABLE_API_KEY) {
+      try {
+        const healthResponse = await fetch(`${supabaseUrl}/functions/v1/system-health`, {
+          headers: { 'Authorization': `Bearer ${supabaseKey}` }
+        });
+        if (healthResponse.ok) {
+          const health = await healthResponse.json();
+          const lovableCheck = health.checks?.find((c: any) => c.service === 'lovable_ai');
+          lovableAIHealthy = lovableCheck?.status === 'healthy';
+          logger.info('System health check', { lovableAI: lovableCheck?.status });
+        }
+      } catch (err) {
+        logger.warn('Health check failed', { error: err instanceof Error ? err.message : String(err) });
+      }
+    }
+
+    // Step 4b: Call AI with provider failover
+    logger.debug('Calling AI', { provider: useOpenAI ? 'OpenAI' : 'Lovable AI' });
+    const { callAI } = await import('../_shared/ai-wrapper.ts');
+    const aiStart = Date.now();
+    
+    let aiResult;
+    try {
+      aiResult = await callAI(OPENAI_API_KEY, {
+        model: 'gpt-5-2025-08-07',
+        systemPrompt,
+        userPrompt,
+        maxTokens: 1500,
+        timeoutMs: 25000,
       tools: [{
         type: 'function',
         function: {
@@ -510,7 +528,243 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         }
       }],
       toolChoice: { type: 'function', function: { name: 'provide_cost_estimate' } }
-    });
+      });
+      const aiMs = Date.now() - aiStart;
+      logger.info('AI call succeeded', { provider: 'openai', duration: aiMs });
+    } catch (aiError) {
+      const aiMs = Date.now() - aiStart;
+      logger.warn('OpenAI failed, attempting fallback', { duration: aiMs, error: aiError instanceof Error ? aiError.message : String(aiError) });
+      
+      // Try Lovable AI if available and healthy
+      if (LOVABLE_API_KEY && lovableAIHealthy) {
+        try {
+          const geminiStart = Date.now();
+          aiResult = await callAI(LOVABLE_API_KEY, {
+            model: 'google/gemini-2.5-flash',
+            systemPrompt,
+            userPrompt,
+            maxTokens: 1500,
+            timeoutMs: 25000,
+            temperature: 0.2,
+            tools: [{
+              type: 'function',
+              function: {
+                name: 'provide_cost_estimate',
+                description: 'Return detailed cost estimate with materials and labour breakdown',
+                parameters: {
+                  type: 'object',
+                  properties: {
+                    response: { type: 'string', description: 'Detailed cost analysis (150-250 words)' },
+                    materials: {
+                      type: 'object',
+                      properties: {
+                        items: {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              description: { type: 'string' },
+                              quantity: { type: 'number' },
+                              unit: { type: 'string' },
+                              unitPrice: { type: 'number' },
+                              total: { type: 'number' },
+                              supplier: { type: 'string' },
+                              inDatabase: { type: 'boolean' }
+                            },
+                            required: ['description', 'quantity', 'unit', 'unitPrice', 'total', 'supplier', 'inDatabase']
+                          }
+                        },
+                        subtotal: { type: 'number' },
+                        vat: { type: 'number' },
+                        total: { type: 'number' }
+                      },
+                      required: ['items', 'subtotal', 'vat', 'total']
+                    },
+                    labour: {
+                      type: 'object',
+                      properties: {
+                        tasks: {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              task: { type: 'string' },
+                              hours: { type: 'number' },
+                              rate: { type: 'number' },
+                              total: { type: 'number' }
+                            },
+                            required: ['task', 'hours', 'rate', 'total']
+                          }
+                        },
+                        subtotal: { type: 'number' },
+                        vat: { type: 'number' },
+                        total: { type: 'number' }
+                      },
+                      required: ['tasks', 'subtotal', 'vat', 'total']
+                    },
+                    summary: {
+                      type: 'object',
+                      properties: {
+                        materialsTotal: { type: 'number' },
+                        labourTotal: { type: 'number' },
+                        subtotal: { type: 'number' },
+                        vat: { type: 'number' },
+                        grandTotal: { type: 'number' }
+                      },
+                      required: ['grandTotal']
+                    },
+                    valueEngineering: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          suggestion: { type: 'string' },
+                          potentialSaving: { type: 'number' }
+                        },
+                        required: ['suggestion', 'potentialSaving']
+                      }
+                    },
+                    suggestedNextAgents: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          agent: { type: 'string' },
+                          reason: { type: 'string' },
+                          priority: { type: 'string', enum: ['high', 'medium', 'low'] }
+                        },
+                        required: ['agent', 'reason', 'priority']
+                      }
+                    }
+                  },
+                  required: ['response', 'materials', 'summary'],
+                  additionalProperties: false
+                }
+              }
+            }],
+            toolChoice: { type: 'function', function: { name: 'provide_cost_estimate' } }
+          });
+          logger.info('Lovable AI fallback succeeded', { duration: Date.now() - geminiStart });
+        } catch (fallbackError) {
+          logger.error('All AI providers failed, using deterministic fallback', { 
+            error: fallbackError instanceof Error ? fallbackError.message : String(fallbackError) 
+          });
+          aiResult = null; // Trigger fallback below
+        }
+      } else {
+        logger.warn('No AI fallback available, using deterministic estimate');
+        aiResult = null;
+      }
+    }
+
+    // Step 4c: Deterministic fallback if all AI fails
+    if (!aiResult) {
+      logger.info('Building deterministic quick estimate from RAG + heuristics');
+      
+      const materialItems: any[] = [];
+      let materialSubtotal = 0;
+      
+      if (parsedEntities.jobType === 'rewire') {
+        const beds = parsedEntities.propertySize?.bedrooms || 3;
+        const scale = beds === 1 ? 0.5 : beds === 2 ? 0.7 : beds === 4 ? 1.3 : beds === 5 ? 1.6 : 1.0;
+        
+        const cable25mm = Math.ceil(150 * scale);
+        const cable15mm = Math.ceil(105 * scale);
+        const cable6mm = Math.ceil(30 * scale);
+        
+        materialItems.push(
+          { description: '2.5mm² T&E cable', quantity: cable25mm, unit: 'm', unitPrice: 0.98, total: cable25mm * 0.98, supplier: 'CEF/TLC average', inDatabase: false },
+          { description: '1.5mm² T&E cable', quantity: cable15mm, unit: 'm', unitPrice: 0.80, total: cable15mm * 0.80, supplier: 'CEF/TLC average', inDatabase: false },
+          { description: '6mm² T&E cable (shower)', quantity: cable6mm, unit: 'm', unitPrice: 2.20, total: cable6mm * 2.20, supplier: 'CEF/TLC average', inDatabase: false },
+          { description: 'Consumer unit (18-way RCD)', quantity: 1, unit: 'unit', unitPrice: 285, total: 285, supplier: 'Standard', inDatabase: false }
+        );
+      } else if (parsedEntities.jobType === 'board_change') {
+        const ways = parsedEntities.consumerUnitWays || 10;
+        const cuPrice = ways === 8 ? 136.36 : ways === 10 ? 156 : ways === 12 ? 185 : ways === 16 ? 245 : 285;
+        materialItems.push(
+          { description: `Consumer unit (${ways}-way)`, quantity: 1, unit: 'unit', unitPrice: cuPrice, total: cuPrice, supplier: 'Standard', inDatabase: false }
+        );
+      }
+      
+      materialSubtotal = materialItems.reduce((sum, item) => sum + item.total, 0);
+      const materialVAT = materialSubtotal * 0.2;
+      const materialTotal = materialSubtotal + materialVAT;
+      
+      const labourTasks: any[] = [];
+      let labourSubtotal = 0;
+      
+      if (parsedEntities.jobType === 'rewire') {
+        labourTasks.push(
+          { task: 'First fix (chasing, cabling)', hours: 24, rate: 50, total: 1200 },
+          { task: 'Second fix (accessories, CU)', hours: 16, rate: 50, total: 800 },
+          { task: 'Testing & certification', hours: 5, rate: 50, total: 250 }
+        );
+      } else if (parsedEntities.jobType === 'board_change') {
+        labourTasks.push(
+          { task: 'Consumer unit replacement', hours: 7, rate: 50, total: 350 },
+          { task: 'Testing & certification (EIC)', hours: 3, rate: 50, total: 150 }
+        );
+      } else {
+        labourTasks.push(
+          { task: 'Installation & testing', hours: 8, rate: 50, total: 400 }
+        );
+      }
+      
+      labourSubtotal = labourTasks.reduce((sum, task) => sum + task.total, 0);
+      const labourVAT = labourSubtotal * 0.2;
+      const labourTotal = labourSubtotal + labourVAT;
+      
+      const grandTotal = materialTotal + labourTotal;
+      
+      const fallbackEstimate = {
+        response: `Quick Estimate (fallback mode): Based on parsed job type (${parsedEntities.jobType}) and standard UK rates. This is a deterministic estimate generated from heuristics when AI providers were unavailable. Materials based on typical ${parsedEntities.jobType} requirements, labour calculated using standard industry times. For a detailed breakdown, please try again when AI services are available.`,
+        materials: {
+          items: materialItems,
+          subtotal: materialSubtotal,
+          vat: materialVAT,
+          total: materialTotal
+        },
+        labour: {
+          tasks: labourTasks,
+          subtotal: labourSubtotal,
+          vat: labourVAT,
+          total: labourTotal
+        },
+        summary: {
+          materialsTotal: materialTotal,
+          labourTotal: labourTotal,
+          subtotal: materialSubtotal + labourSubtotal,
+          vat: materialVAT + labourVAT,
+          grandTotal
+        },
+        valueEngineering: [
+          { suggestion: 'Quick estimate mode - detailed value engineering unavailable', potentialSaving: 0 }
+        ],
+        suggestedNextAgents: []
+      };
+      
+      logger.info('Deterministic fallback complete', { 
+        provider: 'fallback',
+        materialsTotal: materialTotal,
+        labourTotal: labourTotal,
+        grandTotal
+      });
+      
+      return new Response(
+        JSON.stringify({
+          success: true,
+          result: fallbackEstimate,
+          metadata: {
+            requestId,
+            timestamp: new Date().toISOString(),
+            provider: 'fallback',
+            ragMs: Date.now() - ragStart,
+            totalMs: Date.now() - parallelStart
+          }
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     // Robust tool-call parsing (matches universal wrapper contract)
     let costResult: any;
