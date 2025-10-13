@@ -37,9 +37,10 @@ export async function multiVectorSearch(
   // Primary search (always present)
   const primaryQuery = buildPrimaryQuery(components);
   
+  // PHASE 2: Use cached version for faster searches
   searches.push(
     generateEmbeddingWithRetry(primaryQuery, openAiKey).then(emb => 
-      supabase.rpc('search_bs7671_hybrid', {
+      supabase.rpc('search_bs7671_hybrid_cached', {
         query_text: primaryQuery,
         query_embedding: emb,
         match_count: 10
@@ -47,12 +48,12 @@ export async function multiVectorSearch(
     )
   );
   
-  // Secondary searches (location, safety, etc.)
+  // Secondary searches (location, safety, etc.) - PHASE 2: Use cached version
   for (const concern of components.secondary.slice(0, 2)) { // Top 2 concerns
     const concernQuery = concern.keywords.join(' ');
     searches.push(
       generateEmbeddingWithRetry(concernQuery, openAiKey).then(emb =>
-        supabase.rpc('search_bs7671_hybrid', {
+        supabase.rpc('search_bs7671_hybrid_cached', {
           query_text: concernQuery,
           query_embedding: emb,
           match_count: 5

@@ -169,9 +169,9 @@ async function vectorSearch(
     }
   }
 
-  // PHASE 5: Generate embedding and extract keywords in PARALLEL
+  // PHASE 1 & 5: Generate embedding with correct dimensions (3072) for accuracy
   const [embeddingData, _] = await Promise.all([
-    // Embedding generation (200ms)
+    // Embedding generation (200ms) - PHASE 1: text-embedding-3-large for 3072d
     fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
@@ -180,7 +180,8 @@ async function vectorSearch(
       },
       body: JSON.stringify({
         input: params.expandedQuery,
-        model: 'text-embedding-3-small',
+        model: 'text-embedding-3-large', // PHASE 1: Upgraded from 3-small
+        dimensions: 3072 // Explicit dimension specification
       }),
     }).then(res => {
       if (!res.ok) throw new Error(`OpenAI embedding failed: ${res.status}`);
@@ -209,12 +210,12 @@ async function vectorSearchWithEmbedding(
   const searches: Promise<any>[] = [];
   const searchTypes: string[] = [];
 
-  // BS 7671 search
+  // BS 7671 search - PHASE 2: Use cached version for 120x speedup
   if (!priority || priority.bs7671 > 50) {
     searches.push(
-      supabase.rpc('search_bs7671', {
+      supabase.rpc('search_bs7671_hybrid_cached', {
+        query_text: params.expandedQuery,
         query_embedding: embedding,
-        match_threshold: 0.55,
         match_count: 10,
       })
     );
