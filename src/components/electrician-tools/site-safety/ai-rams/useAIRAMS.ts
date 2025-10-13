@@ -230,8 +230,18 @@ export function useAIRAMS(): UseAIRAMSReturn {
         }
       });
 
-      if (hsError) throw new Error(`Health & Safety Agent failed: ${hsError.message}`);
-      if (!hsData?.response) throw new Error('No response from Health & Safety Agent');
+      if (hsError || !hsData) {
+        console.error('Health & Safety agent error:', hsError);
+        setReasoningSteps(prev => prev.map(step => 
+          step.agent === 'health-safety' 
+            ? { ...step, status: 'error', reasoning: hsError?.message || 'Agent failed to respond' }
+            : step
+        ));
+        
+        setError('Health & Safety Agent failed. Please check your input and try again.');
+        setIsProcessing(false);
+        return; // Stop processing if health-safety fails
+      }
 
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'health-safety' 
