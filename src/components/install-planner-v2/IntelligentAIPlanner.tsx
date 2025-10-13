@@ -404,7 +404,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           : step
       ));
     },
-    onAgentResponse: async (agent, response, structuredData) => {
+    onAgentResponse: async (agent, response, structuredData, fullAgentResponse) => {
       console.log(`Agent ${agent} responded:`, response.slice(0, 100));
       
       // Pass response into structuredData for fallback rendering
@@ -464,7 +464,10 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           content: response,
           activeAgents: [agent],
           agentName: agent,
-          structuredData: enrichedStructuredData
+          structuredData: enrichedStructuredData,
+          enrichment: fullAgentResponse?.enrichment,
+          citations: fullAgentResponse?.citations,
+          rendering: fullAgentResponse?.rendering
         }];
       });
     },

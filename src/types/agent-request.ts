@@ -44,6 +44,14 @@ export interface AgentResponse {
   result?: any;
   error?: string;
   structuredData?: any;
+  enrichment?: {
+    displayHints?: {
+      primaryView?: string;
+      expandableSections?: string[];
+      highlightTerms?: string[];
+    };
+    interactiveElements?: any[];
+  };
   citations?: Array<{
     source?: string;
     section?: string;
@@ -62,6 +70,11 @@ export interface AgentResponse {
     citationConfidence?: number;
     validatedCitations?: boolean;
     [key: string]: any;
+  };
+  rendering?: {
+    layout?: string;
+    priority?: string;
+    callouts?: any[];
   };
   suggestedNextAgents?: string[];
 }

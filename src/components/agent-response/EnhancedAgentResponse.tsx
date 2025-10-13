@@ -5,6 +5,7 @@ import { ConfidenceBadge } from "./ConfidenceBadge";
 import { RegulationCitation } from "./RegulationCitation";
 import { StructuredDesignView } from "./StructuredDesignView";
 import { CollapsibleSection } from "./CollapsibleSection";
+import { RegulationCitationTooltip } from "./RegulationCitationTooltip";
 
 interface EnhancedAgentResponseProps {
   response: any;
@@ -50,7 +51,7 @@ export const EnhancedAgentResponse = ({
         <StructuredDesignView design={response.design} />
       )}
 
-      {/* Citations with confidence */}
+      {/* Citations with interactive tooltips */}
       {citations && citations.length > 0 && (
         <Card className="bg-slate-900/50 border-elec-yellow/20">
           <CardHeader>
@@ -59,9 +60,9 @@ export const EnhancedAgentResponse = ({
               Regulations Referenced
             </h3>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="flex flex-wrap gap-2">
             {citations.map((citation, idx) => (
-              <RegulationCitation key={idx} citation={citation} />
+              <RegulationCitationTooltip key={idx} citation={citation} index={idx} />
             ))}
           </CardContent>
         </Card>

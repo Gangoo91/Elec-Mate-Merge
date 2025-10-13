@@ -4,6 +4,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Brain, BookOpen, Loader2 } from "lucide-react";
 import { useMemo, memo, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "sonner";
 import { AgentFeedbackButtons } from "./AgentFeedbackButtons";
 import {
@@ -24,16 +25,52 @@ interface AgentResponseRendererProps {
   content: string;
   agentId?: string;
   structuredData?: any;
+  enrichment?: any;
+  citations?: any[];
+  rendering?: any;
   conversationId?: string;
   question?: string;
   onSelectAgent?: (agentId: string) => void;
-  isThinking?: boolean;  // NEW: For thinking display
+  isThinking?: boolean;
 }
 
-export const AgentResponseRenderer = memo(({ content, agentId, structuredData, conversationId, question, onSelectAgent, isThinking }: AgentResponseRendererProps) => {
+export const AgentResponseRenderer = memo(({ content, agentId, structuredData, enrichment, citations, rendering, conversationId, question, onSelectAgent, isThinking }: AgentResponseRendererProps) => {
   // ✅ ALL HOOKS FIRST - before any conditional logic
   const [showFullText, setShowFullText] = useState(false);
   const [showReasoningDrawer, setShowReasoningDrawer] = useState(false);
+  
+  // Extract enrichment data
+  const displayHints = enrichment?.displayHints;
+  const highlightTerms = displayHints?.highlightTerms || [];
+  const callouts = rendering?.callouts || [];
+  const enrichedCitations = citations || [];
+  
+  // Helper function to highlight terms in text
+  const highlightText = (text: string, terms: string[]): React.ReactNode => {
+    if (!terms || terms.length === 0 || !text) return text;
+    
+    let result: (string | JSX.Element)[] = [text];
+    terms.forEach(term => {
+      const newResult: (string | JSX.Element)[] = [];
+      result.forEach((part) => {
+        if (typeof part !== 'string') {
+          newResult.push(part);
+          return;
+        }
+        const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        const parts = part.split(regex);
+        parts.forEach((chunk, i) => {
+          if (regex.test(chunk)) {
+            newResult.push(<mark key={`${term}-${i}`} className="bg-elec-yellow/30 px-1 rounded">{chunk}</mark>);
+          } else if (chunk) {
+            newResult.push(chunk);
+          }
+        });
+      });
+      result = newResult;
+    });
+    return <>{result}</>;
+  };
   // ROBUST NARRATIVE TEXT - Try multiple sources with clear priority and clean markdown
   const narrativeText = useMemo(() => {
     const sources = [
@@ -102,6 +139,13 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
   
   return (
     <div className="space-y-4 text-left max-w-full overflow-hidden">
+      {/* Enriched Callouts/Warnings */}
+      {callouts.length > 0 && callouts.filter((c: any) => c.placement === 'top').map((callout: any, idx: number) => (
+        <Alert key={`callout-${idx}`} variant={callout.type === 'warning' ? 'destructive' : 'default'} className="border-l-4">
+          <AlertDescription>{callout.content}</AlertDescription>
+        </Alert>
+      ))}
+      
       {/* PHASE 3: Safety Warnings */}
       {structuredData?.safetyWarnings && structuredData.safetyWarnings.length > 0 && (
         <div className="space-y-2">

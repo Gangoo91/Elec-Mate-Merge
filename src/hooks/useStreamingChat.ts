@@ -49,7 +49,7 @@ interface UseStreamingChatOptions {
   onCitation?: (citation: any) => void;
   onError?: (error: string) => void;
   onAgentStart?: (agent: string, index: number, total: number) => void;
-  onAgentResponse?: (agent: string, response: string, structuredData?: any) => void;
+  onAgentResponse?: (agent: string, response: string, structuredData?: any, fullResponse?: any) => void;
   onAgentComplete?: (agent: string, nextAgent: string | null) => void;
   onAllAgentsComplete?: (agentOutputs: any[]) => void;
   onPlan?: (agents: string[], complexity: string) => void;
@@ -251,7 +251,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
                     if (chunk.agent && chunk.response) {
                       fullResponse += (fullResponse ? '\n\n' : '') + chunk.response;
                       onToken(chunk.response);
-                      options.onAgentResponse?.(chunk.agent, chunk.response, chunk.structuredData);
+                      options.onAgentResponse?.(chunk.agent, chunk.response, chunk.structuredData, chunk);
                       
                       if (chunk.citations) {
                         citations.push(...chunk.citations);
@@ -446,7 +446,7 @@ export const useStreamingChat = (options: UseStreamingChatOptions = {}) => {
             fullResponse += (fullResponse ? '\n\n' : '') + responseText;
             
             // Notify agent response with structured data
-            options.onAgentResponse?.(agentName, responseText, agentResponse?.structuredData);
+            options.onAgentResponse?.(agentName, responseText, agentResponse?.structuredData, agentResponse);
             
             // Merge structured data (last agent wins, but collect suggestedNextAgents)
             if (agentResponse?.structuredData) {

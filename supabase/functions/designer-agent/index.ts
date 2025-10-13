@@ -14,6 +14,7 @@ import { intelligentRAGSearch, type HybridSearchParams } from '../_shared/intell
 import { searchDesignPattern, storeDesignPattern } from '../_shared/pattern-learning.ts';
 import { buildEnhancedRAGQuery } from './ragQueryBuilder.ts';
 import { detectEdgeCases } from './edgeCaseDetection.ts';
+import { enrichResponse } from '../_shared/response-enricher.ts';
 import { getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
 import { getMaxZs, checkRCDRequirement } from "../shared/bs7671ProtectionData.ts";
@@ -1429,12 +1430,36 @@ IMPORTANT - RESPONSE FORMAT:
       confidence: 95,
     });
 
+    // Extract entities for enrichment
+    const entities = {
+      loadType: circuitParams.circuitType,
+      location: circuitParams.location,
+      cableSize: `${circuitParams.cableSize}mm²`,
+      voltage: `${circuitParams.voltage}V`,
+      current: `${calculationResults?.cableCapacity?.Ib || circuitParams.power / circuitParams.voltage}A`
+    };
+
+    // Determine query type
+    const queryType = userMessage?.toLowerCase().includes('how') || userMessage?.toLowerCase().includes('install') 
+      ? 'guidance' 
+      : 'design';
+
+    // Enrich response with UI metadata
+    const enrichedResponse = enrichResponse(
+      structuredData,
+      regulations,
+      queryType,
+      entities
+    );
+
     return new Response(JSON.stringify({
       response: responseContent,
       structuredData,
       reasoning,
       calculationResults,
       citations: enhancedCitations.length > 0 ? enhancedCitations : citations,
+      enrichment: enrichedResponse.enrichment,
+      rendering: enrichedResponse.rendering,
       confidence: 0.95,
       model: 'google/gemini-2.5-flash',
       timestamp: new Date().toISOString(),
