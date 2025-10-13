@@ -1,125 +1,110 @@
 /**
- * Citation Validator - Prevents AI hallucinations
- * Validates that AI-cited regulations actually exist in RAG results
+ * Citation Validation Layer
+ * Eliminates hallucinated regulation numbers
  */
 
-import { extractRegulationNumbers } from './query-parser.ts';
+import type { RegulationResult } from './cross-encoder-reranker.ts';
 
-export interface RegulationResult {
-  id: string;
-  regulation_number: string;
-  section: string;
-  content: string;
-  amendment?: string;
-  metadata?: any;
-  similarity?: number;
-  hybrid_score?: number;
-}
-
-export interface ValidationResult {
+export interface CitationValidationResult {
   isValid: boolean;
-  hallucinations: string[];
-  missingCitations: string[];
-  confidence: number;
+  hallucinations: string[]; // Regulation numbers cited but not in RAG
+  missingCitations: string[]; // Top RAG results not cited
+  citationConfidence: number; // 0-1 score
+  correctedNarrative?: string;
 }
 
 /**
- * Validate that AI-cited regulations exist in RAG results
+ * Extract regulation numbers from AI narrative
  */
-export function validateCitations(
-  aiResponse: string,
-  ragResults: RegulationResult[]
-): ValidationResult {
-  // Extract regulation numbers from AI response
-  const citedRegs = extractRegulationNumbers(aiResponse);
+export function extractCitations(narrative: string): string[] {
+  // Regex to match regulation numbers (e.g., 433.1.1, Table 4D5, 701.512.3)
+  const regexPatterns = [
+    /\b\d{3}\.\d{1,2}(?:\.\d{1,2})?\b/g, // Standard format: 433.1.1
+    /\bTable\s+\d+[A-Z]\d*\b/gi, // Table format: Table 4D5
+    /\bAppendix\s+\d+\b/gi, // Appendix format
+    /\bSection\s+\d{3}\b/gi // Section format: Section 701
+  ];
   
-  // Check each citation against RAG results
-  const ragRegNumbers = new Set(ragResults.map(r => r.regulation_number));
+  const citations = new Set<string>();
   
-  const hallucinations: string[] = [];
-  for (const cited of citedRegs) {
-    if (!ragRegNumbers.has(cited)) {
-      // Check if it's a known regulation (fuzzy match)
-      const isKnown = isKnownRegulation(cited);
-      if (!isKnown) {
-        hallucinations.push(cited);
-      }
+  for (const regex of regexPatterns) {
+    const matches = narrative.match(regex);
+    if (matches) {
+      matches.forEach(m => citations.add(m.trim()));
     }
   }
   
-  // Check if AI missed important regulations from RAG
-  const topRagRegs = ragResults
-    .slice(0, 5)
-    .map(r => r.regulation_number);
+  return Array.from(citations);
+}
+
+/**
+ * Validate citations against RAG results
+ */
+export function validateCitations(
+  narrative: string,
+  ragResults: RegulationResult[]
+): CitationValidationResult {
+  const citedRegulations = extractCitations(narrative);
+  const ragRegulations = ragResults.map(r => r.regulation_number);
   
-  const missingCitations = topRagRegs.filter(reg => !citedRegs.includes(reg));
+  // Find hallucinations (cited but not in RAG)
+  const hallucinations = citedRegulations.filter(cited => 
+    !ragRegulations.some(rag => rag.includes(cited) || cited.includes(rag))
+  );
   
-  const confidence = hallucinations.length === 0 && missingCitations.length <= 2 
-    ? 1.0 
-    : Math.max(0, 1.0 - (hallucinations.length * 0.3 + missingCitations.length * 0.1));
+  // Find missing citations (top 5 RAG results not cited)
+  const topRagResults = ragResults.slice(0, 5).map(r => r.regulation_number);
+  const missingCitations = topRagResults.filter(rag =>
+    !citedRegulations.some(cited => cited.includes(rag) || rag.includes(cited))
+  );
+  
+  // Calculate citation confidence
+  const totalCitations = citedRegulations.length;
+  const validCitations = totalCitations - hallucinations.length;
+  const citationConfidence = totalCitations > 0 ? validCitations / totalCitations : 1.0;
   
   return {
     isValid: hallucinations.length === 0,
     hallucinations,
     missingCitations,
-    confidence
+    citationConfidence
   };
 }
 
 /**
- * Check if a regulation number follows valid BS 7671 format
+ * Auto-correct common AI mistakes
  */
-function isKnownRegulation(regNumber: string): boolean {
-  // Validate against known BS 7671:2018+A3:2024 structure
-  const validFormats = [
-    /^\d{3}\.\d{1,2}\.\d{1,2}$/,  // 433.1.1
-    /^Table \d+[A-Z]?\d*$/,        // Table 4D5
-    /^Appendix \d+$/,              // Appendix 1
-    /^Section \d{3}$/              // Section 701
-  ];
-  
-  return validFormats.some(pattern => pattern.test(regNumber));
-}
-
-/**
- * Auto-correct common AI mistakes in regulation citations
- */
-export function correctCommonErrors(aiResponse: string): string {
+export function correctCommonErrors(narrative: string): string {
   const corrections: Record<string, string> = {
-    '433.1': '433.1.1',  // AI often drops last digit
-    'Table 4D': 'Table 4D5',
-    'Section 70': 'Section 701',
-    'Reg 433': '433.1.1',
-    'A2:2022': 'A3:2024',  // Update to Amendment 3
-    'Amendment 2': 'Amendment 3'
+    '433.1': '433.1.1',
+    '411.3': '411.3.2',
+    '525': '525.1',
+    '533': '533.1.1',
+    '543.1': '543.1.1'
   };
   
-  let corrected = aiResponse;
+  let corrected = narrative;
   for (const [wrong, right] of Object.entries(corrections)) {
-    corrected = corrected.replace(new RegExp(wrong, 'g'), right);
+    corrected = corrected.replace(new RegExp(`\\b${wrong}\\b`, 'g'), right);
   }
   
   return corrected;
 }
 
 /**
- * Strip invalid citations from AI response
+ * Strip invalid citations and add disclaimer
  */
-export function stripInvalidCitations(aiResponse: string, invalidRefs: string[]): string {
-  let cleaned = aiResponse;
+export function stripInvalidCitations(
+  narrative: string,
+  hallucinations: string[]
+): string {
+  let cleaned = narrative;
   
-  for (const invalid of invalidRefs) {
-    // Remove citation and surrounding context
-    const patterns = [
-      new RegExp(`\\b${invalid}\\b[^.]*\\.`, 'g'),
-      new RegExp(`\\(${invalid}\\)`, 'g'),
-      new RegExp(`${invalid}`, 'g')
-    ];
-    
-    for (const pattern of patterns) {
-      cleaned = cleaned.replace(pattern, '');
-    }
+  for (const hallucination of hallucinations) {
+    // Remove the regulation number and surrounding context
+    const escapedReg = hallucination.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    cleaned = cleaned.replace(new RegExp(`\\b${escapedReg}\\b`, 'g'), '[citation removed]');
   }
   
-  return cleaned.trim();
+  return cleaned;
 }
