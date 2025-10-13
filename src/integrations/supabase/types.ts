@@ -3996,6 +3996,7 @@ export type Database = {
       rag_cache: {
         Row: {
           agent_name: string
+          cache_confidence: number | null
           cache_hits: number | null
           created_at: string | null
           expires_at: string | null
@@ -4006,6 +4007,7 @@ export type Database = {
         }
         Insert: {
           agent_name: string
+          cache_confidence?: number | null
           cache_hits?: number | null
           created_at?: string | null
           expires_at?: string | null
@@ -4016,6 +4018,7 @@ export type Database = {
         }
         Update: {
           agent_name?: string
+          cache_confidence?: number | null
           cache_hits?: number | null
           created_at?: string | null
           expires_at?: string | null
