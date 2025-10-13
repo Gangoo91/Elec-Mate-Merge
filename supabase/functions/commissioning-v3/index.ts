@@ -395,9 +395,24 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     const toolCall = aiData.choices[0].message.tool_calls[0];
     const commResult = JSON.parse(toolCall.function.arguments);
 
+    // IMPROVEMENT: Response Quality Validation
+    const { validateResponse } = await import('../_shared/response-validation.ts');
+    const validation = validateResponse(
+      commResult.response,
+      effectiveQuery,
+      { testKnowledge, circuitType }
+    );
+
+    if (!validation.isValid) {
+      logger.warn('⚠️ Testing response validation issues', {
+        issues: validation.issues.length
+      });
+    }
+
     logger.info('Testing guidance completed', { 
       deadTests: commResult.testingProcedure?.deadTests?.length,
-      liveTests: commResult.testingProcedure?.liveTests?.length
+      liveTests: commResult.testingProcedure?.liveTests?.length,
+      validationConfidence: validation.confidence
     });
 
     // Step 5: Enrich response with UI metadata

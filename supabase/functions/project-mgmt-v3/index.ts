@@ -343,9 +343,24 @@ Include phases, resources, compliance requirements, and risk management.`;
     const toolCall = aiData.choices[0].message.tool_calls[0];
     const pmResult = JSON.parse(toolCall.function.arguments);
 
+    // IMPROVEMENT: Response Quality Validation
+    const { validateResponse } = await import('../_shared/response-validation.ts');
+    const validation = validateResponse(
+      pmResult.response,
+      effectiveQuery,
+      { pmKnowledge, projectType }
+    );
+
+    if (!validation.isValid) {
+      logger.warn('⚠️ PM response validation issues', {
+        issues: validation.issues.length
+      });
+    }
+
     logger.info('Project plan completed', { 
       phasesCount: pmResult.projectPlan?.phases?.length,
-      totalDuration: pmResult.projectPlan?.totalDuration
+      totalDuration: pmResult.projectPlan?.totalDuration,
+      validationConfidence: validation.confidence
     });
 
     // Step 5: Enrich response with UI metadata

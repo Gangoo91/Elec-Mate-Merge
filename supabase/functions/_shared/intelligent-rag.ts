@@ -321,14 +321,59 @@ async function vectorSearchWithEmbedding(
     console.log('⏭️ Skipping installation search (low priority)');
   }
 
-  // PHASE 5: Execute all searches in PARALLEL (150ms vs 400ms sequential)
-  const results = await Promise.all(searches);
+  // IMPROVEMENT: Proactive Error Recovery - Execute with retry logic
+  const { withRetry, RetryPresets } = await import('./retry.ts');
+  
+  const results = await Promise.all(
+    searches.map((search, index) => 
+      withRetry(
+        () => search,
+        {
+          ...RetryPresets.FAST,
+          shouldRetry: (error: unknown) => {
+            if (error instanceof Error) {
+              const msg = error.message.toLowerCase();
+              return msg.includes('timeout') || 
+                     msg.includes('network') ||
+                     msg.includes('econnreset');
+            }
+            return false;
+          }
+        }
+      ).catch((error) => {
+        console.error(`RAG search ${searchTypes[index]} failed:`, error);
+        return { data: [], error: error.message };
+      })
+    )
+  );
+
+  // IMPROVEMENT: Handle partial failures gracefully
+  const failedSearches = results.filter(r => r.error).length;
+  if (failedSearches > 0) {
+    console.warn(`⚠️ ${failedSearches}/${results.length} RAG searches failed - continuing with partial results`);
+  }
 
   // Map results back to named fields
   const resultMap: any = {};
   searchTypes.forEach((type, idx) => {
-    resultMap[type] = results[idx]?.data || [];
+    const result = results[idx];
+    resultMap[type] = result?.data || [];
+    if (result?.error) {
+      console.warn(`Search ${type} failed: ${result.error}`);
+    }
   });
+
+  // IMPROVEMENT: Ensure minimum quality threshold
+  const totalResults = (resultMap.bs7671?.length || 0) + 
+                      (resultMap.design?.length || 0) + 
+                      (resultMap.installation?.length || 0) + 
+                      (resultMap.health_safety?.length || 0);
+  
+  const hasMinimumResults = totalResults >= 3;
+  
+  if (!hasMinimumResults && failedSearches === 0) {
+    console.warn('⚠️ Low quality RAG results - fewer than minimum threshold');
+  }
 
   return {
     regulations: resultMap.bs7671 || [],
@@ -337,6 +382,12 @@ async function vectorSearchWithEmbedding(
     installationDocs: resultMap.installation || [],
     embedding,
     timeMs: Date.now() - startTime,
+    qualityMetrics: {
+      failedSearches,
+      totalSearches: searches.length,
+      hasMinimumResults,
+      totalResults
+    }
   };
 }
 

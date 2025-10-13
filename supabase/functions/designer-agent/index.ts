@@ -387,6 +387,8 @@ serve(async (req) => {
         ).join('\n\n');
       }
       
+      // IMPROVEMENT: Response Quality Validation will be applied after AI response
+      
       logger.info('✅ Intelligent RAG Complete', {
         bs7671Count: regulations.length,
         designDocsCount: designDocs.length,

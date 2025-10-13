@@ -446,10 +446,25 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     timings.aiGeneration = Date.now() - timings.start - timings.ragRetrieval - timings.cacheCheck;
     timings.total = Date.now() - timings.start;
 
+    // IMPROVEMENT: Response Quality Validation
+    const { validateResponse } = await import('../_shared/response-validation.ts');
+    const validation = validateResponse(
+      installResult.response,
+      effectiveQuery,
+      { installKnowledge, method: installationMethod }
+    );
+
+    if (!validation.isValid) {
+      logger.warn('⚠️ Installation response validation issues', {
+        issues: validation.issues.length
+      });
+    }
+
     logger.info('Installation guidance completed', {
       stepsCount: installResult.installationSteps?.length,
       tipsCount: installResult.practicalTips?.length,
       performanceMs: timings.total,
+      validationConfidence: validation.confidence,
       breakdown: {
         cache: timings.cacheCheck,
         rag: timings.ragRetrieval,
