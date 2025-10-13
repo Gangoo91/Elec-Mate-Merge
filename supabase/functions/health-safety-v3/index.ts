@@ -99,23 +99,32 @@ serve(async (req) => {
         ).join('\n\n')
       : 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
 
-    // Build conversation context with INSTALLATION PLAN
+    // Build HIGH-LEVEL INSTALL KNOWLEDGE from installer output
+    let installKnowledge = '';
     let contextSection = '';
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
       const installerOutput = previousAgentOutputs.find((o: any) => o.agent === 'installer');
       const designerOutput = previousAgentOutputs.find((o: any) => o.agent === 'designer');
       
+      if (installerOutput?.response?.structuredData?.steps) {
+        const steps = installerOutput.response.structuredData.steps;
+        installKnowledge = '\n\n📋 HIGH-LEVEL INSTALLATION STEPS (assess risks for each):\n\n';
+        steps.forEach((step: any, idx: number) => {
+          installKnowledge += `${idx + 1}. ${step.action || step.description}\n`;
+          if (step.considerations) installKnowledge += `   → ${step.considerations}\n`;
+        });
+        installKnowledge += '\n';
+      }
+      
       contextSection += '\n\nWORK TO ASSESS FOR RISKS:\n';
       if (installerOutput?.response?.structuredData) {
         const inst = installerOutput.response.structuredData;
         contextSection += `INSTALLATION STEPS: ${inst.steps?.length || 0} steps\n`;
-        contextSection += `Methods: ${JSON.stringify(inst.steps?.map((s: any) => s.action))}\n`;
       }
       if (designerOutput?.response?.structuredData) {
         const d = designerOutput.response.structuredData;
         contextSection += `DESIGN: ${d.voltage}V, ${d.cableType}, ${d.environment}\n`;
       }
-      contextSection += '\n\nFULL CONTEXT:\n' + JSON.stringify(previousAgentOutputs, null, 2);
     }
     if (messages && messages.length > 0) {
       contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
@@ -140,6 +149,8 @@ CURRENT DATE: September 2025
 
 HEALTH & SAFETY KNOWLEDGE DATABASE (YOU MUST USE THIS DATA):
 ${hsContext}
+
+${installKnowledge}
 
 🔴 CRITICAL INSTRUCTIONS FOR RISK ASSESSMENT:
 1. EXTRACT hazards from knowledge base FIRST:
@@ -353,13 +364,34 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       controlsApplied: safetyResult.riskAssessment?.controls?.length
     });
 
-    // Step 5: Return response - flat format for router/UI
+    // Step 5: Build RAG preview from H&S knowledge
+    const ragPreview = hsKnowledge && hsKnowledge.length > 0
+      ? hsKnowledge.slice(0, 5).map((item: any) => ({
+          id: item.id,
+          topic: item.topic || 'Safety Guidance',
+          scale: item.scale,
+          excerpt: (item.content || '').slice(0, 200) + '…'
+        }))
+      : [];
+
+    const citations = ragPreview.map((r: any, i: number) => ({
+      number: `H&S-${i + 1}`,
+      title: r.topic || 'Safety Guidance'
+    }));
+
+    // Step 6: Return response - flat format for router/UI
     const { response, suggestedNextAgents, riskAssessment, methodStatement, compliance } = safetyResult;
     
     return new Response(
       JSON.stringify({
         response,
-        structuredData: { riskAssessment, methodStatement, compliance },
+        structuredData: { 
+          riskAssessment, 
+          methodStatement, 
+          compliance,
+          ragPreview,
+          citations
+        },
         suggestedNextAgents: suggestedNextAgents || []
       }),
       { 

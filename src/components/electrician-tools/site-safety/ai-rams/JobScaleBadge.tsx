@@ -30,29 +30,29 @@ export const JobScaleBadge: React.FC<JobScaleBadgeProps> = ({
   };
   
   return (
-    <div className="space-y-2">
-      <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border ${config[scale].color}`}>
-        <span className="text-lg">{config[scale].icon}</span>
-        <span className="font-semibold text-sm">Detected: {config[scale].label}</span>
+    <div className="space-y-3">
+      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border ${config[scale].color}`}>
+        <span className="text-base sm:text-lg">{config[scale].icon}</span>
+        <span className="font-semibold text-sm sm:text-sm">Detected: {config[scale].label}</span>
         {confidence > 70 && (
-          <span className="text-xs opacity-75">({confidence}% confident)</span>
+          <span className="text-xs opacity-75">({confidence}% sure)</span>
         )}
       </div>
       
       {onManualChange && (
         <details className="text-sm">
-          <summary className="cursor-pointer text-muted-foreground hover:text-foreground">
-            Not right? Change it ▼
+          <summary className="cursor-pointer text-muted-foreground hover:text-foreground touch-manipulation py-1">
+            ▼Not right? Change it
           </summary>
-          <div className="flex gap-2 mt-2">
+          <div className="flex flex-col sm:flex-row gap-2 mt-3">
             {(['domestic', 'commercial', 'industrial'] as const).map(s => (
               <button
                 key={s}
                 onClick={() => onManualChange(s)}
-                className={`min-h-[44px] px-3 py-1.5 rounded-md border transition-colors ${
+                className={`min-h-[44px] w-full sm:w-auto px-4 py-2.5 rounded-lg border transition-all touch-manipulation ${
                   s === scale 
-                    ? config[s].color 
-                    : 'border-muted text-muted-foreground hover:border-foreground'
+                    ? config[s].color + ' shadow-sm' 
+                    : 'border-muted/50 text-muted-foreground hover:border-foreground/50 active:scale-95'
                 }`}
               >
                 {config[s].icon} {config[s].label}
