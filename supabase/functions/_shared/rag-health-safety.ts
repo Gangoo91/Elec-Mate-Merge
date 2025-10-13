@@ -1,140 +1,195 @@
 /**
- * Health & Safety RAG Retrieval - Hybrid Search Strategy
- * Optimized for ultra-fast H&S knowledge retrieval with query caching
+ * RAG Module for Health & Safety
+ * Hybrid search (BM25 + Vector RRF) for health_safety_knowledge
+ * - Query expansion for safety terms
+ * - Semantic caching (60min TTL)
+ * - Parallel vector + keyword search
  */
 
 import { createClient } from './deps.ts';
 import { generateEmbeddingWithRetry } from './v3-core.ts';
+import type { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
-export interface HSKnowledgeResult {
+interface HealthSafetyResult {
   id: string;
   topic: string;
   content: string;
   source: string;
+  scale?: string;
   metadata?: any;
-  similarity?: number;
+  hybrid_score?: number;
 }
 
-/**
- * Generate cache key from query + work type
- */
-function generateCacheKey(query: string, workType?: string): string {
-  const normalized = `${query.toLowerCase().trim()}_${workType || 'general'}`;
-  let hash = 0;
-  for (let i = 0; i < normalized.length; i++) {
-    const char = normalized.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
-  }
-  return Math.abs(hash).toString(36);
-}
+export type HSKnowledgeResult = HealthSafetyResult;
 
 /**
- * Expand query with electrical safety synonyms
+ * Query expansion for safety terms
  */
-function expandQuery(query: string, workType?: string): string[] {
-  const keywords = query.toLowerCase().split(/\s+/).filter(w => w.length > 3);
-  const expansions: string[] = [...keywords];
-  
-  // Electrical safety synonyms
-  const synonymMap: Record<string, string[]> = {
-    'shock': ['electrocution', 'live', 'voltage', 'isolation'],
-    'height': ['ladder', 'scaffold', 'fall', 'WAHR'],
-    'fire': ['arc fault', 'overload', 'combustion'],
-    'isolation': ['lockout', 'LOTO', 'safe isolation', 'proving'],
-    'ppe': ['protective equipment', 'gloves', 'boots', 'EN60903'],
-    'permit': ['permit to work', 'safe system', 'hot work'],
+function expandSafetyQuery(query: string): string {
+  const expansions: Record<string, string[]> = {
+    'bathroom': ['wet areas', 'Section 701', 'zones', 'IP rating', 'moisture'],
+    'outdoor': ['external', 'weatherproof', 'IP65', 'buried', 'underground'],
+    'height': ['working at height', 'WAHR', 'scaffolding', 'fall protection', 'ladders'],
+    'excavation': ['digging', 'trenching', 'underground services', 'shoring'],
+    'isolation': ['LOTO', 'lock off tag out', 'safe isolation', 'permit to work'],
+    'ppe': ['personal protective equipment', 'safety gear', 'protection'],
+    'risk': ['risk assessment', 'RAMS', 'hazard', 'mitigation'],
+    'fire': ['fire safety', 'fire extinguisher', 'emergency procedures'],
+    'first aid': ['medical emergency', 'injury', 'accident response'],
+    'asbestos': ['ACM', 'asbestos containing materials', 'R&D survey'],
+    'shock': ['electrocution', 'live', 'voltage', 'current'],
     'testing': ['proving', 'voltage indicator', 'GS38'],
-    'emergency': ['first aid', 'shock treatment', 'INDG231']
+    'emergency': ['shock treatment', 'INDG231'],
   };
-  
-  keywords.forEach(kw => {
-    if (synonymMap[kw]) {
-      expansions.push(...synonymMap[kw]);
-    }
-  });
-  
-  // Work type specific expansions
-  if (workType) {
-    if (workType.includes('commercial')) {
-      expansions.push('industrial', 'workplace', 'HASAWA');
-    }
-    if (workType.includes('domestic')) {
-      expansions.push('residential', 'occupied', 'tenant');
-    }
-    if (workType.includes('rewire')) {
-      expansions.push('isolation', 'live work', 'testing', 'certification');
+
+  let expanded = query.toLowerCase();
+  for (const [key, synonyms] of Object.entries(expansions)) {
+    if (expanded.includes(key)) {
+      expanded += ' ' + synonyms.join(' ');
     }
   }
-  
-  return [...new Set(expansions)]; // Deduplicate
+  return expanded;
 }
 
 /**
- * Check query cache (60-min TTL)
+ * Generate cache key
  */
-async function checkCache(
-  supabase: any,
-  queryHash: string
-): Promise<HSKnowledgeResult[] | null> {
+function generateCacheKey(query: string, scale?: string): string {
+  const normalized = query.toLowerCase().trim();
+  const key = scale ? `${normalized}:${scale}` : normalized;
+  return btoa(key).substring(0, 32);
+}
+
+/**
+ * Check semantic cache
+ */
+async function checkSemanticCache(
+  supabase: SupabaseClient,
+  queryHash: string,
+  logger: any
+): Promise<HealthSafetyResult[] | null> {
   try {
     const { data, error } = await supabase
-      .from('hs_query_cache')
-      .select('results, hit_count')
+      .from('rag_cache')
+      .select('*')
       .eq('query_hash', queryHash)
+      .eq('agent_name', 'health-safety')
       .gt('expires_at', new Date().toISOString())
-      .maybeSingle();
-    
-    if (error || !data) return null;
-    
-    // Increment hit counter
+      .single();
+
+    if (error || !data) {
+      logger.debug('Cache miss', { queryHash });
+      return null;
+    }
+
     await supabase
-      .from('hs_query_cache')
+      .from('rag_cache')
       .update({ hit_count: (data.hit_count || 0) + 1 })
       .eq('query_hash', queryHash);
-    
-    console.log(`✅ Cache HIT (${data.hit_count + 1} hits): ${queryHash}`);
-    return data.results as HSKnowledgeResult[];
+
+    logger.info('Cache hit', { queryHash, hitCount: data.hit_count + 1 });
+    return data.results as HealthSafetyResult[];
   } catch (err) {
-    console.error('Cache check failed:', err);
+    logger.warn('Cache check failed', { error: err instanceof Error ? err.message : String(err) });
     return null;
   }
 }
 
 /**
- * Store results in cache
+ * Store in semantic cache
  */
-async function storeCache(
-  supabase: any,
+async function storeSemanticCache(
+  supabase: SupabaseClient,
   queryHash: string,
   query: string,
-  results: HSKnowledgeResult[],
-  workType?: string
+  results: HealthSafetyResult[],
+  logger: any
 ): Promise<void> {
   try {
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+    
     await supabase
-      .from('hs_query_cache')
+      .from('rag_cache')
       .upsert({
         query_hash: queryHash,
-        query: query.slice(0, 500),
+        query_text: query,
+        agent_name: 'health-safety',
         results,
-        work_type: workType || null,
-        hit_count: 1,
-        expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString() // 60 min
+        hit_count: 0,
+        created_at: new Date().toISOString(),
+        expires_at: expiresAt.toISOString()
       });
-    
-    console.log(`💾 Cached H&S results: ${queryHash}`);
+
+    logger.debug('Stored in cache', { queryHash, resultCount: results.length });
   } catch (err) {
-    console.error('Cache store failed:', err);
+    logger.warn('Cache store failed', { error: err instanceof Error ? err.message : String(err) });
   }
 }
 
 /**
- * Retrieve H&S knowledge using hybrid search
- * 1. Check cache (instant if hit)
- * 2. Keyword search via full-text search (0.3s)
- * 3. Vector search with lower threshold (0.7s)
- * 4. Merge and deduplicate
+ * Hybrid H&S knowledge search
+ */
+export async function searchHealthSafetyKnowledge(
+  query: string,
+  openAiKey: string,
+  supabase: SupabaseClient,
+  logger: any,
+  scale?: string
+): Promise<HealthSafetyResult[]> {
+  const searchStart = Date.now();
+  
+  // Check cache
+  const cacheKey = generateCacheKey(query, scale);
+  const cached = await checkSemanticCache(supabase, cacheKey, logger);
+  if (cached) {
+    logger.info('RAG cache hit', { duration: Date.now() - searchStart });
+    return cached;
+  }
+
+  logger.debug('Starting hybrid H&S search', { query, scale });
+
+  // Expand query
+  const expandedQuery = expandSafetyQuery(query);
+  
+  // Generate embedding
+  const embedding = await generateEmbeddingWithRetry(expandedQuery, openAiKey);
+
+  try {
+    // Hybrid search
+    const { data, error } = await supabase.rpc('search_health_safety_hybrid', {
+      query_text: expandedQuery,
+      query_embedding: embedding,
+      scale_filter: scale || null,
+      match_count: 12
+    });
+
+    if (error) throw error;
+
+    const results = data || [];
+
+    logger.info('Hybrid H&S search complete', {
+      duration: Date.now() - searchStart,
+      resultsCount: results.length,
+      avgScore: results.length > 0 
+        ? (results.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) / results.length).toFixed(3)
+        : 0
+    });
+
+    // Store in cache
+    await storeSemanticCache(supabase, cacheKey, query, results, logger);
+
+    return results;
+  } catch (error) {
+    logger.error('Hybrid H&S search failed', {
+      error: error instanceof Error ? error.message : String(error),
+      duration: Date.now() - searchStart
+    });
+    throw error;
+  }
+}
+
+/**
+ * Legacy wrapper for backwards compatibility
  */
 export async function retrieveHealthSafetyKnowledge(
   query: string,
@@ -146,117 +201,36 @@ export async function retrieveHealthSafetyKnowledge(
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseKey);
   
-  // Step 1: Check cache (instant if hit)
-  const cacheKey = generateCacheKey(query, workType);
-  const cached = await checkCache(supabase, cacheKey);
-  if (cached && cached.length > 0) {
-    return cached;
+  const logger = {
+    debug: (msg: string, data?: any) => console.log(`[DEBUG] ${msg}`, data),
+    info: (msg: string, data?: any) => console.log(`[INFO] ${msg}`, data),
+    warn: (msg: string, data?: any) => console.warn(`[WARN] ${msg}`, data),
+    error: (msg: string, data?: any) => console.error(`[ERROR] ${msg}`, data),
+  };
+  
+  if (!openAiKey) {
+    openAiKey = Deno.env.get('OPENAI_API_KEY');
+  }
+  if (!openAiKey) {
+    throw new Error('OpenAI API key required');
   }
   
-  console.log('🔍 Cache MISS - performing hybrid search');
-  
-  // Step 2: Expand query with synonyms
-  const expandedTerms = expandQuery(query, workType);
-  const searchQuery = expandedTerms.slice(0, 8).join(' | '); // Take top 8 terms
-  
-  // Step 3: Keyword search (FAST - no embedding needed)
-  const { data: keywordResults } = await supabase
-    .from('health_safety_knowledge')
-    .select('*')
-    .textSearch('content', searchQuery, {
-      type: 'websearch',
-      config: 'english'
-    })
-    .limit(8);
-  
-  console.log(`📝 Keyword search: ${keywordResults?.length || 0} results`);
-  
-  // Step 4: Vector search (if keyword results < threshold)
-  let vectorResults: any[] = [];
-  if ((keywordResults?.length || 0) < 6) {
-    if (!openAiKey) {
-      openAiKey = Deno.env.get('OPENAI_API_KEY');
-    }
-    if (!openAiKey) {
-      throw new Error('OpenAI API key required for vector search');
-    }
-    
-    const embedding = await generateEmbeddingWithRetry(
-      `${query} ${workType || ''} electrical hazards safety`,
-      openAiKey
-    );
-    
-    const { data: vecData } = await supabase.rpc('search_health_safety', {
-      query_embedding: embedding,
-      scale_filter: workType || null,
-      source_filter: null,
-      match_threshold: 0.5,  // Lower threshold for better recall
-      match_count: limit
-    });
-    
-    vectorResults = vecData || [];
-    console.log(`🎯 Vector search: ${vectorResults.length} results`);
-  }
-  
-  // Step 5: Merge, deduplicate, and rank
-  const combined = [...(keywordResults || []), ...vectorResults];
-  const unique = Array.from(new Map(combined.map(r => [r.id, r])).values());
-  
-  // Step 6: Prioritize based on work type and source
-  const ranked = unique
-    .map(r => ({
-      ...r,
-      relevanceScore: calculateRelevance(r, query, workType)
-    }))
-    .sort((a, b) => (b.relevanceScore || 0) - (a.relevanceScore || 0))
-    .slice(0, limit);
-  
-  console.log(`✅ Hybrid search complete: ${ranked.length} total results`);
-  
-  // Step 7: Store in cache for future queries
-  await storeCache(supabase, cacheKey, query, ranked, workType);
-  
-  return ranked;
+  return searchHealthSafetyKnowledge(query, openAiKey, supabase, logger, workType);
 }
 
 /**
- * Calculate relevance score for ranking
+ * Format H&S context for LLM
  */
-function calculateRelevance(
-  result: any,
-  query: string,
-  workType?: string
-): number {
-  let score = result.similarity || 0.5;
-  
-  // Boost HSE official guidance
-  if (result.source?.includes('HSE')) {
-    score += 0.2;
+export function formatHealthSafetyContext(results: HealthSafetyResult[]): string {
+  if (!results || results.length === 0) {
+    return 'No database H&S guidance found. Use standard safety principles.';
   }
-  
-  // Boost BS 7671 references
-  if (result.content?.includes('BS 7671') || result.content?.includes('Section 4')) {
-    score += 0.15;
-  }
-  
-  // Boost if topic matches query keywords
-  const queryLower = query.toLowerCase();
-  if (result.topic && queryLower.includes(result.topic.toLowerCase())) {
-    score += 0.15;
-  }
-  
-  // Boost work type matches
-  if (workType && result.metadata?.scale === workType) {
-    score += 0.1;
-  }
-  
-  // Critical hazards always relevant
-  const criticalTopics = ['electric shock', 'live work', 'isolation', 'working at height'];
-  if (criticalTopics.some(t => result.topic?.toLowerCase().includes(t))) {
-    score += 0.1;
-  }
-  
-  return Math.min(score, 1.0);
+
+  return `HEALTH & SAFETY GUIDANCE (${results.length} items):\n` +
+    results
+      .slice(0, 10)
+      .map(h => `- ${h.topic}: ${h.content.substring(0, 150)}...`)
+      .join('\n');
 }
 
 /**

@@ -5914,6 +5914,37 @@ export type Database = {
           similarity: number
         }[]
       }
+      search_bs7671_hybrid: {
+        Args: {
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          amendment: string
+          content: string
+          hybrid_score: number
+          id: string
+          metadata: Json
+          regulation_number: string
+          section: string
+        }[]
+      }
+      search_design_hybrid: {
+        Args: {
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          content: string
+          hybrid_score: number
+          id: string
+          metadata: Json
+          source: string
+          topic: string
+        }[]
+      }
       search_design_knowledge: {
         Args: {
           circuit_filter?: string
@@ -5942,6 +5973,23 @@ export type Database = {
           content: string
           id: string
           similarity: number
+          source: string
+          topic: string
+        }[]
+      }
+      search_health_safety_hybrid: {
+        Args: {
+          match_count?: number
+          query_embedding: string
+          query_text: string
+          scale_filter?: string
+        }
+        Returns: {
+          content: string
+          hybrid_score: number
+          id: string
+          metadata: Json
+          scale: string
           source: string
           topic: string
         }[]
@@ -5993,6 +6041,21 @@ export type Database = {
           price_per_unit: string
           similarity: number
           wholesaler: string
+        }[]
+      }
+      search_project_mgmt_hybrid: {
+        Args: {
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          content: string
+          hybrid_score: number
+          id: string
+          metadata: Json
+          source: string
+          topic: string
         }[]
       }
       search_regulation_index: {
