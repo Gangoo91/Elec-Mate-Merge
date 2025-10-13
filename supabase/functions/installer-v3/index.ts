@@ -98,7 +98,13 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, cableType, installationMethod, location, messages, previousAgentOutputs } = body;
+    const { query, cableType, installationMethod, location, messages, previousAgentOutputs, sharedRegulations } = body;
+
+    // PHASE 1: Query Enhancement
+    const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
+    const enhancement = enhanceQuery(query, messages || []);
+    logEnhancement(enhancement, logger);
+    const effectiveQuery = enhancement.enhanced;
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -108,7 +114,19 @@ serve(async (req) => {
       throw new ValidationError('query must be less than 1000 characters');
     }
 
-    logger.info('Installer V3 request received', { query: query.substring(0, 50), installationMethod });
+    logger.info('🔧 Installer V3 invoked', { 
+      query: effectiveQuery.substring(0, 50),
+      enhanced: enhancement.addedContext.length > 0,
+      installationMethod,
+      hasSharedRegs: !!sharedRegulations?.length
+    });
+
+    // PHASE 3: Safety Guardian
+    const { detectSafetyRequirements } = await import('../_shared/safety-guardian.ts');
+    const safetyWarnings = detectSafetyRequirements(effectiveQuery, undefined, undefined, location);
+    if (safetyWarnings.warningCount > 0) {
+      logger.info(`⚠️ ${safetyWarnings.warningCount} installation warnings detected`);
+    }
 
     // Get API keys
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');

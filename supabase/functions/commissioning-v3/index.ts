@@ -38,7 +38,14 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, circuitType, voltage, messages, previousAgentOutputs } = body;
+    const { query, circuitType, voltage, messages, previousAgentOutputs, sharedRegulations } = body;
+
+    // PHASE 1: Query Enhancement
+    const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
+    const enhancement = enhanceQuery(query, messages || []);
+    logEnhancement(enhancement, logger);
+    
+    const effectiveQuery = enhancement.enhanced;
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -48,7 +55,11 @@ serve(async (req) => {
       throw new ValidationError('query must be less than 1000 characters');
     }
 
-    logger.info('Commissioning V3 request received', { query: query.substring(0, 50) });
+    logger.info('🔍 Commissioning V3 request received', { 
+      query: effectiveQuery.substring(0, 50),
+      enhanced: enhancement.addedContext.length > 0,
+      hasSharedRegs: !!sharedRegulations?.length
+    });
 
     // Get API keys
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');

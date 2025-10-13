@@ -33,7 +33,14 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, workType, location, hazards, messages, previousAgentOutputs } = body;
+    const { query, workType, location, hazards, messages, previousAgentOutputs, sharedRegulations } = body;
+
+    // PHASE 1: Query Enhancement
+    const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
+    const enhancement = enhanceQuery(query, messages || []);
+    logEnhancement(enhancement, logger);
+    
+    const effectiveQuery = enhancement.enhanced;
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -52,7 +59,27 @@ serve(async (req) => {
       throw new ValidationError('hazards must be an array');
     }
 
-    logger.info('Health & Safety V3 request received', { query: query.substring(0, 50), workType });
+    logger.info('🦺 Health & Safety V3 request received', { 
+      query: effectiveQuery.substring(0, 50),
+      enhanced: enhancement.addedContext.length > 0,
+      workType,
+      hasSharedRegs: !!sharedRegulations?.length
+    });
+
+    // PHASE 3: Safety Guardian - Detect critical hazards
+    const { detectSafetyRequirements } = await import('../_shared/safety-guardian.ts');
+    const safetyWarnings = detectSafetyRequirements(
+      effectiveQuery,
+      undefined, // circuitType from previousAgentOutputs
+      undefined,
+      location,
+      undefined,
+      undefined
+    );
+    
+    if (safetyWarnings.criticalCount > 0) {
+      logger.info(`🚨 ${safetyWarnings.criticalCount} critical hazards detected`);
+    }
 
     // Get API keys
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');

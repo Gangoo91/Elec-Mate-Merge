@@ -33,7 +33,13 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, projectType, scope, timeline, messages, previousAgentOutputs } = body;
+    const { query, projectType, scope, timeline, messages, previousAgentOutputs, sharedRegulations } = body;
+
+    // PHASE 1: Query Enhancement
+    const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
+    const enhancement = enhanceQuery(query, messages || []);
+    logEnhancement(enhancement, logger);
+    const effectiveQuery = enhancement.enhanced;
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -52,7 +58,12 @@ serve(async (req) => {
       throw new ValidationError('timeline must be a string');
     }
 
-    logger.info('Project Manager V3 request received', { query: query.substring(0, 50), projectType });
+    logger.info('📋 Project Manager V3 request received', { 
+      query: effectiveQuery.substring(0, 50),
+      enhanced: enhancement.addedContext.length > 0,
+      projectType,
+      hasSharedRegs: !!sharedRegulations?.length
+    });
 
     // Get API keys
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');

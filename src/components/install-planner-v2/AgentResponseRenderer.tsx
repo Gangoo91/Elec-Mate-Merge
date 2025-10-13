@@ -137,6 +137,27 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, c
         </div>
       )}
       
+      {/* PHASE 4: Conflict Resolutions */}
+      {structuredData?.conflicts && structuredData.conflicts.length > 0 && (
+        <div className="px-4 py-3 bg-blue-500/10 border-l-4 border-blue-500 rounded-r">
+          <p className="text-sm font-semibold mb-2 flex items-center gap-2">
+            <span>⚖️</span>
+            Agent Recommendations Consolidated
+          </p>
+          {structuredData.conflicts.map((conflict: any, idx: number) => (
+            <div key={idx} className="text-xs space-y-1 mb-3 last:mb-0">
+              <p className="text-foreground/90">
+                <span className="font-medium">{conflict.parameter.replace('_', ' ')}:</span> {conflict.agents.join(' & ')} provided different values
+              </p>
+              <p className="text-blue-400 font-semibold">
+                ✓ Resolved: {conflict.resolution}
+              </p>
+              <p className="text-muted-foreground italic">{conflict.reason}</p>
+            </div>
+          ))}
+        </div>
+      )}
+      
       {/* Designer: Show RAG results if no narrative but citations exist */}
       {agentId === 'designer' && narrativeText.length <= 10 && structuredData?.citations && structuredData.citations.length > 0 && (
         <Card className="border-elec-yellow/20 bg-elec-yellow/5">
