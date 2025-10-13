@@ -243,6 +243,38 @@ export async function callAI(
 
         const data = await response.json();
         
+        // Debug log the full response structure
+        console.log('🔍 AI Response Structure:', {
+          hasChoices: !!data.choices,
+          choicesLength: data.choices?.length,
+          hasMessage: !!data.choices?.[0]?.message,
+          hasContent: !!data.choices?.[0]?.message?.content,
+          contentType: typeof data.choices?.[0]?.message?.content,
+          finishReason: data.choices?.[0]?.finish_reason,
+          safetyRatings: data.choices?.[0]?.safety_ratings,
+          model: data.model
+        });
+
+        // Handle safety blocks (Gemini-specific)
+        if (data.choices?.[0]?.finish_reason === 'SAFETY') {
+          throw new AIError(
+            'Content blocked by safety filters. Try rephrasing your query.',
+            providerName,
+            undefined,
+            false // Not retryable
+          );
+        }
+
+        // Handle refusals (Claude/GPT-specific)
+        if (data.choices?.[0]?.finish_reason === 'content_filter') {
+          throw new AIError(
+            'Content filtered by AI provider. Please rephrase.',
+            providerName,
+            undefined,
+            false
+          );
+        }
+        
         // Handle tool calls (structured output)
         if (data.choices?.[0]?.message?.tool_calls) {
           const toolCalls = data.choices[0].message.tool_calls;
@@ -255,7 +287,20 @@ export async function callAI(
         const content = data.choices?.[0]?.message?.content;
         
         if (!content) {
-          throw new AIError('Empty response from AI', providerName, undefined, true);
+          // Log the full response for debugging
+          console.error('❌ Empty content from AI:', {
+            fullResponse: JSON.stringify(data),
+            finishReason: data.choices?.[0]?.finish_reason,
+            model: data.model,
+            usage: data.usage
+          });
+          
+          throw new AIError(
+            `Empty response from AI (finish_reason: ${data.choices?.[0]?.finish_reason || 'unknown'})`,
+            providerName,
+            undefined,
+            true // Retryable - might be transient
+          );
         }
 
         // Validate JSON if required
@@ -270,6 +315,7 @@ export async function callAI(
         return { content, toolCalls: undefined };
       }, {
         ...RetryPresets.STANDARD,
+        maxRetries: 3, // Reduce from 4 to 3
         shouldRetry: (error: unknown) => {
           if (error instanceof AIError) {
             return error.retryable;

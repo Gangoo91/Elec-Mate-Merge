@@ -36,9 +36,52 @@ export function buildEnhancedRAGQuery(userMessage: string, circuitParams: any, p
     parts.push(`${circuitParams.power}W power rating`);
   }
   
-  // Cable run distance context
+  // Cable run distance context with SWA vs Twin & Earth guidance
   if (circuitParams.cableLength) {
     parts.push(`${circuitParams.cableLength}m cable run`);
+    
+    // Critical: Long runs need SWA vs Twin & Earth guidance
+    if (circuitParams.cableLength > 20) {
+      parts.push(
+        'Regulation 521 wiring system selection',
+        'SWA cable armoured for long distances',
+        'twin and earth versus singles versus SWA comparison',
+        'mechanical protection requirements BS 7671',
+        'cable installation method Table 4A2 reference C',
+        'voltage drop calculation long cable runs',
+        'outdoor buried cable installation',
+        'cable protection from mechanical damage',
+        'twin and earth maximum 10mm only domestic'
+      );
+    }
+    
+    // Medium runs (10-20m) still need guidance
+    if (circuitParams.cableLength > 10 && circuitParams.cableLength <= 20) {
+      parts.push(
+        'cable type selection criteria Table 4A2',
+        'twin and earth suitability for distance',
+        'voltage drop considerations',
+        'singles in conduit alternative'
+      );
+    }
+    
+    // Short runs (<10m) - standard guidance
+    if (circuitParams.cableLength <= 10) {
+      parts.push(
+        'twin and earth suitable for short runs',
+        'standard domestic installation'
+      );
+    }
+  }
+  
+  // High power circuits need cable type consideration (twin & earth max 10mm²)
+  if (circuitParams.power && circuitParams.power > 7000) {
+    parts.push(
+      'high load cable selection',
+      'large CSA cables singles versus twin and earth',
+      'twin and earth maximum size 10mm domestic only',
+      'over 10mm2 use singles in conduit or SWA'
+    );
   }
   
   // Location context (critical for special locations)

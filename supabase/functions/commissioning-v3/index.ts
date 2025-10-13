@@ -95,12 +95,12 @@ serve(async (req) => {
       count: testKnowledge?.length || 0
     });
 
-    // Step 3: Build testing context from GN3 knowledge
+    // Step 3: Build testing context from GN3 knowledge (LIMIT to top 10 to prevent token overflow)
     const testContext = testKnowledge && testKnowledge.length > 0
-      ? testKnowledge.map((test: any) => 
-          `[GN3] ${test.topic}: ${test.content}`
+      ? testKnowledge.slice(0, 10).map((test: any) => 
+          `**${test.regulation_number || 'Testing Procedure'}**\n${test.content || test.section || 'No content available'}`
         ).join('\n\n')
-      : 'Apply general BS 7671 Chapter 64 testing procedures and GN3 guidance.';
+      : 'No specific testing procedures found. Refer to GN3 and BS 7671 Chapter 64.';
 
     // Build conversation context with DESIGN DATA
     let contextSection = '';
@@ -124,10 +124,11 @@ serve(async (req) => {
       }
       contextSection += '\n\nFULL CONTEXT:\n' + JSON.stringify(previousAgentOutputs, null, 2);
     }
+    // Limit message history to last 6 messages to prevent token overflow
     if (messages && messages.length > 0) {
-      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
+      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.slice(-6).map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
-      ).slice(-5).join('\n');
+      ).join('\n');
     }
 
     const systemPrompt = `You are a GN3 PRACTICAL TESTING GURU - BS 7671:2018+A3:2024 Chapter 64 specialist.
@@ -288,7 +289,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       systemPrompt,
       userPrompt,
       maxTokens: 2000,
-      timeoutMs: 55000,
+      timeoutMs: 30000, // Reduced from 55s to 30s
       tools: [{
         type: 'function',
         function: {

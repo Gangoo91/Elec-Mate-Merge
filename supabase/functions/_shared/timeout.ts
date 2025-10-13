@@ -52,6 +52,9 @@ export const Timeouts = {
   
   /** Critical timeout (2 minutes) - batch processing */
   CRITICAL: 120000,
+  
+  /** AI call timeout (30s) - Fast failure detection for Gemini/GPT */
+  AI_CALL: 30000,
 };
 
 /**

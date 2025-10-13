@@ -407,7 +407,12 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       ));
     },
     onAgentResponse: async (agent, response, structuredData, fullAgentResponse) => {
-      console.log(`Agent ${agent} responded:`, response.slice(0, 100));
+      // Type-safe response handling
+      const responseStr = typeof response === 'string' 
+        ? response 
+        : JSON.stringify(response || '');
+      
+      console.log(`Agent ${agent} responded:`, responseStr.slice(0, 100));
       
       // Pass response into structuredData for fallback rendering
       const enrichedStructuredData = structuredData ? {
