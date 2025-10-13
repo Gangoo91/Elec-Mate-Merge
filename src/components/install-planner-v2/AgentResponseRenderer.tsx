@@ -20,6 +20,7 @@ import { CitationBadge } from "./CitationBadge";
 import { MultiCircuitRenderer } from "./MultiCircuitRenderer";
 import { AgentSuggestions } from "./AgentSuggestions";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { RegulationCitationTooltip } from "@/components/agent-response/RegulationCitationTooltip";
 
 interface AgentResponseRendererProps {
   content: string;
@@ -145,6 +146,23 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, e
           <AlertDescription>{callout.content}</AlertDescription>
         </Alert>
       ))}
+
+      {/* Interactive Regulation Citations with Tooltips */}
+      {enrichedCitations && enrichedCitations.length > 0 && (
+        <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+          <CardHeader>
+            <CardTitle className="text-sm flex items-center gap-2">
+              <BookOpen className="h-4 w-4" />
+              Regulations Referenced
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-wrap gap-2">
+            {enrichedCitations.map((citation: any, idx: number) => (
+              <RegulationCitationTooltip key={idx} citation={citation} index={idx} />
+            ))}
+          </CardContent>
+        </Card>
+      )}
       
       {/* PHASE 3: Safety Warnings */}
       {structuredData?.safetyWarnings && structuredData.safetyWarnings.length > 0 && (
@@ -341,14 +359,26 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, e
           
           <CollapsibleContent className="space-y-4 pt-3">
             {sections.map((section, index) => (
-              <SectionRenderer key={index} section={section} agentId={agentId} />
+              <SectionRenderer 
+                key={index} 
+                section={section} 
+                agentId={agentId}
+                highlightTerms={highlightTerms}
+                highlightText={highlightText}
+              />
             ))}
           </CollapsibleContent>
         </Collapsible>
       ) : (
         // No structured data - show text as normal
         sections.map((section, index) => (
-          <SectionRenderer key={index} section={section} agentId={agentId} />
+          <SectionRenderer 
+            key={index} 
+            section={section} 
+            agentId={agentId}
+            highlightTerms={highlightTerms}
+            highlightText={highlightText}
+          />
         ))
       )}
       
@@ -401,7 +431,12 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, e
   );
 });
 
-const SectionRenderer = memo(({ section, agentId }: { section: ParsedSection; agentId?: string }) => {
+const SectionRenderer = memo(({ section, agentId, highlightTerms = [], highlightText }: { 
+  section: ParsedSection; 
+  agentId?: string;
+  highlightTerms?: string[];
+  highlightText?: (text: string, terms: string[]) => React.ReactNode;
+}) => {
   switch (section.type) {
     case 'header':
       return (
@@ -422,7 +457,9 @@ const SectionRenderer = memo(({ section, agentId }: { section: ParsedSection; ag
           {section.items?.map((item, idx) => (
             <li key={idx} className="flex items-start gap-3 text-sm leading-relaxed">
               <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-elec-yellow flex-shrink-0" />
-              <span className="text-foreground">{item}</span>
+              <span className="text-foreground">
+                {highlightText && highlightTerms.length > 0 ? highlightText(item, highlightTerms) : item}
+              </span>
             </li>
           ))}
         </ul>
@@ -449,7 +486,7 @@ const SectionRenderer = memo(({ section, agentId }: { section: ParsedSection; ag
     case 'paragraph':
       return (
         <p className="text-sm leading-relaxed text-foreground">
-          {section.content}
+          {highlightText && highlightTerms.length > 0 ? highlightText(section.content, highlightTerms) : section.content}
         </p>
       );
     
