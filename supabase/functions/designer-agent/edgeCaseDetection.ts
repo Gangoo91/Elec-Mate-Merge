@@ -77,8 +77,10 @@ I can show you the theoretical design, but the voltage drop calculations might i
   }
   
   // 4. FOLLOW-UP QUESTION WITHOUT CONTEXT
-  if ((msgLower.startsWith('why ') || msgLower.includes('why not')) && 
+  // PHASE 2: Don't flag as edge case if we successfully pulled params from currentDesign
+  if ((msgLower.startsWith('why ') || msgLower.includes('why not') || msgLower.includes('better to')) && 
       power === 0 && 
+      !circuitParams.isContextQuestion && // Check if context question was successfully resolved
       (!currentDesign || !currentDesign.circuits || currentDesign.circuits.length === 0)) {
     return {
       isEdgeCase: true,

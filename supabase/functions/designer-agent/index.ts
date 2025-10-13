@@ -686,10 +686,12 @@ Reasoning: ${lastCircuit.calculations?.reasoning || 'Standard BS 7671 compliance
 `;
       }
       
-      // PHASE 3: Detect "why" questions and inject specific context
+      // PHASE 3 & 4: Detect "why" questions and "better to" patterns - inject specific context
       const isWhyQuestion = userMessage.toLowerCase().startsWith('why ') || 
                            userMessage.toLowerCase().includes('why not') || 
-                           userMessage.toLowerCase().includes('instead of');
+                           userMessage.toLowerCase().includes('instead of') ||
+                           userMessage.toLowerCase().includes('better to') ||
+                           userMessage.toLowerCase().includes('wouldn\'t it be better');
       
       let whyQuestionContext = '';
       if (isWhyQuestion && currentDesign?.circuits && currentDesign.circuits.length > 0) {
@@ -711,8 +713,32 @@ IMPORTANT:
 `;
       }
       
+      // PHASE 3: Inject context for follow-up questions about previous circuits
+      const contextQuestionPrompt = circuitParams.isContextQuestion ? `
+🔄 USER IS ASKING A FOLLOW-UP QUESTION ABOUT A PREVIOUS CIRCUIT:
+
+Referenced Circuit: ${circuitParams.referencedCircuitName}
+- Load: ${circuitParams.power}W (${(circuitParams.power/1000).toFixed(1)}kW)
+- Distance: ${circuitParams.cableLength}m
+- Current cable: ${circuitParams.cableSize}mm² ${circuitParams.cableType === 'swa' ? 'SWA' : 'twin & earth'}
+- Protection: ${circuitParams.deviceRating}A MCB Type ${circuitParams.deviceType}
+${circuitParams.referencedCircuit?.voltageDrop ? `- Voltage drop: ${circuitParams.referencedCircuit.voltageDrop.toFixed(2)}% (${circuitParams.referencedCircuit.voltageDrop < 5 ? 'COMPLIANT' : 'EXCEEDS LIMIT'})` : ''}
+
+User's question: "${userMessage}"
+
+YOUR JOB:
+- Explain whether their suggestion (e.g., upsizing cable) is advisable
+- Reference current voltage drop vs BS 7671 limits (5% max for power circuits - Reg 525)
+- Discuss cost/benefit of their suggested change
+- Clarify if it's necessary for compliance or just "good practice"
+- Be practical and conversational
+
+` : '';
+
       // PHASE 1: Enhanced conversational system prompt with examples
       systemPrompt = `You are a senior electrical design engineer (15+ years BS 7671 experience) having a chat with a colleague about circuit design.
+
+${contextQuestionPrompt}
 
 TONE & STYLE EXAMPLES:
 ✅ GOOD: "Right, 9.5kW shower over 18m - pretty standard domestic job. With 41A load, you're looking at 10mm² T&E on a 45A MCB..."
@@ -1506,6 +1532,73 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
   const voltageMatch = userMessage.match(/(\d+)\s*V/i);
   const lengthMatch = userMessage.match(/(\d+)\s*m(?:etre)?s?/i);
   const phaseMatch = userMessage.match(/(single|three|1|3)[\s-]?phase/i);
+
+  // PHASE 1: Context-aware parameter extraction for follow-up questions
+  if (!loadMatch && !lengthMatch && currentDesign?.circuits?.length > 0) {
+    const msgLower = userMessage.toLowerCase();
+    
+    // Detect which circuit they're referencing
+    let referencedCircuit = null;
+    
+    // Check for circuit type references
+    if (msgLower.includes('heater') && !msgLower.includes('water')) {
+      referencedCircuit = currentDesign.circuits.find((c: any) => 
+        c.circuitType === 'heating' || c.name?.toLowerCase().includes('heater')
+      );
+    } else if (msgLower.includes('shower')) {
+      referencedCircuit = currentDesign.circuits.find((c: any) => 
+        c.circuitType === 'shower' || c.name?.toLowerCase().includes('shower')
+      );
+    } else if (msgLower.includes('cooker') || msgLower.includes('oven')) {
+      referencedCircuit = currentDesign.circuits.find((c: any) => 
+        c.circuitType === 'cooker' || c.name?.toLowerCase().includes('cooker')
+      );
+    } else if (msgLower.includes('socket')) {
+      referencedCircuit = currentDesign.circuits.find((c: any) => 
+        c.circuitType === 'socket' || c.name?.toLowerCase().includes('socket')
+      );
+    } else if (msgLower.includes('light')) {
+      referencedCircuit = currentDesign.circuits.find((c: any) => 
+        c.circuitType === 'lighting' || c.name?.toLowerCase().includes('light')
+      );
+    } else if (msgLower.includes('way 1') || msgLower.includes('circuit 1') || msgLower.includes('first')) {
+      referencedCircuit = currentDesign.circuits[0];
+    } else if (msgLower.includes('way 2') || msgLower.includes('circuit 2') || msgLower.includes('second')) {
+      referencedCircuit = currentDesign.circuits[1];
+    } else if (msgLower.includes('way 3') || msgLower.includes('circuit 3') || msgLower.includes('third')) {
+      referencedCircuit = currentDesign.circuits[2];
+    }
+    
+    // If still no match, use the most recent circuit
+    if (!referencedCircuit && currentDesign.circuits.length > 0) {
+      referencedCircuit = currentDesign.circuits[currentDesign.circuits.length - 1];
+    }
+    
+    if (referencedCircuit) {
+      console.log(`🔄 Context question detected - referencing circuit: ${referencedCircuit.name || referencedCircuit.circuitType}`);
+      
+      return {
+        hasEnoughData: true,
+        power: referencedCircuit.load || referencedCircuit.totalLoad || 0,
+        voltage: referencedCircuit.voltage || 230,
+        phases: referencedCircuit.phases || 'single',
+        designCurrent: referencedCircuit.designCurrent || 0,
+        deviceRating: referencedCircuit.mcbRating || 32,
+        deviceType: referencedCircuit.deviceType || 'B',
+        cableSize: referencedCircuit.cableSize || 2.5,
+        cableLength: referencedCircuit.cableLength || 15,
+        ambientTemp: referencedCircuit.ambientTemp || 30,
+        groupingCircuits: referencedCircuit.groupingCircuits || 1,
+        installationMethod: referencedCircuit.installationMethod || 'clipped-direct',
+        cableType: referencedCircuit.cableType || '6242Y',
+        circuitType: referencedCircuit.circuitType || 'socket',
+        location: referencedCircuit.location || 'general',
+        isContextQuestion: true,
+        referencedCircuitName: referencedCircuit.name || formatCircuitName(referencedCircuit.circuitType),
+        referencedCircuit: referencedCircuit
+      };
+    }
+  }
 
   const power = loadMatch ? (loadMatch[2].toLowerCase() === 'kw' ? parseFloat(loadMatch[1]) * 1000 : parseFloat(loadMatch[1])) : 0;
   const voltage = voltageMatch ? parseInt(voltageMatch[1]) : (currentDesign?.voltage || 230);
