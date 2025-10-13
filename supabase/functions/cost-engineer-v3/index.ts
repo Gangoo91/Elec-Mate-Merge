@@ -126,6 +126,7 @@ serve(async (req) => {
 
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'cost-engineer-v3' });
+  const functionStart = Date.now(); // Timer for total execution
 
   try {
     const body = await req.json();
@@ -727,13 +728,17 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       return new Response(
         JSON.stringify({
           success: true,
-          result: fallbackEstimate,
+          response: `Quick cost estimate: ${query}`,
+          structuredData: fallbackEstimate,
+          citations: [],
+          enrichment: { displayHints: { primaryView: 'cost-breakdown' }},
+          rendering: { layout: 'cost-estimate' },
           metadata: {
             requestId,
             timestamp: new Date().toISOString(),
             provider: 'fallback',
             ragMs: Date.now() - ragStart,
-            totalMs: Date.now() - parallelStart
+            totalMs: Date.now() - functionStart
           }
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -888,7 +893,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
     );
 
     // Log RAG metrics for observability
-    const totalTime = Date.now() - requestId;
+    const totalTime = Date.now() - functionStart;
     await supabase.from('agent_metrics').insert({
       function_name: 'cost-engineer-v3',
       request_id: requestId,
@@ -899,7 +904,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       query_type: parsedEntities.jobType || 'general'
     }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
 
-    // Return enriched response
+    // Return enriched response (Designer-v3 structure)
     const { response, suggestedNextAgents, materials: costMaterials, labour, summary, notes } = costResult;
     
     return new Response(
@@ -910,7 +915,17 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         citations: enrichedResponse.citations,
         rendering: enrichedResponse.rendering,
         structuredData: { materials: costMaterials, labour, summary, notes },
-        suggestedNextAgents: suggestedNextAgents || []
+        suggestedNextAgents: suggestedNextAgents || [],
+        metadata: {
+          requestId,
+          provider: useOpenAI ? 'openai' : 'lovable-ai',
+          model: useOpenAI ? 'gpt-5-nano' : 'gemini-2.5-flash',
+          totalMs: Date.now() - functionStart,
+          ragMs: Date.now() - ragStart,
+          aiMs: aiResult?.duration || 0,
+          pricingItems: finalPricingResults?.length || 0,
+          labourTimeItems: labourTimeResults?.length || 0
+        }
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
