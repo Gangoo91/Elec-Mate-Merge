@@ -223,13 +223,10 @@ export function useAIRAMS(): UseAIRAMSReturn {
         step.agent === 'health-safety' ? { ...step, status: 'processing' } : step
       ));
 
-      const { data: hsData, error: hsError } = await supabase.functions.invoke('health-safety-agent', {
+      const { data: hsData, error: hsError } = await supabase.functions.invoke('health-safety-v3', {
         body: {
-          messages: [{
-            role: 'user',
-            content: `Create a detailed risk assessment for the following electrical work: ${jobDescription}. Include specific hazards, risk ratings (likelihood and severity), and control measures.`
-          }],
-          jobScale
+          query: `Create a detailed risk assessment for the following electrical work: ${jobDescription}. Include specific hazards, risk ratings (likelihood and severity), and control measures.`,
+          workType: jobScale
         }
       });
 
@@ -247,19 +244,13 @@ export function useAIRAMS(): UseAIRAMSReturn {
         step.agent === 'installer' ? { ...step, status: 'processing' } : step
       ));
 
-      const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-agent', {
+      const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
         body: {
-          messages: [{
-            role: 'user',
-            content: `Create a detailed step-by-step method statement for: ${jobDescription}. Include installation procedures, safety requirements per step, equipment needed, and time estimates.`
-          }],
-          context: {
-            previousAgentOutputs: [{
-              agent: 'health-safety',
-              response: hsData.response
-            }]
-          },
-          jobScale
+          query: `Create a detailed step-by-step method statement for: ${jobDescription}. Include installation procedures, safety requirements per step, equipment needed, and time estimates.`,
+          previousAgentOutputs: [{
+            agent: 'health-safety',
+            response: hsData
+          }]
         }
       });
 
@@ -274,8 +265,16 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       // Step 3: Transform agent outputs to RAMS format
       const combinedData = combineAgentOutputsToRAMS(
-        { response: hsData.response, confidence: hsData.confidence },
-        { response: installerData.response, confidence: installerData.confidence },
+        { 
+          response: hsData.response, 
+          confidence: hsData.confidence,
+          structuredData: hsData.structuredData 
+        },
+        { 
+          response: installerData.response, 
+          confidence: installerData.confidence,
+          structuredData: installerData.structuredData 
+        },
         {
           ...projectInfo,
           date: new Date().toISOString()

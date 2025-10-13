@@ -4,6 +4,7 @@ import type { MethodStatementData, MethodStep } from '@/types/method-statement';
 interface AgentResponse {
   response: string;
   confidence?: number;
+  structuredData?: any;
 }
 
 /**
