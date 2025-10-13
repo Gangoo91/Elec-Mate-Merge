@@ -5993,6 +5993,22 @@ export type Database = {
           section: string
         }[]
       }
+      search_bs7671_hybrid_cached: {
+        Args: {
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          amendment: string
+          content: string
+          hybrid_score: number
+          id: string
+          metadata: Json
+          regulation_number: string
+          section: string
+        }[]
+      }
       search_design_hybrid: {
         Args: {
           match_count?: number
