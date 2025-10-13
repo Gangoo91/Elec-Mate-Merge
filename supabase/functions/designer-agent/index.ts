@@ -710,9 +710,18 @@ Include a "costEstimate" field in the JSON with:
 - "totalRange": "£XX-£YY + VAT"
 - "notes": "Brief explanation of cost drivers"
 
+CABLE SIZING METHODOLOGY (CRITICAL):
+- ALWAYS calculate cable size including voltage drop BEFORE selecting cable type
+- Twin & Earth maximum 10mm² for domestic installations (BS 6004)
+- If calculated size >10mm² → MUST use SWA or singles in conduit
+- Voltage drop limits: 3% lighting, 5% other (Regulation 525)
+- Formula: VD% = (mV/A/m × Ib × Length × 100) / (230 × 1000)
+- Cable type selection happens AFTER final size is determined
+
 VALIDATION REQUIREMENTS:
 - Every circuit MUST have: id, name, loadType, load, cableSize, protection, calculations
 - calculations MUST include: Ib, In, Iz, voltageDrop, zs
+- cableSize must be ≤10mm² if Twin & Earth selected (otherwise use SWA)
 - Return ONLY the JSON object, no markdown, no explanations
 
 Use UK English. Be thorough. Return valid JSON only.`;
@@ -1699,12 +1708,49 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
   const standardRatings = [6, 10, 16, 20, 25, 32, 40, 45, 50, 63, 80, 100, 125];
   const deviceRating = standardRatings.find(r => r >= designCurrent) || 32;
   
-  const cableSize = deviceRating <= 16 ? 2.5 :
-                   deviceRating <= 25 ? 4 :
-                   deviceRating <= 32 ? 6 :
-                   deviceRating <= 45 ? 10 :
-                   deviceRating <= 63 ? 16 : 25;
+  // Calculate initial cable size based on MCB rating
+  let cableSize = deviceRating <= 16 ? 2.5 :
+                  deviceRating <= 25 ? 4 :
+                  deviceRating <= 32 ? 6 :
+                  deviceRating <= 45 ? 10 :
+                  deviceRating <= 63 ? 16 : 25;
+  
+  // CRITICAL: Check if voltage drop requires upsizing (BS 7671 Regulation 525)
+  // This is THE key issue - cable type selection must happen AFTER VD check
+  const standardCableSizes = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120];
+  const cableLength = lengthMatch ? parseFloat(lengthMatch[1]) : 0;
+  
+  if (power > 0 && cableLength > 0 && designCurrent > 0) {
+    for (const testSize of standardCableSizes) {
+      if (testSize < cableSize) continue; // Skip smaller than MCB sizing
+      
+      const vdTest = calculateVoltageDropUnified({
+        current: designCurrent,
+        cableLength,
+        cableSize: testSize,
+        voltage,
+        phases
+      });
+      
+      // Check voltage drop compliance (5% max for power, 3% for lighting)
+      const maxVD = circuitType === 'lighting' ? 3 : 5;
+      if (vdTest.voltageDropPercent <= maxVD) {
+        cableSize = testSize;
+        logger.info('Cable sized with VD check', { 
+          testSize, 
+          vdPercent: vdTest.voltageDropPercent.toFixed(2),
+          maxAllowed: maxVD,
+          cableLength 
+        });
+        break;
+      }
+    }
+  }
 
+  // Twin & Earth availability limits (BS 6004 + Regulation 521)
+  const MAX_TWIN_EARTH_DOMESTIC = 10; // mm² - standard domestic limit
+  const MAX_TWIN_EARTH_COMMERCIAL = 16; // mm² - rare but exists
+  
   let circuitType = 'socket';
   let location = '';
   const msgLower = userMessage.toLowerCase();
@@ -1742,6 +1788,28 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
   }
   if (msgLower.includes('outdoor') || msgLower.includes('outside') || msgLower.includes('garage')) {
     location = location || 'outdoor';
+  }
+  
+  // CRITICAL: Determine cable type based on CALCULATED size (after VD check)
+  let cableType = '6242Y'; // Twin & Earth default
+  let cableTypeReason = '';
+  
+  if (cableSize > MAX_TWIN_EARTH_DOMESTIC) {
+    cableType = 'SWA';
+    cableTypeReason = `Cable size ${cableSize}mm² exceeds Twin & Earth maximum (10mm² for domestic installations). SWA armoured cable required (Regulation 521.10.1).`;
+    
+    logger.info('Cable type: SWA selected due to size', { 
+      cableSize, 
+      reason: 'Exceeds T&E limits' 
+    });
+  } else if (location === 'outdoor' || location === 'underground' || location === 'ev-charging') {
+    cableType = 'SWA';
+    cableTypeReason = `Outdoor/underground installation requires SWA armoured cable for mechanical protection (Regulation 522.6.101).`;
+  } else if (circuitType?.includes('ev-charger') || circuitType?.includes('heat-pump')) {
+    cableType = 'SWA';
+    cableTypeReason = `${circuitType} installations typically require SWA for outdoor sections (Section 722 / Reg 521).`;
+  } else {
+    cableTypeReason = `Standard domestic wiring - Twin & Earth suitable for ${cableSize}mm² at ${cableLength}m.`;
   }
   
   // Extract ambient temperature (including negative values)

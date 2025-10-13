@@ -74,14 +74,51 @@ export function buildEnhancedRAGQuery(userMessage: string, circuitParams: any, p
     }
   }
   
-  // High power circuits need cable type consideration (twin & earth max 10mm²)
+  // Cable size-based type selection (Twin & Earth vs SWA)
+  // CRITICAL: Check estimated final size including VD, not just power rating
+  if (circuitParams.cableSize || circuitParams.power > 7000) {
+    const estimatedSize = circuitParams.cableSize || 
+                         (circuitParams.power > 9000 ? 16 : 10);
+    
+    if (estimatedSize > 10) {
+      parts.push(
+        'cable size over 10mm requires SWA',
+        'twin and earth maximum 10mm domestic',
+        'Regulation 521 wiring system selection',
+        'SWA armoured cable for large CSA',
+        'singles in conduit vs SWA comparison',
+        'twin and earth vs singles vs SWA',
+        'large cable installation methods',
+        'cable sizing methodology BS 7671',
+        'voltage drop drives cable size up'
+      );
+    }
+  }
+  
+  // High power circuits need proper cable sizing methodology
   if (circuitParams.power && circuitParams.power > 7000) {
     parts.push(
       'high load cable selection',
-      'large CSA cables singles versus twin and earth',
-      'twin and earth maximum size 10mm domestic only',
-      'over 10mm2 use singles in conduit or SWA'
+      'cable sizing including voltage drop',
+      'twin and earth maximum 10mm domestic',
+      'calculate size before selecting cable type',
+      'voltage drop calculation methodology'
     );
+  }
+  
+  // Cable length considerations (voltage drop drives size up)
+  if (circuitParams.cableLength) {
+    // Long runs + high power = likely to need larger cable = likely to need SWA
+    if (circuitParams.cableLength > 20 && circuitParams.power > 3000) {
+      parts.push(
+        'long cable run voltage drop',
+        'cable sizing for voltage drop compliance',
+        'SWA cable for long high-power circuits',
+        'voltage drop calculation mV/A/m',
+        'cable upsizing for VD compliance',
+        'voltage drop limits 5% regulation 525'
+      );
+    }
   }
   
   // Location context (critical for special locations)
