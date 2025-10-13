@@ -5,6 +5,15 @@ export interface RAMSData {
   assessor: string;
   activities: string[];
   risks: RAMSRisk[];
+  contractor?: string;
+  supervisor?: string;
+  siteManagerName?: string;
+  siteManagerPhone?: string;
+  firstAiderName?: string;
+  firstAiderPhone?: string;
+  safetyOfficerName?: string;
+  safetyOfficerPhone?: string;
+  assemblyPoint?: string;
 }
 
 export interface RAMSRisk {

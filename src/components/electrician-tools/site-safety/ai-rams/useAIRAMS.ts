@@ -26,6 +26,13 @@ interface UseAIRAMSReturn {
     assessor: string;
     contractor: string;
     supervisor: string;
+    siteManagerName?: string;
+    siteManagerPhone?: string;
+    firstAiderName?: string;
+    firstAiderPhone?: string;
+    safetyOfficerName?: string;
+    safetyOfficerPhone?: string;
+    assemblyPoint?: string;
   }, jobScale: 'domestic' | 'commercial' | 'industrial') => Promise<void>;
   saveToDatabase: () => Promise<void>;
   reset: () => void;
@@ -78,15 +85,24 @@ export function useAIRAMS(): UseAIRAMSReturn {
         location: ramsData.location,
         date: ramsData.date,
         assessor: ramsData.assessor,
-        contractor: methodData.contractor || '',
-        supervisor: methodData.supervisor || '',
+        contractor: ramsData.contractor || methodData.contractor || '',
+        supervisor: ramsData.supervisor || methodData.supervisor || '',
         activities: ramsData.activities,
         risks: ramsData.risks as unknown as any, // JSONB type
         status: 'draft' as const,
         last_autosave_at: new Date().toISOString(),
         ai_generation_metadata: {
           generatedAt: new Date().toISOString(),
-          autosave: isAutosave
+          autosave: isAutosave,
+          emergencyContacts: {
+            siteManagerName: ramsData.siteManagerName,
+            siteManagerPhone: ramsData.siteManagerPhone,
+            firstAiderName: ramsData.firstAiderName,
+            firstAiderPhone: ramsData.firstAiderPhone,
+            safetyOfficerName: ramsData.safetyOfficerName,
+            safetyOfficerPhone: ramsData.safetyOfficerPhone,
+            assemblyPoint: ramsData.assemblyPoint
+          }
         } as any
       };
 
@@ -182,6 +198,13 @@ export function useAIRAMS(): UseAIRAMSReturn {
       assessor: string;
       contractor: string;
       supervisor: string;
+      siteManagerName?: string;
+      siteManagerPhone?: string;
+      firstAiderName?: string;
+      firstAiderPhone?: string;
+      safetyOfficerName?: string;
+      safetyOfficerPhone?: string;
+      assemblyPoint?: string;
     },
     jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => {

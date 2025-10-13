@@ -3,7 +3,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { Textarea } from '@/components/ui/textarea';
-import { Sparkles, Zap, HardHat, FileWarning } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Sparkles, Zap, HardHat, FileWarning, ChevronDown } from 'lucide-react';
 import { JobScaleBadge } from './JobScaleBadge';
 
 export interface AIRAMSInputProps {
@@ -15,6 +16,13 @@ export interface AIRAMSInputProps {
       assessor: string;
       contractor: string;
       supervisor: string;
+      siteManagerName?: string;
+      siteManagerPhone?: string;
+      firstAiderName?: string;
+      firstAiderPhone?: string;
+      safetyOfficerName?: string;
+      safetyOfficerPhone?: string;
+      assemblyPoint?: string;
     },
     jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => void;
@@ -31,12 +39,20 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
     location: '',
     assessor: '',
     contractor: '',
-    supervisor: ''
+    supervisor: '',
+    siteManagerName: '',
+    siteManagerPhone: '',
+    firstAiderName: '',
+    firstAiderPhone: '',
+    safetyOfficerName: '',
+    safetyOfficerPhone: '',
+    assemblyPoint: ''
   });
 
   const [detectedScale, setDetectedScale] = useState<'domestic' | 'commercial' | 'industrial'>('commercial');
   const [manualScale, setManualScale] = useState<'domestic' | 'commercial' | 'industrial' | null>(null);
   const [scaleConfidence, setScaleConfidence] = useState<number>(0);
+  const [showEmergencyContacts, setShowEmergencyContacts] = useState(false);
 
   const examplePrompts: Record<'domestic' | 'commercial' | 'industrial', string[]> = {
     domestic: [
@@ -244,6 +260,79 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               className="md:col-span-2 bg-elec-grey border-elec-yellow/20 h-14 text-base"
             />
           </div>
+
+          {/* Emergency Contacts Section */}
+          <Collapsible open={showEmergencyContacts} onOpenChange={setShowEmergencyContacts}>
+            <CollapsibleTrigger asChild>
+              <button
+                type="button"
+                className="w-full flex items-center justify-between p-3 rounded-lg bg-card hover:bg-accent transition-colors min-h-[44px] touch-manipulation"
+              >
+                <span className="text-sm font-medium">Emergency Contacts & Site Personnel (Optional)</span>
+                <ChevronDown className={`h-4 w-4 transition-transform ${showEmergencyContacts ? 'rotate-180' : ''}`} />
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-4">
+                <MobileInput
+                  label="Site Manager Name"
+                  value={projectInfo.siteManagerName}
+                  onChange={(e) => setProjectInfo(prev => ({ ...prev, siteManagerName: e.target.value }))}
+                  placeholder="John Smith"
+                  disabled={isProcessing}
+                  className="bg-elec-grey border-elec-yellow/20 h-14 text-base"
+                />
+                <MobileInput
+                  label="Site Manager Phone"
+                  value={projectInfo.siteManagerPhone}
+                  onChange={(e) => setProjectInfo(prev => ({ ...prev, siteManagerPhone: e.target.value }))}
+                  placeholder="07XXX XXXXXX"
+                  disabled={isProcessing}
+                  className="bg-elec-grey border-elec-yellow/20 h-14 text-base"
+                />
+                <MobileInput
+                  label="First Aider Name"
+                  value={projectInfo.firstAiderName}
+                  onChange={(e) => setProjectInfo(prev => ({ ...prev, firstAiderName: e.target.value }))}
+                  placeholder="Jane Doe"
+                  disabled={isProcessing}
+                  className="bg-elec-grey border-elec-yellow/20 h-14 text-base"
+                />
+                <MobileInput
+                  label="First Aider Phone"
+                  value={projectInfo.firstAiderPhone}
+                  onChange={(e) => setProjectInfo(prev => ({ ...prev, firstAiderPhone: e.target.value }))}
+                  placeholder="07XXX XXXXXX"
+                  disabled={isProcessing}
+                  className="bg-elec-grey border-elec-yellow/20 h-14 text-base"
+                />
+                <MobileInput
+                  label="H&S Officer Name"
+                  value={projectInfo.safetyOfficerName}
+                  onChange={(e) => setProjectInfo(prev => ({ ...prev, safetyOfficerName: e.target.value }))}
+                  placeholder="Safety Officer"
+                  disabled={isProcessing}
+                  className="bg-elec-grey border-elec-yellow/20 h-14 text-base"
+                />
+                <MobileInput
+                  label="H&S Officer Phone"
+                  value={projectInfo.safetyOfficerPhone}
+                  onChange={(e) => setProjectInfo(prev => ({ ...prev, safetyOfficerPhone: e.target.value }))}
+                  placeholder="07XXX XXXXXX"
+                  disabled={isProcessing}
+                  className="bg-elec-grey border-elec-yellow/20 h-14 text-base"
+                />
+                <MobileInput
+                  label="Emergency Assembly Point"
+                  value={projectInfo.assemblyPoint}
+                  onChange={(e) => setProjectInfo(prev => ({ ...prev, assemblyPoint: e.target.value }))}
+                  placeholder="e.g., Main car park, Site entrance"
+                  disabled={isProcessing}
+                  className="md:col-span-2 bg-elec-grey border-elec-yellow/20 h-14 text-base"
+                />
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
         </CardContent>
       </Card>
 
