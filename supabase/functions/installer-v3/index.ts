@@ -96,6 +96,15 @@ serve(async (req) => {
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'installer-v3' });
 
+  // Performance tracking
+  const timings = {
+    start: Date.now(),
+    cacheCheck: 0,
+    ragRetrieval: 0,
+    aiGeneration: 0,
+    total: 0
+  };
+
   try {
     const body = await req.json();
     const { query, cableType, installationMethod, location, messages, previousAgentOutputs, sharedRegulations } = body;
@@ -153,8 +162,14 @@ serve(async (req) => {
       .gt('expires_at', new Date().toISOString())
       .single();
 
+    timings.cacheCheck = Date.now() - timings.start;
+
     if (cachedResult) {
-      logger.info('RAG cache HIT - returning cached results', { queryHash });
+      timings.total = Date.now() - timings.start;
+      logger.info('RAG cache HIT - returning cached results', { 
+        queryHash,
+        performanceMs: timings.total
+      });
       
       // Increment hit counter
       await supabase
@@ -198,11 +213,14 @@ serve(async (req) => {
     
     const installKnowledge = ragResults?.installationDocs || [];
 
+    timings.ragRetrieval = Date.now() - timings.start - timings.cacheCheck;
+
     logger.info('Installation knowledge retrieved', {
       count: installKnowledge.length,
       avgScore: installKnowledge.length > 0
         ? (installKnowledge.reduce((s: number, k: any) => s + (k.finalScore || 0), 0) / installKnowledge.length).toFixed(3)
-        : 'N/A'
+        : 'N/A',
+      ragDuration: timings.ragRetrieval
     });
 
     // Build installation context with focused snippets (400 chars)
@@ -234,12 +252,44 @@ serve(async (req) => {
       ).slice(-5).join('\n');
     }
 
-    // Phase 1: Simplified system prompt (600 words vs 1500)
-    const systemPrompt = `You are an expert UK Installation Specialist with 15+ years onsite experience.
+    // Phase 1: Enhanced conversational system prompt with expert guidance
+    const systemPrompt = `You are a master electrician with 20+ years of installation experience across residential, commercial, and industrial projects. You're chatting with a colleague who needs practical, on-site advice.
 
 Write in UK English (British spelling). Current date: September 2025.
 
-🎯 YOUR ROLE: Translate electrical designs into PRACTICAL step-by-step installation guidance
+🎯 TONE & COMMUNICATION:
+✅ Conversational: "Right, full rewire on a 3-bed - that's a solid week's work for two sparks..."
+✅ Practical: Explain the WHY before the HOW (e.g., "We clip every 400mm on horizontal runs because anything wider risks cable sag and potential damage")
+✅ Safety-First: Always highlight critical safety points (e.g., "Isolate and test dead before ANY cable work - this is non-negotiable")
+❌ Avoid: Robotic lists without context, vague terms like "regular intervals" or "appropriate spacing"
+
+📋 STRUCTURE YOUR RESPONSE:
+1. **Acknowledge** (1-2 sentences) - Confirm what they're asking and show you understand the job
+   Example: "Right, so you're looking at installing a shower circuit - 13kW load over 23m. That's a meaty cable run, let's break it down."
+
+2. **Key Considerations** (2-4 bullets) - Critical things they must know BEFORE starting
+   Example:
+   - Circuit breaker: 40A Type B (13kW ÷ 230V = 56.5A, so 40A B-type won't nuisance trip on shower surge)
+   - Cable size: 10mm² T&E (voltage drop: 3.2% at 23m - well within BS 7671's 5% limit)
+   - Protection: 30mA RCD mandatory (bathroom circuit, Reg 701.411.3.3)
+
+3. **Step-by-Step Guidance** - Practical installation sequence with EXACT values from knowledge base
+   Use specific measurements: "Clip spacing for 10mm² horizontal run: 250mm (BS 7671 Table 4A2)"
+   Include practical tips: "When notching joists, max depth is 1/8th joist depth (e.g., 25mm notch on 200mm joist) - Section 522.6.204"
+   
+4. **Safety Warnings** (always include) - Highlight risks
+   Example:
+   ⚠️ CRITICAL SAFETY:
+   - Isolate supply at consumer unit and TEST DEAD before starting
+   - Bathroom zones: NO socket outlets within 3m of bath/shower (Section 701.512.3)
+   - Double-pole isolation switch required (pull-cord type, outside zones)
+
+5. **Pro Tips** - Time-savers and common mistakes to avoid
+   Example:
+   💡 PRO TIPS:
+   - Route cable INSIDE safe zones (150mm from corners, 150mm above/below accessories)
+   - Label cables at both ends BEFORE termination (saves hours of tracing later)
+   - Test continuity BEFORE plastering over cables
 
 INSTALLATION KNOWLEDGE DATABASE (${installKnowledge?.length || 0} verified guides):
 ${installContext}
@@ -250,16 +300,9 @@ ${installContext}
 ✓ If database references "BS 7671 Table 4A2" → cite the table number
 ✗ Never use vague terms like "regular intervals" or "appropriate spacing"
 
-📋 RESPONSE REQUIREMENTS:
-1. **Be specific**: Use actual measurements from RAG (e.g., "400mm clip spacing", not "regular spacing")
-2. **Reference regulations**: Cite BS 7671 section numbers from RAG
-3. **Include practical tips**: Use field wisdom from knowledge base
-4. **Anticipate problems**: Mention common mistakes from RAG
-5. **Quality checkpoints**: Add verification steps at each stage
-
 ${contextSection}
 
-Respond using the tool schema provided.`;
+Respond using the tool schema provided with conversational, practical guidance.`;
 
     const userPrompt = `Provide detailed installation guidance for:
 ${query}
@@ -385,9 +428,18 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       throw new Error('No content or tool calls returned from AI');
     }
 
+    timings.aiGeneration = Date.now() - timings.start - timings.ragRetrieval - timings.cacheCheck;
+    timings.total = Date.now() - timings.start;
+
     logger.info('Installation guidance completed', {
       stepsCount: installResult.installationSteps?.length,
-      tipsCount: installResult.practicalTips?.length
+      tipsCount: installResult.practicalTips?.length,
+      performanceMs: timings.total,
+      breakdown: {
+        cache: timings.cacheCheck,
+        rag: timings.ragRetrieval,
+        ai: timings.aiGeneration
+      }
     });
 
     // Build RAG preview for UI display
@@ -406,7 +458,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       { installationMethod, cableType, location }
     );
 
-    // Build final response
+    // Build final response with performance metrics
     const finalResponse = {
       success: true,
       response: enrichedResponse.response,
@@ -423,7 +475,12 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         difficultyLevel: installResult.difficultyLevel,
         compliance: installResult.compliance
       },
-      suggestedNextAgents: installResult.suggestedNextAgents || []
+      suggestedNextAgents: installResult.suggestedNextAgents || [],
+      metadata: {
+        performanceMs: timings.total,
+        breakdown: timings,
+        knowledgeCount: installKnowledge.length
+      }
     };
 
     // Phase 5: Store in cache for 1 hour
@@ -443,7 +500,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
 
     // Log RAG metrics for observability
     const totalTime = Date.now() - requestId;
-    await supabase.from('agent_metrics').insert({
+    const { error: metricsError } = await supabase.from('agent_metrics').insert({
       function_name: 'installer-v3',
       request_id: requestId,
       rag_time: embeddingStart ? Date.now() - embeddingStart : null,
@@ -451,7 +508,11 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       regulation_count: installKnowledge?.length || 0,
       success: true,
       query_type: installationMethod || 'general'
-    }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
+    });
+
+    if (metricsError) {
+      logger.warn('Failed to log metrics', { error: metricsError.message });
+    }
 
     return new Response(
       JSON.stringify(finalResponse),
@@ -462,7 +523,31 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     );
 
   } catch (error) {
-    logger.error('Installer V3 error', { error: error instanceof Error ? error.message : String(error) });
-    return handleError(error);
+    timings.total = Date.now() - timings.start;
+    
+    logger.error('Installer V3 error', { 
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+      performanceMs: timings.total
+    });
+    
+    // User-friendly error messages based on error type
+    const userMessage = error instanceof Error && error.message.includes('embedding')
+      ? "I'm having trouble processing your query right now. Could you try rephrasing it?"
+      : error instanceof Error && error.message.includes('cache')
+      ? "Temporary storage issue - your request will still be processed, just might take a bit longer."
+      : error instanceof Error && error.message.includes('API')
+      ? "AI service temporarily unavailable. Please try again in a moment."
+      : "Something went wrong on my end. The technical team has been notified. Please try again.";
+    
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: userMessage,
+        technicalError: error instanceof Error ? error.message : String(error),
+        requestId
+      }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+    );
   }
 });

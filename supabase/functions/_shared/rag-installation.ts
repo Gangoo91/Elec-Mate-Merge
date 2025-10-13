@@ -150,18 +150,28 @@ export async function retrieveInstallationKnowledge(
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  // Check cache first
+  // Parallel: cache check + query expansion
   const cacheKey = generateCacheKey(query, entities.installationMethod);
-  const cached = await checkSemanticCache(supabase, cacheKey, logger);
+  const [cached, expandedQuery] = await Promise.all([
+    checkSemanticCache(supabase, cacheKey, logger),
+    Promise.resolve(expandInstallationQuery(query))
+  ]);
+
+  // Early exit if cache hit with high confidence
+  if (cached && Array.isArray(cached) && cached[0]?.confidence?.overall > 0.9) {
+    logger.info('RAG cache hit (high confidence, skipping rerank)', { 
+      duration: Date.now() - searchStart,
+      confidence: cached[0].confidence.overall
+    });
+    return cached;
+  }
+
   if (cached) {
     logger.info('RAG cache hit', { duration: Date.now() - searchStart });
     return cached;
   }
 
   logger.debug('Starting hybrid installation search', { query, method: entities.installationMethod });
-
-  // Expand query for better recall
-  const expandedQuery = expandInstallationQuery(query);
   
   // Generate embedding
   const embedding = await generateEmbeddingWithRetry(expandedQuery, openAiKey);
