@@ -40,6 +40,15 @@ timeout_sec = 300
 verify_jwt = false
 timeout_sec = 300
 
+# Document Processing Functions
+[functions.parse-project-management]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.parse-inspection-testing-pdf]
+verify_jwt = false
+timeout_sec = 600
+
 # Subscription & Core Functions - Active
 [functions.check-subscription]
 verify_jwt = true

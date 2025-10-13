@@ -41,50 +41,72 @@ serve(async (req) => {
     let processed = 0;
     let errors = 0;
 
-    for (const chunk of chunks) {
+    // Process in batches of 20 to avoid rate limits and improve performance
+    const BATCH_SIZE = 20;
+    
+    for (let i = 0; i < chunks.length; i += BATCH_SIZE) {
+      const batch = chunks.slice(i, i + BATCH_SIZE);
+      console.log(`📦 Processing batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(chunks.length / BATCH_SIZE)}`);
+      
       try {
-        // Generate embedding
-        const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${openAIApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'text-embedding-3-small',
-            input: chunk.text,
-          }),
-        });
+        // Generate embeddings for entire batch in parallel
+        const embeddingPromises = batch.map(chunk => 
+          fetch('https://api.openai.com/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${openAIApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: chunk.text,
+            }),
+          })
+        );
 
-        if (!embeddingResponse.ok) {
-          console.error('❌ OpenAI embedding error:', await embeddingResponse.text());
-          errors++;
-          continue;
-        }
+        const embeddingResponses = await Promise.all(embeddingPromises);
+        
+        // Process responses and prepare batch insert
+        const insertData = [];
+        for (let j = 0; j < embeddingResponses.length; j++) {
+          const response = embeddingResponses[j];
+          const chunk = batch[j];
+          
+          if (!response.ok) {
+            console.error(`❌ Embedding error for chunk ${i + j}:`, await response.text());
+            errors++;
+            continue;
+          }
 
-        const embeddingData = await embeddingResponse.json();
-        const embedding = embeddingData.data[0].embedding;
+          const embeddingData = await response.json();
+          const embedding = embeddingData.data[0].embedding;
 
-        // Insert into database
-        const { error: insertError } = await supabase
-          .from('project_mgmt_knowledge')
-          .insert({
+          insertData.push({
             content: chunk.text,
             topic: chunk.topic,
             source: source,
             embedding: JSON.stringify(embedding),
             metadata: { chunk_index: chunk.index }
           });
+        }
 
-        if (insertError) {
-          console.error('❌ Insert error:', insertError);
-          errors++;
-        } else {
-          processed++;
+        // Batch insert into database
+        if (insertData.length > 0) {
+          const { error: insertError } = await supabase
+            .from('project_mgmt_knowledge')
+            .insert(insertData);
+
+          if (insertError) {
+            console.error('❌ Batch insert error:', insertError);
+            errors += insertData.length;
+          } else {
+            processed += insertData.length;
+            console.log(`✅ Inserted ${insertData.length} chunks`);
+          }
         }
       } catch (error) {
-        console.error('❌ Chunk processing error:', error);
-        errors++;
+        console.error('❌ Batch processing error:', error);
+        errors += batch.length;
       }
     }
 
