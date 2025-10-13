@@ -188,19 +188,22 @@ serve(async (req) => {
     const queryEmbedding = await generateEmbeddingWithRetry(expandedQuery, OPENAI_API_KEY);
     logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
-    // Get installation knowledge with reranking + confidence
-    const installKnowledge = await retrieveInstallationKnowledge(
+    // Use intelligent RAG with cross-encoder reranking
+    const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
+    const installKnowledge = await intelligentRAGSearch(
       expandedQuery,
+      'installation_knowledge',
       12,
       OPENAI_API_KEY,
-      { installationMethod, cableType, location },
-      logger
+      supabase,
+      logger,
+      { installationMethod, cableType, location }
     );
 
     logger.info('Installation knowledge retrieved', {
       count: installKnowledge.length,
-      avgConfidence: installKnowledge.length > 0
-        ? (installKnowledge.reduce((s, k) => s + (k.confidence?.overall || 0.7), 0) / installKnowledge.length).toFixed(2)
+      avgScore: installKnowledge.length > 0
+        ? (installKnowledge.reduce((s: number, k: any) => s + (k.finalScore || 0), 0) / installKnowledge.length).toFixed(3)
         : 'N/A'
     });
 

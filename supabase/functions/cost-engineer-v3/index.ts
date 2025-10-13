@@ -186,51 +186,27 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Step 3: Parallel execution - embedding + RAG searches
-    logger.debug('Starting parallel embedding + RAG');
-    const parallelStart = Date.now();
+    // Step 3: Use intelligent RAG for installation + PM knowledge with cross-encoder
+    logger.debug('Starting intelligent RAG pipeline');
+    const ragStart = Date.now();
     
-    const [queryEmbedding, { data: installationResults }, { data: pmResults }] = await Promise.all([
+    const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
+    
+    const [queryEmbedding, pricingResults, installationResults, pmResults] = await Promise.all([
       // Generate embedding
       generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
       
-      // Installation knowledge search
-      supabase.rpc('search_installation_knowledge', {
-        query_embedding: null, // Will be filled after embedding
-        match_threshold: 0.55,
-        match_count: 8
-      }).then(() => ({ data: null })), // Placeholder
+      // Use optimized pricing RAG module (already optimized)
+      searchPricingKnowledge(enhancedQuery, await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType),
       
-      // PM knowledge search  
-      supabase.rpc('search_project_mgmt', {
-        query_embedding: null,
-        match_threshold: 0.65,
-        match_count: 2
-      }).then(() => ({ data: null })) // Placeholder
-    ]);
-
-    // Step 4: Now execute RAG searches with embedding
-    const ragStart = Date.now();
-    const [pricingResults, actualInstallResults, actualPmResults] = await Promise.all([
-      // Use optimized pricing RAG module
-      searchPricingKnowledge(enhancedQuery, queryEmbedding, supabase, logger, parsedEntities.jobType),
+      // Installation knowledge with intelligent RAG
+      intelligentRAGSearch(enhancedQuery, 'installation_knowledge', 8, OPENAI_API_KEY, supabase, logger),
       
-      // Installation knowledge
-      supabase.rpc('search_installation_knowledge', {
-        query_embedding: queryEmbedding,
-        match_threshold: 0.55,
-        match_count: 8
-      }).then(r => r.data),
-      
-      // PM knowledge
-      supabase.rpc('search_project_mgmt', {
-        query_embedding: queryEmbedding,
-        match_threshold: 0.65,
-        match_count: 2
-      }).then(r => r.data)
+      // PM knowledge with intelligent RAG
+      intelligentRAGSearch(enhancedQuery, 'project_mgmt_knowledge', 2, OPENAI_API_KEY, supabase, logger)
     ]);
     
-    logger.debug('All RAG searches completed', { duration: Date.now() - ragStart });
+    logger.debug('Intelligent RAG complete', { duration: Date.now() - ragStart });
 
     // Keyword fallback for installation knowledge if vector search insufficient
     let installationResults = actualInstallResults;

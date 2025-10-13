@@ -60,10 +60,10 @@ export async function retrieveRegulations(
 
   const embedding = await generateEmbeddingWithRetry(query, openAiKey);
   
-  // 4. Vector search with single reasonable threshold
-  const { data: vectorResults } = await supabase.rpc('search_bs7671', {
+  // 4. Vector search with cached hybrid function
+  const { data: vectorResults } = await supabase.rpc('search_bs7671_hybrid_cached', {
+    query_text: query,
     query_embedding: embedding,
-    match_threshold: 0.5, // Balanced threshold
     match_count: limit
   });
   

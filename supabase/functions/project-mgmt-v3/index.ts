@@ -76,31 +76,28 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Step 1: Generate embedding for project management knowledge (with retry)
-    logger.debug('Generating query embedding');
-    const embeddingStart = Date.now();
-    const queryEmbedding = await generateEmbeddingWithRetry(
-      `${query} ${projectType || ''} project planning timeline coordination`,
-      OPENAI_API_KEY
-    );
-    logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
-
-    // Step 2: Search project management knowledge database
+    // Use intelligent RAG with cross-encoder for PM knowledge
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-
-    logger.debug('Searching project management knowledge');
-
-    const { data: pmKnowledge, error: pmError } = await supabase.rpc('search_project_mgmt', {
-      query_embedding: queryEmbedding,
-      match_threshold: 0.7,
-      match_count: 8
+    
+    logger.debug('Starting intelligent RAG for project management');
+    const ragStart = Date.now();
+    
+    const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
+    const pmKnowledge = await intelligentRAGSearch(
+      `${query} ${projectType || ''} project planning timeline coordination`,
+      'project_mgmt_knowledge',
+      8,
+      OPENAI_API_KEY,
+      supabase,
+      logger
+    );
+    
+    logger.debug('PM knowledge retrieved', { 
+      duration: Date.now() - ragStart,
+      count: pmKnowledge?.length || 0
     });
-
-    if (pmError) {
-      logger.warn('Project management search failed', { error: pmError });
-    }
 
     // Step 3: Build PM context
     const pmContext = pmKnowledge && pmKnowledge.length > 0

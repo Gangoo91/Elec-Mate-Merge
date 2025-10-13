@@ -92,22 +92,29 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Step 1: Use optimized hybrid RAG retrieval
-    logger.debug('Searching health & safety knowledge');
+    // Step 1: Use intelligent RAG with cross-encoder reranking
+    logger.debug('Starting intelligent RAG for H&S');
     const ragStart = Date.now();
     
-    const { retrieveHealthSafetyKnowledge } = await import('../_shared/rag-health-safety.ts');
-    const hsKnowledge = await retrieveHealthSafetyKnowledge(
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    
+    const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
+    const hsKnowledge = await intelligentRAGSearch(
       query,
-      workType,
-      12, // Increased limit
-      OPENAI_API_KEY
+      'health_safety_knowledge',
+      12,
+      OPENAI_API_KEY,
+      supabase,
+      logger,
+      { workType }
     );
     
     logger.debug('H&S knowledge retrieved', { 
       duration: Date.now() - ragStart,
       resultsCount: hsKnowledge.length,
-      cacheHit: (Date.now() - ragStart) < 500
+      avgScore: hsKnowledge.length > 0 ? (hsKnowledge.reduce((s: number, k: any) => s + (k.finalScore || 0), 0) / hsKnowledge.length).toFixed(3) : 'N/A'
     });
 
     // Step 3: Build H&S context

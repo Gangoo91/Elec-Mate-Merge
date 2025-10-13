@@ -149,29 +149,17 @@ serve(async (req) => {
         });
       }
       
-      // STEP 2: Get detailed RAG regulations (INCREASED DEPTH)
+      // STEP 2: Use intelligent RAG pipeline with cross-encoder
       const ragStartTime = Date.now();
-      let regulations = await retrieveRegulations(
+      const { retrieveRegulationsWithIntelligentRAG } = await import('../_shared/intelligent-rag.ts');
+      
+      const regulations = await retrieveRegulationsWithIntelligentRAG(
         `${design.regulations.join(' ')} ${query}`,
-        15, // PHASE 4: Fetch 15 for cross-encoder reranking
+        entities,
         OPENAI_API_KEY,
-        entities
+        logger
       );
       
-      // PHASE 4: Cross-encoder reranking for precision boost (78% → 92% accuracy)
-      if (regulations.length > 5) {
-        const { rerankWithCrossEncoder } = await import('../_shared/cross-encoder-reranker.ts');
-        logger.info('🎯 Applying cross-encoder reranking');
-        regulations = await rerankWithCrossEncoder(
-          query,
-          regulations.slice(0, 15), // Rerank top 15 only
-          OPENAI_API_KEY,
-          logger
-        );
-        logger.info('Cross-encoder reranking complete', {
-          avgFinalScore: (regulations.reduce((s, r: any) => s + (r.finalScore || 0), 0) / regulations.length).toFixed(3)
-        });
-      }
       const ragEndTime = Date.now();
       
       logger.info('Calculations and RAG complete', {
@@ -390,6 +378,10 @@ Provide a comprehensive electrical design response that addresses the query comp
       });
       
       // PHASE 6: Log RAG performance metrics for observability
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const supabase = createClient(supabaseUrl, supabaseKey);
+      
       const totalTime = Date.now() - startTime;
       const ragTime = ragEndTime - ragStartTime;
       await supabase.from('agent_metrics').insert({
@@ -441,7 +433,8 @@ Provide a comprehensive electrical design response that addresses the query comp
     if (queryType === 'lookup' || queryType === 'explain') {
       logger.info('📖 Using lookup/explain path');
       
-      const ragResults = await retrieveRegulations(query, 8, OPENAI_API_KEY);
+      const { retrieveRegulationsWithIntelligentRAG } = await import('../_shared/intelligent-rag.ts');
+      const ragResults = await retrieveRegulationsWithIntelligentRAG(query, {}, OPENAI_API_KEY, logger);
       
       if (ragResults.length === 0) {
         return new Response(JSON.stringify({

@@ -72,31 +72,28 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Step 1: Generate embedding for inspection/testing knowledge (with retry)
-    logger.debug('Generating query embedding');
-    const embeddingStart = Date.now();
-    const queryEmbedding = await generateEmbeddingWithRetry(
-      `${query} testing commissioning GN3 Chapter 64 inspection procedures`,
-      OPENAI_API_KEY
-    );
-    logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
-
-    // Step 2: Search inspection & testing knowledge database
+    // Use intelligent RAG with cross-encoder for testing knowledge
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-
-    logger.debug('Searching inspection & testing knowledge');
-
-    const { data: testKnowledge, error: testError } = await supabase.rpc('search_inspection_testing', {
-      query_embedding: queryEmbedding,
-      match_threshold: 0.7,
-      match_count: 10
+    
+    logger.debug('Starting intelligent RAG for commissioning');
+    const ragStart = Date.now();
+    
+    const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
+    const testKnowledge = await intelligentRAGSearch(
+      `${query} testing commissioning GN3 Chapter 64 inspection procedures`,
+      'commissioning_knowledge',
+      10,
+      OPENAI_API_KEY,
+      supabase,
+      logger
+    );
+    
+    logger.debug('Testing knowledge retrieved', { 
+      duration: Date.now() - ragStart,
+      count: testKnowledge?.length || 0
     });
-
-    if (testError) {
-      logger.warn('Testing knowledge search failed', { error: testError });
-    }
 
     // Step 3: Build testing context from GN3 knowledge
     const testContext = testKnowledge && testKnowledge.length > 0
