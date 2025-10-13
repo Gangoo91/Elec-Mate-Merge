@@ -195,7 +195,7 @@ serve(async (req) => {
     // Build labour-specific query
     const labourQuery = `labour time standards installation time ${parsedEntities.jobType || 'circuit'} ${parsedEntities.circuitCount ? parsedEntities.circuitCount + ' circuits' : ''}`;
     
-    const [queryEmbedding, pricingResults, ragResults, labourTimeResults] = await Promise.all([
+    const [queryEmbedding, finalPricingResults, ragResults, labourTimeResults] = await Promise.all([
       // Generate embedding
       generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
       
@@ -219,7 +219,7 @@ serve(async (req) => {
     const pmResults = ragResults?.designDocs || [];
     
     logger.info('RAG search complete', {
-      pricingItems: pricingResults?.length || 0,
+      pricingItems: finalPricingResults?.length || 0,
       installationGuides: installationResults.length,
       pmGuides: pmResults.length,
       labourTimeEntries: labourTimeResults.length,
@@ -227,7 +227,7 @@ serve(async (req) => {
     });
 
     // Step 5: Build pricing context using RAG module formatter
-    const pricingContext = formatPricingContext(pricingResults) +
+    const pricingContext = formatPricingContext(finalPricingResults) +
       `\n\nFALLBACK MARKET RATES (use if not in database):\n- 2.5mm² T&E cable: £0.98/metre\n- 1.5mm² T&E cable: £0.80/metre\n- 6mm² T&E cable: £2.20/metre\n- 10mm² T&E cable: £3.90/metre\n- 2.5mm² SWA: £3.50/m, 4mm² SWA: £4.80/m, 6mm² SWA: £6.20/m, 10mm² SWA: £9.50/m\n- SWA gland 20mm: £10 (x2)\n- Consumer units: 8-way £136, 10-way £156, 12-way £185, 16-way £245\n- 40A RCBO: £28.50`;
 
     // Build installation context (trimmed: 120 chars max)
