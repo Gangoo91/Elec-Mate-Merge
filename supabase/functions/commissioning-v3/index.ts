@@ -13,6 +13,7 @@ import {
   callLovableAIWithTimeout,
   parseJsonWithRepair
 } from "../_shared/v3-core.ts";
+import { enrichResponse } from '../_shared/response-enricher.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -391,12 +392,24 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       liveTests: commResult.testingProcedure?.liveTests?.length
     });
 
-    // Step 5: Return response - flat format for router/UI
+    // Step 5: Enrich response with UI metadata
+    const enrichedResponse = enrichResponse(
+      commResult,
+      testKnowledge,
+      'commissioning',
+      { circuitType, testType: query }
+    );
+
+    // Return enriched response
     const { response, suggestedNextAgents, testingProcedure, certification } = commResult;
     
     return new Response(
       JSON.stringify({
-        response,
+        success: true,
+        response: enrichedResponse.response,
+        enrichment: enrichedResponse.enrichment,
+        citations: enrichedResponse.citations,
+        rendering: enrichedResponse.rendering,
         structuredData: { testingProcedure, certification },
         suggestedNextAgents: suggestedNextAgents || []
       }),

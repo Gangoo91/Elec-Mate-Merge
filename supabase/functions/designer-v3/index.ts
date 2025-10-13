@@ -15,6 +15,9 @@ import {
 import { parseQueryEntities, classifyQuery, QueryType, extractRegulationNumbers } from '../_shared/query-parser.ts';
 import { designCircuit } from '../_shared/deterministic-designer.ts';
 import { retrieveRegulations } from '../_shared/rag-retrieval.ts';
+import { DESIGNER_RESPONSE_SCHEMA } from '../_shared/response-schemas.ts';
+import { validateCitations, correctCommonErrors } from '../_shared/citation-validator.ts';
+import { enrichResponse } from '../_shared/response-enricher.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -177,7 +180,7 @@ serve(async (req) => {
         warnings: design.warnings
       };
       
-      // STEP 4: AI synthesis with universal wrapper
+      // STEP 4: AI synthesis with universal wrapper - STRUCTURED OUTPUT
       const { callAIWithFallback } = await import('../_shared/ai-wrapper.ts');
       
       const aiResult = await callAIWithFallback(
@@ -185,37 +188,77 @@ serve(async (req) => {
         {
           model: 'google/gemini-2.5-flash',
           systemPrompt: `You are a MASTER ELECTRICIAN with 20+ years BS 7671:2018+A2:2022 experience.
+Return a structured JSON response using the provided schema.
+NEVER recalculate - use provided facts as GROUND TRUTH.
+For EACH regulation provide: what (plain English), why (for THIS job), consequence (if ignored).
 
-Your job: Explain this electrical design like you're mentoring an apprentice on-site.
+Write like a mentor, not a textbook. Be conversational but authoritative.`,
+          userPrompt: `Facts: ${JSON.stringify(structuredFacts, null, 2)}
+User query: "${query}"
 
-MANDATORY REQUIREMENTS:
-1. NEVER recalculate - the numbers provided are from BS 7671 tables (GROUND TRUTH)
-2. For EACH regulation cited, explain:
-   - What it says (in plain English)
-   - Why it matters for THIS specific installation
-   - Real consequences if ignored (safety, compliance, warranty)
-3. Give PRACTICAL on-site guidance:
-   - Installation tips (cable routing, fixing methods, spacing)
-   - Testing checkpoints (what values to verify, when to test)
-   - Common mistakes apprentices make (and how to avoid them)
-4. Warn about EDGE CASES and special requirements
-5. Structure your response clearly with headers and bullet points
-
-Write like a mentor, not a textbook. Use "we" and "you". Be conversational but authoritative.
-
-Remember: The user asked "${query}" - address that directly and completely.`,
-          userPrompt: `Here are the FACTS (do not recalculate, just explain):
-
-${JSON.stringify(structuredFacts, null, 2)}
-
-Write a comprehensive electrical design response that addresses "${query}" completely.`,
+Provide a comprehensive electrical design response that addresses the query completely.`,
           maxTokens: 2000,
-          timeoutMs: 55000
+          timeoutMs: 55000,
+          tools: [{
+            type: "function",
+            function: {
+              name: "format_design_response",
+              description: "Structure the electrical design response",
+              parameters: DESIGNER_RESPONSE_SCHEMA
+            }
+          }],
+          tool_choice: { type: "function", function: { name: "format_design_response" } }
         },
-        () => buildFallbackNarrative(structuredFacts)
+        () => ({ 
+          summary: buildFallbackNarrative(structuredFacts),
+          design: {
+            cable: design.cableSize,
+            mcb: `${design.mcbRating}A ${design.mcbType || 'Type B'}`,
+            voltageDrop: `${design.voltageDrop.percent.toFixed(1)}% ${design.voltageDrop.compliant ? '✓' : '✗'}`,
+            earthFault: `Zs ≤ ${design.earthFault.maxZs}Ω ${design.earthFault.compliant ? '✓' : '✗'}`
+          },
+          regulations: [],
+          practicalGuidance: {
+            installation: [],
+            testing: [],
+            commonMistakes: []
+          }
+        })
       );
 
-      const narrative = aiResult.content;
+      // Parse structured response
+      const structuredResponse = typeof aiResult.content === 'string'
+        ? JSON.parse(aiResult.content)
+        : aiResult.content;
+
+      // Validate citations
+      const citationValidation = validateCitations(
+        JSON.stringify(structuredResponse),
+        regulations
+      );
+
+      if (!citationValidation.isValid && citationValidation.hallucinations.length > 0) {
+        logger.warn('Citation issues detected', {
+          hallucinations: citationValidation.hallucinations
+        });
+        
+        // Auto-correct common errors in regulation numbers
+        if (structuredResponse.regulations) {
+          structuredResponse.regulations = structuredResponse.regulations.map((reg: any) => ({
+            ...reg,
+            number: correctCommonErrors(reg.number)
+          }));
+        }
+      }
+
+      // Enrich response with UI metadata
+      const enrichedResponse = enrichResponse(
+        structuredResponse,
+        regulations,
+        'design',
+        entities
+      );
+
       const responseSource = aiResult.source === 'ai' ? 'deterministic+rag+ai' : 'deterministic+rag_only';
 
       logger.info('AI synthesis complete', { 
@@ -224,10 +267,13 @@ Write a comprehensive electrical design response that addresses "${query}" compl
         model: aiResult.model 
       });
       
-      // STEP 5: Return complete response
+      // STEP 5: Return enriched response
       return new Response(JSON.stringify({
         success: true,
-        response: narrative,
+        response: enrichedResponse.response,
+        enrichment: enrichedResponse.enrichment,
+        citations: enrichedResponse.citations,
+        rendering: enrichedResponse.rendering,
         structuredData: {
           design: design,
           calculations: design.calculations,
@@ -238,15 +284,12 @@ Write a comprehensive electrical design response that addresses "${query}" compl
           },
           entities: entities
         },
-        citations: regulations.slice(0, 8).map(r => ({
-          regulation_number: r.regulation_number,
-          section: r.section,
-          excerpt: r.content.slice(0, 200) + '...'
-        })),
         metadata: {
           responseSource: responseSource,
           calculationTime: '<500ms',
-          regulationCount: regulations.length
+          regulationCount: regulations.length,
+          citationConfidence: citationValidation.citationConfidence,
+          validatedCitations: citationValidation.isValid
         },
         suggestedNextAgents: design.success ? ['installer', 'cost-engineer'] : ['health-safety']
       }), {

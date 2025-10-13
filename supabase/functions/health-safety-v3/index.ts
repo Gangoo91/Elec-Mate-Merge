@@ -12,6 +12,7 @@ import {
   callLovableAIWithTimeout,
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
+import { enrichResponse } from '../_shared/response-enricher.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -298,18 +299,29 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       title: r.topic || 'Safety Guidance'
     }));
 
-    // Step 6: Return response - flat format for router/UI
+    // Step 6: Enrich response with UI metadata
+    const enrichedResponse = enrichResponse(
+      safetyResult,
+      hsKnowledge,
+      'health-safety',
+      { workType, location, hazards }
+    );
+
+    // Return enriched response
     const { response, suggestedNextAgents, riskAssessment, methodStatement, compliance } = safetyResult;
     
     return new Response(
       JSON.stringify({
-        response,
+        success: true,
+        response: enrichedResponse.response,
+        enrichment: enrichedResponse.enrichment,
+        citations: enrichedResponse.citations,
+        rendering: enrichedResponse.rendering,
         structuredData: { 
           riskAssessment, 
           methodStatement, 
           compliance,
-          ragPreview,
-          citations
+          ragPreview
         },
         suggestedNextAgents: suggestedNextAgents || []
       }),

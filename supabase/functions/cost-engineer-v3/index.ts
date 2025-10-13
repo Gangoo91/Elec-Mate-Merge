@@ -14,6 +14,7 @@ import {
 } from '../_shared/v3-core.ts';
 import { parseQueryEntities, type ParsedEntities } from '../_shared/query-parser.ts';
 import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
+import { enrichResponse } from '../_shared/response-enricher.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
@@ -905,12 +906,24 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       itemsCount: costResult.materials?.items?.length
     });
 
-    // Step 5: Return response - flat format for router/UI
+    // Step 5: Enrich response with UI metadata
+    const enrichedResponse = enrichResponse(
+      costResult,
+      finalPricingResults,
+      'cost-engineer',
+      parsedEntities
+    );
+
+    // Return enriched response
     const { response, suggestedNextAgents, materials: costMaterials, labour, summary, notes } = costResult;
     
     return new Response(
       JSON.stringify({
-        response,
+        success: true,
+        response: enrichedResponse.response,
+        enrichment: enrichedResponse.enrichment,
+        citations: enrichedResponse.citations,
+        rendering: enrichedResponse.rendering,
         structuredData: { materials: costMaterials, labour, summary, notes },
         suggestedNextAgents: suggestedNextAgents || []
       }),
