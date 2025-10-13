@@ -326,18 +326,7 @@ serve(async (req) => {
       issues: validationResults.filter(r => !r.isValid).length
     });
 
-    // PHASE 4: Detect and resolve agent disagreements
-    const conflicts = detectConflicts(agentOutputs);
-    const resolvedConflicts = conflicts.length > 0 ? resolveConflicts(conflicts) : [];
-    
-    if (resolvedConflicts.length > 0) {
-      logger.info('Conflicts detected and resolved', {
-        conflictCount: resolvedConflicts.length,
-        parameters: resolvedConflicts.map(c => c.parameter)
-      });
-    }
-
-    // PHASE 4: Intelligent Response Synthesis
+    // Intelligent Response Synthesis
     const { synthesizeAgentOutputs } = await import('../_shared/response-synthesizer.ts');
     
     const synthesizedResponse = await synthesizeAgentOutputs({
@@ -351,8 +340,7 @@ serve(async (req) => {
         searchMethod: agentContext.foundRegulations?.[0]?.source || 'hybrid'
       },
       agentChain: agentPlan.sequence.map(s => s.agent),
-      validationReport: !validationResults.every(r => r.isValid) ? validationReport : undefined,
-      conflicts: resolvedConflicts.length > 0 ? resolvedConflicts : undefined
+      validationReport: !validationResults.every(r => r.isValid) ? validationReport : undefined
     });
     
     const combinedResponse = synthesizedResponse;
@@ -367,7 +355,6 @@ serve(async (req) => {
       conversationState,
       conversationSummary,
       validationResults,
-      conflicts: resolvedConflicts.length > 0 ? resolvedConflicts : undefined,
       executionTime: Date.now() - startTime,
       agentContext
     };
@@ -435,121 +422,3 @@ function inferQueryIntent(message: string): QueryIntent {
   };
 }
 
-/**
- * PHASE 4: Conflict Detection
- * Detect when agents give different recommendations for the same parameter
- */
-interface AgentConflict {
-  parameter: string;
-  agents: string[];
-  values: any[];
-  conflictType: 'cable_size' | 'ip_rating' | 'cost' | 'method' | 'other';
-}
-
-function detectConflicts(agentOutputs: AgentOutput[]): AgentConflict[] {
-  const conflicts: AgentConflict[] = [];
-  
-  // Extract cable sizes from agent outputs
-  const cableSizes: Array<{ agent: string; value: string }> = [];
-  agentOutputs.forEach(output => {
-    const cableMatch = output.response?.match(/(\d+(?:\.\d+)?)\s*mm[²2]/i);
-    if (cableMatch) {
-      cableSizes.push({ agent: output.agent, value: `${cableMatch[1]}mm²` });
-    }
-  });
-  
-  if (cableSizes.length > 1) {
-    const uniqueSizes = [...new Set(cableSizes.map(c => c.value))];
-    if (uniqueSizes.length > 1) {
-      conflicts.push({
-        parameter: 'cable_size',
-        agents: cableSizes.map(c => c.agent),
-        values: cableSizes.map(c => c.value),
-        conflictType: 'cable_size'
-      });
-    }
-  }
-  
-  // Extract IP ratings
-  const ipRatings: Array<{ agent: string; value: string }> = [];
-  agentOutputs.forEach(output => {
-    const ipMatch = output.response?.match(/IP([X\d]{2})/i);
-    if (ipMatch) {
-      ipRatings.push({ agent: output.agent, value: ipMatch[0] });
-    }
-  });
-  
-  if (ipRatings.length > 1) {
-    const uniqueRatings = [...new Set(ipRatings.map(r => r.value))];
-    if (uniqueRatings.length > 1) {
-      conflicts.push({
-        parameter: 'ip_rating',
-        agents: ipRatings.map(r => r.agent),
-        values: ipRatings.map(r => r.value),
-        conflictType: 'ip_rating'
-      });
-    }
-  }
-  
-  return conflicts;
-}
-
-/**
- * PHASE 4: Conflict Resolution
- * Apply resolution rules to conflicts
- */
-interface ResolvedConflict {
-  parameter: string;
-  agents: string[];
-  values: any[];
-  resolution: any;
-  reason: string;
-}
-
-function resolveConflicts(conflicts: AgentConflict[]): ResolvedConflict[] {
-  return conflicts.map(conflict => {
-    switch (conflict.conflictType) {
-      case 'cable_size':
-        // RULE: Always use larger cable (safety first, accommodates worst case)
-        const sizes = conflict.values.map(v => parseFloat(v.replace('mm²', '')));
-        const maxSize = Math.max(...sizes);
-        return {
-          parameter: conflict.parameter,
-          agents: conflict.agents,
-          values: conflict.values,
-          resolution: `${maxSize}mm²`,
-          reason: `Using larger cable size (${maxSize}mm²) recommended by ${conflict.agents[sizes.indexOf(maxSize)]}. This accommodates voltage drop over full cable run and provides safety margin.`
-        };
-      
-      case 'ip_rating':
-        // RULE: Always use higher IP rating (better protection)
-        const ratings = conflict.values.map(v => {
-          const match = v.match(/IP([X\d])([X\d])/);
-          return { 
-            full: v, 
-            solid: match[1] === 'X' ? 0 : parseInt(match[1]),
-            liquid: match[2] === 'X' ? 0 : parseInt(match[2])
-          };
-        });
-        const maxRating = ratings.reduce((max, r) => 
-          (r.solid + r.liquid) > (max.solid + max.liquid) ? r : max
-        );
-        return {
-          parameter: conflict.parameter,
-          agents: conflict.agents,
-          values: conflict.values,
-          resolution: maxRating.full,
-          reason: `Using higher IP rating (${maxRating.full}) for better protection in this environment. This exceeds minimum requirements and provides safety margin.`
-        };
-      
-      default:
-        return {
-          parameter: conflict.parameter,
-          agents: conflict.agents,
-          values: conflict.values,
-          resolution: conflict.values[0],
-          reason: `Multiple recommendations exist. Review all agent outputs for best approach.`
-        };
-    }
-  });
-}
