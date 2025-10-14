@@ -209,6 +209,7 @@ serve(async (req) => {
       };
       
       console.log('[PDF-MONKEY] Transformed invoice items:', transformedInvoice.items.length, 'items');
+      console.log('[PDF-MONKEY] Items detail:', JSON.stringify(transformedInvoice.items, null, 2));
 
       // Calculate totals from items
       const itemsSubtotal = transformedInvoice.items.reduce((sum, item) => 

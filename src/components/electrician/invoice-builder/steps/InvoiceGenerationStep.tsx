@@ -32,26 +32,25 @@ export const InvoiceGenerationStep = ({
     return new Date(date).toLocaleDateString('en-GB');
   };
 
-  const allItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
+  // Items already merged in database during save
+  const allItems = invoice.items || [];
 
   const handlePreviewPDF = async () => {
     setIsPreviewing(true);
     try {
       const success = await onSave();
       if (success) {
-        // Merge all items before sending to PDF generator
-        const mergedItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
+        // Use items directly from invoice - they're already merged in DB
+        const mergedItems = invoice.items || [];
         
-        console.log('Merged items for PDF:', {
-          originalItems: invoice.items?.length || 0,
-          additionalItems: invoice.additional_invoice_items?.length || 0,
-          totalMerged: mergedItems.length,
+        console.log('[INVOICE-PREVIEW] Items for PDF:', {
+          itemsCount: mergedItems.length,
           calculatedSubtotal: mergedItems.reduce((sum, item) => sum + item.totalPrice, 0),
           invoiceSubtotal: invoice.subtotal,
           invoiceTotal: invoice.total
         });
 
-        // Recalculate totals client-side to ensure they match
+        // Recalculate totals from merged items to ensure accuracy
         const recalculatedSubtotal = mergedItems.reduce((sum, item) => sum + item.totalPrice, 0);
         const settings = invoice.settings!;
         const recalculatedOverhead = recalculatedSubtotal * ((settings.overheadPercentage || 0) / 100);
@@ -64,8 +63,8 @@ export const InvoiceGenerationStep = ({
         const completeInvoice = {
           ...invoice,
           items: mergedItems,
-          additional_invoice_items: [],
-          // Force recalculated totals
+          additional_invoice_items: [], // Already merged
+          // Use recalculated totals
           subtotal: recalculatedSubtotal,
           overhead: recalculatedOverhead,
           profit: recalculatedProfit,
@@ -74,7 +73,7 @@ export const InvoiceGenerationStep = ({
           jobDetails: invoice.jobDetails,
         };
         
-        console.log('PDF Data being sent:', { invoice: completeInvoice, companyProfile });
+        console.log('[INVOICE-PREVIEW] PDF generation data ready');
         
         await generateInvoicePDF(completeInvoice, companyProfile);
         toast({

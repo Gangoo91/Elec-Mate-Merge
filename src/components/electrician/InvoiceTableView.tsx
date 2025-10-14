@@ -22,14 +22,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
 
 interface InvoiceTableViewProps {
   invoices: Quote[];
   onInvoiceAction: (invoice: Quote) => void;
   onDownloadPDF: (invoice: Quote) => void;
-  onSendInvoice: (invoice: Quote) => void;
   onMarkAsPaid: (invoice: Quote) => void;
-  sendingInvoiceId: string | null;
+  onSendSuccess: () => void;
   markingPaidId: string | null;
   downloadingPdfId: string | null;
 }
@@ -38,9 +38,8 @@ const InvoiceTableView = ({
   invoices,
   onInvoiceAction,
   onDownloadPDF,
-  onSendInvoice,
   onMarkAsPaid,
-  sendingInvoiceId,
+  onSendSuccess,
   markingPaidId,
   downloadingPdfId,
 }: InvoiceTableViewProps) => {
@@ -213,27 +212,11 @@ const InvoiceTableView = ({
                         {/* Send Invoice */}
                         {status !== 'paid' && (
                           <>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  size="sm"
-                                  variant="ghost"
-                                  onClick={() => onSendInvoice(invoice)}
-                                  disabled={sendingInvoiceId === invoice.id}
-                                  className="h-8 w-8 p-0"
-                                  aria-label={isOverdue ? 'Send reminder' : 'Send invoice'}
-                                >
-                                  {isOverdue ? (
-                                    <Bell className="h-4 w-4 text-red-600" />
-                                  ) : (
-                                    <Mail className="h-4 w-4" />
-                                  )}
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{isOverdue ? 'Send reminder' : 'Send invoice'}</p>
-                              </TooltipContent>
-                            </Tooltip>
+                            <InvoiceSendDropdown 
+                              invoice={invoice}
+                              onSuccess={onSendSuccess}
+                              className="h-8 w-8 p-0"
+                            />
 
                             {/* Mark as Paid */}
                             <Tooltip>

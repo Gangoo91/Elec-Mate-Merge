@@ -21,13 +21,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
 
 const InvoiceViewPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [invoice, setInvoice] = useState<Quote | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isSending, setIsSending] = useState(false);
   const [isMarkingPaid, setIsMarkingPaid] = useState(false);
 
   useEffect(() => {
@@ -137,40 +137,8 @@ const InvoiceViewPage = () => {
     }
   };
 
-  const handleSendInvoice = async () => {
-    if (!invoice) return;
-    
-    try {
-      setIsSending(true);
-      
-      const { error } = await supabase.functions.invoke('send-invoice', {
-        body: { invoiceId: invoice.id }
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: 'Invoice sent',
-        description: `Invoice sent to ${invoice.client?.email}`,
-      });
-
-      // Update status to sent
-      await supabase
-        .from('quotes')
-        .update({ invoice_status: 'sent' })
-        .eq('id', invoice.id);
-      
-      fetchInvoice();
-    } catch (error) {
-      console.error('Error sending invoice:', error);
-      toast({
-        title: 'Error sending invoice',
-        description: 'Failed to send invoice. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSending(false);
-    }
+  const handleSendSuccess = async () => {
+    await fetchInvoice();
   };
 
   const handleMarkAsPaid = async () => {
@@ -289,14 +257,10 @@ const InvoiceViewPage = () => {
         
         {invoice.invoice_status !== 'paid' && (
           <>
-            <Button 
-              onClick={handleSendInvoice} 
-              disabled={isSending}
-              variant="outline"
-            >
-              <Mail className="mr-2 h-4 w-4" />
-              {isSending ? 'Sending...' : 'Send Invoice'}
-            </Button>
+            <InvoiceSendDropdown 
+              invoice={invoice}
+              onSuccess={handleSendSuccess}
+            />
             
             <AlertDialog>
               <AlertDialogTrigger asChild>

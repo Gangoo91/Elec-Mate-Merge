@@ -13,6 +13,7 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import InvoiceTableView from "@/components/electrician/InvoiceTableView";
 import InvoiceCardList from "@/components/electrician/InvoiceCardList";
+import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
 
 const InvoicesPage = () => {
   const { invoices, isLoading, fetchInvoices } = useInvoiceStorage();
@@ -20,7 +21,6 @@ const InvoicesPage = () => {
   const [searchParams] = useSearchParams();
   const highlightId = searchParams.get('highlight');
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'sent' | 'overdue' | 'paid'>('all');
-  const [sendingInvoiceId, setSendingInvoiceId] = useState<string | null>(null);
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
   const [downloadingPdfId, setDownloadingPdfId] = useState<string | null>(null);
 
@@ -138,48 +138,8 @@ const InvoicesPage = () => {
     }
   };
 
-  const handleSendInvoice = async (invoice: Quote) => {
-    try {
-      setSendingInvoiceId(invoice.id);
-      
-      // Get the current session to ensure we have a valid auth token
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        throw new Error('Not authenticated');
-      }
-      
-      const { error } = await supabase.functions.invoke('send-invoice', {
-        body: { invoiceId: invoice.id },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
-        }
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: 'Invoice sent',
-        description: `Invoice ${invoice.invoice_number} sent to ${invoice.client?.email}`,
-      });
-
-      // Update status to sent
-      await supabase
-        .from('quotes')
-        .update({ invoice_status: 'sent' })
-        .eq('id', invoice.id);
-      
-      await fetchInvoices();
-    } catch (error) {
-      console.error('Error sending invoice:', error);
-      toast({
-        title: 'Error sending invoice',
-        description: 'Failed to send invoice. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setSendingInvoiceId(null);
-    }
+  const handleSendSuccess = async () => {
+    await fetchInvoices();
   };
 
   const handleMarkAsPaid = async (invoice: Quote) => {
@@ -444,9 +404,8 @@ const InvoicesPage = () => {
                 invoices={sortedInvoices}
                 onInvoiceAction={handleInvoiceAction}
                 onDownloadPDF={handleDownloadPDF}
-                onSendInvoice={handleSendInvoice}
                 onMarkAsPaid={handleMarkAsPaid}
-                sendingInvoiceId={sendingInvoiceId}
+                onSendSuccess={handleSendSuccess}
                 markingPaidId={markingPaidId}
                 downloadingPdfId={downloadingPdfId}
               />
@@ -456,9 +415,8 @@ const InvoicesPage = () => {
                 invoices={sortedInvoices}
                 onInvoiceAction={handleInvoiceAction}
                 onDownloadPDF={handleDownloadPDF}
-                onSendInvoice={handleSendInvoice}
                 onMarkAsPaid={handleMarkAsPaid}
-                sendingInvoiceId={sendingInvoiceId}
+                onSendSuccess={handleSendSuccess}
                 markingPaidId={markingPaidId}
                 downloadingPdfId={downloadingPdfId}
               />

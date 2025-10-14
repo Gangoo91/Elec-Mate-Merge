@@ -16,14 +16,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
 
 interface InvoiceCardListProps {
   invoices: Quote[];
   onInvoiceAction: (invoice: Quote) => void;
   onDownloadPDF: (invoice: Quote) => void;
-  onSendInvoice: (invoice: Quote) => void;
   onMarkAsPaid: (invoice: Quote) => void;
-  sendingInvoiceId: string | null;
+  onSendSuccess: () => void;
   markingPaidId: string | null;
   downloadingPdfId: string | null;
 }
@@ -32,9 +32,8 @@ const InvoiceCardList = ({
   invoices,
   onInvoiceAction,
   onDownloadPDF,
-  onSendInvoice,
   onMarkAsPaid,
-  sendingInvoiceId,
+  onSendSuccess,
   markingPaidId,
   downloadingPdfId,
 }: InvoiceCardListProps) => {
@@ -238,16 +237,13 @@ const InvoiceCardList = ({
 
                 {invoice.invoice_status !== 'paid' ? (
                   <>
-                    <button
-                      onClick={() => onSendInvoice(invoice)}
-                      disabled={sendingInvoiceId === invoice.id}
-                      className="flex-1 bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
-                    >
-                      <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm font-medium">
-                        {sendingInvoiceId === invoice.id ? 'Sending' : 'Send'}
-                      </span>
-                    </button>
+                    <div className="flex-1">
+                      <InvoiceSendDropdown 
+                        invoice={invoice}
+                        onSuccess={onSendSuccess}
+                        className="w-full bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3"
+                      />
+                    </div>
 
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
