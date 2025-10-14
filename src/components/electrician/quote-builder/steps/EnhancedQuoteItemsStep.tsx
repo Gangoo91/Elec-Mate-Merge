@@ -7,14 +7,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp, Tag, Hash, DollarSign, Ruler, MessageSquare, RotateCcw, Search, Brain } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp, Tag, Hash, DollarSign, Ruler, MessageSquare, RotateCcw, Search } from "lucide-react";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Switch } from "@/components/ui/switch";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
-import { SmartQuoteBuilder } from "../SmartQuoteBuilder";
-import { MaterialToQuoteItem } from "@/hooks/useQuoteMaterialIntegration";
 import { 
   workerTypes, 
   materialCategories, 
@@ -58,23 +56,6 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
     });
   };
 
-  // Handlers for Smart Quote Builder integration
-  const handleMaterialToQuote = (material: MaterialToQuoteItem, quantity?: number) => {
-    const parsedPrice = parseFloat(material.price.replace(/[£,]/g, '')) || 0;
-    onAdd({
-      description: material.name,
-      quantity: quantity || 1,
-      unit: 'each',
-      unitPrice: parsedPrice,
-      category: 'materials',
-      subcategory: material.category || 'general',
-      notes: `${material.supplier} - ${material.stockStatus}`
-    });
-  };
-
-  const handleMultipleMaterialsToQuote = (materials: MaterialToQuoteItem[]) => {
-    materials.forEach(material => handleMaterialToQuote(material, 1));
-  };
 
   const handleCategoryChange = (category: string) => {
     setNewItem(prev => ({
@@ -233,13 +214,8 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
   return (
     <div className="space-y-4">
-      <Tabs defaultValue="smart" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-6">
-          <TabsTrigger value="smart" className="flex items-center gap-2">
-            <Brain className="h-4 w-4" />
-            <span className="hidden sm:inline">Smart List Builder</span>
-            <span className="sm:hidden">Smart</span>
-          </TabsTrigger>
+      <Tabs defaultValue="labour" className="w-full">
+        <TabsList className="grid w-full grid-cols-2 mb-6">
           <TabsTrigger value="labour" className="flex items-center gap-2">
             <Wrench className="h-4 w-4" />
             Labour
@@ -250,13 +226,6 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
             <span className="sm:hidden">Templates</span>
           </TabsTrigger>
         </TabsList>
-
-        <TabsContent value="smart">
-          <SmartQuoteBuilder 
-            onAddToQuote={handleMaterialToQuote}
-            onAddMultipleToQuote={handleMultipleMaterialsToQuote}
-          />
-        </TabsContent>
 
         <TabsContent value="labour">
           <Card className="bg-card/50 border border-primary/20">
@@ -416,18 +385,21 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                       <div className="space-y-2">
                         <Label htmlFor="material" className="text-sm font-medium">Material</Label>
                         <Select value={newItem.materialCode} onValueChange={handleMaterialSelect}>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder={filteredMaterials.length > 0 ? "Select material" : "No materials found"} />
+                          <SelectTrigger className="h-12 w-full">
+                            <SelectValue 
+                              placeholder={filteredMaterials.length > 0 ? "Select material" : "No materials found"}
+                              className="truncate"
+                            />
                           </SelectTrigger>
-                           <SelectContent className="z-50 bg-background border shadow-lg max-h-[300px]">
+                           <SelectContent className="z-50 bg-background border shadow-lg max-h-[400px] overflow-y-auto">
                              {filteredMaterials.length > 0 ? (
                                filteredMaterials.map(material => {
                                  const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice;
                                  return (
-                                   <SelectItem key={material.id} value={material.id}>
-                                     <div className="flex flex-col">
-                                       <span>{material.name}</span>
-                                       <span className="text-xs text-muted-foreground">
+                                   <SelectItem key={material.id} value={material.id} className="cursor-pointer w-full">
+                                     <div className="flex flex-col py-1 w-full">
+                                       <span className="font-medium text-sm truncate">{material.name}</span>
+                                       <span className="text-xs text-muted-foreground truncate">
                                          {material.code && `${material.code} | `}
                                          {priceAdjustment > 0 ? (
                                            <>Base: £{material.defaultPrice.toFixed(2)} | Adjusted: £{adjustedPrice.toFixed(2)} (+{priceAdjustment}%)</>
