@@ -10,6 +10,7 @@ import { BriefingFormWizard } from "./BriefingFormWizard";
 import { BriefingHistory } from "./BriefingHistory";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HeroAIBriefingCard } from "./HeroAIBriefingCard";
+import { TemplateLibrary } from "./briefing-templates/TemplateLibrary";
 
 
 interface TeamBriefing {
@@ -38,6 +39,7 @@ const TeamBriefingTemplates = () => {
   const [editingBriefing, setEditingBriefing] = useState<any>(null);
   const [activeTab, setActiveTab] = useState("history");
   const [scheduledBriefingsExpanded, setScheduledBriefingsExpanded] = useState(false);
+  const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
 
   useEffect(() => {
     fetchBriefings();
@@ -143,6 +145,10 @@ const TeamBriefingTemplates = () => {
     );
   }
 
+  if (showTemplateLibrary) {
+    return <TemplateLibrary onClose={() => setShowTemplateLibrary(false)} />;
+  }
+
   if (showAIWizard) {
     return <BriefingFormWizard 
       initialData={editingBriefing}
@@ -171,6 +177,20 @@ const TeamBriefingTemplates = () => {
       <div className="md:hidden space-y-4 px-3">
         {/* Hero AI Briefing Card */}
         <HeroAIBriefingCard onCreateBriefing={() => setShowAIWizard(true)} />
+
+        {/* Quick Access: Manage Templates */}
+        <Card className="border-elec-yellow/20">
+          <CardContent className="p-4">
+            <MobileButton
+              variant="outline"
+              className="w-full justify-start"
+              onClick={() => setShowTemplateLibrary(true)}
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Manage Templates
+            </MobileButton>
+          </CardContent>
+        </Card>
 
         {/* History Tab */}
         <div className="mt-6">

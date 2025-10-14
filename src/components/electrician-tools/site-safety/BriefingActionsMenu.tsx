@@ -64,7 +64,10 @@ export const BriefingActionsMenu = ({
                 <Edit className="mr-2 h-4 w-4" />
                 Edit Briefing
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setShowReschedule(true)}>
+              <DropdownMenuItem 
+                onClick={() => setShowReschedule(true)}
+                className="text-amber-600 dark:text-amber-400 focus:text-amber-600"
+              >
                 <Calendar className="mr-2 h-4 w-4" />
                 Reschedule
               </DropdownMenuItem>
@@ -128,6 +131,10 @@ export const BriefingActionsMenu = ({
         onOpenChange={setShowCancel}
         briefing={briefing}
         onSuccess={onRefresh}
+        onReschedule={() => {
+          setShowCancel(false);
+          setShowReschedule(true);
+        }}
       />
 
       <Dialog open={showInBriefingMode} onOpenChange={setShowInBriefingMode}>

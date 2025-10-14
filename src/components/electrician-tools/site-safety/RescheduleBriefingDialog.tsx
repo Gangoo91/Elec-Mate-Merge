@@ -11,9 +11,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
+import { CalendarDays, Clock } from "lucide-react";
 
 interface RescheduleBriefingDialogProps {
   open: boolean;
@@ -32,7 +35,18 @@ export const RescheduleBriefingDialog = ({
     briefing?.briefing_date ? new Date(briefing.briefing_date) : undefined
   );
   const [time, setTime] = useState(briefing?.briefing_time || "09:00");
+  const [rescheduleReason, setRescheduleReason] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const originalDate = briefing?.briefing_date ? new Date(briefing.briefing_date) : null;
+  const originalTime = briefing?.briefing_time || "09:00";
+
+  const suggestNextSlot = () => {
+    if (originalDate) {
+      setDate(addDays(originalDate, 1));
+      setTime(originalTime);
+    }
+  };
 
   const handleReschedule = async () => {
     if (!date) {
@@ -46,7 +60,8 @@ export const RescheduleBriefingDialog = ({
 
     setLoading(true);
     try {
-      const { error } = await supabase
+      // Update briefing
+      const { error: updateError } = await supabase
         .from("team_briefings")
         .update({
           briefing_date: format(date, "yyyy-MM-dd"),
@@ -54,7 +69,21 @@ export const RescheduleBriefingDialog = ({
         })
         .eq("id", briefing.id);
 
-      if (error) throw error;
+      if (updateError) throw updateError;
+
+      // Create status history entry
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user && rescheduleReason) {
+        await supabase
+          .from("briefing_status_history")
+          .insert({
+            briefing_id: briefing.id,
+            old_status: briefing.status,
+            new_status: 'scheduled',
+            reason: `Rescheduled: ${rescheduleReason}`,
+            changed_by: user.id,
+          });
+      }
 
       toast({
         title: "Briefing Rescheduled",
@@ -77,15 +106,46 @@ export const RescheduleBriefingDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Reschedule Briefing</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <CalendarDays className="h-5 w-5 text-elec-yellow" />
+            Reschedule Briefing
+          </DialogTitle>
           <DialogDescription>
-            Select a new date and time for "{briefing?.title}"
+            Select a new date and time for "{briefing?.briefing_name || briefing?.title}"
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
+          {/* Original Date/Time Display */}
+          {originalDate && (
+            <div className="bg-muted/50 p-3 rounded-lg border border-border">
+              <p className="text-sm font-medium mb-1">Original Schedule:</p>
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <CalendarDays className="h-4 w-4" />
+                  {format(originalDate, "PPP")}
+                </div>
+                <div className="flex items-center gap-1">
+                  <Clock className="h-4 w-4" />
+                  {originalTime}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Quick Suggestion */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={suggestNextSlot}
+            className="w-full"
+          >
+            Suggest Next Day (Same Time)
+          </Button>
+
+          {/* New Date Selection */}
           <div className="space-y-2">
             <Label>New Date</Label>
             <Calendar
@@ -97,6 +157,7 @@ export const RescheduleBriefingDialog = ({
             />
           </div>
 
+          {/* New Time Selection */}
           <div className="space-y-2">
             <Label htmlFor="time">New Time</Label>
             <Input
@@ -106,13 +167,25 @@ export const RescheduleBriefingDialog = ({
               onChange={(e) => setTime(e.target.value)}
             />
           </div>
+
+          {/* Reason for Rescheduling */}
+          <div className="space-y-2">
+            <Label htmlFor="reschedule-reason">Reason (Optional)</Label>
+            <Textarea
+              id="reschedule-reason"
+              placeholder="Why are you rescheduling? (e.g., Weather delay, Resource conflict)"
+              value={rescheduleReason}
+              onChange={(e) => setRescheduleReason(e.target.value)}
+              rows={2}
+            />
+          </div>
         </div>
 
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={loading}>
             Cancel
           </Button>
-          <Button onClick={handleReschedule} disabled={loading}>
+          <Button onClick={handleReschedule} disabled={loading || !date}>
             {loading ? "Rescheduling..." : "Reschedule"}
           </Button>
         </DialogFooter>
