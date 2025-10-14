@@ -76,13 +76,13 @@ export const InvoiceGenerationStep = ({
         }
       });
 
-      if (pdfError || !pdfData?.download_url) {
+      if (pdfError || !pdfData?.downloadUrl) {
         console.error('PDF Monkey error:', pdfError);
         throw new Error('Failed to generate professional PDF');
       }
 
       // Open PDF in new tab
-      window.open(pdfData.download_url, '_blank');
+      window.open(pdfData.downloadUrl, '_blank');
 
       toast({
         title: 'Invoice PDF Ready',

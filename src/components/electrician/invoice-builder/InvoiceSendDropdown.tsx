@@ -187,12 +187,12 @@ export const InvoiceSendDropdown = ({
         }
       });
 
-      if (pdfError || !pdfData?.download_url) {
+      if (pdfError || !pdfData?.downloadUrl) {
         console.error('PDF Monkey error:', pdfError);
         throw new Error('Failed to generate professional PDF');
       }
 
-      const pdfUrl = pdfData.download_url;
+      const pdfUrl = pdfData.downloadUrl;
 
       // 3. Create professional WhatsApp message (NO BRANDING)
       const clientName = invoice.client?.name || 'Valued Client';

@@ -141,11 +141,11 @@ const InvoiceViewPage = () => {
         }
       });
 
-      if (pdfError || !pdfData?.download_url) {
+      if (pdfError || !pdfData?.downloadUrl) {
         throw new Error('Failed to generate professional PDF');
       }
 
-      window.open(pdfData.download_url, '_blank');
+      window.open(pdfData.downloadUrl, '_blank');
     } catch (error) {
       console.error('Error generating invoice PDF:', error);
       toast({
