@@ -7,11 +7,11 @@ import { useCompanyProfile } from './useCompanyProfile';
 import { generateSequentialQuoteNumber } from '@/utils/quote-number-generator';
 import { supabase } from '@/integrations/supabase/client';
 
-export const useQuoteBuilder = (onQuoteGenerated?: () => void) => {
+export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Quote) => {
   const { saveQuote } = useQuoteStorage();
   const { companyProfile, refetch } = useCompanyProfile();
   
-  const [quote, setQuote] = useState<Partial<Quote>>({
+  const [quote, setQuote] = useState<Partial<Quote>>(initialQuote || {
     id: uuidv4(),
     quoteNumber: '', // Will be generated when needed
     items: [],

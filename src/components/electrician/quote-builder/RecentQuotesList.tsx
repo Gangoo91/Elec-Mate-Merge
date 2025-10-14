@@ -352,6 +352,48 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
     }).format(amount);
   };
 
+  const getAcceptanceStatusBadge = (quote: Quote) => {
+    const acceptanceStatus = quote.acceptance_status;
+    
+    if (acceptanceStatus === "accepted") {
+      return (
+        <Badge variant="success" className="text-xs">
+          Accepted
+        </Badge>
+      );
+    }
+    
+    if (acceptanceStatus === "rejected") {
+      return (
+        <Badge variant="destructive" className="text-xs">
+          Rejected
+        </Badge>
+      );
+    }
+    
+    if (quote.status === "sent") {
+      return (
+        <Badge variant="secondary" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
+          Sent
+        </Badge>
+      );
+    }
+    
+    if (quote.status === "draft") {
+      return (
+        <Badge variant="outline" className="text-xs">
+          Draft
+        </Badge>
+      );
+    }
+    
+    return (
+      <Badge variant="outline" className="text-xs">
+        Pending
+      </Badge>
+    );
+  };
+
   if (quotes.length === 0) {
     return (
       <Card className="border-0 shadow-lg bg-gradient-to-br from-card to-card/50">
@@ -378,26 +420,77 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   return (
     <div className="space-y-4">
       {displayQuotes.map((quote) => (
-        <Card key={quote.id} className="overflow-hidden border-2 border-elec-yellow/20 bg-gradient-to-br from-elec-card/60 to-elec-card/40 hover:border-elec-yellow/40 hover:shadow-xl transition-all duration-300 shadow-lg">
-          {/* Header: Quote Number + Status + Actions */}
-          <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-elec-yellow/10">
-            <span className="text-sm font-semibold text-muted-foreground">{quote.quoteNumber}</span>
-            <div className="flex items-center gap-2">
-              <Badge variant={getStatusVariant(quote.status)} className="text-xs capitalize">
-                {quote.status}
-              </Badge>
-              
-              {/* Actions Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    className="h-8 w-8 p-0 hover:bg-elec-yellow/10"
-                  >
-                    <MoreVertical className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
+        <div
+          key={quote.id}
+          className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
+        >
+          {/* Header with Quote Number & Acceptance Status */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs">
+              <Badge variant="outline">{quote.quoteNumber}</Badge>
+            </div>
+            
+            <div className="flex items-start justify-between gap-3">
+              {getAcceptanceStatusBadge(quote)}
+              <span className="text-lg font-bold text-elec-yellow shrink-0">
+                {formatCurrency(quote.total)}
+              </span>
+            </div>
+          </div>
+
+          {/* Client Info */}
+          <div className="flex items-center gap-2 text-sm">
+            <User className="h-4 w-4 text-muted-foreground" />
+            <span className="font-medium truncate">{quote.client.name}</span>
+          </div>
+
+          {/* Meta Info - Date & Items */}
+          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+            <div className="flex items-center gap-1.5">
+              <Calendar className="h-3.5 w-3.5" />
+              <span>{format(new Date(quote.createdAt), "dd MMM yyyy")}</span>
+            </div>
+            <span className="text-border">•</span>
+            <div className="flex items-center gap-1.5">
+              <FileText className="h-3.5 w-3.5" />
+              <span>{quote.items.length} items</span>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleRegeneratePDF(quote)}
+              disabled={loadingAction === `pdf-${quote.id}`}
+              className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
+            >
+              <Download className="h-3 w-3 mr-1" />
+              {loadingAction === `pdf-${quote.id}` ? 'Downloading...' : 'Download PDF'}
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => navigate(`/electrician/quote-builder/${quote.id}`)}
+              className="flex-1 text-xs bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+            >
+              <Eye className="h-3 w-3 mr-1" />
+              View/Edit
+            </Button>
+          </div>
+
+          {/* Actions Dropdown - Hidden for mobile */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="hidden h-8 w-8 p-0 hover:bg-elec-yellow/10"
+              >
+                <MoreVertical className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 bg-popover border border-elec-yellow/20 z-50">
                   {/* Send to Invoice - for eligible quotes */}
                   {canRaiseInvoice(quote) && (
@@ -514,79 +607,9 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     <Trash2 className="h-4 w-4 mr-2" />
                     Delete Quote
                   </DropdownMenuItem>
-                </DropdownMenuContent>
+                  </DropdownMenuContent>
               </DropdownMenu>
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="px-5 pt-3 pb-4 space-y-3">
-            {/* Client Name */}
-            <div className="flex items-center gap-2">
-              <User className="h-4 w-4 text-muted-foreground" />
-              <span className="font-medium text-foreground">{quote.client.name}</span>
-            </div>
-
-            {/* Price - Prominent */}
-            <div className="text-3xl font-bold text-elec-yellow">
-              {formatCurrency(quote.total)}
-            </div>
-            
-            {/* Meta Info Row */}
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5" />
-                <span>{format(quote.createdAt, 'dd MMM yyyy')}</span>
-              </div>
-              <span>•</span>
-              <div className="flex items-center gap-1.5">
-                <FileText className="h-3.5 w-3.5" />
-                <span>{quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
-              </div>
-            </div>
-            
-            {/* Tags */}
-            {quote.tags && quote.tags.length > 0 && (
-              <div className="flex gap-1.5 flex-wrap pt-1">
-                {quote.tags.map((tag) => (
-                  <Badge 
-                    key={tag} 
-                    variant={tag === 'work_done' ? 'success' : getTagVariant(tag)} 
-                    className="text-xs"
-                  >
-                    {tag === 'work_done' && <Check className="h-3 w-3 mr-1" />}
-                    {tag === 'work_done' ? 'Work Done' : getTagLabel(tag)}
-                  </Badge>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Invoice Raised Indicator - show if invoice already raised */}
-          {hasInvoiceRaised(quote) && (
-            <div className="px-5 pb-4">
-              <div className="flex items-center justify-between bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-                <div className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-green-400" />
-                  <span className="text-sm font-medium text-green-400">Invoice Raised</span>
-                  {quote.invoice_number && (
-                    <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
-                      {quote.invoice_number}
-                    </Badge>
-                  )}
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => navigate(`/electrician/invoices?highlight=${quote.id}`)}
-                  className="text-xs text-green-400 hover:text-green-300 hover:bg-green-500/10 h-8"
-                >
-                  View →
-                </Button>
-              </div>
-            </div>
-          )}
-        </Card>
+        </div>
       ))}
       
       {!showAll && quotes.length > 10 && (

@@ -23,9 +23,10 @@ const steps = [
 
 interface QuoteWizardProps {
   onQuoteGenerated?: () => void;
+  initialQuote?: any;
 }
 
-export const QuoteWizard = ({ onQuoteGenerated }: QuoteWizardProps) => {
+export const QuoteWizard = ({ onQuoteGenerated, initialQuote }: QuoteWizardProps) => {
 const {
     quote,
     currentStep,
@@ -43,7 +44,7 @@ const {
     generateQuote,
     resetQuote,
     isGenerating,
-  } = useQuoteBuilder(onQuoteGenerated);
+  } = useQuoteBuilder(onQuoteGenerated, initialQuote);
 
   const canProceed = () => {
     switch (currentStep) {
