@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MoreVertical, Edit, Calendar, XCircle, Copy, PlayCircle, CheckCircle, Eye } from "lucide-react";
+import { MoreVertical, Edit, Calendar, XCircle, Copy, PlayCircle, CheckCircle, Eye, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { RescheduleBriefingDialog } from "./RescheduleBriefingDialog";
 import { CancelBriefingDialog } from "./CancelBriefingDialog";
+import { DeleteBriefingDialog } from "./DeleteBriefingDialog";
 import { InBriefingMode } from "./InBriefingMode";
 import { BriefingStatusTimeline } from "./BriefingStatusTimeline";
 import { QuickActionsPanel } from "./QuickActionsPanel";
@@ -37,12 +38,14 @@ export const BriefingActionsMenu = ({
 }: BriefingActionsMenuProps) => {
   const [showReschedule, setShowReschedule] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   const [showInBriefingMode, setShowInBriefingMode] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
   const canStart = briefing.status === 'scheduled';
   const canComplete = briefing.status === 'in_progress';
   const canEdit = briefing.status !== 'cancelled' && briefing.status !== 'completed';
+  const canDelete = briefing.status === 'cancelled' || briefing.status === 'draft';
 
   const handleStartBriefing = () => {
     onStatusChange('in_progress');
@@ -116,6 +119,19 @@ export const BriefingActionsMenu = ({
               </DropdownMenuItem>
             </>
           )}
+
+          {canDelete && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => setShowDelete(true)}
+                className="text-destructive focus:text-destructive"
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Delete Permanently
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -135,6 +151,13 @@ export const BriefingActionsMenu = ({
           setShowCancel(false);
           setShowReschedule(true);
         }}
+      />
+
+      <DeleteBriefingDialog
+        open={showDelete}
+        onOpenChange={setShowDelete}
+        briefing={briefing}
+        onSuccess={onRefresh}
       />
 
       <Dialog open={showInBriefingMode} onOpenChange={setShowInBriefingMode}>

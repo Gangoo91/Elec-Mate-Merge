@@ -222,41 +222,53 @@ const TeamBriefingTemplates = () => {
 
           {scheduledBriefingsExpanded && (
             <div className="space-y-3 animate-fade-in">
-              {briefings && briefings.length > 0 ? (
-                briefings.slice(0, 5).map((briefing) => (
-                  <div
-                    key={briefing.id}
-                    className="bg-card border border-elec-yellow/20 rounded-xl p-4 hover:border-elec-yellow/40 transition-all"
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-elec-light mb-1">{briefing.briefing_name}</h3>
-                        <p className="text-sm text-elec-light/70">
-                          {briefing.location}
-                        </p>
-                      </div>
-                      <Badge className={`${
-                        briefing.status === 'completed' ? 'bg-primary/10 text-primary border-primary/20' :
-                        briefing.status === 'in_progress' ? 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20' :
-                        'bg-card border-elec-yellow/20 text-elec-light'
-                      }`}>
-                        {briefing.status}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-elec-light/60">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{new Date(briefing.briefing_date).toLocaleDateString('en-GB')}</span>
-                      </div>
-                      {briefing.attendees.length > 0 && (
-                        <div className="flex items-center gap-1">
-                          <Users className="h-4 w-4" />
-                          <span>{briefing.attendees.length}</span>
+              {briefings && briefings.filter(b => b.status !== 'cancelled' && new Date(b.briefing_date) >= new Date()).length > 0 ? (
+                briefings
+                  .filter(b => b.status !== 'cancelled' && new Date(b.briefing_date) >= new Date())
+                  .slice(0, 5)
+                  .map((briefing) => {
+                    const statusColors = {
+                      'completed': 'border-green-500/30 bg-green-500/5',
+                      'in_progress': 'border-yellow-500/50 bg-yellow-500/5 shadow-yellow-500/20 shadow-sm',
+                      'scheduled': 'border-elec-yellow/10',
+                    };
+                    const statusColor = statusColors[briefing.status as keyof typeof statusColors] || 'border-elec-yellow/10';
+                    
+                    return (
+                      <div
+                        key={briefing.id}
+                        className={`bg-card ${statusColor} rounded-xl p-3 hover:border-elec-yellow/40 transition-all`}
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-elec-light mb-1 text-sm">{briefing.briefing_name}</h3>
+                            <p className="text-xs text-elec-light/70">
+                              {briefing.location}
+                            </p>
+                          </div>
+                          <Badge className={`text-xs ${
+                            briefing.status === 'completed' ? 'bg-green-500/20 text-green-400 border-0' :
+                            briefing.status === 'in_progress' ? 'bg-yellow-500/20 text-yellow-400 border-0' :
+                            'bg-card border-elec-yellow/20 text-elec-light'
+                          }`}>
+                            {briefing.status === 'in_progress' ? 'In Progress' : briefing.status}
+                          </Badge>
                         </div>
-                      )}
-                    </div>
-                  </div>
-                ))
+                        <div className="flex items-center gap-4 text-xs text-elec-light/60">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            <span>{new Date(briefing.briefing_date).toLocaleDateString('en-GB')}</span>
+                          </div>
+                          {briefing.attendees?.length > 0 && (
+                            <div className="flex items-center gap-1">
+                              <Users className="h-3 w-3" />
+                              <span>{briefing.attendees.length}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })
               ) : (
                 <div className="bg-card border border-elec-yellow/20 rounded-xl p-6 text-center">
                   <Calendar className="h-12 w-12 text-elec-yellow/50 mx-auto mb-3" />

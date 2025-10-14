@@ -102,58 +102,124 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
   }
 
   return (
-    <Card className="bg-background border-primary/30">
-      <CardHeader>
-        <CardTitle className="text-elec-yellow flex items-center gap-2">
-          <FileText className="h-5 w-5" />
+    <div className="space-y-4">
+      {/* Header */}
+      <div>
+        <h3 className="text-xl font-semibold text-elec-light flex items-center gap-2 mb-1">
+          <FileText className="h-5 w-5 text-elec-yellow" />
           Briefing History
-        </CardTitle>
+        </h3>
+        <p className="text-sm text-muted-foreground">
+          View and manage all your briefings
+        </p>
+      </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 mt-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-elec-light/60" />
-            <Input
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search briefings..."
-              className="pl-10 bg-card border-primary/30 text-elec-light"
-            />
-          </div>
-
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-full sm:w-[150px] bg-card border-primary/30 text-elec-light">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent className="bg-card border-elec-yellow/30">
-              <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-              <SelectItem value="draft">Draft</SelectItem>
-              <SelectItem value="scheduled">Scheduled</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select value={aiFilter} onValueChange={setAiFilter}>
-            <SelectTrigger className="w-full sm:w-[150px] bg-card border-primary/30 text-elec-light">
-              <SelectValue placeholder="Type" />
-            </SelectTrigger>
-            <SelectContent className="bg-card border-elec-yellow/30">
-              <SelectItem value="all">All Types</SelectItem>
-              <SelectItem value="ai">AI Generated</SelectItem>
-              <SelectItem value="manual">Manual</SelectItem>
-            </SelectContent>
-          </Select>
+      {/* Sticky Filters */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-3 space-y-3">
+        {/* Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search briefings..."
+            className="pl-10 h-11 bg-card/50 border-elec-yellow/20"
+          />
         </div>
-      </CardHeader>
 
-      <CardContent>
-        {filteredBriefings.length === 0 ? (
-          <div className="text-center py-12 text-elec-light/60">
-            <FileText className="h-12 w-12 mx-auto mb-3 opacity-40" />
-            <p>No briefings found</p>
+        {/* Filter chips - Horizontal scroll */}
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          <button
+            onClick={() => setStatusFilter("all")}
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              statusFilter === "all"
+                ? "bg-elec-yellow text-elec-dark"
+                : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
+            }`}
+          >
+            All Status
+          </button>
+          <button
+            onClick={() => setStatusFilter("completed")}
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              statusFilter === "completed"
+                ? "bg-elec-yellow text-elec-dark"
+                : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
+            }`}
+          >
+            Completed
+          </button>
+          <button
+            onClick={() => setStatusFilter("scheduled")}
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              statusFilter === "scheduled"
+                ? "bg-elec-yellow text-elec-dark"
+                : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
+            }`}
+          >
+            Scheduled
+          </button>
+          <button
+            onClick={() => setStatusFilter("draft")}
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              statusFilter === "draft"
+                ? "bg-elec-yellow text-elec-dark"
+                : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
+            }`}
+          >
+            Draft
+          </button>
+          <div className="border-l border-elec-yellow/20 mx-1"></div>
+          <button
+            onClick={() => setAiFilter("all")}
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              aiFilter === "all"
+                ? "bg-elec-yellow text-elec-dark"
+                : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
+            }`}
+          >
+            All Types
+          </button>
+          <button
+            onClick={() => setAiFilter("ai")}
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              aiFilter === "ai"
+                ? "bg-elec-yellow text-elec-dark"
+                : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
+            }`}
+          >
+            <Sparkles className="h-3 w-3 inline mr-1" />
+            AI Generated
+          </button>
+          <button
+            onClick={() => setAiFilter("manual")}
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              aiFilter === "manual"
+                ? "bg-elec-yellow text-elec-dark"
+                : "bg-card border border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40"
+            }`}
+          >
+            Manual
+          </button>
+        </div>
+      </div>
+
+      {/* Content */}
+      {filteredBriefings.length === 0 ? (
+        <div className="text-center py-16">
+          <div className="bg-card/30 border border-dashed border-elec-yellow/20 rounded-2xl p-8 max-w-sm mx-auto">
+            <FileText className="h-16 w-16 mx-auto mb-4 text-elec-yellow/40" />
+            <h3 className="font-semibold text-elec-light mb-2">No briefings yet</h3>
+            <p className="text-sm text-muted-foreground">
+              {searchTerm || statusFilter !== "all" || aiFilter !== "all"
+                ? "Try adjusting your filters"
+                : "Create your first briefing to get started"}
+            </p>
           </div>
-        ) : (
-          <div className="space-y-4">
-            {filteredBriefings.map((briefing) => {
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {filteredBriefings.map((briefing) => {
               const briefingTypeConfig = {
                 'site-work': { label: 'Site Work', color: 'bg-blue-500/20 text-blue-400' },
                 'lfe': { label: 'LFE Report', color: 'bg-red-500/20 text-red-400' },
@@ -185,8 +251,10 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
               };
 
               return (
-                <Card key={briefing.id} className="bg-card/50 border-primary/20">
-                  <CardContent className="p-4">
+                <div 
+                  key={briefing.id} 
+                  className="bg-card/30 border border-elec-yellow/10 rounded-xl p-4 hover:border-elec-yellow/30 transition-all active:scale-[0.98]"
+                >
                     {/* Top badges row with actions */}
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <div className="flex flex-wrap items-center gap-2">
@@ -275,17 +343,15 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
                       )}
                     </div>
 
-                    {/* PDF Actions at bottom */}
-                    <div className="pt-3 border-t border-primary/10">
-                      <BriefingPDFActions briefing={briefing} companyProfile={companyProfile} />
-                    </div>
-                  </CardContent>
-                </Card>
+                  {/* PDF Actions at bottom */}
+                  <div className="pt-3 border-t border-elec-yellow/10">
+                    <BriefingPDFActions briefing={briefing} companyProfile={companyProfile} />
+                  </div>
+                </div>
               );
             })}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+        </div>
+      )}
+    </div>
   );
 };
