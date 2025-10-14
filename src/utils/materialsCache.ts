@@ -3,21 +3,21 @@ import { supabase } from '@/integrations/supabase/client';
 // Trigger weekly cache update using the tools-weekly-refresh function
 export const updateMaterialsCache = async () => {
   try {
-    console.log('🔄 Triggering tools weekly refresh with force refresh...');
+    console.log('🔄 Triggering materials refresh with force refresh...');
     
-    const { data, error } = await supabase.functions.invoke('tools-weekly-refresh', {
-      body: { forceRefresh: true }
+    const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
+      body: { forceRefresh: true, mergeAll: false }
     });
     
     if (error) {
-      console.error('Tools refresh error:', error);
+      console.error('Materials refresh error:', error);
       return { success: false, error: error.message };
     }
     
-    console.log('✅ Tools refresh completed:', data);
+    console.log('✅ Materials refresh completed:', data);
     return { success: true, data };
   } catch (error) {
-    console.error('Tools refresh failed:', error);
+    console.error('Materials refresh failed:', error);
     return { success: false, error: error.message };
   }
 };

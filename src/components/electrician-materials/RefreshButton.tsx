@@ -4,6 +4,7 @@ import { RefreshCw, Clock, AlertCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { updateMaterialsCache, getCacheStatus } from "@/utils/materialsCache";
 import { useToast } from "@/hooks/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface RefreshButtonProps {
   isFetching: boolean;
@@ -19,6 +20,7 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
   const [cacheAge, setCacheAge] = useState<number | null>(null);
   const [nextRefreshDate, setNextRefreshDate] = useState<Date | null>(null);
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     checkCacheStatus();
@@ -56,6 +58,9 @@ const RefreshButton = ({ isFetching, lastFetchTime, onRefresh, categoryId, class
           title: "Cache Updated",
           description: "Materials data has been refreshed successfully.",
         });
+        
+        // Invalidate React Query cache to trigger refetch
+        queryClient.invalidateQueries({ queryKey: ['comprehensive-materials'] });
         
         // Refresh the data on the page
         onRefresh();
