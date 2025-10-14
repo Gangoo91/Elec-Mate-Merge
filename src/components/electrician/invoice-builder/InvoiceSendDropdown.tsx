@@ -165,18 +165,34 @@ export const InvoiceSendDropdown = ({
         console.error('Company profile error:', companyError);
       }
 
-      // 2. Generate PDF and upload to storage
+      // 2. Generate professional PDF using PDF Monkey template
       toast({
-        title: 'Generating PDF',
-        description: 'Please wait while we prepare your invoice...',
+        title: 'Generating Professional PDF',
+        description: 'Creating invoice with your branded template...',
       });
 
-      const { generateAndUploadInvoicePDF } = await import('@/utils/invoice-pdf-storage');
-      const pdfUrl = await generateAndUploadInvoicePDF(invoice, companyData);
-
-      if (!pdfUrl) {
-        throw new Error('Failed to generate PDF');
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('User not authenticated');
       }
+
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: {
+          quote: invoice,
+          companyProfile: companyData,
+          invoice_mode: true  // Uses DC891A6A-4B38-48F5-A7DB-7CD0B550F4A2 template
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      if (pdfError || !pdfData?.download_url) {
+        console.error('PDF Monkey error:', pdfError);
+        throw new Error('Failed to generate professional PDF');
+      }
+
+      const pdfUrl = pdfData.download_url;
 
       // 3. Create professional WhatsApp message (NO BRANDING)
       const clientName = invoice.client?.name || 'Valued Client';
