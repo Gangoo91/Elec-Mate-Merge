@@ -292,13 +292,15 @@ const ElectricalMaterials = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             
             <CardHeader className="pb-3 relative">
-              <CardTitle className="flex items-center justify-center gap-3 text-lg text-center text-white group-hover:text-elec-yellow transition-colors">
+              <div className="flex flex-col items-center gap-3">
                 <div className="text-elec-yellow group-hover:scale-110 transition-transform duration-300">
                   {material.icon}
                 </div>
-                {material.title}
-              </CardTitle>
-              <CardDescription className="text-sm text-center leading-relaxed">
+                <CardTitle className="text-lg text-center text-white group-hover:text-elec-yellow transition-colors">
+                  {material.title}
+                </CardTitle>
+              </div>
+              <CardDescription className="text-sm text-center leading-relaxed mt-2">
                 {material.description}
               </CardDescription>
             </CardHeader>
