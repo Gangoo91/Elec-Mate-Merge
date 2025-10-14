@@ -290,16 +290,16 @@ const InvoicesPage = () => {
             Invoices
           </h1>
         </div>
-        <div className="flex gap-2 w-full sm:w-auto">
-          <Link to="/electrician/quotes" className="flex-1 sm:flex-initial">
-            <Button variant="outline" className="w-full sm:w-auto">
-              <Plus className="mr-2 h-4 w-4" /> Raise Invoice
-            </Button>
-          </Link>
-          <Link to="/electrician" className="flex-1 sm:flex-initial">
-            <Button variant="outline" className="w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <Link to="/electrician" className="w-full sm:w-auto order-1 sm:order-2">
+            <MobileButton variant="outline" className="w-full sm:w-auto justify-center">
               <ArrowLeft className="mr-2 h-4 w-4" /> Back to Electrical Hub
-            </Button>
+            </MobileButton>
+          </Link>
+          <Link to="/electrician/quotes" className="w-full sm:w-auto order-2 sm:order-1">
+            <MobileButton variant="elec" className="w-full sm:w-auto justify-center">
+              <Plus className="mr-2 h-4 w-4" /> Raise Invoice
+            </MobileButton>
           </Link>
         </div>
       </header>
