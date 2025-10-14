@@ -278,7 +278,8 @@ async function saveMaterialsToCache(materials: any[]) {
     total_products: (categoryMaterials as any[]).length,
     last_updated: new Date().toISOString(),
     expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
-    update_status: 'completed'
+    update_status: 'completed',
+    source: 'comprehensive-materials-scraper'
   }));
 
   const { error: insertError } = await withTimeout(
