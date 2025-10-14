@@ -116,7 +116,7 @@ const Materials = () => {
             className="shrink-0"
           >
             <RefreshCw className={`w-4 h-4 mr-2 ${isUpdating ? 'animate-spin' : ''}`} />
-            {isUpdating ? 'Fetching from Screwfix...' : 'Update Products'}
+            {isUpdating ? 'Scraping Materials...' : 'Refresh Materials Data'}
           </Button>
         </div>
 
