@@ -518,10 +518,10 @@ serve(async (req) => {
       }
 
       // Delete old category data
-      await supabase.from("tools_weekly_cache").delete().eq("category", categoryName);
+      await supabase.from("materials_weekly_cache").delete().eq("category", categoryName);
 
       // Insert new category data
-      const { error: storeError } = await supabase.from("tools_weekly_cache").insert({
+      const { error: storeError } = await supabase.from("materials_weekly_cache").insert({
         tools_data: categoryProducts,
         total_products: categoryProducts.length,
         category: categoryName,

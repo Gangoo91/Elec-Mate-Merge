@@ -229,9 +229,43 @@ export const useMaterialsData = () => {
   const rawQuery = useQuery({
     queryKey: ['comprehensive-materials'],
     queryFn: async () => {
-      console.log('🔍 Fetching materials from comprehensive scraper...');
+      console.log('🔍 Fetching materials from cache...');
       
       try {
+        // First, try to fetch from materials_weekly_cache table
+        const { data: cachedData, error: cacheError } = await supabase
+          .from('materials_weekly_cache')
+          .select('*');
+
+        if (cacheError) {
+          console.warn('⚠️ Cache fetch error:', cacheError);
+        }
+
+        // Check if cache has valid data
+        if (cachedData && cachedData.length > 0) {
+          console.log(`✅ Found ${cachedData.length} categories in cache`);
+          
+          // Flatten all materials_data arrays from all categories
+          const allMaterials = cachedData.flatMap(entry => 
+            ensureStockStatus((entry.materials_data as unknown as MaterialItem[]) || [])
+          );
+          
+          const totalFound = cachedData.reduce((sum, entry) => sum + (entry.total_products || 0), 0);
+          
+          console.log(`✅ Loaded ${allMaterials.length} materials from ${cachedData.length} categories`);
+          
+          const processedData = processMaterialsData(allMaterials);
+          
+          return {
+            data: processedData,
+            rawMaterials: allMaterials,
+            fromCache: true,
+            totalMaterials: totalFound
+          };
+        }
+
+        // If cache is empty/expired, call the edge function to populate it
+        console.log('📡 Cache empty, calling edge function...');
         const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
           body: { mergeAll: true }
         });
@@ -244,16 +278,15 @@ export const useMaterialsData = () => {
         // Map tools array to materials (same data structure)
         const materials = ensureStockStatus(data?.tools || []);
         const totalFound = data?.totalFound || materials.length;
-        const categoriesFound = data?.categoriesFound || 0;
         
-        console.log(`✅ Received ${materials.length} materials from ${categoriesFound} categories`);
+        console.log(`✅ Received ${materials.length} materials from edge function`);
         
         const processedData = processMaterialsData(materials);
         
         return {
           data: processedData,
           rawMaterials: materials,
-          fromCache: true,
+          fromCache: false,
           totalMaterials: totalFound
         };
       } catch (error) {
