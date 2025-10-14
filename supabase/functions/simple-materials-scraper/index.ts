@@ -64,72 +64,81 @@ async function scrapeFromScrewfix(logger: any) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      url: "https://www.screwfix.com/c/electrical-lighting/cat850002?page_size=100",
+      url: "https://www.screwfix.com/c/electrical-lighting/cables/cat850003?page_size=50",
       onlyMainContent: true,
       maxAge: 0,
-      timeout: 45000,
-      formats: [
-        {
-          type: "json",
-          schema: productSchema,
-          prompt: `Extract all electrical products visible on this page. For each product, include:  
-                      - Full product names  
-                      - Brand names
-                      - Exact prices in GBP  
-                      - Stock availability
-                      - Product categories
-                      - Product images  
-                      - Direct URLs to product pages
-    
-                      Extract every product visible on the page.`
-        },
-      ],
+      timeout: 30000,
+      formats: ["markdown"],
     }),
   };
 
   try {
-    logger.info('Starting Firecrawl scrape from Screwfix');
+    logger.info('Starting Firecrawl scrape from Screwfix (markdown mode)');
     const response = await withRetry(
       () => withTimeout(
         fetch(url, options),
-        Timeouts.LONG,
+        45000,
         'Firecrawl materials scrape'
       ),
       RetryPresets.STANDARD
     );
 
     if (!response.ok) {
+      const errorText = await response.text();
+      logger.error('Firecrawl API error', { status: response.status, error: errorText });
       throw new Error(`Firecrawl API request failed: ${response.status}`);
     }
 
     const data = await response.json();
     
-    // Enhanced logging to debug the response
-    logger.info('Firecrawl raw response', { 
+    logger.info('Firecrawl response received', { 
       success: data.success,
-      hasData: !!data.data,
-      dataKeys: data.data ? Object.keys(data.data) : [],
-      jsonCount: data.data?.json?.length || 0,
-      rawDataSample: data.data ? JSON.stringify(data.data).substring(0, 500) : 'no data'
+      hasMarkdown: !!data.data?.markdown,
+      markdownLength: data.data?.markdown?.length || 0
     });
 
-    if (data.data?.json && Array.isArray(data.data.json)) {
-      logger.info('Firecrawl scrape successful', { count: data.data.json.length });
-      return data.data.json;
+    if (!data.data?.markdown) {
+      logger.warn('No markdown data in response');
+      return [];
     }
 
-    // Check if data is in a different format
-    if (data.data?.markdown) {
-      logger.warn('Firecrawl returned markdown instead of JSON', { 
-        markdownLength: data.data.markdown.length 
-      });
+    // Parse markdown to extract product information
+    const markdown = data.data.markdown;
+    const products = [];
+    
+    // Simple regex to find product patterns - looking for price indicators
+    const priceMatches = markdown.matchAll(/£(\d+\.\d{2})/g);
+    const prices = Array.from(priceMatches);
+    
+    logger.info('Found prices in markdown', { count: prices.length });
+    
+    // For now, return a simple parsed structure
+    // This is a basic implementation - we can enhance it based on what we see
+    const lines = markdown.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const priceMatch = line.match(/£(\d+\.\d{2})/);
+      
+      if (priceMatch && i > 0) {
+        // Look for product name in previous lines
+        const nameLine = lines[i - 1] || lines[i - 2] || '';
+        if (nameLine.trim()) {
+          products.push({
+            name: nameLine.trim().replace(/[#*]/g, ''),
+            price: `£${priceMatch[1]}`,
+            supplier: 'Screwfix',
+            inStock: true,
+          });
+        }
+      }
     }
 
-    logger.warn('No products found in Firecrawl response', { responseStructure: Object.keys(data) });
-    return [];
+    logger.info('Extracted products from markdown', { count: products.length });
+    return products;
   } catch (error) {
     logger.error('Error scraping from Screwfix', { 
-      error: error instanceof Error ? error.message : String(error) 
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
     });
     return [];
   }
