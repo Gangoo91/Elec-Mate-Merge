@@ -30,6 +30,19 @@ const InvoiceViewPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isMarkingPaid, setIsMarkingPaid] = useState(false);
 
+  // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
+  const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
+    for (let i = 0; i < 45; i++) {
+      const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: { documentId, mode: 'status' },
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      if (data?.downloadUrl) return data.downloadUrl;
+      await new Promise((res) => setTimeout(res, 2000));
+    }
+    return null;
+  };
+
   useEffect(() => {
     fetchInvoice();
   }, [id]);
@@ -141,11 +154,18 @@ const InvoiceViewPage = () => {
         }
       });
 
-      if (pdfError || !pdfData?.downloadUrl) {
+      let pdfUrl: string | undefined = pdfData?.downloadUrl;
+      const documentId: string | undefined = pdfData?.documentId;
+      if (!pdfUrl && documentId) {
+        toast({ title: 'Preparing PDF…', description: 'Finalising your professional invoice…' });
+        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+      }
+
+      if (pdfError || !pdfUrl) {
         throw new Error('Failed to generate professional PDF');
       }
 
-      window.open(pdfData.downloadUrl, '_blank');
+      window.open(pdfUrl, '_blank');
     } catch (error) {
       console.error('Error generating invoice PDF:', error);
       toast({

@@ -1,6 +1,7 @@
+project_id = "jtwygbeceundfgnkirof"
+
 # Only list functions in active use to avoid deploy failures
 # Legacy V2 agents are not listed here
-project_id = "jtwygbeceundfgnkirof"
 
 # V3 Agent Functions - Active
 [functions.designer-agent]
@@ -68,3 +69,8 @@ verify_jwt = true
 
 [functions.send-payment-reminder]
 verify_jwt = true
+
+# PDF Generation
+[functions.generate-pdf-monkey]
+verify_jwt = true
+timeout_sec = 180

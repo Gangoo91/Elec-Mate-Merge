@@ -31,6 +31,19 @@ export const InvoiceSendDropdown = ({
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
   const [isSendingReminder, setIsSendingReminder] = useState<'gentle' | 'firm' | 'final' | null>(null);
 
+  // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
+  const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
+    for (let i = 0; i < 45; i++) {
+      const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: { documentId, mode: 'status' },
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      if (data?.downloadUrl) return data.downloadUrl;
+      await new Promise((res) => setTimeout(res, 2000));
+    }
+    return null;
+  };
+
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
@@ -187,12 +200,18 @@ export const InvoiceSendDropdown = ({
         }
       });
 
-      if (pdfError || !pdfData?.downloadUrl) {
+      let pdfUrl: string | undefined = pdfData?.downloadUrl;
+      const documentId: string | undefined = pdfData?.documentId;
+
+      if (!pdfUrl && documentId) {
+        toast({ title: 'Preparing PDF…', description: 'Finalising your professional invoice…' });
+        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+      }
+
+      if (pdfError || !pdfUrl) {
         console.error('PDF Monkey error:', pdfError);
         throw new Error('Failed to generate professional PDF');
       }
-
-      const pdfUrl = pdfData.downloadUrl;
 
       // 3. Create professional WhatsApp message (NO BRANDING)
       const clientName = invoice.client?.name || 'Valued Client';

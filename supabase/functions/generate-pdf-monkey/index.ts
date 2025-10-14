@@ -44,8 +44,43 @@ serve(async (req) => {
     }
 
     // Parse request body
-    const { quote, companyProfile, invoice_mode, briefing, briefing_mode } = await req.json();
-    console.log('[PDF-MONKEY] Received request - Mode:', invoice_mode ? 'invoice' : briefing_mode ? 'briefing' : 'quote');
+    const { quote, companyProfile, invoice_mode, briefing, briefing_mode, documentId, mode } = await req.json();
+    console.log('[PDF-MONKEY] Received request - Mode:', invoice_mode ? 'invoice' : briefing_mode ? 'briefing' : (documentId ? 'status' : 'quote'));
+
+    // Status-only polling mode: skip creation and just check an existing document
+    if (documentId && (mode === 'status' || (!quote && !briefing))) {
+      try {
+        const statusResponse = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
+          headers: { 'Authorization': `Bearer ${PDF_MONKEY_API_KEY}` },
+        });
+        if (!statusResponse.ok) {
+          const err = await statusResponse.text();
+          console.error('[PDF-MONKEY] Status-check error:', statusResponse.status, err);
+          return new Response(JSON.stringify({ success: false, status: 'unknown', documentId }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+        const statusData = await statusResponse.json();
+        const status = statusData.document?.status;
+        if (status === 'success') {
+          return new Response(JSON.stringify({
+            success: true,
+            documentId: statusData.document.id,
+            downloadUrl: statusData.document.download_url,
+            previewUrl: statusData.document.preview_url,
+            status,
+          }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+        }
+        return new Response(JSON.stringify({ success: false, status: status || 'generating', documentId }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      } catch (e) {
+        console.error('[PDF-MONKEY] Status-check exception:', e);
+        return new Response(JSON.stringify({ success: false, status: 'error', documentId }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+    }
     
     if (briefing_mode) {
       console.log('[PDF-MONKEY] Briefing data:', {
