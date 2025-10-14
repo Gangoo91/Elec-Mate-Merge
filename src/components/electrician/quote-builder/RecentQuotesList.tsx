@@ -378,7 +378,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   return (
     <div className="space-y-4">
       {displayQuotes.map((quote) => (
-        <Card key={quote.id} className="overflow-hidden border-border/40 bg-card hover:border-elec-yellow/30 transition-all duration-200">
+        <Card key={quote.id} className="overflow-hidden border-2 border-elec-yellow/20 bg-elec-card/50 hover:border-elec-yellow/40 transition-all duration-200 shadow-lg">
           {/* Header: Quote Number + Status */}
           <div className="flex items-center justify-between px-5 pt-4 pb-3">
             <span className="text-sm font-semibold text-muted-foreground">{quote.quoteNumber}</span>
