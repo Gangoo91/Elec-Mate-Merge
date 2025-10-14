@@ -272,10 +272,10 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                           </SelectTrigger>
                           <SelectContent className="z-50 bg-background border shadow-lg">
                             {workerTypes.map(worker => (
-                              <SelectItem key={worker.id} value={worker.id}>
-                                <div className="flex flex-col">
-                                  <span>{worker.name}</span>
-                                  <span className="text-xs text-muted-foreground">£{worker.defaultHourlyRate}/hour</span>
+                              <SelectItem key={worker.id} value={worker.id} className="py-3">
+                                <div className="flex justify-between items-center w-full gap-4">
+                                  <span className="font-medium">{worker.name}</span>
+                                  <span className="text-xs text-muted-foreground whitespace-nowrap">£{worker.defaultHourlyRate}/hour</span>
                                 </div>
                               </SelectItem>
                             ))}
