@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Loader2, Calendar, ChevronDown, ChevronUp, Plus } from "lucide-react";
+import { Users, Loader2, Calendar, ChevronDown, ChevronUp, Plus, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
@@ -162,35 +162,31 @@ const TeamBriefingTemplates = () => {
 
   return (
     <div className="space-y-6 pb-24">
-      {/* Floating Action Button - Mobile Only */}
-      <div className="md:hidden fixed bottom-20 right-4 z-50">
-        <MobileButton
-          variant="elec"
-          size="lg"
-          icon={<Plus className="h-6 w-6" />}
-          onClick={() => setShowAIWizard(true)}
-          className="rounded-full h-14 w-14 shadow-2xl shadow-elec-yellow/30"
-        />
-      </div>
-
       {/* MOBILE LAYOUT */}
       <div className="md:hidden space-y-4 px-3">
         {/* Hero AI Briefing Card */}
         <HeroAIBriefingCard onCreateBriefing={() => setShowAIWizard(true)} />
 
-        {/* Quick Access: Manage Templates */}
-        <Card className="border-elec-yellow/20">
-          <CardContent className="p-4">
-            <MobileButton
-              variant="outline"
-              className="w-full justify-start"
-              onClick={() => setShowTemplateLibrary(true)}
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              Manage Templates
-            </MobileButton>
-          </CardContent>
-        </Card>
+        {/* Quick Action Buttons */}
+        <div className="grid grid-cols-2 gap-3">
+          <MobileButton
+            variant="elec"
+            size="wide"
+            onClick={() => setShowAIWizard(true)}
+            className="font-semibold"
+          >
+            <Plus className="mr-2 h-5 w-5" />
+            New Briefing
+          </MobileButton>
+          <MobileButton
+            variant="elec-outline"
+            size="wide"
+            onClick={() => setShowTemplateLibrary(true)}
+          >
+            <FileText className="mr-2 h-5 w-5" />
+            Templates
+          </MobileButton>
+        </div>
 
         {/* History Tab */}
         <div className="mt-6">

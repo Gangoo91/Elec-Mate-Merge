@@ -55,7 +55,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
       const { data, error } = await supabase
         .from("briefing_templates")
         .select("*")
-        .or(`is_default.eq.true,created_by.eq.${user.id}`)
+        .or(`is_default.eq.true,user_id.eq.${user.id}`)
         .order("usage_count", { ascending: false });
 
       if (error) throw error;
@@ -178,21 +178,33 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 pb-24">
+      {/* Header - Mobile Optimized */}
+      <div className="space-y-4">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" onClick={onClose}>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={onClose}
+            className="md:flex"
+          >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <div>
-            <h2 className="text-2xl font-bold text-elec-light">Template Library</h2>
-            <p className="text-sm text-muted-foreground">
+          <div className="flex-1">
+            <h2 className="text-xl md:text-2xl font-bold text-elec-light">
+              Template Library
+            </h2>
+            <p className="text-xs md:text-sm text-muted-foreground">
               Manage your briefing templates
             </p>
           </div>
         </div>
-        <Button onClick={() => setShowEditor(true)}>
+        
+        {/* Create button - full width on mobile */}
+        <Button
+          onClick={() => setShowEditor(true)}
+          className="w-full md:w-auto"
+        >
           <Plus className="mr-2 h-4 w-4" />
           Create Template
         </Button>
@@ -236,7 +248,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
           <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredTemplates.map((template) => (
             <Card
               key={template.id}
@@ -265,7 +277,7 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   {!template.is_default && (
                     <Button
                       variant="outline"
@@ -274,32 +286,39 @@ export const TemplateLibrary = ({ onClose }: TemplateLibraryProps) => {
                         setEditingTemplateId(template.id);
                         setShowEditor(true);
                       }}
+                      className="flex-1 min-w-[80px]"
                     >
-                      <Edit className="h-4 w-4" />
+                      <Edit className="h-4 w-4 md:mr-2" />
+                      <span className="hidden md:inline">Edit</span>
                     </Button>
                   )}
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleDuplicate(template)}
+                    className="flex-1 min-w-[80px]"
                   >
-                    <Copy className="h-4 w-4" />
+                    <Copy className="h-4 w-4 md:mr-2" />
+                    <span className="hidden md:inline">Copy</span>
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleExport(template)}
+                    className="flex-1 min-w-[80px]"
                   >
-                    <Download className="h-4 w-4" />
+                    <Download className="h-4 w-4 md:mr-2" />
+                    <span className="hidden md:inline">Export</span>
                   </Button>
                   {!template.is_default && (
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handleDelete(template.id)}
-                      className="text-destructive hover:text-destructive"
+                      className="text-destructive hover:text-destructive flex-1 min-w-[80px]"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-4 w-4 md:mr-2" />
+                      <span className="hidden md:inline">Delete</span>
                     </Button>
                   )}
                 </div>
