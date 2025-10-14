@@ -378,157 +378,53 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   return (
     <div className="space-y-4">
       {displayQuotes.map((quote) => (
-        <Card key={quote.id} className="overflow-hidden border-2 border-elec-yellow/20 bg-elec-card/50 hover:border-elec-yellow/40 transition-all duration-200 shadow-lg">
-          {/* Header: Quote Number + Status */}
-          <div className="flex items-center justify-between px-5 pt-4 pb-3">
+        <Card key={quote.id} className="overflow-hidden border-2 border-elec-yellow/20 bg-gradient-to-br from-elec-card/60 to-elec-card/40 hover:border-elec-yellow/40 hover:shadow-xl transition-all duration-300 shadow-lg">
+          {/* Header: Quote Number + Status + Actions */}
+          <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-elec-yellow/10">
             <span className="text-sm font-semibold text-muted-foreground">{quote.quoteNumber}</span>
-            <Badge variant={getStatusVariant(quote.status)} className="text-xs capitalize">
-              {quote.status}
-            </Badge>
-          </div>
-
-          {/* Main Content */}
-          <div className="px-5 pb-4 space-y-3">
-            {/* Client Name */}
             <div className="flex items-center gap-2">
-              <User className="h-4 w-4 text-muted-foreground" />
-              <span className="font-medium text-foreground">{quote.client.name}</span>
-            </div>
-
-            {/* Price - Prominent */}
-            <div className="text-3xl font-bold text-elec-yellow">
-              {formatCurrency(quote.total)}
-            </div>
-            
-            {/* Meta Info Row */}
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5" />
-                <span>{format(quote.createdAt, 'dd MMM yyyy')}</span>
-              </div>
-              <span>•</span>
-              <div className="flex items-center gap-1.5">
-                <FileText className="h-3.5 w-3.5" />
-                <span>{quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
-              </div>
-            </div>
-            
-            {/* Tags */}
-            {quote.tags && quote.tags.length > 0 && (
-              <div className="flex gap-1.5 flex-wrap pt-1">
-                {quote.tags.map((tag) => (
-                  <Badge 
-                    key={tag} 
-                    variant={tag === 'work_done' ? 'success' : getTagVariant(tag)} 
-                    className="text-xs"
-                  >
-                    {tag === 'work_done' && <Check className="h-3 w-3 mr-1" />}
-                    {tag === 'work_done' ? 'Work Done' : getTagLabel(tag)}
-                  </Badge>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Primary Actions */}
-          <div className="px-5 pb-4 space-y-2">
-            {/* Send to Invoice Button - Only show for eligible quotes */}
-            {canRaiseInvoice(quote) && (
-              <MobileButton
-                variant="elec"
-                size="wide"
-                onClick={() => {
-                  setQuoteForInvoice(quote);
-                  setShowInvoiceDecision(true);
-                }}
-                className="bg-gradient-to-r from-elec-yellow via-elec-yellow to-yellow-400 text-elec-dark font-semibold shadow-lg hover:shadow-elec-yellow/20"
-                icon={<Receipt className="h-4 w-4" />}
-              >
-                Send to Invoice
-              </MobileButton>
-            )}
-
-            {/* Download PDF */}
-            <MobileButton
-              variant="outline"
-              size="wide"
-              onClick={() => handleRegeneratePDF(quote)}
-              disabled={loadingAction === `pdf-${quote.id}`}
-              loading={loadingAction === `pdf-${quote.id}`}
-              icon={<Download className="h-4 w-4" />}
-              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              Download PDF
-            </MobileButton>
-          </div>
-
-          {/* Invoice Raised Indicator - only show if invoice raised AND not eligible */}
-          {hasInvoiceRaised(quote) && !canRaiseInvoice(quote) && (
-            <div className="px-5 pb-4">
-              <div className="flex items-center justify-between bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-                <div className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-green-400" />
-                  <span className="text-sm font-medium text-green-400">Invoice Raised</span>
-                  {quote.invoice_number && (
-                    <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
-                      {quote.invoice_number}
-                    </Badge>
-                  )}
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => navigate(`/electrician/invoices?highlight=${quote.id}`)}
-                  className="text-xs text-green-400 hover:text-green-300 hover:bg-green-500/10 h-8"
-                >
-                  View →
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {/* Secondary Actions Footer */}
-          <div className="border-t border-border/40 px-3 py-2">
-            <div className="flex items-center gap-2">
-              {/* Quick Actions for 'sent' status */}
-              {quote.status === 'sent' && onUpdateQuoteStatus && (
-                <>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleActionClick(quote, 'accept')}
-                    disabled={loadingAction.startsWith(`action-${quote.id}`)}
-                    className="flex-1 text-green-400 hover:text-green-300 hover:bg-green-500/10 h-9"
-                  >
-                    <Check className="h-4 w-4 mr-1.5" />
-                    Accept
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleActionClick(quote, 'reject')}
-                    disabled={loadingAction.startsWith(`action-${quote.id}`)}
-                    className="flex-1 text-destructive hover:bg-destructive/10 h-9"
-                  >
-                    <X className="h-4 w-4 mr-1.5" />
-                    Reject
-                  </Button>
-                </>
-              )}
+              <Badge variant={getStatusVariant(quote.status)} className="text-xs capitalize">
+                {quote.status}
+              </Badge>
               
-              {/* More Actions Menu */}
+              {/* Actions Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="ghost" 
-                    size="sm" 
-                    className={quote.status === 'sent' ? "" : "w-full justify-start"}
+                    size="sm"
+                    className="h-8 w-8 p-0 hover:bg-elec-yellow/10"
                   >
                     <MoreVertical className="h-4 w-4" />
-                    <span className="ml-2">More</span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-52">
+                <DropdownMenuContent align="end" className="w-56 bg-popover z-50">
+                  {/* Send to Invoice - for eligible quotes */}
+                  {canRaiseInvoice(quote) && (
+                    <>
+                      <DropdownMenuItem 
+                        onClick={() => {
+                          setQuoteForInvoice(quote);
+                          setShowInvoiceDecision(true);
+                        }}
+                        className="text-elec-yellow font-medium"
+                      >
+                        <Receipt className="h-4 w-4 mr-2" />
+                        Send to Invoice
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
+                  
+                  {/* Download PDF */}
+                  <DropdownMenuItem 
+                    onClick={() => handleRegeneratePDF(quote)}
+                    disabled={loadingAction === `pdf-${quote.id}`}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    {loadingAction === `pdf-${quote.id}` ? 'Downloading...' : 'Download PDF'}
+                  </DropdownMenuItem>
+                  
                   <DropdownMenuItem onClick={() => navigate(`/electrician/quote-builder/${quote.id}`)}>
                     <Eye className="h-4 w-4 mr-2" />
                     View/Edit Quote
@@ -536,7 +432,30 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                   
                   <DropdownMenuSeparator />
                   
-                  {/* Status Updates */}
+                  {/* Status Updates for 'sent' quotes */}
+                  {onUpdateQuoteStatus && quote.status === 'sent' && (
+                    <>
+                      <DropdownMenuItem 
+                        onClick={() => handleActionClick(quote, 'accept')}
+                        disabled={loadingAction.startsWith(`action-${quote.id}`)}
+                        className="text-green-400"
+                      >
+                        <Check className="h-4 w-4 mr-2" />
+                        Accept Quote
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={() => handleActionClick(quote, 'reject')}
+                        disabled={loadingAction.startsWith(`action-${quote.id}`)}
+                        className="text-destructive"
+                      >
+                        <X className="h-4 w-4 mr-2" />
+                        Reject Quote
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
+                  
+                  {/* Status Updates for other statuses */}
                   {onUpdateQuoteStatus && quote.status !== 'sent' && (
                     <>
                       {quote.status === 'pending' && (
@@ -599,6 +518,74 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               </DropdownMenu>
             </div>
           </div>
+
+          {/* Main Content */}
+          <div className="px-5 pb-4 space-y-3">
+            {/* Client Name */}
+            <div className="flex items-center gap-2">
+              <User className="h-4 w-4 text-muted-foreground" />
+              <span className="font-medium text-foreground">{quote.client.name}</span>
+            </div>
+
+            {/* Price - Prominent */}
+            <div className="text-3xl font-bold text-elec-yellow">
+              {formatCurrency(quote.total)}
+            </div>
+            
+            {/* Meta Info Row */}
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              <div className="flex items-center gap-1.5">
+                <Calendar className="h-3.5 w-3.5" />
+                <span>{format(quote.createdAt, 'dd MMM yyyy')}</span>
+              </div>
+              <span>•</span>
+              <div className="flex items-center gap-1.5">
+                <FileText className="h-3.5 w-3.5" />
+                <span>{quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
+              </div>
+            </div>
+            
+            {/* Tags */}
+            {quote.tags && quote.tags.length > 0 && (
+              <div className="flex gap-1.5 flex-wrap pt-1">
+                {quote.tags.map((tag) => (
+                  <Badge 
+                    key={tag} 
+                    variant={tag === 'work_done' ? 'success' : getTagVariant(tag)} 
+                    className="text-xs"
+                  >
+                    {tag === 'work_done' && <Check className="h-3 w-3 mr-1" />}
+                    {tag === 'work_done' ? 'Work Done' : getTagLabel(tag)}
+                  </Badge>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Invoice Raised Indicator - show if invoice already raised */}
+          {hasInvoiceRaised(quote) && (
+            <div className="px-5 pb-4">
+              <div className="flex items-center justify-between bg-green-500/10 border border-green-500/20 rounded-lg p-3">
+                <div className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-green-400" />
+                  <span className="text-sm font-medium text-green-400">Invoice Raised</span>
+                  {quote.invoice_number && (
+                    <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
+                      {quote.invoice_number}
+                    </Badge>
+                  )}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => navigate(`/electrician/invoices?highlight=${quote.id}`)}
+                  className="text-xs text-green-400 hover:text-green-300 hover:bg-green-500/10 h-8"
+                >
+                  View →
+                </Button>
+              </div>
+            </div>
+          )}
         </Card>
       ))}
       
