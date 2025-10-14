@@ -24,10 +24,11 @@ import {
 interface InBriefingModeProps {
   briefing: any;
   onComplete: () => void;
-  onExit: () => void;
+  onExit?: () => void;
+  onClose?: () => void;
 }
 
-export const InBriefingMode = ({ briefing, onComplete, onExit }: InBriefingModeProps) => {
+export const InBriefingMode = ({ briefing, onComplete, onExit, onClose }: InBriefingModeProps) => {
   const { toast } = useToast();
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -168,7 +169,8 @@ export const InBriefingMode = ({ briefing, onComplete, onExit }: InBriefingModeP
         })
         .eq('id', briefing.id);
     }
-    onExit();
+    if (onExit) onExit();
+    if (onClose) onClose();
   };
 
   const progressPercent = ((currentSection + 1) / sections.length) * 100;

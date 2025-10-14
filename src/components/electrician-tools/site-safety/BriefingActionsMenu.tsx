@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MoreVertical, Edit, Calendar, XCircle, Copy, PlayCircle, CheckCircle } from "lucide-react";
+import { MoreVertical, Edit, Calendar, XCircle, Copy, PlayCircle, CheckCircle, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,8 +8,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { RescheduleBriefingDialog } from "./RescheduleBriefingDialog";
 import { CancelBriefingDialog } from "./CancelBriefingDialog";
+import { InBriefingMode } from "./InBriefingMode";
+import { BriefingStatusTimeline } from "./BriefingStatusTimeline";
+import { QuickActionsPanel } from "./QuickActionsPanel";
 
 interface BriefingActionsMenuProps {
   briefing: any;
@@ -28,10 +37,17 @@ export const BriefingActionsMenu = ({
 }: BriefingActionsMenuProps) => {
   const [showReschedule, setShowReschedule] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
+  const [showInBriefingMode, setShowInBriefingMode] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   const canStart = briefing.status === 'scheduled';
   const canComplete = briefing.status === 'in_progress';
   const canEdit = briefing.status !== 'cancelled' && briefing.status !== 'completed';
+
+  const handleStartBriefing = () => {
+    onStatusChange('in_progress');
+    setShowInBriefingMode(true);
+  };
 
   return (
     <>
@@ -60,10 +76,15 @@ export const BriefingActionsMenu = ({
             Duplicate
           </DropdownMenuItem>
 
+          <DropdownMenuItem onClick={() => setShowDetails(true)}>
+            <Eye className="mr-2 h-4 w-4" />
+            View Details
+          </DropdownMenuItem>
+
           {canStart && (
             <>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => onStatusChange('in_progress')}>
+              <DropdownMenuItem onClick={handleStartBriefing}>
                 <PlayCircle className="mr-2 h-4 w-4" />
                 Start Briefing
               </DropdownMenuItem>
@@ -108,6 +129,32 @@ export const BriefingActionsMenu = ({
         briefing={briefing}
         onSuccess={onRefresh}
       />
+
+      <Dialog open={showInBriefingMode} onOpenChange={setShowInBriefingMode}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <InBriefingMode
+            briefing={briefing}
+            onComplete={() => {
+              onStatusChange('completed');
+              setShowInBriefingMode(false);
+              onRefresh();
+            }}
+            onClose={() => setShowInBriefingMode(false)}
+          />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showDetails} onOpenChange={setShowDetails}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-elec-light">{briefing.briefing_name}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6">
+            <QuickActionsPanel briefing={briefing} onRefresh={onRefresh} />
+            <BriefingStatusTimeline briefingId={briefing.id} />
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

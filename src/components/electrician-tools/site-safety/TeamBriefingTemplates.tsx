@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Loader2, Calendar, ChevronDown, ChevronUp } from "lucide-react";
+import { Users, Loader2, Calendar, ChevronDown, ChevronUp, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -154,7 +155,18 @@ const TeamBriefingTemplates = () => {
   }
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-6 pb-24">
+      {/* Floating Action Button - Mobile Only */}
+      <div className="md:hidden fixed bottom-20 right-4 z-50">
+        <MobileButton
+          variant="elec"
+          size="lg"
+          icon={<Plus className="h-6 w-6" />}
+          onClick={() => setShowAIWizard(true)}
+          className="rounded-full h-14 w-14 shadow-2xl shadow-elec-yellow/30"
+        />
+      </div>
+
       {/* MOBILE LAYOUT */}
       <div className="md:hidden space-y-4 px-3">
         {/* Hero AI Briefing Card */}

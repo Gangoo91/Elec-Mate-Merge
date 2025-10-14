@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, ArrowRight, Sparkles, Save, FileText, Users, AlertTriangle, Camera, Loader2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { TemplateSelector } from "./briefing-templates/TemplateSelector";
 
 const HAZARD_CATEGORIES = [
   { id: 'live-circuits', label: 'Live Circuits', category: 'Electrical' },
@@ -32,10 +33,12 @@ interface BriefingFormWizardProps {
 
 export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: BriefingFormWizardProps) => {
   const { toast } = useToast();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0); // Start at 0 for template selection
   const [aiGenerating, setAiGenerating] = useState(false);
   const [aiContent, setAiContent] = useState<any>(null);
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
+  const [showTemplateSelector, setShowTemplateSelector] = useState(!initialData);
 
   // Form data - pre-populate if editing
   const [formData, setFormData] = useState({
@@ -73,8 +76,26 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
     attendees: initialData?.attendees || [] as any[],
   });
 
-  const totalSteps = 6;
+  const totalSteps = 7; // Including template selection
   const progress = (step / totalSteps) * 100;
+
+  const handleTemplateSelect = (template: any) => {
+    setSelectedTemplate(template);
+    setShowTemplateSelector(false);
+    
+    // Pre-populate form data based on template
+    if (template.template_schema) {
+      const schema = template.template_schema;
+      setFormData(prev => ({
+        ...prev,
+        briefingType: template.template_type,
+        workScope: schema.work_scope || prev.workScope,
+        identifiedHazards: schema.hazards || prev.identifiedHazards,
+      }));
+    }
+    
+    setStep(1); // Move to first actual form step
+  };
 
   const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -288,6 +309,29 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
 
   const renderStep = () => {
     switch (step) {
+      case 0:
+        return (
+          <div className="space-y-4">
+            <div className="text-center mb-6">
+              <h2 className="text-xl font-bold text-elec-light mb-2">Choose a Template</h2>
+              <p className="text-sm text-elec-light/60">
+                Start with a template or create from scratch
+              </p>
+            </div>
+            <TemplateSelector
+              onSelectTemplate={handleTemplateSelect}
+              selectedType={formData.briefingType}
+            />
+            <Button
+              variant="outline"
+              className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              onClick={() => setStep(1)}
+            >
+              Skip - Start from Scratch
+            </Button>
+          </div>
+        );
+      
       case 1:
         return (
           <div className="space-y-4">
