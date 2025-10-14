@@ -103,9 +103,30 @@ async function scrapeFromScrewfix(logger: any) {
     }
 
     const data = await response.json();
-    logger.info('Firecrawl scrape successful', { count: data.data?.json?.length || 0 });
+    
+    // Enhanced logging to debug the response
+    logger.info('Firecrawl raw response', { 
+      success: data.success,
+      hasData: !!data.data,
+      dataKeys: data.data ? Object.keys(data.data) : [],
+      jsonCount: data.data?.json?.length || 0,
+      rawDataSample: data.data ? JSON.stringify(data.data).substring(0, 500) : 'no data'
+    });
 
-    return data.data?.json || [];
+    if (data.data?.json && Array.isArray(data.data.json)) {
+      logger.info('Firecrawl scrape successful', { count: data.data.json.length });
+      return data.data.json;
+    }
+
+    // Check if data is in a different format
+    if (data.data?.markdown) {
+      logger.warn('Firecrawl returned markdown instead of JSON', { 
+        markdownLength: data.data.markdown.length 
+      });
+    }
+
+    logger.warn('No products found in Firecrawl response', { responseStructure: Object.keys(data) });
+    return [];
   } catch (error) {
     logger.error('Error scraping from Screwfix', { 
       error: error instanceof Error ? error.message : String(error) 
