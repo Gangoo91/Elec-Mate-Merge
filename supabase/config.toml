@@ -58,3 +58,7 @@ verify_jwt = false
 
 [functions.market-insights-scheduler]
 verify_jwt = false
+
+[functions.simple-materials-scraper]
+verify_jwt = false
+timeout_sec = 120

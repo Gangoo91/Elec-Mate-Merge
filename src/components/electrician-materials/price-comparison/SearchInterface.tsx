@@ -45,7 +45,8 @@ interface SearchInterfaceProps {
   isLoading: boolean;
   onSearch: () => void;
   onClearSelection?: () => void;
-  showingPreSelected: boolean;
+  showingPreSelected?: boolean;
+  showClearButton?: boolean;
 }
 
 export const SearchInterface = ({

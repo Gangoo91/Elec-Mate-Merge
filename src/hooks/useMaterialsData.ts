@@ -19,6 +19,7 @@ export interface MaterialItem {
   isOnSale?: boolean;
   stockStatus?: string;
   discount?: number;
+  inStock?: boolean;
 }
 
 export interface ProcessedCategoryData {
@@ -168,73 +169,12 @@ function extractPriceNumber(priceStr: string): number {
   return match ? parseFloat(match[0].replace(/,/g, '')) : 0;
 }
 
-// Enhanced function to merge database materials with local sale items
-function enhanceMaterialsWithDeals(dbMaterials: MaterialItem[]): MaterialItem[] {
-  console.log('🔧 Enhancing materials with deals detection...');
-  
-  // Get all local products with sales
-  const allLocalProducts = Object.values(productsBySupplier).flat();
-  const localSaleItems = allLocalProducts.filter(item => item.isOnSale || item.salePrice);
-  
-  console.log(`📦 Found ${localSaleItems.length} local sale items to add`);
-  
-  // Enhance database materials with deal detection
-  const enhancedDbMaterials = dbMaterials.map(material => {
-    let isOnSale = false;
-    let salePrice = material.salePrice;
-    let discount = 0;
-    
-    // Pattern-based deal detection
-    const nameText = material.name?.toLowerCase() || '';
-    const hasDiscountKeywords = ['sale', 'clearance', 'reduced', 'offer', 'deal', 'special'].some(keyword => 
-      nameText.includes(keyword)
-    );
-    
-    // Price-based pattern detection (items ending in .99, .95, or with "was" in name)
-    const priceStr = material.price?.toString() || '';
-    const isProbablyOnSale = priceStr.includes('.99') || priceStr.includes('.95') || 
-                            nameText.includes('was') || nameText.includes('now') ||
-                            hasDiscountKeywords;
-    
-    if (isProbablyOnSale && !material.isOnSale) {
-      isOnSale = true;
-      // Generate realistic sale price (10-25% discount)
-      const originalPrice = extractPriceNumber(material.price);
-      const discountPercent = 10 + Math.random() * 15; // 10-25% discount
-      const saleAmount = originalPrice * (1 - discountPercent / 100);
-      salePrice = `£${saleAmount.toFixed(2)}`;
-      discount = Math.round(discountPercent);
-    }
-    
-    return {
-      ...material,
-      isOnSale: material.isOnSale || isOnSale,
-      salePrice: material.salePrice || salePrice,
-      discount: material.discount || discount,
-      stockStatus: material.stockStatus || 'In Stock'
-    };
-  });
-  
-  // Add local sale items to the mix
-  const localItemsAsMaterials: MaterialItem[] = localSaleItems.map((item, index) => ({
-    id: 90000 + index, // High IDs to avoid conflicts
-    name: item.name,
-    category: item.category,
-    price: item.price,
-    supplier: item.supplier,
-    image: item.image,
-    salePrice: item.salePrice,
-    isOnSale: item.isOnSale,
-    discount: 0, // Will be calculated by deals detection
-    stockStatus: item.stockStatus || 'In Stock',
-    highlights: item.highlights,
-    searched_product: item.name
+// Simple function to add stock status if missing
+function ensureStockStatus(materials: MaterialItem[]): MaterialItem[] {
+  return materials.map(material => ({
+    ...material,
+    stockStatus: material.stockStatus || (material.inStock !== false ? 'In Stock' : 'Out of Stock')
   }));
-  
-  console.log(`✨ Enhanced ${enhancedDbMaterials.length} DB materials + added ${localItemsAsMaterials.length} local sale items`);
-  
-  // Combine and return
-  return [...enhancedDbMaterials, ...localItemsAsMaterials];
 }
 
 function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[] {
@@ -287,83 +227,31 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
 
 export const useMaterialsData = () => {
   const rawQuery = useQuery({
-    queryKey: ['materials-weekly-cache'],
+    queryKey: ['simple-materials'],
     queryFn: async () => {
-      console.log('🔍 Fetching materials from cache-first strategy...');
+      console.log('🔍 Fetching materials from Firecrawl scraper...');
       
       try {
-        // First check the materials_weekly_cache table directly
-        console.log('📞 Checking materials_weekly_cache table...');
-        const { data: cacheEntries, error: cacheError } = await supabase
-          .from('materials_weekly_cache')
-          .select('materials_data, expires_at, created_at')
-          .gt('expires_at', new Date().toISOString())
-          .order('created_at', { ascending: false });
-        
-        if (!cacheError && cacheEntries && cacheEntries.length > 0) {
-          // Combine all materials from different categories
-          const dbMaterials = cacheEntries.flatMap((entry: any) => entry.materials_data || []) as MaterialItem[];
-          if (dbMaterials.length > 0) {
-            console.log(`✅ Got ${dbMaterials.length} materials from weekly cache table`);
-            // Enhance with deals detection and local sale items
-            const enhancedMaterials = enhanceMaterialsWithDeals(dbMaterials);
-            const processedData = processMaterialsData(enhancedMaterials);
-            return {
-              data: processedData,
-              rawMaterials: enhancedMaterials,
-              fromCache: true,
-              totalMaterials: enhancedMaterials.length
-            };
-          }
-        }
-        
-        // If no valid cache data, fall back to the cache function
-        console.log('⚠️ No valid cache found, trying materials-weekly-cache function...');
-        const { data, error } = await supabase.functions.invoke('materials-weekly-cache', {
+        const { data, error } = await supabase.functions.invoke('simple-materials-scraper', {
           body: {}
         });
         
-        if (!error && data && data.data && data.data.length > 0) {
-          console.log(`✅ Received ${data.data?.length || 0} categories from cache function`);
-          return {
-            data: data.data || defaultCategoryData,
-            rawMaterials: data.rawMaterials || [],
-            fromCache: data.fromCache || false,
-            totalMaterials: data.totalMaterials || 0
-          };
+        if (error) {
+          console.error('❌ Error fetching materials:', error);
+          throw error;
         }
 
-        // Final fallback to cables cache or defaults
-        console.log('⚠️ Cache sources empty, checking cables cache...');
-        const { data: cablesCache, error: cablesCacheError } = await supabase
-          .from('cables_materials_cache')
-          .select('product_data')
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .single();
+        const materials = data?.materials || [];
+        console.log(`✅ Received ${materials.length} materials from Screwfix`);
         
-        if (!cablesCacheError && cablesCache?.product_data && Array.isArray(cablesCache.product_data)) {
-          const dbMaterials = cablesCache.product_data as unknown as MaterialItem[];
-          console.log(`✅ Got ${dbMaterials.length} materials from cables cache fallback`);
-          // Enhance with deals detection and local sale items
-          const enhancedMaterials = enhanceMaterialsWithDeals(dbMaterials);
-          const processedData = processMaterialsData(enhancedMaterials);
-          return {
-            data: processedData,
-            rawMaterials: enhancedMaterials,
-            fromCache: true,
-            totalMaterials: enhancedMaterials.length
-          };
-        }
-
-        console.log('📊 All cache sources failed, using default categories');
+        const processedData = processMaterialsData(materials);
+        
         return {
-          data: defaultCategoryData,
-          rawMaterials: [],
+          data: processedData,
+          rawMaterials: materials,
           fromCache: false,
-          totalMaterials: 0
+          totalMaterials: materials.length
         };
-        
       } catch (error) {
         console.error('❌ Error in fetchMaterialsData:', error);
         return {
@@ -374,10 +262,10 @@ export const useMaterialsData = () => {
         };
       }
     },
-    staleTime: 1000 * 60 * 15, // 15 minutes - longer since we're using cache
-    gcTime: 1000 * 60 * 30, // 30 minutes
-    retry: 2,
-    refetchOnWindowFocus: false, // Don't refetch on focus since data is cached
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
+    retry: 1,
+    refetchOnWindowFocus: false,
   });
 
   return {

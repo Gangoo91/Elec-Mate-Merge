@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award, Loader2, RefreshCw } from "lucide-react";
+import { Cable, Zap, Shield, Package, Building, TrendingUp, ArrowRight, Award, Loader2, RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useMaterialsData } from "@/hooks/useMaterialsData";
 
@@ -163,36 +163,6 @@ const MaterialCategoryBrowser = () => {
                     </div>
                   </div>
 
-                  {category.popularItems.length > 0 && (
-                    <div>
-                      <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
-                        <Users className="h-4 w-4" />
-                        Best Sellers:
-                      </h4>
-                      <div className="space-y-2">
-                        {category.popularItems.slice(0, 2).map((item, index) => (
-                          <div key={index} className="flex justify-between items-center text-xs bg-elec-dark/30 p-2 rounded">
-                            <div className="flex-1 min-w-0">
-                              <p className="text-white truncate">{item.name}</p>
-                              <div className="flex items-center gap-2 mt-1">
-                                <div className="flex items-center gap-1">
-                                  <Star className="h-3 w-3 text-amber-400 fill-current" />
-                                  <span className="text-muted-foreground">{item.rating.toFixed(1)}</span>
-                                </div>
-                                {item.sales && (
-                                  <>
-                                    <span className="text-muted-foreground">•</span>
-                                    <span className="text-muted-foreground">{item.sales} sold</span>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                            <span className="text-elec-yellow font-medium ml-2">{item.price}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
 
                   <Button asChild className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors">
                     <Link to={`/electrician/materials/category/${category.id}`}>

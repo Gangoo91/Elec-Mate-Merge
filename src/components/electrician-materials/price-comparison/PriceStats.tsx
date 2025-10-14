@@ -14,23 +14,29 @@ export interface PriceComparisonResult {
 }
 
 interface PriceStatsProps {
-  comparisonResult: PriceComparisonResult;
+  comparisonResult?: PriceComparisonResult;
+  result?: PriceComparisonResult;
   onExportToPDF?: () => void;
   onAddMultipleToQuote?: (materials: any[]) => void;
 }
 
 export const PriceStats = ({ 
   comparisonResult, 
+  result,
   onExportToPDF, 
   onAddMultipleToQuote 
 }: PriceStatsProps) => {
+  const data = comparisonResult || result;
+  
+  if (!data) return null;
+  
   const formatPrice = (price: number): string => {
     return `£${price.toFixed(2)}`;
   };
 
   const handleAddAllToQuote = () => {
     if (onAddMultipleToQuote) {
-      const materials = comparisonResult.products.map(product => ({
+      const materials = data.products.map(product => ({
         name: product.name,
         supplier: product.supplier,
         price: product.price,
@@ -63,7 +69,7 @@ export const PriceStats = ({
                   Export
                 </Button>
               )}
-              {onAddMultipleToQuote && comparisonResult.products.length > 1 && (
+              {onAddMultipleToQuote && data.products.length > 1 && (
                 <Button 
                   size="sm"
                   onClick={handleAddAllToQuote}
@@ -81,7 +87,7 @@ export const PriceStats = ({
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div className="bg-elec-yellow/10 rounded-lg p-4 text-center border border-elec-yellow/20">
               <div className="text-2xl md:text-3xl font-bold text-elec-yellow">
-                {comparisonResult.products.length}
+                {data.products.length}
               </div>
               <div className="text-xs md:text-sm text-muted-foreground mt-1">
                 Products Found
@@ -89,7 +95,7 @@ export const PriceStats = ({
             </div>
             <div className="bg-green-500/10 rounded-lg p-4 text-center border border-green-500/20">
               <div className="text-2xl md:text-3xl font-bold text-green-400">
-                {formatPrice(comparisonResult.cheapestPrice)}
+                {formatPrice(data.cheapestPrice)}
               </div>
               <div className="text-xs md:text-sm text-muted-foreground mt-1">
                 Best Price
@@ -102,13 +108,13 @@ export const PriceStats = ({
             <div className="flex justify-between items-center p-3 bg-blue-500/5 rounded-lg border border-blue-500/10">
               <span className="text-sm text-muted-foreground">Average Price</span>
               <span className="text-lg font-semibold text-blue-400">
-                {formatPrice(comparisonResult.averagePrice)}
+                {formatPrice(data.averagePrice)}
               </span>
             </div>
             <div className="flex justify-between items-center p-3 bg-purple-500/5 rounded-lg border border-purple-500/10">
               <span className="text-sm text-muted-foreground">Price Range</span>
               <span className="text-sm font-medium text-purple-400">
-                {comparisonResult.priceRange}
+                {data.priceRange}
               </span>
             </div>
           </div>
@@ -120,7 +126,7 @@ export const PriceStats = ({
               Best deals highlighted
             </Badge>
             <div className="text-xs md:text-sm text-muted-foreground">
-              <span className="text-elec-yellow font-medium">Search:</span> "{comparisonResult.searchTerm}"
+              <span className="text-elec-yellow font-medium">Search:</span> "{data.searchTerm}"
             </div>
           </div>
         </CardContent>

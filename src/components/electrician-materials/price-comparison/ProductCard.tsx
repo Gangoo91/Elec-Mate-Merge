@@ -30,13 +30,17 @@ export interface PriceComparisonItem {
 
 interface ProductCardProps {
   product: PriceComparisonItem;
-  isCheapest: boolean;
-  savings: number;
+  isCheapest?: boolean;
+  cheapestPrice?: number;
+  savings?: number;
   onAddToQuote?: (material: any, quantity?: number) => void;
 }
 
-export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: ProductCardProps) => {
+export const ProductCard = ({ product, isCheapest, cheapestPrice, savings, onAddToQuote }: ProductCardProps) => {
   const isMobile = useIsMobile();
+  
+  const calculatedIsCheapest = isCheapest !== undefined ? isCheapest : (cheapestPrice ? product.numericPrice === cheapestPrice : false);
+  const calculatedSavings = savings !== undefined ? savings : (cheapestPrice && cheapestPrice > 0 ? Math.round(((product.numericPrice - cheapestPrice) / cheapestPrice) * 100) : 0);
 
   // Process image URL to set width and height to 236
   const imageSrc = (() => {
@@ -69,7 +73,7 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
   return (
     <Card 
       className={`border transition-all hover:shadow-lg ${
-        isCheapest 
+        calculatedIsCheapest 
           ? 'border-green-500/50 bg-gradient-to-br from-green-500/5 to-green-500/10 ring-1 ring-green-500/20' 
           : 'border-elec-yellow/20 bg-gradient-to-br from-elec-gray to-elec-gray/80'
       }`}
@@ -84,10 +88,10 @@ export const ProductCard = ({ product, isCheapest, savings, onAddToQuote }: Prod
                 £{product.price.replace(/[£$]/g, '')}
               </div>
               <div className="text-xs text-muted-foreground">per each</div>
-              {savings > 0 && (
-                <div className="text-xs text-red-400">+{savings}% more</div>
+              {calculatedSavings > 0 && (
+                <div className="text-xs text-red-400">+{calculatedSavings}% more</div>
               )}
-              {isCheapest && (
+              {calculatedIsCheapest && (
                 <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs px-2 py-0.5 mt-1">
                   <Crown className="h-3 w-3 mr-1" />
                   Best Value

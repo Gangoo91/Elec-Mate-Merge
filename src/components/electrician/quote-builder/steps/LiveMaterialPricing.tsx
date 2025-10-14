@@ -38,7 +38,6 @@ export const LiveMaterialPricing = ({ onAddToQuote, onAddMultipleToQuote }: Live
         <TabsContent value="search">
           <MaterialPriceComparison 
             onAddToQuote={onAddToQuote}
-            onAddMultipleToQuote={onAddMultipleToQuote}
           />
         </TabsContent>
 
