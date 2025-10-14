@@ -520,7 +520,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           </div>
 
           {/* Main Content */}
-          <div className="px-5 pb-4 space-y-3">
+          <div className="px-5 pt-3 pb-4 space-y-3">
             {/* Client Name */}
             <div className="flex items-center gap-2">
               <User className="h-4 w-4 text-muted-foreground" />
