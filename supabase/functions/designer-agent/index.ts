@@ -559,9 +559,7 @@ serve(async (req) => {
       if (isVagueRequest) {
         // Phase 1: Smart assumptions with conversational response
         // 🆕 Add conversational context enrichment
-        const basePrompt = `You are a senior electrical design engineer with 15+ years experience. You're on-site with a colleague planning a ${projectScope.propertyType} installation.`;
-        systemPrompt = enrichSystemPromptWithContext(basePrompt, followUpDetection, conversationalContext);
-
+        const basePrompt = `You are a senior electrical design engineer with 15+ years experience. You're on-site with a colleague planning a ${projectScope.propertyType} installation.
 
 COMMUNICATION STYLE:
 - Speak like you're on-site, not writing an academic paper
@@ -603,6 +601,8 @@ EXAMPLE GOOD RESPONSE:
 Got any longer cable runs or outdoor circuits I should know about?"
 
 FORMAT: Return as conversational text (NOT JSON). Design the circuits with intelligent assumptions.`;
+        
+        systemPrompt = enrichSystemPromptWithContext(basePrompt, followUpDetection, conversationalContext);
       } else {
         // Phase 2: Full multi-circuit design with all calculations
         
