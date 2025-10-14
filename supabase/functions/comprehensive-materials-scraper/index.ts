@@ -522,7 +522,7 @@ serve(async (req) => {
 
       // Insert new category data
       const { error: storeError } = await supabase.from("materials_weekly_cache").insert({
-        tools_data: categoryProducts,
+        materials_data: categoryProducts,
         total_products: categoryProducts.length,
         category: categoryName,
         source: "comprehensive-scraper",
