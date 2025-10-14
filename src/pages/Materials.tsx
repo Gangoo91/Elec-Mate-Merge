@@ -22,15 +22,15 @@ const Materials = () => {
     
     try {
       addLog("🔄 Starting materials refresh...");
-      addLog("📡 Calling simple-materials-scraper edge function...");
+      addLog("📡 Calling comprehensive-materials-scraper edge function...");
       
       toast({
         title: "Fetching Materials",
-        description: "Calling Firecrawl API to scrape Screwfix products...",
+        description: "Retrieving comprehensive materials data...",
       });
       
-      const { data, error } = await supabase.functions.invoke('simple-materials-scraper', {
-        body: {}
+      const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
+        body: { mergeAll: true, forceRefresh: true }
       });
       
       if (error) {
@@ -38,22 +38,43 @@ const Materials = () => {
         throw error;
       }
 
-      const materialsCount = data?.materials?.length || 0;
-      addLog(`✅ Edge function completed successfully`);
-      addLog(`📦 Received ${materialsCount} materials from Screwfix`);
-      
-      if (materialsCount > 0) {
-        addLog("🔄 Reloading page to display new materials...");
-        toast({
-          title: "Success!",
-          description: `Fetched ${materialsCount} products. Refreshing page...`,
-        });
-        setTimeout(() => window.location.reload(), 1000);
+      if (data?.success) {
+        const totalProducts = data.totalFound || data.tools?.length || 0;
+        const categoriesFound = data.categoriesFound || 0;
+        const totalCategories = data.totalCategories || 8;
+        
+        addLog(`✅ Edge function completed successfully`);
+        addLog(`📦 Found ${totalProducts} products from ${categoriesFound}/${totalCategories} categories`);
+        
+        if (data.successfulCategories && data.successfulCategories.length > 0) {
+          addLog(`✅ Successful categories: ${data.successfulCategories.join(', ')}`);
+        }
+        
+        if (data.failedCategories && data.failedCategories.length > 0) {
+          addLog(`⚠️ Failed categories: ${data.failedCategories.join(', ')}`);
+        }
+        
+        if (totalProducts > 0) {
+          addLog("🔄 Refreshing materials data...");
+          toast({
+            title: "Success!",
+            description: `Fetched ${totalProducts} products from ${categoriesFound} categories`,
+          });
+          // Trigger refetch instead of page reload
+          setTimeout(() => window.location.reload(), 1000);
+        } else {
+          addLog("⚠️ No materials returned - check edge function logs");
+          toast({
+            title: "No Products Found",
+            description: "The scraper returned 0 products. Check the edge function logs.",
+            variant: "destructive",
+          });
+        }
       } else {
-        addLog("⚠️ No materials returned - check edge function logs");
+        addLog(`❌ Scraper failed: ${data?.error || 'Unknown error'}`);
         toast({
-          title: "No Products Found",
-          description: "The scraper returned 0 products. Check the edge function logs.",
+          title: "Scraping Failed",
+          description: data?.error || "Failed to scrape materials",
           variant: "destructive",
         });
       }

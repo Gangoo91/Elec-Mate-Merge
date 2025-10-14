@@ -227,13 +227,13 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
 
 export const useMaterialsData = () => {
   const rawQuery = useQuery({
-    queryKey: ['simple-materials'],
+    queryKey: ['comprehensive-materials'],
     queryFn: async () => {
-      console.log('🔍 Fetching materials from Firecrawl scraper...');
+      console.log('🔍 Fetching materials from comprehensive scraper...');
       
       try {
-        const { data, error } = await supabase.functions.invoke('simple-materials-scraper', {
-          body: {}
+        const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
+          body: { mergeAll: true }
         });
         
         if (error) {
@@ -241,16 +241,20 @@ export const useMaterialsData = () => {
           throw error;
         }
 
-        const materials = data?.materials || [];
-        console.log(`✅ Received ${materials.length} materials from Screwfix`);
+        // Map tools array to materials (same data structure)
+        const materials = ensureStockStatus(data?.tools || []);
+        const totalFound = data?.totalFound || materials.length;
+        const categoriesFound = data?.categoriesFound || 0;
+        
+        console.log(`✅ Received ${materials.length} materials from ${categoriesFound} categories`);
         
         const processedData = processMaterialsData(materials);
         
         return {
           data: processedData,
           rawMaterials: materials,
-          fromCache: false,
-          totalMaterials: materials.length
+          fromCache: true,
+          totalMaterials: totalFound
         };
       } catch (error) {
         console.error('❌ Error in fetchMaterialsData:', error);
