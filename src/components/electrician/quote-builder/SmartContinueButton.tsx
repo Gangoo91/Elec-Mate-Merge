@@ -27,9 +27,8 @@ export const SmartContinueButton = ({
       <Button
         onClick={onGenerate}
         disabled={!canProceed || isGenerating}
-        size="lg"
         className={cn(
-          "w-full sm:w-auto sm:min-w-40 max-w-full",
+          "w-full h-11 sm:h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold",
           className
         )}
       >
@@ -52,9 +51,8 @@ export const SmartContinueButton = ({
     <Button
       onClick={onNext}
       disabled={!canProceed}
-      size="lg"
       className={cn(
-        "w-full sm:w-auto sm:min-w-40 max-w-full text-left justify-start sm:justify-center",
+        "w-full h-11 sm:h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold",
         className
       )}
     >

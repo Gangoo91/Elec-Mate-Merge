@@ -47,7 +47,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   const [quoteForInvoice, setQuoteForInvoice] = useState<Quote | null>(null);
 
   const canRaiseInvoice = (quote: Quote) => {
-    return quote.status === 'approved' && quote.tags?.includes('work_done') && !quote.invoice_raised;
+    return quote.acceptance_status === 'accepted' && !quote.invoice_raised;
   };
 
   const hasInvoiceRaised = (quote: Quote) => {
@@ -479,6 +479,51 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               View/Edit
             </Button>
           </div>
+
+          {/* Accept/Reject Actions - Only for 'sent' quotes */}
+          {quote.status === 'sent' && quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected' && (
+            <div className="flex gap-2 pt-2 border-t border-elec-yellow/10">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleActionClick(quote, 'accept')}
+                disabled={loadingAction === `action-${quote.id}`}
+                className="flex-1 text-xs border-green-600/30 text-green-400 hover:bg-green-600/10"
+              >
+                <Check className="h-3 w-3 mr-1" />
+                {loadingAction === `action-${quote.id}` ? 'Processing...' : 'Accept Quote'}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleActionClick(quote, 'reject')}
+                disabled={loadingAction === `action-${quote.id}`}
+                className="flex-1 text-xs border-red-600/30 text-red-400 hover:bg-red-600/10"
+              >
+                <X className="h-3 w-3 mr-1" />
+                Reject
+              </Button>
+            </div>
+          )}
+
+          {/* Send to Invoice - Only for ACCEPTED quotes */}
+          {canRaiseInvoice(quote) && (
+            <div className="pt-2 border-t border-elec-yellow/10">
+              <Button
+                variant="default"
+                size="sm"
+                onClick={() => {
+                  setQuoteForInvoice(quote);
+                  setShowInvoiceDecision(true);
+                }}
+                disabled={loadingAction === `invoice-${quote.id}`}
+                className="w-full text-xs bg-gradient-to-r from-elec-yellow to-yellow-400 text-black font-semibold hover:from-elec-yellow/90 hover:to-yellow-400/90"
+              >
+                <Receipt className="h-3 w-3 mr-1" />
+                {loadingAction === `invoice-${quote.id}` ? 'Creating Invoice...' : 'Send to Invoice'}
+              </Button>
+            </div>
+          )}
 
           {/* Actions Dropdown - Hidden for mobile */}
           <DropdownMenu>

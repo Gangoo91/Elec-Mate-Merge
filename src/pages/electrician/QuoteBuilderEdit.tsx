@@ -97,7 +97,7 @@ const QuoteBuilderEdit = () => {
       <div className="space-y-6">
         <Button
           variant="ghost"
-          onClick={() => navigate('/electrician/quotes')}
+          onClick={() => navigate('/electrician/quote-builder')}
           className="gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -108,7 +108,7 @@ const QuoteBuilderEdit = () => {
           <p className="text-muted-foreground">
             The quote you're looking for doesn't exist or may have been deleted.
           </p>
-          <Button onClick={() => navigate('/electrician/quotes')}>
+          <Button onClick={() => navigate('/electrician/quote-builder')}>
             View All Quotes
           </Button>
         </div>
@@ -121,7 +121,7 @@ const QuoteBuilderEdit = () => {
       <div className="flex items-center gap-4">
         <Button
           variant="ghost"
-          onClick={() => navigate('/electrician/quotes')}
+          onClick={() => navigate('/electrician/quote-builder')}
           className="gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -137,7 +137,7 @@ const QuoteBuilderEdit = () => {
       
       <QuoteWizard
         initialQuote={quote}
-        onQuoteGenerated={() => navigate('/electrician/quotes')}
+        onQuoteGenerated={() => navigate('/electrician/quote-builder')}
       />
     </div>
   );

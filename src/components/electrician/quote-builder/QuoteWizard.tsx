@@ -94,7 +94,7 @@ const {
   };
 
   return (
-    <div className="space-y-4 max-w-4xl mx-auto">
+    <div className="w-full max-w-full md:max-w-4xl mx-auto px-3 md:px-4 space-y-4 md:space-y-6">
       {/* Simple Progress */}
       <QuoteProgressIndicator
         currentStep={currentStep}
@@ -108,30 +108,13 @@ const {
           <CardTitle className="text-xl">{steps[currentStep].title}</CardTitle>
           <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="p-3 md:p-6 space-y-4 md:space-y-6">
           {renderStep()}
           
           {/* Integrated Navigation */}
           <div className="pt-4 border-t">
-            <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
-              <div className="flex flex-wrap items-center gap-2 min-w-0">
-                <Button
-                  variant="outline"
-                  onClick={prevStep}
-                  disabled={currentStep === 0}
-                  size="sm"
-                  className="flex-shrink-0"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Previous
-                </Button>
-                
-                <Button variant="ghost" size="sm" onClick={resetQuote} className="flex-shrink-0">
-                  Start Over
-                </Button>
-              </div>
-              
-              <div className="flex-shrink-0 w-full sm:w-auto sm:max-w-xs">
+            <div className="flex flex-col gap-3">
+              <div className="order-2 sm:order-1">
                 <SmartContinueButton
                   canProceed={Boolean(canProceed())}
                   isLastStep={currentStep === steps.length - 1}
@@ -140,6 +123,28 @@ const {
                   onGenerate={generateQuote}
                   isGenerating={isGenerating}
                 />
+              </div>
+              
+              <div className="flex flex-wrap items-center gap-2 order-1 sm:order-2">
+                <Button
+                  variant="outline"
+                  onClick={prevStep}
+                  disabled={currentStep === 0}
+                  size="sm"
+                  className="flex-1 sm:flex-initial h-11 sm:h-9"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Previous
+                </Button>
+                
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={resetQuote} 
+                  className="flex-1 sm:flex-initial h-11 sm:h-9"
+                >
+                  Start Over
+                </Button>
               </div>
             </div>
           </div>
