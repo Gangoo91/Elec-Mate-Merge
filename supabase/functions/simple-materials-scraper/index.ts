@@ -4,48 +4,26 @@ import { withRetry, RetryPresets } from "../_shared/retry.ts";
 import { withTimeout, Timeouts } from "../_shared/timeout.ts";
 import { createLogger, generateRequestId } from "../_shared/logger.ts";
 
-const productSchema = {
-  type: "array",
-  items: {
-    type: "object",
-    required: ["name", "price", "view_product_url"],
-    properties: {
-      name: {
-        type: "string",
-        description: "Full product name or title",
-      },
-      brand: {
-        type: "string",
-        description: "Brand or manufacturer name",
-      },
-      category: {
-        type: "string",
-        description: "Product category (e.g., Cables, Components, Lighting)",
-      },
-      price: {
-        type: "string",
-        description: "The price of the product including currency and VAT",
-      },
-      inStock: {
-        type: "boolean",
-        description: "Whether the product is currently in stock",
-      },
-      description: {
-        type: "string",
-        description: "Product description or key features",
-      },
-      image: {
-        type: "string",
-        format: "uri",
-        description: "URL of the product image",
-      },
-      view_product_url: {
-        type: "string",
-        format: "uri",
-        description: "Direct URL to the product page",
+const extractSchema = {
+  type: "object",
+  properties: {
+    products: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          name: { type: "string" },
+          price: { type: "string" },
+          brand: { type: "string" },
+          image: { type: "string" },
+          productUrl: { type: "string" },
+          inStock: { type: "boolean" }
+        },
+        required: ["name", "price"]
       }
     }
   },
+  required: ["products"]
 };
 
 async function scrapeFromScrewfix(logger: any) {
@@ -64,20 +42,25 @@ async function scrapeFromScrewfix(logger: any) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      url: "https://www.screwfix.com/c/electrical-lighting/cables/cat850003?page_size=50",
+      url: "https://www.screwfix.com/c/electrical-lighting/cables/cat850003",
+      formats: [
+        {
+          type: "extract",
+          schema: extractSchema,
+          prompt: "Extract all electrical cable products from this page. For each product include the name, price (in GBP with £ symbol), brand, image URL, product page URL, and stock availability. Only extract actual products, not navigation items or ads."
+        }
+      ],
       onlyMainContent: true,
-      maxAge: 0,
-      timeout: 30000,
-      formats: ["markdown"],
+      timeout: 60000,
     }),
   };
 
   try {
-    logger.info('Starting Firecrawl scrape from Screwfix (markdown mode)');
+    logger.info('Starting Firecrawl scrape from Screwfix (extract mode)');
     const response = await withRetry(
       () => withTimeout(
         fetch(url, options),
-        45000,
+        70000,
         'Firecrawl materials scrape'
       ),
       RetryPresets.STANDARD
@@ -93,47 +76,33 @@ async function scrapeFromScrewfix(logger: any) {
     
     logger.info('Firecrawl response received', { 
       success: data.success,
-      hasMarkdown: !!data.data?.markdown,
-      markdownLength: data.data?.markdown?.length || 0
+      hasExtract: !!data.data?.extract,
+      extractKeys: data.data?.extract ? Object.keys(data.data.extract) : []
     });
 
-    if (!data.data?.markdown) {
-      logger.warn('No markdown data in response');
+    if (!data.success) {
+      logger.error('Firecrawl scrape failed', { data });
       return [];
     }
 
-    // Parse markdown to extract product information
-    const markdown = data.data.markdown;
-    const products = [];
-    
-    // Simple regex to find product patterns - looking for price indicators
-    const priceMatches = markdown.matchAll(/£(\d+\.\d{2})/g);
-    const prices = Array.from(priceMatches);
-    
-    logger.info('Found prices in markdown', { count: prices.length });
-    
-    // For now, return a simple parsed structure
-    // This is a basic implementation - we can enhance it based on what we see
-    const lines = markdown.split('\n');
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      const priceMatch = line.match(/£(\d+\.\d{2})/);
-      
-      if (priceMatch && i > 0) {
-        // Look for product name in previous lines
-        const nameLine = lines[i - 1] || lines[i - 2] || '';
-        if (nameLine.trim()) {
-          products.push({
-            name: nameLine.trim().replace(/[#*]/g, ''),
-            price: `£${priceMatch[1]}`,
-            supplier: 'Screwfix',
-            inStock: true,
-          });
-        }
-      }
+    const extractedData = data.data?.extract;
+    if (!extractedData?.products || !Array.isArray(extractedData.products)) {
+      logger.warn('No products array in extracted data', { extractedData });
+      return [];
     }
 
-    logger.info('Extracted products from markdown', { count: products.length });
+    const products = extractedData.products.map((product: any) => ({
+      name: product.name || 'Unknown Product',
+      price: product.price || '£0.00',
+      brand: product.brand,
+      supplier: 'Screwfix',
+      inStock: product.inStock !== false,
+      image: product.image,
+      view_product_url: product.productUrl,
+      category: 'Electrical Cables'
+    }));
+
+    logger.info('Extracted products successfully', { count: products.length });
     return products;
   } catch (error) {
     logger.error('Error scraping from Screwfix', { 
