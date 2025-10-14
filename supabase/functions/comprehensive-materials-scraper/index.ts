@@ -525,6 +525,7 @@ serve(async (req) => {
         tools_data: categoryProducts,
         total_products: categoryProducts.length,
         category: categoryName,
+        source: "comprehensive-scraper",
         expires_at: expiresAt.toISOString(),
         update_status: "completed",
       });
