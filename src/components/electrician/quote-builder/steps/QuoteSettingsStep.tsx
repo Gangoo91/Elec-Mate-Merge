@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Switch } from "@/components/ui/switch";
 import { QuoteSettings } from "@/types/quote";
 import { useEffect } from "react";
@@ -78,18 +78,19 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
               name="vatRate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>VAT Rate (%)</FormLabel>
                   <FormControl>
-                    <Input 
-                      type="number" 
+                    <MobileInput 
+                      label="VAT Rate (%)"
+                      type="number"
+                      inputMode="decimal"
                       step="0.1"
                       placeholder="20"
                       disabled={!form.watch('vatRegistered')}
                       {...field}
-                       onChange={(e) => {
-                         const value = e.target.value;
-                         field.onChange(value === '' ? '' : parseFloat(value) || '');
-                       }}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        field.onChange(value === '' ? '' : parseFloat(value) || '');
+                      }}
                     />
                   </FormControl>
                   <FormMessage />

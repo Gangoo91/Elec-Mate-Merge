@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Plus, Trash2, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp, Tag, Hash, DollarSign, Ruler, MessageSquare, RotateCcw, Search } from "lucide-react";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { MobileQuoteItemCard } from "../MobileQuoteItemCard";
 import { Switch } from "@/components/ui/switch";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
@@ -491,96 +492,13 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
             {/* Mobile Card View */}
             <div className="md:hidden space-y-3">
               {items.map((item) => (
-                <Card key={item.id} className="border-muted">
-                  <CardContent className="p-4 space-y-3">
-                    {/* Header with Icon and Actions */}
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-start gap-2 flex-1 min-w-0">
-                        <div className="flex-shrink-0 mt-1">
-                          {getCategoryIcon(item.category)}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm break-words">{item.description}</p>
-                          {item.notes && (
-                            <p className="text-xs text-muted-foreground mt-1 break-words">{item.notes}</p>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-1 flex-shrink-0">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => duplicateItem(item)}
-                          className="h-7 w-7 p-0"
-                        >
-                          <Copy className="h-3 w-3" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onRemove(item.id)}
-                          className="h-7 w-7 p-0 text-destructive hover:text-destructive"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-
-                    {/* Details Grid */}
-                    <div className="grid grid-cols-2 gap-3 pt-2 border-t">
-                      <div>
-                        <label className="text-xs text-muted-foreground">Quantity</label>
-                        <Input
-                          type="number"
-                          value={item.quantity}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (value === '') {
-                              onUpdate(item.id, { quantity: 0 });
-                            } else {
-                              const parsed = parseFloat(value);
-                              if (!isNaN(parsed) && parsed >= 0) {
-                                onUpdate(item.id, { quantity: parsed });
-                              }
-                            }
-                          }}
-                          onBlur={(e) => {
-                            const value = parseFloat(e.target.value);
-                            if (isNaN(value) || value <= 0) {
-                              onUpdate(item.id, { quantity: 1 });
-                            }
-                          }}
-                          className="h-8 mt-1"
-                          min="0.1"
-                          step="0.1"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted-foreground">Unit</label>
-                        <div className="h-8 flex items-center mt-1 px-3 bg-muted rounded-md text-sm">
-                          {item.unit}
-                        </div>
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted-foreground">Unit Price</label>
-                        <Input
-                          type="number"
-                          value={item.unitPrice}
-                          onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
-                          className="h-8 mt-1"
-                          min="0"
-                          step="0.01"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted-foreground">Total</label>
-                        <div className="h-8 flex items-center justify-end mt-1 px-3 bg-primary/10 rounded-md font-semibold text-sm">
-                          £{item.totalPrice.toFixed(2)}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <MobileQuoteItemCard
+                  key={item.id}
+                  item={item}
+                  onUpdate={onUpdate}
+                  onRemove={onRemove}
+                  onDuplicate={duplicateItem}
+                />
               ))}
             </div>
 

@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { PostcodeFinder } from "@/components/ui/postcode-finder";
 import { QuoteClient } from "@/types/quote";
 import { useEffect, useState } from "react";
@@ -62,9 +62,8 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Client Name *</FormLabel>
               <FormControl>
-                <Input placeholder="Enter client name" {...field} />
+                <MobileInput label="Client Name *" placeholder="Enter client name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,9 +75,8 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email Address *</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="client@example.com" {...field} />
+                <MobileInput label="Email Address *" type="email" placeholder="client@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -90,9 +88,8 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone Number *</FormLabel>
               <FormControl>
-                <Input placeholder="Enter phone number" {...field} />
+                <MobileInput label="Phone Number *" type="tel" inputMode="tel" placeholder="Enter phone number" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -104,9 +101,8 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
           name="postcode"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Postcode *</FormLabel>
               <FormControl>
-                <Input placeholder="Enter postcode" {...field} />
+                <MobileInput label="Postcode *" placeholder="Enter postcode" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -129,9 +125,8 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
           name="address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Address *</FormLabel>
               <FormControl>
-                <Input placeholder="Enter full address" {...field} />
+                <MobileInput label="Address *" placeholder="Enter full address" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

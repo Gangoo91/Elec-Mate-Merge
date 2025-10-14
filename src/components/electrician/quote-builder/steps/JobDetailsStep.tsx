@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Calendar, MapPin, Clock, AlertCircle, Briefcase } from "lucide-react";
 import { JobDetails } from "@/types/quote";
 
@@ -29,16 +29,14 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Job Title */}
-        <div className="space-y-2">
-          <Label htmlFor="job-title">Job Title *</Label>
-          <Input
-            id="job-title"
-            value={jobDetails?.title || ""}
-            onChange={(e) => handleChange("title", e.target.value)}
-            placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade, Garden Lighting Installation"
-            required
-          />
-        </div>
+        <MobileInput
+          label="Job Title *"
+          id="job-title"
+          value={jobDetails?.title || ""}
+          onChange={(e) => handleChange("title", e.target.value)}
+          placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade"
+          required
+        />
 
         {/* Job Description */}
         <div className="space-y-2">
@@ -55,71 +53,53 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
 
         {/* Location and Timeline Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="job-location">Work Location</Label>
-            <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="job-location"
-                value={jobDetails?.location || ""}
-                onChange={(e) => handleChange("location", e.target.value)}
-                placeholder="If different from client address"
-                className="pl-10"
-              />
-            </div>
-          </div>
+          <MobileInput
+            label="Work Location"
+            id="job-location"
+            value={jobDetails?.location || ""}
+            onChange={(e) => handleChange("location", e.target.value)}
+            placeholder="If different from client address"
+            hint="Optional - leave blank if same as client address"
+          />
 
-          <div className="space-y-2">
-            <Label htmlFor="estimated-duration">Estimated Duration</Label>
-            <div className="relative">
-              <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              {jobDetails?.estimatedDuration === "Other" ? (
-                <Input
-                  id="estimated-duration-custom"
-                  value={jobDetails?.customDuration || ""}
-                  onChange={(e) => handleChange("customDuration", e.target.value)}
-                  placeholder="Enter custom duration"
-                  className="pl-10"
-                />
-              ) : (
-                <Select
-                  value={jobDetails?.estimatedDuration || ""}
-                  onValueChange={(value) => handleChange("estimatedDuration", value)}
-                >
-                  <SelectTrigger className="pl-10">
-                    <SelectValue placeholder="Select duration" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Half day">Half day</SelectItem>
-                    <SelectItem value="1 day">1 day</SelectItem>
-                    <SelectItem value="2 days">2 days</SelectItem>
-                    <SelectItem value="3 days">3 days</SelectItem>
-                    <SelectItem value="1 week">1 week</SelectItem>
-                    <SelectItem value="2 weeks">2 weeks</SelectItem>
-                    <SelectItem value="3 weeks">3 weeks</SelectItem>
-                    <SelectItem value="1 month">1 month</SelectItem>
-                    <SelectItem value="Other">Other...</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            </div>
-          </div>
+          {jobDetails?.estimatedDuration === "Other" ? (
+            <MobileInput
+              label="Estimated Duration"
+              id="estimated-duration-custom"
+              value={jobDetails?.customDuration || ""}
+              onChange={(e) => handleChange("customDuration", e.target.value)}
+              placeholder="Enter custom duration"
+            />
+          ) : (
+            <MobileSelectWrapper
+              label="Estimated Duration"
+              value={jobDetails?.estimatedDuration || ""}
+              onValueChange={(value) => handleChange("estimatedDuration", value)}
+              options={[
+                { value: "Half day", label: "Half day" },
+                { value: "1 day", label: "1 day" },
+                { value: "2 days", label: "2 days" },
+                { value: "3 days", label: "3 days" },
+                { value: "1 week", label: "1 week" },
+                { value: "2 weeks", label: "2 weeks" },
+                { value: "3 weeks", label: "3 weeks" },
+                { value: "1 month", label: "1 month" },
+                { value: "Other", label: "Other..." },
+              ]}
+              placeholder="Select duration"
+              icon={<Clock className="h-4 w-4" />}
+            />
+          )}
         </div>
 
         {/* Work Start Date */}
-        <div className="space-y-2">
-          <Label htmlFor="work-start-date">Proposed Start Date</Label>
-          <div className="relative">
-            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="work-start-date"
-              type="date"
-              value={jobDetails?.workStartDate || ""}
-              onChange={(e) => handleChange("workStartDate", e.target.value)}
-              className="pl-10"
-            />
-          </div>
-        </div>
+        <MobileInput
+          label="Proposed Start Date"
+          id="work-start-date"
+          type="date"
+          value={jobDetails?.workStartDate || ""}
+          onChange={(e) => handleChange("workStartDate", e.target.value)}
+        />
 
         {/* Special Requirements */}
         <div className="space-y-2">

@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Plus, X } from "lucide-react";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
@@ -83,9 +83,9 @@ const QuotesPage = () => {
             </div>
             <div className="flex gap-3 w-full sm:w-auto">
               <Link to="/electrician" className="w-full sm:w-auto">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Back to Electrical Hub
-                </Button>
+                <MobileButton variant="outline" size="wide" className="sm:w-auto">
+                  <ArrowLeft className="mr-2 h-4 w-4" /> Back
+                </MobileButton>
               </Link>
             </div>
           </div>
@@ -100,20 +100,20 @@ const QuotesPage = () => {
               <span className="text-sm text-muted-foreground">Filtered by:</span>
               <Badge variant="secondary" className="flex items-center gap-2">
                 {getFilterLabel(filter)}
-                <Button
+                <MobileButton
                   variant="ghost"
                   size="sm"
                   className="h-4 w-4 p-0 hover:bg-transparent"
                   onClick={clearFilter}
                 >
                   <X className="h-3 w-3" />
-                </Button>
+                </MobileButton>
               </Badge>
             </section>
           )}
 
           {/* Quote Statistics */}
-          <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <section className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <div className="bg-card border rounded-lg p-6 text-center">
               <div className="text-2xl font-bold text-primary">
                 {filter ? filteredQuotes.length : savedQuotes.length}
