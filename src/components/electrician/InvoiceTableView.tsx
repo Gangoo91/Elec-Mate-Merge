@@ -126,15 +126,24 @@ const InvoiceTableView = ({
                     #{invoice.invoice_number || invoice.quoteNumber}
                   </TableCell>
                   <TableCell>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => navigate(`/electrician/quotes?highlight=${invoice.id}`)}
-                      className="h-auto p-1 text-xs font-mono hover:text-elec-yellow"
-                    >
-                      <FileText className="h-3 w-3 mr-1" />
-                      #{invoice.quoteNumber}
-                    </Button>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => navigate(`/electrician/quotes?highlight=${invoice.id}`)}
+                            className="h-auto p-1 text-xs font-mono hover:text-elec-yellow"
+                          >
+                            <FileText className="h-3 w-3 mr-1" />
+                            #{invoice.quoteNumber}
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>View original quote</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </TableCell>
                   <TableCell className="max-w-[200px] truncate">
                     {invoice.client?.name || 'N/A'}
