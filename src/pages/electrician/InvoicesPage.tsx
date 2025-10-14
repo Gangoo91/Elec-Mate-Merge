@@ -16,13 +16,14 @@ import InvoiceCardList from "@/components/electrician/InvoiceCardList";
 import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
 
 const InvoicesPage = () => {
-  const { invoices, isLoading, fetchInvoices } = useInvoiceStorage();
+  const { invoices, isLoading, fetchInvoices, deleteInvoice } = useInvoiceStorage();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const highlightId = searchParams.get('highlight');
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'sent' | 'overdue' | 'paid'>('all');
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
   const [downloadingPdfId, setDownloadingPdfId] = useState<string | null>(null);
+  const [deletingInvoiceId, setDeletingInvoiceId] = useState<string | null>(null);
 
   const canonical = `${window.location.origin}/electrician/invoices`;
 
@@ -169,6 +170,15 @@ const InvoicesPage = () => {
     } finally {
       setMarkingPaidId(null);
     }
+  };
+
+  const handleDeleteInvoice = async (invoiceId: string) => {
+    setDeletingInvoiceId(invoiceId);
+    const success = await deleteInvoice(invoiceId);
+    if (success) {
+      await fetchInvoices();
+    }
+    setDeletingInvoiceId(null);
   };
 
   const getActionButton = (invoice: Quote) => {
@@ -406,8 +416,10 @@ const InvoicesPage = () => {
                 onDownloadPDF={handleDownloadPDF}
                 onMarkAsPaid={handleMarkAsPaid}
                 onSendSuccess={handleSendSuccess}
+                onDeleteInvoice={handleDeleteInvoice}
                 markingPaidId={markingPaidId}
                 downloadingPdfId={downloadingPdfId}
+                deletingInvoiceId={deletingInvoiceId}
               />
 
               {/* Mobile/Tablet: Card View */}
@@ -417,8 +429,10 @@ const InvoicesPage = () => {
                 onDownloadPDF={handleDownloadPDF}
                 onMarkAsPaid={handleMarkAsPaid}
                 onSendSuccess={handleSendSuccess}
+                onDeleteInvoice={handleDeleteInvoice}
                 markingPaidId={markingPaidId}
                 downloadingPdfId={downloadingPdfId}
+                deletingInvoiceId={deletingInvoiceId}
               />
             </>
           )}

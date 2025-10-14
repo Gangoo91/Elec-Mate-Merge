@@ -67,12 +67,13 @@ export const useInvoiceStorage = () => {
         return;
       }
 
-      const { data, error } = await supabase
-        .from('quotes')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('invoice_raised', true)
-        .order('invoice_date', { ascending: false });
+    const { data, error } = await supabase
+      .from('quotes')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('invoice_raised', true)
+      .is('deleted_at', null)
+      .order('invoice_date', { ascending: false });
 
       if (error) throw error;
 
@@ -208,6 +209,48 @@ export const useInvoiceStorage = () => {
     }
   };
 
+  const deleteInvoice = async (invoiceId: string): Promise<boolean> => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          title: 'Authentication required',
+          description: 'Please sign in to delete invoices',
+          variant: 'destructive',
+        });
+        return false;
+      }
+
+      const { error } = await supabase
+        .from('quotes')
+        .update({ 
+          deleted_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', invoiceId)
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      toast({
+        title: 'Invoice deleted',
+        description: 'Invoice has been deleted successfully.',
+      });
+
+      await fetchInvoices();
+      return true;
+    } catch (error) {
+      console.error('Error deleting invoice:', error);
+      toast({
+        title: 'Error deleting invoice',
+        description: 'Failed to delete invoice. Please try again.',
+        variant: 'destructive',
+      });
+      return false;
+    }
+  };
+
   return {
     invoices,
     isLoading,
@@ -215,5 +258,6 @@ export const useInvoiceStorage = () => {
     markWorkComplete,
     updateInvoiceStatus,
     fetchInvoices,
+    deleteInvoice,
   };
 };

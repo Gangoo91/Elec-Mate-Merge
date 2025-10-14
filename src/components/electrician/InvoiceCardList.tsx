@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { Quote } from "@/types/quote";
 import { Badge } from "@/components/ui/badge";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { Button } from "@/components/ui/button";
-import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft } from "lucide-react";
+import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { format, isPast } from "date-fns";
 import {
@@ -17,6 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
+import { DeleteInvoiceDialog } from "@/components/electrician/invoice-builder/DeleteInvoiceDialog";
 
 interface InvoiceCardListProps {
   invoices: Quote[];
@@ -24,8 +26,10 @@ interface InvoiceCardListProps {
   onDownloadPDF: (invoice: Quote) => void;
   onMarkAsPaid: (invoice: Quote) => void;
   onSendSuccess: () => void;
+  onDeleteInvoice: (invoiceId: string) => void;
   markingPaidId: string | null;
   downloadingPdfId: string | null;
+  deletingInvoiceId: string | null;
 }
 
 const InvoiceCardList = ({
@@ -34,9 +38,26 @@ const InvoiceCardList = ({
   onDownloadPDF,
   onMarkAsPaid,
   onSendSuccess,
+  onDeleteInvoice,
   markingPaidId,
   downloadingPdfId,
+  deletingInvoiceId,
 }: InvoiceCardListProps) => {
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [invoiceToDelete, setInvoiceToDelete] = useState<Quote | null>(null);
+
+  const handleDeleteClick = (invoice: Quote) => {
+    setInvoiceToDelete(invoice);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (invoiceToDelete) {
+      onDeleteInvoice(invoiceToDelete.id);
+      setDeleteDialogOpen(false);
+      setInvoiceToDelete(null);
+    }
+  };
   const navigate = useNavigate();
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-GB", {

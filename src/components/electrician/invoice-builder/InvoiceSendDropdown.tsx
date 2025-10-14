@@ -37,11 +37,20 @@ export const InvoiceSendDropdown = ({
     try {
       setIsSendingEmail(true);
 
-      // Get the current session to ensure we have a valid auth token
-      const { data: { session } } = await supabase.auth.getSession();
+      // Try to get current session
+      let { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
-      if (!session) {
-        throw new Error('Not authenticated');
+      // If session is missing or expired, try to refresh
+      if (sessionError || !session) {
+        console.log('Session missing or expired, attempting refresh...');
+        const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
+        
+        if (refreshError || !refreshData.session) {
+          throw new Error('Please log in again to send invoices. Your session has expired.');
+        }
+        
+        session = refreshData.session;
+        console.log('Session refreshed successfully');
       }
       
       const { error } = await supabase.functions.invoke('send-invoice', {
@@ -66,11 +75,21 @@ export const InvoiceSendDropdown = ({
         .eq('id', invoice.id);
 
       onSuccess?.();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error sending invoice:', error);
+      
+      // Provide specific error messages
+      let errorMessage = 'Failed to send invoice. Please try again.';
+      
+      if (error.message?.includes('session')) {
+        errorMessage = 'Your session has expired. Please refresh the page and try again.';
+      } else if (error.message?.includes('email')) {
+        errorMessage = 'Client email address is missing or invalid.';
+      }
+      
       toast({
         title: 'Error sending invoice',
-        description: 'Failed to send invoice. Please try again.',
+        description: errorMessage,
         variant: 'destructive',
       });
     } finally {

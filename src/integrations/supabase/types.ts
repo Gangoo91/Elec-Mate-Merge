@@ -4088,6 +4088,7 @@ export type Database = {
           additional_invoice_items: Json | null
           client_data: Json
           created_at: string
+          deleted_at: string | null
           docusign_envelope_id: string | null
           docusign_status: string | null
           expiry_date: string
@@ -4129,6 +4130,7 @@ export type Database = {
           additional_invoice_items?: Json | null
           client_data: Json
           created_at?: string
+          deleted_at?: string | null
           docusign_envelope_id?: string | null
           docusign_status?: string | null
           expiry_date: string
@@ -4170,6 +4172,7 @@ export type Database = {
           additional_invoice_items?: Json | null
           client_data?: Json
           created_at?: string
+          deleted_at?: string | null
           docusign_envelope_id?: string | null
           docusign_status?: string | null
           expiry_date?: string

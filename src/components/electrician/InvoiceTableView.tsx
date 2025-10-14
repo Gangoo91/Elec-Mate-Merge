@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { Quote } from "@/types/quote";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft } from "lucide-react";
+import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
   Tooltip,
@@ -23,6 +24,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
+import { DeleteInvoiceDialog } from "@/components/electrician/invoice-builder/DeleteInvoiceDialog";
 
 interface InvoiceTableViewProps {
   invoices: Quote[];
@@ -30,8 +32,10 @@ interface InvoiceTableViewProps {
   onDownloadPDF: (invoice: Quote) => void;
   onMarkAsPaid: (invoice: Quote) => void;
   onSendSuccess: () => void;
+  onDeleteInvoice: (invoiceId: string) => void;
   markingPaidId: string | null;
   downloadingPdfId: string | null;
+  deletingInvoiceId: string | null;
 }
 
 const InvoiceTableView = ({
@@ -40,9 +44,26 @@ const InvoiceTableView = ({
   onDownloadPDF,
   onMarkAsPaid,
   onSendSuccess,
+  onDeleteInvoice,
   markingPaidId,
   downloadingPdfId,
+  deletingInvoiceId,
 }: InvoiceTableViewProps) => {
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [invoiceToDelete, setInvoiceToDelete] = useState<Quote | null>(null);
+
+  const handleDeleteClick = (invoice: Quote) => {
+    setInvoiceToDelete(invoice);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (invoiceToDelete) {
+      onDeleteInvoice(invoiceToDelete.id);
+      setDeleteDialogOpen(false);
+      setInvoiceToDelete(null);
+    }
+  };
   const navigate = useNavigate();
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-GB", {
@@ -253,6 +274,25 @@ const InvoiceTableView = ({
                                 <p>Mark as paid</p>
                               </TooltipContent>
                             </Tooltip>
+
+                            {/* Delete Invoice */}
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => handleDeleteClick(invoice)}
+                                  disabled={deletingInvoiceId === invoice.id}
+                                  className="h-8 w-8 p-0 hover:text-destructive"
+                                  aria-label="Delete invoice"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Delete invoice</p>
+                              </TooltipContent>
+                            </Tooltip>
                           </>
                         )}
                       </div>
@@ -263,6 +303,16 @@ const InvoiceTableView = ({
             })}
           </TableBody>
         </Table>
+
+        {invoiceToDelete && (
+          <DeleteInvoiceDialog
+            open={deleteDialogOpen}
+            onOpenChange={setDeleteDialogOpen}
+            invoice={invoiceToDelete}
+            onConfirm={handleDeleteConfirm}
+            isDeleting={deletingInvoiceId === invoiceToDelete.id}
+          />
+        )}
       </div>
     </div>
   );
