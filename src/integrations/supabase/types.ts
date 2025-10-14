@@ -4106,6 +4106,7 @@ export type Database = {
           profit: number
           public_token: string | null
           quote_number: string
+          reminder_count: number | null
           settings: Json
           signature_url: string | null
           status: string
@@ -4146,6 +4147,7 @@ export type Database = {
           profit?: number
           public_token?: string | null
           quote_number: string
+          reminder_count?: number | null
           settings: Json
           signature_url?: string | null
           status?: string
@@ -4186,6 +4188,7 @@ export type Database = {
           profit?: number
           public_token?: string | null
           quote_number?: string
+          reminder_count?: number | null
           settings?: Json
           signature_url?: string | null
           status?: string

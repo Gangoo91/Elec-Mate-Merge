@@ -88,98 +88,141 @@ const handler = async (req: Request): Promise<Response> => {
       }).format(amount);
     };
 
-    // Generate email HTML
+    // Generate professional HTML email
     const emailHtml = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8">
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #1e40af; color: white; padding: 20px; text-align: center; }
-            .content { background: #f9fafb; padding: 30px; }
-            .invoice-details { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; }
-            .total { font-size: 24px; font-weight: bold; color: #1e40af; margin: 20px 0; }
-            .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
-            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-            th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
-            th { background: #f3f4f6; font-weight: 600; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>Invoice ${invoice.invoice_number}</h1>
-              ${companyProfile?.company_name ? `<p>${companyProfile.company_name}</p>` : ''}
-            </div>
-            
-            <div class="content">
-              <p>Dear ${invoice.client_data?.name || 'Valued Client'},</p>
-              
-              <p>Please find your invoice details below:</p>
-              
-              <div class="invoice-details">
-                <p><strong>Invoice Number:</strong> ${invoice.invoice_number}</p>
-                <p><strong>Issue Date:</strong> ${new Date(invoice.invoice_date).toLocaleDateString('en-GB')}</p>
-                <p><strong>Due Date:</strong> ${new Date(invoice.invoice_due_date).toLocaleDateString('en-GB')}</p>
-                
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Description</th>
-                      <th>Quantity</th>
-                      <th>Unit Price</th>
-                      <th>Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${invoice.items.map((item: any) => `
-                      <tr>
-                        <td>${item.description}</td>
-                        <td>${item.quantity}</td>
-                        <td>${formatCurrency(item.unitPrice)}</td>
-                        <td>${formatCurrency(item.total)}</td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
-                
-                <div style="text-align: right; margin-top: 20px;">
-                  <p><strong>Subtotal:</strong> ${formatCurrency(parseFloat(invoice.subtotal))}</p>
-                  <p><strong>VAT (20%):</strong> ${formatCurrency(parseFloat(invoice.vat_amount))}</p>
-                  <p class="total">Total: ${formatCurrency(parseFloat(invoice.total))}</p>
-                </div>
-                
-                ${invoice.settings?.paymentTerms ? `<p><strong>Payment Terms:</strong> ${invoice.settings.paymentTerms}</p>` : ''}
-                
-                ${invoice.settings?.bankDetails ? `
-                  <div style="margin-top: 20px; padding: 15px; background: #f3f4f6; border-radius: 6px;">
-                    <p style="margin: 0; font-weight: 600;">Bank Details:</p>
-                    <p style="margin: 5px 0;">Account Name: ${invoice.settings.bankDetails.accountName}</p>
-                    <p style="margin: 5px 0;">Account Number: ${invoice.settings.bankDetails.accountNumber}</p>
-                    <p style="margin: 5px 0;">Sort Code: ${invoice.settings.bankDetails.sortCode}</p>
-                  </div>
-                ` : ''}
-              </div>
-              
-              ${invoice.invoice_notes ? `<p style="margin-top: 20px;"><strong>Notes:</strong><br>${invoice.invoice_notes}</p>` : ''}
-              
-              <p>If you have any questions about this invoice, please don't hesitate to contact us.</p>
-              
-              <p>Thank you for your business!</p>
-              
-              ${companyProfile?.company_name ? `<p><strong>${companyProfile.company_name}</strong></p>` : ''}
-              ${companyProfile?.company_email ? `<p>Email: ${companyProfile.company_email}</p>` : ''}
-              ${companyProfile?.company_phone ? `<p>Phone: ${companyProfile.company_phone}</p>` : ''}
-            </div>
-            
-            <div class="footer">
-              <p>This is an automated email. Please do not reply directly to this message.</p>
-            </div>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; }
+    .container { max-width: 600px; margin: 0 auto; background: white; }
+    .header { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 30px; text-align: center; }
+    .company-name { color: #FFD700; font-size: 24px; font-weight: bold; margin: 0; }
+    .content { padding: 30px; }
+    .invoice-header { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+    .invoice-number { font-size: 28px; font-weight: bold; color: #1a1a1a; margin: 0 0 10px 0; }
+    .invoice-details { margin-top: 15px; }
+    .detail-row { display: flex; justify-content: space-between; padding: 8px 0; }
+    .detail-label { font-weight: 600; color: #666; }
+    .detail-value { color: #1a1a1a; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th { background: #f3f4f6; padding: 12px; text-align: left; font-weight: 600; border-bottom: 2px solid #e5e7eb; }
+    td { padding: 12px; border-bottom: 1px solid #e5e7eb; }
+    .totals { text-align: right; margin-top: 20px; }
+    .totals p { margin: 8px 0; }
+    .total-amount { font-size: 32px; font-weight: bold; color: #FFD700; margin: 20px 0; }
+    .pay-now-section { text-align: center; margin: 30px 0; }
+    .pay-now-btn { display: inline-block; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #1a1a1a; text-decoration: none; padding: 16px 48px; border-radius: 8px; font-weight: bold; font-size: 18px; opacity: 0.6; cursor: not-allowed; }
+    .coming-soon { color: #999; font-size: 14px; margin-top: 10px; }
+    .bank-details { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 30px 0; }
+    .bank-details h3 { margin-top: 0; color: #1a1a1a; }
+    .bank-detail { margin: 8px 0; }
+    .notes { background: #fff9e6; border-left: 4px solid #FFD700; padding: 15px; margin: 20px 0; }
+    .footer { background: #1a1a1a; color: #fff; padding: 30px; text-align: center; }
+    .footer-brand { color: #FFD700; font-weight: bold; font-size: 16px; }
+    .footer-text { color: #999; font-size: 14px; margin: 10px 0 0 0; }
+    @media only screen and (max-width: 600px) {
+      .content { padding: 20px; }
+      .invoice-number { font-size: 24px; }
+      .total-amount { font-size: 28px; }
+      .pay-now-btn { padding: 14px 36px; font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="company-name">${companyProfile?.company_name || 'ElecMate Professional'}</h1>
+    </div>
+    
+    <div class="content">
+      <p>Dear ${invoice.client_data?.name || 'Valued Client'},</p>
+      <p>Thank you for your business. Please find your invoice details below:</p>
+      
+      <div class="invoice-header">
+        <p class="invoice-number">Invoice #${invoice.invoice_number}</p>
+        <div class="invoice-details">
+          <div class="detail-row">
+            <span class="detail-label">Invoice Date:</span>
+            <span class="detail-value">${new Date(invoice.invoice_date).toLocaleDateString('en-GB')}</span>
           </div>
-        </body>
-      </html>
+          <div class="detail-row">
+            <span class="detail-label">Due Date:</span>
+            <span class="detail-value">${new Date(invoice.invoice_due_date).toLocaleDateString('en-GB')}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Payment Terms:</span>
+            <span class="detail-value">${invoice.settings?.paymentTerms || 'Payment due within 30 days'}</span>
+          </div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th style="text-align: center;">Qty</th>
+            <th style="text-align: right;">Unit Price</th>
+            <th style="text-align: right;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${invoice.items.map((item: any) => `
+            <tr>
+              <td>${item.description}</td>
+              <td style="text-align: center;">${item.quantity}</td>
+              <td style="text-align: right;">${formatCurrency(item.unitPrice)}</td>
+              <td style="text-align: right;">${formatCurrency(item.total)}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+
+      <div class="totals">
+        <p><strong>Subtotal:</strong> ${formatCurrency(parseFloat(invoice.subtotal))}</p>
+        <p><strong>VAT (20%):</strong> ${formatCurrency(parseFloat(invoice.vat_amount))}</p>
+        <p class="total-amount">£${parseFloat(invoice.total).toFixed(2)}</p>
+      </div>
+
+      <div class="pay-now-section">
+        <span class="pay-now-btn">Pay Now</span>
+        <p class="coming-soon">💳 Online payments coming soon</p>
+      </div>
+
+      ${invoice.settings?.bankDetails ? `
+      <div class="bank-details">
+        <h3>Or pay via bank transfer:</h3>
+        <div class="bank-detail"><strong>Bank Name:</strong> ${invoice.settings.bankDetails.bankName}</div>
+        <div class="bank-detail"><strong>Account Name:</strong> ${invoice.settings.bankDetails.accountName}</div>
+        <div class="bank-detail"><strong>Account Number:</strong> ${invoice.settings.bankDetails.accountNumber}</div>
+        <div class="bank-detail"><strong>Sort Code:</strong> ${invoice.settings.bankDetails.sortCode}</div>
+      </div>
+      ` : ''}
+
+      ${invoice.invoice_notes ? `
+      <div class="notes">
+        <strong>Notes:</strong><br>
+        ${invoice.invoice_notes}
+      </div>
+      ` : ''}
+
+      <p>If you have any questions about this invoice, please don't hesitate to contact us.</p>
+      
+      <p>Thank you for your business!</p>
+      <p><strong>${companyProfile?.company_name || 'ElecMate Professional'}</strong><br>
+      ${companyProfile?.company_phone ? `📞 ${companyProfile.company_phone}<br>` : ''}
+      ${companyProfile?.company_email ? `✉️ ${companyProfile.company_email}` : ''}</p>
+    </div>
+    
+    <div class="footer">
+      <p class="footer-brand">⚡ Powered by ElecMate Professional Suite</p>
+      <p class="footer-text">Professional electrical contracting tools for modern electricians</p>
+    </div>
+  </div>
+</body>
+</html>
     `;
 
     // Send email using Gmail API

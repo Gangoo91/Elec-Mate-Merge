@@ -62,3 +62,9 @@ verify_jwt = false
 [functions.simple-materials-scraper]
 verify_jwt = false
 timeout_sec = 120
+
+[functions.send-invoice]
+verify_jwt = true
+
+[functions.send-payment-reminder]
+verify_jwt = true
