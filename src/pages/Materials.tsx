@@ -30,7 +30,7 @@ const Materials = () => {
       });
       
       const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
-        body: { mergeAll: true, forceRefresh: true }
+        body: { mergeAll: false, forceRefresh: true }
       });
       
       if (error) {
