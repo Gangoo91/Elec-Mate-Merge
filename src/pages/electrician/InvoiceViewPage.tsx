@@ -124,9 +124,28 @@ const InvoiceViewPage = () => {
         return;
       }
 
-      // Call generateInvoicePDF utility
-      const { generateInvoicePDF } = await import('@/utils/invoice-pdf');
-      await generateInvoicePDF(invoice, companyData);
+      // Generate professional PDF using PDF Monkey
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('User not authenticated');
+      }
+
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: {
+          quote: invoice,
+          companyProfile: companyData,
+          invoice_mode: true
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      if (pdfError || !pdfData?.download_url) {
+        throw new Error('Failed to generate professional PDF');
+      }
+
+      window.open(pdfData.download_url, '_blank');
     } catch (error) {
       console.error('Error generating invoice PDF:', error);
       toast({

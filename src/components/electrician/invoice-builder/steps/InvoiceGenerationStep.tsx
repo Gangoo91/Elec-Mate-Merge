@@ -4,9 +4,9 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { FileText, Download } from 'lucide-react';
-import { generateInvoicePDF } from '@/utils/invoice-pdf';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface InvoiceGenerationStepProps {
   invoice: Partial<Invoice>;
@@ -39,49 +39,63 @@ export const InvoiceGenerationStep = ({
     setIsPreviewing(true);
     try {
       const success = await onSave();
-      if (success) {
-        // Use items directly from invoice - they're already merged in DB
-        const mergedItems = invoice.items || [];
-        
-        console.log('[INVOICE-PREVIEW] Items for PDF:', {
-          itemsCount: mergedItems.length,
-          calculatedSubtotal: mergedItems.reduce((sum, item) => sum + item.totalPrice, 0),
-          invoiceSubtotal: invoice.subtotal,
-          invoiceTotal: invoice.total
-        });
-
-        // Recalculate totals from merged items to ensure accuracy
-        const recalculatedSubtotal = mergedItems.reduce((sum, item) => sum + item.totalPrice, 0);
-        const settings = invoice.settings!;
-        const recalculatedOverhead = recalculatedSubtotal * ((settings.overheadPercentage || 0) / 100);
-        const recalculatedProfit = (recalculatedSubtotal + recalculatedOverhead) * ((settings.profitMargin || 0) / 100);
-        const recalculatedVAT = settings.vatRegistered 
-          ? (recalculatedSubtotal + recalculatedOverhead + recalculatedProfit) * ((settings.vatRate || 0) / 100)
-          : 0;
-        const recalculatedTotal = recalculatedSubtotal + recalculatedOverhead + recalculatedProfit + recalculatedVAT;
-
-        const completeInvoice = {
-          ...invoice,
-          items: mergedItems,
-          additional_invoice_items: [], // Already merged
-          // Use recalculated totals
-          subtotal: recalculatedSubtotal,
-          overhead: recalculatedOverhead,
-          profit: recalculatedProfit,
-          vatAmount: recalculatedVAT,
-          total: recalculatedTotal,
-          jobDetails: invoice.jobDetails,
-        };
-        
-        console.log('[INVOICE-PREVIEW] PDF generation data ready');
-        
-        await generateInvoicePDF(completeInvoice, companyProfile);
-        toast({
-          title: 'Invoice saved & PDF generated',
-          description: 'Invoice has been saved and PDF preview is ready',
-          variant: 'success',
-        });
+      if (!success) {
+        throw new Error('Failed to save invoice');
       }
+
+      // Get user session for authentication
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('User not authenticated');
+      }
+
+      // Use items directly from invoice - they're already merged in DB
+      const mergedItems = invoice.items || [];
+      
+      const completeInvoice = {
+        ...invoice,
+        items: mergedItems,
+        additional_invoice_items: [], // Already merged
+        jobDetails: invoice.jobDetails,
+      };
+
+      // Generate professional PDF using PDF Monkey template
+      toast({
+        title: 'Generating Professional PDF',
+        description: 'Creating invoice preview with your branded template...',
+      });
+
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: {
+          quote: completeInvoice,
+          companyProfile: companyProfile,
+          invoice_mode: true  // Uses DC891A6A-4B38-48F5-A7DB-7CD0B550F4A2 template
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      if (pdfError || !pdfData?.download_url) {
+        console.error('PDF Monkey error:', pdfError);
+        throw new Error('Failed to generate professional PDF');
+      }
+
+      // Open PDF in new tab
+      window.open(pdfData.download_url, '_blank');
+
+      toast({
+        title: 'Invoice PDF Ready',
+        description: 'Professional invoice PDF has been generated',
+        variant: 'success',
+      });
+    } catch (error) {
+      console.error('Preview PDF error:', error);
+      toast({
+        title: 'PDF Generation Failed',
+        description: error instanceof Error ? error.message : 'Failed to generate PDF preview',
+        variant: 'destructive',
+      });
     } finally {
       setIsPreviewing(false);
     }
