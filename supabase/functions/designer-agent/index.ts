@@ -15,6 +15,8 @@ import { searchDesignPattern, storeDesignPattern } from '../_shared/pattern-lear
 import { buildEnhancedRAGQuery } from './ragQueryBuilder.ts';
 import { detectEdgeCases } from './edgeCaseDetection.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
+import { detectIntent } from '../_shared/query-intent.ts';
+import { validateRAGResults, generateCoverageReport } from '../_shared/rag-validator.ts';
 import { getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
 import { getCachedQuery, cacheQuery, hashQuery } from '../_shared/query-cache.ts';
@@ -164,17 +166,44 @@ serve(async (req) => {
       }
     }
     
-    // NEW: Build context-enriched RAG query for better retrieval
-    const contextEnrichedQuery = buildEnhancedRAGQuery(userMessage, circuitParams, messages);
+    // ============================================
+    // PHASE 3: INTENT DETECTION
+    // ============================================
+    const detectedIntent = detectIntent(userMessage, messages);
+    logger.info('Query intent detected', {
+      type: detectedIntent.type,
+      complexity: detectedIntent.complexity,
+      userLevel: detectedIntent.userLevel,
+      semanticMeaning: detectedIntent.semanticMeaning
+    });
+    
+    // NEW: Build context-enriched RAG query with intent awareness
+    const contextEnrichedQuery = buildEnhancedRAGQuery(
+      userMessage, 
+      circuitParams, 
+      detectedIntent,
+      messages
+    );
+    
+    // Add context enrichments from parameter extraction
+    const fullRAGQuery = circuitParams.ragContextEnrichments 
+      ? `${contextEnrichedQuery} ${circuitParams.ragContextEnrichments.join(' ')}`
+      : contextEnrichedQuery;
+    
+    logger.info('RAG query built', {
+      originalLength: userMessage.length,
+      enrichedLength: fullRAGQuery.length,
+      contextAdded: circuitParams.ragContextEnrichments?.length || 0
+    });
     
     // Create or merge agent context
     const queryIntent: QueryIntent = {
-      primaryGoal: 'design',
+      primaryGoal: detectedIntent.type === 'design_request' ? 'design' : 'explain',
       circuitType: circuitParams.circuitType,
       powerRating: circuitParams.power,
-      complexity: 'medium',
-      requiresCalculations: true,
-      requiresRegulations: true,
+      complexity: detectedIntent.complexity >= 7 ? 'high' : detectedIntent.complexity >= 4 ? 'medium' : 'low',
+      requiresCalculations: detectedIntent.requiresCalculations,
+      requiresRegulations: detectedIntent.requiresRegulationCitation,
       keywords: [circuitParams.circuitType, 'overload', 'voltage drop', 'cable sizing'],
     };
 
@@ -358,17 +387,47 @@ serve(async (req) => {
         };
       }
       
-      // Store found regulations in context
-      agentContext.foundRegulations = regulations.slice(0, 5).map(r => ({
+      // ============================================
+      // PHASE 4: RAG VALIDATION & PRIORITIZATION
+      // ============================================
+      const ragValidation = validateRAGResults(userMessage, detectedIntent, regulations);
+      
+      logger.info('RAG validation complete', {
+        isComplete: ragValidation.isComplete,
+        confidence: ragValidation.confidence,
+        missingTopics: ragValidation.missingTopics,
+        criticalRegCount: ragValidation.criticalRegulations.length
+      });
+      
+      // Log coverage report for debugging
+      if (ragValidation.confidence < 70) {
+        console.warn('⚠️ LOW RAG CONFIDENCE:');
+        console.warn(generateCoverageReport(ragValidation));
+      } else {
+        console.log('✅ RAG Coverage Report:');
+        console.log(generateCoverageReport(ragValidation));
+      }
+      
+      // Store found regulations in context (prioritize critical ones)
+      const criticalRegNums = new Set(ragValidation.criticalRegulations.map(r => r.regulation));
+      const sortedRegs = [
+        ...regulations.filter(r => criticalRegNums.has(r.regulation_number)),
+        ...regulations.filter(r => !criticalRegNums.has(r.regulation_number))
+      ];
+      
+      agentContext.foundRegulations = sortedRegs.slice(0, 5).map(r => ({
         regulation_number: r.regulation_number,
         section: r.section,
         content: r.content,
         relevance: r.relevance,
         source: r.source,
+        isCritical: criticalRegNums.has(r.regulation_number)
       }));
       
       // PHASE 2: Share knowledge with downstream agents (prevent re-retrieval)
-      agentContext.sharedRegulations = regulations.slice(0, 12); // Top 12
+      // Prioritize critical regulations
+      agentContext.sharedRegulations = sortedRegs.slice(0, 12); // Top 12 with critical first
+      agentContext.ragValidation = ragValidation; // Share validation results
       agentContext.sharedKnowledge = {
         designDocs: designDocs.slice(0, 8),
         installationDocs: ragResults.installationDocs?.slice(0, 8) || []
@@ -573,14 +632,22 @@ RULES:
 - NEVER quote full regulation text
 - Save detailed formulas for JSON structure only
 
-KNOWLEDGE BASE ACCESS:
-You have retrieved:
-- ${regulations.length} relevant BS 7671:2018+A3:2024 regulations
-- ${designDocs.length} design guidance documents (cable sizing, voltage drop tables, diversity factors)
-- ${ragResults?.installationDocs?.length || 0} installation best practices (safe zones, IP ratings, burial depths)
+KNOWLEDGE BASE ACCESS (BS 7671:2018+A3:2024):
+You have retrieved ${regulations.length} regulations (RAG Confidence: ${agentContext.ragValidation?.confidence || 0}%)
 
-USE this knowledge to inform your circuit designs. Apply regulations internally to validate compliance.
-DO NOT quote regulation text in the "calculations" field - reference them in the JSON "appliedRegulations" array only.
+CRITICAL REGULATIONS FOR THIS QUERY:
+${agentContext.ragValidation?.criticalRegulations
+  .filter((r: any) => r.priority === 'critical')
+  .slice(0, 3)
+  .map((r: any) => `- ${r.regulation}: ${r.reason}`)
+  .join('\n') || 'None identified'}
+
+${detectedIntent.requiresRegulationCitation ? 
+  `\n⚠️ USER EXPECTS REGULATION CITATIONS - You MUST cite regulation numbers when explaining WHY decisions were made.\nFormat: "This is required by Regulation 525 (voltage drop limits)."\n` : 
+  `\nApply regulations INTERNALLY to validate designs. Only cite regulation numbers in the JSON "appliedRegulations" array.`}
+
+${detectedIntent.complexity >= 7 ? 
+  `\n🔥 HIGH COMPLEXITY QUERY - Provide step-by-step reasoning, intermediate calculations, and cross-check multiple regulations.\n` : ''}
 
 FORMAT AS JSON (EXACTLY AS SHOWN - ALL FIELDS REQUIRED):
 {
@@ -1766,6 +1833,20 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
   const MAX_TWIN_EARTH_DOMESTIC = 10; // mm² - standard domestic limit
   const MAX_TWIN_EARTH_COMMERCIAL = 16; // mm² - rare but exists
   
+  // ============================================
+  // PHASE 1: CONTEXTUAL ENTITY EXTRACTION
+  // ============================================
+  
+  // Semantic context detection (replaces basic keyword matching)
+  const contextHints = {
+    isOutdoor: /garage|shed|garden|external|outdoor|buried|outside/i.test(userMessage),
+    isBathroom: /bathroom|shower room|wet room|en.?suite/i.test(userMessage),
+    isLongRun: /far|long run|distance|distant|remote/i.test(userMessage),
+    isHighLoad: /heavy|large|industrial|commercial|high power/i.test(userMessage),
+    isSupplyFeed: /supply to|feed to|cable to|run to/i.test(userMessage),
+    isBuriedInstall: /buried|underground|duct|trench/i.test(userMessage)
+  };
+  
   let circuitType = 'socket';
   let location = '';
   const msgLower = userMessage.toLowerCase();
@@ -1801,15 +1882,68 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
     circuitType = 'bathroom';
     location = 'bathroom';
   }
-  if (msgLower.includes('outdoor') || msgLower.includes('outside') || msgLower.includes('garage')) {
+  if (contextHints.isOutdoor) {
     location = location || 'outdoor';
   }
   
-  // CRITICAL: Determine cable type based on CALCULATED size (after VD check)
+  // CONTEXTUAL AUTO-ENRICHMENT: Infer requirements from context
+  const ragContextEnrichments: string[] = [];
+  
+  // "supply to garage" → outdoor + likely SWA
+  if (contextHints.isSupplyFeed) {
+    const destination = userMessage.match(/(?:supply to|feed to|cable to|run to)\s+(\w+)/i)?.[1]?.toLowerCase();
+    if (destination) {
+      if (['garage', 'shed', 'outbuilding', 'garden'].includes(destination)) {
+        contextHints.isOutdoor = true;
+        location = 'outdoor';
+        ragContextEnrichments.push('outdoor installation SWA cable requirements');
+        console.log(`🔍 Context: Supply to ${destination} → outdoor installation detected`);
+      }
+    }
+  }
+  
+  // Buried installation → mandatory SWA, depth requirements
+  if (contextHints.isBuriedInstall) {
+    ragContextEnrichments.push(
+      'Section 522.8.10 buried cable requirements',
+      'SWA armoured cable buried installation',
+      'burial depth mechanical protection',
+      'route marking tape'
+    );
+    console.log('🔍 Context: Buried installation → SWA + burial depth requirements');
+  }
+  
+  // Long run + high power → likely voltage drop issues
+  if (contextHints.isLongRun && power > 5000) {
+    ragContextEnrichments.push(
+      'voltage drop long cable runs',
+      'cable upsizing for voltage drop compliance',
+      'Regulation 525 voltage drop limits'
+    );
+    console.log('🔍 Context: Long run + high power → voltage drop critical');
+  }
+  
+  // Bathroom → Section 701 mandatory
+  if (contextHints.isBathroom) {
+    ragContextEnrichments.push(
+      'Section 701 bathroom installations',
+      'IP rating zones bathroom',
+      'RCD protection bathroom circuits',
+      'supplementary bonding'
+    );
+    console.log('🔍 Context: Bathroom → Section 701 requirements');
+  }
+  
+  // CRITICAL: Determine cable type based on CALCULATED size (after VD check) + CONTEXT
   let cableType = '6242Y'; // Twin & Earth default
   let cableTypeReason = '';
   
-  if (cableSize > MAX_TWIN_EARTH_DOMESTIC) {
+  // Context-driven cable selection (overrides size-only logic)
+  if (contextHints.isOutdoor || contextHints.isBuriedInstall) {
+    cableType = 'SWA';
+    cableTypeReason = `Outdoor/buried installation requires SWA armoured cable for mechanical protection (Regulation 522.6.101).`;
+    ragContextEnrichments.push('SWA cable outdoor installation Regulation 522');
+  } else if (cableSize > MAX_TWIN_EARTH_DOMESTIC) {
     cableType = 'SWA';
     cableTypeReason = `Cable size ${cableSize}mm² exceeds Twin & Earth maximum (10mm² for domestic installations). SWA armoured cable required (Regulation 521.10.1).`;
     
@@ -1865,6 +1999,7 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
     hasEnoughData: power > 0 && designCurrent > 0 && circuitType !== 'socket',
     power,
     voltage,
+    voltageSource, // Track how voltage was determined (explicit/auto/default)
     phases,
     designCurrent: Math.round(designCurrent * 10) / 10,
     deviceRating,
@@ -1874,9 +2009,11 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
     ambientTemp,
     groupingCircuits: detectedGrouping,
     installationMethod: isOutdoor ? 'cable-tray' : (currentDesign?.installationMethod || 'clipped-direct'),
-    cableType: isOutdoor ? 'swa' : '6242Y',
+    cableType: isOutdoor ? 'swa' : cableType,
     circuitType,
-    location
+    location,
+    contextHints, // Pass semantic context for RAG enrichment
+    ragContextEnrichments // Pass auto-detected RAG topic enrichments
   };
 }
 

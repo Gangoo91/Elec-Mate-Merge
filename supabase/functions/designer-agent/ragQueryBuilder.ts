@@ -1,10 +1,21 @@
 /**
  * RAG Query Builder - Build context-enriched queries for better retrieval
- * Phase 1: Full RAG Integration
+ * PHASE 2 UPGRADE: Semantic query reformulation for maximum RAG precision
  */
 
-export function buildEnhancedRAGQuery(userMessage: string, circuitParams: any, previousMessages?: any[]): string {
+import { QueryIntent } from '../_shared/query-intent.ts';
+
+export function buildEnhancedRAGQuery(
+  userMessage: string, 
+  circuitParams: any, 
+  intent?: QueryIntent,
+  previousMessages?: any[]
+): string {
   const msgLower = userMessage.toLowerCase();
+  
+  // PHASE 2: Semantic Query Reformulation
+  // Transform user query into BS 7671-optimized search query
+  const reformulated = reformulateForRAG(userMessage, circuitParams, intent);
   
   // PHASE 3: Detect contextual/follow-up questions that need specific regulation guidance
   if (msgLower.startsWith('why ') || msgLower.includes('why not') || msgLower.includes('instead of')) {
@@ -189,5 +200,120 @@ export function buildEnhancedRAGQuery(userMessage: string, circuitParams: any, p
     );
   }
   
+  // Combine reformulated query with context parts
+  const finalQuery = [reformulated, ...parts].join(' ');
+  
+  return finalQuery;
+}
+
+/**
+ * PHASE 2: Reformulate user query into BS 7671-optimized semantic query
+ */
+function reformulateForRAG(userMessage: string, params: any, intent?: QueryIntent): string {
+  const parts: string[] = [];
+  
+  // DESIGN REQUESTS: Transform into structured search
+  if (intent?.type === 'design_request' || /what (cable|mcb|size)/i.test(userMessage)) {
+    if (params.power && params.cableLength) {
+      parts.push(
+        `cable sizing calculation ${(params.power / 1000).toFixed(1)}kW load`,
+        `voltage drop ${params.cableLength}m cable run compliance Regulation 525`,
+        `current-carrying capacity tabulated ratings Table 4D5`,
+        `protection device coordination Ib In Iz relationship Regulation 433.1.1`,
+        `overcurrent protection MCB selection methodology`
+      );
+    } else if (params.power) {
+      parts.push(
+        `cable sizing ${(params.power / 1000).toFixed(1)}kW load calculation`,
+        `design current calculation`,
+        `protective device selection`
+      );
+    }
+  }
+  
+  // WHY QUESTIONS: Add regulation-specific context
+  if (intent?.type === 'why_question') {
+    const topic = intent.criticalTopics[0] || 'design decision';
+    parts.push(
+      `${topic} justification BS 7671`,
+      `regulation requirements ${topic}`,
+      `design methodology reasoning`,
+      `compliance explanation`
+    );
+  }
+  
+  // ALTERNATIVE COMPARISONS: Add comparison criteria
+  if (intent?.type === 'alternative_comparison') {
+    parts.push(
+      'wiring system selection criteria Regulation 521',
+      'installation method comparison',
+      'advantages disadvantages',
+      'cost versus performance',
+      'regulation compliance comparison'
+    );
+  }
+  
+  // Add BS 7671 structure awareness - map to specific chapters
+  const bs7671Map = getBs7671ChapterMapping(params, intent);
+  parts.push(...bs7671Map);
+  
   return parts.join(' ');
+}
+
+/**
+ * Map design questions to BS 7671 chapter structure
+ */
+function getBs7671ChapterMapping(params: any, intent?: QueryIntent): string[] {
+  const chapters: string[] = [];
+  
+  // Always include foundational regulations for design
+  if (intent?.type === 'design_request' || intent?.requiresCalculations) {
+    chapters.push(
+      'Regulation 433.1.1 cable sizing relationship Ib In Iz',
+      'Regulation 525 voltage drop maximum limits 5% power 3% lighting',
+      'Regulation 411.3.2 automatic disconnection earth fault',
+      'Chapter 52 selection and erection of wiring systems'
+    );
+  }
+  
+  // Cable sizing specific
+  if (params.power > 0 && params.cableLength > 0) {
+    chapters.push(
+      'Table 4D5 current-carrying capacity PVC cables clipped direct',
+      'Appendix 4 voltage drop tables mV/A/m values',
+      'Table 4D4A SWA cables armoured three-core four-core'
+    );
+  }
+  
+  // Three-phase specific
+  if (params.phases === 'three' || params.voltage === 400) {
+    chapters.push(
+      'Table 4D4B three-phase cable current ratings',
+      'Regulation 559 TN-S three-phase systems',
+      'balanced load neutral conductor sizing'
+    );
+  }
+  
+  // Location-specific chapters
+  if (params.location === 'bathroom') {
+    chapters.push('Section 701 bathrooms IP rating zones RCD protection');
+  } else if (params.location === 'outdoor') {
+    chapters.push('Section 522 buried cable outdoor installation mechanical protection');
+  }
+  
+  // Circuit-type specific
+  if (params.circuitType?.includes('ev')) {
+    chapters.push('Section 722 EV charging installation dedicated circuit');
+  }
+  
+  // Cable type selection
+  if (params.cableSize > 10 || params.power > 7000) {
+    chapters.push(
+      'Regulation 521 wiring system selection twin and earth versus SWA',
+      'twin and earth maximum 10mm domestic installations only',
+      'SWA armoured cable large conductor sizes mechanical protection'
+    );
+  }
+  
+  return chapters;
 }
