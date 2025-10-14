@@ -4,6 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { format, isPast } from "date-fns";
 import {
   AlertDialog,
@@ -152,83 +158,113 @@ const InvoiceTableView = ({
                     {getStatusBadge(invoice)}
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      {/* View/Edit Button */}
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => onInvoiceAction(invoice)}
-                        className="h-8 w-8 p-0"
-                        aria-label={status === 'draft' ? 'Edit invoice' : 'View invoice'}
-                      >
-                        {status === 'draft' ? (
-                          <Edit className="h-4 w-4" />
-                        ) : (
-                          <Eye className="h-4 w-4" />
+                    <TooltipProvider>
+                      <div className="flex items-center justify-end gap-1">
+                        {/* View/Edit Button */}
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => onInvoiceAction(invoice)}
+                              className="h-8 w-8 p-0"
+                              aria-label={status === 'draft' ? 'Edit invoice' : 'View invoice'}
+                            >
+                              {status === 'draft' ? (
+                                <Edit className="h-4 w-4" />
+                              ) : (
+                                <Eye className="h-4 w-4" />
+                              )}
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{status === 'draft' ? 'Edit invoice' : 'View invoice'}</p>
+                          </TooltipContent>
+                        </Tooltip>
+
+                        {/* Download PDF */}
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => onDownloadPDF(invoice)}
+                              disabled={downloadingPdfId === invoice.id}
+                              className="h-8 w-8 p-0"
+                              aria-label="Download PDF"
+                            >
+                              <Download className="h-4 w-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Download PDF</p>
+                          </TooltipContent>
+                        </Tooltip>
+
+                        {/* Send Invoice */}
+                        {status !== 'paid' && (
+                          <>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => onSendInvoice(invoice)}
+                                  disabled={sendingInvoiceId === invoice.id}
+                                  className="h-8 w-8 p-0"
+                                  aria-label={isOverdue ? 'Send reminder' : 'Send invoice'}
+                                >
+                                  {isOverdue ? (
+                                    <Bell className="h-4 w-4 text-red-600" />
+                                  ) : (
+                                    <Mail className="h-4 w-4" />
+                                  )}
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{isOverdue ? 'Send reminder' : 'Send invoice'}</p>
+                              </TooltipContent>
+                            </Tooltip>
+
+                            {/* Mark as Paid */}
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      disabled={markingPaidId === invoice.id}
+                                      className="h-8 w-8 p-0"
+                                      aria-label="Mark as paid"
+                                    >
+                                      <CheckCircle className="h-4 w-4" />
+                                    </Button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle>Mark invoice as paid?</AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        This will mark invoice {invoice.invoice_number} as paid.
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                      <AlertDialogAction onClick={() => onMarkAsPaid(invoice)}>
+                                        Confirm
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Mark as paid</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </>
                         )}
-                      </Button>
-
-                      {/* Download PDF */}
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => onDownloadPDF(invoice)}
-                        disabled={downloadingPdfId === invoice.id}
-                        className="h-8 w-8 p-0"
-                        aria-label="Download PDF"
-                      >
-                        <Download className="h-4 w-4" />
-                      </Button>
-
-                      {/* Send Invoice */}
-                      {status !== 'paid' && (
-                        <>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            onClick={() => onSendInvoice(invoice)}
-                            disabled={sendingInvoiceId === invoice.id}
-                            className="h-8 w-8 p-0"
-                            aria-label={isOverdue ? 'Send reminder' : 'Send invoice'}
-                          >
-                            {isOverdue ? (
-                              <Bell className="h-4 w-4 text-red-600" />
-                            ) : (
-                              <Mail className="h-4 w-4" />
-                            )}
-                          </Button>
-
-                          {/* Mark as Paid */}
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                disabled={markingPaidId === invoice.id}
-                                className="h-8 w-8 p-0"
-                                aria-label="Mark as paid"
-                              >
-                                <CheckCircle className="h-4 w-4" />
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>Mark invoice as paid?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  This will mark invoice {invoice.invoice_number} as paid.
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => onMarkAsPaid(invoice)}>
-                                  Confirm
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </>
-                      )}
-                    </div>
+                      </div>
+                    </TooltipProvider>
                   </TableCell>
                 </TableRow>
               );
