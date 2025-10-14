@@ -15,7 +15,7 @@ export function detectEdgeCases(
   userMessage: string,
   currentDesign?: any
 ): EdgeCaseResult {
-  const { power, cableLength, voltage, phases } = circuitParams;
+  const { power, cableLength, voltage, phases, voltageSource } = circuitParams;
   const msgLower = userMessage.toLowerCase();
   
   // 1. IMPOSSIBLE SINGLE-PHASE LOAD (>100kW is industrial/commercial)
@@ -96,7 +96,9 @@ Then I can explain the cable selection, protection choices, and BS 7671 reasonin
   }
   
   // 5. THREE-PHASE WITH UNUSUAL VOLTAGE
-  if (phases === 3 && voltage !== 400 && voltage !== 230) {
+  // Only flag if user EXPLICITLY specified a non-standard voltage
+  // Don't flag auto-corrected voltages (voltageSource === 'auto')
+  if (phases === 'three' && voltage !== 400 && voltage !== 230 && voltageSource === 'explicit') {
     return {
       isEdgeCase: true,
       type: 'non-standard-voltage',

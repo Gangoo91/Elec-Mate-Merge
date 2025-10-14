@@ -1700,8 +1700,23 @@ function extractCircuitParams(userMessage: string, currentDesign: any, context?:
   }
 
   const power = loadMatch ? (loadMatch[2].toLowerCase() === 'kw' ? parseFloat(loadMatch[1]) * 1000 : parseFloat(loadMatch[1])) : 0;
-  const voltage = voltageMatch ? parseInt(voltageMatch[1]) : (currentDesign?.voltage || 230);
   const phases = phaseMatch ? (phaseMatch[1] === '3' || phaseMatch[1].toLowerCase() === 'three' ? 'three' : 'single') : 'single';
+  
+  // BS 7671 standard UK voltages - auto-detect based on phase configuration
+  let voltage: number;
+  let voltageSource: 'explicit' | 'auto' | 'default';
+  
+  if (voltageMatch) {
+    voltage = parseInt(voltageMatch[1]);
+    voltageSource = 'explicit';
+  } else if (phases === 'three') {
+    voltage = 400; // UK standard three-phase line-to-line voltage
+    voltageSource = 'auto';
+    console.log('🔌 Three-phase detected - auto-setting voltage to 400V (BS 7671 standard)');
+  } else {
+    voltage = currentDesign?.voltage || 230; // UK standard single-phase voltage
+    voltageSource = currentDesign?.voltage ? 'default' : 'auto';
+  }
   
   const designCurrent = power > 0 ? power / voltage / (phases === 'three' ? Math.sqrt(3) : 1) / 0.95 : 0;
   

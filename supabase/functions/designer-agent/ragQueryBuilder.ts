@@ -173,5 +173,21 @@ export function buildEnhancedRAGQuery(userMessage: string, circuitParams: any, p
     }
   }
   
+  // Three-phase specific guidance (BS 7671 requirements)
+  if (circuitParams.phases === 'three' || circuitParams.voltage === 400) {
+    parts.push(
+      'three-phase installation',
+      'balanced load distribution',
+      'line-to-line voltage 400V',
+      'phase current calculation',
+      'three-phase voltage drop calculation',
+      'three-phase earth fault loop impedance',
+      'neutral conductor sizing',
+      'Regulation 559 TN-S system three-phase',
+      'Table 4D4B three-phase cable ratings',
+      'symmetrical three-phase load'
+    );
+  }
+  
   return parts.join(' ');
 }
