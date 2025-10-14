@@ -210,9 +210,50 @@ serve(async (req) => {
       
       console.log('[PDF-MONKEY] Transformed invoice items:', transformedInvoice.items.length, 'items');
 
+      // Calculate totals from items
+      const itemsSubtotal = transformedInvoice.items.reduce((sum, item) => 
+        sum + (item.quantity * item.unitPrice), 0
+      );
+
+      const settings = quote?.settings || {};
+      const overhead = itemsSubtotal * ((settings.overheadPercentage || 0) / 100);
+      const profit = (itemsSubtotal + overhead) * ((settings.profitMargin || 0) / 100);
+      const vatAmount = settings.vatRegistered 
+        ? (itemsSubtotal + overhead + profit) * ((settings.vatRate || 20) / 100)
+        : 0;
+      const total = itemsSubtotal + overhead + profit + vatAmount;
+
+      console.log('[PDF-MONKEY] Recalculated totals:', {
+        itemsSubtotal,
+        overhead,
+        profit,
+        vatAmount,
+        total,
+        originalTotal: quote?.total
+      });
+
       payload = {
         companyProfile: transformedCompanyProfile,
-        invoice: transformedInvoice,
+        invoice: {
+          ...transformedInvoice,
+          // Force calculated totals
+          subtotal: itemsSubtotal,
+          overhead: overhead,
+          profit: profit,
+          vatAmount: vatAmount,
+          total: total
+        },
+        // Add explicit calculation fields for template
+        calculations: {
+          subtotal: itemsSubtotal,
+          overhead: overhead,
+          overheadPercentage: settings.overheadPercentage || 0,
+          profit: profit,
+          profitMargin: settings.profitMargin || 0,
+          vatAmount: vatAmount,
+          vatRate: settings.vatRate || 20,
+          total: total
+        },
         terms: quote?.settings?.terms || "",
         useVat: (quote?.settings?.vatRate || 0) > 0,
         vatRate: quote?.settings?.vatRate || 20

@@ -41,10 +41,36 @@ export const InvoiceGenerationStep = ({
       if (success) {
         // Merge all items before sending to PDF generator
         const mergedItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
+        
+        console.log('Merged items for PDF:', {
+          originalItems: invoice.items?.length || 0,
+          additionalItems: invoice.additional_invoice_items?.length || 0,
+          totalMerged: mergedItems.length,
+          calculatedSubtotal: mergedItems.reduce((sum, item) => sum + item.totalPrice, 0),
+          invoiceSubtotal: invoice.subtotal,
+          invoiceTotal: invoice.total
+        });
+
+        // Recalculate totals client-side to ensure they match
+        const recalculatedSubtotal = mergedItems.reduce((sum, item) => sum + item.totalPrice, 0);
+        const settings = invoice.settings!;
+        const recalculatedOverhead = recalculatedSubtotal * ((settings.overheadPercentage || 0) / 100);
+        const recalculatedProfit = (recalculatedSubtotal + recalculatedOverhead) * ((settings.profitMargin || 0) / 100);
+        const recalculatedVAT = settings.vatRegistered 
+          ? (recalculatedSubtotal + recalculatedOverhead + recalculatedProfit) * ((settings.vatRate || 0) / 100)
+          : 0;
+        const recalculatedTotal = recalculatedSubtotal + recalculatedOverhead + recalculatedProfit + recalculatedVAT;
+
         const completeInvoice = {
           ...invoice,
           items: mergedItems,
           additional_invoice_items: [],
+          // Force recalculated totals
+          subtotal: recalculatedSubtotal,
+          overhead: recalculatedOverhead,
+          profit: recalculatedProfit,
+          vatAmount: recalculatedVAT,
+          total: recalculatedTotal,
           jobDetails: invoice.jobDetails,
         };
         
