@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,10 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { ArrowLeft, FileText, Send, Edit, Eye, Bell, AlertCircle, Plus, Filter, Download, CheckCircle, Mail } from "lucide-react";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
-import { useNavigate } from "react-router-dom";
 import { format, isPast } from "date-fns";
 import { Quote } from "@/types/quote";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import InvoiceTableView from "@/components/electrician/InvoiceTableView";
@@ -18,6 +17,8 @@ import InvoiceCardList from "@/components/electrician/InvoiceCardList";
 const InvoicesPage = () => {
   const { invoices, isLoading, fetchInvoices } = useInvoiceStorage();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const highlightId = searchParams.get('highlight');
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'sent' | 'overdue' | 'paid'>('all');
   const [sendingInvoiceId, setSendingInvoiceId] = useState<string | null>(null);
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
@@ -283,6 +284,22 @@ const InvoicesPage = () => {
     }).length,
     paid: invoices.filter(i => i.invoice_status === 'paid').length,
   };
+
+  // Highlight invoice when navigating from quote
+  useEffect(() => {
+    if (highlightId) {
+      setTimeout(() => {
+        const element = document.getElementById(`invoice-${highlightId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          element.classList.add('ring-2', 'ring-elec-yellow', 'animate-pulse');
+          setTimeout(() => {
+            element.classList.remove('animate-pulse');
+          }, 2000);
+        }
+      }, 100);
+    }
+  }, [highlightId]);
 
   return (
     <div className="space-y-6 md:space-y-8 animate-fade-in px-0">

@@ -2,7 +2,8 @@ import { Quote } from "@/types/quote";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText } from "lucide-react";
+import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { format, isPast } from "date-fns";
 import {
   AlertDialog,
@@ -37,6 +38,7 @@ const InvoiceTableView = ({
   markingPaidId,
   downloadingPdfId,
 }: InvoiceTableViewProps) => {
+  const navigate = useNavigate();
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-GB", {
       style: "currency",
@@ -98,6 +100,7 @@ const InvoiceTableView = ({
           <TableHeader>
             <TableRow>
               <TableHead>Invoice #</TableHead>
+              <TableHead>Quote Ref</TableHead>
               <TableHead>Client</TableHead>
               <TableHead>Issued Date</TableHead>
               <TableHead>Due Date</TableHead>
@@ -112,9 +115,20 @@ const InvoiceTableView = ({
               const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
 
               return (
-                <TableRow key={invoice.id} className="hover:bg-muted/50">
+                <TableRow key={invoice.id} id={`invoice-${invoice.id}`} className="hover:bg-muted/50 transition-all">
                   <TableCell className="font-medium">
                     #{invoice.invoice_number || invoice.quoteNumber}
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => navigate(`/electrician/quotes?highlight=${invoice.id}`)}
+                      className="h-auto p-1 text-xs font-mono hover:text-elec-yellow"
+                    >
+                      <FileText className="h-3 w-3 mr-1" />
+                      #{invoice.quoteNumber}
+                    </Button>
                   </TableCell>
                   <TableCell className="max-w-[200px] truncate">
                     {invoice.client?.name || 'N/A'}

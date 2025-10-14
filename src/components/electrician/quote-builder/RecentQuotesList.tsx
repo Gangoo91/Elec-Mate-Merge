@@ -440,34 +440,54 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             </div>
           </div>
 
+          {/* Send to Invoice Button for Eligible Quotes */}
+          {canRaiseInvoice(quote) && (
+            <div className="px-4 sm:px-5 pb-3 border-t border-elec-yellow/20 pt-3">
+              <MobileButton
+                variant="elec"
+                size="wide"
+                onClick={() => {
+                  setQuoteForInvoice(quote);
+                  setShowInvoiceDecision(true);
+                }}
+                className="bg-gradient-to-r from-elec-yellow to-yellow-400 text-black font-semibold shadow-lg hover:shadow-xl"
+                icon={<Receipt className="h-5 w-5" />}
+              >
+                Send to Invoice
+              </MobileButton>
+            </div>
+          )}
+
+          {/* Invoice Raised Indicator */}
+          {hasInvoiceRaised(quote) && (
+            <div className="px-4 sm:px-5 pb-3 border-t border-green-500/20 pt-3">
+              <div className="flex items-center justify-between bg-green-500/10 rounded-lg p-3">
+                <div className="flex items-center gap-2 text-green-400">
+                  <Check className="h-4 w-4" />
+                  <span className="text-sm font-medium">Invoice Raised</span>
+                  {quote.invoice_number && (
+                    <Badge variant="outline" className="text-xs border-green-500/30">
+                      #{quote.invoice_number}
+                    </Badge>
+                  )}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => navigate(`/electrician/invoices?highlight=${quote.id}`)}
+                  className="text-green-400 hover:text-green-300 hover:bg-green-500/10"
+                >
+                  View Invoice →
+                </Button>
+              </div>
+            </div>
+          )}
+
           {/* Actions */}
           <div className="p-4 sm:p-5 pt-3 border-t">
             <div className="flex gap-2">
               {/* Primary Action */}
-              {hasInvoiceRaised(quote) ? (
-                <MobileButton
-                  variant="elec"
-                  size="sm"
-                  className="flex-1"
-                  onClick={() => navigate('/electrician/invoices')}
-                  icon={<Eye className="h-4 w-4" />}
-                >
-                  View Invoice
-                </MobileButton>
-              ) : canRaiseInvoice(quote) ? (
-                <MobileButton
-                  variant="elec"
-                  size="sm"
-                  className="flex-1"
-                  onClick={() => {
-                    setQuoteForInvoice(quote);
-                    setShowInvoiceDecision(true);
-                  }}
-                  icon={<Receipt className="h-4 w-4" />}
-                >
-                  Raise Invoice
-                </MobileButton>
-              ) : quote.status === 'sent' && onUpdateQuoteStatus ? (
+              {quote.status === 'sent' && onUpdateQuoteStatus ? (
                 <>
                   <MobileButton
                     variant="elec"

@@ -2,7 +2,8 @@ import { Quote } from "@/types/quote";
 import { Badge } from "@/components/ui/badge";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { Button } from "@/components/ui/button";
-import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText } from "lucide-react";
+import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { format, isPast } from "date-fns";
 import {
   AlertDialog,
@@ -37,6 +38,7 @@ const InvoiceCardList = ({
   markingPaidId,
   downloadingPdfId,
 }: InvoiceCardListProps) => {
+  const navigate = useNavigate();
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-GB", {
       style: "currency",
@@ -124,6 +126,7 @@ const InvoiceCardList = ({
         return (
           <div
             key={invoice.id}
+            id={`invoice-${invoice.id}`}
             className={`relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border ${
               invoice.invoice_status === 'paid' 
                 ? 'border-green-500/30 border-l-4 border-l-green-500/60' 
@@ -133,13 +136,24 @@ const InvoiceCardList = ({
             
             {/* Content Container */}
             <div className="relative p-3">
-              {/* Top Row: Invoice Number & Status Badge */}
+              {/* Top Row: Invoice Number, Quote Ref & Status Badge */}
               <div className="flex items-start justify-between mb-3 pb-2 border-b border-primary/20">
-                <div className="flex items-center gap-2 w-full">
-                  <h3 className="text-base sm:text-lg font-bold text-foreground">
-                    #{invoice.invoice_number || invoice.quoteNumber}
-                  </h3>
-                  {getStatusBadge(invoice)}
+                <div className="flex flex-col gap-2 w-full">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base sm:text-lg font-bold text-foreground">
+                      #{invoice.invoice_number || invoice.quoteNumber}
+                    </h3>
+                    {getStatusBadge(invoice)}
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate(`/electrician/quotes?highlight=${invoice.id}`)}
+                    className="h-auto p-1.5 text-xs justify-start hover:bg-elec-yellow/10 w-fit"
+                  >
+                    <ArrowLeft className="h-3 w-3 mr-1" />
+                    Quote #{invoice.quoteNumber}
+                  </Button>
                 </div>
                 {invoice.invoice_status === 'paid' ? (
                   <Button
