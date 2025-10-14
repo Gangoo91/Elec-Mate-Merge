@@ -44,7 +44,7 @@ const ElectricalHub = () => {
     {
       id: 6,
       title: "Invoices",
-      icon: Receipt,
+      icon: PoundSterling,
       link: "/electrician/invoices"
     },
     {
