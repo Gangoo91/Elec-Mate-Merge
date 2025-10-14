@@ -8,6 +8,11 @@ export interface EdgeCaseResult {
   type?: string;
   suggestion?: string;
   allowTheoreticalDesign?: boolean; // Allow AI to continue with warnings
+  autoCorrection?: {
+    suggested: any;
+    confidence: number;
+    explanation: string;
+  };
 }
 
 export function detectEdgeCases(
@@ -35,6 +40,29 @@ Did you mean:
 • Commercial/industrial installation? I'd need to know the supply infrastructure.
 
 Please clarify the load or supply type so I can design this properly.`
+    };
+  }
+  
+  // 1a. PROACTIVE AUTO-CORRECTION: Very high single-phase current suggests three-phase
+  const singlePhaseCurrent = power / voltage;
+  if (singlePhaseCurrent > 100 && phases === 1 && voltage === 230) {
+    const threePhaseVoltage = 400;
+    const threePhaseIb = power / (Math.sqrt(3) * threePhaseVoltage);
+    
+    return {
+      isEdgeCase: true,
+      type: 'unusual_load_single_phase',
+      allowTheoreticalDesign: true,
+      suggestion: `⚠️ Design current of ${singlePhaseCurrent.toFixed(0)}A on single-phase is very high. Consider three-phase supply?`,
+      autoCorrection: {
+        suggested: {
+          ...circuitParams,
+          voltage: threePhaseVoltage,
+          phases: 'three'
+        },
+        confidence: 85,
+        explanation: `At 400V three-phase, design current becomes ${threePhaseIb.toFixed(1)}A (Ib = ${power}W / (√3 × 400V)) which is more practical for this load.`
+      }
     };
   }
   

@@ -17,6 +17,11 @@ import { detectEdgeCases } from './edgeCaseDetection.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { detectIntent } from '../_shared/query-intent.ts';
 import { validateRAGResults, generateCoverageReport } from '../_shared/rag-validator.ts';
+import { validateResponse } from '../_shared/response-validation.ts';
+import { extractConversationalContext, detectFollowUpPattern, enrichSystemPromptWithContext } from '../_shared/conversational-context.ts';
+import { trackUserExpertise } from '../_shared/user-expertise-tracker.ts';
+import { parseCalculationsFromResponse, validateCalculations, generateFixInstructions } from '../_shared/calculation-validator.ts';
+import { loadCoreRegulationsCache } from './core-regulations-cache.ts';
 import { getCableCapacity, TABLE_4D5_TWO_CORE_TE } from "../shared/bs7671CableTables.ts";
 import { calculateOverallCorrectionFactor } from "../shared/bs7671CorrectionFactors.ts";
 import { getCachedQuery, cacheQuery, hashQuery } from '../_shared/query-cache.ts';
@@ -488,9 +493,59 @@ serve(async (req) => {
         error: error instanceof Error ? error.message : String(error),
         requestId 
       });
+      
+      // 🆕 PHASE 4: RAG Failure Fallback Strategy
+      try {
+        const coreRegulations = await loadCoreRegulationsCache(supabase);
+        
+        if (coreRegulations && coreRegulations.length > 0) {
+          logger.warn('⚠️ Using cached core regulations as fallback', {
+            count: coreRegulations.length,
+            requestId
+          });
+          
+          regulations = coreRegulations;
+          relevantRegsText = coreRegulations.map((r: any) => 
+            `Reg ${r.regulation_number}: ${r.content}`
+          ).join('\n\n');
+          
+          agentContext.ragFallback = true;
+        } else {
+          throw new Error('Core regulation cache also unavailable');
+        }
+      } catch (fallbackError) {
+        logger.error('🚨 All RAG systems failed', { fallbackError, requestId });
+        agentContext.ragFallback = true;
+        agentContext.ragFailure = true;
+      }
       // Continue with empty RAG - AI can still provide design
     }
 
+    // 🆕 PHASE 2: Multi-Turn Conversation Intelligence
+    const conversationalContext = extractConversationalContext(
+      messages,
+      conversationSummary,
+      previousAgentOutputs
+    );
+    const followUpDetection = detectFollowUpPattern(userMessage, conversationalContext);
+    
+    if (followUpDetection.isFollowUp) {
+      logger.info('🔗 Follow-up detected', {
+        type: followUpDetection.type,
+        previousTopic: followUpDetection.previousTopic,
+        requestId
+      });
+    }
+    
+    // 🆕 PHASE 6: User Expertise Detection
+    const userExpertise = trackUserExpertise(messages, conversationSummary);
+    logger.info('👤 User expertise detected', {
+      level: userExpertise.level,
+      confidence: userExpertise.confidence,
+      indicators: userExpertise.indicators.slice(0, 3),
+      requestId
+    });
+    
     // Use the projectScope already detected at line 144
     
     let systemPrompt = '';
@@ -503,7 +558,10 @@ serve(async (req) => {
       
       if (isVagueRequest) {
         // Phase 1: Smart assumptions with conversational response
-        systemPrompt = `You are a senior electrical design engineer with 15+ years experience. You're on-site with a colleague planning a ${projectScope.propertyType} installation.
+        // 🆕 Add conversational context enrichment
+        const basePrompt = `You are a senior electrical design engineer with 15+ years experience. You're on-site with a colleague planning a ${projectScope.propertyType} installation.`;
+        systemPrompt = enrichSystemPromptWithContext(basePrompt, followUpDetection, conversationalContext);
+
 
 COMMUNICATION STYLE:
 - Speak like you're on-site, not writing an academic paper
@@ -511,6 +569,8 @@ COMMUNICATION STYLE:
 - Only ask for critical unknowns (specific distances, special locations)
 - Be confident - you know typical domestic setups inside out
 - Use UK English: "earthing" not "grounding", "consumer unit" not "panel"
+
+${userExpertise.adaptationGuidance ? `\n${userExpertise.adaptationGuidance}\n` : ''}
 
 USER REQUEST: "${userMessage}"
 
@@ -545,7 +605,15 @@ Got any longer cable runs or outdoor circuits I should know about?"
 FORMAT: Return as conversational text (NOT JSON). Design the circuits with intelligent assumptions.`;
       } else {
         // Phase 2: Full multi-circuit design with all calculations
-        systemPrompt = `You MUST return ONLY valid JSON. No text before or after. All fields are REQUIRED.
+        
+        // 🆕 Add user expertise adaptation
+        const expertiseGuidance = userExpertise.level === 'apprentice'
+          ? '\n\nUSER LEVEL: Apprentice/Learning. Provide step-by-step explanations and educational context for technical decisions.'
+          : userExpertise.level === 'expert'
+          ? '\n\nUSER LEVEL: Expert. Provide concise technical specs without basic explanations. Focus on advanced considerations and edge cases.'
+          : '\n\nUSER LEVEL: Electrician/Designer. Balance technical accuracy with clarity.';
+        
+        systemPrompt = `You MUST return ONLY valid JSON. No text before or after. All fields are REQUIRED.${expertiseGuidance}
 
 You are a senior electrical design engineer with 15+ years experience, designing circuits to BS 7671:2018+A3:2024 (current as of September 2025).
 
@@ -1566,12 +1634,67 @@ IMPORTANT - RESPONSE FORMAT:
       timestamp: Date.now()
     }).catch(err => logger.warn('Failed to cache query', { error: err.message }));
 
+    // 🆕 PHASE 1: Response Quality Validation
+    const responseValidation = validateResponse(responseContent, userMessage, agentContext);
+    
+    if (!responseValidation.isValid) {
+      logger.warn('⚠️ Response validation failed', {
+        issues: responseValidation.issues,
+        confidence: responseValidation.confidence,
+        requestId
+      });
+    }
+    
+    // 🆕 PHASE 1: Calculation Cross-Validation
+    const extractedCalcs = parseCalculationsFromResponse(responseContent);
+    const calcValidation = validateCalculations(extractedCalcs, circuitParams);
+    
+    if (!calcValidation.isValid) {
+      logger.error('❌ Calculation validation failed', {
+        errors: calcValidation.errors,
+        confidence: calcValidation.confidence,
+        requestId
+      });
+      
+      // If critical calculation errors, should regenerate (commented for now to avoid breaking changes)
+      // const fixInstructions = generateFixInstructions(calcValidation);
+      // Could trigger regeneration here
+    }
+    
+    // 🆕 PHASE 5: Pattern Learning - Store successful design
+    if (structuredData?.circuits && structuredData.circuits.length > 0 && circuitParams.hasEnoughData) {
+      try {
+        await storeDesignPattern({
+          circuitType: circuitParams.circuitType,
+          powerRating: circuitParams.power,
+          voltage: circuitParams.voltage,
+          cableLength: circuitParams.cableLength,
+          designSolution: {
+            cableSize: structuredData.circuits[0].cableSize,
+            protection: structuredData.circuits[0].protectionDevice,
+            summary: structuredData.circuits[0].name
+          },
+          regulationsCited: enrichedResponse.citations?.map((c: any) => c.regulation_number || c.number) || []
+        }, Date.now() - startTime);
+        
+        logger.info('✅ Design pattern stored for future learning');
+      } catch (patternError) {
+        logger.warn('Failed to store pattern', { patternError });
+      }
+    }
+
     return new Response(JSON.stringify({
       response: responseContent,
       structuredData,
       reasoning,
       calculationResults,
       citations: enrichedResponse.citations, // FIX: Use enriched citations with full metadata
+      quality: {
+        validationConfidence: responseValidation.confidence,
+        calculationConfidence: calcValidation.confidence,
+        issues: responseValidation.issues.filter(i => i.severity !== 'info'),
+        calculationWarnings: calcValidation.warnings
+      },
       enrichment: enrichedResponse.enrichment,
       rendering: enrichedResponse.rendering,
       confidence: 0.95,
