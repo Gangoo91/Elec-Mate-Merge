@@ -398,7 +398,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
                     <MoreVertical className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-popover z-50">
+                <DropdownMenuContent align="end" className="w-56 bg-popover border border-elec-yellow/20 z-50">
                   {/* Send to Invoice - for eligible quotes */}
                   {canRaiseInvoice(quote) && (
                     <>
