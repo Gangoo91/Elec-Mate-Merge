@@ -43,13 +43,11 @@ async function scrapeFromScrewfix(logger: any) {
     },
     body: JSON.stringify({
       url: "https://www.screwfix.com/c/electrical-lighting/cables/cat850003",
-      formats: [
-        {
-          type: "extract",
-          schema: extractSchema,
-          prompt: "Extract all electrical cable products from this page. For each product include the name, price (in GBP with £ symbol), brand, image URL, product page URL, and stock availability. Only extract actual products, not navigation items or ads."
-        }
-      ],
+      formats: ["markdown"],
+      extract: {
+        schema: extractSchema,
+        prompt: "Extract all electrical cable products from this Screwfix page. For each product include the name, price (in GBP with £ symbol), brand, image URL, product page URL, and stock availability. Only extract actual products, not navigation items or ads."
+      },
       onlyMainContent: true,
       timeout: 60000,
     }),
