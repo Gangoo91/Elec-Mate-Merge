@@ -44,19 +44,19 @@ serve(async (req) => {
     }
 
     // Parse request body
-    const { quote, companyProfile, invoice_mode, briefing, briefing_mode, documentId, mode } = await req.json();
-    console.log('[PDF-MONKEY] Received request - Mode:', invoice_mode ? 'invoice' : briefing_mode ? 'briefing' : (documentId ? 'status' : 'quote'));
+    const { quote, companyProfile, invoice_mode, briefing, briefing_mode, documentId: requestDocumentId, mode } = await req.json();
+    console.log('[PDF-MONKEY] Received request - Mode:', invoice_mode ? 'invoice' : briefing_mode ? 'briefing' : (requestDocumentId ? 'status' : 'quote'));
 
     // Status-only polling mode: skip creation and just check an existing document
-    if (documentId && (mode === 'status' || (!quote && !briefing))) {
+    if (requestDocumentId && (mode === 'status' || (!quote && !briefing))) {
       try {
-        const statusResponse = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
+        const statusResponse = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${requestDocumentId}`, {
           headers: { 'Authorization': `Bearer ${PDF_MONKEY_API_KEY}` },
         });
         if (!statusResponse.ok) {
           const err = await statusResponse.text();
           console.error('[PDF-MONKEY] Status-check error:', statusResponse.status, err);
-          return new Response(JSON.stringify({ success: false, status: 'unknown', documentId }), {
+          return new Response(JSON.stringify({ success: false, status: 'unknown', documentId: requestDocumentId }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           });
         }
@@ -71,12 +71,12 @@ serve(async (req) => {
             status,
           }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
         }
-        return new Response(JSON.stringify({ success: false, status: status || 'generating', documentId }), {
+        return new Response(JSON.stringify({ success: false, status: status || 'generating', documentId: requestDocumentId }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       } catch (e) {
         console.error('[PDF-MONKEY] Status-check exception:', e);
-        return new Response(JSON.stringify({ success: false, status: 'error', documentId }), {
+        return new Response(JSON.stringify({ success: false, status: 'error', documentId: requestDocumentId }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
@@ -365,7 +365,7 @@ serve(async (req) => {
     console.log('[PDF-MONKEY] PDF generation initiated, document ID:', pdfData.document?.id);
 
     // Poll for document completion (PDF Monkey processes async)
-    let documentId = pdfData.document?.id;
+    const createdDocumentId = pdfData.document?.id;
     let attempts = 0;
     const maxAttempts = 30; // 30 attempts * 2 seconds = 60 seconds max wait
     let documentStatus = pdfData.document?.status;
@@ -373,7 +373,7 @@ serve(async (req) => {
     while (documentStatus !== 'success' && documentStatus !== 'failure' && attempts < maxAttempts) {
       await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
       
-      const statusResponse = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
+      const statusResponse = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${createdDocumentId}`, {
         headers: {
           'Authorization': `Bearer ${PDF_MONKEY_API_KEY}`,
         }
@@ -420,8 +420,8 @@ serve(async (req) => {
       JSON.stringify({
         success: false,
         message: 'PDF generation in progress',
-        documentId: documentId,
-        checkStatusUrl: `https://api.pdfmonkey.io/api/v1/documents/${documentId}`
+        documentId: createdDocumentId,
+        checkStatusUrl: `https://api.pdfmonkey.io/api/v1/documents/${createdDocumentId}`
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
