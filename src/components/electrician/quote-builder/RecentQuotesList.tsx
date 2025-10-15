@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { MobileButton } from '@/components/ui/mobile-button';
-import { Badge } from '@/components/ui/badge';
-import { FileText, Download, Trash2, Eye, Calendar, Check, Mail, Tag, Clock, X, Receipt, User, MoreVertical, ArrowRight } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { Quote, QuoteTag } from '@/types/quote';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
@@ -12,15 +10,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { InvoiceDecisionDialog } from '@/components/electrician/invoice-builder/InvoiceDecisionDialog';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
-import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu';
-import { format } from 'date-fns';
+import { Badge } from '@/components/ui/badge';
+import QuoteTableView from '@/components/electrician/quote-builder/QuoteTableView';
+import QuoteCardView from '@/components/electrician/quote-builder/QuoteCardView';
 
 interface RecentQuotesListProps {
   quotes: Quote[];
@@ -420,260 +412,40 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
 
   return (
     <div className="space-y-4">
-      {displayQuotes.map((quote) => (
-        <div
-          key={quote.id}
-          className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
-        >
-          {/* Header */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Badge variant="outline" className="text-xs">
-                Quote #{quote.quoteNumber}
-              </Badge>
-              {hasInvoiceRaised(quote) && (
-                <>
-                  <ArrowRight className="h-3 w-3" />
-                  <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
-                    <Receipt className="h-3 w-3 mr-1" />
-                    Invoice Raised
-                  </Badge>
-                </>
-              )}
-            </div>
-            
-            <div className="flex items-start justify-between gap-3">
-              {getAcceptanceStatusBadge(quote)}
-              <span className="text-lg font-bold text-elec-yellow shrink-0">
-                {formatCurrency(quote.total)}
-              </span>
-            </div>
-          </div>
+      {/* Desktop Table View */}
+      <QuoteTableView
+        quotes={displayQuotes}
+        loadingAction={loadingAction}
+        handleRegeneratePDF={handleRegeneratePDF}
+        handleStatusUpdate={handleStatusUpdate}
+        onNavigate={navigate}
+        hasInvoiceRaised={hasInvoiceRaised}
+        getAcceptanceStatusBadge={getAcceptanceStatusBadge}
+        formatCurrency={formatCurrency}
+        canRaiseInvoice={canRaiseInvoice}
+        onInvoiceAction={(quote) => {
+          setQuoteForInvoice(quote);
+          setShowInvoiceDecision(true);
+        }}
+      />
 
-          {/* Client Info */}
-          <div className="flex items-center gap-2 text-sm">
-            <User className="h-4 w-4 text-muted-foreground" />
-            <span className="font-medium truncate">{quote.client.name}</span>
-          </div>
-
-          {/* Meta Info */}
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <div className="flex items-center gap-1.5">
-              <Calendar className="h-3.5 w-3.5" />
-              <span>{format(new Date(quote.createdAt), "dd MMM yyyy")}</span>
-            </div>
-            <span className="text-border">•</span>
-            <div className="flex items-center gap-1.5">
-              <span>{quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleRegeneratePDF(quote)}
-              disabled={loadingAction === `pdf-${quote.id}`}
-              className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
-            >
-              <Download className="h-3 w-3 mr-1" />
-              {loadingAction === `pdf-${quote.id}` ? 'Downloading...' : 'Download'}
-            </Button>
-            <Button
-              variant="default"
-              size="sm"
-              onClick={() => navigate(`/electrician/quote-builder/${quote.id}`)}
-              className="flex-1 text-xs bg-elec-yellow hover:bg-elec-yellow/90 text-black border-0"
-            >
-              <Eye className="h-3 w-3 mr-1" />
-              View Quote
-            </Button>
-          </div>
-
-          {/* Send Button - Full Width */}
-          <QuoteSendDropdown 
-            quote={quote}
-            onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
-            disabled={!quote.client?.email}
-          />
-
-          {/* Accept/Reject Actions - Only for 'sent' quotes */}
-          {quote.status === 'sent' && quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected' && (
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleActionClick(quote, 'accept')}
-                disabled={loadingAction === `action-${quote.id}`}
-                className="flex-1 text-xs border-green-600/30 text-green-400 hover:bg-green-600/10"
-              >
-                <Check className="h-3 w-3 mr-1" />
-                {loadingAction === `action-${quote.id}` ? 'Processing...' : 'Accept Quote'}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleActionClick(quote, 'reject')}
-                disabled={loadingAction === `action-${quote.id}`}
-                className="flex-1 text-xs border-red-600/30 text-red-400 hover:bg-red-600/10"
-              >
-                <X className="h-3 w-3 mr-1" />
-                Reject
-              </Button>
-            </div>
-          )}
-
-          {/* Send to Invoice - Only for ACCEPTED quotes */}
-          {canRaiseInvoice(quote) && (
-            <div className="pt-2 border-t border-elec-yellow/10">
-              <Button
-                variant="default"
-                size="sm"
-                onClick={() => {
-                  setQuoteForInvoice(quote);
-                  setShowInvoiceDecision(true);
-                }}
-                disabled={loadingAction === `invoice-${quote.id}`}
-                className="w-full text-xs bg-gradient-to-r from-elec-yellow to-yellow-400 text-black font-semibold hover:from-elec-yellow/90 hover:to-yellow-400/90"
-              >
-                <Receipt className="h-3 w-3 mr-1" />
-                {loadingAction === `invoice-${quote.id}` ? 'Creating Invoice...' : 'Send to Invoice'}
-              </Button>
-            </div>
-          )}
-
-          {/* Actions Dropdown - Hidden for mobile */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="sm"
-                className="hidden h-8 w-8 p-0 hover:bg-elec-yellow/10"
-              >
-                <MoreVertical className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-popover border border-elec-yellow/20 z-50">
-                  {/* Send to Invoice - for eligible quotes */}
-                  {canRaiseInvoice(quote) && (
-                    <>
-                      <DropdownMenuItem 
-                        onClick={() => {
-                          setQuoteForInvoice(quote);
-                          setShowInvoiceDecision(true);
-                        }}
-                        className="text-elec-yellow font-medium"
-                      >
-                        <Receipt className="h-4 w-4 mr-2" />
-                        Send to Invoice
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                    </>
-                  )}
-                  
-                  {/* Download PDF */}
-                  <DropdownMenuItem 
-                    onClick={() => handleRegeneratePDF(quote)}
-                    disabled={loadingAction === `pdf-${quote.id}`}
-                  >
-                    <Download className="h-4 w-4 mr-2" />
-                    {loadingAction === `pdf-${quote.id}` ? 'Downloading...' : 'Download PDF'}
-                  </DropdownMenuItem>
-                  
-                  <DropdownMenuItem onClick={() => navigate(`/electrician/quote-builder/${quote.id}`)}>
-                    <Eye className="h-4 w-4 mr-2" />
-                    View/Edit Quote
-                  </DropdownMenuItem>
-                  
-                  <DropdownMenuSeparator />
-                  
-                  {/* Status Updates for 'sent' quotes */}
-                  {onUpdateQuoteStatus && quote.status === 'sent' && (
-                    <>
-                      <DropdownMenuItem 
-                        onClick={() => handleActionClick(quote, 'accept')}
-                        disabled={loadingAction.startsWith(`action-${quote.id}`)}
-                        className="text-green-400"
-                      >
-                        <Check className="h-4 w-4 mr-2" />
-                        Accept Quote
-                      </DropdownMenuItem>
-                      <DropdownMenuItem 
-                        onClick={() => handleActionClick(quote, 'reject')}
-                        disabled={loadingAction.startsWith(`action-${quote.id}`)}
-                        className="text-destructive"
-                      >
-                        <X className="h-4 w-4 mr-2" />
-                        Reject Quote
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                    </>
-                  )}
-                  
-                  {/* Status Updates for other statuses */}
-                  {onUpdateQuoteStatus && quote.status !== 'sent' && (
-                    <>
-                      {quote.status === 'pending' && (
-                        <>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['job_not_complete'])}>
-                            <Clock className="h-4 w-4 mr-2" />
-                            Mark Job Not Complete
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'pending', ['awaiting_payment'])}>
-                            <Clock className="h-4 w-4 mr-2" />
-                            Mark Awaiting Payment
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved')}>
-                            <Check className="h-4 w-4 mr-2" />
-                            Mark as Approved
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                        </>
-                      )}
-                      {quote.status === 'approved' && !quote.tags?.includes('work_done') && (
-                        <>
-                          <DropdownMenuItem onClick={() => handleStatusUpdate(quote.id, 'approved', ['work_done'])}>
-                            <Check className="h-4 w-4 mr-2" />
-                            Mark Work Complete
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                        </>
-                      )}
-                    </>
-                  )}
-                  
-                  {/* Payment Reminders */}
-                  {onSendPaymentReminder && quote.tags?.includes('awaiting_payment') && (
-                    <>
-                      <DropdownMenuItem onClick={() => handleSendReminder(quote.id, 'gentle')}>
-                        <Mail className="h-4 w-4 mr-2" />
-                        Send Gentle Reminder
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleSendReminder(quote.id, 'firm')}>
-                        <Mail className="h-4 w-4 mr-2" />
-                        Send Firm Reminder
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleSendReminder(quote.id, 'final')}>
-                        <Mail className="h-4 w-4 mr-2" />
-                        Send Final Notice
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                    </>
-                  )}
-                  
-                  {/* Delete */}
-                  <DropdownMenuItem 
-                    onClick={() => handleDeleteQuote(quote)}
-                    className="text-red-500 focus:text-red-500"
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete Quote
-                  </DropdownMenuItem>
-                  </DropdownMenuContent>
-              </DropdownMenu>
-        </div>
-      ))}
+      {/* Mobile/Tablet Card View */}
+      <QuoteCardView
+        quotes={displayQuotes}
+        loadingAction={loadingAction}
+        handleRegeneratePDF={handleRegeneratePDF}
+        handleActionClick={handleActionClick}
+        handleStatusUpdate={handleStatusUpdate}
+        onNavigate={navigate}
+        hasInvoiceRaised={hasInvoiceRaised}
+        getAcceptanceStatusBadge={getAcceptanceStatusBadge}
+        formatCurrency={formatCurrency}
+        canRaiseInvoice={canRaiseInvoice}
+        onInvoiceAction={(quote) => {
+          setQuoteForInvoice(quote);
+          setShowInvoiceDecision(true);
+        }}
+      />
       
       {!showAll && quotes.length > 10 && (
         <Card className="border-elec-yellow/20 bg-elec-gray/50">
