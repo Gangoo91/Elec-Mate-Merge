@@ -114,12 +114,6 @@ export const CompanyBrandingStep = ({ onComplete }: CompanyBrandingStepProps) =>
         logo_data_url: logoDataUrl,
       });
       
-      toast({
-        title: "Company profile saved",
-        description: "Your company branding has been updated successfully.",
-        variant: "success",
-      });
-      
       onComplete?.();
     } catch (error) {
       console.error('Error saving company profile:', error);
