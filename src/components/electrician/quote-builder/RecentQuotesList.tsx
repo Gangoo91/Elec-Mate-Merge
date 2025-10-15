@@ -460,7 +460,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons - Exact Match to Invoice */}
           <div className="flex gap-2">
             <Button
               variant="ghost"
@@ -470,15 +470,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
             >
               <Download className="h-3 w-3 mr-1" />
-              {loadingAction === `pdf-${quote.id}` ? 'Downloading...' : 'Download PDF'}
+              {loadingAction === `pdf-${quote.id}` ? 'Downloading...' : 'Download'}
             </Button>
-            
-            <QuoteSendDropdown 
-              quote={quote}
-              onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
-              disabled={!quote.client?.email}
-            />
-            
             <Button
               variant="default"
               size="sm"
@@ -486,8 +479,30 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               className="flex-1 text-xs bg-elec-yellow hover:bg-elec-yellow/90 text-black border-0"
             >
               <Eye className="h-3 w-3 mr-1" />
-              View/Edit
+              View Quote
             </Button>
+          </div>
+
+          {/* Send/More Actions */}
+          <div className="flex gap-2 pt-2 border-t border-elec-yellow/10">
+            <QuoteSendDropdown 
+              quote={quote}
+              onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
+              disabled={!quote.client?.email}
+            />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="px-3">
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => handleDeleteQuote(quote)} className="text-destructive">
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete Quote
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Accept/Reject Actions - Only for 'sent' quotes */}
