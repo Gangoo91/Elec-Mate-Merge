@@ -100,24 +100,26 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
       )}
 
       {/* Action buttons */}
-      <div className="flex flex-col sm:flex-row gap-2 pt-2">
+      <div className="flex gap-2 pt-2">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => onDuplicate(item)}
-          className="w-full sm:flex-1 h-9 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
+          className="flex-1 h-11 min-w-[44px] border border-elec-yellow/20 hover:bg-elec-yellow/10"
+          aria-label="Duplicate item"
         >
-          <Copy className="h-3 w-3 mr-1" />
-          Duplicate
+          <Copy className="h-4 w-4" />
+          <span className="ml-1.5 hidden xs:inline sm:hidden md:inline">Duplicate</span>
         </Button>
         <Button
           variant="ghost"
           size="sm"
           onClick={() => onRemove(item.id)}
-          className="w-full sm:flex-1 h-9 text-xs border border-destructive/30 hover:bg-destructive/10 text-destructive"
+          className="flex-1 h-11 min-w-[44px] border border-destructive/30 hover:bg-destructive/10 text-destructive"
+          aria-label="Remove item"
         >
-          <Trash2 className="h-3 w-3 mr-1" />
-          Remove
+          <Trash2 className="h-4 w-4" />
+          <span className="ml-1.5 hidden xs:inline sm:hidden md:inline">Remove</span>
         </Button>
       </div>
     </Card>
