@@ -785,11 +785,12 @@ export const InvoiceItemsStep = ({
                       <Label htmlFor="unit-price" className="text-sm font-medium">Unit Price (£)</Label>
                       <Input
                         type="number"
-                        value={newItem.unitPrice}
+                        value={newItem.unitPrice === 0 ? "" : newItem.unitPrice}
                         onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
                         min="0"
                         step="0.01"
                         className="h-12"
+                        placeholder="Enter price"
                       />
                     </div>
 

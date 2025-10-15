@@ -571,7 +571,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                           <Input
                             type="number"
                             inputMode="decimal"
-                            value={item.unitPrice}
+                            value={item.unitPrice === 0 ? "" : item.unitPrice}
                             onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
                             className="w-24 text-left h-10"
                             min="0"
