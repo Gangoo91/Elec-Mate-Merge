@@ -425,10 +425,12 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           key={quote.id}
           className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
         >
-          {/* Header with Quote Number & Acceptance Status */}
+          {/* Header with Quote Number */}
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-xs">
-              <Badge variant="outline">{quote.quoteNumber}</Badge>
+              <Badge variant="outline" className="text-xs">
+                {quote.quoteNumber}
+              </Badge>
             </div>
             
             <div className="flex items-start justify-between gap-3">
@@ -445,7 +447,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             <span className="font-medium truncate">{quote.client.name}</span>
           </div>
 
-          {/* Meta Info - Date & Items */}
+          {/* Meta Info */}
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <div className="flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5" />
@@ -459,15 +461,15 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex gap-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => handleRegeneratePDF(quote)}
               disabled={loadingAction === `pdf-${quote.id}`}
-              className="h-12 sm:h-9 text-base sm:text-xs flex-1 border border-elec-yellow/20 hover:bg-elec-yellow/10"
+              className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
             >
-              <Download className="h-4 w-4 sm:h-3 sm:w-3 mr-2 sm:mr-1" />
+              <Download className="h-3 w-3 mr-1" />
               {loadingAction === `pdf-${quote.id}` ? 'Downloading...' : 'Download PDF'}
             </Button>
             
@@ -475,16 +477,15 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               quote={quote}
               onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
               disabled={!quote.client?.email}
-              className="h-12 sm:h-9 text-base sm:text-xs flex-1 border border-elec-yellow/20 hover:bg-elec-yellow/10"
             />
             
             <Button
               variant="default"
               size="sm"
               onClick={() => navigate(`/electrician/quote-builder/${quote.id}`)}
-              className="h-12 sm:h-9 text-base sm:text-xs flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+              className="flex-1 text-xs bg-elec-yellow hover:bg-elec-yellow/90 text-black border-0"
             >
-              <Eye className="h-4 w-4 sm:h-3 sm:w-3 mr-2 sm:mr-1" />
+              <Eye className="h-3 w-3 mr-1" />
               View/Edit
             </Button>
           </div>
