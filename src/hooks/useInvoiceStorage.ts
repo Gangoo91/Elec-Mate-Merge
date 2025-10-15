@@ -212,6 +212,9 @@ export const useInvoiceStorage = () => {
 
           if (pdfUpdateError) {
             console.error('PDF metadata update error:', pdfUpdateError);
+          } else {
+            // Wait a moment for database to fully commit the update
+            await new Promise(resolve => setTimeout(resolve, 500));
           }
 
           toast({
