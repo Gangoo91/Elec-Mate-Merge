@@ -200,7 +200,7 @@ export const useInvoiceStorage = () => {
 
         // 4. Store PDF metadata with current timestamp
         if (pdfUrl && documentId) {
-          await supabase
+          const { error: pdfUpdateError } = await supabase
             .from('quotes')
             .update({
               pdf_document_id: documentId,
@@ -209,6 +209,10 @@ export const useInvoiceStorage = () => {
               pdf_version: (invoice.pdf_version || 0) + 1
             })
             .eq('id', invoice.id);
+
+          if (pdfUpdateError) {
+            console.error('PDF metadata update error:', pdfUpdateError);
+          }
 
           toast({
             title: 'PDF generated',
@@ -225,6 +229,7 @@ export const useInvoiceStorage = () => {
         });
       }
 
+      // 5. Refetch to get the latest data including PDF URL
       await fetchInvoices();
       return true;
     } catch (error) {
