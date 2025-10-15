@@ -101,8 +101,27 @@ export const InvoiceGenerationStep = ({
         throw new Error('Failed to generate professional PDF');
       }
 
-      // Open PDF in new tab
-      window.open(pdfUrl, '_blank');
+      // Update database with new PDF metadata
+      if (pdfUrl && documentId && invoice.id) {
+        const newVersion = (invoice.pdf_version || 0) + 1;
+        const { error: updateError } = await supabase
+          .from('quotes')
+          .update({
+            pdf_url: pdfUrl,
+            pdf_document_id: documentId,
+            pdf_generated_at: new Date().toISOString(),
+            pdf_version: newVersion
+          })
+          .eq('id', invoice.id);
+
+        if (updateError) {
+          console.error('Failed to update PDF metadata:', updateError);
+        }
+      }
+
+      // Add cache busting to ensure fresh PDF
+      const cacheBustedUrl = `${pdfUrl}?t=${Date.now()}`;
+      window.open(cacheBustedUrl, '_blank');
 
       toast({
         title: 'Invoice PDF Ready',
