@@ -382,15 +382,16 @@ export const InvoiceItemsStep = ({
                               totalPrice: quantity * item.unitPrice 
                             });
                           }}
-                          className="w-20 text-center h-8"
+                          className="w-full max-w-[100px] mx-auto text-center h-9"
                           min="0.1"
                           step="0.1"
+                          aria-label={`Quantity for ${item.description}`}
                         />
                       </TableCell>
                       <TableCell className="text-center py-3">
                         <span className="text-sm text-muted-foreground">{item.unit}</span>
                       </TableCell>
-                      <TableCell className="text-right py-3">
+                      <TableCell className="py-3">
                         <Input
                           type="number"
                           value={item.unitPrice}
@@ -401,9 +402,10 @@ export const InvoiceItemsStep = ({
                               totalPrice: item.quantity * unitPrice 
                             });
                           }}
-                          className="w-24 text-left ml-auto h-8"
+                          className="w-full max-w-[120px] ml-auto text-right h-9"
                           min="0"
                           step="0.01"
+                          aria-label={`Unit price for ${item.description}`}
                         />
                       </TableCell>
                       <TableCell className="text-right py-3">
