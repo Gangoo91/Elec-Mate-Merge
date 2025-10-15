@@ -255,7 +255,7 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
 
       {/* Job Details */}
       {quote.jobDetails && (
-        <Card className="bg-card/50 border-border/20">
+        <Card className="bg-card/50 border border-primary/10">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Briefcase className="h-5 w-5" />
