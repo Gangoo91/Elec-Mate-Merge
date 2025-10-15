@@ -425,12 +425,21 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           key={quote.id}
           className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
         >
-          {/* Header with Quote Number */}
+          {/* Header with Quote Badge */}
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Badge variant="outline" className="text-xs">
+              <Badge variant="default" className="text-xs bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                <FileText className="h-3 w-3 mr-1" />
                 Quote #{quote.quoteNumber}
               </Badge>
+              {hasInvoiceRaised(quote) && (
+                <>
+                  <Receipt className="h-3 w-3" />
+                  <Badge variant="success" className="text-xs">
+                    Invoice Raised
+                  </Badge>
+                </>
+              )}
             </div>
             
             <div className="flex items-start justify-between gap-3">
@@ -455,8 +464,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             </div>
             <span className="text-border">•</span>
             <div className="flex items-center gap-1.5">
-              <FileText className="h-3.5 w-3.5" />
-              <span>{quote.items.length} items</span>
+              <span>{quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
             </div>
           </div>
 
