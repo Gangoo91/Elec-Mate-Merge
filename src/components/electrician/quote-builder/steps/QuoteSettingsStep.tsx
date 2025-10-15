@@ -44,7 +44,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
     <Form {...form}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* VAT Settings */}
-        <Card className="bg-elec-gray/50 border-elec-yellow/20">
+        <Card className="bg-elec-gray/50 border border-elec-yellow/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Percent className="h-5 w-5" />
@@ -101,7 +101,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
         </Card>
 
         {/* AI Enhancement Settings */}
-        <Card className="bg-elec-gray/50 border-elec-yellow/20">
+        <Card className="bg-elec-gray/50 border border-elec-yellow/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Brain className="h-5 w-5" />

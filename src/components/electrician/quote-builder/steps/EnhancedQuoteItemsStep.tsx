@@ -480,7 +480,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
       {/* Items List */}
       {items.length > 0 && (
-        <Card className="bg-card border-primary/20">
+        <Card className="bg-card border border-primary/20">
           <CardHeader className="pb-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <CardTitle className="text-base sm:text-lg">Quote Items ({items.length})</CardTitle>
