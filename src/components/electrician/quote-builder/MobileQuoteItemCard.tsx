@@ -34,14 +34,17 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
   return (
     <Card className="p-3 sm:p-4 border-elec-yellow/20 bg-card/50 space-y-3">
       {/* Header with category and price */}
-      <div className="flex items-start justify-between gap-2 sm:gap-3">
-        <Badge variant="outline" className={`${getCategoryColor(item.category)} flex items-center gap-1 text-xs`}>
+      <div className="flex items-start justify-between gap-3">
+        <Badge variant="outline" className={`${getCategoryColor(item.category)} flex items-center gap-1 text-xs shrink-0`}>
           {getCategoryIcon(item.category)}
           {item.category}
         </Badge>
-        <span className="text-lg font-bold text-elec-yellow shrink-0">
-          £{item.totalPrice.toFixed(2)}
-        </span>
+        <div className="flex flex-col items-end min-w-0">
+          <span className="text-xs text-muted-foreground">Total</span>
+          <span className="text-base sm:text-lg font-bold text-elec-yellow truncate max-w-[150px]">
+            £{item.totalPrice.toFixed(2)}
+          </span>
+        </div>
       </div>
 
       {/* Description */}
