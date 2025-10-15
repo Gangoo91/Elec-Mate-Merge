@@ -72,11 +72,7 @@ export const InvoiceGenerationStep = ({
         jobDetails: invoice.jobDetails,
       };
 
-      // Generate professional PDF using PDF Monkey template
-      toast({
-        title: 'Generating Professional PDF',
-        description: 'Creating invoice preview with your branded template...',
-      });
+      // Generate PDF silently - show loading in button UI
 
       const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: {
@@ -92,7 +88,6 @@ export const InvoiceGenerationStep = ({
       let pdfUrl: string | undefined = pdfData?.downloadUrl;
       const documentId: string | undefined = pdfData?.documentId;
       if (!pdfUrl && documentId) {
-        toast({ title: 'Preparing PDF…', description: 'Finalising your professional invoice…' });
         pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
       }
 
@@ -122,15 +117,14 @@ export const InvoiceGenerationStep = ({
       window.open(pdfUrl, '_blank');
 
       toast({
-        title: 'Invoice PDF Ready',
-        description: 'Professional invoice PDF has been generated',
+        title: 'PDF ready',
         variant: 'success',
       });
     } catch (error) {
       console.error('Preview PDF error:', error);
       toast({
-        title: 'PDF Generation Failed',
-        description: error instanceof Error ? error.message : 'Failed to generate PDF preview',
+        title: 'PDF generation failed',
+        description: error instanceof Error ? error.message : 'Please try again',
         variant: 'destructive',
       });
     } finally {

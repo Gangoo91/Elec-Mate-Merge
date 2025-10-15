@@ -22,10 +22,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
     try {
-      toast({
-        title: "Generating Professional PDF",
-        description: "Creating your quote PDF, this may take a moment...",
-      });
+      // Generate PDF silently - loading state shown in button
 
       // Create a default company profile if none exists
       const effectiveCompanyProfile = companyProfile || {
@@ -76,17 +73,15 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
       }
 
       if (data.success && data.downloadUrl) {
-        // Open the PDF in a new tab
         window.open(data.downloadUrl, '_blank');
-        
         toast({
-          title: "Success",
-          description: "Quote PDF generated successfully!",
+          title: "PDF ready",
+          variant: "success",
         });
       } else if (data.documentId) {
         toast({
-          title: "PDF Generation In Progress",
-          description: "Your PDF is being generated. Check back in a moment.",
+          title: "PDF in progress",
+          description: "Check back in a moment",
         });
       } else {
         throw new Error(data.error || 'Failed to generate PDF');
@@ -94,8 +89,8 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
     } catch (error) {
       console.error('PDF generation error:', error);
       toast({
-        title: "Error",
-        description: error.message || "Failed to generate PDF. Please try again.",
+        title: "PDF generation failed",
+        description: error.message || "Please try again",
         variant: "destructive",
       });
     } finally {
@@ -125,16 +120,11 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
     setIsSendingEmail(true);
     
     try {
-      // Get effective company profile
+      // Get effective company profile (send silently - loading shown in button)
       const effectiveCompanyProfile = companyProfile || {
         company_name: "Your Electrical Company",
         company_email: "contact@yourcompany.com"
       };
-
-      toast({
-        title: "Sending Email",
-        description: "Preparing and sending your quote via Gmail...",
-      });
 
       const { data, error } = await supabase.functions.invoke('send-quote-email', {
         body: {
@@ -154,8 +144,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
 
       if (data?.success) {
         toast({
-          title: "Email Sent Successfully",
-          description: `Quote ${quote.quoteNumber} has been sent to ${quote.client.email}`,
+          title: "Email sent",
           variant: "success"
         });
       } else {
@@ -182,8 +171,8 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
       window.open(mailtoLink);
       
       toast({
-        title: "Gmail API Error",
-        description: "Gmail API authentication failed. Please configure Gmail credentials in settings. Opening default email client instead.",
+        title: "Gmail API error",
+        description: "Opening default email client instead",
         variant: "destructive"
       });
     } finally {

@@ -18,9 +18,16 @@ const toast = ({ title, description, variant = "default", ...props }: ToastProps
     color: "white",
   };
 
+  // Auto-dismiss durations based on variant
+  const defaultDuration = 
+    variant === "success" ? 3000 :     // Success - 3s
+    variant === "destructive" ? 5000 : // Errors - 5s (more time to read)
+    3000;                              // Default - 3s
+
   return sonnerToast(title, {
     description,
     style: styles,
+    duration: props.duration ?? defaultDuration,
     ...props,
   });
 };

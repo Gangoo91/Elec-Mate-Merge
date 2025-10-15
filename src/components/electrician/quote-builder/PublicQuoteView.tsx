@@ -158,8 +158,7 @@ const PublicQuoteView = () => {
       if (updateError) throw updateError;
 
       toast({
-        title: "Quote Accepted",
-        description: "Thank you! Your acceptance has been recorded.",
+        title: "Quote accepted",
         variant: "success"
       });
 
@@ -198,8 +197,7 @@ const PublicQuoteView = () => {
       if (error) throw error;
 
       toast({
-        title: "Quote Rejected",
-        description: "Your response has been recorded.",
+        title: "Quote rejected",
         variant: "success"
       });
 

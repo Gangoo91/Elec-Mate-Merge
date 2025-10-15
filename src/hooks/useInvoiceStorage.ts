@@ -142,17 +142,8 @@ export const useInvoiceStorage = () => {
 
       if (updateError) throw updateError;
 
-      toast({
-        title: 'Invoice saved',
-        description: `Invoice ${invoice.invoice_number} has been saved successfully.`,
-      });
-
-      // 2. Force regenerate PDF with LATEST data on every save
+      // 2. Force regenerate PDF with LATEST data on every save (silent background process)
       try {
-        toast({
-          title: 'Generating PDF',
-          description: 'Creating invoice PDF with latest data...',
-        });
 
         const { data: companyData } = await supabase
           .from('company_profiles')
@@ -212,18 +203,19 @@ export const useInvoiceStorage = () => {
           if (pdfUpdateError) {
             console.error('PDF metadata update error:', pdfUpdateError);
           }
-
-          toast({
-            title: 'Success',
-            description: 'Invoice saved with updated PDF',
-          });
         }
+
+        // Show single success toast after everything is done
+        toast({
+          title: 'Invoice saved',
+          variant: 'success',
+        });
       } catch (pdfError) {
         console.error('PDF generation error:', pdfError);
-        // Don't fail the save if PDF generation fails
+        // Show success toast even if PDF generation fails (it's a background process)
         toast({
-          title: 'PDF generation skipped',
-          description: 'Invoice saved, PDF will generate on next download',
+          title: 'Invoice saved',
+          variant: 'success',
         });
       }
 
@@ -255,7 +247,7 @@ export const useInvoiceStorage = () => {
 
       toast({
         title: 'Work marked complete',
-        description: 'You can now raise an invoice for this quote.',
+        variant: 'success',
       });
 
       return true;
@@ -281,7 +273,7 @@ export const useInvoiceStorage = () => {
 
       toast({
         title: 'Status updated',
-        description: `Invoice status changed to ${status}`,
+        variant: 'success',
       });
 
       await fetchInvoices();
@@ -323,7 +315,7 @@ export const useInvoiceStorage = () => {
 
       toast({
         title: 'Invoice deleted',
-        description: 'Invoice has been deleted successfully.',
+        variant: 'success',
       });
 
       await fetchInvoices();

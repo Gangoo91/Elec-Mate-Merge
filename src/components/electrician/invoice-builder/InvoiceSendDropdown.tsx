@@ -140,8 +140,7 @@ export const InvoiceSendDropdown = ({
       };
 
       toast({
-        title: 'Payment reminder sent',
-        description: `${reminderLabels[reminderType]} sent to ${invoice.client?.email}`,
+        title: 'Reminder sent',
         variant: 'success',
       });
 
@@ -190,12 +189,7 @@ export const InvoiceSendDropdown = ({
         console.error('Company profile error:', companyError);
       }
 
-      // Step 2: Generate fresh PDF with latest data
-      toast({
-        title: 'Generating Professional PDF',
-        description: 'Creating invoice with latest data...',
-      });
-
+      // Step 2: Generate fresh PDF with latest data (silently)
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         throw new Error('User not authenticated');
@@ -217,7 +211,6 @@ export const InvoiceSendDropdown = ({
       const documentId = pdfData?.documentId;
 
       if (!pdfUrl && documentId) {
-        toast({ title: 'Preparing PDF…', description: 'Finalising your professional invoice…' });
         pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
       }
 
@@ -286,8 +279,8 @@ ${companyName}`;
       window.open(whatsappUrl, '_blank');
 
       toast({
-        title: 'WhatsApp opened',
-        description: 'Invoice PDF ready to send',
+        title: 'Sent via WhatsApp',
+        variant: 'success',
       });
 
       onSuccess?.();
