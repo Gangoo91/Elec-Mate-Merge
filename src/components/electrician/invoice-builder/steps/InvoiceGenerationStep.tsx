@@ -178,18 +178,6 @@ export const InvoiceGenerationStep = ({
             <span>Subtotal:</span>
             <span>{formatCurrency(invoice.subtotal || 0)}</span>
           </div>
-          {invoice.overhead && invoice.overhead > 0 && (
-            <div className="flex justify-between text-sm">
-              <span>Overhead:</span>
-              <span>{formatCurrency(invoice.overhead)}</span>
-            </div>
-          )}
-          {invoice.profit && invoice.profit > 0 && (
-            <div className="flex justify-between text-sm">
-              <span>Profit:</span>
-              <span>{formatCurrency(invoice.profit)}</span>
-            </div>
-          )}
           {invoice.vatAmount && invoice.vatAmount > 0 && (
             <div className="flex justify-between text-sm">
               <span>VAT:</span>
