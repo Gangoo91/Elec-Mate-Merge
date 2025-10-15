@@ -160,7 +160,7 @@ export async function callLovableAI(
   } = {}
 ): Promise<string> {
   const {
-    model = 'google/gemini-2.5-flash',
+    model = 'openai/gpt-5-mini',
     temperature,
     maxTokens = 2000,
     responseFormat = 'text'

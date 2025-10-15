@@ -515,7 +515,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         try {
           const geminiStart = Date.now();
           aiResult = await callAI(LOVABLE_API_KEY, {
-            model: 'google/gemini-2.5-flash',
+            model: 'openai/gpt-5-mini',
             systemPrompt,
             userPrompt,
             maxTokens: 1500,

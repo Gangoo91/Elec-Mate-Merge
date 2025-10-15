@@ -129,6 +129,14 @@ serve(async (req) => {
       contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.slice(-6).map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
       ).join('\n');
+      
+      contextSection += '\n\n⚠️ CRITICAL INSTRUCTION - CONVERSATIONAL MODE:\n';
+      contextSection += 'This is an ongoing conversation, NOT a standalone query. You MUST:\n';
+      contextSection += '1. Reference previous messages naturally (e.g., "Right, for that 10kW shower circuit we tested...")\n';
+      contextSection += '2. Build on earlier test results (e.g., "Since we already measured Zs at 1.2Ω...")\n';
+      contextSection += '3. Notice context changes (e.g., "Wait, the circuit type changed - we need different tests...")\n';
+      contextSection += '4. Respond like an experienced testing engineer having a conversation, not filling out a form\n';
+      contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
     const systemPrompt = `You are a GN3 PRACTICAL TESTING GURU - BS 7671:2018+A3:2024 Chapter 64 specialist.
@@ -285,11 +293,11 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
     const aiResult = await callAI(LOVABLE_API_KEY!, {
-      model: 'google/gemini-2.5-flash',
+      model: 'openai/gpt-5-mini',
       systemPrompt,
       userPrompt,
-      maxTokens: 2000,
-      timeoutMs: 30000, // Reduced from 55s to 30s
+      maxTokens: 3000,
+      timeoutMs: 35000,
       tools: [{
         type: 'function',
         function: {
@@ -300,7 +308,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
             properties: {
               response: {
                 type: 'string',
-                description: 'COMPREHENSIVE GN3 testing guidance (300-400 words)'
+                description: 'Natural testing guidance. Reference conversation context. Detailed step-by-step as needed.'
               },
               testingProcedure: {
                 type: 'object',
@@ -384,7 +392,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                 }
               }
             },
-            required: ['response', 'testingProcedure'],
+            required: ['response'],
             additionalProperties: false
           }
         }

@@ -13,6 +13,7 @@ export const handleConsultation = async (
   messages: any[],
   selectedAgents: AgentType[],
   currentDesign: any,
+  conversationId: string,
   maxRetries = 2,
   onProgress?: (message: string) => void
 ) => {
@@ -35,7 +36,7 @@ export const handleConsultation = async (
       // Call agent-router edge function
       const { data, error } = await supabase.functions.invoke('agent-router', {
         body: {
-          conversationId: crypto.randomUUID(),
+          conversationId: conversationId,
           userMessage,
           selectedAgents: agentsToCall,
           messages,

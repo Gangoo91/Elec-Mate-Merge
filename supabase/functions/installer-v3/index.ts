@@ -268,6 +268,14 @@ serve(async (req) => {
       contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
       ).slice(-5).join('\n');
+      
+      contextSection += '\n\n⚠️ CRITICAL INSTRUCTION - CONVERSATIONAL MODE:\n';
+      contextSection += 'This is an ongoing conversation, NOT a standalone query. You MUST:\n';
+      contextSection += '1. Reference previous messages naturally (e.g., "Right, for that 10kW shower we just designed...")\n';
+      contextSection += '2. Build on earlier decisions (e.g., "Since we already sized 10mm² cable...")\n';
+      contextSection += '3. Notice context changes (e.g., "Wait, you said 12m earlier but now 25m - let me recalculate...")\n';
+      contextSection += '4. Respond like an experienced electrician having a conversation, not filling out a form\n';
+      contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
     // Phase 1: Enhanced conversational system prompt with expert guidance
@@ -331,19 +339,18 @@ ${location ? `Location: ${location}` : ''}
 
 Include step-by-step instructions, practical tips, and things to avoid.`;
 
-    // Phase 1: Call AI with dual-provider support (Gemini default, Claude if ANTHROPIC_API_KEY set)
-    const useAnthropicDirect = Deno.env.get('ANTHROPIC_API_KEY');
-    const model = useAnthropicDirect ? 'claude-sonnet-4-20250514' : 'google/gemini-2.5-flash';
+    // Phase 1: Call AI with GPT-5 mini for superior reasoning
+    const model = 'openai/gpt-5-mini';
     
-    logger.debug(`Calling ${model}`, { hasAnthropicKey: !!useAnthropicDirect });
+    logger.debug(`Calling ${model}`);
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
     const aiResult = await callAI(LOVABLE_API_KEY!, {
       model,
       systemPrompt,
       userPrompt,
-      maxTokens: 2600,   // Increased tokens for detailed responses
-      timeoutMs: 70000,  // 70s timeout
+      maxTokens: 3000,   // Increased tokens for detailed responses
+      timeoutMs: 35000,  // 35s timeout
       tools: [{
         type: 'function',
         function: {
@@ -354,7 +361,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
             properties: {
               response: {
                 type: 'string',
-                description: 'Comprehensive UK English explanation (200-300 words)'
+                description: 'Natural, conversational UK English response. Reference previous messages naturally (e.g., "Right, for that 10mm² cable we discussed..."). As long as needed to answer thoroughly.'
               },
               installationSteps: {
                 type: 'array',
@@ -391,7 +398,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                 }
               }
             },
-            required: ['response', 'installationSteps', 'practicalTips'], // Phase 1: Simplified required fields
+            required: ['response'],
             additionalProperties: false
           }
         }

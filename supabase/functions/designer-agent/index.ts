@@ -1010,6 +1010,14 @@ Is there a reason you're considering singles instead?"
 PREVIOUS CONVERSATION:
 ${messages.slice(Math.max(0, messages.length - 4), -1).map((m: any) => `${m.role}: ${m.content.substring(0, 150)}...`).join('\n')}
 
+⚠️ CRITICAL INSTRUCTION - CONVERSATIONAL MODE:
+This is an ongoing conversation, NOT a standalone query. You MUST:
+1. Reference previous messages naturally (e.g., "Right, for that 10kW shower you mentioned...")
+2. Build on earlier designs (e.g., "Since we already determined 10mm² cable for the shower...")
+3. Notice context changes (e.g., "Wait, the cable length changed from 12m to 25m - let me recalculate voltage drop...")
+4. Respond like an experienced circuit designer having a conversation, not filling out a form
+5. If unsure what the user means, reference what was discussed to clarify
+
 ${previousDesignSummary}${whyQuestionContext}${edgeCaseWarning}
 
 FORMAT YOUR RESPONSE AS SHOWN BELOW:
@@ -1099,7 +1107,7 @@ IMPORTANT - RESPONSE FORMAT:
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              model: 'google/gemini-2.5-flash',
+              model: 'openai/gpt-5-mini',
               messages: [
                 { role: 'system', content: systemPrompt },
                 ...messages,

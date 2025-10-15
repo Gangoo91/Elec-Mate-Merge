@@ -606,7 +606,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
         { 
           circuits: planData.circuits || [],
           conversationHistory: messages,
-          agentOutputHistory
+          agentOutputHistory,
+          conversationId: currentConversationId
         },
         // On each token
         (token) => {

@@ -171,6 +171,14 @@ serve(async (req) => {
       contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
       ).slice(-5).join('\n');
+      
+      contextSection += '\n\n⚠️ CRITICAL INSTRUCTION - CONVERSATIONAL MODE:\n';
+      contextSection += 'This is an ongoing conversation, NOT a standalone query. You MUST:\n';
+      contextSection += '1. Reference previous messages naturally (e.g., "Right, for that shower circuit we discussed...")\n';
+      contextSection += '2. Build on earlier risk assessments (e.g., "Since we already identified live working risks...")\n';
+      contextSection += '3. Notice context changes (e.g., "Wait, the location changed from bathroom to kitchen...")\n';
+      contextSection += '4. Respond like an experienced H&S adviser having a conversation, not filling out a form\n';
+      contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
     const systemPrompt = `You are an expert Health & Safety adviser specialising in UK electrical installations. Use UK English.
@@ -212,11 +220,11 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
     const aiResult = await callAI(LOVABLE_API_KEY!, {
-      model: 'google/gemini-2.5-flash',
+      model: 'openai/gpt-5-mini',
       systemPrompt,
       userPrompt,
-      maxTokens: 2000,
-      timeoutMs: 25000, // Reduced from 55s to 25s
+      maxTokens: 3000,
+      timeoutMs: 35000,
       tools: [{
         type: 'function',
         function: {
@@ -227,7 +235,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
             properties: {
               response: {
                 type: 'string',
-                description: 'Comprehensive UK English explanation (200-300 words)'
+                description: 'Natural, conversational risk assessment. Reference previous discussion. As detailed as needed.'
               },
               riskAssessment: {
                 type: 'object',
@@ -306,7 +314,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                 }
               }
             },
-            required: ['response', 'riskAssessment'],
+            required: ['response'],
             additionalProperties: false
           }
         }
