@@ -522,20 +522,109 @@ Provide a comprehensive electrical design response that addresses the query comp
       }
     }
 
-    // ⚡ PHASE 3: GENERAL FALLBACK (~80 lines)
+    // ⚡ PHASE 3: GENERAL FALLBACK WITH SMART ROUTING
     logger.info('💬 Using general query path');
 
-    // Simple RAG lookup
-    const regulations = await retrieveRegulations(query, 8, OPENAI_API_KEY);
+    // 🆕 DETECT HIGH-LEVEL DESIGN REQUESTS (full house, rewire, board sizing, etc.)
+    const isHighLevelDesign = /full house|rewire|board change|consumer unit|(\d+)[\s-]?way|(\d+)\s+circuits?|whole house|complete design|full design/i.test(query);
+
+    if (isHighLevelDesign) {
+      logger.info('🏠 High-level design request detected - using GPT-5 conversational mode');
+      
+      // Call GPT-5 with clarification-first prompt (no RAG needed initially)
+      const clarificationPrompt = `The user asked: "${query}"
+
+This is a high-level design request (full house rewire, consumer unit sizing, circuit planning). You should EITHER:
+
+1. **Ask clarifying questions** (preferred for vague requests):
+   - Property type? (3-bed semi, flat, bungalow, commercial?)
+   - Known high-load circuits? (electric shower, cooker, EV charger, heat pump?)
+   - Earthing system? (TN-S, TN-C-S, TT?)
+   - Any special requirements? (outdoor sockets, garage supply, future-proofing?)
+   
+2. **Provide a typical design** (if enough context given):
+   - List typical circuits for the property type
+   - Recommend board size (ways + spare capacity for future)
+   - Mention diversity factors per Appendix 1
+   - Suggest main switch rating
+
+Respond conversationally like an experienced electrician guiding a client. Be friendly but professional.`;
+
+      try {
+        const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'openai/gpt-5-mini',
+            messages: [
+              { role: 'system', content: 'You are an experienced UK electrician (20+ years) helping with electrical design. You ask clarifying questions or provide typical designs based on the information given. Always reference BS 7671:2018+A3:2024 when relevant.' },
+              { role: 'user', content: clarificationPrompt }
+            ],
+            max_completion_tokens: 1500
+          })
+        });
+
+        if (!aiResponse.ok) {
+          const errorText = await aiResponse.text();
+          logger.error('GPT-5 API error', { status: aiResponse.status, error: errorText });
+          throw new Error(`Lovable AI error: ${aiResponse.status}`);
+        }
+
+        const aiData = await aiResponse.json();
+        const responseContent = aiData.choices[0]?.message?.content || 'Could you provide more details about the installation (property type, known circuits, etc.)?';
+
+        return new Response(JSON.stringify({
+          success: true,
+          response: responseContent,
+          metadata: { 
+            type: 'high_level_design', 
+            requestId,
+            model: 'gpt-5-mini',
+            timestamp: new Date().toISOString()
+          },
+          citations: []
+        }), { 
+          status: 200, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        });
+      } catch (error) {
+        logger.error('Failed to call GPT-5 for high-level design', { error: error.message });
+        // Fallback to standard help text if GPT-5 fails
+        return new Response(JSON.stringify({
+          success: true,
+          response: 'I can help design your electrical installation. Could you tell me:\n- Property type? (3-bed house, flat, commercial unit?)\n- Any known circuits? (shower, cooker, EV charger?)\n- Approximate size or circuit count needed?',
+          metadata: { type: 'high_level_design_fallback', requestId },
+          citations: []
+        }), { status: 200, headers: corsHeaders });
+      }
+    }
+
+    // Standard RAG path for specific queries
+    let regulations = await retrieveRegulations(query, 8, OPENAI_API_KEY);
 
     if (regulations.length === 0) {
-      return new Response(JSON.stringify({
-        success: true,
-        response: 'I can help with BS 7671 electrical design questions. Try:\n- "9.5kW shower, 15m from board"\n- "What is regulation 433.1.1?"\n- "Cable sizing for 10kW cooker"',
-        structuredData: null,
-        citations: [],
-        source: 'empty_query'
-      }), { status: 200, headers: corsHeaders });
+      // 🆕 IMPROVED FALLBACK - Expand query before giving up
+      logger.warn('No regulations found - trying expanded query');
+      
+      const expandedQuery = `domestic electrical installation circuit design consumer unit ${query}`;
+      const expandedRegs = await retrieveRegulations(expandedQuery, 8, OPENAI_API_KEY);
+      
+      if (expandedRegs.length === 0) {
+        // Only show help text if truly nothing found
+        return new Response(JSON.stringify({
+          success: true,
+          response: 'I can help with BS 7671 electrical design questions. Try:\n- "9.5kW shower, 15m from board"\n- "What is regulation 433.1.1?"\n- "Cable sizing for 10kW cooker"\n- "Design a 3-bed house rewire"',
+          structuredData: null,
+          citations: [],
+          source: 'empty_query'
+        }), { status: 200, headers: corsHeaders });
+      }
+      
+      regulations = expandedRegs;
+      logger.info(`✅ Expanded query found ${expandedRegs.length} regulations`);
     }
 
     // Conversational Gemini synthesis

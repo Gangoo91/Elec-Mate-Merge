@@ -56,7 +56,12 @@ function isMultiCircuitQuery(query: string): boolean {
     /multiple circuits/i,
     /(\d+\s*circuits?)/i,
     /circuit \d+.*circuit \d+/i,
-    /(?:ring|radial|cooker|shower|lighting|heater).*?(?:and|,|plus|\+).*?(?:ring|radial|cooker|shower|lighting|heater)/i
+    /(?:ring|radial|cooker|shower|lighting|heater).*?(?:and|,|plus|\+).*?(?:ring|radial|cooker|shower|lighting|heater)/i,
+    // 🆕 HIGH-LEVEL DESIGN PATTERNS (full house, rewire, consumer unit sizing)
+    /full house|whole house|house rewire|complete rewire/i,
+    /(\d+)[\s-]?way.*(?:board|consumer unit|CU)/i,
+    /(\d+)[\s-]?bed.*(?:house|property|rewire)/i,
+    /board change|consumer unit.*(?:sizing|design|planning)/i
   ];
   return patterns.some(p => p.test(query));
 }

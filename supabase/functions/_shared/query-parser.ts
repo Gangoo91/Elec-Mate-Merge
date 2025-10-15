@@ -150,6 +150,37 @@ export function parseQueryEntities(query: string): ParsedEntities {
   } else if (/testing|test and inspect|EICR|periodic inspection/i.test(query)) {
     entities.jobType = 'testing';
   }
+
+  // 🆕 HIGH-LEVEL DESIGN DETECTION
+  if (/full house|whole house|complete house|house rewire/i.test(query)) {
+    if (!entities.jobType) {
+      entities.jobType = 'rewire';
+    }
+    // Default circuit count for full house if not specified
+    if (!entities.circuitCount) {
+      entities.circuitCount = 12;
+    }
+  }
+
+  // 🆕 BEDROOM-BASED SIZING (typical UK domestic)
+  const bedMatch = query.match(/(\d+)[\s-]?bed/i);
+  if (bedMatch) {
+    const bedrooms = parseInt(bedMatch[1], 10);
+    
+    // Typical circuit count based on bedrooms (UK domestic standard)
+    if (!entities.circuitCount) {
+      if (bedrooms === 1) entities.circuitCount = 6;
+      else if (bedrooms === 2) entities.circuitCount = 10;
+      else if (bedrooms === 3) entities.circuitCount = 12;
+      else if (bedrooms === 4) entities.circuitCount = 14;
+      else entities.circuitCount = 16; // 5+ beds
+    }
+    
+    // Default consumer unit sizing (circuits + spares)
+    if (!entities.consumerUnitWays) {
+      entities.consumerUnitWays = entities.circuitCount + 4; // +4 spare ways
+    }
+  }
   
   return entities;
 }
