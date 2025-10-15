@@ -1,24 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
-export interface WiringSchematicRequest {
-  component_type: string;
-  circuit_params: {
-    cableSize: number;
-    cableType: string;
-    protectionDevice: string;
-    rcdRequired: boolean;
-    loadPower: number;
-    voltage: number;
-  };
-  installation_context: string;
-}
-
-export interface CircuitSpec {
-  cableSize: number;
-  cableType: string;
-  protectionDevice: string;
-  rcdRequired: boolean;
-  rcdRating?: number;
+export interface WiringGuidanceRequest {
+  component_image_url: string;
 }
 
 export interface WiringStep {
@@ -27,34 +10,31 @@ export interface WiringStep {
   instruction: string;
   safety_critical: boolean;
   bs7671_reference: string;
-  ppe_required?: string[];
 }
 
 export interface TerminalConnection {
   terminal: string;
   wire_colour: string;
   connection_point: string;
-  torque_setting?: string;
+  notes?: string;
 }
 
-export interface WiringSchematicResponse {
-  schematic_svg: string;
-  circuit_spec: CircuitSpec;
-  wiring_procedure: WiringStep[];
+export interface WiringGuidanceResponse {
+  component_name: string;
+  component_details: string;
+  wiring_steps: WiringStep[];
   terminal_connections: TerminalConnection[];
-  testing_requirements: string[];
-  installation_method_guidance: string;
   safety_warnings: string[];
+  required_tests: string[];
   rag_sources: {
     installation_docs_count: number;
     regulations_count: number;
-    safety_docs_count: number;
   };
 }
 
-export async function generateWiringSchematic(
-  request: WiringSchematicRequest
-): Promise<WiringSchematicResponse> {
+export async function generateWiringGuidance(
+  request: WiringGuidanceRequest
+): Promise<WiringGuidanceResponse> {
   const { data, error } = await supabase.functions.invoke(
     'wiring-diagram-generator-rag',
     {
@@ -63,13 +43,13 @@ export async function generateWiringSchematic(
   );
 
   if (error) {
-    console.error('❌ Wiring schematic generation failed:', error);
-    throw new Error(error.message || 'Failed to generate wiring schematic');
+    console.error('❌ Wiring guidance generation failed:', error);
+    throw new Error(error.message || 'Failed to generate wiring guidance');
   }
 
   if (!data) {
-    throw new Error('No data returned from wiring schematic generator');
+    throw new Error('No data returned from wiring guidance generator');
   }
 
-  return data as WiringSchematicResponse;
+  return data as WiringGuidanceResponse;
 }

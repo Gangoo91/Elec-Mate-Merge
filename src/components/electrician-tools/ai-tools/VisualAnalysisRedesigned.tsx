@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import ComponentIdentificationResults from "./ComponentIdentificationResults";
-import WiringSchematicDisplay from "./WiringSchematicDisplay";
+import WiringGuidanceDisplay from "./WiringGuidanceDisplay";
 import WiringGuidanceSection from "./WiringGuidanceSection";
 import ModeSelector, { AnalysisMode } from "./ModeSelector";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -64,13 +64,12 @@ interface AnalysisResult {
   rag_verified?: boolean;
   verification_note?: string;
   wiring_schematic?: {
-    schematic_svg: string;
-    circuit_spec: any;
-    wiring_procedure: any[];
+    component_name: string;
+    component_details: string;
+    wiring_steps: any[];
     terminal_connections: any[];
-    testing_requirements: string[];
-    installation_method_guidance: string;
     safety_warnings: string[];
+    required_tests: string[];
     rag_sources: any;
   };
 }
@@ -990,16 +989,15 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             <ComponentIdentificationResults analysisResult={analysisResult} />
           )}
 
-          {/* Wiring Schematic */}
+          {/* Wiring Guidance */}
           {selectedMode === 'wiring_instruction' && analysisResult.wiring_schematic && (
-            <WiringSchematicDisplay 
-              schematicSvg={analysisResult.wiring_schematic.schematic_svg}
-              circuitSpec={analysisResult.wiring_schematic.circuit_spec}
-              wiringProcedure={analysisResult.wiring_schematic.wiring_procedure}
+            <WiringGuidanceDisplay 
+              componentName={analysisResult.wiring_schematic.component_name}
+              componentDetails={analysisResult.wiring_schematic.component_details}
+              wiringSteps={analysisResult.wiring_schematic.wiring_steps}
               terminalConnections={analysisResult.wiring_schematic.terminal_connections}
-              testingRequirements={analysisResult.wiring_schematic.testing_requirements}
-              installationMethodGuidance={analysisResult.wiring_schematic.installation_method_guidance}
               safetyWarnings={analysisResult.wiring_schematic.safety_warnings}
+              requiredTests={analysisResult.wiring_schematic.required_tests}
               ragSourcesCount={analysisResult.wiring_schematic.rag_sources}
             />
           )}
