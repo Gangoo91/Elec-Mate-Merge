@@ -80,9 +80,9 @@ const CISDRCHelper: React.FC = () => {
                 <span className="font-semibold text-sm sm:text-base text-elec-light">What is CIS (Construction Industry Scheme)?</span>
                 <Info className="w-4 h-4 text-elec-yellow" />
               </CollapsibleTrigger>
-              <CollapsibleContent className="mt-3 p-3 text-xs sm:text-sm text-elec-light/80 space-y-2">
+              <CollapsibleContent className="mt-3 p-3 sm:p-4 text-xs sm:text-sm text-elec-light/80 space-y-2 text-left">
                 <p>HMRC scheme where contractors deduct money from subcontractor payments and pass it to HMRC as advance tax payment.</p>
-                <ul className="list-disc pl-5 space-y-1">
+                <ul className="list-disc pl-5 space-y-1.5 sm:space-y-2 text-left">
                   <li>Contractors must register and verify subcontractors</li>
                   <li>Deductions: 20% (registered), 30% (not registered), or 0% (gross status)</li>
                   <li>Deducted from labour costs only, not materials</li>
@@ -95,9 +95,9 @@ const CISDRCHelper: React.FC = () => {
                 <span className="font-semibold text-sm sm:text-base text-elec-light">What is DRC (Domestic Reverse Charge)?</span>
                 <Info className="w-4 h-4 text-elec-yellow" />
               </CollapsibleTrigger>
-              <CollapsibleContent className="mt-3 p-3 text-xs sm:text-sm text-elec-light/80 space-y-2">
+              <CollapsibleContent className="mt-3 p-3 sm:p-4 text-xs sm:text-sm text-elec-light/80 space-y-2 text-left">
                 <p>VAT rule where the customer (contractor) accounts for VAT, not the supplier (subcontractor).</p>
-                <ul className="list-disc pl-5 space-y-1">
+                <ul className="list-disc pl-5 space-y-1.5 sm:space-y-2 text-left">
                   <li>Applies to specified CIS building/construction services</li>
                   <li>Started 1 March 2021</li>
                   <li>Subcontractor doesn't charge VAT on invoice</li>
@@ -111,9 +111,9 @@ const CISDRCHelper: React.FC = () => {
                 <span className="font-semibold text-sm sm:text-base text-elec-light">When do both apply together?</span>
                 <Info className="w-4 h-4 text-elec-yellow" />
               </CollapsibleTrigger>
-              <CollapsibleContent className="mt-3 p-3 text-xs sm:text-sm text-elec-light/80 space-y-2">
+              <CollapsibleContent className="mt-3 p-3 sm:p-4 text-xs sm:text-sm text-elec-light/80 space-y-2 text-left">
                 <p>If you're a CIS subcontractor working for a CIS contractor: Both CIS and DRC apply.</p>
-                <ul className="list-disc pl-5 space-y-1">
+                <ul className="list-disc pl-5 space-y-1.5 sm:space-y-2 text-left">
                   <li>Your invoice shows: Labour + Materials (no VAT)</li>
                   <li>CIS deduction applies to labour only</li>
                   <li>Contractor accounts for the VAT separately</li>
@@ -369,13 +369,15 @@ const CISDRCHelper: React.FC = () => {
                 What This Means
               </CardTitle>
             </CardHeader>
-            <CardContent className="px-4 sm:px-6 space-y-2 text-xs sm:text-sm text-elec-light/80">
-              <p>• You invoice <strong className="text-elec-light">{currency(totalDueFromCustomer)}</strong> but receive <strong className="text-green-500">{currency(cashReceived)}</strong></p>
-              <p>• Contractor pays <strong className="text-elec-light">{currency(cisDeduction)}</strong> directly to HMRC as your tax</p>
-              {drcApplies && (
-                <p>• Contractor accounts for <strong className="text-elec-light">{currency(subTotal * (vatRate/100))}</strong> VAT to HMRC (not shown on your invoice)</p>
-              )}
-              <p>• Claim your <strong className="text-elec-light">{currency(cisDeduction)}</strong> CIS deduction on your Self Assessment tax return</p>
+            <CardContent className="px-4 sm:px-6 text-left">
+              <ul className="list-disc pl-5 space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-elec-light/80">
+                <li>You invoice <strong className="text-elec-light">{currency(totalDueFromCustomer)}</strong> but receive <strong className="text-green-500">{currency(cashReceived)}</strong></li>
+                <li>Contractor pays <strong className="text-elec-light">{currency(cisDeduction)}</strong> directly to HMRC as your tax</li>
+                {drcApplies && (
+                  <li>Contractor accounts for <strong className="text-elec-light">{currency(subTotal * (vatRate/100))}</strong> VAT to HMRC (not shown on your invoice)</li>
+                )}
+                <li>Claim your <strong className="text-elec-light">{currency(cisDeduction)}</strong> CIS deduction on your Self Assessment tax return</li>
+              </ul>
             </CardContent>
           </Card>
         )}
