@@ -150,9 +150,9 @@ export const CompanyBrandingStep = ({ onComplete }: CompanyBrandingStepProps) =>
           {/* Logo Upload */}
           <div className="space-y-3">
             <Label>Company Logo</Label>
-            <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
               {logoPreview && (
-                <div className="w-24 h-24 border-2 border-border rounded-lg overflow-hidden bg-background">
+                <div className="w-24 h-24 border-2 border-border rounded-lg overflow-hidden bg-background mx-auto sm:mx-0">
                   <img 
                     src={logoPreview} 
                     alt="Company logo preview" 
