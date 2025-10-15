@@ -156,7 +156,7 @@ export const CompanyBrandingStep = ({ onComplete }: CompanyBrandingStepProps) =>
                   <img 
                     src={logoPreview} 
                     alt="Company logo preview" 
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain object-center"
                   />
                 </div>
               )}
