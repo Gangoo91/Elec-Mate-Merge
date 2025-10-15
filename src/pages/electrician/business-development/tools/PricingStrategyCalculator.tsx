@@ -39,9 +39,24 @@ const PricingStrategyCalculator = () => {
   const [vatRegistered, setVatRegistered] = useState<boolean>(true);
   const [vatRate, setVatRate] = useState<number>(20);
 
+  // Input validation helper
+  const validateInput = (value: number, field: keyof PricingInputs): number => {
+    const ranges = {
+      materialsCost: { min: 0, max: 50000 },
+      labourHours: { min: 0, max: 100 },
+      hourlyRate: { min: 15, max: 150 },
+      overheadPercent: { min: 0, max: 50 },
+      profitMarginPercent: { min: 5, max: 50 },
+      discountPercent: { min: 0, max: 30 }
+    };
+    
+    const range = ranges[field];
+    return Math.max(range.min, Math.min(range.max, value));
+  };
+
   const update = (k: keyof PricingInputs, v: number) => {
     setCalculated(false);
-    setInputs((p) => ({ ...p, [k]: isFinite(v) ? v : 0 }));
+    setInputs((p) => ({ ...p, [k]: validateInput(isFinite(v) ? v : 0, k) }));
   };
 
   const overheadOptions = [10, 15, 20, 25, 30].map((v) => ({ value: String(v), label: `${v}%` }));
@@ -138,139 +153,308 @@ const PricingStrategyCalculator = () => {
         ]}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Input Cards - Responsive Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        {/* Job Costs */}
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-elec-light text-lg flex items-center gap-2">
               <Target className="h-5 w-5 text-elec-yellow" />
-              Pricing Inputs
+              Job Costs
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <MobileInput label="Materials Cost" value={String(inputs.materialsCost)} type="number" onChange={(e) => update("materialsCost", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="£" />
-              <MobileInput label="Labour Hours" value={String(inputs.labourHours)} type="number" onChange={(e) => update("labourHours", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="h" />
-              <MobileInput label="Hourly Rate" value={String(inputs.hourlyRate)} type="number" onChange={(e) => update("hourlyRate", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="£/hr" />
-              <div className="relative z-[var(--dropdown-z,50)]">
-                <MobileSelectWrapper
-                  label="Overhead %"
-                  placeholder="Select overhead"
-                  value={String(inputs.overheadPercent)}
-                  onValueChange={(val) => update("overheadPercent", parseFloat(val))}
-                  options={overheadOptions}
-                />
-              </div>
-              <div className="flex items-end justify-between gap-2">
-                <div className="flex-1 relative z-[var(--dropdown-z,50)]">
-                  <MobileSelectWrapper
-                    label="Target Margin %"
-                    placeholder="Select margin"
-                    value={String(inputs.profitMarginPercent)}
-                    onValueChange={(val) => update("profitMarginPercent", parseFloat(val))}
-                    options={marginOptions}
-                  />
-                </div>
-                <Link to="/electrician/business-development/tools/hourly-rate" className="text-elec-yellow text-xs inline-flex items-center gap-1 mb-1">
-                  <LinkIcon className="h-3 w-3" /> Get your rate
-                </Link>
-              </div>
-              <MobileInput label="Discount %" value={String(inputs.discountPercent)} type="number" onChange={(e) => update("discountPercent", parseFloat((e.target as HTMLInputElement).value || "0"))} unit="%" />
-            </div>
-
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Button onClick={calculatePricing} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                Calculate Pricing Strategy
-              </Button>
-              <Button variant="secondary" onClick={saveScenario} className="gap-2">
-                <Save className="h-4 w-4" /> Save Scenario
-              </Button>
-              <Button variant="outline" onClick={reset} className="gap-2">
-                <RefreshCw className="h-4 w-4" /> Reset
-              </Button>
-            </div>
+            <MobileInput 
+              label="Materials Cost" 
+              value={String(inputs.materialsCost)} 
+              type="number" 
+              inputMode="decimal"
+              onChange={(e) => update("materialsCost", parseFloat((e.target as HTMLInputElement).value || "0"))} 
+              hint="Total cost of all materials, components, and consumables"
+              unit="£" 
+            />
+            <MobileInput 
+              label="Labour Hours" 
+              value={String(inputs.labourHours)} 
+              type="number" 
+              inputMode="decimal"
+              onChange={(e) => update("labourHours", parseFloat((e.target as HTMLInputElement).value || "0"))} 
+              hint="Estimated time on-site to complete the work"
+              unit="hrs" 
+            />
+            <MobileInput 
+              label="Hourly Rate" 
+              value={String(inputs.hourlyRate)} 
+              type="number" 
+              inputMode="decimal"
+              onChange={(e) => update("hourlyRate", parseFloat((e.target as HTMLInputElement).value || "0"))} 
+              hint="UK average for qualified electricians: £45-65/hr"
+              unit="£/hr" 
+            />
+            <Link to="/electrician/business-development/tools/hourly-rate" className="text-elec-yellow text-sm inline-flex items-center gap-1 hover:underline">
+              <LinkIcon className="h-3 w-3" /> Calculate your ideal hourly rate
+            </Link>
           </CardContent>
         </Card>
 
+        {/* Business Strategy */}
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-elec-light text-lg flex items-center gap-2">
               <Target className="h-5 w-5 text-elec-yellow" />
-              Strategic Pricing Analysis
-              {calculated && <Badge variant="success" className="ml-auto">Calculated</Badge>}
+              Business Strategy
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {!calculated ? (
-              <div className="text-elec-light text-sm flex items-start gap-2">
-                <Info className="h-4 w-4 mt-0.5 text-elec-yellow" />
-                Enter inputs then press Calculate to see a full breakdown and VAT totals.
+            <div className="relative z-50">
+              <MobileSelectWrapper
+                label="Overhead %"
+                placeholder="Select overhead"
+                value={String(inputs.overheadPercent)}
+                onValueChange={(val) => update("overheadPercent", parseFloat(val))}
+                options={overheadOptions}
+                hint="Typical: 20-25% for small businesses, 15-20% for established"
+              />
+            </div>
+            <div className="relative z-40">
+              <MobileSelectWrapper
+                label="Target Margin %"
+                placeholder="Select margin"
+                value={String(inputs.profitMarginPercent)}
+                onValueChange={(val) => update("profitMarginPercent", parseFloat(val))}
+                options={marginOptions}
+                hint="Standard: 15-25% depending on competition and job type"
+              />
+            </div>
+            <MobileInput 
+              label="Discount %" 
+              value={String(inputs.discountPercent)} 
+              type="number" 
+              inputMode="decimal"
+              onChange={(e) => update("discountPercent", parseFloat((e.target as HTMLInputElement).value || "0"))} 
+              hint="Optional discount for repeat customers or larger jobs"
+              unit="%" 
+            />
+          </CardContent>
+        </Card>
+
+        {/* VAT Configuration */}
+        <Card className="border-elec-yellow/20 bg-elec-card">
+          <CardHeader>
+            <CardTitle className="text-elec-light text-lg flex items-center gap-2">
+              <Target className="h-5 w-5 text-elec-yellow" />
+              VAT & Final Pricing
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <VATCalculator
+              quoteAmount={result.netAfterDiscount}
+              vatRate={vatRate}
+              onVATRateChange={setVatRate}
+              vatRegistered={vatRegistered}
+              onVATRegistrationChange={setVatRegistered}
+            />
+            <div className="pt-4">
+              <Button onClick={calculatePricing} className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12 text-base font-semibold">
+                Calculate Pricing Strategy
+              </Button>
+              <div className="flex gap-2 mt-3">
+                <Button variant="secondary" onClick={saveScenario} className="flex-1 gap-2">
+                  <Save className="h-4 w-4" /> Save
+                </Button>
+                <Button variant="outline" onClick={reset} className="flex-1 gap-2">
+                  <RefreshCw className="h-4 w-4" /> Reset
+                </Button>
               </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">Materials</div>
-                    <div className="text-white text-lg font-semibold">{currency(inputs.materialsCost)}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">Labour</div>
-                    <div className="text-white text-lg font-semibold">{currency(result.labourCost)}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">Overhead</div>
-                    <div className="text-white text-lg font-semibold">{currency(result.overheadCost)}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">Net (after discount)</div>
-                    <div className="text-elec-yellow text-lg font-semibold">{currency(result.netAfterDiscount)}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">VAT</div>
-                    <div className="text-white text-lg font-semibold">{currency(result.vatAmount)}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 rounded-lg p-3">
-                    <div className="text-elec-light text-xs">Total (incl. VAT)</div>
-                    <div className="text-white text-lg font-semibold">{currency(result.totalGross)}</div>
-                  </div>
-                </div>
-
-                <div className="bg-elec-dark/50 rounded-lg p-4">
-                  <h4 className="text-white font-medium mb-2">Cost to Price Breakdown</h4>
-                  <div className="h-56">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={chartData}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                        <XAxis dataKey="name" stroke="rgba(255,255,255,0.6)" />
-                        <YAxis stroke="rgba(255,255,255,0.6)" tickFormatter={(v) => `£${v}`} />
-                        <Tooltip formatter={(v: any) => currency(v as number)} contentStyle={{ background: "#0b0f15", border: "1px solid rgba(255,255,255,0.1)" }} />
-                        <Bar dataKey="value" fill="#F7D154" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                  <div className="text-elec-light text-xs mt-2">Achieved margin on net: {result.achievedMargin.toFixed(1)}%</div>
-                </div>
-
-                <VATCalculator
-                  quoteAmount={result.netAfterDiscount}
-                  vatRate={vatRate}
-                  onVATRateChange={setVatRate}
-                  vatRegistered={vatRegistered}
-                  onVATRegistrationChange={setVatRegistered}
-                />
-
-                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
-                  <div className="flex items-start gap-2">
-                    <Info className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-blue-200/80 text-xs">
-                      Prices shown are estimates. Check reduced VAT eligibility (5%) where applicable and ensure BS 7671 compliant designs. CIS may apply for subcontract labour.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+            </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Results Section - Full Width */}
+      {calculated && (
+        <div className="space-y-6">
+          {/* Step-by-Step Calculation Breakdown */}
+          <Card className="border-elec-yellow/20 bg-elec-card">
+            <CardHeader>
+              <CardTitle className="text-elec-light flex items-center gap-2">
+                <Info className="h-5 w-5 text-elec-yellow" />
+                Pricing Calculation Breakdown
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-elec-dark/30 rounded-lg p-4 sm:p-6">
+                <h4 className="text-elec-light font-medium mb-4 text-base">How Your Price is Built</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
+                    <span className="text-elec-light/80">1. Materials Cost</span>
+                    <span className="text-elec-light font-mono font-semibold">{currency(inputs.materialsCost)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
+                    <span className="text-elec-light/80">2. Labour Cost ({inputs.labourHours}h × {currency(inputs.hourlyRate)}/h)</span>
+                    <span className="text-elec-light font-mono font-semibold">+ {currency(result.labourCost)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
+                    <span className="text-elec-light/80">3. Overhead ({inputs.overheadPercent}% of base costs)</span>
+                    <span className="text-elec-light font-mono font-semibold">+ {currency(result.overheadCost)}</span>
+                  </div>
+                  <div className="h-px bg-elec-yellow/30 my-3"></div>
+                  <div className="flex justify-between items-center py-2 font-medium">
+                    <span className="text-elec-light">Total Base Cost</span>
+                    <span className="text-elec-light font-mono text-base">{currency(result.subtotalNet)}</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
+                    <span className="text-elec-light/80">4. Profit Margin ({inputs.profitMarginPercent}%)</span>
+                    <span className="text-elec-light font-mono font-semibold">+ {currency(result.priceBeforeDiscount - result.subtotalNet)}</span>
+                  </div>
+                  {inputs.discountPercent > 0 && (
+                    <div className="flex justify-between items-center py-2 border-b border-elec-yellow/10">
+                      <span className="text-red-400/90">5. Discount ({inputs.discountPercent}%)</span>
+                      <span className="text-red-400 font-mono font-semibold">- {currency(result.priceBeforeDiscount - result.netAfterDiscount)}</span>
+                    </div>
+                  )}
+                  <div className="h-px bg-elec-yellow/30 my-3"></div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-elec-light/70 text-xs">Achieved Profit Margin</span>
+                    <span className="text-elec-yellow text-sm font-semibold">{result.achievedMargin.toFixed(1)}%</span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Prominent Final Pricing Display */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <Card className="bg-elec-yellow/10 border-elec-yellow/30">
+              <CardContent className="text-center p-6 sm:p-8">
+                <div className="text-elec-yellow text-4xl sm:text-5xl font-bold mb-3">
+                  {currency(result.netAfterDiscount)}
+                </div>
+                <div className="text-elec-light font-semibold text-lg mb-1">Net Price (ex VAT)</div>
+                <div className="text-elec-light/70 text-sm">Quote this amount to your customer</div>
+              </CardContent>
+            </Card>
+            
+            {vatRegistered && (
+              <Card className="bg-green-500/10 border-green-500/30">
+                <CardContent className="text-center p-6 sm:p-8">
+                  <div className="text-green-400 text-4xl sm:text-5xl font-bold mb-3">
+                    {currency(result.totalGross)}
+                  </div>
+                  <div className="text-elec-light font-semibold text-lg mb-1">Total inc VAT ({vatRate}%)</div>
+                  <div className="text-elec-light/70 text-sm">Final invoice amount</div>
+                  <div className="text-elec-light/60 text-xs mt-2">VAT: {currency(result.vatAmount)}</div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+
+          {/* Chart Section */}
+          <Card className="border-elec-yellow/20 bg-elec-card">
+            <CardHeader>
+              <CardTitle className="text-elec-light">Cost to Price Visualization</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-elec-dark/30 rounded-lg p-4">
+                <div className="h-64 sm:h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                      <XAxis 
+                        dataKey="name" 
+                        stroke="rgba(255,255,255,0.8)" 
+                        fontSize={12}
+                        angle={-45}
+                        textAnchor="end"
+                        height={80}
+                      />
+                      <YAxis 
+                        stroke="rgba(255,255,255,0.8)" 
+                        tickFormatter={(v) => `£${v}`}
+                        fontSize={12}
+                      />
+                      <Tooltip 
+                        formatter={(v: any) => [currency(v as number), "Amount"]}
+                        contentStyle={{ 
+                          background: "#1a1f2e", 
+                          border: "1px solid rgba(247, 209, 84, 0.3)",
+                          borderRadius: "8px",
+                          color: "white"
+                        }}
+                      />
+                      <Bar dataKey="value" fill="#F7D154" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                
+                {/* Mobile-friendly summary cards below chart */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mt-4">
+                  {chartData.map((item, index) => (
+                    <div key={index} className="bg-elec-dark/50 rounded p-3 text-center">
+                      <div className="text-elec-light/70 text-xs mb-1">{item.name}</div>
+                      <div className="text-elec-light font-semibold text-sm">{currency(item.value)}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Guidance Section */}
+          <Card className="bg-blue-500/5 border-blue-500/20">
+            <CardHeader>
+              <CardTitle className="text-blue-300 flex items-center gap-2">
+                <Info className="h-5 w-5" />
+                How to Use This Calculator
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 text-blue-200/90 text-sm">
+              <div>
+                <h5 className="font-medium text-blue-200 mb-1">1. Enter Your Job Costs</h5>
+                <p className="text-blue-200/80">Input your materials cost, estimated hours, and current hourly rate. Be realistic with labour hours to maintain profitability.</p>
+              </div>
+              <div>
+                <h5 className="font-medium text-blue-200 mb-1">2. Set Your Business Strategy</h5>
+                <p className="text-blue-200/80">Typical overhead: 20-25% for small businesses, 15-20% for established ones. Target margin: 15-25% depending on competition and job complexity.</p>
+              </div>
+              <div>
+                <h5 className="font-medium text-blue-200 mb-1">3. Configure VAT</h5>
+                <p className="text-blue-200/80">Most electrical work is 20% VAT. Some energy-efficiency installations qualify for 5% reduced rate under government schemes.</p>
+              </div>
+              <div className="bg-blue-500/10 rounded-lg p-4 mt-4">
+                <h5 className="font-medium text-blue-200 mb-2">Example Scenario</h5>
+                <p className="text-xs text-blue-200/80 leading-relaxed">
+                  <strong>Consumer Unit Replacement:</strong><br />
+                  £800 materials + 6 hours @ £50/hr (£300 labour) + 22% overhead (£242) = £1,342 base cost<br />
+                  + 18% margin (£242) = <strong className="text-blue-300">£1,584 net price</strong><br />
+                  + 20% VAT (£317) = <strong className="text-blue-300">£1,901 total invoice</strong>
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Compliance Notice */}
+          <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+            <div className="flex items-start gap-2">
+              <Info className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+              <p className="text-blue-200/80 text-sm">
+                Prices shown are estimates for planning purposes. Always verify reduced VAT eligibility (5%) where applicable and ensure all designs comply with BS 7671:2018+A2:2022. CIS deductions may apply for subcontract labour.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Prompt to Calculate */}
+      {!calculated && (
+        <Card className="border-elec-yellow/20 bg-elec-card">
+          <CardContent className="text-center py-12">
+            <Info className="h-12 w-12 text-elec-yellow mx-auto mb-4 opacity-50" />
+            <h3 className="text-elec-light text-xl font-semibold mb-2">Ready to Calculate</h3>
+            <p className="text-elec-light/70 mb-6">Enter your job costs and business strategy above, then click "Calculate Pricing Strategy" to see your detailed breakdown.</p>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
