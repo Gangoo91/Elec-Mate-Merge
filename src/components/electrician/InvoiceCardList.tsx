@@ -3,6 +3,12 @@ import { Quote } from "@/types/quote";
 import { Badge } from "@/components/ui/badge";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { format, isPast } from "date-fns";
@@ -186,15 +192,22 @@ const InvoiceCardList = ({
                     <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Button>
                 ) : (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => onInvoiceAction(invoice)}
-                    className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
-                    aria-label="Edit invoice"
-                  >
-                    <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onInvoiceAction(invoice)}
+                        className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
+                        aria-label="Edit invoice"
+                      >
+                        <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Edit invoice</p>
+                    </TooltipContent>
+                  </Tooltip>
                 )}
               </div>
 
