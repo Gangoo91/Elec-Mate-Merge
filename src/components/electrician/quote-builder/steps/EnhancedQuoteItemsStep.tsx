@@ -231,32 +231,32 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
         <TabsContent value="labour">
           <Card className="bg-card/50 border border-primary/20">
-            <CardContent className="pt-6">
-              <div className="space-y-4">
+            <CardContent className="pt-6 pb-6 px-4 sm:px-6">
+              <div className="space-y-5 sm:space-y-6">
                   {/* Category Selection */}
-                  <div className="space-y-2">
-                    <Label htmlFor="category" className="text-sm font-medium">Category</Label>
+                  <div className="space-y-3">
+                    <Label htmlFor="category" className="text-base font-semibold text-foreground">Category</Label>
                     <Select value={newItem.category} onValueChange={handleCategoryChange}>
-                      <SelectTrigger className="h-12 w-full">
+                      <SelectTrigger className="h-14 sm:h-12 w-full text-base sm:text-sm border-2">
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
-                      <SelectContent className="z-50 bg-background border shadow-lg">
-                        <SelectItem value="labour">
-                          <div className="flex items-center gap-2">
-                            <Wrench className="h-4 w-4" />
-                            Labour
+                      <SelectContent className="z-50 bg-background border-2 shadow-lg">
+                        <SelectItem value="labour" className="py-3 text-base sm:text-sm">
+                          <div className="flex items-center gap-3">
+                            <Wrench className="h-5 w-5 sm:h-4 sm:w-4" />
+                            <span className="font-medium">Labour</span>
                           </div>
                         </SelectItem>
-                        <SelectItem value="materials">
-                          <div className="flex items-center gap-2">
-                            <Package className="h-4 w-4" />
-                            Materials
+                        <SelectItem value="materials" className="py-3 text-base sm:text-sm">
+                          <div className="flex items-center gap-3">
+                            <Package className="h-5 w-5 sm:h-4 sm:w-4" />
+                            <span className="font-medium">Materials</span>
                           </div>
                         </SelectItem>
-                        <SelectItem value="equipment">
-                          <div className="flex items-center gap-2">
-                            <Zap className="h-4 w-4" />
-                            Equipment
+                        <SelectItem value="equipment" className="py-3 text-base sm:text-sm">
+                          <div className="flex items-center gap-3">
+                            <Zap className="h-5 w-5 sm:h-4 sm:w-4" />
+                            <span className="font-medium">Equipment</span>
                           </div>
                         </SelectItem>
                       </SelectContent>
@@ -265,19 +265,19 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
                   {/* Labour specific fields */}
                   {newItem.category === "labour" && (
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="workerType" className="text-sm font-medium">Worker Type</Label>
+                    <div className="grid grid-cols-1 gap-5 sm:gap-4">
+                      <div className="space-y-3">
+                        <Label htmlFor="workerType" className="text-base font-semibold text-foreground">Worker Type</Label>
                         <Select value={newItem.workerType} onValueChange={handleWorkerTypeChange}>
-                          <SelectTrigger className="h-12 w-full">
+                          <SelectTrigger className="h-14 sm:h-12 w-full text-base sm:text-sm border-2">
                             <SelectValue placeholder="Select worker type" />
                           </SelectTrigger>
-                          <SelectContent className="z-50 bg-background border shadow-lg">
+                          <SelectContent className="z-50 bg-background border-2 shadow-lg">
                             {workerTypes.map(worker => (
-                              <SelectItem key={worker.id} value={worker.id} className="py-3">
-                                <div className="flex justify-between items-center w-full gap-4">
-                                  <span className="font-medium">{worker.name}</span>
-                                  <span className="text-xs text-muted-foreground whitespace-nowrap">£{worker.defaultHourlyRate}/hour</span>
+                              <SelectItem key={worker.id} value={worker.id} className="py-4 sm:py-3">
+                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center w-full gap-1 sm:gap-4">
+                                  <span className="font-semibold text-base sm:text-sm">{worker.name}</span>
+                                  <span className="text-sm sm:text-xs text-muted-foreground whitespace-nowrap font-medium">£{worker.defaultHourlyRate}/hour</span>
                                 </div>
                               </SelectItem>
                             ))}
@@ -285,33 +285,33 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                         </Select>
                       </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="hours" className="text-sm font-medium">Hours</Label>
+                      <div className="space-y-3">
+                        <Label htmlFor="hours" className="text-base font-semibold text-foreground">Hours</Label>
                          <Select value={newItem.hours > 0 ? newItem.hours.toString() : ""} onValueChange={(value) => handleHoursChange(parseFloat(value))}>
-                           <SelectTrigger className="h-12 w-full">
+                           <SelectTrigger className="h-14 sm:h-12 w-full text-base sm:text-sm border-2">
                              <SelectValue placeholder="Select hours" />
                           </SelectTrigger>
-                          <SelectContent className="z-50 bg-background border shadow-lg">
-                            <SelectItem value="0.5">0.5 hours</SelectItem>
-                            <SelectItem value="1">1 hour</SelectItem>
-                            <SelectItem value="1.5">1.5 hours</SelectItem>
-                            <SelectItem value="2">2 hours</SelectItem>
-                            <SelectItem value="2.5">2.5 hours</SelectItem>
-                            <SelectItem value="3">3 hours</SelectItem>
-                            <SelectItem value="4">4 hours</SelectItem>
-                            <SelectItem value="5">5 hours</SelectItem>
-                            <SelectItem value="6">6 hours</SelectItem>
-                            <SelectItem value="7">7 hours</SelectItem>
-                            <SelectItem value="8">8 hours (1 day)</SelectItem>
-                            <SelectItem value="10">10 hours</SelectItem>
-                            <SelectItem value="12">12 hours</SelectItem>
-                            <SelectItem value="16">16 hours (2 days)</SelectItem>
-                            <SelectItem value="24">24 hours (3 days)</SelectItem>
-                            <SelectItem value="32">32 hours (4 days)</SelectItem>
-                            <SelectItem value="40">40 hours (5 days)</SelectItem>
-                            <SelectItem value="48">48 hours (6 days)</SelectItem>
-                            <SelectItem value="56">56 hours (7 days)</SelectItem>
-                            <SelectItem value="80">80 hours (10 days)</SelectItem>
+                          <SelectContent className="z-50 bg-background border-2 shadow-lg max-h-[60vh] overflow-y-auto">
+                            <SelectItem value="0.5" className="py-3 text-base sm:text-sm">0.5 hours</SelectItem>
+                            <SelectItem value="1" className="py-3 text-base sm:text-sm">1 hour</SelectItem>
+                            <SelectItem value="1.5" className="py-3 text-base sm:text-sm">1.5 hours</SelectItem>
+                            <SelectItem value="2" className="py-3 text-base sm:text-sm">2 hours</SelectItem>
+                            <SelectItem value="2.5" className="py-3 text-base sm:text-sm">2.5 hours</SelectItem>
+                            <SelectItem value="3" className="py-3 text-base sm:text-sm">3 hours</SelectItem>
+                            <SelectItem value="4" className="py-3 text-base sm:text-sm">4 hours</SelectItem>
+                            <SelectItem value="5" className="py-3 text-base sm:text-sm">5 hours</SelectItem>
+                            <SelectItem value="6" className="py-3 text-base sm:text-sm">6 hours</SelectItem>
+                            <SelectItem value="7" className="py-3 text-base sm:text-sm">7 hours</SelectItem>
+                            <SelectItem value="8" className="py-3 text-base sm:text-sm font-medium">8 hours (1 day)</SelectItem>
+                            <SelectItem value="10" className="py-3 text-base sm:text-sm">10 hours</SelectItem>
+                            <SelectItem value="12" className="py-3 text-base sm:text-sm">12 hours</SelectItem>
+                            <SelectItem value="16" className="py-3 text-base sm:text-sm font-medium">16 hours (2 days)</SelectItem>
+                            <SelectItem value="24" className="py-3 text-base sm:text-sm font-medium">24 hours (3 days)</SelectItem>
+                            <SelectItem value="32" className="py-3 text-base sm:text-sm font-medium">32 hours (4 days)</SelectItem>
+                            <SelectItem value="40" className="py-3 text-base sm:text-sm font-medium">40 hours (5 days)</SelectItem>
+                            <SelectItem value="48" className="py-3 text-base sm:text-sm font-medium">48 hours (6 days)</SelectItem>
+                            <SelectItem value="56" className="py-3 text-base sm:text-sm font-medium">56 hours (7 days)</SelectItem>
+                            <SelectItem value="80" className="py-3 text-base sm:text-sm font-medium">80 hours (10 days)</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
@@ -465,7 +465,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                     </div>
                   )}
 
-                <Button onClick={handleAddItem} className="w-full">
+                <Button onClick={handleAddItem} className="w-full h-14 sm:h-11 text-base sm:text-sm font-semibold mt-2">
                   Add Item to Quote
                 </Button>
               </div>
