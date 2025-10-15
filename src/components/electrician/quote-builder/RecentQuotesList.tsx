@@ -459,15 +459,15 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => handleRegeneratePDF(quote)}
               disabled={loadingAction === `pdf-${quote.id}`}
-              className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
+              className="h-12 sm:h-9 text-base sm:text-xs flex-1 border border-elec-yellow/20 hover:bg-elec-yellow/10"
             >
-              <Download className="h-3 w-3 mr-1" />
+              <Download className="h-4 w-4 sm:h-3 sm:w-3 mr-2 sm:mr-1" />
               {loadingAction === `pdf-${quote.id}` ? 'Downloading...' : 'Download PDF'}
             </Button>
             
@@ -475,16 +475,16 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               quote={quote}
               onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
               disabled={!quote.client?.email}
-              className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
+              className="h-12 sm:h-9 text-base sm:text-xs flex-1 border border-elec-yellow/20 hover:bg-elec-yellow/10"
             />
             
             <Button
               variant="default"
               size="sm"
               onClick={() => navigate(`/electrician/quote-builder/${quote.id}`)}
-              className="flex-1 text-xs bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+              className="h-12 sm:h-9 text-base sm:text-xs flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
             >
-              <Eye className="h-3 w-3 mr-1" />
+              <Eye className="h-4 w-4 sm:h-3 sm:w-3 mr-2 sm:mr-1" />
               View/Edit
             </Button>
           </div>
