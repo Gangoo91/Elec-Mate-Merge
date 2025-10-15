@@ -425,29 +425,28 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           key={quote.id}
           className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
         >
-          {/* Header with Quote Number */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs">
-              <Badge variant="outline" className="text-xs">
-                {quote.quoteNumber}
-              </Badge>
-            </div>
-            
-            <div className="flex items-start justify-between gap-3">
-              {getAcceptanceStatusBadge(quote)}
-              <span className="text-lg font-bold text-elec-yellow shrink-0">
-                {formatCurrency(quote.total)}
-              </span>
-            </div>
+          {/* Quote Number and Status Badge on same line */}
+          <div className="flex items-center justify-between">
+            <Badge variant="outline" className="text-xs">
+              {quote.quoteNumber}
+            </Badge>
+            {getAcceptanceStatusBadge(quote)}
           </div>
 
-          {/* Client Info */}
+          {/* Total Amount - Large and Prominent */}
+          <div className="text-right">
+            <span className="text-2xl font-bold text-elec-yellow">
+              {formatCurrency(quote.total)}
+            </span>
+          </div>
+
+          {/* Client Name with Icon */}
           <div className="flex items-center gap-2 text-sm">
             <User className="h-4 w-4 text-muted-foreground" />
             <span className="font-medium truncate">{quote.client.name}</span>
           </div>
 
-          {/* Meta Info */}
+          {/* Meta Info - Date and Items */}
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <div className="flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5" />
@@ -460,7 +459,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             </div>
           </div>
 
-          {/* Action Buttons - Exact Match to Invoice */}
+          {/* Main Action Buttons */}
           <div className="flex gap-2">
             <Button
               variant="ghost"
@@ -483,31 +482,16 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             </Button>
           </div>
 
-          {/* Send/More Actions */}
-          <div className="flex gap-2 pt-2 border-t border-elec-yellow/10">
-            <QuoteSendDropdown 
-              quote={quote}
-              onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
-              disabled={!quote.client?.email}
-            />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="px-3">
-                  <MoreVertical className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleDeleteQuote(quote)} className="text-destructive">
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete Quote
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          {/* Send Button - Full Width */}
+          <QuoteSendDropdown 
+            quote={quote}
+            onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
+            disabled={!quote.client?.email}
+          />
 
           {/* Accept/Reject Actions - Only for 'sent' quotes */}
           {quote.status === 'sent' && quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected' && (
-            <div className="flex gap-2 pt-2 border-t border-elec-yellow/10">
+            <div className="flex gap-2">
               <Button
                 variant="outline"
                 size="sm"
