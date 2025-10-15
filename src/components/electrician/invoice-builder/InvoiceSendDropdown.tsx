@@ -162,99 +162,99 @@ export const InvoiceSendDropdown = ({
     try {
       setIsSharingWhatsApp(true);
 
-      // 1. Check if we have a current PDF
-      const pdfIsCurrent = invoice.pdf_url && invoice.pdf_generated_at && 
-        new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
-      
-      let pdfUrl: string | undefined;
-      let documentId: string | undefined;
-
-      if (pdfIsCurrent) {
-        // Use cached PDF - instant!
-        pdfUrl = invoice.pdf_url;
-        toast({
-          title: 'PDF ready',
-          description: 'Using latest invoice PDF',
-        });
-      } else {
-        // PDF is stale or missing - regenerate
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
-          throw new Error('User not authenticated');
-        }
-
-        const { data: companyData, error: companyError } = await supabase
-          .from('company_profiles')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-
-        if (companyError) {
-          console.error('Company profile error:', companyError);
-        }
-
-        // Generate professional PDF using PDF Monkey template
-        toast({
-          title: 'Generating Professional PDF',
-          description: 'Creating invoice with your branded template...',
-        });
-
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-          throw new Error('User not authenticated');
-        }
-
-        const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
-          body: {
-            quote: invoice,
-            companyProfile: companyData,
-            invoice_mode: true
-          },
-          headers: {
-            Authorization: `Bearer ${session.access_token}`
-          }
-        });
-
-        pdfUrl = pdfData?.downloadUrl;
-        documentId = pdfData?.documentId;
-
-        if (!pdfUrl && documentId) {
-          toast({ title: 'Preparing PDF…', description: 'Finalising your professional invoice…' });
-          pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
-        }
-
-        if (pdfError || !pdfUrl) {
-          console.error('PDF Monkey error:', pdfError);
-          throw new Error('Failed to generate professional PDF');
-        }
-
-        // Store PDF metadata for future use
-        if (pdfUrl && documentId) {
-          await supabase
-            .from('quotes')
-            .update({
-              pdf_document_id: documentId,
-              pdf_url: pdfUrl,
-              pdf_generated_at: new Date().toISOString()
-            })
-            .eq('id', invoice.id);
-        }
+      // ALWAYS regenerate PDF for guaranteed freshness - fetch latest data first
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('User not authenticated');
       }
 
-      // 2. Create professional WhatsApp message (NO BRANDING)
-      const clientName = invoice.client?.name || 'Valued Client';
-      const { data: companyData } = await supabase
-        .from('company_profiles')
-        .select('company_name')
-        .eq('user_id', (await supabase.auth.getUser()).data.user?.id)
+      // Step 1: Fetch FRESH invoice data from database
+      const { data: freshInvoice, error: fetchError } = await supabase
+        .from('quotes')
+        .select('*')
+        .eq('id', invoice.id)
+        .eq('user_id', user.id)
         .single();
+
+      if (fetchError || !freshInvoice) {
+        throw new Error('Failed to fetch latest invoice data');
+      }
+
+      const { data: companyData, error: companyError } = await supabase
+        .from('company_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (companyError) {
+        console.error('Company profile error:', companyError);
+      }
+
+      // Step 2: Generate fresh PDF with latest data
+      toast({
+        title: 'Generating Professional PDF',
+        description: 'Creating invoice with latest data...',
+      });
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('User not authenticated');
+      }
+
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: {
+          quote: freshInvoice, // Use fresh data from database
+          companyProfile: companyData,
+          invoice_mode: true,
+          force_regenerate: true
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      let pdfUrl = pdfData?.downloadUrl;
+      const documentId = pdfData?.documentId;
+
+      if (!pdfUrl && documentId) {
+        toast({ title: 'Preparing PDF…', description: 'Finalising your professional invoice…' });
+        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+      }
+
+      if (pdfError || !pdfUrl) {
+        console.error('PDF Monkey error:', pdfError);
+        throw new Error('Failed to generate professional PDF');
+      }
+
+      // Step 3: Store PDF metadata in database
+      if (pdfUrl && documentId) {
+        const newVersion = (freshInvoice.pdf_version || 0) + 1;
+        await supabase
+          .from('quotes')
+          .update({
+            pdf_document_id: documentId,
+            pdf_url: pdfUrl,
+            pdf_generated_at: new Date().toISOString(),
+            pdf_version: newVersion
+          })
+          .eq('id', invoice.id);
+      }
+
+      // Step 4: Add cache busting to PDF URL
+      const cacheBustedPdfUrl = `${pdfUrl}?t=${Date.now()}`;
+
+      // Step 5: Create professional WhatsApp message with cache-busted URL
+      const clientData = typeof freshInvoice.client_data === 'string' 
+        ? JSON.parse(freshInvoice.client_data) 
+        : freshInvoice.client_data;
+      const clientName = clientData?.name || 'Valued Client';
       const companyName = companyData?.company_name || 'Your Company';
-      const totalAmount = invoice.total || 0;
-      const dueDate = invoice.invoice_due_date 
-        ? format(new Date(invoice.invoice_due_date), 'dd MMMM yyyy')
+      const totalAmount = freshInvoice.total || 0;
+      const dueDate = freshInvoice.invoice_due_date 
+        ? format(new Date(freshInvoice.invoice_due_date), 'dd MMMM yyyy')
         : format(new Date(), 'dd MMMM yyyy');
       
-      const message = `📄 *Invoice ${invoice.invoice_number}*
+      const message = `📄 *Invoice ${freshInvoice.invoice_number}*
 
 Dear ${clientName},
 
@@ -262,7 +262,7 @@ Please find your invoice for ${formatCurrency(totalAmount)}
 Due date: ${dueDate}
 
 📥 Download Invoice (PDF):
-${pdfUrl}
+${cacheBustedPdfUrl}
 
 Payment details are included in the invoice.
 
@@ -271,8 +271,8 @@ If you have any questions, please don't hesitate to contact me.
 Best regards,
 ${companyName}`;
 
-      // 4. Open WhatsApp with message and PDF link
-      const clientPhone = invoice.client?.phone;
+      // Step 6: Open WhatsApp with message and fresh PDF link
+      const clientPhone = clientData?.phone;
       
       let whatsappUrl: string;
       if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {

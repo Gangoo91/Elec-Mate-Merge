@@ -198,29 +198,26 @@ export const useInvoiceStorage = () => {
           }
         }
 
-        // 4. Store PDF metadata with current timestamp
+        // 4. Store PDF metadata with incremented version
         if (pdfUrl && documentId) {
+          const newVersion = (updatedQuote.pdf_version || 0) + 1;
           const { error: pdfUpdateError } = await supabase
             .from('quotes')
             .update({
               pdf_document_id: documentId,
               pdf_url: pdfUrl,
               pdf_generated_at: new Date().toISOString(),
-              pdf_version: (invoice.pdf_version || 0) + 1
+              pdf_version: newVersion
             })
-            .eq('id', invoice.id);
+            .eq('id', updatedQuote.id);
 
           if (pdfUpdateError) {
             console.error('PDF metadata update error:', pdfUpdateError);
-          } else {
-            // Wait a moment for database to fully commit the update
-            await new Promise(resolve => setTimeout(resolve, 500));
           }
 
           toast({
-            title: 'PDF generated',
-            description: 'Invoice PDF created with latest data',
-            variant: 'success',
+            title: 'Success',
+            description: 'Invoice saved with updated PDF',
           });
         }
       } catch (pdfError) {

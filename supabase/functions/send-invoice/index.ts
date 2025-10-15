@@ -80,6 +80,54 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error('Client email not found');
     }
 
+    // Ensure we have a fresh PDF - regenerate if missing or stale
+    let pdfUrl = invoice.pdf_url;
+    const pdfNeedsRegeneration = !pdfUrl || !invoice.pdf_document_id;
+
+    if (pdfNeedsRegeneration) {
+      console.log('Regenerating PDF for email attachment...');
+      
+      // Call generate-pdf-monkey edge function to create fresh PDF
+      const pdfResponse = await fetch(
+        `${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-pdf-monkey`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': req.headers.get('Authorization') || '',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            quote: invoice,
+            companyProfile: companyProfile,
+            invoice_mode: true,
+            force_regenerate: true,
+          }),
+        }
+      );
+
+      if (pdfResponse.ok) {
+        const pdfData = await pdfResponse.json();
+        pdfUrl = pdfData.downloadUrl;
+        
+        // Update database with new PDF metadata
+        if (pdfUrl && pdfData.documentId) {
+          const newVersion = (invoice.pdf_version || 0) + 1;
+          await supabaseClient
+            .from('quotes')
+            .update({
+              pdf_url: pdfUrl,
+              pdf_document_id: pdfData.documentId,
+              pdf_generated_at: new Date().toISOString(),
+              pdf_version: newVersion,
+            })
+            .eq('id', invoiceId);
+        }
+      }
+    }
+
+    // Add cache busting to PDF URL
+    const cacheBustedPdfUrl = pdfUrl ? `${pdfUrl}?t=${Date.now()}` : null;
+
     // Format currency
     const formatCurrency = (amount: number) => {
       return new Intl.NumberFormat('en-GB', {
@@ -205,6 +253,21 @@ const handler = async (req: Request): Promise<Response> => {
       <div class="notes">
         <strong>Notes:</strong><br>
         ${invoice.invoice_notes}
+      </div>
+      ` : ''}
+
+      ${cacheBustedPdfUrl ? `
+      <div style="text-align: center; margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+        <p style="margin: 0 0 15px 0; font-size: 16px;"><strong>📄 Download Full Invoice (PDF)</strong></p>
+        <a href="${cacheBustedPdfUrl}" 
+           style="display: inline-block; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); 
+                  color: #1a1a1a; text-decoration: none; padding: 12px 32px; border-radius: 6px; 
+                  font-weight: bold; font-size: 16px;">
+          Download Invoice PDF
+        </a>
+        <p style="margin: 15px 0 0 0; font-size: 12px; color: #666;">
+          Click to download a professional PDF copy of this invoice
+        </p>
       </div>
       ` : ''}
 
