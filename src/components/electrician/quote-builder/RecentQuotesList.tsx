@@ -425,19 +425,20 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           key={quote.id}
           className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
         >
-          {/* Quote Number and Status Badge on same line */}
-          <div className="flex items-center justify-between">
-            <Badge variant="outline" className="text-xs">
-              {quote.quoteNumber}
-            </Badge>
-            {getAcceptanceStatusBadge(quote)}
-          </div>
-
-          {/* Total Amount - Large and Prominent */}
-          <div className="text-right">
-            <span className="text-2xl font-bold text-elec-yellow">
-              {formatCurrency(quote.total)}
-            </span>
+          {/* Header section with Quote Number */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs">
+              <Badge variant="outline" className="text-xs">
+                {quote.quoteNumber}
+              </Badge>
+            </div>
+            
+            <div className="flex items-start justify-between gap-3">
+              {getAcceptanceStatusBadge(quote)}
+              <span className="text-lg font-bold text-elec-yellow shrink-0">
+                {formatCurrency(quote.total)}
+              </span>
+            </div>
           </div>
 
           {/* Client Name with Icon */}
