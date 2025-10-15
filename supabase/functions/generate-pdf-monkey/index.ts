@@ -255,7 +255,7 @@ serve(async (req) => {
         items: (freshQuote?.items || []).map((item: any) => ({
           name: item.description || "",
           description: item.notes || "",
-          quantity: item.actualQuantity || item.quantity || 0,
+          quantity: item.quantity || 0,  // Use original quoted quantity for billing
           unit: item.unit || "each",
           unitPrice: item.unitPrice || 0
         })),
