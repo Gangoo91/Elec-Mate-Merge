@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { supabase } from '@/integrations/supabase/client';
 import { Quote, QuoteClient, QuoteItem, QuoteSettings, QuoteTag } from '@/types/quote';
+import { Invoice, InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Loader2 } from 'lucide-react';
 import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
 import { toast } from '@/hooks/use-toast';
@@ -66,6 +67,9 @@ export default function InvoiceQuoteBuilder() {
           return;
         }
 
+        // Check if this is an existing invoice (has invoice_raised = true)
+        const isExistingInvoice = data.invoice_raised === true;
+
         // Transform database row to Quote object
         const quoteData: Quote = {
           id: data.id,
@@ -88,6 +92,8 @@ export default function InvoiceQuoteBuilder() {
           acceptance_status: data.acceptance_status as Quote['acceptance_status'],
           accepted_at: data.accepted_at ? new Date(data.accepted_at) : undefined,
           public_token: data.public_token,
+          invoice_raised: data.invoice_raised || false,
+          invoice_number: data.invoice_number,
         };
 
         setQuote(quoteData);
@@ -146,9 +152,34 @@ export default function InvoiceQuoteBuilder() {
           </p>
         </div>
         
-        {quote && (
+        {quote && quote.invoice_raised && quote.invoice_number ? (
+          <InvoiceWizard 
+            sourceQuote={quote}
+            existingInvoice={{
+              ...quote,
+              invoice_number: quote.invoice_number,
+              invoice_date: new Date(),
+              invoice_due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+              invoice_status: 'draft',
+              invoice_raised: true,
+              additional_invoice_items: [],
+              work_completion_date: new Date(),
+              originalQuoteId: quote.id,
+              items: quote.items.map(item => ({
+                ...item,
+                completionStatus: 'completed' as const,
+                actualQuantity: item.quantity,
+              })) as InvoiceItem[],
+              settings: {
+                ...quote.settings,
+                paymentTerms: '30 days',
+                dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+              } as InvoiceSettings,
+            }}
+          />
+        ) : quote ? (
           <InvoiceWizard sourceQuote={quote} />
-        )}
+        ) : null}
       </div>
     </>
   );

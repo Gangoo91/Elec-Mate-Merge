@@ -5,6 +5,7 @@ import { MobileButton } from '@/components/ui/mobile-button';
 import { MobileGestureHandler } from '@/components/ui/mobile-gesture-handler';
 import { ArrowLeft, ArrowRight, Save } from 'lucide-react';
 import { Quote } from '@/types/quote';
+import { Invoice } from '@/types/invoice';
 import { useInvoiceBuilder } from '@/hooks/useInvoiceBuilder';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { InvoiceProgressIndicator } from './InvoiceProgressIndicator';
@@ -16,6 +17,7 @@ import { toast } from '@/hooks/use-toast';
 
 interface InvoiceWizardProps {
   sourceQuote?: Quote;
+  existingInvoice?: Partial<Invoice>;
 }
 
 const steps = [
@@ -25,12 +27,12 @@ const steps = [
   { title: 'Generate Invoice', description: 'Preview and save' },
 ];
 
-export const InvoiceWizard = ({ sourceQuote }: InvoiceWizardProps) => {
+export const InvoiceWizard = ({ sourceQuote, existingInvoice }: InvoiceWizardProps) => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
   
-  const invoiceBuilder = useInvoiceBuilder(sourceQuote);
+  const invoiceBuilder = useInvoiceBuilder(sourceQuote, existingInvoice);
   const { saveInvoice } = useInvoiceStorage();
 
   const handleNext = () => {

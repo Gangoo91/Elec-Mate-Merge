@@ -38,8 +38,13 @@ const createInvoiceFromQuote = (quote: Quote): Partial<Invoice> => {
   };
 };
 
-export const useInvoiceBuilder = (sourceQuote?: Quote) => {
+export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial<Invoice>) => {
   const [invoice, setInvoice] = useState<Partial<Invoice>>(() => {
+    // If editing an existing invoice, preserve it
+    if (existingInvoice) {
+      return existingInvoice;
+    }
+    // Otherwise create from quote
     if (sourceQuote) {
       return createInvoiceFromQuote(sourceQuote);
     }
