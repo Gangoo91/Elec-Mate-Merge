@@ -12,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { InvoiceDecisionDialog } from '@/components/electrician/invoice-builder/InvoiceDecisionDialog';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
+import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -469,6 +470,14 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
               <Download className="h-3 w-3 mr-1" />
               {loadingAction === `pdf-${quote.id}` ? 'Downloading...' : 'Download PDF'}
             </Button>
+            
+            <QuoteSendDropdown 
+              quote={quote}
+              onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
+              disabled={!quote.client?.email}
+              className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
+            />
+            
             <Button
               variant="default"
               size="sm"

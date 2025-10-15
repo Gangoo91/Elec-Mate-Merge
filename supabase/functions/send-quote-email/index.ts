@@ -6,15 +6,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-interface SendQuoteEmailRequest {
-  quoteId: string;
-  clientEmail: string;
-  clientName: string;
-  companyName: string;
-  quoteNumber: string;
-  total: number;
-}
-
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -31,17 +22,130 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     console.log('Starting quote email send process...');
     
+    const { quoteId } = await req.json();
+
+    if (!quoteId) {
+      throw new Error('Missing quoteId');
+    }
+
+    // Get authorization header
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      throw new Error('Missing authorization header');
+    }
+
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL') as string;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') as string;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Parse request body
-    const { quoteId, clientEmail, clientName, companyName, quoteNumber, total }: SendQuoteEmailRequest = await req.json();
+    // Create user-scoped client for RLS
+    const userSupabase = createClient(
+      supabaseUrl,
+      Deno.env.get('SUPABASE_ANON_KEY') as string,
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    // Fetch quote data
+    const { data: quote, error: quoteError } = await userSupabase
+      .from('quotes')
+      .select('*')
+      .eq('id', quoteId)
+      .single();
+
+    if (quoteError || !quote) {
+      throw new Error('Quote not found');
+    }
+
+    // Parse client data
+    const clientData = typeof quote.client_data === 'string' 
+      ? JSON.parse(quote.client_data) 
+      : quote.client_data;
+
+    if (!clientData?.email) {
+      throw new Error('Client email not found');
+    }
+
+    const clientEmail = clientData.email;
+    const clientName = clientData.name || 'Valued Client';
+    const quoteNumber = quote.quote_number;
+
+    // Fetch user and company profile
+    const { data: { user } } = await userSupabase.auth.getUser();
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+
+    const { data: companyProfile } = await supabase
+      .from('company_profiles')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+
+    const companyName = companyProfile?.company_name || 'Your Company';
 
     console.log(`Sending quote ${quoteNumber} to ${clientEmail}`);
 
-    // Get Gmail credentials from Supabase secrets and sanitise them (strip accidental quotes/whitespace)
+    // Generate fresh PDF
+    const pdfResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
+      method: 'POST',
+      headers: {
+        'Authorization': authHeader,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        quote,
+        companyProfile,
+        invoice_mode: false,
+        force_regenerate: true
+      })
+    });
+
+    const pdfData = await pdfResponse.json();
+    let pdfDownloadUrl = pdfData?.downloadUrl;
+    const documentId = pdfData?.documentId;
+
+    // Poll for PDF if not immediately available
+    if (!pdfDownloadUrl && documentId) {
+      for (let i = 0; i < 45; i++) {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        const statusResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
+          method: 'POST',
+          headers: {
+            'Authorization': authHeader,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ documentId, mode: 'status' })
+        });
+        const statusData = await statusResponse.json();
+        if (statusData?.downloadUrl) {
+          pdfDownloadUrl = statusData.downloadUrl;
+          break;
+        }
+      }
+    }
+
+    if (!pdfDownloadUrl) {
+      throw new Error('Failed to generate PDF');
+    }
+
+    // Store PDF metadata
+    if (documentId) {
+      const newVersion = (quote.pdf_version || 0) + 1;
+      await supabase
+        .from('quotes')
+        .update({
+          pdf_document_id: documentId,
+          pdf_generated_at: new Date().toISOString(),
+          pdf_version: newVersion
+        })
+        .eq('id', quoteId);
+    }
+
+    // Cache-busted PDF URL
+    const cacheBustedPdfUrl = `${pdfDownloadUrl}?t=${Date.now()}`;
+
+    // Get Gmail credentials from Supabase secrets
     const rawClientId = Deno.env.get('GMAIL_CLIENT_ID') ?? '';
     const rawClientSecret = Deno.env.get('GMAIL_CLIENT_SECRET') ?? '';
     const rawRefreshToken = Deno.env.get('GMAIL_REFRESH_TOKEN') ?? '';
@@ -59,13 +163,6 @@ const handler = async (req: Request): Promise<Response> => {
       });
       throw new Error('Gmail API not configured - missing credentials');
     }
-
-    // Helpful debugging (masked)
-    console.log('Gmail creds loaded:', {
-      clientIdSuffix: gmailClientId.slice(-6),
-      hasSecret: Boolean(gmailClientSecret),
-      refreshTokenPrefix: gmailRefreshToken.slice(0, 6)
-    });
 
     // Get access token using refresh token
     const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
@@ -107,20 +204,9 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log('Successfully obtained Gmail access token');
 
-    // Fetch the full quote data from database
-    const { data: quoteData, error: quoteError } = await supabase
-      .from('quotes')
-      .select('*')
-      .eq('id', quoteId)
-      .single();
-
-    if (quoteError || !quoteData) {
-      throw new Error('Quote not found');
-    }
-
-    // Generate professional email content
+    // Generate professional email content with PDF link
     const emailSubject = `Quote ${quoteNumber} from ${companyName}`;
-    const emailBody = generateEmailHTML(quoteData, clientName, companyName);
+    const emailBody = generateEmailHTML(quote, clientName, companyName, cacheBustedPdfUrl);
 
     // Create email message for Gmail API
     const emailMessage = [
@@ -199,137 +285,71 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-function generateEmailHTML(quote: any, clientName: string, companyName: string): string {
-  const clientData = JSON.parse(quote.client_data);
-  const settings = JSON.parse(quote.settings);
+function generateEmailHTML(quote: any, clientName: string, companyName: string, pdfUrl: string): string {
+  const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
+  const settings = typeof quote.settings === 'string' ? JSON.parse(quote.settings) : quote.settings;
+  const jobDetails = typeof quote.job_details === 'string' ? JSON.parse(quote.job_details) : quote.job_details;
+  const total = quote.total || 0;
+  const expiryDate = quote.expiry_date 
+    ? new Date(quote.expiry_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  const jobTitle = jobDetails?.title || 'Electrical Work';
   
   return `
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quote from ${companyName}</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f8fafc;
-        }
-        .email-container {
-            background: white;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-        .header {
-            border-bottom: 2px solid #3b82f6;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #3b82f6;
-            margin-bottom: 10px;
-        }
-        .quote-summary {
-            background-color: #f1f5f9;
-            border-left: 4px solid #3b82f6;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .quote-total {
-            font-size: 24px;
-            font-weight: bold;
-            color: #1e40af;
-            margin: 10px 0;
-        }
-        .button {
-            display: inline-block;
-            background-color: #3b82f6;
-            color: white;
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            margin: 20px 0;
-        }
-        .footer {
-            border-top: 1px solid #e2e8f0;
-            padding-top: 20px;
-            margin-top: 30px;
-            font-size: 14px;
-            color: #64748b;
-        }
-        .contact-info {
-            margin: 15px 0;
-        }
-        .validity-info {
-            background-color: #fef3c7;
-            border: 1px solid #f59e0b;
-            padding: 15px;
-            border-radius: 6px;
-            margin: 20px 0;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quote ${quote.quote_number}</title>
 </head>
-<body>
-    <div class="email-container">
-        <div class="header">
-            <div class="logo">${companyName}</div>
-            <h1>Quote ${quote.quote_number}</h1>
-        </div>
-        
-        <p>Dear ${clientName},</p>
-        
-        <p>Thank you for your interest in our electrical services. Please find attached your detailed quote for the work requested.</p>
-        
-        <div class="quote-summary">
-            <h3>Quote Summary</h3>
-            <p><strong>Quote Number:</strong> ${quote.quote_number}</p>
-            <p><strong>Project:</strong> ${quote.job_details ? JSON.parse(quote.job_details).title || 'Electrical Installation' : 'Electrical Services'}</p>
-            <div class="quote-total">Total: £${quote.total.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</div>
-            ${settings.vatRegistered ? `<p><em>VAT included at ${settings.vatRate}%</em></p>` : '<p><em>VAT not applicable</em></p>'}
-        </div>
-        
-        <div class="validity-info">
-            <strong>⏰ Quote Validity:</strong> This quote is valid for 30 days from the date of issue.
-        </div>
-        
-        <p>Our quote includes:</p>
-        <ul>
-            <li>All labour and materials as specified</li>
-            <li>Professional installation by certified electricians</li>
-            <li>Compliance with BS 7671 18th Edition standards</li>
-            <li>All necessary certificates and documentation</li>
-        </ul>
-        
-        <p>To accept this quote or if you have any questions, please don't hesitate to get in touch with us. We're here to help and would be delighted to work with you on this project.</p>
-        
-        <div class="footer">
-            <div class="contact-info">
-                <p><strong>Need to discuss this quote?</strong></p>
-                <p>Reply to this email or give us a call - we're always happy to answer any questions you might have about your electrical project.</p>
-            </div>
-            
-            <p>Thank you for considering ${companyName} for your electrical needs.</p>
-            
-            <p>Best regards,<br>
-            The ${companyName} Team</p>
-            
-            <hr style="margin: 20px 0; border: none; border-top: 1px solid #e2e8f0;">
-            
-            <p style="font-size: 12px; color: #94a3b8;">
-                This email and any attachments are confidential and intended solely for the use of the individual or entity to whom they are addressed.
-            </p>
-        </div>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+    <h1 style="color: white; margin: 0; font-size: 28px;">${companyName}</h1>
+    <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">Professional Electrical Services</p>
+  </div>
+  
+  <div style="background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px;">
+    <h2 style="color: #667eea; margin-top: 0;">Quote ${quote.quote_number}</h2>
+    
+    <p style="font-size: 16px;">Dear ${clientName},</p>
+    
+    <p style="font-size: 16px;">Thank you for your enquiry. Please find your quotation for <strong>${jobTitle}</strong>.</p>
+    
+    <div style="background: white; border-left: 4px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 5px;">
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <td style="padding: 8px 0; color: #666;">Quote Number:</td>
+          <td style="padding: 8px 0; text-align: right; font-weight: bold;">${quote.quote_number}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #666;">Total Amount:</td>
+          <td style="padding: 8px 0; text-align: right; font-weight: bold; color: #667eea; font-size: 20px;">£${total.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #666;">Valid Until:</td>
+          <td style="padding: 8px 0; text-align: right; font-weight: bold;">${expiryDate}</td>
+        </tr>
+      </table>
     </div>
+    
+    <div style="text-align: center; margin: 30px 0;">
+      <a href="${pdfUrl}" 
+         style="display: inline-block; background: #667eea; color: white; padding: 15px 40px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">
+        📥 Download Quote (PDF)
+      </a>
+    </div>
+    
+    <p style="font-size: 14px; color: #666; margin-top: 30px;">
+      This quote is valid for 30 days from the date of issue. If you have any questions or would like to proceed, please don't hesitate to contact us.
+    </p>
+    
+    <p style="font-size: 16px; margin-top: 20px;">Best regards,<br><strong>${companyName}</strong></p>
+  </div>
+  
+  <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
+    <p>This is an automated email. Please do not reply directly to this message.</p>
+  </div>
 </body>
 </html>
   `;

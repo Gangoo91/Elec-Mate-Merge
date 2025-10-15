@@ -1,12 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { User, FileText, Calculator, Package, Wrench, Zap, Download, Mail, Briefcase, Loader2, Code, Copy, ChevronDown, ChevronUp } from "lucide-react";
+import { User, FileText, Calculator, Package, Wrench, Zap, Download, Briefcase, Loader2, Code, Copy, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Quote } from "@/types/quote";
 import { useToast } from "@/hooks/use-toast";
 import { useCompanyProfile } from "@/hooks/useCompanyProfile";
 import { supabase } from "@/integrations/supabase/client";
+import { QuoteSendDropdown } from "@/components/electrician/quote-builder/QuoteSendDropdown";
 
 interface QuoteReviewStepProps {
   quote: Partial<Quote>;
@@ -16,7 +17,6 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const { toast } = useToast();
   const { companyProfile } = useCompanyProfile();
   const [isDownloading, setIsDownloading] = useState(false);
-  const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [showTestData, setShowTestData] = useState(false);
 
   const handleDownloadPDF = async () => {
@@ -98,87 +98,6 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
     }
   };
 
-  const handleEmailQuote = async () => {
-    if (!quote.client?.email) {
-      toast({
-        title: "Missing Email",
-        description: "Client email address is required to send the quote.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (!quote.id) {
-      toast({
-        title: "Error",
-        description: "Quote must be saved before sending via email.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setIsSendingEmail(true);
-    
-    try {
-      // Get effective company profile (send silently - loading shown in button)
-      const effectiveCompanyProfile = companyProfile || {
-        company_name: "Your Electrical Company",
-        company_email: "contact@yourcompany.com"
-      };
-
-      const { data, error } = await supabase.functions.invoke('send-quote-email', {
-        body: {
-          quoteId: quote.id,
-          clientEmail: quote.client.email,
-          clientName: quote.client.name,
-          companyName: effectiveCompanyProfile.company_name,
-          quoteNumber: quote.quoteNumber,
-          total: quote.total || 0
-        }
-      });
-
-      if (error) {
-        console.error('Email sending error:', error);
-        throw new Error(error.message || 'Failed to send email');
-      }
-
-      if (data?.success) {
-        toast({
-          title: "Email sent",
-          variant: "success"
-        });
-      } else {
-        throw new Error(data?.error || 'Failed to send email');
-      }
-    } catch (error: any) {
-      console.error('Error sending quote email:', error);
-      
-      // Fallback to mailto if Gmail API fails
-      const subject = `Electrical Quote - ${quote.quoteNumber}`;
-      const body = `Dear ${quote.client?.name},
-
-Please find your electrical quote details below.
-
-Quote Number: ${quote.quoteNumber}
-Total Amount: £${(quote.total || 0).toFixed(2)}
-
-This quote is valid for 30 days from the date of issue.
-
-Best regards,
-${companyProfile?.company_name || 'Your Electrician'}`;
-
-      const mailtoLink = `mailto:${quote.client?.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.open(mailtoLink);
-      
-      toast({
-        title: "Gmail API error",
-        description: "Opening default email client instead",
-        variant: "destructive"
-      });
-    } finally {
-      setIsSendingEmail(false);
-    }
-  };
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'labour': return <Wrench className="h-4 w-4" />;
@@ -445,19 +364,18 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
           {isDownloading ? "Generating..." : "Download PDF"}
         </Button>
         
-        <Button 
-          onClick={handleEmailQuote} 
-          disabled={isSendingEmail || !quote.client?.email}
-          variant="outline" 
-          className="flex items-center gap-2"
-        >
-          {isSendingEmail ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Mail className="h-4 w-4" />
-          )}
-          {isSendingEmail ? "Sending..." : "Email to Client"}
-        </Button>
+        <QuoteSendDropdown 
+          quote={quote as Quote}
+          onSuccess={() => {
+            toast({
+              title: "Quote sent",
+              description: "Quote has been sent successfully",
+              variant: "success"
+            });
+          }}
+          disabled={!quote.client?.email || !quote.id}
+          className="flex items-center gap-2 w-full"
+        />
         
         <Button 
           onClick={() => {
