@@ -197,7 +197,6 @@ const CashFlowPlanner = () => {
 
       {/* Accordion-based Layout */}
       <Accordion type="multiple" value={expandedSections} onValueChange={setExpandedSections} className="space-y-4">
-          <div className="grid gap-6 lg:grid-cols-2">
         {/* Setup Section */}
         <AccordionItem value="setup" className="border-elec-yellow/20 bg-elec-card rounded-lg px-6">
           <AccordionTrigger className="text-elec-light hover:text-elec-yellow">
@@ -207,8 +206,9 @@ const CashFlowPlanner = () => {
             </div>
           </AccordionTrigger>
           <AccordionContent className="space-y-6 pt-4">
-            {/* Income Streams */}
-            <Card className="border-elec-yellow/20 bg-elec-card">
+            <div className="grid gap-6 lg:grid-cols-2">
+              {/* Income Streams */}
+              <Card className="border-elec-yellow/20 bg-elec-card">
               <CardHeader>
                 <CardTitle className="text-white flex items-center justify-between">
                   Income Streams
@@ -437,9 +437,9 @@ const CashFlowPlanner = () => {
                 )}
               </CardContent>
             </Card>
-          </div>
+            </div>
 
-          {/* Settings */}
+            {/* Settings */}
           <Card className="border-elec-yellow/20 bg-elec-card">
             <CardHeader>
               <CardTitle className="text-white">Settings & Assumptions</CardTitle>
