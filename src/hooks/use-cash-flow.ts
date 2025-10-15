@@ -362,7 +362,10 @@ export const useCashFlow = () => {
     const avgMonthlyExpenses = totalExpenses / 12;
     const minBalance = Math.min(...monthlyProjections.map(p => p.cumulativeBalance));
     const maxBalance = Math.max(...monthlyProjections.map(p => p.cumulativeBalance));
-    const cashRunway = minBalance < 0 ? 0 : Math.floor(minBalance / avgMonthlyExpenses);
+    // Fix infinity bug - return 0 if avgMonthlyExpenses is 0
+    const cashRunway = avgMonthlyExpenses > 0 
+      ? (minBalance < 0 ? 0 : Math.floor(minBalance / avgMonthlyExpenses))
+      : 0;
 
     return {
       totalIncome,

@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import { MonthlyProjection } from "@/hooks/use-cash-flow";
 import { TrendingUp, BarChart3, PieChart as PieChartIcon } from "lucide-react";
@@ -58,27 +59,33 @@ export const CashFlowCharts = ({ projections, selectedScenario }: CashFlowCharts
     <div className="space-y-6">
       {/* Monthly Trend Line Chart - Taller on mobile */}
       <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader>
-          <CardTitle className="text-elec-light flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-elec-yellow" />
-            Monthly Cash Flow Trends ({selectedScenario} scenario)
+        <CardHeader className="pb-3 sm:pb-6">
+          <CardTitle className="text-base sm:text-lg md:text-xl text-elec-light flex flex-col sm:flex-row sm:items-center gap-2">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-elec-yellow" />
+              <span>Monthly Cash Flow Trends</span>
+            </div>
+            <Badge variant="outline" className="w-fit text-xs sm:text-sm">
+              {selectedScenario.charAt(0).toUpperCase() + selectedScenario.slice(1)}
+            </Badge>
           </CardTitle>
         </CardHeader>
-        <CardContent className="h-[400px] sm:h-80">
+        <CardContent className="h-[400px] sm:h-80 pb-3 sm:pb-6">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={lineChartData} margin={{ top: 20, right: 10, left: 0, bottom: 20 }}>
+            <LineChart data={lineChartData} margin={{ top: 20, right: 10, left: 0, bottom: 60 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
               <XAxis 
                 dataKey="month" 
                 stroke="rgba(255,255,255,0.8)"
-                fontSize={11}
-                angle={-45}
+                fontSize={10}
+                angle={-60}
                 textAnchor="end"
-                height={80}
+                height={100}
               />
               <YAxis 
                 stroke="rgba(255,255,255,0.8)"
-                fontSize={11}
+                fontSize={10}
+                width={50}
                 tickFormatter={(value) => `£${(value / 1000).toFixed(0)}k`}
               />
               <Tooltip 
@@ -121,45 +128,51 @@ export const CashFlowCharts = ({ projections, selectedScenario }: CashFlowCharts
         </CardContent>
         
         {/* Mobile-friendly summary cards below chart */}
-        <CardContent className="pt-0">
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-            {projections.slice(0, 6).map(month => (
-              <Card key={month.month} className="p-2 bg-elec-dark/50 border-elec-yellow/10">
-                <p className="text-xs text-elec-light/60 text-center">{month.monthName}</p>
-                <p className={`text-sm font-bold text-center ${
-                  month.cumulativeBalance >= 0 ? 'text-green-400' : 'text-red-400'
-                }`}>
-                  £{(month.cumulativeBalance / 1000).toFixed(1)}k
-                </p>
-              </Card>
-            ))}
+        <CardContent className="pt-0 pb-4 sm:pb-6">
+          <div className="overflow-x-auto -mx-3 sm:-mx-6 px-3 sm:px-6 pb-2">
+            <div className="flex gap-2 sm:gap-3 min-w-max sm:min-w-0 sm:grid sm:grid-cols-3 md:grid-cols-6">
+              {projections.slice(0, 6).map(month => (
+                <Card key={month.month} className="min-w-[100px] sm:min-w-0 p-2 sm:p-3 bg-elec-dark/50 border-elec-yellow/10">
+                  <p className="text-xs text-elec-light/60 text-center mb-1">{month.monthName}</p>
+                  <p className={`text-sm sm:text-base font-bold text-center ${
+                    month.cumulativeBalance >= 0 ? 'text-green-400' : 'text-red-400'
+                  }`}>
+                    £{(month.cumulativeBalance / 1000).toFixed(1)}k
+                  </p>
+                  <p className="text-xs text-elec-light/60 text-center mt-1">
+                    {month.netFlow >= 0 ? '+' : ''}{(month.netFlow / 1000).toFixed(1)}k
+                  </p>
+                </Card>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Monthly Net Flow Waterfall */}
       <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader>
-          <CardTitle className="text-elec-light flex items-center gap-2">
+        <CardHeader className="pb-3 sm:pb-6">
+          <CardTitle className="text-base sm:text-lg md:text-xl text-elec-light flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-elec-yellow" />
             Monthly Net Cash Flow
           </CardTitle>
         </CardHeader>
-        <CardContent className="h-72 sm:h-64">
+        <CardContent className="h-[350px] sm:h-64 pb-4 sm:pb-6">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={waterfallData} margin={{ top: 20, right: 10, left: 0, bottom: 20 }}>
+            <BarChart data={waterfallData} margin={{ top: 20, right: 10, left: 0, bottom: 60 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
               <XAxis 
                 dataKey="month" 
                 stroke="rgba(255,255,255,0.8)"
-                fontSize={11}
-                angle={-45}
+                fontSize={10}
+                angle={-60}
                 textAnchor="end"
-                height={80}
+                height={100}
               />
               <YAxis 
                 stroke="rgba(255,255,255,0.8)"
-                fontSize={11}
+                fontSize={10}
+                width={50}
                 tickFormatter={(value) => `£${(value / 1000).toFixed(0)}k`}
               />
               <Tooltip 

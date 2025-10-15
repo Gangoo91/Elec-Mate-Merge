@@ -130,18 +130,18 @@ const CashFlowPlanner = () => {
   const monthWithNegativeBalance = monthlyProjections.findIndex(p => p.cumulativeBalance < 0) + 1;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-7xl overflow-x-hidden">
       <Helmet>
         <title>Cash Flow Planner UK for Electricians | Forecast & Scenarios</title>
         <meta name="description" content="Plan electrician cash flow with projections, VAT quarters, scenarios and insights. Mobile-first." />
         <link rel="canonical" href="/electrician/business-development/tools/cash-flow" />
       </Helmet>
-      <div className="flex flex-col items-center justify-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-elec-light mb-4 flex items-center gap-3">
-          <TrendingUp className="h-8 w-8 text-elec-yellow" />
+      <div className="flex flex-col items-center justify-center mb-4 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-elec-light mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3">
+          <TrendingUp className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
           Advanced Cash Flow Planner
         </h1>
-        <p className="text-elec-light/80 text-center max-w-2xl mb-6">
+        <p className="text-sm sm:text-base text-elec-light/80 text-center max-w-2xl mb-4 sm:mb-6 px-2">
           Professional cash flow forecasting with scenario planning, industry-specific insights, and real-time what-if analysis.
         </p>
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
@@ -163,22 +163,22 @@ const CashFlowPlanner = () => {
       )}
 
       {/* Export Options */}
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end mb-3 sm:mb-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="border-elec-yellow/30 text-elec-light">
+            <Button variant="outline" className="border-elec-yellow/30 text-elec-light min-h-[44px]">
               <Download className="h-4 w-4 mr-2" />
-              Export
+              <span className="hidden sm:inline">Export</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-elec-card border-elec-yellow/30">
-            <DropdownMenuItem onClick={handleExportCSV} className="text-elec-light">
-              <FileSpreadsheet className="h-4 w-4 mr-2" />
-              Export to CSV
+          <DropdownMenuContent align="end" className="bg-elec-card border-elec-yellow/30 w-48 z-50">
+            <DropdownMenuItem onClick={handleExportCSV} className="text-elec-light py-3 cursor-pointer focus:bg-elec-yellow/10">
+              <FileSpreadsheet className="h-5 w-5 mr-3" />
+              <span className="text-base">Export to CSV</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleCopySummary} className="text-elec-light">
-              <Copy className="h-4 w-4 mr-2" />
-              Copy Summary
+            <DropdownMenuItem onClick={handleCopySummary} className="text-elec-light py-3 cursor-pointer focus:bg-elec-yellow/10">
+              <Copy className="h-5 w-5 mr-3" />
+              <span className="text-base">Copy Summary</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -186,7 +186,7 @@ const CashFlowPlanner = () => {
 
       {/* Financial Health Summary - Always Visible */}
       {state.incomeStreams.length > 0 && (
-        <div className="mb-6">
+        <div className="mb-4 sm:mb-6">
           <FinancialHealthSummary
             financialMetrics={financialMetrics}
             emergencyFundTarget={state.emergencyFundTarget}
@@ -196,49 +196,50 @@ const CashFlowPlanner = () => {
       )}
 
       {/* Accordion-based Layout */}
-      <Accordion type="multiple" value={expandedSections} onValueChange={setExpandedSections} className="space-y-4">
+      <Accordion type="multiple" value={expandedSections} onValueChange={setExpandedSections} className="space-y-3 sm:space-y-4">
         {/* Setup Section */}
-        <AccordionItem value="setup" className="border-elec-yellow/20 bg-elec-card rounded-lg px-6">
-          <AccordionTrigger className="text-elec-light hover:text-elec-yellow">
+        <AccordionItem value="setup" className="border-elec-yellow/20 bg-elec-card rounded-lg px-3 sm:px-6">
+          <AccordionTrigger className="text-elec-light hover:text-elec-yellow py-4 min-h-[44px] touch-manipulation">
             <div className="flex items-center gap-2">
               <Plus className="h-5 w-5" />
-              Setup Your Business
+              <span className="text-base sm:text-lg">Setup Your Business</span>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="space-y-6 pt-4">
-            <div className="grid gap-6 lg:grid-cols-2">
+          <AccordionContent className="space-y-4 sm:space-y-6 pt-4">
+            <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
               {/* Income Streams */}
-              <Card className="border-elec-yellow/20 bg-elec-card">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center justify-between">
+              <Card className="border-elec-yellow/20 bg-elec-card p-3 sm:p-4">
+              <CardHeader className="p-0 pb-4">
+                <CardTitle className="text-elec-light text-base sm:text-lg flex items-center justify-between">
                   Income Streams
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => setShowAddIncome(!showAddIncome)}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-1 sm:gap-2 min-h-[44px] px-2 sm:px-3"
                   >
                     <Plus className="h-4 w-4" />
-                    Add Stream
+                    <span className="hidden sm:inline">Add Stream</span>
+                    <span className="sm:hidden">Add</span>
                   </Button>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4 p-0">
                 {state.incomeStreams.map((stream) => (
-                  <div key={stream.id} className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
+                  <div key={stream.id} className="p-3 sm:p-4 rounded-lg bg-secondary/20 border border-secondary/40">
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="font-medium text-white">{stream.name}</h4>
+                      <h4 className="font-medium text-elec-light text-sm sm:text-base truncate flex-1 mr-2">{stream.name}</h4>
                       <Button
                         size="sm"
                         variant="ghost"
                         onClick={() => removeIncomeStream(stream.id)}
-                        className="text-red-400 hover:text-red-300"
+                        className="text-red-400 hover:text-red-300 min-h-[44px] px-2"
                       >
                         <Minus className="h-4 w-4" />
                       </Button>
                     </div>
                     
-                    <div className="grid gap-3 md:grid-cols-2">
+                    <div className="grid gap-3 sm:grid-cols-2">
                       <MobileInput
                         label="Amount"
                         value={stream.amount.toString()}
@@ -277,9 +278,9 @@ const CashFlowPlanner = () => {
                 ))}
 
                 {showAddIncome && (
-                  <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-                    <h4 className="font-medium text-white mb-3">Add New Income Stream</h4>
-                    <div className="grid gap-3 md:grid-cols-2">
+                  <div className="p-3 sm:p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+                    <h4 className="font-medium text-elec-light text-sm sm:text-base mb-3">Add New Income Stream</h4>
+                    <div className="grid gap-3 sm:grid-cols-2">
                       <MobileInput
                         label="Name"
                         value={newIncomeForm.name}
@@ -325,40 +326,41 @@ const CashFlowPlanner = () => {
             </Card>
 
             {/* Expense Categories */}
-            <Card className="border-elec-yellow/20 bg-elec-card">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center justify-between">
+            <Card className="border-elec-yellow/20 bg-elec-card p-3 sm:p-4">
+              <CardHeader className="p-0 pb-4">
+                <CardTitle className="text-elec-light text-base sm:text-lg flex items-center justify-between">
                   Expense Categories
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => setShowAddExpense(!showAddExpense)}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-1 sm:gap-2 min-h-[44px] px-2 sm:px-3"
                   >
                     <Plus className="h-4 w-4" />
-                    Add Category
+                    <span className="hidden sm:inline">Add Category</span>
+                    <span className="sm:hidden">Add</span>
                   </Button>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4 p-0">
                 {state.expenseCategories.map((category) => (
-                  <div key={category.id} className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
+                  <div key={category.id} className="p-3 sm:p-4 rounded-lg bg-secondary/20 border border-secondary/40">
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="font-medium text-white">{category.name}</h4>
-                      <div className="flex items-center gap-2">
-                        {category.variable && <Badge variant="yellow">Variable</Badge>}
+                      <h4 className="font-medium text-elec-light text-sm sm:text-base truncate flex-1 mr-2">{category.name}</h4>
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        {category.variable && <Badge variant="yellow" className="text-xs">Variable</Badge>}
                         <Button
                           size="sm"
                           variant="ghost"
                           onClick={() => removeExpenseCategory(category.id)}
-                          className="text-red-400 hover:text-red-300"
+                          className="text-red-400 hover:text-red-300 min-h-[44px] px-2"
                         >
                           <Minus className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
                     
-                    <div className="grid gap-3 md:grid-cols-2">
+                    <div className="grid gap-3 sm:grid-cols-2">
                       <MobileInput
                         label="Amount"
                         value={category.amount.toString()}
@@ -398,9 +400,9 @@ const CashFlowPlanner = () => {
                 ))}
 
                 {showAddExpense && (
-                  <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-                    <h4 className="font-medium text-white mb-3">Add New Expense Category</h4>
-                    <div className="grid gap-3 md:grid-cols-2">
+                  <div className="p-3 sm:p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+                    <h4 className="font-medium text-elec-light text-sm sm:text-base mb-3">Add New Expense Category</h4>
+                    <div className="grid gap-3 sm:grid-cols-2">
                       <MobileInput
                         label="Name"
                         value={newExpenseForm.name}
@@ -440,13 +442,13 @@ const CashFlowPlanner = () => {
             </div>
 
             {/* Settings */}
-          <Card className="border-elec-yellow/20 bg-elec-card">
-            <CardHeader>
-              <CardTitle className="text-white">Settings & Assumptions</CardTitle>
+          <Card className="border-elec-yellow/20 bg-elec-card p-3 sm:p-6">
+            <CardHeader className="p-0 pb-4">
+              <CardTitle className="text-elec-light text-base sm:text-lg">Settings & Assumptions</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-0">
               {/* Mobile-first grid layout with responsive breakpoints */}
-              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 
                 {/* Row 1 - Primary Settings */}
                 <div className="space-y-2">
