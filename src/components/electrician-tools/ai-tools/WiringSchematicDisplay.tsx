@@ -117,7 +117,7 @@ const WiringSchematicDisplay = ({
               <Shield className="h-5 w-5 text-green-600 dark:text-green-500 flex-shrink-0" />
               <div>
                 <p className="text-xs font-medium text-green-700 dark:text-green-400">BS 7671 Verified</p>
-                <p className="text-xs text-muted-foreground">Regulation compliant</p>
+                <p className="text-xs text-foreground/90">Regulation compliant</p>
               </div>
             </div>
           </CardContent>
@@ -135,12 +135,12 @@ const WiringSchematicDisplay = ({
                   <p className="text-xs font-medium text-blue-700 dark:text-blue-400">
                     {ragSourcesCount.installation_docs_count + ragSourcesCount.regulations_count + ragSourcesCount.safety_docs_count} Knowledge Sources
                   </p>
-                  <p className="text-xs text-muted-foreground">Tap to view</p>
+                  <p className="text-xs text-foreground/80">Tap to view</p>
                 </div>
                 {showRagSources ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
               </button>
               {showRagSources && (
-                <div className="mt-2 pt-2 border-t border-blue-500/20 text-xs text-muted-foreground space-y-1">
+                <div className="mt-2 pt-2 border-t border-blue-500/20 text-xs text-foreground/90 space-y-1">
                   <p>• {ragSourcesCount.installation_docs_count} installation guides</p>
                   <p>• {ragSourcesCount.regulations_count} BS 7671 regulations</p>
                   <p>• {ragSourcesCount.safety_docs_count} safety documents</p>
@@ -160,7 +160,7 @@ const WiringSchematicDisplay = ({
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="text-base sm:text-lg">Wiring Schematic</CardTitle>
-              <CardDescription className="text-xs sm:text-sm">Single-line circuit diagram</CardDescription>
+              <CardDescription className="text-xs sm:text-sm text-foreground/80">Single-line circuit diagram</CardDescription>
             </div>
             <Button onClick={downloadSchematic} size="sm" variant="outline" className="h-8 sm:h-9">
               <Download className="h-4 w-4 mr-2" />
@@ -306,7 +306,7 @@ const WiringSchematicDisplay = ({
                       <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-500 flex-shrink-0 mt-0.5" />
                     )}
                   </div>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-2.5 leading-relaxed">{step.instruction}</p>
+                  <p className="text-xs sm:text-sm text-foreground/90 mb-2.5 leading-relaxed">{step.instruction}</p>
                   <div className="flex items-center gap-2 flex-wrap">
                     <TooltipProvider>
                       <Tooltip>
@@ -350,7 +350,7 @@ const WiringSchematicDisplay = ({
             </CollapsibleTrigger>
             <CollapsibleContent>
               <CardContent className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0">
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{installationMethodGuidance}</p>
+                <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">{installationMethodGuidance}</p>
               </CardContent>
             </CollapsibleContent>
           </Card>
@@ -371,7 +371,7 @@ const WiringSchematicDisplay = ({
               {testingRequirements.map((test, idx) => (
                 <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm p-2 sm:p-2.5 bg-muted/30 rounded-lg">
                   <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground leading-relaxed">{test}</span>
+                  <span className="text-foreground/90 leading-relaxed">{test}</span>
                 </li>
               ))}
             </ul>

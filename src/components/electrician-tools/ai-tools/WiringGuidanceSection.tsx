@@ -25,8 +25,8 @@ const WiringGuidanceSection = () => {
             <span className="font-semibold text-sm text-foreground">What This Tool Does</span>
             <Info className="w-4 h-4 text-blue-500 flex-shrink-0" />
           </CollapsibleTrigger>
-          <CollapsibleContent className="mt-2 p-3 sm:p-4 text-xs sm:text-sm text-muted-foreground space-y-2 text-left bg-background/30 rounded-lg border border-border/30">
-            <p>Generates BS 7671-compliant wiring instructions with RAG verification from installation docs and regulations.</p>
+          <CollapsibleContent className="mt-2 p-3 sm:p-4 text-xs sm:text-sm text-foreground space-y-2 text-left bg-background/30 rounded-lg border border-border/30">
+            <p>Generates BS 7671-compliant wiring instructions verified against installation docs and regulations.</p>
             <ul className="list-disc pl-5 space-y-1.5 text-left">
               <li>Step-by-step wiring procedure with safety warnings</li>
               <li>Terminal connection details with colour coding</li>
@@ -49,7 +49,7 @@ const WiringGuidanceSection = () => {
                 <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-500 flex-shrink-0 mt-0.5" />
                 <span className="text-xs sm:text-sm font-semibold text-green-700 dark:text-green-400">Good Photo</span>
               </div>
-              <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-muted-foreground text-left">
+              <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-foreground text-left">
                 <li>Clear, well-lit, straight-on angle</li>
                 <li>Component nameplate/ratings visible</li>
                 <li>Terminal labels clearly shown</li>
@@ -63,7 +63,7 @@ const WiringGuidanceSection = () => {
                 <XCircle className="h-4 w-4 text-red-600 dark:text-red-500 flex-shrink-0 mt-0.5" />
                 <span className="text-xs sm:text-sm font-semibold text-red-700 dark:text-red-400">Avoid</span>
               </div>
-              <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-muted-foreground text-left">
+              <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-foreground text-left">
                 <li>Blurry, dark, or angled photos</li>
                 <li>Too far away - can't read ratings</li>
                 <li>Obstructed view of terminals</li>
@@ -79,7 +79,7 @@ const WiringGuidanceSection = () => {
             <span className="font-semibold text-sm text-foreground">When to Use This Tool</span>
             <AlertTriangle className="w-4 h-4 text-blue-500 flex-shrink-0" />
           </CollapsibleTrigger>
-          <CollapsibleContent className="mt-2 p-3 sm:p-4 text-xs sm:text-sm text-muted-foreground space-y-1.5 text-left bg-background/30 rounded-lg border border-border/30">
+          <CollapsibleContent className="mt-2 p-3 sm:p-4 text-xs sm:text-sm text-foreground space-y-1.5 text-left bg-background/30 rounded-lg border border-border/30">
             <ul className="list-disc pl-5 space-y-1.5 text-left">
               <li>Installing new components and need wiring guidance</li>
               <li>Replacing existing equipment and need terminal connections</li>
