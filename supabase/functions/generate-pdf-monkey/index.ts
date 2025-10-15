@@ -47,41 +47,24 @@ serve(async (req) => {
     const { quote, companyProfile, invoice_mode, briefing, briefing_mode, documentId: requestDocumentId, mode, force_regenerate } = await req.json();
     console.log('[PDF-MONKEY] Received request - Mode:', invoice_mode ? 'invoice' : briefing_mode ? 'briefing' : (requestDocumentId ? 'status' : 'quote'));
     
-    // STEP 2: Force Fresh Data - Fetch latest from database if quote/invoice
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? ''
-    );
+    // Use data passed directly from the update - it's already fresh from database
+    // No need to re-fetch - the quote passed in is returned immediately after transaction commits
+    const freshQuote = quote;
+    const freshCompanyProfile = companyProfile;
     
-    let freshQuote = quote;
-    let freshCompanyProfile = companyProfile;
-    
-    if ((invoice_mode || !briefing_mode) && quote?.id) {
-      console.log('[PDF-MONKEY] Fetching FRESH data from database for quote:', quote.id);
-      
-      const { data: latestQuote, error: quoteError } = await supabaseClient
-        .from('quotes')
-        .select('*')
-        .eq('id', quote.id)
-        .single();
-      
-      if (!quoteError && latestQuote) {
-        freshQuote = latestQuote;
-        console.log('[PDF-MONKEY] Using fresh quote data from database');
-        
-        // Fetch latest company profile
-        const { data: latestCompany, error: companyError } = await supabaseClient
-          .from('company_profiles')
-          .select('*')
-          .eq('user_id', latestQuote.user_id)
-          .single();
-        
-        if (!companyError && latestCompany) {
-          freshCompanyProfile = latestCompany;
-          console.log('[PDF-MONKEY] Using fresh company profile from database');
+    // Validation: ensure required data is present for quote/invoice mode
+    if ((invoice_mode || !briefing_mode) && !quote?.id) {
+      console.error('[PDF-MONKEY] Missing quote data');
+      return new Response(
+        JSON.stringify({ error: 'Quote data is required' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
         }
-      }
+      );
     }
+    
+    console.log('[PDF-MONKEY] Using data passed from client (fresh from database update)');
 
     // Status-only polling mode: skip creation and just check an existing document
     if (requestDocumentId && (mode === 'status' || (!quote && !briefing))) {
