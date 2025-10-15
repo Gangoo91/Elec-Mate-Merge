@@ -125,8 +125,19 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
-    // Add cache busting to PDF URL
-    const cacheBustedPdfUrl = pdfUrl ? `${pdfUrl}?t=${Date.now()}` : null;
+    // Download PDF as binary data for attachment
+    if (!pdfUrl) {
+      throw new Error('PDF URL is missing - cannot send invoice without PDF');
+    }
+    
+    console.log('Downloading PDF for attachment...');
+    const pdfFileResponse = await fetch(pdfUrl);
+    if (!pdfFileResponse.ok) {
+      throw new Error('Failed to download PDF from PDF Monkey');
+    }
+    const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
+    const pdfBase64 = btoa(String.fromCharCode(...new Uint8Array(pdfArrayBuffer)));
+    console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
 
     // Format currency
     const formatCurrency = (amount: number) => {
@@ -256,20 +267,14 @@ const handler = async (req: Request): Promise<Response> => {
       </div>
       ` : ''}
 
-      ${cacheBustedPdfUrl ? `
-      <div style="text-align: center; margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 8px;">
-        <p style="margin: 0 0 15px 0; font-size: 16px;"><strong>📄 Download Full Invoice (PDF)</strong></p>
-        <a href="${cacheBustedPdfUrl}" 
-           style="display: inline-block; background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); 
-                  color: #1a1a1a; text-decoration: none; padding: 12px 32px; border-radius: 6px; 
-                  font-weight: bold; font-size: 16px;">
-          Download Invoice PDF
-        </a>
-        <p style="margin: 15px 0 0 0; font-size: 12px; color: #666;">
-          Click to download a professional PDF copy of this invoice
+      <div style="background: #fff9e6; border: 2px dashed #FFD700; padding: 20px; margin: 30px 0; border-radius: 8px; text-align: center;">
+        <p style="margin: 0; font-size: 18px; color: #1a1a1a;">
+          <strong>📎 Invoice_${invoice.invoice_number}.pdf</strong>
+        </p>
+        <p style="margin: 10px 0 0 0; font-size: 14px; color: #666;">
+          Please see the attached PDF for the complete invoice details.
         </p>
       </div>
-      ` : ''}
 
       <p>If you have any questions about this invoice, please don't hesitate to contact us.</p>
       
@@ -319,18 +324,32 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { access_token } = await tokenResponse.json();
 
-    // Construct email in MIME format
+    // Construct multipart email with PDF attachment
     const subject = `Invoice ${invoice.invoice_number} - ${companyProfile?.company_name || 'ElecMate'}`;
     const fromEmail = companyProfile?.company_email || 'invoices@elecmate.dev';
+    const boundary = '----=_Part_' + Date.now();
+    const pdfFilename = `Invoice_${invoice.invoice_number}.pdf`;
     
     const emailContent = [
       `From: ${fromEmail}`,
       `To: ${clientEmail}`,
       `Subject: ${subject}`,
       'MIME-Version: 1.0',
+      `Content-Type: multipart/mixed; boundary="${boundary}"`,
+      '',
+      `--${boundary}`,
       'Content-Type: text/html; charset=utf-8',
       '',
       emailHtml,
+      '',
+      `--${boundary}`,
+      'Content-Type: application/pdf',
+      'Content-Transfer-Encoding: base64',
+      `Content-Disposition: attachment; filename="${pdfFilename}"`,
+      '',
+      pdfBase64,
+      '',
+      `--${boundary}--`
     ].join('\r\n');
 
     // Encode email in base64url format

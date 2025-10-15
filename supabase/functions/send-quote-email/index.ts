@@ -142,8 +142,15 @@ const handler = async (req: Request): Promise<Response> => {
         .eq('id', quoteId);
     }
 
-    // Cache-busted PDF URL
-    const cacheBustedPdfUrl = `${pdfDownloadUrl}?t=${Date.now()}`;
+    // Download PDF as binary data for attachment
+    console.log('Downloading PDF for attachment...');
+    const pdfFileResponse = await fetch(pdfDownloadUrl);
+    if (!pdfFileResponse.ok) {
+      throw new Error('Failed to download PDF from PDF Monkey');
+    }
+    const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
+    const pdfBase64 = btoa(String.fromCharCode(...new Uint8Array(pdfArrayBuffer)));
+    console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
 
     // Get Gmail credentials from Supabase secrets
     const rawClientId = Deno.env.get('GMAIL_CLIENT_ID') ?? '';
@@ -204,21 +211,37 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log('Successfully obtained Gmail access token');
 
-    // Generate professional email content with PDF link
+    // Generate professional email content
     const emailSubject = `Quote ${quoteNumber} from ${companyName}`;
-    const emailBody = generateEmailHTML(quote, clientName, companyName, cacheBustedPdfUrl);
+    const emailBody = generateEmailHTML(quote, clientName, companyName);
 
-    // Create email message for Gmail API
+    // Create multipart email with PDF attachment
+    const boundary = '----=_Part_' + Date.now();
+    const pdfFilename = `Quote_${quoteNumber}.pdf`;
+    
     const emailMessage = [
       `To: ${clientEmail}`,
       `Subject: ${emailSubject}`,
+      'MIME-Version: 1.0',
+      `Content-Type: multipart/mixed; boundary="${boundary}"`,
+      '',
+      `--${boundary}`,
       'Content-Type: text/html; charset=utf-8',
       '',
-      emailBody
-    ].join('\n');
+      emailBody,
+      '',
+      `--${boundary}`,
+      'Content-Type: application/pdf',
+      'Content-Transfer-Encoding: base64',
+      `Content-Disposition: attachment; filename="${pdfFilename}"`,
+      '',
+      pdfBase64,
+      '',
+      `--${boundary}--`
+    ].join('\r\n');
 
-    // Encode email message in base64
-    const encodedMessage = btoa(unescape(encodeURIComponent(emailMessage)))
+    // Encode email message in base64url
+    const encodedMessage = btoa(emailMessage)
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
       .replace(/=+$/, '');
@@ -285,7 +308,7 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-function generateEmailHTML(quote: any, clientName: string, companyName: string, pdfUrl: string): string {
+function generateEmailHTML(quote: any, clientName: string, companyName: string): string {
   const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
   const settings = typeof quote.settings === 'string' ? JSON.parse(quote.settings) : quote.settings;
   const jobDetails = typeof quote.job_details === 'string' ? JSON.parse(quote.job_details) : quote.job_details;
@@ -314,7 +337,7 @@ function generateEmailHTML(quote: any, clientName: string, companyName: string, 
     
     <p style="font-size: 16px;">Dear ${clientName},</p>
     
-    <p style="font-size: 16px;">Thank you for your enquiry. Please find your quotation for <strong>${jobTitle}</strong>.</p>
+    <p style="font-size: 16px;">Thank you for your enquiry. Please find your quotation for <strong>${jobTitle}</strong> attached as a PDF.</p>
     
     <div style="background: white; border-left: 4px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 5px;">
       <table style="width: 100%; border-collapse: collapse;">
@@ -333,11 +356,13 @@ function generateEmailHTML(quote: any, clientName: string, companyName: string, 
       </table>
     </div>
     
-    <div style="text-align: center; margin: 30px 0;">
-      <a href="${pdfUrl}" 
-         style="display: inline-block; background: #667eea; color: white; padding: 15px 40px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">
-        📥 Download Quote (PDF)
-      </a>
+    <div style="background: #e8f4f8; border: 2px dashed #667eea; padding: 20px; margin: 30px 0; border-radius: 8px; text-align: center;">
+      <p style="margin: 0; font-size: 16px; color: #667eea;">
+        <strong>📎 Quote_${quote.quote_number}.pdf</strong>
+      </p>
+      <p style="margin: 10px 0 0 0; font-size: 14px; color: #666;">
+        Please see the attached PDF for the complete quote details.
+      </p>
     </div>
     
     <p style="font-size: 14px; color: #666; margin-top: 30px;">
