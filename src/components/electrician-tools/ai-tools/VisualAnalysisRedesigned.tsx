@@ -19,6 +19,7 @@ import {
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import ComponentIdentificationResults from "./ComponentIdentificationResults";
 import WiringSchematicDisplay from "./WiringSchematicDisplay";
+import WiringGuidanceSection from "./WiringGuidanceSection";
 import ModeSelector, { AnalysisMode } from "./ModeSelector";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -611,6 +612,31 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
           </div>
         </CardHeader>
       </Card>
+
+      {/* Guidance Section - Only for wiring_instruction mode */}
+      {selectedMode === 'wiring_instruction' && !analysisResult && !isAnalyzing && (
+        <WiringGuidanceSection />
+      )}
+
+      {/* Context Tags for Wiring Mode */}
+      {selectedMode === 'wiring_instruction' && !analysisResult && !isAnalyzing && images.length > 0 && (
+        <Card className="bg-card border-border">
+          <CardContent className="p-3 sm:p-4">
+            <p className="text-xs font-medium text-muted-foreground mb-2">Quick Context</p>
+            <div className="flex flex-wrap gap-1.5">
+              {['Consumer Unit', 'Cooker Circuit', 'EV Charger', 'Shower Circuit', 'Outdoor Socket', 'Immersion Heater'].map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => handleContextTagClick(tag)}
+                  className="px-2.5 py-1.5 text-xs bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow rounded border border-elec-yellow/30 transition-colors"
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Inline Loading State */}
       {isAnalyzing && (
