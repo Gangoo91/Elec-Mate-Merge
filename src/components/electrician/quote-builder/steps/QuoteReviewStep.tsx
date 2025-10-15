@@ -305,7 +305,7 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
       <div className="space-y-4">
         {/* Labour Items */}
         {quote.items?.filter(item => item.category === 'labour').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
-          <Card className="bg-card border-border">
+          <Card className="bg-card border border-primary/10">
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center justify-between text-base">
                 <div className="flex items-center gap-2">
