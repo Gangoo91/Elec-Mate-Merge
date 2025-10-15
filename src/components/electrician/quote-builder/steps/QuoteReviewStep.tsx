@@ -204,7 +204,7 @@ ${companyProfile?.company_name || 'Your Electrician'}`;
       {/* Quote Header */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Client Information */}
-        <Card className="bg-card/50 border-border/20">
+        <Card className="bg-card/50 border border-primary/30">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <User className="h-5 w-5" />
