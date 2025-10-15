@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { Badge } from '@/components/ui/badge';
-import { FileText, Download, Trash2, Eye, Calendar, Check, Mail, Tag, Clock, X, Receipt, User, MoreVertical } from 'lucide-react';
+import { FileText, Download, Trash2, Eye, Calendar, Check, Mail, Tag, Clock, X, Receipt, User, MoreVertical, ArrowRight } from 'lucide-react';
 import { Quote, QuoteTag } from '@/types/quote';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
@@ -425,17 +425,17 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           key={quote.id}
           className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
         >
-          {/* Header with Quote Badge */}
+          {/* Header */}
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Badge variant="default" className="text-xs bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
-                <FileText className="h-3 w-3 mr-1" />
+              <Badge variant="outline" className="text-xs">
                 Quote #{quote.quoteNumber}
               </Badge>
               {hasInvoiceRaised(quote) && (
                 <>
-                  <Receipt className="h-3 w-3" />
-                  <Badge variant="success" className="text-xs">
+                  <ArrowRight className="h-3 w-3" />
+                  <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
+                    <Receipt className="h-3 w-3 mr-1" />
                     Invoice Raised
                   </Badge>
                 </>
