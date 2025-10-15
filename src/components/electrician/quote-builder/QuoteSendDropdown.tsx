@@ -6,8 +6,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2 } from 'lucide-react';
+import { Mail, MessageCircle, Loader2, MailOpen } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -27,6 +29,7 @@ export const QuoteSendDropdown = ({
 }: QuoteSendDropdownProps) => {
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
+  const [isGeneratingMailtoLink, setIsGeneratingMailtoLink] = useState(false);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
@@ -106,6 +109,120 @@ export const QuoteSendDropdown = ({
       });
     } finally {
       setIsSendingEmail(false);
+    }
+  };
+
+  const handleSendViaEmailClient = async () => {
+    try {
+      setIsGeneratingMailtoLink(true);
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('User not authenticated');
+      }
+
+      // Generate temporary PDF link
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
+        'generate-temporary-pdf-link',
+        {
+          body: {
+            documentId: quote.id,
+            documentType: 'quote'
+          },
+          headers: {
+            Authorization: `Bearer ${session.access_token}`
+          }
+        }
+      );
+
+      if (pdfError || !pdfData?.success) {
+        console.error('PDF generation error:', pdfError);
+        throw new Error('Failed to generate PDF');
+      }
+
+      const pdfUrl = pdfData.publicUrl;
+
+      // Get client and company data
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      const { data: companyData } = await supabase
+        .from('company_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      const clientData = quote.client;
+      const jobDetails = quote.jobDetails;
+
+      const clientEmail = clientData?.email || '';
+      const clientName = clientData?.name || 'Valued Client';
+      const companyName = companyData?.company_name || 'Your Company';
+      const companyPhone = companyData?.company_phone || '';
+      const companyEmail = companyData?.company_email || '';
+      const jobTitle = jobDetails?.title || 'Electrical Work';
+      const totalAmount = quote.total || 0;
+      const validityDate = quote.expiryDate 
+        ? format(new Date(quote.expiryDate), 'dd MMMM yyyy')
+        : format(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'dd MMMM yyyy');
+
+      // Format currency
+      const formatCurrency = (amount: number) =>
+        new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
+
+      // Create email subject
+      const subject = `Quote ${quote.quoteNumber} from ${companyName}`;
+
+      // Create email body with PDF link
+      const body = `Dear ${clientName},
+
+Thank you for your enquiry. Please find your quotation for ${jobTitle}.
+
+📋 Quote Details:
+• Quote Number: ${quote.quoteNumber}
+• Total Amount: ${formatCurrency(totalAmount)}
+• Valid Until: ${validityDate}
+
+📥 Download Quote (PDF):
+${pdfUrl}
+
+This quote is valid for 30 days from the date of issue. If you have any questions or would like to proceed, please don't hesitate to contact us.
+
+Best regards,
+${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\n✉️ ${companyEmail}` : ''}
+
+---
+⚡ Powered by ElecMate Professional Suite`;
+
+      // Open mailto link
+      const mailtoLink = `mailto:${clientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+
+      toast({
+        title: 'Email draft opened',
+        description: 'Your email app should open with a pre-filled quote email',
+        variant: 'success',
+        duration: 4000,
+      });
+
+      // Update quote status to sent
+      await supabase
+        .from('quotes')
+        .update({ status: 'sent' })
+        .eq('id', quote.id);
+
+      onSuccess?.();
+    } catch (error: any) {
+      console.error('Error generating mailto link:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to open email draft',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsGeneratingMailtoLink(false);
     }
   };
 
@@ -254,7 +371,7 @@ ${companyName}`;
     }
   };
 
-  const isLoading = isSendingEmail || isSharingWhatsApp;
+  const isLoading = isSendingEmail || isSharingWhatsApp || isGeneratingMailtoLink;
 
   return (
     <DropdownMenu>
@@ -268,7 +385,7 @@ ${companyName}`;
           {isLoading ? (
             <>
               <Loader2 className="mr-1 h-3 w-3 animate-spin" />
-              {isSendingEmail ? 'Sending...' : 'Preparing...'}
+              {isSendingEmail ? 'Sending...' : isGeneratingMailtoLink ? 'Preparing...' : 'Loading...'}
             </>
           ) : (
             <>
@@ -279,6 +396,9 @@ ${companyName}`;
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center" className="w-64 bg-background border-border shadow-lg z-50" sideOffset={8}>
+        <DropdownMenuLabel className="text-xs text-muted-foreground">
+          Send Options
+        </DropdownMenuLabel>
         <DropdownMenuItem
           onClick={handleSendEmail}
           disabled={isSendingEmail}
@@ -289,8 +409,27 @@ ${companyName}`;
           ) : (
             <Mail className="mr-2 h-4 w-4" />
           )}
-          <span>Send via Email</span>
+          <div className="flex flex-col">
+            <span>Send via Email</span>
+            <span className="text-xs text-muted-foreground">Automatic delivery via Gmail</span>
+          </div>
         </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={handleSendViaEmailClient}
+          disabled={isGeneratingMailtoLink}
+          className="cursor-pointer"
+        >
+          {isGeneratingMailtoLink ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <MailOpen className="mr-2 h-4 w-4" />
+          )}
+          <div className="flex flex-col">
+            <span>Send via My Email App</span>
+            <span className="text-xs text-muted-foreground">Opens your email client</span>
+          </div>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={handleShareWhatsApp}
           disabled={isSharingWhatsApp}

@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2, AlertCircle, AlertTriangle, AlertOctagon } from 'lucide-react';
+import { Mail, MessageCircle, Loader2, AlertCircle, AlertTriangle, AlertOctagon, MailOpen } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -30,6 +30,7 @@ export const InvoiceSendDropdown = ({
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
   const [isSendingReminder, setIsSendingReminder] = useState<'gentle' | 'firm' | 'final' | null>(null);
+  const [isGeneratingMailtoLink, setIsGeneratingMailtoLink] = useState(false);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
@@ -157,6 +158,127 @@ export const InvoiceSendDropdown = ({
       });
     } finally {
       setIsSendingReminder(null);
+    }
+  };
+
+  const handleSendViaEmailClient = async () => {
+    try {
+      setIsGeneratingMailtoLink(true);
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('User not authenticated');
+      }
+
+      // Generate temporary PDF link
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
+        'generate-temporary-pdf-link',
+        {
+          body: {
+            documentId: invoice.id,
+            documentType: 'invoice'
+          },
+          headers: {
+            Authorization: `Bearer ${session.access_token}`
+          }
+        }
+      );
+
+      if (pdfError || !pdfData?.success) {
+        console.error('PDF generation error:', pdfError);
+        throw new Error('Failed to generate PDF');
+      }
+
+      const pdfUrl = pdfData.publicUrl;
+
+      // Get client and company data
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      const { data: companyData } = await supabase
+        .from('company_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      const clientData = invoice.client;
+      const clientEmail = clientData?.email || '';
+      const clientName = clientData?.name || 'Valued Client';
+      const companyName = companyData?.company_name || 'Your Company';
+      const companyPhone = companyData?.company_phone || '';
+      const companyEmail = companyData?.company_email || '';
+      const totalAmount = invoice.total || 0;
+      const dueDate = invoice.invoice_due_date 
+        ? format(new Date(invoice.invoice_due_date), 'dd MMMM yyyy')
+        : format(new Date(), 'dd MMMM yyyy');
+
+      // Format currency
+      const formatCurrency = (amount: number) =>
+        new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
+
+      // Create email subject
+      const subject = `Invoice ${invoice.invoice_number} from ${companyName}`;
+
+      // Create email body with PDF link and payment details
+      const settings = invoice.settings as any; // Type assertion for bankDetails
+      const bankDetails = settings?.bankDetails;
+      const paymentDetailsText = bankDetails ? `
+
+💳 Payment Details:
+• Bank Name: ${bankDetails.bankName}
+• Account Name: ${bankDetails.accountName}
+• Account Number: ${bankDetails.accountNumber}
+• Sort Code: ${bankDetails.sortCode}` : '';
+
+      const body = `Dear ${clientName},
+
+Please find your invoice for ${formatCurrency(totalAmount)}.
+
+📄 Invoice Details:
+• Invoice Number: ${invoice.invoice_number}
+• Amount Due: ${formatCurrency(totalAmount)}
+• Due Date: ${dueDate}
+
+📥 Download Invoice (PDF):
+${pdfUrl}${paymentDetailsText}
+
+Payment is due by ${dueDate}. If you have any questions about this invoice, please don't hesitate to contact us.
+
+Best regards,
+${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\n✉️ ${companyEmail}` : ''}
+
+---
+⚡ Powered by ElecMate Professional Suite`;
+
+      // Open mailto link
+      const mailtoLink = `mailto:${clientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+
+      toast({
+        title: 'Email draft opened',
+        description: 'Your email app should open with a pre-filled invoice email',
+        variant: 'success',
+        duration: 4000,
+      });
+
+      // Update invoice status to sent
+      await supabase
+        .from('quotes')
+        .update({ invoice_status: 'sent' })
+        .eq('id', invoice.id);
+
+      onSuccess?.();
+    } catch (error: any) {
+      console.error('Error generating mailto link:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to open email draft',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsGeneratingMailtoLink(false);
     }
   };
 
@@ -300,7 +422,7 @@ ${companyName}`;
     }
   };
 
-  const isLoading = isSendingEmail || isSharingWhatsApp || isSendingReminder !== null;
+  const isLoading = isSendingEmail || isSharingWhatsApp || isSendingReminder !== null || isGeneratingMailtoLink;
   
   // Check if invoice is overdue
   const isOverdue = invoice.invoice_due_date && 
@@ -329,6 +451,9 @@ ${companyName}`;
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center" className="w-64 bg-background border-border shadow-lg z-50" sideOffset={8}>
+        <DropdownMenuLabel className="text-xs text-muted-foreground">
+          Send Options
+        </DropdownMenuLabel>
         <DropdownMenuItem
           onClick={handleSendEmail}
           disabled={isSendingEmail}
@@ -339,8 +464,27 @@ ${companyName}`;
           ) : (
             <Mail className="mr-2 h-4 w-4" />
           )}
-          <span>Send via Email</span>
+          <div className="flex flex-col">
+            <span>Send via Email</span>
+            <span className="text-xs text-muted-foreground">Automatic delivery via Gmail</span>
+          </div>
         </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={handleSendViaEmailClient}
+          disabled={isGeneratingMailtoLink}
+          className="cursor-pointer"
+        >
+          {isGeneratingMailtoLink ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <MailOpen className="mr-2 h-4 w-4" />
+          )}
+          <div className="flex flex-col">
+            <span>Send via My Email App</span>
+            <span className="text-xs text-muted-foreground">Opens your email client</span>
+          </div>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={handleShareWhatsApp}
           disabled={isSharingWhatsApp}

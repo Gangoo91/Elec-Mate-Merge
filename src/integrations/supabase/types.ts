@@ -6088,6 +6088,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      cleanup_expired_temp_pdfs: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       cleanup_expired_tool_cache: {
         Args: Record<PropertyKey, never>
         Returns: undefined

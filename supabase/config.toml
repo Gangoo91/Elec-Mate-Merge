@@ -74,3 +74,7 @@ verify_jwt = true
 [functions.generate-pdf-monkey]
 verify_jwt = true
 timeout_sec = 180
+
+[functions.generate-temporary-pdf-link]
+verify_jwt = true
+timeout_sec = 180
