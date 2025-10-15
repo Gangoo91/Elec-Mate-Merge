@@ -158,7 +158,7 @@ const QuoteVarianceTracker: React.FC = () => {
           <CardContent className="grid gap-3 sm:gap-4">
             {/* Hours Variance */}
             <div className="flex items-center justify-between py-2 border-b border-border/40">
-              <span className="text-sm sm:text-base text-muted-foreground">Hours Variance</span>
+              <span className="text-sm sm:text-base text-elec-light font-medium">Hours Variance</span>
               <div className="flex items-center gap-2">
                 <span className={`${getVarianceColor(hoursVar)}`}>
                   {getVarianceIcon(hoursVar)}
@@ -171,7 +171,7 @@ const QuoteVarianceTracker: React.FC = () => {
 
             {/* Labour Variance */}
             <div className="flex items-center justify-between py-2 border-b border-border/40">
-              <span className="text-sm sm:text-base text-muted-foreground">Labour Cost Variance</span>
+              <span className="text-sm sm:text-base text-elec-light font-medium">Labour Cost Variance</span>
               <div className="flex items-center gap-2">
                 <span className={`${getVarianceColor(hoursVarCost)}`}>
                   {getVarianceIcon(hoursVarCost)}
@@ -184,7 +184,7 @@ const QuoteVarianceTracker: React.FC = () => {
 
             {/* Materials Variance */}
             <div className="flex items-center justify-between py-2 border-b border-border/40">
-              <span className="text-sm sm:text-base text-muted-foreground">Materials Variance</span>
+              <span className="text-sm sm:text-base text-elec-light font-medium">Materials Variance</span>
               <div className="flex items-center gap-2">
                 <span className={`${getVarianceColor(matsVar)}`}>
                   {getVarianceIcon(matsVar)}
@@ -210,7 +210,7 @@ const QuoteVarianceTracker: React.FC = () => {
 
             {/* Variance Interpretation */}
             <div className="mt-2 p-3 sm:p-4 bg-background/30 rounded-md border border-border/20">
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              <p className="text-xs sm:text-sm text-elec-light/90 leading-relaxed">
                 {Math.abs(Number(totalVarPercent)) < 5 ? (
                   <><strong className="text-elec-yellow">On target!</strong> Your quote was within 5% of actual costs - excellent estimating.</>
                 ) : totalVar > 0 ? (
