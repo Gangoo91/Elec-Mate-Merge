@@ -132,7 +132,7 @@ const InvoiceTableView = ({
               <TableHead>Due Date</TableHead>
               <TableHead>Amount</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead className="text-right min-w-[160px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -186,9 +186,9 @@ const InvoiceTableView = ({
                   <TableCell>
                     {getStatusBadge(invoice)}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right min-w-[160px]">
                     <TooltipProvider>
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex items-center justify-end gap-3">
                         {/* View/Edit Button */}
                         <Tooltip>
                           <TooltipTrigger asChild>
