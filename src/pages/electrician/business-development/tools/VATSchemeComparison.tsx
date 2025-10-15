@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet";
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import InfoBox from "@/components/common/InfoBox";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { Percent, TrendingDown, Receipt, Calculator, CheckCircle2, AlertCircle } from "lucide-react";
 
 const currency = (n: number) => `£${n.toFixed(2)}`;
 
@@ -33,77 +35,232 @@ const VATSchemeComparison: React.FC = () => {
   const diff = frsVatPayable - standardVatPayable; // + = FRS worse
 
   return (
-    <main className="container mx-auto px-4 py-8 max-w-3xl">
-      <Helmet>
-        <title>VAT Scheme Comparison for Electricians UK</title>
-        <meta name="description" content="Compare Flat Rate vs Standard VAT schemes for UK electricians to see net take-home impact." />
-        <link rel="canonical" href="/electrician/business-development/tools/vat-scheme" />
-      </Helmet>
+    <main className="min-h-screen bg-background">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 max-w-4xl">
+        <Helmet>
+          <title>VAT Scheme Comparison for Electricians UK</title>
+          <meta name="description" content="Compare Flat Rate vs Standard VAT schemes for UK electricians to see net take-home impact." />
+          <link rel="canonical" href="/electrician/business-development/tools/vat-scheme" />
+        </Helmet>
 
-      <header className="mb-6 text-center">
-        <h1 className="text-3xl font-bold tracking-tight">VAT Scheme Comparison</h1>
-        <p className="text-muted-foreground mt-2">Understand which VAT scheme suits your business model best.</p>
-      </header>
+        <header className="mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-elec-light">VAT Scheme Comparison</h1>
+          <p className="text-elec-light/70 mt-2 text-sm sm:text-base">Understand which VAT scheme suits your business model best.</p>
+        </header>
 
-      <BackButton customUrl="/electrician/business-development/tools" />
+        <BackButton customUrl="/electrician/business-development/tools" />
 
-      <section className="mt-6 grid gap-4">
-        <InfoBox
-          title="Why this matters"
-          points={[
-            "Shows real impact on cash flow and margin.",
-            "Accounts for materials-heavy vs labour-heavy jobs.",
-            "Helps plan pricing and invoicing policies.",
-          ]}
-        />
+        <section className="mt-4 sm:mt-6 space-y-4 sm:space-y-6">
+          <InfoBox
+            title="Why this matters"
+            points={[
+              "Shows real impact on cash flow and margin.",
+              "Accounts for materials-heavy vs labour-heavy jobs.",
+              "Helps plan pricing and invoicing policies.",
+            ]}
+          />
 
-        <Card className="bg-elec-card border-elec-yellow/20">
-          <CardHeader>
-            <CardTitle className="text-elec-light">Inputs</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <label className="grid gap-1 text-sm">
-                <span>Annual revenue (ex VAT)</span>
-                <input type="number" className="input input-bordered bg-elec-card" value={annualRevenue} onChange={(e)=>setAnnualRevenue(Number(e.target.value)||0)} />
-              </label>
-              <label className="grid gap-1 text-sm">
-                <span>Labour share %</span>
-                <input type="number" className="input input-bordered bg-elec-card" value={labourShare} onChange={(e)=>setLabourShare(Number(e.target.value)||0)} />
-              </label>
-              <label className="grid gap-1 text-sm">
-                <span>Flat rate %</span>
-                <input type="number" className="input input-bordered bg-elec-card" value={flatRate} onChange={(e)=>setFlatRate(Number(e.target.value)||0)} step={0.1} />
-              </label>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
-              <label className="grid gap-1 text-sm">
-                <span>VAT rate %</span>
-                <input type="number" className="input input-bordered bg-elec-card" value={vatRate} onChange={(e)=>setVatRate(Number(e.target.value)||0)} step={0.1} />
-              </label>
-              <div className="grid gap-1">
-                <span className="text-sm">VAT registered?</span>
-                <div className="inline-flex rounded-xl overflow-hidden border border-elec-yellow/30">
-                  <button className={(vatRegistered?"bg-elec-yellow text-black":"text-elec-yellow hover:bg-elec-yellow/10")+" h-12 px-4"} onClick={()=>setVatRegistered(true)}>Yes</button>
-                  <button className={(!vatRegistered?"bg-elec-yellow text-black":"text-elec-yellow hover:bg-elec-yellow/10")+" h-12 px-4"} onClick={()=>setVatRegistered(false)}>No</button>
-                </div>
+          <Card className="bg-elec-card border-elec-yellow/20">
+            <CardHeader>
+              <CardTitle className="text-elec-light text-lg sm:text-xl">Business Details</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 sm:space-y-5">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <MobileInputWrapper
+                  label="Annual Revenue (ex VAT)"
+                  type="number"
+                  inputMode="numeric"
+                  value={annualRevenue}
+                  onChange={(val) => setAnnualRevenue(Number(val) || 0)}
+                  icon={<Receipt className="w-5 h-5" />}
+                  unit="£"
+                  hint="Typical UK electrician: £40k-£150k. VAT threshold: £90,000"
+                />
+                
+                <MobileInputWrapper
+                  label="Labour Share"
+                  type="number"
+                  inputMode="numeric"
+                  value={labourShare}
+                  onChange={(val) => setLabourShare(Number(val) || 0)}
+                  icon={<Percent className="w-5 h-5" />}
+                  unit="%"
+                  hint="Domestic/rewires: 60-80%. Commercial with materials: 30-50%"
+                />
               </div>
-              <div className="text-sm text-muted-foreground">Materials share auto = {materialsShare}%</div>
-            </div>
-          </CardContent>
-        </Card>
 
-        <Card className="bg-elec-card border-elec-yellow/20">
-          <CardHeader>
-            <CardTitle className="text-elec-light">Comparison</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-2 text-sm">
-            <div className="flex justify-between"><span>Standard scheme VAT payable</span><strong>{currency(standardVatPayable)}</strong></div>
-            <div className="flex justify-between"><span>Flat Rate scheme VAT payable</span><strong>{currency(frsVatPayable)}</strong></div>
-            <div className="flex justify-between"><span>Difference (FRS - Standard)</span><strong className={diff>0?"text-red-400":"text-green-400"}>{currency(diff)}</strong></div>
-          </CardContent>
-        </Card>
-      </section>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <MobileInputWrapper
+                  label="Flat Rate"
+                  type="number"
+                  inputMode="decimal"
+                  step="0.1"
+                  value={flatRate}
+                  onChange={(val) => setFlatRate(Number(val) || 0)}
+                  icon={<Calculator className="w-5 h-5" />}
+                  unit="%"
+                  hint="Building services: 14.5% (first year), 12.5% (after)"
+                />
+                
+                <MobileInputWrapper
+                  label="VAT Rate"
+                  type="number"
+                  inputMode="decimal"
+                  step="0.1"
+                  value={vatRate}
+                  onChange={(val) => setVatRate(Number(val) || 0)}
+                  icon={<TrendingDown className="w-5 h-5" />}
+                  unit="%"
+                  hint="20% standard, 5% reduced for energy-saving installations"
+                />
+              </div>
+
+              <div className="space-y-3">
+                <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                  VAT Registered?
+                </label>
+                <div className="flex rounded-xl overflow-hidden border border-elec-yellow/30 h-14">
+                  <button 
+                    className={`flex-1 font-medium transition-all ${
+                      vatRegistered 
+                        ? "bg-elec-yellow text-black" 
+                        : "text-elec-yellow hover:bg-elec-yellow/10"
+                    }`}
+                    onClick={() => setVatRegistered(true)}
+                  >
+                    Yes
+                  </button>
+                  <button 
+                    className={`flex-1 font-medium transition-all ${
+                      !vatRegistered 
+                        ? "bg-elec-yellow text-black" 
+                        : "text-elec-yellow hover:bg-elec-yellow/10"
+                    }`}
+                    onClick={() => setVatRegistered(false)}
+                  >
+                    No
+                  </button>
+                </div>
+                <p className="text-xs text-elec-light/70 flex items-center gap-1">
+                  <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+                  Materials share auto-calculated: {materialsShare}%
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {vatRegistered && (
+            <>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Card className="bg-elec-card border-elec-yellow/20">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-elec-light text-base sm:text-lg flex items-center gap-2">
+                      <Receipt className="w-5 h-5 text-elec-yellow" />
+                      Standard VAT Scheme
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between text-elec-light/70">
+                        <span>Output VAT charged</span>
+                        <span className="font-medium text-elec-light">{currency(standardOutputVat)}</span>
+                      </div>
+                      <div className="flex justify-between text-elec-light/70">
+                        <span>Input VAT reclaimable</span>
+                        <span className="font-medium text-green-400">-{currency(standardInputVat)}</span>
+                      </div>
+                      <div className="h-px bg-elec-yellow/20 my-2"></div>
+                      <div className="flex justify-between font-semibold text-elec-light">
+                        <span>Net VAT payable</span>
+                        <span className="text-lg">{currency(standardVatPayable)}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-elec-card border-elec-yellow/20">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-elec-light text-base sm:text-lg flex items-center gap-2">
+                      <Calculator className="w-5 h-5 text-elec-yellow" />
+                      Flat Rate VAT Scheme
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between text-elec-light/70">
+                        <span>VAT-inclusive turnover</span>
+                        <span className="font-medium text-elec-light">{currency(annualRevenue * (1 + vatRate/100))}</span>
+                      </div>
+                      <div className="flex justify-between text-elec-light/70">
+                        <span>Flat rate applied</span>
+                        <span className="font-medium text-elec-light">{flatRate}%</span>
+                      </div>
+                      <div className="h-px bg-elec-yellow/20 my-2"></div>
+                      <div className="flex justify-between font-semibold text-elec-light">
+                        <span>VAT payable</span>
+                        <span className="text-lg">{currency(frsVatPayable)}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className={`border-2 ${diff > 0 ? "bg-red-950/20 border-red-500/30" : "bg-green-950/20 border-green-500/30"}`}>
+                <CardHeader>
+                  <CardTitle className="text-elec-light text-lg sm:text-xl flex items-center gap-2">
+                    {diff > 0 ? (
+                      <AlertCircle className="w-6 h-6 text-red-400" />
+                    ) : (
+                      <CheckCircle2 className="w-6 h-6 text-green-400" />
+                    )}
+                    Recommendation
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between p-4 rounded-lg bg-card">
+                    <div>
+                      <p className="text-sm text-elec-light/70">Annual difference</p>
+                      <p className={`text-2xl sm:text-3xl font-bold ${diff > 0 ? "text-red-400" : "text-green-400"}`}>
+                        {diff > 0 ? "+" : ""}{currency(diff)}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm text-elec-light/70">Better choice</p>
+                      <p className="text-xl font-semibold text-elec-yellow">
+                        {diff > 0 ? "Standard VAT" : "Flat Rate VAT"}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="text-sm text-elec-light/90 space-y-2">
+                    {diff > 0 ? (
+                      <p>
+                        💡 <strong>Standard VAT</strong> is better for your business. You can reclaim {currency(standardInputVat)} 
+                        in input VAT on materials, saving you {currency(Math.abs(diff))} annually compared to Flat Rate.
+                      </p>
+                    ) : (
+                      <p>
+                        💡 <strong>Flat Rate VAT</strong> is better for your business. Despite not reclaiming input VAT, 
+                        you save {currency(Math.abs(diff))} annually with simplified accounting and the lower flat rate percentage.
+                      </p>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <InfoBox
+                title="Understanding the schemes"
+                points={[
+                  "Standard VAT: Charge 20% VAT, reclaim VAT on purchases. More admin, better for materials-heavy work.",
+                  "Flat Rate VAT: Pay flat % (e.g., 12.5%) on turnover. Simpler admin, better for labour-heavy work.",
+                  "Consider your labour/materials split, admin capacity, and annual turnover when choosing.",
+                ]}
+              />
+            </>
+          )}
+        </section>
+      </div>
     </main>
   );
 };
