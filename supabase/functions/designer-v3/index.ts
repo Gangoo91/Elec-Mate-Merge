@@ -551,14 +551,14 @@ This is a high-level design request (full house rewire, consumer unit sizing, ci
 Respond conversationally like an experienced electrician guiding a client. Be friendly but professional.`;
 
       try {
-        const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+            'Authorization': `Bearer ${OPENAI_API_KEY}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'openai/gpt-5-mini',
+            model: 'gpt-5-mini-2025-08-07',
             messages: [
               { role: 'system', content: 'You are an experienced UK electrician (20+ years) helping with electrical design. You ask clarifying questions or provide typical designs based on the information given. Always reference BS 7671:2018+A3:2024 when relevant.' },
               { role: 'user', content: clarificationPrompt }
@@ -646,14 +646,14 @@ NOW - answer the question like you're explaining it to someone who knows their s
 Be conversational ("Right, so here's what you need to know..."), cite the reg numbers naturally, give PRACTICAL advice (not just theory), and keep it friendly but professional. About 250-350 words.`;
 
     try {
-      const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'google/gemini-2.5-flash',
+          model: 'gpt-5-mini-2025-08-07',
           messages: [
             { 
               role: 'system', 

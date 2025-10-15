@@ -345,7 +345,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     logger.debug(`Calling ${model}`);
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
-    const aiResult = await callAI(LOVABLE_API_KEY!, {
+    const aiResult = await callAI(OPENAI_API_KEY!, {
       model,
       systemPrompt,
       userPrompt,

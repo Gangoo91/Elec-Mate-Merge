@@ -514,7 +514,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       if (LOVABLE_API_KEY && lovableAIHealthy) {
         try {
           const geminiStart = Date.now();
-          aiResult = await callAI(LOVABLE_API_KEY, {
+          aiResult = await callAI(OPENAI_API_KEY, {
             model: 'openai/gpt-5-mini',
             systemPrompt,
             userPrompt,

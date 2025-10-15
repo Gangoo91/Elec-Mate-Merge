@@ -292,7 +292,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     logger.debug('Calling AI with wrapper');
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
-    const aiResult = await callAI(LOVABLE_API_KEY!, {
+    const aiResult = await callAI(OPENAI_API_KEY!, {
       model: 'openai/gpt-5-mini',
       systemPrompt,
       userPrompt,
