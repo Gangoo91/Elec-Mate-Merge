@@ -425,7 +425,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           key={quote.id}
           className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
         >
-          {/* Header section with Quote Number and Status */}
+          {/* Header with Quote Number */}
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Badge variant="outline" className="text-xs">
@@ -441,13 +441,13 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             </div>
           </div>
 
-          {/* Client Name with Icon */}
+          {/* Client Info */}
           <div className="flex items-center gap-2 text-sm">
             <User className="h-4 w-4 text-muted-foreground" />
             <span className="font-medium truncate">{quote.client.name}</span>
           </div>
 
-          {/* Meta Info - Date and Items */}
+          {/* Meta Info */}
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <div className="flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5" />
@@ -460,7 +460,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
             </div>
           </div>
 
-          {/* Main Action Buttons */}
+          {/* Action Buttons */}
           <div className="flex gap-2">
             <Button
               variant="ghost"
