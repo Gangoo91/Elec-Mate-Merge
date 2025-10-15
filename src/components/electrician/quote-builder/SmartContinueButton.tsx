@@ -28,7 +28,7 @@ export const SmartContinueButton = ({
         onClick={onGenerate}
         disabled={!canProceed || isGenerating}
         className={cn(
-          "w-full h-11 sm:h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold",
+          "w-full h-12 sm:h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base sm:text-sm",
           className
         )}
       >
@@ -52,7 +52,7 @@ export const SmartContinueButton = ({
       onClick={onNext}
       disabled={!canProceed}
       className={cn(
-        "w-full h-11 sm:h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold",
+        "w-full h-12 sm:h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base sm:text-sm",
         className
       )}
     >

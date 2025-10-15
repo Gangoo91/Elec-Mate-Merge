@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const SmartQuoteBuilderPage = () => {
   return (
     <div className="min-h-screen bg-elec-grey text-foreground">
-      <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-6">
+      <div className="w-full mx-auto p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6">
         {/* Navigation */}
         <div className="flex justify-start">
           <Link to="/electrician/quote-builder">

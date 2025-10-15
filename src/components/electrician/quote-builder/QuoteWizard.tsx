@@ -94,7 +94,7 @@ const {
   };
 
   return (
-    <div className="w-full max-w-full md:max-w-4xl mx-auto px-3 md:px-4 space-y-4 md:space-y-6">
+    <div className="w-full mx-auto space-y-4 md:space-y-6">
       {/* Simple Progress */}
       <QuoteProgressIndicator
         currentStep={currentStep}
@@ -104,48 +104,46 @@ const {
 
       {/* Main Content */}
       <Card>
-        <CardHeader className="pb-4">
-          <CardTitle className="text-xl">{steps[currentStep].title}</CardTitle>
+        <CardHeader className="p-3 sm:p-4 md:p-6 pb-3 sm:pb-4">
+          <CardTitle className="text-lg sm:text-xl">{steps[currentStep].title}</CardTitle>
           <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>
         </CardHeader>
-        <CardContent className="p-3 md:p-6 space-y-4 md:space-y-6">
+        <CardContent className="p-3 sm:p-4 md:p-6 space-y-4 md:space-y-6">
           {renderStep()}
           
           {/* Integrated Navigation */}
-          <div className="pt-4 border-t">
-            <div className="flex flex-col gap-3">
-              <div className="order-2 sm:order-1">
-                <SmartContinueButton
-                  canProceed={Boolean(canProceed())}
-                  isLastStep={currentStep === steps.length - 1}
-                  nextStepTitle={steps[currentStep + 1]?.title}
-                  onNext={nextStep}
-                  onGenerate={generateQuote}
-                  isGenerating={isGenerating}
-                />
-              </div>
+          <div className="pt-3 sm:pt-4 border-t space-y-3">
+            {/* Continue Button - Always First on Mobile */}
+            <SmartContinueButton
+              canProceed={Boolean(canProceed())}
+              isLastStep={currentStep === steps.length - 1}
+              nextStepTitle={steps[currentStep + 1]?.title}
+              onNext={nextStep}
+              onGenerate={generateQuote}
+              isGenerating={isGenerating}
+            />
+            
+            {/* Secondary Actions - Stack on Mobile */}
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <Button
+                variant="outline"
+                onClick={prevStep}
+                disabled={currentStep === 0}
+                size="sm"
+                className="w-full sm:w-auto h-10 sm:h-9"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Previous
+              </Button>
               
-              <div className="flex flex-wrap items-center gap-2 order-1 sm:order-2">
-                <Button
-                  variant="outline"
-                  onClick={prevStep}
-                  disabled={currentStep === 0}
-                  size="sm"
-                  className="flex-1 sm:flex-initial h-11 sm:h-9"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Previous
-                </Button>
-                
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={resetQuote} 
-                  className="flex-1 sm:flex-initial h-11 sm:h-9"
-                >
-                  Start Over
-                </Button>
-              </div>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={resetQuote} 
+                className="w-full sm:w-auto h-10 sm:h-9"
+              >
+                Start Over
+              </Button>
             </div>
           </div>
         </CardContent>
