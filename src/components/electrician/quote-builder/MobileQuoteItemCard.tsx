@@ -51,9 +51,9 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
 
       {/* Quantity and unit price - Editable */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <label className="text-xs font-medium text-muted-foreground">Quantity</label>
-          <div className="flex items-center gap-1.5">
+          <div className="relative">
             <Input
               type="number"
               value={item.quantity}
@@ -74,22 +74,26 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
                   onUpdate(item.id, { quantity: 1 });
                 }
               }}
-              className="h-9 text-center text-sm"
+              className="h-10 text-center text-sm pr-12"
               min="0.1"
               step="0.1"
             />
-            <span className="text-xs text-muted-foreground shrink-0">{item.unit}</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground pointer-events-none">
+              {item.unit}
+            </span>
           </div>
         </div>
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           <label className="text-xs font-medium text-muted-foreground">Unit Price</label>
-          <div className="flex items-center gap-1">
-            <span className="text-xs text-muted-foreground">£</span>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground pointer-events-none">
+              £
+            </span>
             <Input
               type="number"
               value={item.unitPrice}
               onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
-              className="h-9 text-right text-sm"
+              className="h-10 text-right text-sm pl-7"
               min="0"
               step="0.01"
             />
