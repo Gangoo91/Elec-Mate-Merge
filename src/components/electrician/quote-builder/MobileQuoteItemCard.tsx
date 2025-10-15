@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Trash2, Copy, Wrench, Package, Zap } from "lucide-react";
 import { QuoteItem } from "@/types/quote";
 
@@ -48,13 +49,51 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
         <p className="font-medium text-sm line-clamp-2">{item.description}</p>
       </div>
 
-      {/* Quantity and unit price */}
-      <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
-        <div>
-          <span className="font-medium">Quantity:</span> {item.quantity} {item.unit}
+      {/* Quantity and unit price - Editable */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-1.5">
+          <label className="text-xs font-medium text-muted-foreground">Quantity</label>
+          <div className="flex items-center gap-1.5">
+            <Input
+              type="number"
+              value={item.quantity}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value === '') {
+                  onUpdate(item.id, { quantity: 0 });
+                } else {
+                  const parsed = parseFloat(value);
+                  if (!isNaN(parsed) && parsed >= 0) {
+                    onUpdate(item.id, { quantity: parsed });
+                  }
+                }
+              }}
+              onBlur={(e) => {
+                const value = parseFloat(e.target.value);
+                if (isNaN(value) || value <= 0) {
+                  onUpdate(item.id, { quantity: 1 });
+                }
+              }}
+              className="h-9 text-center text-sm"
+              min="0.1"
+              step="0.1"
+            />
+            <span className="text-xs text-muted-foreground shrink-0">{item.unit}</span>
+          </div>
         </div>
-        <div>
-          <span className="font-medium">Unit Price:</span> £{item.unitPrice.toFixed(2)}
+        <div className="space-y-1.5">
+          <label className="text-xs font-medium text-muted-foreground">Unit Price</label>
+          <div className="flex items-center gap-1">
+            <span className="text-xs text-muted-foreground">£</span>
+            <Input
+              type="number"
+              value={item.unitPrice}
+              onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
+              className="h-9 text-right text-sm"
+              min="0"
+              step="0.01"
+            />
+          </div>
         </div>
       </div>
 
