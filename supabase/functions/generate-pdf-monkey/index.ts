@@ -44,8 +44,44 @@ serve(async (req) => {
     }
 
     // Parse request body
-    const { quote, companyProfile, invoice_mode, briefing, briefing_mode, documentId: requestDocumentId, mode } = await req.json();
+    const { quote, companyProfile, invoice_mode, briefing, briefing_mode, documentId: requestDocumentId, mode, force_regenerate } = await req.json();
     console.log('[PDF-MONKEY] Received request - Mode:', invoice_mode ? 'invoice' : briefing_mode ? 'briefing' : (requestDocumentId ? 'status' : 'quote'));
+    
+    // STEP 2: Force Fresh Data - Fetch latest from database if quote/invoice
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? ''
+    );
+    
+    let freshQuote = quote;
+    let freshCompanyProfile = companyProfile;
+    
+    if ((invoice_mode || !briefing_mode) && quote?.id) {
+      console.log('[PDF-MONKEY] Fetching FRESH data from database for quote:', quote.id);
+      
+      const { data: latestQuote, error: quoteError } = await supabaseClient
+        .from('quotes')
+        .select('*')
+        .eq('id', quote.id)
+        .single();
+      
+      if (!quoteError && latestQuote) {
+        freshQuote = latestQuote;
+        console.log('[PDF-MONKEY] Using fresh quote data from database');
+        
+        // Fetch latest company profile
+        const { data: latestCompany, error: companyError } = await supabaseClient
+          .from('company_profiles')
+          .select('*')
+          .eq('user_id', latestQuote.user_id)
+          .single();
+        
+        if (!companyError && latestCompany) {
+          freshCompanyProfile = latestCompany;
+          console.log('[PDF-MONKEY] Using fresh company profile from database');
+        }
+      }
+    }
 
     // Status-only polling mode: skip creation and just check an existing document
     if (requestDocumentId && (mode === 'status' || (!quote && !briefing))) {
@@ -107,10 +143,10 @@ serve(async (req) => {
         );
       }
     } else {
-      console.log('[PDF-MONKEY] Quote/Invoice items count:', quote?.items?.length || 0);
-      console.log('[PDF-MONKEY] Settings:', JSON.stringify(quote?.settings, null, 2));
+      console.log('[PDF-MONKEY] Quote/Invoice items count:', freshQuote?.items?.length || 0);
+      console.log('[PDF-MONKEY] Settings:', JSON.stringify(freshQuote?.settings, null, 2));
       
-      if (!quote) {
+      if (!freshQuote) {
         return new Response(
           JSON.stringify({ error: 'Quote/Invoice data is required' }),
           { 
@@ -179,25 +215,25 @@ serve(async (req) => {
       payload = transformedBriefing;
       console.log('[PDF-MONKEY] Transformed briefing payload');
     } else if (invoice_mode) {
-      // Transform to invoice format
+      // Transform to invoice format - USE FRESH DATA
       // Use bank details from invoice settings first, fallback to company profile
-      const bankDetails = quote?.settings?.bankDetails || companyProfile?.bank_details || {};
+      const bankDetails = freshQuote?.settings?.bankDetails || freshCompanyProfile?.bank_details || {};
       
       const transformedCompanyProfile = {
-        logo_url: companyProfile?.logo_url || "",
-        company_name: companyProfile?.company_name || "",
-        company_address: companyProfile?.company_address ? 
-          `${companyProfile.company_address}${companyProfile.company_postcode ? '\n' + companyProfile.company_postcode : ''}` : "",
-        company_phone: companyProfile?.company_phone || "",
-        company_email: companyProfile?.company_email || "",
-        vat_number: companyProfile?.vat_number || "",
-        company_website: companyProfile?.company_website || "",
+        logo_url: freshCompanyProfile?.logo_url || "",
+        company_name: freshCompanyProfile?.company_name || "",
+        company_address: freshCompanyProfile?.company_address ? 
+          `${freshCompanyProfile.company_address}${freshCompanyProfile.company_postcode ? '\n' + freshCompanyProfile.company_postcode : ''}` : "",
+        company_phone: freshCompanyProfile?.company_phone || "",
+        company_email: freshCompanyProfile?.company_email || "",
+        vat_number: freshCompanyProfile?.vat_number || "",
+        company_website: freshCompanyProfile?.company_website || "",
         bank_name: bankDetails?.bankName || bankDetails?.bank_name || "",
-        account_name: bankDetails?.accountName || bankDetails?.account_name || companyProfile?.company_name || "",
+        account_name: bankDetails?.accountName || bankDetails?.account_name || freshCompanyProfile?.company_name || "",
         account_number: bankDetails?.accountNumber || bankDetails?.account_number || "",
         sort_code: bankDetails?.sortCode || bankDetails?.sort_code || "",
-        payment_terms: quote?.settings?.paymentTerms || "7 days",
-        company_registration: companyProfile?.company_registration || ""
+        payment_terms: freshQuote?.settings?.paymentTerms || "7 days",
+        company_registration: freshCompanyProfile?.company_registration || ""
       };
       
       console.log('[PDF-MONKEY] Bank details for invoice:', {
@@ -208,39 +244,39 @@ serve(async (req) => {
       });
 
       const transformedInvoice = {
-        invoiceNumber: quote?.invoice_number || "",
-        createdAt: quote?.invoice_date ? new Date(quote.invoice_date).toISOString().split('T')[0] : "",
-        dueDate: quote?.invoice_due_date ? new Date(quote.invoice_due_date).toISOString().split('T')[0] : "",
-        purchaseOrder: quote?.purchase_order || "",
+        invoiceNumber: freshQuote?.invoice_number || "",
+        createdAt: freshQuote?.invoice_date ? new Date(freshQuote.invoice_date).toISOString().split('T')[0] : "",
+        dueDate: freshQuote?.invoice_due_date ? new Date(freshQuote.invoice_due_date).toISOString().split('T')[0] : "",
+        purchaseOrder: freshQuote?.purchase_order || "",
         client: {
-          name: quote?.client?.name || quote?.client_data?.name || "",
-          contactName: quote?.client?.contactName || quote?.client_data?.contactName || "",
-          address: quote?.client?.address || quote?.client_data?.address ? 
-            `${(quote?.client?.address || quote?.client_data?.address)}${(quote?.client?.postcode || quote?.client_data?.postcode) ? '\n' + (quote?.client?.postcode || quote?.client_data?.postcode) : ''}` : "",
-          postcode: quote?.client?.postcode || quote?.client_data?.postcode || "",
-          email: quote?.client?.email || quote?.client_data?.email || "",
-          phone: quote?.client?.phone || quote?.client_data?.phone || ""
+          name: freshQuote?.client?.name || freshQuote?.client_data?.name || "",
+          contactName: freshQuote?.client?.contactName || freshQuote?.client_data?.contactName || "",
+          address: freshQuote?.client?.address || freshQuote?.client_data?.address ? 
+            `${(freshQuote?.client?.address || freshQuote?.client_data?.address)}${(freshQuote?.client?.postcode || freshQuote?.client_data?.postcode) ? '\n' + (freshQuote?.client?.postcode || freshQuote?.client_data?.postcode) : ''}` : "",
+          postcode: freshQuote?.client?.postcode || freshQuote?.client_data?.postcode || "",
+          email: freshQuote?.client?.email || freshQuote?.client_data?.email || "",
+          phone: freshQuote?.client?.phone || freshQuote?.client_data?.phone || ""
         },
         jobDetails: {
-          title: quote?.jobDetails?.title || quote?.job_details?.title || "",
-          description: quote?.jobDetails?.description || quote?.job_details?.description || "",
-          location: quote?.jobDetails?.location || quote?.job_details?.location || "",
-          estimatedDuration: quote?.jobDetails?.estimatedDuration || quote?.job_details?.estimatedDuration || "",
-          customDuration: quote?.jobDetails?.customDuration || quote?.job_details?.customDuration || "",
-          workStartDate: quote?.jobDetails?.workStartDate || quote?.job_details?.workStartDate || "",
-          specialRequirements: quote?.jobDetails?.specialRequirements || quote?.job_details?.specialRequirements || "",
-          completionDate: quote?.work_completion_date ? 
-            new Date(quote.work_completion_date).toISOString().split('T')[0] : "",
-          reference: quote?.jobDetails?.reference || quote?.job_details?.reference || quote?.quote_number || ""
+          title: freshQuote?.jobDetails?.title || freshQuote?.job_details?.title || "",
+          description: freshQuote?.jobDetails?.description || freshQuote?.job_details?.description || "",
+          location: freshQuote?.jobDetails?.location || freshQuote?.job_details?.location || "",
+          estimatedDuration: freshQuote?.jobDetails?.estimatedDuration || freshQuote?.job_details?.estimatedDuration || "",
+          customDuration: freshQuote?.jobDetails?.customDuration || freshQuote?.job_details?.customDuration || "",
+          workStartDate: freshQuote?.jobDetails?.workStartDate || freshQuote?.job_details?.workStartDate || "",
+          specialRequirements: freshQuote?.jobDetails?.specialRequirements || freshQuote?.job_details?.specialRequirements || "",
+          completionDate: freshQuote?.work_completion_date ? 
+            new Date(freshQuote.work_completion_date).toISOString().split('T')[0] : "",
+          reference: freshQuote?.jobDetails?.reference || freshQuote?.job_details?.reference || freshQuote?.quote_number || ""
         },
-        items: (quote?.items || []).map((item: any) => ({
+        items: (freshQuote?.items || []).map((item: any) => ({
           name: item.description || "",
           description: item.notes || "",
           quantity: item.actualQuantity || item.quantity || 0,
           unit: item.unit || "each",
           unitPrice: item.unitPrice || 0
         })),
-        notes: quote?.invoice_notes || ""
+        notes: freshQuote?.invoice_notes || ""
       };
       
       console.log('[PDF-MONKEY] Transformed invoice items:', transformedInvoice.items.length, 'items');
@@ -251,7 +287,7 @@ serve(async (req) => {
         sum + (item.quantity * item.unitPrice), 0
       );
 
-      const settings = quote?.settings || {};
+      const settings = freshQuote?.settings || {};
       const overhead = itemsSubtotal * ((settings.overheadPercentage || 0) / 100);
       const profit = (itemsSubtotal + overhead) * ((settings.profitMargin || 0) / 100);
       const vatAmount = settings.vatRegistered 
@@ -265,7 +301,7 @@ serve(async (req) => {
         profit,
         vatAmount,
         total,
-        originalTotal: quote?.total
+        originalTotal: freshQuote?.total
       });
 
       payload = {
@@ -290,33 +326,39 @@ serve(async (req) => {
           vatRate: settings.vatRate || 20,
           total: total
         },
-        terms: quote?.settings?.terms || "",
-        useVat: (quote?.settings?.vatRate || 0) > 0,
-        vatRate: quote?.settings?.vatRate || 20
+        terms: freshQuote?.settings?.terms || "",
+        useVat: (freshQuote?.settings?.vatRate || 0) > 0,
+        vatRate: freshQuote?.settings?.vatRate || 20,
+        // STEP 5: Cache busting timestamp
+        _cache_bust: Date.now(),
+        _generated_at: new Date().toISOString()
       };
 
       console.log('[PDF-MONKEY] Transformed invoice payload for template');
     } else {
-      // Transform quote format to ensure jobDetails is properly structured with all fields
+      // Transform quote format to ensure jobDetails is properly structured with all fields - USE FRESH DATA
       const transformedQuote = {
-        ...quote,
+        ...freshQuote,
         jobDetails: {
-          title: quote?.jobDetails?.title || "",
-          description: quote?.jobDetails?.description || "",
-          location: quote?.jobDetails?.location || "",
-          estimatedDuration: quote?.jobDetails?.estimatedDuration || "",
-          customDuration: quote?.jobDetails?.customDuration || "",
-          workStartDate: quote?.jobDetails?.workStartDate || "",
-          specialRequirements: quote?.jobDetails?.specialRequirements || "",
-          completionDate: quote?.work_completion_date ? 
-            new Date(quote.work_completion_date).toISOString().split('T')[0] : "",
-          reference: quote?.jobDetails?.reference || quote?.quoteNumber || ""
+          title: freshQuote?.jobDetails?.title || "",
+          description: freshQuote?.jobDetails?.description || "",
+          location: freshQuote?.jobDetails?.location || "",
+          estimatedDuration: freshQuote?.jobDetails?.estimatedDuration || "",
+          customDuration: freshQuote?.jobDetails?.customDuration || "",
+          workStartDate: freshQuote?.jobDetails?.workStartDate || "",
+          specialRequirements: freshQuote?.jobDetails?.specialRequirements || "",
+          completionDate: freshQuote?.work_completion_date ? 
+            new Date(freshQuote.work_completion_date).toISOString().split('T')[0] : "",
+          reference: freshQuote?.jobDetails?.reference || freshQuote?.quoteNumber || ""
         }
       };
       
       payload = {
         quote: transformedQuote,
-        companyProfile
+        companyProfile: freshCompanyProfile,
+        // STEP 5: Cache busting timestamp
+        _cache_bust: Date.now(),
+        _generated_at: new Date().toISOString()
       };
       console.log('[PDF-MONKEY] Using quote format with all jobDetails fields:', {
         hasTitle: !!transformedQuote.jobDetails.title,

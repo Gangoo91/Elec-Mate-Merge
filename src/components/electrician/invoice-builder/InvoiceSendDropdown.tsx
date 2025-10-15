@@ -226,21 +226,20 @@ export const InvoiceSendDropdown = ({
         throw new Error('Failed to generate professional PDF');
       }
 
-      // Step 3: Store PDF metadata in database
-      if (pdfUrl && documentId) {
+      // Step 3: Store PDF metadata in database (NO URL - it expires)
+      if (documentId) {
         const newVersion = (freshInvoice.pdf_version || 0) + 1;
         await supabase
           .from('quotes')
           .update({
             pdf_document_id: documentId,
-            pdf_url: pdfUrl,
             pdf_generated_at: new Date().toISOString(),
             pdf_version: newVersion
           })
           .eq('id', invoice.id);
       }
 
-      // Step 4: Add cache busting to PDF URL
+      // Step 4: Use fresh PDF URL directly (don't store - it expires)
       const cacheBustedPdfUrl = `${pdfUrl}?t=${Date.now()}`;
 
       // Step 5: Create professional WhatsApp message with cache-busted URL

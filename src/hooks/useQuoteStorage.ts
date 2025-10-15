@@ -141,6 +141,42 @@ export const useQuoteStorage = () => {
 
       console.log('Quote Storage - Database save successful');
 
+      // STEP 3: Generate PDF for quote (like invoices)
+      try {
+        const { data: companyData } = await supabase
+          .from('company_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          const { data: pdfData } = await supabase.functions.invoke('generate-pdf-monkey', {
+            body: {
+              quote: quoteData,
+              companyProfile: companyData,
+              invoice_mode: false,
+              force_regenerate: true
+            },
+            headers: { Authorization: `Bearer ${session.access_token}` }
+          });
+
+          const documentId = pdfData?.documentId;
+          if (documentId) {
+            await supabase
+              .from('quotes')
+              .update({
+                pdf_document_id: documentId,
+                pdf_generated_at: new Date().toISOString(),
+                pdf_version: (quote.pdf_version || 0) + 1
+              })
+              .eq('id', quote.id);
+          }
+        }
+      } catch (pdfError) {
+        console.error('Quote PDF generation error (non-blocking):', pdfError);
+      }
+
       // Update local state
       const updatedQuotes = [quote, ...savedQuotes.filter(q => q.id !== quote.id)];
       setSavedQuotes(updatedQuotes);

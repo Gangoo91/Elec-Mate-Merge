@@ -47,7 +47,6 @@ export const useInvoiceStorage = () => {
     invoice_notes: row.invoice_notes,
     additional_invoice_items: row.additional_invoice_items || [],
     pdf_document_id: row.pdf_document_id,
-    pdf_url: row.pdf_url,
     pdf_generated_at: row.pdf_generated_at ? new Date(row.pdf_generated_at) : undefined,
     pdf_version: row.pdf_version,
   }), []);
@@ -199,13 +198,12 @@ export const useInvoiceStorage = () => {
         }
 
         // 4. Store PDF metadata with incremented version
-        if (pdfUrl && documentId) {
+        if (documentId) {
           const newVersion = (updatedQuote.pdf_version || 0) + 1;
           const { error: pdfUpdateError } = await supabase
             .from('quotes')
             .update({
               pdf_document_id: documentId,
-              pdf_url: pdfUrl,
               pdf_generated_at: new Date().toISOString(),
               pdf_version: newVersion
             })
@@ -229,8 +227,8 @@ export const useInvoiceStorage = () => {
         });
       }
 
-      // 5. Refetch to get the latest data including PDF URL
-      await fetchInvoices();
+      // 5. Return success without refetching (database trigger handles updated_at)
+      setInvoices(prev => prev.map(inv => inv.id === invoice.id ? convertDbRowToQuote(updatedQuote) : inv));
       return true;
     } catch (error) {
       console.error('Error saving invoice:', error);
