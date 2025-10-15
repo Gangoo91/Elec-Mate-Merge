@@ -111,9 +111,24 @@ const InvoiceViewPage = () => {
     if (!invoice) return;
     
     try {
+      // Check if we have a current PDF
+      const pdfIsCurrent = invoice.pdf_url && invoice.pdf_generated_at && 
+        new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
+      
+      if (pdfIsCurrent) {
+        // Use cached PDF - instant!
+        window.open(invoice.pdf_url, '_blank');
+        toast({
+          title: 'PDF ready',
+          description: 'Opening your invoice PDF',
+        });
+        return;
+      }
+
+      // PDF is stale or missing - regenerate
       toast({
         title: 'Generating PDF',
-        description: 'Your invoice PDF is being generated...',
+        description: 'Creating latest version of your invoice...',
       });
 
       // Fetch company profile
@@ -163,6 +178,18 @@ const InvoiceViewPage = () => {
 
       if (pdfError || !pdfUrl) {
         throw new Error('Failed to generate professional PDF');
+      }
+
+      // Store PDF metadata for future use
+      if (pdfUrl && documentId) {
+        await supabase
+          .from('quotes')
+          .update({
+            pdf_document_id: documentId,
+            pdf_url: pdfUrl,
+            pdf_generated_at: new Date().toISOString()
+          })
+          .eq('id', invoice.id);
       }
 
       window.open(pdfUrl, '_blank');

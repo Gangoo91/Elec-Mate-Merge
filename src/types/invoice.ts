@@ -30,6 +30,10 @@ export interface Invoice extends Omit<Quote, 'items' | 'settings'> {
   settings: InvoiceSettings;
   originalQuoteId: string;
   purchase_order?: string;
+  pdf_document_id?: string;
+  pdf_url?: string;
+  pdf_generated_at?: Date;
+  pdf_version?: number;
 }
 
 export type InvoiceStatus = 'draft' | 'sent' | 'paid' | 'overdue';

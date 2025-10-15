@@ -4104,6 +4104,10 @@ export type Database = {
           last_reminder_sent_at: string | null
           notes: string | null
           overhead: number
+          pdf_document_id: string | null
+          pdf_generated_at: string | null
+          pdf_url: string | null
+          pdf_version: number | null
           profit: number
           public_token: string | null
           quote_number: string
@@ -4146,6 +4150,10 @@ export type Database = {
           last_reminder_sent_at?: string | null
           notes?: string | null
           overhead?: number
+          pdf_document_id?: string | null
+          pdf_generated_at?: string | null
+          pdf_url?: string | null
+          pdf_version?: number | null
           profit?: number
           public_token?: string | null
           quote_number: string
@@ -4188,6 +4196,10 @@ export type Database = {
           last_reminder_sent_at?: string | null
           notes?: string | null
           overhead?: number
+          pdf_document_id?: string | null
+          pdf_generated_at?: string | null
+          pdf_url?: string | null
+          pdf_version?: number | null
           profit?: number
           public_token?: string | null
           quote_number?: string

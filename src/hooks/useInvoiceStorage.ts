@@ -46,6 +46,10 @@ export const useInvoiceStorage = () => {
     work_completion_date: row.work_completion_date ? new Date(row.work_completion_date) : undefined,
     invoice_notes: row.invoice_notes,
     additional_invoice_items: row.additional_invoice_items || [],
+    pdf_document_id: row.pdf_document_id,
+    pdf_url: row.pdf_url,
+    pdf_generated_at: row.pdf_generated_at ? new Date(row.pdf_generated_at) : undefined,
+    pdf_version: row.pdf_version,
   }), []);
 
 
@@ -110,7 +114,8 @@ export const useInvoiceStorage = () => {
         ...(invoice.additional_invoice_items || [])
       ];
 
-      const { error } = await supabase
+      // 1. Save invoice data to database
+      const { data: updatedQuote, error: updateError } = await supabase
         .from('quotes')
         .update({
           invoice_raised: true,
@@ -129,16 +134,91 @@ export const useInvoiceStorage = () => {
           profit: invoice.profit,
           vat_amount: invoice.vatAmount,
           total: invoice.total,
+          pdf_version: (invoice.pdf_version || 0) + 1,
           updated_at: new Date().toISOString(),
         })
-        .eq('id', invoice.id);
+        .eq('id', invoice.id)
+        .select()
+        .single();
 
-      if (error) throw error;
+      if (updateError) throw updateError;
 
       toast({
         title: 'Invoice saved',
         description: `Invoice ${invoice.invoice_number} has been saved successfully.`,
       });
+
+      // 2. Regenerate PDF with latest data
+      try {
+        toast({
+          title: 'Regenerating PDF',
+          description: 'Updating invoice PDF with latest changes...',
+        });
+
+        const { data: companyData } = await supabase
+          .from('company_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          throw new Error('User not authenticated');
+        }
+
+        const { data: pdfData } = await supabase.functions.invoke('generate-pdf-monkey', {
+          body: {
+            quote: updatedQuote,
+            companyProfile: companyData,
+            invoice_mode: true
+          },
+          headers: { Authorization: `Bearer ${session.access_token}` }
+        });
+
+        // 3. Poll if needed & update PDF metadata
+        let pdfUrl = pdfData?.downloadUrl;
+        const documentId = pdfData?.documentId;
+
+        if (!pdfUrl && documentId) {
+          // Poll for PDF completion
+          for (let i = 0; i < 45; i++) {
+            const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
+              body: { documentId, mode: 'status' },
+              headers: { Authorization: `Bearer ${session.access_token}` },
+            });
+            if (statusData?.downloadUrl) {
+              pdfUrl = statusData.downloadUrl;
+              break;
+            }
+            await new Promise((res) => setTimeout(res, 2000));
+          }
+        }
+
+        // 4. Store PDF metadata
+        if (pdfUrl && documentId) {
+          await supabase
+            .from('quotes')
+            .update({
+              pdf_document_id: documentId,
+              pdf_url: pdfUrl,
+              pdf_generated_at: new Date().toISOString()
+            })
+            .eq('id', invoice.id);
+
+          toast({
+            title: 'PDF regenerated',
+            description: 'Invoice PDF updated with latest changes',
+            variant: 'success',
+          });
+        }
+      } catch (pdfError) {
+        console.error('PDF regeneration error:', pdfError);
+        // Don't fail the save if PDF generation fails
+        toast({
+          title: 'PDF generation skipped',
+          description: 'Invoice saved, but PDF will regenerate on next download',
+        });
+      }
 
       await fetchInvoices();
       return true;

@@ -110,6 +110,10 @@ export interface Quote {
   work_completion_date?: Date;
   invoice_notes?: string;
   additional_invoice_items?: QuoteItem[];
+  pdf_document_id?: string;
+  pdf_url?: string;
+  pdf_generated_at?: Date;
+  pdf_version?: number;
 }
 
 export type QuoteTag = 'awaiting_payment' | 'job_not_complete' | 'on_hold' | 'disputed' | 'work_done';

@@ -162,59 +162,92 @@ export const InvoiceSendDropdown = ({
     try {
       setIsSharingWhatsApp(true);
 
-      // 1. Fetch company profile for PDF generation
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
+      // 1. Check if we have a current PDF
+      const pdfIsCurrent = invoice.pdf_url && invoice.pdf_generated_at && 
+        new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
+      
+      let pdfUrl: string | undefined;
+      let documentId: string | undefined;
 
-      const { data: companyData, error: companyError } = await supabase
-        .from('company_profiles')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      if (companyError) {
-        console.error('Company profile error:', companyError);
-      }
-
-      // 2. Generate professional PDF using PDF Monkey template
-      toast({
-        title: 'Generating Professional PDF',
-        description: 'Creating invoice with your branded template...',
-      });
-
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        throw new Error('User not authenticated');
-      }
-
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
-        body: {
-          quote: invoice,
-          companyProfile: companyData,
-          invoice_mode: true  // Uses DC891A6A-4B38-48F5-A7DB-7CD0B550F4A2 template
-        },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
+      if (pdfIsCurrent) {
+        // Use cached PDF - instant!
+        pdfUrl = invoice.pdf_url;
+        toast({
+          title: 'PDF ready',
+          description: 'Using latest invoice PDF',
+        });
+      } else {
+        // PDF is stale or missing - regenerate
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          throw new Error('User not authenticated');
         }
-      });
 
-      let pdfUrl: string | undefined = pdfData?.downloadUrl;
-      const documentId: string | undefined = pdfData?.documentId;
+        const { data: companyData, error: companyError } = await supabase
+          .from('company_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
 
-      if (!pdfUrl && documentId) {
-        toast({ title: 'Preparing PDF…', description: 'Finalising your professional invoice…' });
-        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+        if (companyError) {
+          console.error('Company profile error:', companyError);
+        }
+
+        // Generate professional PDF using PDF Monkey template
+        toast({
+          title: 'Generating Professional PDF',
+          description: 'Creating invoice with your branded template...',
+        });
+
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          throw new Error('User not authenticated');
+        }
+
+        const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+          body: {
+            quote: invoice,
+            companyProfile: companyData,
+            invoice_mode: true
+          },
+          headers: {
+            Authorization: `Bearer ${session.access_token}`
+          }
+        });
+
+        pdfUrl = pdfData?.downloadUrl;
+        documentId = pdfData?.documentId;
+
+        if (!pdfUrl && documentId) {
+          toast({ title: 'Preparing PDF…', description: 'Finalising your professional invoice…' });
+          pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+        }
+
+        if (pdfError || !pdfUrl) {
+          console.error('PDF Monkey error:', pdfError);
+          throw new Error('Failed to generate professional PDF');
+        }
+
+        // Store PDF metadata for future use
+        if (pdfUrl && documentId) {
+          await supabase
+            .from('quotes')
+            .update({
+              pdf_document_id: documentId,
+              pdf_url: pdfUrl,
+              pdf_generated_at: new Date().toISOString()
+            })
+            .eq('id', invoice.id);
+        }
       }
 
-      if (pdfError || !pdfUrl) {
-        console.error('PDF Monkey error:', pdfError);
-        throw new Error('Failed to generate professional PDF');
-      }
-
-      // 3. Create professional WhatsApp message (NO BRANDING)
+      // 2. Create professional WhatsApp message (NO BRANDING)
       const clientName = invoice.client?.name || 'Valued Client';
+      const { data: companyData } = await supabase
+        .from('company_profiles')
+        .select('company_name')
+        .eq('user_id', (await supabase.auth.getUser()).data.user?.id)
+        .single();
       const companyName = companyData?.company_name || 'Your Company';
       const totalAmount = invoice.total || 0;
       const dueDate = invoice.invoice_due_date 
