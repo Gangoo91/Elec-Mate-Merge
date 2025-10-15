@@ -15,7 +15,7 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'wiring-diagram-generator-rag' });
 
   try {
-    const { component_type, circuit_params, installation_context } = await req.json();
+    const { component_type, circuit_params, installation_context, component_image_url } = await req.json();
 
     if (!component_type) {
       throw new ValidationError('component_type is required');
@@ -33,8 +33,61 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
+    // Analyze component image if provided
+    let enhancedComponentType = component_type;
+    let imageAnalysisContext = '';
+    
+    if (component_image_url) {
+      logger.info('Analyzing component image', { component_image_url });
+      
+      const imageAnalysisData = await withRetry(
+        () => withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'google/gemini-2.5-flash',
+              messages: [
+                { 
+                  role: 'user', 
+                  content: [
+                    {
+                      type: 'text',
+                      text: 'Analyze this electrical component image. Identify: component type, ratings (amps/volts), manufacturer, model number, visible terminals, cable entry points, and any visible labels/markings. Be specific and technical.'
+                    },
+                    {
+                      type: 'image_url',
+                      image_url: { url: component_image_url }
+                    }
+                  ]
+                }
+              ],
+              max_tokens: 500
+            }),
+          }).then(async (res) => {
+            if (!res.ok) {
+              logger.warn('Image analysis failed', { status: res.status });
+              return { choices: [{ message: { content: '' } }] };
+            }
+            return res.json();
+          }),
+          Timeouts.STANDARD,
+          'Image analysis'
+        ),
+        RetryPresets.STANDARD
+      );
+      
+      imageAnalysisContext = imageAnalysisData.choices[0].message.content;
+      enhancedComponentType = `${component_type} - ${imageAnalysisContext}`;
+      
+      logger.info('Image analysis completed', { imageAnalysisContext: imageAnalysisContext.substring(0, 100) });
+    }
+
     // RAG query for wiring procedures and installation methods
-    const ragQuery = `${component_type} wiring procedure terminal connections cable installation methods UK colour codes safe isolation testing`;
+    const ragQuery = `${enhancedComponentType} wiring procedure terminal connections cable installation methods UK colour codes safe isolation testing`;
 
     // Generate embedding
     const embeddingData = await logger.time(
@@ -138,6 +191,7 @@ ${safetyDocs?.map((s: any) => `${s.topic}: ${s.content}`).join('\n') || 'None fo
     const schematicPrompt = `You are an electrical installation expert. Generate a simple single-line circuit diagram in SVG format.
 
 COMPONENT: ${component_type}
+IMAGE ANALYSIS: ${imageAnalysisContext || 'No image provided'}
 CIRCUIT SPECIFICATION: ${JSON.stringify(circuit_params)}
 INSTALLATION CONTEXT: ${installation_context}
 
