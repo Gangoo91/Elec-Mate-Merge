@@ -512,9 +512,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                   <TableRow className="border-muted">
                     <TableHead className="w-[40px]">Type</TableHead>
                     <TableHead>Description</TableHead>
-                    <TableHead className="text-center w-[80px]">Qty</TableHead>
+                    <TableHead className="text-center w-[100px]">Quantity</TableHead>
                     <TableHead className="text-center w-[80px]">Unit</TableHead>
-                    <TableHead className="text-right w-[100px]">Unit Price</TableHead>
+                    <TableHead className="text-right w-[120px]">Unit Price</TableHead>
                     <TableHead className="text-right w-[100px]">Total</TableHead>
                     <TableHead className="text-center w-[100px]">Actions</TableHead>
                   </TableRow>
@@ -538,6 +538,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                       <TableCell className="text-center py-3">
                         <Input
                           type="number"
+                          inputMode="decimal"
                           value={item.quantity}
                           onChange={(e) => {
                             const value = e.target.value;
@@ -556,21 +557,27 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                               onUpdate(item.id, { quantity: 1 });
                             }
                           }}
-                          className="w-16 text-center h-8"
+                          className="w-20 text-center h-10"
                           min="0.1"
                           step="0.1"
+                          aria-label="Quantity"
                         />
                       </TableCell>
                       <TableCell className="text-center py-3 text-sm">{item.unit}</TableCell>
                       <TableCell className="text-right py-3">
-                        <Input
-                          type="number"
-                          value={item.unitPrice}
-                          onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
-                          className="w-20 text-right h-8"
-                          min="0"
-                          step="0.01"
-                        />
+                        <div className="flex items-center justify-end gap-1">
+                          <span className="text-sm text-muted-foreground">£</span>
+                          <Input
+                            type="number"
+                            inputMode="decimal"
+                            value={item.unitPrice}
+                            onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
+                            className="w-24 text-right h-10"
+                            min="0"
+                            step="0.01"
+                            aria-label="Unit price"
+                          />
+                        </div>
                       </TableCell>
                       <TableCell className="text-right py-3 font-semibold">
                         £{item.totalPrice.toFixed(2)}
