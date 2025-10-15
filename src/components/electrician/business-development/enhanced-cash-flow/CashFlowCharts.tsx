@@ -56,37 +56,40 @@ export const CashFlowCharts = ({ projections, selectedScenario }: CashFlowCharts
 
   return (
     <div className="space-y-6">
-      {/* Monthly Trend Line Chart */}
+      {/* Monthly Trend Line Chart - Taller on mobile */}
       <Card className="border-elec-yellow/20 bg-elec-card">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-elec-light flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
             Monthly Cash Flow Trends ({selectedScenario} scenario)
           </CardTitle>
         </CardHeader>
-        <CardContent className="h-80">
+        <CardContent className="h-[400px] sm:h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={lineChartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+            <LineChart data={lineChartData} margin={{ top: 20, right: 10, left: 0, bottom: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
               <XAxis 
                 dataKey="month" 
-                stroke="#9ca3af"
-                fontSize={12}
+                stroke="rgba(255,255,255,0.8)"
+                fontSize={11}
+                angle={-45}
+                textAnchor="end"
+                height={80}
               />
               <YAxis 
-                stroke="#9ca3af"
-                fontSize={12}
+                stroke="rgba(255,255,255,0.8)"
+                fontSize={11}
                 tickFormatter={(value) => `£${(value / 1000).toFixed(0)}k`}
               />
               <Tooltip 
                 contentStyle={{ 
-                  backgroundColor: '#1f2937', 
-                  border: '1px solid #374151',
+                  backgroundColor: 'hsl(var(--elec-card))', 
+                  border: '1px solid rgba(247, 209, 84, 0.3)',
                   borderRadius: '8px',
-                  color: '#fff'
+                  color: 'hsl(var(--elec-light))'
                 }}
                 formatter={(value: number, name: string) => [
-                  `£${value.toFixed(0)}`,
+                  `£${value.toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
                   name === 'income' ? 'Income' :
                   name === 'expenses' ? 'Expenses' :
                   name === 'balance' ? 'Balance' : 'Net Flow'
@@ -96,62 +99,82 @@ export const CashFlowCharts = ({ projections, selectedScenario }: CashFlowCharts
                 type="monotone" 
                 dataKey="income" 
                 stroke="#10b981" 
-                strokeWidth={2}
-                dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
+                strokeWidth={3}
+                dot={{ fill: '#10b981', strokeWidth: 2, r: 6 }}
               />
               <Line 
                 type="monotone" 
                 dataKey="expenses" 
                 stroke="#ef4444" 
-                strokeWidth={2}
-                dot={{ fill: '#ef4444', strokeWidth: 2, r: 4 }}
+                strokeWidth={3}
+                dot={{ fill: '#ef4444', strokeWidth: 2, r: 6 }}
               />
               <Line 
                 type="monotone" 
                 dataKey="balance" 
                 stroke="#fbbf24" 
                 strokeWidth={3}
-                dot={{ fill: '#fbbf24', strokeWidth: 2, r: 5 }}
+                dot={{ fill: '#fbbf24', strokeWidth: 2, r: 7 }}
               />
             </LineChart>
           </ResponsiveContainer>
+        </CardContent>
+        
+        {/* Mobile-friendly summary cards below chart */}
+        <CardContent className="pt-0">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+            {projections.slice(0, 6).map(month => (
+              <Card key={month.month} className="p-2 bg-elec-dark/50 border-elec-yellow/10">
+                <p className="text-xs text-elec-light/60 text-center">{month.monthName}</p>
+                <p className={`text-sm font-bold text-center ${
+                  month.cumulativeBalance >= 0 ? 'text-green-400' : 'text-red-400'
+                }`}>
+                  £{(month.cumulativeBalance / 1000).toFixed(1)}k
+                </p>
+              </Card>
+            ))}
+          </div>
         </CardContent>
       </Card>
 
       {/* Monthly Net Flow Waterfall */}
       <Card className="border-elec-yellow/20 bg-elec-card">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-elec-light flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-elec-yellow" />
             Monthly Net Cash Flow
           </CardTitle>
         </CardHeader>
-        <CardContent className="h-64">
+        <CardContent className="h-72 sm:h-64">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={waterfallData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+            <BarChart data={waterfallData} margin={{ top: 20, right: 10, left: 0, bottom: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
               <XAxis 
                 dataKey="month" 
-                stroke="#9ca3af"
-                fontSize={12}
+                stroke="rgba(255,255,255,0.8)"
+                fontSize={11}
+                angle={-45}
+                textAnchor="end"
+                height={80}
               />
               <YAxis 
-                stroke="#9ca3af"
-                fontSize={12}
+                stroke="rgba(255,255,255,0.8)"
+                fontSize={11}
                 tickFormatter={(value) => `£${(value / 1000).toFixed(0)}k`}
               />
               <Tooltip 
                 contentStyle={{ 
-                  backgroundColor: '#1f2937', 
-                  border: '1px solid #374151',
+                  backgroundColor: 'hsl(var(--elec-card))', 
+                  border: '1px solid rgba(247, 209, 84, 0.3)',
                   borderRadius: '8px',
-                  color: '#fff'
+                  color: 'hsl(var(--elec-light))'
                 }}
-                formatter={(value: number) => [`£${value.toFixed(0)}`, 'Net Flow']}
+                formatter={(value: number) => [`£${value.toLocaleString(undefined, { maximumFractionDigits: 0 })}`, 'Net Flow']}
               />
               <Bar 
                 dataKey="value" 
                 fill="#10b981"
+                radius={[4, 4, 0, 0]}
               >
                 {waterfallData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.isPositive ? '#10b981' : '#ef4444'} />
@@ -166,7 +189,7 @@ export const CashFlowCharts = ({ projections, selectedScenario }: CashFlowCharts
       <div className="grid gap-6 md:grid-cols-2">
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-elec-light flex items-center gap-2">
               <PieChartIcon className="h-5 w-5 text-elec-yellow" />
               Annual Income Breakdown
             </CardTitle>
@@ -206,9 +229,9 @@ export const CashFlowCharts = ({ projections, selectedScenario }: CashFlowCharts
                       className="w-3 h-3 rounded-full" 
                       style={{ backgroundColor: item.color }}
                     />
-                    <span className="text-muted-foreground">{item.name}</span>
+                     <span className="text-elec-light/80">{item.name}</span>
                   </div>
-                  <span className="text-white font-medium">£{item.value.toFixed(0)}</span>
+                  <span className="text-elec-light font-medium">£{item.value.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
                 </div>
               ))}
             </div>
@@ -217,7 +240,7 @@ export const CashFlowCharts = ({ projections, selectedScenario }: CashFlowCharts
 
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-elec-light flex items-center gap-2">
               <PieChartIcon className="h-5 w-5 text-elec-yellow" />
               Annual Expense Breakdown
             </CardTitle>
@@ -257,9 +280,9 @@ export const CashFlowCharts = ({ projections, selectedScenario }: CashFlowCharts
                       className="w-3 h-3 rounded-full" 
                       style={{ backgroundColor: item.color }}
                     />
-                    <span className="text-muted-foreground">{item.name}</span>
+                     <span className="text-elec-light/80">{item.name}</span>
                   </div>
-                  <span className="text-white font-medium">£{item.value.toFixed(0)}</span>
+                  <span className="text-elec-light font-medium">£{item.value.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
                 </div>
               ))}
             </div>

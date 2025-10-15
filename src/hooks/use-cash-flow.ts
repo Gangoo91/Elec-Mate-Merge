@@ -126,8 +126,8 @@ const defaultExpenseCategories: ExpenseCategory[] = [
 
 export const useCashFlow = () => {
   const [state, setState] = useState<CashFlowState>({
-    incomeStreams: defaultIncomeStreams,
-    expenseCategories: defaultExpenseCategories,
+    incomeStreams: [],
+    expenseCategories: [],
     startingBalance: 5000,
     scenarios: defaultScenarios,
     selectedScenario: 'realistic',
@@ -139,6 +139,17 @@ export const useCashFlow = () => {
     cardFeesPercent: 1.5,
     monthlyLoanRepayments: 0,
   });
+
+  const loadTemplate = useCallback((
+    incomeStreams: Omit<IncomeStream, 'id'>[],
+    expenseCategories: Omit<ExpenseCategory, 'id'>[]
+  ) => {
+    setState(prev => ({
+      ...prev,
+      incomeStreams: incomeStreams.map((stream, idx) => ({ ...stream, id: `income-${Date.now()}-${idx}` })),
+      expenseCategories: expenseCategories.map((cat, idx) => ({ ...cat, id: `expense-${Date.now()}-${idx}` }))
+    }));
+  }, []);
 
   const updateIncomeStream = useCallback((id: string, updates: Partial<IncomeStream>) => {
     setState(prev => ({
@@ -367,6 +378,45 @@ export const useCashFlow = () => {
     };
   }, [monthlyProjections]);
 
+  const exportToCSV = useCallback(() => {
+    const headers = ['Month', 'Income', 'Expenses', 'Net Flow', 'Cumulative Balance'];
+    const rows = monthlyProjections.map(p => [
+      p.monthName,
+      p.income.toFixed(2),
+      p.expenses.toFixed(2),
+      p.netFlow.toFixed(2),
+      p.cumulativeBalance.toFixed(2)
+    ]);
+    
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.join(','))
+    ].join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `cash-flow-projection-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [monthlyProjections]);
+
+  const copySummaryToClipboard = useCallback(() => {
+    const summary = `Cash Flow Summary
+Annual Profit: £${financialMetrics.netProfit.toFixed(0)}
+Lowest Balance: £${financialMetrics.minBalance.toFixed(0)}
+Cash Runway: ${financialMetrics.cashRunway} months
+Profit Margin: ${financialMetrics.profitMargin.toFixed(1)}%
+
+Monthly Breakdown:
+${monthlyProjections.map(p => 
+  `${p.monthName}: Income £${p.income.toFixed(0)}, Expenses £${p.expenses.toFixed(0)}, Balance £${p.cumulativeBalance.toFixed(0)}`
+).join('\n')}`;
+    
+    navigator.clipboard.writeText(summary);
+  }, [monthlyProjections, financialMetrics]);
+
   return {
     state,
     monthlyProjections,
@@ -378,6 +428,9 @@ export const useCashFlow = () => {
     updateExpenseCategory,
     addExpenseCategory,
     removeExpenseCategory,
-    updateSettings
+    updateSettings,
+    loadTemplate,
+    exportToCSV,
+    copySummaryToClipboard
   };
 };

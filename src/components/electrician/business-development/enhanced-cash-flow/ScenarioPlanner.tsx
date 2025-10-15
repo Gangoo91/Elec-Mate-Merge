@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { Scenario, useCashFlow } from "@/hooks/use-cash-flow";
 import { Target, TrendingUp, TrendingDown, BarChart3, AlertTriangle } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ScenarioPlannerProps {
   scenarios: Scenario[];
@@ -38,7 +39,7 @@ export const ScenarioPlanner = ({
       netFlow: (p.income * multiplier) - p.expenses
     }));
 
-    let cumulativeBalance = 5000; // Starting balance
+    let cumulativeBalance = monthlyProjections[0]?.cumulativeBalance - monthlyProjections[0]?.netFlow || 5000;
     const updatedProjections = newProjections.map(p => {
       cumulativeBalance += p.netFlow;
       return { ...p, cumulativeBalance };
@@ -52,9 +53,9 @@ export const ScenarioPlanner = ({
     const profitChange = newNetProfit - financialMetrics.netProfit;
     
     if (multiplier > 1) {
-      impactDescription = `${changePercent}% income increase would add £${profitChange.toFixed(0)} annual profit`;
+      impactDescription = `${changePercent}% income increase would add £${profitChange.toLocaleString(undefined, { maximumFractionDigits: 0 })} annual profit`;
     } else if (multiplier < 1) {
-      impactDescription = `${Math.abs(Number(changePercent))}% income decrease would reduce annual profit by £${Math.abs(profitChange).toFixed(0)}`;
+      impactDescription = `${Math.abs(Number(changePercent))}% income decrease would reduce annual profit by £${Math.abs(profitChange).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
     } else {
       impactDescription = "No change from current projections";
     }
@@ -65,6 +66,11 @@ export const ScenarioPlanner = ({
       impactDescription
     });
   };
+
+  // Run initial analysis on mount
+  useEffect(() => {
+    runWhatIfAnalysis();
+  }, [monthlyProjections]);
 
   const getScenarioIcon = (scenarioId: string) => {
     switch (scenarioId) {
@@ -123,10 +129,10 @@ export const ScenarioPlanner = ({
         <TabsContent value="scenarios" className="space-y-4">
           <Card className="border-elec-yellow/20 bg-elec-card">
             <CardHeader>
-              <CardTitle className="text-white">Scenario Planning</CardTitle>
+              <CardTitle className="text-elec-light">Scenario Planning</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-muted-foreground text-sm">
+              <p className="text-elec-light/80 text-sm">
                 Select different scenarios to see how they impact your cash flow projections.
               </p>
               
@@ -145,8 +151,8 @@ export const ScenarioPlanner = ({
                       <div className="flex items-center gap-3">
                         {getScenarioIcon(scenario.id)}
                         <div>
-                          <h4 className="font-medium text-white">{scenario.name}</h4>
-                          <p className="text-sm text-muted-foreground">{scenario.description}</p>
+                          <h4 className="font-medium text-elec-light">{scenario.name}</h4>
+                          <p className="text-sm text-elec-light/70">{scenario.description}</p>
                         </div>
                       </div>
                       <div className="text-right">
@@ -168,17 +174,17 @@ export const ScenarioPlanner = ({
         <TabsContent value="comparison" className="space-y-4">
           <Card className="border-elec-yellow/20 bg-elec-card">
             <CardHeader>
-              <CardTitle className="text-white">Scenario Comparison</CardTitle>
+              <CardTitle className="text-elec-light">Scenario Comparison</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-secondary/40">
-                      <th className="text-left py-2 text-white">Scenario</th>
-                      <th className="text-right py-2 text-white">Income</th>
-                      <th className="text-right py-2 text-white">Profit</th>
-                      <th className="text-right py-2 text-white">Margin</th>
+                      <th className="text-left py-2 text-elec-light">Scenario</th>
+                      <th className="text-right py-2 text-elec-light">Income</th>
+                      <th className="text-right py-2 text-elec-light">Profit</th>
+                      <th className="text-right py-2 text-elec-light">Margin</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -192,7 +198,7 @@ export const ScenarioPlanner = ({
                         <td className="py-3">
                           <div className="flex items-center gap-2">
                             {getScenarioIcon(scenario.id)}
-                            <span className="text-white font-medium">{scenario.name}</span>
+                            <span className="text-elec-light font-medium">{scenario.name}</span>
                             {selectedScenario === scenario.id && (
                               <Badge variant="outline">Current</Badge>
                             )}
@@ -222,82 +228,73 @@ export const ScenarioPlanner = ({
         </TabsContent>
 
         <TabsContent value="whatif" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-card">
+          <Card className="border-blue-400/30 bg-blue-500/5">
             <CardHeader>
-              <CardTitle className="text-white">What-If Analysis</CardTitle>
+              <CardTitle className="text-elec-light">What-If Analysis</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <label className="text-white font-medium mb-3 block">
-                  Income Adjustment: {(whatIfMultiplier[0] * 100).toFixed(0)}%
+                <label className="text-elec-light font-medium mb-3 block">
+                  If my income changes by: <span className="text-elec-yellow font-bold">{((whatIfMultiplier[0] - 1) * 100).toFixed(0)}%</span>
                 </label>
                 <Slider
                   value={whatIfMultiplier}
-                  onValueChange={setWhatIfMultiplier}
+                  onValueChange={(value) => {
+                    setWhatIfMultiplier(value);
+                    runWhatIfAnalysis();
+                  }}
                   min={0.5}
                   max={2.0}
-                  step={0.1}
+                  step={0.05}
                   className="w-full"
                 />
-                <div className="flex justify-between text-sm text-muted-foreground mt-2">
-                  <span>50% (Crisis)</span>
-                  <span>100% (Current)</span>
-                  <span>200% (Boom)</span>
+                <div className="flex justify-between text-sm text-elec-light/70 mt-2">
+                  <span>-50% (Crisis)</span>
+                  <span>0% (Current)</span>
+                  <span>+100% (Boom)</span>
                 </div>
               </div>
 
-              <Button 
-                onClick={runWhatIfAnalysis}
-                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              >
-                Run Analysis
-              </Button>
-
               {whatIfAnalysis && (
-                <div className="space-y-4 p-4 rounded-lg bg-secondary/20 border border-secondary/40">
-                  <h4 className="font-medium text-white">Analysis Results</h4>
+                <div className="space-y-4 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
+                  <h4 className="font-medium text-elec-light">Live Results</h4>
                   
-                  <div className="grid gap-3">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Impact:</span>
-                      <span className="text-white">{whatIfAnalysis.impactDescription}</span>
-                    </div>
-                    
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">New Annual Profit:</span>
-                      <span className={`font-medium ${
+                  {/* Live results grid */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-lg bg-elec-dark/50">
+                      <p className="text-xs text-elec-light/70">New Annual Profit</p>
+                      <p className={`text-xl font-bold ${
                         whatIfAnalysis.newNetProfit >= 0 ? 'text-green-400' : 'text-red-400'
                       }`}>
-                        £{whatIfAnalysis.newNetProfit.toFixed(0)}
-                      </span>
+                        £{whatIfAnalysis.newNetProfit.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      </p>
+                      <p className="text-xs text-elec-light/60 mt-1">
+                        {whatIfAnalysis.newNetProfit - financialMetrics.netProfit >= 0 ? '+' : ''}
+                        £{Math.abs(whatIfAnalysis.newNetProfit - financialMetrics.netProfit).toLocaleString(undefined, { maximumFractionDigits: 0 })} change
+                      </p>
                     </div>
                     
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Minimum Cash Position:</span>
-                      <span className={`font-medium ${
+                    <div className="p-3 rounded-lg bg-elec-dark/50">
+                      <p className="text-xs text-elec-light/70">Lowest Balance</p>
+                      <p className={`text-xl font-bold ${
                         whatIfAnalysis.newMinBalance >= 0 ? 'text-green-400' : 'text-red-400'
                       }`}>
-                        £{whatIfAnalysis.newMinBalance.toFixed(0)}
-                      </span>
-                    </div>
-                    
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Profit Change:</span>
-                      <span className={`font-medium ${
-                        whatIfAnalysis.newNetProfit - financialMetrics.netProfit >= 0 ? 'text-green-400' : 'text-red-400'
-                      }`}>
-                        {whatIfAnalysis.newNetProfit - financialMetrics.netProfit >= 0 ? '+' : ''}
-                        £{(whatIfAnalysis.newNetProfit - financialMetrics.netProfit).toFixed(0)}
-                      </span>
+                        £{whatIfAnalysis.newMinBalance.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                      </p>
+                      <p className="text-xs text-elec-light/60 mt-1">
+                        {whatIfAnalysis.newMinBalance >= 0 ? 'Safe' : 'Negative'}
+                      </p>
                     </div>
                   </div>
 
                   {whatIfAnalysis.newMinBalance < 0 && (
-                    <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/30">
-                      <p className="text-destructive text-sm">
-                        ⚠️ This scenario would result in negative cash flow. Consider building reserves or securing credit facilities.
-                      </p>
-                    </div>
+                    <Alert variant="destructive">
+                      <AlertTriangle className="h-4 w-4" />
+                      <AlertDescription>
+                        At {((whatIfMultiplier[0] - 1) * 100).toFixed(0)}% income change, you'll go negative. 
+                        Consider reducing expenses by £{Math.abs(whatIfAnalysis.newMinBalance).toLocaleString(undefined, { maximumFractionDigits: 0 })}.
+                      </AlertDescription>
+                    </Alert>
                   )}
                 </div>
               )}

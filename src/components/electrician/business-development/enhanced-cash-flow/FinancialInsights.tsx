@@ -121,7 +121,7 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
       {/* Financial Health Dashboard */}
       <Card className="border-elec-yellow/20 bg-elec-card">
         <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
+          <CardTitle className="text-elec-light flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
             Financial Health Dashboard
           </CardTitle>
@@ -132,12 +132,12 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
             <div className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
               <div className="flex items-center gap-2 mb-2">
                 <DollarSign className="h-4 w-4 text-green-400" />
-                <span className="text-sm text-muted-foreground">Profit Margin</span>
+                <span className="text-sm text-elec-light/70">Profit Margin</span>
               </div>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-2xl font-bold text-elec-light">
                 {financialMetrics.profitMargin.toFixed(1)}%
               </div>
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-elec-light/60">
                 Industry benchmark: 15%
               </div>
             </div>
@@ -145,12 +145,12 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
             <div className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="h-4 w-4 text-blue-400" />
-                <span className="text-sm text-muted-foreground">Cash Runway</span>
+                <span className="text-sm text-elec-light/70">Cash Runway</span>
               </div>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-2xl font-bold text-elec-light">
                 {financialMetrics.cashRunway} months
               </div>
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-elec-light/60">
                 Target: 6+ months
               </div>
             </div>
@@ -158,9 +158,9 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
             <div className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
               <div className="flex items-center gap-2 mb-2">
                 <PiggyBank className="h-4 w-4 text-yellow-400" />
-                <span className="text-sm text-muted-foreground">Emergency Fund</span>
+                <span className="text-sm text-elec-light/70">Emergency Fund</span>
               </div>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-2xl font-bold text-elec-light">
                 {emergencyFundProgress.toFixed(0)}%
               </div>
               <Progress value={emergencyFundProgress} className="mt-2" />
@@ -169,12 +169,12 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
             <div className="p-4 rounded-lg bg-secondary/20 border border-secondary/40">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="h-4 w-4 text-purple-400" />
-                <span className="text-sm text-muted-foreground">Break-Even</span>
+                <span className="text-sm text-elec-light/70">Break-Even</span>
               </div>
-              <div className="text-2xl font-bold text-white">
+              <div className="text-2xl font-bold text-elec-light">
                 Month {financialMetrics.breakEvenMonth || 'N/A'}
               </div>
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-elec-light/60">
                 {financialMetrics.breakEvenMonth <= 6 ? 'Healthy' : 'Needs attention'}
               </div>
             </div>
@@ -182,17 +182,17 @@ export const FinancialInsights = ({ insights, financialMetrics, emergencyFundTar
 
           {/* Industry-Specific Metrics */}
           <div>
-            <h4 className="text-white font-medium mb-3">Electrician Business Metrics</h4>
+            <h4 className="text-elec-light font-medium mb-3">Electrician Business Metrics</h4>
             <div className="grid gap-3 md:grid-cols-2">
               {electricianSpecificMetrics.map((metric, index) => (
                 <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-secondary/10 border border-secondary/20">
                   {metric.icon}
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-white font-medium">{metric.title}</span>
+                      <span className="text-elec-light font-medium">{metric.title}</span>
                       <span className="text-elec-yellow font-bold">{metric.value}</span>
                     </div>
-                    <p className="text-xs text-muted-foreground">{metric.description}</p>
+                    <p className="text-xs text-elec-light/70">{metric.description}</p>
                   </div>
                 </div>
               ))}

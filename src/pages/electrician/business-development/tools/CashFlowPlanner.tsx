@@ -1,17 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import BackButton from "@/components/common/BackButton";
 import { useToast } from "@/hooks/use-toast";
-import { TrendingUp, Calculator, BarChart3, Target, Settings, Plus, Minus } from "lucide-react";
+import { TrendingUp, Download, FileSpreadsheet, Copy, Plus, Minus, ChevronDown, Info } from "lucide-react";
 import { useCashFlow } from "@/hooks/use-cash-flow";
 import { CashFlowCharts } from "@/components/electrician/business-development/enhanced-cash-flow/CashFlowCharts";
 import { ScenarioPlanner } from "@/components/electrician/business-development/enhanced-cash-flow/ScenarioPlanner";
 import { FinancialInsights } from "@/components/electrician/business-development/enhanced-cash-flow/FinancialInsights";
+import { FinancialHealthSummary } from "@/components/electrician/business-development/enhanced-cash-flow/FinancialHealthSummary";
+import { QuickStartTemplates } from "@/components/electrician/business-development/enhanced-cash-flow/QuickStartTemplates";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import WhyThisMatters from "@/components/common/WhyThisMatters";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
@@ -29,10 +33,16 @@ const CashFlowPlanner = () => {
     updateExpenseCategory,
     addExpenseCategory,
     removeExpenseCategory,
-    updateSettings
+    updateSettings,
+    loadTemplate,
+    exportToCSV,
+    copySummaryToClipboard
   } = useCashFlow();
 
-  const [activeTab, setActiveTab] = useState("setup");
+  const [showTemplates, setShowTemplates] = useState(state.incomeStreams.length === 0);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['summary']);
+
+  
 
   const [showAddIncome, setShowAddIncome] = useState(false);
   const [showAddExpense, setShowAddExpense] = useState(false);
@@ -89,6 +99,36 @@ const CashFlowPlanner = () => {
     }
   };
 
+  const handleLoadTemplate = (incomeStreams: any[], expenseCategories: any[]) => {
+    loadTemplate(incomeStreams, expenseCategories);
+    setShowTemplates(false);
+    toast({
+      title: "Template Loaded",
+      description: "Your cash flow template has been loaded. Review and adjust as needed.",
+      variant: "success"
+    });
+  };
+
+  const handleExportCSV = () => {
+    exportToCSV();
+    toast({
+      title: "Exported",
+      description: "Cash flow data exported to CSV",
+      variant: "success"
+    });
+  };
+
+  const handleCopySummary = () => {
+    copySummaryToClipboard();
+    toast({
+      title: "Copied",
+      description: "Cash flow summary copied to clipboard",
+      variant: "success"
+    });
+  };
+
+  const monthWithNegativeBalance = monthlyProjections.findIndex(p => p.cumulativeBalance < 0) + 1;
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <Helmet>
@@ -97,12 +137,12 @@ const CashFlowPlanner = () => {
         <link rel="canonical" href="/electrician/business-development/tools/cash-flow" />
       </Helmet>
       <div className="flex flex-col items-center justify-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
+        <h1 className="text-3xl font-bold tracking-tight text-elec-light mb-4 flex items-center gap-3">
           <TrendingUp className="h-8 w-8 text-elec-yellow" />
           Advanced Cash Flow Planner
         </h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-6">
-          Professional cash flow forecasting with scenario planning, industry-specific insights, and BS7671 compliance tracking.
+        <p className="text-elec-light/80 text-center max-w-2xl mb-6">
+          Professional cash flow forecasting with scenario planning, industry-specific insights, and real-time what-if analysis.
         </p>
         <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
       </div>
@@ -115,81 +155,58 @@ const CashFlowPlanner = () => {
         ]}
       />
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        {/* Mobile Dropdown */}
-        <div className="sm:hidden">
-          <Select value={activeTab} onValueChange={setActiveTab}>
-            <SelectTrigger className="w-full bg-elec-card border-elec-yellow/20">
-              <div className="flex items-center gap-2">
-                {activeTab === "setup" && <Settings className="h-4 w-4" />}
-                {activeTab === "projections" && <Calculator className="h-4 w-4" />}
-                {activeTab === "charts" && <BarChart3 className="h-4 w-4" />}
-                {activeTab === "scenarios" && <Target className="h-4 w-4" />}
-                {activeTab === "insights" && <TrendingUp className="h-4 w-4" />}
-                <SelectValue placeholder="Select tab" />
-              </div>
-            </SelectTrigger>
-            <SelectContent className="bg-elec-card border-elec-yellow/20">
-              <SelectItem value="setup">
-                <div className="flex items-center gap-2">
-                  <Settings className="h-4 w-4" />
-                  Setup
-                </div>
-              </SelectItem>
-              <SelectItem value="projections">
-                <div className="flex items-center gap-2">
-                  <Calculator className="h-4 w-4" />
-                  Projections
-                </div>
-              </SelectItem>
-              <SelectItem value="charts">
-                <div className="flex items-center gap-2">
-                  <BarChart3 className="h-4 w-4" />
-                  Charts
-                </div>
-              </SelectItem>
-              <SelectItem value="scenarios">
-                <div className="flex items-center gap-2">
-                  <Target className="h-4 w-4" />
-                  Scenarios
-                </div>
-              </SelectItem>
-              <SelectItem value="insights">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4" />
-                  Insights
-                </div>
-              </SelectItem>
-            </SelectContent>
-          </Select>
+      {/* Quick Start Templates */}
+      {showTemplates && (
+        <div className="mb-6">
+          <QuickStartTemplates onLoadTemplate={handleLoadTemplate} />
         </div>
+      )}
 
-        {/* Desktop Tabs */}
-        <TabsList className="hidden sm:grid w-full grid-cols-3 lg:grid-cols-5 h-auto">
-          <TabsTrigger value="setup" className="flex items-center gap-2 py-3 px-2">
-            <Settings className="h-4 w-4" />
-            Setup
-          </TabsTrigger>
-          <TabsTrigger value="projections" className="flex items-center gap-2 py-3 px-2">
-            <Calculator className="h-4 w-4" />
-            Projections
-          </TabsTrigger>
-          <TabsTrigger value="charts" className="flex items-center gap-2 py-3 px-2">
-            <BarChart3 className="h-4 w-4" />
-            Charts
-          </TabsTrigger>
-          <TabsTrigger value="scenarios" className="flex items-center gap-2 py-3 px-2">
-            <Target className="h-4 w-4" />
-            Scenarios
-          </TabsTrigger>
-          <TabsTrigger value="insights" className="flex items-center gap-2 py-3 px-2">
-            <TrendingUp className="h-4 w-4" />
-            Insights
-          </TabsTrigger>
-        </TabsList>
+      {/* Export Options */}
+      <div className="flex justify-end mb-4">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="border-elec-yellow/30 text-elec-light">
+              <Download className="h-4 w-4 mr-2" />
+              Export
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-elec-card border-elec-yellow/30">
+            <DropdownMenuItem onClick={handleExportCSV} className="text-elec-light">
+              <FileSpreadsheet className="h-4 w-4 mr-2" />
+              Export to CSV
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleCopySummary} className="text-elec-light">
+              <Copy className="h-4 w-4 mr-2" />
+              Copy Summary
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
 
-        <TabsContent value="setup" className="space-y-6">
+      {/* Financial Health Summary - Always Visible */}
+      {state.incomeStreams.length > 0 && (
+        <div className="mb-6">
+          <FinancialHealthSummary
+            financialMetrics={financialMetrics}
+            emergencyFundTarget={state.emergencyFundTarget}
+            monthWithNegativeBalance={monthWithNegativeBalance > 0 ? monthWithNegativeBalance : undefined}
+          />
+        </div>
+      )}
+
+      {/* Accordion-based Layout */}
+      <Accordion type="multiple" value={expandedSections} onValueChange={setExpandedSections} className="space-y-4">
           <div className="grid gap-6 lg:grid-cols-2">
+        {/* Setup Section */}
+        <AccordionItem value="setup" className="border-elec-yellow/20 bg-elec-card rounded-lg px-6">
+          <AccordionTrigger className="text-elec-light hover:text-elec-yellow">
+            <div className="flex items-center gap-2">
+              <Plus className="h-5 w-5" />
+              Setup Your Business
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="space-y-6 pt-4">
             {/* Income Streams */}
             <Card className="border-elec-yellow/20 bg-elec-card">
               <CardHeader>
@@ -554,9 +571,65 @@ const CashFlowPlanner = () => {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+          </AccordionContent>
+        </AccordionItem>
 
-        <TabsContent value="projections" className="space-y-6">
+        {/* Charts Section */}
+        <AccordionItem value="charts" className="border-elec-yellow/20 bg-elec-card rounded-lg px-6">
+          <AccordionTrigger className="text-elec-light hover:text-elec-yellow">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5" />
+              Charts & Visualizations
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pt-4">
+            <CashFlowCharts 
+              projections={monthlyProjections} 
+              selectedScenario={state.scenarios.find(s => s.id === state.selectedScenario)?.name || 'Realistic'}
+            />
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Scenarios Section */}
+        <AccordionItem value="scenarios" className="border-elec-yellow/20 bg-elec-card rounded-lg px-6">
+          <AccordionTrigger className="text-elec-light hover:text-elec-yellow">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5" />
+              Scenarios & What-If
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pt-4">
+            <ScenarioPlanner
+              scenarios={state.scenarios}
+              selectedScenario={state.selectedScenario}
+              onScenarioChange={(scenarioId) => updateSettings({ selectedScenario: scenarioId })}
+              monthlyProjections={monthlyProjections}
+              financialMetrics={financialMetrics}
+            />
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Insights Section */}
+        <AccordionItem value="insights" className="border-elec-yellow/20 bg-elec-card rounded-lg px-6">
+          <AccordionTrigger className="text-elec-light hover:text-elec-yellow">
+            <div className="flex items-center gap-2">
+              <Info className="h-5 w-5" />
+              Insights & Recommendations
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pt-4">
+            <FinancialInsights
+              insights={insights}
+              financialMetrics={financialMetrics}
+              emergencyFundTarget={state.emergencyFundTarget}
+            />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Monthly Projections - Standalone Card */}
+      {state.incomeStreams.length > 0 && (
+        <div className="mt-6">
           <Card className="border-elec-yellow/20 bg-elec-card">
             <CardHeader>
               <CardTitle className="text-white flex items-center justify-between">
@@ -646,33 +719,8 @@ const CashFlowPlanner = () => {
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="charts">
-          <CashFlowCharts 
-            projections={monthlyProjections} 
-            selectedScenario={state.scenarios.find(s => s.id === state.selectedScenario)?.name || 'Realistic'}
-          />
-        </TabsContent>
-
-        <TabsContent value="scenarios">
-          <ScenarioPlanner
-            scenarios={state.scenarios}
-            selectedScenario={state.selectedScenario}
-            onScenarioChange={(scenarioId) => updateSettings({ selectedScenario: scenarioId })}
-            monthlyProjections={monthlyProjections}
-            financialMetrics={financialMetrics}
-          />
-        </TabsContent>
-
-        <TabsContent value="insights">
-          <FinancialInsights
-            insights={insights}
-            financialMetrics={financialMetrics}
-            emergencyFundTarget={state.emergencyFundTarget}
-          />
-        </TabsContent>
-      </Tabs>
+        </div>
+      )}
     </div>
   );
 };
