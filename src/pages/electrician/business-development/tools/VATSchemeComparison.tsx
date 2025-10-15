@@ -4,7 +4,7 @@ import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import InfoBox from "@/components/common/InfoBox";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { Percent, TrendingDown, Receipt, Calculator, CheckCircle2, AlertCircle } from "lucide-react";
+import { Percent, TrendingDown, PoundSterling, Calculator, CheckCircle2, AlertCircle } from "lucide-react";
 
 const currency = (n: number) => `£${n.toFixed(2)}`;
 
@@ -36,7 +36,7 @@ const VATSchemeComparison: React.FC = () => {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 max-w-4xl">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 py-5 sm:py-7 max-w-4xl">
         <Helmet>
           <title>VAT Scheme Comparison for Electricians UK</title>
           <meta name="description" content="Compare Flat Rate vs Standard VAT schemes for UK electricians to see net take-home impact." />
@@ -50,7 +50,7 @@ const VATSchemeComparison: React.FC = () => {
 
         <BackButton customUrl="/electrician/business-development/tools" />
 
-        <section className="mt-4 sm:mt-6 space-y-4 sm:space-y-6">
+        <section className="mt-5 sm:mt-7 space-y-5 sm:space-y-7">
           <InfoBox
             title="Why this matters"
             points={[
@@ -64,18 +64,19 @@ const VATSchemeComparison: React.FC = () => {
             <CardHeader>
               <CardTitle className="text-elec-light text-lg sm:text-xl">Business Details</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4 sm:space-y-5">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <MobileInputWrapper
-                  label="Annual Revenue (ex VAT)"
-                  type="number"
-                  inputMode="numeric"
-                  value={annualRevenue}
-                  onChange={(val) => setAnnualRevenue(Number(val) || 0)}
-                  icon={<Receipt className="w-5 h-5" />}
-                  unit="£"
-                  hint="Typical UK electrician: £40k-£150k. VAT threshold: £90,000"
-                />
+            <CardContent className="space-y-5 sm:space-y-6">
+              <div className="bg-elec-grey/30 p-4 rounded-xl space-y-4">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <MobileInputWrapper
+                    label="Annual Revenue (ex VAT)"
+                    type="number"
+                    inputMode="numeric"
+                    value={annualRevenue}
+                    onChange={(val) => setAnnualRevenue(Number(val) || 0)}
+                    icon={<PoundSterling className="w-5 h-5" />}
+                    unit="£"
+                    hint="Typical UK electrician: £40k-£150k. VAT threshold: £90,000"
+                  />
                 
                 <MobileInputWrapper
                   label="Labour Share"
@@ -87,9 +88,11 @@ const VATSchemeComparison: React.FC = () => {
                   unit="%"
                   hint="Domestic/rewires: 60-80%. Commercial with materials: 30-50%"
                 />
+                </div>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="bg-elec-grey/30 p-4 rounded-xl space-y-4">
+                <div className="grid gap-4 sm:grid-cols-2">
                 <MobileInputWrapper
                   label="Flat Rate"
                   type="number"
@@ -113,9 +116,10 @@ const VATSchemeComparison: React.FC = () => {
                   unit="%"
                   hint="20% standard, 5% reduced for energy-saving installations"
                 />
+                </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-3 bg-elec-grey/30 p-4 rounded-xl">
                 <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
                   <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
                   VAT Registered?
@@ -152,15 +156,15 @@ const VATSchemeComparison: React.FC = () => {
 
           {vatRegistered && (
             <>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-4 sm:gap-5 sm:grid-cols-2">
                 <Card className="bg-elec-card border-elec-yellow/20">
-                  <CardHeader className="pb-3">
+                  <CardHeader className="pb-3 px-4 sm:px-6">
                     <CardTitle className="text-elec-light text-base sm:text-lg flex items-center gap-2">
-                      <Receipt className="w-5 h-5 text-elec-yellow" />
+                      <PoundSterling className="w-5 h-5 text-elec-yellow" />
                       Standard VAT Scheme
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-3">
+                  <CardContent className="space-y-3 px-4 sm:px-6">
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between text-elec-light/70">
                         <span>Output VAT charged</span>
@@ -180,13 +184,13 @@ const VATSchemeComparison: React.FC = () => {
                 </Card>
 
                 <Card className="bg-elec-card border-elec-yellow/20">
-                  <CardHeader className="pb-3">
+                  <CardHeader className="pb-3 px-4 sm:px-6">
                     <CardTitle className="text-elec-light text-base sm:text-lg flex items-center gap-2">
                       <Calculator className="w-5 h-5 text-elec-yellow" />
                       Flat Rate VAT Scheme
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-3">
+                  <CardContent className="space-y-3 px-4 sm:px-6">
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between text-elec-light/70">
                         <span>VAT-inclusive turnover</span>
@@ -207,7 +211,7 @@ const VATSchemeComparison: React.FC = () => {
               </div>
 
               <Card className={`border-2 ${diff > 0 ? "bg-red-950/20 border-red-500/30" : "bg-green-950/20 border-green-500/30"}`}>
-                <CardHeader>
+                <CardHeader className="px-4 sm:px-6">
                   <CardTitle className="text-elec-light text-lg sm:text-xl flex items-center gap-2">
                     {diff > 0 ? (
                       <AlertCircle className="w-6 h-6 text-red-400" />
@@ -217,17 +221,17 @@ const VATSchemeComparison: React.FC = () => {
                     Recommendation
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between p-4 rounded-lg bg-card">
-                    <div>
-                      <p className="text-sm text-elec-light/70">Annual difference</p>
-                      <p className={`text-2xl sm:text-3xl font-bold ${diff > 0 ? "text-red-400" : "text-green-400"}`}>
+                <CardContent className="space-y-4 px-4 sm:px-6">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-lg bg-card">
+                    <div className="flex-1">
+                      <p className="text-xs sm:text-sm text-elec-light/70 mb-1">Annual difference</p>
+                      <p className={`text-3xl sm:text-4xl font-bold ${diff > 0 ? "text-red-400" : "text-green-400"}`}>
                         {diff > 0 ? "+" : ""}{currency(diff)}
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm text-elec-light/70">Better choice</p>
-                      <p className="text-xl font-semibold text-elec-yellow">
+                    <div className="text-left sm:text-right">
+                      <p className="text-xs sm:text-sm text-elec-light/70 mb-1">Better choice</p>
+                      <p className="text-xl sm:text-2xl font-semibold text-elec-yellow">
                         {diff > 0 ? "Standard VAT" : "Flat Rate VAT"}
                       </p>
                     </div>
