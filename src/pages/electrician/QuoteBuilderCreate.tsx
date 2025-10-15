@@ -30,7 +30,7 @@ const QuoteBuilderCreate = () => {
       {/* Header */}
       <header className="relative bg-card border-b">
         <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-        <div className="relative px-3 sm:px-4 md:px-6 py-4 sm:py-6 space-y-3 sm:space-y-4">
+        <div className="relative px-4 py-6 space-y-4">
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center gap-2 text-sm text-muted-foreground">
             <button 
@@ -73,7 +73,7 @@ const QuoteBuilderCreate = () => {
       </header>
 
       {/* Quote Wizard Content */}
-      <div className="px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
+      <div className="px-4 md:px-6 py-6 md:py-8">
         <QuoteWizard onQuoteGenerated={handleQuoteGenerated} />
       </div>
     </div>

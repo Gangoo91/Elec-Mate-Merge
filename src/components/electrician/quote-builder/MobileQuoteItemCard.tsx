@@ -31,9 +31,9 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
   };
 
   return (
-    <Card className="p-3 sm:p-4 border-elec-yellow/20 bg-card/50 space-y-3">
+    <Card className="p-4 border-elec-yellow/20 bg-card/50 space-y-3">
       {/* Header with category and price */}
-      <div className="flex items-start justify-between gap-2 sm:gap-3">
+      <div className="flex items-start justify-between gap-3">
         <Badge variant="outline" className={`${getCategoryColor(item.category)} flex items-center gap-1 text-xs`}>
           {getCategoryIcon(item.category)}
           {item.category}
@@ -66,12 +66,12 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
       )}
 
       {/* Action buttons */}
-      <div className="flex flex-col sm:flex-row gap-2 pt-2">
+      <div className="flex gap-2 pt-2">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => onDuplicate(item)}
-          className="w-full sm:flex-1 h-9 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
+          className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
         >
           <Copy className="h-3 w-3 mr-1" />
           Duplicate
@@ -80,7 +80,7 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
           variant="ghost"
           size="sm"
           onClick={() => onRemove(item.id)}
-          className="w-full sm:flex-1 h-9 text-xs border border-destructive/30 hover:bg-destructive/10 text-destructive"
+          className="flex-1 text-xs border border-destructive/30 hover:bg-destructive/10 text-destructive"
         >
           <Trash2 className="h-3 w-3 mr-1" />
           Remove
