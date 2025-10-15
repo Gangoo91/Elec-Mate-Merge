@@ -425,11 +425,11 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           key={quote.id}
           className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
         >
-          {/* Header section with Quote Number */}
+          {/* Header section with Quote Number and Status */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Badge variant="outline" className="text-xs">
-                {quote.quoteNumber}
+                Quote #{quote.quoteNumber}
               </Badge>
             </div>
             
