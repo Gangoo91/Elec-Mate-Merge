@@ -107,7 +107,6 @@ export const InvoiceGenerationStep = ({
         const { error: updateError } = await supabase
           .from('quotes')
           .update({
-            pdf_url: pdfUrl,
             pdf_document_id: documentId,
             pdf_generated_at: new Date().toISOString(),
             pdf_version: newVersion
@@ -119,9 +118,8 @@ export const InvoiceGenerationStep = ({
         }
       }
 
-      // Add cache busting to ensure fresh PDF
-      const cacheBustedUrl = `${pdfUrl}?t=${Date.now()}`;
-      window.open(cacheBustedUrl, '_blank');
+      // Open the fresh PDF URL directly (S3 signed URLs expire, so don't store them)
+      window.open(pdfUrl, '_blank');
 
       toast({
         title: 'Invoice PDF Ready',
