@@ -128,7 +128,7 @@ serve(async (req) => {
     if (messages && messages.length > 0) {
       contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
-      ).slice(-5).join('\n');
+      ).join('\n');
     }
 
     const systemPrompt = `You are an expert electrical project manager applying PRINCE2/APM methodology.
@@ -245,7 +245,7 @@ Include phases, resources, compliance requirements, and risk management.`;
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
     const aiResult = await callAI(LOVABLE_API_KEY!, {
-      model: 'google/gemini-2.5-flash',
+      model: 'openai/gpt-5-mini',
       systemPrompt,
       userPrompt,
       maxTokens: 2000,
