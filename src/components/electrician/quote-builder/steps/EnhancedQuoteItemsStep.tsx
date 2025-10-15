@@ -572,7 +572,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                             inputMode="decimal"
                             value={item.unitPrice}
                             onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
-                            className="w-24 text-right h-10"
+                            className="w-24 text-left h-10"
                             min="0"
                             step="0.01"
                             aria-label="Unit price"
