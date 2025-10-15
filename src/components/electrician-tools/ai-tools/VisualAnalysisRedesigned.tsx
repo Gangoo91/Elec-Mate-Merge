@@ -340,33 +340,78 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         throw new Error('Analysis cancelled');
       }
       
-      // Create a promise that rejects when aborted
-      const analyzeWithAbort = new Promise<any>((resolve, reject) => {
-        if (abortControllerRef.current) {
-          abortControllerRef.current.signal.addEventListener('abort', () => {
-            reject(new Error('Analysis cancelled'));
-          });
-        }
-        
-        supabase.functions.invoke('visual-analysis', {
-          body: { 
-            primary_image: primaryImageUrl,
-            additional_images: additionalImageUrls,
-            user_context: userContext.trim() || undefined,
-            analysis_settings: {
-              mode: selectedMode || 'fault_diagnosis',
-              confidence_threshold: 0.75,
-              enable_bounding_boxes: true,
-              focus_areas: getFocusAreasForMode(selectedMode || 'fault_diagnosis'),
-              remove_background: false,
-              bs7671_compliance: true,
-              fast_mode: fastMode
-            }
+      let data, error;
+      
+      // Route to proper backend based on mode
+      if (selectedMode === 'wiring_instruction') {
+        // Use wiring-diagram-generator-rag for comprehensive BS 7671 schematics
+        const analyzeWithAbort = new Promise<any>((resolve, reject) => {
+          if (abortControllerRef.current) {
+            abortControllerRef.current.signal.addEventListener('abort', () => {
+              reject(new Error('Analysis cancelled'));
+            });
           }
-        }).then(resolve).catch(reject);
-      });
-
-      const { data, error } = await analyzeWithAbort;
+          
+          supabase.functions.invoke('wiring-diagram-generator-rag', {
+            body: {
+              component_type: userContext.trim() || 'electrical component',
+              circuit_params: {
+                cableSize: 2.5,
+                cableType: '6242Y Twin & Earth',
+                protectionDevice: '32A MCB Type B',
+                rcdRequired: true,
+                loadPower: 3000,
+                voltage: 230
+              },
+              installation_context: userContext.trim() || 'Standard UK domestic installation. Analyse the uploaded image to determine specific component requirements and generate appropriate wiring schematic.',
+              component_image_url: primaryImageUrl
+            }
+          }).then(resolve).catch(reject);
+        });
+        
+        const result = await analyzeWithAbort;
+        data = result.data;
+        error = result.error;
+        
+        // Transform response to expected format
+        if (!error && data) {
+          data = {
+            analysis: {
+              wiring_schematic: data
+            }
+          };
+        }
+      } else {
+        // Use visual-analysis for other modes
+        const analyzeWithAbort = new Promise<any>((resolve, reject) => {
+          if (abortControllerRef.current) {
+            abortControllerRef.current.signal.addEventListener('abort', () => {
+              reject(new Error('Analysis cancelled'));
+            });
+          }
+          
+          supabase.functions.invoke('visual-analysis', {
+            body: { 
+              primary_image: primaryImageUrl,
+              additional_images: additionalImageUrls,
+              user_context: userContext.trim() || undefined,
+              analysis_settings: {
+                mode: selectedMode || 'fault_diagnosis',
+                confidence_threshold: 0.75,
+                enable_bounding_boxes: true,
+                focus_areas: getFocusAreasForMode(selectedMode || 'fault_diagnosis'),
+                remove_background: false,
+                bs7671_compliance: true,
+                fast_mode: fastMode
+              }
+            }
+          }).then(resolve).catch(reject);
+        });
+        
+        const result = await analyzeWithAbort;
+        data = result.data;
+        error = result.error;
+      }
 
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current);
