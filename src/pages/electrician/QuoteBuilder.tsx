@@ -121,11 +121,20 @@ const QuoteBuilder = () => {
                 Create professional electrical quotes with ease
               </p>
             </div>
-            <Link to="/electrician/business" className="w-full sm:w-auto">
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto shadow-lg">
-                <ArrowLeft className="mr-2 h-4 w-4" /> Back to Business Hub
-              </Button>
-            </Link>
+            <Button 
+              variant="secondary" 
+              size="lg" 
+              className="w-full sm:w-auto shadow-lg"
+              onClick={() => {
+                if (window.history.length > 1) {
+                  navigate(-1);
+                } else {
+                  navigate('/electrician/business');
+                }
+              }}
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Business Hub
+            </Button>
           </div>
         </div>
       </header>
