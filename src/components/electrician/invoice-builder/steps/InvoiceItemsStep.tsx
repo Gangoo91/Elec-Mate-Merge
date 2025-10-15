@@ -396,12 +396,12 @@ export const InvoiceItemsStep = ({
                           value={item.unitPrice}
                           onChange={(e) => {
                             const unitPrice = parseFloat(e.target.value) || 0;
-                            onUpdateItem(item.id, { 
+                            onUpdateItem(item.id, {
                               unitPrice,
                               totalPrice: item.quantity * unitPrice 
                             });
                           }}
-                          className="w-24 text-right ml-auto h-8"
+                          className="w-24 text-left ml-auto h-8"
                           min="0"
                           step="0.01"
                         />
