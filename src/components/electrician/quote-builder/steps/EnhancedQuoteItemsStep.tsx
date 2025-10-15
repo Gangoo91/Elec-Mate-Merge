@@ -540,7 +540,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                         <Input
                           type="number"
                           inputMode="decimal"
-                          value={item.quantity}
+                          value={item.quantity === 0 ? "" : item.quantity}
                           onChange={(e) => {
                             const value = e.target.value;
                             if (value === '') {

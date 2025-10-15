@@ -285,7 +285,7 @@ export const InvoiceItemsStep = ({
                         <label className="text-xs text-muted-foreground">Quantity</label>
                         <Input
                           type="number"
-                          value={item.quantity}
+                          value={item.quantity === 0 ? "" : item.quantity}
                           onChange={(e) => {
                             const quantity = parseFloat(e.target.value) || 0;
                             onUpdateItem(item.id, { 
@@ -366,7 +366,7 @@ export const InvoiceItemsStep = ({
                         <div className="flex justify-center">
                           <Input
                             type="number"
-                            value={item.quantity}
+                            value={item.quantity === 0 ? "" : item.quantity}
                             onChange={(e) => {
                               const quantity = parseFloat(e.target.value) || 0;
                               onUpdateItem(item.id, { 
@@ -906,7 +906,7 @@ export const InvoiceItemsStep = ({
                         <label className="text-xs text-muted-foreground">Quantity</label>
                         <Input
                           type="number"
-                          value={item.quantity}
+                          value={item.quantity === 0 ? "" : item.quantity}
                           onChange={(e) => {
                             const value = e.target.value;
                             if (value === '') {
@@ -991,7 +991,7 @@ export const InvoiceItemsStep = ({
                       <TableCell className="text-center py-3">
                         <Input
                           type="number"
-                          value={item.quantity}
+                          value={item.quantity === 0 ? "" : item.quantity}
                           onChange={(e) => {
                             const value = e.target.value;
                             if (value === '') {
