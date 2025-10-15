@@ -349,10 +349,10 @@ export const InvoiceItemsStep = ({
                   <TableRow className="border-muted">
                     <TableHead className="w-[40px]">Type</TableHead>
                     <TableHead className="min-w-[300px]">Description</TableHead>
-                    <TableHead className="text-center w-[80px]">Qty</TableHead>
-                    <TableHead className="text-center w-[80px]">Unit</TableHead>
-                    <TableHead className="text-right w-[100px]">Unit Price</TableHead>
-                    <TableHead className="text-right w-[100px]">Total</TableHead>
+                    <TableHead className="text-center w-[120px]">Qty</TableHead>
+                    <TableHead className="text-center w-[100px]">Unit</TableHead>
+                    <TableHead className="text-right w-[150px]">Unit Price</TableHead>
+                    <TableHead className="text-right w-[120px]">Total</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -371,42 +371,46 @@ export const InvoiceItemsStep = ({
                           )}
                         </div>
                       </TableCell>
-                      <TableCell className="text-center py-3">
-                        <Input
-                          type="number"
-                          value={item.quantity}
-                          onChange={(e) => {
-                            const quantity = parseFloat(e.target.value) || 0;
-                            onUpdateItem(item.id, { 
-                              quantity,
-                              totalPrice: quantity * item.unitPrice 
-                            });
-                          }}
-                          className="w-full max-w-[100px] mx-auto text-center h-9"
-                          min="0.1"
-                          step="0.1"
-                          aria-label={`Quantity for ${item.description}`}
-                        />
+                      <TableCell className="py-3">
+                        <div className="flex justify-center">
+                          <Input
+                            type="number"
+                            value={item.quantity}
+                            onChange={(e) => {
+                              const quantity = parseFloat(e.target.value) || 0;
+                              onUpdateItem(item.id, { 
+                                quantity,
+                                totalPrice: quantity * item.unitPrice 
+                              });
+                            }}
+                            className="w-24 text-center h-10 text-base"
+                            min="0.1"
+                            step="0.1"
+                            aria-label={`Quantity for ${item.description}`}
+                          />
+                        </div>
                       </TableCell>
                       <TableCell className="text-center py-3">
                         <span className="text-sm text-muted-foreground">{item.unit}</span>
                       </TableCell>
                       <TableCell className="py-3">
-                        <Input
-                          type="number"
-                          value={item.unitPrice}
-                          onChange={(e) => {
-                            const unitPrice = parseFloat(e.target.value) || 0;
-                            onUpdateItem(item.id, {
-                              unitPrice,
-                              totalPrice: item.quantity * unitPrice 
-                            });
-                          }}
-                          className="w-full max-w-[120px] ml-auto text-right h-9"
-                          min="0"
-                          step="0.01"
-                          aria-label={`Unit price for ${item.description}`}
-                        />
+                        <div className="flex justify-end">
+                          <Input
+                            type="number"
+                            value={item.unitPrice}
+                            onChange={(e) => {
+                              const unitPrice = parseFloat(e.target.value) || 0;
+                              onUpdateItem(item.id, {
+                                unitPrice,
+                                totalPrice: item.quantity * unitPrice 
+                              });
+                            }}
+                            className="w-32 text-right h-10 text-base"
+                            min="0"
+                            step="0.01"
+                            aria-label={`Unit price for ${item.description}`}
+                          />
+                        </div>
                       </TableCell>
                       <TableCell className="text-right py-3">
                         <span className="font-semibold text-primary">
