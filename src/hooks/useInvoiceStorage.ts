@@ -209,14 +209,11 @@ export const useInvoiceStorage = () => {
         toast({
           title: 'Invoice saved',
           variant: 'success',
+          duration: 3000,
         });
       } catch (pdfError) {
         console.error('PDF generation error:', pdfError);
-        // Show success toast even if PDF generation fails (it's a background process)
-        toast({
-          title: 'Invoice saved',
-          variant: 'success',
-        });
+        // Silent - PDF regenerates in background
       }
 
       // 5. Return success without refetching (database trigger handles updated_at)

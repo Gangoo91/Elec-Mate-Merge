@@ -38,10 +38,6 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice }: InvoiceWizardPro
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
-      toast({
-        title: 'Progress saved',
-        description: `Moving to ${steps[currentStep + 1].title}`,
-      });
     }
   };
 

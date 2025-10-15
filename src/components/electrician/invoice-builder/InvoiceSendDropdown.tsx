@@ -80,6 +80,7 @@ export const InvoiceSendDropdown = ({
         title: 'Invoice sent',
         description: `Invoice ${invoice.invoice_number} sent to ${invoice.client?.email}`,
         variant: 'success',
+        duration: 4000,
       });
 
       // Update status to sent
@@ -141,7 +142,9 @@ export const InvoiceSendDropdown = ({
 
       toast({
         title: 'Reminder sent',
+        description: `Payment reminder sent to ${invoice.client?.email}`,
         variant: 'success',
+        duration: 3000,
       });
 
       onSuccess?.();
@@ -281,6 +284,7 @@ ${companyName}`;
       toast({
         title: 'Sent via WhatsApp',
         variant: 'success',
+        duration: 3000,
       });
 
       onSuccess?.();

@@ -111,12 +111,8 @@ const InvoicesPage = () => {
         new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
       
       if (pdfIsCurrent) {
-        // Use cached PDF - instant!
+        // Use cached PDF - instant! No toast needed.
         window.open(invoice.pdf_url, '_blank');
-        toast({
-          title: 'PDF ready',
-          description: 'Opening your invoice PDF',
-        });
         setDownloadingPdfId(null);
         return;
       }
@@ -125,6 +121,7 @@ const InvoicesPage = () => {
       toast({
         title: 'Generating PDF',
         description: `Creating latest version for invoice ${invoice.invoice_number}...`,
+        duration: 5000,
       });
 
       // Fetch company profile
@@ -168,7 +165,6 @@ const InvoicesPage = () => {
       let pdfUrl: string | undefined = pdfData?.downloadUrl;
       const documentId: string | undefined = pdfData?.documentId;
       if (!pdfUrl && documentId) {
-        toast({ title: 'Preparing PDF…', description: `Finalising invoice ${invoice.invoice_number}…` });
         pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
       }
 
@@ -192,7 +188,9 @@ const InvoicesPage = () => {
       
       toast({
         title: 'PDF downloaded',
-        description: `Invoice ${invoice.invoice_number} downloaded successfully.`,
+        description: `Invoice ${invoice.invoice_number} downloaded successfully`,
+        variant: 'success',
+        duration: 3000,
       });
     } catch (error) {
       console.error('Error generating invoice PDF:', error);

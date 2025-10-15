@@ -181,11 +181,6 @@ export const InvoiceItemsStep = ({
       equipmentCode: '',
       notes: ''
     }));
-    
-    toast({
-      title: 'Item added',
-      description: 'Item has been added to the invoice',
-    });
   };
 
   const getCategoryIcon = (category: string) => {
@@ -213,10 +208,6 @@ export const InvoiceItemsStep = ({
       notes: item.notes
     };
     onAddItem(duplicate);
-    toast({
-      title: 'Item duplicated',
-      description: 'Item has been duplicated',
-    });
   };
 
   const filteredMaterials = useMemo(() => {
@@ -901,13 +892,7 @@ export const InvoiceItemsStep = ({
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => {
-                            onRemoveItem(item.id);
-                            toast({
-                              title: 'Item removed',
-                              description: 'The item has been removed from the invoice',
-                            });
-                          }}
+                          onClick={() => onRemoveItem(item.id)}
                           className="h-7 w-7 p-0 text-destructive hover:text-destructive"
                         >
                           <Trash2 className="h-3 w-3" />
@@ -1059,13 +1044,7 @@ export const InvoiceItemsStep = ({
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => {
-                              onRemoveItem(item.id);
-                              toast({
-                                title: 'Item removed',
-                                description: 'The item has been removed from the invoice',
-                              });
-                            }}
+                            onClick={() => onRemoveItem(item.id)}
                             className="h-8 w-8 p-0 text-destructive hover:text-destructive"
                           >
                             <Trash2 className="h-4 w-4" />

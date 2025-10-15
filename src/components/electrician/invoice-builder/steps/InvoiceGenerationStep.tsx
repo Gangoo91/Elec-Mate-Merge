@@ -119,6 +119,7 @@ export const InvoiceGenerationStep = ({
       toast({
         title: 'PDF ready',
         variant: 'success',
+        duration: 3000,
       });
     } catch (error) {
       console.error('Preview PDF error:', error);
