@@ -53,11 +53,11 @@ export interface EnrichedResponse {
 function extractKeyTerms(response: string, entities: any): string[] {
   const terms: string[] = [];
   
-  // Add circuit-specific terms
-  if (entities.loadType) {
+  // Add circuit-specific terms (validate strings only)
+  if (entities.loadType && typeof entities.loadType === 'string') {
     terms.push(entities.loadType.replace('_', ' '));
   }
-  if (entities.location) {
+  if (entities.location && typeof entities.location === 'string') {
     terms.push(entities.location);
   }
   
@@ -69,7 +69,8 @@ function extractKeyTerms(response: string, entities: any): string[] {
     }
   }
   
-  return terms;
+  // ✅ Filter to ensure only valid strings are returned
+  return terms.filter(t => typeof t === 'string' && t.trim().length > 0);
 }
 
 /**

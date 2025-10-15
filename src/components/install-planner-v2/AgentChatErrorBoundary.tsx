@@ -24,7 +24,12 @@ export class AgentChatErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Agent chat error caught:', error, errorInfo);
+    console.error('❌ Agent chat rendering error:', {
+      error: error.message,
+      stack: error.stack,
+      componentStack: errorInfo.componentStack,
+      errorType: error.name
+    });
   }
 
   handleReset = () => {

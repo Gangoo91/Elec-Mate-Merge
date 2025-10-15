@@ -40,33 +40,47 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, e
   const [showFullText, setShowFullText] = useState(false);
   const [showReasoningDrawer, setShowReasoningDrawer] = useState(false);
   
-  // Extract enrichment data
+  // Extract enrichment data with validation
   const displayHints = enrichment?.displayHints;
-  const highlightTerms = displayHints?.highlightTerms || [];
+  const highlightTerms = Array.isArray(displayHints?.highlightTerms) 
+    ? displayHints.highlightTerms.filter((t: any) => typeof t === 'string' && t.trim().length > 0)
+    : [];
   const callouts = rendering?.callouts || [];
   const enrichedCitations = citations || [];
   
-  // Helper function to highlight terms in text
+  // Helper function to highlight terms in text with type safety
   const highlightText = (text: string, terms: string[]): React.ReactNode => {
     if (!terms || terms.length === 0 || !text) return text;
     
+    // ✅ CRITICAL FIX: Filter to only valid string terms
+    const validTerms = terms.filter(t => typeof t === 'string' && t.trim().length > 0);
+    if (validTerms.length === 0) return text;
+    
     let result: (string | JSX.Element)[] = [text];
-    terms.forEach(term => {
+    validTerms.forEach(term => {
       const newResult: (string | JSX.Element)[] = [];
       result.forEach((part) => {
         if (typeof part !== 'string') {
           newResult.push(part);
           return;
         }
-        const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-        const parts = part.split(regex);
-        parts.forEach((chunk, i) => {
-          if (regex.test(chunk)) {
-            newResult.push(<mark key={`${term}-${i}`} className="bg-elec-yellow/30 px-1 rounded">{chunk}</mark>);
-          } else if (chunk) {
-            newResult.push(chunk);
-          }
-        });
+        try {
+          // Safely escape regex special characters
+          const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp(`(${escapedTerm})`, 'gi');
+          const parts = part.split(regex);
+          parts.forEach((chunk, i) => {
+            if (regex.test(chunk)) {
+              newResult.push(<mark key={`${term}-${i}`} className="bg-elec-yellow/30 px-1 rounded">{chunk}</mark>);
+            } else if (chunk) {
+              newResult.push(chunk);
+            }
+          });
+        } catch (err) {
+          // If regex fails, just push the original part
+          console.warn('Failed to highlight term:', term, err);
+          newResult.push(part);
+        }
       });
       result = newResult;
     });
