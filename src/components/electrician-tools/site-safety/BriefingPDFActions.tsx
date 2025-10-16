@@ -30,10 +30,13 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
         );
         const expiryDate = new Date(startDate.getTime() + expirySeconds * 1000);
         const now = new Date();
-        const oneHourFromNow = new Date(now.getTime() + 60 * 60 * 1000);
+        const fiveMinutesFromNow = new Date(now.getTime() + 5 * 60 * 1000);
         
-        // Regenerate if expired or expiring within 1 hour
-        return expiryDate < oneHourFromNow;
+        const isExpired = expiryDate < fiveMinutesFromNow;
+        console.log('[PDF-URL] Expiry check:', { expiryDate, fiveMinutesFromNow, isExpired });
+        
+        // Regenerate if expired or expiring within 5 minutes
+        return isExpired;
       }
     } catch (error) {
       console.error('[PDF-URL] Error parsing URL:', error);
@@ -69,7 +72,7 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
       }
     };
     checkUrl();
-  }, []);
+  }, [pdfUrl]);
 
   const handleGeneratePDF = async () => {
     setGenerating(true);
