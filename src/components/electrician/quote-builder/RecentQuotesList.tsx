@@ -322,7 +322,10 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           .eq('id', quote.id);
       }
 
-      const cacheBustedPdfUrl = `${pdfUrl}?t=${Date.now()}`;
+
+      // Don't modify signed URLs - it breaks AWS S3 signature
+      const pdfDownloadUrl = pdfUrl;
+
 
       const clientData = typeof freshQuote.client_data === 'string' 
         ? JSON.parse(freshQuote.client_data) 
@@ -349,7 +352,7 @@ Please find your quote for ${jobTitle}
 Valid until: ${validityDate}
 
 📥 Download Quote (PDF):
-${cacheBustedPdfUrl}
+${pdfDownloadUrl}
 
 If you have any questions, please don't hesitate to contact us.
 
@@ -446,7 +449,10 @@ ${companyName}`;
           .eq('id', quote.id);
       }
 
-      const cacheBustedPdfUrl = `${pdfUrl}?t=${Date.now()}`;
+
+      // Don't modify signed URLs - it breaks AWS S3 signature
+      const pdfDownloadUrl = pdfUrl;
+
 
       const clientData = typeof freshQuote.client_data === 'string' 
         ? JSON.parse(freshQuote.client_data) 
@@ -472,7 +478,7 @@ Total Amount: ${formatCurrency(totalAmount)}
 Valid until: ${validityDate}
 
 Download your quote here:
-${cacheBustedPdfUrl}
+${pdfDownloadUrl}
 
 If you have any questions, please contact us.
 

@@ -311,10 +311,11 @@ ${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\
           .eq('id', quote.id);
       }
 
-      // Step 4: Use fresh PDF URL directly (don't store - it expires)
-      const cacheBustedPdfUrl = `${pdfUrl}?t=${Date.now()}`;
 
-      // Step 5: Create professional WhatsApp message with cache-busted URL
+      // Step 4: Use PDF URL directly (don't modify signed URLs - it breaks AWS signature)
+      const pdfDownloadUrl = pdfUrl;
+
+      // Step 5: Create professional WhatsApp message with PDF URL
       const clientData = typeof freshQuote.client_data === 'string' 
         ? JSON.parse(freshQuote.client_data) 
         : freshQuote.client_data;
@@ -340,7 +341,7 @@ Please find your quote for ${jobTitle}
 Valid until: ${validityDate}
 
 📥 Download Quote (PDF):
-${cacheBustedPdfUrl}
+${pdfDownloadUrl}
 
 If you have any questions, please don't hesitate to contact us.
 
