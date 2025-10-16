@@ -246,6 +246,259 @@ const InvoicesPage = () => {
     setDeletingInvoiceId(null);
   };
 
+  const handleShareWhatsApp = async (invoice: Quote) => {
+    try {
+      // Fetch fresh invoice data
+      const { data: freshInvoice, error: fetchError } = await supabase
+        .from('quotes')
+        .select('*')
+        .eq('id', invoice.id)
+        .single();
+
+      if (fetchError || !freshInvoice) {
+        throw new Error('Failed to fetch invoice data');
+      }
+
+      // Check if PDF is current
+      const pdfIsCurrent = (freshInvoice as any).pdf_url && (freshInvoice as any).pdf_generated_at && 
+        new Date((freshInvoice as any).pdf_generated_at) >= new Date(freshInvoice.updated_at);
+
+      let pdfUrl = (freshInvoice as any).pdf_url;
+
+      // Generate new PDF if needed
+      if (!pdfIsCurrent) {
+        toast({
+          title: 'Generating PDF',
+          description: 'Creating latest version for WhatsApp share...',
+          duration: 5000,
+        });
+
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) throw new Error('User not authenticated');
+
+        const { data: companyData } = await supabase
+          .from('company_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+
+        if (!companyData) {
+          toast({
+            title: 'Company profile required',
+            description: 'Please set up your company profile first',
+            variant: 'destructive',
+          });
+          return;
+        }
+
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) throw new Error('User not authenticated');
+
+        const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+          body: {
+            quote: freshInvoice,
+            companyProfile: companyData,
+            invoice_mode: true
+          },
+          headers: { Authorization: `Bearer ${session.access_token}` }
+        });
+
+        let generatedUrl: string | undefined = pdfData?.downloadUrl;
+        const documentId: string | undefined = pdfData?.documentId;
+        
+        if (!generatedUrl && documentId) {
+          generatedUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+        }
+
+        if (pdfError || !generatedUrl) {
+          throw new Error('Failed to generate PDF');
+        }
+
+        pdfUrl = generatedUrl;
+
+        // Store PDF metadata
+        if (generatedUrl && documentId) {
+          await supabase
+            .from('quotes')
+            .update({
+              pdf_document_id: documentId,
+              pdf_url: generatedUrl,
+              pdf_generated_at: new Date().toISOString()
+            })
+            .eq('id', invoice.id);
+        }
+      }
+
+      // Don't modify signed URLs - it breaks AWS S3 signature
+      const pdfDownloadUrl = pdfUrl;
+
+      const clientData = typeof freshInvoice.client_data === 'string' 
+        ? JSON.parse(freshInvoice.client_data) 
+        : freshInvoice.client_data;
+
+      const dueDate = freshInvoice.invoice_due_date 
+        ? format(new Date(freshInvoice.invoice_due_date), 'dd MMM yyyy')
+        : 'Upon receipt';
+
+      const message = `Hello ${clientData?.name || 'there'},
+
+Here is your invoice from ${clientData?.company || 'our company'}:
+
+📄 Invoice #${freshInvoice.invoice_number}
+💷 Amount: ${formatCurrency(freshInvoice.total)}
+📅 Due Date: ${dueDate}
+
+📥 Download Invoice (PDF):
+${pdfDownloadUrl}
+
+If you have any questions, please don't hesitate to contact us.
+
+Thank you for your business!`;
+
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+
+      toast({
+        title: 'Opening WhatsApp',
+        description: 'Invoice ready to share via WhatsApp',
+      });
+    } catch (error) {
+      console.error('Error sharing via WhatsApp:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to prepare invoice for WhatsApp. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleShareEmail = async (invoice: Quote) => {
+    try {
+      // Fetch fresh invoice data
+      const { data: freshInvoice, error: fetchError } = await supabase
+        .from('quotes')
+        .select('*')
+        .eq('id', invoice.id)
+        .single();
+
+      if (fetchError || !freshInvoice) {
+        throw new Error('Failed to fetch invoice data');
+      }
+
+      // Check if PDF is current
+      const pdfIsCurrent = (freshInvoice as any).pdf_url && (freshInvoice as any).pdf_generated_at && 
+        new Date((freshInvoice as any).pdf_generated_at) >= new Date(freshInvoice.updated_at);
+
+      let pdfUrl = (freshInvoice as any).pdf_url;
+
+      // Generate new PDF if needed
+      if (!pdfIsCurrent) {
+        toast({
+          title: 'Generating PDF',
+          description: 'Creating latest version for email share...',
+          duration: 5000,
+        });
+
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) throw new Error('User not authenticated');
+
+        const { data: companyData } = await supabase
+          .from('company_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+
+        if (!companyData) {
+          toast({
+            title: 'Company profile required',
+            description: 'Please set up your company profile first',
+            variant: 'destructive',
+          });
+          return;
+        }
+
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) throw new Error('User not authenticated');
+
+        const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+          body: {
+            quote: freshInvoice,
+            companyProfile: companyData,
+            invoice_mode: true
+          },
+          headers: { Authorization: `Bearer ${session.access_token}` }
+        });
+
+        let generatedUrl: string | undefined = pdfData?.downloadUrl;
+        const documentId: string | undefined = pdfData?.documentId;
+        
+        if (!generatedUrl && documentId) {
+          generatedUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+        }
+
+        if (pdfError || !generatedUrl) {
+          throw new Error('Failed to generate PDF');
+        }
+
+        pdfUrl = generatedUrl;
+
+        // Store PDF metadata
+        if (generatedUrl && documentId) {
+          await supabase
+            .from('quotes')
+            .update({
+              pdf_document_id: documentId,
+              pdf_url: generatedUrl,
+              pdf_generated_at: new Date().toISOString()
+            })
+            .eq('id', invoice.id);
+        }
+      }
+
+      // Don't modify signed URLs - it breaks AWS S3 signature
+      const pdfDownloadUrl = pdfUrl;
+
+      const clientData = typeof freshInvoice.client_data === 'string' 
+        ? JSON.parse(freshInvoice.client_data) 
+        : freshInvoice.client_data;
+
+      const dueDate = freshInvoice.invoice_due_date 
+        ? format(new Date(freshInvoice.invoice_due_date), 'dd MMM yyyy')
+        : 'Upon receipt';
+
+      const subject = `Invoice ${freshInvoice.invoice_number} - ${formatCurrency(freshInvoice.total)}`;
+      const body = `Hello ${clientData?.name || 'there'},
+
+Please find attached your invoice:
+
+Invoice #${freshInvoice.invoice_number}
+Amount: ${formatCurrency(freshInvoice.total)}
+Due Date: ${dueDate}
+
+Download your invoice here:
+${pdfDownloadUrl}
+
+If you have any questions, please contact us.
+
+Thank you for your business!`;
+
+      const mailtoUrl = `mailto:${clientData?.email || ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoUrl;
+
+      toast({
+        title: 'Opening Email',
+        description: 'Invoice ready to send via email',
+      });
+    } catch (error) {
+      console.error('Error sharing via email:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to prepare invoice for email. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const getActionButton = (invoice: Quote) => {
     const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
     const status = invoice.invoice_status;
@@ -482,6 +735,8 @@ const InvoicesPage = () => {
                 onMarkAsPaid={handleMarkAsPaid}
                 onSendSuccess={handleSendSuccess}
                 onDeleteInvoice={handleDeleteInvoice}
+                onShareWhatsApp={handleShareWhatsApp}
+                onShareEmail={handleShareEmail}
                 markingPaidId={markingPaidId}
                 downloadingPdfId={downloadingPdfId}
                 deletingInvoiceId={deletingInvoiceId}
@@ -495,6 +750,8 @@ const InvoicesPage = () => {
                 onMarkAsPaid={handleMarkAsPaid}
                 onSendSuccess={handleSendSuccess}
                 onDeleteInvoice={handleDeleteInvoice}
+                onShareWhatsApp={handleShareWhatsApp}
+                onShareEmail={handleShareEmail}
                 markingPaidId={markingPaidId}
                 downloadingPdfId={downloadingPdfId}
                 deletingInvoiceId={deletingInvoiceId}

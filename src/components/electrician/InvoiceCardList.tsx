@@ -33,6 +33,8 @@ interface InvoiceCardListProps {
   onMarkAsPaid: (invoice: Quote) => void;
   onSendSuccess: () => void;
   onDeleteInvoice: (invoiceId: string) => void;
+  onShareWhatsApp?: (invoice: Quote) => void;
+  onShareEmail?: (invoice: Quote) => void;
   markingPaidId: string | null;
   downloadingPdfId: string | null;
   deletingInvoiceId: string | null;
@@ -45,6 +47,8 @@ const InvoiceCardList = ({
   onMarkAsPaid,
   onSendSuccess,
   onDeleteInvoice,
+  onShareWhatsApp,
+  onShareEmail,
   markingPaidId,
   downloadingPdfId,
   deletingInvoiceId,
