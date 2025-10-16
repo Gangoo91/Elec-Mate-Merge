@@ -150,18 +150,19 @@ serve(async (req) => {
 
     console.log('☁️ PDF uploaded to storage:', uploadData.path);
 
-    // Step 6: Get public URL
-    const { data: publicUrlData } = supabase
+    // Step 6: Generate signed URL (valid for 7 days)
+    const { data: signedUrlData, error: signedUrlError } = await supabase
       .storage
       .from('temp-pdfs')
-      .getPublicUrl(fileName);
+      .createSignedUrl(fileName, 604800); // 7 days in seconds
 
-    if (!publicUrlData?.publicUrl) {
-      throw new Error('Failed to generate public URL');
+    if (signedUrlError || !signedUrlData?.signedUrl) {
+      console.error('Signed URL error:', signedUrlError);
+      throw new Error('Failed to generate signed URL');
     }
 
-    const publicUrl = publicUrlData.publicUrl;
-    console.log('✅ Public URL generated:', publicUrl);
+    const publicUrl = signedUrlData.signedUrl;
+    console.log('✅ Signed URL generated (valid 7 days):', publicUrl);
 
     // Step 7: Update document with PDF metadata (optional - for tracking)
     if (pdfDocumentId) {
