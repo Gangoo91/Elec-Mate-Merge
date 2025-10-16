@@ -14,6 +14,8 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
   const [generating, setGenerating] = useState(false);
   const [validating, setValidating] = useState(false);
   const [pdfUrl, setPdfUrl] = useState(briefing.pdf_url || "");
+  const [polling, setPolling] = useState(false);
+  const [pollAttempts, setPollAttempts] = useState(0);
 
   // Check if AWS S3 URL is expired or about to expire
   const isUrlExpired = (url: string): boolean => {
@@ -60,10 +62,12 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
     }
   };
 
-  // Check URL validity on mount
+  // Check URL validity on mount (only run once, not on pdfUrl changes)
   useEffect(() => {
     const checkUrl = async () => {
-      if (pdfUrl) {
+      if (pdfUrl && !generating && !polling) {
+        // Add 2 second delay to allow AWS S3 URL to propagate
+        await new Promise(resolve => setTimeout(resolve, 2000));
         const isValid = await validatePdfUrl(pdfUrl);
         if (!isValid) {
           console.log('[PDF-URL] URL invalid or expired, clearing state');
@@ -72,12 +76,48 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
       }
     };
     checkUrl();
-  }, [pdfUrl]);
+  }, []); // Only run on mount
+
+  // Client-side polling for long-running PDF generation
+  const pollDocumentStatus = async (documentId: string, maxAttempts = 20): Promise<any> => {
+    console.log('[PDF-POLL] Starting client-side polling for documentId:', documentId);
+    
+    for (let i = 0; i < maxAttempts; i++) {
+      setPollAttempts(i + 1);
+      await new Promise(resolve => setTimeout(resolve, 3000)); // 3 seconds between polls
+      
+      console.log(`[PDF-POLL] Attempt ${i + 1}/${maxAttempts}`);
+      
+      const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: { documentId, mode: 'status' }
+      });
+      
+      if (error) {
+        console.error('[PDF-POLL] Error checking status:', error);
+        throw error;
+      }
+      
+      console.log('[PDF-POLL] Status response:', data);
+      
+      if (data.success && data.downloadUrl) {
+        console.log('[PDF-POLL] PDF ready!');
+        return data;
+      }
+      
+      if (data.status === 'failure') {
+        throw new Error('PDF generation failed on server');
+      }
+    }
+    
+    throw new Error('PDF generation timed out after 60 seconds of polling');
+  };
 
   const handleGeneratePDF = async () => {
     setGenerating(true);
+    setPollAttempts(0);
+    
     try {
-      console.log('[BRIEFING-PDF] Generating PDF for briefing:', briefing.id);
+      console.log('[BRIEFING-PDF] Starting PDF generation for briefing:', briefing.id);
 
       const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: {
@@ -89,10 +129,11 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
 
       if (error) throw error;
 
-      if (data.success) {
+      // Case A: Success - PDF ready immediately (< 60 seconds)
+      if (data.success && data.downloadUrl) {
+        console.log('[BRIEFING-PDF] PDF generated successfully');
         setPdfUrl(data.downloadUrl);
-
-        // Update database with PDF URL
+        
         await supabase
           .from('team_briefings')
           .update({
@@ -106,18 +147,68 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
           title: "PDF Generated",
           description: "Your briefing PDF is ready to view or download.",
         });
-      } else {
-        throw new Error(data.message || 'PDF generation failed');
+        return;
       }
+      
+      // Case B: Timeout - PDF still generating (60-120 seconds)
+      if (!data.success && data.documentId) {
+        console.log('[BRIEFING-PDF] Edge function timed out, starting client-side polling');
+        
+        toast({
+          title: "PDF Generation in Progress",
+          description: "This is taking longer than expected. Please wait...",
+        });
+        
+        setPolling(true);
+        const polledData = await pollDocumentStatus(data.documentId);
+        setPolling(false);
+        
+        if (polledData.downloadUrl) {
+          console.log('[BRIEFING-PDF] PDF ready after polling');
+          setPdfUrl(polledData.downloadUrl);
+          
+          await supabase
+            .from('team_briefings')
+            .update({
+              pdf_url: polledData.downloadUrl,
+              pdf_document_id: polledData.documentId,
+              pdf_generated_at: new Date().toISOString()
+            })
+            .eq('id', briefing.id);
+
+          toast({
+            title: "PDF Generated",
+            description: "Your briefing PDF is ready to view or download.",
+          });
+          return;
+        }
+      }
+      
+      // Case C: Failure
+      throw new Error(data.message || 'PDF generation failed');
+      
     } catch (error: any) {
-      console.error('PDF generation error:', error);
+      console.error('[BRIEFING-PDF] Generation error:', error);
+      
+      let errorMessage = "Failed to generate PDF. Please try again.";
+      
+      if (error.message.includes('timed out')) {
+        errorMessage = "PDF generation is taking unusually long. Please try again later.";
+      } else if (error.message.includes('network') || error.message.includes('fetch')) {
+        errorMessage = "Network error occurred. Please check your connection.";
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "PDF Generation Failed",
-        description: error.message || "Failed to generate PDF. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
       setGenerating(false);
+      setPolling(false);
+      setPollAttempts(0);
     }
   };
 
@@ -246,11 +337,13 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
     );
   }
 
-  if (generating) {
+  if (generating || polling) {
     return (
       <Button disabled size="sm" className="w-full">
         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-        Generating PDF...
+        {polling 
+          ? `Still generating... (${pollAttempts * 3}s)` 
+          : 'Generating PDF...'}
       </Button>
     );
   }
