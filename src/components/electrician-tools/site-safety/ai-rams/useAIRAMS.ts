@@ -245,7 +245,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'health-safety' 
-          ? { ...step, status: 'complete', reasoning: hsData.response.substring(0, 200) + '...' }
+          ? { ...step, status: 'complete', reasoning: `Generated ${hsData.riskAssessment?.hazards?.length || 0} hazards and control measures` }
           : step
       ));
 
@@ -269,7 +269,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'installer' 
-          ? { ...step, status: 'complete', reasoning: installerData.response.substring(0, 200) + '...' }
+          ? { ...step, status: 'complete', reasoning: `Generated ${installerData.methodStatementSteps?.length || 0} installation steps` }
           : step
       ));
 
