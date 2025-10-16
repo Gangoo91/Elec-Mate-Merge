@@ -9,7 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft, Trash2 } from "lucide-react";
+import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft, Trash2, Share2, MessageCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { format, isPast } from "date-fns";
 import {
@@ -262,12 +262,12 @@ const InvoiceCardList = ({
                 </div>
               </div>
 
-              {/* Bottom Action Bar - Three Dark Rounded Buttons */}
-              <div className="flex items-center gap-2">
+              {/* Bottom Action Bar - Four Rounded Buttons */}
+              <div className="grid grid-cols-2 gap-2 mb-2">
                 <button
                   onClick={() => onDownloadPDF(invoice)}
                   disabled={downloadingPdfId === invoice.id}
-                  className="flex-1 bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
+                  className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
                 >
                   <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   <span className="text-xs sm:text-sm font-medium">
@@ -277,19 +277,27 @@ const InvoiceCardList = ({
 
                 {invoice.invoice_status !== 'paid' ? (
                   <>
-                    <div className="flex-1">
-                      <InvoiceSendDropdown 
-                        invoice={invoice}
-                        onSuccess={onSendSuccess}
-                        className="w-full bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3"
-                      />
-                    </div>
+                    <button
+                      onClick={() => onShareWhatsApp?.(invoice)}
+                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
+                    >
+                      <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="text-xs sm:text-sm font-medium">WhatsApp</span>
+                    </button>
+
+                    <button
+                      onClick={() => onShareEmail?.(invoice)}
+                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
+                    >
+                      <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="text-xs sm:text-sm font-medium">Email</span>
+                    </button>
 
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <button
                           disabled={markingPaidId === invoice.id}
-                          className="flex-1 bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
+                          className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
                         >
                           <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           <span className="text-xs sm:text-sm font-medium">Paid</span>
@@ -314,18 +322,27 @@ const InvoiceCardList = ({
                 ) : (
                   <>
                     <button
-                      disabled
-                      className="flex-1 bg-background/20 border border-primary/10 text-muted-foreground/40 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 touch-manipulation"
+                      onClick={() => onShareWhatsApp?.(invoice)}
+                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
+                    >
+                      <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="text-xs sm:text-sm font-medium">WhatsApp</span>
+                    </button>
+
+                    <button
+                      onClick={() => onShareEmail?.(invoice)}
+                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
                     >
                       <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm font-medium">Send</span>
+                      <span className="text-xs sm:text-sm font-medium">Email</span>
                     </button>
+
                     <button
                       disabled
-                      className="flex-1 bg-background/20 border border-primary/10 text-muted-foreground/40 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 touch-manipulation"
+                      className="col-span-2 bg-green-500/10 border border-green-500/30 text-green-600 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 touch-manipulation"
                     >
                       <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm font-medium">Paid</span>
+                      <span className="text-xs sm:text-sm font-medium">Paid ✓</span>
                     </button>
                   </>
                 )}
