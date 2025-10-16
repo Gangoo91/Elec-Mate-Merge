@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, ArrowRight, Sparkles, Save, FileText, Users, AlertTriangle, Camera, Loader2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { TemplateSelector } from "./briefing-templates/TemplateSelector";
+import { FormattedTextDisplay } from "./FormattedTextDisplay";
 
 const HAZARD_CATEGORIES = [
   { id: 'live-circuits', label: 'Live Circuits', category: 'Electrical' },
@@ -607,28 +608,27 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
 
                 <div className="space-y-2">
                   <Label className="text-elec-light text-sm">Briefing Overview</Label>
-                  <Textarea
+                  <FormattedTextDisplay
                     value={formData.briefingDescription}
-                    onChange={(e) => setFormData(prev => ({ ...prev, briefingDescription: e.target.value }))}
+                    onChange={(value) => setFormData(prev => ({ ...prev, briefingDescription: value }))}
                     placeholder="Describe the work being carried out..."
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label className="text-elec-light text-sm">Hazards & Controls</Label>
-                  <Textarea
+                  <FormattedTextDisplay
                     value={formData.hazards}
-                    onChange={(e) => setFormData(prev => ({ ...prev, hazards: e.target.value }))}
+                    onChange={(value) => setFormData(prev => ({ ...prev, hazards: value }))}
                     placeholder="List hazards and control measures..."
-                    className="whitespace-pre-wrap"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label className="text-elec-light text-sm">Safety Warning</Label>
-                  <Textarea
+                  <FormattedTextDisplay
                     value={formData.safetyWarning}
-                    onChange={(e) => setFormData(prev => ({ ...prev, safetyWarning: e.target.value }))}
+                    onChange={(value) => setFormData(prev => ({ ...prev, safetyWarning: value }))}
                     placeholder="Any safety warnings or precautions..."
                   />
                 </div>
