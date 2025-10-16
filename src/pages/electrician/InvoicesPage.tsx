@@ -248,104 +248,47 @@ const InvoicesPage = () => {
 
   const handleShareWhatsApp = async (invoice: Quote) => {
     try {
-      // Fetch fresh invoice data
-      const { data: freshInvoice, error: fetchError } = await supabase
-        .from('quotes')
-        .select('*')
-        .eq('id', invoice.id)
-        .single();
+      toast({
+        title: 'Preparing PDF',
+        description: 'Generating shareable link for WhatsApp...',
+        duration: 5000,
+      });
 
-      if (fetchError || !freshInvoice) {
-        throw new Error('Failed to fetch invoice data');
-      }
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('User not authenticated');
 
-      // Check if PDF is current
-      const pdfIsCurrent = (freshInvoice as any).pdf_url && (freshInvoice as any).pdf_generated_at && 
-        new Date((freshInvoice as any).pdf_generated_at) >= new Date(freshInvoice.updated_at);
-
-      let pdfUrl = (freshInvoice as any).pdf_url;
-
-      // Generate new PDF if needed
-      if (!pdfIsCurrent) {
-        toast({
-          title: 'Generating PDF',
-          description: 'Creating latest version for WhatsApp share...',
-          duration: 5000,
-        });
-
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) throw new Error('User not authenticated');
-
-        const { data: companyData } = await supabase
-          .from('company_profiles')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-
-        if (!companyData) {
-          toast({
-            title: 'Company profile required',
-            description: 'Please set up your company profile first',
-            variant: 'destructive',
-          });
-          return;
-        }
-
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) throw new Error('User not authenticated');
-
-        const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+      // Use the generate-temporary-pdf-link edge function to get a stable public URL
+      const { data: linkData, error: linkError } = await supabase.functions.invoke(
+        'generate-temporary-pdf-link',
+        {
           body: {
-            quote: freshInvoice,
-            companyProfile: companyData,
-            invoice_mode: true
+            documentId: invoice.id,
+            documentType: 'invoice'
           },
           headers: { Authorization: `Bearer ${session.access_token}` }
-        });
-
-        let generatedUrl: string | undefined = pdfData?.downloadUrl;
-        const documentId: string | undefined = pdfData?.documentId;
-        
-        if (!generatedUrl && documentId) {
-          generatedUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
         }
+      );
 
-        if (pdfError || !generatedUrl) {
-          throw new Error('Failed to generate PDF');
-        }
-
-        pdfUrl = generatedUrl;
-
-        // Store PDF metadata
-        if (generatedUrl && documentId) {
-          await supabase
-            .from('quotes')
-            .update({
-              pdf_document_id: documentId,
-              pdf_url: generatedUrl,
-              pdf_generated_at: new Date().toISOString()
-            })
-            .eq('id', invoice.id);
-        }
+      if (linkError || !linkData?.publicUrl) {
+        throw new Error('Failed to generate shareable PDF link');
       }
 
-      // Don't modify signed URLs - it breaks AWS S3 signature
-      const pdfDownloadUrl = pdfUrl;
+      const pdfDownloadUrl = linkData.publicUrl;
 
-      const clientData = typeof freshInvoice.client_data === 'string' 
-        ? JSON.parse(freshInvoice.client_data) 
-        : freshInvoice.client_data;
+      const clientData = typeof (invoice as any).client_data === 'string' 
+        ? JSON.parse((invoice as any).client_data) 
+        : (invoice as any).client_data;
 
-      const dueDate = freshInvoice.invoice_due_date 
-        ? format(new Date(freshInvoice.invoice_due_date), 'dd MMM yyyy')
+      const dueDate = invoice.invoice_due_date 
+        ? format(new Date(invoice.invoice_due_date), 'dd MMM yyyy')
         : 'Upon receipt';
 
       const message = `Hello ${clientData?.name || 'there'},
 
 Here is your invoice from ${clientData?.company || 'our company'}:
 
-📄 Invoice #${freshInvoice.invoice_number}
-💷 Amount: ${formatCurrency(freshInvoice.total)}
+📄 Invoice #${invoice.invoice_number}
+💷 Amount: ${formatCurrency(invoice.total)}
 📅 Due Date: ${dueDate}
 
 📥 Download Invoice (PDF):
@@ -374,7 +317,34 @@ Thank you for your business!`;
 
   const handleShareEmail = async (invoice: Quote) => {
     try {
-      // Fetch fresh invoice data
+      toast({
+        title: 'Preparing PDF',
+        description: 'Generating shareable link for email...',
+        duration: 5000,
+      });
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('User not authenticated');
+
+      // Use the generate-temporary-pdf-link edge function to get a stable public URL
+      const { data: linkData, error: linkError } = await supabase.functions.invoke(
+        'generate-temporary-pdf-link',
+        {
+          body: {
+            documentId: invoice.id,
+            documentType: 'invoice'
+          },
+          headers: { Authorization: `Bearer ${session.access_token}` }
+        }
+      );
+
+      if (linkError || !linkData?.publicUrl) {
+        throw new Error('Failed to generate shareable PDF link');
+      }
+
+      const pdfDownloadUrl = linkData.publicUrl;
+
+      // Fetch fresh invoice data for email content
       const { data: freshInvoice, error: fetchError } = await supabase
         .from('quotes')
         .select('*')
@@ -384,79 +354,6 @@ Thank you for your business!`;
       if (fetchError || !freshInvoice) {
         throw new Error('Failed to fetch invoice data');
       }
-
-      // Check if PDF is current
-      const pdfIsCurrent = (freshInvoice as any).pdf_url && (freshInvoice as any).pdf_generated_at && 
-        new Date((freshInvoice as any).pdf_generated_at) >= new Date(freshInvoice.updated_at);
-
-      let pdfUrl = (freshInvoice as any).pdf_url;
-
-      // Generate new PDF if needed
-      if (!pdfIsCurrent) {
-        toast({
-          title: 'Generating PDF',
-          description: 'Creating latest version for email share...',
-          duration: 5000,
-        });
-
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) throw new Error('User not authenticated');
-
-        const { data: companyData } = await supabase
-          .from('company_profiles')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-
-        if (!companyData) {
-          toast({
-            title: 'Company profile required',
-            description: 'Please set up your company profile first',
-            variant: 'destructive',
-          });
-          return;
-        }
-
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) throw new Error('User not authenticated');
-
-        const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
-          body: {
-            quote: freshInvoice,
-            companyProfile: companyData,
-            invoice_mode: true
-          },
-          headers: { Authorization: `Bearer ${session.access_token}` }
-        });
-
-        let generatedUrl: string | undefined = pdfData?.downloadUrl;
-        const documentId: string | undefined = pdfData?.documentId;
-        
-        if (!generatedUrl && documentId) {
-          generatedUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
-        }
-
-        if (pdfError || !generatedUrl) {
-          throw new Error('Failed to generate PDF');
-        }
-
-        pdfUrl = generatedUrl;
-
-        // Store PDF metadata
-        if (generatedUrl && documentId) {
-          await supabase
-            .from('quotes')
-            .update({
-              pdf_document_id: documentId,
-              pdf_url: generatedUrl,
-              pdf_generated_at: new Date().toISOString()
-            })
-            .eq('id', invoice.id);
-        }
-      }
-
-      // Don't modify signed URLs - it breaks AWS S3 signature
-      const pdfDownloadUrl = pdfUrl;
 
       const clientData = typeof freshInvoice.client_data === 'string' 
         ? JSON.parse(freshInvoice.client_data) 
