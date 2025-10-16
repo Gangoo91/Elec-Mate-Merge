@@ -215,47 +215,35 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
   const handleViewPDF = async () => {
     if (!pdfUrl) return;
     
-    setValidating(true);
-    try {
-      const isValid = await validatePdfUrl(pdfUrl);
-      
-      if (!isValid) {
-        toast({
-          title: "PDF Expired",
-          description: "Regenerating your PDF...",
-        });
-        await handleGeneratePDF();
-        return;
-      }
-      
-      window.open(pdfUrl, '_blank');
-    } catch (error: any) {
+    // Check expiry first (lightweight check)
+    if (isUrlExpired(pdfUrl)) {
       toast({
-        title: "Failed to Open PDF",
-        description: error.message || "Please try regenerating the PDF.",
-        variant: "destructive",
+        title: "PDF Expired",
+        description: "Regenerating your PDF...",
       });
-    } finally {
-      setValidating(false);
+      await handleGeneratePDF();
+      return;
     }
+    
+    // Directly open PDF - don't validate with HEAD request (causes CORS issues)
+    window.open(pdfUrl, '_blank');
   };
 
   const handleDownloadPDF = async () => {
     if (!pdfUrl) return;
     
+    // Check expiry first (lightweight check)
+    if (isUrlExpired(pdfUrl)) {
+      toast({
+        title: "PDF Expired",
+        description: "Regenerating your PDF...",
+      });
+      await handleGeneratePDF();
+      return;
+    }
+
     setValidating(true);
     try {
-      const isValid = await validatePdfUrl(pdfUrl);
-      
-      if (!isValid) {
-        toast({
-          title: "PDF Expired",
-          description: "Regenerating your PDF...",
-        });
-        await handleGeneratePDF();
-        return;
-      }
-
       // Fetch PDF as blob to bypass CORS issues
       const response = await fetch(pdfUrl);
       if (!response.ok) throw new Error('Failed to fetch PDF');
@@ -279,11 +267,21 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
       });
     } catch (error: any) {
       console.error('[PDF-DOWNLOAD] Error:', error);
-      toast({
-        title: "Download Failed",
-        description: error.message || "Please try regenerating the PDF.",
-        variant: "destructive",
-      });
+      
+      // If download fails, might be expired - try regenerating
+      if (error.message.includes('fetch')) {
+        toast({
+          title: "PDF Expired",
+          description: "Regenerating your PDF...",
+        });
+        await handleGeneratePDF();
+      } else {
+        toast({
+          title: "Download Failed",
+          description: "Please try again or regenerate the PDF.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setValidating(false);
     }
@@ -292,19 +290,18 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
   const handlePrintPDF = async () => {
     if (!pdfUrl) return;
     
+    // Check expiry first (lightweight check)
+    if (isUrlExpired(pdfUrl)) {
+      toast({
+        title: "PDF Expired",
+        description: "Regenerating your PDF...",
+      });
+      await handleGeneratePDF();
+      return;
+    }
+    
     setValidating(true);
     try {
-      const isValid = await validatePdfUrl(pdfUrl);
-      
-      if (!isValid) {
-        toast({
-          title: "PDF Expired",
-          description: "Regenerating your PDF...",
-        });
-        await handleGeneratePDF();
-        return;
-      }
-      
       const iframe = document.createElement('iframe');
       iframe.style.display = 'none';
       iframe.src = pdfUrl;
@@ -312,10 +309,16 @@ export const BriefingPDFActions = ({ briefing, companyProfile }: BriefingPDFActi
       iframe.onload = () => {
         iframe.contentWindow?.print();
       };
+      
+      // Clean up after 1 minute
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+      }, 60000);
     } catch (error: any) {
+      console.error('[PDF-PRINT] Error:', error);
       toast({
         title: "Print Failed",
-        description: error.message || "Please try regenerating the PDF.",
+        description: "Please try again or regenerate the PDF.",
         variant: "destructive",
       });
     } finally {
