@@ -50,6 +50,9 @@ export const Timeouts = {
   /** Long-running operations (60s) - web scraping, embeddings */
   LONG: 60000,
   
+  /** Extended operations (90s) - complex AI generation with RAG */
+  EXTENDED: 90000,
+  
   /** Critical timeout (2 minutes) - batch processing */
   CRITICAL: 120000,
   
