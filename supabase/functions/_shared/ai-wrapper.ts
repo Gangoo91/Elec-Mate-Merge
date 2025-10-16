@@ -171,7 +171,7 @@ export async function callAI(
 
         // Build request body with correct parameters for model type
         const body: any = {
-          model,
+          model: isOpenAI ? model.replace(/^openai\//, '') : model, // Strip openai/ prefix for direct API calls
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }

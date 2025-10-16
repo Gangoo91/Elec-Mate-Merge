@@ -245,7 +245,7 @@ Include phases, resources, compliance requirements, and risk management.`;
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
     const aiResult = await callAI(OPENAI_API_KEY!, {
-      model: 'openai/gpt-5-mini',
+      model: 'gpt-5-mini-2025-08-07',
       systemPrompt,
       userPrompt,
       maxTokens: 2000,

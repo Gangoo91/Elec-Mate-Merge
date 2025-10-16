@@ -340,7 +340,7 @@ ${location ? `Location: ${location}` : ''}
 Include step-by-step instructions, practical tips, and things to avoid.`;
 
     // Phase 1: Call AI with GPT-5 mini for superior reasoning
-    const model = 'openai/gpt-5-mini';
+    const model = 'gpt-5-mini-2025-08-07';
     
     logger.debug(`Calling ${model}`);
     const { callAI } = await import('../_shared/ai-wrapper.ts');
