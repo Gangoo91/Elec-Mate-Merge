@@ -249,7 +249,7 @@ Include phases, resources, compliance requirements, and risk management.`;
       systemPrompt,
       userPrompt,
       maxTokens: 10000,
-      timeoutMs: 70000,
+      timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
       tools: [{
         type: 'function',
         function: {

@@ -350,7 +350,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       systemPrompt,
       userPrompt,
       maxTokens: 10000,   // Increased tokens for detailed responses
-      timeoutMs: 60000,  // 60s timeout for GPT-5 mini reasoning
+      timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
       tools: [{
         type: 'function',
         function: {
