@@ -610,7 +610,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                   <Textarea
                     value={formData.briefingDescription}
                     onChange={(e) => setFormData(prev => ({ ...prev, briefingDescription: e.target.value }))}
-                    className="min-h-32 bg-card border-primary/30 text-elec-light text-sm resize-none"
+                    placeholder="Describe the work being carried out..."
                   />
                 </div>
 
@@ -619,7 +619,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                   <Textarea
                     value={formData.hazards}
                     onChange={(e) => setFormData(prev => ({ ...prev, hazards: e.target.value }))}
-                    className="min-h-32 bg-card border-primary/30 text-elec-light text-sm resize-none"
+                    placeholder="List hazards and control measures..."
                   />
                 </div>
 
@@ -628,7 +628,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                   <Textarea
                     value={formData.safetyWarning}
                     onChange={(e) => setFormData(prev => ({ ...prev, safetyWarning: e.target.value }))}
-                    className="min-h-20 bg-card border-primary/30 text-elec-light text-sm resize-none"
+                    placeholder="Any safety warnings or precautions..."
                   />
                 </div>
 
