@@ -312,11 +312,11 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 ))}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pb-safe">
+              <div className="flex flex-col sm:grid sm:grid-cols-3 gap-4 pb-safe">
                 <Button
                   onClick={handleGenerateRAMSPDF}
                   disabled={isGenerating}
-                  className="h-14 sm:h-12 bg-primary text-primary-foreground hover:bg-primary/90 text-lg sm:text-base font-semibold"
+                  className="h-14 w-full touch-manipulation bg-primary text-primary-foreground hover:bg-primary/90 font-semibold active:scale-95 transition-transform"
                 >
                   <Download className="h-5 w-5 mr-2" />
                   Risk Assessment
@@ -325,7 +325,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 <Button
                   onClick={handleGenerateMethodPDF}
                   disabled={isGenerating}
-                  className="h-14 sm:h-12 bg-primary text-primary-foreground hover:bg-primary/90 text-lg sm:text-base font-semibold"
+                  className="h-14 w-full touch-manipulation bg-primary text-primary-foreground hover:bg-primary/90 font-semibold active:scale-95 transition-transform"
                 >
                   <Download className="h-5 w-5 mr-2" />
                   Method Statement
@@ -334,7 +334,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 <Button
                   onClick={handleGenerateCombinedRAMS}
                   disabled={isGenerating}
-                  className="h-14 sm:h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-lg sm:text-base font-bold"
+                  className="h-14 w-full touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-bold active:scale-95 transition-transform"
                 >
                   <Download className="h-5 w-5 mr-2" />
                   Combined RAMS
