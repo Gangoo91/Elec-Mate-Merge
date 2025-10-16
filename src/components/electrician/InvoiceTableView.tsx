@@ -3,7 +3,7 @@ import { Quote } from "@/types/quote";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft, Trash2 } from "lucide-react";
+import { Eye, Edit, Download, Mail, CheckCircle, Bell, AlertCircle, Send, FileText, ArrowLeft, Trash2, MoreHorizontal } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
   Tooltip,
@@ -25,6 +25,14 @@ import {
 } from "@/components/ui/alert-dialog";
 import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
 import { DeleteInvoiceDialog } from "@/components/electrician/invoice-builder/DeleteInvoiceDialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface InvoiceTableViewProps {
   invoices: Quote[];
@@ -33,6 +41,8 @@ interface InvoiceTableViewProps {
   onMarkAsPaid: (invoice: Quote) => void;
   onSendSuccess: () => void;
   onDeleteInvoice: (invoiceId: string) => void;
+  onShareWhatsApp?: (invoice: Quote) => void;
+  onShareEmail?: (invoice: Quote) => void;
   markingPaidId: string | null;
   downloadingPdfId: string | null;
   deletingInvoiceId: string | null;
@@ -45,6 +55,8 @@ const InvoiceTableView = ({
   onMarkAsPaid,
   onSendSuccess,
   onDeleteInvoice,
+  onShareWhatsApp,
+  onShareEmail,
   markingPaidId,
   downloadingPdfId,
   deletingInvoiceId,
@@ -188,7 +200,7 @@ const InvoiceTableView = ({
                   </TableCell>
                   <TableCell className="text-right min-w-[160px]">
                     <TooltipProvider>
-                      <div className="flex items-center justify-end gap-3">
+                      <div className="flex items-center justify-end gap-2">
                         {/* View/Edit Button */}
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -211,90 +223,72 @@ const InvoiceTableView = ({
                           </TooltipContent>
                         </Tooltip>
 
-                        {/* Download PDF */}
-                        <Tooltip>
-                          <TooltipTrigger asChild>
+                        {/* More Actions Menu */}
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
                             <Button
                               size="sm"
                               variant="ghost"
+                              className="h-8 w-8 p-0"
+                              aria-label="More actions"
+                            >
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-56 bg-background border-border z-50">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            
+                            <DropdownMenuItem
                               onClick={() => onDownloadPDF(invoice)}
                               disabled={downloadingPdfId === invoice.id}
-                              className="h-8 w-8 p-0"
-                              aria-label="Download PDF"
                             >
-                              <Download className="h-4 w-4" />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Download PDF</p>
-                          </TooltipContent>
-                        </Tooltip>
+                              <Download className="h-4 w-4 mr-2" />
+                              Download PDF
+                            </DropdownMenuItem>
 
-                        {/* Send Invoice */}
-                        {status !== 'paid' && (
-                          <>
-                            <InvoiceSendDropdown 
-                              invoice={invoice}
-                              onSuccess={onSendSuccess}
-                              className="h-8 w-8 p-0"
-                            />
+                            {onShareWhatsApp && (
+                              <DropdownMenuItem
+                                onClick={() => onShareWhatsApp(invoice)}
+                              >
+                                <Send className="h-4 w-4 mr-2" />
+                                Send to WhatsApp
+                              </DropdownMenuItem>
+                            )}
 
-                            {/* Mark as Paid */}
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <AlertDialog>
-                                  <AlertDialogTrigger asChild>
-                                    <Button
-                                      size="sm"
-                                      variant="ghost"
-                                      disabled={markingPaidId === invoice.id}
-                                      className="h-8 w-8 p-0"
-                                      aria-label="Mark as paid"
-                                    >
-                                      <CheckCircle className="h-4 w-4" />
-                                    </Button>
-                                  </AlertDialogTrigger>
-                                  <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                      <AlertDialogTitle>Mark invoice as paid?</AlertDialogTitle>
-                                      <AlertDialogDescription>
-                                        This will mark invoice {invoice.invoice_number} as paid.
-                                      </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                      <AlertDialogAction onClick={() => onMarkAsPaid(invoice)}>
-                                        Confirm
-                                      </AlertDialogAction>
-                                    </AlertDialogFooter>
-                                  </AlertDialogContent>
-                                </AlertDialog>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>Mark as paid</p>
-                              </TooltipContent>
-                            </Tooltip>
+                            {onShareEmail && (
+                              <DropdownMenuItem
+                                onClick={() => onShareEmail(invoice)}
+                              >
+                                <Mail className="h-4 w-4 mr-2" />
+                                Send via Email
+                              </DropdownMenuItem>
+                            )}
 
-                            {/* Delete Invoice */}
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  size="sm"
-                                  variant="ghost"
+                            {status !== 'paid' && (
+                              <>
+                                <DropdownMenuSeparator />
+                                
+                                <DropdownMenuItem
+                                  onClick={() => onMarkAsPaid(invoice)}
+                                  disabled={markingPaidId === invoice.id}
+                                >
+                                  <CheckCircle className="h-4 w-4 mr-2" />
+                                  Mark as Paid
+                                </DropdownMenuItem>
+
+                                <DropdownMenuItem
                                   onClick={() => handleDeleteClick(invoice)}
                                   disabled={deletingInvoiceId === invoice.id}
-                                  className="h-8 w-8 p-0 hover:text-destructive"
-                                  aria-label="Delete invoice"
+                                  className="text-destructive focus:text-destructive"
                                 >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>Delete invoice</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </>
-                        )}
+                                  <Trash2 className="h-4 w-4 mr-2" />
+                                  Delete Invoice
+                                </DropdownMenuItem>
+                              </>
+                            )}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </TooltipProvider>
                   </TableCell>
