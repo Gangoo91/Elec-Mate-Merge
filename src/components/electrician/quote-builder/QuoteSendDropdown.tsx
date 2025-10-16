@@ -229,6 +229,8 @@ ${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\
   const handleShareWhatsApp = async () => {
     try {
       setIsSharingWhatsApp(true);
+      
+      console.log('🔄 Starting WhatsApp share process...');
 
       // ALWAYS regenerate PDF for guaranteed freshness - fetch latest data first
       const { data: { user } } = await supabase.auth.getUser();
@@ -245,8 +247,11 @@ ${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\
         .single();
 
       if (fetchError || !freshQuote) {
+        console.error('❌ Failed to fetch quote:', fetchError);
         throw new Error('Failed to fetch latest quote data');
       }
+      
+      console.log('✅ Quote data fetched:', freshQuote.quote_number);
 
       const { data: companyData, error: companyError } = await supabase
         .from('company_profiles')
@@ -264,6 +269,8 @@ ${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\
         throw new Error('User not authenticated');
       }
 
+      console.log('🔄 Generating PDF...');
+      
       const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: {
           quote: freshQuote, // Use fresh data from database
@@ -280,13 +287,16 @@ ${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\
       const documentId = pdfData?.documentId;
 
       if (!pdfUrl && documentId) {
+        console.log('⏳ PDF not ready, polling for download URL...');
         pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
       }
 
       if (pdfError || !pdfUrl) {
-        console.error('PDF Monkey error:', pdfError);
+        console.error('❌ PDF generation failed:', pdfError);
         throw new Error('Failed to generate professional PDF');
       }
+      
+      console.log('✅ PDF URL received:', pdfUrl.substring(0, 50) + '...');
 
       // Step 3: Store PDF metadata in database (NO URL - it expires)
       if (documentId) {
@@ -337,7 +347,7 @@ If you have any questions, please don't hesitate to contact us.
 Best regards,
 ${companyName}`;
 
-      // Step 6: Open WhatsApp with message and fresh PDF link
+      // Step 6: Build WhatsApp URL
       const clientPhone = clientData?.phone;
       
       let whatsappUrl: string;
@@ -349,18 +359,36 @@ ${companyName}`;
         // No number or international - share URL only
         whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
       }
+      
+      console.log('📱 Opening WhatsApp with URL (first 100 chars):', whatsappUrl.substring(0, 100) + '...');
 
-      window.open(whatsappUrl, '_blank');
+      // Step 7: Open WhatsApp (NOT the PDF directly)
+      try {
+        const whatsappWindow = window.open(whatsappUrl, '_blank');
+        
+        if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
+          // Popup was blocked
+          console.warn('⚠️ Popup blocked, trying location.href...');
+          window.location.href = whatsappUrl;
+        } else {
+          console.log('✅ WhatsApp opened successfully');
+        }
+      } catch (openError) {
+        console.error('❌ Error opening WhatsApp:', openError);
+        // Fallback to location.href
+        window.location.href = whatsappUrl;
+      }
 
       toast({
-        title: 'Sent via WhatsApp',
+        title: 'Opening WhatsApp',
+        description: 'WhatsApp will open with your quote message',
         variant: 'success',
         duration: 3000,
       });
 
       onSuccess?.();
     } catch (error: any) {
-      console.error('Error sharing via WhatsApp:', error);
+      console.error('❌ Error in WhatsApp share:', error);
       toast({
         title: 'Error',
         description: error.message || 'Failed to prepare quote for WhatsApp',
