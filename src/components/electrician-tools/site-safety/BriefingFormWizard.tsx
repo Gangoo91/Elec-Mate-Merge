@@ -620,6 +620,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                     value={formData.hazards}
                     onChange={(e) => setFormData(prev => ({ ...prev, hazards: e.target.value }))}
                     placeholder="List hazards and control measures..."
+                    className="whitespace-pre-wrap"
                   />
                 </div>
 
