@@ -2,21 +2,59 @@ import type { RAMSData, RAMSRisk } from '@/types/rams';
 import type { MethodStatementData, MethodStep } from '@/types/method-statement';
 
 interface AgentResponse {
-  response: string;
+  response?: string;
   confidence?: number;
   structuredData?: any;
+  riskAssessment?: {
+    hazards?: Array<{
+      hazard: string;
+      risk: string;
+      likelihood: number;
+      severity: number;
+      controls: string[];
+    }>;
+  };
+  methodStatementSteps?: any[];
 }
 
 /**
  * Transform Health & Safety agent response into RAMS risks
  */
 export function transformHealthSafetyToRAMS(
-  hsResponse: string,
+  hsResponse: AgentResponse,
   projectInfo: { projectName: string; location: string; assessor: string; date: string }
 ): { risks: RAMSRisk[]; activities: string[] } {
   const risks: RAMSRisk[] = [];
   const activities: string[] = [];
-  const lines = hsResponse.split('\n');
+  
+  // Handle structured response from health-safety agent
+  if (hsResponse.riskAssessment?.hazards) {
+    hsResponse.riskAssessment.hazards.forEach((hazard, idx) => {
+      const riskRating = hazard.likelihood * hazard.severity;
+      const residualRisk = Math.max(1, Math.floor(riskRating / 2));
+      
+      risks.push({
+        id: `risk-${idx + 1}`,
+        hazard: hazard.hazard,
+        risk: hazard.risk,
+        likelihood: hazard.likelihood,
+        severity: hazard.severity,
+        riskRating,
+        controls: hazard.controls.join('\n• '),
+        residualRisk,
+        furtherAction: "",
+        responsible: projectInfo.assessor,
+        actionBy: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        done: false
+      });
+    });
+    
+    return { risks, activities: activities.length > 0 ? activities : ["Electrical installation work"] };
+  }
+  
+  // Fallback to string parsing if response is a string
+  const responseText = typeof hsResponse === 'string' ? hsResponse : hsResponse.response || '';
+  const lines = responseText.split('\n');
   
   let currentHazard = "";
   let currentRisk = "";
@@ -119,9 +157,28 @@ export function transformHealthSafetyToRAMS(
 /**
  * Transform Installer agent response into Method Statement steps
  */
-export function transformInstallerToMethodSteps(installerResponse: string): MethodStep[] {
+export function transformInstallerToMethodSteps(installerResponse: AgentResponse): MethodStep[] {
   const steps: MethodStep[] = [];
-  const lines = installerResponse.split('\n');
+  
+  // Handle structured response from installer agent
+  if (installerResponse.methodStatementSteps && Array.isArray(installerResponse.methodStatementSteps)) {
+    return installerResponse.methodStatementSteps.map((step, idx) => ({
+      id: step.id || `step-${idx + 1}`,
+      stepNumber: step.stepNumber || idx + 1,
+      title: step.title || step.step || 'Installation Step',
+      description: step.description || '',
+      estimatedDuration: step.estimatedDuration || step.duration || '30 minutes',
+      riskLevel: step.riskLevel || 'medium',
+      safetyRequirements: step.safetyRequirements || [],
+      equipmentNeeded: step.equipmentNeeded || step.equipment || [],
+      qualifications: step.qualifications || [],
+      isCompleted: false
+    }));
+  }
+  
+  // Fallback to string parsing if response is a string
+  const responseText = typeof installerResponse === 'string' ? installerResponse : installerResponse.response || '';
+  const lines = responseText.split('\n');
   
   let stepNumber = 1;
   let currentStep: Partial<MethodStep> | null = null;
@@ -249,10 +306,10 @@ export function combineAgentOutputsToRAMS(
   }
 ): { ramsData: RAMSData; methodData: Partial<MethodStatementData> } {
   // Transform H&S response to RAMS risks
-  const { risks, activities } = transformHealthSafetyToRAMS(hsResponse.response, projectInfo);
+  const { risks, activities } = transformHealthSafetyToRAMS(hsResponse, projectInfo);
   
   // Transform Installer response to method steps
-  const steps = transformInstallerToMethodSteps(installerResponse.response);
+  const steps = transformInstallerToMethodSteps(installerResponse);
   
   // Create RAMS data
   const ramsData: RAMSData = {
@@ -273,7 +330,7 @@ export function combineAgentOutputsToRAMS(
     workType: "Electrical Installation",
     duration: estimateTotalDuration(steps),
     teamSize: "2-3 electricians",
-    description: extractWorkDescription(installerResponse.response),
+    description: extractWorkDescription(installerResponse),
     overallRiskLevel: calculateOverallRisk(risks),
     reviewDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 year from now
     steps
@@ -307,10 +364,11 @@ function estimateTotalDuration(steps: MethodStep[]): string {
   }
 }
 
-function extractWorkDescription(installerResponse: string): string {
-  const lines = installerResponse.split('\n').filter(l => l.trim().length > 20);
+function extractWorkDescription(installerResponse: AgentResponse): string {
+  const responseText = typeof installerResponse === 'string' ? installerResponse : installerResponse.response || '';
+  const lines = responseText.split('\n').filter(l => l.trim().length > 20);
   const firstParagraph = lines.slice(0, 3).join(' ').replace(/[*#]/g, '').trim();
-  return firstParagraph.substring(0, 300);
+  return firstParagraph.substring(0, 300) || 'Electrical installation work as per specifications';
 }
 
 function calculateOverallRisk(risks: RAMSRisk[]): 'low' | 'medium' | 'high' {
