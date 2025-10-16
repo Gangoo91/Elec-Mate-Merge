@@ -144,7 +144,7 @@ const InvoiceTableView = ({
               <TableHead>Due Date</TableHead>
               <TableHead>Amount</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right min-w-[160px]">Actions</TableHead>
+              <TableHead className="text-right w-[80px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -198,7 +198,7 @@ const InvoiceTableView = ({
                   <TableCell>
                     {getStatusBadge(invoice)}
                   </TableCell>
-                  <TableCell className="text-right min-w-[160px]">
+                  <TableCell className="text-right w-[80px]">
                     <div className="flex items-center justify-end">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
