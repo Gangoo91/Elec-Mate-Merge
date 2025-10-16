@@ -59,7 +59,7 @@ export const FormattedTextDisplay = ({
       elements.push(
         <p 
           key={`line-${key++}`} 
-          className="text-sm text-elec-light/90"
+          className="text-sm text-elec-light/90 pl-6"
           dangerouslySetInnerHTML={{ __html: processInlineFormatting(line) }}
         />
       );
