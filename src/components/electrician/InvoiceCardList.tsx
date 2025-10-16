@@ -38,6 +38,8 @@ interface InvoiceCardListProps {
   markingPaidId: string | null;
   downloadingPdfId: string | null;
   deletingInvoiceId: string | null;
+  sharingWhatsAppId?: string | null;
+  sharingEmailId?: string | null;
 }
 
 const InvoiceCardList = ({
@@ -52,6 +54,8 @@ const InvoiceCardList = ({
   markingPaidId,
   downloadingPdfId,
   deletingInvoiceId,
+  sharingWhatsAppId,
+  sharingEmailId,
 }: InvoiceCardListProps) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [invoiceToDelete, setInvoiceToDelete] = useState<Quote | null>(null);
@@ -279,18 +283,24 @@ const InvoiceCardList = ({
                   <>
                     <button
                       onClick={() => onShareWhatsApp?.(invoice)}
-                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
+                      disabled={sharingWhatsAppId === invoice.id}
+                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
                     >
                       <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm font-medium">WhatsApp</span>
+                      <span className="text-xs sm:text-sm font-medium">
+                        {sharingWhatsAppId === invoice.id ? 'Loading...' : 'WhatsApp'}
+                      </span>
                     </button>
 
                     <button
                       onClick={() => onShareEmail?.(invoice)}
-                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
+                      disabled={sharingEmailId === invoice.id}
+                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
                     >
                       <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm font-medium">Email</span>
+                      <span className="text-xs sm:text-sm font-medium">
+                        {sharingEmailId === invoice.id ? 'Loading...' : 'Email'}
+                      </span>
                     </button>
 
                     <AlertDialog>
@@ -323,18 +333,24 @@ const InvoiceCardList = ({
                   <>
                     <button
                       onClick={() => onShareWhatsApp?.(invoice)}
-                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
+                      disabled={sharingWhatsAppId === invoice.id}
+                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
                     >
                       <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm font-medium">WhatsApp</span>
+                      <span className="text-xs sm:text-sm font-medium">
+                        {sharingWhatsAppId === invoice.id ? 'Loading...' : 'WhatsApp'}
+                      </span>
                     </button>
 
                     <button
                       onClick={() => onShareEmail?.(invoice)}
-                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
+                      disabled={sharingEmailId === invoice.id}
+                      className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
                     >
                       <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      <span className="text-xs sm:text-sm font-medium">Email</span>
+                      <span className="text-xs sm:text-sm font-medium">
+                        {sharingEmailId === invoice.id ? 'Loading...' : 'Email'}
+                      </span>
                     </button>
 
                     <button

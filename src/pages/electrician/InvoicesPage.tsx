@@ -24,6 +24,8 @@ const InvoicesPage = () => {
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
   const [downloadingPdfId, setDownloadingPdfId] = useState<string | null>(null);
   const [deletingInvoiceId, setDeletingInvoiceId] = useState<string | null>(null);
+  const [sharingWhatsAppId, setSharingWhatsAppId] = useState<string | null>(null);
+  const [sharingEmailId, setSharingEmailId] = useState<string | null>(null);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
@@ -247,6 +249,7 @@ const InvoicesPage = () => {
   };
 
   const handleShareWhatsApp = async (invoice: Quote) => {
+    setSharingWhatsAppId(invoice.id);
     try {
       toast({
         title: 'Preparing PDF',
@@ -312,10 +315,13 @@ Thank you for your business!`;
         description: 'Failed to prepare invoice for WhatsApp. Please try again.',
         variant: 'destructive',
       });
+    } finally {
+      setSharingWhatsAppId(null);
     }
   };
 
   const handleShareEmail = async (invoice: Quote) => {
+    setSharingEmailId(invoice.id);
     try {
       toast({
         title: 'Preparing PDF',
@@ -393,6 +399,8 @@ Thank you for your business!`;
         description: 'Failed to prepare invoice for email. Please try again.',
         variant: 'destructive',
       });
+    } finally {
+      setSharingEmailId(null);
     }
   };
 
@@ -652,6 +660,8 @@ Thank you for your business!`;
                 markingPaidId={markingPaidId}
                 downloadingPdfId={downloadingPdfId}
                 deletingInvoiceId={deletingInvoiceId}
+                sharingWhatsAppId={sharingWhatsAppId}
+                sharingEmailId={sharingEmailId}
               />
             </>
           )}
