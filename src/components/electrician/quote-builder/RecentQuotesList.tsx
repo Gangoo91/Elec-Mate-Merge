@@ -13,6 +13,7 @@ import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { Badge } from '@/components/ui/badge';
 import QuoteTableView from '@/components/electrician/quote-builder/QuoteTableView';
 import QuoteCardView from '@/components/electrician/quote-builder/QuoteCardView';
+import { format } from 'date-fns';
 
 interface RecentQuotesListProps {
   quotes: Quote[];
@@ -38,6 +39,22 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showInvoiceDecision, setShowInvoiceDecision] = useState(false);
   const [quoteForInvoice, setQuoteForInvoice] = useState<Quote | null>(null);
+  
+  
+  // Poll PDF Monkey status until downloadUrl is ready
+
+  // Poll PDF Monkey status until downloadUrl is ready
+  const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
+    for (let i = 0; i < 45; i++) {
+      const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: { documentId, mode: 'status' },
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      if (data?.downloadUrl) return data.downloadUrl;
+      await new Promise((res) => setTimeout(res, 2000));
+    }
+    return null;
+  };
 
   const canRaiseInvoice = (quote: Quote) => {
     return quote.acceptance_status === 'accepted' && !quote.invoice_raised;
@@ -244,6 +261,241 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
     }
   };
 
+  const handleShareWhatsApp = async (quote: Quote) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      const { data: freshQuote, error: fetchError } = await supabase
+        .from('quotes')
+        .select('*')
+        .eq('id', quote.id)
+        .eq('user_id', user.id)
+        .single();
+
+      if (fetchError || !freshQuote) throw new Error('Failed to fetch latest quote data');
+
+      const { data: companyData } = await supabase
+        .from('company_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('User not authenticated');
+
+      toast({
+        title: "Generating PDF",
+        description: "Please wait...",
+      });
+
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: {
+          quote: freshQuote,
+          companyProfile: companyData,
+          invoice_mode: false,
+          force_regenerate: true
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      let pdfUrl = pdfData?.downloadUrl;
+      const documentId = pdfData?.documentId;
+
+      if (!pdfUrl && documentId) {
+        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+      }
+
+      if (pdfError || !pdfUrl) throw new Error('Failed to generate PDF');
+
+      if (documentId) {
+        const newVersion = (freshQuote.pdf_version || 0) + 1;
+        await supabase
+          .from('quotes')
+          .update({
+            pdf_document_id: documentId,
+            pdf_generated_at: new Date().toISOString(),
+            pdf_version: newVersion
+          })
+          .eq('id', quote.id);
+      }
+
+      const cacheBustedPdfUrl = `${pdfUrl}?t=${Date.now()}`;
+
+      const clientData = typeof freshQuote.client_data === 'string' 
+        ? JSON.parse(freshQuote.client_data) 
+        : freshQuote.client_data;
+      const clientName = clientData?.name || 'Valued Client';
+      const companyName = companyData?.company_name || 'Your Company';
+      const totalAmount = freshQuote.total || 0;
+      const validityDate = freshQuote.expiry_date 
+        ? format(new Date(freshQuote.expiry_date), 'dd MMMM yyyy')
+        : format(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'dd MMMM yyyy');
+      
+      const jobDetails = typeof freshQuote.job_details === 'string' 
+        ? JSON.parse(freshQuote.job_details) 
+        : freshQuote.job_details;
+      const jobTitle = jobDetails?.title || 'Electrical Work';
+      
+      const message = `📋 *Quote ${freshQuote.quote_number}*
+
+Dear ${clientName},
+
+Please find your quote for ${jobTitle}
+
+💰 Total Amount: ${formatCurrency(totalAmount)}
+Valid until: ${validityDate}
+
+📥 Download Quote (PDF):
+${cacheBustedPdfUrl}
+
+If you have any questions, please don't hesitate to contact us.
+
+Best regards,
+${companyName}`;
+
+      const clientPhone = clientData?.phone;
+      let whatsappUrl: string;
+      if (clientPhone && (clientPhone.startsWith('+44') || clientPhone.startsWith('44'))) {
+        const cleanPhone = clientPhone.replace(/\s/g, '').replace(/^44/, '+44');
+        whatsappUrl = `https://wa.me/${cleanPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
+      } else {
+        whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      }
+
+      const whatsappWindow = window.open(whatsappUrl, '_blank');
+      
+      if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
+        window.location.href = whatsappUrl;
+      }
+
+      toast({
+        title: 'Opening WhatsApp',
+        description: 'WhatsApp will open with your quote message',
+        variant: 'success',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to share via WhatsApp',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleShareEmail = async (quote: Quote) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      const { data: freshQuote, error: fetchError } = await supabase
+        .from('quotes')
+        .select('*')
+        .eq('id', quote.id)
+        .eq('user_id', user.id)
+        .single();
+
+      if (fetchError || !freshQuote) throw new Error('Failed to fetch latest quote data');
+
+      const { data: companyData } = await supabase
+        .from('company_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('User not authenticated');
+
+      toast({
+        title: "Generating PDF",
+        description: "Please wait...",
+      });
+
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: {
+          quote: freshQuote,
+          companyProfile: companyData,
+          invoice_mode: false,
+          force_regenerate: true
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      let pdfUrl = pdfData?.downloadUrl;
+      const documentId = pdfData?.documentId;
+
+      if (!pdfUrl && documentId) {
+        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
+      }
+
+      if (pdfError || !pdfUrl) throw new Error('Failed to generate PDF');
+
+      if (documentId) {
+        const newVersion = (freshQuote.pdf_version || 0) + 1;
+        await supabase
+          .from('quotes')
+          .update({
+            pdf_document_id: documentId,
+            pdf_generated_at: new Date().toISOString(),
+            pdf_version: newVersion
+          })
+          .eq('id', quote.id);
+      }
+
+      const cacheBustedPdfUrl = `${pdfUrl}?t=${Date.now()}`;
+
+      const clientData = typeof freshQuote.client_data === 'string' 
+        ? JSON.parse(freshQuote.client_data) 
+        : freshQuote.client_data;
+      const clientEmail = clientData?.email || '';
+      const companyName = companyData?.company_name || 'Your Company';
+      const totalAmount = freshQuote.total || 0;
+      const validityDate = freshQuote.expiry_date 
+        ? format(new Date(freshQuote.expiry_date), 'dd MMMM yyyy')
+        : format(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'dd MMMM yyyy');
+      
+      const jobDetails = typeof freshQuote.job_details === 'string' 
+        ? JSON.parse(freshQuote.job_details) 
+        : freshQuote.job_details;
+      const jobTitle = jobDetails?.title || 'Electrical Work';
+
+      const subject = `Quote ${freshQuote.quote_number} - ${jobTitle}`;
+      const body = `Dear ${clientData?.name || 'Valued Client'},
+
+Please find your quote for ${jobTitle}.
+
+Total Amount: ${formatCurrency(totalAmount)}
+Valid until: ${validityDate}
+
+Download your quote here:
+${cacheBustedPdfUrl}
+
+If you have any questions, please contact us.
+
+Best regards,
+${companyName}`;
+
+      const mailtoLink = `mailto:${clientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+
+      toast({
+        title: 'Opening Email',
+        description: 'Your email client will open with the quote',
+        variant: 'success',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to prepare email',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const handleHasChanges = () => {
     if (!quoteForInvoice) return;
     setShowInvoiceDecision(false);
@@ -427,12 +679,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           setQuoteForInvoice(quote);
           setShowInvoiceDecision(true);
         }}
-        onShareWhatsApp={(quote) => {
-          navigate(`/electrician/quote-builder/${quote.id}`, { state: { action: 'whatsapp' } });
-        }}
-        onShareEmail={(quote) => {
-          navigate(`/electrician/quote-builder/${quote.id}`, { state: { action: 'email' } });
-        }}
+        onShareWhatsApp={handleShareWhatsApp}
+        onShareEmail={handleShareEmail}
       />
 
       {/* Mobile/Tablet Card View */}
