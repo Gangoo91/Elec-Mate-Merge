@@ -322,20 +322,9 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       toolChoice: { type: 'function', function: { name: 'provide_safety_assessment' } }
     });
 
-    const aiData = JSON.parse(aiResult.content);
-    
-    // Validate AI response structure
-    if (!aiData?.choices?.[0]?.message?.tool_calls?.[0]) {
-      logger.error('Invalid AI response structure', { 
-        hasChoices: !!aiData?.choices,
-        hasMessage: !!aiData?.choices?.[0]?.message,
-        hasToolCalls: !!aiData?.choices?.[0]?.message?.tool_calls 
-      });
-      throw new Error('AI response missing required tool_calls data');
-    }
-    
-    const toolCall = aiData.choices[0].message.tool_calls[0];
-    const safetyResult = JSON.parse(toolCall.function.arguments);
+    // AI wrapper already extracts tool call arguments as JSON string
+    // Just parse it directly - no need to navigate through choices/message/tool_calls
+    const safetyResult = JSON.parse(aiResult.content);
 
     logger.info('Risk assessment completed', {
       hazardsIdentified: safetyResult.riskAssessment?.hazards?.length,
