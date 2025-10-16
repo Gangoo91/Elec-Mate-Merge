@@ -2,10 +2,17 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Download, Eye, Receipt, ArrowRight, User } from 'lucide-react';
+import { Download, Eye, Receipt, ArrowRight, User, MoreVertical, Mail, MessageCircle } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format } from 'date-fns';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
 
 interface QuoteTableViewProps {
   quotes: Quote[];
@@ -18,6 +25,8 @@ interface QuoteTableViewProps {
   formatCurrency: (amount: number) => string;
   canRaiseInvoice: (quote: Quote) => boolean;
   onInvoiceAction: (quote: Quote) => void;
+  onShareWhatsApp: (quote: Quote) => void;
+  onShareEmail: (quote: Quote) => void;
 }
 
 const QuoteTableView: React.FC<QuoteTableViewProps> = ({
@@ -31,6 +40,8 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
   formatCurrency,
   canRaiseInvoice,
   onInvoiceAction,
+  onShareWhatsApp,
+  onShareEmail,
 }) => {
   if (quotes.length === 0) {
     return null;
@@ -102,43 +113,49 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
 
                 {/* Actions */}
                 <TableCell className="text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    {/* Download Button */}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRegeneratePDF(quote)}
-                      disabled={loadingAction === `pdf-${quote.id}`}
-                      className="h-8"
-                    >
-                      <Download className="h-4 w-4" />
-                    </Button>
-
-                    {/* View Button */}
-                    <Button
-                      variant="default"
-                      size="sm"
-                      onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
-                      className="h-8"
-                    >
-                      <Eye className="h-4 w-4 mr-1" />
-                      View
-                    </Button>
-
-                    {/* Send to Invoice */}
-                    {canRaiseInvoice(quote) && (
-                      <Button
-                        variant="gold"
-                        size="sm"
-                        onClick={() => onInvoiceAction(quote)}
-                        disabled={loadingAction === `invoice-${quote.id}`}
-                        className="h-8"
-                      >
-                        <Receipt className="h-4 w-4 mr-1" />
-                        Invoice
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <MoreVertical className="h-4 w-4" />
                       </Button>
-                    )}
-                  </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuItem onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}>
+                        <Eye className="h-4 w-4 mr-2" />
+                        View Quote
+                      </DropdownMenuItem>
+                      
+                      <DropdownMenuItem onClick={() => handleRegeneratePDF(quote)} disabled={loadingAction === `pdf-${quote.id}`}>
+                        <Download className="h-4 w-4 mr-2" />
+                        Download PDF
+                      </DropdownMenuItem>
+                      
+                      <DropdownMenuSeparator />
+                      
+                      <DropdownMenuItem onClick={() => onShareWhatsApp(quote)}>
+                        <MessageCircle className="h-4 w-4 mr-2" />
+                        Send via WhatsApp
+                      </DropdownMenuItem>
+                      
+                      <DropdownMenuItem onClick={() => onShareEmail(quote)}>
+                        <Mail className="h-4 w-4 mr-2" />
+                        Send via Email
+                      </DropdownMenuItem>
+                      
+                      {canRaiseInvoice(quote) && (
+                        <>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem 
+                            onClick={() => onInvoiceAction(quote)} 
+                            disabled={loadingAction === `invoice-${quote.id}`}
+                          >
+                            <Receipt className="h-4 w-4 mr-2" />
+                            Raise Invoice
+                          </DropdownMenuItem>
+                        </>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             ))}

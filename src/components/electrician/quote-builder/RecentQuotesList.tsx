@@ -427,6 +427,12 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           setQuoteForInvoice(quote);
           setShowInvoiceDecision(true);
         }}
+        onShareWhatsApp={(quote) => {
+          navigate(`/electrician/quote-builder/${quote.id}`, { state: { action: 'whatsapp' } });
+        }}
+        onShareEmail={(quote) => {
+          navigate(`/electrician/quote-builder/${quote.id}`, { state: { action: 'email' } });
+        }}
       />
 
       {/* Mobile/Tablet Card View */}
