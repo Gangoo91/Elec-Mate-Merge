@@ -223,7 +223,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       model: 'gpt-5-mini-2025-08-07',
       systemPrompt,
       userPrompt,
-      maxTokens: 3000,
+      maxTokens: 10000,
       timeoutMs: 35000,
       tools: [{
         type: 'function',

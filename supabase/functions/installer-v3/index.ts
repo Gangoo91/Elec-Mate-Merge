@@ -349,7 +349,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       model,
       systemPrompt,
       userPrompt,
-      maxTokens: 3000,   // Increased tokens for detailed responses
+      maxTokens: 10000,   // Increased tokens for detailed responses
       timeoutMs: 35000,  // 35s timeout
       tools: [{
         type: 'function',

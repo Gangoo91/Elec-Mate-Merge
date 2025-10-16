@@ -296,7 +296,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       model: 'gpt-5-mini-2025-08-07',
       systemPrompt,
       userPrompt,
-      maxTokens: 3000,
+      maxTokens: 10000,
       timeoutMs: 35000,
       tools: [{
         type: 'function',

@@ -248,7 +248,7 @@ Include phases, resources, compliance requirements, and risk management.`;
       model: 'gpt-5-mini-2025-08-07',
       systemPrompt,
       userPrompt,
-      maxTokens: 2000,
+      maxTokens: 10000,
       timeoutMs: 55000,
       tools: [{
         type: 'function',
