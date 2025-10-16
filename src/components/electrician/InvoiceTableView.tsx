@@ -199,98 +199,86 @@ const InvoiceTableView = ({
                     {getStatusBadge(invoice)}
                   </TableCell>
                   <TableCell className="text-right min-w-[160px]">
-                    <TooltipProvider>
-                      <div className="flex items-center justify-end gap-2">
-                        {/* View/Edit Button */}
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onClick={() => onInvoiceAction(invoice)}
-                              className="h-8 w-8 p-0"
-                              aria-label={status === 'draft' ? 'Edit invoice' : 'View invoice'}
-                            >
-                              {status === 'draft' ? (
-                                <Edit className="h-4 w-4" />
-                              ) : (
-                                <Eye className="h-4 w-4" />
-                              )}
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>{status === 'draft' ? 'Edit invoice' : 'View invoice'}</p>
-                          </TooltipContent>
-                        </Tooltip>
-
-                        {/* More Actions Menu */}
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="h-8 w-8 p-0"
-                              aria-label="More actions"
-                            >
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="w-56 bg-background border-border z-50">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            
-                            <DropdownMenuItem
-                              onClick={() => onDownloadPDF(invoice)}
-                              disabled={downloadingPdfId === invoice.id}
-                            >
-                              <Download className="h-4 w-4 mr-2" />
-                              Download PDF
-                            </DropdownMenuItem>
-
-                            {onShareWhatsApp && (
-                              <DropdownMenuItem
-                                onClick={() => onShareWhatsApp(invoice)}
-                              >
-                                <Send className="h-4 w-4 mr-2" />
-                                Send to WhatsApp
-                              </DropdownMenuItem>
-                            )}
-
-                            {onShareEmail && (
-                              <DropdownMenuItem
-                                onClick={() => onShareEmail(invoice)}
-                              >
-                                <Mail className="h-4 w-4 mr-2" />
-                                Send via Email
-                              </DropdownMenuItem>
-                            )}
-
-                            {status !== 'paid' && (
+                    <div className="flex items-center justify-end">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-8 w-8 p-0"
+                            aria-label="More actions"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-56 bg-background border-border z-50">
+                          <DropdownMenuItem
+                            onClick={() => onInvoiceAction(invoice)}
+                          >
+                            {status === 'draft' ? (
                               <>
-                                <DropdownMenuSeparator />
-                                
-                                <DropdownMenuItem
-                                  onClick={() => onMarkAsPaid(invoice)}
-                                  disabled={markingPaidId === invoice.id}
-                                >
-                                  <CheckCircle className="h-4 w-4 mr-2" />
-                                  Mark as Paid
-                                </DropdownMenuItem>
-
-                                <DropdownMenuItem
-                                  onClick={() => handleDeleteClick(invoice)}
-                                  disabled={deletingInvoiceId === invoice.id}
-                                  className="text-destructive focus:text-destructive"
-                                >
-                                  <Trash2 className="h-4 w-4 mr-2" />
-                                  Delete Invoice
-                                </DropdownMenuItem>
+                                <Edit className="h-4 w-4 mr-2" />
+                                Edit Invoice
+                              </>
+                            ) : (
+                              <>
+                                <Eye className="h-4 w-4 mr-2" />
+                                View Invoice
                               </>
                             )}
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </TooltipProvider>
+                          </DropdownMenuItem>
+                          
+                          <DropdownMenuItem
+                            onClick={() => onDownloadPDF(invoice)}
+                            disabled={downloadingPdfId === invoice.id}
+                          >
+                            <Download className="h-4 w-4 mr-2" />
+                            Download PDF
+                          </DropdownMenuItem>
+
+                          {onShareWhatsApp && (
+                            <DropdownMenuItem
+                              onClick={() => onShareWhatsApp(invoice)}
+                            >
+                              <Send className="h-4 w-4 mr-2" />
+                              Send to WhatsApp
+                            </DropdownMenuItem>
+                          )}
+
+                          {onShareEmail && (
+                            <DropdownMenuItem
+                              onClick={() => onShareEmail(invoice)}
+                            >
+                              <Mail className="h-4 w-4 mr-2" />
+                              Send via Email
+                            </DropdownMenuItem>
+                          )}
+
+                          {status !== 'paid' && (
+                            <>
+                              <DropdownMenuSeparator />
+                              
+                              <DropdownMenuItem
+                                onClick={() => onMarkAsPaid(invoice)}
+                                disabled={markingPaidId === invoice.id}
+                              >
+                                <CheckCircle className="h-4 w-4 mr-2" />
+                                Mark as Paid
+                              </DropdownMenuItem>
+
+                              <DropdownMenuItem
+                                onClick={() => handleDeleteClick(invoice)}
+                                disabled={deletingInvoiceId === invoice.id}
+                                className="text-destructive focus:text-destructive"
+                              >
+                                <Trash2 className="h-4 w-4 mr-2" />
+                                Delete Invoice
+                              </DropdownMenuItem>
+                            </>
+                          )}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
                   </TableCell>
                 </TableRow>
               );
