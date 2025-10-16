@@ -53,7 +53,14 @@ export function transformHealthSafetyToRAMS(
   }
   
   // Fallback to string parsing if response is a string
-  const responseText = typeof hsResponse === 'string' ? hsResponse : hsResponse.response || '';
+  let responseText = '';
+  if (typeof hsResponse === 'string') {
+    responseText = hsResponse;
+  } else if (typeof hsResponse.response === 'string') {
+    responseText = hsResponse.response;
+  } else if (typeof hsResponse.response === 'object' && hsResponse.response && 'response' in hsResponse.response && typeof (hsResponse.response as any).response === 'string') {
+    responseText = (hsResponse.response as any).response;
+  }
   const lines = responseText.split('\n');
   
   let currentHazard = "";
@@ -177,7 +184,14 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
   }
   
   // Fallback to string parsing if response is a string
-  const responseText = typeof installerResponse === 'string' ? installerResponse : installerResponse.response || '';
+  let responseText = '';
+  if (typeof installerResponse === 'string') {
+    responseText = installerResponse;
+  } else if (typeof installerResponse.response === 'string') {
+    responseText = installerResponse.response;
+  } else if (typeof installerResponse.response === 'object' && installerResponse.response && 'response' in installerResponse.response && typeof (installerResponse.response as any).response === 'string') {
+    responseText = (installerResponse.response as any).response;
+  }
   const lines = responseText.split('\n');
   
   let stepNumber = 1;
@@ -365,7 +379,14 @@ function estimateTotalDuration(steps: MethodStep[]): string {
 }
 
 function extractWorkDescription(installerResponse: AgentResponse): string {
-  const responseText = typeof installerResponse === 'string' ? installerResponse : installerResponse.response || '';
+  let responseText = '';
+  if (typeof installerResponse === 'string') {
+    responseText = installerResponse;
+  } else if (typeof installerResponse.response === 'string') {
+    responseText = installerResponse.response;
+  } else if (typeof installerResponse.response === 'object' && installerResponse.response && 'response' in installerResponse.response && typeof (installerResponse.response as any).response === 'string') {
+    responseText = (installerResponse.response as any).response;
+  }
   const lines = responseText.split('\n').filter(l => l.trim().length > 20);
   const firstParagraph = lines.slice(0, 3).join(' ').replace(/[*#]/g, '').trim();
   return firstParagraph.substring(0, 300) || 'Electrical installation work as per specifications';
