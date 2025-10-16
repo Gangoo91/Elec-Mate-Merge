@@ -6,12 +6,17 @@ import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, ArrowRight, Sparkles, Save, FileText, Users, AlertTriangle, Camera, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, Save, FileText, Users, AlertTriangle, Camera, Loader2, Clock, AlertCircle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { TemplateSelector } from "./briefing-templates/TemplateSelector";
 import { FormattedTextDisplay } from "./FormattedTextDisplay";
+import { useBriefingAutoSave } from "@/hooks/useBriefingAutoSave";
+import { RiskMatrixGuide } from "./wizard-helpers/RiskMatrixGuide";
+import { StepValidation } from "./wizard-helpers/StepValidation";
+import { EnhancedPhotoManager } from "./wizard-helpers/EnhancedPhotoManager";
 
 const HAZARD_CATEGORIES = [
   { id: 'live-circuits', label: 'Live Circuits', category: 'Electrical' },
@@ -40,6 +45,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
   const [showTemplateSelector, setShowTemplateSelector] = useState(!initialData);
+  const [showRestoreDialog, setShowRestoreDialog] = useState(false);
 
   // Form data - pre-populate if editing
   const [formData, setFormData] = useState({
@@ -77,8 +83,46 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
     attendees: initialData?.attendees || [] as any[],
   });
 
+  // Auto-save hook
+  const {
+    loadSavedData,
+    saveData: manualSave,
+    clearSavedData,
+    lastSaved,
+    hasUnsavedChanges,
+    timeSinceLastSave,
+  } = useBriefingAutoSave(formData, step, !!initialData);
+
   const totalSteps = 7; // Including template selection
   const progress = (step / totalSteps) * 100;
+
+  // Check for saved data on mount
+  useEffect(() => {
+    if (initialData) return; // Don't load auto-save when editing
+    
+    const saved = loadSavedData();
+    if (saved) {
+      setShowRestoreDialog(true);
+    }
+  }, []);
+
+  const handleRestoreSaved = () => {
+    const saved = loadSavedData();
+    if (saved) {
+      setFormData(saved.formData);
+      setStep(saved.step);
+      toast({
+        title: "Progress Restored",
+        description: "Your previous work has been restored.",
+      });
+    }
+    setShowRestoreDialog(false);
+  };
+
+  const handleDiscardSaved = () => {
+    clearSavedData();
+    setShowRestoreDialog(false);
+  };
 
   const handleTemplateSelect = (template: any) => {
     setSelectedTemplate(template);
@@ -296,6 +340,9 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
         description: initialData?.id ? "Briefing updated successfully." : (asDraft ? "You can complete it later." : "Team briefing created successfully."),
       });
 
+      // Clear auto-save data on successful save
+      clearSavedData();
+
       onSuccess();
       onClose();
     } catch (error: any) {
@@ -368,6 +415,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                   : 'Enter briefing title'
               }
               icon={<FileText className="h-4 w-4" />}
+              hint="A clear, descriptive title helps identify the briefing later"
             />
 
             <MobileInputWrapper
@@ -376,6 +424,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
               onChange={(v) => setFormData(prev => ({ ...prev, location: v }))}
               placeholder="Full site address or meeting location"
               icon={<FileText className="h-4 w-4" />}
+              hint="BS 7671 requires full site address for installation work"
             />
 
             <MobileInputWrapper
@@ -434,7 +483,16 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                 className="min-h-32 bg-card border-primary/30 text-elec-light resize-none"
                 maxLength={500}
               />
-              <p className="text-xs text-elec-light/60">{formData.briefingContent.length}/500 characters</p>
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-elec-light/60">
+                  {formData.briefingContent.length}/500 characters
+                </p>
+                {formData.briefingContent.length < 50 && (
+                  <p className="text-xs text-elec-yellow/70">
+                    Add {50 - formData.briefingContent.length} more for AI generation
+                  </p>
+                )}
+              </div>
             </div>
 
             {formData.briefingType === 'site-work' && (
@@ -493,9 +551,12 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                 { value: "apprentice", label: "Apprentice Level" },
                 { value: "qualified", label: "Qualified Electricians" },
                 { value: "mixed", label: "Mixed Experience" },
-                { value: "senior", label: "Senior/Expert Team" },
-              ]}
-            />
+                 { value: "senior", label: "Senior/Expert Team" },
+               ]}
+             />
+
+            {/* Smart Validation */}
+            <StepValidation step={step} formData={formData} />
           </div>
         );
 
@@ -545,17 +606,17 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
               />
             </div>
 
-            <MobileSelectWrapper
-              label="Overall Risk Level"
-              value={formData.riskLevel}
-              onValueChange={(v) => setFormData(prev => ({ ...prev, riskLevel: v }))}
-              options={[
-                { value: "low", label: "Low Risk" },
-                { value: "medium", label: "Medium Risk" },
-                { value: "high", label: "High Risk" },
-                { value: "critical", label: "Critical Risk" },
-              ]}
-            />
+            {/* Risk Matrix Guide */}
+            <div className="space-y-2">
+              <Label className="text-elec-light">Overall Risk Level</Label>
+              <RiskMatrixGuide
+                selectedRiskLevel={formData.riskLevel}
+                identifiedHazards={formData.identifiedHazards.map(h => 
+                  HAZARD_CATEGORIES.find(cat => cat.label === h)?.id || ''
+                )}
+                onRiskLevelChange={(level) => setFormData(prev => ({ ...prev, riskLevel: level }))}
+              />
+            </div>
 
             <div className="space-y-2">
               <Label className="text-elec-light">Special Safety Considerations</Label>
@@ -566,6 +627,9 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                 className="h-24 bg-card border-primary/30 text-elec-light"
               />
             </div>
+
+            {/* Smart Validation */}
+            <StepValidation step={step} formData={formData} />
           </div>
         );
 
@@ -641,6 +705,9 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                 >
                   Regenerate Content
                 </Button>
+
+                {/* Smart Validation */}
+                <StepValidation step={step} formData={formData} />
               </div>
             )}
           </div>
@@ -651,63 +718,14 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
           <div className="space-y-4">
             <h3 className="text-base font-semibold text-elec-light mb-3">Photo Upload (Optional)</h3>
             
-            <div className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center space-y-3">
-              <Camera className="h-10 w-10 text-elec-yellow mx-auto" />
-              <div className="space-y-1">
-                <p className="text-sm text-elec-light">Add photos to your briefing</p>
-                <p className="text-xs text-elec-light/60">Upload reference photos, site conditions, or incident images</p>
-              </div>
-              <input
-                type="file"
-                id="photo-upload"
-                className="hidden"
-                accept="image/*"
-                multiple
-                capture="environment"
-                onChange={handlePhotoUpload}
-                disabled={uploadingPhotos}
-              />
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="mt-2"
-                onClick={() => document.getElementById('photo-upload')?.click()}
-                disabled={uploadingPhotos}
-              >
-                {uploadingPhotos ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Uploading...
-                  </>
-                ) : (
-                  <>
-                    <Camera className="h-4 w-4 mr-2" />
-                    Add Photos
-                  </>
-                )}
-              </Button>
-            </div>
-
-            {formData.photos.length > 0 && (
-              <div className="space-y-3">
-                <p className="text-xs text-elec-light/70">{formData.photos.length} photo(s) attached</p>
-                <div className="grid grid-cols-2 gap-3">
-                  {formData.photos.map((photo, idx) => (
-                    <div key={idx} className="relative aspect-video bg-card rounded-lg overflow-hidden border border-primary/20 group">
-                      <img src={photo.url} alt={photo.caption || `Photo ${idx + 1}`} className="w-full h-full object-cover" />
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        className="absolute top-1 right-1 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                        onClick={() => handleDeletePhoto(idx)}
-                      >
-                        ×
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            {/* Enhanced Photo Manager */}
+            <EnhancedPhotoManager
+              photos={formData.photos}
+              onPhotosChange={(photos) => setFormData(prev => ({ ...prev, photos }))}
+              onPhotoUpload={handlePhotoUpload}
+              onDeletePhoto={handleDeletePhoto}
+              uploadingPhotos={uploadingPhotos}
+            />
           </div>
         );
 
@@ -790,59 +808,126 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto bg-background border-primary/30">
-      <CardHeader>
-        <div className="space-y-4">
-          <CardTitle className="text-elec-yellow">AI-Powered Briefing Wizard</CardTitle>
-          <Progress value={progress} className="h-2" />
-          <div className="flex justify-between text-xs text-elec-light/60">
-            <span>Step {step} of {totalSteps}</span>
-            <span>{Math.round(progress)}% Complete</span>
-          </div>
+    <>
+      {/* Restore Dialog */}
+      {showRestoreDialog && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md bg-background border-primary/30">
+            <CardHeader>
+              <CardTitle className="text-elec-yellow flex items-center gap-2">
+                <AlertCircle className="h-5 w-5" />
+                Continue Previous Work?
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-elec-light">
+                We found unsaved work from a previous session. Would you like to continue where you left off?
+              </p>
+              <div className="flex gap-3">
+                <Button
+                  onClick={handleRestoreSaved}
+                  className="flex-1 bg-elec-yellow text-background"
+                >
+                  Restore
+                </Button>
+                <Button
+                  onClick={handleDiscardSaved}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  Start Fresh
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </CardHeader>
+      )}
 
-      <CardContent className="space-y-6">
-        {renderStep()}
-
-        <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t">
-          <div className="flex gap-3 flex-1">
-            {step > 1 && (
-              <Button
-                onClick={() => setStep(s => s - 1)}
-                variant="outline"
-                className="flex-1"
-              >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Previous
-              </Button>
-            )}
-
-            {step < totalSteps && (
-              <Button
-                onClick={() => setStep(s => s + 1)}
-                className="flex-1 bg-elec-yellow text-background"
-                disabled={
-                  (step === 1 && (!formData.briefingTitle || !formData.location || !formData.conductorName)) ||
-                  (step === 2 && !formData.briefingContent) ||
-                  (step === 4 && !aiContent)
-                }
-              >
-                Next
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
+      <Card className="w-full max-w-2xl mx-auto bg-background border-primary/30">
+        <CardHeader>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-elec-yellow">AI-Powered Briefing Wizard</CardTitle>
+              {!initialData && timeSinceLastSave && (
+                <div className="flex items-center gap-2 text-xs text-elec-light/60">
+                  <Clock className="h-3 w-3" />
+                  <span>Saved {timeSinceLastSave}</span>
+                </div>
+              )}
+            </div>
+            <Progress value={progress} className="h-2" />
+            <div className="flex justify-between text-xs text-elec-light/60">
+              <span>Step {step} of {totalSteps}</span>
+              <span>{Math.round(progress)}% Complete</span>
+            </div>
+            {hasUnsavedChanges && !initialData && (
+              <Alert className="bg-elec-yellow/5 border-elec-yellow/20">
+                <AlertCircle className="h-4 w-4 text-elec-yellow" />
+                <AlertDescription className="text-xs text-elec-light/70">
+                  Your progress is being auto-saved every 30 seconds
+                </AlertDescription>
+              </Alert>
             )}
           </div>
-          
-          <Button
-            onClick={onClose}
-            variant="ghost"
-            className="w-full sm:w-auto"
-          >
-            Close
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+        </CardHeader>
+
+        <CardContent className="space-y-6">
+          {renderStep()}
+
+          <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t">
+            <div className="flex gap-3 flex-1">
+              {step > 1 && (
+                <Button
+                  onClick={() => setStep(s => s - 1)}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Previous
+                </Button>
+              )}
+
+              {step < totalSteps && (
+                <Button
+                  onClick={() => setStep(s => s + 1)}
+                  className="flex-1 bg-elec-yellow text-background"
+                  disabled={
+                    (step === 1 && (!formData.briefingTitle || !formData.location || !formData.conductorName)) ||
+                    (step === 2 && !formData.briefingContent) ||
+                    (step === 4 && !aiContent)
+                  }
+                >
+                  Next
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              )}
+            </div>
+            
+            <div className="flex gap-3">
+              {!initialData && (
+                <Button
+                  onClick={manualSave}
+                  variant="outline"
+                  size="sm"
+                  className="w-full sm:w-auto"
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Save Progress
+                </Button>
+              )}
+              
+              <Button
+                onClick={onClose}
+                variant="ghost"
+                size="sm"
+                className="w-full sm:w-auto"
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </>
   );
 };
