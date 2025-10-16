@@ -316,18 +316,18 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 <Button
                   onClick={handleGenerateRAMSPDF}
                   disabled={isGenerating}
-                  className="h-14 w-full touch-manipulation bg-primary text-primary-foreground hover:bg-primary/90 font-semibold active:scale-95 transition-transform"
+                  className="h-14 w-full touch-manipulation border-2 border-elec-yellow/30 bg-elec-gray text-elec-light hover:border-elec-yellow/50 hover:bg-elec-gray/80 font-semibold active:scale-95 transition-all"
                 >
-                  <Download className="h-5 w-5 mr-2" />
+                  <Download className="h-5 w-5 mr-2 text-elec-yellow" />
                   Risk Assessment
                 </Button>
                 
                 <Button
                   onClick={handleGenerateMethodPDF}
                   disabled={isGenerating}
-                  className="h-14 w-full touch-manipulation bg-primary text-primary-foreground hover:bg-primary/90 font-semibold active:scale-95 transition-transform"
+                  className="h-14 w-full touch-manipulation border-2 border-elec-yellow/30 bg-elec-gray text-elec-light hover:border-elec-yellow/50 hover:bg-elec-gray/80 font-semibold active:scale-95 transition-all"
                 >
-                  <Download className="h-5 w-5 mr-2" />
+                  <Download className="h-5 w-5 mr-2 text-elec-yellow" />
                   Method Statement
                 </Button>
                 
