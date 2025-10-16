@@ -224,7 +224,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       systemPrompt,
       userPrompt,
       maxTokens: 10000,
-      timeoutMs: 35000,
+      timeoutMs: 60000,
       tools: [{
         type: 'function',
         function: {

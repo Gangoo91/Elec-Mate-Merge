@@ -249,7 +249,7 @@ Include phases, resources, compliance requirements, and risk management.`;
       systemPrompt,
       userPrompt,
       maxTokens: 10000,
-      timeoutMs: 55000,
+      timeoutMs: 70000,
       tools: [{
         type: 'function',
         function: {

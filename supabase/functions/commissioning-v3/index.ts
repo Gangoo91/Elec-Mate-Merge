@@ -297,7 +297,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       systemPrompt,
       userPrompt,
       maxTokens: 10000,
-      timeoutMs: 35000,
+      timeoutMs: 60000,
       tools: [{
         type: 'function',
         function: {
