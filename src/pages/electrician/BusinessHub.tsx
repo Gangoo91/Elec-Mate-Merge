@@ -8,30 +8,42 @@ const BusinessHub = () => {
   const cards = [
     {
       id: 1,
+      title: "Quote Builder",
+      icon: FileText,
+      link: "/electrician/quote-builder",
+    },
+    {
+      id: 2,
+      title: "Invoice Builder",
+      icon: Receipt,
+      link: "/electrician/invoice-builder/create",
+    },
+    {
+      id: 3,
       title: "Start & Grow",
       icon: Briefcase,
       link: "/electrician/business-development",
     },
     {
-      id: 2,
+      id: 4,
       title: "Business Calculators",
       icon: Calculator,
       link: "/electrician/business-development/tools",
     },
     {
-      id: 3,
+      id: 5,
       title: "Materials",
       icon: Package,
       link: "/electrician/materials",
     },
     {
-      id: 4,
+      id: 6,
       title: "Tools",
       icon: Wrench,
       link: "/electrician/tools",
     },
     {
-      id: 5,
+      id: 7,
       title: "Business Admin",
       icon: Cog,
       link: "/electrician/business-admin",

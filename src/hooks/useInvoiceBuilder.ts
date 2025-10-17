@@ -38,6 +38,49 @@ const createInvoiceFromQuote = (quote: Quote): Partial<Invoice> => {
   };
 };
 
+const createEmptyInvoice = (): Partial<Invoice> => {
+  const invoiceDate = new Date();
+  const dueDate = new Date();
+  dueDate.setDate(dueDate.getDate() + 30); // 30 days payment terms
+
+  return {
+    id: uuidv4(),
+    invoice_raised: false,
+    invoice_number: generateInvoiceNumber(),
+    invoice_date: invoiceDate,
+    invoice_due_date: dueDate,
+    invoice_status: 'draft',
+    additional_invoice_items: [],
+    work_completion_date: new Date(),
+    items: [],
+    client: {
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      postcode: '',
+    },
+    jobDetails: {
+      title: '',
+      description: '',
+    },
+    settings: {
+      labourRate: 50,
+      overheadPercentage: 15,
+      profitMargin: 20,
+      vatRate: 20,
+      vatRegistered: true,
+      paymentTerms: '30 days',
+      dueDate: dueDate,
+    },
+    subtotal: 0,
+    overhead: 0,
+    profit: 0,
+    vatAmount: 0,
+    total: 0,
+  };
+};
+
 export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial<Invoice>) => {
   const [invoice, setInvoice] = useState<Partial<Invoice>>(() => {
     // If editing an existing invoice, preserve it
@@ -48,7 +91,8 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     if (sourceQuote) {
       return createInvoiceFromQuote(sourceQuote);
     }
-    return {};
+    // Create empty invoice for standalone creation
+    return createEmptyInvoice();
   });
 
   const addInvoiceItem = useCallback((item: Omit<InvoiceItem, 'id' | 'totalPrice'>) => {
@@ -236,6 +280,24 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     }));
   }, []);
 
+  const updateClientDetails = useCallback((client: Partial<Quote['client']>) => {
+    setInvoice(prev => ({
+      ...prev,
+      client: {
+        ...prev.client,
+        ...client,
+      },
+    }));
+  }, []);
+
+  const initializeInvoice = useCallback((client: Quote['client'], jobDetails: Quote['jobDetails']) => {
+    setInvoice(prev => ({
+      ...prev,
+      client,
+      jobDetails,
+    }));
+  }, []);
+
   return {
     invoice,
     addInvoiceItem,
@@ -245,6 +307,8 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     setInvoiceNotes,
     updateInvoiceStatus,
     updateJobDetails,
+    updateClientDetails,
+    initializeInvoice,
     recalculateTotals,
   };
 };

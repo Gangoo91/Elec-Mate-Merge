@@ -10,6 +10,7 @@ import { useInvoiceBuilder } from '@/hooks/useInvoiceBuilder';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { InvoiceProgressIndicator } from './InvoiceProgressIndicator';
 import { InvoiceReviewStep } from './steps/InvoiceReviewStep';
+import { InvoiceClientDetailsStep } from './steps/InvoiceClientDetailsStep';
 import { InvoiceItemsStep } from './steps/InvoiceItemsStep';
 import { InvoiceSettingsStep } from './steps/InvoiceSettingsStep';
 import { InvoiceGenerationStep } from './steps/InvoiceGenerationStep';
@@ -18,16 +19,23 @@ import { toast } from '@/hooks/use-toast';
 interface InvoiceWizardProps {
   sourceQuote?: Quote;
   existingInvoice?: Partial<Invoice>;
+  onInvoiceGenerated?: () => void;
 }
 
-const steps = [
-  { title: 'Review Quote', description: 'Verify quote details' },
-  { title: 'Review & Edit Items', description: 'Adjust costs and quantities' },
-  { title: 'Invoice Settings', description: 'Configure payment terms' },
-  { title: 'Generate Invoice', description: 'Preview and save' },
-];
-
-export const InvoiceWizard = ({ sourceQuote, existingInvoice }: InvoiceWizardProps) => {
+export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated }: InvoiceWizardProps) => {
+  const isStandaloneMode = !sourceQuote && !existingInvoice;
+  
+  const steps = isStandaloneMode ? [
+    { title: 'Client & Job Details', description: 'Enter client information' },
+    { title: 'Add Items', description: 'Add invoice line items' },
+    { title: 'Invoice Settings', description: 'Configure payment terms' },
+    { title: 'Generate Invoice', description: 'Preview and save' },
+  ] : [
+    { title: 'Review Quote', description: 'Verify quote details' },
+    { title: 'Review & Edit Items', description: 'Adjust costs and quantities' },
+    { title: 'Invoice Settings', description: 'Configure payment terms' },
+    { title: 'Generate Invoice', description: 'Preview and save' },
+  ];
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -70,13 +78,33 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice }: InvoiceWizardPro
     const success = await handleSave();
     
     if (success) {
-      navigate('/electrician/invoices');
+      if (onInvoiceGenerated) {
+        onInvoiceGenerated();
+      } else {
+        navigate('/electrician/invoices');
+      }
     }
+  };
+
+  const handleClientUpdate = (client: Quote['client'], jobDetails: Quote['jobDetails']) => {
+    invoiceBuilder.updateClientDetails(client);
+    invoiceBuilder.updateJobDetails(jobDetails);
   };
 
   const renderStep = () => {
     switch (currentStep) {
       case 0:
+        if (isStandaloneMode) {
+          return (
+            <InvoiceClientDetailsStep
+              initialData={{
+                client: invoiceBuilder.invoice.client,
+                jobDetails: invoiceBuilder.invoice.jobDetails,
+              }}
+              onUpdate={handleClientUpdate}
+            />
+          );
+        }
         return <InvoiceReviewStep invoice={invoiceBuilder.invoice} />;
       case 1:
         return (

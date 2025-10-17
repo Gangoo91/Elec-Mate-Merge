@@ -57,6 +57,7 @@ import QuoteBuilderEdit from "@/pages/electrician/QuoteBuilderEdit";
 import SmartQuoteBuilderPage from "@/pages/electrician/SmartQuoteBuilderPage";
 import QuotesPage from "@/pages/electrician/QuotesPage";
 import InvoicesPage from "@/pages/electrician/InvoicesPage";
+import InvoiceBuilderCreate from "@/pages/electrician/InvoiceBuilderCreate";
 import QuoteInvoiceDashboard from "@/pages/electrician/QuoteInvoiceDashboard";
 import Calculations from "@/pages/electrician-tools/Calculations";
 import InstallPlannerV2 from "@/pages/electrician-tools/InstallPlannerV2";
@@ -101,6 +102,7 @@ const ElectricianHubRoutes = () => (
     <Route path="quote-builder/smart" element={<SmartQuoteBuilderPage />} />
     <Route path="quotes" element={<QuotesPage />} />
     <Route path="invoices" element={<InvoicesPage />} />
+    <Route path="invoice-builder/create" element={<InvoiceBuilderCreate />} />
     <Route path="quote-invoice-dashboard" element={<QuoteInvoiceDashboard />} />
     {/* Business Development Routes */}
     <Route path="business-development" element={<BusinessDevelopment />} />

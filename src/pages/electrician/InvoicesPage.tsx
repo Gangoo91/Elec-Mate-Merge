@@ -519,9 +519,9 @@ Thank you for your business!`;
               <ArrowLeft className="mr-2 h-4 w-4" /> Back to Electrical Hub
             </MobileButton>
           </Link>
-          <Link to="/electrician/quotes" className="w-full sm:w-auto order-2 sm:order-1">
+          <Link to="/electrician/invoice-builder/create" className="w-full sm:w-auto order-2 sm:order-1">
             <MobileButton variant="elec" className="w-full sm:w-auto justify-center">
-              <Plus className="mr-2 h-4 w-4" /> Raise Invoice
+              <Plus className="mr-2 h-4 w-4" /> Create Invoice
             </MobileButton>
           </Link>
         </div>
@@ -623,10 +623,10 @@ Thank you for your business!`;
                   : `No ${statusFilter} invoices`
                 }
               </p>
-              <Link to="/electrician/quotes">
+              <Link to="/electrician/invoice-builder/create">
                 <MobileButton variant="elec">
                   <Plus className="mr-2 h-4 w-4" />
-                  Raise Your First Invoice
+                  Create Your First Invoice
                 </MobileButton>
               </Link>
             </div>
