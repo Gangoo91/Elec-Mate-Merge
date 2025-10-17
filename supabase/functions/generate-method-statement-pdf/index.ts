@@ -89,6 +89,8 @@ serve(async (req) => {
       for (let i = 0; i < maxAttempts; i++) {
         await new Promise(resolve => setTimeout(resolve, 1000));
         
+        console.log(`Polling attempt ${i + 1}/${maxAttempts}, current status: ${status}`);
+        
         const statusResponse = await fetch(
           `https://api.pdfmonkey.io/api/v1/documents/${documentId}`,
           {
@@ -103,11 +105,24 @@ serve(async (req) => {
         downloadUrl = statusData.document.download_url;
         
         if (status === 'success') {
+          console.log('PDF generation completed successfully');
           break;
         } else if (status === 'failure') {
           throw new Error('PDF generation failed');
         }
       }
+    }
+
+    // Check if PDF generation completed successfully
+    if (!downloadUrl || status !== 'success') {
+      console.log('PDF generation timed out or incomplete', { status, downloadUrl });
+      return new Response(JSON.stringify({
+        success: false,
+        useFallback: true,
+        message: 'PDF generation timed out'
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     return new Response(JSON.stringify({
