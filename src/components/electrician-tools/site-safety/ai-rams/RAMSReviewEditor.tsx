@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle, Code } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
 import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
@@ -174,6 +174,20 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     }
   };
 
+  const handleCopyJSON = () => {
+    const combinedData = {
+      ramsData,
+      methodStatementData: methodData
+    };
+    
+    navigator.clipboard.writeText(JSON.stringify(combinedData, null, 2));
+    toast({
+      title: 'JSON Copied',
+      description: 'Combined RAMS data copied to clipboard',
+      variant: 'success'
+    });
+  };
+
   return (
     <div className="space-y-5 md:space-y-6 pb-safe">
       <Card className="border-elec-yellow/20 shadow-md bg-elec-grey">
@@ -318,7 +332,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 ))}
               </div>
 
-              <div className="flex flex-col sm:grid sm:grid-cols-3 gap-4 pb-safe">
+              <div className="flex flex-col sm:grid sm:grid-cols-4 gap-4 pb-safe">
                 <Button
                   onClick={handleGenerateRAMSPDF}
                   disabled={isGenerating}
@@ -344,6 +358,15 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 >
                   <Download className="h-5 w-5 mr-2" />
                   Combined RAMS
+                </Button>
+
+                <Button
+                  onClick={handleCopyJSON}
+                  variant="outline"
+                  className="h-14 w-full touch-manipulation border-2 border-primary/30 bg-background text-foreground hover:border-primary/50 hover:bg-background/80 font-semibold active:scale-95 transition-all"
+                >
+                  <Code className="h-5 w-5 mr-2" />
+                  Copy JSON
                 </Button>
               </div>
             </TabsContent>
