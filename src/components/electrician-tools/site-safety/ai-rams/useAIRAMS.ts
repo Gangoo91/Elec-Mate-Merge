@@ -243,9 +243,27 @@ export function useAIRAMS(): UseAIRAMSReturn {
         return; // Stop processing if health-safety fails
       }
 
+      // Debug logging to see actual response structure
+      console.log('🔍 Health & Safety raw response:', hsData);
+      console.log('🔍 hsData.response structure:', hsData.response);
+      console.log('🔍 hsData.structuredData:', hsData.structuredData);
+
+      // Extract hazard count from multiple possible locations
+      const hsActualData = hsData.structuredData?.riskAssessment 
+        || hsData.response?.structuredData?.riskAssessment
+        || hsData.response?.riskAssessment 
+        || hsData.riskAssessment
+        || hsData;
+
+      const hazardCount = hsActualData.riskAssessment?.hazards?.length 
+        || hsActualData.hazards?.length 
+        || 0;
+
+      console.log('🔍 Extracted hazard count:', hazardCount);
+
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'health-safety' 
-          ? { ...step, status: 'complete', reasoning: `Generated ${hsData.response?.riskAssessment?.hazards?.length || hsData.riskAssessment?.hazards?.length || 0} hazards and control measures` }
+          ? { ...step, status: 'complete', reasoning: `Generated ${hazardCount} hazards and control measures` }
           : step
       ));
 
@@ -265,26 +283,39 @@ export function useAIRAMS(): UseAIRAMSReturn {
       });
 
       if (installerError) throw new Error(`Installer Agent failed: ${installerError.message}`);
-      if (!installerData?.response) throw new Error('No response from Installer Agent');
+      if (!installerData) throw new Error('No response from Installer Agent');
+
+      // Debug logging to see actual response structure
+      console.log('🔍 Installer raw response:', installerData);
+      console.log('🔍 installerData.response structure:', installerData.response);
+      console.log('🔍 installerData.structuredData:', installerData.structuredData);
+
+      // Extract steps count from multiple possible locations
+      const installerActualData = installerData.structuredData?.methodStatementSteps
+        || installerData.response?.structuredData?.methodStatementSteps
+        || installerData.response?.methodStatementSteps
+        || installerData.response?.installationSteps
+        || installerData.methodStatementSteps
+        || installerData.installationSteps
+        || installerData;
+
+      const stepsCount = installerActualData.methodStatementSteps?.length 
+        || installerActualData.installationSteps?.length
+        || (Array.isArray(installerActualData) ? installerActualData.length : 0);
+
+      console.log('🔍 Extracted steps count:', stepsCount);
 
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'installer' 
-          ? { ...step, status: 'complete', reasoning: `Generated ${installerData.response?.methodStatementSteps?.length || installerData.response?.installationSteps?.length || installerData.methodStatementSteps?.length || 0} installation steps` }
+          ? { ...step, status: 'complete', reasoning: `Generated ${stepsCount} installation steps` }
           : step
       ));
 
       // Step 3: Transform agent outputs to RAMS format
+      // Pass the full agent response objects to the transformer
       const combinedData = combineAgentOutputsToRAMS(
-        { 
-          response: hsData.response, 
-          confidence: hsData.confidence,
-          structuredData: hsData.structuredData 
-        },
-        { 
-          response: installerData.response, 
-          confidence: installerData.confidence,
-          structuredData: installerData.structuredData 
-        },
+        hsData,
+        installerData,
         {
           ...projectInfo,
           date: new Date().toISOString()

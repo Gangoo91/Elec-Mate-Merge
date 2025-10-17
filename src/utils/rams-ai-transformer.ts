@@ -27,9 +27,23 @@ export function transformHealthSafetyToRAMS(
   const risks: RAMSRisk[] = [];
   const activities: string[] = [];
   
+  // Try multiple possible locations for hazard data
+  const hazards = hsResponse.riskAssessment?.hazards 
+    || (hsResponse.response as any)?.riskAssessment?.hazards
+    || (hsResponse.structuredData as any)?.riskAssessment?.hazards
+    || (hsResponse as any).structuredData?.hazards
+    || (hsResponse as any).hazards;
+  
+  console.log('🔍 Transformer received hsResponse:', {
+    hasRiskAssessment: !!hsResponse.riskAssessment,
+    hasResponseRiskAssessment: !!(hsResponse.response as any)?.riskAssessment,
+    hasStructuredData: !!hsResponse.structuredData,
+    hazardsFound: hazards?.length || 0
+  });
+  
   // Handle structured response from health-safety agent
-  if (hsResponse.riskAssessment?.hazards) {
-    hsResponse.riskAssessment.hazards.forEach((hazard, idx) => {
+  if (hazards && Array.isArray(hazards)) {
+    hazards.forEach((hazard, idx) => {
       const riskRating = hazard.likelihood * hazard.severity;
       const residualRisk = Math.max(1, Math.floor(riskRating / 2));
       
@@ -49,6 +63,7 @@ export function transformHealthSafetyToRAMS(
       });
     });
     
+    console.log('✅ Transformer created', risks.length, 'risk entries');
     return { risks, activities: activities.length > 0 ? activities : ["Electrical installation work"] };
   }
   
@@ -167,9 +182,24 @@ export function transformHealthSafetyToRAMS(
 export function transformInstallerToMethodSteps(installerResponse: AgentResponse): MethodStep[] {
   const steps: MethodStep[] = [];
   
+  // Try multiple possible locations for steps data
+  const methodSteps = installerResponse.methodStatementSteps
+    || (installerResponse.response as any)?.methodStatementSteps
+    || (installerResponse.structuredData as any)?.methodStatementSteps
+    || (installerResponse as any).installationSteps
+    || (installerResponse.response as any)?.installationSteps
+    || (installerResponse.structuredData as any)?.installationSteps;
+  
+  console.log('🔍 Transformer received installerResponse:', {
+    hasMethodSteps: !!installerResponse.methodStatementSteps,
+    hasResponseMethodSteps: !!(installerResponse.response as any)?.methodStatementSteps,
+    hasStructuredData: !!installerResponse.structuredData,
+    stepsFound: methodSteps?.length || 0
+  });
+  
   // Handle structured response from installer agent
-  if (installerResponse.methodStatementSteps && Array.isArray(installerResponse.methodStatementSteps)) {
-    return installerResponse.methodStatementSteps.map((step, idx) => ({
+  if (methodSteps && Array.isArray(methodSteps)) {
+    const transformedSteps = methodSteps.map((step, idx) => ({
       id: step.id || `step-${idx + 1}`,
       stepNumber: step.stepNumber || idx + 1,
       title: step.title || step.step || 'Installation Step',
@@ -181,6 +211,9 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
       qualifications: step.qualifications || [],
       isCompleted: false
     }));
+    
+    console.log('✅ Transformer created', transformedSteps.length, 'method steps');
+    return transformedSteps;
   }
   
   // Fallback to string parsing if response is a string
