@@ -85,7 +85,7 @@ serve(async (req) => {
     
     // Poll for completion if still generating (include 'draft' status)
     if (status === 'draft' || status === 'pending' || status === 'generating') {
-      const maxAttempts = 30;
+      const maxAttempts = 60;
       for (let i = 0; i < maxAttempts; i++) {
         await new Promise(resolve => setTimeout(resolve, 1000));
         
