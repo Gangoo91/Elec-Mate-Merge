@@ -88,6 +88,47 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const handleGenerateRAMSPDF = async () => {
     setIsGenerating(true);
     try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      const { data, error } = await supabase.functions.invoke('generate-rams-pdf', {
+        body: { 
+          ramsData, 
+          userId: user?.id
+        }
+      });
+
+      if (data?.success && data?.downloadUrl) {
+        const link = document.createElement('a');
+        link.href = data.downloadUrl;
+        link.download = `Risk_Assessment_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
+        link.click();
+        
+        toast({
+          title: 'Professional RAMS Generated',
+          description: 'Your risk assessment has been generated using our professional template.'
+        });
+      } else {
+        console.log('Falling back to client-side PDF generation', { data, error });
+        const pdfDataUri = generateRAMSPDF(ramsData, {
+          includeSignatures: true,
+          companyName: methodData.contractor || 'Professional Electrical Services',
+          documentReference: `RAMS-${Date.now()}`,
+          reviewDate: methodData.reviewDate
+        });
+
+        const link = document.createElement('a');
+        link.href = pdfDataUri;
+        link.download = `Risk_Assessment_${Date.now()}.pdf`;
+        link.click();
+
+        toast({
+          title: 'RAMS PDF Generated',
+          description: 'Your risk assessment document has been downloaded.'
+        });
+      }
+    } catch (error) {
+      console.error('Error generating RAMS PDF:', error);
       const pdfDataUri = generateRAMSPDF(ramsData, {
         includeSignatures: true,
         companyName: methodData.contractor || 'Professional Electrical Services',
@@ -95,7 +136,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         reviewDate: methodData.reviewDate
       });
 
-      // Convert data URI to blob and download
       const link = document.createElement('a');
       link.href = pdfDataUri;
       link.download = `Risk_Assessment_${Date.now()}.pdf`;
@@ -105,13 +145,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         title: 'RAMS PDF Generated',
         description: 'Your risk assessment document has been downloaded.'
       });
-    } catch (error) {
-      console.error('Error generating RAMS PDF:', error);
-      toast({
-        title: 'Generation Failed',
-        description: 'Failed to generate RAMS PDF.',
-        variant: 'destructive'
-      });
     } finally {
       setIsGenerating(false);
     }
@@ -120,11 +153,49 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const handleGenerateMethodPDF = async () => {
     setIsGenerating(true);
     try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      
+      const { data, error } = await supabase.functions.invoke('generate-method-statement-pdf', {
+        body: { 
+          methodData
+        }
+      });
+
+      if (data?.success && data?.downloadUrl) {
+        const link = document.createElement('a');
+        link.href = data.downloadUrl;
+        link.download = `Method_Statement_${methodData.jobTitle?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
+        link.click();
+        
+        toast({
+          title: 'Professional Method Statement Generated',
+          description: 'Your method statement has been generated using our professional template.'
+        });
+      } else {
+        console.log('Falling back to client-side PDF generation', { data, error });
+        const methodPdfData = generateMethodStatementPDF(methodData as MethodStatementData, {
+          companyName: methodData.contractor || 'Professional Electrical Services'
+        });
+
+        const blob = new Blob([new Uint8Array(methodPdfData)], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Method_Statement_${Date.now()}.pdf`;
+        link.click();
+        URL.revokeObjectURL(url);
+
+        toast({
+          title: 'Method Statement PDF Generated',
+          description: 'Your method statement has been downloaded.'
+        });
+      }
+    } catch (error) {
+      console.error('Error generating Method Statement PDF:', error);
       const methodPdfData = generateMethodStatementPDF(methodData as MethodStatementData, {
         companyName: methodData.contractor || 'Professional Electrical Services'
       });
 
-      // Create blob and download
       const blob = new Blob([new Uint8Array(methodPdfData)], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -136,13 +207,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       toast({
         title: 'Method Statement PDF Generated',
         description: 'Your method statement has been downloaded.'
-      });
-    } catch (error) {
-      console.error('Error generating Method Statement PDF:', error);
-      toast({
-        title: 'Generation Failed',
-        description: 'Failed to generate Method Statement PDF.',
-        variant: 'destructive'
       });
     } finally {
       setIsGenerating(false);

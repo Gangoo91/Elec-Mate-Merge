@@ -8,6 +8,14 @@ project_id = "jtwygbeceundfgnkirof"
 verify_jwt = false
 timeout_sec = 180
 
+[functions.generate-rams-pdf]
+verify_jwt = false
+timeout_sec = 180
+
+[functions.generate-method-statement-pdf]
+verify_jwt = false
+timeout_sec = 180
+
 # V3 Agent Functions - Active
 [functions.designer-agent]
 verify_jwt = false

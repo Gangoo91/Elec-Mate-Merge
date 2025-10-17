@@ -7,6 +7,9 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Placeholder template ID - replace with actual PDF Monkey template ID
+const RAMS_TEMPLATE_ID = 'PLACEHOLDER-RAMS-TEMPLATE-ID';
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -16,8 +19,20 @@ serve(async (req) => {
     const { ramsData, userId } = await req.json();
     const pdfMonkeyApiKey = Deno.env.get('PDF_MONKEY_API_KEY');
 
-    console.log('Generating RAMS PDF');
+    console.log('Generating RAMS PDF with template:', RAMS_TEMPLATE_ID);
 
+    if (!pdfMonkeyApiKey) {
+      console.log('PDF_MONKEY_API_KEY not configured, using fallback');
+      return new Response(JSON.stringify({ 
+        success: false,
+        useFallback: true,
+        message: 'PDF Monkey not configured'
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Check for custom user template (optional override)
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
@@ -30,18 +45,36 @@ serve(async (req) => {
       .eq('is_active', true)
       .single();
 
-    if (!template?.pdf_monkey_template_id || !pdfMonkeyApiKey) {
-      console.log('No custom template configured, using fallback');
-      return new Response(JSON.stringify({ 
-        success: false,
-        useFallback: true,
-        message: 'No custom template configured'
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-    }
-
-    const mappedData = applyFieldMapping(ramsData, template.field_mapping || {});
+    // Use custom template if available, otherwise use default
+    const templateId = template?.pdf_monkey_template_id || RAMS_TEMPLATE_ID;
+    const payload = template?.field_mapping 
+      ? applyFieldMapping(ramsData, template.field_mapping)
+      : {
+          projectName: ramsData.projectName,
+          location: ramsData.location,
+          date: ramsData.date,
+          assessor: ramsData.assessor,
+          contractor: ramsData.contractor,
+          supervisor: ramsData.supervisor,
+          risks: ramsData.risks.map((risk: any) => ({
+            hazard: risk.hazard,
+            likelihood: risk.likelihood,
+            severity: risk.severity,
+            riskRating: risk.riskRating,
+            riskLevel: getRiskLevel(risk.riskRating),
+            controls: risk.controls,
+            residualRisk: risk.residualRisk
+          })),
+          emergencyContacts: {
+            siteManager: ramsData.siteManagerName,
+            siteManagerPhone: ramsData.siteManagerPhone,
+            firstAider: ramsData.firstAiderName,
+            firstAiderPhone: ramsData.firstAiderPhone,
+            safetyOfficer: ramsData.safetyOfficerName,
+            safetyOfficerPhone: ramsData.safetyOfficerPhone,
+            assemblyPoint: ramsData.assemblyPoint
+          }
+        };
 
     const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
@@ -51,8 +84,8 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         document: {
-          document_template_id: template.pdf_monkey_template_id,
-          payload: mappedData,
+          document_template_id: templateId,
+          payload: payload,
           meta: {
             _filename: `RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`
           }
@@ -67,12 +100,42 @@ serve(async (req) => {
     }
 
     const pdfResponse = await response.json();
+    const documentId = pdfResponse.document.id;
+    let downloadUrl = pdfResponse.document.download_url;
+    let status = pdfResponse.document.status;
+    
+    // Poll for completion if still generating (include 'draft' status)
+    if (status === 'draft' || status === 'pending' || status === 'generating') {
+      const maxAttempts = 30;
+      for (let i = 0; i < maxAttempts; i++) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        const statusResponse = await fetch(
+          `https://api.pdfmonkey.io/api/v1/documents/${documentId}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${pdfMonkeyApiKey}`,
+            }
+          }
+        );
+        
+        const statusData = await statusResponse.json();
+        status = statusData.document.status;
+        downloadUrl = statusData.document.download_url;
+        
+        if (status === 'success') {
+          break;
+        } else if (status === 'failure') {
+          throw new Error('PDF generation failed');
+        }
+      }
+    }
 
     return new Response(JSON.stringify({
       success: true,
-      documentId: pdfResponse.document.id,
-      downloadUrl: pdfResponse.document.download_url,
-      status: pdfResponse.document.status
+      documentId: documentId,
+      downloadUrl: downloadUrl,
+      status: status
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
@@ -89,6 +152,13 @@ serve(async (req) => {
     });
   }
 });
+
+function getRiskLevel(rating: number): string {
+  if (rating <= 4) return 'Low';
+  if (rating <= 9) return 'Medium';
+  if (rating <= 16) return 'High';
+  return 'Very High';
+}
 
 function applyFieldMapping(data: any, fieldMapping: Record<string, string>): any {
   if (!fieldMapping || Object.keys(fieldMapping).length === 0) {
