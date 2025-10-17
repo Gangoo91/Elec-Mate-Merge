@@ -83,12 +83,33 @@ serve(async (req) => {
     };
 
     console.log('📤 Sending payload to PDF Monkey...');
-    console.log('📦 Payload structure:', {
-      projectName: combinedPayload.projectName,
-      risksCount: combinedPayload.risks?.length,
-      stepsCount: combinedPayload.steps?.length,
-      hasEmergencyContacts: !!combinedPayload.emergencyContacts
+    
+    // Full payload logging for debugging empty PDF
+    console.log('📦 FULL PAYLOAD (JSON):');
+    console.log(JSON.stringify(combinedPayload, null, 2));
+    
+    // Sample data logging
+    console.log('📋 RAMS Data Sample:', {
+      projectName: ramsData.projectName,
+      location: ramsData.location,
+      date: ramsData.date,
+      risksCount: ramsData.risks?.length,
+      firstRisk: ramsData.risks?.[0]
     });
+    
+    console.log('📋 Method Data Sample:', {
+      jobTitle: methodData.jobTitle,
+      workType: methodData.workType,
+      stepsCount: methodData.steps?.length,
+      firstStep: methodData.steps?.[0]
+    });
+    
+    console.log('📋 Emergency Contacts:', JSON.stringify(combinedPayload.emergencyContacts, null, 2));
+    
+    // Field validation
+    const payloadFields = Object.keys(combinedPayload);
+    console.log('✅ Payload fields present:', payloadFields);
+    console.log('📊 Payload field count:', payloadFields.length);
 
     const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
@@ -147,6 +168,10 @@ serve(async (req) => {
       console.log('Document Meta:', pdfResponse.document.meta);
     }
     
+    // Log full response for debugging
+    console.log('📄 Full PDF Monkey Response:');
+    console.log(JSON.stringify(pdfResponse, null, 2));
+    
     // Enhanced polling with exponential backoff
     if (status === 'draft' || status === 'pending' || status === 'generating') {
       console.log('⏳ Document not ready, starting polling...');
@@ -193,7 +218,9 @@ serve(async (req) => {
           break;
         } else if (status === 'failure') {
           console.error('❌ PDF generation failed');
-          console.error('Failure details:', statusData.document);
+          console.error('Failure cause:', statusData.document.failure_cause);
+          console.error('Generation logs:', statusData.document.generation_logs);
+          console.error('Full failure details:', JSON.stringify(statusData.document, null, 2));
           return new Response(JSON.stringify({
             success: false,
             useFallback: true,
