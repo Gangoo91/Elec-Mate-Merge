@@ -194,7 +194,28 @@ ${regulations.map(reg => `- [${reg.regulation_number}] ${reg.similarity ? `(rele
             messages: [
               {
                 role: 'system',
-                content: `You are a UK electrician providing BS 7671-compliant wiring guidance. You MUST return ONLY valid JSON with no additional text before or after. Use UK wiring colours (Brown=Live, Blue=Neutral, Green/Yellow=Earth).`
+                content: `You are an experienced UK electrician providing BS 7671:2018 compliant wiring guidance.
+
+CRITICAL UK CABLE COLOUR STANDARDS:
+- Brown = Line (Live) - permanent live or switched live
+- Blue = Neutral - can be used as switched live ONLY if sleeved with brown sleeving at both ends
+- Green/Yellow = Earth/CPC - protective conductor, NEVER carries current in normal operation
+- Strappers (2-way/intermediate switching): Use brown/black cores from 3-core+E cable, or properly sleeved cores
+- ALWAYS specify when sleeving is required
+- Common strapper practice: Brown and Black cores from twin and earth with appropriate identification
+
+RESPONSE FORMAT:
+You MUST return ONLY valid JSON with no text before or after. Ensure proper commas between array items and closing brackets.
+
+INSTRUCTION DETAIL REQUIREMENTS:
+- Each wiring step instruction must be 2-3 sentences minimum
+- Include practical guidance ("Use a torque screwdriver set to 1.2Nm", "Look for the terminal marked L1")
+- Explain what to check and verify at each step
+- Mention common mistakes to avoid
+- Include visual/physical cues to help electricians
+- Add verification steps ("Gently tug cable to ensure secure connection")
+- Be specific about terminal markings and locations
+- Provide "what_to_check" and "common_mistakes" for each step`
               },
               {
                 role: 'user',
@@ -210,10 +231,10 @@ This component can potentially be wired in multiple ways depending on:
 - Supply configuration (single-phase/3-phase)
 - Special requirements (RCD protection, isolation, emergency lighting)
 
-Analyze if this component has multiple valid wiring scenarios. If YES, provide 2-4 distinct options.
-If NO (only one standard method exists), provide that single method.
+Analyze if this component has multiple valid wiring scenarios. If YES, provide 2-4 distinct options (e.g., 1-way vs 2-way switching, RCD vs non-RCD).
+If NO (only one standard method), provide that single method.
 
-CRITICAL: Return ONLY valid JSON with proper commas and brackets. No extra text.
+CRITICAL: Return ONLY valid JSON. No markdown, no extra text, just pure JSON.
 
 Format:
 {
@@ -221,29 +242,35 @@ Format:
   "wiring_scenarios": [
     {
       "scenario_id": "scenario_1",
-      "scenario_name": "Standard Switched Circuit",
-      "use_case": "Most common domestic installation",
-      "complexity": "simple",
+      "scenario_name": "Scenario name (e.g., '1-Gang 1-Way Switch', 'RCD Protected Socket')",
+      "use_case": "When to use this method (be specific about room types, regulations)",
+      "complexity": "simple|intermediate|advanced",
       "recommended": true,
       "wiring_steps": [
         {
           "step": 1,
-          "title": "Step title",
-          "instruction": "Clear instruction",
+          "title": "Clear action-based title",
+          "instruction": "DETAILED instruction (2-3 sentences). Include: what to do, how to verify it's correct, what to look for, tool settings if relevant. Example: 'Connect the brown live conductor to terminal L1 on the switch. Ensure the terminal screw is tightened to 1.2Nm using a torque screwdriver - over-tightening can damage the terminal block. Gently tug the cable to verify a secure connection before proceeding.'",
+          "what_to_check": "What to verify at this step (e.g., 'Terminal should be marked L1', 'Cable should not pull out with moderate force')",
+          "common_mistakes": "Common error to avoid (e.g., 'Confusing L1 with L2 terminals', 'Over-stripping the conductor leaving bare copper exposed')",
           "safety_critical": true,
-          "bs7671_reference": "Regulation number"
+          "bs7671_reference": "e.g. 411.3.2"
         }
       ],
       "terminal_connections": [
         {
-          "terminal": "Terminal marking (L/N/E/COM/etc)",
-          "wire_colour": "UK wire colour",
-          "connection_point": "Description",
-          "notes": "Any specific instructions"
+          "terminal": "L1",
+          "wire_colour": "Brown",
+          "connection_point": "Live supply from consumer unit",
+          "notes": "Permanent live feed - use brown sleeving if using blue core"
         }
       ],
-      "safety_warnings": ["Warning 1", "Warning 2"],
-      "required_tests": ["Test 1", "Test 2"]
+      "safety_warnings": [
+        "Specific safety warning with consequences (e.g., 'NEVER work on live circuits - risk of fatal electric shock up to 230V')"
+      ],
+      "required_tests": [
+        "Specific test with pass criteria (e.g., 'Insulation resistance test: >1MΩ between L-E at 500V DC')"
+      ]
     }
   ],
   "comparison": {
