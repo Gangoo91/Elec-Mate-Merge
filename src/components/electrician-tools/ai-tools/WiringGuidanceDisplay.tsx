@@ -3,6 +3,15 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, AlertTriangle, Shield, Info, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
+// Clean markdown formatting from text
+const cleanMarkdown = (text: string): string => {
+  return text
+    .replace(/\*\*/g, '')  // Remove bold **text**
+    .replace(/\*/g, '')    // Remove italic *text*
+    .replace(/`([^`]+)`/g, '$1')  // Remove code `text`
+    .trim();
+};
+
 interface WiringStep {
   step: number;
   title: string;
@@ -64,34 +73,38 @@ const WiringGuidanceDisplay = ({
   const completedCount = Object.values(completedSteps).filter(Boolean).length;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-4xl mx-auto">
       {/* Component Info & RAG Sources */}
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-        <Card className="bg-green-500/10 border-green-500/20 flex-1">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-green-600 dark:text-green-500 flex-shrink-0" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <Card className="bg-green-500/10 border-green-500/30 shadow-md">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-500/20 rounded-lg">
+                <Shield className="h-6 w-6 text-green-500 flex-shrink-0" />
+              </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-green-700 dark:text-green-400">BS 7671 Compliant</p>
-                <p className="text-xs text-foreground/90 truncate">{componentName}</p>
+                <p className="text-xs font-semibold text-green-400 uppercase tracking-wide">BS 7671 Compliant</p>
+                <p className="text-sm font-medium text-foreground/90 truncate mt-0.5">{componentName}</p>
               </div>
             </div>
           </CardContent>
         </Card>
         
         {ragSourcesCount && (
-          <Card className="bg-blue-500/10 border-blue-500/20 flex-1">
-            <CardContent className="p-3 sm:p-4">
+          <Card className="bg-blue-500/10 border-blue-500/30 shadow-md">
+            <CardContent className="p-4">
               <button 
                 onClick={() => setShowRagSources(!showRagSources)}
-                className="flex items-center gap-2 w-full text-left"
+                className="flex items-center gap-3 w-full text-left"
               >
-                <Info className="h-5 w-5 text-blue-600 dark:text-blue-500 flex-shrink-0" />
+                <div className="p-2 bg-blue-500/20 rounded-lg">
+                  <Info className="h-6 w-6 text-blue-500 flex-shrink-0" />
+                </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-medium text-blue-700 dark:text-blue-400">
+                  <p className="text-xs font-semibold text-blue-400 uppercase tracking-wide">
                     {ragSourcesCount.installation_docs_count + ragSourcesCount.regulations_count} Sources
                   </p>
-                  <p className="text-xs text-foreground/80">Tap to view</p>
+                  <p className="text-xs text-foreground/70">Tap to view</p>
                 </div>
                 {showRagSources ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
               </button>
@@ -108,47 +121,94 @@ const WiringGuidanceDisplay = ({
 
       {/* Component Details */}
       <Card className="bg-muted/30 border-border">
-        <CardHeader className="p-4">
-          <CardTitle className="text-base">Component Identified</CardTitle>
+        <CardHeader className="p-4 sm:p-5">
+          <CardTitle className="text-base sm:text-lg">Component Identified</CardTitle>
         </CardHeader>
-        <CardContent className="px-4 pb-4">
-          <pre className="text-xs text-foreground/90 whitespace-pre-wrap font-mono bg-background/50 p-3 rounded-lg border border-border">
-            {componentDetails}
-          </pre>
+        <CardContent className="px-4 pb-4 sm:px-5 sm:pb-5">
+          <div className="text-sm text-foreground/90 leading-relaxed space-y-3">
+            {componentDetails.split('\n\n').map((paragraph, idx) => {
+              // Handle numbered lists
+              if (/^\d+\./.test(paragraph.trim())) {
+                const items = paragraph.split('\n').filter(line => /^\d+\./.test(line.trim()));
+                return (
+                  <ol key={idx} className="list-decimal list-inside space-y-2 pl-2">
+                    {items.map((item, i) => {
+                      const text = cleanMarkdown(item.replace(/^\d+\.\s*/, ''));
+                      return (
+                        <li key={i} className="text-sm leading-relaxed">
+                          {text}
+                        </li>
+                      );
+                    })}
+                  </ol>
+                );
+              }
+              
+              // Handle bullet lists
+              if (/^\s*[-*•]/.test(paragraph.trim())) {
+                const items = paragraph.split('\n').filter(line => /^\s*[-*•]/.test(line.trim()));
+                return (
+                  <ul key={idx} className="space-y-2 pl-2">
+                    {items.map((item, i) => {
+                      const text = cleanMarkdown(item.replace(/^\s*[-*•]\s*/, ''));
+                      return (
+                        <li key={i} className="flex items-start gap-2 text-sm leading-relaxed">
+                          <span className="text-elec-yellow mt-1">•</span>
+                          <span>{text}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                );
+              }
+              
+              // Regular paragraphs
+              const cleanText = cleanMarkdown(paragraph);
+              if (!cleanText) return null;
+              
+              return (
+                <p key={idx} className="text-sm leading-relaxed">
+                  {cleanText}
+                </p>
+              );
+            })}
+          </div>
         </CardContent>
       </Card>
 
       {/* Terminal Connections */}
       <Card className="bg-card border-border">
-        <CardHeader className="p-4">
-          <CardTitle className="text-base">Terminal Connections</CardTitle>
+        <CardHeader className="p-4 sm:p-5">
+          <CardTitle className="text-base sm:text-lg">Terminal Connections</CardTitle>
         </CardHeader>
-        <CardContent className="px-4 pb-4">
-          <div className="space-y-2.5">
-            {terminalConnections.map((conn, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/30">
-                <div className="flex items-center gap-2.5 flex-1 min-w-0">
-                  <Badge className="font-mono text-xs flex-shrink-0">{conn.terminal}</Badge>
-                  <div 
-                    className="h-6 w-6 rounded-full border-2 border-border flex-shrink-0" 
-                    style={{ background: getWireColor(conn.wire_colour) }} 
-                  />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground">{conn.wire_colour}</p>
-                    <p className="text-xs text-muted-foreground">{conn.connection_point}</p>
-                    {conn.notes && <p className="text-xs text-foreground/80 italic mt-1">{conn.notes}</p>}
-                  </div>
+        <CardContent className="px-4 pb-4 sm:px-5 sm:pb-5 space-y-3">
+          {terminalConnections.map((conn, idx) => (
+            <div key={idx} className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 sm:p-4 bg-muted/50 rounded-lg border border-border/30">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <Badge className="font-mono text-xs sm:text-sm flex-shrink-0 bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 px-3 py-1">
+                  {conn.terminal}
+                </Badge>
+                <div 
+                  className="h-8 w-8 rounded-full border-2 border-border flex-shrink-0 shadow-md" 
+                  style={{ background: getWireColor(conn.wire_colour) }} 
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm sm:text-base font-semibold text-foreground">{conn.wire_colour}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">{conn.connection_point}</p>
                 </div>
               </div>
-            ))}
-          </div>
+              {conn.notes && (
+                <p className="text-xs text-foreground/70 italic pl-11 sm:pl-0 sm:max-w-xs">{cleanMarkdown(conn.notes)}</p>
+              )}
+            </div>
+          ))}
         </CardContent>
       </Card>
 
       {/* Wiring Steps */}
       <Card className="bg-card border-border">
-        <CardHeader className="p-4">
-          <CardTitle className="text-base flex items-center justify-between">
+        <CardHeader className="p-4 sm:p-5">
+          <CardTitle className="text-base sm:text-lg flex items-center justify-between">
             <span>Step-by-Step Wiring Procedure</span>
             {completedCount > 0 && (
               <Badge variant="secondary" className="text-xs">
@@ -157,44 +217,51 @@ const WiringGuidanceDisplay = ({
             )}
           </CardTitle>
         </CardHeader>
-        <CardContent className="px-4 pb-4 space-y-3">
+        <CardContent className="px-3 sm:px-4 pb-4 space-y-3">
           {wiringSteps.map((step) => (
             <div 
               key={step.step} 
-              className={`p-3 sm:p-4 rounded-lg border-2 transition-all ${
+              className={`p-4 rounded-xl border-2 transition-all touch-manipulation ${
                 step.safety_critical 
-                  ? 'border-red-500/40 bg-red-500/5' 
+                  ? 'border-red-500/50 bg-red-500/10 shadow-lg shadow-red-500/20' 
                   : completedSteps[step.step]
-                  ? 'border-green-500/40 bg-green-500/5'
+                  ? 'border-green-500/50 bg-green-500/10 shadow-lg shadow-green-500/20'
                   : 'border-border bg-muted/30'
               }`}
             >
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <button
                   onClick={() => toggleStepCompletion(step.step)}
-                  className="flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 rounded-full"
+                  className="flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 rounded-full active:scale-95 transition-transform"
                 >
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-base transition-all shadow-md ${
                     step.safety_critical 
                       ? 'bg-red-500 text-white' 
                       : completedSteps[step.step]
                       ? 'bg-green-500 text-white'
-                      : 'bg-muted text-foreground'
+                      : 'bg-muted text-foreground border-2 border-border'
                   }`}>
                     {completedSteps[step.step] ? '✓' : step.step}
                   </div>
                 </button>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-start gap-2 mb-2">
-                    <h4 className="text-sm font-semibold text-foreground leading-tight flex-1">{step.title}</h4>
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h4 className="text-sm sm:text-base font-bold text-foreground leading-tight flex-1">{step.title}</h4>
                     {step.safety_critical && (
-                      <AlertTriangle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
+                      <AlertTriangle className="h-5 w-5 text-red-500 flex-shrink-0 animate-pulse" />
                     )}
                   </div>
-                  <p className="text-xs sm:text-sm text-foreground/90 mb-2 leading-relaxed">{step.instruction}</p>
-                  <Badge variant="outline" className="text-xs font-mono">
-                    BS 7671: {step.bs7671_reference}
-                  </Badge>
+                  <p className="text-xs sm:text-sm text-foreground/90 mb-3 leading-relaxed">
+                    {cleanMarkdown(step.instruction)}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge 
+                      variant="outline" 
+                      className="text-xs font-mono bg-blue-500/10 border-blue-500/30 text-blue-400 px-3 py-1"
+                    >
+                      📘 BS 7671: {step.bs7671_reference}
+                    </Badge>
+                  </div>
                 </div>
               </div>
             </div>
@@ -203,19 +270,19 @@ const WiringGuidanceDisplay = ({
       </Card>
 
       {/* Required Tests */}
-      <Card className="bg-card border-border">
-        <CardHeader className="p-4">
-          <CardTitle className="text-base flex items-center gap-2">
-            <CheckCircle2 className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-            Required Testing
+      <Card className="bg-gradient-to-br from-green-500/5 to-green-500/10 border-green-500/30">
+        <CardHeader className="p-4 sm:p-5">
+          <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+            <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
+            <span className="text-green-400">Required Testing & Verification</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="px-4 pb-4">
-          <ul className="space-y-2">
+        <CardContent className="px-4 pb-4 sm:px-5 sm:pb-5">
+          <ul className="space-y-2.5">
             {requiredTests.map((test, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm p-2 bg-muted/30 rounded-lg">
-                <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                <span className="text-foreground/90">{test}</span>
+              <li key={idx} className="flex items-start gap-3 text-sm p-3 bg-background/50 rounded-lg border border-green-500/20 min-h-[44px]">
+                <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                <span className="text-foreground/90 leading-relaxed">{cleanMarkdown(test)}</span>
               </li>
             ))}
           </ul>
@@ -223,19 +290,19 @@ const WiringGuidanceDisplay = ({
       </Card>
 
       {/* Safety Warnings */}
-      <Card className="bg-red-500/10 border-red-500/30">
-        <CardHeader className="p-4">
-          <CardTitle className="text-base flex items-center gap-2 text-red-700 dark:text-red-400">
-            <AlertTriangle className="h-5 w-5 flex-shrink-0" />
-            Safety Warnings
+      <Card className="bg-gradient-to-br from-red-500/10 to-red-500/5 border-red-500/40 shadow-lg shadow-red-500/10">
+        <CardHeader className="p-4 sm:p-5">
+          <CardTitle className="text-base sm:text-lg flex items-center gap-2 text-red-400">
+            <AlertTriangle className="h-5 w-5 flex-shrink-0 animate-pulse" />
+            <span>⚠️ Critical Safety Warnings</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="px-4 pb-4">
-          <ul className="space-y-2">
+        <CardContent className="px-4 pb-4 sm:px-5 sm:pb-5">
+          <ul className="space-y-3">
             {safetyWarnings.map((warning, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                <AlertTriangle className="h-4 w-4 text-red-600 dark:text-red-500 flex-shrink-0 mt-0.5" />
-                <span className="text-red-700 dark:text-red-400 font-medium">{warning}</span>
+              <li key={idx} className="flex items-start gap-3 text-sm p-4 bg-red-500/10 border-2 border-red-500/30 rounded-lg shadow-md min-h-[44px]">
+                <AlertTriangle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <span className="text-red-300 font-medium leading-relaxed">{cleanMarkdown(warning)}</span>
               </li>
             ))}
           </ul>
