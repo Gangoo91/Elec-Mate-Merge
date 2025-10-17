@@ -272,8 +272,24 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           variant: 'success'
         });
       } else {
-        console.log('Falling back to client-side PDF generation', { data, error });
+        console.log('PDF Monkey unavailable, using fallback', { 
+          status: data?.status,
+          message: data?.message,
+          hint: data?.hint,
+          templateId: data?.templateId,
+          error: data?.error 
+        });
+        
         setShowPDFModal(false);
+        
+        if (data?.message || data?.hint) {
+          toast({
+            title: 'Using Alternative PDF Generator',
+            description: data?.hint || data?.message || 'PDF Monkey unavailable',
+            variant: 'default'
+          });
+        }
+        
         const { generateCombinedRAMSPDF } = await import('@/utils/rams-combined-pdf');
         await generateCombinedRAMSPDF(ramsData, methodData as MethodStatementData, {
           companyName: methodData.contractor || 'Professional Electrical Services',
@@ -282,13 +298,20 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         
         toast({
           title: 'PDF Downloaded',
-          description: 'Your Combined RAMS PDF has been downloaded',
+          description: 'Your Combined RAMS PDF has been downloaded using alternative method',
           variant: 'success'
         });
       }
     } catch (error) {
       console.error('Error generating combined RAMS:', error);
       setShowPDFModal(false);
+      
+      toast({
+        title: 'Switching to Alternative Method',
+        description: 'Professional PDF generation unavailable, using built-in generator',
+        variant: 'default'
+      });
+      
       const { generateCombinedRAMSPDF } = await import('@/utils/rams-combined-pdf');
       await generateCombinedRAMSPDF(ramsData, methodData as MethodStatementData, {
         companyName: methodData.contractor || 'Professional Electrical Services',
@@ -296,9 +319,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       });
       
       toast({
-        title: 'PDF Generation Error',
-        description: 'Failed to generate PDF, using backup method',
-        variant: 'destructive'
+        title: 'PDF Downloaded',
+        description: 'Your Combined RAMS PDF has been downloaded',
+        variant: 'success'
       });
     } finally {
       setIsGenerating(false);

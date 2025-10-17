@@ -17,14 +17,26 @@ serve(async (req) => {
     const { ramsData, methodData } = await req.json();
     const pdfMonkeyApiKey = Deno.env.get('PDF_MONKEY_API_KEY');
 
-    console.log('Generating Combined RAMS PDF with template:', COMBINED_RAMS_TEMPLATE_ID);
+    console.log('📄 Combined RAMS PDF Generation Started');
+    console.log('🔧 Template ID:', COMBINED_RAMS_TEMPLATE_ID);
+    console.log('📊 RAMS Data:', { 
+      projectName: ramsData?.projectName, 
+      risksCount: ramsData?.risks?.length,
+      location: ramsData?.location 
+    });
+    console.log('📋 Method Data:', { 
+      jobTitle: methodData?.jobTitle, 
+      stepsCount: methodData?.steps?.length,
+      workType: methodData?.workType
+    });
 
     if (!pdfMonkeyApiKey) {
-      console.log('PDF_MONKEY_API_KEY not configured, using fallback');
+      console.warn('⚠️  PDF_MONKEY_API_KEY not configured');
       return new Response(JSON.stringify({ 
         success: false,
         useFallback: true,
-        message: 'PDF Monkey not configured'
+        message: 'PDF Monkey API key not configured',
+        templateId: COMBINED_RAMS_TEMPLATE_ID
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -70,6 +82,14 @@ serve(async (req) => {
       }
     };
 
+    console.log('📤 Sending payload to PDF Monkey...');
+    console.log('📦 Payload structure:', {
+      projectName: combinedPayload.projectName,
+      risksCount: combinedPayload.risks?.length,
+      stepsCount: combinedPayload.steps?.length,
+      hasEmergencyContacts: !!combinedPayload.emergencyContacts
+    });
+
     const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
       headers: {
@@ -89,8 +109,27 @@ serve(async (req) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('PDF Monkey API error:', response.status, errorText);
-      throw new Error(`PDF Monkey API error: ${response.status}`);
+      console.error('❌ PDF Monkey API Error');
+      console.error('Status:', response.status);
+      console.error('Response:', errorText);
+      
+      let errorDetails;
+      try {
+        errorDetails = JSON.parse(errorText);
+      } catch (e) {
+        errorDetails = { message: errorText };
+      }
+      
+      return new Response(JSON.stringify({ 
+        success: false,
+        useFallback: true,
+        error: `PDF Monkey API error: ${response.status}`,
+        details: errorDetails,
+        templateId: COMBINED_RAMS_TEMPLATE_ID
+      }), {
+        status: response.status,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const pdfResponse = await response.json();
@@ -98,13 +137,26 @@ serve(async (req) => {
     let downloadUrl = pdfResponse.document.download_url;
     let status = pdfResponse.document.status;
     
-    // Poll for completion if still generating (include 'draft' status)
+    console.log('📨 Initial PDF Monkey Response:');
+    console.log('Document ID:', documentId);
+    console.log('Initial Status:', status);
+    console.log('Initial Download URL:', downloadUrl ? 'Present' : 'Null');
+    
+    if (pdfResponse.document.meta) {
+      console.log('Document Meta:', pdfResponse.document.meta);
+    }
+    
+    // Enhanced polling with exponential backoff
     if (status === 'draft' || status === 'pending' || status === 'generating') {
-      const maxAttempts = 60;
+      console.log('⏳ Document not ready, starting polling...');
+      const maxAttempts = 30; // Reduced from 60
+      const delays = [1000, 2000, 4000, 8000, 16000]; // Exponential backoff
+      
       for (let i = 0; i < maxAttempts; i++) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        const delay = delays[Math.min(i, delays.length - 1)];
+        await new Promise(resolve => setTimeout(resolve, delay));
         
-        console.log(`Polling attempt ${i + 1}/${maxAttempts}, current status: ${status}`);
+        console.log(`🔄 Poll ${i + 1}/${maxAttempts} (wait: ${delay}ms) | Status: ${status}`);
         
         const statusResponse = await fetch(
           `https://api.pdfmonkey.io/api/v1/documents/${documentId}`,
@@ -115,46 +167,91 @@ serve(async (req) => {
           }
         );
         
+        if (!statusResponse.ok) {
+          console.error('❌ Status check failed:', statusResponse.status);
+          const errorText = await statusResponse.text();
+          console.error('Error response:', errorText);
+          break;
+        }
+        
         const statusData = await statusResponse.json();
+        const oldStatus = status;
         status = statusData.document.status;
         downloadUrl = statusData.document.download_url;
         
+        if (status !== oldStatus) {
+          console.log(`📊 Status changed: ${oldStatus} → ${status}`);
+        }
+        
+        if (statusData.document.errors) {
+          console.error('❌ Document errors:', statusData.document.errors);
+        }
+        
         if (status === 'success') {
-          console.log('PDF generation completed successfully');
+          console.log('✅ PDF generation completed successfully');
           break;
         } else if (status === 'failure') {
-          throw new Error('PDF generation failed');
+          console.error('❌ PDF generation failed');
+          console.error('Failure details:', statusData.document);
+          return new Response(JSON.stringify({
+            success: false,
+            useFallback: true,
+            error: 'PDF Monkey generation failed',
+            details: statusData.document.errors || 'Unknown error',
+            templateId: COMBINED_RAMS_TEMPLATE_ID
+          }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
         }
       }
     }
 
     // Check if PDF generation completed successfully
     if (!downloadUrl || status !== 'success') {
-      console.log('PDF generation timed out or incomplete', { status, downloadUrl });
+      console.warn('⚠️  PDF generation incomplete');
+      console.warn('Final Status:', status);
+      console.warn('Download URL:', downloadUrl ? 'Present' : 'Missing');
+      
       return new Response(JSON.stringify({
         success: false,
         useFallback: true,
-        message: 'PDF generation timed out'
+        message: `PDF generation ${status === 'draft' ? 'stuck in draft status' : 'timed out'}`,
+        status: status,
+        documentId: documentId,
+        templateId: COMBINED_RAMS_TEMPLATE_ID,
+        hint: status === 'draft' 
+          ? 'Template may not be set to auto-generate mode in PDF Monkey dashboard'
+          : 'Generation took too long - check template configuration'
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
+    console.log('✅ Success! Download URL ready:', downloadUrl);
+    
     return new Response(JSON.stringify({
       success: true,
       documentId: documentId,
       downloadUrl: downloadUrl,
-      status: status
+      status: status,
+      templateId: COMBINED_RAMS_TEMPLATE_ID
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
   } catch (error) {
-    console.error('Error in generate-combined-rams-pdf function:', error);
+    console.error('❌ Fatal error in generate-combined-rams-pdf:', error);
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      templateId: COMBINED_RAMS_TEMPLATE_ID
+    });
+    
     return new Response(JSON.stringify({ 
       success: false,
       useFallback: true,
-      error: error instanceof Error ? error.message : 'Failed to generate PDF'
+      error: error instanceof Error ? error.message : 'Failed to generate PDF',
+      templateId: COMBINED_RAMS_TEMPLATE_ID
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
