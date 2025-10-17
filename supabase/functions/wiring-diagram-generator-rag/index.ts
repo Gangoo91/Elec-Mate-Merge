@@ -5,6 +5,7 @@ import { withRetry, RetryPresets } from "../_shared/retry.ts";
 import { withTimeout, Timeouts } from "../_shared/timeout.ts";
 import { createLogger, generateRequestId } from "../_shared/logger.ts";
 import { safeAll } from "../_shared/safe-parallel.ts";
+import { retrieveRegulations } from "../_shared/rag-retrieval.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -82,13 +83,18 @@ Be concise and technical.`
     const componentDetails = imageAnalysisData.choices[0].message.content;
     logger.info('Component identified', { componentDetails: componentDetails.substring(0, 100) });
 
-    // Step 2: Search installation manuals and BS 7671
+    // Step 2: Intelligent component-specific RAG retrieval
     const componentType = componentDetails.split('\n')[0].replace(/^\d+\.\s*/, '').trim();
     
-    logger.info('Searching RAG for wiring guidance', { componentType });
+    logger.info('Using intelligent RAG for component-specific regulations', { componentType });
+
+    const openAiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!openAiKey) {
+      logger.warn('OPENAI_API_KEY not found, falling back to keyword search');
+    }
 
     const { successes, failures } = await logger.time(
-      'RAG searches',
+      'Smart RAG searches',
       async () => await safeAll([
         {
           name: 'installation',
@@ -103,16 +109,34 @@ Be concise and technical.`
           )
         },
         {
-          name: 'bs7671',
-          execute: () => withTimeout(
-            supabase
-              .from('bs7671_embeddings')
-              .select('*')
-              .or('regulation_number.ilike.%537%,regulation_number.ilike.%526%,regulation_number.ilike.%514%,regulation_number.ilike.%134%')
-              .limit(8),
-            Timeouts.STANDARD,
-            'BS 7671 wiring regulations'
-          )
+          name: 'wiring_regs',
+          execute: async () => openAiKey 
+            ? await retrieveRegulations(
+                `${componentType} wiring requirements: terminal connections, cable colors, protection requirements`,
+                8,
+                openAiKey
+              )
+            : { data: [], error: null }
+        },
+        {
+          name: 'safety_regs',
+          execute: async () => openAiKey
+            ? await retrieveRegulations(
+                `${componentType} safety requirements: RCD protection, IP ratings, zones, isolation`,
+                5,
+                openAiKey
+              )
+            : { data: [], error: null }
+        },
+        {
+          name: 'installation_regs',
+          execute: async () => openAiKey
+            ? await retrieveRegulations(
+                `${componentType} installation method: cable sizing, mounting, earthing, bonding`,
+                5,
+                openAiKey
+              )
+            : { data: [], error: null }
         }
       ])
     );
@@ -122,20 +146,31 @@ Be concise and technical.`
     }
 
     const installationDocs = successes.find(s => s.name === 'installation')?.result?.data || [];
-    const regulations = successes.find(s => s.name === 'bs7671')?.result?.data || [];
+    const wiringRegs = successes.find(s => s.name === 'wiring_regs')?.result || [];
+    const safetyRegs = successes.find(s => s.name === 'safety_regs')?.result || [];
+    const installRegs = successes.find(s => s.name === 'installation_regs')?.result || [];
+    
+    // Merge and deduplicate regulations
+    const allRegulations = [...wiringRegs, ...safetyRegs, ...installRegs];
+    const regulations = Array.from(
+      new Map(allRegulations.map(reg => [reg.id, reg])).values()
+    );
 
-    logger.info('RAG search completed', { 
+    logger.info('Smart RAG retrieval completed', { 
       installationCount: installationDocs.length,
-      regulationsCount: regulations.length
+      regulationsCount: regulations.length,
+      wiringRegsCount: wiringRegs.length,
+      safetyRegsCount: safetyRegs.length,
+      installRegsCount: installRegs.length
     });
 
-    // Step 3: Generate wiring guidance using AI + RAG context
+    // Step 3: Generate wiring guidance using AI + enhanced RAG context
     const ragContext = `
-Installation Manuals:
+Installation Manuals (${installationDocs.length} sources):
 ${installationDocs.map(doc => `- ${doc.topic}: ${doc.content.substring(0, 200)}`).join('\n')}
 
-BS 7671 Wiring Regulations:
-${regulations.map(reg => `- ${reg.regulation_number}: ${reg.content.substring(0, 200)}`).join('\n')}
+BS 7671 Wiring Regulations (${regulations.length} relevant regulations):
+${regulations.map(reg => `- [${reg.regulation_number}] ${reg.similarity ? `(relevance: ${(reg.similarity * 100).toFixed(0)}%)` : ''} ${reg.content.substring(0, 250)}`).join('\n\n')}
 `;
 
     logger.info('Generating wiring guidance with AI');
