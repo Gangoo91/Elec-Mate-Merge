@@ -480,15 +480,16 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
       {/* Items List */}
       {items.length > 0 && (
-        <Card className="bg-card border border-primary/20">
-          <CardHeader className="pb-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <CardTitle className="text-base sm:text-lg">Quote Items ({items.length})</CardTitle>
-              <div className="flex flex-col sm:items-end">
-                <span className="text-xs text-muted-foreground">Total:</span>
-                <span className="text-lg sm:text-xl font-bold text-primary truncate">
-                  £{total.toFixed(2)}
-                </span>
+        <Card className="bg-gradient-to-br from-elec-card/80 to-elec-dark/30 border-2 border-primary/30 shadow-lg">
+          <CardHeader className="border-b border-primary/30 bg-elec-card/50 pb-4">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xl font-bold flex items-center gap-2">
+                <FileText className="h-5 w-5 text-primary" />
+                Quote Items ({items.length})
+              </CardTitle>
+              <div className="text-right">
+                <p className="text-sm text-muted-foreground">Total:</p>
+                <p className="text-2xl font-bold text-primary">£{total.toFixed(2)}</p>
               </div>
             </div>
           </CardHeader>
@@ -507,36 +508,45 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
             </div>
 
             {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto">
+            <div className="hidden md:block overflow-x-auto rounded-lg border border-primary/20">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-muted">
-                    <TableHead className="w-[40px]">Type</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead className="text-center w-[100px]">Quantity</TableHead>
-                    <TableHead className="text-center w-[80px]">Unit</TableHead>
-                    <TableHead className="text-right w-[120px]">Unit Price</TableHead>
-                    <TableHead className="text-right w-[100px]">Total</TableHead>
-                    <TableHead className="text-center w-[100px]">Actions</TableHead>
+                  <TableRow className="border-b border-primary/30 bg-elec-card/50">
+                    <TableHead className="w-[60px] text-muted-foreground font-semibold">Type</TableHead>
+                    <TableHead className="text-muted-foreground font-semibold">Description</TableHead>
+                    <TableHead className="text-center w-[120px] text-muted-foreground font-semibold">Quantity</TableHead>
+                    <TableHead className="text-center w-[100px] text-muted-foreground font-semibold">Unit</TableHead>
+                    <TableHead className="text-right w-[140px] text-muted-foreground font-semibold">Unit Price</TableHead>
+                    <TableHead className="text-right w-[140px] text-muted-foreground font-semibold">Total</TableHead>
+                    <TableHead className="text-center w-[120px] text-muted-foreground font-semibold">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {items.map((item) => (
-                    <TableRow key={item.id} className="border-muted">
-                      <TableCell className="py-3">
+                  {items.map((item, index) => (
+                    <TableRow 
+                      key={item.id} 
+                      className={`border-b border-primary/10 transition-all hover:bg-elec-card/40 hover:scale-[1.01] ${
+                        index % 2 === 0 ? 'bg-elec-card/20' : 'bg-transparent'
+                      }`}
+                    >
+                      <TableCell className="py-4">
                         <div className="flex items-center justify-center">
-                          {getCategoryIcon(item.category)}
+                          <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                            {getCategoryIcon(item.category)}
+                          </div>
                         </div>
                       </TableCell>
-                      <TableCell className="py-3">
-                        <div>
-                          <p className="font-medium">{item.description}</p>
+                      <TableCell className="py-4">
+                        <div className="space-y-1">
+                          <p className="font-semibold text-base text-foreground">{item.description}</p>
                           {item.notes && (
-                            <p className="text-xs text-muted-foreground mt-1">{item.notes}</p>
+                            <p className="text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded">
+                              {item.notes}
+                            </p>
                           )}
                         </div>
                       </TableCell>
-                      <TableCell className="text-center py-3">
+                      <TableCell className="text-center py-4">
                         <Input
                           type="number"
                           inputMode="decimal"
@@ -558,70 +568,58 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                               onUpdate(item.id, { quantity: 1 });
                             }
                           }}
-                          className="w-20 text-center h-10"
+                          className="w-24 text-center h-11 font-semibold bg-background border-2 border-primary/20 focus:border-primary/40 shadow-sm"
                           min="0.1"
                           step="0.1"
                           aria-label="Quantity"
                         />
                       </TableCell>
-                      <TableCell className="text-center py-3 text-sm">{item.unit}</TableCell>
-                      <TableCell className="text-right py-3">
-                        <div className="flex items-center justify-end gap-1">
-                          <span className="text-sm text-muted-foreground">£</span>
+                      <TableCell className="text-center py-4">
+                        <span className="text-sm font-medium text-muted-foreground bg-muted/30 px-3 py-1.5 rounded-full">
+                          {item.unit}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-right py-4">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <span className="text-sm text-muted-foreground font-semibold">£</span>
                           <Input
                             type="number"
                             inputMode="decimal"
-                            value={item.unitPrice === 0 ? "" : item.unitPrice}
+                            value={item.unitPrice === 0 ? "" : item.unitPrice.toFixed(2)}
                             onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
-                            className="w-24 text-left h-10"
+                            className="w-28 text-right h-11 font-semibold bg-background border-2 border-primary/20 focus:border-primary/40 shadow-sm"
                             min="0"
                             step="0.01"
                             aria-label="Unit price"
                           />
                         </div>
                       </TableCell>
-                      <TableCell className="text-right py-3 font-semibold">
-                        £{item.totalPrice.toFixed(2)}
+                      <TableCell className="text-right py-4">
+                        <span className="text-lg font-bold text-primary">
+                          £{item.totalPrice.toFixed(2)}
+                        </span>
                       </TableCell>
-                      <TableCell className="text-center py-3">
-                        <div className="flex items-center justify-center gap-1">
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => duplicateItem(item)}
-                                  className="h-8 w-8 p-0"
-                                  aria-label="Duplicate item"
-                                >
-                                  <Copy className="h-3 w-3" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>Duplicate item</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
+                      <TableCell className="text-center py-4">
+                        <div className="flex items-center justify-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => duplicateItem(item)}
+                            className="h-9 w-9 p-0 border-primary/30 hover:bg-primary/10 hover:border-primary/50"
+                            aria-label="Duplicate item"
+                          >
+                            <Copy className="h-4 w-4" />
+                          </Button>
                           
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => onRemove(item.id)}
-                                  className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                                  aria-label="Remove item"
-                                >
-                                  <Trash2 className="h-3 w-3" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>Remove item</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => onRemove(item.id)}
+                            className="h-9 w-9 p-0 bg-red-500/10 border border-red-500/30 text-red-600 hover:bg-red-500/20 hover:border-red-500/50"
+                            aria-label="Delete item"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
                         </div>
                       </TableCell>
                     </TableRow>

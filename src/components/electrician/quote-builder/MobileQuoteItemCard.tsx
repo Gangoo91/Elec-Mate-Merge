@@ -32,19 +32,31 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
   };
 
   return (
-    <Card className="p-3 sm:p-4 border-elec-yellow/20 bg-card/50 space-y-3">
-      {/* Header with category and price */}
+    <Card className="p-3 sm:p-4 border-2 border-primary/30 bg-gradient-to-br from-elec-card/80 to-elec-dark/30 shadow-lg space-y-3">
+      {/* Header with category icon, price, and delete */}
       <div className="flex items-start justify-between gap-3">
-        <Badge variant="outline" className={`${getCategoryColor(item.category)} flex items-center gap-1 text-xs shrink-0`}>
-          {getCategoryIcon(item.category)}
-          {item.category}
-        </Badge>
-        <div className="flex flex-col items-end min-w-0">
-          <span className="text-xs text-muted-foreground">Total</span>
-          <span className="text-base sm:text-lg font-bold text-elec-yellow truncate max-w-[150px]">
-            £{item.totalPrice.toFixed(2)}
-          </span>
+        <div className="flex items-center gap-2">
+          <div className={`p-2 rounded-lg ${getCategoryColor(item.category)}`}>
+            {getCategoryIcon(item.category)}
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Total</p>
+            <p className="font-bold text-primary text-lg">
+              £{item.totalPrice.toFixed(2)}
+            </p>
+          </div>
         </div>
+        
+        {/* Prominent delete button */}
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() => onRemove(item.id)}
+          className="h-10 w-10 p-0 bg-red-500/10 border border-red-500/30 text-red-600 hover:bg-red-500/20 flex-shrink-0"
+          aria-label="Delete item"
+        >
+          <Trash2 className="h-5 w-5" />
+        </Button>
       </div>
 
       {/* Description */}
@@ -100,26 +112,16 @@ export const MobileQuoteItemCard = ({ item, onUpdate, onRemove, onDuplicate }: M
       )}
 
       {/* Action buttons */}
-      <div className="flex gap-2 pt-2">
+      <div className="pt-2">
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
           onClick={() => onDuplicate(item)}
-          className="flex-1 h-11 min-w-[44px] border border-elec-yellow/20 hover:bg-elec-yellow/10"
+          className="w-full h-11 border-primary/30 hover:bg-primary/10 hover:border-primary/50"
           aria-label="Duplicate item"
         >
           <Copy className="h-4 w-4" />
-          <span className="ml-1.5 hidden xs:inline sm:hidden md:inline">Duplicate</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => onRemove(item.id)}
-          className="flex-1 h-11 min-w-[44px] border border-destructive/30 hover:bg-destructive/10 text-destructive"
-          aria-label="Remove item"
-        >
-          <Trash2 className="h-4 w-4" />
-          <span className="ml-1.5 hidden xs:inline sm:hidden md:inline">Remove</span>
+          <span className="ml-2">Duplicate Item</span>
         </Button>
       </div>
     </Card>
