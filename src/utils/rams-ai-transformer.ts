@@ -41,6 +41,117 @@ export function transformHealthSafetyToRAMS(
     hazardsFound: hazards?.length || 0
   });
   
+  // Generate controls from hazard description if not provided
+  const generateControlsFromHazard = (hazard: any): string[] => {
+    const controls: string[] = [];
+    
+    // Use regulation as a control if available
+    if (hazard.regulation) {
+      controls.push(`Comply with ${hazard.regulation}`);
+    }
+    
+    const hazardLower = hazard.hazard.toLowerCase();
+    
+    if (hazardLower.includes('electric shock') || hazardLower.includes('live') || hazardLower.includes('electrocution')) {
+      controls.push('Isolate and lock-off power supply before work');
+      controls.push('Use approved voltage tester to prove dead');
+      controls.push('Wear insulated gloves and safety boots');
+      controls.push('Competent person supervision required');
+    }
+    
+    if (hazardLower.includes('arc flash') || hazardLower.includes('arc blast')) {
+      controls.push('Maintain safe working distance from switchgear');
+      controls.push('Wear arc-rated PPE when switching');
+      controls.push('Use remote operation where possible');
+    }
+    
+    if (hazardLower.includes('asbestos')) {
+      controls.push('Conduct asbestos survey before drilling/fixing');
+      controls.push('Licensed asbestos contractor if ACMs present');
+      controls.push('Do not disturb suspected ACMs');
+    }
+    
+    if (hazardLower.includes('dust') || hazardLower.includes('silica')) {
+      controls.push('Use dust extraction equipment (Class H/M)');
+      controls.push('Wear RPE (FFP3 mask minimum)');
+      controls.push('Wet cutting where feasible');
+    }
+    
+    if (hazardLower.includes('height') || hazardLower.includes('ladder') || hazardLower.includes('podium')) {
+      controls.push('Use appropriate access equipment (podium/stepladder)');
+      controls.push('Ensure 3-point contact when climbing');
+      controls.push('Inspect access equipment before use');
+    }
+    
+    if (hazardLower.includes('manual handling') || hazardLower.includes('lifting')) {
+      controls.push('Mechanical aids for heavy items');
+      controls.push('Team lift for items >25kg');
+      controls.push('Proper lifting technique training');
+    }
+    
+    if (hazardLower.includes('fire')) {
+      controls.push('Ensure correct protective device ratings');
+      controls.push('Torque all terminations to manufacturer specs');
+      controls.push('Thermal imaging post-energisation');
+    }
+    
+    if (hazardLower.includes('hidden') || hazardLower.includes('striking')) {
+      controls.push('Use CAT & Genny scanner before drilling');
+      controls.push('Refer to drawings and services plans');
+      controls.push('Hand-dig trial holes where required');
+    }
+    
+    if (hazardLower.includes('slip') || hazardLower.includes('trip') || hazardLower.includes('fall')) {
+      controls.push('Keep work area tidy and free of obstructions');
+      controls.push('Secure trailing cables and leads');
+      controls.push('Adequate lighting in work areas');
+    }
+    
+    if (hazardLower.includes('public') || hazardLower.includes('customer')) {
+      controls.push('Erect barriers and warning signs');
+      controls.push('Supervise work area continuously');
+      controls.push('Brief staff/public on restricted areas');
+    }
+    
+    if (hazardLower.includes('noise') || hazardLower.includes('vibration')) {
+      controls.push('Wear hearing protection (ear defenders)');
+      controls.push('Limit exposure time to vibrating tools');
+      controls.push('Use anti-vibration gloves');
+    }
+    
+    if (hazardLower.includes('tool') || hazardLower.includes('equipment')) {
+      controls.push('All tools 110V or battery-powered');
+      controls.push('Visual inspection before use');
+      controls.push('Current PAT test certificate required');
+    }
+    
+    if (hazardLower.includes('competence') || hazardLower.includes('supervision')) {
+      controls.push('Work supervised by qualified electrician');
+      controls.push('Apprentices under direct supervision');
+      controls.push('Pre-start toolbox talk on specific hazards');
+    }
+    
+    if (hazardLower.includes('backfeed') || hazardLower.includes('isolation') || hazardLower.includes('ups') || hazardLower.includes('generator')) {
+      controls.push('Identify all sources of supply (inc. UPS/PV)');
+      controls.push('Isolate all sources before work');
+      controls.push('Lock-off and tag all isolation points');
+    }
+    
+    if (hazardLower.includes('fire alarm') || hazardLower.includes('emergency lighting') || hazardLower.includes('life safety')) {
+      controls.push('Coordinate with building management');
+      controls.push('Arrange alternative provision during work');
+      controls.push('Minimise downtime of critical systems');
+    }
+    
+    if (controls.length === 0) {
+      controls.push('Conduct dynamic risk assessment before work');
+      controls.push('Follow method statement procedures');
+      controls.push('Ensure competent supervision');
+    }
+    
+    return controls;
+  };
+  
   // Handle structured response from health-safety agent
   if (hazards && Array.isArray(hazards)) {
     console.log('🔍 Individual hazard structure:', hazards[0]);
@@ -55,13 +166,13 @@ export function transformHealthSafetyToRAMS(
         likelihood: hazard.likelihood,
         severity: hazard.severity,
         riskRating,
-        controls: Array.isArray(hazard.controls) 
-          ? hazard.controls.join('\n• ')
-          : typeof hazard.controls === 'string'
+        controls: Array.isArray(hazard.controls) && hazard.controls.length > 0
+          ? '• ' + hazard.controls.join('\n• ')
+          : typeof hazard.controls === 'string' && hazard.controls.trim()
             ? hazard.controls
-            : hazard.controlMeasures && Array.isArray(hazard.controlMeasures)
-              ? hazard.controlMeasures.join('\n• ')
-              : 'No controls specified',
+            : hazard.controlMeasures && Array.isArray(hazard.controlMeasures) && hazard.controlMeasures.length > 0
+              ? '• ' + hazard.controlMeasures.join('\n• ')
+              : '• ' + generateControlsFromHazard(hazard).join('\n• '),
         residualRisk,
         furtherAction: "",
         responsible: projectInfo.assessor,
@@ -204,6 +315,92 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
     stepsFound: methodSteps?.length || 0
   });
   
+  // Infer safety requirements from step description
+  const inferSafetyRequirements = (step: any): string[] => {
+    const safety: string[] = [];
+    const combined = `${step.title || ''} ${step.description || ''}`.toLowerCase();
+    
+    if (combined.includes('isolat') || combined.includes('dead')) {
+      safety.push('Isolation and lock-off required');
+      safety.push('Prove dead before work');
+    }
+    if (combined.includes('live') || combined.includes('energis')) {
+      safety.push('Live working prohibited unless specifically authorized');
+      safety.push('Arc-rated PPE required if switching');
+    }
+    if (combined.includes('height') || combined.includes('ladder') || combined.includes('podium')) {
+      safety.push('Work at height assessment required');
+      safety.push('Stable working platform');
+    }
+    if (combined.includes('drill') || combined.includes('dust')) {
+      safety.push('Dust extraction and RPE required');
+    }
+    if (combined.includes('manual') || combined.includes('lift') || combined.includes('heavy')) {
+      safety.push('Manual handling assessment');
+    }
+    if (combined.includes('test')) {
+      safety.push('GS38 compliant test equipment');
+      safety.push('Confirm isolation before testing');
+    }
+    
+    return safety.length > 0 ? safety : ['Follow general site safety rules', 'PPE required'];
+  };
+  
+  // Infer equipment from step description
+  const inferEquipment = (step: any): string[] => {
+    const equipment: string[] = [];
+    const combined = `${step.title || ''} ${step.description || ''}`.toLowerCase();
+    
+    if (combined.includes('test') || combined.includes('prove')) {
+      equipment.push('Voltage tester (GS38 compliant)');
+      equipment.push('Multi-function tester');
+    }
+    if (combined.includes('isolat') || combined.includes('lock')) {
+      equipment.push('Lock-off kit and tags');
+    }
+    if (combined.includes('termin') || combined.includes('connect')) {
+      equipment.push('Torque screwdriver/wrench');
+      equipment.push('Cable strippers');
+      equipment.push('Insulated hand tools');
+    }
+    if (combined.includes('drill') || combined.includes('fix')) {
+      equipment.push('Drill with dust extraction');
+      equipment.push('PPE (goggles, gloves, RPE)');
+    }
+    if (combined.includes('label')) {
+      equipment.push('Label maker or pre-printed labels');
+    }
+    if (combined.includes('mount') || combined.includes('install')) {
+      equipment.push('Spirit level');
+      equipment.push('Fixings and rawlplugs');
+    }
+    if (combined.includes('cable') || combined.includes('route')) {
+      equipment.push('Cable clips and fixings');
+      equipment.push('Trunking/conduit as required');
+    }
+    
+    return equipment.length > 0 ? equipment : ['Standard electrician hand tools'];
+  };
+  
+  // Infer qualifications from step description
+  const inferQualifications = (step: any): string[] => {
+    const quals: string[] = [];
+    const combined = `${step.title || ''} ${step.description || ''}`.toLowerCase();
+    
+    if (combined.includes('isolat') || combined.includes('switch') || combined.includes('energis')) {
+      quals.push('Authorized Person (Electrical)');
+    }
+    if (combined.includes('test') || combined.includes('commission')) {
+      quals.push('BS 7671 18th Edition');
+      quals.push('Inspection & Testing (2391)');
+    }
+    if (combined.includes('design') || combined.includes('calculate')) {
+      quals.push('Electrical Installation Design');
+    }
+    
+    return quals.length > 0 ? quals : ['Qualified electrician'];
+  };
+  
   // Handle structured response from installer agent
   if (methodSteps && Array.isArray(methodSteps)) {
     const transformedSteps = methodSteps.map((step, idx) => ({
@@ -213,9 +410,17 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
       description: step.description || '',
       estimatedDuration: step.estimatedDuration || step.duration || '30 minutes',
       riskLevel: step.riskLevel || 'medium',
-      safetyRequirements: step.safetyRequirements || [],
-      equipmentNeeded: step.equipmentNeeded || step.equipment || [],
-      qualifications: step.qualifications || [],
+      safetyRequirements: step.safetyRequirements && step.safetyRequirements.length > 0
+        ? step.safetyRequirements
+        : inferSafetyRequirements(step),
+      equipmentNeeded: step.equipmentNeeded && step.equipmentNeeded.length > 0
+        ? step.equipmentNeeded
+        : step.equipment && step.equipment.length > 0
+          ? step.equipment
+          : inferEquipment(step),
+      qualifications: step.qualifications && step.qualifications.length > 0
+        ? step.qualifications
+        : inferQualifications(step),
       isCompleted: false
     }));
     
@@ -371,6 +576,8 @@ export function combineAgentOutputsToRAMS(
     location: projectInfo.location,
     date: projectInfo.date,
     assessor: projectInfo.assessor,
+    contractor: projectInfo.contractor || '',
+    supervisor: projectInfo.supervisor || '',
     activities: activities.length > 0 ? activities : ["Electrical installation work"],
     risks
   };
