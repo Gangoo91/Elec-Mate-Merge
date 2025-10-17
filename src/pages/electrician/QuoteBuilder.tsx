@@ -89,7 +89,7 @@ const QuoteBuilder = () => {
   const canonical = `${window.location.origin}/electrician/quote-builder`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-background/95">
+    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-background to-elec-card">
       <Helmet>
         <title>Quote Builder for Electricians | Create Professional Quotes</title>
         <meta
@@ -100,8 +100,8 @@ const QuoteBuilder = () => {
       </Helmet>
 
       {/* Enhanced Header */}
-      <header className="relative bg-card border-b">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+      <header className="relative bg-elec-card/90 backdrop-blur-sm border-b border-primary/20">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="relative px-4 py-8 space-y-6">
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -172,7 +172,7 @@ const QuoteBuilder = () => {
               {statCards.map((stat, index) => (
                 <Card 
                   key={index} 
-                  className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-card to-card/50 cursor-pointer"
+                  className="group relative overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-elec-card/80 to-elec-dark/50 cursor-pointer backdrop-blur-sm"
                   onClick={() => handleCardClick(stat.type)}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -194,21 +194,6 @@ const QuoteBuilder = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div>
-
-            {/* Create Quote Call-to-Action */}
-            <div className="mt-6 text-center">
-              <Button 
-                onClick={() => navigate('/electrician/quote-builder/create')}
-                size="lg"
-                className="mobile-button-primary w-full sm:w-auto px-8 py-4 text-lg font-semibold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-lg hover:shadow-xl transition-all duration-300 group"
-              >
-                <Plus className="mr-2 h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
-                Create New Quote
-              </Button>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Professional electrical quotes in minutes
-              </p>
             </div>
           </section>
 

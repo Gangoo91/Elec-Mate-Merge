@@ -38,122 +38,152 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
       {quotes.map((quote) => (
         <div
           key={quote.id}
-          className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
+          id={`quote-${quote.id}`}
+          className={`relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border ${
+            quote.acceptance_status === 'accepted' 
+              ? 'border-green-500/30 border-l-4 border-l-green-500/60' 
+              : quote.acceptance_status === 'rejected'
+                ? 'border-red-500/30 border-l-4 border-l-red-500/60'
+                : 'border-primary/20 border-l-4 border-l-primary/60'
+          }`}
         >
-          {/* Header */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Badge variant="outline" className="text-xs">
-                Quote #{quote.quoteNumber}
-              </Badge>
-              {hasInvoiceRaised(quote) && (
-                <>
-                  <ArrowRight className="h-3 w-3" />
-                  <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
+          {/* Content Container */}
+          <div className="relative p-3">
+            {/* Top Row: Quote Number & Status Badge */}
+            <div className="flex items-start justify-between mb-3 pb-2 border-b border-primary/20">
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-bold text-foreground">
+                    #{quote.quoteNumber}
+                  </h3>
+                  {getAcceptanceStatusBadge(quote)}
+                </div>
+                {hasInvoiceRaised(quote) && (
+                  <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30 w-fit">
                     <Receipt className="h-3 w-3 mr-1" />
-                    Invoice Raised
+                    Invoice #{quote.invoice_number}
                   </Badge>
+                )}
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
+                className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
+                aria-label="View quote"
+              >
+                <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              </Button>
+            </div>
+
+            {/* Middle Row: Client Info (left) | Date & Items (right) */}
+            <div className="flex items-start justify-between mb-4 gap-3">
+              {/* Left: Client Icon + Info */}
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                <div className="w-10 h-10 flex items-center justify-center flex-shrink-0 p-0">
+                  <User className="h-10 w-10 sm:h-14 sm:w-14 text-muted-foreground/40" strokeWidth={1.5} />
+                </div>
+                <div className="min-w-0 flex-1 text-left">
+                  <div className="text-xs sm:text-sm text-muted-foreground mb-0.5">Client</div>
+                  <div className="text-sm sm:text-base text-foreground font-medium truncate">
+                    {quote.client.name}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Right: Dates */}
+              <div className="text-right space-y-2 flex-shrink-0">
+                <div>
+                  <div className="text-xs text-muted-foreground mb-0.5">Created</div>
+                  <div className="text-xs sm:text-sm text-foreground font-medium">
+                    {format(new Date(quote.createdAt), "dd MMM yyyy")}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs text-muted-foreground mb-0.5">Items</div>
+                  <div className="text-xs sm:text-sm text-foreground font-semibold">
+                    {quote.items.length} item{quote.items.length !== 1 ? 's' : ''}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Total Amount - Centered and Prominent */}
+            <div className="text-center mb-4 py-3 bg-background/40 rounded-lg border border-primary/10">
+              <div className="text-xs sm:text-sm text-muted-foreground mb-1 font-normal">Total Amount</div>
+              <div className="text-2xl sm:text-3xl font-bold text-primary">
+                {formatCurrency(quote.total)}
+              </div>
+            </div>
+
+            {/* Bottom Action Bar - Grid Layout */}
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => handleRegeneratePDF(quote)}
+                disabled={loadingAction === `pdf-${quote.id}`}
+                className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
+              >
+                <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                <span className="text-xs sm:text-sm font-medium">
+                  {loadingAction === `pdf-${quote.id}` ? 'Loading' : 'PDF'}
+                </span>
+              </button>
+
+              <button
+                onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
+                className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
+              >
+                <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                <span className="text-xs sm:text-sm font-medium">View</span>
+              </button>
+
+              {/* Show QuoteSendDropdown as a grid button */}
+              <div className="col-span-2">
+                <QuoteSendDropdown 
+                  quote={quote}
+                  onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
+                  disabled={!quote.client?.email}
+                />
+              </div>
+
+              {/* Accept/Reject Actions - Only for 'sent' quotes */}
+              {quote.status === 'sent' && quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected' && (
+                <>
+                  <button
+                    onClick={() => handleActionClick(quote, 'accept')}
+                    disabled={loadingAction === `action-${quote.id}`}
+                    className="bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 text-green-600 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
+                  >
+                    <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    <span className="text-xs sm:text-sm font-medium">Accept</span>
+                  </button>
+
+                  <button
+                    onClick={() => handleActionClick(quote, 'reject')}
+                    disabled={loadingAction === `action-${quote.id}`}
+                    className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-600 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation"
+                  >
+                    <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    <span className="text-xs sm:text-sm font-medium">Reject</span>
+                  </button>
                 </>
               )}
-            </div>
-            
-            <div className="flex items-start justify-between gap-3">
-              {getAcceptanceStatusBadge(quote)}
-              <span className="text-lg font-bold text-elec-yellow shrink-0">
-                {formatCurrency(quote.total)}
-              </span>
-            </div>
-          </div>
 
-          {/* Client Info */}
-          <div className="flex items-center gap-2 text-sm">
-            <User className="h-4 w-4 text-muted-foreground" />
-            <span className="font-medium truncate">{quote.client.name}</span>
-          </div>
-
-          {/* Meta Info */}
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <div className="flex items-center gap-1.5">
-              <Calendar className="h-3.5 w-3.5" />
-              <span>{format(new Date(quote.createdAt), "dd MMM yyyy")}</span>
-            </div>
-            <span className="text-border">•</span>
-            <div className="flex items-center gap-1.5">
-              <span>{quote.items.length} item{quote.items.length !== 1 ? 's' : ''}</span>
+              {/* Send to Invoice - Only for ACCEPTED quotes */}
+              {canRaiseInvoice(quote) && (
+                <button
+                  onClick={() => onInvoiceAction(quote)}
+                  disabled={loadingAction === `invoice-${quote.id}`}
+                  className="col-span-2 bg-gradient-to-r from-elec-yellow to-yellow-400 hover:from-elec-yellow/90 hover:to-yellow-400/90 text-black py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation font-semibold"
+                >
+                  <Receipt className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="text-xs sm:text-sm">
+                    {loadingAction === `invoice-${quote.id}` ? 'Creating...' : 'Send to Invoice'}
+                  </span>
+                </button>
+              )}
             </div>
           </div>
-
-          {/* Action Buttons */}
-          <div className="flex gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleRegeneratePDF(quote)}
-              disabled={loadingAction === `pdf-${quote.id}`}
-              className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
-            >
-              <Download className="h-3 w-3 mr-1" />
-              {loadingAction === `pdf-${quote.id}` ? 'Downloading...' : 'Download'}
-            </Button>
-            <Button
-              variant="default"
-              size="sm"
-              onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
-              className="flex-1 text-xs bg-elec-yellow hover:bg-elec-yellow/90 text-black border-0"
-            >
-              <Eye className="h-3 w-3 mr-1" />
-              View Quote
-            </Button>
-          </div>
-
-          {/* Send Button - Full Width */}
-          <QuoteSendDropdown 
-            quote={quote}
-            onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
-            disabled={!quote.client?.email}
-          />
-
-          {/* Accept/Reject Actions - Only for 'sent' quotes */}
-          {quote.status === 'sent' && quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected' && (
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleActionClick(quote, 'accept')}
-                disabled={loadingAction === `action-${quote.id}`}
-                className="flex-1 text-xs border-green-600/30 text-green-400 hover:bg-green-600/10"
-              >
-                <Check className="h-3 w-3 mr-1" />
-                {loadingAction === `action-${quote.id}` ? 'Processing...' : 'Accept Quote'}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleActionClick(quote, 'reject')}
-                disabled={loadingAction === `action-${quote.id}`}
-                className="flex-1 text-xs border-red-600/30 text-red-400 hover:bg-red-600/10"
-              >
-                <X className="h-3 w-3 mr-1" />
-                Reject
-              </Button>
-            </div>
-          )}
-
-          {/* Send to Invoice - Only for ACCEPTED quotes */}
-          {canRaiseInvoice(quote) && (
-            <div className="pt-2 border-t border-elec-yellow/10">
-              <Button
-                variant="default"
-                size="sm"
-                onClick={() => onInvoiceAction(quote)}
-                disabled={loadingAction === `invoice-${quote.id}`}
-                className="w-full text-xs bg-gradient-to-r from-elec-yellow to-yellow-400 text-black font-semibold hover:from-elec-yellow/90 hover:to-yellow-400/90"
-              >
-                <Receipt className="h-3 w-3 mr-1" />
-                {loadingAction === `invoice-${quote.id}` ? 'Creating Invoice...' : 'Send to Invoice'}
-              </Button>
-            </div>
-          )}
         </div>
       ))}
     </div>
