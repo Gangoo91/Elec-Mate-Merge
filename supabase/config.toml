@@ -3,6 +3,11 @@ project_id = "jtwygbeceundfgnkirof"
 # Only list functions in active use to avoid deploy failures
 # Legacy V2 agents are not listed here
 
+# PDF Generation Functions
+[functions.generate-combined-rams-pdf]
+verify_jwt = false
+timeout_sec = 180
+
 # V3 Agent Functions - Active
 [functions.designer-agent]
 verify_jwt = false

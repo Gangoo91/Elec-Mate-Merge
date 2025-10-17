@@ -152,22 +152,49 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const handleGenerateCombinedRAMS = async () => {
     setIsGenerating(true);
     try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      
+      const { data, error } = await supabase.functions.invoke('generate-combined-rams-pdf', {
+        body: { 
+          ramsData, 
+          methodData
+        }
+      });
+
+      if (data?.success && data?.downloadUrl) {
+        const link = document.createElement('a');
+        link.href = data.downloadUrl;
+        link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
+        link.click();
+        
+        toast({
+          title: 'Professional Combined RAMS Generated',
+          description: 'Your PDF has been generated using our professional template.'
+        });
+      } else if (data?.useFallback || error) {
+        console.log('Falling back to client-side PDF generation');
+        const { generateCombinedRAMSPDF } = await import('@/utils/rams-combined-pdf');
+        await generateCombinedRAMSPDF(ramsData, methodData as MethodStatementData, {
+          companyName: methodData.contractor || 'Professional Electrical Services',
+          documentReference: `RAMS-${Date.now()}`
+        });
+        
+        toast({
+          title: 'Combined RAMS Generated',
+          description: 'Your complete RAMS document has been downloaded.'
+        });
+      }
+    } catch (error) {
+      console.error('Error generating combined RAMS:', error);
       const { generateCombinedRAMSPDF } = await import('@/utils/rams-combined-pdf');
       await generateCombinedRAMSPDF(ramsData, methodData as MethodStatementData, {
         companyName: methodData.contractor || 'Professional Electrical Services',
         documentReference: `RAMS-${Date.now()}`
       });
-
+      
       toast({
         title: 'Combined RAMS Generated',
         description: 'Your complete RAMS document has been downloaded.'
-      });
-    } catch (error) {
-      console.error('Error generating combined RAMS:', error);
-      toast({
-        title: 'Generation Failed',
-        description: 'Failed to generate combined RAMS.',
-        variant: 'destructive'
       });
     } finally {
       setIsGenerating(false);
