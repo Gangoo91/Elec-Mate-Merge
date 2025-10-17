@@ -89,9 +89,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               <CheckCircle2 className="h-6 w-6 md:h-5 md:w-5 text-green-500 animate-in fade-in zoom-in duration-300" />
             ) : hasError ? (
               <AlertCircle className="h-6 w-6 md:h-5 md:w-5 text-red-500" />
-            ) : (
-              <Loader2 className="h-6 w-6 md:h-5 md:w-5 text-elec-yellow animate-spin" />
-            )}
+            ) : null}
             AI Processing
           </CardTitle>
           <GenerationTimer isRunning={isProcessing && !allComplete} />
