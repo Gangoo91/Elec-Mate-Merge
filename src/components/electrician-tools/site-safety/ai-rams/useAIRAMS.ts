@@ -245,7 +245,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'health-safety' 
-          ? { ...step, status: 'complete', reasoning: `Generated ${hsData.riskAssessment?.hazards?.length || 0} hazards and control measures` }
+          ? { ...step, status: 'complete', reasoning: `Generated ${hsData.response?.riskAssessment?.hazards?.length || hsData.riskAssessment?.hazards?.length || 0} hazards and control measures` }
           : step
       ));
 
@@ -269,7 +269,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'installer' 
-          ? { ...step, status: 'complete', reasoning: `Generated ${installerData.methodStatementSteps?.length || 0} installation steps` }
+          ? { ...step, status: 'complete', reasoning: `Generated ${installerData.response?.methodStatementSteps?.length || installerData.response?.installationSteps?.length || installerData.methodStatementSteps?.length || 0} installation steps` }
           : step
       ));
 
