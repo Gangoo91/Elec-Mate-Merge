@@ -171,8 +171,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           title: 'Professional Combined RAMS Generated',
           description: 'Your PDF has been generated using our professional template.'
         });
-      } else if (data?.useFallback || error) {
-        console.log('Falling back to client-side PDF generation');
+      } else {
+        console.log('Falling back to client-side PDF generation', { data, error });
         const { generateCombinedRAMSPDF } = await import('@/utils/rams-combined-pdf');
         await generateCombinedRAMSPDF(ramsData, methodData as MethodStatementData, {
           companyName: methodData.contractor || 'Professional Electrical Services',

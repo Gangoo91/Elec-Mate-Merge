@@ -98,8 +98,8 @@ serve(async (req) => {
     let downloadUrl = pdfResponse.document.download_url;
     let status = pdfResponse.document.status;
     
-    // Poll for completion if still generating
-    if (status === 'pending' || status === 'generating') {
+    // Poll for completion if still generating (include 'draft' status)
+    if (status === 'draft' || status === 'pending' || status === 'generating') {
       const maxAttempts = 30;
       for (let i = 0; i < maxAttempts; i++) {
         await new Promise(resolve => setTimeout(resolve, 1000));
