@@ -76,7 +76,7 @@ export const useInvoiceStorage = () => {
       .eq('user_id', user.id)
       .eq('invoice_raised', true)
       .is('deleted_at', null)
-      .order('invoice_date', { ascending: false });
+      .order('created_at', { ascending: false });
 
       if (error) throw error;
 
