@@ -85,6 +85,7 @@ serve(async (req) => {
       body: JSON.stringify({
         document: {
           document_template_id: templateId,
+          status: "pending",
           payload: payload,
           meta: {
             _filename: `RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`

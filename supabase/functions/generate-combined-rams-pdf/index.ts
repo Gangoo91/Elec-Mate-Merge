@@ -99,6 +99,7 @@ serve(async (req) => {
       body: JSON.stringify({
         document: {
           document_template_id: COMBINED_RAMS_TEMPLATE_ID,
+          status: "pending",
           payload: combinedPayload,
           meta: {
             _filename: `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`

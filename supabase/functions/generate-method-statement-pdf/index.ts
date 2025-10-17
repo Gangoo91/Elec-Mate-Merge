@@ -64,6 +64,7 @@ serve(async (req) => {
       body: JSON.stringify({
         document: {
           document_template_id: METHOD_STATEMENT_TEMPLATE_ID,
+          status: "pending",
           payload: payload,
           meta: {
             _filename: `Method_Statement_${methodData.jobTitle?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`
