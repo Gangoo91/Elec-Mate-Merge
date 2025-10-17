@@ -176,14 +176,45 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
   const handleCopyJSON = () => {
     const combinedData = {
-      ramsData,
-      methodStatementData: methodData
+      ramsData: {
+        ...ramsData,
+        contractor: ramsData.contractor || '',
+        supervisor: ramsData.supervisor || '',
+        siteManagerName: ramsData.siteManagerName || '',
+        siteManagerPhone: ramsData.siteManagerPhone || '',
+        firstAiderName: ramsData.firstAiderName || '',
+        firstAiderPhone: ramsData.firstAiderPhone || '',
+        safetyOfficerName: ramsData.safetyOfficerName || '',
+        safetyOfficerPhone: ramsData.safetyOfficerPhone || '',
+        assemblyPoint: ramsData.assemblyPoint || '',
+        risks: ramsData.risks.map(risk => ({
+          ...risk,
+          furtherAction: risk.furtherAction || '',
+          responsible: risk.responsible || '',
+          actionBy: risk.actionBy || '',
+          done: risk.done || false
+        }))
+      },
+      methodStatementData: methodData ? {
+        ...methodData,
+        id: methodData.id || '',
+        approvedBy: methodData.approvedBy || '',
+        createdAt: methodData.createdAt || '',
+        updatedAt: methodData.updatedAt || '',
+        steps: methodData.steps.map(step => ({
+          ...step,
+          dependencies: step.dependencies || [],
+          isCompleted: step.isCompleted || false,
+          notes: step.notes || '',
+          linkedHazards: step.linkedHazards || []
+        }))
+      } : null
     };
     
     navigator.clipboard.writeText(JSON.stringify(combinedData, null, 2));
     toast({
       title: 'JSON Copied',
-      description: 'Combined RAMS data copied to clipboard',
+      description: 'Combined RAMS data with all fields copied to clipboard',
       variant: 'success'
     });
   };
