@@ -11,6 +11,9 @@ import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
 import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
 import type { RAMSData, RAMSRisk } from '@/types/rams';
 import type { MethodStatementData, MethodStep } from '@/types/method-statement';
+import { PDFGenerationModal } from './PDFGenerationModal';
+import { MobilePDFDownloadSheet } from './MobilePDFDownloadSheet';
+import { PDFPreviewModal } from './PDFPreviewModal';
 
 interface RAMSReviewEditorProps {
   ramsData: RAMSData;
@@ -32,10 +35,23 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const [ramsData, setRamsData] = useState<RAMSData>(initialRamsData);
   const [methodData, setMethodData] = useState<Partial<MethodStatementData>>(initialMethodData);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [currentPDFType, setCurrentPDFType] = useState<'combined' | 'rams' | 'method'>('combined');
+  const [showPDFModal, setShowPDFModal] = useState(false);
+  const [showMobileSheet, setShowMobileSheet] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     onUpdate(ramsData, methodData);
   }, [ramsData, methodData]);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const updateRisk = (riskId: string, updates: Partial<RAMSRisk>) => {
     setRamsData(prev => ({
@@ -87,6 +103,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
   const handleGenerateRAMSPDF = async () => {
     setIsGenerating(true);
+    setCurrentPDFType('rams');
+    setShowPDFModal(true);
     try {
       const { supabase } = await import('@/integrations/supabase/client');
       const { data: { user } } = await supabase.auth.getUser();
@@ -104,12 +122,15 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         link.download = `Risk_Assessment_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
         link.click();
         
+        setShowPDFModal(false);
         toast({
-          title: 'Professional RAMS Generated',
-          description: 'Your risk assessment has been generated using our professional template.'
+          title: 'PDF Downloaded',
+          description: 'Your RAMS PDF has been downloaded successfully',
+          variant: 'success'
         });
       } else {
         console.log('Falling back to client-side PDF generation', { data, error });
+        setShowPDFModal(false);
         const pdfDataUri = generateRAMSPDF(ramsData, {
           includeSignatures: true,
           companyName: methodData.contractor || 'Professional Electrical Services',
@@ -123,12 +144,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         link.click();
 
         toast({
-          title: 'RAMS PDF Generated',
-          description: 'Your risk assessment document has been downloaded.'
+          title: 'PDF Downloaded',
+          description: 'Your RAMS PDF has been downloaded',
+          variant: 'success'
         });
       }
     } catch (error) {
       console.error('Error generating RAMS PDF:', error);
+      setShowPDFModal(false);
       const pdfDataUri = generateRAMSPDF(ramsData, {
         includeSignatures: true,
         companyName: methodData.contractor || 'Professional Electrical Services',
@@ -142,8 +165,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       link.click();
 
       toast({
-        title: 'RAMS PDF Generated',
-        description: 'Your risk assessment document has been downloaded.'
+        title: 'PDF Generation Error',
+        description: 'Failed to generate PDF through server, using backup method',
+        variant: 'destructive'
       });
     } finally {
       setIsGenerating(false);
@@ -152,6 +176,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
   const handleGenerateMethodPDF = async () => {
     setIsGenerating(true);
+    setCurrentPDFType('method');
+    setShowPDFModal(true);
     try {
       const { supabase } = await import('@/integrations/supabase/client');
       
@@ -167,12 +193,15 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         link.download = `Method_Statement_${methodData.jobTitle?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
         link.click();
         
+        setShowPDFModal(false);
         toast({
-          title: 'Professional Method Statement Generated',
-          description: 'Your method statement has been generated using our professional template.'
+          title: 'PDF Downloaded',
+          description: 'Your Method Statement PDF has been downloaded successfully',
+          variant: 'success'
         });
       } else {
         console.log('Falling back to client-side PDF generation', { data, error });
+        setShowPDFModal(false);
         const methodPdfData = generateMethodStatementPDF(methodData as MethodStatementData, {
           companyName: methodData.contractor || 'Professional Electrical Services'
         });
@@ -186,12 +215,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         URL.revokeObjectURL(url);
 
         toast({
-          title: 'Method Statement PDF Generated',
-          description: 'Your method statement has been downloaded.'
+          title: 'PDF Downloaded',
+          description: 'Your Method Statement PDF has been downloaded',
+          variant: 'success'
         });
       }
     } catch (error) {
       console.error('Error generating Method Statement PDF:', error);
+      setShowPDFModal(false);
       const methodPdfData = generateMethodStatementPDF(methodData as MethodStatementData, {
         companyName: methodData.contractor || 'Professional Electrical Services'
       });
@@ -205,8 +236,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       URL.revokeObjectURL(url);
 
       toast({
-        title: 'Method Statement PDF Generated',
-        description: 'Your method statement has been downloaded.'
+        title: 'PDF Generation Error',
+        description: 'Failed to generate PDF, using backup method',
+        variant: 'destructive'
       });
     } finally {
       setIsGenerating(false);
@@ -215,6 +247,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
   const handleGenerateCombinedRAMS = async () => {
     setIsGenerating(true);
+    setCurrentPDFType('combined');
+    setShowPDFModal(true);
     try {
       const { supabase } = await import('@/integrations/supabase/client');
       
@@ -231,12 +265,15 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
         link.click();
         
+        setShowPDFModal(false);
         toast({
-          title: 'Professional Combined RAMS Generated',
-          description: 'Your PDF has been generated using our professional template.'
+          title: 'PDF Downloaded',
+          description: 'Your Combined RAMS PDF has been downloaded successfully',
+          variant: 'success'
         });
       } else {
         console.log('Falling back to client-side PDF generation', { data, error });
+        setShowPDFModal(false);
         const { generateCombinedRAMSPDF } = await import('@/utils/rams-combined-pdf');
         await generateCombinedRAMSPDF(ramsData, methodData as MethodStatementData, {
           companyName: methodData.contractor || 'Professional Electrical Services',
@@ -244,12 +281,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         });
         
         toast({
-          title: 'Combined RAMS Generated',
-          description: 'Your complete RAMS document has been downloaded.'
+          title: 'PDF Downloaded',
+          description: 'Your Combined RAMS PDF has been downloaded',
+          variant: 'success'
         });
       }
     } catch (error) {
       console.error('Error generating combined RAMS:', error);
+      setShowPDFModal(false);
       const { generateCombinedRAMSPDF } = await import('@/utils/rams-combined-pdf');
       await generateCombinedRAMSPDF(ramsData, methodData as MethodStatementData, {
         companyName: methodData.contractor || 'Professional Electrical Services',
@@ -257,8 +296,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       });
       
       toast({
-        title: 'Combined RAMS Generated',
-        description: 'Your complete RAMS document has been downloaded.'
+        title: 'PDF Generation Error',
+        description: 'Failed to generate PDF, using backup method',
+        variant: 'destructive'
       });
     } finally {
       setIsGenerating(false);
@@ -569,8 +609,95 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
             </TabsContent>
           </Tabs>
+
+          {/* Download Buttons Section */}
+          <div className="mt-6 pt-6 border-t border-border">
+            <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+              <Download className="h-4 w-4 text-elec-yellow" />
+              Download Documents
+            </h4>
+            
+            {/* Desktop View - All buttons visible */}
+            <div className="hidden md:flex flex-wrap gap-3">
+              <Button
+                onClick={handleGenerateCombinedRAMS}
+                disabled={isGenerating}
+                className="gap-2"
+                variant="default"
+              >
+                <FileText className="h-4 w-4" />
+                Combined RAMS
+              </Button>
+              <Button
+                onClick={handleGenerateRAMSPDF}
+                disabled={isGenerating}
+                className="gap-2"
+                variant="outline"
+              >
+                <FileText className="h-4 w-4" />
+                RAMS Only
+              </Button>
+              <Button
+                onClick={handleGenerateMethodPDF}
+                disabled={isGenerating}
+                className="gap-2"
+                variant="outline"
+              >
+                <FileText className="h-4 w-4" />
+                Method Statement
+              </Button>
+              <Button
+                onClick={handleCopyJSON}
+                disabled={isGenerating}
+                className="gap-2 ml-auto"
+                variant="ghost"
+              >
+                <Code className="h-4 w-4" />
+                Copy JSON
+              </Button>
+            </div>
+
+            {/* Mobile View - Single button to open sheet */}
+            <div className="md:hidden">
+              <Button
+                onClick={() => setShowMobileSheet(true)}
+                disabled={isGenerating}
+                className="w-full gap-2"
+                size="lg"
+              >
+                <Download className="h-5 w-5" />
+                Download PDF Options
+              </Button>
+              <Button
+                onClick={handleCopyJSON}
+                disabled={isGenerating}
+                className="w-full gap-2 mt-2"
+                variant="outline"
+                size="lg"
+              >
+                <Code className="h-5 w-5" />
+                Copy JSON
+              </Button>
+            </div>
+          </div>
         </CardContent>
       </Card>
+
+      {/* Modals and Sheets */}
+      <PDFGenerationModal
+        open={showPDFModal}
+        onOpenChange={(open) => !open && setShowPDFModal(false)}
+        pdfType={currentPDFType}
+      />
+
+      <MobilePDFDownloadSheet
+        open={showMobileSheet}
+        onOpenChange={setShowMobileSheet}
+        onDownloadCombined={handleGenerateCombinedRAMS}
+        onDownloadRAMS={handleGenerateRAMSPDF}
+        onDownloadMethod={handleGenerateMethodPDF}
+        isGenerating={isGenerating}
+      />
     </div>
   );
 };
