@@ -130,7 +130,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
               <div key={step.agent} className="relative">
                 {/* Connector line */}
                 {idx < steps.length - 1 && (
-                  <div className={`absolute left-5 sm:left-5 top-11 sm:top-12 w-0.5 h-full transition-colors duration-500 ${
+                  <div className={`absolute left-5 sm:left-5.5 top-[52px] sm:top-[56px] w-0.5 h-[calc(100%+12px)] sm:h-[calc(100%+16px)] -mb-3 sm:-mb-4 transition-colors duration-500 ${
                     step.status === 'complete' ? 'bg-elec-yellow' : 'bg-elec-yellow/20'
                   }`} />
                 )}
