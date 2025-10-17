@@ -17,9 +17,12 @@ export const AIRAMSGenerator: React.FC = () => {
     error,
     isSaving,
     lastSaved,
+    overallProgress,
+    estimatedTimeRemaining,
     generateRAMS,
     saveToDatabase,
-    reset
+    reset,
+    cancelGeneration
   } = useAIRAMS();
 
   const [showResults, setShowResults] = useState(false);
@@ -35,8 +38,8 @@ export const AIRAMSGenerator: React.FC = () => {
     },
     jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => {
+    setShowResults(true); // Show processing view immediately
     await generateRAMS(jobDescription, projectInfo, jobScale);
-    setShowResults(true);
   };
 
   const handleStartOver = () => {
@@ -57,6 +60,9 @@ export const AIRAMSGenerator: React.FC = () => {
               <AgentProcessingView
                 steps={reasoningSteps}
                 isVisible={true}
+                overallProgress={overallProgress}
+                estimatedTimeRemaining={estimatedTimeRemaining}
+                onCancel={isProcessing ? cancelGeneration : undefined}
               />
 
               {error && (

@@ -1,15 +1,36 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { combineAgentOutputsToRAMS } from '@/utils/rams-ai-transformer';
 import type { RAMSData } from '@/types/rams';
 import type { MethodStatementData } from '@/types/method-statement';
 import { useToast } from '@/hooks/use-toast';
 
+interface SubStep {
+  label: string;
+  progress: number;
+}
+
 interface ReasoningStep {
   agent: 'health-safety' | 'installer';
   status: 'pending' | 'processing' | 'complete' | 'error';
   reasoning?: string;
+  subStep?: SubStep | null;
+  timeElapsed?: number;
 }
+
+const HEALTH_SAFETY_SUBSTEPS: SubStep[] = [
+  { label: 'Analysing job description...', progress: 0 },
+  { label: 'Identifying hazards...', progress: 0 },
+  { label: 'Assessing risk levels...', progress: 0 },
+  { label: 'Generating control measures...', progress: 0 },
+];
+
+const INSTALLER_SUBSTEPS: SubStep[] = [
+  { label: 'Reviewing safety requirements...', progress: 0 },
+  { label: 'Planning installation sequence...', progress: 0 },
+  { label: 'Defining equipment & tools...', progress: 0 },
+  { label: 'Generating method statement...', progress: 0 },
+];
 
 interface UseAIRAMSReturn {
   isProcessing: boolean;
@@ -20,6 +41,8 @@ interface UseAIRAMSReturn {
   isSaving: boolean;
   lastSaved: Date | null;
   documentId: string | null;
+  overallProgress: number;
+  estimatedTimeRemaining: number | undefined;
   generateRAMS: (jobDescription: string, projectInfo: {
     projectName: string;
     location: string;
@@ -36,6 +59,7 @@ interface UseAIRAMSReturn {
   }, jobScale: 'domestic' | 'commercial' | 'industrial') => Promise<void>;
   saveToDatabase: () => Promise<void>;
   reset: () => void;
+  cancelGeneration: () => void;
 }
 
 export function useAIRAMS(): UseAIRAMSReturn {
@@ -47,7 +71,12 @@ export function useAIRAMS(): UseAIRAMSReturn {
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [documentId, setDocumentId] = useState<string | null>(null);
+  const [overallProgress, setOverallProgress] = useState(0);
+  const [estimatedTimeRemaining, setEstimatedTimeRemaining] = useState<number | undefined>(undefined);
   const { toast } = useToast();
+
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const progressIntervalsRef = useRef<NodeJS.Timeout[]>([]);
 
   // Autosave every 30 seconds when data exists
   useEffect(() => {
@@ -190,6 +219,65 @@ export function useAIRAMS(): UseAIRAMSReturn {
     }
   }, [ramsData, methodData, documentId, toast]);
 
+  const simulateSubStepProgress = useCallback((
+    agent: 'health-safety' | 'installer',
+    subSteps: SubStep[]
+  ) => {
+    let currentSubStepIndex = 0;
+    let currentProgress = 0;
+    const totalDuration = 10000; // 10 seconds per agent
+    const updateInterval = 150; // Update every 150ms
+    const progressPerUpdate = (100 / (totalDuration / updateInterval)) / subSteps.length;
+
+    const interval = setInterval(() => {
+      currentProgress += progressPerUpdate;
+      
+      if (currentProgress >= 100) {
+        currentProgress = 95; // Cap at 95% until real data arrives
+        currentSubStepIndex = subSteps.length - 1;
+      } else {
+        currentSubStepIndex = Math.min(
+          Math.floor((currentProgress / 100) * subSteps.length),
+          subSteps.length - 1
+        );
+      }
+
+      const subStep: SubStep = {
+        label: subSteps[currentSubStepIndex].label,
+        progress: Math.round(Math.min(((currentProgress % (100 / subSteps.length)) / (100 / subSteps.length)) * 100, 95))
+      };
+
+      setReasoningSteps(prev => 
+        prev.map(step => 
+          step.agent === agent && step.status === 'processing'
+            ? { ...step, subStep }
+            : step
+        )
+      );
+    }, updateInterval);
+
+    progressIntervalsRef.current.push(interval);
+    return interval;
+  }, []);
+
+  const clearProgressIntervals = useCallback(() => {
+    progressIntervalsRef.current.forEach(interval => clearInterval(interval));
+    progressIntervalsRef.current = [];
+  }, []);
+
+  const cancelGeneration = useCallback(() => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      clearProgressIntervals();
+      setIsProcessing(false);
+      setError('Generation cancelled by user');
+      toast({
+        title: "Cancelled",
+        description: "RAMS generation has been cancelled",
+      });
+    }
+  }, [clearProgressIntervals, toast]);
+
   const generateRAMS = async (
     jobDescription: string,
     projectInfo: {
@@ -210,18 +298,29 @@ export function useAIRAMS(): UseAIRAMSReturn {
   ) => {
     setIsProcessing(true);
     setError(null);
+    setOverallProgress(0);
+    setEstimatedTimeRemaining(45);
+    clearProgressIntervals();
+    
+    abortControllerRef.current = new AbortController();
     
     // Initialize reasoning steps
     setReasoningSteps([
-      { agent: 'health-safety', status: 'pending' },
-      { agent: 'installer', status: 'pending' }
+      { agent: 'health-safety', status: 'pending', subStep: null },
+      { agent: 'installer', status: 'pending', subStep: null }
     ]);
 
     try {
       // Step 1: Call Health & Safety Agent
+      const hsStartTime = Date.now();
       setReasoningSteps(prev => prev.map(step => 
-        step.agent === 'health-safety' ? { ...step, status: 'processing' } : step
+        step.agent === 'health-safety' ? { ...step, status: 'processing', subStep: HEALTH_SAFETY_SUBSTEPS[0] } : step
       ));
+      setOverallProgress(5);
+      setEstimatedTimeRemaining(40);
+
+      // Start simulated progress
+      simulateSubStepProgress('health-safety', HEALTH_SAFETY_SUBSTEPS);
 
       const { data: hsData, error: hsError } = await supabase.functions.invoke('health-safety-v3', {
         body: {
@@ -230,11 +329,16 @@ export function useAIRAMS(): UseAIRAMSReturn {
         }
       });
 
+      if (abortControllerRef.current?.signal.aborted) {
+        throw new Error('Generation cancelled');
+      }
+
       if (hsError || !hsData) {
         console.error('Health & Safety agent error:', hsError);
+        clearProgressIntervals();
         setReasoningSteps(prev => prev.map(step => 
           step.agent === 'health-safety' 
-            ? { ...step, status: 'error', reasoning: hsError?.message || 'Agent failed to respond' }
+            ? { ...step, status: 'error', reasoning: hsError?.message || 'Agent failed to respond', subStep: null }
             : step
         ));
         
@@ -242,6 +346,9 @@ export function useAIRAMS(): UseAIRAMSReturn {
         setIsProcessing(false);
         return; // Stop processing if health-safety fails
       }
+
+      clearProgressIntervals();
+      const hsTimeElapsed = Math.round((Date.now() - hsStartTime) / 1000);
 
       // Debug logging to see actual response structure
       console.log('🔍 Health & Safety raw response:', hsData);
@@ -263,14 +370,20 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'health-safety' 
-          ? { ...step, status: 'complete', reasoning: `Generated ${hazardCount} hazards and control measures` }
+          ? { ...step, status: 'complete', reasoning: `Generated ${hazardCount} hazards and control measures`, subStep: null, timeElapsed: hsTimeElapsed }
           : step
       ));
+      setOverallProgress(50);
+      setEstimatedTimeRemaining(25);
 
       // Step 2: Call Installer Agent (with H&S context)
+      const installerStartTime = Date.now();
       setReasoningSteps(prev => prev.map(step => 
-        step.agent === 'installer' ? { ...step, status: 'processing' } : step
+        step.agent === 'installer' ? { ...step, status: 'processing', subStep: INSTALLER_SUBSTEPS[0] } : step
       ));
+
+      // Start simulated progress for installer
+      simulateSubStepProgress('installer', INSTALLER_SUBSTEPS);
 
       const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
         body: {
@@ -282,8 +395,15 @@ export function useAIRAMS(): UseAIRAMSReturn {
         }
       });
 
+      if (abortControllerRef.current?.signal.aborted) {
+        throw new Error('Generation cancelled');
+      }
+
       if (installerError) throw new Error(`Installer Agent failed: ${installerError.message}`);
       if (!installerData) throw new Error('No response from Installer Agent');
+
+      clearProgressIntervals();
+      const installerTimeElapsed = Math.round((Date.now() - installerStartTime) / 1000);
 
       // Debug logging to see actual response structure
       console.log('🔍 Installer raw response:', installerData);
@@ -307,9 +427,11 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'installer' 
-          ? { ...step, status: 'complete', reasoning: `Generated ${stepsCount} installation steps` }
+          ? { ...step, status: 'complete', reasoning: `Generated ${stepsCount} installation steps`, subStep: null, timeElapsed: installerTimeElapsed }
           : step
       ));
+      setOverallProgress(100);
+      setEstimatedTimeRemaining(0);
 
       // Step 3: Transform agent outputs to RAMS format
       // Pass the full agent response objects to the transformer
@@ -330,16 +452,21 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
     } catch (err) {
       console.error('AI RAMS generation error:', err);
+      clearProgressIntervals();
       setError(err instanceof Error ? err.message : 'Failed to generate RAMS');
       setReasoningSteps(prev => prev.map(step => 
-        step.status === 'processing' ? { ...step, status: 'error' } : step
+        step.status === 'processing' ? { ...step, status: 'error', subStep: null } : step
       ));
+      setOverallProgress(0);
+      setEstimatedTimeRemaining(undefined);
     } finally {
       setIsProcessing(false);
     }
   };
 
   const reset = () => {
+    clearProgressIntervals();
+    abortControllerRef.current = null;
     setIsProcessing(false);
     setReasoningSteps([]);
     setRamsData(null);
@@ -347,6 +474,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
     setError(null);
     setDocumentId(null);
     setLastSaved(null);
+    setOverallProgress(0);
+    setEstimatedTimeRemaining(undefined);
   };
 
   return {
@@ -358,8 +487,11 @@ export function useAIRAMS(): UseAIRAMSReturn {
     isSaving,
     lastSaved,
     documentId,
+    overallProgress,
+    estimatedTimeRemaining,
     generateRAMS,
     saveToDatabase,
-    reset
+    reset,
+    cancelGeneration
   };
 }
