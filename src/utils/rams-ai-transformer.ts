@@ -43,6 +43,7 @@ export function transformHealthSafetyToRAMS(
   
   // Handle structured response from health-safety agent
   if (hazards && Array.isArray(hazards)) {
+    console.log('🔍 Individual hazard structure:', hazards[0]);
     hazards.forEach((hazard, idx) => {
       const riskRating = hazard.likelihood * hazard.severity;
       const residualRisk = Math.max(1, Math.floor(riskRating / 2));
@@ -54,7 +55,13 @@ export function transformHealthSafetyToRAMS(
         likelihood: hazard.likelihood,
         severity: hazard.severity,
         riskRating,
-        controls: hazard.controls.join('\n• '),
+        controls: Array.isArray(hazard.controls) 
+          ? hazard.controls.join('\n• ')
+          : typeof hazard.controls === 'string'
+            ? hazard.controls
+            : hazard.controlMeasures && Array.isArray(hazard.controlMeasures)
+              ? hazard.controlMeasures.join('\n• ')
+              : 'No controls specified',
         residualRisk,
         furtherAction: "",
         responsible: projectInfo.assessor,
