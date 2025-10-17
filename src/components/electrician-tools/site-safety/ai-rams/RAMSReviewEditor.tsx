@@ -88,12 +88,18 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const handleGenerateRAMSPDF = async () => {
     setIsGenerating(true);
     try {
-      await generateRAMSPDF(ramsData, {
+      const pdfDataUri = generateRAMSPDF(ramsData, {
         includeSignatures: true,
         companyName: methodData.contractor || 'Professional Electrical Services',
         documentReference: `RAMS-${Date.now()}`,
         reviewDate: methodData.reviewDate
       });
+
+      // Convert data URI to blob and download
+      const link = document.createElement('a');
+      link.href = pdfDataUri;
+      link.download = `Risk_Assessment_${Date.now()}.pdf`;
+      link.click();
 
       toast({
         title: 'RAMS PDF Generated',
