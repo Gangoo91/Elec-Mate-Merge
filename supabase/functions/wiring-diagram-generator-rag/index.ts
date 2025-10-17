@@ -194,7 +194,7 @@ ${regulations.map(reg => `- [${reg.regulation_number}] ${reg.similarity ? `(rele
             messages: [
               {
                 role: 'system',
-                content: `You are a UK electrician providing BS 7671-compliant wiring guidance. Generate step-by-step instructions using UK wiring colours (Brown=Live, Blue=Neutral, Green/Yellow=Earth). Be practical and safety-focused.`
+                content: `You are a UK electrician providing BS 7671-compliant wiring guidance. You MUST return ONLY valid JSON with no additional text before or after. Use UK wiring colours (Brown=Live, Blue=Neutral, Green/Yellow=Earth).`
               },
               {
                 role: 'user',
@@ -213,7 +213,9 @@ This component can potentially be wired in multiple ways depending on:
 Analyze if this component has multiple valid wiring scenarios. If YES, provide 2-4 distinct options.
 If NO (only one standard method exists), provide that single method.
 
-Return JSON in this format:
+CRITICAL: Return ONLY valid JSON with proper commas and brackets. No extra text.
+
+Format:
 {
   "component_name": "Component name",
   "wiring_scenarios": [
@@ -251,7 +253,7 @@ Return JSON in this format:
 }`
               }
             ],
-            max_tokens: 1500
+            max_tokens: 4000
           }),
         }).then(async (res) => {
           if (!res.ok) {
@@ -266,11 +268,41 @@ Return JSON in this format:
     );
 
     const guidanceText = guidanceData.choices[0].message.content;
-    const jsonMatch = guidanceText.match(/\{[\s\S]*\}/);
-    const guidance = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
-
-    if (!guidance) {
-      throw new Error('Failed to parse wiring guidance');
+    
+    // Extract JSON with improved regex
+    let jsonMatch = guidanceText.match(/\{[\s\S]*\}/);
+    let guidance = null;
+    
+    try {
+      if (jsonMatch) {
+        // Try to parse the matched JSON
+        guidance = JSON.parse(jsonMatch[0]);
+      } else {
+        // Fallback: try parsing the entire response
+        guidance = JSON.parse(guidanceText.trim());
+      }
+      
+      // Validate required fields
+      if (!guidance?.component_name || !guidance?.wiring_scenarios || !Array.isArray(guidance.wiring_scenarios)) {
+        throw new Error('Invalid JSON structure: missing required fields');
+      }
+      
+      // Validate each scenario has required fields
+      for (const scenario of guidance.wiring_scenarios) {
+        if (!scenario.scenario_id || !scenario.wiring_steps || !scenario.terminal_connections) {
+          throw new Error(`Invalid scenario structure: ${scenario.scenario_id || 'unknown'}`);
+        }
+      }
+      
+      logger.info('JSON validation passed', { scenarioCount: guidance.wiring_scenarios.length });
+      
+    } catch (parseError) {
+      logger.error('JSON parsing failed', { 
+        error: parseError.message,
+        responsePreview: guidanceText.substring(0, 500),
+        responseLength: guidanceText.length
+      });
+      throw new Error(`Failed to parse AI response: ${parseError.message}. The AI returned invalid JSON.`);
     }
 
     logger.info('Wiring guidance generated successfully');
