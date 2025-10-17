@@ -162,28 +162,51 @@ ${regulations.map(reg => `- ${reg.regulation_number}: ${reg.content.substring(0,
 Using this technical knowledge:
 ${ragContext}
 
-Provide practical wiring guidance in this JSON format:
+This component can potentially be wired in multiple ways depending on:
+- Circuit type (lighting/power/dedicated)
+- Control method (switched/unswitched/2-way/intermediate)
+- Installation location (indoor/outdoor/bathroom zones)
+- Supply configuration (single-phase/3-phase)
+- Special requirements (RCD protection, isolation, emergency lighting)
+
+Analyze if this component has multiple valid wiring scenarios. If YES, provide 2-4 distinct options.
+If NO (only one standard method exists), provide that single method.
+
+Return JSON in this format:
 {
-  "component_name": "Exact component name",
-  "wiring_steps": [
+  "component_name": "Component name",
+  "wiring_scenarios": [
     {
-      "step": 1,
-      "title": "Step title",
-      "instruction": "Clear instruction",
-      "safety_critical": true/false,
-      "bs7671_reference": "Regulation number"
+      "scenario_id": "scenario_1",
+      "scenario_name": "Standard Switched Circuit",
+      "use_case": "Most common domestic installation",
+      "complexity": "simple",
+      "recommended": true,
+      "wiring_steps": [
+        {
+          "step": 1,
+          "title": "Step title",
+          "instruction": "Clear instruction",
+          "safety_critical": true,
+          "bs7671_reference": "Regulation number"
+        }
+      ],
+      "terminal_connections": [
+        {
+          "terminal": "Terminal marking (L/N/E/COM/etc)",
+          "wire_colour": "UK wire colour",
+          "connection_point": "Description",
+          "notes": "Any specific instructions"
+        }
+      ],
+      "safety_warnings": ["Warning 1", "Warning 2"],
+      "required_tests": ["Test 1", "Test 2"]
     }
   ],
-  "terminal_connections": [
-    {
-      "terminal": "Terminal marking (L/N/E/COM/etc)",
-      "wire_colour": "UK wire colour",
-      "connection_point": "Description",
-      "notes": "Any specific instructions"
-    }
-  ],
-  "safety_warnings": ["Warning 1", "Warning 2"],
-  "required_tests": ["Test 1", "Test 2"]
+  "comparison": {
+    "key_differences": ["Difference 1", "Difference 2"],
+    "decision_factors": ["Factor 1 to consider", "Factor 2"]
+  }
 }`
               }
             ],
@@ -214,10 +237,20 @@ Provide practical wiring guidance in this JSON format:
     return new Response(JSON.stringify({
       component_name: guidance.component_name,
       component_details: componentDetails,
-      wiring_steps: guidance.wiring_steps,
-      terminal_connections: guidance.terminal_connections,
-      safety_warnings: guidance.safety_warnings,
-      required_tests: guidance.required_tests,
+      wiring_scenarios: guidance.wiring_scenarios || [
+        {
+          scenario_id: 'default',
+          scenario_name: 'Standard Installation',
+          use_case: 'Standard BS 7671 compliant installation',
+          complexity: 'simple',
+          recommended: true,
+          wiring_steps: guidance.wiring_steps,
+          terminal_connections: guidance.terminal_connections,
+          safety_warnings: guidance.safety_warnings,
+          required_tests: guidance.required_tests
+        }
+      ],
+      comparison: guidance.comparison,
       rag_sources: {
         installation_docs_count: installationDocs.length,
         regulations_count: regulations.length

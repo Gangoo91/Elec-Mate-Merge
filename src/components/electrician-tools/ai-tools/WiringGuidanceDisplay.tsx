@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, AlertTriangle, Shield, Info, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { WiringScenarioSelector } from "./WiringScenarioSelector";
 
 // Clean markdown formatting from text
 const cleanMarkdown = (text: string): string => {
@@ -27,13 +28,26 @@ interface TerminalConnection {
   notes?: string;
 }
 
+interface WiringScenario {
+  scenario_id: string;
+  scenario_name: string;
+  use_case: string;
+  complexity: 'simple' | 'intermediate' | 'advanced';
+  recommended: boolean;
+  wiring_steps: WiringStep[];
+  terminal_connections: TerminalConnection[];
+  safety_warnings: string[];
+  required_tests: string[];
+}
+
 interface WiringGuidanceDisplayProps {
   componentName: string;
   componentDetails: string;
-  wiringSteps: WiringStep[];
-  terminalConnections: TerminalConnection[];
-  safetyWarnings: string[];
-  requiredTests: string[];
+  wiringScenarios: WiringScenario[];
+  comparison?: {
+    key_differences: string[];
+    decision_factors: string[];
+  };
   ragSourcesCount?: {
     installation_docs_count: number;
     regulations_count: number;
@@ -43,14 +57,23 @@ interface WiringGuidanceDisplayProps {
 const WiringGuidanceDisplay = ({
   componentName,
   componentDetails,
-  wiringSteps,
-  terminalConnections,
-  safetyWarnings,
-  requiredTests,
+  wiringScenarios,
+  comparison,
   ragSourcesCount
 }: WiringGuidanceDisplayProps) => {
   const [showRagSources, setShowRagSources] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<Record<number, boolean>>({});
+  
+  const [selectedScenarioId, setSelectedScenarioId] = useState<string>(
+    wiringScenarios.find(s => s.recommended)?.scenario_id || wiringScenarios[0]?.scenario_id
+  );
+
+  const selectedScenario = wiringScenarios.find(s => s.scenario_id === selectedScenarioId) || wiringScenarios[0];
+  
+  const wiringSteps = selectedScenario.wiring_steps;
+  const terminalConnections = selectedScenario.terminal_connections;
+  const safetyWarnings = selectedScenario.safety_warnings;
+  const requiredTests = selectedScenario.required_tests;
 
   const toggleStepCompletion = (stepNumber: number) => {
     setCompletedSteps(prev => ({ ...prev, [stepNumber]: !prev[stepNumber] }));
@@ -118,6 +141,14 @@ const WiringGuidanceDisplay = ({
           </Card>
         )}
       </div>
+
+      {/* Scenario Selector */}
+      <WiringScenarioSelector 
+        scenarios={wiringScenarios}
+        selectedScenario={selectedScenarioId}
+        onSelectScenario={setSelectedScenarioId}
+        comparison={comparison}
+      />
 
       {/* Component Details */}
       <Card className="bg-muted/30 border-border">

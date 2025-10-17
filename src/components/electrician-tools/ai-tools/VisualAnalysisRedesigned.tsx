@@ -66,10 +66,25 @@ interface AnalysisResult {
   wiring_schematic?: {
     component_name: string;
     component_details: string;
-    wiring_steps: any[];
-    terminal_connections: any[];
-    safety_warnings: string[];
-    required_tests: string[];
+    wiring_steps?: any[];
+    terminal_connections?: any[];
+    safety_warnings?: string[];
+    required_tests?: string[];
+    wiring_scenarios?: Array<{
+      scenario_id: string;
+      scenario_name: string;
+      use_case: string;
+      complexity: 'simple' | 'intermediate' | 'advanced';
+      recommended: boolean;
+      wiring_steps: any[];
+      terminal_connections: any[];
+      safety_warnings: string[];
+      required_tests: string[];
+    }>;
+    comparison?: {
+      key_differences: string[];
+      decision_factors: string[];
+    };
     rag_sources: any;
   };
 }
@@ -994,10 +1009,20 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             <WiringGuidanceDisplay 
               componentName={analysisResult.wiring_schematic.component_name}
               componentDetails={analysisResult.wiring_schematic.component_details}
-              wiringSteps={analysisResult.wiring_schematic.wiring_steps}
-              terminalConnections={analysisResult.wiring_schematic.terminal_connections}
-              safetyWarnings={analysisResult.wiring_schematic.safety_warnings}
-              requiredTests={analysisResult.wiring_schematic.required_tests}
+              wiringScenarios={analysisResult.wiring_schematic.wiring_scenarios || [
+                {
+                  scenario_id: 'default',
+                  scenario_name: 'Standard Installation',
+                  use_case: 'Standard BS 7671 compliant installation',
+                  complexity: 'simple',
+                  recommended: true,
+                  wiring_steps: analysisResult.wiring_schematic.wiring_steps,
+                  terminal_connections: analysisResult.wiring_schematic.terminal_connections,
+                  safety_warnings: analysisResult.wiring_schematic.safety_warnings,
+                  required_tests: analysisResult.wiring_schematic.required_tests
+                }
+              ]}
+              comparison={analysisResult.wiring_schematic.comparison}
               ragSourcesCount={analysisResult.wiring_schematic.rag_sources}
             />
           )}
