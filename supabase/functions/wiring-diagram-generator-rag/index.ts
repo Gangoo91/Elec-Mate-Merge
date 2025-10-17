@@ -110,33 +110,39 @@ Be concise and technical.`
         },
         {
           name: 'wiring_regs',
-          execute: async () => openAiKey 
-            ? await retrieveRegulations(
-                `${componentType} wiring requirements: terminal connections, cable colors, protection requirements`,
-                8,
-                openAiKey
-              )
-            : { data: [], error: null }
+          execute: async () => {
+            if (!openAiKey) return { data: [], error: null };
+            const results = await retrieveRegulations(
+              `${componentType} wiring requirements: terminal connections, cable colors, protection requirements`,
+              8,
+              openAiKey
+            );
+            return { data: results, error: null };
+          }
         },
         {
           name: 'safety_regs',
-          execute: async () => openAiKey
-            ? await retrieveRegulations(
-                `${componentType} safety requirements: RCD protection, IP ratings, zones, isolation`,
-                5,
-                openAiKey
-              )
-            : { data: [], error: null }
+          execute: async () => {
+            if (!openAiKey) return { data: [], error: null };
+            const results = await retrieveRegulations(
+              `${componentType} safety requirements: RCD protection, IP ratings, zones, isolation`,
+              5,
+              openAiKey
+            );
+            return { data: results, error: null };
+          }
         },
         {
           name: 'installation_regs',
-          execute: async () => openAiKey
-            ? await retrieveRegulations(
-                `${componentType} installation method: cable sizing, mounting, earthing, bonding`,
-                5,
-                openAiKey
-              )
-            : { data: [], error: null }
+          execute: async () => {
+            if (!openAiKey) return { data: [], error: null };
+            const results = await retrieveRegulations(
+              `${componentType} installation method: cable sizing, mounting, earthing, bonding`,
+              5,
+              openAiKey
+            );
+            return { data: results, error: null };
+          }
         }
       ])
     );
@@ -146,9 +152,9 @@ Be concise and technical.`
     }
 
     const installationDocs = successes.find(s => s.name === 'installation')?.result?.data || [];
-    const wiringRegs = successes.find(s => s.name === 'wiring_regs')?.result || [];
-    const safetyRegs = successes.find(s => s.name === 'safety_regs')?.result || [];
-    const installRegs = successes.find(s => s.name === 'installation_regs')?.result || [];
+    const wiringRegs = successes.find(s => s.name === 'wiring_regs')?.result?.data || [];
+    const safetyRegs = successes.find(s => s.name === 'safety_regs')?.result?.data || [];
+    const installRegs = successes.find(s => s.name === 'installation_regs')?.result?.data || [];
     
     // Merge and deduplicate regulations
     const allRegulations = [...wiringRegs, ...safetyRegs, ...installRegs];
