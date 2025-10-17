@@ -13,12 +13,9 @@ import { QuoteProgressIndicator } from "./QuoteProgressIndicator";
 import { SmartContinueButton } from "./SmartContinueButton";
 
 const steps = [
-  { title: "Company Branding", icon: Building2, description: "Logo and company details" },
-  { title: "Client Details", icon: User, description: "Customer information" },
-  { title: "Job Details", icon: Briefcase, description: "Scope of work" },
-  { title: "Quote Items", icon: FileText, description: "Add labour and materials" },
-  { title: "Settings", icon: Settings, description: "VAT and AI settings" },
-  { title: "Review", icon: Calculator, description: "Review and finalise" },
+  { title: "Client & Company", icon: User, description: "Customer and company details" },
+  { title: "Job & Items", icon: FileText, description: "Scope of work and pricing" },
+  { title: "Settings & Review", icon: Calculator, description: "VAT, settings, and finalise" },
 ];
 
 interface QuoteWizardProps {
@@ -48,17 +45,14 @@ const {
 
   const canProceed = () => {
     switch (currentStep) {
-      case 0:
-        return true; // Company branding is optional for quick quotes
-      case 1:
+      case 0: // Client & Company combined
         const clientValid = quote.client?.name && quote.client?.email && quote.client?.phone && quote.client?.address && quote.client?.postcode;
         return clientValid;
-      case 2:
+      case 1: // Job & Items combined
         const jobValid = quote.jobDetails?.title && quote.jobDetails?.description;
-        return jobValid;
-      case 3:
-        return quote.items && quote.items.length > 0;
-      case 4:
+        const itemsValid = quote.items && quote.items.length > 0;
+        return jobValid && itemsValid;
+      case 2: // Settings & Review
         return quote.settings?.vatRegistered !== undefined;
       default:
         return true;
@@ -69,25 +63,43 @@ const {
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return <CompanyBrandingStep />;
+        return (
+          <div className="space-y-6">
+            <CompanyBrandingStep />
+            <div className="border-t pt-6 mt-6">
+              <h3 className="text-lg font-semibold mb-4">Client Information</h3>
+              <ClientDetailsStep client={quote.client} onUpdate={updateClient} />
+            </div>
+          </div>
+        );
       case 1:
-        return <ClientDetailsStep client={quote.client} onUpdate={updateClient} />;
+        return (
+          <div className="space-y-6">
+            <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />
+            <div className="border-t pt-6 mt-6">
+              <h3 className="text-lg font-semibold mb-4">Quote Items</h3>
+              <EnhancedQuoteItemsStep 
+                items={quote.items || []} 
+                onAdd={addItem} 
+                onUpdate={updateItem} 
+                onRemove={removeItem}
+                priceAdjustment={priceAdjustment}
+                setPriceAdjustment={setPriceAdjustment}
+                calculateAdjustedPrice={calculateAdjustedPrice}
+              />
+            </div>
+          </div>
+        );
       case 2:
-        return <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />;
-      case 3:
-        return <EnhancedQuoteItemsStep 
-          items={quote.items || []} 
-          onAdd={addItem} 
-          onUpdate={updateItem} 
-          onRemove={removeItem}
-          priceAdjustment={priceAdjustment}
-          setPriceAdjustment={setPriceAdjustment}
-          calculateAdjustedPrice={calculateAdjustedPrice}
-        />;
-      case 4:
-        return <QuoteSettingsStep settings={quote.settings} onUpdate={updateSettings} />;
-      case 5:
-        return <QuoteReviewStep quote={quote} />;
+        return (
+          <div className="space-y-6">
+            <QuoteSettingsStep settings={quote.settings} onUpdate={updateSettings} />
+            <div className="border-t pt-6 mt-6">
+              <h3 className="text-lg font-semibold mb-4">Final Review</h3>
+              <QuoteReviewStep quote={quote} />
+            </div>
+          </div>
+        );
       default:
         return null;
     }

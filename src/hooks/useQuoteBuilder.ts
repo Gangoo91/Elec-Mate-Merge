@@ -118,7 +118,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   }, [quote]);
 
   const nextStep = useCallback(() => {
-    setCurrentStep(prev => Math.min(prev + 1, 5));
+    setCurrentStep(prev => Math.min(prev + 1, 2));
   }, []);
 
   const prevStep = useCallback(() => {
@@ -257,9 +257,9 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       }
 
       // Move to review step if not already there
-      if (currentStep < 5) {
+      if (currentStep < 2) {
         console.log('Quote Generation - Moving to review step');
-        setCurrentStep(5);
+        setCurrentStep(2);
       }
 
       console.log('Quote Generation - Process completed');

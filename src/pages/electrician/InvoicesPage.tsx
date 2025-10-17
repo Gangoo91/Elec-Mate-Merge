@@ -14,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import InvoiceTableView from "@/components/electrician/InvoiceTableView";
 import InvoiceCardList from "@/components/electrician/InvoiceCardList";
 import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
+import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
 
 const InvoicesPage = () => {
   const { invoices, isLoading, fetchInvoices, deleteInvoice } = useInvoiceStorage();
@@ -614,19 +615,23 @@ Thank you for your business!`;
         <CardContent className="mobile-card-spacing">
           {isLoading ? (
             <p className="text-muted-foreground text-center py-8">Loading invoices...</p>
+          ) : sortedInvoices.length === 0 && statusFilter === 'all' ? (
+            <div className="mt-8">
+              <EmptyStateGuide 
+                type="invoice" 
+                onCreateClick={() => navigate('/electrician/invoice-builder/create')} 
+              />
+            </div>
           ) : sortedInvoices.length === 0 ? (
             <div className="text-center py-8">
               <FileText className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
               <p className="text-muted-foreground mb-4">
-                {statusFilter === 'all' 
-                  ? 'No invoices yet'
-                  : `No ${statusFilter} invoices`
-                }
+                No {statusFilter} invoices
               </p>
               <Link to="/electrician/invoice-builder/create">
                 <MobileButton variant="elec">
                   <Plus className="mr-2 h-4 w-4" />
-                  Create Your First Invoice
+                  Create Invoice
                 </MobileButton>
               </Link>
             </div>

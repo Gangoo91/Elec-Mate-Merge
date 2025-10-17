@@ -6,6 +6,7 @@ import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft, XCircle } fr
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import FinancialSnapshot from "@/components/electrician/quote-builder/FinancialSnapshot";
+import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
 import React, { useState } from "react";
 
 const QuoteBuilder = () => {
@@ -222,12 +223,21 @@ const QuoteBuilder = () => {
                 </Button>
               </Link>
             </div>
-            <RecentQuotesList 
-              quotes={savedQuotes}
-              onDeleteQuote={deleteQuote}
-              onUpdateQuoteStatus={updateQuoteStatus}
-              onSendPaymentReminder={sendPaymentReminder}
-            />
+            {savedQuotes.length === 0 && !loading ? (
+              <div className="mt-8">
+                <EmptyStateGuide 
+                  type="quote" 
+                  onCreateClick={() => navigate('/electrician/quote-builder/create')} 
+                />
+              </div>
+            ) : (
+              <RecentQuotesList 
+                quotes={savedQuotes}
+                onDeleteQuote={deleteQuote}
+                onUpdateQuoteStatus={updateQuoteStatus}
+                onSendPaymentReminder={sendPaymentReminder}
+              />
+            )}
           </section>
         </main>
       </div>
