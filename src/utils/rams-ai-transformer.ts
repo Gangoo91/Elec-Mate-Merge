@@ -325,7 +325,7 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
       safety.push('Prove dead before work');
     }
     if (combined.includes('live') || combined.includes('energis')) {
-      safety.push('Live working prohibited unless specifically authorized');
+      safety.push('Live working prohibited unless specifically authorised');
       safety.push('Arc-rated PPE required if switching');
     }
     if (combined.includes('height') || combined.includes('ladder') || combined.includes('podium')) {
