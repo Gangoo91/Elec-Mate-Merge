@@ -129,7 +129,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-[95vw] sm:max-w-[500px] max-h-[85vh] sm:max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto overflow-x-hidden">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-base sm:text-xl">
             <Edit3 className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
@@ -147,7 +147,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
         ) : documentData ? (
           <div className="space-y-3 sm:space-y-6 py-2 sm:py-4">
             {/* Document Info */}
-            <div className="space-y-2 sm:space-y-3.5 p-3 sm:p-5 rounded-lg bg-elec-gray/80 border-2 border-elec-yellow/30">
+            <div className="space-y-2 sm:space-y-3.5 p-3 sm:p-5 rounded-lg bg-elec-grey/80 border-2 border-elec-yellow/30">
               <div className="flex items-start gap-2 sm:gap-2.5">
                 <User className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
