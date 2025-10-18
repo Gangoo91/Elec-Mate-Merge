@@ -19,9 +19,33 @@ export interface TerminalConnection {
   notes?: string;
 }
 
+export interface PreInstallationTask {
+  task: string;
+  description: string;
+  why?: string;
+  tools_needed?: string[];
+}
+
+export interface BoardLayoutGuide {
+  mcb_arrangement: string;
+  earth_bar_numbering: string;
+  neutral_bar_numbering: string;
+  visual_diagram?: string;
+}
+
+export interface WiringSequenceStrategy {
+  order: string[];
+  rationale: string;
+}
+
 export interface WiringGuidanceResponse {
   component_name: string;
   component_details: string;
+  pre_installation_tasks?: PreInstallationTask[];
+  board_layout_guide?: BoardLayoutGuide;
+  wiring_sequence_strategy?: WiringSequenceStrategy;
+  practical_tips?: string[];
+  common_mistakes?: string[];
   wiring_steps: WiringStep[];
   terminal_connections: TerminalConnection[];
   safety_warnings: string[];

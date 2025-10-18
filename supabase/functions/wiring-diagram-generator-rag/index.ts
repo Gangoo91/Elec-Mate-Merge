@@ -215,7 +215,44 @@ INSTRUCTION DETAIL REQUIREMENTS:
 - Include visual/physical cues to help electricians
 - Add verification steps ("Gently tug cable to ensure secure connection")
 - Be specific about terminal markings and locations
-- Provide "what_to_check" and "common_mistakes" for each step`
+- Provide "what_to_check" and "common_mistakes" for each step
+
+DISTRIBUTION BOARDS - ENHANCED GUIDANCE REQUIRED:
+For distribution boards/consumer units specifically, you MUST include:
+
+1. PRE-INSTALLATION CHECKLIST (in "pre_installation_tasks" array):
+   - Photo documentation of existing installation (multiple angles)
+   - Record all circuit details (way numbers, MCB ratings, cable sizes)
+   - Circuit labeling at both ends with tape/labels
+   - Incoming supply voltage verification
+   - Earth/neutral bar capacity check
+
+2. BOARD LAYOUT PLANNING (in "board_layout_guide" object):
+   - MCB arrangement strategy (left-to-right by way number)
+   - Group similar circuits (sockets together, lights together)
+   - RCD split load arrangement if applicable
+   - Spare ways for future expansion
+   - High current circuits near main switch
+
+3. EARTH/NEUTRAL BAR STRATEGY (in "board_layout_guide"):
+   - Number positions to match MCB way numbers (Way 1 → Position 1)
+   - CRITICAL: Terminate ALL earths FIRST (creates workspace, easier ID)
+   - Then terminate ALL neutrals
+   - Finally wire MCB live terminals
+   - Benefits explained: workspace, identification, safety
+
+4. DETAILED WIRING SEQUENCE (in "wiring_sequence_strategy" object):
+   - Step-by-step order with rationale
+   - NOT just "connect terminal" - include cable routing, strain relief
+   - Terminal tightening torque values
+   - Testing between stages
+
+5. PRACTICAL TIPS & COMMON MISTAKES (separate arrays):
+   - Cable management (bundling earths, avoiding crossovers)
+   - Photo documentation points
+   - Cable markers matching way numbers
+   - Leaving earth tails longer for future work
+   - Common mistakes: wiring lives first (cramped), not labeling circuits`
               },
               {
                 role: 'user',
@@ -239,10 +276,38 @@ CRITICAL: Return ONLY valid JSON. No markdown, no extra text, just pure JSON.
 Format:
 {
   "component_name": "Component name",
+  "pre_installation_tasks": [
+    {
+      "task": "Task title (e.g., 'Photo Documentation')",
+      "description": "What to do in detail",
+      "why": "Why this step is important/required",
+      "tools_needed": ["Tool 1", "Tool 2"]
+    }
+  ],
+  "board_layout_guide": {
+    "mcb_arrangement": "Suggested MCB layout strategy (left-to-right, grouping, spacing)",
+    "earth_bar_numbering": "Earth bar numbering strategy to match MCB ways",
+    "neutral_bar_numbering": "Neutral bar numbering strategy to match MCB ways",
+    "visual_diagram": "Text description of recommended layout"
+  },
+  "wiring_sequence_strategy": {
+    "order": ["Step 1: Isolate supply", "Step 2: Install MCBs", "Step 3: Terminate earths", "Step 4: Terminate neutrals", "Step 5: Terminate lives"],
+    "rationale": "Why this order is optimal (workspace, safety, identification)"
+  },
+  "practical_tips": [
+    "Use cable markers matching board way numbers",
+    "Bundle earth cores together with cable ties for neatness",
+    "Leave earth tails 50mm longer than required for future work"
+  ],
+  "common_mistakes": [
+    "Wiring live conductors before earths - creates cramped workspace",
+    "Not labeling circuits at both ends - nightmare for troubleshooting",
+    "Over-tightening terminal screws - can damage terminals"
+  ],
   "wiring_scenarios": [
     {
       "scenario_id": "scenario_1",
-      "scenario_name": "Scenario name (e.g., '1-Gang 1-Way Switch', 'RCD Protected Socket')",
+      "scenario_name": "Scenario name (e.g., '1-Gang 1-Way Switch', 'RCD Protected Socket', '18-Way Dual RCD Board')",
       "use_case": "When to use this method (be specific about room types, regulations)",
       "complexity": "simple|intermediate|advanced",
       "recommended": true,
@@ -337,6 +402,11 @@ Format:
     return new Response(JSON.stringify({
       component_name: guidance.component_name,
       component_details: componentDetails,
+      pre_installation_tasks: guidance.pre_installation_tasks || [],
+      board_layout_guide: guidance.board_layout_guide,
+      wiring_sequence_strategy: guidance.wiring_sequence_strategy,
+      practical_tips: guidance.practical_tips || [],
+      common_mistakes: guidance.common_mistakes || [],
       wiring_scenarios: guidance.wiring_scenarios || [
         {
           scenario_id: 'default',

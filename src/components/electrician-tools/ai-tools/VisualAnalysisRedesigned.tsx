@@ -66,6 +66,24 @@ interface AnalysisResult {
   wiring_schematic?: {
     component_name: string;
     component_details: string;
+    pre_installation_tasks?: Array<{
+      task: string;
+      description: string;
+      why?: string;
+      tools_needed?: string[];
+    }>;
+    board_layout_guide?: {
+      mcb_arrangement: string;
+      earth_bar_numbering: string;
+      neutral_bar_numbering: string;
+      visual_diagram?: string;
+    };
+    wiring_sequence_strategy?: {
+      order: string[];
+      rationale: string;
+    };
+    practical_tips?: string[];
+    common_mistakes?: string[];
     wiring_steps?: any[];
     terminal_connections?: any[];
     safety_warnings?: string[];
@@ -1024,6 +1042,11 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
               ]}
               comparison={analysisResult.wiring_schematic.comparison}
               ragSourcesCount={analysisResult.wiring_schematic.rag_sources}
+              preInstallationTasks={analysisResult.wiring_schematic.pre_installation_tasks}
+              boardLayoutGuide={analysisResult.wiring_schematic.board_layout_guide}
+              wiringSequenceStrategy={analysisResult.wiring_schematic.wiring_sequence_strategy}
+              practicalTips={analysisResult.wiring_schematic.practical_tips}
+              commonMistakes={analysisResult.wiring_schematic.common_mistakes}
             />
           )}
 

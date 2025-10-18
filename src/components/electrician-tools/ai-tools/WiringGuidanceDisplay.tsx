@@ -1,10 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, AlertTriangle, Shield, Info, ChevronDown, ChevronUp, BookOpen } from "lucide-react";
+import { CheckCircle2, AlertTriangle, Shield, Info, ChevronDown, ChevronUp, BookOpen, Clipboard, LayoutGrid, Grid3x3, Lightbulb, XCircle, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { WiringScenarioSelector } from "./WiringScenarioSelector";
 import { TerminalConnectionCard } from "./TerminalConnectionCard";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Clean markdown formatting from text
 const cleanMarkdown = (text: string): string => {
@@ -44,6 +45,25 @@ interface WiringScenario {
   required_tests: string[];
 }
 
+interface PreInstallationTask {
+  task: string;
+  description: string;
+  why?: string;
+  tools_needed?: string[];
+}
+
+interface BoardLayoutGuide {
+  mcb_arrangement: string;
+  earth_bar_numbering: string;
+  neutral_bar_numbering: string;
+  visual_diagram?: string;
+}
+
+interface WiringSequenceStrategy {
+  order: string[];
+  rationale: string;
+}
+
 interface WiringGuidanceDisplayProps {
   componentName: string;
   componentDetails: string;
@@ -56,6 +76,11 @@ interface WiringGuidanceDisplayProps {
     installation_docs_count: number;
     regulations_count: number;
   };
+  preInstallationTasks?: PreInstallationTask[];
+  boardLayoutGuide?: BoardLayoutGuide;
+  wiringSequenceStrategy?: WiringSequenceStrategy;
+  practicalTips?: string[];
+  commonMistakes?: string[];
 }
 
 const WiringGuidanceDisplay = ({
@@ -63,7 +88,12 @@ const WiringGuidanceDisplay = ({
   componentDetails,
   wiringScenarios,
   comparison,
-  ragSourcesCount
+  ragSourcesCount,
+  preInstallationTasks,
+  boardLayoutGuide,
+  wiringSequenceStrategy,
+  practicalTips,
+  commonMistakes
 }: WiringGuidanceDisplayProps) => {
   const [showRagSources, setShowRagSources] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<Record<number, boolean>>({});
@@ -145,6 +175,155 @@ const WiringGuidanceDisplay = ({
         onSelectScenario={setSelectedScenarioId}
         comparison={comparison}
       />
+
+      {/* Pre-Installation Checklist */}
+      {preInstallationTasks && preInstallationTasks.length > 0 && (
+        <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-blue-500/30">
+          <CardHeader className="p-4 sm:p-5">
+            <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+              <Clipboard className="h-5 w-5 text-blue-400" />
+              Pre-Installation Checklist
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-4 pb-4 sm:px-5 sm:pb-5">
+            <div className="space-y-3">
+              {preInstallationTasks.map((task, idx) => (
+                <div key={idx} className="p-4 bg-background/50 rounded-lg border border-blue-500/20">
+                  <div className="flex items-start gap-3">
+                    <Checkbox className="mt-1" />
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold text-sm text-foreground">{task.task}</h4>
+                      <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{task.description}</p>
+                      {task.why && (
+                        <p className="text-xs text-blue-400 mt-2 flex items-start gap-1.5">
+                          <Info className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                          <span>{task.why}</span>
+                        </p>
+                      )}
+                      {task.tools_needed && task.tools_needed.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-2">
+                          {task.tools_needed.map((tool, i) => (
+                            <Badge key={i} variant="outline" className="text-xs bg-background/50">
+                              {tool}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Distribution Board Layout Guide */}
+      {boardLayoutGuide && (
+        <Card className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border-purple-500/30">
+          <CardHeader className="p-4 sm:p-5">
+            <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+              <LayoutGrid className="h-5 w-5 text-purple-400" />
+              Board Layout & Termination Strategy
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-4 pb-4 sm:px-5 sm:pb-5 space-y-4">
+            {/* MCB Arrangement */}
+            <div className="p-4 bg-background/50 rounded-lg border border-purple-500/20">
+              <h4 className="font-semibold text-sm mb-2 flex items-center gap-2 text-purple-300">
+                <Grid3x3 className="h-4 w-4" />
+                MCB Arrangement
+              </h4>
+              <p className="text-sm text-foreground/90 leading-relaxed">{boardLayoutGuide.mcb_arrangement}</p>
+            </div>
+
+            {/* Earth/Neutral Bar Strategy */}
+            <div className="grid sm:grid-cols-2 gap-3">
+              <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                <h4 className="font-semibold text-sm text-green-400 mb-2">
+                  Earth Bar Numbering
+                </h4>
+                <p className="text-xs text-foreground/80 leading-relaxed">{boardLayoutGuide.earth_bar_numbering}</p>
+              </div>
+              <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                <h4 className="font-semibold text-sm text-blue-400 mb-2">
+                  Neutral Bar Numbering
+                </h4>
+                <p className="text-xs text-foreground/80 leading-relaxed">{boardLayoutGuide.neutral_bar_numbering}</p>
+              </div>
+            </div>
+
+            {/* Wiring Sequence Strategy */}
+            {wiringSequenceStrategy && (
+              <div className="p-4 bg-background/50 rounded-lg border border-purple-500/20">
+                <h4 className="font-semibold text-sm mb-3 text-purple-300">Recommended Wiring Sequence</h4>
+                <ol className="space-y-2">
+                  {wiringSequenceStrategy.order.map((step, idx) => (
+                    <li key={idx} className="flex items-center gap-3 text-sm">
+                      <span className="flex-shrink-0 w-6 h-6 bg-purple-500/20 rounded-full flex items-center justify-center text-xs font-bold text-purple-300">
+                        {idx + 1}
+                      </span>
+                      <span className="text-foreground/90">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+                <p className="text-xs text-muted-foreground mt-3 p-3 bg-purple-500/10 rounded border border-purple-500/20 italic leading-relaxed">
+                  💡 {wiringSequenceStrategy.rationale}
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Practical Tips & Common Mistakes */}
+      {(practicalTips && practicalTips.length > 0) || (commonMistakes && commonMistakes.length > 0) ? (
+        <div className="grid sm:grid-cols-2 gap-4">
+          {/* Practical Tips */}
+          {practicalTips && practicalTips.length > 0 && (
+            <Card className="bg-gradient-to-br from-green-500/10 to-green-500/5 border-green-500/30">
+              <CardHeader className="p-4 sm:p-5">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Lightbulb className="h-5 w-5 text-green-400" />
+                  <span className="text-green-400">Pro Tips</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="px-4 pb-4 sm:px-5 sm:pb-5">
+                <ul className="space-y-2.5">
+                  {practicalTips.map((tip, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5 text-sm p-3 bg-background/50 rounded-lg border border-green-500/20">
+                      <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-foreground/90 leading-relaxed">{cleanMarkdown(tip)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Common Mistakes */}
+          {commonMistakes && commonMistakes.length > 0 && (
+            <Card className="bg-gradient-to-br from-orange-500/10 to-orange-500/5 border-orange-500/30">
+              <CardHeader className="p-4 sm:p-5">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <AlertCircle className="h-5 w-5 text-orange-400" />
+                  <span className="text-orange-400">Avoid These Mistakes</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="px-4 pb-4 sm:px-5 sm:pb-5">
+                <ul className="space-y-2.5">
+                  {commonMistakes.map((mistake, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5 text-sm p-3 bg-background/50 rounded-lg border border-orange-500/20">
+                      <XCircle className="h-4 w-4 text-orange-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-foreground/90 leading-relaxed">{cleanMarkdown(mistake)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      ) : null}
 
       {/* Component Details */}
       <Card className="bg-muted/30 border-border">
