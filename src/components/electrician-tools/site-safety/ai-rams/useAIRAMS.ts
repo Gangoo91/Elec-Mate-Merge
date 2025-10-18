@@ -229,7 +229,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
   ) => {
     let currentSubStepIndex = 0;
     let currentProgress = 0;
-    const totalDuration = 10000; // 10 seconds per agent
+    const totalDuration = 120000; // 2 minutes per agent
     const updateInterval = 150; // Update every 150ms
     const progressPerUpdate = (100 / (totalDuration / updateInterval)) / subSteps.length;
 
@@ -303,7 +303,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
     setIsProcessing(true);
     setError(null);
     setOverallProgress(0);
-    setEstimatedTimeRemaining(45);
+    setEstimatedTimeRemaining(270); // 4.5 minutes
     clearProgressIntervals();
     
     abortControllerRef.current = new AbortController();
@@ -321,7 +321,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
         step.agent === 'health-safety' ? { ...step, status: 'processing', subStep: HEALTH_SAFETY_SUBSTEPS[0] } : step
       ));
       setOverallProgress(5);
-      setEstimatedTimeRemaining(40);
+      setEstimatedTimeRemaining(240); // 4 minutes
 
       // Start simulated progress
       simulateSubStepProgress('health-safety', HEALTH_SAFETY_SUBSTEPS);
@@ -381,7 +381,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
           : step
       ));
       setOverallProgress(50);
-      setEstimatedTimeRemaining(25);
+      setEstimatedTimeRemaining(120); // 2 minutes
 
       // Step 2: Call Installer Agent (with H&S context)
       const installerStartTime = Date.now();

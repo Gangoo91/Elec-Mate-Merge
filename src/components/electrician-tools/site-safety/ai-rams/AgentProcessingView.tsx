@@ -80,97 +80,128 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
     }
   };
 
+  const formatTimeRemaining = (seconds: number): string => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    if (mins > 0) {
+      return `${mins}m ${secs}s remaining`;
+    }
+    return `${secs}s remaining`;
+  };
+
   return (
-    <Card className="border-elec-yellow/20 shadow-md bg-elec-grey">
-      <CardHeader className="pb-4">
-        <div className="flex items-center justify-between mb-4">
-          <CardTitle className="text-xl md:text-xl font-bold tracking-tight leading-tight flex items-center gap-2.5">
+    <Card className="border-elec-yellow/30 shadow-lg bg-gradient-to-br from-elec-grey to-elec-grey/80">
+      <CardHeader className="pb-5 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <CardTitle className="text-2xl sm:text-3xl font-bold tracking-tight leading-tight flex items-center gap-3">
             {allComplete ? (
-              <CheckCircle2 className="h-6 w-6 md:h-5 md:w-5 text-green-500 animate-in fade-in zoom-in duration-300" />
+              <CheckCircle2 className="h-7 w-7 sm:h-8 sm:w-8 text-green-500 animate-in fade-in zoom-in duration-300" />
             ) : hasError ? (
-              <AlertCircle className="h-6 w-6 md:h-5 md:w-5 text-red-500" />
-            ) : null}
-            AI Processing
+              <AlertCircle className="h-7 w-7 sm:h-8 sm:w-8 text-red-500" />
+            ) : (
+              <div className="relative">
+                <div className="absolute inset-0 bg-elec-yellow/30 rounded-full blur-md animate-pulse" />
+                <Sparkles className="relative h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow animate-pulse" />
+              </div>
+            )}
+            <span className="bg-gradient-to-r from-elec-yellow to-elec-yellow/70 bg-clip-text text-transparent">
+              AI Processing
+            </span>
           </CardTitle>
           <GenerationTimer isRunning={isProcessing && !allComplete} />
         </div>
 
         {/* Overall Progress Bar */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-elec-light/70 font-medium">Overall Progress</span>
-            <div className="flex items-center gap-2">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-elec-light/80 font-semibold">Overall Progress</span>
+            <div className="flex items-center gap-3">
               {estimatedTimeRemaining !== undefined && estimatedTimeRemaining > 0 && !allComplete && (
-                <span className="text-elec-light/50">~{estimatedTimeRemaining}s remaining</span>
+                <span className="text-elec-light/60 font-medium tabular-nums">{formatTimeRemaining(estimatedTimeRemaining)}</span>
               )}
-              <span className="text-elec-yellow font-semibold">{Math.round(overallProgress)}%</span>
+              <span className="text-elec-yellow font-bold text-lg tabular-nums">{Math.round(overallProgress)}%</span>
             </div>
           </div>
-          <Progress value={overallProgress} className="h-2" />
+          <div className="relative">
+            <Progress value={overallProgress} className="h-3" />
+            {isProcessing && (
+              <div className="absolute inset-0 h-3 rounded-full bg-gradient-to-r from-transparent via-elec-yellow/20 to-transparent animate-pulse pointer-events-none" />
+            )}
+          </div>
         </div>
 
         {/* Cancel button */}
         {isProcessing && !allComplete && onCancel && (
           <button
             onClick={onCancel}
-            className="w-full mt-3 px-4 py-2 text-sm font-medium text-elec-light/70 hover:text-elec-light border border-elec-yellow/20 hover:border-elec-yellow/40 rounded-lg transition-all"
+            className="w-full mt-2 px-4 py-2.5 text-sm font-semibold text-red-400 hover:text-red-300 border border-red-500/30 hover:border-red-500/50 rounded-lg transition-all hover:bg-red-500/10 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)]"
           >
             Cancel Generation
           </button>
         )}
       </CardHeader>
-      <CardContent className="space-y-3 sm:space-y-4 px-3 sm:px-6">
+      <CardContent className="space-y-4 sm:space-y-6 px-4 sm:px-6 pb-6">
         {/* Vertical Timeline - Mobile Optimized */}
-        <div className="space-y-3 sm:space-y-4">
+        <div className="space-y-4 sm:space-y-6">
           {steps.map((step, idx) => {
             const Icon = agentIcons[step.agent];
             const isActive = step.status === 'processing' || step.status === 'complete';
+            const agentColor = step.agent === 'health-safety' ? 'green' : 'blue';
             
             return (
               <div key={step.agent} className="relative">
-                {/* Connector line */}
+                {/* Connector line with gradient animation */}
                 {idx < steps.length - 1 && (
-                  <div className={`absolute left-5 sm:left-5.5 top-[52px] sm:top-[56px] w-0.5 h-[calc(100%+12px)] sm:h-[calc(100%+16px)] -mb-3 sm:-mb-4 transition-colors duration-500 ${
-                    step.status === 'complete' ? 'bg-elec-yellow' : 'bg-elec-yellow/20'
+                  <div className={`absolute left-6 sm:left-7 top-[60px] sm:top-[64px] w-0.5 h-[calc(100%+16px)] sm:h-[calc(100%+24px)] -mb-4 sm:-mb-6 transition-all duration-700 ${
+                    step.status === 'complete' 
+                      ? 'bg-gradient-to-b from-elec-yellow via-elec-yellow to-elec-yellow/30 shadow-[0_0_8px_rgba(255,193,7,0.5)]' 
+                      : 'bg-elec-yellow/20'
                   }`} />
                 )}
                 
-                <div className={`relative flex gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-300 ${
-                  isActive ? 'bg-elec-grey/80 border border-elec-yellow/30' : 'bg-elec-grey/50 border border-transparent'
+                <div className={`relative flex gap-4 sm:gap-5 p-4 sm:p-5 rounded-xl transition-all duration-300 ${
+                  step.status === 'processing'
+                    ? 'bg-gradient-to-br from-elec-yellow/10 via-elec-grey/90 to-elec-grey/90 border border-elec-yellow/40 shadow-[0_0_20px_rgba(255,193,7,0.15)] backdrop-blur-sm'
+                    : isActive 
+                    ? 'bg-elec-grey/80 border border-elec-yellow/30' 
+                    : 'bg-elec-grey/50 border border-elec-yellow/10'
                 } ${step.status === 'complete' ? 'animate-in fade-in slide-in-from-left-4 duration-500' : ''}`}>
-                  {/* Icon */}
-                  <div className={`shrink-0 h-10 w-10 sm:h-11 sm:w-11 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 relative ${
+                  {/* Icon with glow effect */}
+                  <div className={`shrink-0 h-12 w-12 sm:h-14 sm:w-14 rounded-xl flex items-center justify-center transition-all duration-300 relative ${
                     step.status === 'complete' 
-                      ? 'bg-green-500/20 border border-green-500/40' 
+                      ? 'bg-gradient-to-br from-green-500/30 to-green-500/10 border-2 border-green-500/50 shadow-[0_0_20px_rgba(34,197,94,0.3)]' 
                       : step.status === 'processing'
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 animate-pulse'
-                      : 'bg-muted border border-border'
+                      ? 'bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 border-2 border-elec-yellow/60 animate-pulse shadow-[0_0_20px_rgba(255,193,7,0.4)]'
+                      : 'bg-muted border-2 border-border'
                   }`}>
-                    <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${
+                    {step.status === 'processing' && (
+                      <div className="absolute inset-0 rounded-xl bg-elec-yellow/20 animate-ping" />
+                    )}
+                    <Icon className={`relative h-6 w-6 sm:h-7 sm:w-7 ${
                       step.status === 'complete' 
-                        ? 'text-green-500' 
+                        ? 'text-green-400' 
                         : step.status === 'processing'
                         ? 'text-elec-yellow'
                         : 'text-muted-foreground'
                     }`} />
                     {step.status === 'complete' && (
-                      <Sparkles className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-400 animate-in zoom-in duration-300" />
+                      <Sparkles className="absolute -top-1 -right-1 h-4 w-4 sm:h-5 sm:w-5 text-green-300 animate-in zoom-in duration-300" />
                     )}
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1 min-w-0 space-y-2">
+                  <div className="flex-1 min-w-0 space-y-3">
                     {/* Title and Status Row */}
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3">
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-sm sm:text-base leading-tight tracking-tight">
+                        <h4 className="font-bold text-base sm:text-lg leading-tight tracking-tight">
                           {agentNames[step.agent]}
                         </h4>
-                        <p className="text-xs sm:text-sm text-elec-light/70 mt-0.5 sm:mt-1 font-medium leading-relaxed">
+                        <p className="text-sm sm:text-base text-elec-light/70 mt-1 sm:mt-1.5 font-medium leading-relaxed">
                           {agentDescriptions[step.agent]}
                         </p>
                       </div>
-                      <div className="shrink-0 flex items-center gap-2 self-start">
+                      <div className="shrink-0 flex items-center gap-2.5 self-start">
                         {getStatusIcon(step.status)}
                         {getStatusBadge(step.status)}
                       </div>
@@ -186,16 +217,16 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
 
                     {/* Time elapsed for completed steps */}
                     {step.status === 'complete' && step.timeElapsed && (
-                      <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-elec-light/50">
-                        <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                        <span className="font-medium">Completed in {step.timeElapsed}s</span>
+                      <div className="flex items-center gap-2 text-xs sm:text-sm text-elec-light/60">
+                        <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        <span className="font-medium tabular-nums">Completed in {step.timeElapsed}s</span>
                       </div>
                     )}
 
                     {/* Reasoning - only show when complete */}
                     {step.status === 'complete' && step.reasoning && (
-                      <div className="pt-2 sm:pt-3 border-t border-elec-yellow/20 animate-in fade-in slide-in-from-top-2 duration-300">
-                        <p className="text-xs sm:text-sm text-elec-light/80 font-medium leading-relaxed">
+                      <div className="pt-3 border-t border-elec-yellow/20 animate-in fade-in slide-in-from-top-2 duration-300">
+                        <p className="text-sm sm:text-base text-elec-light/90 font-medium leading-relaxed">
                           {step.reasoning}
                         </p>
                       </div>
@@ -209,14 +240,14 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
 
         {/* Completion message */}
         {allComplete && (
-          <div className="mt-3 sm:mt-4 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-green-500/10 border border-green-500/30 animate-fade-in">
-            <div className="flex items-center gap-3">
-              <CheckCircle2 className="h-6 w-6 md:h-5 md:w-5 text-green-500 shrink-0" />
+          <div className="mt-4 sm:mt-6 p-4 sm:p-5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/10 border-2 border-green-500/40 animate-fade-in shadow-[0_0_30px_rgba(34,197,94,0.2)]">
+            <div className="flex items-center gap-4">
+              <CheckCircle2 className="h-8 w-8 sm:h-9 sm:w-9 text-green-400 shrink-0" />
               <div className="flex-1">
-                <p className="text-base md:text-sm font-bold text-green-600 dark:text-green-400 tracking-tight leading-tight">
+                <p className="text-lg sm:text-xl font-bold text-green-400 tracking-tight leading-tight">
                   Documentation Generated Successfully
                 </p>
-                <p className="text-sm md:text-xs text-green-600/80 dark:text-green-400/80 mt-1 font-medium leading-relaxed">
+                <p className="text-sm sm:text-base text-green-400/80 mt-1.5 font-medium leading-relaxed">
                   Review and edit your RAMS below
                 </p>
               </div>
