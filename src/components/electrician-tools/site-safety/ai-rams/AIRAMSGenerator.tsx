@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 import { AIRAMSInput } from './AIRAMSInput';
 import { AgentProcessingView } from './AgentProcessingView';
 import { RAMSReviewEditor } from './RAMSReviewEditor';
@@ -50,8 +50,34 @@ export const AIRAMSGenerator: React.FC = () => {
   };
 
   return (
-    <div className="w-full px-4 md:px-6 lg:px-8 py-4 max-w-7xl mx-auto">
-      <div className="space-y-6 md:space-y-8">
+    <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
+      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 max-w-7xl mx-auto">
+        {/* Page Header with Back Navigation */}
+        <div className="mb-6 sm:mb-8 space-y-4">
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/electrician/site-safety')}
+            className="group -ml-2 text-muted-foreground hover:text-elec-yellow transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+            Back to Site Safety
+          </Button>
+          
+          <div className="space-y-3">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+              <span className="bg-gradient-to-r from-elec-yellow via-yellow-400 to-elec-yellow bg-clip-text text-transparent animate-pulse-glow">
+                AI RAMS Generator
+              </span>
+            </h1>
+            <p className="text-base sm:text-lg text-muted-foreground max-w-3xl leading-relaxed">
+              Generate professional Risk Assessments and Method Statements in minutes using advanced AI
+            </p>
+          </div>
+          
+          <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent" />
+        </div>
+
+        <div className="space-y-6 md:space-y-8">
           {!showResults ? (
             <AIRAMSInput
               onGenerate={handleGenerate}
@@ -96,18 +122,20 @@ export const AIRAMSGenerator: React.FC = () => {
               )}
 
               {!isProcessing && ramsData && (
-                <div className="flex justify-center">
+                <div className="flex justify-center pt-4">
                   <Button
                     variant="outline"
                     onClick={handleStartOver}
-                    className="border-primary/30"
+                    className="border-elec-yellow/40 hover:border-elec-yellow hover:bg-elec-yellow/10 text-elec-yellow font-bold text-lg px-8 py-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-elec-yellow/30"
                   >
+                    <Sparkles className="h-5 w-5 mr-2" />
                     Generate Another RAMS
                   </Button>
                 </div>
               )}
             </>
           )}
+        </div>
       </div>
     </div>
   );

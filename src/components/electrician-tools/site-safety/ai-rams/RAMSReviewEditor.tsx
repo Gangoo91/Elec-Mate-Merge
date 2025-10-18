@@ -379,50 +379,66 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   };
 
   return (
-    <div className="space-y-5 md:space-y-6 pb-safe">
-      <Card className="border-elec-yellow/20 shadow-md bg-elec-grey">
-        <CardHeader className="pb-5">
-          <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 text-foreground">
-            <div className="flex flex-col gap-1">
-              <span className="flex items-center gap-2.5 text-xl md:text-xl font-bold tracking-tight leading-tight">
-                <Edit3 className="h-5 w-5" />
-                Review & Edit Generated Documentation
+    <div className="space-y-6 md:space-y-8 pb-safe">
+      <Card className="border-elec-yellow/30 shadow-2xl bg-elec-card/90 backdrop-blur-sm rounded-2xl overflow-hidden">
+        <CardHeader className="pb-6 bg-gradient-to-r from-elec-grey/50 to-elec-grey/30 border-b border-elec-yellow/20">
+          <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 text-foreground">
+            <div className="flex flex-col gap-2">
+              <span className="flex items-center gap-3 text-2xl md:text-xl font-bold tracking-tight leading-tight">
+                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 flex items-center justify-center border border-elec-yellow/30">
+                  <Edit3 className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                  Review & Edit Documentation
+                </span>
               </span>
               {lastSaved && (
-                <span className="text-xs text-elec-light/60">
+                <span className="text-xs text-muted-foreground ml-13">
                   {isSaving ? 'Saving...' : `Last saved ${lastSaved.toLocaleTimeString()}`}
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               {onSave && (
                 <Button
                   onClick={onSave}
                   disabled={isSaving}
                   size="sm"
                   variant="outline"
-                  className="border-elec-yellow/30 h-10 px-4 font-semibold"
+                  className="border-elec-yellow/40 hover:border-elec-yellow h-11 px-5 font-semibold hover:bg-elec-yellow/10 transition-all"
                 >
-                  {isSaving ? 'Saving...' : 'Save'}
+                  {isSaving ? 'Saving...' : 'Save Changes'}
                 </Button>
               )}
-              <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/30 text-sm font-semibold">
-                <CheckCircle className="h-3.5 w-3.5 mr-1" />
+              <Badge variant="outline" className="bg-green-500/15 text-green-500 border-green-500/40 text-sm font-semibold px-3 py-1.5 h-11 flex items-center gap-1.5">
+                <CheckCircle className="h-4 w-4" />
                 AI Generated
               </Badge>
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-14 bg-elec-grey/80">
-              <TabsTrigger value="rams" className="text-base md:text-base font-semibold">Risk Assessment</TabsTrigger>
-              <TabsTrigger value="method" className="text-base md:text-base font-semibold">Method Statement</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 h-16 md:h-14 bg-elec-grey border-b border-elec-yellow/20 rounded-none">
+              <TabsTrigger 
+                value="rams" 
+                className="text-lg md:text-base font-bold data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:shadow-[0_2px_0_0] data-[state=active]:shadow-elec-yellow transition-all h-full rounded-none flex items-center gap-2"
+              >
+                <Shield className="h-5 w-5 md:h-4 md:w-4" />
+                <span>Risk Assessment</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="method" 
+                className="text-lg md:text-base font-bold data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:shadow-[0_2px_0_0] data-[state=active]:shadow-elec-yellow transition-all h-full rounded-none flex items-center gap-2"
+              >
+                <FileText className="h-5 w-5 md:h-4 md:w-4" />
+                <span>Method Statement</span>
+              </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="rams" className="space-y-5 mt-6">
+            <TabsContent value="rams" className="space-y-6 mt-0 p-6 md:p-8">
               {/* Project Info */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
                 <div>
                   <label className="text-lg sm:text-base md:text-sm font-semibold text-elec-light tracking-wide">Project Name</label>
                   <Input
@@ -441,16 +457,30 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 </div>
               </div>
 
-              {/* Risks */}
-              <div className="space-y-4">
-                <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5 tracking-tight leading-tight">
-                  <AlertTriangle className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
-                  Identified Risks ({ramsData.risks.length})
-                </h4>
+              {/* Enhanced Risks Section */}
+              <div className="space-y-5">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-elec-yellow/10 to-transparent border-l-4 border-elec-yellow">
+                  <h4 className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-3 tracking-tight">
+                    <AlertTriangle className="h-6 w-6 sm:h-5 sm:w-5 text-elec-yellow" />
+                    <span>Identified Risks</span>
+                  </h4>
+                  <Badge variant="outline" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold text-base px-3 py-1">
+                    {ramsData.risks.length}
+                  </Badge>
+                </div>
                 
-                {ramsData.risks.map((risk) => (
-                  <Card key={risk.id} className="border-primary/20 bg-card/40">
-                    <CardContent className="pt-4">
+                {ramsData.risks.map((risk) => {
+                  const riskRating = risk.riskRating || 0;
+                  const riskLevel = riskRating <= 4 ? 'low' : riskRating <= 9 ? 'medium' : 'high';
+                  const borderColors = {
+                    low: 'border-l-green-500',
+                    medium: 'border-l-yellow-500',
+                    high: 'border-l-red-500'
+                  };
+                  return (
+                    <Card key={risk.id} className={`border-elec-yellow/30 bg-elec-grey/50 backdrop-blur-sm hover:border-elec-yellow/50 transition-all border-l-4 ${borderColors[riskLevel]} shadow-lg`}>
+                      <CardContent className="pt-5 pb-5 px-5 md:px-6">
+                      {/* Risk card content */}
                       <div className="space-y-3">
                         <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-2">
                           <Input
@@ -519,7 +549,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                       </div>
                     </CardContent>
                   </Card>
-                ))}
+                  );
+                })}
               </div>
 
               {/* PPE Section */}
