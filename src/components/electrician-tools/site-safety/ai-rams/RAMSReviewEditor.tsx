@@ -462,9 +462,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="rams" className="space-y-6 mt-0 p-6 md:p-8">
+            <TabsContent value="rams" className="space-y-6 mt-0 p-3 sm:p-4 md:p-6 lg:p-8">
               {/* Project Info */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
                 <div>
                   <label className="text-lg sm:text-base md:text-sm font-semibold text-elec-light tracking-wide">Project Name</label>
                   <Input
@@ -505,16 +505,11 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   };
                   return (
                     <Card key={risk.id} className={`border-0 md:border md:border-elec-yellow/30 bg-elec-grey/30 md:bg-elec-grey/50 md:backdrop-blur-sm hover:border-elec-yellow/50 transition-all border-l-4 ${borderColors[riskLevel]} shadow-none md:shadow-lg rounded-lg`}>
-                      <CardContent className="pt-4 pb-4 px-4 md:pt-5 md:pb-5 md:px-6">
+                      <CardContent className="pt-3 pb-3 px-3 sm:px-4 md:pt-5 md:pb-5 md:px-6">
                       {/* Risk card content */}
                       <div className="space-y-3">
-                        <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-2">
-                          <Input
-                            value={risk.hazard}
-                            onChange={(e) => updateRisk(risk.id, { hazard: e.target.value })}
-                            className="flex-1 bg-background/50 border-primary/30 font-medium"
-                            placeholder="Hazard"
-                          />
+                        {/* Header row with risk level and delete */}
+                        <div className="flex items-center justify-between gap-2">
                           <Badge className={`${getRiskLevelColor(risk.riskRating)} text-white whitespace-nowrap`}>
                             Risk: {risk.riskRating}
                           </Badge>
@@ -522,19 +517,33 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                             variant="ghost"
                             size="sm"
                             onClick={() => removeRisk(risk.id)}
-                            className="text-red-500 hover:text-red-600"
+                            className="text-red-500 hover:text-red-600 -mr-2"
                           >
                             <X className="h-4 w-4" />
                           </Button>
                         </div>
+                        
+                        {/* Full width hazard input */}
+                        <div>
+                          <label className="text-xs text-muted-foreground mb-1.5 block">Hazard</label>
+                          <Input
+                            value={risk.hazard}
+                            onChange={(e) => updateRisk(risk.id, { hazard: e.target.value })}
+                            className="w-full bg-background/50 border-primary/30 font-medium text-sm"
+                            placeholder="Describe the hazard"
+                          />
+                        </div>
 
-                        <Textarea
-                          value={risk.controls}
-                          onChange={(e) => updateRisk(risk.id, { controls: e.target.value })}
-                          className="bg-background/50 border-primary/30"
-                          placeholder="Control measures"
-                          rows={2}
-                        />
+                        <div>
+                          <label className="text-xs text-muted-foreground mb-1.5 block">Control Measures</label>
+                          <Textarea
+                            value={risk.controls}
+                            onChange={(e) => updateRisk(risk.id, { controls: e.target.value })}
+                            className="w-full bg-background/50 border-primary/30 text-sm"
+                            placeholder="Describe control measures and compliance (e.g., PUWER 1998, BS 7671)"
+                            rows={3}
+                          />
+                        </div>
 
                         <div className="grid grid-cols-2 gap-2">
                           <div>
