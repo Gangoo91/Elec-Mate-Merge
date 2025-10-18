@@ -23,7 +23,7 @@ function estimateTokens(text: string): number {
 }
 
 // Utility: Split content on paragraph boundaries
-function splitContent(text: string, maxTokens: number = 6000): string[] {
+function splitContent(text: string, maxTokens: number = 4000): string[] {
   const estimatedTokens = estimateTokens(text);
   if (estimatedTokens <= maxTokens) return [text];
 
@@ -87,9 +87,9 @@ serve(async (req) => {
     const expandedChunks: PDFChunk[] = [];
     for (const chunk of chunks) {
       const tokens = estimateTokens(chunk.content);
-      if (tokens > 6000) {
+      if (tokens > 4000) {
         console.log(`📦 Splitting oversized chunk: ${chunk.regulation_number || chunk.section} (~${tokens} tokens)`);
-        const splitParts = splitContent(chunk.content, 6000);
+        const splitParts = splitContent(chunk.content, 4000);
         splitParts.forEach((part, idx) => {
           expandedChunks.push({
             ...chunk,
@@ -116,7 +116,7 @@ serve(async (req) => {
       const batch = expandedChunks.slice(i, i + batchSize);
       
       // Final safety check
-      const validBatch = batch.filter(chunk => estimateTokens(chunk.content) <= 6000);
+      const validBatch = batch.filter(chunk => estimateTokens(chunk.content) <= 4000);
       const skippedCount = batch.length - validBatch.length;
       
       if (skippedCount > 0) {
