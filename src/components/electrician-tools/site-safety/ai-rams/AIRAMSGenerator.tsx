@@ -52,16 +52,7 @@ export const AIRAMSGenerator: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
       <div className="w-full px-0 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 max-w-7xl mx-auto">
-        {/* Page Header */}
         <div className="mb-6 sm:mb-8 space-y-4 px-3 sm:px-0">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/electrician/site-safety')}
-            className="group -ml-2 text-foreground hover:text-elec-yellow transition-colors hover:bg-elec-yellow/10"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Back to Site Safety
-          </Button>
           
           <div className="space-y-3">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground">
