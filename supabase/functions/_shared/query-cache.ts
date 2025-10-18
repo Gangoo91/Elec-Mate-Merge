@@ -5,6 +5,7 @@
  */
 
 import { createClient } from './deps.ts';
+import { normalizeQuery } from './query-normalizer.ts';
 
 export interface CachedQuery {
   queryHash: string;
@@ -70,9 +71,13 @@ export async function cacheQuery(
 /**
  * Generate semantic hash from circuit parameters
  * Same electrical parameters = same hash
+ * UPGRADED: Now uses query normalization for better cache hits
  */
 export function hashQuery(userMessage: string, circuitParams: any): string {
-  // Normalize to canonical form for better cache hits
+  // Normalize user message for consistent caching
+  const normalizedMessage = normalizeQuery(userMessage);
+  
+  // Normalize circuit parameters to canonical form
   const canonical = {
     type: circuitParams.circuitType || 'general',
     power: circuitParams.power ? Math.round(circuitParams.power / 100) * 100 : null,
@@ -81,7 +86,8 @@ export function hashQuery(userMessage: string, circuitParams: any): string {
     phases: circuitParams.phases || 'single'
   };
   
-  const str = JSON.stringify(canonical);
+  // Combine normalized message + params for hash
+  const str = normalizedMessage + JSON.stringify(canonical);
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash = ((hash << 5) - hash) + str.charCodeAt(i);
