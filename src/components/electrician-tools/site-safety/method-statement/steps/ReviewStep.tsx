@@ -127,9 +127,9 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-0 sm:border sm:border-elec-yellow/20 bg-transparent sm:bg-elec-gray rounded-none sm:rounded-lg">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Eye className="h-5 w-5" />
@@ -142,11 +142,11 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
       </Card>
 
       {/* Statistics Overview */}
-      <Card className="border-blue-500/20 bg-blue-500/5">
-        <CardHeader>
+      <Card className="border-0 sm:border sm:border-blue-500/20 bg-blue-500/5 rounded-none sm:rounded-lg">
+        <CardHeader className="px-3 sm:px-6">
           <CardTitle className="text-blue-300">Method Statement Summary</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-3 sm:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-elec-yellow">{stats.totalSteps}</div>
@@ -169,8 +169,8 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
       </Card>
 
       {/* Job Details Summary */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
+      <Card className="border-0 sm:border sm:border-elec-yellow/20 bg-transparent sm:bg-elec-gray rounded-none sm:rounded-lg">
+        <CardHeader className="px-3 sm:px-6">
           <div className="flex items-center justify-between">
             <CardTitle className="text-elec-yellow">Job Details</CardTitle>
             <Button variant="outline" size="sm" onClick={onBack}>
@@ -179,7 +179,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="space-y-6 text-left">
+        <CardContent className="space-y-4 sm:space-y-6 text-left px-3 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-medium text-elec-yellow">
@@ -234,31 +234,42 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
       </Card>
 
       {/* Method Steps Review */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
+      <Card className="border-0 sm:border sm:border-elec-yellow/20 bg-transparent sm:bg-elec-gray rounded-none sm:rounded-lg">
+        <CardHeader className="px-3 sm:px-6">
           <CardTitle className="text-elec-yellow">Method Steps ({data.steps.length})</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 sm:space-y-4 px-2 sm:px-4">
           {data.steps.map((step, index) => (
-            <Card key={step.id} className="border-elec-yellow/30">
-              <CardContent className="p-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center font-bold text-sm">
+            <Card key={step.id} className="border-0 sm:border sm:border-elec-yellow/30 rounded-none sm:rounded-lg">
+              <CardContent className="p-2 sm:p-4">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">
                     {step.stepNumber}
                   </div>
-                  <div className="flex-1 space-y-3">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <h4 className="font-semibold text-elec-yellow">{step.title}</h4>
-                      <div className="flex items-center gap-2">
-                        <Badge className={getRiskColor(step.riskLevel)}>
-                          {step.riskLevel} risk
-                        </Badge>
+                  <div className="flex-1 min-w-0 space-y-2 sm:space-y-3">
+                    {/* Mobile: Stack everything vertically for max width */}
+                    <div className="space-y-2">
+                      {/* Full-width title on its own row */}
+                      <h4 className="font-semibold text-elec-yellow text-sm sm:text-base leading-tight">
+                        {step.title}
+                      </h4>
+                      
+                      {/* Metadata row below title */}
+                      <div className="flex flex-wrap items-center gap-2">
                         {step.estimatedDuration && (
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <div className="flex items-center gap-1 text-xs text-muted-foreground bg-elec-dark/50 px-2 py-1 rounded">
                             <Clock className="h-3 w-3" />
                             {step.estimatedDuration}
                           </div>
                         )}
+                        {/* Show risk level as compact text instead of badge */}
+                        <div className={`text-xs px-2 py-1 rounded ${
+                          step.riskLevel === 'high' ? 'bg-red-500/20 text-red-300' :
+                          step.riskLevel === 'medium' ? 'bg-yellow-500/20 text-yellow-300' :
+                          'bg-green-500/20 text-green-300'
+                        }`}>
+                          {step.riskLevel} risk
+                        </div>
                       </div>
                     </div>
                     
@@ -266,7 +277,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                       <p className="text-sm text-muted-foreground text-left">{step.description}</p>
                     )}
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-left">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 text-xs text-left">
                       {step.safetyRequirements.length > 0 && (
                         <div>
                           <div className="flex items-start gap-1 font-medium text-red-300 mb-1 text-left">
@@ -333,11 +344,11 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
       </Card>
 
       {/* Approval Section */}
-      <Card className="border-green-500/20 bg-green-500/5">
-        <CardHeader>
+      <Card className="border-0 sm:border sm:border-green-500/20 bg-green-500/5 rounded-none sm:rounded-lg">
+        <CardHeader className="px-3 sm:px-6">
           <CardTitle className="text-green-300">Approval & Sign-off</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 px-3 sm:px-6">
           <div className="gap-4">
             <Label htmlFor="approvedBy">Approved By</Label>
             <Input
@@ -362,8 +373,8 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
 
       {/* High Risk Warning */}
       {stats.highRiskSteps > 0 && (
-        <Card className="border-red-500/20 bg-red-500/5">
-          <CardContent className="p-4">
+        <Card className="border-0 sm:border sm:border-red-500/20 bg-red-500/5 rounded-none sm:rounded-lg">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-red-300" />
               <div>
@@ -379,7 +390,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
       )}
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-4 px-3 sm:px-0">
         <Button
           onClick={exportToPDF}
           variant="outline"
