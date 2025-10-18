@@ -250,7 +250,7 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                     {/* Mobile: Stack everything vertically for max width */}
                     <div className="space-y-2">
                       {/* Full-width title on its own row */}
-                      <h4 className="font-semibold text-elec-yellow text-sm sm:text-base leading-tight">
+                      <h4 className="font-semibold text-elec-yellow text-base sm:text-lg leading-tight break-words">
                         {step.title}
                       </h4>
                       
@@ -262,14 +262,6 @@ const ReviewStep = ({ data, onDataChange, onBack }: ReviewStepProps) => {
                             {step.estimatedDuration}
                           </div>
                         )}
-                        {/* Show risk level as compact text instead of badge */}
-                        <div className={`text-xs px-2 py-1 rounded ${
-                          step.riskLevel === 'high' ? 'bg-red-500/20 text-red-300' :
-                          step.riskLevel === 'medium' ? 'bg-yellow-500/20 text-yellow-300' :
-                          'bg-green-500/20 text-green-300'
-                        }`}>
-                          {step.riskLevel} risk
-                        </div>
                       </div>
                     </div>
                     
