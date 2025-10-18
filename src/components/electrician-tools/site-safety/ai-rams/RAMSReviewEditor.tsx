@@ -528,11 +528,12 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         {/* Full width hazard input */}
                         <div>
                           <label className="text-xs text-muted-foreground mb-1.5 block">Hazard</label>
-                          <Input
+                          <Textarea
                             value={risk.hazard}
                             onChange={(e) => updateRisk(risk.id, { hazard: e.target.value })}
-                            className="w-full bg-background/50 border-primary/30 font-medium text-sm"
+                            className="w-full bg-background/50 border-primary/30 font-medium text-sm min-h-[60px]"
                             placeholder="Describe the hazard"
+                            rows={2}
                           />
                         </div>
 
