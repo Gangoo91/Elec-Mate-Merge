@@ -388,7 +388,7 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
     const combined = `${step.title || ''} ${step.description || ''}`.toLowerCase();
     
     if (combined.includes('isolat') || combined.includes('switch') || combined.includes('energis')) {
-      quals.push('Authorized Person (Electrical)');
+      quals.push('Authorised Person (Electrical)');
     }
     if (combined.includes('test') || combined.includes('commission')) {
       quals.push('BS 7671 18th Edition');
