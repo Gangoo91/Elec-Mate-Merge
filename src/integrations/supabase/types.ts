@@ -6214,6 +6214,10 @@ export type Database = {
         Args: { "": string } | { "": unknown } | { "": unknown }
         Returns: unknown
       }
+      normalize_query_text: {
+        Args: { query_text: string }
+        Returns: string
+      }
       search_bs7671: {
         Args: {
           match_count?: number
