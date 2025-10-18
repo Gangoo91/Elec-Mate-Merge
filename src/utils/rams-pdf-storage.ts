@@ -16,10 +16,29 @@ export async function saveRAMSPDFToStorage(
       return { success: false, error: 'User not authenticated' };
     }
 
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    // Check for existing document with same name/location/date to prevent duplicates
+    const { data: existingDoc } = await supabase
+      .from('rams_documents')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('project_name', projectName)
+      .eq('location', location)
+      .eq('date', currentDate)
+      .maybeSingle();
+
+    if (existingDoc) {
+      console.log('Duplicate detected, skipping save');
+      return { success: false, error: 'Document already saved today for this project/location' };
+    }
+
     // Create unique filename
     const timestamp = Date.now();
     const sanitizedName = projectName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
     const fileName = `${user.id}/${sanitizedName}_${timestamp}.pdf`;
+
+    console.log('Uploading PDF to storage:', fileName);
 
     // Upload to storage
     const { data: uploadData, error: uploadError } = await supabase.storage
@@ -34,14 +53,15 @@ export async function saveRAMSPDFToStorage(
       return { success: false, error: uploadError.message };
     }
 
+    console.log('PDF uploaded successfully, saving to database:', uploadData.path);
+
     // Save reference in database  
-    // Based on rams_documents table schema - user_id is required
     const { data: docData, error: dbError } = await supabase
       .from('rams_documents')
       .insert([{
         user_id: user.id,
         assessor: 'AI Generated',
-        date: new Date().toISOString().split('T')[0],
+        date: currentDate,
         location: location,
         project_name: projectName,
         status: status,
@@ -53,11 +73,12 @@ export async function saveRAMSPDFToStorage(
 
     if (dbError) {
       console.error('Database insert error:', dbError);
-      // Try to clean up uploaded file
+      // Clean up uploaded file
       await supabase.storage.from('rams-pdfs').remove([uploadData.path]);
       return { success: false, error: dbError.message };
     }
 
+    console.log('Document saved successfully:', docData.id);
     return { success: true, documentId: docData.id };
   } catch (error) {
     console.error('Error saving RAMS PDF:', error);

@@ -258,6 +258,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   };
 
   const handleGenerateCombinedRAMS = async () => {
+    // Prevent multiple clicks
+    if (isGenerating) return;
+    
     setIsGenerating(true);
     setCurrentPDFType('combined');
     setShowPDFModal(true);

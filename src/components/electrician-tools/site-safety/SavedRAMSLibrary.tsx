@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { FileText, Download, Trash2, Calendar, Loader2, FolderOpen } from 'lucide-react';
+import { FileText, Download, Trash2, Calendar, Loader2, FolderOpen, Edit, ChevronDown, ChevronUp } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface SavedRAMS {
@@ -22,7 +22,11 @@ export const SavedRAMSLibrary = () => {
   const [loading, setLoading] = useState(true);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
   const { toast } = useToast();
+
+  // Display logic: show 12 most recent by default
+  const displayedDocuments = showAll ? documents : documents.slice(0, 12);
 
   useEffect(() => {
     fetchDocuments();
@@ -204,9 +208,36 @@ export const SavedRAMSLibrary = () => {
 
   return (
     <div className="space-y-4">
+      {/* Document count and View All toggle */}
+      {documents.length > 12 && (
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-muted-foreground">
+            Showing {displayedDocuments.length} of {documents.length} documents
+          </p>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowAll(!showAll)}
+            className="text-elec-yellow hover:text-elec-yellow/80"
+          >
+            {showAll ? (
+              <>
+                <ChevronUp className="h-4 w-4 mr-1" />
+                Show Less
+              </>
+            ) : (
+              <>
+                <ChevronDown className="h-4 w-4 mr-1" />
+                View All
+              </>
+            )}
+          </Button>
+        </div>
+      )}
+
       {/* Mobile: Stack cards */}
       <div className="block sm:hidden space-y-3">
-        {documents.map((doc) => (
+        {displayedDocuments.map((doc) => (
           <Card 
             key={doc.id} 
             className="border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40 transition-colors"
@@ -236,11 +267,11 @@ export const SavedRAMSLibrary = () => {
                 </div>
               </div>
               
-              <div className="flex gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 <Button
                   size="sm"
                   variant="outline"
-                  className="flex-1 border-elec-yellow/30 hover:bg-elec-yellow/10 text-xs"
+                  className="border-elec-yellow/30 hover:bg-elec-yellow/10 text-xs"
                   onClick={() => handleDownload(doc)}
                   disabled={!doc.pdf_url || downloadingId === doc.id}
                 >
@@ -253,7 +284,16 @@ export const SavedRAMSLibrary = () => {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="border-destructive/30 hover:bg-destructive/10 text-destructive"
+                  className="border-elec-blue/30 hover:bg-elec-blue/10 text-elec-blue text-xs"
+                  disabled
+                  title="Amend feature coming soon"
+                >
+                  <Edit className="h-3 w-3" />
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-destructive/30 hover:bg-destructive/10 text-destructive text-xs"
                   onClick={() => handleDelete(doc.id, doc.pdf_url)}
                   disabled={deletingId === doc.id}
                 >
@@ -284,7 +324,7 @@ export const SavedRAMSLibrary = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-elec-yellow/10">
-                {documents.map((doc) => (
+                {displayedDocuments.map((doc) => (
                   <tr key={doc.id} className="hover:bg-elec-yellow/5 transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
@@ -320,6 +360,16 @@ export const SavedRAMSLibrary = () => {
                               Download
                             </>
                           )}
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="border-elec-blue/30 hover:bg-elec-blue/10 text-elec-blue"
+                          disabled
+                          title="Amend feature coming soon"
+                        >
+                          <Edit className="h-4 w-4 mr-2" />
+                          Amend
                         </Button>
                         <Button
                           size="sm"
