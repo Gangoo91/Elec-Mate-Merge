@@ -285,16 +285,16 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
             <CollapsibleTrigger asChild>
               <button
                 type="button"
-                className="w-full flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-elec-grey/80 to-elec-grey/60 hover:from-elec-yellow/10 hover:to-elec-yellow/5 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all min-h-[56px] touch-manipulation group"
+                className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-xl bg-gradient-to-r from-elec-grey/80 to-elec-grey/60 hover:from-elec-yellow/10 hover:to-elec-yellow/5 border border-elec-yellow/20 hover:border-elec-yellow/40 transition-all min-h-[56px] touch-manipulation group gap-3"
               >
-                <div className="flex items-center gap-3">
-                  <Shield className="h-5 w-5 text-elec-yellow group-hover:animate-pulse" />
+                <div className="flex items-center gap-3 flex-wrap">
+                  <Shield className="h-5 w-5 text-elec-yellow group-hover:animate-pulse flex-shrink-0" />
                   <span className="text-base font-semibold text-foreground">Emergency Contacts & Site Personnel</span>
-                  <span className="text-xs px-2.5 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 font-medium">
+                  <span className="text-xs px-2.5 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 font-medium whitespace-nowrap">
                     Optional - Recommended
                   </span>
                 </div>
-                <ChevronDown className={`h-5 w-5 text-elec-yellow transition-transform duration-300 ${showEmergencyContacts ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-5 w-5 text-elec-yellow transition-transform duration-300 flex-shrink-0 self-end sm:self-center ${showEmergencyContacts ? 'rotate-180' : ''}`} />
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-5">
@@ -372,7 +372,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
           icon={<HardHat className="h-6 w-6" />}
           className="w-full text-xl sm:text-lg font-bold tracking-wide shadow-2xl shadow-elec-yellow/30 hover:shadow-elec-yellow/50 hover:scale-[1.02] transition-all duration-200 h-16 sm:h-14 rounded-xl"
         >
-          {isProcessing ? 'Generating RAMS...' : 'Generate Professional RAMS'}
+          {isProcessing ? 'Generating RAMS...' : 'Generate RAMS'}
         </MobileButton>
       </div>
 
