@@ -23,12 +23,13 @@ interface AgentResponse {
 export function transformHealthSafetyToRAMS(
   hsResponse: AgentResponse,
   projectInfo: { projectName: string; location: string; assessor: string; date: string }
-): { risks: RAMSRisk[]; activities: string[] } {
+): { risks: RAMSRisk[]; hazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }>; activities: string[] } {
   const risks: RAMSRisk[] = [];
+  const identifiedHazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }> = [];
   const activities: string[] = [];
   
   // Try multiple possible locations for hazard data
-  const hazards = hsResponse.riskAssessment?.hazards 
+  const sourceHazards = hsResponse.riskAssessment?.hazards 
     || (hsResponse.response as any)?.riskAssessment?.hazards
     || (hsResponse.structuredData as any)?.riskAssessment?.hazards
     || (hsResponse as any).structuredData?.hazards
@@ -38,7 +39,7 @@ export function transformHealthSafetyToRAMS(
     hasRiskAssessment: !!hsResponse.riskAssessment,
     hasResponseRiskAssessment: !!(hsResponse.response as any)?.riskAssessment,
     hasStructuredData: !!hsResponse.structuredData,
-    hazardsFound: hazards?.length || 0
+    hazardsFound: sourceHazards?.length || 0
   });
   
   // Generate controls from hazard description if not provided
@@ -153,26 +154,37 @@ export function transformHealthSafetyToRAMS(
   };
   
   // Handle structured response from health-safety agent
-  if (hazards && Array.isArray(hazards)) {
-    console.log('🔍 Individual hazard structure:', hazards[0]);
-    hazards.forEach((hazard, idx) => {
-      const riskRating = hazard.likelihood * hazard.severity;
+  if (sourceHazards && Array.isArray(sourceHazards)) {
+    console.log('🔍 Individual hazard structure:', sourceHazards[0]);
+    sourceHazards.forEach((sourceHazard, idx) => {
+      const riskRating = sourceHazard.likelihood * sourceHazard.severity;
       const residualRisk = Math.max(1, Math.floor(riskRating / 2));
+      
+      // Store raw hazard for HAZARDS IDENTIFIED section
+      identifiedHazards.push({
+        id: `hazard-${idx + 1}`,
+        hazard: sourceHazard.hazard,
+        likelihood: sourceHazard.likelihood,
+        severity: sourceHazard.severity,
+        riskScore: riskRating,
+        riskLevel: riskRating >= 15 ? 'high' : riskRating >= 8 ? 'medium' : 'low',
+        regulation: sourceHazard.regulation
+      });
       
       risks.push({
         id: `risk-${idx + 1}`,
-        hazard: hazard.hazard,
-        risk: hazard.risk,
-        likelihood: hazard.likelihood,
-        severity: hazard.severity,
+        hazard: sourceHazard.hazard,
+        risk: sourceHazard.risk,
+        likelihood: sourceHazard.likelihood,
+        severity: sourceHazard.severity,
         riskRating,
-        controls: Array.isArray(hazard.controls) && hazard.controls.length > 0
-          ? '• ' + hazard.controls.join('\n• ')
-          : typeof hazard.controls === 'string' && hazard.controls.trim()
-            ? hazard.controls
-            : hazard.controlMeasures && Array.isArray(hazard.controlMeasures) && hazard.controlMeasures.length > 0
-              ? '• ' + hazard.controlMeasures.join('\n• ')
-              : '• ' + generateControlsFromHazard(hazard).join('\n• '),
+        controls: Array.isArray(sourceHazard.controls) && sourceHazard.controls.length > 0
+          ? '• ' + sourceHazard.controls.join('\n• ')
+          : typeof sourceHazard.controls === 'string' && sourceHazard.controls.trim()
+            ? sourceHazard.controls
+            : sourceHazard.controlMeasures && Array.isArray(sourceHazard.controlMeasures) && sourceHazard.controlMeasures.length > 0
+              ? '• ' + sourceHazard.controlMeasures.join('\n• ')
+              : '• ' + generateControlsFromHazard(sourceHazard).join('\n• '),
         residualRisk,
         furtherAction: "",
         responsible: projectInfo.assessor,
@@ -181,8 +193,8 @@ export function transformHealthSafetyToRAMS(
       });
     });
     
-    console.log('✅ Transformer created', risks.length, 'risk entries');
-    return { risks, activities: activities.length > 0 ? activities : ["Electrical installation work"] };
+    console.log('✅ Transformer created', risks.length, 'risk entries and', identifiedHazards.length, 'hazard entries');
+    return { risks, hazards: identifiedHazards, activities: activities.length > 0 ? activities : ["Electrical installation work"] };
   }
   
   // Fallback to string parsing if response is a string
@@ -291,7 +303,7 @@ export function transformHealthSafetyToRAMS(
     });
   }
   
-  return { risks, activities };
+  return { risks, hazards: identifiedHazards, activities };
 }
 
 /**
@@ -572,7 +584,7 @@ export function combineAgentOutputsToRAMS(
   }
 ): { ramsData: RAMSData; methodData: Partial<MethodStatementData> } {
   // Transform H&S response to RAMS risks
-  const { risks, activities } = transformHealthSafetyToRAMS(hsResponse, projectInfo);
+  const { risks, hazards, activities } = transformHealthSafetyToRAMS(hsResponse, projectInfo);
   
   // Transform Installer response to method steps
   const steps = transformInstallerToMethodSteps(installerResponse);
@@ -593,7 +605,8 @@ export function combineAgentOutputsToRAMS(
     safetyOfficerPhone: projectInfo.safetyOfficerPhone || '',
     assemblyPoint: projectInfo.assemblyPoint || '',
     activities: activities.length > 0 ? activities : ["Electrical installation work"],
-    risks
+    risks,
+    hazards
   };
   
   // Create Method Statement data
