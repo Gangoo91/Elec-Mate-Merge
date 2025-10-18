@@ -362,7 +362,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       </Card>
 
       {/* Enhanced Generate Button */}
-      <div className="sticky bottom-4 sm:bottom-6 z-10">
+      <div className="mt-6">
         <MobileButton
           onClick={handleSubmit}
           disabled={!isFormValid || isProcessing}
