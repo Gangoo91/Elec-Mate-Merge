@@ -185,6 +185,14 @@ serve(async (req) => {
     const getScaleSpecificInstallerPrompt = (scale: 'domestic' | 'commercial' | 'industrial') => {
       const basePrompt = `You are an installation supervisor breaking down work into LOGICAL PHASES.
 
+**CRITICAL: ALL OUTPUT MUST BE IN UK ENGLISH**
+- Use UK spellings: realise (not realize), analyse (not analyze), minimise (not minimize), categorise (not categorize), organise (not organize)
+- Use UK terminology: earthing (not grounding), consumer unit (not breaker panel), metre (not meter for distance), spanner (not wrench)
+- Use UK measurements: metres, millimetres, litres (not meters, millimeters, liters)
+- Use UK phrases: "whilst" (not "while"), "amongst" (not "among"), "towards" (not "toward")
+- Reference UK standards: BS 7671, BS EN ISO, HSE guidance, CDM Regulations
+- Use UK trade terminology: electrician (not electrician), first fix (not rough-in), second fix (not trim-out)
+
 THINK IN MAJOR WORK STAGES, NOT MICRO-STEPS.
 
 ❌ BAD (too granular):
