@@ -52,24 +52,24 @@ export const AIRAMSGenerator: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
       <div className="w-full px-0 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 max-w-7xl mx-auto">
-        {/* Page Header with Back Navigation */}
-        <div className="mb-6 sm:mb-8 space-y-4">
+        {/* Page Header */}
+        <div className="mb-6 sm:mb-8 space-y-4 px-3 sm:px-0">
           <Button
             variant="ghost"
             onClick={() => navigate('/electrician/site-safety')}
-            className="group -ml-2 text-muted-foreground hover:text-elec-yellow transition-colors"
+            className="group -ml-2 text-foreground hover:text-elec-yellow transition-colors hover:bg-elec-yellow/10"
           >
             <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
             Back to Site Safety
           </Button>
           
           <div className="space-y-3">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground">
               <span className="bg-gradient-to-r from-elec-yellow via-yellow-400 to-elec-yellow bg-clip-text text-transparent animate-pulse-glow">
                 AI RAMS Generator
               </span>
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-3xl leading-relaxed">
+            <p className="text-base sm:text-lg text-foreground/80 max-w-3xl leading-relaxed">
               Generate professional Risk Assessments and Method Statements in minutes using advanced AI
             </p>
           </div>
