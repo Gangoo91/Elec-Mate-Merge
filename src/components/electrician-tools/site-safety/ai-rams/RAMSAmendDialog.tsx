@@ -129,13 +129,13 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="w-[95vw] sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-xl">
+          <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
             <Edit3 className="h-5 w-5 text-elec-yellow" />
             Amend RAMS Document
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-sm sm:text-base">
             Choose how you'd like to update this document
           </DialogDescription>
         </DialogHeader>
@@ -147,26 +147,26 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
         ) : documentData ? (
           <div className="space-y-6 py-4">
             {/* Document Info */}
-            <div className="space-y-3 p-4 rounded-lg bg-elec-grey/50 border border-elec-yellow/20">
-              <div className="flex items-start gap-2">
-                <User className="h-4 w-4 text-elec-yellow mt-0.5" />
-                <div>
+            <div className="space-y-3.5 p-4 sm:p-5 rounded-lg bg-elec-gray/80 border-2 border-elec-yellow/30">
+              <div className="flex items-start gap-2.5">
+                <User className="h-5 w-5 sm:h-4 sm:w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-muted-foreground">Project</p>
-                  <p className="text-base font-semibold">{documentData.project_name}</p>
+                  <p className="text-base sm:text-sm font-semibold break-words">{documentData.project_name}</p>
                 </div>
               </div>
-              <div className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-elec-yellow mt-0.5" />
-                <div>
+              <div className="flex items-start gap-2.5">
+                <MapPin className="h-5 w-5 sm:h-4 sm:w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-muted-foreground">Location</p>
-                  <p className="text-base">{documentData.location}</p>
+                  <p className="text-base sm:text-sm break-words">{documentData.location}</p>
                 </div>
               </div>
-              <div className="flex items-start gap-2">
-                <Calendar className="h-4 w-4 text-elec-yellow mt-0.5" />
-                <div>
+              <div className="flex items-start gap-2.5">
+                <Calendar className="h-5 w-5 sm:h-4 sm:w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-muted-foreground">Created</p>
-                  <p className="text-base">{new Date(documentData.created_at).toLocaleDateString('en-GB')}</p>
+                  <p className="text-base sm:text-sm">{new Date(documentData.created_at).toLocaleDateString('en-GB')}</p>
                 </div>
               </div>
             </div>
@@ -175,13 +175,13 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
             <div className="space-y-3">
               <Button
                 onClick={handleQuickEdit}
-                className="w-full h-auto py-4 px-4 flex-col items-start gap-2 bg-gradient-to-r from-elec-yellow to-yellow-400 hover:from-elec-yellow/90 hover:to-yellow-400/90 text-elec-dark"
+                className="w-full min-h-[68px] py-5 sm:py-4 px-4 sm:px-5 flex-col items-start gap-2 bg-gradient-to-r from-elec-yellow to-yellow-400 hover:from-elec-yellow/90 hover:to-yellow-400/90 text-elec-dark shadow-lg"
               >
-                <div className="flex items-center gap-2 w-full">
-                  <Edit3 className="h-5 w-5" />
-                  <span className="text-lg font-bold">Quick Edit</span>
+                <div className="flex items-center gap-2.5 w-full">
+                  <Edit3 className="h-6 w-6 sm:h-5 sm:w-5" />
+                  <span className="text-lg sm:text-base font-bold">Quick Edit</span>
                 </div>
-                <span className="text-sm font-normal text-elec-dark/80">
+                <span className="text-sm font-medium text-elec-dark/90">
                   Edit risks and steps directly - fast updates
                 </span>
               </Button>
@@ -189,13 +189,13 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
               <Button
                 onClick={handleRegenerateWithAI}
                 variant="outline"
-                className="w-full h-auto py-4 px-4 flex-col items-start gap-2 border-elec-yellow/30 hover:border-elec-yellow hover:bg-elec-yellow/10"
+                className="w-full min-h-[68px] py-5 sm:py-4 px-4 sm:px-5 flex-col items-start gap-2 border-2 border-elec-yellow/50 hover:border-elec-yellow hover:bg-elec-yellow/10"
               >
-                <div className="flex items-center gap-2 w-full">
-                  <Sparkles className="h-5 w-5 text-elec-yellow" />
-                  <span className="text-lg font-bold">Regenerate with AI</span>
+                <div className="flex items-center gap-2.5 w-full">
+                  <Sparkles className="h-6 w-6 sm:h-5 sm:w-5 text-elec-yellow" />
+                  <span className="text-lg sm:text-base font-bold">Regenerate with AI</span>
                 </div>
-                <span className="text-sm font-normal text-muted-foreground">
+                <span className="text-sm font-medium text-muted-foreground">
                   Use AI to rebuild from scratch with new information
                 </span>
               </Button>
@@ -205,7 +205,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
             <Button
               onClick={onClose}
               variant="ghost"
-              className="w-full"
+              className="w-full min-h-[44px] text-base sm:text-sm border border-transparent hover:border-elec-yellow/30"
             >
               Cancel
             </Button>
