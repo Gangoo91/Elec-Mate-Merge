@@ -170,13 +170,19 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               </div>
               <span>Job Description</span>
             </label>
-            <Textarea
-              value={jobDescription}
-              onChange={(e) => setJobDescription(e.target.value)}
-              placeholder="Describe the electrical work in detail... e.g., Install new consumer unit in 3-bed house with full rewire of kitchen and additional circuits"
-              disabled={isProcessing}
-              className="resize-none min-h-[140px] md:min-h-[120px] text-base bg-elec-grey/80 border-elec-yellow/30 focus-visible:border-elec-yellow focus-visible:ring-elec-yellow/30 transition-all"
-            />
+            <div className="relative">
+              <Textarea
+                value={jobDescription}
+                onChange={(e) => setJobDescription(e.target.value)}
+                placeholder="Describe the electrical work in detail... e.g., Install new consumer unit in 3-bed house with full rewire of kitchen and additional circuits"
+                disabled={isProcessing}
+                className="resize-none min-h-[140px] md:min-h-[120px] text-base bg-elec-grey/80 border-elec-yellow/30 focus-visible:border-elec-yellow focus-visible:ring-elec-yellow/30 transition-all pr-20"
+                maxLength={1000}
+              />
+              <div className="absolute bottom-3 right-3 text-xs text-muted-foreground font-medium">
+                {jobDescription.length}/1000
+              </div>
+            </div>
           </div>
 
           {/* Enhanced Job Scale Detection */}

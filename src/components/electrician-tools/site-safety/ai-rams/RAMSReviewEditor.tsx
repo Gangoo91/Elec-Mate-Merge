@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle, Code, Shield, AlertCircle, Copy } from 'lucide-react';
+import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle, Code, Shield, AlertCircle, Copy, ChevronDown, ChevronUp, Save } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
 import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
@@ -15,6 +15,10 @@ import { PDFGenerationModal } from './PDFGenerationModal';
 import { MobilePDFDownloadSheet } from './MobilePDFDownloadSheet';
 import { PDFPreviewModal } from './PDFPreviewModal';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { MobileBottomActionBar } from './MobileBottomActionBar';
+import { SwipeableRiskCard } from './SwipeableRiskCard';
+import { useMobileKeyboard } from '@/hooks/use-mobile-keyboard';
+import { cn } from '@/lib/utils';
 
 interface RAMSReviewEditorProps {
   ramsData: RAMSData;
@@ -44,6 +48,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const [showPDFModal, setShowPDFModal] = useState(false);
   const [showMobileSheet, setShowMobileSheet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [expandedSteps, setExpandedSteps] = useState<Set<string>>(new Set());
+  
+  const { isVisible: keyboardVisible } = useMobileKeyboard();
 
   useEffect(() => {
     onUpdate(ramsData, methodData);
@@ -378,60 +385,79 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     });
   };
 
+  const toggleStepExpansion = (stepId: string) => {
+    setExpandedSteps(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(stepId)) {
+        newSet.delete(stepId);
+      } else {
+        newSet.add(stepId);
+      }
+      return newSet;
+    });
+  };
+
   return (
-    <div className="space-y-6 md:space-y-8 pb-safe">
+    <div className={cn(
+      "space-y-6 md:space-y-8",
+      isMobile && keyboardVisible && "pb-[100px]",
+      isMobile && !keyboardVisible && "pb-[100px]"
+    )}>
       <Card className="border-elec-yellow/30 shadow-2xl bg-elec-card/90 backdrop-blur-sm rounded-2xl overflow-hidden">
         <CardHeader className="pb-6 bg-gradient-to-r from-elec-grey/50 to-elec-grey/30 border-b border-elec-yellow/20">
           <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 text-foreground">
             <div className="flex flex-col gap-2">
               <span className="flex items-center gap-3 text-2xl md:text-xl font-bold tracking-tight leading-tight">
-                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 flex items-center justify-center border border-elec-yellow/30">
-                  <Edit3 className="h-5 w-5 text-elec-yellow" />
+                <div className="h-12 w-12 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 flex items-center justify-center border border-elec-yellow/40 shadow-[0_0_15px_rgba(255,193,7,0.2)]">
+                  <Edit3 className="h-6 w-6 sm:h-5 sm:w-5 text-elec-yellow" />
                 </div>
-                <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-elec-yellow to-elec-yellow/70 bg-clip-text text-transparent">
                   Review & Edit Documentation
                 </span>
               </span>
               {lastSaved && (
-                <span className="text-xs text-muted-foreground ml-13">
+                <span className="text-xs text-muted-foreground ml-13 sm:ml-13">
                   {isSaving ? 'Saving...' : `Last saved ${lastSaved.toLocaleTimeString()}`}
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-3">
-              {onSave && (
-                <Button
-                  onClick={onSave}
-                  disabled={isSaving}
-                  size="sm"
-                  variant="outline"
-                  className="border-elec-yellow/40 hover:border-elec-yellow h-11 px-5 font-semibold hover:bg-elec-yellow/10 transition-all"
-                >
-                  {isSaving ? 'Saving...' : 'Save Changes'}
-                </Button>
-              )}
-              <Badge variant="outline" className="bg-green-500/15 text-green-500 border-green-500/40 text-sm font-semibold px-3 py-1.5 h-11 flex items-center gap-1.5">
-                <CheckCircle className="h-4 w-4" />
-                AI Generated
-              </Badge>
-            </div>
+            {!isMobile && (
+              <div className="flex items-center gap-3">
+                {onSave && (
+                  <Button
+                    onClick={onSave}
+                    disabled={isSaving}
+                    size="sm"
+                    variant="outline"
+                    className="border-elec-yellow/40 hover:border-elec-yellow h-11 px-5 font-semibold hover:bg-elec-yellow/10 transition-all"
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    {isSaving ? 'Saving...' : 'Save Changes'}
+                  </Button>
+                )}
+                <Badge variant="outline" className="bg-green-500/15 text-green-500 border-green-500/40 text-sm font-semibold px-3 py-1.5 h-11 flex items-center gap-1.5">
+                  <CheckCircle className="h-4 w-4" />
+                  AI Generated
+                </Badge>
+              </div>
+            )}
           </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-16 md:h-14 bg-elec-grey border-b border-elec-yellow/20 rounded-none">
+            <TabsList className="grid w-full grid-cols-2 h-16 lg:h-14 bg-gradient-to-r from-elec-grey to-elec-grey/90 border-b border-elec-yellow/20 rounded-none p-1">
               <TabsTrigger 
                 value="rams" 
-                className="text-lg md:text-base font-bold data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:shadow-[0_2px_0_0] data-[state=active]:shadow-elec-yellow transition-all h-full rounded-none flex items-center gap-2"
+                className="text-lg lg:text-base font-bold data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow/20 data-[state=active]:to-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:border data-[state=active]:border-elec-yellow/40 data-[state=active]:shadow-[0_0_15px_rgba(255,193,7,0.3)] transition-all h-full rounded-lg flex items-center justify-center gap-2.5 hover:bg-elec-yellow/5"
               >
-                <Shield className="h-5 w-5 md:h-4 md:w-4" />
+                <Shield className="h-5 w-5" />
                 <span>Risk Assessment</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="method" 
-                className="text-lg md:text-base font-bold data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:shadow-[0_2px_0_0] data-[state=active]:shadow-elec-yellow transition-all h-full rounded-none flex items-center gap-2"
+                className="text-lg lg:text-base font-bold data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow/20 data-[state=active]:to-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:border data-[state=active]:border-elec-yellow/40 data-[state=active]:shadow-[0_0_15px_rgba(255,193,7,0.3)] transition-all h-full rounded-lg flex items-center justify-center gap-2.5 hover:bg-elec-yellow/5"
               >
-                <FileText className="h-5 w-5 md:h-4 md:w-4" />
+                <FileText className="h-5 w-5" />
                 <span>Method Statement</span>
               </TabsTrigger>
             </TabsList>
@@ -928,6 +954,15 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         onDownloadMethod={handleGenerateMethodPDF}
         isGenerating={isGenerating}
       />
+
+      {/* Mobile Bottom Action Bar */}
+      {isMobile && (
+        <MobileBottomActionBar
+          onSave={() => onSave && onSave()}
+          onDownload={handleGenerateCombinedRAMS}
+          isSaving={isSaving}
+        />
+      )}
     </div>
   );
 };
