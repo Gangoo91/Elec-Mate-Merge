@@ -129,13 +129,13 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto overflow-x-hidden">
+      <DialogContent className="w-[88vw] sm:w-auto sm:max-w-[480px] max-h-[85dvh] sm:max-h-[90dvh] overflow-y-auto overflow-x-hidden rounded-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-base sm:text-xl">
+          <DialogTitle className="flex items-center gap-2 text-sm sm:text-xl">
             <Edit3 className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
             Amend RAMS Document
           </DialogTitle>
-          <DialogDescription className="text-xs sm:text-base">
+          <DialogDescription className="hidden sm:block text-sm text-muted-foreground">
             Choose how you'd like to update this document
           </DialogDescription>
         </DialogHeader>
@@ -147,7 +147,7 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
         ) : documentData ? (
           <div className="space-y-3 sm:space-y-6 py-2 sm:py-4">
             {/* Document Info */}
-            <div className="space-y-2 sm:space-y-3.5 p-3 sm:p-5 rounded-lg bg-elec-grey/80 border-2 border-elec-yellow/30">
+            <div className="space-y-2 sm:space-y-3.5 p-2 sm:p-5 rounded-lg bg-elec-grey/80 border border-elec-yellow/30">
               <div className="flex items-start gap-2 sm:gap-2.5">
                 <User className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div className="min-w-0 flex-1">
@@ -175,13 +175,13 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
             <div className="space-y-2 sm:space-y-3">
               <Button
                 onClick={handleQuickEdit}
-                className="w-full min-h-[56px] sm:min-h-[68px] py-3 sm:py-4 px-3 sm:px-5 flex-col items-start gap-1.5 sm:gap-2 bg-gradient-to-r from-elec-yellow to-yellow-400 hover:from-elec-yellow/90 hover:to-yellow-400/90 text-elec-dark shadow-lg"
+                className="w-full min-h-[44px] sm:min-h-[60px] py-2.5 sm:py-4 px-3 sm:px-5 flex items-center justify-between gap-2 bg-gradient-to-r from-elec-yellow to-yellow-400 hover:from-elec-yellow/90 hover:to-yellow-400/90 text-elec-dark shadow-lg"
               >
-                <div className="flex items-center gap-2 sm:gap-2.5 w-full">
-                  <Edit3 className="h-5 w-5 sm:h-6 sm:w-6" />
-                  <span className="text-base sm:text-lg font-bold">Quick Edit</span>
+                <div className="flex items-center gap-2">
+                  <Edit3 className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="text-sm sm:text-lg font-bold">Quick Edit</span>
                 </div>
-                <span className="text-xs sm:text-sm font-medium text-elec-dark/90">
+                <span className="hidden sm:block text-xs sm:text-sm font-medium text-elec-dark/90">
                   Edit risks and steps directly - fast updates
                 </span>
               </Button>
@@ -189,13 +189,13 @@ export const RAMSAmendDialog: React.FC<RAMSAmendDialogProps> = ({
               <Button
                 onClick={handleRegenerateWithAI}
                 variant="outline"
-                className="w-full min-h-[56px] sm:min-h-[68px] py-3 sm:py-4 px-3 sm:px-5 flex-col items-start gap-1.5 sm:gap-2 border-2 border-elec-yellow/50 hover:border-elec-yellow hover:bg-elec-yellow/10"
+                className="w-full min-h-[44px] sm:min-h-[60px] py-2.5 sm:py-4 px-3 sm:px-5 flex items-center justify-between gap-2 border-2 border-elec-yellow/50 hover:border-elec-yellow hover:bg-elec-yellow/10"
               >
-                <div className="flex items-center gap-2 sm:gap-2.5 w-full">
-                  <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-                  <span className="text-base sm:text-lg font-bold">Regenerate with AI</span>
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
+                  <span className="text-sm sm:text-lg font-bold">Regenerate with AI</span>
                 </div>
-                <span className="text-xs sm:text-sm font-medium text-muted-foreground">
+                <span className="hidden sm:block text-xs sm:text-sm font-medium text-muted-foreground">
                   Use AI to rebuild from scratch with new information
                 </span>
               </Button>
