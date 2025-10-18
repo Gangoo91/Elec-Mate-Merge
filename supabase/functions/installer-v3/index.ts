@@ -219,11 +219,21 @@ serve(async (req) => {
       logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
       // Use intelligent RAG with cross-encoder reranking
-      const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
+    const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
       const ragResults = await intelligentRAGSearch({
         circuitType: installationMethod,
         searchTerms: expandedQuery.split(' ').filter(w => w.length > 3),
-        expandedQuery
+        expandedQuery,
+        context: {
+          ragPriority: {
+            bs7671: 70,           // Medium - regulatory compliance
+            design: 70,           // Medium - design context
+            health_safety: 0,     // Skip - not relevant for installation
+            installation: 95,     // HIGHEST - installation procedures and methods
+            inspection: 0,        // Skip - not relevant for installation
+            project_mgmt: 0       // Skip - not relevant for installation
+          }
+        }
       });
       
       installKnowledge = ragResults?.installationDocs || [];

@@ -107,10 +107,12 @@ serve(async (req) => {
       expandedQuery: query,
       context: {
         ragPriority: {
-          bs7671: 85,           // High - need regulations for safety compliance
-          design: 30,           // Low - not designing, just assessing risks
+          bs7671: 70,           // Medium - regulatory compliance for safety
+          design: 20,           // Very Low - below threshold, won't search
           health_safety: 95,    // HIGHEST - risk assessment procedures, PPE, hazards
-          installation: 50      // Medium - installation methods may be relevant
+          installation: 70,     // Medium - installation methods inform risk assessments
+          inspection: 0,        // Skip - not relevant for risk assessment
+          project_mgmt: 0       // Skip - not relevant for risk assessment
         }
       }
     });
