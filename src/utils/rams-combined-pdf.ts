@@ -253,7 +253,9 @@ export async function generateCombinedRAMSPDF(
     step.stepNumber.toString(),
     safeText(step.title),
     safeText(step.description),
-    step.safetyRequirements.join(', '),
+    step.safetyRequirements && step.safetyRequirements.length > 0
+      ? step.safetyRequirements.join(', ')
+      : 'N/A',
     step.riskLevel.toUpperCase(),
     safeText(step.estimatedDuration)
   ]);

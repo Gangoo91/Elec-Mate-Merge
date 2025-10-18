@@ -341,6 +341,15 @@ SHUTDOWN/ISOLATION PHASES:
 ❌ WRONG: "Order materials" with "Lock-off kit, Cable clips"
 ✅ RIGHT: "Order materials" with "Supplier pricing lists" OR "No special tools required"
 
+⚠️ CRITICAL: STEP-SPECIFIC SAFETY REQUIREMENTS
+For each step's safetyNotes array:
+- Only include safety requirements SPECIFIC to that individual step
+- If a step has no unique safety requirements, leave the array EMPTY (do not add generic requirements)
+- Example: Planning/survey phase should have NO safety notes or minimal ones like "Review site hazards"
+- Example: Isolation phase MUST have "Isolation and lock-off required", "Prove dead before work"
+- Example: Installation phase should have specific requirements like "Dust extraction required", "Manual handling assessment"
+- DO NOT repeat the same safety requirements across multiple steps
+
 Current date: September 2025.
 
 🎯 TONE & COMMUNICATION:
@@ -433,7 +442,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                     description: { type: 'string', description: 'Step description in UK English (authorised, realise, organise, metres, whilst)' },
                     tools: { type: 'array', items: { type: 'string' }, description: 'CONTEXT-SPECIFIC tools for THIS EXACT PHASE only. Examples: Planning phase = drawings, camera, notepad. Procurement phase = supplier details, order forms (or "No special tools required"). Installation phase = drills, cables, fixings. Testing phase = test equipment. DO NOT list installation tools for planning/procurement phases.' },
                     materials: { type: 'array', items: { type: 'string' } },
-                    safetyNotes: { type: 'array', items: { type: 'string', description: 'Safety note in UK English (authorised, organise, metres)' } },
+                    safetyNotes: { type: 'array', items: { type: 'string', description: 'STEP-SPECIFIC safety requirements for THIS STEP ONLY (not general project safety). In UK English (authorised, organise, metres). If no specific safety requirements for this step, return empty array. Example: Planning phase should have NO or minimal safety notes. Installation/isolation phases MUST have specific requirements like "Isolation and lock-off required".' } },
                     estimatedTime: { type: 'number' }
                   },
                   required: ['step', 'title', 'description']

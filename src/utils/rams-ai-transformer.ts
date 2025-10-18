@@ -403,7 +403,7 @@ export function transformInstallerToMethodSteps(
     return [...new Set(linkedHazardIds)]; // Remove duplicates
   };
   
-  // Infer safety requirements from step description
+  // Infer safety requirements from step description - only if SPECIFIC safety requirements are detected
   const inferSafetyRequirements = (step: any): string[] => {
     const safety: string[] = [];
     const combined = `${step.title || ''} ${step.description || ''}`.toLowerCase();
@@ -431,7 +431,8 @@ export function transformInstallerToMethodSteps(
       safety.push('Confirm isolation before testing');
     }
     
-    return safety.length > 0 ? safety : ['Follow general site safety rules', 'PPE required'];
+    // Allow empty array if no specific safety requirements detected
+    return safety;
   };
   
   // Phase-aware equipment inference
@@ -641,9 +642,11 @@ export function transformInstallerToMethodSteps(
       description: step.description || '',
       estimatedDuration: step.estimatedDuration || step.duration || '30 minutes',
       riskLevel: step.riskLevel || 'medium',
-      safetyRequirements: step.safetyRequirements && step.safetyRequirements.length > 0
+      safetyRequirements: step.safetyRequirements && Array.isArray(step.safetyRequirements)
         ? step.safetyRequirements
-        : inferSafetyRequirements(step),
+        : step.safetyNotes && Array.isArray(step.safetyNotes)
+          ? step.safetyNotes
+          : inferSafetyRequirements(step),
       equipmentNeeded: step.equipmentNeeded && step.equipmentNeeded.length > 0
         ? step.equipmentNeeded
         : step.equipment && step.equipment.length > 0
@@ -734,9 +737,9 @@ export function transformInstallerToMethodSteps(
   function finalizeStep() {
     if (!currentStep) return;
     
-    // Add default safety requirements if none found
-    if (!currentStep.safetyRequirements || currentStep.safetyRequirements.length === 0) {
-      currentStep.safetyRequirements = ["PPE required", "Competent person supervision"];
+    // Allow empty safety requirements if none found (step-specific requirement)
+    if (!currentStep.safetyRequirements) {
+      currentStep.safetyRequirements = [];
     }
     
     // Add default equipment if none found
