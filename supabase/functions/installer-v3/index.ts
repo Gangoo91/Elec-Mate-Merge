@@ -289,6 +289,48 @@ serve(async (req) => {
 - Reference UK standards: BS 7671, BS EN ISO, HSE guidance, CDM Regulations
 - Use UK trade terminology: first fix (not rough-in), second fix (not trim-out)
 
+⚠️ CRITICAL: MATCH EQUIPMENT TO WORK PHASE
+Each step has a distinct phase - match equipment accordingly:
+
+PLANNING/SURVEY PHASES:
+- Drawings, plans, site survey forms
+- Camera for photos
+- Notepad and pen
+- CAT & Genny scanner (if applicable)
+- Measuring tape
+- NO installation tools needed yet!
+
+PROCUREMENT/ORDERING PHASES:
+- Supplier contact details
+- Purchase orders/requisition forms
+- Equipment specifications
+- Budget approval documentation
+- Or simply: "No special tools required - administrative task"
+
+INSTALLATION PHASES (actual physical work):
+- Drills, fixings, rawlplugs
+- Cable installation tools
+- Mounting equipment
+- Power tools as needed
+
+TESTING/COMMISSIONING PHASES:
+- Voltage testers (GS38)
+- Multi-function testers
+- Insulation testers
+- Test certificates
+
+SHUTDOWN/ISOLATION PHASES:
+- Lock-off kits
+- Warning signs and tags
+- Voltage indicators
+- Proving unit
+
+❌ WRONG: "Pre-start survey" with "Drill, dust extraction, PPE"
+✅ RIGHT: "Pre-start survey" with "Site survey form, Camera, Measuring tape, CAT scanner"
+
+❌ WRONG: "Order materials" with "Lock-off kit, Cable clips"
+✅ RIGHT: "Order materials" with "Supplier pricing lists" OR "No special tools required"
+
 Current date: September 2025.
 
 🎯 TONE & COMMUNICATION:
@@ -379,7 +421,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                     step: { type: 'number' },
                     title: { type: 'string' },
                     description: { type: 'string', description: 'Step description in UK English (authorised, realise, organise, metres, whilst)' },
-                    tools: { type: 'array', items: { type: 'string' } },
+                    tools: { type: 'array', items: { type: 'string' }, description: 'CONTEXT-SPECIFIC tools for THIS EXACT PHASE only. Examples: Planning phase = drawings, camera, notepad. Procurement phase = supplier details, order forms (or "No special tools required"). Installation phase = drills, cables, fixings. Testing phase = test equipment. DO NOT list installation tools for planning/procurement phases.' },
                     materials: { type: 'array', items: { type: 'string' } },
                     safetyNotes: { type: 'array', items: { type: 'string', description: 'Safety note in UK English (authorised, organise, metres)' } },
                     estimatedTime: { type: 'number' }

@@ -434,40 +434,183 @@ export function transformInstallerToMethodSteps(
     return safety.length > 0 ? safety : ['Follow general site safety rules', 'PPE required'];
   };
   
-  // Infer equipment from step description
+  // Phase-aware equipment inference
   const inferEquipment = (step: any): string[] => {
     const equipment: string[] = [];
-    const combined = `${step.title || ''} ${step.description || ''}`.toLowerCase();
+    const titleLower = (step.title || '').toLowerCase();
+    const descLower = (step.description || '').toLowerCase();
+    const combined = `${titleLower} ${descLower}`;
     
-    if (combined.includes('test') || combined.includes('prove')) {
+    // Phase 1: Planning, Survey, Assessment
+    if (
+      titleLower.includes('survey') ||
+      titleLower.includes('planning') ||
+      titleLower.includes('assess') ||
+      titleLower.includes('inspect') ||
+      titleLower.includes('review') ||
+      (titleLower.includes('pre-') && (titleLower.includes('start') || titleLower.includes('work')))
+    ) {
+      equipment.push('Site survey form');
+      equipment.push('Camera for photographic evidence');
+      equipment.push('Measuring tape');
+      if (combined.includes('hidden') || combined.includes('service') || combined.includes('detect')) {
+        equipment.push('CAT & Genny scanner');
+      }
+      if (combined.includes('draw') || combined.includes('plan')) {
+        equipment.push('Site plans and drawings');
+      }
+      return equipment.length > 0 ? equipment : ['Notepad and pen', 'Camera'];
+    }
+    
+    // Phase 2: Procurement, Ordering, Materials
+    if (
+      titleLower.includes('procur') ||
+      titleLower.includes('order') ||
+      titleLower.includes('purchas') ||
+      titleLower.includes('material') && titleLower.includes('obtain') ||
+      titleLower.includes('equipment') && (titleLower.includes('source') || titleLower.includes('order'))
+    ) {
+      if (combined.includes('label')) {
+        equipment.push('Label maker or pre-printed labels');
+      }
+      if (combined.includes('pre-assemble') || combined.includes('bench')) {
+        equipment.push('Workshop bench and tools');
+      }
+      return equipment.length > 0 ? equipment : ['No special tools required'];
+    }
+    
+    // Phase 3: Isolation, Shutdown, Lock-off
+    if (
+      titleLower.includes('isolat') ||
+      titleLower.includes('shutdown') ||
+      titleLower.includes('lock') && titleLower.includes('off') ||
+      titleLower.includes('permit') && titleLower.includes('work')
+    ) {
+      equipment.push('Isolation and lock-off tags');
+      equipment.push('Lock-off kit and tags');
+      if (combined.includes('test') || combined.includes('prove')) {
+        equipment.push('Voltage tester (GS38 compliant)');
+        equipment.push('Proving unit');
+      }
+      if (combined.includes('sign')) {
+        equipment.push('Warning signs and barriers');
+      }
+      return equipment;
+    }
+    
+    // Phase 4: Physical Installation Work
+    if (
+      titleLower.includes('install') ||
+      titleLower.includes('mount') ||
+      titleLower.includes('fix') ||
+      titleLower.includes('route') && titleLower.includes('cable') ||
+      titleLower.includes('wire') ||
+      titleLower.includes('run') && titleLower.includes('cable')
+    ) {
+      // Mounting/fixing equipment
+      if (combined.includes('mount') || combined.includes('fix') || combined.includes('db') || combined.includes('board') || combined.includes('enclosure')) {
+        equipment.push('Drill with dust extraction');
+        equipment.push('Spirit level');
+        equipment.push('Fixings and rawlplugs');
+        equipment.push('PPE (goggles, gloves, RPE)');
+      }
+      
+      // Cable work equipment
+      if (combined.includes('cable') || combined.includes('wire')) {
+        equipment.push('Cable clips and fixings');
+        if (combined.includes('trunking') || combined.includes('conduit')) {
+          equipment.push('Trunking/conduit as required');
+        }
+      }
+      
+      // Termination work
+      if (combined.includes('termin') || combined.includes('connect') || combined.includes('wiring')) {
+        equipment.push('Torque screwdriver/wrench');
+        equipment.push('Cable strippers');
+        equipment.push('Insulated hand tools');
+      }
+      
+      // Labelling
+      if (combined.includes('label')) {
+        equipment.push('Label maker or pre-printed labels');
+      }
+      
+      return equipment.length > 0 ? equipment : ['Standard electrician hand tools'];
+    }
+    
+    // Phase 5: De-commissioning, Removal, Disconnect
+    if (
+      titleLower.includes('decommission') ||
+      titleLower.includes('remov') ||
+      titleLower.includes('disconnect') ||
+      titleLower.includes('strip') && titleLower.includes('out')
+    ) {
+      equipment.push('Voltage tester (GS38 compliant)');
+      equipment.push('Insulated hand tools');
+      equipment.push('Cable cutters');
+      if (combined.includes('lift') || combined.includes('equipment')) {
+        equipment.push('Lifting equipment as required');
+      }
+      return equipment;
+    }
+    
+    // Phase 6: Testing, Commissioning, Verification
+    if (
+      titleLower.includes('test') ||
+      titleLower.includes('commission') ||
+      titleLower.includes('verif') ||
+      titleLower.includes('energis') && titleLower.includes('test') ||
+      titleLower.includes('prove')
+    ) {
       equipment.push('Voltage tester (GS38 compliant)');
       equipment.push('Multi-function tester');
-    }
-    if (combined.includes('isolat') || combined.includes('lock')) {
-      equipment.push('Lock-off kit and tags');
-    }
-    if (combined.includes('termin') || combined.includes('connect')) {
-      equipment.push('Torque screwdriver/wrench');
-      equipment.push('Cable strippers');
-      equipment.push('Insulated hand tools');
-    }
-    if (combined.includes('drill') || combined.includes('fix')) {
-      equipment.push('Drill with dust extraction');
-      equipment.push('PPE (goggles, gloves, RPE)');
-    }
-    if (combined.includes('label')) {
-      equipment.push('Label maker or pre-printed labels');
-    }
-    if (combined.includes('mount') || combined.includes('install')) {
-      equipment.push('Spirit level');
-      equipment.push('Fixings and rawlplugs');
-    }
-    if (combined.includes('cable') || combined.includes('route')) {
-      equipment.push('Cable clips and fixings');
-      equipment.push('Trunking/conduit as required');
+      if (combined.includes('insulation')) {
+        equipment.push('Insulation resistance tester');
+      }
+      if (combined.includes('earth') || combined.includes('loop')) {
+        equipment.push('Earth loop impedance tester');
+      }
+      if (combined.includes('rcd')) {
+        equipment.push('RCD tester');
+      }
+      if (combined.includes('thermal') || combined.includes('commission')) {
+        equipment.push('Thermal imaging camera');
+      }
+      if (combined.includes('GS38')) {
+        equipment.push('GS38 compliant test equipment');
+      }
+      return equipment;
     }
     
-    return equipment.length > 0 ? equipment : ['Standard electrician hand tools'];
+    // Phase 7: Preparation of New Location
+    if (
+      titleLower.includes('prepare') && (titleLower.includes('new') || titleLower.includes('location') || titleLower.includes('area')) ||
+      titleLower.includes('containment') && titleLower.includes('mount')
+    ) {
+      equipment.push('Drill with dust extraction');
+      equipment.push('PPE (goggles, gloves, RPE)');
+      equipment.push('Spirit level');
+      equipment.push('Fixings and rawlplugs');
+      if (combined.includes('cable')) {
+        equipment.push('Cable clips and fixings');
+        equipment.push('Trunking/conduit as required');
+      }
+      return equipment;
+    }
+    
+    // Fallback: Generic administrative or non-physical work
+    if (
+      titleLower.includes('brief') ||
+      titleLower.includes('coordinate') ||
+      titleLower.includes('notify') ||
+      titleLower.includes('arrange') ||
+      titleLower.includes('obtain') && titleLower.includes('approval')
+    ) {
+      return ['No special tools required'];
+    }
+    
+    // Final fallback
+    return ['Standard electrician hand tools'];
   };
   
   // Infer qualifications from step description
