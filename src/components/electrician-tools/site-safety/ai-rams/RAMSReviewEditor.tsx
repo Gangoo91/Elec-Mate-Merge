@@ -445,19 +445,19 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         </CardHeader>
         <CardContent className="p-0">
           <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-16 lg:h-14 bg-gradient-to-r from-elec-grey to-elec-grey/90 border-b border-elec-yellow/20 rounded-none p-1">
+            <TabsList className="grid w-full grid-cols-2 h-12 lg:h-14 bg-gradient-to-r from-elec-grey to-elec-grey/90 border-b border-elec-yellow/20 rounded-none p-1">
               <TabsTrigger 
                 value="rams" 
-                className="text-lg lg:text-base font-bold data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow/20 data-[state=active]:to-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:border data-[state=active]:border-elec-yellow/40 data-[state=active]:shadow-[0_0_15px_rgba(255,193,7,0.3)] transition-all h-full rounded-lg flex items-center justify-center gap-2.5 hover:bg-elec-yellow/5"
+                className="text-xs sm:text-sm lg:text-base font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow/20 data-[state=active]:to-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:border data-[state=active]:border-elec-yellow/40 data-[state=active]:shadow-[0_0_15px_rgba(255,193,7,0.3)] transition-all h-full rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 hover:bg-elec-yellow/5"
               >
-                <Shield className="h-5 w-5" />
+                <Shield className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span>Risk Assessment</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="method" 
-                className="text-lg lg:text-base font-bold data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow/20 data-[state=active]:to-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:border data-[state=active]:border-elec-yellow/40 data-[state=active]:shadow-[0_0_15px_rgba(255,193,7,0.3)] transition-all h-full rounded-lg flex items-center justify-center gap-2.5 hover:bg-elec-yellow/5"
+                className="text-xs sm:text-sm lg:text-base font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-elec-yellow/20 data-[state=active]:to-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=active]:border data-[state=active]:border-elec-yellow/40 data-[state=active]:shadow-[0_0_15px_rgba(255,193,7,0.3)] transition-all h-full rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 hover:bg-elec-yellow/5"
               >
-                <FileText className="h-5 w-5" />
+                <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span>Method Statement</span>
               </TabsTrigger>
             </TabsList>
