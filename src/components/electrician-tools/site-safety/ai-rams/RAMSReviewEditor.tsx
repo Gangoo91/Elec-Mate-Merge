@@ -302,17 +302,46 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           });
         }
         
-        const { generateCombinedRAMSPDF } = await import('@/utils/rams-combined-pdf');
-        await generateCombinedRAMSPDF(ramsData, methodData as MethodStatementData, {
+        // Generate PDF and save to storage
+        const { generateCombinedRAMSPDFBlob } = await import('@/utils/rams-combined-pdf');
+        const { saveRAMSPDFToStorage } = await import('@/utils/rams-pdf-storage');
+        
+        const pdfBlob = await generateCombinedRAMSPDFBlob(ramsData, methodData as MethodStatementData, {
           companyName: methodData.contractor || 'Professional Electrical Services',
           documentReference: `RAMS-${Date.now()}`
         });
         
-        toast({
-          title: 'PDF Downloaded',
-          description: 'Your Combined RAMS PDF has been downloaded using alternative method',
-          variant: 'success'
-        });
+        // Save to storage
+        const saveResult = await saveRAMSPDFToStorage(
+          pdfBlob,
+          ramsData.projectName || 'Untitled Project',
+          ramsData.location || 'No location specified',
+          'draft'
+        );
+        
+        if (saveResult.success) {
+          // Also trigger download
+          const url = URL.createObjectURL(pdfBlob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+          
+          toast({
+            title: 'PDF Downloaded & Saved',
+            description: 'Your Combined RAMS PDF has been downloaded and saved to your library',
+            variant: 'success'
+          });
+        } else {
+          toast({
+            title: 'PDF Downloaded',
+            description: 'Your Combined RAMS PDF has been downloaded (could not save to library)',
+            variant: 'default'
+          });
+        }
       }
     } catch (error) {
       console.error('Error generating combined RAMS:', error);
@@ -324,17 +353,46 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         variant: 'default'
       });
       
-      const { generateCombinedRAMSPDF } = await import('@/utils/rams-combined-pdf');
-      await generateCombinedRAMSPDF(ramsData, methodData as MethodStatementData, {
-        companyName: methodData.contractor || 'Professional Electrical Services',
-        documentReference: `RAMS-${Date.now()}`
-      });
-      
-      toast({
-        title: 'PDF Downloaded',
-        description: 'Your Combined RAMS PDF has been downloaded',
-        variant: 'success'
-      });
+      try {
+        const { generateCombinedRAMSPDFBlob } = await import('@/utils/rams-combined-pdf');
+        const { saveRAMSPDFToStorage } = await import('@/utils/rams-pdf-storage');
+        
+        const pdfBlob = await generateCombinedRAMSPDFBlob(ramsData, methodData as MethodStatementData, {
+          companyName: methodData.contractor || 'Professional Electrical Services',
+          documentReference: `RAMS-${Date.now()}`
+        });
+        
+        // Save to storage
+        await saveRAMSPDFToStorage(
+          pdfBlob,
+          ramsData.projectName || 'Untitled Project',
+          ramsData.location || 'No location specified',
+          'draft'
+        );
+        
+        // Download
+        const url = URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Combined_RAMS_${ramsData.projectName?.replace(/[^a-z0-9]/gi, '_') || Date.now()}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        
+        toast({
+          title: 'PDF Downloaded & Saved',
+          description: 'Your Combined RAMS PDF has been downloaded and saved',
+          variant: 'success'
+        });
+      } catch (fallbackError) {
+        console.error('Fallback PDF generation failed:', fallbackError);
+        toast({
+          title: 'PDF Generation Failed',
+          description: 'Could not generate PDF. Please try again.',
+          variant: 'destructive'
+        });
+      }
     } finally {
       setIsGenerating(false);
     }

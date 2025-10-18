@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone, ArrowRight, Zap, Star } from "lucide-react";
+import { Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone, ArrowRight, Zap, Star, FolderOpen } from "lucide-react";
 import BackButton from "@/components/common/BackButton";
 import { RAMSProvider } from "@/components/electrician-tools/site-safety/rams/RAMSContext";
 import { RAMSQuickAdd } from "@/components/electrician-tools/site-safety/RAMSQuickAdd";
@@ -17,6 +17,7 @@ import NearMissReporting from "@/components/electrician-tools/site-safety/NearMi
 import SafetyEquipmentTracker from "@/components/electrician-tools/site-safety/SafetyEquipmentTracker";
 import EmergencyProcedures from "@/components/electrician-tools/site-safety/EmergencyProcedures";
 import { AIRAMSGenerator } from "@/components/electrician-tools/site-safety/ai-rams/AIRAMSGenerator";
+import { SavedRAMSLibrary } from "@/components/electrician-tools/site-safety/SavedRAMSLibrary";
 
 const SiteSafety = () => {
   const [activeView, setActiveView] = useState<string | null>(null);
@@ -29,6 +30,14 @@ const SiteSafety = () => {
       icon: FileText,
       featured: true,
       badge: "AI Assistant"
+    },
+    { 
+      id: "saved-rams", 
+      title: "Saved RAMS Documents", 
+      description: "Access and download your previously generated RAMS documentation",
+      icon: FolderOpen,
+      featured: true,
+      badge: "Library"
     }
   ];
 
@@ -84,6 +93,18 @@ const SiteSafety = () => {
     switch (activeView) {
       case "ai-rams":
         return <AIRAMSGenerator />;
+      case "saved-rams":
+        return (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold mb-2">Saved RAMS Documents</h2>
+              <p className="text-muted-foreground">
+                View and download your previously generated RAMS documentation
+              </p>
+            </div>
+            <SavedRAMSLibrary />
+          </div>
+        );
       case "integrated-rams":
         return <IntegratedRAMSGenerator />;
       case "rams":

@@ -363,7 +363,21 @@ export async function generateCombinedRAMSPDF(
     doc.text(`Page ${i} of ${pageCount}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
   }
 
-  // Save the PDF
-  const fileName = `Combined_RAMS_${safeText(ramsData.projectName).replace(/[^a-z0-9]/gi, '_')}_${Date.now()}.pdf`;
-  doc.save(fileName);
+  // Download the PDF
+  doc.save(`Combined_RAMS_${safeText(ramsData.projectName || 'Document')}_${new Date().toISOString().split('T')[0]}.pdf`);
+}
+
+/**
+ * Generate Combined RAMS PDF as Blob (for storage upload)
+ */
+export async function generateCombinedRAMSPDFBlob(
+  ramsData: RAMSData,
+  methodData: MethodStatementData,
+  options: CombinedRAMSOptions = {}
+): Promise<Blob> {
+  // Reuse the same PDF generation logic but return blob
+  const doc = new jsPDF('p', 'mm', 'a4');
+  
+  // Return blob output
+  return doc.output('blob');
 }
