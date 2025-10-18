@@ -25,6 +25,8 @@ export interface RAMSData {
   safetyOfficerName?: string;
   safetyOfficerPhone?: string;
   assemblyPoint?: string;
+  complianceRegulations?: string[];
+  complianceWarnings?: string[];
 }
 
 export interface RAMSRisk {

@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle, Code, Shield, AlertCircle } from 'lucide-react';
+import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle, Code, Shield, AlertCircle, Copy } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
 import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
@@ -14,6 +14,7 @@ import type { MethodStatementData, MethodStep } from '@/types/method-statement';
 import { PDFGenerationModal } from './PDFGenerationModal';
 import { MobilePDFDownloadSheet } from './MobilePDFDownloadSheet';
 import { PDFPreviewModal } from './PDFPreviewModal';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 interface RAMSReviewEditorProps {
   ramsData: RAMSData;
@@ -22,6 +23,8 @@ interface RAMSReviewEditorProps {
   lastSaved?: Date | null;
   onSave?: () => void;
   onUpdate: (rams: RAMSData, method: Partial<MethodStatementData>) => void;
+  rawHSResponse?: any;
+  rawInstallerResponse?: any;
 }
 
 export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
@@ -30,7 +33,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   isSaving = false,
   lastSaved = null,
   onSave,
-  onUpdate
+  onUpdate,
+  rawHSResponse,
+  rawInstallerResponse
 }) => {
   const [ramsData, setRamsData] = useState<RAMSData>(initialRamsData);
   const [methodData, setMethodData] = useState<Partial<MethodStatementData>>(initialMethodData);
@@ -697,6 +702,185 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           </div>
         </CardContent>
       </Card>
+
+      {/* AI Response JSON Display - Developer/Debug Section */}
+      {(rawHSResponse || rawInstallerResponse) && (
+        <Card className="border-blue-500/30 bg-slate-900/50">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span className="flex items-center gap-2 text-blue-400">
+                <Code className="h-5 w-5" />
+                AI Response Data (Debug)
+              </span>
+              <Button
+                onClick={() => {
+                  const debugData = {
+                    timestamp: new Date().toISOString(),
+                    rawResponses: {
+                      healthSafety: rawHSResponse,
+                      installer: rawInstallerResponse
+                    },
+                    transformedData: {
+                      ramsData,
+                      methodData
+                    },
+                    dataMapping: {
+                      hazardsIdentified: ramsData.hazards?.length || 0,
+                      risksGenerated: ramsData.risks?.length || 0,
+                      methodSteps: methodData.steps?.length || 0,
+                      linkedHazards: methodData.steps?.filter(s => s.linkedHazards?.length > 0).length || 0,
+                      ppeItems: ramsData.requiredPPE?.length || 0,
+                      emergencyProcedures: ramsData.emergencyProcedures?.length || 0,
+                      practicalTips: methodData.practicalTips?.length || 0,
+                      commonMistakes: methodData.commonMistakes?.length || 0,
+                      toolsRequired: methodData.toolsRequired?.length || 0,
+                      materialsRequired: methodData.materialsRequired?.length || 0,
+                      complianceRegulations: ramsData.complianceRegulations?.length || 0
+                    }
+                  };
+                  
+                  navigator.clipboard.writeText(JSON.stringify(debugData, null, 2));
+                  toast({
+                    title: 'Debug Data Copied',
+                    description: 'Complete AI response data copied to clipboard',
+                    variant: 'default'
+                  });
+                }}
+                size="sm"
+                variant="outline"
+                className="border-blue-500/30"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Copy Debug JSON
+              </Button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+              {/* Health & Safety Response */}
+              {rawHSResponse && (
+                <AccordionItem value="hs-response">
+                  <AccordionTrigger className="text-blue-300">
+                    Health & Safety Agent Response
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="bg-slate-950 p-4 rounded-lg overflow-auto max-h-96">
+                      <pre className="text-xs text-green-400">
+                        {JSON.stringify(rawHSResponse, null, 2)}
+                      </pre>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+
+              {/* Installer Response */}
+              {rawInstallerResponse && (
+                <AccordionItem value="installer-response">
+                  <AccordionTrigger className="text-blue-300">
+                    Installer Agent Response
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="bg-slate-950 p-4 rounded-lg overflow-auto max-h-96">
+                      <pre className="text-xs text-green-400">
+                        {JSON.stringify(rawInstallerResponse, null, 2)}
+                      </pre>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              )}
+
+              {/* Transformed RAMS Data */}
+              <AccordionItem value="rams-data">
+                <AccordionTrigger className="text-blue-300">
+                  Transformed RAMS Data
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="bg-slate-950 p-4 rounded-lg overflow-auto max-h-96">
+                    <pre className="text-xs text-yellow-400">
+                      {JSON.stringify(ramsData, null, 2)}
+                    </pre>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Transformed Method Statement Data */}
+              <AccordionItem value="method-data">
+                <AccordionTrigger className="text-blue-300">
+                  Transformed Method Statement Data
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="bg-slate-950 p-4 rounded-lg overflow-auto max-h-96">
+                    <pre className="text-xs text-yellow-400">
+                      {JSON.stringify(methodData, null, 2)}
+                    </pre>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Data Mapping Summary */}
+              <AccordionItem value="mapping-summary">
+                <AccordionTrigger className="text-blue-300">
+                  Data Mapping Summary
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span>Hazards Identified:</span>
+                      <span className="font-mono text-blue-400">{ramsData.hazards?.length || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Risks Generated:</span>
+                      <span className="font-mono text-blue-400">{ramsData.risks?.length || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Method Steps:</span>
+                      <span className="font-mono text-blue-400">{methodData.steps?.length || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Steps with Linked Hazards:</span>
+                      <span className="font-mono text-blue-400">
+                        {methodData.steps?.filter(s => s.linkedHazards?.length > 0).length || 0}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>PPE Items:</span>
+                      <span className="font-mono text-blue-400">{ramsData.requiredPPE?.length || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Emergency Procedures:</span>
+                      <span className="font-mono text-blue-400">{ramsData.emergencyProcedures?.length || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Practical Tips:</span>
+                      <span className="font-mono text-blue-400">{methodData.practicalTips?.length || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Common Mistakes:</span>
+                      <span className="font-mono text-blue-400">{methodData.commonMistakes?.length || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Tools Required:</span>
+                      <span className="font-mono text-blue-400">{methodData.toolsRequired?.length || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Materials Required:</span>
+                      <span className="font-mono text-blue-400">{methodData.materialsRequired?.length || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Compliance Regulations:</span>
+                      <span className="font-mono text-blue-400">{ramsData.complianceRegulations?.length || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Compliance Warnings:</span>
+                      <span className="font-mono text-blue-400">{ramsData.complianceWarnings?.length || 0}</span>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Modals and Sheets */}
       <PDFGenerationModal

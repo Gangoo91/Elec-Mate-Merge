@@ -671,6 +671,57 @@ export function combineAgentOutputsToRAMS(
   // Transform Installer response to method steps (with hazard linking)
   const steps = transformInstallerToMethodSteps(installerResponse, hazards);
   
+  // Extract additional installer data
+  const practicalTips = installerResponse.structuredData?.practicalTips 
+    || (installerResponse.response as any)?.structuredData?.practicalTips 
+    || [];
+
+  const commonMistakes = installerResponse.structuredData?.commonMistakes 
+    || (installerResponse.response as any)?.structuredData?.commonMistakes 
+    || [];
+
+  const toolsRequired = installerResponse.structuredData?.toolsRequired 
+    || (installerResponse.response as any)?.structuredData?.toolsRequired 
+    || [];
+
+  const materialsRequired = installerResponse.structuredData?.materialsRequired 
+    || (installerResponse.response as any)?.structuredData?.materialsRequired 
+    || [];
+
+  const totalEstimatedTime = installerResponse.structuredData?.totalEstimatedTime 
+    || (installerResponse.response as any)?.structuredData?.totalEstimatedTime;
+
+  const difficultyLevel = installerResponse.structuredData?.difficultyLevel 
+    || (installerResponse.response as any)?.structuredData?.difficultyLevel;
+
+  // Extract compliance data from both agents
+  const hsCompliance = hsResponse.structuredData?.compliance 
+    || (hsResponse.response as any)?.structuredData?.compliance 
+    || {};
+
+  const installerCompliance = installerResponse.structuredData?.compliance 
+    || (installerResponse.response as any)?.structuredData?.compliance 
+    || {};
+
+  const complianceRegulations = [
+    ...(hsCompliance.regulations || []),
+    ...(installerCompliance.regulations || [])
+  ];
+
+  const complianceWarnings = [
+    ...(hsCompliance.warnings || []),
+    ...(installerCompliance.warnings || [])
+  ];
+
+  console.log('🔧 Extracted additional data:', {
+    practicalTips: practicalTips.length,
+    commonMistakes: commonMistakes.length,
+    toolsRequired: toolsRequired.length,
+    materialsRequired: materialsRequired.length,
+    complianceRegulations: complianceRegulations.length,
+    complianceWarnings: complianceWarnings.length
+  });
+  
   // Create RAMS data
   const ramsData: RAMSData = {
     projectName: projectInfo.projectName,
@@ -690,7 +741,9 @@ export function combineAgentOutputsToRAMS(
     risks,
     requiredPPE,
     emergencyProcedures,
-    hazards
+    hazards,
+    complianceRegulations: [...new Set(complianceRegulations)],
+    complianceWarnings: [...new Set(complianceWarnings)]
   };
   
   // Create Method Statement data
@@ -700,12 +753,20 @@ export function combineAgentOutputsToRAMS(
     contractor: projectInfo.contractor,
     supervisor: projectInfo.supervisor,
     workType: "Electrical Installation",
-    duration: estimateTotalDuration(steps),
+    duration: totalEstimatedTime || estimateTotalDuration(steps),
     teamSize: "2-3 electricians",
     description: extractWorkDescription(installerResponse),
     overallRiskLevel: calculateOverallRisk(risks),
     reviewDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 year from now
-    steps
+    steps,
+    practicalTips,
+    commonMistakes,
+    toolsRequired,
+    materialsRequired,
+    totalEstimatedTime,
+    difficultyLevel,
+    complianceRegulations: [...new Set(complianceRegulations)],
+    complianceWarnings: [...new Set(complianceWarnings)]
   };
   
   return { ramsData, methodData };

@@ -30,6 +30,14 @@ export interface MethodStatementData {
   steps: MethodStep[];
   createdAt?: string;
   updatedAt?: string;
+  practicalTips?: string[];
+  commonMistakes?: string[];
+  toolsRequired?: string[];
+  materialsRequired?: string[];
+  totalEstimatedTime?: string;
+  difficultyLevel?: string;
+  complianceRegulations?: string[];
+  complianceWarnings?: string[];
 }
 
 export interface MethodTemplate {

@@ -19,6 +19,8 @@ export const AIRAMSGenerator: React.FC = () => {
     lastSaved,
     overallProgress,
     estimatedTimeRemaining,
+    rawHSResponse,
+    rawInstallerResponse,
     generateRAMS,
     saveToDatabase,
     reset,
@@ -88,6 +90,8 @@ export const AIRAMSGenerator: React.FC = () => {
                   onUpdate={(rams, method) => {
                     // Update handled by internal state
                   }}
+                  rawHSResponse={rawHSResponse}
+                  rawInstallerResponse={rawInstallerResponse}
                 />
               )}
 

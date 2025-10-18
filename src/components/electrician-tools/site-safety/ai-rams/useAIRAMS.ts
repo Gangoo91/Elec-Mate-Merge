@@ -43,6 +43,8 @@ interface UseAIRAMSReturn {
   documentId: string | null;
   overallProgress: number;
   estimatedTimeRemaining: number | undefined;
+  rawHSResponse: any | null;
+  rawInstallerResponse: any | null;
   generateRAMS: (jobDescription: string, projectInfo: {
     projectName: string;
     location: string;
@@ -73,6 +75,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
   const [documentId, setDocumentId] = useState<string | null>(null);
   const [overallProgress, setOverallProgress] = useState(0);
   const [estimatedTimeRemaining, setEstimatedTimeRemaining] = useState<number | undefined>(undefined);
+  const [rawHSResponse, setRawHSResponse] = useState<any | null>(null);
+  const [rawInstallerResponse, setRawInstallerResponse] = useState<any | null>(null);
   const { toast } = useToast();
 
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -347,6 +351,9 @@ export function useAIRAMS(): UseAIRAMSReturn {
         return; // Stop processing if health-safety fails
       }
 
+      // Store raw H&S response
+      setRawHSResponse(hsData);
+
       clearProgressIntervals();
       const hsTimeElapsed = Math.round((Date.now() - hsStartTime) / 1000);
 
@@ -401,6 +408,9 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       if (installerError) throw new Error(`Installer Agent failed: ${installerError.message}`);
       if (!installerData) throw new Error('No response from Installer Agent');
+
+      // Store raw installer response
+      setRawInstallerResponse(installerData);
 
       clearProgressIntervals();
       const installerTimeElapsed = Math.round((Date.now() - installerStartTime) / 1000);
@@ -476,6 +486,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
     setLastSaved(null);
     setOverallProgress(0);
     setEstimatedTimeRemaining(undefined);
+    setRawHSResponse(null);
+    setRawInstallerResponse(null);
   };
 
   return {
@@ -489,6 +501,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
     documentId,
     overallProgress,
     estimatedTimeRemaining,
+    rawHSResponse,
+    rawInstallerResponse,
     generateRAMS,
     saveToDatabase,
     reset,
