@@ -632,15 +632,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 <FileText className="h-4 w-4" />
                 Method Statement
               </Button>
-              <Button
-                onClick={handleCopyJSON}
-                disabled={isGenerating}
-                className="gap-2 ml-auto"
-                variant="ghost"
-              >
-                <Code className="h-4 w-4" />
-                Copy JSON
-              </Button>
             </div>
 
             {/* Mobile View - Single button to open sheet */}
