@@ -243,7 +243,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
             properties: {
               response: {
                 type: 'string',
-                description: 'Natural, conversational risk assessment. Reference previous discussion. As detailed as needed.'
+                description: 'Natural, conversational risk assessment IN UK ENGLISH ONLY (authorised not authorized, realise not realize, organise not organize, metres not meters). Reference previous discussion. As detailed as needed.'
               },
               riskAssessment: {
                 type: 'object',
@@ -253,7 +253,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                     items: {
                       type: 'object',
                       properties: {
-                        hazard: { type: 'string' },
+                        hazard: { type: 'string', description: 'Hazard description in UK English (authorised, realise, organise, metres)' },
                         likelihood: { type: 'number', minimum: 1, maximum: 5 },
                         likelihoodReason: { type: 'string' },
                         severity: { type: 'number', minimum: 1, maximum: 5 },
@@ -271,7 +271,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                       type: 'object',
                       properties: {
                         hazard: { type: 'string' },
-                        controlMeasure: { type: 'string' },
+                        controlMeasure: { type: 'string', description: 'Control measure in UK English (authorised, realise, organise, metres)' },
                         residualLikelihood: { type: 'number' },
                         residualSeverity: { type: 'number' },
                         residualRisk: { type: 'number' },

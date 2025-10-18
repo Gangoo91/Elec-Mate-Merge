@@ -369,7 +369,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
             properties: {
               response: {
                 type: 'string',
-                description: 'Natural, conversational UK English response. Reference previous messages naturally (e.g., "Right, for that 10mm² cable we discussed..."). As long as needed to answer thoroughly.'
+                description: 'Natural, conversational response IN UK ENGLISH ONLY (authorised not authorized, realise not realize, organise not organize, metres not meters, whilst not while). Reference previous messages naturally (e.g., "Right, for that 10mm² cable we discussed..."). As long as needed to answer thoroughly.'
               },
               installationSteps: {
                 type: 'array',
@@ -378,10 +378,10 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                   properties: {
                     step: { type: 'number' },
                     title: { type: 'string' },
-                    description: { type: 'string' },
+                    description: { type: 'string', description: 'Step description in UK English (authorised, realise, organise, metres, whilst)' },
                     tools: { type: 'array', items: { type: 'string' } },
                     materials: { type: 'array', items: { type: 'string' } },
-                    safetyNotes: { type: 'array', items: { type: 'string' } },
+                    safetyNotes: { type: 'array', items: { type: 'string', description: 'Safety note in UK English (authorised, organise, metres)' } },
                     estimatedTime: { type: 'number' }
                   },
                   required: ['step', 'title', 'description']
