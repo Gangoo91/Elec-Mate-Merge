@@ -663,26 +663,23 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <Card key={step.id} className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40 shadow-none rounded-lg border-l-4 border-l-elec-yellow/40">
                     <CardContent className="pt-3 md:pt-4 px-4">
                       <div className="space-y-3">
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="bg-primary/10">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex items-start gap-3 flex-1 min-w-0">
+                            <Badge variant="outline" className="bg-primary/10 shrink-0">
                               Step {step.stepNumber}
                             </Badge>
                             <Input
                               value={step.title}
                               onChange={(e) => updateStep(step.id, { title: e.target.value })}
-                              className="flex-1 bg-background/50 border-primary/30 font-medium"
+                              className="flex-1 bg-background/50 border-primary/30 font-medium text-base md:text-lg min-h-[3rem] leading-relaxed"
                               placeholder="Step title"
                             />
                           </div>
-                          <Badge className={getRiskLevelBadge(step.riskLevel)}>
-                            {step.riskLevel}
-                          </Badge>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => removeStep(step.id)}
-                            className="text-red-500 hover:text-red-600"
+                            className="text-red-500 hover:text-red-600 shrink-0"
                           >
                             <X className="h-4 w-4" />
                           </Button>
