@@ -309,7 +309,10 @@ export function transformHealthSafetyToRAMS(
 /**
  * Transform Installer agent response into Method Statement steps
  */
-export function transformInstallerToMethodSteps(installerResponse: AgentResponse): MethodStep[] {
+export function transformInstallerToMethodSteps(
+  installerResponse: AgentResponse,
+  hazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }> = []
+): MethodStep[] {
   const steps: MethodStep[] = [];
   
   // Try multiple possible locations for steps data
@@ -326,6 +329,41 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
     hasStructuredData: !!installerResponse.structuredData,
     stepsFound: methodSteps?.length || 0
   });
+  
+  // Helper function to link hazards to a step based on keyword matching
+  const linkHazardsToStep = (step: any): string[] => {
+    const stepText = `${step.title || step.step || ''} ${step.description || ''}`.toLowerCase();
+    const linkedHazardIds: string[] = [];
+    
+    hazards.forEach(hazard => {
+      const hazardText = hazard.hazard.toLowerCase();
+      
+      // Keyword matching logic
+      const keywords = [
+        { hazard: ['electric', 'shock', 'live', 'voltage'], step: ['electric', 'cable', 'wire', 'circuit', 'terminal', 'connect', 'test', 'energi'] },
+        { hazard: ['height', 'fall', 'working at height'], step: ['ladder', 'scaffold', 'height', 'above', 'ceiling', 'roof', 'elevated'] },
+        { hazard: ['manual', 'handling', 'lifting'], step: ['lift', 'carry', 'move', 'install', 'position', 'transport', 'handling'] },
+        { hazard: ['confined', 'space'], step: ['confined', 'enclosed', 'restricted', 'access', 'tight'] },
+        { hazard: ['dust', 'silica', 'debris'], step: ['dust', 'drill', 'cut', 'chase', 'grind', 'debris'] },
+        { hazard: ['fire', 'burn'], step: ['hot', 'heat', 'solder', 'burn', 'flame', 'fire'] },
+        { hazard: ['sharp', 'cut'], step: ['cut', 'strip', 'sharp', 'blade', 'knife', 'trim'] },
+        { hazard: ['noise'], step: ['drill', 'noise', 'loud', 'power tool', 'drilling'] },
+        { hazard: ['trip', 'slip'], step: ['cable', 'route', 'floor', 'access', 'install'] }
+      ];
+      
+      for (const match of keywords) {
+        const hazardMatch = match.hazard.some(keyword => hazardText.includes(keyword));
+        const stepMatch = match.step.some(keyword => stepText.includes(keyword));
+        
+        if (hazardMatch && stepMatch) {
+          linkedHazardIds.push(hazard.id);
+          break;
+        }
+      }
+    });
+    
+    return [...new Set(linkedHazardIds)]; // Remove duplicates
+  };
   
   // Infer safety requirements from step description
   const inferSafetyRequirements = (step: any): string[] => {
@@ -433,6 +471,7 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
       qualifications: step.qualifications && step.qualifications.length > 0
         ? step.qualifications
         : inferQualifications(step),
+      linkedHazards: linkHazardsToStep(step),
       isCompleted: false
     }));
     
@@ -474,6 +513,7 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
         safetyRequirements: [],
         equipmentNeeded: [],
         qualifications: [],
+        linkedHazards: [],
         isCompleted: false
       };
       currentSection = 'description';
@@ -538,6 +578,9 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
       currentStep.riskLevel = "low";
     }
     
+    // Link hazards to this step
+    currentStep.linkedHazards = linkHazardsToStep(currentStep);
+    
     steps.push(currentStep as MethodStep);
     currentStep = null;
   }
@@ -554,6 +597,7 @@ export function transformInstallerToMethodSteps(installerResponse: AgentResponse
       safetyRequirements: ["Isolation confirmed", "PPE worn", "Risk assessment reviewed"],
       equipmentNeeded: ["Voltage tester", "Lock-off devices", "Warning signs"],
       qualifications: ["18th Edition BS 7671", "Competent person"],
+      linkedHazards: [],
       isCompleted: false
     });
   }
@@ -586,8 +630,8 @@ export function combineAgentOutputsToRAMS(
   // Transform H&S response to RAMS risks
   const { risks, hazards, activities } = transformHealthSafetyToRAMS(hsResponse, projectInfo);
   
-  // Transform Installer response to method steps
-  const steps = transformInstallerToMethodSteps(installerResponse);
+  // Transform Installer response to method steps (with hazard linking)
+  const steps = transformInstallerToMethodSteps(installerResponse, hazards);
   
   // Create RAMS data
   const ramsData: RAMSData = {
