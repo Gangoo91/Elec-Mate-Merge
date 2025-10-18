@@ -399,11 +399,11 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
   return (
     <div className={cn(
-      "space-y-6 md:space-y-8",
+      "space-y-6 md:space-y-8 px-3 sm:px-0",
       isMobile && keyboardVisible && "pb-[100px]",
       isMobile && !keyboardVisible && "pb-[100px]"
     )}>
-      <Card className="border-elec-yellow/30 shadow-2xl bg-elec-card/90 backdrop-blur-sm rounded-2xl overflow-hidden">
+      <Card className="border-0 md:border md:border-elec-yellow/30 shadow-none md:shadow-2xl bg-transparent md:bg-elec-card/90 md:backdrop-blur-sm rounded-none md:rounded-2xl overflow-hidden">
         <CardHeader className="pb-6 bg-gradient-to-r from-elec-grey/50 to-elec-grey/30 border-b border-elec-yellow/20">
           <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 text-foreground">
             <div className="flex flex-col gap-2">
@@ -504,8 +504,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     high: 'border-l-red-500'
                   };
                   return (
-                    <Card key={risk.id} className={`border-elec-yellow/30 bg-elec-grey/50 backdrop-blur-sm hover:border-elec-yellow/50 transition-all border-l-4 ${borderColors[riskLevel]} shadow-lg`}>
-                      <CardContent className="pt-5 pb-5 px-5 md:px-6">
+                    <Card key={risk.id} className={`border-0 md:border md:border-elec-yellow/30 bg-elec-grey/30 md:bg-elec-grey/50 md:backdrop-blur-sm hover:border-elec-yellow/50 transition-all border-l-4 ${borderColors[riskLevel]} shadow-none md:shadow-lg rounded-lg`}>
+                      <CardContent className="pt-4 pb-4 px-4 md:pt-5 md:pb-5 md:px-6">
                       {/* Risk card content */}
                       <div className="space-y-3">
                         <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-2">
@@ -586,8 +586,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <Shield className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
                     Required Personal Protective Equipment
                   </h4>
-                  <Card className="border-primary/20 bg-card/40">
-                    <CardContent className="pt-4">
+                  <Card className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40 shadow-none rounded-lg">
+                    <CardContent className="pt-3 md:pt-4 px-4">
                       <ul className="list-disc list-inside space-y-2">
                         {ramsData.requiredPPE.map((ppe, idx) => (
                           <li key={idx} className="text-sm text-foreground">{ppe}</li>
@@ -605,8 +605,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <AlertCircle className="h-5 w-5 md:h-4 md:w-4 text-red-500" />
                     Emergency Procedures
                   </h4>
-                  <Card className="border-red-500/20 bg-card/40">
-                    <CardContent className="pt-4">
+                  <Card className="border-0 md:border md:border-red-500/20 bg-elec-grey/30 md:bg-card/40 shadow-none rounded-lg">
+                    <CardContent className="pt-3 md:pt-4 px-4">
                       <ul className="list-disc list-inside space-y-2">
                         {ramsData.emergencyProcedures.map((proc, idx) => (
                           <li key={idx} className="text-sm text-foreground">{proc}</li>
@@ -648,8 +648,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 </h4>
                 
                 {methodData.steps?.map((step) => (
-                  <Card key={step.id} className="border-primary/20 bg-card/40">
-                    <CardContent className="pt-4">
+                  <Card key={step.id} className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40 shadow-none rounded-lg border-l-4 border-l-elec-yellow/40">
+                    <CardContent className="pt-3 md:pt-4 px-4">
                       <div className="space-y-3">
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex items-center gap-2">
@@ -762,7 +762,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
       {/* AI Response JSON Display - Developer/Debug Section */}
       {(rawHSResponse || rawInstallerResponse) && (
-        <Card className="border-blue-500/30 bg-slate-900/50">
+        <Card className="border-0 md:border md:border-blue-500/30 bg-slate-900/30 md:bg-slate-900/50 shadow-none rounded-lg">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-blue-400">

@@ -123,7 +123,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
   );
 
   return (
-    <div className="space-y-6 md:space-y-8">
+    <div className="space-y-6 md:space-y-8 px-3 sm:px-0">
       {/* Enhanced Header */}
       <div className="space-y-4">
         <div className="flex items-center gap-4">
@@ -161,8 +161,8 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       </div>
 
       {/* Enhanced Job Description Card */}
-      <Card className="border-elec-yellow/30 shadow-xl bg-elec-card/80 backdrop-blur-sm hover:border-elec-yellow/50 transition-all duration-300 rounded-2xl">
-        <CardContent className="p-6 md:p-8 space-y-6">
+      <Card className="border-0 md:border md:border-elec-yellow/30 shadow-none md:shadow-xl bg-transparent md:bg-elec-card/80 md:backdrop-blur-sm hover:border-elec-yellow/50 transition-all duration-300 rounded-none md:rounded-2xl">
+        <CardContent className="p-4 md:p-6 lg:p-8 space-y-6">
           <div className="space-y-4">
             <label className="text-lg md:text-base font-bold text-foreground tracking-wide flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 flex items-center justify-center border border-elec-yellow/30">
@@ -224,8 +224,8 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       </Card>
 
       {/* Enhanced Project Info Card */}
-      <Card className="border-elec-yellow/30 shadow-xl bg-elec-card/80 backdrop-blur-sm hover:border-elec-yellow/50 transition-all duration-300 rounded-2xl">
-        <CardContent className="p-6 md:p-8 space-y-6">
+      <Card className="border-0 md:border md:border-elec-yellow/30 shadow-none md:shadow-xl bg-transparent md:bg-elec-card/80 md:backdrop-blur-sm hover:border-elec-yellow/50 transition-all duration-300 rounded-none md:rounded-2xl">
+        <CardContent className="p-4 md:p-6 lg:p-8 space-y-6">
           <h3 className="text-xl md:text-lg font-bold tracking-tight leading-tight flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 flex items-center justify-center border border-elec-yellow/30">
               <FileWarning className="h-5 w-5 text-elec-yellow" />

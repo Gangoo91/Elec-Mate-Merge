@@ -51,7 +51,7 @@ export const AIRAMSGenerator: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
-      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 max-w-7xl mx-auto">
+      <div className="w-full px-0 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 max-w-7xl mx-auto">
         {/* Page Header with Back Navigation */}
         <div className="mb-6 sm:mb-8 space-y-4">
           <Button
