@@ -1,4 +1,8 @@
 import { supabase } from '@/integrations/supabase/client';
+import type { RAMSData } from '@/types/rams';
+import type { MethodStatementData } from '@/types/method-statement';
+
+export { updateRAMSDocument } from './rams-pdf-storage-update';
 
 /**
  * Upload a PDF blob to Supabase Storage and save reference in database

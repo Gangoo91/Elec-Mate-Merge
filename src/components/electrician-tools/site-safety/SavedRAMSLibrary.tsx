@@ -6,6 +6,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { FileText, Download, Trash2, Calendar, Loader2, FolderOpen, Edit, ChevronDown, ChevronUp } from 'lucide-react';
 import { format } from 'date-fns';
+import { RAMSAmendDialog } from './ai-rams/RAMSAmendDialog';
+import { RAMSQuickEditDialog } from './ai-rams/RAMSQuickEditDialog';
 
 interface SavedRAMS {
   id: string;
@@ -23,6 +25,9 @@ export const SavedRAMSLibrary = () => {
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [amendDialogOpen, setAmendDialogOpen] = useState(false);
+  const [quickEditDialogOpen, setQuickEditDialogOpen] = useState(false);
+  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
   const { toast } = useToast();
 
   // Display logic: show 12 most recent by default
@@ -285,8 +290,10 @@ export const SavedRAMSLibrary = () => {
                   size="sm"
                   variant="outline"
                   className="border-elec-blue/30 hover:bg-elec-blue/10 text-elec-blue text-xs"
-                  disabled
-                  title="Amend feature coming soon"
+                  onClick={() => {
+                    setSelectedDocumentId(doc.id);
+                    setAmendDialogOpen(true);
+                  }}
                 >
                   <Edit className="h-3 w-3" />
                 </Button>
@@ -365,8 +372,10 @@ export const SavedRAMSLibrary = () => {
                           size="sm"
                           variant="outline"
                           className="border-elec-blue/30 hover:bg-elec-blue/10 text-elec-blue"
-                          disabled
-                          title="Amend feature coming soon"
+                          onClick={() => {
+                            setSelectedDocumentId(doc.id);
+                            setAmendDialogOpen(true);
+                          }}
                         >
                           <Edit className="h-4 w-4 mr-2" />
                           Amend
@@ -393,6 +402,34 @@ export const SavedRAMSLibrary = () => {
           </div>
         </Card>
       </div>
+
+      {/* Amend Dialogs */}
+      {selectedDocumentId && (
+        <>
+          <RAMSAmendDialog
+            documentId={selectedDocumentId}
+            isOpen={amendDialogOpen}
+            onClose={() => {
+              setAmendDialogOpen(false);
+              setSelectedDocumentId(null);
+            }}
+            onQuickEdit={() => {
+              setAmendDialogOpen(false);
+              setQuickEditDialogOpen(true);
+            }}
+          />
+
+          <RAMSQuickEditDialog
+            documentId={selectedDocumentId}
+            isOpen={quickEditDialogOpen}
+            onClose={() => {
+              setQuickEditDialogOpen(false);
+              setSelectedDocumentId(null);
+              fetchDocuments(); // Refresh list after edit
+            }}
+          />
+        </>
+      )}
     </div>
   );
 };

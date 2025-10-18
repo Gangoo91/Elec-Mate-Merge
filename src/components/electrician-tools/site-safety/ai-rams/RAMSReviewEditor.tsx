@@ -29,6 +29,7 @@ interface RAMSReviewEditorProps {
   onUpdate: (rams: RAMSData, method: Partial<MethodStatementData>) => void;
   rawHSResponse?: any;
   rawInstallerResponse?: any;
+  mode?: 'embedded' | 'standalone';
 }
 
 export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
@@ -39,7 +40,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   onSave,
   onUpdate,
   rawHSResponse,
-  rawInstallerResponse
+  rawInstallerResponse,
+  mode = 'embedded'
 }) => {
   const [ramsData, setRamsData] = useState<RAMSData>(initialRamsData);
   const [methodData, setMethodData] = useState<Partial<MethodStatementData>>(initialMethodData);
