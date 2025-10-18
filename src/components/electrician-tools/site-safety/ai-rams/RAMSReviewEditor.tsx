@@ -399,7 +399,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
   return (
     <div className={cn(
-      "space-y-6 md:space-y-8 px-3 sm:px-0",
+      "space-y-6 md:space-y-8",
       isMobile && keyboardVisible && "pb-[100px]",
       isMobile && !keyboardVisible && "pb-[100px]"
     )}>
@@ -462,9 +462,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="rams" className="space-y-6 mt-0 p-3 sm:p-4 md:p-6 lg:p-8">
+            <TabsContent value="rams" className="space-y-6 mt-0 p-0 sm:p-4 md:p-6 lg:p-8">
               {/* Project Info */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+              <div className="px-3 sm:px-0">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
                 <div>
                   <label className="text-lg sm:text-base md:text-sm font-semibold text-elec-light tracking-wide">Project Name</label>
                   <Input
@@ -481,6 +482,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     className="mt-2 h-14 sm:h-12 text-base sm:text-sm bg-elec-grey border-elec-yellow/20 text-foreground font-medium"
                   />
                 </div>
+              </div>
               </div>
 
               {/* Enhanced Risks Section */}
@@ -505,7 +507,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   };
                   return (
                     <Card key={risk.id} className={`border-0 md:border md:border-elec-yellow/30 bg-elec-grey/30 md:bg-elec-grey/50 md:backdrop-blur-sm hover:border-elec-yellow/50 transition-all border-l-4 ${borderColors[riskLevel]} shadow-none md:shadow-lg rounded-lg`}>
-                      <CardContent className="pt-3 pb-3 px-3 sm:px-4 md:pt-5 md:pb-5 md:px-6">
+                      <CardContent className="pt-3 pb-3 px-2 sm:px-4 md:pt-5 md:pb-5 md:px-6">
                       {/* Risk card content */}
                       <div className="space-y-3">
                         {/* Header row with risk level and delete */}
