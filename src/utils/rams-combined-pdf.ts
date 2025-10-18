@@ -177,6 +177,54 @@ export async function generateCombinedRAMSPDF(
   yPos += 15;
   checkPageBreak(40);
 
+  // Add PPE section
+  if (ramsData.requiredPPE && ramsData.requiredPPE.length > 0) {
+    doc.setFillColor(240, 240, 240);
+    doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(20, 20, 20);
+    doc.text('REQUIRED PPE', margin + 3, yPos + 5.5);
+    yPos += 12;
+    
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    ramsData.requiredPPE.forEach((ppe) => {
+      doc.text(`• ${safeText(ppe)}`, margin + 3, yPos);
+      yPos += 6;
+      if (yPos > pageHeight - 30) {
+        doc.addPage();
+        yPos = addPageHeader();
+      }
+    });
+    yPos += 8;
+    checkPageBreak(40);
+  }
+
+  // Add Emergency Procedures section
+  if (ramsData.emergencyProcedures && ramsData.emergencyProcedures.length > 0) {
+    doc.setFillColor(240, 240, 240);
+    doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(20, 20, 20);
+    doc.text('EMERGENCY PROCEDURES', margin + 3, yPos + 5.5);
+    yPos += 12;
+    
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    ramsData.emergencyProcedures.forEach((proc) => {
+      doc.text(`• ${safeText(proc)}`, margin + 3, yPos);
+      yPos += 6;
+      if (yPos > pageHeight - 30) {
+        doc.addPage();
+        yPos = addPageHeader();
+      }
+    });
+    yPos += 10;
+    checkPageBreak(40);
+  }
+
   // SECTION 2: METHOD STATEMENT
   doc.setFillColor(255, 215, 0);
   doc.rect(margin, yPos, pageWidth - 2 * margin, 10, 'F');

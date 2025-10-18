@@ -13,6 +13,8 @@ interface AgentResponse {
       severity: number;
       controls: string[];
     }>;
+    ppe?: string[];
+    emergencyProcedures?: string[];
   };
   methodStatementSteps?: any[];
 }
@@ -23,7 +25,7 @@ interface AgentResponse {
 export function transformHealthSafetyToRAMS(
   hsResponse: AgentResponse,
   projectInfo: { projectName: string; location: string; assessor: string; date: string }
-): { risks: RAMSRisk[]; hazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }>; activities: string[] } {
+): { risks: RAMSRisk[]; hazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }>; activities: string[]; requiredPPE: string[]; emergencyProcedures: string[] } {
   const risks: RAMSRisk[] = [];
   const identifiedHazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }> = [];
   const activities: string[] = [];
@@ -35,11 +37,24 @@ export function transformHealthSafetyToRAMS(
     || (hsResponse as any).structuredData?.hazards
     || (hsResponse as any).hazards;
   
+  // Extract PPE and emergency procedures
+  const ppe = hsResponse.riskAssessment?.ppe
+    || (hsResponse.response as any)?.riskAssessment?.ppe
+    || (hsResponse.structuredData as any)?.riskAssessment?.ppe
+    || [];
+
+  const emergencyProcedures = hsResponse.riskAssessment?.emergencyProcedures
+    || (hsResponse.response as any)?.riskAssessment?.emergencyProcedures
+    || (hsResponse.structuredData as any)?.riskAssessment?.emergencyProcedures
+    || [];
+  
   console.log('🔍 Transformer received hsResponse:', {
     hasRiskAssessment: !!hsResponse.riskAssessment,
     hasResponseRiskAssessment: !!(hsResponse.response as any)?.riskAssessment,
     hasStructuredData: !!hsResponse.structuredData,
-    hazardsFound: sourceHazards?.length || 0
+    hazardsFound: sourceHazards?.length || 0,
+    ppeFound: ppe?.length || 0,
+    emergencyProcsFound: emergencyProcedures?.length || 0
   });
   
   // Generate controls from hazard description if not provided
@@ -194,7 +209,24 @@ export function transformHealthSafetyToRAMS(
     });
     
     console.log('✅ Transformer created', risks.length, 'risk entries and', identifiedHazards.length, 'hazard entries');
-    return { risks, hazards: identifiedHazards, activities: activities.length > 0 ? activities : ["Electrical installation work"] };
+    return { 
+      risks, 
+      hazards: identifiedHazards, 
+      activities: activities.length > 0 ? activities : ["Electrical installation work"],
+      requiredPPE: ppe && ppe.length > 0 ? ppe : [
+        "Safety helmet to BS EN 397",
+        "Safety boots to BS EN 20345",
+        "High-visibility vest to BS EN ISO 20471",
+        "Insulated gloves to BS EN 60903",
+        "Safety glasses to BS EN 166"
+      ],
+      emergencyProcedures: emergencyProcedures && emergencyProcedures.length > 0 ? emergencyProcedures : [
+        "In case of electric shock, isolate power and call emergency services",
+        "Location of first aid kit and trained first aider",
+        "Fire extinguisher location and type (CO2 for electrical fires)",
+        "Emergency contact numbers displayed"
+      ]
+    };
   }
   
   // Fallback to string parsing if response is a string
@@ -303,7 +335,13 @@ export function transformHealthSafetyToRAMS(
     });
   }
   
-  return { risks, hazards: identifiedHazards, activities };
+  return { 
+    risks, 
+    hazards: identifiedHazards, 
+    activities,
+    requiredPPE: [],
+    emergencyProcedures: []
+  };
 }
 
 /**
@@ -628,7 +666,7 @@ export function combineAgentOutputsToRAMS(
   }
 ): { ramsData: RAMSData; methodData: Partial<MethodStatementData> } {
   // Transform H&S response to RAMS risks
-  const { risks, hazards, activities } = transformHealthSafetyToRAMS(hsResponse, projectInfo);
+  const { risks, hazards, activities, requiredPPE, emergencyProcedures } = transformHealthSafetyToRAMS(hsResponse, projectInfo);
   
   // Transform Installer response to method steps (with hazard linking)
   const steps = transformInstallerToMethodSteps(installerResponse, hazards);
@@ -650,6 +688,8 @@ export function combineAgentOutputsToRAMS(
     assemblyPoint: projectInfo.assemblyPoint || '',
     activities: activities.length > 0 ? activities : ["Electrical installation work"],
     risks,
+    requiredPPE,
+    emergencyProcedures,
     hazards
   };
   

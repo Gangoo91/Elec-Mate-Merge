@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle, Code } from 'lucide-react';
+import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle, Code, Shield, AlertCircle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
 import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
@@ -516,6 +516,44 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   </Card>
                 ))}
               </div>
+
+              {/* PPE Section */}
+              {ramsData.requiredPPE && ramsData.requiredPPE.length > 0 && (
+                <div className="space-y-3">
+                  <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5 tracking-tight leading-tight">
+                    <Shield className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
+                    Required Personal Protective Equipment
+                  </h4>
+                  <Card className="border-primary/20 bg-card/40">
+                    <CardContent className="pt-4">
+                      <ul className="list-disc list-inside space-y-2">
+                        {ramsData.requiredPPE.map((ppe, idx) => (
+                          <li key={idx} className="text-sm text-foreground">{ppe}</li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
+
+              {/* Emergency Procedures Section */}
+              {ramsData.emergencyProcedures && ramsData.emergencyProcedures.length > 0 && (
+                <div className="space-y-3">
+                  <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5 tracking-tight leading-tight">
+                    <AlertCircle className="h-5 w-5 md:h-4 md:w-4 text-red-500" />
+                    Emergency Procedures
+                  </h4>
+                  <Card className="border-red-500/20 bg-card/40">
+                    <CardContent className="pt-4">
+                      <ul className="list-disc list-inside space-y-2">
+                        {ramsData.emergencyProcedures.map((proc, idx) => (
+                          <li key={idx} className="text-sm text-foreground">{proc}</li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
 
             </TabsContent>
 

@@ -14,6 +14,8 @@ export interface RAMSData {
     riskLevel: string;
     regulation?: string;
   }>;
+  requiredPPE?: string[];
+  emergencyProcedures?: string[];
   contractor?: string;
   supervisor?: string;
   siteManagerName?: string;
