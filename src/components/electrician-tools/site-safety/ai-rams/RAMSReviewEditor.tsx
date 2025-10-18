@@ -600,7 +600,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   </h4>
                   <Card className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40 shadow-none rounded-lg">
                     <CardContent className="pt-3 md:pt-4 px-4">
-                      <ul className="list-disc list-inside space-y-2">
+                      <ul className="list-disc list-outside space-y-2 pl-5">
                         {ramsData.requiredPPE.map((ppe, idx) => (
                           <li key={idx} className="text-sm text-foreground">{ppe}</li>
                         ))}
@@ -619,7 +619,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   </h4>
                   <Card className="border-0 md:border md:border-red-500/20 bg-elec-grey/30 md:bg-card/40 shadow-none rounded-lg">
                     <CardContent className="pt-3 md:pt-4 px-4">
-                      <ul className="list-disc list-inside space-y-2">
+                      <ul className="list-disc list-outside space-y-2 pl-5">
                         {ramsData.emergencyProcedures.map((proc, idx) => (
                           <li key={idx} className="text-sm text-foreground">{proc}</li>
                         ))}
