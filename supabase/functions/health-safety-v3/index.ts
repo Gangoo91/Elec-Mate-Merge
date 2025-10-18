@@ -104,7 +104,15 @@ serve(async (req) => {
     const hsKnowledge = await intelligentRAGSearch({
       circuitType: workType,
       searchTerms: query.split(' ').filter(w => w.length > 3),
-      expandedQuery: query
+      expandedQuery: query,
+      context: {
+        ragPriority: {
+          bs7671: 85,           // High - need regulations for safety compliance
+          design: 30,           // Low - not designing, just assessing risks
+          health_safety: 95,    // HIGHEST - risk assessment procedures, PPE, hazards
+          installation: 50      // Medium - installation methods may be relevant
+        }
+      }
     });
     
     // PHASE 2: Reuse BS 7671 regulations from Designer (filter for H&S relevant ones)
@@ -231,7 +239,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       model: 'gpt-5-2025-08-07',
       systemPrompt,
       userPrompt,
-      maxTokens: 10000,
+      maxTokens: 15000,
       timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
       tools: [{
         type: 'function',
