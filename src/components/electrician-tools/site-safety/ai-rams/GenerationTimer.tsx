@@ -35,9 +35,9 @@ export const GenerationTimer: React.FC<GenerationTimerProps> = ({ isRunning, onT
   if (!isRunning && seconds === 0) return null;
 
   return (
-    <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-      <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow animate-pulse" />
-      <span className="font-mono font-bold text-sm sm:text-base text-elec-yellow tabular-nums tracking-tight">
+    <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-muted/50 border border-border/50">
+      <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
+      <span className="font-mono font-medium text-xs sm:text-sm text-muted-foreground tabular-nums tracking-tight">
         {formatTime(seconds)}
       </span>
     </div>

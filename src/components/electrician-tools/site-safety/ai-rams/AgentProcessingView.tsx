@@ -99,10 +99,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
             ) : hasError ? (
               <AlertCircle className="h-7 w-7 sm:h-8 sm:w-8 text-red-500" />
             ) : (
-              <div className="relative">
-                <div className="absolute inset-0 bg-elec-yellow/30 rounded-full blur-md animate-pulse" />
-                <Sparkles className="relative h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow animate-pulse" />
-              </div>
+              <Sparkles className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow" />
             )}
             <span className="bg-gradient-to-r from-elec-yellow to-elec-yellow/70 bg-clip-text text-transparent">
               AI Processing
@@ -124,9 +121,6 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           </div>
           <div className="relative">
             <Progress value={overallProgress} className="h-3" />
-            {isProcessing && (
-              <div className="absolute inset-0 h-3 rounded-full bg-gradient-to-r from-transparent via-elec-yellow/20 to-transparent animate-pulse pointer-events-none" />
-            )}
           </div>
         </div>
 
@@ -140,9 +134,9 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           </button>
         )}
       </CardHeader>
-      <CardContent className="space-y-4 sm:space-y-6 px-4 sm:px-6 pb-6">
+      <CardContent className="space-y-3 sm:space-y-5 px-4 sm:px-6 pb-6">
         {/* Vertical Timeline - Mobile Optimized */}
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-3 sm:space-y-5">
           {steps.map((step, idx) => {
             const Icon = agentIcons[step.agent];
             const isActive = step.status === 'processing' || step.status === 'complete';
@@ -171,12 +165,9 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                     step.status === 'complete' 
                       ? 'bg-gradient-to-br from-green-500/30 to-green-500/10 border-2 border-green-500/50 shadow-[0_0_20px_rgba(34,197,94,0.3)]' 
                       : step.status === 'processing'
-                      ? 'bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 border-2 border-elec-yellow/60 animate-pulse shadow-[0_0_20px_rgba(255,193,7,0.4)]'
+                      ? 'bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 border-2 border-elec-yellow/60 shadow-[0_0_20px_rgba(255,193,7,0.4)]'
                       : 'bg-muted border-2 border-border'
                   }`}>
-                    {step.status === 'processing' && (
-                      <div className="absolute inset-0 rounded-xl bg-elec-yellow/20 animate-ping" />
-                    )}
                     <Icon className={`relative h-6 w-6 sm:h-7 sm:w-7 ${
                       step.status === 'complete' 
                         ? 'text-green-400' 
@@ -185,7 +176,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                         : 'text-muted-foreground'
                     }`} />
                     {step.status === 'complete' && (
-                      <Sparkles className="absolute -top-1 -right-1 h-4 w-4 sm:h-5 sm:w-5 text-green-300 animate-in zoom-in duration-300" />
+                      <Sparkles className="absolute -top-1 -right-1 h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-300 animate-in zoom-in duration-300" />
                     )}
                   </div>
 
