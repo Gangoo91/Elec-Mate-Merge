@@ -562,6 +562,13 @@ export function combineAgentOutputsToRAMS(
     date: string;
     contractor: string;
     supervisor: string;
+    siteManagerName?: string;
+    siteManagerPhone?: string;
+    firstAiderName?: string;
+    firstAiderPhone?: string;
+    safetyOfficerName?: string;
+    safetyOfficerPhone?: string;
+    assemblyPoint?: string;
   }
 ): { ramsData: RAMSData; methodData: Partial<MethodStatementData> } {
   // Transform H&S response to RAMS risks
@@ -578,6 +585,13 @@ export function combineAgentOutputsToRAMS(
     assessor: projectInfo.assessor,
     contractor: projectInfo.contractor || '',
     supervisor: projectInfo.supervisor || '',
+    siteManagerName: projectInfo.siteManagerName || '',
+    siteManagerPhone: projectInfo.siteManagerPhone || '',
+    firstAiderName: projectInfo.firstAiderName || '',
+    firstAiderPhone: projectInfo.firstAiderPhone || '',
+    safetyOfficerName: projectInfo.safetyOfficerName || '',
+    safetyOfficerPhone: projectInfo.safetyOfficerPhone || '',
+    assemblyPoint: projectInfo.assemblyPoint || '',
     activities: activities.length > 0 ? activities : ["Electrical installation work"],
     risks
   };
