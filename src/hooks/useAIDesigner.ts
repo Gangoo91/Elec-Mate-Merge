@@ -20,15 +20,13 @@ export const useAIDesigner = () => {
     setError(null);
     setDesignData(null);
 
+    // PHASE 4: Updated stages to match backend reality
     const stages = [
-      { stage: 1, message: 'Understanding your requirements...', duration: 15000, targetPercent: 5 },
-      { stage: 2, message: 'Checking BS 7671 requirements for each circuit...', duration: 25000, targetPercent: 20 },
-      { stage: 3, message: 'Calculating cable sizes and derating factors...', duration: 35000, targetPercent: 40 },
-      { stage: 4, message: 'Determining protection devices...', duration: 30000, targetPercent: 60 },
-      { stage: 5, message: 'Verifying voltage drop compliance...', duration: 25000, targetPercent: 75 },
-      { stage: 6, message: 'Calculating earth fault loop impedance...', duration: 20000, targetPercent: 85 },
-      { stage: 7, message: 'Generating materials list and cost estimate...', duration: 20000, targetPercent: 93 },
-      { stage: 8, message: 'Finalising design documentation...', duration: 60000, targetPercent: 99 }
+      { stage: 1, message: 'Understanding your requirements...', duration: 5000, targetPercent: 5 },
+      { stage: 2, message: 'Searching BS 7671 for each circuit type...', duration: 30000, targetPercent: 25 },
+      { stage: 3, message: 'AI is designing circuits and calculations...', duration: 90000, targetPercent: 70 },
+      { stage: 4, message: 'Validating compliance and voltage drop...', duration: 20000, targetPercent: 90 },
+      { stage: 5, message: 'Finalising materials list...', duration: 15000, targetPercent: 99 }
     ];
 
     let progressInterval: ReturnType<typeof setInterval> | null = null;

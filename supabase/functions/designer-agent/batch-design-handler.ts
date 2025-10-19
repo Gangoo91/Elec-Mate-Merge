@@ -45,11 +45,15 @@ export async function handleBatchDesign(body: any, logger: any) {
 
   const allCircuits = [...inputCircuits, ...inferredCircuits];
 
-  logger.info('Parsed prompt', {
+  // PHASE 1: Enhanced logging for debugging
+  logger.info('✅ STEP 0 Complete - Parsed user requirements', {
+    manualCircuits: inputCircuits.length,
     inferredCircuits: inferredCircuits.length,
-    specialRequirements,
-    installationConstraints,
-    totalCircuits: allCircuits.length
+    totalCircuits: allCircuits.length,
+    specialRequirements: specialRequirements.length,
+    installationConstraints: installationConstraints.length,
+    circuitTypes: allCircuits.map((c: any) => c.loadType),
+    specialReqsSummary: specialRequirements.slice(0, 3)
   });
 
   // Build query from structured inputs + parsed context
@@ -66,64 +70,149 @@ export async function handleBatchDesign(body: any, logger: any) {
   logger.info('🔍 STEP 1: Multi-Query RAG Retrieval');
 
   const uniqueLoadTypes = [...new Set(allCircuits.map((c: any) => c.loadType))];
-  logger.info('Unique load types detected', { loadTypes: uniqueLoadTypes });
+  logger.info('Unique load types detected', { 
+    loadTypes: uniqueLoadTypes,
+    circuitCount: allCircuits.length 
+  });
 
-  const ragSearches = uniqueLoadTypes.slice(0, 8).map((loadType: string) => 
-    intelligentRAGSearch({
-      circuitType: loadType,
-      searchTerms: [loadType, 'circuit design', ...extractSearchTerms(query, allCircuits)],
-      expandedQuery: `${loadType} circuit design requirements ${installationType}`,
-      context: {
-        ragPriority: aiConfig?.ragPriority || {
-          design: 95,
-          bs7671: 85,
-          installation: 75
+  // PHASE 2: Add timeout wrapper for RAG reliability
+  const { withTimeout, Timeouts } = await import('../_shared/timeout.ts');
+  const { loadCoreRegulationsCache } = await import('./core-regulations-cache.ts');
+  
+  const ragSearchesWithTimeout = uniqueLoadTypes.slice(0, 8).map((loadType: string) => 
+    withTimeout(
+      intelligentRAGSearch({
+        circuitType: loadType,
+        searchTerms: [loadType, 'circuit design', ...extractSearchTerms(query, allCircuits)],
+        expandedQuery: `${loadType} circuit design requirements ${installationType}`,
+        context: {
+          ragPriority: aiConfig?.ragPriority || {
+            design: 95,
+            bs7671: 85,
+            installation: 75
+          }
         }
-      }
+      }),
+      15000, // 15s timeout per search
+      `RAG search for ${loadType}`
+    ).catch(error => {
+      logger.warn(`⚠️ RAG search timeout for ${loadType}`, { error: error.message });
+      return { regulations: [], designDocs: [], searchMethod: 'timeout' };
     })
   );
 
   // Also do a general search for diversity and consumer unit
-  ragSearches.push(
-    intelligentRAGSearch({
-      circuitType: 'general',
-      searchTerms: ['diversity', 'consumer unit', 'main switch', 'Appendix 15'],
-      expandedQuery: `electrical installation diversity calculations`,
-      context: { 
-        ragPriority: aiConfig?.ragPriority || {
-          design: 95,
-          bs7671: 85,
-          installation: 75
+  ragSearchesWithTimeout.push(
+    withTimeout(
+      intelligentRAGSearch({
+        circuitType: 'general',
+        searchTerms: ['diversity', 'consumer unit', 'main switch', 'Appendix 15'],
+        expandedQuery: `electrical installation diversity calculations`,
+        context: { 
+          ragPriority: aiConfig?.ragPriority || {
+            design: 95,
+            bs7671: 85,
+            installation: 75
+          }
         }
-      }
+      }),
+      15000, // 15s timeout
+      'RAG search for diversity'
+    ).catch(error => {
+      logger.warn('⚠️ RAG diversity search timeout', { error: error.message });
+      return { regulations: [], designDocs: [], searchMethod: 'timeout' };
     })
   );
 
-  const allRAGResults = await Promise.all(ragSearches);
+  logger.info('📡 Starting parallel RAG searches', {
+    searchCount: ragSearchesWithTimeout.length,
+    timeout: '15s per search',
+    maxTotalTime: '~45s'
+  });
 
-  // Merge and deduplicate regulations
+  const startTime = Date.now();
+  const allRAGResults = await Promise.all(ragSearchesWithTimeout);
+  const ragElapsedMs = Date.now() - startTime;
+  
+  logger.info('✅ All RAG searches complete', {
+    totalTimeMs: ragElapsedMs,
+    successfulSearches: allRAGResults.filter((r: any) => r.regulations?.length > 0).length,
+    timeouts: allRAGResults.filter((r: any) => r.searchMethod === 'timeout').length
+  });
+
+  // PHASE 2: Merge and deduplicate regulations (by reg number AND content hash)
+  const seenHashes = new Set<string>();
   const mergedRegulations = allRAGResults
     .flatMap(r => r.regulations || [])
-    .reduce((acc: any[], reg: any) => {
-      if (!acc.find((r: any) => r.regulation_number === reg.regulation_number)) {
-        acc.push(reg);
+    .filter((reg: any) => {
+      // Deduplicate by regulation_number
+      const isDuplicateNumber = mergedRegulations.some((r: any) => 
+        r.regulation_number === reg.regulation_number
+      );
+      
+      // Also deduplicate by content hash (catch near-identical entries)
+      const contentHash = hashContent(reg.content || '');
+      const isDuplicateContent = seenHashes.has(contentHash);
+      
+      if (!isDuplicateNumber && !isDuplicateContent) {
+        seenHashes.add(contentHash);
+        return true;
       }
-      return acc;
-    }, [])
+      return false;
+    })
     .sort((a: any, b: any) => (b.hybrid_score || 0) - (a.hybrid_score || 0))
     .slice(0, 25);
 
   logger.info('✅ Multi-Query RAG Complete', {
-    searches: ragSearches.length,
+    searches: ragSearchesWithTimeout.length,
     uniqueLoadTypes,
     totalRegulations: mergedRegulations.length,
-    regulationNumbers: mergedRegulations.slice(0, 5).map((r: any) => r.regulation_number)
+    topRegulations: mergedRegulations.slice(0, 5).map((r: any) => ({
+      number: r.regulation_number,
+      score: r.hybrid_score
+    }))
   });
 
-  const ragResults = {
-    regulations: mergedRegulations,
-    designDocs: allRAGResults[0]?.designDocs || []
-  };
+  // PHASE 2: Fallback to core regulations if insufficient results
+  let ragResults;
+  if (mergedRegulations.length < 5) {
+    logger.warn('⚠️ Insufficient RAG results, loading core regulations cache', {
+      foundRegulations: mergedRegulations.length,
+      requiredMinimum: 5
+    });
+    
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = await import('../_shared/deps.ts').then(m => 
+      m.createClient(supabaseUrl, supabaseKey)
+    );
+    
+    try {
+      const coreRegs = await loadCoreRegulationsCache(supabase);
+      logger.info('✅ Loaded core regulations fallback', { count: coreRegs.length });
+      
+      ragResults = {
+        regulations: [...mergedRegulations, ...coreRegs].slice(0, 25),
+        designDocs: allRAGResults[0]?.designDocs || []
+      };
+    } catch (fallbackError) {
+      logger.error('🚨 Core regulations cache failed', { error: fallbackError });
+      ragResults = {
+        regulations: mergedRegulations,
+        designDocs: allRAGResults[0]?.designDocs || []
+      };
+    }
+  } else {
+    ragResults = {
+      regulations: mergedRegulations,
+      designDocs: allRAGResults[0]?.designDocs || []
+    };
+  }
+  
+  logger.info('📚 Final RAG knowledge base', {
+    regulations: ragResults.regulations.length,
+    designDocs: ragResults.designDocs.length
+  });
   
   // STEP 2: Build System Prompt with RAG Knowledge + Parsed Context
   logger.info('📝 STEP 2: Building AI Prompt with RAG Context');
@@ -137,160 +226,211 @@ export async function handleBatchDesign(body: any, logger: any) {
     installationConstraints
   );
   
+  // PHASE 1: Log prompt details for debugging
+  logger.info('✅ STEP 2 Complete - System prompt built', {
+    promptLength: systemPrompt.length,
+    promptLines: systemPrompt.split('\n').length,
+    includesRAG: systemPrompt.includes('BS 7671'),
+    circuitHints: allCircuits.length,
+    specialRequirements: specialRequirements.length
+  });
+  
   // STEP 3: Call AI with Tool Calling (structured output)
   logger.info('🤖 STEP 3: Generating Design with AI + Structured Output');
+  
+  const requestBody = {
+    model: aiConfig?.model || 'openai/gpt-5',
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: query }
+    ],
+    max_completion_tokens: aiConfig?.maxTokens || (allCircuits.length > 12 ? 20000 : 15000),
+    tools: [{
+      type: "function",
+      function: {
+        name: "design_circuits",
+        description: "Return complete multi-circuit electrical design with BS 7671 compliance",
+        parameters: {
+          type: "object",
+          properties: {
+            circuits: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  circuitNumber: { type: "number" },
+                  name: { type: "string" },
+                  loadType: { type: "string" },
+                  loadPower: { type: "number" },
+                  voltage: { type: "number" },
+                  phases: { type: "string" },
+                  cableSize: { type: "number" },
+                  cpcSize: { type: "number" },
+                  cableLength: { type: "number" },
+                  installationMethod: { type: "string" },
+                  protectionDevice: {
+                    type: "object",
+                    properties: {
+                      type: { type: "string" },
+                      rating: { type: "number" },
+                      curve: { type: "string" },
+                      kaRating: { type: "number" }
+                    }
+                  },
+                  rcdProtected: { type: "boolean" },
+                  rcdRating: { type: "number" },
+                  afddRequired: { type: "boolean" },
+                  calculations: {
+                    type: "object",
+                    properties: {
+                      Ib: { type: "number" },
+                      In: { type: "number" },
+                      Iz: { type: "number" },
+                      voltageDrop: {
+                        type: "object",
+                        properties: {
+                          volts: { type: "number" },
+                          percent: { type: "number" },
+                          compliant: { type: "boolean" }
+                        }
+                      },
+                      zs: { type: "number" },
+                      maxZs: { type: "number" }
+                    }
+                  },
+                  justifications: {
+                    type: "object",
+                    properties: {
+                      cableSize: { type: "string" },
+                      protection: { type: "string" },
+                      rcd: { type: "string" }
+                    }
+                  },
+                  warnings: {
+                    type: "array",
+                    items: { type: "string" }
+                  }
+                }
+              }
+            },
+            diversityBreakdown: {
+              type: "object",
+              properties: {
+                totalConnectedLoad: { type: "number" },
+                diversifiedLoad: { type: "number" },
+                overallDiversityFactor: { type: "number" },
+                reasoning: { type: "string" },
+                bs7671Reference: { type: "string" },
+                circuitDiversity: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      circuitName: { type: "string" },
+                      connectedLoad: { type: "number" },
+                      diversityFactorApplied: { type: "number" },
+                      diversifiedLoad: { type: "number" },
+                      justification: { type: "string" }
+                    }
+                  }
+                }
+              }
+            },
+            materials: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  name: { type: "string" },
+                  specification: { type: "string" },
+                  quantity: { type: "string" },
+                  unit: { type: "string" }
+                }
+              }
+            },
+            consumerUnit: {
+              type: "object",
+              properties: {
+                type: { type: "string" },
+                mainSwitchRating: { type: "number" },
+                incomingSupply: { type: "object" }
+              }
+            }
+          },
+          required: ["circuits", "diversityBreakdown", "materials", "consumerUnit"]
+        }
+      }
+    }],
+    tool_choice: { type: "function", function: { name: "design_circuits" } }
+  };
+  
+  // PHASE 1: Log AI request details (without exposing keys)
+  logger.info('📤 Sending AI request', {
+    model: requestBody.model,
+    maxTokens: requestBody.max_completion_tokens,
+    systemPromptLength: systemPrompt.length,
+    userQueryLength: query.length,
+    toolsConfigured: requestBody.tools.length
+  });
+  
+  const aiStartTime = Date.now();
   const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${lovableApiKey}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      model: aiConfig?.model || 'openai/gpt-5',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: query }
-      ],
-      max_completion_tokens: aiConfig?.maxTokens || (allCircuits.length > 12 ? 20000 : 15000),
-      tools: [{
-        type: "function",
-        function: {
-          name: "design_circuits",
-          description: "Return complete multi-circuit electrical design with BS 7671 compliance",
-          parameters: {
-            type: "object",
-            properties: {
-              circuits: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    circuitNumber: { type: "number" },
-                    name: { type: "string" },
-                    loadType: { type: "string" },
-                    loadPower: { type: "number" },
-                    voltage: { type: "number" },
-                    phases: { type: "string" },
-                    cableSize: { type: "number" },
-                    cpcSize: { type: "number" },
-                    cableLength: { type: "number" },
-                    installationMethod: { type: "string" },
-                    protectionDevice: {
-                      type: "object",
-                      properties: {
-                        type: { type: "string" },
-                        rating: { type: "number" },
-                        curve: { type: "string" },
-                        kaRating: { type: "number" }
-                      }
-                    },
-                    rcdProtected: { type: "boolean" },
-                    rcdRating: { type: "number" },
-                    afddRequired: { type: "boolean" },
-                    calculations: {
-                      type: "object",
-                      properties: {
-                        Ib: { type: "number" },
-                        In: { type: "number" },
-                        Iz: { type: "number" },
-                        voltageDrop: {
-                          type: "object",
-                          properties: {
-                            volts: { type: "number" },
-                            percent: { type: "number" },
-                            compliant: { type: "boolean" }
-                          }
-                        },
-                        zs: { type: "number" },
-                        maxZs: { type: "number" }
-                      }
-                    },
-                    justifications: {
-                      type: "object",
-                      properties: {
-                        cableSize: { type: "string" },
-                        protection: { type: "string" },
-                        rcd: { type: "string" }
-                      }
-                    },
-                    warnings: {
-                      type: "array",
-                      items: { type: "string" }
-                    }
-                  }
-                }
-              },
-              diversityBreakdown: {
-                type: "object",
-                properties: {
-                  totalConnectedLoad: { type: "number" },
-                  diversifiedLoad: { type: "number" },
-                  overallDiversityFactor: { type: "number" },
-                  reasoning: { type: "string" },
-                  bs7671Reference: { type: "string" },
-                  circuitDiversity: {
-                    type: "array",
-                    items: {
-                      type: "object",
-                      properties: {
-                        circuitName: { type: "string" },
-                        connectedLoad: { type: "number" },
-                        diversityFactorApplied: { type: "number" },
-                        diversifiedLoad: { type: "number" },
-                        justification: { type: "string" }
-                      }
-                    }
-                  }
-                }
-              },
-              materials: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    name: { type: "string" },
-                    specification: { type: "string" },
-                    quantity: { type: "string" },
-                    unit: { type: "string" }
-                  }
-                }
-              },
-              consumerUnit: {
-                type: "object",
-                properties: {
-                  type: { type: "string" },
-                  mainSwitchRating: { type: "number" },
-                  incomingSupply: { type: "object" }
-                }
-              }
-            },
-            required: ["circuits", "diversityBreakdown", "materials", "consumerUnit"]
-          }
-        }
-      }],
-      tool_choice: { type: "function", function: { name: "design_circuits" } }
-    })
+    body: JSON.stringify(requestBody)
+  });
+  
+  const aiElapsedMs = Date.now() - aiStartTime;
+  
+  // PHASE 1: Log AI response status
+  logger.info('📥 AI response received', {
+    status: response.status,
+    timeMs: aiElapsedMs,
+    ok: response.ok
   });
   
   if (!response.ok) {
     const errorText = await response.text();
-    logger.error('AI API error:', response.status, errorText);
-    throw new Error(`AI API error: ${response.status}`);
+    logger.error('🚨 AI API error', { 
+      status: response.status, 
+      statusText: response.statusText,
+      errorPreview: errorText.substring(0, 500)
+    });
+    throw new Error(`AI API error: ${response.status} - ${errorText.substring(0, 200)}`);
   }
   
   let aiData;
   try {
     aiData = await response.json();
+    logger.info('✅ AI response parsed successfully', {
+      hasChoices: !!aiData.choices,
+      choiceCount: aiData.choices?.length || 0,
+      hasUsage: !!aiData.usage,
+      tokensUsed: aiData.usage?.total_tokens || 0
+    });
   } catch (parseError) {
-    logger.error('Failed to parse AI response JSON', parseError);
+    logger.error('🚨 Failed to parse AI response JSON', { 
+      error: parseError instanceof Error ? parseError.message : String(parseError) 
+    });
     throw new Error('Invalid response from AI service');
   }
   
   let toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
   
+  // PHASE 1: Enhanced logging for tool call detection
+  logger.info('🔍 Checking for tool call', {
+    hasToolCall: !!toolCall,
+    hasMessage: !!aiData.choices?.[0]?.message,
+    hasContent: !!aiData.choices?.[0]?.message?.content,
+    contentPreview: aiData.choices?.[0]?.message?.content?.substring(0, 100)
+  });
+  
   // Retry once if no tool call (AI might have returned text instead)
   if (!toolCall) {
-    logger.warn('No tool call in first response, retrying with stricter instruction');
+    logger.warn('⚠️ No tool call in first response, retrying with stricter instruction');
     
     const retryResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -332,33 +472,80 @@ export async function handleBatchDesign(body: any, logger: any) {
     }
   }
   
-  // Final check - if still no tool call, try parsing content as JSON
+  // PHASE 1: Enhanced fallback - try parsing content as JSON or extract from markdown
   if (!toolCall) {
     const content = aiData.choices?.[0]?.message?.content;
+    logger.warn('⚠️ Still no tool call after retry, attempting content parsing', {
+      hasContent: !!content,
+      contentLength: content?.length || 0
+    });
+    
     if (content) {
+      // Try 1: Direct JSON parse
       try {
         const parsed = JSON.parse(content);
         if (parsed.circuits) {
-          logger.info('Recovered design from content JSON');
+          logger.info('✅ Recovered design from direct JSON content');
           toolCall = { function: { arguments: content } };
         }
       } catch (e) {
-        logger.error('Failed to parse content as JSON', e);
+        // Try 2: Extract JSON from markdown code blocks
+        const jsonMatch = content.match(/```(?:json)?\n?([\s\S]*?)\n?```/);
+        if (jsonMatch) {
+          try {
+            const parsed = JSON.parse(jsonMatch[1]);
+            if (parsed.circuits) {
+              logger.info('✅ Recovered design from markdown JSON block');
+              toolCall = { function: { arguments: jsonMatch[1] } };
+            }
+          } catch (e2) {
+            logger.error('🚨 Failed to parse extracted JSON', { 
+              error: e2 instanceof Error ? e2.message : String(e2) 
+            });
+          }
+        } else {
+          logger.error('🚨 No JSON found in content', { 
+            error: e instanceof Error ? e.message : String(e),
+            contentPreview: content.substring(0, 300)
+          });
+        }
       }
     }
     
     if (!toolCall) {
-      logger.error('AI did not return structured design after retry', {
-        hasContent: !!aiData.choices?.[0]?.message?.content,
-        contentPreview: aiData.choices?.[0]?.message?.content?.substring(0, 200)
+      logger.error('🚨 AI did not return structured design after all attempts', {
+        hasContent: !!content,
+        contentPreview: content?.substring(0, 200),
+        fullContentLength: content?.length || 0
       });
-      throw new Error('AI did not return structured design (no tool call). Please try again.');
+      throw new Error('AI did not return structured design (no tool call). The AI may have returned text instead of calling the design_circuits function. Please try again or simplify your request.');
     }
   }
   
-  const designData = JSON.parse(toolCall.function.arguments);
+  // PHASE 1: Log tool call extraction success
+  logger.info('✅ Tool call extracted', {
+    functionName: toolCall.function?.name,
+    argumentsLength: toolCall.function?.arguments?.length || 0
+  });
   
-  // Validate AI output
+  let designData;
+  try {
+    designData = JSON.parse(toolCall.function.arguments);
+    logger.info('✅ Design data parsed successfully', {
+      hasCircuits: !!designData.circuits,
+      circuitCount: designData.circuits?.length || 0,
+      hasDiversity: !!designData.diversityBreakdown,
+      hasMaterials: !!designData.materials
+    });
+  } catch (parseError) {
+    logger.error('🚨 Failed to parse tool call arguments', {
+      error: parseError instanceof Error ? parseError.message : String(parseError),
+      argumentsPreview: toolCall.function.arguments.substring(0, 500)
+    });
+    throw new Error('Failed to parse AI design output');
+  }
+  
+  // PHASE 1: Validate AI output with detailed logging
   logger.info('🔍 Validating AI design output');
   const validationWarnings: string[] = [];
   
@@ -385,10 +572,17 @@ export async function handleBatchDesign(body: any, logger: any) {
     }
   });
   
-  logger.info('✅ Design Complete', {
+  // PHASE 1: Enhanced completion logging
+  logger.info('✅ STEP 3 Complete - Design validation finished', {
     circuits: designData.circuits?.length || 0,
+    requestedCircuits: allCircuits.length,
     tokensUsed: aiData.usage?.total_tokens || 0,
-    validationWarnings: validationWarnings.length
+    promptTokens: aiData.usage?.prompt_tokens || 0,
+    completionTokens: aiData.usage?.completion_tokens || 0,
+    validationWarnings: validationWarnings.length,
+    warningsSummary: validationWarnings.slice(0, 3),
+    aiTimeMs: aiElapsedMs,
+    ragTimeMs: ragElapsedMs
   });
   
   // STEP 4: Return structured design (NO costEstimate)
@@ -686,4 +880,11 @@ function extractPracticalGuidance(circuits: any[]): string[] {
   }
   
   return guidance;
+}
+
+// PHASE 2: Simple content hash function for deduplication
+function hashContent(content: string): string {
+  // Simple hash using first 100 chars + length as fingerprint
+  const normalized = content.toLowerCase().replace(/\s+/g, ' ').trim();
+  return `${normalized.substring(0, 100)}_${normalized.length}`;
 }
