@@ -223,6 +223,14 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
 
   const canGenerate = projectName.trim() && (circuits.length > 0 || promptDescription.trim().length > 0);
 
+  // VALIDATION HELPER: Show what's missing
+  const getMissingRequirements = () => {
+    const missing: string[] = [];
+    if (!projectName.trim()) missing.push('Project Name');
+    if (circuits.length === 0 && !promptDescription.trim()) missing.push('Description or Circuits');
+    return missing;
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pb-6">
       {/* 1. HERO PROMPT SECTION */}
@@ -531,14 +539,27 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       </Collapsible>
 
       {/* GENERATE BUTTON */}
-      <Button
-        type="submit"
-        disabled={!canGenerate || isProcessing}
-        className="w-full h-12 sm:h-14 text-base sm:text-lg font-semibold gap-2"
-      >
-        <Sparkles className="h-5 w-5" />
-        {isProcessing ? 'Generating...' : getButtonText()}
-      </Button>
+      <div className="space-y-2">
+        {!canGenerate && (
+          <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-lg border border-destructive/20">
+            <p className="font-medium">Missing required fields:</p>
+            <ul className="list-disc list-inside mt-1 space-y-0.5">
+              {getMissingRequirements().map(req => (
+                <li key={req}>{req}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        
+        <Button
+          type="submit"
+          disabled={!canGenerate || isProcessing}
+          className="w-full h-12 sm:h-14 text-base sm:text-lg font-semibold gap-2"
+        >
+          <Sparkles className="h-5 w-5" />
+          {isProcessing ? 'Generating...' : getButtonText()}
+        </Button>
+      </div>
     </form>
   );
 };
