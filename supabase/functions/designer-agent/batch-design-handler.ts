@@ -251,129 +251,60 @@ export async function handleBatchDesign(body: any, logger: any) {
   // STEP 3: Call AI with Tool Calling (structured output)
   logger.info('🤖 STEP 3: Generating Design with AI + Structured Output');
   
+  // ✨ SIMPLIFIED SCHEMA - Matching AI RAMS Pattern (5 simple fields)
   const requestBody = {
-    model: aiConfig?.model || 'openai/gpt-5',
+    model: aiConfig?.model || 'openai/gpt-5-mini',
     messages: [
       { 
         role: 'system', 
-        content: systemPrompt + '\n\n⚠️ CRITICAL INSTRUCTION:\n- You MUST call the "design_circuits" function with valid circuit data\n- Generate AT LEAST 1 circuit (circuits array cannot be empty)\n- DO NOT output text, markdown, or explanations - ONLY call the function\n- If project description lacks detail, infer typical circuits for that installation type'
+        content: `You are an expert electrical designer specialising in BS 7671:2018+A3:2024 compliant circuit design.
+
+KNOWLEDGE BASE (${ragResults.regulations.length} verified regulations):
+${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.substring(0, 200)}...`).join('\n\n')}
+
+YOUR ROLE: Design compliant electrical circuits with cable sizing, protection devices, and voltage drop calculations.
+
+INSTRUCTIONS:
+1. For each circuit, specify: cable size, breaker type/rating, voltage drop %, earth fault loop impedance
+2. Reference specific BS 7671 regulations (e.g., "433.1.1 requires Ib ≤ In ≤ Iz")
+3. Include practical installation notes
+4. Warn about any non-compliances
+
+Return your design using the provided tool schema.`
       },
       { role: 'user', content: query }
     ],
-    max_completion_tokens: aiConfig?.maxTokens || (allCircuits.length > 12 ? 20000 : 15000),
+    max_completion_tokens: aiConfig?.maxTokens || 8000,
     tools: [{
       type: "function",
       function: {
         name: "design_circuits",
-        description: "MANDATORY: You MUST call this function to return the electrical design. DO NOT return text - only call this function with design data. You MUST generate at least 1 circuit.",
+        description: "Return electrical circuit design with BS 7671 compliance",
         parameters: {
           type: "object",
           properties: {
-            circuits: {
+            response: { 
+              type: "string",
+              description: "Conversational summary of the design in UK English"
+            },
+            circuits: { 
               type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  circuitNumber: { type: "number" },
-                  name: { type: "string" },
-                  loadType: { type: "string" },
-                  loadPower: { type: "number" },
-                  voltage: { type: "number" },
-                  phases: { type: "string" },
-                  cableSize: { type: "number" },
-                  cpcSize: { type: "number" },
-                  cableLength: { type: "number" },
-                  installationMethod: { type: "string" },
-                  protectionDevice: {
-                    type: "object",
-                    properties: {
-                      type: { type: "string" },
-                      rating: { type: "number" },
-                      curve: { type: "string" },
-                      kaRating: { type: "number" }
-                    }
-                  },
-                  rcdProtected: { type: "boolean" },
-                  rcdRating: { type: "number" },
-                  afddRequired: { type: "boolean" },
-                  calculations: {
-                    type: "object",
-                    properties: {
-                      Ib: { type: "number" },
-                      In: { type: "number" },
-                      Iz: { type: "number" },
-                      voltageDrop: {
-                        type: "object",
-                        properties: {
-                          volts: { type: "number" },
-                          percent: { type: "number" },
-                          compliant: { type: "boolean" }
-                        }
-                      },
-                      zs: { type: "number" },
-                      maxZs: { type: "number" }
-                    }
-                  },
-                  justifications: {
-                    type: "object",
-                    properties: {
-                      cableSize: { type: "string" },
-                      protection: { type: "string" },
-                      rcd: { type: "string" }
-                    }
-                  },
-                  warnings: {
-                    type: "array",
-                    items: { type: "string" }
-                  }
-                }
-              }
+              description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations"
             },
-            diversityBreakdown: {
-              type: "object",
-              properties: {
-                totalConnectedLoad: { type: "number" },
-                diversifiedLoad: { type: "number" },
-                overallDiversityFactor: { type: "number" },
-                reasoning: { type: "string" },
-                bs7671Reference: { type: "string" },
-                circuitDiversity: {
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      circuitName: { type: "string" },
-                      connectedLoad: { type: "number" },
-                      diversityFactorApplied: { type: "number" },
-                      diversifiedLoad: { type: "number" },
-                      justification: { type: "string" }
-                    }
-                  }
-                }
-              }
-            },
-            materials: {
+            materials: { 
               type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  name: { type: "string" },
-                  specification: { type: "string" },
-                  quantity: { type: "string" },
-                  unit: { type: "string" }
-                }
-              }
+              description: "Required materials list with specifications"
             },
-            consumerUnit: {
-              type: "object",
-              properties: {
-                type: { type: "string" },
-                mainSwitchRating: { type: "number" },
-                incomingSupply: { type: "object" }
-              }
+            warnings: { 
+              type: "array",
+              description: "Any compliance warnings or important notes"
+            },
+            suggestedNextAgents: {
+              type: "array",
+              description: "Suggested follow-up agents (cost-engineer, installer, etc.)"
             }
           },
-          required: ["circuits", "diversityBreakdown", "materials", "consumerUnit"]
+          required: ["response", "circuits"]
         }
       }
     }],
@@ -446,7 +377,7 @@ export async function handleBatchDesign(body: any, logger: any) {
   
   // Retry once if no tool call (AI might have returned text instead)
   if (!toolCall) {
-    logger.warn('⚠️ No tool call in first response, retrying with stricter instruction');
+    logger.warn('⚠️ No tool call in first response, retrying');
     
     const retryResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -455,33 +386,58 @@ export async function handleBatchDesign(body: any, logger: any) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: aiConfig?.model || 'openai/gpt-5',
+        model: aiConfig?.model || 'openai/gpt-5-mini',
         messages: [
           { 
             role: 'system', 
-            content: systemPrompt + '\n\n⚠️ CRITICAL INSTRUCTION:\n- You MUST call the "design_circuits" function\n- Generate AT LEAST 1 circuit (circuits array cannot be empty)\n- DO NOT output text, markdown, or explanations\n- ONLY return the function call with valid JSON data\n- If project description is vague, infer typical circuits for that installation type'
+            content: `You are an expert electrical designer specialising in BS 7671:2018+A3:2024 compliant circuit design.
+
+KNOWLEDGE BASE (${ragResults.regulations.length} verified regulations):
+${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.substring(0, 200)}...`).join('\n\n')}
+
+YOUR ROLE: Design compliant electrical circuits with cable sizing, protection devices, and voltage drop calculations.
+
+INSTRUCTIONS:
+1. For each circuit, specify: cable size, breaker type/rating, voltage drop %, earth fault loop impedance
+2. Reference specific BS 7671 regulations (e.g., "433.1.1 requires Ib ≤ In ≤ Iz")
+3. Include practical installation notes
+4. Warn about any non-compliances
+
+Return your design using the provided tool schema.`
           },
           { role: 'user', content: query }
         ],
-        max_completion_tokens: aiConfig?.maxTokens || 15000,
+        max_completion_tokens: aiConfig?.maxTokens || 8000,
         tools: [{
           type: "function",
           function: {
             name: "design_circuits",
-            description: "MANDATORY: Return electrical design data. You MUST generate at least 1 circuit.",
+            description: "Return electrical circuit design with BS 7671 compliance",
             parameters: {
               type: "object",
               properties: {
-                circuits: { 
-                  type: "array", 
-                  minItems: 1,
-                  items: { type: "object" } 
+                response: { 
+                  type: "string",
+                  description: "Conversational summary of the design in UK English"
                 },
-                diversityBreakdown: { type: "object" },
-                materials: { type: "array", items: { type: "object" } },
-                consumerUnit: { type: "object" }
+                circuits: { 
+                  type: "array",
+                  description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations"
+                },
+                materials: { 
+                  type: "array",
+                  description: "Required materials list with specifications"
+                },
+                warnings: { 
+                  type: "array",
+                  description: "Any compliance warnings or important notes"
+                },
+                suggestedNextAgents: {
+                  type: "array",
+                  description: "Suggested follow-up agents (cost-engineer, installer, etc.)"
+                }
               },
-              required: ["circuits", "diversityBreakdown", "materials", "consumerUnit"]
+              required: ["response", "circuits"]
             }
           }
         }],
@@ -587,32 +543,9 @@ export async function handleBatchDesign(body: any, logger: any) {
     throw new Error('Failed to parse AI design output');
   }
   
-  // PHASE 1: Validate AI output with detailed logging
+  // ✨ SIMPLIFIED VALIDATION - Trust AI more, just ensure basics
   logger.info('🔍 Validating AI design output');
-  const validationWarnings: string[] = [];
-  
-  designData.circuits?.forEach((circuit: any, i: number) => {
-    if (!circuit.calculations?.Ib) {
-      const warning = `Circuit ${i+1} (${circuit.name}): Missing Ib calculation`;
-      logger.warn(warning);
-      validationWarnings.push(warning);
-    }
-    if (!circuit.calculations?.voltageDrop?.volts) {
-      const warning = `Circuit ${i+1} (${circuit.name}): Missing voltage drop`;
-      logger.warn(warning);
-      validationWarnings.push(warning);
-    }
-    if (circuit.calculations?.voltageDrop?.percent > 5.5) {
-      const warning = `Circuit ${i+1} (${circuit.name}): Voltage drop ${circuit.calculations.voltageDrop.percent}% exceeds 5%`;
-      logger.warn(warning);
-      validationWarnings.push(warning);
-    }
-    if (!circuit.justifications?.cableSize) {
-      const warning = `Circuit ${i+1} (${circuit.name}): Missing cable size justification`;
-      logger.warn(warning);
-      validationWarnings.push(warning);
-    }
-  });
+  const validationWarnings: string[] = designData.warnings || [];
   
   // PHASE 1: Enhanced completion logging
   logger.info('✅ STEP 3 Complete - Design validation finished', {
@@ -627,11 +560,17 @@ export async function handleBatchDesign(body: any, logger: any) {
     ragTimeMs: ragElapsedMs
   });
   
-  // STEP 4: Return structured design (NO costEstimate)
-  logger.info('✅ Returning design to client');
+  // STEP 4: Return structured design (matching AI RAMS pattern)
+  logger.info('✅ Returning design to client', {
+    hasResponse: !!designData.response,
+    circuitCount: designData.circuits?.length || 0,
+    hasMaterials: !!designData.materials,
+    warningCount: validationWarnings.length
+  });
   
   return new Response(JSON.stringify({
     success: true,
+    response: designData.response || 'Design complete',
     design: {
       projectName: projectInfo.name,
       location: projectInfo.location,
@@ -641,18 +580,17 @@ export async function handleBatchDesign(body: any, logger: any) {
       totalLoad: Array.isArray(designData.circuits) 
         ? designData.circuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0)
         : 0,
-      diversityApplied: true,
-      diversityFactor: designData.diversityBreakdown?.overallDiversityFactor || 0.75,
-      diversityBreakdown: designData.diversityBreakdown,
       circuits: designData.circuits,
-      consumerUnit: designData.consumerUnit,
-      materials: designData.materials,
-      practicalGuidance: extractPracticalGuidance(designData.circuits)
+      materials: designData.materials || [],
+      warnings: validationWarnings,
+      suggestedNextAgents: designData.suggestedNextAgents || ['cost-engineer', 'installer']
     },
     metadata: {
       ragCalls: ragResults.regulations?.length || 0,
-      model: aiConfig?.model || 'openai/gpt-5',
-      tokensUsed: aiData.usage?.total_tokens
+      model: aiConfig?.model || 'openai/gpt-5-mini',
+      tokensUsed: aiData.usage?.total_tokens,
+      aiTimeMs: aiElapsedMs,
+      ragTimeMs: ragElapsedMs
     }
   }), { 
     headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
