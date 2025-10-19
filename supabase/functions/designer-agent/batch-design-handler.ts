@@ -659,7 +659,153 @@ Return your design using the provided tool schema.`
                 circuits: { 
                   type: "array",
                   description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations",
-                  items: { type: "object" }
+                  items: {
+                    type: "object",
+                    properties: {
+                      name: { type: "string" },
+                      circuitNumber: { type: "number" },
+                      loadType: { type: "string" },
+                      loadPower: { type: "number" },
+                      phases: { type: "number" },
+                      cableSize: { type: "string" },
+                      cpcSize: { type: "string" },
+                      cableLength: { type: "number" },
+                      protectionDevice: {
+                        type: "object",
+                        properties: {
+                          type: { type: "string" },
+                          rating: { type: "number" },
+                          curve: { type: "string" },
+                          breakingCapacity: { type: "number" }
+                        }
+                      },
+                      rcdProtected: { type: "boolean" },
+                      rcdRating: { type: "number" },
+                      voltageDrop: {
+                        type: "object",
+                        properties: {
+                          volts: { type: "number" },
+                          percent: { type: "number" },
+                          compliant: { type: "boolean" },
+                          limit: { type: "number" }
+                        },
+                        required: ["volts", "percent", "compliant", "limit"]
+                      },
+                      zs: { type: "number" },
+                      maxZs: { type: "number" },
+                      justifications: {
+                        type: "object",
+                        properties: {
+                          cableSize: { type: "string" },
+                          protection: { type: "string" },
+                          rcd: { type: "string" }
+                        },
+                        required: ["cableSize", "protection"]
+                      },
+                      warnings: {
+                        type: "array",
+                        items: { type: "string" }
+                      },
+                      installationMethod: { type: "string" },
+                      diversityFactor: { type: "number" },
+                      diversityJustification: { type: "string" },
+                      faultCurrentAnalysis: {
+                        type: "object",
+                        properties: {
+                          psccAtCircuit: { type: "number" },
+                          deviceBreakingCapacity: { type: "number" },
+                          compliant: { type: "boolean" },
+                          marginOfSafety: { type: "string" },
+                          regulation: { type: "string" }
+                        }
+                      },
+                      earthingRequirements: {
+                        type: "object",
+                        properties: {
+                          cpcSize: { type: "string" },
+                          supplementaryBonding: { type: "boolean" },
+                          bondingConductorSize: { type: "string" },
+                          justification: { type: "string" },
+                          regulation: { type: "string" }
+                        }
+                      },
+                      deratingFactors: {
+                        type: "object",
+                        properties: {
+                          Ca: { type: "number" },
+                          Cg: { type: "number" },
+                          Ci: { type: "number" },
+                          overall: { type: "number" },
+                          explanation: { type: "string" },
+                          tableReferences: { type: "string" }
+                        }
+                      },
+                      installationGuidance: {
+                        type: "object",
+                        properties: {
+                          referenceMethod: { type: "string" },
+                          description: { type: "string" },
+                          clipSpacing: { type: "string" },
+                          practicalTips: {
+                            type: "array",
+                            items: { type: "string" }
+                          },
+                          regulation: { type: "string" }
+                        }
+                      },
+                      specialLocationCompliance: {
+                        type: "object",
+                        properties: {
+                          isSpecialLocation: { type: "boolean" },
+                          locationType: { type: "string" },
+                          requirements: {
+                            type: "array",
+                            items: { type: "string" }
+                          },
+                          zonesApplicable: { type: "string" },
+                          regulation: { type: "string" }
+                        }
+                      },
+                      expectedTestResults: {
+                        type: "object",
+                        properties: {
+                          r1r2: {
+                            type: "object",
+                            properties: {
+                              at20C: { type: "string" },
+                              at70C: { type: "string" },
+                              calculation: { type: "string" }
+                            }
+                          },
+                          zs: {
+                            type: "object",
+                            properties: {
+                              calculated: { type: "string" },
+                              maxPermitted: { type: "string" },
+                              compliant: { type: "boolean" }
+                            }
+                          },
+                          insulationResistance: {
+                            type: "object",
+                            properties: {
+                              testVoltage: { type: "string" },
+                              minResistance: { type: "string" }
+                            }
+                          },
+                          polarity: { type: "string" },
+                          rcdTest: {
+                            type: "object",
+                            properties: {
+                              at1x: { type: "string" },
+                              at5x: { type: "string" },
+                              regulation: { type: "string" }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    required: ["name", "circuitNumber", "loadType", "cableSize", "protectionDevice", "voltageDrop", "justifications"]
+                  }
                 },
                 materials: { 
                   type: "array",
@@ -738,11 +884,38 @@ ${compactRagContext}
 
 Return EXACTLY a single JSON object with keys: response, circuits, materials, warnings. No markdown, no prose outside JSON.
 
+You MUST populate all RAG-driven fields using the regulations provided:
+1. diversityFactor & diversityJustification (BS 7671 Appendix 15)
+2. faultCurrentAnalysis (Regulation 434.5.2)
+3. earthingRequirements (Sections 411, 544)
+4. deratingFactors (Appendix 4 tables - show Ca, Cg, Ci)
+5. installationGuidance (Appendix 4 reference methods)
+6. specialLocationCompliance (Sections 701/702/714)
+7. expectedTestResults (R1+R2, Zs, insulation, RCD times)
+
 Structure:
 - response: brief summary in UK English
-- circuits: array of circuit objects with name, circuitNumber, loadType, loadPower, phases, cableSize, cpcSize, cableLength, protectionDevice, rcdProtected, calculations, justifications, warnings, installationMethod
+- circuits: array of circuit objects with:
+  * name, circuitNumber, loadType, loadPower, phases
+  * cableSize, cpcSize, cableLength
+  * protectionDevice: {type, rating, curve, breakingCapacity}
+  * rcdProtected, rcdRating
+  * voltageDrop: {volts, percent, compliant, limit}
+  * zs, maxZs
+  * justifications: {cableSize, protection, rcd}
+  * warnings: array of strings
+  * installationMethod
+  * diversityFactor, diversityJustification
+  * faultCurrentAnalysis: {psccAtCircuit, deviceBreakingCapacity, compliant, marginOfSafety, regulation}
+  * earthingRequirements: {cpcSize, supplementaryBonding, bondingConductorSize, justification, regulation}
+  * deratingFactors: {Ca, Cg, Ci, overall, explanation, tableReferences}
+  * installationGuidance: {referenceMethod, description, clipSpacing, practicalTips[], regulation}
+  * specialLocationCompliance: {isSpecialLocation, locationType, requirements[], zonesApplicable, regulation}
+  * expectedTestResults: {r1r2: {at20C, at70C, calculation}, zs: {calculated, maxPermitted, compliant}, insulationResistance: {testVoltage, minResistance}, polarity, rcdTest: {at1x, at5x, regulation}}
 - materials: array of material objects with name, specification, quantity, unit
-- warnings: array of strings`
+- warnings: array of strings
+
+Always cite regulation numbers and show working for calculations.`
             },
             { role: 'user', content: query }
           ],
