@@ -58,6 +58,9 @@ export const Timeouts = {
   
   /** AI call timeout (30s) - Fast failure detection for Gemini/GPT */
   AI_CALL: 30000,
+  
+  /** Super extended (4 min 40 sec) - complex multi-circuit designs with RAG */
+  SUPER_EXTENDED: 280000,
 };
 
 /**

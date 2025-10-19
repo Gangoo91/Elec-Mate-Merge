@@ -1,5 +1,6 @@
 import { corsHeaders } from '../_shared/deps.ts';
-import { getMaxZs } from "../shared/bs7671ProtectionData.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { intelligentRAGSearch } from './intelligentRAG.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
@@ -26,75 +27,211 @@ const INSTALLATION_CONTEXT = {
 };
 
 export async function handleBatchDesign(body: any, logger: any) {
-  const { projectInfo, incomingSupply, circuits: inputCircuits } = body;
+  const { projectInfo, incomingSupply, circuits: inputCircuits, aiConfig } = body;
   const installationType = projectInfo.installationType || 'domestic';
   
-  logger.info('💭 THINKING: Starting batch circuit design', {
+  logger.info('💭 AI-Powered Batch Design Starting (RAG-First Mode)', {
     circuitCount: inputCircuits.length,
     installationType: projectInfo.installationType,
-    hasAdditionalPrompt: !!projectInfo.additionalPrompt
+    hasAdditionalPrompt: !!projectInfo.additionalPrompt,
+    model: aiConfig?.model || 'openai/gpt-5'
   });
 
-  // If no circuits provided but additionalPrompt exists, generate circuits from natural language
-  let circuitsToDesign = inputCircuits;
+  // Build query from structured inputs
+  const query = buildDesignQuery(projectInfo, incomingSupply, inputCircuits);
   
-  if (inputCircuits.length === 0 && projectInfo.additionalPrompt) {
-    logger.info('🤖 AI Mode: Generating circuits from natural language description');
-    circuitsToDesign = generateCircuitsFromDescription(
-      projectInfo.additionalPrompt,
-      installationType,
-      incomingSupply.phases
-    );
-    logger.info('✨ Generated circuits from description', { count: circuitsToDesign.length });
+  // Call main designer with RAG + AI (like RAMS does)
+  const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+  if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+  
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  
+  // STEP 1: RAG Search (like RAMS)
+  logger.info('🔍 STEP 1: RAG Knowledge Retrieval');
+  const ragResults = await intelligentRAGSearch({
+    circuitType: 'general',
+    searchTerms: extractSearchTerms(query, inputCircuits),
+    expandedQuery: query,
+    context: {
+      ragPriority: aiConfig?.ragPriority || {
+        design: 95,
+        bs7671: 85,
+        installation: 75
+      }
+    }
+  });
+  
+  logger.info('✅ RAG Complete', {
+    regulations: ragResults.regulations?.length || 0,
+    designDocs: ragResults.designDocs?.length || 0
+  });
+  
+  // STEP 2: Build System Prompt with RAG Knowledge
+  logger.info('📝 STEP 2: Building AI Prompt with RAG Context');
+  const systemPrompt = buildStructuredDesignPrompt(
+    projectInfo,
+    incomingSupply,
+    inputCircuits,
+    ragResults,
+    installationType
+  );
+  
+  // STEP 3: Call AI with Tool Calling (structured output)
+  logger.info('🤖 STEP 3: Generating Design with AI + Structured Output');
+  const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${lovableApiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: aiConfig?.model || 'openai/gpt-5',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: query }
+      ],
+      max_completion_tokens: aiConfig?.maxTokens || 15000,
+      tools: [{
+        type: "function",
+        function: {
+          name: "design_circuits",
+          description: "Return complete multi-circuit electrical design with BS 7671 compliance",
+          parameters: {
+            type: "object",
+            properties: {
+              circuits: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    circuitNumber: { type: "number" },
+                    name: { type: "string" },
+                    loadType: { type: "string" },
+                    loadPower: { type: "number" },
+                    voltage: { type: "number" },
+                    phases: { type: "string" },
+                    cableSize: { type: "number" },
+                    cpcSize: { type: "number" },
+                    cableLength: { type: "number" },
+                    installationMethod: { type: "string" },
+                    protectionDevice: {
+                      type: "object",
+                      properties: {
+                        type: { type: "string" },
+                        rating: { type: "number" },
+                        curve: { type: "string" },
+                        kaRating: { type: "number" }
+                      }
+                    },
+                    rcdProtected: { type: "boolean" },
+                    rcdRating: { type: "number" },
+                    afddRequired: { type: "boolean" },
+                    calculations: {
+                      type: "object",
+                      properties: {
+                        Ib: { type: "number" },
+                        In: { type: "number" },
+                        Iz: { type: "number" },
+                        voltageDrop: {
+                          type: "object",
+                          properties: {
+                            volts: { type: "number" },
+                            percent: { type: "number" },
+                            compliant: { type: "boolean" }
+                          }
+                        },
+                        zs: { type: "number" },
+                        maxZs: { type: "number" }
+                      }
+                    },
+                    justifications: {
+                      type: "object",
+                      properties: {
+                        cableSize: { type: "string" },
+                        protection: { type: "string" },
+                        rcd: { type: "string" }
+                      }
+                    },
+                    warnings: {
+                      type: "array",
+                      items: { type: "string" }
+                    }
+                  }
+                }
+              },
+              diversityBreakdown: {
+                type: "object",
+                properties: {
+                  totalConnectedLoad: { type: "number" },
+                  diversifiedLoad: { type: "number" },
+                  overallDiversityFactor: { type: "number" },
+                  reasoning: { type: "string" },
+                  bs7671Reference: { type: "string" },
+                  circuitDiversity: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        circuitName: { type: "string" },
+                        connectedLoad: { type: "number" },
+                        diversityFactorApplied: { type: "number" },
+                        diversifiedLoad: { type: "number" },
+                        justification: { type: "string" }
+                      }
+                    }
+                  }
+                }
+              },
+              materials: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    name: { type: "string" },
+                    specification: { type: "string" },
+                    quantity: { type: "string" },
+                    unit: { type: "string" }
+                  }
+                }
+              },
+              consumerUnit: {
+                type: "object",
+                properties: {
+                  type: { type: "string" },
+                  mainSwitchRating: { type: "number" },
+                  incomingSupply: { type: "object" }
+                }
+              }
+            },
+            required: ["circuits", "diversityBreakdown", "materials", "consumerUnit"]
+          }
+        }
+      }],
+      tool_choice: { type: "function", function: { name: "design_circuits" } }
+    })
+  });
+  
+  if (!response.ok) {
+    const errorText = await response.text();
+    logger.error('AI API error:', response.status, errorText);
+    throw new Error(`AI API error: ${response.status}`);
   }
-
-  const enrichedCircuits = circuitsToDesign.map((circuit: any) => ({
-    ...circuit,
-    loadPower: circuit.loadPower || inferLoadPower(circuit.loadType, circuit.name),
-    cableLength: circuit.cableLength || inferCableLength(circuit.loadType, projectInfo.installationType)
-  }));
-
-  const designedCircuits = enrichedCircuits.map((circuit: any, i: number) => {
-    const Ib = circuit.loadPower / incomingSupply.voltage;
-    const cableSize = determineCableFromCurrent(Ib);
-    const cpcSize = cableSize <= 16 ? cableSize : cableSize / 2;
-    const protectionRating = Math.ceil(Ib / 6) * 6;
-    const requiresRCD = ['bathroom', 'outdoor'].includes(circuit.specialLocation);
-    
-    const vd = calculateSimpleVoltageDrop(Ib, circuit.cableLength, cableSize, incomingSupply.voltage);
-    const zs = incomingSupply.Ze + calculateR1R2(cableSize, cpcSize, circuit.cableLength);
-    const maxZs = getMaxZs('MCB', protectionRating, 'B');
-    
-    return {
-      circuitNumber: i + 1,
-      name: circuit.name,
-      loadType: circuit.loadType,
-      loadPower: circuit.loadPower,
-      designCurrent: Ib,
-      voltage: incomingSupply.voltage,
-      phases: circuit.phases,
-      cableSize,
-      cpcSize,
-      cableLength: circuit.cableLength,
-      installationMethod: 'Clipped Direct (Method C)',
-      protectionDevice: { type: requiresRCD ? 'RCBO' : 'MCB', rating: protectionRating, curve: 'B', kaRating: 6 },
-      rcdProtected: requiresRCD,
-      calculations: {
-        Ib, In: protectionRating, Iz: cableSize * 20,
-        voltageDrop: { volts: vd, percent: (vd / incomingSupply.voltage) * 100, compliant: (vd / incomingSupply.voltage) * 100 < 3 },
-        zs, maxZs, deratedCapacity: cableSize * 20, safetyMargin: 20
-      },
-      justifications: {
-        cableSize: `Per Regulation 433.1.1, ${cableSize}mm² cable adequate for ${Ib.toFixed(1)}A design current.`,
-        protection: `${protectionRating}A Type B ${requiresRCD ? 'RCBO' : 'MCB'} per Regulation 411.3.2.`,
-        rcd: requiresRCD ? `RCD required per Regulation 411.3.3 for ${circuit.specialLocation} location.` : undefined
-      },
-      warnings: []
-    };
-  });
-
-  const totalLoad = designedCircuits.reduce((sum: number, c: any) => sum + c.loadPower, 0);
   
+  const aiData = await response.json();
+  const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
+  if (!toolCall) {
+    throw new Error('No tool call in AI response');
+  }
+  
+  const designData = JSON.parse(toolCall.function.arguments);
+  
+  logger.info('✅ Design Complete', {
+    circuits: designData.circuits?.length || 0,
+    tokensUsed: aiData.usage?.total_tokens || 0
+  });
+  
+  // STEP 4: Return structured design (NO costEstimate)
   return new Response(JSON.stringify({
     success: true,
     design: {
@@ -103,238 +240,156 @@ export async function handleBatchDesign(body: any, logger: any) {
       clientName: projectInfo.clientName,
       electricianName: projectInfo.electricianName,
       installationType: projectInfo.installationType,
-      totalLoad,
+      totalLoad: designData.circuits.reduce((sum: number, c: any) => sum + c.loadPower, 0),
       diversityApplied: true,
-      diversityFactor: 0.75,
-      circuits: designedCircuits,
-      consumerUnit: {
-        type: 'split-load',
-        mainSwitchRating: incomingSupply.mainSwitchRating || 100,
-        incomingSupply: {
-          voltage: incomingSupply.voltage,
-          phases: incomingSupply.phases,
-          incomingPFC: incomingSupply.pscc || 3500,
-          Ze: incomingSupply.Ze,
-          earthingSystem: incomingSupply.earthingSystem
-        }
-      },
-      materials: [
-        { name: '2.5mm² Twin & Earth', specification: 'BS 6004', quantity: '100m', unit: 'm' }
-      ],
-      costEstimate: { materials: 500, labour: 750, total: 1250 },
-      practicalGuidance: ['Test all circuits before energising', 'Complete BS 7671 certificate']
+      diversityFactor: designData.diversityBreakdown?.overallDiversityFactor || 0.75,
+      diversityBreakdown: designData.diversityBreakdown,
+      circuits: designData.circuits,
+      consumerUnit: designData.consumerUnit,
+      materials: designData.materials,
+      practicalGuidance: extractPracticalGuidance(designData.circuits)
+    },
+    metadata: {
+      ragCalls: ragResults.regulations?.length || 0,
+      model: aiConfig?.model || 'openai/gpt-5',
+      tokensUsed: aiData.usage?.total_tokens
     }
-  }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+  }), { 
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+  });
 }
 
-function inferLoadPower(loadType: string, name: string): number {
-  const defaults: Record<string, number> = {
-    socket: 7360, lighting: 1000, cooker: 9200, shower: 8500, 'ev-charger': 7000, immersion: 3000, heating: 5000, motor: 3000
-  };
-  return defaults[loadType] || 3000;
-}
-
-function inferCableLength(loadType: string, type: string): number {
-  return type === 'domestic' ? (loadType === 'lighting' ? 15 : 20) : 30;
-}
-
-function determineCableFromCurrent(current: number): number {
-  if (current <= 13) return 1.5;
-  if (current <= 20) return 2.5;
-  if (current <= 27) return 4;
-  if (current <= 37) return 6;
-  if (current <= 50) return 10;
-  return 16;
-}
-
-function calculateSimpleVoltageDrop(current: number, length: number, cableSize: number, voltage: number): number {
-  const mV: Record<number, number> = { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 };
-  return ((mV[cableSize] || 18) * current * length) / 1000;
-}
-
-function calculateR1R2(liveSize: number, cpcSize: number, length: number): number {
-  const r: Record<number, number> = { 1.5: 12.1, 2.5: 7.41, 4: 4.61, 6: 3.08, 10: 1.83, 16: 1.15 };
-  return (((r[liveSize] || 7.41) + (r[cpcSize] || 12.1)) * length * 1.2) / 1000;
-}
-
-function generateCircuitsFromDescription(description: string, installationType: string, phases: string): any[] {
-  const circuits: any[] = [];
-  const lowerDesc = description.toLowerCase();
+// Helper functions
+function buildDesignQuery(projectInfo: any, supply: any, circuits: any[]): string {
+  return `Design ${circuits.length} circuits for ${projectInfo.name}.
   
-  // Domestic circuits
-  if (installationType === 'domestic') {
-    // Count bedrooms to determine socket circuits needed
-    const bedroomMatch = lowerDesc.match(/(\d+)[-\s]?bed/);
-    const bedrooms = bedroomMatch ? parseInt(bedroomMatch[1]) : 3;
-    
-    // Kitchen
-    if (lowerDesc.includes('kitchen')) {
-      circuits.push({ name: 'Kitchen Sockets', loadType: 'socket', phases: 'single', specialLocation: 'kitchen' });
-      if (lowerDesc.includes('cooker') || lowerDesc.includes('hob') || lowerDesc.includes('range')) {
-        circuits.push({ name: 'Cooker', loadType: 'cooker', phases: 'single', specialLocation: 'kitchen' });
-      }
-      if (lowerDesc.includes('integrated') || lowerDesc.includes('appliances')) {
-        circuits.push({ name: 'Integrated Appliances', loadType: 'socket', loadPower: 3000, phases: 'single', specialLocation: 'kitchen' });
-      }
-    }
-    
-    // Living areas - socket circuits
-    circuits.push({ name: 'Downstairs Sockets', loadType: 'socket', phases: 'single', specialLocation: 'none' });
-    circuits.push({ name: 'Upstairs Sockets', loadType: 'socket', phases: 'single', specialLocation: 'none' });
-    
-    // Lighting
-    circuits.push({ name: 'Downstairs Lights', loadType: 'lighting', loadPower: 1000, cableLength: 15, phases: 'single', specialLocation: 'none' });
-    circuits.push({ name: 'Upstairs Lights', loadType: 'lighting', loadPower: 800, cableLength: 20, phases: 'single', specialLocation: 'none' });
-    
-    // Bathrooms/Showers
-    const bathroomMatch = lowerDesc.match(/(\d+)\s*bath/);
-    const bathrooms = bathroomMatch ? parseInt(bathroomMatch[1]) : (lowerDesc.includes('bathroom') ? 1 : 0);
-    
-    if (lowerDesc.includes('shower') || bathrooms > 0) {
-      circuits.push({ name: 'Electric Shower', loadType: 'shower', loadPower: 10500, cableLength: 15, phases: 'single', specialLocation: 'bathroom' });
-    }
-    if (lowerDesc.includes('en-suite') || bathrooms > 1) {
-      circuits.push({ name: 'En-Suite Shower', loadType: 'shower', loadPower: 8500, cableLength: 12, phases: 'single', specialLocation: 'bathroom' });
-    }
-    
-    // Garage
-    if (lowerDesc.includes('garage') || lowerDesc.includes('workshop')) {
-      const isWorkshop = lowerDesc.includes('workshop') || lowerDesc.includes('equipment');
-      circuits.push({ 
-        name: isWorkshop ? 'Garage Workshop' : 'Garage Sockets', 
-        loadType: 'garage', 
-        loadPower: isWorkshop ? 5000 : 3000,
-        phases: lowerDesc.includes('3-phase') || lowerDesc.includes('three phase') ? 'three' : 'single',
-        specialLocation: 'none' 
-      });
-    }
-    
-    // EV Charger
-    if (lowerDesc.includes('ev') || lowerDesc.includes('electric vehicle') || lowerDesc.includes('car charger')) {
-      const power = lowerDesc.includes('22kw') || lowerDesc.includes('22 kw') ? 22000 : 7400;
-      circuits.push({ 
-        name: power > 8000 ? 'EV Charger 22kW' : 'EV Charger 7.4kW', 
-        loadType: 'ev-charger', 
-        loadPower: power,
-        cableLength: 20,
-        phases: power > 8000 ? 'three' : 'single',
-        specialLocation: 'outdoor' 
-      });
-    }
-    
-    // Outdoor
-    if (lowerDesc.includes('outdoor') || lowerDesc.includes('garden') || lowerDesc.includes('outside')) {
-      circuits.push({ name: 'Outdoor Sockets', loadType: 'outdoor', loadPower: 3000, phases: 'single', specialLocation: 'outdoor' });
-    }
-    
-    // Immersion
-    if (lowerDesc.includes('immersion') || lowerDesc.includes('hot water')) {
-      circuits.push({ name: 'Immersion Heater', loadType: 'immersion', loadPower: 3000, phases: 'single', specialLocation: 'none' });
-    }
+Incoming supply: ${supply.voltage}V ${supply.phases}, Ze=${supply.Ze}Ω, ${supply.earthingSystem}.
+Prospective fault current: ${supply.pscc || 3500}A.
+
+Circuits required:
+${circuits.map((c: any, i: number) => `${i+1}. ${c.name} - ${c.loadPower}W, ${c.cableLength}m, ${c.phases} phase${c.specialLocation !== 'none' ? ` (${c.specialLocation})` : ''}`).join('\n')}
+
+${projectInfo.additionalPrompt || ''}`;
+}
+
+function extractSearchTerms(query: string, circuits: any[]): string[] {
+  const terms = ['circuit design', 'cable sizing', 'voltage drop', 'protection devices', 'BS 7671'];
+  
+  // Add circuit-specific terms
+  circuits.forEach((c: any) => {
+    if (c.loadType) terms.push(c.loadType);
+    if (c.specialLocation && c.specialLocation !== 'none') terms.push(c.specialLocation);
+  });
+  
+  return terms;
+}
+
+function buildStructuredDesignPrompt(
+  projectInfo: any, 
+  supply: any, 
+  circuits: any[], 
+  ragResults: any, 
+  type: string
+): string {
+  const regulations = ragResults.regulations?.slice(0, 15).map((r: any) => 
+    `${r.regulation_number}: ${r.content}`
+  ).join('\n\n') || 'No specific regulations retrieved';
+  
+  return `You are a senior electrical design engineer specializing in BS 7671:2018+A3:2024 compliant installations.
+
+INSTALLATION TYPE: ${type}
+${INSTALLATION_CONTEXT[type] || ''}
+
+INCOMING SUPPLY DETAILS:
+- Voltage: ${supply.voltage}V ${supply.phases}
+- External Earth Fault Loop Impedance (Ze): ${supply.Ze}Ω
+- Earthing System: ${supply.earthingSystem}
+- Prospective Fault Current (PFC): ${supply.pscc || 3500}A
+- Main Switch Rating: ${supply.mainSwitchRating || 100}A
+
+CIRCUITS TO DESIGN (${circuits.length} total):
+${circuits.map((c: any, i: number) => `${i+1}. ${c.name}
+   - Load Type: ${c.loadType}
+   - Power: ${c.loadPower}W (${(c.loadPower/1000).toFixed(1)}kW)
+   - Cable Run: ${c.cableLength}m
+   - Phases: ${c.phases}
+   - Location: ${c.specialLocation || 'general'}`).join('\n\n')}
+
+BS 7671 KNOWLEDGE BASE (Top 15 regulations retrieved via RAG):
+${regulations}
+
+CRITICAL DESIGN REQUIREMENTS:
+
+1. **Cable Sizing (Reg 433.1)**:
+   - Calculate design current (Ib) for each circuit
+   - Select protective device rating (In) where In ≥ Ib
+   - Determine cable current-carrying capacity (Iz) where Iz ≥ In
+   - Apply derating factors for ambient temperature and grouping
+   - Select appropriate cable CSA (mm²) and CPC size
+
+2. **Voltage Drop Compliance (Reg 525)**:
+   - Calculate actual voltage drop in volts and percentage
+   - Lighting circuits: Max 3% (6.9V at 230V)
+   - Power circuits: Max 5% (11.5V at 230V)
+   - Use cable resistance values from BS 7671 Appendix 4
+
+3. **Earth Fault Protection (Reg 411.3.2)**:
+   - Calculate circuit Zs (Ze + R1+R2)
+   - Verify Zs < maximum permitted Zs for chosen protective device
+   - Ensure disconnection time ≤ 0.4s (final circuits) or ≤ 5s (distribution)
+
+4. **RCD Protection (Reg 411.3.3)**:
+   - ALL socket outlets ≤32A require 30mA RCD
+   - Bathrooms (Section 701): 30mA RCD mandatory
+   - Outdoor circuits: 30mA RCD mandatory
+   - Specify RCBO or separate RCD
+
+5. **Diversity Calculation (Appendix 15)**:
+   - Apply diversity factors per BS 7671 Appendix 15
+   - Provide clear reasoning for each circuit's diversity
+   - Calculate total diversified load for main switch sizing
+   - Include diversity breakdown with BS 7671 references
+
+6. **Materials List**:
+   - Specify cable types (T&E, SWA, FP200) based on location
+   - Include quantities with units (metres, number of)
+   - List all protective devices
+   - Include consumer unit specification
+
+7. **Justifications**:
+   - Cite specific BS 7671 regulation numbers
+   - Explain cable size selection with calculations
+   - Justify protective device type, rating, and curve
+   - Explain RCD requirements based on location/circuit type
+
+IMPORTANT NOTES:
+- ALL calculations must be numerically accurate
+- ALL regulation citations must be specific (e.g., "Reg 411.3.3")
+- Provide practical justifications, not just regulation text
+- Consider installation method impact on current capacity
+- Account for voltage drop over cable length
+- Ensure all circuits meet disconnection time requirements
+
+Use the design_circuits function to return your complete design with all required data.`;
+}
+
+function extractPracticalGuidance(circuits: any[]): string[] {
+  const guidance = [
+    'Complete all required tests per BS 7671 Part 6 before energising circuits',
+    'Fill in Electrical Installation Certificate (EIC) with Schedule of Test Results',
+    `Total of ${circuits.length} circuits designed - verify consumer unit has sufficient ways`,
+    'Ensure all RCD/RCBO devices are tested monthly by end user',
+    'Verify actual Ze at origin matches design assumption before installation'
+  ];
+  
+  // Add circuit-specific guidance
+  if (circuits.some((c: any) => c.rcdProtected)) {
+    guidance.push('RCD protection required for multiple circuits - consider use of RCBOs for selectivity');
   }
   
-  // Commercial circuits
-  if (installationType === 'commercial') {
-    // Office desks
-    const deskMatch = lowerDesc.match(/(\d+)\s*desk/);
-    const desks = deskMatch ? parseInt(deskMatch[1]) : 0;
-    
-    if (desks > 0 || lowerDesc.includes('office')) {
-      const zones = Math.ceil(desks / 10) || 2;
-      for (let i = 1; i <= zones; i++) {
-        circuits.push({ name: `Office Sockets - Zone ${i}`, loadType: 'office-sockets', loadPower: 5000, phases: 'single', specialLocation: 'none' });
-      }
-    }
-    
-    // Lighting
-    circuits.push({ name: 'Main Lighting', loadType: 'lighting', loadPower: 2000, cableLength: 30, phases: 'single', specialLocation: 'none' });
-    circuits.push({ name: 'Emergency Lighting', loadType: 'emergency-lighting', loadPower: 500, cableLength: 35, phases: 'single', specialLocation: 'none' });
-    
-    // Server/IT
-    if (lowerDesc.includes('server') || lowerDesc.includes('data') || lowerDesc.includes('it')) {
-      circuits.push({ name: 'Server Room/Data Cabinet', loadType: 'server-room', loadPower: 5000, phases: 'single', specialLocation: 'none', notes: 'UPS required' });
-    }
-    
-    // HVAC
-    if (lowerDesc.includes('hvac') || lowerDesc.includes('air con') || lowerDesc.includes('heating')) {
-      circuits.push({ name: 'HVAC System', loadType: 'hvac', loadPower: 3000, phases: 'single', specialLocation: 'none' });
-    }
-    
-    // Kitchen/Breakroom
-    if (lowerDesc.includes('kitchen') || lowerDesc.includes('breakroom') || lowerDesc.includes('cafe')) {
-      circuits.push({ name: 'Kitchen/Breakroom', loadType: 'kitchen-equipment', loadPower: 3000, phases: 'single', specialLocation: 'kitchen' });
-    }
-    
-    // Security systems
-    if (lowerDesc.includes('cctv') || lowerDesc.includes('security') || lowerDesc.includes('camera')) {
-      circuits.push({ name: 'CCTV System', loadType: 'cctv', loadPower: 500, phases: 'single', specialLocation: 'none' });
-    }
-    if (lowerDesc.includes('access control') || lowerDesc.includes('door')) {
-      circuits.push({ name: 'Access Control', loadType: 'access-control', loadPower: 300, phases: 'single', specialLocation: 'none' });
-    }
-    
-    // Fire alarm
-    circuits.push({ name: 'Fire Alarm Panel', loadType: 'fire-alarm', loadPower: 500, phases: 'single', specialLocation: 'none' });
+  if (circuits.some((c: any) => c.loadType?.includes('shower'))) {
+    guidance.push('Electric showers require bonding to supplementary equipotential bonding per Section 701');
   }
   
-  // Industrial circuits
-  if (installationType === 'industrial') {
-    // Count machines
-    const machineMatch = lowerDesc.match(/(\d+)\s*machine/);
-    const machines = machineMatch ? parseInt(machineMatch[1]) : 0;
-    
-    if (machines > 0) {
-      for (let i = 1; i <= machines; i++) {
-        circuits.push({ 
-          name: `Machine Tool ${i}`, 
-          loadType: 'machine-tool', 
-          loadPower: 11000, 
-          phases: 'three', 
-          specialLocation: 'none',
-          notes: '7.5kW motor - Type D MCB'
-        });
-      }
-    }
-    
-    // Motors
-    if (lowerDesc.includes('motor') && machines === 0) {
-      circuits.push({ name: 'Three Phase Motor', loadType: 'three-phase-motor', loadPower: 15000, phases: 'three', specialLocation: 'none', notes: '11kW' });
-    }
-    
-    // Welding
-    if (lowerDesc.includes('weld')) {
-      circuits.push({ name: 'Welding Equipment', loadType: 'welding', loadPower: 15000, phases: 'three', specialLocation: 'none', notes: 'High inrush - Type D MCB' });
-    }
-    
-    // Conveyor/Production line
-    if (lowerDesc.includes('conveyor') || lowerDesc.includes('production')) {
-      circuits.push({ name: 'Conveyor System', loadType: 'conveyor', loadPower: 7500, phases: 'three', specialLocation: 'none' });
-    }
-    
-    // Crane
-    if (lowerDesc.includes('crane') || lowerDesc.includes('hoist')) {
-      circuits.push({ name: 'Overhead Crane', loadType: 'three-phase-motor', loadPower: 11000, phases: 'three', specialLocation: 'none' });
-    }
-    
-    // Compressor
-    if (lowerDesc.includes('compressor') || lowerDesc.includes('compressed air')) {
-      circuits.push({ name: 'Air Compressor', loadType: 'compressor', loadPower: 5500, phases: 'three', specialLocation: 'none', notes: '4kW' });
-    }
-    
-    // Extraction
-    if (lowerDesc.includes('extraction') || lowerDesc.includes('ventilation')) {
-      circuits.push({ name: 'Extraction System', loadType: 'extraction', loadPower: 4000, phases: 'single', specialLocation: 'none' });
-    }
-    
-    // Workshop sockets
-    circuits.push({ name: 'Workshop Sockets', loadType: 'workshop-sockets', loadPower: 5000, phases: 'single', specialLocation: 'none' });
-    
-    // Lighting
-    circuits.push({ name: 'Factory Lighting', loadType: 'overhead-lighting', loadPower: 3000, cableLength: 50, phases: 'single', specialLocation: 'none' });
-    
-    // Control panel
-    circuits.push({ name: 'Control Systems', loadType: 'control-panel', loadPower: 1500, phases: 'single', specialLocation: 'none' });
-  }
-  
-  return circuits;
+  return guidance;
 }

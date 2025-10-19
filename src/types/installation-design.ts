@@ -96,10 +96,24 @@ export interface InstallationDesign {
   circuits: CircuitDesign[];
   consumerUnit: ConsumerUnit;
   materials: MaterialItem[];
-  costEstimate: {
+  costEstimate?: {
     materials: number;
     labour: number;
     total: number;
+  };
+  diversityBreakdown?: {
+    totalConnectedLoad: number;
+    diversifiedLoad: number;
+    overallDiversityFactor: number;
+    reasoning: string;
+    bs7671Reference: string;
+    circuitDiversity?: Array<{
+      circuitName: string;
+      connectedLoad: number;
+      diversityFactorApplied: number;
+      diversifiedLoad: number;
+      justification: string;
+    }>;
   };
   practicalGuidance: string[];
 }

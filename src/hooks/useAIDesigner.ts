@@ -49,6 +49,17 @@ export const useAIDesigner = () => {
       const { data, error: invokeError } = await supabase.functions.invoke('designer-agent', {
         body: {
           mode: 'batch-design',
+          aiConfig: {
+            model: 'openai/gpt-5', // Use GPT-5 for best results
+            maxTokens: 15000,
+            timeoutMs: 280000, // 4 min 40 sec (like RAMS)
+            noMemory: true, // No conversation history
+            ragPriority: {
+              design: 95,      // High priority for design docs
+              bs7671: 85,      // High priority for regulations
+              installation: 75 // Medium-high for installation guides
+            }
+          },
           projectInfo: {
             name: inputs.projectName,
             location: inputs.location,
@@ -57,7 +68,8 @@ export const useAIDesigner = () => {
             installationType: inputs.propertyType,
             propertyAge: inputs.propertyAge,
             existingInstallation: inputs.existingInstallation,
-            budgetLevel: inputs.budgetLevel
+            budgetLevel: inputs.budgetLevel,
+            additionalPrompt: inputs.additionalPrompt
           },
           incomingSupply: {
             voltage: inputs.voltage,
@@ -78,8 +90,7 @@ export const useAIDesigner = () => {
             phases: c.phases,
             specialLocation: c.specialLocation,
             notes: c.notes
-          })),
-          additionalContext: inputs.additionalPrompt
+          }))
         }
       });
 

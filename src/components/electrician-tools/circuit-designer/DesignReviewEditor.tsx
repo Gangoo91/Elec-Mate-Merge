@@ -12,6 +12,10 @@ interface DesignReviewEditorProps {
   onReset: () => void;
 }
 
+// Safe number formatter - prevents null.toFixed() crashes
+const fmt = (n: unknown, dp = 1, fallback = '—') => 
+  (typeof n === 'number' && !isNaN(n) ? n.toFixed(dp) : fallback);
+
 export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps) => {
   const [selectedCircuit, setSelectedCircuit] = useState(0);
 
@@ -146,7 +150,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Design Current (Ib):</span>
-                    <span className="font-medium">{currentCircuit.calculations.Ib.toFixed(1)}A</span>
+                    <span className="font-medium">{fmt(currentCircuit.calculations?.Ib, 1)}A</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Phases:</span>
@@ -215,10 +219,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     }
                   </div>
                   <p className="text-lg font-bold">
-                    {currentCircuit.calculations.voltageDrop.percent.toFixed(2)}%
+                    {fmt(currentCircuit.calculations?.voltageDrop?.percent, 2)}%
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    {currentCircuit.calculations.voltageDrop.volts.toFixed(2)}V (Max: 3%)
+                    {fmt(currentCircuit.calculations?.voltageDrop?.volts, 2)}V (Max: 3%)
                   </p>
                 </div>
 
@@ -230,9 +234,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       <AlertTriangle className="h-4 w-4 text-red-600" />
                     }
                   </div>
-                  <p className="text-lg font-bold">{currentCircuit.calculations.zs.toFixed(3)}Ω</p>
+                  <p className="text-lg font-bold">{fmt(currentCircuit.calculations?.zs, 3)}Ω</p>
                   <p className="text-xs text-muted-foreground">
-                    Max: {currentCircuit.calculations.maxZs.toFixed(3)}Ω
+                    Max: {fmt(currentCircuit.calculations?.maxZs, 3)}Ω
                   </p>
                 </div>
               </div>
@@ -291,12 +295,14 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </div>
           ))}
         </div>
-        <div className="mt-4 pt-4 border-t">
-          <div className="flex justify-between font-bold text-lg">
-            <span>Estimated Total</span>
-            <span>£{design.costEstimate.total.toFixed(2)}</span>
+        {design.costEstimate && (
+          <div className="mt-4 pt-4 border-t">
+            <div className="flex justify-between font-bold text-lg">
+              <span>Estimated Total</span>
+              <span>£{fmt(design.costEstimate?.total, 2, '0.00')}</span>
+            </div>
           </div>
-        </div>
+        )}
       </Card>
 
       {/* Actions */}

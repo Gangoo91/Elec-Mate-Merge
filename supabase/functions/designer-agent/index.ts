@@ -97,8 +97,27 @@ serve(async (req) => {
       context: incomingContext,
       conversationSummary,
       previousAgentOutputs = [],
-      requestSuggestions = false
+      requestSuggestions = false,
+      aiConfig = {} // NEW: Allow AI configuration from client
     } = body;
+    
+    // Set defaults for AI configuration (like RAMS does)
+    const modelConfig = {
+      model: aiConfig.model || 'openai/gpt-5', // Use GPT-5 by default
+      maxTokens: aiConfig.maxTokens || 15000,
+      timeoutMs: aiConfig.timeoutMs || 280000, // 4 min 40 sec
+      noMemory: aiConfig.noMemory !== false, // Default TRUE (no conversation memory)
+      ragPriority: aiConfig.ragPriority || {
+        design: 95,
+        bs7671: 85,
+        installation: 75,
+        health_safety: 0,
+        inspection: 0,
+        project_mgmt: 0
+      }
+    };
+
+    logger.info('AI Configuration', modelConfig);
     
     // Input validation
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
@@ -123,15 +142,7 @@ serve(async (req) => {
 
     logger.info('Designer Agent v3.0 processing with Intelligent Hybrid RAG', { messageCount: messages.length });
 
-    // PHASE 1: Detect conversational context for context-aware responses
-    const conversationalContext = extractConversationalContext(messages, conversationSummary, previousAgentOutputs);
-    const followUpPattern = detectFollowUpPattern(userMessage, conversationalContext);
-    
-    logger.debug('Conversational context analysis', {
-      isFollowUp: followUpPattern.isFollowUp,
-      followUpType: followUpPattern.type,
-      conversationDepth: conversationalContext.conversationDepth
-    });
+    // PHASE 1: Single-shot design mode (no conversation memory like RAMS)
 
     const circuitParams = extractCircuitParams(userMessage, currentDesign, incomingContext);
     
@@ -409,8 +420,14 @@ serve(async (req) => {
         context: agentContext,
       };
 
-      logger.debug('Retrieving regulations', searchParams);
-      const ragResults = await intelligentRAGSearch(searchParams);
+      logger.debug('Retrieving regulations with configured priorities', { ...searchParams, ragPriority: modelConfig.ragPriority });
+      const ragResults = await intelligentRAGSearch({
+        ...searchParams,
+        context: {
+          ...agentContext,
+          ragPriority: modelConfig.ragPriority // Use configured RAG priorities
+        }
+      });
       logger.debug('Regulations retrieved', { count: ragResults.regulations?.length || 0 });
       
       logger.info('💭 THINKING: Reviewing applicable regulations and standards');
@@ -556,16 +573,7 @@ serve(async (req) => {
       // Continue with empty RAG - AI can still provide design
     }
 
-    // 🆕 PHASE 2: Multi-Turn Conversation Intelligence (using context from line 127)
-    const followUpDetection = detectFollowUpPattern(userMessage, conversationalContext);
-    
-    if (followUpDetection.isFollowUp) {
-      logger.info('🔗 Follow-up detected', {
-        type: followUpDetection.type,
-        previousTopic: followUpDetection.previousTopic,
-        requestId
-      });
-    }
+    // 🆕 PHASE 2: RAG-First Mode (no conversation tracking needed)
     
     // 🆕 PHASE 6: User Expertise Detection
     const userExpertise = trackUserExpertise(messages, conversationSummary);
@@ -1127,7 +1135,7 @@ IMPORTANT - RESPONSE FORMAT:
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              model: 'openai/gpt-5-mini',
+              model: modelConfig.model, // Use configured model (gpt-5)
               messages: [
                 { role: 'system', content: systemPrompt },
                 ...messages,
@@ -1136,10 +1144,11 @@ IMPORTANT - RESPONSE FORMAT:
                   content: agentContext.structuredKnowledge
                 }] : [])
               ],
-              max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage), messages)
+              max_completion_tokens: modelConfig.maxTokens, // GPT-5 uses max_completion_tokens
+              // CRITICAL: GPT-5 does NOT support temperature parameter
             }),
           }),
-          Timeouts.LONG,
+          modelConfig.timeoutMs, // Use configured timeout (280s)
           'Lovable AI design generation'
         ),
         RetryPresets.STANDARD
