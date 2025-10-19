@@ -31,77 +31,89 @@ export const CircuitCard = ({
   calculationResult 
 }: CircuitCardProps) => {
   return (
-    <Card className="bg-card border-border hover:border-primary/50 transition-colors">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Badge variant="outline" className="text-xs">C{circuitNumber}</Badge>
-            <CardTitle className="text-base">{circuit.name}</CardTitle>
+    <Card className="bg-background hover:bg-accent/5 border-2 border-border hover:border-primary/40 transition-all hover:shadow-lg">
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row items-start gap-4">
+          {/* Large circuit number badge */}
+          <div className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center">
+            <span className="text-xl sm:text-2xl font-bold text-primary">C{circuitNumber}</span>
           </div>
-          <div className="flex gap-2">
-            <Button size="sm" variant="ghost" onClick={onEdit}>
-              <Edit className="h-4 w-4" />
+          
+          {/* Circuit info */}
+          <div className="flex-1 min-w-0 w-full sm:w-auto">
+            <h3 className="text-lg sm:text-xl font-bold mb-1 truncate">{circuit.name}</h3>
+            <p className="text-sm text-muted-foreground mb-3 capitalize">{circuit.loadType.replace('-', ' ')}</p>
+            
+            {/* Compact details grid */}
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="flex items-center gap-2">
+                <Power className="h-4 w-4 text-primary flex-shrink-0" />
+                <div>
+                  <span className="text-xs text-muted-foreground block">Load</span>
+                  <span className="font-semibold">{circuit.loadPower}W</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-primary flex-shrink-0" />
+                <div>
+                  <span className="text-xs text-muted-foreground block">Length</span>
+                  <span className="font-semibold">{circuit.cableLength}m</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Large, touch-friendly action buttons */}
+          <div className="flex sm:flex-col gap-2 w-full sm:w-auto">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="h-11 w-full sm:w-11 flex-1 sm:flex-initial hover:bg-primary/10 hover:text-primary hover:border-primary/50" 
+              onClick={onEdit}
+            >
+              <Edit className="h-5 w-5 sm:h-4 sm:w-4" />
+              <span className="sm:hidden ml-2">Edit</span>
             </Button>
-            <Button size="sm" variant="ghost" onClick={onDelete}>
-              <Trash2 className="h-4 w-4 text-destructive" />
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="h-11 w-full sm:w-11 flex-1 sm:flex-initial text-destructive hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50" 
+              onClick={onDelete}
+            >
+              <Trash2 className="h-5 w-5 sm:h-4 sm:w-4" />
+              <span className="sm:hidden ml-2">Delete</span>
             </Button>
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="grid grid-cols-2 gap-2 text-sm">
-          <div className="flex items-center gap-2">
-            <Power className="h-3 w-3 text-muted-foreground" />
-            <span className="text-muted-foreground">Load:</span>
-            <span className="font-medium">{circuit.loadPower}W</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Zap className="h-3 w-3 text-muted-foreground" />
-            <span className="text-muted-foreground">Length:</span>
-            <span className="font-medium">{circuit.cableLength}m</span>
-          </div>
-        </div>
-
+        
+        {/* Calculation results section */}
         {calculationResult && (
-          <div className="pt-2 border-t border-border space-y-2">
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div>
-                <span className="text-muted-foreground">Design Current:</span>
-                <p className="font-medium">{calculationResult.designCurrent.toFixed(1)}A</p>
+          <div className="mt-4 pt-4 border-t border-border space-y-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="bg-accent/30 rounded-lg p-2">
+                <span className="text-xs text-muted-foreground block mb-1">Design Current</span>
+                <p className="font-bold text-sm">{calculationResult.designCurrent.toFixed(1)}A</p>
               </div>
-              <div>
-                <span className="text-muted-foreground">Cable:</span>
-                <p className="font-medium">{calculationResult.cableSize}mm²</p>
+              <div className="bg-accent/30 rounded-lg p-2">
+                <span className="text-xs text-muted-foreground block mb-1">Cable Size</span>
+                <p className="font-bold text-sm">{calculationResult.cableSize}mm²</p>
               </div>
-              <div>
-                <span className="text-muted-foreground">Protection:</span>
-                <p className="font-medium">{calculationResult.protectionRating}A</p>
+              <div className="bg-accent/30 rounded-lg p-2">
+                <span className="text-xs text-muted-foreground block mb-1">Protection</span>
+                <p className="font-bold text-sm">{calculationResult.protectionRating}A</p>
               </div>
-              <div>
-                <span className="text-muted-foreground">Zs:</span>
-                <p className="font-medium">{calculationResult.zs.toFixed(3)}Ω</p>
+              <div className="bg-accent/30 rounded-lg p-2">
+                <span className="text-xs text-muted-foreground block mb-1">Zs</span>
+                <p className="font-bold text-sm">{calculationResult.zs.toFixed(3)}Ω</p>
               </div>
             </div>
-            <div className="flex gap-2">
-              <Badge 
-                variant={calculationResult.compliant ? "default" : "destructive"}
-                className="flex-1 justify-center"
-              >
-                {calculationResult.compliant ? "✓ Compliant" : "⚠ Non-Compliant"}
-              </Badge>
-              {onGenerateSchematic && (
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={onGenerateSchematic}
-                  disabled={loadingSchematic}
-                  className="flex-1"
-                >
-                  <FileText className="h-3 w-3 mr-1" />
-                  {loadingSchematic ? "Generating..." : "Wiring Schematic"}
-                </Button>
-              )}
-            </div>
+            
+            <Badge 
+              variant={calculationResult.compliant ? "default" : "destructive"}
+              className="w-full justify-center h-8 text-sm"
+            >
+              {calculationResult.compliant ? "✓ BS 7671 Compliant" : "⚠ Non-Compliant - Review Required"}
+            </Badge>
           </div>
         )}
       </CardContent>

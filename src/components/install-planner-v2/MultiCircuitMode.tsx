@@ -258,9 +258,14 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
         />
       )}
 
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Circuits ({circuits.length})</h3>
-        <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
+        <div>
+          <h3 className="text-2xl font-bold">Circuits</h3>
+          <p className="text-sm text-muted-foreground">
+            {circuits.length} circuit{circuits.length !== 1 ? 's' : ''} configured
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
           {circuits.length > 0 && (
             <>
               <Button variant="outline" size="sm" onClick={() => setShowDiagram(!showDiagram)}>
@@ -340,7 +345,7 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
         />
       )}
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {circuits.map((circuit) => {
           const result = circuitResults.find(r => r.circuitNumber === circuit.circuitNumber);
           return (
@@ -359,11 +364,17 @@ export const MultiCircuitMode = ({ planData, updatePlanData, onReset }: MultiCir
       </div>
 
       {circuits.length === 0 && (
-        <Card className="bg-muted/50 border-dashed">
-          <CardContent className="py-12 text-center">
-            <p className="text-white/70 mb-4">No circuits added yet</p>
-            <Button onClick={handleAddCircuit}>
-              <Plus className="h-4 w-4 mr-2" />
+        <Card className="bg-gradient-to-br from-primary/5 to-background border-dashed border-2">
+          <CardContent className="py-16 text-center">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+              <Plus className="h-8 w-8 text-primary" />
+            </div>
+            <h4 className="text-lg font-semibold mb-2">No circuits added yet</h4>
+            <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
+              Start by adding your first circuit to begin designing your electrical installation
+            </p>
+            <Button size="lg" onClick={handleAddCircuit}>
+              <Plus className="h-5 w-5 mr-2" />
               Add Your First Circuit
             </Button>
           </CardContent>
