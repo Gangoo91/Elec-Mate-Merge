@@ -69,7 +69,7 @@ const AgentSelectorPage = () => {
   const handleAgentSelect = (agentId: string) => {
     if (agentId === 'designer') {
       // Navigate to dedicated Circuit Designer page
-      navigate('/electrician-tools/circuit-designer', {
+      navigate('/electrician/circuit-designer', {
         state: { fromAgentSelector: true }
       });
     } else {
