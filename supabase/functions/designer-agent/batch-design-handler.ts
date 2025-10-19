@@ -278,7 +278,14 @@ export async function handleBatchDesign(body: any, logger: any) {
     throw new Error(`AI API error: ${response.status}`);
   }
   
-  const aiData = await response.json();
+  let aiData;
+  try {
+    aiData = await response.json();
+  } catch (parseError) {
+    logger.error('Failed to parse AI response JSON', parseError);
+    throw new Error('Invalid response from AI service');
+  }
+  
   let toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
   
   // Retry once if no tool call (AI might have returned text instead)
@@ -385,6 +392,8 @@ export async function handleBatchDesign(body: any, logger: any) {
   });
   
   // STEP 4: Return structured design (NO costEstimate)
+  logger.info('✅ Returning design to client');
+  
   return new Response(JSON.stringify({
     success: true,
     design: {

@@ -15,7 +15,7 @@ export const useAIDesigner = () => {
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<DesignProgress | null>(null);
 
-  const generateDesign = async (inputs: DesignInputs) => {
+  const generateDesign = async (inputs: DesignInputs): Promise<boolean> => {
     setIsProcessing(true);
     setError(null);
     setDesignData(null);
@@ -31,50 +31,117 @@ export const useAIDesigner = () => {
       { stage: 8, message: 'Finalising design documentation...', duration: 60000, targetPercent: 99 }
     ];
 
+    // Pre-compute cumulative stage durations for monotonic progress
+    const cumulativeDurations = stages.map((s, i) => 
+      s.duration + (i > 0 ? cumulativeDurations[i - 1] : 0)
+    );
+    const totalDuration = cumulativeDurations[cumulativeDurations.length - 1];
+
     let progressInterval: ReturnType<typeof setInterval> | null = null;
-    let currentStage = 0;
     let currentPercent = 0;
+    let retryMessage = '';
+
+    const invokeWithRetry = async (attempt = 1, maxAttempts = 3): Promise<any> => {
+      try {
+        const { data, error: invokeError } = await supabase.functions.invoke('designer-agent', {
+          body: {
+            mode: 'batch-design',
+            aiConfig: {
+              model: 'openai/gpt-5',
+              maxTokens: 15000,
+              timeoutMs: 280000,
+              noMemory: true,
+              ragPriority: {
+                design: 95,
+                bs7671: 85,
+                installation: 75
+              }
+            },
+            projectInfo: {
+              name: inputs.projectName,
+              location: inputs.location,
+              clientName: inputs.clientName,
+              electricianName: inputs.electricianName,
+              installationType: inputs.propertyType,
+              propertyAge: inputs.propertyAge,
+              existingInstallation: inputs.existingInstallation,
+              budgetLevel: inputs.budgetLevel,
+              additionalPrompt: inputs.additionalPrompt
+            },
+            incomingSupply: {
+              voltage: inputs.voltage,
+              phases: inputs.phases,
+              Ze: inputs.ze,
+              earthingSystem: inputs.earthingSystem,
+              pscc: inputs.pscc || 3500,
+              mainSwitchRating: inputs.mainSwitchRating || 100,
+              ambientTemp: inputs.ambientTemp || 30,
+              installationMethod: inputs.installationMethod || 'clipped-direct',
+              groupingFactor: inputs.groupingFactor || 1
+            },
+            circuits: inputs.circuits.map(c => ({
+              name: c.name,
+              loadType: c.loadType,
+              loadPower: c.loadPower,
+              cableLength: c.cableLength,
+              phases: c.phases,
+              specialLocation: c.specialLocation,
+              notes: c.notes
+            }))
+          }
+        });
+
+        if (invokeError) throw invokeError;
+        retryMessage = ''; // Clear retry message on success
+        return { data, error: null };
+      } catch (error: any) {
+        const isTransient = 
+          error?.message?.includes('Failed to send a request to the Edge Function') ||
+          error?.message?.includes('fetch') ||
+          error?.message?.includes('network') ||
+          error?.message?.includes('502') ||
+          error?.message?.includes('503') ||
+          error?.message?.includes('504') ||
+          error instanceof TypeError;
+
+        if (isTransient && attempt < maxAttempts) {
+          const delay = 1500 * Math.pow(2, attempt - 1); // 1.5s, 3s
+          console.warn(`⚠️ Attempt ${attempt}/${maxAttempts} failed, retrying in ${delay}ms...`, error.message);
+          retryMessage = `Reconnecting to design service… (retry ${attempt}/${maxAttempts - 1})`;
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return invokeWithRetry(attempt + 1, maxAttempts);
+        }
+
+        throw error;
+      }
+    };
 
     try {
-      // Realistic progress controller - gradually advances through stages
+      // Monotonic progress controller
       const startTime = Date.now();
-      let accumulatedDuration = 0;
 
       progressInterval = setInterval(() => {
-        const elapsed = Date.now() - startTime;
+        const elapsed = Math.min(Date.now() - startTime, totalDuration * 0.99);
         
-        // Find which stage we should be in based on elapsed time
-        let targetStage = 0;
-        let stageStartTime = 0;
+        // Find current stage based on cumulative durations
+        const stageIndex = cumulativeDurations.findIndex(t => elapsed < t);
+        const currentStage = stageIndex === -1 ? stages.length - 1 : stageIndex;
         
-        for (let i = 0; i < stages.length; i++) {
-          if (elapsed < accumulatedDuration + stages[i].duration) {
-            targetStage = i;
-            stageStartTime = accumulatedDuration;
-            break;
-          }
-          accumulatedDuration += stages[i].duration;
-          targetStage = i;
-        }
+        const stageStartTime = currentStage === 0 ? 0 : cumulativeDurations[currentStage - 1];
+        const stageDuration = stages[currentStage].duration;
+        const stageElapsed = Math.max(0, elapsed - stageStartTime);
+        const stageFraction = Math.min(1, stageElapsed / stageDuration);
         
-        // Cap at stage 7 (99%) until backend completes
-        if (targetStage >= 7) targetStage = 7;
+        const prevPercent = currentStage === 0 ? 0 : stages[currentStage - 1].targetPercent;
+        const targetPercent = stages[currentStage].targetPercent;
+        const computedPercent = Math.floor(prevPercent + (targetPercent - prevPercent) * stageFraction);
         
-        // Update current stage and smoothly interpolate percent
-        if (targetStage !== currentStage) {
-          currentStage = targetStage;
-        }
-        
-        const stage = stages[currentStage];
-        const stageElapsed = Math.min(elapsed - stageStartTime, stage.duration);
-        const stageProgress = stageElapsed / stage.duration;
-        
-        const prevPercent = currentStage > 0 ? stages[currentStage - 1].targetPercent : 0;
-        currentPercent = Math.floor(prevPercent + (stage.targetPercent - prevPercent) * stageProgress);
+        // Ensure monotonic progress
+        currentPercent = Math.max(currentPercent, computedPercent);
         
         setProgress({
           stage: currentStage + 1,
-          message: stage.message,
+          message: retryMessage || stages[currentStage].message,
           percent: currentPercent
         });
       }, 1000);
@@ -84,58 +151,11 @@ export const useAIDesigner = () => {
         projectName: inputs.projectName
       });
 
-      const { data, error: invokeError } = await supabase.functions.invoke('designer-agent', {
-        body: {
-          mode: 'batch-design',
-          aiConfig: {
-            model: 'openai/gpt-5', // Use GPT-5 for best results
-            maxTokens: 15000,
-            timeoutMs: 280000, // 4 min 40 sec (like RAMS)
-            noMemory: true, // No conversation history
-            ragPriority: {
-              design: 95,      // High priority for design docs
-              bs7671: 85,      // High priority for regulations
-              installation: 75 // Medium-high for installation guides
-            }
-          },
-          projectInfo: {
-            name: inputs.projectName,
-            location: inputs.location,
-            clientName: inputs.clientName,
-            electricianName: inputs.electricianName,
-            installationType: inputs.propertyType,
-            propertyAge: inputs.propertyAge,
-            existingInstallation: inputs.existingInstallation,
-            budgetLevel: inputs.budgetLevel,
-            additionalPrompt: inputs.additionalPrompt
-          },
-          incomingSupply: {
-            voltage: inputs.voltage,
-            phases: inputs.phases,
-            Ze: inputs.ze,
-            earthingSystem: inputs.earthingSystem,
-            pscc: inputs.pscc || 3500,
-            mainSwitchRating: inputs.mainSwitchRating || 100,
-            ambientTemp: inputs.ambientTemp || 30,
-            installationMethod: inputs.installationMethod || 'clipped-direct',
-            groupingFactor: inputs.groupingFactor || 1
-          },
-          circuits: inputs.circuits.map(c => ({
-            name: c.name,
-            loadType: c.loadType,
-            loadPower: c.loadPower,
-            cableLength: c.cableLength,
-            phases: c.phases,
-            specialLocation: c.specialLocation,
-            notes: c.notes
-          }))
-        }
-      });
+      const { data, error: invokeError } = await invokeWithRetry();
 
       if (progressInterval) clearInterval(progressInterval);
 
       if (invokeError) {
-        // Map specific error codes
         let errorMessage = invokeError.message || 'Unknown error occurred';
         
         if (invokeError.message?.includes('429')) {
@@ -153,7 +173,7 @@ export const useAIDesigner = () => {
         throw new Error(data.error || 'Design generation failed');
       }
 
-      // Complete progress smoothly to 100%
+      // Complete progress to 100%
       setProgress({ stage: 8, message: 'Design complete!', percent: 100 });
       
       console.log('✅ Design generated successfully', data.design);
@@ -163,17 +183,20 @@ export const useAIDesigner = () => {
         description: `${data.design.circuits.length} circuits designed and verified`
       });
 
+      return true;
+
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       console.error('❌ Design generation failed:', errorMessage);
       setError(errorMessage);
 
-      // Stop progress at current stage on error (don't show 100%)
       if (progressInterval) clearInterval(progressInterval);
 
       toast.error('Design generation failed', {
         description: errorMessage
       });
+
+      return false;
     } finally {
       setIsProcessing(false);
       if (progressInterval) clearInterval(progressInterval);

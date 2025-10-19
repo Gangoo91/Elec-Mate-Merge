@@ -13,8 +13,8 @@ export const AIInstallationDesigner = () => {
 
   const handleGenerate = async (inputs: DesignInputs) => {
     setCurrentView('processing');
-    await generateDesign(inputs);
-    if (!error) {
+    const success = await generateDesign(inputs);
+    if (success) {
       setCurrentView('results');
     } else {
       setCurrentView('input');
