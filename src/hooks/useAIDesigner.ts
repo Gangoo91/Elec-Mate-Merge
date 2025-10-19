@@ -31,15 +31,12 @@ export const useAIDesigner = () => {
       { stage: 8, message: 'Finalising design documentation...', duration: 60000, targetPercent: 99 }
     ];
 
-    // Pre-compute cumulative stage durations for monotonic progress
-    const cumulativeDurations = stages.map((s, i) => 
-      s.duration + (i > 0 ? cumulativeDurations[i - 1] : 0)
-    );
-    const totalDuration = cumulativeDurations[cumulativeDurations.length - 1];
-
     let progressInterval: ReturnType<typeof setInterval> | null = null;
     let currentPercent = 0;
     let retryMessage = '';
+
+    // Initialize progress immediately
+    setProgress({ stage: 1, message: 'Initialising...', percent: 0 });
 
     const invokeWithRetry = async (attempt = 1, maxAttempts = 3): Promise<any> => {
       try {
@@ -117,34 +114,46 @@ export const useAIDesigner = () => {
     };
 
     try {
-      // Monotonic progress controller
-      const startTime = Date.now();
+      // Pre-compute cumulative stage durations for monotonic progress (fix temporal dead zone)
+      const cumulativeDurations: number[] = [];
+      stages.forEach((s, i) => {
+        cumulativeDurations[i] = (i === 0 ? 0 : cumulativeDurations[i - 1]) + s.duration;
+      });
+      const totalDuration = cumulativeDurations[cumulativeDurations.length - 1];
 
-      progressInterval = setInterval(() => {
-        const elapsed = Math.min(Date.now() - startTime, totalDuration * 0.99);
-        
-        // Find current stage based on cumulative durations
-        const stageIndex = cumulativeDurations.findIndex(t => elapsed < t);
-        const currentStage = stageIndex === -1 ? stages.length - 1 : stageIndex;
-        
-        const stageStartTime = currentStage === 0 ? 0 : cumulativeDurations[currentStage - 1];
-        const stageDuration = stages[currentStage].duration;
-        const stageElapsed = Math.max(0, elapsed - stageStartTime);
-        const stageFraction = Math.min(1, stageElapsed / stageDuration);
-        
-        const prevPercent = currentStage === 0 ? 0 : stages[currentStage - 1].targetPercent;
-        const targetPercent = stages[currentStage].targetPercent;
-        const computedPercent = Math.floor(prevPercent + (targetPercent - prevPercent) * stageFraction);
-        
-        // Ensure monotonic progress
-        currentPercent = Math.max(currentPercent, computedPercent);
-        
-        setProgress({
-          stage: currentStage + 1,
-          message: retryMessage || stages[currentStage].message,
-          percent: currentPercent
-        });
-      }, 1000);
+      // Defensive check
+      if (totalDuration <= 0) {
+        console.warn('⚠️ Invalid total duration, skipping progress scheduler');
+      } else {
+        // Monotonic progress controller
+        const startTime = Date.now();
+
+        progressInterval = setInterval(() => {
+          const elapsed = Math.min(Date.now() - startTime, totalDuration * 0.99);
+          
+          // Find current stage based on cumulative durations
+          const stageIndex = cumulativeDurations.findIndex(t => elapsed < t);
+          const currentStage = stageIndex === -1 ? stages.length - 1 : stageIndex;
+          
+          const stageStartTime = currentStage === 0 ? 0 : cumulativeDurations[currentStage - 1];
+          const stageDuration = stages[currentStage].duration;
+          const stageElapsed = Math.max(0, elapsed - stageStartTime);
+          const stageFraction = Math.min(1, stageElapsed / stageDuration);
+          
+          const prevPercent = currentStage === 0 ? 0 : stages[currentStage - 1].targetPercent;
+          const targetPercent = stages[currentStage].targetPercent;
+          const computedPercent = Math.floor(prevPercent + (targetPercent - prevPercent) * stageFraction);
+          
+          // Ensure monotonic progress
+          currentPercent = Math.max(currentPercent, computedPercent);
+          
+          setProgress({
+            stage: currentStage + 1,
+            message: retryMessage || stages[currentStage].message,
+            percent: currentPercent
+          });
+        }, 1000);
+      }
 
       console.log('🔧 Generating installation design', {
         circuits: inputs.circuits.length,
