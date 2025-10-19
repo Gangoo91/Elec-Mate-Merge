@@ -1,171 +1,186 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { CircuitInput, DesignInputs, CircuitPreset } from '@/types/installation-design';
-import { CircuitBuilderCard } from './CircuitBuilderCard';
 import { MobileInput } from '@/components/ui/mobile-input';
-import BackButton from '@/components/common/BackButton';
-import { Plus, Zap, FileText, Plug, MessageSquare, Home, Building, Factory, Info } from 'lucide-react';
-import { v4 as uuidv4 } from 'uuid';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown } from 'lucide-react';
-import { DOMESTIC_TEMPLATES, COMMERCIAL_TEMPLATES, INDUSTRIAL_TEMPLATES, SMART_DEFAULTS } from '@/lib/circuit-templates';
+import { Badge } from '@/components/ui/badge';
+import { CircuitBuilderCard } from './CircuitBuilderCard';
 import { SmartSuggestionPanel } from './SmartSuggestionPanel';
-import { toast } from '@/hooks/use-toast';
+import { InstallationTypeDetection } from './InstallationTypeDetection';
+import { PromptExamples } from './PromptExamples';
+import { DesignInputs, CircuitInput } from '@/types/installation-design';
+import { DOMESTIC_TEMPLATES, COMMERCIAL_TEMPLATES, INDUSTRIAL_TEMPLATES, SMART_DEFAULTS } from '@/lib/circuit-templates';
+import { Sparkles, Zap, ChevronDown, Plus, Info, Lightbulb, Building2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface DesignInputFormProps {
-  onGenerate: (inputs: DesignInputs) => void;
+  onGenerate: (inputs: DesignInputs) => Promise<void>;
   isProcessing: boolean;
 }
 
 export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormProps) => {
+  // Prompt-first state
+  const [promptDescription, setPromptDescription] = useState('');
+  const [detectedType, setDetectedType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
+  const [detectionConfidence, setDetectionConfidence] = useState(0);
+
+  // Project info
   const [projectName, setProjectName] = useState('');
   const [location, setLocation] = useState('');
   const [clientName, setClientName] = useState('');
   const [electricianName, setElectricianName] = useState('');
-  const [propertyType, setPropertyType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
+  const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
+
+  // Supply details (collapsible)
+  const [supplyOpen, setSupplyOpen] = useState(false);
   const [voltage, setVoltage] = useState(230);
   const [phases, setPhases] = useState<'single' | 'three'>('single');
   const [ze, setZe] = useState(0.35);
   const [earthingSystem, setEarthingSystem] = useState<'TN-S' | 'TN-C-S' | 'TT'>('TN-S');
-  const [ambientTemp, setAmbientTemp] = useState(30);
-  const [installationMethod, setInstallationMethod] = useState<'clipped-direct' | 'in-conduit' | 'in-trunking' | 'buried-direct' | 'in-insulation'>('clipped-direct');
+  const [ambientTemp, setAmbientTemp] = useState(25);
+  const [installationMethod, setInstallationMethod] = useState<'clipped-direct' | 'in-conduit' | 'in-trunking'>('clipped-direct');
   const [groupingFactor, setGroupingFactor] = useState(1);
-  const [propertyAge, setPropertyAge] = useState<'new-build' | 'modern' | 'older' | 'very-old'>('modern');
-  const [existingInstallation, setExistingInstallation] = useState(false);
-  const [budgetLevel, setBudgetLevel] = useState<'basic' | 'standard' | 'premium'>('standard');
-  const [circuits, setCircuits] = useState<CircuitInput[]>([]);
-  const [additionalPrompt, setAdditionalPrompt] = useState('');
-  const [supplyOpen, setSupplyOpen] = useState(false);
 
-  // Apply smart defaults when property type changes
+  // Emergency contacts (collapsible)
+  const [emergencyOpen, setEmergencyOpen] = useState(false);
+  const [emergencyContact, setEmergencyContact] = useState('');
+  const [emergencyPhone, setEmergencyPhone] = useState('');
+
+  // Circuits (collapsible)
+  const [circuitsOpen, setCircuitsOpen] = useState(false);
+  const [circuits, setCircuits] = useState<CircuitInput[]>([]);
+
+  // Auto-detect installation type from prompt
   useEffect(() => {
-    const defaults = SMART_DEFAULTS[propertyType];
+    if (!promptDescription.trim()) {
+      setDetectionConfidence(0);
+      return;
+    }
+
+    const lower = promptDescription.toLowerCase();
+    let type: 'domestic' | 'commercial' | 'industrial' = 'domestic';
+    let confidence = 50;
+
+    // Industrial keywords
+    if (/(factory|workshop|machine|welding|crane|motor|conveyor|manufacturing|cnc|lathe|compressor|three.?phase)/i.test(lower)) {
+      type = 'industrial';
+      confidence = 85;
+    }
+    // Commercial keywords
+    else if (/(office|shop|retail|restaurant|café|cafe|commercial|warehouse|server|hvac|emergency.?light|fire.?alarm)/i.test(lower)) {
+      type = 'commercial';
+      confidence = 80;
+    }
+    // Domestic keywords
+    else if (/(house|home|flat|apartment|bedroom|kitchen|bathroom|shower|garage|rewire|consumer.?unit|ev.?charg)/i.test(lower)) {
+      type = 'domestic';
+      confidence = 75;
+    }
+
+    setDetectedType(type);
+    setDetectionConfidence(confidence);
+
+    // Auto-update installation type if confidence is high
+    if (confidence >= 75) {
+      setInstallationType(type);
+    }
+  }, [promptDescription]);
+
+  // Apply smart defaults when installation type changes
+  useEffect(() => {
+    const defaults = SMART_DEFAULTS[installationType];
     setVoltage(defaults.voltage);
     setPhases(defaults.phases);
     setZe(defaults.ze);
     setEarthingSystem(defaults.earthingSystem);
-    setAmbientTemp(defaults.ambientTemp || 25);
+    setAmbientTemp(defaults.ambientTemp);
     setInstallationMethod(defaults.installationMethod);
-    setGroupingFactor(defaults.groupingFactor || 1);
-    setBudgetLevel(defaults.budgetLevel);
-  }, [propertyType]);
+    setGroupingFactor(defaults.groupingFactor);
+  }, [installationType]);
 
-  const addCircuit = () => {
-    const newCircuit: CircuitInput = {
-      id: uuidv4(),
-      name: `Circuit ${circuits.length + 1}`,
-      loadType: 'socket',
-      phases: 'single',
-      specialLocation: 'none'
-    };
-    setCircuits([...circuits, newCircuit]);
+  const getQuickAddButtons = () => {
+    switch (installationType) {
+      case 'domestic':
+        return [
+          { label: 'Socket Ring', value: 'socket' },
+          { label: 'Lighting', value: 'lighting' },
+          { label: 'Cooker', value: 'cooker' },
+          { label: 'Shower', value: 'shower' },
+          { label: 'EV Charger', value: 'ev-charger' }
+        ];
+      case 'commercial':
+        return [
+          { label: 'Office Sockets', value: 'office-sockets' },
+          { label: 'Lighting', value: 'lighting' },
+          { label: 'Emergency Lights', value: 'emergency-lighting' },
+          { label: 'Server Room', value: 'server-room' },
+          { label: 'HVAC', value: 'hvac' }
+        ];
+      case 'industrial':
+        return [
+          { label: '3-Phase Motor', value: 'three-phase-motor' },
+          { label: 'Machine Tool', value: 'machine-tool' },
+          { label: 'Welding', value: 'welding' },
+          { label: 'Workshop Sockets', value: 'workshop-sockets' },
+          { label: 'Lighting', value: 'overhead-lighting' }
+        ];
+    }
+  };
+
+  const getTemplates = () => {
+    switch (installationType) {
+      case 'domestic': return DOMESTIC_TEMPLATES;
+      case 'commercial': return COMMERCIAL_TEMPLATES;
+      case 'industrial': return INDUSTRIAL_TEMPLATES;
+    }
   };
 
   const addQuickCircuit = (loadType: string) => {
-    const quickPresets: Record<string, Partial<CircuitInput>> = {
-      socket: { name: 'Socket Ring Main', loadType: 'socket' as any, loadPower: 7360 },
-      lighting: { name: 'Lighting Circuit', loadType: 'lighting' as any, loadPower: 1000 },
-      cooker: { name: 'Cooker', loadType: 'cooker' as any, loadPower: 9200, specialLocation: 'kitchen' },
-      shower: { name: 'Electric Shower', loadType: 'shower' as any, loadPower: 10000, specialLocation: 'bathroom', cableLength: 15 },
-      'ev-charger': { name: 'EV Charger', loadType: 'ev-charger' as any, loadPower: 7400, specialLocation: 'outdoor', cableLength: 20 },
-      'office-sockets': { name: 'Office Sockets', loadType: 'office-sockets' as any, loadPower: 5000 },
-      'emergency-lighting': { name: 'Emergency Lighting', loadType: 'emergency-lighting' as any, loadPower: 500 },
-      hvac: { name: 'HVAC Unit', loadType: 'hvac' as any, loadPower: 3000 },
-      'server-room': { name: 'Server Room', loadType: 'server-room' as any, loadPower: 5000, notes: 'UPS required' },
-      'kitchen-equipment': { name: 'Kitchen Equipment', loadType: 'kitchen-equipment' as any, loadPower: 3000, specialLocation: 'kitchen' },
-      'three-phase-motor': { name: '3Φ Motor', loadType: 'three-phase-motor' as any, loadPower: 11000, phases: 'three', notes: 'Type D MCB for motor starting' },
-      'machine-tool': { name: 'Machine Tool', loadType: 'machine-tool' as any, loadPower: 7500, phases: 'three' },
-      welding: { name: 'Welding Equipment', loadType: 'welding' as any, loadPower: 15000, phases: 'three', notes: 'High inrush current' },
-      conveyor: { name: 'Conveyor System', loadType: 'conveyor' as any, loadPower: 5500, phases: 'three' },
-      'workshop-sockets': { name: 'Workshop Sockets', loadType: 'workshop-sockets' as any, loadPower: 5000 }
-    };
-
-    const preset = quickPresets[loadType] || { name: `Circuit ${circuits.length + 1}`, loadType: loadType as any };
     const newCircuit: CircuitInput = {
-      id: uuidv4(),
-      phases: 'single',
-      specialLocation: 'none',
-      ...preset
-    } as CircuitInput;
-
+      id: `circuit-${Date.now()}`,
+      name: `New ${loadType.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`,
+      loadType: loadType as any,
+      phases: installationType === 'industrial' ? 'three' : 'single',
+      specialLocation: 'none'
+    };
     setCircuits([...circuits, newCircuit]);
+    setCircuitsOpen(true);
   };
 
-  const updateCircuit = (id: string, updated: CircuitInput) => {
-    setCircuits(circuits.map(c => c.id === id ? updated : c));
-  };
-
-  const deleteCircuit = (id: string) => {
-    setCircuits(circuits.filter(c => c.id !== id));
-  };
-
-  const loadPreset = (template: CircuitPreset) => {
-    const circuitsWithIds = template.circuits.map(c => ({
-      ...c,
-      id: uuidv4()
-    })) as CircuitInput[];
-    setCircuits(circuitsWithIds);
-  };
-
-  const getTemplatesForType = () => {
-    switch (propertyType) {
-      case 'domestic':
-        return DOMESTIC_TEMPLATES;
-      case 'commercial':
-        return COMMERCIAL_TEMPLATES;
-      case 'industrial':
-        return INDUSTRIAL_TEMPLATES;
+  const applyTemplate = (templateId: string) => {
+    const template = getTemplates().find(t => t.id === templateId);
+    if (template) {
+      const circuitsWithIds = template.circuits.map((circuit, idx) => ({
+        ...circuit,
+        id: `circuit-${Date.now()}-${idx}`
+      }));
+      setCircuits(circuitsWithIds);
+      setCircuitsOpen(true);
+      toast.success(`Applied: ${template.name}`, {
+        description: `${template.circuits.length} circuits added`
+      });
     }
   };
 
-  const getQuickAddButtons = () => {
-    switch (propertyType) {
-      case 'domestic':
-        return [
-          { value: 'socket', label: 'Socket Ring', icon: '⭐' },
-          { value: 'lighting', label: 'Lighting', icon: '✅' },
-          { value: 'cooker', label: 'Cooker', icon: '' },
-          { value: 'shower', label: 'Shower', icon: '⚡' },
-          { value: 'ev-charger', label: 'EV Charger', icon: '🔌' }
-        ];
-      case 'commercial':
-        return [
-          { value: 'office-sockets', label: 'Office Sockets', icon: '⭐' },
-          { value: 'emergency-lighting', label: 'Emergency Lights', icon: '✅' },
-          { value: 'hvac', label: 'HVAC', icon: '' },
-          { value: 'server-room', label: 'Server Room', icon: '' },
-          { value: 'kitchen-equipment', label: 'Kitchen Equip', icon: '' }
-        ];
-      case 'industrial':
-        return [
-          { value: 'three-phase-motor', label: '3Φ Motor', icon: '⭐' },
-          { value: 'machine-tool', label: 'Machine Tool', icon: '' },
-          { value: 'welding', label: 'Welding', icon: '⚡⚡' },
-          { value: 'conveyor', label: 'Conveyor', icon: '' },
-          { value: 'workshop-sockets', label: 'Workshop', icon: '' }
-        ];
-    }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await handleGenerate();
   };
 
-  const handleSubmit = () => {
-    if (!projectName) {
-      toast({
-        title: "Project name required",
-        description: "Please enter a project name",
-        variant: "destructive"
+  const handleGenerate = async () => {
+    if (!projectName.trim()) {
+      toast.error('Project name required', {
+        description: 'Please enter a project name to continue'
       });
       return;
     }
-    
-    if (circuits.length === 0 && !additionalPrompt.trim()) {
-      toast({
-        title: "Circuits or description required",
-        description: "Please either add circuits manually or describe your requirements in the Additional Requirements field",
-        variant: "destructive"
+
+    if (circuits.length === 0 && !promptDescription.trim()) {
+      toast.error('Circuits or description required', {
+        description: 'Please either add circuits manually or describe your requirements in the AI prompt'
       });
       return;
     }
@@ -175,7 +190,7 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       location,
       clientName,
       electricianName,
-      propertyType,
+      propertyType: installationType,
       voltage,
       phases,
       ze,
@@ -183,74 +198,95 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       ambientTemp,
       installationMethod,
       groupingFactor,
-      propertyAge,
-      existingInstallation,
-      budgetLevel,
       circuits,
-      additionalPrompt
+      additionalPrompt: promptDescription
     };
 
-    onGenerate(inputs);
+    await onGenerate(inputs);
   };
 
-  const requiredFieldsComplete = projectName && circuits.length > 0;
-  const completionPercent = Math.round(((projectName ? 1 : 0) + (circuits.length > 0 ? 1 : 0)) / 2 * 100);
+  const getButtonText = () => {
+    if (circuits.length === 0 && promptDescription.trim()) {
+      return 'Generate Design from AI Description';
+    }
+    if (circuits.length > 0 && !promptDescription.trim()) {
+      return `Generate Design (${circuits.length} circuit${circuits.length !== 1 ? 's' : ''})`;
+    }
+    if (circuits.length > 0 && promptDescription.trim()) {
+      return `Generate Enhanced Design (${circuits.length} circuits + AI)`;
+    }
+    return 'Describe requirements or add circuits';
+  };
+
+  const canGenerate = projectName.trim() && (circuits.length > 0 || promptDescription.trim().length > 0);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header with Back Button */}
-      <div className="bg-background border-b">
-        <div className="container max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <BackButton customUrl="/electrical-hub" />
-            <div className="flex-1">
-              <h1 className="text-2xl md:text-3xl font-bold">AI Circuit Designer</h1>
-              <p className="text-sm text-muted-foreground mt-1">BS 7671:2018 Compliant Design</p>
+    <form onSubmit={handleSubmit} className="space-y-4 pb-6">
+      {/* 1. HERO PROMPT SECTION */}
+      <Card className="p-4 sm:p-6 bg-gradient-to-br from-primary/5 via-background to-background border-primary/20">
+        <div className="space-y-4">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center animate-pulse">
+              <Sparkles className="h-6 w-6 text-primary" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+                What electrical work do you need designed?
+              </h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                Describe your requirements in plain English - AI will handle the rest
+              </p>
             </div>
           </div>
-          {/* Progress Bar */}
-          {!requiredFieldsComplete && (
-            <div className="mt-4">
-              <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-                <span>Required fields</span>
-                <span>{completionPercent}%</span>
-              </div>
-              <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-primary transition-all duration-300"
-                  style={{ width: `${completionPercent}%` }}
-                />
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
 
-      <div className="container max-w-4xl mx-auto px-4 py-6 space-y-6">
-        {/* Project Information */}
-        <Card className="p-4 md:p-6">
-          <h2 className="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
-            <FileText className="h-5 w-5 text-primary" />
-            Project Information
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4">
+          <Textarea
+            value={promptDescription}
+            onChange={(e) => setPromptDescription(e.target.value)}
+            placeholder="Example: 3-bed house complete rewire with new consumer unit, kitchen extension with integrated appliances, 2 bathrooms with 10.5kW showers, EV charger on driveway, outdoor sockets for garden..."
+            className="min-h-[140px] text-base resize-none"
+          />
+
+          <InstallationTypeDetection
+            detectedType={detectedType}
+            selectedType={installationType}
+            onTypeChange={setInstallationType}
+            confidence={detectionConfidence}
+          />
+
+          <PromptExamples
+            installationType={installationType}
+            onSelectExample={setPromptDescription}
+          />
+        </div>
+      </Card>
+
+      {/* 2. PROJECT INFORMATION */}
+      <Card className="p-4 sm:p-6">
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <Building2 className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-semibold">Project Information</h3>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
             <MobileInput
-              label="Project Name *"
+              label="Project Name"
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)}
-              placeholder="e.g., 123 High Street Rewire"
+              placeholder="e.g., Smith Residence Rewire"
+              required
             />
             <MobileInput
               label="Location"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              placeholder="e.g., Manchester"
+              placeholder="e.g., 123 High Street, London"
             />
             <MobileInput
               label="Client Name"
               value={clientName}
               onChange={(e) => setClientName(e.target.value)}
-              placeholder="Optional"
+              placeholder="e.g., John Smith"
             />
             <MobileInput
               label="Electrician Name"
@@ -259,113 +295,50 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
               placeholder="Your name"
             />
           </div>
+        </div>
+      </Card>
 
-          <div className="grid md:grid-cols-2 gap-4 mt-4">
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Property Age</Label>
-              <Select value={propertyAge} onValueChange={(v: any) => setPropertyAge(v)}>
-                <SelectTrigger className="h-12">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="new-build">New Build</SelectItem>
-                  <SelectItem value="modern">Modern (Post-2008)</SelectItem>
-                  <SelectItem value="older">Older (1980-2008)</SelectItem>
-                  <SelectItem value="very-old">Very Old (Pre-1980)</SelectItem>
-                </SelectContent>
-              </Select>
+      {/* 3. SUPPLY DETAILS (Collapsible) */}
+      <Collapsible open={supplyOpen} onOpenChange={setSupplyOpen}>
+        <Card className="overflow-hidden">
+          <CollapsibleTrigger className="w-full p-4 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors">
+            <div className="flex items-center gap-2">
+              <Zap className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold text-left">Supply Details</h3>
+              <Badge variant="secondary" className="text-xs">Smart defaults applied</Badge>
             </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Budget Level</Label>
-              <Select value={budgetLevel} onValueChange={(v: any) => setBudgetLevel(v)}>
-                <SelectTrigger className="h-12">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="basic">Basic (Minimum Compliant)</SelectItem>
-                  <SelectItem value="standard">Standard (RCBOs)</SelectItem>
-                  <SelectItem value="premium">Premium (AFDDs + Surge)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="mt-4 flex items-center gap-3">
-            <input
-              type="checkbox"
-              id="existing"
-              checked={existingInstallation}
-              onChange={(e) => setExistingInstallation(e.target.checked)}
-              className="h-4 w-4 rounded border-primary/30"
-            />
-            <Label htmlFor="existing" className="text-sm cursor-pointer">
-              Adding to existing installation
-            </Label>
-          </div>
-        </Card>
-
-        {/* Incoming Supply - Collapsible on Mobile */}
-        <Card className="p-4 md:p-6">
-          <Collapsible open={supplyOpen} onOpenChange={setSupplyOpen}>
-            <CollapsibleTrigger className="w-full flex items-center justify-between mb-4 md:cursor-default md:pointer-events-none">
-              <h2 className="text-lg md:text-xl font-bold flex items-center gap-2">
-                <Zap className="h-5 w-5 text-primary" />
-                Incoming Supply Details
-              </h2>
-              <ChevronDown className={`h-5 w-5 transition-transform md:hidden ${supplyOpen ? 'rotate-180' : ''}`} />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="md:block">
-              <div className="grid md:grid-cols-3 gap-4">
+            <ChevronDown className={`h-5 w-5 transition-transform ${supplyOpen ? 'rotate-180' : ''}`} />
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="p-4 sm:p-6 pt-0 space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <MobileInput
+                  label="Voltage (V)"
+                  type="number"
+                  value={voltage.toString()}
+                  onChange={(e) => setVoltage(Number(e.target.value))}
+                />
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">Property Type</Label>
-                  <Select value={propertyType} onValueChange={(v: any) => setPropertyType(v)}>
+                  <Label>Phases</Label>
+                  <Select value={phases} onValueChange={(v: any) => setPhases(v)}>
                     <SelectTrigger className="h-12">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="domestic">
-                        <div className="flex items-center gap-2">
-                          <Home className="h-4 w-4" />
-                          Domestic
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="commercial">
-                        <div className="flex items-center gap-2">
-                          <Building className="h-4 w-4" />
-                          Commercial
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="industrial">
-                        <div className="flex items-center gap-2">
-                          <Factory className="h-4 w-4" />
-                          Industrial
-                        </div>
-                      </SelectItem>
+                      <SelectItem value="single">Single Phase</SelectItem>
+                      <SelectItem value="three">Three Phase</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
+                <MobileInput
+                  label="Ze (Ω)"
+                  type="number"
+                  step="0.01"
+                  value={ze.toString()}
+                  onChange={(e) => setZe(Number(e.target.value))}
+                />
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">Voltage / Phases</Label>
-                  <Select
-                    value={`${voltage}-${phases}`}
-                    onValueChange={(v) => {
-                      const [volt, phase] = v.split('-');
-                      setVoltage(Number(volt));
-                      setPhases(phase as 'single' | 'three');
-                    }}
-                  >
-                    <SelectTrigger className="h-12">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="230-single">230V Single Phase</SelectItem>
-                      <SelectItem value="400-three">400V Three Phase</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Earthing System</Label>
+                  <Label>Earthing System</Label>
                   <Select value={earthingSystem} onValueChange={(v: any) => setEarthingSystem(v)}>
                     <SelectTrigger className="h-12">
                       <SelectValue />
@@ -378,188 +351,182 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
                   </Select>
                 </div>
                 <MobileInput
-                  label="Ze (Ω)"
+                  label="Ambient Temp (°C)"
                   type="number"
-                  inputMode="decimal"
-                  step="0.01"
-                  value={ze.toString()}
-                  onChange={(e) => setZe(Number(e.target.value))}
-                  hint="External earth fault loop impedance"
+                  value={ambientTemp.toString()}
+                  onChange={(e) => setAmbientTemp(Number(e.target.value))}
                 />
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium flex items-center gap-1">
-                    Ambient Temp
-                    <Info className="h-3 w-3 text-muted-foreground" />
-                  </Label>
-                  <Select value={ambientTemp.toString()} onValueChange={(v) => setAmbientTemp(Number(v))}>
-                    <SelectTrigger className="h-12">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="20">20°C</SelectItem>
-                      <SelectItem value="25">25°C</SelectItem>
-                      <SelectItem value="30">30°C (Standard)</SelectItem>
-                      <SelectItem value="35">35°C</SelectItem>
-                      <SelectItem value="40">40°C</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground">Affects cable derating</p>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium flex items-center gap-1">
-                    Installation Method
-                    <Info className="h-3 w-3 text-muted-foreground" />
-                  </Label>
+                  <Label>Installation Method</Label>
                   <Select value={installationMethod} onValueChange={(v: any) => setInstallationMethod(v)}>
                     <SelectTrigger className="h-12">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="clipped-direct">Clipped Direct (Method C)</SelectItem>
-                      <SelectItem value="in-conduit">In Conduit/Trunking</SelectItem>
-                      <SelectItem value="in-trunking">In Trunking (Perforated)</SelectItem>
-                      <SelectItem value="buried-direct">Buried Direct</SelectItem>
-                      <SelectItem value="in-insulation">In Insulation</SelectItem>
+                      <SelectItem value="clipped-direct">Clipped Direct</SelectItem>
+                      <SelectItem value="in-conduit">In Conduit</SelectItem>
+                      <SelectItem value="in-trunking">In Trunking</SelectItem>
                     </SelectContent>
                   </Select>
-                  <p className="text-xs text-muted-foreground">How cables will be installed</p>
                 </div>
-              </div>
-              <div className="mt-4">
                 <MobileInput
                   label="Grouping Factor"
                   type="number"
-                  inputMode="numeric"
-                  min="1"
-                  max="10"
                   value={groupingFactor.toString()}
                   onChange={(e) => setGroupingFactor(Number(e.target.value))}
-                  hint="Number of circuits grouped together (1-10)"
                 />
               </div>
-            </CollapsibleContent>
-          </Collapsible>
+            </div>
+          </CollapsibleContent>
         </Card>
+      </Collapsible>
 
-        {/* Smart Suggestion Panel */}
-        <SmartSuggestionPanel 
-          installationType={propertyType}
-          propertyAge={propertyAge}
-          budgetLevel={budgetLevel}
-        />
-
-        {/* Circuit Builder */}
-        <Card className="p-4 md:p-6">
-          <div className="flex flex-col gap-4 mb-4">
-            <h2 className="text-lg md:text-xl font-bold flex items-center gap-2">
-              <Plug className="h-5 w-5 text-primary" />
-              Circuit Builder {circuits.length > 0 && <span className="text-sm font-normal text-muted-foreground">({circuits.length} circuits)</span>}
-            </h2>
-            
-            {/* Context-Aware Quick Add Buttons */}
-            <div className="flex flex-wrap gap-2 justify-start">
-              {getQuickAddButtons().map(btn => (
-                <Button 
-                  key={btn.value}
-                  variant="outline" 
-                  size="sm" 
-                  onClick={() => addQuickCircuit(btn.value)} 
-                  className="min-w-[110px] max-w-[160px] h-10"
-                >
-                  <Plus className="h-3 w-3 mr-1" />
-                  {btn.label} {btn.icon && <span className="ml-1 text-xs">{btn.icon}</span>}
-                </Button>
-              ))}
+      {/* 4. EMERGENCY CONTACTS (Collapsible) */}
+      <Collapsible open={emergencyOpen} onOpenChange={setEmergencyOpen}>
+        <Card className="overflow-hidden">
+          <CollapsibleTrigger className="w-full p-4 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors">
+            <div className="flex items-center gap-2">
+              <Info className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold text-left">Emergency Contacts</h3>
+              <Badge variant="outline" className="text-xs">Optional</Badge>
             </div>
-
-            {/* Context-Aware Preset Templates */}
-            <div className="flex flex-wrap gap-2 justify-start">
-              {getTemplatesForType().map(template => (
-                <Button 
-                  key={template.id}
-                  variant="secondary" 
-                  size="sm" 
-                  onClick={() => loadPreset(template)} 
-                  className="min-w-[140px] max-w-[200px] h-9"
-                >
-                  {propertyType === 'domestic' && <Home className="h-4 w-4 mr-2" />}
-                  {propertyType === 'commercial' && <Building className="h-4 w-4 mr-2" />}
-                  {propertyType === 'industrial' && <Factory className="h-4 w-4 mr-2" />}
-                  {template.name}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            {circuits.map((circuit, index) => (
-              <CircuitBuilderCard
-                key={circuit.id}
-                circuit={circuit}
-                circuitNumber={index + 1}
-                installationType={propertyType}
-                onUpdate={(updated) => updateCircuit(circuit.id, updated)}
-                onDelete={() => deleteCircuit(circuit.id)}
-              />
-            ))}
-
-            {circuits.length === 0 && (
-              <div className="text-left py-8 px-4 bg-muted/30 rounded-lg border border-dashed">
-                <Plug className="h-12 w-12 mb-3 opacity-50" />
-                <p className="text-sm text-muted-foreground mb-2">
-                  💡 <strong>No circuits added yet.</strong> You have two options:
-                </p>
-                <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside ml-4">
-                  <li>Use the quick add buttons or presets above to add circuits manually</li>
-                  <li>OR describe your requirements in the "Additional Requirements" field below and let AI design the circuits for you</li>
-                </ul>
+            <ChevronDown className={`h-5 w-5 transition-transform ${emergencyOpen ? 'rotate-180' : ''}`} />
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="p-4 sm:p-6 pt-0 space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <MobileInput
+                  label="Emergency Contact Name"
+                  value={emergencyContact}
+                  onChange={(e) => setEmergencyContact(e.target.value)}
+                  placeholder="e.g., Site Manager"
+                />
+                <MobileInput
+                  label="Emergency Phone"
+                  type="tel"
+                  value={emergencyPhone}
+                  onChange={(e) => setEmergencyPhone(e.target.value)}
+                  placeholder="e.g., 07700 900000"
+                />
               </div>
-            )}
-
-            <Button
-              variant="outline"
-              className="w-full h-12"
-              onClick={addCircuit}
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Custom Circuit
-            </Button>
-          </div>
+            </div>
+          </CollapsibleContent>
         </Card>
+      </Collapsible>
 
-        {/* Additional Context */}
-        <Card className="p-4 md:p-6">
-          <h2 className="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
-            <MessageSquare className="h-5 w-5 text-primary" />
-            Additional Requirements or Circuit Description
-          </h2>
-          <Textarea
-            value={additionalPrompt}
-            onChange={(e) => setAdditionalPrompt(e.target.value)}
-            placeholder="Describe your requirements and let AI design the circuits, OR add specific notes for circuits you've already added.
+      {/* 5. MANUAL CIRCUIT OVERRIDE (Collapsible) */}
+      <Collapsible open={circuitsOpen} onOpenChange={setCircuitsOpen}>
+        <Card className="overflow-hidden">
+          <CollapsibleTrigger className="w-full p-4 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold text-left">Manual Circuit Override</h3>
+              <Badge variant="outline" className="text-xs">Optional</Badge>
+              {circuits.length > 0 && (
+                <Badge variant="secondary" className="text-xs">{circuits.length} circuit{circuits.length !== 1 ? 's' : ''}</Badge>
+              )}
+            </div>
+            <ChevronDown className={`h-5 w-5 transition-transform ${circuitsOpen ? 'rotate-180' : ''}`} />
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className="p-4 sm:p-6 pt-0 space-y-4">
+              <div className="bg-accent/50 p-3 rounded-lg border border-border/50">
+                <p className="text-sm text-muted-foreground text-left">
+                  Want to manually specify circuits? Add them below. Otherwise, AI will design them from your description above.
+                </p>
+              </div>
 
-Examples:
-• 3-bed house with kitchen extension, 2 bathrooms, garage, EV charger
-• Small office with 10 desks, server room, kitchen area
-• Workshop with 3 machines, welding bay, overhead crane"
-            rows={5}
-            className="text-base"
-          />
+              {/* Quick Add Buttons */}
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Quick Add</Label>
+                <div className="flex flex-wrap gap-2 justify-start">
+                  {getQuickAddButtons().map(btn => (
+                    <Button
+                      key={btn.value}
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => addQuickCircuit(btn.value)}
+                      className="min-w-[110px] max-w-[160px] h-10 gap-2"
+                    >
+                      <Plus className="h-4 w-4" />
+                      {btn.label}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Template Presets */}
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Template Presets</Label>
+                <div className="flex flex-wrap gap-2 justify-start">
+                  {getTemplates().map(template => (
+                    <Button
+                      key={template.id}
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => applyTemplate(template.id)}
+                      className="min-w-[140px] max-w-[240px] h-auto py-2 px-3"
+                    >
+                      <div className="text-left">
+                        <div className="font-medium text-sm">{template.name}</div>
+                        <div className="text-xs text-muted-foreground">{template.description}</div>
+                      </div>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Circuit List */}
+              {circuits.length > 0 && (
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">Circuits ({circuits.length})</Label>
+                  {circuits.map((circuit, idx) => (
+                    <CircuitBuilderCard
+                      key={idx}
+                      circuit={circuit}
+                      circuitNumber={idx + 1}
+                      installationType={installationType}
+                      onUpdate={(updated) => {
+                        const newCircuits = [...circuits];
+                        newCircuits[idx] = updated;
+                        setCircuits(newCircuits);
+                      }}
+                      onDelete={() => setCircuits(circuits.filter((_, i) => i !== idx))}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {circuits.length === 0 && (
+                <div className="text-center py-8 text-muted-foreground text-sm">
+                  <Lightbulb className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                  <p>No circuits added yet</p>
+                  <p className="mt-1">Use Quick Add buttons or Template Presets above, or let AI design from your description</p>
+                </div>
+              )}
+
+              {/* Smart Suggestions */}
+              {circuits.length > 0 && (
+                <SmartSuggestionPanel
+                  installationType={installationType}
+                />
+              )}
+            </div>
+          </CollapsibleContent>
         </Card>
+      </Collapsible>
 
-        {/* Generate Button */}
-        <div className="pb-4">
-          <Button
-            size="lg"
-            className="w-full h-14 text-base md:text-lg touch-manipulation"
-            onClick={handleSubmit}
-            disabled={!requiredFieldsComplete || isProcessing}
-          >
-            <Zap className="h-5 w-5 mr-2" />
-            {isProcessing ? 'Designing...' : circuits.length === 0 ? 'Add circuits to continue' : `Generate Design (${circuits.length} circuit${circuits.length !== 1 ? 's' : ''})`}
-          </Button>
-        </div>
-      </div>
-    </div>
+      {/* GENERATE BUTTON */}
+      <Button
+        type="submit"
+        disabled={!canGenerate || isProcessing}
+        className="w-full h-12 sm:h-14 text-base sm:text-lg font-semibold gap-2"
+      >
+        <Sparkles className="h-5 w-5" />
+        {isProcessing ? 'Generating...' : getButtonText()}
+      </Button>
+    </form>
   );
 };
