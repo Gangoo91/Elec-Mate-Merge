@@ -165,7 +165,7 @@ export const SMART_DEFAULTS = {
   domestic: {
     voltage: 230,
     phases: 'single' as const,
-    ze: 0.35,
+    ze: 0.8,
     earthingSystem: 'TN-S' as const,
     ambientTemp: 25,
     installationMethod: 'clipped-direct' as const,
@@ -175,7 +175,7 @@ export const SMART_DEFAULTS = {
   commercial: {
     voltage: 230,
     phases: 'single' as const,
-    ze: 0.25,
+    ze: 0.35,
     earthingSystem: 'TN-C-S' as const,
     ambientTemp: 30,
     installationMethod: 'in-trunking' as const,
@@ -185,7 +185,7 @@ export const SMART_DEFAULTS = {
   industrial: {
     voltage: 400,
     phases: 'three' as const,
-    ze: 0.20,
+    ze: 0.8,
     earthingSystem: 'TN-S' as const,
     ambientTemp: 35,
     installationMethod: 'in-conduit' as const,
@@ -195,3 +195,10 @@ export const SMART_DEFAULTS = {
     faultLevel: 10
   }
 };
+
+// BS 7671:2018+A3:2024 Ze reference values by earthing system
+export const ZE_REFERENCE_VALUES = {
+  'TN-S': 0.8,      // Separate neutral and earth
+  'TN-C-S': 0.35,   // PME (Protective Multiple Earthing)
+  'TT': 21          // Earth electrode system (typical maximum)
+} as const;

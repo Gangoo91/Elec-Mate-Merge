@@ -104,6 +104,25 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
     setGroupingFactor(defaults.groupingFactor);
   }, [installationType]);
 
+  // Auto-update voltage when phases change
+  useEffect(() => {
+    if (phases === 'three') {
+      setVoltage(400);
+    } else if (phases === 'single') {
+      setVoltage(230);
+    }
+  }, [phases]);
+
+  // Auto-update Ze when earthing system changes (BS 7671 typical maximum values)
+  useEffect(() => {
+    const zeValues = {
+      'TN-S': 0.8,
+      'TN-C-S': 0.35,
+      'TT': 21
+    };
+    setZe(zeValues[earthingSystem]);
+  }, [earthingSystem]);
+
   const getQuickAddButtons = () => {
     switch (installationType) {
       case 'domestic':
