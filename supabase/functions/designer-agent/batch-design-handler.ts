@@ -1,6 +1,7 @@
 import { corsHeaders } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { intelligentRAGSearch } from '../_shared/intelligent-rag.ts';
+import { parseQueryEntities } from '../_shared/query-parser.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
@@ -37,8 +38,22 @@ export async function handleBatchDesign(body: any, logger: any) {
     model: aiConfig?.model || 'openai/gpt-5'
   });
 
-  // Build query from structured inputs
-  const query = buildDesignQuery(projectInfo, incomingSupply, inputCircuits);
+  // STEP 0: Parse additional prompt for circuits and constraints
+  logger.info('🔍 STEP 0: Parse User Prompt');
+  const { inferredCircuits, specialRequirements, installationConstraints } = 
+    extractCircuitsFromPrompt(projectInfo.additionalPrompt || '', inputCircuits);
+
+  const allCircuits = [...inputCircuits, ...inferredCircuits];
+
+  logger.info('Parsed prompt', {
+    inferredCircuits: inferredCircuits.length,
+    specialRequirements,
+    installationConstraints,
+    totalCircuits: allCircuits.length
+  });
+
+  // Build query from structured inputs + parsed context
+  const query = buildDesignQuery(projectInfo, incomingSupply, allCircuits, specialRequirements, installationConstraints);
   
   // Call main designer with RAG + AI (like RAMS does)
   const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
@@ -47,34 +62,79 @@ export async function handleBatchDesign(body: any, logger: any) {
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   
-  // STEP 1: RAG Search (like RAMS)
-  logger.info('🔍 STEP 1: RAG Knowledge Retrieval');
-  const ragResults = await intelligentRAGSearch({
-    circuitType: 'general',
-    searchTerms: extractSearchTerms(query, inputCircuits),
-    expandedQuery: query,
-    context: {
-      ragPriority: aiConfig?.ragPriority || {
-        design: 95,
-        bs7671: 85,
-        installation: 75
+  // STEP 1: Multi-Query RAG Search (circuit-type-specific)
+  logger.info('🔍 STEP 1: Multi-Query RAG Retrieval');
+
+  const uniqueLoadTypes = [...new Set(allCircuits.map((c: any) => c.loadType))];
+  logger.info('Unique load types detected', { loadTypes: uniqueLoadTypes });
+
+  const ragSearches = uniqueLoadTypes.slice(0, 8).map((loadType: string) => 
+    intelligentRAGSearch({
+      circuitType: loadType,
+      searchTerms: [loadType, 'circuit design', ...extractSearchTerms(query, allCircuits)],
+      expandedQuery: `${loadType} circuit design requirements ${installationType}`,
+      context: {
+        ragPriority: aiConfig?.ragPriority || {
+          design: 95,
+          bs7671: 85,
+          installation: 75
+        }
       }
-    }
+    })
+  );
+
+  // Also do a general search for diversity and consumer unit
+  ragSearches.push(
+    intelligentRAGSearch({
+      circuitType: 'general',
+      searchTerms: ['diversity', 'consumer unit', 'main switch', 'Appendix 15'],
+      expandedQuery: `electrical installation diversity calculations`,
+      context: { 
+        ragPriority: aiConfig?.ragPriority || {
+          design: 95,
+          bs7671: 85,
+          installation: 75
+        }
+      }
+    })
+  );
+
+  const allRAGResults = await Promise.all(ragSearches);
+
+  // Merge and deduplicate regulations
+  const mergedRegulations = allRAGResults
+    .flatMap(r => r.regulations || [])
+    .reduce((acc: any[], reg: any) => {
+      if (!acc.find((r: any) => r.regulation_number === reg.regulation_number)) {
+        acc.push(reg);
+      }
+      return acc;
+    }, [])
+    .sort((a: any, b: any) => (b.hybrid_score || 0) - (a.hybrid_score || 0))
+    .slice(0, 25);
+
+  logger.info('✅ Multi-Query RAG Complete', {
+    searches: ragSearches.length,
+    uniqueLoadTypes,
+    totalRegulations: mergedRegulations.length,
+    regulationNumbers: mergedRegulations.slice(0, 5).map((r: any) => r.regulation_number)
   });
+
+  const ragResults = {
+    regulations: mergedRegulations,
+    designDocs: allRAGResults[0]?.designDocs || []
+  };
   
-  logger.info('✅ RAG Complete', {
-    regulations: ragResults.regulations?.length || 0,
-    designDocs: ragResults.designDocs?.length || 0
-  });
-  
-  // STEP 2: Build System Prompt with RAG Knowledge
+  // STEP 2: Build System Prompt with RAG Knowledge + Parsed Context
   logger.info('📝 STEP 2: Building AI Prompt with RAG Context');
   const systemPrompt = buildStructuredDesignPrompt(
     projectInfo,
     incomingSupply,
-    inputCircuits,
+    allCircuits,
     ragResults,
-    installationType
+    installationType,
+    specialRequirements,
+    installationConstraints
   );
   
   // STEP 3: Call AI with Tool Calling (structured output)
@@ -91,7 +151,7 @@ export async function handleBatchDesign(body: any, logger: any) {
         { role: 'system', content: systemPrompt },
         { role: 'user', content: query }
       ],
-      max_completion_tokens: aiConfig?.maxTokens || 15000,
+      max_completion_tokens: aiConfig?.maxTokens || (allCircuits.length > 12 ? 20000 : 15000),
       tools: [{
         type: "function",
         function: {
@@ -291,9 +351,37 @@ export async function handleBatchDesign(body: any, logger: any) {
   
   const designData = JSON.parse(toolCall.function.arguments);
   
+  // Validate AI output
+  logger.info('🔍 Validating AI design output');
+  const validationWarnings: string[] = [];
+  
+  designData.circuits?.forEach((circuit: any, i: number) => {
+    if (!circuit.calculations?.Ib) {
+      const warning = `Circuit ${i+1} (${circuit.name}): Missing Ib calculation`;
+      logger.warn(warning);
+      validationWarnings.push(warning);
+    }
+    if (!circuit.calculations?.voltageDrop?.volts) {
+      const warning = `Circuit ${i+1} (${circuit.name}): Missing voltage drop`;
+      logger.warn(warning);
+      validationWarnings.push(warning);
+    }
+    if (circuit.calculations?.voltageDrop?.percent > 5.5) {
+      const warning = `Circuit ${i+1} (${circuit.name}): Voltage drop ${circuit.calculations.voltageDrop.percent}% exceeds 5%`;
+      logger.warn(warning);
+      validationWarnings.push(warning);
+    }
+    if (!circuit.justifications?.cableSize) {
+      const warning = `Circuit ${i+1} (${circuit.name}): Missing cable size justification`;
+      logger.warn(warning);
+      validationWarnings.push(warning);
+    }
+  });
+  
   logger.info('✅ Design Complete', {
     circuits: designData.circuits?.length || 0,
-    tokensUsed: aiData.usage?.total_tokens || 0
+    tokensUsed: aiData.usage?.total_tokens || 0,
+    validationWarnings: validationWarnings.length
   });
   
   // STEP 4: Return structured design (NO costEstimate)
@@ -325,19 +413,126 @@ export async function handleBatchDesign(body: any, logger: any) {
 }
 
 // Helper functions
-function buildDesignQuery(projectInfo: any, supply: any, circuits: any[]): string {
+function extractCircuitsFromPrompt(additionalPrompt: string, existingCircuits: any[]): {
+  inferredCircuits: any[];
+  specialRequirements: string[];
+  installationConstraints: string[];
+} {
+  if (!additionalPrompt?.trim()) {
+    return { inferredCircuits: [], specialRequirements: [], installationConstraints: [] };
+  }
+
+  const entities = parseQueryEntities(additionalPrompt);
+  const inferredCircuits: any[] = [];
+  const specialRequirements: string[] = [];
+  const installationConstraints: string[] = [];
+  
+  // Extract special requirements from entities
+  if (entities.specialRequirements) {
+    specialRequirements.push(...entities.specialRequirements);
+  }
+  
+  // Extract installation constraints
+  if (entities.installationConstraints) {
+    installationConstraints.push(...entities.installationConstraints);
+  }
+  
+  // Add location-based requirements
+  if (entities.location === 'bathroom') {
+    specialRequirements.push('⚠️ Section 701: Bathroom installation - 30mA RCD mandatory, IP rating zones, bonding required');
+  }
+  if (entities.location === 'outdoor') {
+    specialRequirements.push('⚠️ Reg 411.3.3: Outdoor installation - 30mA RCD mandatory, IP65+ rating, SWA cable');
+  }
+  
+  // Add earthing system requirements
+  if (entities.earthingSystem === 'TT') {
+    specialRequirements.push('⚠️ TT System: 30mA RCD on all circuits, earth electrode resistance critical');
+  }
+  
+  // Add high temperature derating
+  if (entities.ambientTemperature && entities.ambientTemperature > 30) {
+    installationConstraints.push(`🔧 High ambient temperature (${entities.ambientTemperature}°C): Apply temperature derating factor`);
+  }
+  
+  // Infer circuits if power + load type mentioned
+  if (entities.power && entities.loadType) {
+    inferredCircuits.push({
+      name: `${entities.loadType} (from prompt)`,
+      loadType: entities.loadType,
+      loadPower: entities.power,
+      cableLength: entities.distance || 20,
+      phases: entities.phases || 'single',
+      specialLocation: entities.location || 'none'
+    });
+  }
+  
+  return { inferredCircuits, specialRequirements, installationConstraints };
+}
+
+function getCircuitTypeHints(loadType: string, location?: string): string {
+  const hints: Record<string, string> = {
+    'shower': 'Section 701 (bathrooms), 30mA RCD mandatory, bonding required, min 10mm² cable typical',
+    'ev_charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
+    'ev-charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
+    'cooker': 'Reg 433.1.204 diversity (10A + 30% remainder + 5A socket), 10mm² typical, 40-50A MCB',
+    'socket': 'Ring final: 2.5mm² + 32A MCB | Radial: 4mm² + 32A or 2.5mm² + 20A MCB',
+    'sockets': 'Ring final: 2.5mm² + 32A MCB | Radial: 4mm² + 32A or 2.5mm² + 20A MCB',
+    'lighting': '1.5mm² cable, 6A MCB Type B, 3% voltage drop limit (6.9V at 230V)',
+    'outdoor': '30mA RCD mandatory (411.3.3), SWA cable, IP65+ rating, burial depth 600mm',
+    'heat_pump': 'Dedicated circuit, 16mm² typical, 63A MCB, surge protection (534.4)',
+    'immersion': '16A MCB, 2.5mm² cable typical, timer control, off-peak tariff consideration',
+    'motor': 'Type D MCB for starting current (6-8x FLC), DOL or star-delta starting',
+    'garage': 'RCD protection recommended, mechanical protection for exposed cables'
+  };
+  
+  const locationHints: Record<string, string> = {
+    'bathroom': 'Section 701: IP rating zones (IPX4 min), 30mA RCD, supplementary bonding',
+    'outdoor': 'Reg 411.3.3: RCD mandatory, IP65+, burial depth 600mm, SWA cable',
+    'garage': 'RCD recommended, mechanical protection, consider EV charger future-proofing'
+  };
+  
+  let hint = hints[loadType] || 'Standard circuit design per BS 7671';
+  if (location && locationHints[location]) {
+    hint += ` | ${locationHints[location]}`;
+  }
+  
+  return hint;
+}
+
+function buildDesignQuery(
+  projectInfo: any, 
+  supply: any, 
+  circuits: any[],
+  specialRequirements: string[] = [],
+  installationConstraints: string[] = []
+): string {
   const circuitList = circuits.length > 0 
-    ? `Circuits required:\n${circuits.map((c: any, i: number) => `${i+1}. ${c.name} - ${c.loadPower}W, ${c.cableLength}m, ${c.phases} phase${c.specialLocation !== 'none' ? ` (${c.specialLocation})` : ''}`).join('\n')}`
+    ? `Circuits required (${circuits.length} total):\n${circuits.map((c: any, i: number) => 
+        `${i+1}. ${c.name} - ${c.loadPower}W (${(c.loadPower/1000).toFixed(1)}kW), ${c.cableLength}m, ${c.phases} phase${c.specialLocation !== 'none' ? ` (${c.specialLocation})` : ''}`
+      ).join('\n')}`
     : 'Please infer appropriate circuits from the project description and requirements.';
     
-  return `Design circuits for ${projectInfo.name}.
+  let query = `Design circuits for ${projectInfo.name}.
   
 Incoming supply: ${supply.voltage}V ${supply.phases}, Ze=${supply.Ze}Ω, ${supply.earthingSystem}.
 Prospective fault current: ${supply.pscc || 3500}A.
 
-${circuitList}
+${circuitList}`;
 
-${projectInfo.additionalPrompt || ''}`;
+  if (specialRequirements.length > 0) {
+    query += `\n\nSpecial Requirements:\n${specialRequirements.map(r => `- ${r}`).join('\n')}`;
+  }
+
+  if (installationConstraints.length > 0) {
+    query += `\n\nInstallation Constraints:\n${installationConstraints.map(c => `- ${c}`).join('\n')}`;
+  }
+
+  if (projectInfo.additionalPrompt) {
+    query += `\n\n${projectInfo.additionalPrompt}`;
+  }
+
+  return query;
 }
 
 function extractSearchTerms(query: string, circuits: any[]): string[] {
@@ -357,11 +552,21 @@ function buildStructuredDesignPrompt(
   supply: any, 
   circuits: any[], 
   ragResults: any, 
-  type: string
+  type: string,
+  specialRequirements: string[] = [],
+  installationConstraints: string[] = []
 ): string {
-  const regulations = ragResults.regulations?.slice(0, 15).map((r: any) => 
-    `${r.regulation_number}: ${r.content}`
+  const regulations = ragResults.regulations?.slice(0, 25).map((r: any) => 
+    `${r.regulation_number}: ${r.content.substring(0, 300)}`
   ).join('\n\n') || 'No specific regulations retrieved';
+  
+  // Generate circuit-specific hints
+  const circuitHints = circuits.length > 0
+    ? circuits.map((c: any, i: number) => {
+        const hint = getCircuitTypeHints(c.loadType, c.specialLocation);
+        return `${i+1}. ${c.name} (${c.loadType}): ${hint}`;
+      }).join('\n')
+    : '';
   
   return `You are a senior electrical design engineer specializing in BS 7671:2018+A3:2024 compliant installations.
 
@@ -375,7 +580,13 @@ INCOMING SUPPLY DETAILS:
 - Prospective Fault Current (PFC): ${supply.pscc || 3500}A
 - Main Switch Rating: ${supply.mainSwitchRating || 100}A
 
-CIRCUITS TO DESIGN (${circuits.length} total):
+${specialRequirements.length > 0 ? `SPECIAL REQUIREMENTS:
+${specialRequirements.map(r => `${r}`).join('\n')}
+
+` : ''}${installationConstraints.length > 0 ? `INSTALLATION CONSTRAINTS:
+${installationConstraints.map(c => `${c}`).join('\n')}
+
+` : ''}CIRCUITS TO DESIGN (${circuits.length} total):
 ${circuits.length > 0 
   ? circuits.map((c: any, i: number) => `${i+1}. ${c.name}
    - Load Type: ${c.loadType}
@@ -385,7 +596,10 @@ ${circuits.length > 0
    - Location: ${c.specialLocation || 'general'}`).join('\n\n')
   : 'No specific circuits provided. Infer appropriate circuits from the project requirements and additional prompt.'}
 
-BS 7671 KNOWLEDGE BASE (Top 15 regulations retrieved via RAG):
+${circuitHints ? `CIRCUIT-SPECIFIC REGULATION HINTS:
+${circuitHints}
+
+` : ''}BS 7671 KNOWLEDGE BASE (Top 25 regulations retrieved via multi-query RAG):
 ${regulations}
 
 CRITICAL DESIGN REQUIREMENTS:
