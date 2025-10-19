@@ -5,7 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ArrowLeft, Download, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowLeft, Download, ChevronDown, ChevronUp, Play } from "lucide-react";
 import { generateProjectPDFs } from "@/utils/project-pdf-generator";
 
 interface ConsultationResult {
@@ -28,6 +28,17 @@ export const ConsultationResults = () => {
   const { conversationId } = useParams<{ conversationId: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
+  
+  // PHASE 5: Resume conversation with agent
+  const resumeWithAgent = (agentType: string, messages: any[], planData: any) => {
+    navigate('/electrician/install-planner?mode=ai', {
+      state: {
+        resumeMessages: messages,
+        resumePlanData: planData,
+        targetAgent: agentType
+      }
+    });
+  };
   const [results, setResults] = useState<ConsultationResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
@@ -199,7 +210,7 @@ export const ConsultationResults = () => {
                       </CardHeader>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
-                      <CardContent className="pt-0">
+                      <CardContent className="pt-0 space-y-4">
                         <div className="prose prose-invert max-w-none">
                           {/* Render agent-specific output */}
                           {result.agent_type === 'designer' && (
@@ -227,6 +238,16 @@ export const ConsultationResults = () => {
                             </div>
                           )}
                         </div>
+                        
+                        {/* PHASE 5: Resume with Agent Button */}
+                        <Button
+                          onClick={() => resumeWithAgent(result.agent_type, [], result.output_data)}
+                          className="w-full bg-elec-yellow/10 hover:bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow"
+                          variant="outline"
+                        >
+                          <Play className="h-4 w-4 mr-2" />
+                          Resume with {agentInfo?.name}
+                        </Button>
                       </CardContent>
                     </CollapsibleContent>
                   </Collapsible>

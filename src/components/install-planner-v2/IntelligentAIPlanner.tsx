@@ -284,6 +284,11 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
 
   // Check if consultation has meaningful content - show results button after first agent reply
   const hasMeaningfulContent = messages.length >= 2 && messages.some(m => m.role === 'assistant' && m.agentName);
+  
+  // PHASE 3: Navigate to results page
+  const navigateToResults = () => {
+    navigate(`/install-planner/results/${currentConversationId}`);
+  };
 
   // Auto-populate pricing embeddings if empty
   useEffect(() => {
@@ -459,6 +464,22 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             console.error('Failed to save results:', error);
           }
         }
+      }
+      
+      // PHASE 2: Parse thinking steps from metadata
+      if (fullAgentResponse?.metadata?.thinkingSteps) {
+        // Display thinking steps sequentially before the final response
+        fullAgentResponse.metadata.thinkingSteps.forEach((step: any, i: number) => {
+          setTimeout(() => {
+            setMessages(prev => [...prev, {
+              role: 'assistant',
+              agentName: agent,
+              isThinking: true,
+              thinkingMessage: step.message,
+              content: ''
+            }]);
+          }, i * 800);
+        });
       }
       
       // Remove "Analyzing..." and thinking cards, add actual response with enriched structured data
@@ -1289,7 +1310,17 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   </AgentChatErrorBoundary>
                 )}
 
-                {message.role === 'assistant' && message.isTyping && (
+                {/* PHASE 2: Thinking Cards */}
+                {message.role === 'assistant' && message.isThinking && (
+                  <Card className="bg-elec-grey/20 border-elec-yellow/30 p-3">
+                    <div className="flex items-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+                      <span className="text-sm text-white">{message.thinkingMessage}</span>
+                    </div>
+                  </Card>
+                )}
+
+                {message.role === 'assistant' && message.isTyping && !message.isThinking && (
                   <p className="text-[15px] text-white/70 text-left italic leading-[1.7]">
                     {message.content}
                   </p>
@@ -1350,8 +1381,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   </div>
                 )}
                 
-                {/* Agent Suggestions - show most recent valid suggestions */}
-                {message.role === 'assistant' && index === messages.length - 1 && (() => {
+                {/* PHASE 3: Agent Suggestions + Results Button */}
+                {message.role === 'assistant' && index === messages.length - 1 && hasMeaningfulContent && (() => {
                   // Find most recent message with suggestions (walk backwards from current)
                   const messageWithSuggestions = [...messages].reverse().find(m => 
                     m.role === 'assistant' && 
@@ -1360,10 +1391,21 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   
                   if (messageWithSuggestions?.structuredData?.suggestedNextAgents) {
                     return (
-                      <AgentSuggestions
-                        suggestions={messageWithSuggestions.structuredData.suggestedNextAgents}
-                        onSelectAgent={handleSwitchAgent}
-                      />
+                      <div className="border-t border-elec-yellow/20 pt-4 mt-4 space-y-3">
+                        <AgentSuggestions
+                          suggestions={messageWithSuggestions.structuredData.suggestedNextAgents}
+                          onSelectAgent={handleSwitchAgent}
+                        />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={navigateToResults}
+                          className="w-full bg-elec-yellow/10 hover:bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow"
+                        >
+                          <FileDown className="h-4 w-4 mr-2" />
+                          Save to Results & Continue Later
+                        </Button>
+                      </div>
                     );
                   }
                   return null;

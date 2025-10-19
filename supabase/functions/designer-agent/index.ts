@@ -115,6 +115,16 @@ serve(async (req) => {
 
     logger.info('Designer Agent v3.0 processing with Intelligent Hybrid RAG', { messageCount: messages.length });
 
+    // PHASE 1: Detect conversational context for context-aware responses
+    const conversationalContext = extractConversationalContext(messages, conversationSummary, previousAgentOutputs);
+    const followUpPattern = detectFollowUpPattern(userMessage, conversationalContext);
+    
+    logger.info('💭 THINKING: Analysing conversational context', {
+      isFollowUp: followUpPattern.isFollowUp,
+      followUpType: followUpPattern.type,
+      conversationDepth: conversationalContext.conversationDepth
+    });
+
     const circuitParams = extractCircuitParams(userMessage, currentDesign, incomingContext);
     
     // PHASE 1: Check query cache for instant responses (100ms)
@@ -262,6 +272,7 @@ serve(async (req) => {
     // Run enhanced BS 7671 calculations
     let calculationResults: any = null;
     if (circuitParams.hasEnoughData) {
+      logger.info('💭 THINKING: Running voltage drop calculations per Regulation 525');
       console.log('🔧 Running enhanced BS 7671 calculations:', circuitParams);
       
       const cableData = getCableCapacity(circuitParams.cableSize, 'C', 2);
@@ -368,6 +379,8 @@ serve(async (req) => {
     
     // Run intelligent hybrid search
     try {
+      logger.info('💭 THINKING: Searching BS 7671 for protection requirements');
+      
       const searchParams: HybridSearchParams = {
         circuitType: circuitParams.circuitType,
         powerRating: circuitParams.power,
@@ -389,6 +402,8 @@ serve(async (req) => {
       };
 
       const ragResults = await intelligentRAGSearch(searchParams);
+      
+      logger.info('💭 THINKING: Found relevant BS 7671 regulations, assessing compliance');
       
       regulations = ragResults.regulations;
       designDocs = ragResults.designDocs;

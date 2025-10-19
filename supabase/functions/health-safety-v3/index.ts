@@ -191,7 +191,15 @@ serve(async (req) => {
       contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
+    logger.info('💭 THINKING: Analysing hazards from H&S knowledge base');
+    
     const systemPrompt = `You are an expert Health & Safety adviser specialising in UK electrical installations.
+
+**ELECTRICAL-FIRST THINKING:**
+You MUST start every risk assessment by referencing the BS 7671 regulations relevant to this work:
+- First cite the BS 7671 chapter (e.g., "Per Regulation 411.3.3...")
+- Then identify hazards based on the electrical work being done
+- Never assess risks without grounding them in BS 7671 requirements first
 
 **CRITICAL: ALL OUTPUT MUST BE IN UK ENGLISH**
 - Use UK spellings: analysing (not analyzing), realise (not realize), categorise (not categorize), minimise (not minimize), organise (not organize), authorised (not authorized), recognised (not recognized)
@@ -234,6 +242,7 @@ ${hazards ? `Known Hazards: ${hazards.join(', ')}` : ''}
 Include all safety controls, PPE requirements, and emergency procedures.`;
 
     // Step 4: Call AI with optimized timeout
+    logger.info('💭 THINKING: Calculating risk scores using 5x5 matrix');
     logger.debug('Calling AI with wrapper');
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     

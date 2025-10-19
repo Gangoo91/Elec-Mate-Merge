@@ -45,11 +45,11 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex flex-col gap-2 mt-2 sm:mt-3 p-2 sm:p-3 rounded-lg bg-elec-card/30 border border-elec-yellow/20"
+      className="flex flex-col gap-3 mt-4 p-4 rounded-lg bg-gradient-to-r from-elec-dark/80 to-elec-grey/50 border border-elec-yellow/30"
     >
-      <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-muted-foreground">
-        <Lightbulb className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-elec-yellow flex-shrink-0" />
-        <span className="font-medium">Suggested next steps:</span>
+      <div className="flex items-center gap-2 text-sm font-semibold text-white">
+        <Lightbulb className="h-4 w-4 text-elec-yellow" />
+        <span>Who would you like to consult next?</span>
       </div>
       
       <div className="flex flex-col sm:flex-row sm:flex-wrap gap-1.5 sm:gap-2">
@@ -69,18 +69,20 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
                 suggestion.priority === 'high' && "border-elec-yellow/40"
               )}
             >
-              <div className="flex items-center gap-1.5 sm:gap-2 w-full">
-                <span className="text-sm sm:text-base">{getAgentEmoji(suggestion.agent)}</span>
-                <span className="text-[10px] sm:text-xs font-semibold">{getAgentName(suggestion.agent)}</span>
+              <div className="flex items-center gap-2 w-full">
+                <span className="text-lg">{getAgentEmoji(suggestion.agent)}</span>
+                <div className="flex-1">
+                  <span className="text-sm font-semibold block">{getAgentName(suggestion.agent)}</span>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {suggestion.reason}
+                  </p>
+                </div>
                 {suggestion.priority === 'high' && (
-                  <span className="text-[8px] sm:text-[9px] px-1 sm:px-1.5 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium ml-auto">
+                  <span className="text-[9px] px-2 py-1 rounded bg-elec-yellow/20 text-elec-yellow font-medium">
                     Recommended
                   </span>
                 )}
               </div>
-              <p className="text-[9px] sm:text-[10px] text-muted-foreground text-left leading-tight sm:leading-snug truncate sm:whitespace-normal">
-                {suggestion.reason}
-              </p>
             </Button>
           </motion.div>
         ))}
