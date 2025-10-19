@@ -257,18 +257,32 @@ export async function handleBatchDesign(body: any, logger: any) {
     messages: [
       { 
         role: 'system', 
-        content: `You are an expert electrical designer specialising in BS 7671:2018+A3:2024 compliant circuit design.
+          content: `You are an expert electrical designer specialising in BS 7671:2018+A3:2024 compliant circuit design.
 
 KNOWLEDGE BASE (${ragResults.regulations.length} verified regulations):
 ${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.substring(0, 200)}...`).join('\n\n')}
 
-YOUR ROLE: Design compliant electrical circuits with cable sizing, protection devices, and voltage drop calculations.
+YOUR ROLE: Design compliant electrical circuits with complete details for each circuit.
 
 INSTRUCTIONS:
-1. For each circuit, specify: cable size, breaker type/rating, voltage drop %, earth fault loop impedance
-2. Reference specific BS 7671 regulations (e.g., "433.1.1 requires Ib ≤ In ≤ Iz")
-3. Include practical installation notes
-4. Warn about any non-compliances
+1. For each circuit in the "circuits" array, include:
+   - name, circuitNumber, loadType, loadPower, phases
+   - cableSize (mm²), cpcSize (mm²), cableLength (m)
+   - protectionDevice: { type, rating, curve, kaRating }
+   - rcdProtected (boolean), afddRequired (boolean)
+   - calculations: { Ib, In, Iz, voltageDrop: { volts, percent, compliant, limit }, zs, maxZs }
+   - justifications: { cableSize, protection, rcd }
+   - warnings: [] (array of strings)
+   - installationMethod (e.g., "Clipped Direct", "In Conduit")
+
+2. In the "materials" array, list required materials with:
+   - name, specification, quantity, unit
+
+3. In the "warnings" array, include any compliance notes or important advisories
+
+4. In the "response" field, provide a brief conversational summary in UK English
+
+Reference BS 7671 regulations (e.g., "433.1.1", "525.1", "411.3.2") in justifications.
 
 Return your design using the provided tool schema.`
       },
@@ -298,10 +312,6 @@ Return your design using the provided tool schema.`
             warnings: { 
               type: "array",
               description: "Any compliance warnings or important notes"
-            },
-            suggestedNextAgents: {
-              type: "array",
-              description: "Suggested follow-up agents (cost-engineer, installer, etc.)"
             }
           },
           required: ["response", "circuits"]
@@ -395,13 +405,27 @@ Return your design using the provided tool schema.`
 KNOWLEDGE BASE (${ragResults.regulations.length} verified regulations):
 ${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.substring(0, 200)}...`).join('\n\n')}
 
-YOUR ROLE: Design compliant electrical circuits with cable sizing, protection devices, and voltage drop calculations.
+YOUR ROLE: Design compliant electrical circuits with complete details for each circuit.
 
 INSTRUCTIONS:
-1. For each circuit, specify: cable size, breaker type/rating, voltage drop %, earth fault loop impedance
-2. Reference specific BS 7671 regulations (e.g., "433.1.1 requires Ib ≤ In ≤ Iz")
-3. Include practical installation notes
-4. Warn about any non-compliances
+1. For each circuit in the "circuits" array, include:
+   - name, circuitNumber, loadType, loadPower, phases
+   - cableSize (mm²), cpcSize (mm²), cableLength (m)
+   - protectionDevice: { type, rating, curve, kaRating }
+   - rcdProtected (boolean), afddRequired (boolean)
+   - calculations: { Ib, In, Iz, voltageDrop: { volts, percent, compliant, limit }, zs, maxZs }
+   - justifications: { cableSize, protection, rcd }
+   - warnings: [] (array of strings)
+   - installationMethod (e.g., "Clipped Direct", "In Conduit")
+
+2. In the "materials" array, list required materials with:
+   - name, specification, quantity, unit
+
+3. In the "warnings" array, include any compliance notes or important advisories
+
+4. In the "response" field, provide a brief conversational summary in UK English
+
+Reference BS 7671 regulations (e.g., "433.1.1", "525.1", "411.3.2") in justifications.
 
 Return your design using the provided tool schema.`
           },
@@ -431,10 +455,6 @@ Return your design using the provided tool schema.`
                 warnings: { 
                   type: "array",
                   description: "Any compliance warnings or important notes"
-                },
-                suggestedNextAgents: {
-                  type: "array",
-                  description: "Suggested follow-up agents (cost-engineer, installer, etc.)"
                 }
               },
               required: ["response", "circuits"]
@@ -580,10 +600,23 @@ Return your design using the provided tool schema.`
       totalLoad: Array.isArray(designData.circuits) 
         ? designData.circuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0)
         : 0,
-      circuits: designData.circuits,
+      circuits: designData.circuits, // ✅ Keep all nested circuit data intact
       materials: designData.materials || [],
       warnings: validationWarnings,
-      suggestedNextAgents: designData.suggestedNextAgents || ['cost-engineer', 'installer']
+      consumerUnit: {
+        type: incomingSupply.mainSwitchRating >= 100 ? 'Split Load RCBO' : 'Dual RCD',
+        mainSwitchRating: incomingSupply.mainSwitchRating,
+        incomingSupply: {
+          voltage: incomingSupply.voltage,
+          phases: incomingSupply.phases,
+          incomingPFC: incomingSupply.pscc,
+          Ze: incomingSupply.Ze,
+          earthingSystem: incomingSupply.earthingSystem
+        }
+      },
+      diversityApplied: true,
+      diversityFactor: 0.7,
+      aiResponse: designData.response
     },
     metadata: {
       ragCalls: ragResults.regulations?.length || 0,
