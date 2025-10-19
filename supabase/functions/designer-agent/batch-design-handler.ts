@@ -78,54 +78,68 @@ export async function handleBatchDesign(body: any, logger: any) {
   // PHASE 2: Add timeout wrapper for RAG reliability
   const { withTimeout, Timeouts } = await import('../_shared/timeout.ts');
   const { loadCoreRegulationsCache } = await import('./core-regulations-cache.ts');
+  const { RequestDeduplicator, generateRequestKey } = await import('./parallel-utils.ts');
   
-  const ragSearchesWithTimeout = uniqueLoadTypes.slice(0, 8).map((loadType: string) => 
-    withTimeout(
-      intelligentRAGSearch({
-        circuitType: loadType,
-        searchTerms: [loadType, 'circuit design', ...extractSearchTerms(query, allCircuits)],
-        expandedQuery: `${loadType} circuit design requirements ${installationType}`,
-        context: {
-          ragPriority: aiConfig?.ragPriority || {
-            design: 95,
-            bs7671: 85,
-            installation: 75
+  // Initialize request deduplicator for RAG searches
+  const deduplicator = new RequestDeduplicator();
+  
+  const ragSearchesWithTimeout = uniqueLoadTypes.slice(0, 8).map((loadType: string) => {
+    const requestKey = generateRequestKey('rag', loadType, installationType);
+    
+    return deduplicator.deduplicate(
+      requestKey,
+      () => withTimeout(
+        intelligentRAGSearch({
+          circuitType: loadType,
+          searchTerms: [loadType, 'circuit design', ...extractSearchTerms(query, allCircuits)],
+          expandedQuery: `${loadType} circuit design requirements ${installationType}`,
+          context: {
+            ragPriority: aiConfig?.ragPriority || {
+              design: 95,
+              bs7671: 85,
+              installation: 75
+            }
           }
-        }
-      }),
-      15000, // 15s timeout per search
-      `RAG search for ${loadType}`
-    ).catch(error => {
-      logger.warn(`⚠️ RAG search timeout for ${loadType}`, { error: error.message });
-      return { regulations: [], designDocs: [], searchMethod: 'timeout' };
-    })
-  );
+        }),
+        15000, // 15s timeout per search
+        `RAG search for ${loadType}`
+      ).catch(error => {
+        logger.warn(`⚠️ RAG search timeout for ${loadType}`, { error: error.message });
+        return { regulations: [], designDocs: [], searchMethod: 'timeout' };
+      })
+    );
+  });
 
   // Also do a general search for diversity and consumer unit
+  const diversityRequestKey = generateRequestKey('rag', 'diversity', installationType);
   ragSearchesWithTimeout.push(
-    withTimeout(
-      intelligentRAGSearch({
-        circuitType: 'general',
-        searchTerms: ['diversity', 'consumer unit', 'main switch', 'Appendix 15'],
-        expandedQuery: `electrical installation diversity calculations`,
-        context: { 
-          ragPriority: aiConfig?.ragPriority || {
-            design: 95,
-            bs7671: 85,
-            installation: 75
+    deduplicator.deduplicate(
+      diversityRequestKey,
+      () => withTimeout(
+        intelligentRAGSearch({
+          circuitType: 'general',
+          searchTerms: ['diversity', 'consumer unit', 'main switch', 'Appendix 15'],
+          expandedQuery: `electrical installation diversity calculations`,
+          context: { 
+            ragPriority: aiConfig?.ragPriority || {
+              design: 95,
+              bs7671: 85,
+              installation: 75
+            }
           }
-        }
-      }),
-      15000, // 15s timeout
-      'RAG search for diversity'
-    ).catch(error => {
-      logger.warn('⚠️ RAG diversity search timeout', { error: error.message });
-      return { regulations: [], designDocs: [], searchMethod: 'timeout' };
-    })
+        }),
+        15000, // 15s timeout
+        'RAG search for diversity'
+      ).catch(error => {
+        logger.warn('⚠️ RAG diversity search timeout', { error: error.message });
+        return { regulations: [], designDocs: [], searchMethod: 'timeout' };
+      })
+    )
   );
 
-  logger.info('📡 Starting parallel RAG searches', {
+  logger.info('📡 Starting parallel RAG searches with deduplication', {
     searchCount: ragSearchesWithTimeout.length,
+    deduplicatedCount: deduplicator.getPendingCount(),
     timeout: '15s per search',
     maxTotalTime: '~45s'
   });
@@ -1033,9 +1047,36 @@ Always cite regulation numbers and show working for calculations.`
     throw new Error('Failed to parse AI design output');
   }
   
-  // ✨ SIMPLIFIED VALIDATION - Trust AI more, just ensure basics
-  logger.info('🔍 Validating AI design output');
-  const validationWarnings: string[] = designData.warnings || [];
+  // 🔍 MULTI-STAGE VALIDATION PIPELINE
+  logger.info('🔍 Running multi-stage validation pipeline');
+  const { validateDesign, calculateCircuitConfidence, calculateOverallConfidence } = await import('./validation-pipeline.ts');
+  
+  const validationResult = validateDesign(designData.circuits, incomingSupply, projectInfo);
+  const validationWarnings: string[] = [...(designData.warnings || [])];
+  
+  // Add validation errors and warnings to response
+  if (validationResult.errors.length > 0) {
+    logger.warn('⚠️ Validation errors found', { 
+      errorCount: validationResult.errors.length,
+      errors: validationResult.errors.map(e => e.message)
+    });
+    validationWarnings.push(...validationResult.errors.map(e => `❌ ${e.message} (${e.regulation || 'Check required'})`));
+  }
+  
+  if (validationResult.warnings.length > 0) {
+    logger.info('📋 Validation warnings', { 
+      warningCount: validationResult.warnings.length 
+    });
+    validationWarnings.push(...validationResult.warnings.map(w => `⚠️ ${w.message}`));
+  }
+  
+  // Calculate confidence scores for quality transparency
+  const perCircuitConfidence = designData.circuits.map((c: any) => ({
+    circuitName: c.name,
+    ...calculateCircuitConfidence(c)
+  }));
+  
+  const overallConfidence = calculateOverallConfidence(designData.circuits);
   
   // PHASE 1: Enhanced completion logging
   logger.info('✅ STEP 3 Complete - Design validation finished', {
@@ -1093,7 +1134,14 @@ Always cite regulation numbers and show working for calculations.`
       model: aiConfig?.model || 'openai/gpt-5-mini',
       tokensUsed: aiData.usage?.total_tokens,
       aiTimeMs: aiElapsedMs,
-      ragTimeMs: ragElapsedMs
+      ragTimeMs: ragElapsedMs,
+      validationPassed: validationResult.passed,
+      validationErrorCount: validationResult.errors.length,
+      validationWarningCount: validationResult.warnings.length,
+      confidence: {
+        overall: overallConfidence,
+        perCircuit: perCircuitConfidence
+      }
     }
   }), { 
     headers: { ...corsHeaders, 'Content-Type': 'application/json' } 

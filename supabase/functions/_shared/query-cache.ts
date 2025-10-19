@@ -18,7 +18,7 @@ export interface CachedQuery {
   timestamp: number;
 }
 
-const CACHE_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days
+const CACHE_TTL = 30 * 24 * 60 * 60 * 1000; // 30 days - extended for better cache hit rate
 
 /**
  * Get cached query response
