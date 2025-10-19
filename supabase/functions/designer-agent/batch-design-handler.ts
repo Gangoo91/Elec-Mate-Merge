@@ -303,21 +303,89 @@ Return your design using the provided tool schema.`
             },
             circuits: { 
               type: "array",
-              description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations",
-              items: { type: "object" }
+              description: "Array of BS 7671 compliant circuit designs",
+              items: {
+                type: "object",
+                properties: {
+                  name: { type: "string", description: "Circuit name (e.g., 'Kitchen Ring', 'Shower Circuit')" },
+                  circuitNumber: { type: "string", description: "Circuit number (e.g., 'C1', 'C2')" },
+                  loadType: { type: "string", description: "Load type (e.g., 'Ring Final', 'Radial', 'Lighting')" },
+                  loadPower: { type: "number", description: "Load power in watts" },
+                  phases: { type: "number", description: "1 for single phase, 3 for three phase" },
+                  cableSize: { type: "string", description: "Cable size (e.g., '2.5mm² twin & earth')" },
+                  cpcSize: { type: "string", description: "CPC size (e.g., '1.5mm²')" },
+                  cableLength: { type: "number", description: "Cable length in metres" },
+                  protectionDevice: {
+                    type: "object",
+                    properties: {
+                      type: { type: "string", description: "Device type (e.g., 'MCB', 'RCBO')" },
+                      rating: { type: "string", description: "Rating (e.g., '32A')" },
+                      curve: { type: "string", description: "Curve type (e.g., 'Type B', 'Type C')" },
+                      kaRating: { type: "string", description: "Breaking capacity (e.g., '6kA')" }
+                    },
+                    required: ["type", "rating"]
+                  },
+                  rcdProtected: { type: "boolean", description: "Is RCD protection required" },
+                  afddRequired: { type: "boolean", description: "Is AFDD required per 421.1.7" },
+                  calculations: {
+                    type: "object",
+                    properties: {
+                      Ib: { type: "number", description: "Design current in amps" },
+                      In: { type: "number", description: "Nominal current in amps" },
+                      Iz: { type: "number", description: "Cable current carrying capacity in amps" },
+                      voltageDrop: { type: "number", description: "Voltage drop in volts" },
+                      voltageDropPercent: { type: "number", description: "Voltage drop as percentage" },
+                      zs: { type: "number", description: "Fault loop impedance in ohms" },
+                      maxZs: { type: "number", description: "Maximum permitted Zs in ohms" },
+                      passesVoltageDrop: { type: "boolean" },
+                      passesZs: { type: "boolean" }
+                    },
+                    required: ["Ib", "In", "Iz", "voltageDrop", "zs", "maxZs"]
+                  },
+                  justifications: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        regulation: { type: "string", description: "BS 7671 regulation number" },
+                        requirement: { type: "string", description: "What the regulation requires" },
+                        compliance: { type: "string", description: "How this design complies" }
+                      },
+                      required: ["regulation", "requirement", "compliance"]
+                    }
+                  },
+                  warnings: { 
+                    type: "array", 
+                    items: { type: "string" },
+                    description: "Circuit-specific warnings"
+                  },
+                  installationMethod: { type: "string", description: "Installation method (e.g., 'Method C - clipped direct')" }
+                },
+                required: ["name", "loadType", "cableSize", "protectionDevice", "calculations", "justifications"]
+              }
             },
             materials: { 
               type: "array",
-              description: "Required materials list with specifications",
-              items: { type: "object" }
+              description: "Required materials with specifications",
+              items: {
+                type: "object",
+                properties: {
+                  item: { type: "string", description: "Material name" },
+                  specification: { type: "string", description: "Full specification" },
+                  quantity: { type: "number", description: "Quantity required" },
+                  unit: { type: "string", description: "Unit (e.g., 'metres', 'units')" },
+                  notes: { type: "string", description: "Additional notes" }
+                },
+                required: ["item", "specification", "quantity"]
+              }
             },
             warnings: { 
               type: "array",
-              description: "Any compliance warnings or important notes",
+              description: "General compliance warnings or notes",
               items: { type: "string" }
             }
           },
-          required: ["response", "circuits"]
+          required: ["response", "circuits", "materials"]
         }
       }
     }],
