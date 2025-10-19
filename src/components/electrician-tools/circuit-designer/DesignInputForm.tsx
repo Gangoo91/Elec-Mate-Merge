@@ -14,6 +14,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { ChevronDown } from 'lucide-react';
 import { DOMESTIC_TEMPLATES, COMMERCIAL_TEMPLATES, INDUSTRIAL_TEMPLATES, SMART_DEFAULTS } from '@/lib/circuit-templates';
 import { SmartSuggestionPanel } from './SmartSuggestionPanel';
+import { toast } from '@/hooks/use-toast';
 
 interface DesignInputFormProps {
   onGenerate: (inputs: DesignInputs) => void;
@@ -151,7 +152,21 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   };
 
   const handleSubmit = () => {
-    if (!projectName || circuits.length === 0) {
+    if (!projectName) {
+      toast({
+        title: "Project name required",
+        description: "Please enter a project name",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (circuits.length === 0 && !additionalPrompt.trim()) {
+      toast({
+        title: "Circuits or description required",
+        description: "Please either add circuits manually or describe your requirements in the Additional Requirements field",
+        variant: "destructive"
+      });
       return;
     }
 
@@ -442,14 +457,14 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
             </h2>
             
             {/* Context-Aware Quick Add Buttons */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-start">
               {getQuickAddButtons().map(btn => (
                 <Button 
                   key={btn.value}
                   variant="outline" 
                   size="sm" 
                   onClick={() => addQuickCircuit(btn.value)} 
-                  className="flex-1 min-w-[100px] h-10"
+                  className="min-w-[110px] max-w-[160px] h-10"
                 >
                   <Plus className="h-3 w-3 mr-1" />
                   {btn.label} {btn.icon && <span className="ml-1 text-xs">{btn.icon}</span>}
@@ -458,14 +473,14 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
             </div>
 
             {/* Context-Aware Preset Templates */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-start">
               {getTemplatesForType().map(template => (
                 <Button 
                   key={template.id}
                   variant="secondary" 
                   size="sm" 
                   onClick={() => loadPreset(template)} 
-                  className="flex-1 min-w-[140px] h-9"
+                  className="min-w-[140px] max-w-[200px] h-9"
                 >
                   {propertyType === 'domestic' && <Home className="h-4 w-4 mr-2" />}
                   {propertyType === 'commercial' && <Building className="h-4 w-4 mr-2" />}
@@ -489,10 +504,15 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
             ))}
 
             {circuits.length === 0 && (
-              <div className="text-center py-8 text-muted-foreground">
-                <Plug className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                <p className="text-sm">No circuits added yet</p>
-                <p className="text-xs mt-1">Use quick add buttons or presets above</p>
+              <div className="text-left py-8 px-4 bg-muted/30 rounded-lg border border-dashed">
+                <Plug className="h-12 w-12 mb-3 opacity-50" />
+                <p className="text-sm text-muted-foreground mb-2">
+                  💡 <strong>No circuits added yet.</strong> You have two options:
+                </p>
+                <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside ml-4">
+                  <li>Use the quick add buttons or presets above to add circuits manually</li>
+                  <li>OR describe your requirements in the "Additional Requirements" field below and let AI design the circuits for you</li>
+                </ul>
               </div>
             )}
 
@@ -511,13 +531,18 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
         <Card className="p-4 md:p-6">
           <h2 className="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
             <MessageSquare className="h-5 w-5 text-primary" />
-            Additional Requirements (Optional)
+            Additional Requirements or Circuit Description
           </h2>
           <Textarea
             value={additionalPrompt}
             onChange={(e) => setAdditionalPrompt(e.target.value)}
-            placeholder="e.g., Use fire-rated cable, Client wants AFDDs, Old installation has no RCD..."
-            rows={3}
+            placeholder="Describe your requirements and let AI design the circuits, OR add specific notes for circuits you've already added.
+
+Examples:
+• 3-bed house with kitchen extension, 2 bathrooms, garage, EV charger
+• Small office with 10 desks, server room, kitchen area
+• Workshop with 3 machines, welding bay, overhead crane"
+            rows={5}
             className="text-base"
           />
         </Card>

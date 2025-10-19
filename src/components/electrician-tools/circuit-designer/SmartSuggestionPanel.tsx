@@ -54,9 +54,9 @@ export const SmartSuggestionPanel = ({ installationType, propertyAge, budgetLeve
   return (
     <Alert className="mb-6 border-primary/30 bg-primary/5">
       <Icon className="h-5 w-5 text-primary" />
-      <AlertTitle className="text-base font-semibold mb-2">{config.title}</AlertTitle>
+      <AlertTitle className="text-base font-semibold mb-2 text-left">{config.title}</AlertTitle>
       <AlertDescription>
-        <ul className="space-y-1 text-sm">
+        <ul className="space-y-1 text-sm text-left list-none pl-0">
           {config.items.map((item, idx) => (
             <li key={idx} className={item.startsWith('⚠️') ? 'text-amber-600 dark:text-amber-400' : ''}>
               {item}

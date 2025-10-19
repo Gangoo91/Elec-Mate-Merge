@@ -31,10 +31,24 @@ export async function handleBatchDesign(body: any, logger: any) {
   
   logger.info('💭 THINKING: Starting batch circuit design', {
     circuitCount: inputCircuits.length,
-    installationType: projectInfo.installationType
+    installationType: projectInfo.installationType,
+    hasAdditionalPrompt: !!projectInfo.additionalPrompt
   });
 
-  const enrichedCircuits = inputCircuits.map((circuit: any) => ({
+  // If no circuits provided but additionalPrompt exists, generate circuits from natural language
+  let circuitsToDesign = inputCircuits;
+  
+  if (inputCircuits.length === 0 && projectInfo.additionalPrompt) {
+    logger.info('🤖 AI Mode: Generating circuits from natural language description');
+    circuitsToDesign = generateCircuitsFromDescription(
+      projectInfo.additionalPrompt,
+      installationType,
+      incomingSupply.phases
+    );
+    logger.info('✨ Generated circuits from description', { count: circuitsToDesign.length });
+  }
+
+  const enrichedCircuits = circuitsToDesign.map((circuit: any) => ({
     ...circuit,
     loadPower: circuit.loadPower || inferLoadPower(circuit.loadType, circuit.name),
     cableLength: circuit.cableLength || inferCableLength(circuit.loadType, projectInfo.installationType)
@@ -141,4 +155,186 @@ function calculateSimpleVoltageDrop(current: number, length: number, cableSize: 
 function calculateR1R2(liveSize: number, cpcSize: number, length: number): number {
   const r: Record<number, number> = { 1.5: 12.1, 2.5: 7.41, 4: 4.61, 6: 3.08, 10: 1.83, 16: 1.15 };
   return (((r[liveSize] || 7.41) + (r[cpcSize] || 12.1)) * length * 1.2) / 1000;
+}
+
+function generateCircuitsFromDescription(description: string, installationType: string, phases: string): any[] {
+  const circuits: any[] = [];
+  const lowerDesc = description.toLowerCase();
+  
+  // Domestic circuits
+  if (installationType === 'domestic') {
+    // Count bedrooms to determine socket circuits needed
+    const bedroomMatch = lowerDesc.match(/(\d+)[-\s]?bed/);
+    const bedrooms = bedroomMatch ? parseInt(bedroomMatch[1]) : 3;
+    
+    // Kitchen
+    if (lowerDesc.includes('kitchen')) {
+      circuits.push({ name: 'Kitchen Sockets', loadType: 'socket', phases: 'single', specialLocation: 'kitchen' });
+      if (lowerDesc.includes('cooker') || lowerDesc.includes('hob') || lowerDesc.includes('range')) {
+        circuits.push({ name: 'Cooker', loadType: 'cooker', phases: 'single', specialLocation: 'kitchen' });
+      }
+      if (lowerDesc.includes('integrated') || lowerDesc.includes('appliances')) {
+        circuits.push({ name: 'Integrated Appliances', loadType: 'socket', loadPower: 3000, phases: 'single', specialLocation: 'kitchen' });
+      }
+    }
+    
+    // Living areas - socket circuits
+    circuits.push({ name: 'Downstairs Sockets', loadType: 'socket', phases: 'single', specialLocation: 'none' });
+    circuits.push({ name: 'Upstairs Sockets', loadType: 'socket', phases: 'single', specialLocation: 'none' });
+    
+    // Lighting
+    circuits.push({ name: 'Downstairs Lights', loadType: 'lighting', loadPower: 1000, cableLength: 15, phases: 'single', specialLocation: 'none' });
+    circuits.push({ name: 'Upstairs Lights', loadType: 'lighting', loadPower: 800, cableLength: 20, phases: 'single', specialLocation: 'none' });
+    
+    // Bathrooms/Showers
+    const bathroomMatch = lowerDesc.match(/(\d+)\s*bath/);
+    const bathrooms = bathroomMatch ? parseInt(bathroomMatch[1]) : (lowerDesc.includes('bathroom') ? 1 : 0);
+    
+    if (lowerDesc.includes('shower') || bathrooms > 0) {
+      circuits.push({ name: 'Electric Shower', loadType: 'shower', loadPower: 10500, cableLength: 15, phases: 'single', specialLocation: 'bathroom' });
+    }
+    if (lowerDesc.includes('en-suite') || bathrooms > 1) {
+      circuits.push({ name: 'En-Suite Shower', loadType: 'shower', loadPower: 8500, cableLength: 12, phases: 'single', specialLocation: 'bathroom' });
+    }
+    
+    // Garage
+    if (lowerDesc.includes('garage') || lowerDesc.includes('workshop')) {
+      const isWorkshop = lowerDesc.includes('workshop') || lowerDesc.includes('equipment');
+      circuits.push({ 
+        name: isWorkshop ? 'Garage Workshop' : 'Garage Sockets', 
+        loadType: 'garage', 
+        loadPower: isWorkshop ? 5000 : 3000,
+        phases: lowerDesc.includes('3-phase') || lowerDesc.includes('three phase') ? 'three' : 'single',
+        specialLocation: 'none' 
+      });
+    }
+    
+    // EV Charger
+    if (lowerDesc.includes('ev') || lowerDesc.includes('electric vehicle') || lowerDesc.includes('car charger')) {
+      const power = lowerDesc.includes('22kw') || lowerDesc.includes('22 kw') ? 22000 : 7400;
+      circuits.push({ 
+        name: power > 8000 ? 'EV Charger 22kW' : 'EV Charger 7.4kW', 
+        loadType: 'ev-charger', 
+        loadPower: power,
+        cableLength: 20,
+        phases: power > 8000 ? 'three' : 'single',
+        specialLocation: 'outdoor' 
+      });
+    }
+    
+    // Outdoor
+    if (lowerDesc.includes('outdoor') || lowerDesc.includes('garden') || lowerDesc.includes('outside')) {
+      circuits.push({ name: 'Outdoor Sockets', loadType: 'outdoor', loadPower: 3000, phases: 'single', specialLocation: 'outdoor' });
+    }
+    
+    // Immersion
+    if (lowerDesc.includes('immersion') || lowerDesc.includes('hot water')) {
+      circuits.push({ name: 'Immersion Heater', loadType: 'immersion', loadPower: 3000, phases: 'single', specialLocation: 'none' });
+    }
+  }
+  
+  // Commercial circuits
+  if (installationType === 'commercial') {
+    // Office desks
+    const deskMatch = lowerDesc.match(/(\d+)\s*desk/);
+    const desks = deskMatch ? parseInt(deskMatch[1]) : 0;
+    
+    if (desks > 0 || lowerDesc.includes('office')) {
+      const zones = Math.ceil(desks / 10) || 2;
+      for (let i = 1; i <= zones; i++) {
+        circuits.push({ name: `Office Sockets - Zone ${i}`, loadType: 'office-sockets', loadPower: 5000, phases: 'single', specialLocation: 'none' });
+      }
+    }
+    
+    // Lighting
+    circuits.push({ name: 'Main Lighting', loadType: 'lighting', loadPower: 2000, cableLength: 30, phases: 'single', specialLocation: 'none' });
+    circuits.push({ name: 'Emergency Lighting', loadType: 'emergency-lighting', loadPower: 500, cableLength: 35, phases: 'single', specialLocation: 'none' });
+    
+    // Server/IT
+    if (lowerDesc.includes('server') || lowerDesc.includes('data') || lowerDesc.includes('it')) {
+      circuits.push({ name: 'Server Room/Data Cabinet', loadType: 'server-room', loadPower: 5000, phases: 'single', specialLocation: 'none', notes: 'UPS required' });
+    }
+    
+    // HVAC
+    if (lowerDesc.includes('hvac') || lowerDesc.includes('air con') || lowerDesc.includes('heating')) {
+      circuits.push({ name: 'HVAC System', loadType: 'hvac', loadPower: 3000, phases: 'single', specialLocation: 'none' });
+    }
+    
+    // Kitchen/Breakroom
+    if (lowerDesc.includes('kitchen') || lowerDesc.includes('breakroom') || lowerDesc.includes('cafe')) {
+      circuits.push({ name: 'Kitchen/Breakroom', loadType: 'kitchen-equipment', loadPower: 3000, phases: 'single', specialLocation: 'kitchen' });
+    }
+    
+    // Security systems
+    if (lowerDesc.includes('cctv') || lowerDesc.includes('security') || lowerDesc.includes('camera')) {
+      circuits.push({ name: 'CCTV System', loadType: 'cctv', loadPower: 500, phases: 'single', specialLocation: 'none' });
+    }
+    if (lowerDesc.includes('access control') || lowerDesc.includes('door')) {
+      circuits.push({ name: 'Access Control', loadType: 'access-control', loadPower: 300, phases: 'single', specialLocation: 'none' });
+    }
+    
+    // Fire alarm
+    circuits.push({ name: 'Fire Alarm Panel', loadType: 'fire-alarm', loadPower: 500, phases: 'single', specialLocation: 'none' });
+  }
+  
+  // Industrial circuits
+  if (installationType === 'industrial') {
+    // Count machines
+    const machineMatch = lowerDesc.match(/(\d+)\s*machine/);
+    const machines = machineMatch ? parseInt(machineMatch[1]) : 0;
+    
+    if (machines > 0) {
+      for (let i = 1; i <= machines; i++) {
+        circuits.push({ 
+          name: `Machine Tool ${i}`, 
+          loadType: 'machine-tool', 
+          loadPower: 11000, 
+          phases: 'three', 
+          specialLocation: 'none',
+          notes: '7.5kW motor - Type D MCB'
+        });
+      }
+    }
+    
+    // Motors
+    if (lowerDesc.includes('motor') && machines === 0) {
+      circuits.push({ name: 'Three Phase Motor', loadType: 'three-phase-motor', loadPower: 15000, phases: 'three', specialLocation: 'none', notes: '11kW' });
+    }
+    
+    // Welding
+    if (lowerDesc.includes('weld')) {
+      circuits.push({ name: 'Welding Equipment', loadType: 'welding', loadPower: 15000, phases: 'three', specialLocation: 'none', notes: 'High inrush - Type D MCB' });
+    }
+    
+    // Conveyor/Production line
+    if (lowerDesc.includes('conveyor') || lowerDesc.includes('production')) {
+      circuits.push({ name: 'Conveyor System', loadType: 'conveyor', loadPower: 7500, phases: 'three', specialLocation: 'none' });
+    }
+    
+    // Crane
+    if (lowerDesc.includes('crane') || lowerDesc.includes('hoist')) {
+      circuits.push({ name: 'Overhead Crane', loadType: 'three-phase-motor', loadPower: 11000, phases: 'three', specialLocation: 'none' });
+    }
+    
+    // Compressor
+    if (lowerDesc.includes('compressor') || lowerDesc.includes('compressed air')) {
+      circuits.push({ name: 'Air Compressor', loadType: 'compressor', loadPower: 5500, phases: 'three', specialLocation: 'none', notes: '4kW' });
+    }
+    
+    // Extraction
+    if (lowerDesc.includes('extraction') || lowerDesc.includes('ventilation')) {
+      circuits.push({ name: 'Extraction System', loadType: 'extraction', loadPower: 4000, phases: 'single', specialLocation: 'none' });
+    }
+    
+    // Workshop sockets
+    circuits.push({ name: 'Workshop Sockets', loadType: 'workshop-sockets', loadPower: 5000, phases: 'single', specialLocation: 'none' });
+    
+    // Lighting
+    circuits.push({ name: 'Factory Lighting', loadType: 'overhead-lighting', loadPower: 3000, cableLength: 50, phases: 'single', specialLocation: 'none' });
+    
+    // Control panel
+    circuits.push({ name: 'Control Systems', loadType: 'control-panel', loadPower: 1500, phases: 'single', specialLocation: 'none' });
+  }
+  
+  return circuits;
 }
