@@ -6,7 +6,7 @@ import { EntrySelector } from "@/components/install-planner-v2/EntrySelector";
 import { ExpressMode } from "@/components/install-planner-v2/ExpressMode";
 import { ProfessionalMode } from "@/components/install-planner-v2/ProfessionalMode";
 import { MultiCircuitMode } from "@/components/install-planner-v2/MultiCircuitMode";
-import { IntelligentAIPlanner } from "@/components/install-planner-v2/IntelligentAIPlanner";
+import { AIInstallationDesigner } from "@/components/electrician-tools/circuit-designer/AIInstallationDesigner";
 import { InstallPlanDataV2 } from "@/components/install-planner-v2/types";
 import { SaveManager } from "@/components/install-planner-v2/SaveManager";
 
@@ -96,17 +96,9 @@ const InstallPlannerV2 = () => {
     }
   }, [urlMode]);
 
-  // Full-screen for AI chat mode, container for other modes
+  // Full-screen for AI RAMS-style designer
   if (mode === 'ai-guided') {
-    return (
-      <div className="min-h-screen bg-elec-dark">
-        <IntelligentAIPlanner
-          planData={planData}
-          updatePlanData={setPlanData}
-          onReset={handleReset}
-        />
-      </div>
-    );
+    return <AIInstallationDesigner />;
   }
 
   return (
