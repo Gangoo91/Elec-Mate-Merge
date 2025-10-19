@@ -157,6 +157,7 @@ interface IntelligentAIPlannerProps {
 export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: IntelligentAIPlannerProps) => {
   const location = useLocation();
   const resumeState = location.state as any;
+  const preSelectedAgent = resumeState?.preSelectedAgent as AgentType | undefined;
   
   const [messages, setMessages] = useState<Message[]>(
     resumeState?.resumeMessages || [
@@ -187,7 +188,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [streamingMessageIndex, setStreamingMessageIndex] = useState<number | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [consultationStarted, setConsultationStarted] = useState(!!resumeState?.resumeMessages);
-  const [currentAgent, setCurrentAgent] = useState<string | null>(null);
+  const [currentAgent, setCurrentAgent] = useState<string | null>(preSelectedAgent || null);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [lastSentMessage, setLastSentMessage] = useState<string>("");
@@ -316,7 +317,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
     checkAndPopulatePricing();
   }, []);
 
-  // Handle resume from results page
+  // Handle resume from results page and pre-selected agent
   useEffect(() => {
     if (resumeState?.resumePlanData) {
       updatePlanData(resumeState.resumePlanData);
@@ -325,6 +326,21 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       toast.info(`Resuming consultation with ${resumeState.targetAgent}`, {
         description: "Ask your follow-up question"
       });
+    }
+    // Auto-show welcome message for pre-selected agent
+    if (preSelectedAgent && messages.length === 1) {
+      setConsultationStarted(true);
+      const welcomeMessage = AGENT_WELCOME_MESSAGES[preSelectedAgent];
+      if (welcomeMessage) {
+        setMessages(prev => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: welcomeMessage,
+            agentName: getAgentName(preSelectedAgent)
+          }
+        ]);
+      }
     }
   }, []);
 

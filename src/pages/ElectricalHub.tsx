@@ -89,7 +89,7 @@ const ElectricalHub = () => {
 
       {/* Featured AI Installation Designer */}
       <div className="space-y-4">
-        <Link to="/electrician/install-planner?mode=ai" className="focus:outline-none hover-scale block">
+        <Link to="/electrician/agent-selector" className="focus:outline-none hover-scale block">
           <Card className="border-primary/50 bg-gradient-to-br from-primary/20 to-primary/5 hover:border-primary hover:from-primary/25 hover:to-primary/10 transition-all duration-300 cursor-pointer">
             <CardHeader className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-center md:text-left py-6 md:py-8 px-6 md:px-8">
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">

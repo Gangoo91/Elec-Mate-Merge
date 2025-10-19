@@ -64,6 +64,7 @@ import InstallPlannerV2 from "@/pages/electrician-tools/InstallPlannerV2";
 import InstallPlannerResults from "@/pages/electrician-tools/InstallPlannerResults";
 import InspectionTesting from "@/pages/electrician-tools/InspectionTesting";
 import SiteSafety from "@/pages/electrician-tools/SiteSafety";
+import AgentSelectorPage from "@/pages/electrician-tools/AgentSelectorPage";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -131,6 +132,7 @@ const ElectricianHubRoutes = () => (
     <Route path="business-development/tools/cis-drc" element={<CISDRCHelper />} />
     
     {/* Core Workshop Tools */}
+    <Route path="agent-selector" element={<AgentSelectorPage />} />
     <Route path="calculations" element={<Calculations />} />
     <Route path="install-planner" element={<InstallPlannerV2 />} />
     <Route path="install-planner/results" element={<InstallPlannerResults />} />
