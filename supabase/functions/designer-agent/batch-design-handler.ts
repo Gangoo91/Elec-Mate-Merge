@@ -141,27 +141,40 @@ export async function handleBatchDesign(body: any, logger: any) {
   });
 
   // PHASE 2: Merge and deduplicate regulations (by reg number AND content hash)
-  const seenHashes = new Set<string>();
-  const mergedRegulations = allRAGResults
-    .flatMap(r => r.regulations || [])
-    .filter((reg: any) => {
-      // Deduplicate by regulation_number
-      const isDuplicateNumber = mergedRegulations.some((r: any) => 
-        r.regulation_number === reg.regulation_number
-      );
-      
-      // Also deduplicate by content hash (catch near-identical entries)
+  let mergedRegulations: any[] = [];
+  
+  try {
+    const allRegs = allRAGResults.flatMap(r => r.regulations || []);
+    const seenNumbers = new Set<string>();
+    const seenHashes = new Set<string>();
+    
+    // Safe two-pass deduplication using for-of loop
+    for (const reg of allRegs) {
+      const regNumber = reg.regulation_number;
       const contentHash = hashContent(reg.content || '');
-      const isDuplicateContent = seenHashes.has(contentHash);
       
-      if (!isDuplicateNumber && !isDuplicateContent) {
-        seenHashes.add(contentHash);
-        return true;
+      // Skip if we've seen this regulation number or content hash
+      if (seenNumbers.has(regNumber) || seenHashes.has(contentHash)) {
+        continue;
       }
-      return false;
-    })
-    .sort((a: any, b: any) => (b.hybrid_score || 0) - (a.hybrid_score || 0))
-    .slice(0, 25);
+      
+      // Add to tracking sets and results
+      seenNumbers.add(regNumber);
+      seenHashes.add(contentHash);
+      mergedRegulations.push(reg);
+    }
+    
+    // Sort by score and limit
+    mergedRegulations = mergedRegulations
+      .sort((a: any, b: any) => (b.hybrid_score || 0) - (a.hybrid_score || 0))
+      .slice(0, 25);
+      
+  } catch (dedupError) {
+    logger.error('🚨 Deduplication failed, using empty array (fallback will activate)', { 
+      error: dedupError instanceof Error ? dedupError.message : String(dedupError) 
+    });
+    mergedRegulations = [];
+  }
 
   logger.info('✅ Multi-Query RAG Complete', {
     searches: ragSearchesWithTimeout.length,
