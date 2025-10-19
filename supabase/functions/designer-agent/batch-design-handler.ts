@@ -219,9 +219,74 @@ export async function handleBatchDesign(body: any, logger: any) {
   }
   
   const aiData = await response.json();
-  const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
+  let toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
+  
+  // Retry once if no tool call (AI might have returned text instead)
   if (!toolCall) {
-    throw new Error('No tool call in AI response');
+    logger.warn('No tool call in first response, retrying with stricter instruction');
+    
+    const retryResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: aiConfig?.model || 'openai/gpt-5',
+        messages: [
+          { role: 'system', content: systemPrompt + '\n\nCRITICAL: You MUST call the design_circuits function. Do not output any text or markdown. Only use the tool.' },
+          { role: 'user', content: query }
+        ],
+        max_completion_tokens: aiConfig?.maxTokens || 15000,
+        tools: [{
+          type: "function",
+          function: {
+            name: "design_circuits",
+            description: "Return complete multi-circuit electrical design with BS 7671 compliance",
+            parameters: {
+              type: "object",
+              properties: {
+                circuits: { type: "array", items: { type: "object" } },
+                diversityBreakdown: { type: "object" },
+                materials: { type: "array", items: { type: "object" } },
+                consumerUnit: { type: "object" }
+              },
+              required: ["circuits", "diversityBreakdown", "materials", "consumerUnit"]
+            }
+          }
+        }],
+        tool_choice: { type: "function", function: { name: "design_circuits" } }
+      })
+    });
+    
+    if (retryResponse.ok) {
+      const retryData = await retryResponse.json();
+      toolCall = retryData.choices?.[0]?.message?.tool_calls?.[0];
+    }
+  }
+  
+  // Final check - if still no tool call, try parsing content as JSON
+  if (!toolCall) {
+    const content = aiData.choices?.[0]?.message?.content;
+    if (content) {
+      try {
+        const parsed = JSON.parse(content);
+        if (parsed.circuits) {
+          logger.info('Recovered design from content JSON');
+          toolCall = { function: { arguments: content } };
+        }
+      } catch (e) {
+        logger.error('Failed to parse content as JSON', e);
+      }
+    }
+    
+    if (!toolCall) {
+      logger.error('AI did not return structured design after retry', {
+        hasContent: !!aiData.choices?.[0]?.message?.content,
+        contentPreview: aiData.choices?.[0]?.message?.content?.substring(0, 200)
+      });
+      throw new Error('AI did not return structured design (no tool call). Please try again.');
+    }
   }
   
   const designData = JSON.parse(toolCall.function.arguments);
@@ -261,13 +326,16 @@ export async function handleBatchDesign(body: any, logger: any) {
 
 // Helper functions
 function buildDesignQuery(projectInfo: any, supply: any, circuits: any[]): string {
-  return `Design ${circuits.length} circuits for ${projectInfo.name}.
+  const circuitList = circuits.length > 0 
+    ? `Circuits required:\n${circuits.map((c: any, i: number) => `${i+1}. ${c.name} - ${c.loadPower}W, ${c.cableLength}m, ${c.phases} phase${c.specialLocation !== 'none' ? ` (${c.specialLocation})` : ''}`).join('\n')}`
+    : 'Please infer appropriate circuits from the project description and requirements.';
+    
+  return `Design circuits for ${projectInfo.name}.
   
 Incoming supply: ${supply.voltage}V ${supply.phases}, Ze=${supply.Ze}Ω, ${supply.earthingSystem}.
 Prospective fault current: ${supply.pscc || 3500}A.
 
-Circuits required:
-${circuits.map((c: any, i: number) => `${i+1}. ${c.name} - ${c.loadPower}W, ${c.cableLength}m, ${c.phases} phase${c.specialLocation !== 'none' ? ` (${c.specialLocation})` : ''}`).join('\n')}
+${circuitList}
 
 ${projectInfo.additionalPrompt || ''}`;
 }
@@ -308,12 +376,14 @@ INCOMING SUPPLY DETAILS:
 - Main Switch Rating: ${supply.mainSwitchRating || 100}A
 
 CIRCUITS TO DESIGN (${circuits.length} total):
-${circuits.map((c: any, i: number) => `${i+1}. ${c.name}
+${circuits.length > 0 
+  ? circuits.map((c: any, i: number) => `${i+1}. ${c.name}
    - Load Type: ${c.loadType}
    - Power: ${c.loadPower}W (${(c.loadPower/1000).toFixed(1)}kW)
    - Cable Run: ${c.cableLength}m
    - Phases: ${c.phases}
-   - Location: ${c.specialLocation || 'general'}`).join('\n\n')}
+   - Location: ${c.specialLocation || 'general'}`).join('\n\n')
+  : 'No specific circuits provided. Infer appropriate circuits from the project requirements and additional prompt.'}
 
 BS 7671 KNOWLEDGE BASE (Top 15 regulations retrieved via RAG):
 ${regulations}
@@ -369,8 +439,9 @@ IMPORTANT NOTES:
 - Consider installation method impact on current capacity
 - Account for voltage drop over cable length
 - Ensure all circuits meet disconnection time requirements
+${circuits.length === 0 ? '- Since no circuits were provided, infer appropriate circuits from the project type and brief' : ''}
 
-Use the design_circuits function to return your complete design with all required data.`;
+You MUST call the design_circuits function to return your complete design. Do not output text or markdown - only call the tool.`;
 }
 
 function extractPracticalGuidance(circuits: any[]): string[] {

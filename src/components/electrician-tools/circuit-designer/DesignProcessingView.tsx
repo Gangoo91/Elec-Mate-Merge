@@ -25,7 +25,7 @@ export const DesignProcessingView = ({ progress }: DesignProcessingViewProps) =>
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold mb-2">Generating Your Design</h2>
           <p className="text-muted-foreground">
-            Our AI is analysing circuits and checking BS 7671:2018+A2:2022 compliance
+            Our AI is analysing circuits and checking BS 7671 18th Edition compliance
           </p>
         </div>
 
@@ -70,7 +70,7 @@ export const DesignProcessingView = ({ progress }: DesignProcessingViewProps) =>
           </div>
 
           <div className="text-center text-sm text-muted-foreground pt-4">
-            Estimated time: 2-3 minutes
+            Estimated time: 3–5 minutes
           </div>
         </div>
       </Card>

@@ -21,25 +21,63 @@ export const useAIDesigner = () => {
     setDesignData(null);
 
     const stages = [
-      { stage: 1, message: 'Understanding your requirements...', percent: 5 },
-      { stage: 2, message: 'Checking BS 7671 requirements for each circuit...', percent: 20 },
-      { stage: 3, message: 'Calculating cable sizes and derating factors...', percent: 40 },
-      { stage: 4, message: 'Determining protection devices...', percent: 60 },
-      { stage: 5, message: 'Verifying voltage drop compliance...', percent: 75 },
-      { stage: 6, message: 'Calculating earth fault loop impedance...', percent: 85 },
-      { stage: 7, message: 'Generating materials list and cost estimate...', percent: 95 },
-      { stage: 8, message: 'Finalising design documentation...', percent: 100 }
+      { stage: 1, message: 'Understanding your requirements...', duration: 15000, targetPercent: 5 },
+      { stage: 2, message: 'Checking BS 7671 requirements for each circuit...', duration: 25000, targetPercent: 20 },
+      { stage: 3, message: 'Calculating cable sizes and derating factors...', duration: 35000, targetPercent: 40 },
+      { stage: 4, message: 'Determining protection devices...', duration: 30000, targetPercent: 60 },
+      { stage: 5, message: 'Verifying voltage drop compliance...', duration: 25000, targetPercent: 75 },
+      { stage: 6, message: 'Calculating earth fault loop impedance...', duration: 20000, targetPercent: 85 },
+      { stage: 7, message: 'Generating materials list and cost estimate...', duration: 20000, targetPercent: 93 },
+      { stage: 8, message: 'Finalising design documentation...', duration: 60000, targetPercent: 99 }
     ];
 
+    let progressInterval: ReturnType<typeof setInterval> | null = null;
+    let currentStage = 0;
+    let currentPercent = 0;
+
     try {
-      // Simulate progress stages
-      let currentStage = 0;
-      const progressInterval = setInterval(() => {
-        if (currentStage < stages.length) {
-          setProgress(stages[currentStage]);
-          currentStage++;
+      // Realistic progress controller - gradually advances through stages
+      const startTime = Date.now();
+      let accumulatedDuration = 0;
+
+      progressInterval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        
+        // Find which stage we should be in based on elapsed time
+        let targetStage = 0;
+        let stageStartTime = 0;
+        
+        for (let i = 0; i < stages.length; i++) {
+          if (elapsed < accumulatedDuration + stages[i].duration) {
+            targetStage = i;
+            stageStartTime = accumulatedDuration;
+            break;
+          }
+          accumulatedDuration += stages[i].duration;
+          targetStage = i;
         }
-      }, 2000);
+        
+        // Cap at stage 7 (99%) until backend completes
+        if (targetStage >= 7) targetStage = 7;
+        
+        // Update current stage and smoothly interpolate percent
+        if (targetStage !== currentStage) {
+          currentStage = targetStage;
+        }
+        
+        const stage = stages[currentStage];
+        const stageElapsed = Math.min(elapsed - stageStartTime, stage.duration);
+        const stageProgress = stageElapsed / stage.duration;
+        
+        const prevPercent = currentStage > 0 ? stages[currentStage - 1].targetPercent : 0;
+        currentPercent = Math.floor(prevPercent + (stage.targetPercent - prevPercent) * stageProgress);
+        
+        setProgress({
+          stage: currentStage + 1,
+          message: stage.message,
+          percent: currentPercent
+        });
+      }, 1000);
 
       console.log('🔧 Generating installation design', {
         circuits: inputs.circuits.length,
@@ -94,17 +132,30 @@ export const useAIDesigner = () => {
         }
       });
 
-      clearInterval(progressInterval);
-      setProgress({ stage: 8, message: 'Design complete!', percent: 100 });
+      if (progressInterval) clearInterval(progressInterval);
 
       if (invokeError) {
-        throw invokeError;
+        // Map specific error codes
+        let errorMessage = invokeError.message || 'Unknown error occurred';
+        
+        if (invokeError.message?.includes('429')) {
+          errorMessage = 'Too many requests. Please wait a moment and try again.';
+        } else if (invokeError.message?.includes('402')) {
+          errorMessage = 'Payment required. Please add Lovable AI credits to continue.';
+        } else if (invokeError.message?.includes('No tool call')) {
+          errorMessage = 'AI did not return a structured design. Please try again.';
+        }
+        
+        throw new Error(errorMessage);
       }
 
       if (!data.success) {
         throw new Error(data.error || 'Design generation failed');
       }
 
+      // Complete progress smoothly to 100%
+      setProgress({ stage: 8, message: 'Design complete!', percent: 100 });
+      
       console.log('✅ Design generated successfully', data.design);
       setDesignData(data.design);
 
@@ -117,11 +168,15 @@ export const useAIDesigner = () => {
       console.error('❌ Design generation failed:', errorMessage);
       setError(errorMessage);
 
+      // Stop progress at current stage on error (don't show 100%)
+      if (progressInterval) clearInterval(progressInterval);
+
       toast.error('Design generation failed', {
         description: errorMessage
       });
     } finally {
       setIsProcessing(false);
+      if (progressInterval) clearInterval(progressInterval);
       setTimeout(() => setProgress(null), 2000);
     }
   };
