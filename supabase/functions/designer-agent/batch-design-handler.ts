@@ -254,7 +254,10 @@ export async function handleBatchDesign(body: any, logger: any) {
   const requestBody = {
     model: aiConfig?.model || 'openai/gpt-5',
     messages: [
-      { role: 'system', content: systemPrompt },
+      { 
+        role: 'system', 
+        content: systemPrompt + '\n\n⚠️ CRITICAL INSTRUCTION:\n- You MUST call the "design_circuits" function with valid circuit data\n- Generate AT LEAST 1 circuit (circuits array cannot be empty)\n- DO NOT output text, markdown, or explanations - ONLY call the function\n- If project description lacks detail, infer typical circuits for that installation type'
+      },
       { role: 'user', content: query }
     ],
     max_completion_tokens: aiConfig?.maxTokens || (allCircuits.length > 12 ? 20000 : 15000),
@@ -262,7 +265,7 @@ export async function handleBatchDesign(body: any, logger: any) {
       type: "function",
       function: {
         name: "design_circuits",
-        description: "Return complete multi-circuit electrical design with BS 7671 compliance",
+        description: "MANDATORY: You MUST call this function to return the electrical design. DO NOT return text - only call this function with design data. You MUST generate at least 1 circuit.",
         parameters: {
           type: "object",
           properties: {
@@ -454,7 +457,10 @@ export async function handleBatchDesign(body: any, logger: any) {
       body: JSON.stringify({
         model: aiConfig?.model || 'openai/gpt-5',
         messages: [
-          { role: 'system', content: systemPrompt + '\n\nCRITICAL: You MUST call the design_circuits function. Do not output any text or markdown. Only use the tool.' },
+          { 
+            role: 'system', 
+            content: systemPrompt + '\n\n⚠️ CRITICAL INSTRUCTION:\n- You MUST call the "design_circuits" function\n- Generate AT LEAST 1 circuit (circuits array cannot be empty)\n- DO NOT output text, markdown, or explanations\n- ONLY return the function call with valid JSON data\n- If project description is vague, infer typical circuits for that installation type'
+          },
           { role: 'user', content: query }
         ],
         max_completion_tokens: aiConfig?.maxTokens || 15000,
@@ -462,11 +468,15 @@ export async function handleBatchDesign(body: any, logger: any) {
           type: "function",
           function: {
             name: "design_circuits",
-            description: "Return complete multi-circuit electrical design with BS 7671 compliance",
+            description: "MANDATORY: Return electrical design data. You MUST generate at least 1 circuit.",
             parameters: {
               type: "object",
               properties: {
-                circuits: { type: "array", items: { type: "object" } },
+                circuits: { 
+                  type: "array", 
+                  minItems: 1,
+                  items: { type: "object" } 
+                },
                 diversityBreakdown: { type: "object" },
                 materials: { type: "array", items: { type: "object" } },
                 consumerUnit: { type: "object" }
@@ -544,9 +554,28 @@ export async function handleBatchDesign(body: any, logger: any) {
   let designData;
   try {
     designData = JSON.parse(toolCall.function.arguments);
+    
+    // CRITICAL VALIDATION: Ensure circuits is an array
+    if (!designData.circuits || !Array.isArray(designData.circuits)) {
+      logger.error('🚨 AI returned invalid circuits data', {
+        circuitsType: typeof designData.circuits,
+        circuitsValue: designData.circuits,
+        hasCircuits: !!designData.circuits
+      });
+      throw new Error('AI did not generate circuits array. Received: ' + typeof designData.circuits);
+    }
+    
+    if (designData.circuits.length === 0) {
+      logger.error('🚨 AI returned empty circuits array', {
+        circuitCount: 0,
+        designData: JSON.stringify(designData).substring(0, 500)
+      });
+      throw new Error('AI generated 0 circuits. Please provide more specific requirements or try again.');
+    }
+    
     logger.info('✅ Design data parsed successfully', {
-      hasCircuits: !!designData.circuits,
-      circuitCount: designData.circuits?.length || 0,
+      hasCircuits: true,
+      circuitCount: designData.circuits.length,
       hasDiversity: !!designData.diversityBreakdown,
       hasMaterials: !!designData.materials
     });
@@ -609,7 +638,9 @@ export async function handleBatchDesign(body: any, logger: any) {
       clientName: projectInfo.clientName,
       electricianName: projectInfo.electricianName,
       installationType: projectInfo.installationType,
-      totalLoad: designData.circuits.reduce((sum: number, c: any) => sum + c.loadPower, 0),
+      totalLoad: Array.isArray(designData.circuits) 
+        ? designData.circuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0)
+        : 0,
       diversityApplied: true,
       diversityFactor: designData.diversityBreakdown?.overallDiversityFactor || 0.75,
       diversityBreakdown: designData.diversityBreakdown,
