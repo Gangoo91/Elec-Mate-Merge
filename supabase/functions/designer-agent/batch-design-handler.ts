@@ -1,8 +1,33 @@
 import { corsHeaders } from '../_shared/deps.ts';
 import { getMaxZs } from "../shared/bs7671ProtectionData.ts";
 
+const INSTALLATION_CONTEXT = {
+  domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
+- RCD protection required for all circuits (Reg 411.3.3)
+- Bathroom circuits must have 30mA RCD (Section 701)
+- Consider future EV charging capability
+- AFDDs required for new installations per Amendment 3
+- Focus on safety in wet locations (bathrooms, outdoors)`,
+  commercial: `Design per BS 7671:2018+A3:2024 for commercial installations.
+- AFDDs mandatory for new commercial circuits (Amendment 3)
+- Emergency lighting compliance per BS 5839
+- Fire alarm integration considerations
+- RCBOs recommended for all final circuits
+- Higher fault levels expected in commercial supplies
+- Consider surge protection (Reg 534.4)`,
+  industrial: `Industrial installation per BS 7671:2018+A3:2024.
+- Three-phase motor protection with Type D MCBs
+- Consider motor starting currents (6-8x full load)
+- SWA cabling for mechanical protection
+- Higher fault currents - 10kA+ MCBs (Reg 536.1)
+- Diversity calculations essential for multiple motors
+- Regular inspection intervals per Reg 622
+- G59/G99 agreements may be required for generation`
+};
+
 export async function handleBatchDesign(body: any, logger: any) {
   const { projectInfo, incomingSupply, circuits: inputCircuits } = body;
+  const installationType = projectInfo.installationType || 'domestic';
   
   logger.info('💭 THINKING: Starting batch circuit design', {
     circuitCount: inputCircuits.length,

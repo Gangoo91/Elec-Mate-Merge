@@ -1,10 +1,19 @@
 // AI Installation Designer Types
-// BS 7671:2018+A2:2022 Compliant Circuit Design
+// BS 7671:2018+A3:2024 Compliant Circuit Design
+
+// Extended load types for different installation types
+export type DomesticLoadType = 'socket' | 'lighting' | 'cooker' | 'shower' | 'ev-charger' | 'immersion' | 'heating' | 'smoke-alarm' | 'garage' | 'outdoor';
+
+export type CommercialLoadType = 'office-sockets' | 'emergency-lighting' | 'hvac' | 'server-room' | 'kitchen-equipment' | 'signage' | 'fire-alarm' | 'access-control' | 'cctv' | 'data-cabinet';
+
+export type IndustrialLoadType = 'three-phase-motor' | 'machine-tool' | 'welding' | 'conveyor' | 'extraction' | 'control-panel' | 'overhead-lighting' | 'workshop-sockets' | 'compressor' | 'production-line';
+
+export type LoadType = DomesticLoadType | CommercialLoadType | IndustrialLoadType | 'motor' | 'other';
 
 export interface CircuitInput {
   id: string;
   name: string;
-  loadType: 'socket' | 'lighting' | 'cooker' | 'shower' | 'ev-charger' | 'immersion' | 'heating' | 'motor' | 'other';
+  loadType: LoadType;
   loadPower?: number; // Optional - AI can infer
   cableLength?: number; // Optional - AI can infer
   phases: 'single' | 'three';
@@ -115,4 +124,15 @@ export interface DesignInputs {
   budgetLevel?: 'basic' | 'standard' | 'premium';
   circuits: CircuitInput[];
   additionalPrompt?: string;
+  motorStartingFactor?: number; // For industrial (typically 6-8x)
+  faultLevel?: number; // kA rating for industrial
+  diversityFactor?: number; // Manual override for diversity
+}
+
+// Template definitions
+export interface CircuitPreset {
+  id: string;
+  name: string;
+  description: string;
+  circuits: Omit<CircuitInput, 'id'>[];
 }

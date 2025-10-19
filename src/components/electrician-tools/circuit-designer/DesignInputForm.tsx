@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { CircuitInput, DesignInputs } from '@/types/installation-design';
+import { CircuitInput, DesignInputs, CircuitPreset } from '@/types/installation-design';
 import { CircuitBuilderCard } from './CircuitBuilderCard';
 import { MobileInput } from '@/components/ui/mobile-input';
 import BackButton from '@/components/common/BackButton';
@@ -12,6 +12,8 @@ import { Plus, Zap, FileText, Plug, MessageSquare, Home, Building, Factory, Info
 import { v4 as uuidv4 } from 'uuid';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
+import { DOMESTIC_TEMPLATES, COMMERCIAL_TEMPLATES, INDUSTRIAL_TEMPLATES, SMART_DEFAULTS } from '@/lib/circuit-templates';
+import { SmartSuggestionPanel } from './SmartSuggestionPanel';
 
 interface DesignInputFormProps {
   onGenerate: (inputs: DesignInputs) => void;
@@ -38,6 +40,19 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   const [additionalPrompt, setAdditionalPrompt] = useState('');
   const [supplyOpen, setSupplyOpen] = useState(false);
 
+  // Apply smart defaults when property type changes
+  useEffect(() => {
+    const defaults = SMART_DEFAULTS[propertyType];
+    setVoltage(defaults.voltage);
+    setPhases(defaults.phases);
+    setZe(defaults.ze);
+    setEarthingSystem(defaults.earthingSystem);
+    setAmbientTemp(defaults.ambientTemp || 25);
+    setInstallationMethod(defaults.installationMethod);
+    setGroupingFactor(defaults.groupingFactor || 1);
+    setBudgetLevel(defaults.budgetLevel);
+  }, [propertyType]);
+
   const addCircuit = () => {
     const newCircuit: CircuitInput = {
       id: uuidv4(),
@@ -49,16 +64,26 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
     setCircuits([...circuits, newCircuit]);
   };
 
-  const addQuickCircuit = (type: 'socket' | 'lighting' | 'cooker' | 'shower' | 'ev-charger') => {
-    const presets: Record<typeof type, Partial<CircuitInput>> = {
-      socket: { name: 'Socket Ring Main', loadType: 'socket', loadPower: 7360 },
-      lighting: { name: 'Lighting Circuit', loadType: 'lighting', loadPower: 1000 },
-      cooker: { name: 'Cooker', loadType: 'cooker', loadPower: 9200, specialLocation: 'kitchen' },
-      shower: { name: 'Electric Shower', loadType: 'shower', loadPower: 10000, specialLocation: 'bathroom', cableLength: 15 },
-      'ev-charger': { name: 'EV Charger', loadType: 'ev-charger', loadPower: 7400, specialLocation: 'outdoor', cableLength: 20 }
+  const addQuickCircuit = (loadType: string) => {
+    const quickPresets: Record<string, Partial<CircuitInput>> = {
+      socket: { name: 'Socket Ring Main', loadType: 'socket' as any, loadPower: 7360 },
+      lighting: { name: 'Lighting Circuit', loadType: 'lighting' as any, loadPower: 1000 },
+      cooker: { name: 'Cooker', loadType: 'cooker' as any, loadPower: 9200, specialLocation: 'kitchen' },
+      shower: { name: 'Electric Shower', loadType: 'shower' as any, loadPower: 10000, specialLocation: 'bathroom', cableLength: 15 },
+      'ev-charger': { name: 'EV Charger', loadType: 'ev-charger' as any, loadPower: 7400, specialLocation: 'outdoor', cableLength: 20 },
+      'office-sockets': { name: 'Office Sockets', loadType: 'office-sockets' as any, loadPower: 5000 },
+      'emergency-lighting': { name: 'Emergency Lighting', loadType: 'emergency-lighting' as any, loadPower: 500 },
+      hvac: { name: 'HVAC Unit', loadType: 'hvac' as any, loadPower: 3000 },
+      'server-room': { name: 'Server Room', loadType: 'server-room' as any, loadPower: 5000, notes: 'UPS required' },
+      'kitchen-equipment': { name: 'Kitchen Equipment', loadType: 'kitchen-equipment' as any, loadPower: 3000, specialLocation: 'kitchen' },
+      'three-phase-motor': { name: '3Φ Motor', loadType: 'three-phase-motor' as any, loadPower: 11000, phases: 'three', notes: 'Type D MCB for motor starting' },
+      'machine-tool': { name: 'Machine Tool', loadType: 'machine-tool' as any, loadPower: 7500, phases: 'three' },
+      welding: { name: 'Welding Equipment', loadType: 'welding' as any, loadPower: 15000, phases: 'three', notes: 'High inrush current' },
+      conveyor: { name: 'Conveyor System', loadType: 'conveyor' as any, loadPower: 5500, phases: 'three' },
+      'workshop-sockets': { name: 'Workshop Sockets', loadType: 'workshop-sockets' as any, loadPower: 5000 }
     };
 
-    const preset = presets[type];
+    const preset = quickPresets[loadType] || { name: `Circuit ${circuits.length + 1}`, loadType: loadType as any };
     const newCircuit: CircuitInput = {
       id: uuidv4(),
       phases: 'single',
@@ -77,27 +102,51 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
     setCircuits(circuits.filter(c => c.id !== id));
   };
 
-  const loadPreset = (preset: 'house-rewire' | 'kitchen' | 'ev-charger') => {
-    if (preset === 'house-rewire') {
-      setCircuits([
-        { id: uuidv4(), name: 'Kitchen Ring', loadType: 'socket', phases: 'single', specialLocation: 'kitchen' },
-        { id: uuidv4(), name: 'Living Room Sockets', loadType: 'socket', phases: 'single', specialLocation: 'none' },
-        { id: uuidv4(), name: 'Upstairs Sockets', loadType: 'socket', phases: 'single', specialLocation: 'none' },
-        { id: uuidv4(), name: 'Downstairs Lights', loadType: 'lighting', phases: 'single', specialLocation: 'none' },
-        { id: uuidv4(), name: 'Upstairs Lights', loadType: 'lighting', phases: 'single', specialLocation: 'none' },
-        { id: uuidv4(), name: 'Cooker', loadType: 'cooker', loadPower: 9200, phases: 'single', specialLocation: 'kitchen' },
-        { id: uuidv4(), name: 'Shower', loadType: 'shower', loadPower: 10000, cableLength: 15, phases: 'single', specialLocation: 'bathroom' },
-        { id: uuidv4(), name: 'Immersion Heater', loadType: 'immersion', phases: 'single', specialLocation: 'none' }
-      ]);
-    } else if (preset === 'kitchen') {
-      setCircuits([
-        { id: uuidv4(), name: 'Kitchen Ring', loadType: 'socket', phases: 'single', specialLocation: 'kitchen' },
-        { id: uuidv4(), name: 'Cooker', loadType: 'cooker', loadPower: 9200, phases: 'single', specialLocation: 'kitchen' }
-      ]);
-    } else if (preset === 'ev-charger') {
-      setCircuits([
-        { id: uuidv4(), name: 'EV Charger', loadType: 'ev-charger', loadPower: 7400, cableLength: 20, phases: 'single', specialLocation: 'outdoor' }
-      ]);
+  const loadPreset = (template: CircuitPreset) => {
+    const circuitsWithIds = template.circuits.map(c => ({
+      ...c,
+      id: uuidv4()
+    })) as CircuitInput[];
+    setCircuits(circuitsWithIds);
+  };
+
+  const getTemplatesForType = () => {
+    switch (propertyType) {
+      case 'domestic':
+        return DOMESTIC_TEMPLATES;
+      case 'commercial':
+        return COMMERCIAL_TEMPLATES;
+      case 'industrial':
+        return INDUSTRIAL_TEMPLATES;
+    }
+  };
+
+  const getQuickAddButtons = () => {
+    switch (propertyType) {
+      case 'domestic':
+        return [
+          { value: 'socket', label: 'Socket Ring', icon: '⭐' },
+          { value: 'lighting', label: 'Lighting', icon: '✅' },
+          { value: 'cooker', label: 'Cooker', icon: '' },
+          { value: 'shower', label: 'Shower', icon: '⚡' },
+          { value: 'ev-charger', label: 'EV Charger', icon: '🔌' }
+        ];
+      case 'commercial':
+        return [
+          { value: 'office-sockets', label: 'Office Sockets', icon: '⭐' },
+          { value: 'emergency-lighting', label: 'Emergency Lights', icon: '✅' },
+          { value: 'hvac', label: 'HVAC', icon: '' },
+          { value: 'server-room', label: 'Server Room', icon: '' },
+          { value: 'kitchen-equipment', label: 'Kitchen Equip', icon: '' }
+        ];
+      case 'industrial':
+        return [
+          { value: 'three-phase-motor', label: '3Φ Motor', icon: '⭐' },
+          { value: 'machine-tool', label: 'Machine Tool', icon: '' },
+          { value: 'welding', label: 'Welding', icon: '⚡⚡' },
+          { value: 'conveyor', label: 'Conveyor', icon: '' },
+          { value: 'workshop-sockets', label: 'Workshop', icon: '' }
+        ];
     }
   };
 
@@ -377,6 +426,13 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
           </Collapsible>
         </Card>
 
+        {/* Smart Suggestion Panel */}
+        <SmartSuggestionPanel 
+          installationType={propertyType}
+          propertyAge={propertyAge}
+          budgetLevel={budgetLevel}
+        />
+
         {/* Circuit Builder */}
         <Card className="p-4 md:p-6">
           <div className="flex flex-col gap-4 mb-4">
@@ -385,42 +441,38 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
               Circuit Builder {circuits.length > 0 && <span className="text-sm font-normal text-muted-foreground">({circuits.length} circuits)</span>}
             </h2>
             
-            {/* Quick Add Buttons - Mobile Optimized */}
+            {/* Context-Aware Quick Add Buttons */}
             <div className="flex flex-wrap gap-2">
-              <Button variant="outline" size="sm" onClick={() => addQuickCircuit('socket')} className="flex-1 min-w-[100px] h-10">
-                <Plus className="h-3 w-3 mr-1" />
-                Socket
-              </Button>
-              <Button variant="outline" size="sm" onClick={() => addQuickCircuit('lighting')} className="flex-1 min-w-[100px] h-10">
-                <Plus className="h-3 w-3 mr-1" />
-                Lighting
-              </Button>
-              <Button variant="outline" size="sm" onClick={() => addQuickCircuit('cooker')} className="flex-1 min-w-[100px] h-10">
-                <Plus className="h-3 w-3 mr-1" />
-                Cooker
-              </Button>
-              <Button variant="outline" size="sm" onClick={() => addQuickCircuit('shower')} className="flex-1 min-w-[100px] h-10">
-                <Plus className="h-3 w-3 mr-1" />
-                Shower
-              </Button>
-              <Button variant="outline" size="sm" onClick={() => addQuickCircuit('ev-charger')} className="flex-1 min-w-[100px] h-10">
-                <Plus className="h-3 w-3 mr-1" />
-                EV Charger
-              </Button>
+              {getQuickAddButtons().map(btn => (
+                <Button 
+                  key={btn.value}
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => addQuickCircuit(btn.value)} 
+                  className="flex-1 min-w-[100px] h-10"
+                >
+                  <Plus className="h-3 w-3 mr-1" />
+                  {btn.label} {btn.icon && <span className="ml-1 text-xs">{btn.icon}</span>}
+                </Button>
+              ))}
             </div>
 
-            {/* Preset Templates */}
+            {/* Context-Aware Preset Templates */}
             <div className="flex flex-wrap gap-2">
-              <span className="text-xs text-muted-foreground self-center hidden md:inline">Presets:</span>
-              <Button variant="secondary" size="sm" onClick={() => loadPreset('house-rewire')} className="h-9">
-                House Rewire
-              </Button>
-              <Button variant="secondary" size="sm" onClick={() => loadPreset('kitchen')} className="h-9">
-                Kitchen
-              </Button>
-              <Button variant="secondary" size="sm" onClick={() => loadPreset('ev-charger')} className="h-9">
-                EV Install
-              </Button>
+              {getTemplatesForType().map(template => (
+                <Button 
+                  key={template.id}
+                  variant="secondary" 
+                  size="sm" 
+                  onClick={() => loadPreset(template)} 
+                  className="flex-1 min-w-[140px] h-9"
+                >
+                  {propertyType === 'domestic' && <Home className="h-4 w-4 mr-2" />}
+                  {propertyType === 'commercial' && <Building className="h-4 w-4 mr-2" />}
+                  {propertyType === 'industrial' && <Factory className="h-4 w-4 mr-2" />}
+                  {template.name}
+                </Button>
+              ))}
             </div>
           </div>
 
@@ -430,6 +482,7 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
                 key={circuit.id}
                 circuit={circuit}
                 circuitNumber={index + 1}
+                installationType={propertyType}
                 onUpdate={(updated) => updateCircuit(circuit.id, updated)}
                 onDelete={() => deleteCircuit(circuit.id)}
               />

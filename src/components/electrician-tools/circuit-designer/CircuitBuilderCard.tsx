@@ -18,25 +18,61 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 interface CircuitBuilderCardProps {
   circuit: CircuitInput;
   circuitNumber: number;
+  installationType: 'domestic' | 'commercial' | 'industrial';
   onUpdate: (circuit: CircuitInput) => void;
   onDelete: () => void;
 }
 
-export const CircuitBuilderCard = ({ circuit, circuitNumber, onUpdate, onDelete }: CircuitBuilderCardProps) => {
+export const CircuitBuilderCard = ({ circuit, circuitNumber, installationType, onUpdate, onDelete }: CircuitBuilderCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  const loadTypeLabels: Record<string, string> = {
-    'socket': 'Socket Circuit',
-    'lighting': 'Lighting',
-    'cooker': 'Cooker',
-    'shower': 'Shower',
-    'ev-charger': 'EV Charger',
-    'immersion': 'Immersion Heater',
-    'heating': 'Heating',
-    'motor': 'Motor',
-    'other': 'Other'
+  const getLoadTypeOptions = () => {
+    switch (installationType) {
+      case 'domestic':
+        return [
+          { value: 'socket', label: 'Socket Circuit' },
+          { value: 'lighting', label: 'Lighting' },
+          { value: 'cooker', label: 'Cooker' },
+          { value: 'shower', label: 'Shower' },
+          { value: 'ev-charger', label: 'EV Charger' },
+          { value: 'immersion', label: 'Immersion Heater' },
+          { value: 'heating', label: 'Heating' },
+          { value: 'smoke-alarm', label: 'Smoke Alarms' },
+          { value: 'garage', label: 'Garage' },
+          { value: 'outdoor', label: 'Outdoor' }
+        ];
+      case 'commercial':
+        return [
+          { value: 'office-sockets', label: 'Office Sockets' },
+          { value: 'emergency-lighting', label: 'Emergency Lighting' },
+          { value: 'hvac', label: 'HVAC' },
+          { value: 'server-room', label: 'Server/IT Equipment' },
+          { value: 'kitchen-equipment', label: 'Kitchen Equipment' },
+          { value: 'signage', label: 'Signage' },
+          { value: 'fire-alarm', label: 'Fire Alarm' },
+          { value: 'access-control', label: 'Access Control' },
+          { value: 'cctv', label: 'CCTV' },
+          { value: 'data-cabinet', label: 'Data Cabinet' }
+        ];
+      case 'industrial':
+        return [
+          { value: 'three-phase-motor', label: 'Three Phase Motor' },
+          { value: 'machine-tool', label: 'Machine Tool' },
+          { value: 'welding', label: 'Welding Equipment' },
+          { value: 'conveyor', label: 'Conveyor System' },
+          { value: 'extraction', label: 'Extraction System' },
+          { value: 'control-panel', label: 'Control Panel' },
+          { value: 'overhead-lighting', label: 'Overhead Lighting' },
+          { value: 'workshop-sockets', label: 'Workshop Sockets' },
+          { value: 'compressor', label: 'Air Compressor' },
+          { value: 'production-line', label: 'Production Line' }
+        ];
+    }
   };
+
+  const loadTypeOptions = getLoadTypeOptions();
+  const loadTypeLabels = Object.fromEntries(loadTypeOptions.map(opt => [opt.value, opt.label]));
 
   const EditForm = () => (
     <div className="space-y-4">
@@ -57,15 +93,9 @@ export const CircuitBuilderCard = ({ circuit, circuitNumber, onUpdate, onDelete 
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="socket">Socket Circuit</SelectItem>
-            <SelectItem value="lighting">Lighting</SelectItem>
-            <SelectItem value="cooker">Cooker</SelectItem>
-            <SelectItem value="shower">Shower</SelectItem>
-            <SelectItem value="ev-charger">EV Charger</SelectItem>
-            <SelectItem value="immersion">Immersion Heater</SelectItem>
-            <SelectItem value="heating">Heating</SelectItem>
-            <SelectItem value="motor">Motor</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
+            {loadTypeOptions.map(opt => (
+              <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
