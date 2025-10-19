@@ -42,7 +42,7 @@ export const useAIDesigner = () => {
           body: {
             mode: 'batch-design',
             aiConfig: {
-              model: 'openai/gpt-5',
+              model: 'openai/gpt-5-mini',
               maxTokens: 15000,
               timeoutMs: 280000,
               noMemory: true,

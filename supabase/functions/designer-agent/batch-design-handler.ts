@@ -293,7 +293,7 @@ Return your design using the provided tool schema.`
       type: "function",
       function: {
         name: "design_circuits",
-        description: "Return electrical circuit design with BS 7671 compliance",
+        description: "Return electrical circuit design with BS 7671 compliance. You MUST call this function.",
         parameters: {
           type: "object",
           properties: {
@@ -301,27 +301,27 @@ Return your design using the provided tool schema.`
               type: "string",
               description: "Conversational summary of the design in UK English"
             },
-        circuits: { 
-          type: "array",
-          description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations",
-          items: { type: "object" }
-        },
-        materials: { 
-          type: "array",
-          description: "Required materials list with specifications",
-          items: { type: "object" }
-        },
-        warnings: { 
-          type: "array",
-          description: "Any compliance warnings or important notes",
-          items: { type: "string" }
-        }
+            circuits: { 
+              type: "array",
+              description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations",
+              items: { type: "object" }
+            },
+            materials: { 
+              type: "array",
+              description: "Required materials list with specifications",
+              items: { type: "object" }
+            },
+            warnings: { 
+              type: "array",
+              description: "Any compliance warnings or important notes",
+              items: { type: "string" }
+            }
           },
           required: ["response", "circuits"]
         }
       }
     }],
-    tool_choice: { type: "function", function: { name: "design_circuits" } }
+    tool_choice: "auto"
   };
   
   // PHASE 1: Log AI request details (without exposing keys)
@@ -359,6 +359,15 @@ Return your design using the provided tool schema.`
       statusText: response.statusText,
       errorPreview: errorText.substring(0, 500)
     });
+    
+    // Surface rate limit and payment errors clearly
+    if (response.status === 429) {
+      throw new Error("Rate limit exceeded. Please try again in a moment.");
+    }
+    if (response.status === 402) {
+      throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
+    }
+    
     throw new Error(`AI API error: ${response.status} - ${errorText.substring(0, 200)}`);
   }
   
@@ -439,7 +448,7 @@ Return your design using the provided tool schema.`
           type: "function",
           function: {
             name: "design_circuits",
-            description: "Return electrical circuit design with BS 7671 compliance",
+            description: "Return electrical circuit design with BS 7671 compliance. You MUST call this function.",
             parameters: {
               type: "object",
               properties: {
@@ -449,41 +458,121 @@ Return your design using the provided tool schema.`
                 },
                 circuits: { 
                   type: "array",
-                  description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations"
+                  description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations",
+                  items: { type: "object" }
                 },
                 materials: { 
                   type: "array",
-                  description: "Required materials list with specifications"
+                  description: "Required materials list with specifications",
+                  items: { type: "object" }
                 },
                 warnings: { 
                   type: "array",
-                  description: "Any compliance warnings or important notes"
+                  description: "Any compliance warnings or important notes",
+                  items: { type: "string" }
                 }
               },
               required: ["response", "circuits"]
             }
           }
         }],
-        tool_choice: { type: "function", function: { name: "design_circuits" } }
+        tool_choice: "auto"
       })
     });
     
-    if (retryResponse.ok) {
+    if (!retryResponse.ok) {
+      const errorText = await retryResponse.text();
+      if (retryResponse.status === 429) {
+        throw new Error("Rate limit exceeded. Please try again in a moment.");
+      }
+      if (retryResponse.status === 402) {
+        throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
+      }
+      logger.error('🚨 Retry request failed', { status: retryResponse.status, errorPreview: errorText.substring(0, 200) });
+    } else {
       const retryData = await retryResponse.json();
       toolCall = retryData.choices?.[0]?.message?.tool_calls?.[0];
+      const retryContent = retryData.choices?.[0]?.message?.content;
+      
+      logger.info('⚠️ Retry result', {
+        hasToolCall: !!toolCall,
+        hasContent: !!retryContent,
+        contentLength: retryContent?.length || 0
+      });
     }
   }
   
-  // PHASE 1: Enhanced fallback - try parsing content as JSON or extract from markdown
+  // PHASE 1: Enhanced fallback - try JSON-only mode if no tool call
   if (!toolCall) {
     const content = aiData.choices?.[0]?.message?.content;
-    logger.warn('⚠️ Still no tool call after retry, attempting content parsing', {
+    logger.warn('⚠️ Still no tool call after retry', {
       hasContent: !!content,
       contentLength: content?.length || 0
     });
     
-    if (content) {
-      // Try 1: Direct JSON parse
+    // Final fallback: JSON-only mode (no tools)
+    if (!content || content.trim() === "") {
+      logger.warn('🔄 No tool call and no content, trying JSON-only fallback');
+      
+      // Limit RAG to top 12 regulations for token hygiene
+      const topRegulations = ragResults.regulations.slice(0, 12);
+      const compactRagContext = topRegulations.map((r: any) => 
+        `${r.regulation_number}: ${r.content.substring(0, 200)}...`
+      ).join('\n\n');
+      
+      const jsonResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${lovableApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: aiConfig?.model || 'openai/gpt-5-mini',
+          messages: [
+            { 
+              role: 'system', 
+              content: `You are an expert electrical designer specialising in BS 7671:2018+A3:2024 compliant circuit design.
+
+KNOWLEDGE BASE (top ${topRegulations.length} regulations):
+${compactRagContext}
+
+Return EXACTLY a single JSON object with keys: response, circuits, materials, warnings. No markdown, no prose outside JSON.
+
+Structure:
+- response: brief summary in UK English
+- circuits: array of circuit objects with name, circuitNumber, loadType, loadPower, phases, cableSize, cpcSize, cableLength, protectionDevice, rcdProtected, calculations, justifications, warnings, installationMethod
+- materials: array of material objects with name, specification, quantity, unit
+- warnings: array of strings`
+            },
+            { role: 'user', content: query }
+          ],
+          max_completion_tokens: aiConfig?.maxTokens || 8000,
+          response_format: { type: "json_object" }
+        })
+      });
+      
+      if (!jsonResponse.ok) {
+        const errorText = await jsonResponse.text();
+        if (jsonResponse.status === 429) {
+          throw new Error("Rate limit exceeded. Please try again in a moment.");
+        }
+        if (jsonResponse.status === 402) {
+          throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
+        }
+        throw new Error(`AI JSON fallback error: ${jsonResponse.status} - ${errorText.substring(0, 200)}`);
+      }
+      
+      const jsonData = await jsonResponse.json();
+      const jsonContent = jsonData.choices?.[0]?.message?.content;
+      
+      if (!jsonContent) {
+        throw new Error("AI did not return any content in JSON-only fallback.");
+      }
+      
+      logger.info('✅ JSON-only fallback succeeded', { contentLength: jsonContent.length });
+      toolCall = { function: { arguments: jsonContent } };
+    } else {
+      // Try parsing content as JSON or extract from markdown
       try {
         const parsed = JSON.parse(content);
         if (parsed.circuits) {
@@ -491,7 +580,7 @@ Return your design using the provided tool schema.`
           toolCall = { function: { arguments: content } };
         }
       } catch (e) {
-        // Try 2: Extract JSON from markdown code blocks
+        // Try extracting JSON from markdown code blocks
         const jsonMatch = content.match(/```(?:json)?\n?([\s\S]*?)\n?```/);
         if (jsonMatch) {
           try {
@@ -505,22 +594,17 @@ Return your design using the provided tool schema.`
               error: e2 instanceof Error ? e2.message : String(e2) 
             });
           }
-        } else {
-          logger.error('🚨 No JSON found in content', { 
-            error: e instanceof Error ? e.message : String(e),
-            contentPreview: content.substring(0, 300)
-          });
         }
       }
-    }
-    
-    if (!toolCall) {
-      logger.error('🚨 AI did not return structured design after all attempts', {
-        hasContent: !!content,
-        contentPreview: content?.substring(0, 200),
-        fullContentLength: content?.length || 0
-      });
-      throw new Error('AI did not return structured design (no tool call). The AI may have returned text instead of calling the design_circuits function. Please try again or simplify your request.');
+      
+      if (!toolCall) {
+        logger.error('🚨 AI did not return structured design after all attempts', {
+          hasContent: !!content,
+          contentPreview: content?.substring(0, 200),
+          fullContentLength: content?.length || 0
+        });
+        throw new Error('AI did not return structured design (no tool call). The AI may have returned text instead of calling the design_circuits function. Please try again or simplify your request.');
+      }
     }
   }
   
