@@ -547,82 +547,112 @@ Return your design using the provided tool schema.`
     tool_choice: "auto"
   };
   
-  // PHASE 1: Log AI request details (without exposing keys)
-  logger.info('📤 Sending AI request', {
-    model: requestBody.model,
-    maxTokens: requestBody.max_completion_tokens,
-    systemPromptLength: systemPrompt.length,
-    userQueryLength: query.length,
-    toolsConfigured: requestBody.tools.length
+  // ============================================
+  // PARALLEL BATCHING: Split circuits into batches for faster processing
+  // ============================================
+  const BATCH_SIZE = 3; // Process 3 circuits at a time
+  const circuitBatches = chunkArray(allCircuits, BATCH_SIZE);
+  
+  logger.info('🔄 Processing circuits in parallel batches', {
+    totalCircuits: allCircuits.length,
+    batchSize: BATCH_SIZE,
+    batchCount: circuitBatches.length
   });
   
-  const aiStartTime = Date.now();
-  const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${lovableApiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(requestBody)
-  });
-  
-  const aiElapsedMs = Date.now() - aiStartTime;
-  
-  // PHASE 1: Log AI response status
-  logger.info('📥 AI response received', {
-    status: response.status,
-    timeMs: aiElapsedMs,
-    ok: response.ok
-  });
-  
-  if (!response.ok) {
-    const errorText = await response.text();
-    logger.error('🚨 AI API error', { 
-      status: response.status, 
-      statusText: response.statusText,
-      errorPreview: errorText.substring(0, 500)
+  // Function to process a single batch
+  const processBatch = async (batch: any[], batchIndex: number) => {
+    const batchStartTime = Date.now();
+    logger.info(`📦 Batch ${batchIndex + 1}/${circuitBatches.length}: Processing ${batch.length} circuits`);
+    
+    // Create batch-specific query
+    const batchQuery = `${query}\n\nDesign the following circuits:\n${batch.map((c: any, i: number) => 
+      `${i + 1}. ${c.name || c.loadType} (${c.loadType}, ${c.loadPower}W, ${c.cableLength}m)`
+    ).join('\n')}`;
+    
+    const batchRequestBody = {
+      ...requestBody,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: batchQuery }
+      ]
+    };
+    
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(batchRequestBody)
     });
     
-    // Surface rate limit and payment errors clearly
-    if (response.status === 429) {
-      throw new Error("Rate limit exceeded. Please try again in a moment.");
-    }
-    if (response.status === 402) {
-      throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
+    const batchElapsedMs = Date.now() - batchStartTime;
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      logger.error(`🚨 Batch ${batchIndex + 1} AI API error`, { 
+        status: response.status,
+        errorPreview: errorText.substring(0, 500)
+      });
+      
+      if (response.status === 429) {
+        throw new Error("Rate limit exceeded. Please try again in a moment.");
+      }
+      if (response.status === 402) {
+        throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
+      }
+      
+      throw new Error(`AI API error: ${response.status} - ${errorText.substring(0, 200)}`);
     }
     
-    throw new Error(`AI API error: ${response.status} - ${errorText.substring(0, 200)}`);
-  }
-  
-  let aiData;
-  try {
-    aiData = await response.json();
-    logger.info('✅ AI response parsed successfully', {
-      hasChoices: !!aiData.choices,
-      choiceCount: aiData.choices?.length || 0,
-      hasUsage: !!aiData.usage,
+    const aiData = await response.json();
+    logger.info(`✅ Batch ${batchIndex + 1} completed`, {
+      timeMs: batchElapsedMs,
       tokensUsed: aiData.usage?.total_tokens || 0
     });
-  } catch (parseError) {
-    logger.error('🚨 Failed to parse AI response JSON', { 
-      error: parseError instanceof Error ? parseError.message : String(parseError) 
-    });
-    throw new Error('Invalid response from AI service');
-  }
+    
+    return { aiData, batchElapsedMs };
+  };
   
-  let toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
+  // Process all batches in parallel
+  const aiStartTime = Date.now();
+  const batchResults = await Promise.all(
+    circuitBatches.map((batch, index) => processBatch(batch, index))
+  );
+  const aiElapsedMs = Date.now() - aiStartTime;
   
-  // PHASE 1: Enhanced logging for tool call detection
-  logger.info('🔍 Checking for tool call', {
-    hasToolCall: !!toolCall,
-    hasMessage: !!aiData.choices?.[0]?.message,
-    hasContent: !!aiData.choices?.[0]?.message?.content,
-    contentPreview: aiData.choices?.[0]?.message?.content?.substring(0, 100)
+  logger.info('🎉 All batches completed', {
+    totalTimeMs: aiElapsedMs,
+    averageBatchTimeMs: Math.round(aiElapsedMs / batchResults.length)
   });
   
+  // ============================================
+  // MERGE BATCH RESULTS
+  // ============================================
+  
+  // Combine all tool calls from batches
+  let allToolCalls: any[] = [];
+  let totalTokens = 0;
+  
+  for (const { aiData, batchElapsedMs } of batchResults) {
+    const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
+    if (toolCall) {
+      allToolCalls.push(toolCall);
+    }
+    totalTokens += aiData.usage?.total_tokens || 0;
+  }
+  
+  logger.info('🔗 Merging batch results', {
+    toolCallsFound: allToolCalls.length,
+    totalTokensUsed: totalTokens
+  });
+  
+  // Use first batch's tool call as base, we'll merge circuits later
+  let toolCall = allToolCalls[0];
+  
   // Retry once if no tool call (AI might have returned text instead)
-  if (!toolCall) {
-    logger.warn('⚠️ No tool call in first response, retrying');
+  if (!toolCall && allToolCalls.length === 0) {
+    logger.warn('⚠️ No tool calls in any batch, retrying first batch');
     
     const retryResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -1006,46 +1036,84 @@ Always cite regulation numbers and show working for calculations.`
   }
   
   // PHASE 1: Log tool call extraction success
-  logger.info('✅ Tool call extracted', {
-    functionName: toolCall.function?.name,
-    argumentsLength: toolCall.function?.arguments?.length || 0
+  logger.info('✅ Tool calls extracted from batches', {
+    batchCount: allToolCalls.length,
+    firstFunctionName: toolCall?.function?.name
   });
   
-  let designData;
-  try {
-    designData = JSON.parse(toolCall.function.arguments);
-    
-    // CRITICAL VALIDATION: Ensure circuits is an array
-    if (!designData.circuits || !Array.isArray(designData.circuits)) {
-      logger.error('🚨 AI returned invalid circuits data', {
-        circuitsType: typeof designData.circuits,
-        circuitsValue: designData.circuits,
-        hasCircuits: !!designData.circuits
+  // Merge all circuit designs from batches
+  let designData: any = { circuits: [], materials: [], warnings: [] };
+  
+  for (let i = 0; i < allToolCalls.length; i++) {
+    const batchToolCall = allToolCalls[i];
+    try {
+      const batchData = JSON.parse(batchToolCall.function.arguments);
+      
+      // Merge circuits
+      if (batchData.circuits && Array.isArray(batchData.circuits)) {
+        designData.circuits.push(...batchData.circuits);
+      }
+      
+      // Merge materials (deduplicate)
+      if (batchData.materials && Array.isArray(batchData.materials)) {
+        for (const material of batchData.materials) {
+          const existing = designData.materials.find((m: any) => 
+            m.item === material.item && m.specification === material.specification
+          );
+          if (existing) {
+            existing.quantity += material.quantity;
+          } else {
+            designData.materials.push({ ...material });
+          }
+        }
+      }
+      
+      // Merge warnings
+      if (batchData.warnings && Array.isArray(batchData.warnings)) {
+        designData.warnings.push(...batchData.warnings);
+      }
+      
+      // Use response from first batch
+      if (i === 0 && batchData.response) {
+        designData.response = batchData.response;
+      }
+      
+    } catch (parseError) {
+      logger.error(`🚨 Failed to parse batch ${i + 1} tool call`, {
+        error: parseError instanceof Error ? parseError.message : String(parseError)
       });
-      throw new Error('AI did not generate circuits array. Received: ' + typeof designData.circuits);
     }
-    
-    if (designData.circuits.length === 0) {
-      logger.error('🚨 AI returned empty circuits array', {
-        circuitCount: 0,
-        designData: JSON.stringify(designData).substring(0, 500)
-      });
-      throw new Error('AI generated 0 circuits. Please provide more specific requirements or try again.');
-    }
-    
-    logger.info('✅ Design data parsed successfully', {
-      hasCircuits: true,
-      circuitCount: designData.circuits.length,
-      hasDiversity: !!designData.diversityBreakdown,
-      hasMaterials: !!designData.materials
-    });
-  } catch (parseError) {
-    logger.error('🚨 Failed to parse tool call arguments', {
-      error: parseError instanceof Error ? parseError.message : String(parseError),
-      argumentsPreview: toolCall.function.arguments.substring(0, 500)
-    });
-    throw new Error('Failed to parse AI design output');
   }
+  
+  logger.info('✅ Merged batch data', {
+    totalCircuits: designData.circuits.length,
+    totalMaterials: designData.materials.length,
+    totalWarnings: designData.warnings.length
+  });
+    
+  // CRITICAL VALIDATION: Ensure circuits is an array
+  if (!designData.circuits || !Array.isArray(designData.circuits)) {
+    logger.error('🚨 AI returned invalid circuits data', {
+      circuitsType: typeof designData.circuits,
+      circuitsValue: designData.circuits,
+      hasCircuits: !!designData.circuits
+    });
+    throw new Error('AI did not generate circuits array. Received: ' + typeof designData.circuits);
+  }
+  
+  if (designData.circuits.length === 0) {
+    logger.error('🚨 AI returned empty circuits array', {
+      circuitCount: 0
+    });
+    throw new Error('AI generated 0 circuits. Please provide more specific requirements or try again.');
+  }
+  
+  logger.info('✅ Design data merged successfully', {
+    hasCircuits: true,
+    circuitCount: designData.circuits.length,
+    hasMaterials: !!designData.materials,
+    materialCount: designData.materials?.length || 0
+  });
   
   // 🔍 MULTI-STAGE VALIDATION PIPELINE
   logger.info('🔍 Running multi-stage validation pipeline');
@@ -1082,13 +1150,13 @@ Always cite regulation numbers and show working for calculations.`
   logger.info('✅ STEP 3 Complete - Design validation finished', {
     circuits: designData.circuits?.length || 0,
     requestedCircuits: allCircuits.length,
-    tokensUsed: aiData.usage?.total_tokens || 0,
-    promptTokens: aiData.usage?.prompt_tokens || 0,
-    completionTokens: aiData.usage?.completion_tokens || 0,
+    batchesProcessed: circuitBatches.length,
+    tokensUsed: totalTokens,
     validationWarnings: validationWarnings.length,
     warningsSummary: validationWarnings.slice(0, 3),
     aiTimeMs: aiElapsedMs,
-    ragTimeMs: ragElapsedMs
+    ragTimeMs: ragElapsedMs,
+    parallelSpeedup: circuitBatches.length > 1 ? `${Math.round((circuitBatches.length * 60000) / aiElapsedMs * 100) / 100}x` : 'single batch'
   });
   
   // STEP 4: Return structured design (matching AI RAMS pattern)
@@ -1132,9 +1200,11 @@ Always cite regulation numbers and show working for calculations.`
     metadata: {
       ragCalls: ragResults.regulations?.length || 0,
       model: aiConfig?.model || 'openai/gpt-5-mini',
-      tokensUsed: aiData.usage?.total_tokens,
+      tokensUsed: totalTokens,
       aiTimeMs: aiElapsedMs,
       ragTimeMs: ragElapsedMs,
+      batchesProcessed: circuitBatches.length,
+      parallelProcessing: circuitBatches.length > 1,
       validationPassed: validationResult.passed,
       validationErrorCount: validationResult.errors.length,
       validationWarningCount: validationResult.warnings.length,
