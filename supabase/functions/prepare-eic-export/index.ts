@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { design, projectName, location, clientName, electricianName } = await req.json();
+    const { design } = await req.json();
     
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
@@ -31,18 +31,11 @@ serve(async (req) => {
       throw new Error('Unauthorized');
     }
 
-    console.log('📤 Preparing EIC export for user:', user.id);
+    console.log('📤 Preparing EIC export for design:', design.projectName);
 
-    // Extract metadata
-    const circuits = design.circuits || [];
-    const circuitsCount = circuits.length;
-    const voltage = design.consumerUnit?.incomingSupply?.voltage || 230;
-    const phases = circuits.some((c: any) => c.phases === 'three') ? 'three' : 'single';
-
-    // Transform circuits to EIC format with expected test values
-    const eicCircuits = circuits.map((circuit: any, idx: number) => ({
-      // Circuit identification
-      circuitNumber: String(idx + 1),
+    // Transform InstallationDesign circuits to EIC format
+    const eicCircuits = design.circuits.map((circuit: any, index: number) => ({
+      circuitNumber: String(index + 1),
       description: circuit.name,
       loadType: circuit.loadType,
       phases: circuit.phases,
@@ -52,23 +45,21 @@ serve(async (req) => {
       cpcSize: String(circuit.cpcSize),
       cableLength: circuit.cableLength,
       installationMethod: circuit.installationMethod,
-      referenceMethod: getReferenceMethodCode(circuit.installationMethod),
       
       // Protection device
       protectiveDeviceType: circuit.protectionDevice?.type || 'MCB',
-      protectiveDeviceRating: String(circuit.protectionDevice?.rating || ''),
+      protectiveDeviceRating: String(circuit.protectionDevice?.rating || 0),
       protectiveDeviceCurve: circuit.protectionDevice?.curve || 'B',
       protectiveDeviceKaRating: String(circuit.protectionDevice?.kaRating || 6),
-      bsStandard: 'BS 7671:2018+A3:2024',
       
-      // Expected test results (PRE-FILLED from design calculations)
+      // Expected test results (PRE-FILLED for future testing)
       expectedR1R2: circuit.expectedTestResults?.r1r2?.at70C || 'TBD',
       expectedZs: String(circuit.calculations?.zs || 'TBD'),
       expectedMaxZs: String(circuit.calculations?.maxZs || 'TBD'),
       expectedInsulationResistance: circuit.expectedTestResults?.insulationResistance?.minResistance || '≥1.0 MΩ',
-      expectedPolarity: circuit.expectedTestResults?.polarity || 'Correct (verify on-site)',
+      expectedPolarity: circuit.expectedTestResults?.polarity || 'Correct',
       
-      // RCD fields
+      // RCD data
       rcdProtected: circuit.rcdProtected || false,
       rcdRating: circuit.rcdProtected ? '30mA' : null,
       expectedRcdTripTime: circuit.rcdProtected ? circuit.expectedTestResults?.rcdTest?.at1x : null,
@@ -76,72 +67,82 @@ serve(async (req) => {
       // AFDD
       afddRequired: circuit.afddRequired || false,
       
-      // Blank fields for on-site testing
+      // Blank fields for ON-SITE testing (to be filled by inspector)
       actualR1R2: null,
       actualZs: null,
       actualInsulationResistance: null,
       actualPolarity: null,
       actualRcdTripTime: null,
-      actualPfc: null,
-      functionalTesting: null,
       testDate: null,
-      testedBy: null
+      testedBy: null,
+      remarks: null
     }));
 
-    // Prepare design export data
-    const designExportData = {
-      user_id: user.id,
-      design_id: `design-${Date.now()}`,
-      project_name: projectName || design.projectName || 'Untitled Project',
-      installation_address: location || design.location || '',
-      client_name: clientName || design.clientName || '',
-      electrician_name: electricianName || design.electricianName || '',
-      export_type: 'eic',
-      status: 'pending',
-      circuits_count: circuitsCount,
-      voltage: voltage,
-      phases: phases,
-      design_data: {
-        ...design,
-        eicCircuits: eicCircuits,
-        consumerUnit: design.consumerUnit,
-        exportedAt: new Date().toISOString()
-      }
+    // Create export metadata
+    const exportMetadata = {
+      circuitsCount: design.circuits.length,
+      voltage: design.consumerUnit.incomingSupply.voltage,
+      phases: design.consumerUnit.incomingSupply.phases,
+      earthingSystem: design.consumerUnit.incomingSupply.earthingSystem,
+      Ze: design.consumerUnit.incomingSupply.Ze,
+      incomingPFC: design.consumerUnit.incomingSupply.incomingPFC,
+      mainSwitchRating: design.consumerUnit.mainSwitchRating,
+      totalLoad: design.totalLoad,
+      diversityApplied: design.diversityApplied
     };
 
-    // Insert into design_exports table
+    // Store in design_exports table
     const { data: exportRecord, error: insertError } = await supabaseClient
       .from('design_exports')
-      .insert(designExportData)
+      .insert({
+        user_id: user.id,
+        design_id: `design_${Date.now()}`,
+        project_name: design.projectName,
+        installation_address: design.location,
+        client_name: design.clientName,
+        electrician_name: design.electricianName,
+        export_type: 'eic',
+        status: 'pending',
+        circuits_count: design.circuits.length,
+        voltage: design.consumerUnit.incomingSupply.voltage,
+        phases: design.consumerUnit.incomingSupply.phases,
+        design_data: {
+          ...design,
+          eicCircuits,
+          exportMetadata
+        }
+      })
       .select()
       .single();
 
     if (insertError) {
-      console.error('❌ Error inserting export record:', insertError);
+      console.error('❌ Error storing export:', insertError);
       throw insertError;
     }
 
-    console.log('✅ EIC export created successfully:', exportRecord.id);
+    console.log('✅ Export created successfully:', exportRecord.id);
 
-    // Optional: Store JSON backup in storage bucket
-    const fileName = `${user.id}/${exportRecord.id}.json`;
+    // Optional: Store backup JSON in storage bucket
+    const jsonFileName = `${user.id}/${exportRecord.id}.json`;
     const { error: storageError } = await supabaseClient.storage
       .from('eic-exports')
-      .upload(fileName, JSON.stringify(designExportData, null, 2), {
+      .upload(jsonFileName, JSON.stringify(exportRecord.design_data, null, 2), {
         contentType: 'application/json',
         upsert: false
       });
 
     if (storageError) {
-      console.warn('⚠️ Storage backup failed (non-critical):', storageError);
+      console.warn('⚠️ Storage backup failed (non-critical):', storageError.message);
+    } else {
+      console.log('📦 Backup stored in eic-exports bucket');
     }
 
     return new Response(JSON.stringify({
       success: true,
       exportId: exportRecord.id,
-      circuitsCount: circuitsCount,
-      reference: exportRecord.id.slice(0, 8).toUpperCase(),
-      status: 'pending'
+      circuitsCount: design.circuits.length,
+      status: 'pending',
+      message: `${design.circuits.length} circuits ready for EIC testing`
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
@@ -149,29 +150,10 @@ serve(async (req) => {
   } catch (error) {
     console.error('❌ Error in prepare-eic-export function:', error);
     return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to prepare EIC export',
-      success: false
+      error: error instanceof Error ? error.message : 'Failed to prepare EIC export' 
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 });
-
-// Helper function to map installation method to reference method code
-function getReferenceMethodCode(method?: string): string {
-  const codes: Record<string, string> = {
-    'Method A': '100',
-    'Method B': '101',
-    'Method C': '103',
-    'Clipped Direct': '103',
-    'In Conduit': '100',
-    'In Trunking': '101',
-    'Buried Direct': '120',
-    'clipped-direct': '103',
-    'in-conduit': '100',
-    'in-trunking': '101',
-    'buried-direct': '120'
-  };
-  return codes[method || ''] || '103';
-}
