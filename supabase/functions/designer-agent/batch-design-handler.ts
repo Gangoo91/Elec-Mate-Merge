@@ -3,7 +3,6 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { intelligentRAGSearch } from '../_shared/intelligent-rag.ts';
 import { parseQueryEntities } from '../_shared/query-parser.ts';
 import { chunkArray, RequestDeduplicator, generateRequestKey } from './parallel-utils.ts';
-import { handleError } from '../_shared/errors.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
@@ -667,21 +666,30 @@ Return your design using the provided tool schema.`
   // MERGE BATCH RESULTS
   // ============================================
   
-  // Combine all tool calls from batches
+  // Combine all tool calls from batches (filter out failed batches)
   let allToolCalls: any[] = [];
   let totalTokens = 0;
+  let failedBatches = 0;
   
-  for (const { aiData, batchElapsedMs } of batchResults) {
-    const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
+  for (const batchResult of batchResults) {
+    if (!batchResult.success || !batchResult.aiData) {
+      failedBatches++;
+      logger.warn(`⚠️ Skipping failed batch`, { error: batchResult.error });
+      continue;
+    }
+    
+    const toolCall = batchResult.aiData.choices?.[0]?.message?.tool_calls?.[0];
     if (toolCall) {
       allToolCalls.push(toolCall);
     }
-    totalTokens += aiData.usage?.total_tokens || 0;
+    totalTokens += batchResult.aiData.usage?.total_tokens || 0;
   }
   
   logger.info('🔗 Merging batch results', {
     toolCallsFound: allToolCalls.length,
-    totalTokensUsed: totalTokens
+    totalTokensUsed: totalTokens,
+    failedBatches,
+    successfulBatches: batchResults.length - failedBatches
   });
   
   // Use first batch's tool call as base, we'll merge circuits later
