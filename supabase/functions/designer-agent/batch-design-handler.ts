@@ -3,6 +3,9 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { intelligentRAGSearch } from '../_shared/intelligent-rag.ts';
 import { parseQueryEntities } from '../_shared/query-parser.ts';
 import { chunkArray, RequestDeduplicator, generateRequestKey } from './parallel-utils.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { loadCoreRegulationsCache } from './core-regulations-cache.ts';
+import { validateDesign, calculateCircuitConfidence, calculateOverallConfidence } from './validation-pipeline.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
@@ -76,11 +79,7 @@ export async function handleBatchDesign(body: any, logger: any) {
     circuitCount: allCircuits.length 
   });
 
-  // PHASE 2: Add timeout wrapper for RAG reliability
-  const { withTimeout, Timeouts } = await import('../_shared/timeout.ts');
-  const { loadCoreRegulationsCache } = await import('./core-regulations-cache.ts');
-  const { RequestDeduplicator, generateRequestKey } = await import('./parallel-utils.ts');
-  
+  // PHASE 2: Add timeout wrapper for RAG reliability (static imports)
   // Initialize request deduplicator for RAG searches
   const deduplicator = new RequestDeduplicator();
   
@@ -211,9 +210,7 @@ export async function handleBatchDesign(body: any, logger: any) {
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = await import('../_shared/deps.ts').then(m => 
-      m.createClient(supabaseUrl, supabaseKey)
-    );
+    const supabase = createClient(supabaseUrl, supabaseKey);
     
     try {
       const coreRegs = await loadCoreRegulationsCache(supabase);
@@ -1162,7 +1159,6 @@ Always cite regulation numbers and show working for calculations.`
   
   // 🔍 MULTI-STAGE VALIDATION PIPELINE
   logger.info('🔍 Running multi-stage validation pipeline');
-  const { validateDesign, calculateCircuitConfidence, calculateOverallConfidence } = await import('./validation-pipeline.ts');
   
   const validationResult = validateDesign(designData.circuits, incomingSupply, projectInfo);
   const validationWarnings: string[] = [...(designData.warnings || [])];
