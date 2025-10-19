@@ -123,43 +123,6 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
     setZe(zeValues[earthingSystem]);
   }, [earthingSystem]);
 
-  const getQuickAddButtons = () => {
-    switch (installationType) {
-      case 'domestic':
-        return [
-          { label: 'Socket Ring', value: 'socket' },
-          { label: 'Lighting', value: 'lighting' },
-          { label: 'Cooker', value: 'cooker' },
-          { label: 'Shower', value: 'shower' },
-          { label: 'EV Charger', value: 'ev-charger' }
-        ];
-      case 'commercial':
-        return [
-          { label: 'Office Sockets', value: 'office-sockets' },
-          { label: 'Lighting', value: 'lighting' },
-          { label: 'Emergency Lights', value: 'emergency-lighting' },
-          { label: 'Server Room', value: 'server-room' },
-          { label: 'HVAC', value: 'hvac' }
-        ];
-      case 'industrial':
-        return [
-          { label: '3-Phase Motor', value: 'three-phase-motor' },
-          { label: 'Machine Tool', value: 'machine-tool' },
-          { label: 'Welding', value: 'welding' },
-          { label: 'Workshop Sockets', value: 'workshop-sockets' },
-          { label: 'Lighting', value: 'overhead-lighting' }
-        ];
-    }
-  };
-
-  const getTemplates = () => {
-    switch (installationType) {
-      case 'domestic': return DOMESTIC_TEMPLATES;
-      case 'commercial': return COMMERCIAL_TEMPLATES;
-      case 'industrial': return INDUSTRIAL_TEMPLATES;
-    }
-  };
-
   const addQuickCircuit = (loadType: string) => {
     const newCircuit: CircuitInput = {
       id: `circuit-${Date.now()}`,
@@ -173,7 +136,14 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   };
 
   const applyTemplate = (templateId: string) => {
-    const template = getTemplates().find(t => t.id === templateId);
+    // Search all template arrays
+    const allTemplates = [
+      ...DOMESTIC_TEMPLATES,
+      ...COMMERCIAL_TEMPLATES,
+      ...INDUSTRIAL_TEMPLATES
+    ];
+    
+    const template = allTemplates.find(t => t.id === templateId);
     if (template) {
       const circuitsWithIds = template.circuits.map((circuit, idx) => ({
         ...circuit,
@@ -475,45 +445,157 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
                 </p>
               </div>
 
-              {/* Quick Add Buttons */}
-              <div className="space-y-2">
+              {/* Quick Add Buttons - Categorized by Installation Type */}
+              <div className="space-y-4">
                 <Label className="text-xs sm:text-sm font-medium">Quick Add</Label>
-                <div className="flex flex-wrap gap-2 justify-start">
-                  {getQuickAddButtons().map(btn => (
-                    <Button
-                      key={btn.value}
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => addQuickCircuit(btn.value)}
-                      className="min-w-[100px] sm:min-w-[110px] h-10 gap-2 touch-manipulation text-sm"
-                    >
-                      <Plus className="h-4 w-4 flex-shrink-0" />
-                      <span className="truncate">{btn.label}</span>
-                    </Button>
-                  ))}
+                
+                {/* Domestic Quick Adds */}
+                <div className="space-y-2">
+                  <h4 className="text-xs font-medium text-muted-foreground">Domestic</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { label: 'Socket Ring', value: 'socket' },
+                      { label: 'Lighting', value: 'lighting' },
+                      { label: 'Cooker', value: 'cooker' },
+                      { label: 'Shower', value: 'shower' },
+                      { label: 'EV Charger', value: 'ev-charger' }
+                    ].map(btn => (
+                      <Button
+                        key={btn.value}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => addQuickCircuit(btn.value)}
+                        className="min-w-[100px] sm:min-w-[110px] h-10 gap-2 touch-manipulation text-sm"
+                      >
+                        <Plus className="h-4 w-4 flex-shrink-0" />
+                        <span className="truncate">{btn.label}</span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Commercial Quick Adds */}
+                <div className="space-y-2">
+                  <h4 className="text-xs font-medium text-muted-foreground">Commercial</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { label: 'Office Sockets', value: 'office-sockets' },
+                      { label: 'Lighting', value: 'lighting' },
+                      { label: 'Emergency Lights', value: 'emergency-lighting' },
+                      { label: 'Server Room', value: 'server-room' },
+                      { label: 'HVAC', value: 'hvac' }
+                    ].map(btn => (
+                      <Button
+                        key={btn.value}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => addQuickCircuit(btn.value)}
+                        className="min-w-[100px] sm:min-w-[110px] h-10 gap-2 touch-manipulation text-sm"
+                      >
+                        <Plus className="h-4 w-4 flex-shrink-0" />
+                        <span className="truncate">{btn.label}</span>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Industrial Quick Adds */}
+                <div className="space-y-2">
+                  <h4 className="text-xs font-medium text-muted-foreground">Industrial</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { label: '3-Phase Motor', value: 'three-phase-motor' },
+                      { label: 'Machine Tool', value: 'machine-tool' },
+                      { label: 'Welding', value: 'welding' },
+                      { label: 'Workshop Sockets', value: 'workshop-sockets' },
+                      { label: 'Lighting', value: 'overhead-lighting' }
+                    ].map(btn => (
+                      <Button
+                        key={btn.value}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => addQuickCircuit(btn.value)}
+                        className="min-w-[100px] sm:min-w-[110px] h-10 gap-2 touch-manipulation text-sm"
+                      >
+                        <Plus className="h-4 w-4 flex-shrink-0" />
+                        <span className="truncate">{btn.label}</span>
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Template Presets */}
-              <div className="space-y-2">
+              {/* Template Presets - Categorized */}
+              <div className="space-y-4">
                 <Label className="text-xs sm:text-sm font-medium">Template Presets</Label>
-                <div className="flex flex-wrap gap-2 justify-start">
-                  {getTemplates().map(template => (
-                    <Button
-                      key={template.id}
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => applyTemplate(template.id)}
-                      className="min-w-[140px] sm:min-w-[160px] h-auto py-2 px-3 touch-manipulation"
-                    >
-                      <div className="text-left">
-                        <div className="font-medium text-xs sm:text-sm leading-tight">{template.name}</div>
-                        <div className="text-xs text-muted-foreground leading-tight mt-0.5">{template.description}</div>
-                      </div>
-                    </Button>
-                  ))}
+                
+                {/* Domestic Templates */}
+                <div className="space-y-2">
+                  <h4 className="text-xs font-medium text-muted-foreground">Domestic</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {DOMESTIC_TEMPLATES.map(template => (
+                      <Button
+                        key={template.id}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => applyTemplate(template.id)}
+                        className="min-w-[140px] sm:min-w-[160px] h-auto py-2 px-3 touch-manipulation"
+                      >
+                        <div className="text-left">
+                          <div className="font-medium text-xs sm:text-sm leading-tight">{template.name}</div>
+                          <div className="text-xs text-muted-foreground leading-tight mt-0.5">{template.description}</div>
+                        </div>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Commercial Templates */}
+                <div className="space-y-2">
+                  <h4 className="text-xs font-medium text-muted-foreground">Commercial</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {COMMERCIAL_TEMPLATES.map(template => (
+                      <Button
+                        key={template.id}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => applyTemplate(template.id)}
+                        className="min-w-[140px] sm:min-w-[160px] h-auto py-2 px-3 touch-manipulation"
+                      >
+                        <div className="text-left">
+                          <div className="font-medium text-xs sm:text-sm leading-tight">{template.name}</div>
+                          <div className="text-xs text-muted-foreground leading-tight mt-0.5">{template.description}</div>
+                        </div>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Industrial Templates */}
+                <div className="space-y-2">
+                  <h4 className="text-xs font-medium text-muted-foreground">Industrial</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {INDUSTRIAL_TEMPLATES.map(template => (
+                      <Button
+                        key={template.id}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => applyTemplate(template.id)}
+                        className="min-w-[140px] sm:min-w-[160px] h-auto py-2 px-3 touch-manipulation"
+                      >
+                        <div className="text-left">
+                          <div className="font-medium text-xs sm:text-sm leading-tight">{template.name}</div>
+                          <div className="text-xs text-muted-foreground leading-tight mt-0.5">{template.description}</div>
+                        </div>
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
