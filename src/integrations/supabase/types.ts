@@ -1336,6 +1336,63 @@ export type Database = {
         }
         Relationships: []
       }
+      design_exports: {
+        Row: {
+          circuits_count: number
+          client_name: string | null
+          created_at: string | null
+          design_data: Json
+          design_id: string
+          electrician_name: string | null
+          expires_at: string | null
+          export_type: string
+          id: string
+          installation_address: string | null
+          phases: string
+          project_name: string
+          status: string
+          updated_at: string | null
+          user_id: string
+          voltage: number
+        }
+        Insert: {
+          circuits_count: number
+          client_name?: string | null
+          created_at?: string | null
+          design_data: Json
+          design_id: string
+          electrician_name?: string | null
+          expires_at?: string | null
+          export_type?: string
+          id?: string
+          installation_address?: string | null
+          phases: string
+          project_name: string
+          status?: string
+          updated_at?: string | null
+          user_id: string
+          voltage: number
+        }
+        Update: {
+          circuits_count?: number
+          client_name?: string | null
+          created_at?: string | null
+          design_data?: Json
+          design_id?: string
+          electrician_name?: string | null
+          expires_at?: string | null
+          export_type?: string
+          id?: string
+          installation_address?: string | null
+          phases?: string
+          project_name?: string
+          status?: string
+          updated_at?: string | null
+          user_id?: string
+          voltage?: number
+        }
+        Relationships: []
+      }
       design_knowledge: {
         Row: {
           content: string
@@ -6065,6 +6122,10 @@ export type Database = {
         Returns: undefined
       }
       cleanup_expired_course_dates_cache: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      cleanup_expired_design_exports: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }

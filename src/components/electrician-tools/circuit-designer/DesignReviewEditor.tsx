@@ -7,11 +7,13 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InstallationDesign, CircuitDesign } from '@/types/installation-design';
 import { 
   CheckCircle2, AlertTriangle, Download, Zap, Cable, Shield, 
-  TrendingDown, Percent, Gauge, Wrench, MapPin, ClipboardCheck, FileText
+  TrendingDown, Percent, Gauge, Wrench, MapPin, ClipboardCheck, FileText,
+  Upload, Loader2, Check
 } from 'lucide-react';
 import { downloadEICPDF } from '@/lib/eic/pdfGenerator';
 import { generateEICSchedule } from '@/lib/eic/scheduleGenerator';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -24,6 +26,9 @@ const fmt = (n: unknown, dp = 1, fallback = '—') =>
 
 export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps) => {
   const [selectedCircuit, setSelectedCircuit] = useState(0);
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportSuccess, setExportSuccess] = useState(false);
+  const [exportId, setExportId] = useState('');
 
   const allCompliant = design.circuits.every(c => 
     c.calculations.voltageDrop.compliant && 
@@ -68,6 +73,39 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     } catch (error) {
       console.error('PDF export error:', error);
       toast.error('Failed to export PDF');
+    }
+  };
+
+  const handleExportToEIC = async () => {
+    setIsExporting(true);
+    setExportSuccess(false);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('prepare-eic-export', {
+        body: {
+          design: design,
+          projectName: design.projectName,
+          location: design.location,
+          clientName: design.clientName,
+          electricianName: design.electricianName
+        }
+      });
+      
+      if (error) throw error;
+      
+      setExportSuccess(true);
+      setExportId(data.reference || data.exportId?.slice(0, 8) || 'N/A');
+      
+      toast.success(`${design.circuits.length} circuits ready for EIC testing`, {
+        description: `Reference: ${data.reference || 'N/A'}`
+      });
+    } catch (error) {
+      console.error('Export error:', error);
+      toast.error('Failed to export to EIC testing', {
+        description: error instanceof Error ? error.message : 'Unknown error'
+      });
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -701,6 +739,48 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         </Card>
       )}
 
+
+      {/* Send to EIC Testing Card */}
+      <Card className="bg-gradient-to-br from-emerald-500/10 to-green-500/10 border-emerald-500/30">
+        <div className="p-6 space-y-4">
+          <div className="flex items-center gap-3">
+            <ClipboardCheck className="h-8 w-8 text-emerald-400" />
+            <div>
+              <h3 className="text-lg font-semibold text-white">Ready for EIC Testing?</h3>
+              <p className="text-sm text-white/70">
+                Export this design to pre-fill an Electrical Installation Certificate
+              </p>
+            </div>
+          </div>
+          
+          <Button 
+            onClick={handleExportToEIC}
+            disabled={isExporting}
+            className="w-full bg-emerald-600 hover:bg-emerald-700"
+          >
+            {isExporting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Preparing Export...
+              </>
+            ) : (
+              <>
+                <Upload className="mr-2 h-4 w-4" />
+                Send to EIC Testing
+              </>
+            )}
+          </Button>
+          
+          {exportSuccess && (
+            <Alert className="border-emerald-500/30 bg-emerald-500/10">
+              <Check className="h-4 w-4 text-emerald-400" />
+              <AlertDescription className="text-emerald-400">
+                Design exported successfully! Reference: {exportId}
+              </AlertDescription>
+            </Alert>
+          )}
+        </div>
+      </Card>
 
       {/* Actions */}
       <div className="flex gap-3">
