@@ -15,6 +15,7 @@ import { DesignInputs, CircuitInput } from '@/types/installation-design';
 import { DOMESTIC_TEMPLATES, COMMERCIAL_TEMPLATES, INDUSTRIAL_TEMPLATES, SMART_DEFAULTS } from '@/lib/circuit-templates';
 import { Sparkles, Zap, ChevronDown, Plus, Info, Lightbulb, Building2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface DesignInputFormProps {
   onGenerate: (inputs: DesignInputs) => Promise<void>;
@@ -22,6 +23,8 @@ interface DesignInputFormProps {
 }
 
 export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormProps) => {
+  const isMobile = useIsMobile();
+  
   // Prompt-first state
   const [promptDescription, setPromptDescription] = useState('');
   const [detectedType, setDetectedType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
@@ -221,19 +224,19 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   const canGenerate = projectName.trim() && (circuits.length > 0 || promptDescription.trim().length > 0);
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 pb-6">
+    <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pb-6">
       {/* 1. HERO PROMPT SECTION */}
-      <Card className="p-4 sm:p-6 bg-gradient-to-br from-primary/5 via-background to-background border-primary/20">
-        <div className="space-y-4">
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center animate-pulse">
-              <Sparkles className="h-6 w-6 text-primary" />
+      <Card className="p-3 sm:p-6 bg-gradient-to-br from-primary/5 via-background to-background border-primary/20">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="flex items-start gap-2 sm:gap-3">
+            <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center animate-pulse">
+              <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+              <h2 className="text-lg sm:text-2xl font-bold text-foreground leading-tight">
                 What electrical work do you need designed?
               </h2>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Describe your requirements in plain English - AI will handle the rest
               </p>
             </div>
@@ -242,8 +245,11 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
           <Textarea
             value={promptDescription}
             onChange={(e) => setPromptDescription(e.target.value)}
-            placeholder="Example: 3-bed house complete rewire with new consumer unit, kitchen extension with integrated appliances, 2 bathrooms with 10.5kW showers, EV charger on driveway, outdoor sockets for garden..."
-            className="min-h-[140px] text-base resize-none"
+            placeholder={isMobile 
+              ? "e.g., 3-bed house rewire, kitchen extension, 2 showers, EV charger..."
+              : "Example: 3-bed house complete rewire with new consumer unit, kitchen extension with integrated appliances, 2 bathrooms with 10.5kW showers, EV charger on driveway, outdoor sockets for garden..."
+            }
+            className="min-h-[120px] sm:min-h-[140px] text-base resize-none touch-manipulation"
           />
 
           <InstallationTypeDetection
@@ -261,14 +267,14 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       </Card>
 
       {/* 2. PROJECT INFORMATION */}
-      <Card className="p-4 sm:p-6">
-        <div className="space-y-4">
+      <Card className="p-3 sm:p-6">
+        <div className="space-y-3 sm:space-y-4">
           <div className="flex items-center gap-2">
-            <Building2 className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-semibold">Project Information</h3>
+            <Building2 className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+            <h3 className="text-base sm:text-lg font-semibold">Project Information</h3>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
             <MobileInput
               label="Project Name"
               value={projectName}
@@ -301,17 +307,19 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       {/* 3. SUPPLY DETAILS (Collapsible) */}
       <Collapsible open={supplyOpen} onOpenChange={setSupplyOpen}>
         <Card className="overflow-hidden">
-          <CollapsibleTrigger className="w-full p-4 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors">
-            <div className="flex items-center gap-2">
-              <Zap className="h-5 w-5 text-primary" />
-              <h3 className="text-lg font-semibold text-left">Supply Details</h3>
-              <Badge variant="secondary" className="text-xs">Smart defaults applied</Badge>
+          <CollapsibleTrigger className="w-full p-3 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
+                <h3 className="text-base sm:text-lg font-semibold text-left">Supply Details</h3>
+              </div>
+              <Badge variant="secondary" className="text-xs whitespace-nowrap">Smart defaults applied</Badge>
             </div>
-            <ChevronDown className={`h-5 w-5 transition-transform ${supplyOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`h-5 w-5 transition-transform flex-shrink-0 ml-2 ${supplyOpen ? 'rotate-180' : ''}`} />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className="p-4 sm:p-6 pt-0 space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
+            <div className="p-3 sm:p-6 pt-0 space-y-3 sm:space-y-4">
+              <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
                 <MobileInput
                   label="Voltage (V)"
                   type="number"
@@ -384,17 +392,19 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       {/* 4. EMERGENCY CONTACTS (Collapsible) */}
       <Collapsible open={emergencyOpen} onOpenChange={setEmergencyOpen}>
         <Card className="overflow-hidden">
-          <CollapsibleTrigger className="w-full p-4 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors">
-            <div className="flex items-center gap-2">
-              <Info className="h-5 w-5 text-primary" />
-              <h3 className="text-lg font-semibold text-left">Emergency Contacts</h3>
-              <Badge variant="outline" className="text-xs">Optional</Badge>
+          <CollapsibleTrigger className="w-full p-3 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-2">
+                <Info className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
+                <h3 className="text-base sm:text-lg font-semibold text-left">Emergency Contacts</h3>
+              </div>
+              <Badge variant="outline" className="text-xs whitespace-nowrap">Optional</Badge>
             </div>
-            <ChevronDown className={`h-5 w-5 transition-transform ${emergencyOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`h-5 w-5 transition-transform flex-shrink-0 ml-2 ${emergencyOpen ? 'rotate-180' : ''}`} />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className="p-4 sm:p-6 pt-0 space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
+            <div className="p-3 sm:p-6 pt-0 space-y-3 sm:space-y-4">
+              <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
                 <MobileInput
                   label="Emergency Contact Name"
                   value={emergencyContact}
@@ -417,19 +427,21 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       {/* 5. MANUAL CIRCUIT OVERRIDE (Collapsible) */}
       <Collapsible open={circuitsOpen} onOpenChange={setCircuitsOpen}>
         <Card className="overflow-hidden">
-          <CollapsibleTrigger className="w-full p-4 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors">
-            <div className="flex items-center gap-2">
-              <Lightbulb className="h-5 w-5 text-primary" />
-              <h3 className="text-lg font-semibold text-left">Manual Circuit Override</h3>
-              <Badge variant="outline" className="text-xs">Optional</Badge>
+          <CollapsibleTrigger className="w-full p-3 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-2">
+                <Lightbulb className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
+                <h3 className="text-base sm:text-lg font-semibold text-left">Manual Circuit Override</h3>
+              </div>
+              <Badge variant="outline" className="text-xs whitespace-nowrap">Optional</Badge>
               {circuits.length > 0 && (
-                <Badge variant="secondary" className="text-xs">{circuits.length} circuit{circuits.length !== 1 ? 's' : ''}</Badge>
+                <Badge variant="secondary" className="text-xs whitespace-nowrap">{circuits.length} circuit{circuits.length !== 1 ? 's' : ''}</Badge>
               )}
             </div>
-            <ChevronDown className={`h-5 w-5 transition-transform ${circuitsOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`h-5 w-5 transition-transform flex-shrink-0 ml-2 ${circuitsOpen ? 'rotate-180' : ''}`} />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className="p-4 sm:p-6 pt-0 space-y-4">
+            <div className="p-3 sm:p-6 pt-0 space-y-3 sm:space-y-4">
               <div className="bg-accent/50 p-3 rounded-lg border border-border/50">
                 <p className="text-sm text-muted-foreground text-left">
                   Want to manually specify circuits? Add them below. Otherwise, AI will design them from your description above.
@@ -438,7 +450,7 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
 
               {/* Quick Add Buttons */}
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Quick Add</Label>
+                <Label className="text-xs sm:text-sm font-medium">Quick Add</Label>
                 <div className="flex flex-wrap gap-2 justify-start">
                   {getQuickAddButtons().map(btn => (
                     <Button
@@ -447,10 +459,10 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
                       variant="outline"
                       size="sm"
                       onClick={() => addQuickCircuit(btn.value)}
-                      className="min-w-[110px] max-w-[160px] h-10 gap-2"
+                      className="min-w-[100px] sm:min-w-[110px] h-10 gap-2 touch-manipulation text-sm"
                     >
-                      <Plus className="h-4 w-4" />
-                      {btn.label}
+                      <Plus className="h-4 w-4 flex-shrink-0" />
+                      <span className="truncate">{btn.label}</span>
                     </Button>
                   ))}
                 </div>
@@ -458,7 +470,7 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
 
               {/* Template Presets */}
               <div className="space-y-2">
-                <Label className="text-sm font-medium">Template Presets</Label>
+                <Label className="text-xs sm:text-sm font-medium">Template Presets</Label>
                 <div className="flex flex-wrap gap-2 justify-start">
                   {getTemplates().map(template => (
                     <Button
@@ -467,11 +479,11 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
                       variant="outline"
                       size="sm"
                       onClick={() => applyTemplate(template.id)}
-                      className="min-w-[140px] max-w-[240px] h-auto py-2 px-3"
+                      className="min-w-[140px] sm:min-w-[160px] h-auto py-2 px-3 touch-manipulation"
                     >
                       <div className="text-left">
-                        <div className="font-medium text-sm">{template.name}</div>
-                        <div className="text-xs text-muted-foreground">{template.description}</div>
+                        <div className="font-medium text-xs sm:text-sm leading-tight">{template.name}</div>
+                        <div className="text-xs text-muted-foreground leading-tight mt-0.5">{template.description}</div>
                       </div>
                     </Button>
                   ))}
