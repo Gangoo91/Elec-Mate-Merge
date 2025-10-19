@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,15 +7,40 @@ import { MobileInput } from '@/components/ui/mobile-input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { CircuitBuilderCard } from './CircuitBuilderCard';
 import { SmartSuggestionPanel } from './SmartSuggestionPanel';
 import { InstallationTypeDetection } from './InstallationTypeDetection';
 import { PromptExamples } from './PromptExamples';
 import { DesignInputs, CircuitInput } from '@/types/installation-design';
 import { DOMESTIC_TEMPLATES, COMMERCIAL_TEMPLATES, INDUSTRIAL_TEMPLATES, SMART_DEFAULTS } from '@/lib/circuit-templates';
-import { Sparkles, Zap, ChevronDown, Plus, Info, Lightbulb, Building2 } from 'lucide-react';
+import { Sparkles, Zap, ChevronDown, Plus, Info, Lightbulb, Building2, House, Building, Factory } from 'lucide-react';
 import { toast } from 'sonner';
 import { useIsMobile } from '@/hooks/use-mobile';
+
+const QUICK_ADD_BUTTONS = {
+  domestic: [
+    { label: 'Socket Ring', value: 'socket' },
+    { label: 'Lighting', value: 'lighting' },
+    { label: 'Cooker', value: 'cooker' },
+    { label: 'Shower', value: 'shower' },
+    { label: 'EV Charger', value: 'ev-charger' }
+  ],
+  commercial: [
+    { label: 'Office Sockets', value: 'office-sockets' },
+    { label: 'Lighting', value: 'lighting' },
+    { label: 'Emergency Lights', value: 'emergency-lighting' },
+    { label: 'Server Room', value: 'server-room' },
+    { label: 'HVAC', value: 'hvac' }
+  ],
+  industrial: [
+    { label: '3-Phase Motor', value: 'three-phase-motor' },
+    { label: 'Machine Tool', value: 'machine-tool' },
+    { label: 'Welding', value: 'welding' },
+    { label: 'Workshop Sockets', value: 'workshop-sockets' },
+    { label: 'Lighting', value: 'overhead-lighting' }
+  ]
+};
 
 interface DesignInputFormProps {
   onGenerate: (inputs: DesignInputs) => Promise<void>;
@@ -445,159 +470,202 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
                 </p>
               </div>
 
-              {/* Quick Add Buttons - Categorized by Installation Type */}
-              <div className="space-y-4">
-                <Label className="text-xs sm:text-sm font-medium">Quick Add</Label>
-                
-                {/* Domestic Quick Adds */}
-                <div className="space-y-2">
-                  <h4 className="text-xs font-medium text-muted-foreground">Domestic</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      { label: 'Socket Ring', value: 'socket' },
-                      { label: 'Lighting', value: 'lighting' },
-                      { label: 'Cooker', value: 'cooker' },
-                      { label: 'Shower', value: 'shower' },
-                      { label: 'EV Charger', value: 'ev-charger' }
-                    ].map(btn => (
-                      <Button
-                        key={btn.value}
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => addQuickCircuit(btn.value)}
-                        className="min-w-[100px] sm:min-w-[110px] h-10 gap-2 touch-manipulation text-sm"
-                      >
-                        <Plus className="h-4 w-4 flex-shrink-0" />
-                        <span className="truncate">{btn.label}</span>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
+              {/* Quick Add Circuits - Enhanced Tabbed Design */}
+              <Card className="border-elec-yellow/20 bg-elec-card/50">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg font-bold flex items-center gap-2">
+                    <Zap className="h-5 w-5 text-elec-yellow" />
+                    Quick Add Circuits
+                  </CardTitle>
+                  <CardDescription className="text-sm">
+                    Add common circuits with smart defaults
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Tabs defaultValue="domestic" className="w-full">
+                    <TabsList className="w-full grid grid-cols-3 h-11">
+                      <TabsTrigger value="domestic" className="text-xs sm:text-sm gap-1 sm:gap-2">
+                        <House className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline">Domestic</span>
+                        <span className="sm:hidden">Home</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="commercial" className="text-xs sm:text-sm gap-1 sm:gap-2">
+                        <Building className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline">Commercial</span>
+                        <span className="sm:hidden">Comm</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="industrial" className="text-xs sm:text-sm gap-1 sm:gap-2">
+                        <Factory className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline">Industrial</span>
+                        <span className="sm:hidden">Ind</span>
+                      </TabsTrigger>
+                    </TabsList>
 
-                {/* Commercial Quick Adds */}
-                <div className="space-y-2">
-                  <h4 className="text-xs font-medium text-muted-foreground">Commercial</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      { label: 'Office Sockets', value: 'office-sockets' },
-                      { label: 'Lighting', value: 'lighting' },
-                      { label: 'Emergency Lights', value: 'emergency-lighting' },
-                      { label: 'Server Room', value: 'server-room' },
-                      { label: 'HVAC', value: 'hvac' }
-                    ].map(btn => (
-                      <Button
-                        key={btn.value}
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => addQuickCircuit(btn.value)}
-                        className="min-w-[100px] sm:min-w-[110px] h-10 gap-2 touch-manipulation text-sm"
-                      >
-                        <Plus className="h-4 w-4 flex-shrink-0" />
-                        <span className="truncate">{btn.label}</span>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
+                    <TabsContent value="domestic" className="mt-4">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                        {QUICK_ADD_BUTTONS.domestic.map(btn => (
+                          <Button
+                            key={btn.value}
+                            type="button"
+                            variant="outline"
+                            onClick={() => addQuickCircuit(btn.value)}
+                            className="h-12 gap-2 touch-manipulation text-sm font-medium hover:bg-elec-yellow/5 hover:border-elec-yellow/50 transition-all active:scale-95"
+                          >
+                            <Plus className="h-4 w-4 flex-shrink-0" />
+                            <span className="truncate">{btn.label}</span>
+                          </Button>
+                        ))}
+                      </div>
+                    </TabsContent>
 
-                {/* Industrial Quick Adds */}
-                <div className="space-y-2">
-                  <h4 className="text-xs font-medium text-muted-foreground">Industrial</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      { label: '3-Phase Motor', value: 'three-phase-motor' },
-                      { label: 'Machine Tool', value: 'machine-tool' },
-                      { label: 'Welding', value: 'welding' },
-                      { label: 'Workshop Sockets', value: 'workshop-sockets' },
-                      { label: 'Lighting', value: 'overhead-lighting' }
-                    ].map(btn => (
-                      <Button
-                        key={btn.value}
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => addQuickCircuit(btn.value)}
-                        className="min-w-[100px] sm:min-w-[110px] h-10 gap-2 touch-manipulation text-sm"
-                      >
-                        <Plus className="h-4 w-4 flex-shrink-0" />
-                        <span className="truncate">{btn.label}</span>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+                    <TabsContent value="commercial" className="mt-4">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                        {QUICK_ADD_BUTTONS.commercial.map(btn => (
+                          <Button
+                            key={btn.value}
+                            type="button"
+                            variant="outline"
+                            onClick={() => addQuickCircuit(btn.value)}
+                            className="h-12 gap-2 touch-manipulation text-sm font-medium hover:bg-elec-yellow/5 hover:border-elec-yellow/50 transition-all active:scale-95"
+                          >
+                            <Plus className="h-4 w-4 flex-shrink-0" />
+                            <span className="truncate">{btn.label}</span>
+                          </Button>
+                        ))}
+                      </div>
+                    </TabsContent>
 
-              {/* Template Presets - Categorized */}
-              <div className="space-y-4">
-                <Label className="text-xs sm:text-sm font-medium">Template Presets</Label>
-                
-                {/* Domestic Templates */}
-                <div className="space-y-2">
-                  <h4 className="text-xs font-medium text-muted-foreground">Domestic</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {DOMESTIC_TEMPLATES.map(template => (
-                      <Button
-                        key={template.id}
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => applyTemplate(template.id)}
-                        className="min-w-[140px] sm:min-w-[160px] h-auto py-2 px-3 touch-manipulation"
-                      >
-                        <div className="text-left">
-                          <div className="font-medium text-xs sm:text-sm leading-tight">{template.name}</div>
-                          <div className="text-xs text-muted-foreground leading-tight mt-0.5">{template.description}</div>
-                        </div>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
+                    <TabsContent value="industrial" className="mt-4">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                        {QUICK_ADD_BUTTONS.industrial.map(btn => (
+                          <Button
+                            key={btn.value}
+                            type="button"
+                            variant="outline"
+                            onClick={() => addQuickCircuit(btn.value)}
+                            className="h-12 gap-2 touch-manipulation text-sm font-medium hover:bg-elec-yellow/5 hover:border-elec-yellow/50 transition-all active:scale-95"
+                          >
+                            <Plus className="h-4 w-4 flex-shrink-0" />
+                            <span className="truncate">{btn.label}</span>
+                          </Button>
+                        ))}
+                      </div>
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
 
-                {/* Commercial Templates */}
-                <div className="space-y-2">
-                  <h4 className="text-xs font-medium text-muted-foreground">Commercial</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {COMMERCIAL_TEMPLATES.map(template => (
-                      <Button
-                        key={template.id}
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => applyTemplate(template.id)}
-                        className="min-w-[140px] sm:min-w-[160px] h-auto py-2 px-3 touch-manipulation"
-                      >
-                        <div className="text-left">
-                          <div className="font-medium text-xs sm:text-sm leading-tight">{template.name}</div>
-                          <div className="text-xs text-muted-foreground leading-tight mt-0.5">{template.description}</div>
-                        </div>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
+              {/* Template Presets - Enhanced Tabbed Design */}
+              <Card className="border-elec-yellow/20 bg-elec-card/50">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg font-bold flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-elec-yellow" />
+                    Template Presets
+                  </CardTitle>
+                  <CardDescription className="text-sm">
+                    Start with pre-configured installation designs
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Tabs defaultValue="domestic" className="w-full">
+                    <TabsList className="w-full grid grid-cols-3 h-11">
+                      <TabsTrigger value="domestic" className="text-xs sm:text-sm gap-1 sm:gap-2">
+                        <House className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline">Domestic</span>
+                        <span className="sm:hidden">Home</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="commercial" className="text-xs sm:text-sm gap-1 sm:gap-2">
+                        <Building className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline">Commercial</span>
+                        <span className="sm:hidden">Comm</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="industrial" className="text-xs sm:text-sm gap-1 sm:gap-2">
+                        <Factory className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline">Industrial</span>
+                        <span className="sm:hidden">Ind</span>
+                      </TabsTrigger>
+                    </TabsList>
 
-                {/* Industrial Templates */}
-                <div className="space-y-2">
-                  <h4 className="text-xs font-medium text-muted-foreground">Industrial</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {INDUSTRIAL_TEMPLATES.map(template => (
-                      <Button
-                        key={template.id}
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => applyTemplate(template.id)}
-                        className="min-w-[140px] sm:min-w-[160px] h-auto py-2 px-3 touch-manipulation"
-                      >
-                        <div className="text-left">
-                          <div className="font-medium text-xs sm:text-sm leading-tight">{template.name}</div>
-                          <div className="text-xs text-muted-foreground leading-tight mt-0.5">{template.description}</div>
-                        </div>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+                    <TabsContent value="domestic" className="mt-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {DOMESTIC_TEMPLATES.map(template => (
+                          <Card 
+                            key={template.id}
+                            className="cursor-pointer hover:border-elec-yellow/40 hover:shadow-lg transition-all hover:-translate-y-1 group"
+                            onClick={() => applyTemplate(template.id)}
+                          >
+                            <CardHeader className="p-4">
+                              <div className="flex items-start justify-between gap-2">
+                                <CardTitle className="text-base group-hover:text-elec-yellow transition-colors">
+                                  {template.name}
+                                </CardTitle>
+                                <Badge variant="secondary" className="shrink-0">
+                                  {template.circuits.length}
+                                </Badge>
+                              </div>
+                              <CardDescription className="text-sm leading-relaxed">
+                                {template.description}
+                              </CardDescription>
+                            </CardHeader>
+                          </Card>
+                        ))}
+                      </div>
+                    </TabsContent>
+
+                    <TabsContent value="commercial" className="mt-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {COMMERCIAL_TEMPLATES.map(template => (
+                          <Card 
+                            key={template.id}
+                            className="cursor-pointer hover:border-elec-yellow/40 hover:shadow-lg transition-all hover:-translate-y-1 group"
+                            onClick={() => applyTemplate(template.id)}
+                          >
+                            <CardHeader className="p-4">
+                              <div className="flex items-start justify-between gap-2">
+                                <CardTitle className="text-base group-hover:text-elec-yellow transition-colors">
+                                  {template.name}
+                                </CardTitle>
+                                <Badge variant="secondary" className="shrink-0">
+                                  {template.circuits.length}
+                                </Badge>
+                              </div>
+                              <CardDescription className="text-sm leading-relaxed">
+                                {template.description}
+                              </CardDescription>
+                            </CardHeader>
+                          </Card>
+                        ))}
+                      </div>
+                    </TabsContent>
+
+                    <TabsContent value="industrial" className="mt-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {INDUSTRIAL_TEMPLATES.map(template => (
+                          <Card 
+                            key={template.id}
+                            className="cursor-pointer hover:border-elec-yellow/40 hover:shadow-lg transition-all hover:-translate-y-1 group"
+                            onClick={() => applyTemplate(template.id)}
+                          >
+                            <CardHeader className="p-4">
+                              <div className="flex items-start justify-between gap-2">
+                                <CardTitle className="text-base group-hover:text-elec-yellow transition-colors">
+                                  {template.name}
+                                </CardTitle>
+                                <Badge variant="secondary" className="shrink-0">
+                                  {template.circuits.length}
+                                </Badge>
+                              </div>
+                              <CardDescription className="text-sm leading-relaxed">
+                                {template.description}
+                              </CardDescription>
+                            </CardHeader>
+                          </Card>
+                        ))}
+                      </div>
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
 
               {/* Circuit List */}
               {circuits.length > 0 && (
