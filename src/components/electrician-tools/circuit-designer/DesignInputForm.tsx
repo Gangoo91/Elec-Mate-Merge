@@ -133,7 +133,7 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   const completionPercent = Math.round(((projectName ? 1 : 0) + (circuits.length > 0 ? 1 : 0)) / 2 * 100);
 
   return (
-    <div className="min-h-screen bg-background pb-24 md:pb-6">
+    <div className="min-h-screen bg-background">
       {/* Header with Back Button */}
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="container max-w-4xl mx-auto px-4 py-4">
@@ -468,19 +468,19 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
             className="text-base"
           />
         </Card>
-      </div>
 
-      {/* Sticky Generate Button - Mobile */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t md:relative md:bg-transparent md:border-0 md:container md:max-w-4xl md:mx-auto md:px-4">
-        <Button
-          size="lg"
-          className="w-full h-12 md:h-14 text-base md:text-lg"
-          onClick={handleSubmit}
-          disabled={!requiredFieldsComplete || isProcessing}
-        >
-          <Zap className="h-5 w-5 mr-2" />
-          {isProcessing ? 'Designing...' : circuits.length === 0 ? 'Add circuits to continue' : `Generate Design (${circuits.length} circuit${circuits.length !== 1 ? 's' : ''})`}
-        </Button>
+        {/* Generate Button */}
+        <div className="pb-4">
+          <Button
+            size="lg"
+            className="w-full h-14 text-base md:text-lg touch-manipulation"
+            onClick={handleSubmit}
+            disabled={!requiredFieldsComplete || isProcessing}
+          >
+            <Zap className="h-5 w-5 mr-2" />
+            {isProcessing ? 'Designing...' : circuits.length === 0 ? 'Add circuits to continue' : `Generate Design (${circuits.length} circuit${circuits.length !== 1 ? 's' : ''})`}
+          </Button>
+        </div>
       </div>
     </div>
   );
