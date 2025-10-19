@@ -556,12 +556,7 @@ serve(async (req) => {
       // Continue with empty RAG - AI can still provide design
     }
 
-    // 🆕 PHASE 2: Multi-Turn Conversation Intelligence
-    const conversationalContext = extractConversationalContext(
-      messages,
-      conversationSummary,
-      previousAgentOutputs
-    );
+    // 🆕 PHASE 2: Multi-Turn Conversation Intelligence (using context from line 127)
     const followUpDetection = detectFollowUpPattern(userMessage, conversationalContext);
     
     if (followUpDetection.isFollowUp) {
