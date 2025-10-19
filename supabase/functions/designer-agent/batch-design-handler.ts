@@ -229,15 +229,52 @@ export async function handleBatchDesign(body: any, logger: any) {
   
   // STEP 2: Build System Prompt with RAG Knowledge + Parsed Context
   logger.info('📝 STEP 2: Building AI Prompt with RAG Context');
-  const systemPrompt = buildStructuredDesignPrompt(
-    projectInfo,
-    incomingSupply,
-    allCircuits,
-    ragResults,
-    installationType,
-    specialRequirements,
-    installationConstraints
-  );
+// STEP 2: Build Enhanced System Prompt with RAG-First Instructions
+  logger.info('📝 STEP 2: Building AI Prompt with RAG Context');
+  
+  const systemPrompt = `You are a BS 7671:2018+A3:2024 compliant circuit design expert with RAG knowledge.
+
+KNOWLEDGE BASE (${ragResults.regulations.length} verified regulations):
+${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.substring(0, 180)}...`).join('\n\n')}
+
+YOUR ROLE: Design comprehensive electrical circuits using the regulations provided above.
+
+CRITICAL INSTRUCTIONS - You MUST populate ALL fields using RAG knowledge:
+
+1. **Diversity Factor** (per circuit): Apply BS 7671 Appendix 15 tables from context
+2. **Fault Current Analysis**: Calculate PSCC using Ze + cable impedance, verify device breaking capacity (Reg 434.5.2)
+3. **Earthing/Bonding**: Apply Section 411, 544, 701 requirements from context
+4. **Derating Factors**: Show Ca, Cg, Ci breakdown using Appendix 4 tables
+5. **Installation Method**: Reference Appendix 4 methods from context
+6. **Special Locations**: Check Section 701/702/714 for bathrooms/outdoor
+7. **Expected Test Results**: Calculate R1+R2, Zs, insulation resistance, RCD times
+
+For each circuit, include:
+- Basic fields: name, circuitNumber, loadType, loadPower, phases
+- Cable specs: cableSize (mm²), cpcSize (mm²), cableLength (m), installationMethod
+- Protection: protectionDevice { type, rating, curve, kaRating }
+- Boolean flags: rcdProtected, afddRequired
+- calculations: { Ib, In, Iz, voltageDrop: { volts, percent, compliant, limit }, zs, maxZs, deratedCapacity, safetyMargin }
+- justifications: { cableSize, protection, rcd }
+- diversityFactor (0.0-1.0), diversityJustification (Appendix 15 reference)
+- faultCurrentAnalysis: { psccAtCircuit (kA), deviceBreakingCapacity (kA), compliant, marginOfSafety, regulation }
+- earthingRequirements: { cpcSize, supplementaryBonding (boolean), bondingConductorSize, justification, regulation }
+- deratingFactors: { Ca, Cg, Ci, overall, explanation, tableReferences }
+- installationGuidance: { referenceMethod, description, clipSpacing, practicalTips[], regulation }
+- specialLocationCompliance: { isSpecialLocation, locationType, requirements[], zonesApplicable, regulation }
+- expectedTestResults: { r1r2: { at20C, at70C, calculation }, zs: { calculated, maxPermitted, compliant }, insulationResistance: { testVoltage, minResistance }, polarity, rcdTest: { at1x, at5x, regulation } }
+- warnings: [] (array of strings)
+
+IMPORTANT:
+- Always cite regulation numbers: "Per BS 7671 Reg 525.1..."
+- Show working for all calculations
+- Use plain English explanations
+- Reference specific tables (e.g. "Table 4D5 Column 7")
+- Populate ALL fields with accurate data from context
+
+${INSTALLATION_CONTEXT[installationType]}
+
+Return complete circuit objects using the provided tool schema.`;
   
   // PHASE 1: Log prompt details for debugging
   logger.info('✅ STEP 2 Complete - System prompt built', {
@@ -333,25 +370,120 @@ Return your design using the provided tool schema.`
                       Ib: { type: "number", description: "Design current in amps" },
                       In: { type: "number", description: "Nominal current in amps" },
                       Iz: { type: "number", description: "Cable current carrying capacity in amps" },
-                      voltageDrop: { type: "number", description: "Voltage drop in volts" },
-                      voltageDropPercent: { type: "number", description: "Voltage drop as percentage" },
+                      voltageDrop: { 
+                        type: "object",
+                        properties: {
+                          volts: { type: "number" },
+                          percent: { type: "number" },
+                          compliant: { type: "boolean" },
+                          limit: { type: "number", description: "3% for lighting, 5% for power" }
+                        },
+                        required: ["volts", "percent", "compliant", "limit"]
+                      },
                       zs: { type: "number", description: "Fault loop impedance in ohms" },
                       maxZs: { type: "number", description: "Maximum permitted Zs in ohms" },
-                      passesVoltageDrop: { type: "boolean" },
-                      passesZs: { type: "boolean" }
+                      deratedCapacity: { type: "number", description: "Cable capacity after derating in amps" },
+                      safetyMargin: { type: "number", description: "Safety margin percentage" }
                     },
                     required: ["Ib", "In", "Iz", "voltageDrop", "zs", "maxZs"]
                   },
                   justifications: {
-                    type: "array",
-                    items: {
-                      type: "object",
-                      properties: {
-                        regulation: { type: "string", description: "BS 7671 regulation number" },
-                        requirement: { type: "string", description: "What the regulation requires" },
-                        compliance: { type: "string", description: "How this design complies" }
+                    type: "object",
+                    properties: {
+                      cableSize: { type: "string", description: "Cable sizing justification with BS 7671 reference" },
+                      protection: { type: "string", description: "Protection device justification" },
+                      rcd: { type: "string", description: "RCD requirement justification" }
+                    },
+                    required: ["cableSize", "protection"]
+                  },
+                  diversityFactor: { type: "number", description: "Applied diversity factor 0.0-1.0 per BS 7671 Appendix 15" },
+                  diversityJustification: { type: "string", description: "BS 7671 Appendix 15 table reference and reasoning" },
+                  faultCurrentAnalysis: {
+                    type: "object",
+                    properties: {
+                      psccAtCircuit: { type: "number", description: "PSCC in kA" },
+                      deviceBreakingCapacity: { type: "number", description: "Device breaking capacity in kA (6/10/16)" },
+                      compliant: { type: "boolean" },
+                      marginOfSafety: { type: "string", description: "e.g. '40% margin'" },
+                      regulation: { type: "string", description: "BS 7671 434.5.2" }
+                    }
+                  },
+                  earthingRequirements: {
+                    type: "object",
+                    properties: {
+                      cpcSize: { type: "string", description: "CPC size in mm²" },
+                      supplementaryBonding: { type: "boolean", description: "Is supplementary bonding required" },
+                      bondingConductorSize: { type: "string", description: "e.g. '10mm² for main bonding'" },
+                      justification: { type: "string", description: "BS 7671 Section 544/701 reasoning" },
+                      regulation: { type: "string" }
+                    }
+                  },
+                  deratingFactors: {
+                    type: "object",
+                    properties: {
+                      Ca: { type: "number", description: "Ambient temperature correction factor" },
+                      Cg: { type: "number", description: "Grouping factor" },
+                      Ci: { type: "number", description: "Thermal insulation factor" },
+                      overall: { type: "number", description: "Ca × Cg × Ci" },
+                      explanation: { type: "string", description: "Plain English explanation of derating" },
+                      tableReferences: { type: "string", description: "e.g. 'Table 52.2 (Ca), Table 52.3 (Cg)'" }
+                    }
+                  },
+                  installationGuidance: {
+                    type: "object",
+                    properties: {
+                      referenceMethod: { type: "string", description: "Method C, A1, B1, etc." },
+                      description: { type: "string", description: "e.g. 'Clipped direct to masonry wall'" },
+                      clipSpacing: { type: "string", description: "e.g. 'Maximum 300mm horizontal, 400mm vertical'" },
+                      practicalTips: { type: "array", items: { type: "string" }, description: "On-site installation tips" },
+                      regulation: { type: "string", description: "BS 7671 Appendix 4 reference" }
+                    }
+                  },
+                  specialLocationCompliance: {
+                    type: "object",
+                    properties: {
+                      isSpecialLocation: { type: "boolean" },
+                      locationType: { type: "string", description: "bathroom/outdoor/pool/sauna/none" },
+                      requirements: { type: "array", items: { type: "string" }, description: "Specific requirements" },
+                      zonesApplicable: { type: "string", description: "e.g. 'Zones 0, 1, 2 apply per 701.32'" },
+                      regulation: { type: "string" }
+                    }
+                  },
+                  expectedTestResults: {
+                    type: "object",
+                    properties: {
+                      r1r2: {
+                        type: "object",
+                        properties: {
+                          at20C: { type: "string", description: "e.g. '0.95Ω'" },
+                          at70C: { type: "string", description: "e.g. '1.20Ω'" },
+                          calculation: { type: "string", description: "Show working" }
+                        }
                       },
-                      required: ["regulation", "requirement", "compliance"]
+                      zs: {
+                        type: "object",
+                        properties: {
+                          calculated: { type: "string", description: "Ze + (R1+R2)" },
+                          maxPermitted: { type: "string" },
+                          compliant: { type: "boolean" }
+                        }
+                      },
+                      insulationResistance: {
+                        type: "object",
+                        properties: {
+                          testVoltage: { type: "string", description: "e.g. '500V DC'" },
+                          minResistance: { type: "string", description: "e.g. '≥1.0MΩ per BS 7671 Table 61'" }
+                        }
+                      },
+                      polarity: { type: "string", description: "Expected: 'Correct at all points'" },
+                      rcdTest: {
+                        type: "object",
+                        properties: {
+                          at1x: { type: "string", description: "e.g. '≤300ms @ 30mA'" },
+                          at5x: { type: "string", description: "e.g. '≤40ms @ 150mA'" },
+                          regulation: { type: "string", description: "BS 7671 Regulation 643.2.2" }
+                        }
+                      }
                     }
                   },
                   warnings: { 

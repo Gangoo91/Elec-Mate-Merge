@@ -49,6 +49,7 @@ export interface CircuitDesign {
       volts: number;
       percent: number;
       compliant: boolean;
+      limit: number;
     };
     zs: number;
     maxZs: number;
@@ -59,6 +60,66 @@ export interface CircuitDesign {
     cableSize: string;
     protection: string;
     rcd?: string;
+  };
+  diversityFactor?: number;
+  diversityJustification?: string;
+  faultCurrentAnalysis?: {
+    psccAtCircuit: number;
+    deviceBreakingCapacity: number;
+    compliant: boolean;
+    marginOfSafety: string;
+    regulation: string;
+  };
+  earthingRequirements?: {
+    cpcSize: string;
+    supplementaryBonding: boolean;
+    bondingConductorSize?: string;
+    justification: string;
+    regulation: string;
+  };
+  deratingFactors?: {
+    Ca: number;
+    Cg: number;
+    Ci: number;
+    overall: number;
+    explanation: string;
+    tableReferences: string;
+  };
+  installationGuidance?: {
+    referenceMethod: string;
+    description: string;
+    clipSpacing: string;
+    practicalTips: string[];
+    regulation: string;
+  };
+  specialLocationCompliance?: {
+    isSpecialLocation: boolean;
+    locationType: string;
+    requirements: string[];
+    zonesApplicable?: string;
+    regulation: string;
+  };
+  expectedTestResults?: {
+    r1r2: {
+      at20C: string;
+      at70C: string;
+      calculation: string;
+    };
+    zs: {
+      calculated: string;
+      maxPermitted: string;
+      compliant: boolean;
+    };
+    insulationResistance: {
+      testVoltage: string;
+      minResistance: string;
+    };
+    polarity: string;
+    rcdTest: {
+      at1x: string;
+      at5x: string;
+      regulation: string;
+    };
   };
   warnings: string[];
 }
