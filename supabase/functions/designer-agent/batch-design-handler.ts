@@ -301,18 +301,21 @@ Return your design using the provided tool schema.`
               type: "string",
               description: "Conversational summary of the design in UK English"
             },
-            circuits: { 
-              type: "array",
-              description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations"
-            },
-            materials: { 
-              type: "array",
-              description: "Required materials list with specifications"
-            },
-            warnings: { 
-              type: "array",
-              description: "Any compliance warnings or important notes"
-            }
+        circuits: { 
+          type: "array",
+          description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations",
+          items: { type: "object" }
+        },
+        materials: { 
+          type: "array",
+          description: "Required materials list with specifications",
+          items: { type: "object" }
+        },
+        warnings: { 
+          type: "array",
+          description: "Any compliance warnings or important notes",
+          items: { type: "string" }
+        }
           },
           required: ["response", "circuits"]
         }
