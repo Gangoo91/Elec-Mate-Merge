@@ -28,6 +28,7 @@ import ProcessOnsiteGuide from "@/pages/ProcessOnsiteGuide";
 import AutoProcessOnsite from "@/pages/AutoProcessOnsite";
 import KnowledgeUploader from "@/pages/Admin/KnowledgeUploader";
 import LearningReview from "@/pages/admin/LearningReview";
+import CircuitDesigner from "@/pages/electrician-tools/CircuitDesigner";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -74,6 +75,7 @@ const AppRouter = () => {
         {/* Electrician Tools Routes */}
         <Route path="electrician-tools" element={<Navigate to="/electrician" replace />} />
         <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
+        <Route path="electrician/circuit-designer" element={<CircuitDesigner />} />
         <Route path="install-planner/results/:conversationId" element={<ConsultationResults />} />
         
         {/* Legacy Materials Routes -> Redirect to canonical electrician paths */}

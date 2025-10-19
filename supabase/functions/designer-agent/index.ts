@@ -31,6 +31,7 @@ import {
   calculateVoltageDrop as calculateVoltageDropUnified, 
   calculateEarthFaultLoop 
 } from '../_shared/bs7671-unified-calculations.ts';
+import { handleBatchDesign } from './batch-design-handler.ts';
 
 // TypeScript Interfaces for Type Safety
 interface CircuitCalculations {
@@ -83,6 +84,13 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'designer-agent' });
 
   try {
+    const body = await req.json();
+    
+    // Check for batch design mode
+    if (body.mode === 'batch-design') {
+      return await handleBatchDesign(body, logger);
+    }
+    
     const { 
       messages, 
       currentDesign, 
@@ -90,7 +98,7 @@ serve(async (req) => {
       conversationSummary,
       previousAgentOutputs = [],
       requestSuggestions = false
-    } = await req.json();
+    } = body;
     
     // Input validation
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
