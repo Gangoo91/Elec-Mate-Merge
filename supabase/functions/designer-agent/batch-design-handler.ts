@@ -1,6 +1,6 @@
 import { corsHeaders } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-import { intelligentRAGSearch } from './intelligentRAG.ts';
+import { intelligentRAGSearch } from '../_shared/intelligent-rag.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.

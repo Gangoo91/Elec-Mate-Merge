@@ -25,7 +25,7 @@ const CircuitDesigner = () => {
               AI Circuit Designer
             </h1>
             <p className="text-muted-foreground text-sm sm:text-base mt-1">
-              BS 7671:2018+A2:2022 Compliant Design Generation
+              BS 7671 18th Edition Compliant Design Generation
             </p>
           </div>
 
