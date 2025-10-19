@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { intelligentRAGSearch } from '../_shared/intelligent-rag.ts';
 import { parseQueryEntities } from '../_shared/query-parser.ts';
 import { chunkArray, RequestDeduplicator, generateRequestKey } from './parallel-utils.ts';
+import { handleError } from '../_shared/errors.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
@@ -551,19 +552,20 @@ Return your design using the provided tool schema.`
   // ============================================
   // PARALLEL BATCHING: Split circuits into batches for faster processing
   // ============================================
-  const BATCH_SIZE = 3; // Process 3 circuits at a time
+  const BATCH_SIZE = 2; // REDUCED: Process 2 circuits at a time for stability
   const circuitBatches = chunkArray(allCircuits, BATCH_SIZE);
   
   logger.info('🔄 Processing circuits in parallel batches', {
     totalCircuits: allCircuits.length,
     batchSize: BATCH_SIZE,
-    batchCount: circuitBatches.length
+    batchCount: circuitBatches.length,
+    estimatedTimeSeconds: Math.ceil(circuitBatches.length * 45) // ~45s per batch
   });
   
-  // Function to process a single batch
-  const processBatch = async (batch: any[], batchIndex: number) => {
+  // Function to process a single batch with retry logic
+  const processBatch = async (batch: any[], batchIndex: number, attempt = 0): Promise<any> => {
     const batchStartTime = Date.now();
-    logger.info(`📦 Batch ${batchIndex + 1}/${circuitBatches.length}: Processing ${batch.length} circuits`);
+    logger.info(`📦 Batch ${batchIndex + 1}/${circuitBatches.length}: Processing ${batch.length} circuits${attempt > 0 ? ` (retry ${attempt})` : ''}`);
     
     // Create batch-specific query
     const batchQuery = `${query}\n\nDesign the following circuits:\n${batch.map((c: any, i: number) => 
@@ -578,41 +580,75 @@ Return your design using the provided tool schema.`
       ]
     };
     
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(batchRequestBody)
-    });
-    
-    const batchElapsedMs = Date.now() - batchStartTime;
-    
-    if (!response.ok) {
-      const errorText = await response.text();
-      logger.error(`🚨 Batch ${batchIndex + 1} AI API error`, { 
-        status: response.status,
-        errorPreview: errorText.substring(0, 500)
+    try {
+      const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${lovableApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(batchRequestBody)
       });
       
-      if (response.status === 429) {
-        throw new Error("Rate limit exceeded. Please try again in a moment.");
-      }
-      if (response.status === 402) {
-        throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
+      const batchElapsedMs = Date.now() - batchStartTime;
+      logger.info(`✅ AI responded for batch ${batchIndex + 1}`, { 
+        status: response.status,
+        timeMs: batchElapsedMs
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        const isRetryable = response.status === 429 || response.status >= 500;
+        
+        logger.error(`🚨 Batch ${batchIndex + 1} AI API error (${isRetryable ? 'retryable' : 'fatal'})`, { 
+          status: response.status,
+          attempt,
+          errorPreview: errorText.substring(0, 500)
+        });
+        
+        if (isRetryable && attempt === 0) {
+          const backoffMs = 2000 * Math.pow(2, attempt); // 2s, 4s
+          logger.warn(`⏳ Retrying batch ${batchIndex + 1} in ${backoffMs}ms`);
+          await new Promise(resolve => setTimeout(resolve, backoffMs));
+          return processBatch(batch, batchIndex, attempt + 1);
+        }
+        
+        if (response.status === 429) {
+          throw new Error("Rate limit exceeded. Please try again in a moment.");
+        }
+        if (response.status === 402) {
+          throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
+        }
+        
+        throw new Error(`AI API error: ${response.status} - ${errorText.substring(0, 200)}`);
       }
       
-      throw new Error(`AI API error: ${response.status} - ${errorText.substring(0, 200)}`);
+      const aiData = await response.json();
+      logger.info(`✅ Batch ${batchIndex + 1} completed successfully`, {
+        timeMs: batchElapsedMs,
+        tokensUsed: aiData.usage?.total_tokens || 0
+      });
+      
+      return { aiData, batchElapsedMs, success: true };
+      
+    } catch (error: any) {
+      const isNetworkError = error?.message?.includes('fetch') || error?.message?.includes('network') || error instanceof TypeError;
+      
+      if (isNetworkError && attempt === 0) {
+        const backoffMs = 2000;
+        logger.warn(`⏳ Network error, retrying batch ${batchIndex + 1} in ${backoffMs}ms`, {
+          error: error.message
+        });
+        await new Promise(resolve => setTimeout(resolve, backoffMs));
+        return processBatch(batch, batchIndex, attempt + 1);
+      }
+      
+      logger.error(`🚨 Batch ${batchIndex + 1} failed`, { 
+        error: error.message,
+        attempt
+      });
+      return { aiData: null, batchElapsedMs: Date.now() - batchStartTime, success: false, error: error.message };
     }
-    
-    const aiData = await response.json();
-    logger.info(`✅ Batch ${batchIndex + 1} completed`, {
-      timeMs: batchElapsedMs,
-      tokensUsed: aiData.usage?.total_tokens || 0
-    });
-    
-    return { aiData, batchElapsedMs };
   };
   
   // Process all batches in parallel

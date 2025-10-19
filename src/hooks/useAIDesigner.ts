@@ -36,6 +36,21 @@ export const useAIDesigner = () => {
     // Initialize progress immediately
     setProgress({ stage: 1, message: 'Initialising...', percent: 0 });
 
+    // Pre-flight health check
+    try {
+      const { data: healthData, error: healthError } = await supabase.functions.invoke('designer-agent/health', {});
+      
+      if (healthError || !healthData?.status) {
+        setProgress({ stage: 0, message: 'Design service starting up...', percent: 0 });
+        console.warn('⚠️ Design service not healthy, will retry automatically');
+      } else {
+        console.log('✅ Design service healthy', healthData);
+      }
+    } catch (e) {
+      // Health check failed - service might be cold starting
+      setProgress({ stage: 0, message: 'Initialising design service...', percent: 0 });
+    }
+
     const invokeWithRetry = async (attempt = 1, maxAttempts = 3): Promise<any> => {
       try {
         const { data, error: invokeError } = await supabase.functions.invoke('designer-agent', {
@@ -164,16 +179,33 @@ export const useAIDesigner = () => {
 
       if (invokeError) {
         let errorMessage = invokeError.message || 'Unknown error occurred';
+        let errorDetails: string | undefined;
         
+        // Try to parse structured error from backend
+        try {
+          const errorData = typeof data === 'object' && data !== null ? data : {};
+          if ('error' in errorData && 'code' in errorData) {
+            errorMessage = errorData.error as string;
+            errorDetails = `Error code: ${errorData.code}`;
+          }
+        } catch (e) {
+          // Ignore parsing errors
+        }
+        
+        // Friendly error messages based on status patterns
         if (invokeError.message?.includes('429')) {
           errorMessage = 'Too many requests. Please wait a moment and try again.';
         } else if (invokeError.message?.includes('402')) {
           errorMessage = 'Payment required. Please add Lovable AI credits to continue.';
         } else if (invokeError.message?.includes('No tool call')) {
           errorMessage = 'AI did not return a structured design. Please try again.';
+        } else if (invokeError.message?.includes('non-2xx')) {
+          errorMessage = 'Design service error. Please try again or check the logs for details.';
+          errorDetails = invokeError.message;
         }
         
-        throw new Error(errorMessage);
+        const fullError = errorDetails ? `${errorMessage}\n${errorDetails}` : errorMessage;
+        throw new Error(fullError);
       }
 
       if (!data.success) {
@@ -194,13 +226,19 @@ export const useAIDesigner = () => {
 
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      console.error('❌ Design generation failed:', errorMessage);
+      console.error('❌ Design generation failed:', errorMessage, err);
       setError(errorMessage);
 
       if (progressInterval) clearInterval(progressInterval);
 
+      // Show actionable error message
+      const lines = errorMessage.split('\n');
+      const mainError = lines[0];
+      const details = lines.slice(1).join(' ');
+
       toast.error('Design generation failed', {
-        description: errorMessage
+        description: details || mainError,
+        duration: 6000 // Give users more time to read errors
       });
 
       return false;

@@ -63,16 +63,22 @@ interface DesignedCircuit {
 
 // corsHeaders imported from shared deps
 
+const VERSION = 'v3.1.2';
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const requestId = generateRequestId();
+  const logger = createLogger(requestId, { function: 'designer-agent' });
+
   // Health check endpoint
   if (req.url.endsWith('/health')) {
+    logger.info(`Health check - ${VERSION}`);
     return new Response(JSON.stringify({ 
       status: 'healthy', 
-      version: '2.1',
+      version: VERSION,
       timestamp: new Date().toISOString() 
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -80,8 +86,7 @@ serve(async (req) => {
     });
   }
 
-  const requestId = generateRequestId();
-  const logger = createLogger(requestId, { function: 'designer-agent' });
+  logger.info(`${VERSION} - Request started`, { requestId });
 
   try {
     const body = await req.json();
@@ -1895,10 +1900,11 @@ IMPORTANT - RESPONSE FORMAT:
     });
 
   } catch (error) {
-    console.error('❌ Designer agent error:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Designer agent failed',
-      response: 'Unable to process design request.',
+    logger.error(`${VERSION} - Request failed`, { 
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    });
+    return handleError(error);
       confidence: 0.3
     }), {
       status: 500,
