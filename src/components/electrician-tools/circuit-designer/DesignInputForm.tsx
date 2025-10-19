@@ -135,7 +135,7 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   return (
     <div className="min-h-screen bg-background">
       {/* Header with Back Button */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+      <div className="bg-background border-b">
         <div className="container max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             <BackButton customUrl="/electrical-hub" />
