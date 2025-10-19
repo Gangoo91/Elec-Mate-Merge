@@ -107,6 +107,12 @@ export interface DesignInputs {
   earthingSystem: 'TN-S' | 'TN-C-S' | 'TT';
   pscc?: number;
   mainSwitchRating?: number;
+  ambientTemp?: number;
+  installationMethod?: 'clipped-direct' | 'in-conduit' | 'in-trunking' | 'buried-direct' | 'in-insulation';
+  groupingFactor?: number;
+  propertyAge?: 'new-build' | 'modern' | 'older' | 'very-old';
+  existingInstallation?: boolean;
+  budgetLevel?: 'basic' | 'standard' | 'premium';
   circuits: CircuitInput[];
   additionalPrompt?: string;
 }

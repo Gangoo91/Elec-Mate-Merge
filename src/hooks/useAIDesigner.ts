@@ -54,7 +54,10 @@ export const useAIDesigner = () => {
             location: inputs.location,
             clientName: inputs.clientName,
             electricianName: inputs.electricianName,
-            installationType: inputs.propertyType
+            installationType: inputs.propertyType,
+            propertyAge: inputs.propertyAge,
+            existingInstallation: inputs.existingInstallation,
+            budgetLevel: inputs.budgetLevel
           },
           incomingSupply: {
             voltage: inputs.voltage,
@@ -62,7 +65,10 @@ export const useAIDesigner = () => {
             Ze: inputs.ze,
             earthingSystem: inputs.earthingSystem,
             pscc: inputs.pscc || 3500,
-            mainSwitchRating: inputs.mainSwitchRating || 100
+            mainSwitchRating: inputs.mainSwitchRating || 100,
+            ambientTemp: inputs.ambientTemp || 30,
+            installationMethod: inputs.installationMethod || 'clipped-direct',
+            groupingFactor: inputs.groupingFactor || 1
           },
           circuits: inputs.circuits.map(c => ({
             name: c.name,
