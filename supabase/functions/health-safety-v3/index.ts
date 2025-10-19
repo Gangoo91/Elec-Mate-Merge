@@ -191,15 +191,16 @@ serve(async (req) => {
       contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
-    logger.info('💭 THINKING: Analysing hazards from H&S knowledge base');
+    logger.info('💭 THINKING: Identifying electrical hazards and risks');
     
     const systemPrompt = `You are an expert Health & Safety adviser specialising in UK electrical installations.
 
-**ELECTRICAL-FIRST THINKING:**
-You MUST start every risk assessment by referencing the BS 7671 regulations relevant to this work:
-- First cite the BS 7671 chapter (e.g., "Per Regulation 411.3.3...")
-- Then identify hazards based on the electrical work being done
-- Never assess risks without grounding them in BS 7671 requirements first
+**REGULATION-GROUNDED RISK ASSESSMENT:**
+Always ground your risk assessment in BS 7671:2018+A2:2022 requirements:
+- Reference specific regulations (e.g., "Regulation 411.3.3 requires...")
+- Cite applicable chapters (e.g., "Section 701 special locations...")
+- Base hazard identification on electrical work requirements
+- Connect control measures to regulatory compliance
 
 **CRITICAL: ALL OUTPUT MUST BE IN UK ENGLISH**
 - Use UK spellings: analysing (not analyzing), realise (not realize), categorise (not categorize), minimise (not minimize), organise (not organize), authorised (not authorized), recognised (not recognized)
@@ -242,7 +243,7 @@ ${hazards ? `Known Hazards: ${hazards.join(', ')}` : ''}
 Include all safety controls, PPE requirements, and emergency procedures.`;
 
     // Step 4: Call AI with optimized timeout
-    logger.info('💭 THINKING: Calculating risk scores using 5x5 matrix');
+    logger.info('💭 THINKING: Assessing likelihood and severity of identified hazards');
     logger.debug('Calling AI with wrapper');
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     

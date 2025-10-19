@@ -119,7 +119,7 @@ serve(async (req) => {
     const conversationalContext = extractConversationalContext(messages, conversationSummary, previousAgentOutputs);
     const followUpPattern = detectFollowUpPattern(userMessage, conversationalContext);
     
-    logger.info('💭 THINKING: Analysing conversational context', {
+    logger.debug('Conversational context analysis', {
       isFollowUp: followUpPattern.isFollowUp,
       followUpType: followUpPattern.type,
       conversationDepth: conversationalContext.conversationDepth
@@ -205,7 +205,7 @@ serve(async (req) => {
       ? `${contextEnrichedQuery} ${circuitParams.ragContextEnrichments.join(' ')}`
       : contextEnrichedQuery;
     
-    logger.info('RAG query built', {
+    logger.debug('Query enrichment complete', {
       originalLength: userMessage.length,
       enrichedLength: fullRAGQuery.length,
       contextAdded: circuitParams.ragContextEnrichments?.length || 0
@@ -272,8 +272,8 @@ serve(async (req) => {
     // Run enhanced BS 7671 calculations
     let calculationResults: any = null;
     if (circuitParams.hasEnoughData) {
-      logger.info('💭 THINKING: Running voltage drop calculations per Regulation 525');
-      console.log('🔧 Running enhanced BS 7671 calculations:', circuitParams);
+      logger.info('💭 THINKING: Calculating voltage drop and cable sizing');
+      logger.debug('Running BS 7671 calculations', circuitParams);
       
       const cableData = getCableCapacity(circuitParams.cableSize, 'C', 2);
       const correctionFactors = calculateOverallCorrectionFactor({
@@ -379,7 +379,7 @@ serve(async (req) => {
     
     // Run intelligent hybrid search
     try {
-      logger.info('💭 THINKING: Searching BS 7671 for protection requirements');
+      logger.info('💭 THINKING: Checking circuit protection requirements');
       
       const searchParams: HybridSearchParams = {
         circuitType: circuitParams.circuitType,
@@ -401,9 +401,11 @@ serve(async (req) => {
         context: agentContext,
       };
 
+      logger.debug('Retrieving regulations', searchParams);
       const ragResults = await intelligentRAGSearch(searchParams);
+      logger.debug('Regulations retrieved', { count: ragResults.regulations?.length || 0 });
       
-      logger.info('💭 THINKING: Found relevant BS 7671 regulations, assessing compliance');
+      logger.info('💭 THINKING: Reviewing applicable regulations and standards');
       
       regulations = ragResults.regulations;
       designDocs = ragResults.designDocs;
@@ -422,7 +424,7 @@ serve(async (req) => {
       // ============================================
       const ragValidation = validateRAGResults(userMessage, detectedIntent, regulations);
       
-      logger.info('RAG validation complete', {
+      logger.debug('Regulation coverage analysis', {
         isComplete: ragValidation.isComplete,
         confidence: ragValidation.confidence,
         missingTopics: ragValidation.missingTopics,
