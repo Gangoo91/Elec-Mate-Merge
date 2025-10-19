@@ -31,6 +31,7 @@ export interface CircuitDesign {
   phases: 'single' | 'three';
   cableSize: number;
   cpcSize: number;
+  cableType?: string; // Full cable description
   cableLength: number;
   installationMethod: string;
   protectionDevice: {

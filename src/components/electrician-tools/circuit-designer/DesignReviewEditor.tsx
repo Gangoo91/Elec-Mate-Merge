@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { InstallationDesign, CircuitDesign } from '@/types/installation-design';
 import { 
   CheckCircle2, AlertTriangle, Download, Zap, Cable, Shield, 
@@ -86,29 +88,98 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
           <div>
-            <p className="text-sm text-muted-foreground">Total Load</p>
-            <p className="text-lg font-bold">{design.totalLoad / 1000}kW</p>
+            <p className="text-sm text-white/80">Total Load</p>
+            <p className="text-lg font-bold text-white">{design.totalLoad / 1000}kW</p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">After Diversity</p>
-            <p className="text-lg font-bold">
-              {design.diversityApplied && design.diversityFactor 
-                ? `${((design.totalLoad * design.diversityFactor) / 1000).toFixed(1)}kW`
+            <p className="text-sm text-white/80">After Diversity</p>
+            <p className="text-lg font-bold text-white">
+              {design.diversityBreakdown 
+                ? `${design.diversityBreakdown.diversifiedLoad.toFixed(1)}kW`
                 : `${design.totalLoad / 1000}kW`}
             </p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">Circuits</p>
-            <p className="text-lg font-bold">{design.circuits.length}</p>
+            <p className="text-sm text-white/80">Circuits</p>
+            <p className="text-lg font-bold text-white">{design.circuits.length}</p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">Consumer Unit</p>
-            <p className="text-lg font-bold">{design.consumerUnit.mainSwitchRating}A</p>
+            <p className="text-sm text-white/80">Consumer Unit</p>
+            <p className="text-lg font-bold text-white">{design.consumerUnit.mainSwitchRating}A</p>
           </div>
         </div>
       </Card>
+
+      {/* Diversity Breakdown Card */}
+      {design.diversityBreakdown && (
+        <Card className="p-4 sm:p-6 bg-card/30 border-white/10">
+          <Accordion type="single" collapsible>
+            <AccordionItem value="diversity" className="border-none">
+              <AccordionTrigger className="hover:no-underline">
+                <div className="flex items-center gap-3 flex-1">
+                  <Percent className="h-5 w-5 text-primary flex-shrink-0" />
+                  <div className="text-left">
+                    <h3 className="text-base font-semibold text-white">Load Diversity Breakdown</h3>
+                    <p className="text-sm text-white/70 mt-0.5">
+                      {design.diversityBreakdown.totalConnectedLoad.toFixed(1)}kW → {design.diversityBreakdown.diversifiedLoad.toFixed(1)}kW 
+                      <Badge variant="secondary" className="ml-2">{(design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0)}% applied</Badge>
+                    </p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="pt-4">
+                <div className="space-y-4">
+                  {/* Overall Calculation */}
+                  <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-lg">
+                    <span className="text-sm text-white/80">Total Connected Load:</span>
+                    <span className="font-bold text-white">{design.diversityBreakdown.totalConnectedLoad.toFixed(1)}kW</span>
+                  </div>
+                  <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-lg">
+                    <span className="text-sm text-white/80">Diversity Factor:</span>
+                    <span className="font-bold text-white">{(design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0)}%</span>
+                  </div>
+                  <div className="flex items-center justify-between py-2 px-3 bg-green-500/20 rounded-lg border border-green-500/30">
+                    <span className="text-sm font-semibold text-white">After Diversity:</span>
+                    <span className="font-bold text-lg text-white">{design.diversityBreakdown.diversifiedLoad.toFixed(1)}kW</span>
+                  </div>
+
+                  {/* Per-Circuit Breakdown */}
+                  {design.diversityBreakdown.circuitDiversity && design.diversityBreakdown.circuitDiversity.length > 0 && (
+                    <div className="space-y-2 mt-4">
+                      <p className="text-xs font-semibold text-white/70 uppercase tracking-wide">Per-Circuit Breakdown:</p>
+                      <div className="space-y-2">
+                        {design.diversityBreakdown.circuitDiversity.map((cd, idx) => (
+                          <div key={idx} className="py-2 px-3 bg-background/30 rounded-lg">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="font-medium text-white text-sm">{cd.circuitName}</span>
+                              <Badge variant="outline" className="text-xs">{(cd.diversityFactorApplied * 100).toFixed(0)}%</Badge>
+                            </div>
+                            <div className="text-xs text-white/60">
+                              {cd.connectedLoad.toFixed(1)}kW × {cd.diversityFactorApplied} = {cd.diversifiedLoad.toFixed(1)}kW
+                            </div>
+                            <div className="text-xs text-white/50 italic mt-1">{cd.justification}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Reasoning */}
+                  <div className="py-3 px-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                    <p className="text-xs font-medium text-blue-400 mb-1">BS 7671 Reference:</p>
+                    <p className="text-sm text-white/80 leading-relaxed">{design.diversityBreakdown.reasoning}</p>
+                    <Badge variant="outline" className="mt-2 text-xs text-blue-400 border-blue-400/30">
+                      {design.diversityBreakdown.bs7671Reference}
+                    </Badge>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </Card>
+      )}
 
       {/* Circuit Navigation */}
       <div className="flex gap-2 overflow-x-auto pb-2">
@@ -140,71 +211,166 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               <p className="text-muted-foreground capitalize">{currentCircuit.loadType}</p>
             </div>
 
-            {/* Load & Cable */}
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm font-medium">
-                  <Zap className="h-4 w-4 text-primary" />
-                  Load Details
-                </div>
-                <div className="bg-card/50 p-3 rounded-lg space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white/70">Power:</span>
-                    <span className="font-medium text-white">{currentCircuit.loadPower}W ({(currentCircuit.loadPower / 1000).toFixed(1)}kW)</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white/70">Design Current (Ib):</span>
-                    <span className="font-medium text-white">{fmt(currentCircuit.calculations?.Ib, 1)}A</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white/70">Phases:</span>
-                    <span className="font-medium text-white capitalize">{currentCircuit.phases}</span>
-                  </div>
-                </div>
-              </div>
+            {/* Special Location Alert */}
+            {currentCircuit.specialLocationCompliance?.isSpecialLocation && (
+              <Alert className="border-amber-500/50 bg-amber-500/10">
+                <AlertTriangle className="h-5 w-5 text-amber-500" />
+                <AlertTitle className="text-amber-400 font-semibold">Special Location Requirements</AlertTitle>
+                <AlertDescription>
+                  <div className="space-y-3 mt-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Badge variant="outline" className="text-amber-400 border-amber-400/30 font-mono text-xs">
+                        {currentCircuit.specialLocationCompliance.regulation}
+                      </Badge>
+                      <span className="font-semibold text-white">
+                        {currentCircuit.specialLocationCompliance.locationType}
+                      </span>
+                    </div>
+                    
+                    <ul className="list-disc list-inside space-y-1.5 text-sm text-white/80">
+                      {currentCircuit.specialLocationCompliance.requirements.map((req, idx) => (
+                        <li key={idx} className="leading-relaxed">{req}</li>
+                      ))}
+                    </ul>
 
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm font-medium">
-                  <Cable className="h-4 w-4 text-primary" />
-                  Cable Specification
-                </div>
-                <div className="bg-card/50 p-3 rounded-lg space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white/70">Live Conductor:</span>
-                    <span className="font-medium text-white">{currentCircuit.cableSize}mm²</span>
+                    {currentCircuit.specialLocationCompliance.zonesApplicable && (
+                      <div className="py-2 px-3 bg-amber-500/10 rounded border border-amber-500/20">
+                        <p className="text-xs font-medium text-amber-400">Zones Applicable:</p>
+                        <p className="text-sm text-white/80">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white/70">CPC:</span>
-                    <span className="font-medium text-white">{currentCircuit.cpcSize}mm²</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white/70">Length:</span>
-                    <span className="font-medium text-white">{currentCircuit.cableLength}m</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white/70">Method:</span>
-                    <span className="font-medium text-white">{currentCircuit.installationMethod}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+                </AlertDescription>
+              </Alert>
+            )}
 
-            {/* Protection */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium">
-                <Shield className="h-4 w-4 text-primary" />
-                Protection Device
-              </div>
-              <div className="bg-card/50 p-3 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-white">
-                    {currentCircuit.protectionDevice.rating}A Type {currentCircuit.protectionDevice.curve} {currentCircuit.protectionDevice.type}
-                  </span>
-                  {currentCircuit.rcdProtected && (
-                    <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">RCD Protected</span>
+            {/* Layout - Vertical Stack with Cards */}
+            <div className="space-y-4">
+              {/* Load Details Card */}
+              <Card className="bg-card/30 border-white/10">
+                <div className="p-4 space-y-3">
+                  <div className="flex items-center gap-2 text-base font-semibold text-white">
+                    <Zap className="h-5 w-5 text-primary" />
+                    Load Details
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80">Power:</span>
+                      <span className="font-medium text-white">{currentCircuit.loadPower}W ({(currentCircuit.loadPower / 1000).toFixed(1)}kW)</span>
+                    </div>
+                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80">Design Current (Ib):</span>
+                      <span className="font-medium text-white">{fmt(currentCircuit.calculations?.Ib, 1)}A</span>
+                    </div>
+                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80">Phases:</span>
+                      <span className="font-medium text-white capitalize">{currentCircuit.phases}</span>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Cable Specification Card */}
+              <Card className="bg-card/30 border-white/10">
+                <div className="p-4 space-y-3">
+                  <div className="flex items-center gap-2 text-base font-semibold text-white">
+                    <Cable className="h-5 w-5 text-primary" />
+                    Cable Specification
+                  </div>
+                  
+                  {/* Cable Type Description - Full Width */}
+                  {currentCircuit.cableType && (
+                    <div className="py-2 px-3 bg-background/30 rounded-lg">
+                      <p className="text-sm text-white/80 leading-relaxed">{currentCircuit.cableType}</p>
+                    </div>
+                  )}
+                  
+                  {/* Cable Details Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80">Live Conductor:</span>
+                      <span className="font-medium text-white">{currentCircuit.cableSize}mm²</span>
+                    </div>
+                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80">CPC:</span>
+                      <span className="font-medium text-white">{currentCircuit.cpcSize}mm²</span>
+                    </div>
+                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80">Length:</span>
+                      <span className="font-medium text-white">{currentCircuit.cableLength}m</span>
+                    </div>
+                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80">Method:</span>
+                      <span className="font-medium text-white">
+                        {currentCircuit.installationGuidance?.referenceMethod || currentCircuit.installationMethod}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Installation Method Description */}
+                  {currentCircuit.installationGuidance?.description && (
+                    <div className="py-2 px-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                      <p className="text-xs text-blue-400 font-medium mb-1">Installation Method</p>
+                      <p className="text-sm text-white/80 leading-relaxed">
+                        {currentCircuit.installationGuidance.description}
+                      </p>
+                      {currentCircuit.installationGuidance.regulation && (
+                        <Badge variant="outline" className="mt-2 text-xs text-blue-400 border-blue-400/30">
+                          {currentCircuit.installationGuidance.regulation}
+                        </Badge>
+                      )}
+                    </div>
                   )}
                 </div>
-              </div>
+              </Card>
+
+              {/* Protection Device Card */}
+              <Card className="bg-card/30 border-white/10">
+                <div className="p-4 space-y-3">
+                  <div className="flex items-center gap-2 text-base font-semibold text-white">
+                    <Shield className="h-5 w-5 text-primary" />
+                    Protection Device
+                  </div>
+                  
+                  {/* Device Specification */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="flex items-center justify-between sm:justify-start sm:gap-4 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80">Type:</span>
+                      <span className="font-medium text-white">{currentCircuit.protectionDevice.type}</span>
+                    </div>
+                    <div className="flex items-center justify-between sm:justify-start sm:gap-4 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80">Rating:</span>
+                      <span className="font-medium text-white">{currentCircuit.protectionDevice.rating}A Type {currentCircuit.protectionDevice.curve}</span>
+                    </div>
+                    <div className="flex items-center justify-between sm:justify-start sm:gap-4 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80">Breaking Capacity:</span>
+                      <Badge variant="secondary" className="font-medium">{currentCircuit.protectionDevice.kaRating}kA</Badge>
+                    </div>
+                  </div>
+
+                  {/* RCD Badge */}
+                  {currentCircuit.rcdProtected && (
+                    <div className="flex items-center gap-2">
+                      <Badge className="bg-primary/20 text-primary border-primary/30">RCD Protected</Badge>
+                    </div>
+                  )}
+
+                  {/* Justification */}
+                  {currentCircuit.justifications?.protection && (
+                    <div className="py-3 px-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                      <div className="flex items-start gap-3">
+                        <FileText className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                        <div className="space-y-1 flex-1">
+                          <p className="text-xs font-semibold text-blue-400 uppercase tracking-wide">Selection Justification</p>
+                          <p className="text-sm text-white/90 leading-relaxed">
+                            {currentCircuit.justifications.protection}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Card>
             </div>
 
             {/* Calculations */}

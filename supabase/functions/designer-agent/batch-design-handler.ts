@@ -234,6 +234,14 @@ export async function handleBatchDesign(body: any, logger: any) {
   
   const systemPrompt = `You are a BS 7671:2018+A3:2024 compliant circuit design expert with RAG knowledge.
 
+CRITICAL DATA FORMAT REQUIREMENTS:
+- cableSize: NUMERIC mm² value only (e.g., 2.5 NOT "2.5mm²")
+- cpcSize: NUMERIC mm² value only (e.g., 1.5 NOT "1.5mm²")
+- cableType: Full cable description (e.g., "70°C thermoplastic insulated and sheathed flat cable with protective conductor (BS 6004)")
+- protectionDevice.rating: NUMERIC amps only (e.g., 32 NOT "32A")
+- protectionDevice.curve: LETTER ONLY (e.g., "B" NOT "Type B")
+- protectionDevice.kaRating: NUMERIC kA only (e.g., 6 NOT "6kA")
+
 KNOWLEDGE BASE (${ragResults.regulations.length} verified regulations):
 ${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.substring(0, 180)}...`).join('\n\n')}
 
@@ -349,16 +357,17 @@ Return your design using the provided tool schema.`
                   loadType: { type: "string", description: "Load type (e.g., 'Ring Final', 'Radial', 'Lighting')" },
                   loadPower: { type: "number", description: "Load power in watts" },
                   phases: { type: "number", description: "1 for single phase, 3 for three phase" },
-                  cableSize: { type: "string", description: "Cable size (e.g., '2.5mm² twin & earth')" },
-                  cpcSize: { type: "string", description: "CPC size (e.g., '1.5mm²')" },
+                  cableSize: { type: "number", description: "Live conductor CSA in mm² (numeric only, e.g., 2.5, 4, 6, 10)" },
+                  cpcSize: { type: "number", description: "CPC conductor CSA in mm² (numeric only, e.g., 1.5, 2.5, 4)" },
+                  cableType: { type: "string", description: "Full cable type description (e.g., '70°C thermoplastic insulated and sheathed flat cable with protective conductor (BS 6004)')" },
                   cableLength: { type: "number", description: "Cable length in metres" },
                   protectionDevice: {
                     type: "object",
                     properties: {
                       type: { type: "string", description: "Device type (e.g., 'MCB', 'RCBO')" },
-                      rating: { type: "string", description: "Rating (e.g., '32A')" },
-                      curve: { type: "string", description: "Curve type (e.g., 'Type B', 'Type C')" },
-                      kaRating: { type: "string", description: "Breaking capacity (e.g., '6kA')" }
+                      rating: { type: "number", description: "Device rating in amps (numeric only, e.g., 32)" },
+                      curve: { type: "string", enum: ["B", "C", "D"], description: "Curve type letter only" },
+                      kaRating: { type: "number", description: "Breaking capacity in kA (numeric only, e.g., 6, 10, 16)" }
                     },
                     required: ["type", "rating"]
                   },
@@ -667,16 +676,17 @@ Return your design using the provided tool schema.`
                       loadType: { type: "string" },
                       loadPower: { type: "number" },
                       phases: { type: "number" },
-                      cableSize: { type: "string" },
-                      cpcSize: { type: "string" },
+                      cableSize: { type: "number", description: "Numeric mm² only" },
+                      cpcSize: { type: "number", description: "Numeric mm² only" },
+                      cableType: { type: "string", description: "Full cable description" },
                       cableLength: { type: "number" },
                       protectionDevice: {
                         type: "object",
                         properties: {
                           type: { type: "string" },
-                          rating: { type: "number" },
-                          curve: { type: "string" },
-                          breakingCapacity: { type: "number" }
+                          rating: { type: "number", description: "Numeric amps only" },
+                          curve: { type: "string", enum: ["B", "C", "D"], description: "Letter only" },
+                          breakingCapacity: { type: "number", description: "Numeric kA only" }
                         }
                       },
                       rcdProtected: { type: "boolean" },
