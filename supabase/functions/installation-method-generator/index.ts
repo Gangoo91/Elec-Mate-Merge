@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
-import { createLogger, generateRequestId, ValidationError } from '../_shared/logger.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { ValidationError } from '../_shared/errors.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
