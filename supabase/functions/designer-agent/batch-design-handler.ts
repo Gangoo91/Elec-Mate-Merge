@@ -1049,11 +1049,11 @@ Always cite regulation numbers and show working for calculations.`
         // Try parsing content as JSON or extract from markdown
         try {
           const parsed = JSON.parse(content);
-        if (parsed.circuits) {
-          logger.info('✅ Recovered design from direct JSON content');
-          toolCall = { function: { arguments: content } };
-        }
-      } catch (e) {
+          if (parsed.circuits) {
+            logger.info('✅ Recovered design from direct JSON content');
+            toolCall = { function: { arguments: content } };
+          }
+        } catch (e) {
         // Try extracting JSON from markdown code blocks
         const jsonMatch = content.match(/```(?:json)?\n?([\s\S]*?)\n?```/);
         if (jsonMatch) {
