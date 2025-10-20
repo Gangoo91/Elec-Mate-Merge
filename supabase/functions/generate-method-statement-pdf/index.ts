@@ -6,7 +6,19 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// PDF Monkey template ID for comprehensive method statements
+/**
+ * PDF Monkey Template: 9ABC438D-8E08-4FC3-BC12-CFC3BCB0DB3C
+ * 
+ * Template expects step-specific hazard data in pure method statement format:
+ * - steps[].linkedHazards: comma-separated string of step-specific hazards
+ * - steps[].safetyRequirements: comma-separated string (includes H&S controls)
+ * - steps[].riskLevel: uppercase enum (LOW/MEDIUM/HIGH)
+ * - NO standalone risk assessment section (hazards embedded in steps)
+ * 
+ * H&S Agent uses linkedToStep field:
+ * - linkedToStep: 1-N maps hazards to specific steps
+ * - linkedToStep: 0 indicates general site hazards (added to Step 1)
+ */
 const METHOD_STATEMENT_TEMPLATE_ID = '9ABC438D-8E08-4FC3-BC12-CFC3BCB0DB3C';
 
 serve(async (req) => {
@@ -66,6 +78,10 @@ serve(async (req) => {
           ? step.linkedHazards.join(', ') 
           : ''
       })),
+      
+      // Debug logging
+      _debug_total_steps: (methodData.steps || []).length,
+      _debug_steps_with_hazards: (methodData.steps || []).filter((s: any) => s.linkedHazards && s.linkedHazards.length > 0).length
       
       // Equipment schedule (from maintenance agent)
       equipment_list: (methodData.equipmentSchedule || []).map((eq: any) => ({

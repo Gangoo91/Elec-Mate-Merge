@@ -146,6 +146,18 @@ function mergeAgentOutputs(installer: any, maintenance: any | null, healthSafety
   const allHazards = healthSafety?.riskAssessment?.hazards || [];
   const allControls = healthSafety?.riskAssessment?.controls || [];
   
+  // Debug: H&S hazards breakdown
+  console.log('🔍 H&S Agent Hazards Breakdown:');
+  const hazardsByStep = allHazards.reduce((acc: any, h: any) => {
+    const step = h.linkedToStep !== undefined ? h.linkedToStep : 'unknown';
+    acc[step] = (acc[step] || 0) + 1;
+    return acc;
+  }, {});
+  console.log('Hazards per step:', hazardsByStep);
+  if (allHazards.length > 0) {
+    console.log('Sample hazard:', allHazards[0]);
+  }
+  
   console.log('🔍 Merging agent outputs:', {
     installerSteps: installerSteps.length,
     totalHazards: allHazards.length,
@@ -157,10 +169,21 @@ function mergeAgentOutputs(installer: any, maintenance: any | null, healthSafety
     installationSteps: installerSteps.map((step: any, index: number) => {
       const stepNumber = index + 1;
       
-      // Filter hazards linked to this specific step
+      // Get step-specific hazards
       let stepSpecificHazards = allHazards
         .filter((h: any) => h.linkedToStep === stepNumber)
         .map((h: any) => h.hazard);
+      
+      // For Step 1, also include general site hazards (linkedToStep: 0)
+      if (stepNumber === 1) {
+        const generalHazards = allHazards
+          .filter((h: any) => h.linkedToStep === 0)
+          .map((h: any) => h.hazard);
+        stepSpecificHazards = [...generalHazards, ...stepSpecificHazards];
+        if (generalHazards.length > 0) {
+          console.log(`Step 1: Added ${generalHazards.length} general site hazards`);
+        }
+      }
       
       // Fallback: If no step-linked hazards found, try keyword matching
       if (stepSpecificHazards.length === 0 && allHazards.length > 0) {
@@ -184,14 +207,19 @@ function mergeAgentOutputs(installer: any, maintenance: any | null, healthSafety
         }
       }
       
-      // Filter controls for this step's hazards
+      // Filter controls for this step (match by linkedToStep AND hazard name)
       const stepSpecificControls = allControls
-        .filter((c: any) => stepSpecificHazards.includes(c.hazard))
+        .filter((c: any) => 
+          (c.linkedToStep === stepNumber || c.linkedToStep === 0) &&
+          stepSpecificHazards.includes(c.hazard)
+        )
         .map((c: any) => c.controlMeasure);
       
       // Calculate max risk level for this step
       const stepHazardObjects = allHazards.filter((h: any) => 
-        h.linkedToStep === stepNumber || stepSpecificHazards.includes(h.hazard)
+        h.linkedToStep === stepNumber || 
+        (stepNumber === 1 && h.linkedToStep === 0) ||
+        stepSpecificHazards.includes(h.hazard)
       );
       const maxRiskLevel = stepHazardObjects.length > 0
         ? stepHazardObjects.reduce((max: string, h: any) => {
@@ -201,7 +229,7 @@ function mergeAgentOutputs(installer: any, maintenance: any | null, healthSafety
           }, 'low')
         : (step.riskLevel || 'medium');
       
-      console.log(`Step ${stepNumber}: ${stepSpecificHazards.length} hazards, risk: ${maxRiskLevel}`);
+      console.log(`✅ Step ${stepNumber}: ${stepSpecificHazards.length} hazards, risk: ${maxRiskLevel}`);
       
       return {
         stepNumber: step.step || step.stepNumber || stepNumber,

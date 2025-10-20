@@ -250,12 +250,13 @@ RISK MATRIX (5x5):
 INSTRUCTIONS:
 1. CRITICAL: You will receive installation steps below - identify hazards for EACH SPECIFIC STEP
 2. Use linkedToStep field to link hazards (e.g., step 1 uses linkedToStep: 1, step 2 uses linkedToStep: 2)
-3. General site hazards (access, welfare, site logistics) should use linkedToStep: 0
-4. Extract hazards from knowledge base with specific regulations (e.g., "EWR 1989 Reg 4(3)", "WAHR 2005 Reg 6")
-5. Apply control hierarchy: Elimination → Substitution → Engineering → Admin → PPE
-6. Calculate BEFORE and AFTER risk scores to show control effectiveness
-7. Reference emergency procedures (HSE INDG231 for shock, CO2 for electrical fires)
-8. Include isolation per BS 7671 Section 462 with lock-off devices
+3. General site hazards (vehicle movements, site access, welfare facilities) should use linkedToStep: 0
+4. General hazards (linkedToStep: 0) will be automatically added to the site setup step
+5. Extract hazards from knowledge base with specific regulations (e.g., "EWR 1989 Reg 4(3)", "WAHR 2005 Reg 6")
+6. Apply control hierarchy: Elimination → Substitution → Engineering → Admin → PPE
+7. Calculate BEFORE and AFTER risk scores to show control effectiveness
+8. Reference emergency procedures (HSE INDG231 for shock, CO2 for electrical fires)
+9. Include isolation per BS 7671 Section 462 with lock-off devices
 
 ${contextSection}
 
@@ -323,6 +324,10 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                       type: 'object',
                       properties: {
                         hazard: { type: 'string' },
+                        linkedToStep: { 
+                          type: 'number', 
+                          description: 'Step number this control applies to (must match hazard linkedToStep)' 
+                        },
                         controlMeasure: { type: 'string', description: 'Control measure in UK English (authorised, realise, organise, metres)' },
                         residualLikelihood: { type: 'number' },
                         residualSeverity: { type: 'number' },
@@ -331,7 +336,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                         regulation: { type: 'string' },
                         practicalImplementation: { type: 'string' }
                       },
-                      required: ['hazard', 'controlMeasure', 'residualRisk', 'residualRiskLevel']
+                      required: ['hazard', 'linkedToStep', 'controlMeasure', 'residualRisk', 'residualRiskLevel']
                     }
                   },
                   riskMatrix: {
