@@ -1,26 +1,31 @@
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { CheckCircle2, Loader2, Wrench } from 'lucide-react';
+import { GenerationTimer } from '../site-safety/ai-rams/GenerationTimer';
 
 interface InstallationProcessingViewProps {
   progress: { stage: number; percent: number; message: string } | null;
+  isGenerating: boolean;
 }
 
-export const InstallationProcessingView = ({ progress }: InstallationProcessingViewProps) => {
+export const InstallationProcessingView = ({ progress, isGenerating }: InstallationProcessingViewProps) => {
   const stages = [
     'Analysing installation requirements...',
-    'Consulting BS 7671 knowledge base...',
-    'Generating step-by-step method...',
-    'Extracting tools and materials...',
-    'Finalising safety notes...'
+    'Checking BS 7671 regulations...',
+    'Creating step-by-step instructions...',
+    'Listing tools and materials...',
+    'Adding safety notes and checks...'
   ];
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
       <Card className="p-6 sm:p-8 max-w-2xl w-full mx-auto">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Wrench className="h-8 w-8 text-primary animate-pulse" />
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+              <Wrench className="h-8 w-8 text-primary animate-pulse" />
+            </div>
+            <GenerationTimer isRunning={isGenerating} />
           </div>
           <h2 className="text-2xl font-bold mb-2 text-foreground">Generating Installation Method</h2>
           <p className="text-muted-foreground">
@@ -45,20 +50,22 @@ export const InstallationProcessingView = ({ progress }: InstallationProcessingV
               return (
                 <div
                   key={index}
-                  className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
+                  className={`flex items-start gap-3 p-2.5 rounded-lg transition-all ${
                     isCurrent ? 'bg-primary/5 border border-primary/20' : ''
                   }`}
                 >
                   {isComplete ? (
-                    <CheckCircle2 className="h-5 w-5 text-success flex-shrink-0" />
+                    <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
                   ) : isCurrent ? (
-                    <Loader2 className="h-5 w-5 text-primary animate-spin flex-shrink-0" />
+                    <Loader2 className="h-5 w-5 text-elec-yellow animate-spin flex-shrink-0 mt-0.5" />
                   ) : (
-                    <div className="h-5 w-5 rounded-full border-2 border-muted flex-shrink-0" />
+                    <div className="h-5 w-5 rounded-full border-2 border-muted flex-shrink-0 mt-0.5" />
                   )}
                   <span
-                    className={`text-sm ${
-                      isComplete ? 'text-muted-foreground line-through' : isCurrent ? 'font-medium text-foreground' : 'text-muted-foreground'
+                    className={`text-sm text-left flex-1 ${
+                      isComplete ? 'text-muted-foreground line-through' : 
+                      isCurrent ? 'font-medium text-foreground' : 
+                      'text-muted-foreground'
                     }`}
                   >
                     {stage}

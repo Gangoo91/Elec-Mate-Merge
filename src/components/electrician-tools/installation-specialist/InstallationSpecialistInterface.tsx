@@ -234,9 +234,9 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         />
       )}
 
-      {currentView === 'processing' && (
-        <InstallationProcessingView progress={progress} />
-      )}
+        {currentView === 'processing' && (
+          <InstallationProcessingView progress={progress} isGenerating={isProcessing} />
+        )}
 
       {currentView === 'results' && methodData && (
         <InstallationResultsEditor

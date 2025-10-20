@@ -46,6 +46,7 @@ export const generateMethodStatement = async (
   try {
     // ===== PHASE 1: INSTALLER AGENT (Sequential - must go first) =====
     // Searches RAG for installation procedures and generates base installation steps
+    if (onProgress) onProgress('STAGE_1_START');
     if (onProgress) onProgress('🔧 Searching installation procedures & generating steps...');
     
     const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
@@ -78,7 +79,10 @@ CRITICAL: Search RAG first for relevant installation procedures, best practices,
     
     console.log('✅ Installer completed:', { steps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []).length });
     
+    if (onProgress) onProgress('STAGE_2_START');
+    
     // ===== PHASE 2: H&S + MAINTENANCE AGENTS (Parallel - both search RAG concurrently) =====
+    if (onProgress) onProgress('STAGE_3_START');
     if (onProgress) onProgress('⚡ Searching RAG for hazards & testing procedures in parallel...');
     
     const [healthSafetyResult, maintenanceResult] = await Promise.allSettled([
@@ -143,6 +147,8 @@ CRITICAL TASKS AS FINAL REVIEWER (in order):
     let maintenanceOutput = null;
     let healthSafetyOutput = null;
     
+    if (onProgress) onProgress('STAGE_4_START');
+    
     if (maintenanceResult.status === 'fulfilled') {
       maintenanceOutput = maintenanceResult.value.data?.result;
       if (onProgress) onProgress('✅ Final validation & inspection procedures complete');
@@ -158,6 +164,8 @@ CRITICAL TASKS AS FINAL REVIEWER (in order):
       console.warn('⚠️ H&S agent failed, continuing without risk assessment:', healthSafetyResult.reason);
       if (onProgress) onProgress('⚠️ Risk assessment unavailable, using baseline hazards');
     }
+    
+    if (onProgress) onProgress('STAGE_5_COMPLETE');
     
     // STEP 3: Merge outputs (handles null agents gracefully)
     return mergeAgentOutputs(installerOutput, maintenanceOutput, healthSafetyOutput);
