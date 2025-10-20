@@ -112,19 +112,19 @@ serve(async (req) => {
     const body = await req.json();
     const { query, cableType, installationMethod, location, messages, previousAgentOutputs, sharedRegulations } = body;
 
-    // PHASE 1: Query Enhancement
-    const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
-    const enhancement = enhanceQuery(query, messages || []);
-    logEnhancement(enhancement, logger);
-    const effectiveQuery = enhancement.enhanced;
-
-    // Enhanced input validation
+    // Enhanced input validation BEFORE any processing
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
       throw new ValidationError('query is required and must be a non-empty string');
     }
     if (query.length > 1000) {
       throw new ValidationError('query must be less than 1000 characters');
     }
+
+    // PHASE 1: Query Enhancement (safe now that query is validated)
+    const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
+    const enhancement = enhanceQuery(query, messages || []);
+    logEnhancement(enhancement, logger);
+    const effectiveQuery = enhancement.enhanced;
 
     logger.info('🔧 Installer V3 invoked', { 
       query: effectiveQuery.substring(0, 50),

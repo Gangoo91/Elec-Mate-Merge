@@ -1,6 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
-import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { createLogger, generateRequestId, ValidationError } from '../_shared/logger.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -17,13 +17,14 @@ serve(async (req) => {
       context = {}
     } = await req.json();
 
-    if (!installationDescription) {
-      throw new Error('Installation description is required');
+    if (!installationDescription || typeof installationDescription !== 'string' || installationDescription.trim().length === 0) {
+      throw new ValidationError('Installation description is required and must be a non-empty string');
     }
 
     logger.info('Generating installation method', { 
       installationType,
-      descriptionLength: installationDescription.length 
+      descriptionLength: installationDescription.length,
+      queryPreview: installationDescription.substring(0, 120)
     });
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -59,8 +60,28 @@ Format as clear, numbered steps suitable for a professional method statement.`;
     });
 
     if (installerError) {
-      logger.error('Installer agent error', { error: installerError });
-      throw installerError;
+      logger.error('Installer V3 error', { 
+        function: 'installer-v3',
+        error: installerError,
+        errorMessage: installerError?.message || 'Unknown error'
+      });
+      
+      // Surface specific error messages from installer-v3
+      let errorMessage = 'Failed to generate installation method';
+      if (installerError?.message) {
+        if (installerError.message.includes('OPENAI_API_KEY')) {
+          errorMessage = 'OpenAI API key not configured. Please contact support.';
+        } else if (installerError.message.includes('LOVABLE_API_KEY')) {
+          errorMessage = 'Lovable API key not configured. Please contact support.';
+        } else if (installerError.message.includes('query is required')) {
+          errorMessage = 'Installation description is required';
+        } else if (installerError.message.includes('timeout')) {
+          errorMessage = 'Request timed out. Please try again with a shorter description.';
+        } else {
+          errorMessage = installerError.message;
+        }
+      }
+      throw new Error(errorMessage);
     }
 
     if (!installerData) {
