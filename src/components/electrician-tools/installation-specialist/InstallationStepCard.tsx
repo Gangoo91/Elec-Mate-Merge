@@ -92,67 +92,78 @@ export const InstallationStepCard = ({
           ) : (
             // VIEW MODE
             <div className="space-y-3">
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="font-semibold text-base">{step.title}</h3>
-                <div className="flex gap-1 flex-shrink-0">
-                  {onMoveUp && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={onMoveUp}
-                      className="h-8 w-8 p-0"
-                    >
-                      <ChevronUp className="h-4 w-4" />
-                    </Button>
-                  )}
-                  {onMoveDown && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={onMoveDown}
-                      className="h-8 w-8 p-0"
-                    >
-                      <ChevronDown className="h-4 w-4" />
-                    </Button>
-                  )}
+              {/* Title - Full Width */}
+              <h3 className="font-semibold text-lg text-foreground pr-2">{step.title}</h3>
+              
+              {/* Action Buttons Row */}
+              <div className="flex gap-2 flex-wrap">
+                {onMoveUp && (
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
-                    onClick={() => setIsEditing(true)}
-                    className="h-8 w-8 p-0"
+                    onClick={onMoveUp}
+                    className="h-9 px-3 gap-1.5 touch-manipulation"
                   >
-                    <Edit2 className="h-4 w-4" />
+                    <ChevronUp className="h-4 w-4" />
+                    <span className="text-xs">Move Up</span>
                   </Button>
+                )}
+                {onMoveDown && (
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
-                    onClick={onDelete}
-                    className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                    onClick={onMoveDown}
+                    className="h-9 px-3 gap-1.5 touch-manipulation"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <ChevronDown className="h-4 w-4" />
+                    <span className="text-xs">Move Down</span>
                   </Button>
-                </div>
+                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsEditing(true)}
+                  className="h-9 px-3 gap-1.5 touch-manipulation"
+                >
+                  <Edit2 className="h-4 w-4" />
+                  <span className="text-xs">Edit</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onDelete}
+                  className="h-9 px-3 gap-1.5 text-destructive hover:text-destructive hover:bg-destructive/10 touch-manipulation"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  <span className="text-xs">Delete</span>
+                </Button>
               </div>
 
-              <div className="text-sm text-muted-foreground whitespace-pre-wrap">
+              {/* Content */}
+              <div className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">
                 {step.content}
               </div>
 
+              {/* Risk Badge */}
               {step.riskLevel && (
-                <Badge className={riskColors[step.riskLevel]}>
+                <Badge className={`${riskColors[step.riskLevel]} font-semibold`}>
                   {step.riskLevel.toUpperCase()} RISK
                 </Badge>
               )}
 
+              {/* Safety Notes */}
               {step.safety && step.safety.length > 0 && (
-                <div className="mt-3 p-3 bg-warning/10 border border-warning/20 rounded-lg">
-                  <div className="flex items-start gap-2">
-                    <AlertTriangle className="h-4 w-4 text-warning flex-shrink-0 mt-0.5" />
+                <div className="mt-3 p-4 bg-warning/10 border border-warning/30 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <AlertTriangle className="h-5 w-5 text-warning flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
-                      <div className="font-semibold text-sm text-warning mb-1">Safety Notes</div>
-                      <ul className="text-xs text-muted-foreground space-y-1">
+                      <div className="font-semibold text-sm text-foreground mb-2">Safety Notes</div>
+                      <ul className="text-sm text-foreground space-y-1.5 pl-1">
                         {step.safety.map((note, i) => (
-                          <li key={i}>• {note}</li>
+                          <li key={i} className="flex items-start gap-2">
+                            <span className="text-warning mt-0.5">•</span>
+                            <span>{note}</span>
+                          </li>
                         ))}
                       </ul>
                     </div>
