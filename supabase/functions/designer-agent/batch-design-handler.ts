@@ -1054,23 +1054,23 @@ Always cite regulation numbers and show working for calculations.`
             toolCall = { function: { arguments: content } };
           }
         } catch (e) {
-        // Try extracting JSON from markdown code blocks
-        const jsonMatch = content.match(/```(?:json)?\n?([\s\S]*?)\n?```/);
-        if (jsonMatch) {
-          try {
-            const parsed = JSON.parse(jsonMatch[1]);
-            if (parsed.circuits) {
-              logger.info('✅ Recovered design from markdown JSON block - appending tool call');
-              toolCall = { function: { arguments: jsonMatch[1] } };
-              allToolCalls.push(toolCall);
+          // Try extracting JSON from markdown code blocks
+          const jsonMatch = content.match(/```(?:json)?\n?([\s\S]*?)\n?```/);
+          if (jsonMatch) {
+            try {
+              const parsed = JSON.parse(jsonMatch[1]);
+              if (parsed.circuits) {
+                logger.info('✅ Recovered design from markdown JSON block - appending tool call');
+                toolCall = { function: { arguments: jsonMatch[1] } };
+                allToolCalls.push(toolCall);
+              }
+            } catch (e2) {
+              logger.error('🚨 Failed to parse extracted JSON', { 
+                error: e2 instanceof Error ? e2.message : String(e2) 
+              });
             }
-          } catch (e2) {
-            logger.error('🚨 Failed to parse extracted JSON', { 
-              error: e2 instanceof Error ? e2.message : String(e2) 
-            });
           }
         }
-      }
       
       if (!toolCall) {
         logger.error('🚨 AI did not return structured design after all attempts', {
