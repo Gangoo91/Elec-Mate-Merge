@@ -1090,7 +1090,6 @@ Always cite regulation numbers and show working for calculations.`
       }
     }
   }
-  }
   
   // FIX: Extra guard - ensure fallback toolCall is included
   if (!allToolCalls.length && toolCall) {
