@@ -1071,6 +1071,7 @@ Always cite regulation numbers and show working for calculations.`
             }
           }
         }
+      } // ✅ Close the if (content) block from line 1048
       
       if (!toolCall) {
         logger.error('🚨 AI did not return structured design after all attempts', {
