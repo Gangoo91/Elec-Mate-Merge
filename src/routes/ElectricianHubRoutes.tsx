@@ -138,7 +138,7 @@ const ElectricianHubRoutes = () => (
     <Route path="business-development/tools/cis-drc" element={<CISDRCHelper />} />
     
     {/* Core Workshop Tools */}
-    <Route path="agents" element={<AgentSelectorPage />} />
+    <Route path="agent-selector" element={<AgentSelectorPage />} />
     <Route path="circuit-designer" element={<CircuitDesigner />} />
     <Route path="cost-engineer" element={<CostEngineerPage />} />
     <Route path="installation-specialist" element={<InstallationSpecialistPage />} />
