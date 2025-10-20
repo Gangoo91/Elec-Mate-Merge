@@ -6,8 +6,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Placeholder template ID - replace with actual PDF Monkey template ID
-const METHOD_STATEMENT_TEMPLATE_ID = 'PLACEHOLDER-METHOD-STATEMENT-TEMPLATE-ID';
+// PDF Monkey template ID for comprehensive method statements
+const METHOD_STATEMENT_TEMPLATE_ID = '9ABC438D-8E08-4FC3-BC12-CFC3BCB0DB3C';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -31,28 +31,91 @@ serve(async (req) => {
       });
     }
 
-    // Prepare payload for PDF Monkey template
+    // Prepare comprehensive payload for PDF Monkey template
     const payload = {
-      jobTitle: methodData.jobTitle,
-      location: methodData.location,
-      contractor: methodData.contractor,
-      supervisor: methodData.supervisor,
-      workType: methodData.workType,
-      duration: methodData.duration,
-      teamSize: methodData.teamSize,
-      description: methodData.description,
-      overallRiskLevel: methodData.overallRiskLevel?.toUpperCase(),
-      reviewDate: methodData.reviewDate,
-      steps: methodData.steps?.map((step: any) => ({
+      // Document metadata
+      document_ref: `MS-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
+      issue_date: new Date().toLocaleDateString('en-GB'),
+      
+      // Core method statement data
+      jobTitle: methodData.jobTitle || 'Installation Method Statement',
+      location: methodData.location || 'Site location',
+      contractor: methodData.contractor || 'Contractor name',
+      supervisor: methodData.supervisor || 'Site supervisor',
+      workType: methodData.workType || 'Electrical installation',
+      duration: methodData.duration || 'Variable',
+      teamSize: methodData.teamSize || '1-2 persons',
+      description: methodData.description || '',
+      overallRiskLevel: (methodData.overallRiskLevel || 'medium').toUpperCase(),
+      reviewDate: methodData.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB'),
+      
+      // Installation steps (enriched with inspection checkpoints and hazards)
+      steps: (methodData.steps || []).map((step: any) => ({
         stepNumber: step.stepNumber,
         title: step.title,
         description: step.description,
         safetyRequirements: Array.isArray(step.safetyRequirements) 
           ? step.safetyRequirements.join(', ') 
-          : step.safetyRequirements,
-        estimatedDuration: step.estimatedDuration,
-        riskLevel: step.riskLevel?.toUpperCase()
-      })) || []
+          : (step.safetyRequirements || ''),
+        estimatedDuration: step.estimatedDuration || 'Not specified',
+        riskLevel: (step.riskLevel || 'medium').toUpperCase(),
+        inspectionCheckpoints: Array.isArray(step.inspectionCheckpoints) 
+          ? step.inspectionCheckpoints.join(', ') 
+          : '',
+        linkedHazards: Array.isArray(step.linkedHazards) 
+          ? step.linkedHazards.join(', ') 
+          : ''
+      })),
+      
+      // Equipment schedule (from maintenance agent)
+      equipment_list: (methodData.equipmentSchedule || []).map((eq: any) => ({
+        name: eq.name,
+        quantity: eq.quantity || '1 No.',
+        certification: eq.certification || 'N/A',
+        inspection: eq.inspection || 'Daily',
+        responsible: eq.responsible || 'Site Supervisor'
+      })),
+      
+      // Quality requirements (from maintenance agent)
+      quality_requirements: (methodData.qualityRequirements || []).map((qr: any) => ({
+        stage: qr.stage,
+        requirement: qr.requirement,
+        criteria: qr.criteria
+      })),
+      
+      // Testing & commissioning (from maintenance agent)
+      testing_commissioning: methodData.conditionalFlags?.testing_commissioning !== false,
+      testing_procedures: (methodData.testingProcedures || []).map((tp: any) => ({
+        name: tp.name,
+        standard: tp.standard || 'BS 7671:2018+A3:2024',
+        criteria: tp.criteria,
+        certification: tp.certification || 'EIC'
+      })),
+      
+      // Site logistics (from H&S agent)
+      vehicle_access: methodData.siteLogistics?.vehicleAccess || 'Via main entrance',
+      parking: methodData.siteLogistics?.parking || 'On-site parking available',
+      material_storage: methodData.siteLogistics?.materialStorage || 'Secure compound',
+      waste_management: methodData.siteLogistics?.wasteManagement || 'Segregated waste bins',
+      welfare_facilities: methodData.siteLogistics?.welfareFacilities || 'On-site facilities',
+      site_restrictions: methodData.siteLogistics?.siteRestrictions || 'None specified',
+      
+      // Competency requirements (from H&S agent)
+      competency_requirements: methodData.competencyRequirements?.minimumQualifications || '18th Edition BS 7671:2018+A3:2024',
+      training_required: methodData.competencyRequirements?.mandatoryTraining || 'Site induction, Manual Handling',
+      supervision_level: methodData.competencyRequirements?.supervisionLevel || 'Continuous supervision',
+      
+      // Conditional flags (from all agents)
+      work_at_height: methodData.conditionalFlags?.work_at_height || false,
+      wah_equipment: Array.isArray(methodData.workAtHeightEquipment) 
+        ? methodData.workAtHeightEquipment.join(', ') 
+        : '',
+      services_utilities: methodData.conditionalFlags?.services_utilities || false,
+      hot_works: methodData.conditionalFlags?.hot_works || false,
+      confined_spaces: methodData.conditionalFlags?.confined_spaces || false,
+      client_liaison: methodData.conditionalFlags?.client_liaison !== false,
+      noise_dust_controls: methodData.conditionalFlags?.noise_dust_controls || false,
+      environmental_considerations: methodData.conditionalFlags?.environmental_considerations || false
     };
 
     const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
