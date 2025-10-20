@@ -59,7 +59,7 @@ serve(async (req) => {
       return chunks;
     };
 
-    // Helper function to split large paragraphs intelligently
+    // Helper function to split large paragraphs intelligently (NO RECURSION)
     const splitLargeParagraph = (text: string, maxSize: number = 900): string[] => {
       if (text.length <= maxSize) return [text];
       
@@ -92,6 +92,14 @@ serve(async (req) => {
         let currentChunk = '';
         
         for (const word of words) {
+          // Handle mega-words that exceed maxSize
+          if (word.length > maxSize) {
+            if (currentChunk.trim()) chunks.push(currentChunk.trim());
+            chunks.push(...forceChunkBySize(word));
+            currentChunk = '';
+            continue;
+          }
+          
           if (currentChunk.length + word.length + 1 < maxSize) {
             currentChunk += (currentChunk ? ' ' : '') + word;
           } else {
@@ -117,11 +125,11 @@ serve(async (req) => {
       }
       if (currentChunk.trim()) chunks.push(currentChunk.trim());
       
-      // Verify no chunk exceeds max size, split further if needed
+      // CRITICAL: Replace recursion with forceChunkBySize
       const finalChunks: string[] = [];
       for (const chunk of chunks) {
         if (chunk.length > maxSize) {
-          finalChunks.push(...splitLargeParagraph(chunk, maxSize));
+          finalChunks.push(...forceChunkBySize(chunk));
         } else {
           finalChunks.push(chunk);
         }
@@ -172,6 +180,13 @@ serve(async (req) => {
     let processedCount = 0;
     
     for (const chunk of chunks) {
+      // Preflight token estimation (safety check)
+      const estimatedTokens = Math.ceil(chunk.length / 4);
+      if (estimatedTokens > 8000) {
+        console.warn(`⚠️ Chunk too large (~${estimatedTokens} tokens), skipping...`);
+        continue;
+      }
+      
       // Extract metadata using simple keyword detection
       const lowerChunk = chunk.toLowerCase();
       

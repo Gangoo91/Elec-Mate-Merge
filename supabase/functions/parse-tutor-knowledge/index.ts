@@ -30,7 +30,35 @@ serve(async (req) => {
 
     console.log('📚 Processing tutor knowledge file...');
 
-    // Helper function to split large paragraphs intelligently
+    // CRITICAL: Hard limit to prevent exceeding OpenAI's 8192 token limit
+    const MAX_CHUNK_SIZE = 6000;
+
+    // Force split by character limit (hard boundary)
+    const forceChunkBySize = (text: string): string[] => {
+      if (text.length <= MAX_CHUNK_SIZE) return [text];
+      
+      const chunks: string[] = [];
+      let start = 0;
+      
+      while (start < text.length) {
+        let end = Math.min(start + MAX_CHUNK_SIZE, text.length);
+        
+        // Find last space before limit to avoid word splitting
+        if (end < text.length) {
+          const lastSpace = text.lastIndexOf(' ', end);
+          if (lastSpace > start + MAX_CHUNK_SIZE * 0.8) {
+            end = lastSpace;
+          }
+        }
+        
+        chunks.push(text.slice(start, end).trim());
+        start = end + 1;
+      }
+      
+      return chunks;
+    };
+
+    // Helper function to split large paragraphs intelligently (NO RECURSION)
     const splitLargeParagraph = (text: string, maxSize: number = 900): string[] => {
       if (text.length <= maxSize) return [text];
       
@@ -63,6 +91,14 @@ serve(async (req) => {
         let currentChunk = '';
         
         for (const word of words) {
+          // Handle mega-words that exceed maxSize
+          if (word.length > maxSize) {
+            if (currentChunk.trim()) chunks.push(currentChunk.trim());
+            chunks.push(...forceChunkBySize(word));
+            currentChunk = '';
+            continue;
+          }
+          
           if (currentChunk.length + word.length + 1 < maxSize) {
             currentChunk += (currentChunk ? ' ' : '') + word;
           } else {
@@ -88,11 +124,11 @@ serve(async (req) => {
       }
       if (currentChunk.trim()) chunks.push(currentChunk.trim());
       
-      // Verify no chunk exceeds max size, split further if needed
+      // CRITICAL: Replace recursion with forceChunkBySize
       const finalChunks: string[] = [];
       for (const chunk of chunks) {
         if (chunk.length > maxSize) {
-          finalChunks.push(...splitLargeParagraph(chunk, maxSize));
+          finalChunks.push(...forceChunkBySize(chunk));
         } else {
           finalChunks.push(chunk);
         }
@@ -106,7 +142,7 @@ serve(async (req) => {
       .split(/\n\n+/)
       .filter((p: string) => p.trim().length > 50);
 
-    const chunks: string[] = [];
+    let chunks: string[] = [];
 
     for (const para of paragraphs) {
       if (para.length <= 1000) {
@@ -118,22 +154,38 @@ serve(async (req) => {
       }
     }
 
+    // CRITICAL: Apply hard size limit as final safety check
+    chunks = chunks.flatMap(chunk => 
+      chunk.length > MAX_CHUNK_SIZE ? forceChunkBySize(chunk) : [chunk]
+    );
+
     console.log(`📊 Created ${chunks.length} chunks`);
     
-    // Log chunk statistics
+    // Log chunk statistics with validation
     if (chunks.length > 0) {
       const avgChunkSize = Math.round(chunks.reduce((sum, c) => sum + c.length, 0) / chunks.length);
       const maxChunkSize = Math.max(...chunks.map(c => c.length));
       const minChunkSize = Math.min(...chunks.map(c => c.length));
       console.log(`📏 Chunk stats - Avg: ${avgChunkSize} chars, Min: ${minChunkSize}, Max: ${maxChunkSize}`);
+      
+      // Validation warning
+      const oversizedChunks = chunks.filter(c => c.length > MAX_CHUNK_SIZE);
+      if (oversizedChunks.length > 0) {
+        console.error(`⚠️ WARNING: ${oversizedChunks.length} chunks exceed ${MAX_CHUNK_SIZE} chars!`);
+      }
     }
-
-    console.log(`📊 Created ${chunks.length} chunks`);
 
     // Process chunks and generate embeddings
     let processedCount = 0;
     
     for (const chunk of chunks) {
+      // Preflight token estimation (safety check)
+      const estimatedTokens = Math.ceil(chunk.length / 4);
+      if (estimatedTokens > 8000) {
+        console.warn(`⚠️ Chunk too large (~${estimatedTokens} tokens), skipping...`);
+        continue;
+      }
+      
       // Extract metadata using simple keyword detection
       const lowerChunk = chunk.toLowerCase();
       
