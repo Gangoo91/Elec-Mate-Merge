@@ -76,10 +76,10 @@ export const generateMethodStatement = async (
     console.log('✅ Installer completed:', { steps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []).length });
     
     // ===== PHASE 2: H&S + MAINTENANCE AGENTS (Parallel) =====
-    if (onProgress) onProgress('🔒 Running risk assessment & maintenance planning...');
+    if (onProgress) onProgress('🔒 Running risk assessment & method statement completion...');
     
     const [healthSafetyResult, maintenanceResult] = await Promise.allSettled([
-      // Health-Safety-v3 call
+      // Health-Safety-v3 - Fills hazards per step
       supabase.functions.invoke('health-safety-v3', {
         body: {
           query: `Assess risks for each step of: ${userQuery}`,
@@ -98,34 +98,36 @@ export const generateMethodStatement = async (
         }
       }),
       
-      // Maintenance-v3 call
+      // Maintenance-v3 - THE POWERHOUSE: RAG search, review installer, add testing, fill complete method statement
       supabase.functions.invoke('maintenance-v3', {
         body: {
-          query: `Inspection and testing requirements for: ${userQuery}`,
-          equipmentType: installerOutput.equipmentType || 'electrical installation',
-          maintenanceType: 'preventive',
-          // Context from installer
-          installationSteps: installerOutput.installationSteps || installerOutput.methodStatementSteps,
-          detectedHazards: installerOutput.detectedHazards || []
-        }
-      }),
-      
-      // Health-Safety-v3 call (runs at same time)
-      supabase.functions.invoke('health-safety-v3', {
-        body: {
-          query: `Assess risks for each step of: ${userQuery}`,
+          query: `Complete comprehensive method statement for: ${userQuery}
+          
+CRITICAL TASKS (in order):
+1. Search RAG for relevant inspection, testing, and commissioning procedures
+2. Review and enhance the installation steps provided by the installer agent
+3. Add detailed inspection, testing, and commissioning procedures
+4. Fill in ALL remaining method statement fields (tools, materials, practical tips, warnings, compliance regulations)
+5. Validate entire document for BS 7671:2018+A3:2024 compliance`,
+          
           projectType: 'installation',
+          equipmentType: installerOutput.equipmentType || 'electrical installation',
           workType: installerOutput.workType || 'electrical installation',
+          maintenanceType: 'preventive',
           location: projectDetails?.location || 'Site location',
-          // CRITICAL: Pass installation steps in structured format for step-specific hazard linking
-          installationSteps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []).map((s: any, i: number) => ({
-            stepNumber: i + 1,
-            title: s.title || s.stepTitle || `Step ${i + 1}`,
-            description: s.description || s.content || '',
-            safetyRequirements: s.safetyRequirements || [],
-            equipmentNeeded: s.equipmentNeeded || s.tools || []
-          })),
-          detectedHazards: installerOutput.detectedHazards || []
+          
+          // INSTALLER OUTPUT FOR REVIEW & ENHANCEMENT
+          installerSteps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []),
+          installerJobDetails: {
+            jobTitle: installerOutput.jobTitle,
+            description: installerOutput.description,
+            workType: installerOutput.workType,
+            estimatedDuration: installerOutput.estimatedDuration,
+            requiredQualifications: installerOutput.requiredQualifications,
+            toolsRequired: installerOutput.toolsRequired,
+            materialsRequired: installerOutput.materialsRequired,
+            detectedHazards: installerOutput.detectedHazards || []
+          }
         }
       })
     ]);
