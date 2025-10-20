@@ -30,6 +30,35 @@ serve(async (req) => {
 
     console.log('📄 Processing maintenance knowledge file...');
 
+    // CRITICAL: Hard limit to prevent exceeding OpenAI's 8192 token limit
+    // 6000 chars ≈ 1500 tokens (with 4:1 char:token ratio safety margin)
+    const MAX_CHUNK_SIZE = 6000;
+
+    // Force split by character limit (hard boundary)
+    const forceChunkBySize = (text: string): string[] => {
+      if (text.length <= MAX_CHUNK_SIZE) return [text];
+      
+      const chunks: string[] = [];
+      let start = 0;
+      
+      while (start < text.length) {
+        let end = Math.min(start + MAX_CHUNK_SIZE, text.length);
+        
+        // Find last space before limit to avoid word splitting
+        if (end < text.length) {
+          const lastSpace = text.lastIndexOf(' ', end);
+          if (lastSpace > start + MAX_CHUNK_SIZE * 0.8) {
+            end = lastSpace;
+          }
+        }
+        
+        chunks.push(text.slice(start, end).trim());
+        start = end + 1;
+      }
+      
+      return chunks;
+    };
+
     // Helper function to split large paragraphs intelligently
     const splitLargeParagraph = (text: string, maxSize: number = 900): string[] => {
       if (text.length <= maxSize) return [text];
@@ -106,7 +135,7 @@ serve(async (req) => {
       .split(/\n\n+/)
       .filter((p: string) => p.trim().length > 50);
 
-    const chunks: string[] = [];
+    let chunks: string[] = [];
 
     for (const para of paragraphs) {
       if (para.length <= 1000) {
@@ -118,17 +147,26 @@ serve(async (req) => {
       }
     }
 
+    // CRITICAL: Apply hard size limit as final safety check
+    chunks = chunks.flatMap(chunk => 
+      chunk.length > MAX_CHUNK_SIZE ? forceChunkBySize(chunk) : [chunk]
+    );
+
     console.log(`📊 Created ${chunks.length} chunks`);
     
-    // Log chunk statistics
+    // Log chunk statistics with validation
     if (chunks.length > 0) {
       const avgChunkSize = Math.round(chunks.reduce((sum, c) => sum + c.length, 0) / chunks.length);
       const maxChunkSize = Math.max(...chunks.map(c => c.length));
       const minChunkSize = Math.min(...chunks.map(c => c.length));
       console.log(`📏 Chunk stats - Avg: ${avgChunkSize} chars, Min: ${minChunkSize}, Max: ${maxChunkSize}`);
+      
+      // Validation warning
+      const oversizedChunks = chunks.filter(c => c.length > MAX_CHUNK_SIZE);
+      if (oversizedChunks.length > 0) {
+        console.error(`⚠️ WARNING: ${oversizedChunks.length} chunks exceed ${MAX_CHUNK_SIZE} chars!`);
+      }
     }
-
-    console.log(`📊 Created ${chunks.length} chunks`);
 
     // Process chunks and generate embeddings
     let processedCount = 0;
