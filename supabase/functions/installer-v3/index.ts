@@ -201,7 +201,7 @@ serve(async (req) => {
       });
     } else {
       // Only call RAG if insufficient shared knowledge
-      logger.info('RAG call needed - insufficient shared knowledge');
+      logger.info('Calling RAG for installation knowledge');
       
       // Phase 3: Expand query with technical synonyms
       const queryVariations = expandInstallQuery(query, installationMethod);

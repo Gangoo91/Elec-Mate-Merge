@@ -3,6 +3,8 @@ import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { ValidationError } from '../_shared/errors.ts';
 
+console.log('[installation-method-generator] Function loaded successfully');
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -61,26 +63,30 @@ Format as clear, numbered steps suitable for a professional method statement.`;
     });
 
     if (installerError) {
-      logger.error('Installer V3 error', { 
-        function: 'installer-v3',
-        error: installerError,
-        errorMessage: installerError?.message || 'Unknown error'
+      // Robust error message extraction - handle various error structures
+      const errorMsg = 
+        typeof installerError === 'string' ? installerError :
+        installerError?.message ? installerError.message :
+        installerError?.error ? installerError.error :
+        'Unknown error from installer agent';
+      
+      logger.error('Installer V3 call failed', { 
+        error: errorMsg,
+        rawError: installerError
       });
       
       // Surface specific error messages from installer-v3
       let errorMessage = 'Failed to generate installation method';
-      if (installerError?.message) {
-        if (installerError.message.includes('OPENAI_API_KEY')) {
-          errorMessage = 'OpenAI API key not configured. Please contact support.';
-        } else if (installerError.message.includes('LOVABLE_API_KEY')) {
-          errorMessage = 'Lovable API key not configured. Please contact support.';
-        } else if (installerError.message.includes('query is required')) {
-          errorMessage = 'Installation description is required';
-        } else if (installerError.message.includes('timeout')) {
-          errorMessage = 'Request timed out. Please try again with a shorter description.';
-        } else {
-          errorMessage = installerError.message;
-        }
+      if (errorMsg.includes('OPENAI_API_KEY')) {
+        errorMessage = 'OpenAI API key not configured. Please contact support.';
+      } else if (errorMsg.includes('LOVABLE_API_KEY')) {
+        errorMessage = 'Lovable API key not configured. Please contact support.';
+      } else if (errorMsg.includes('query is required')) {
+        errorMessage = 'Installation description is required';
+      } else if (errorMsg.includes('timeout')) {
+        errorMessage = 'Request timed out. Please try again with a shorter description.';
+      } else {
+        errorMessage = errorMsg;
       }
       throw new Error(errorMessage);
     }
