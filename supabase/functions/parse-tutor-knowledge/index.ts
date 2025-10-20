@@ -12,9 +12,10 @@ serve(async (req) => {
   }
 
   try {
-    const { fileContent } = await req.json();
+    const { fileContent, text } = await req.json();
+    const content = fileContent || text;
     
-    if (!fileContent) {
+    if (!content) {
       throw new Error('No file content provided');
     }
 
@@ -30,7 +31,7 @@ serve(async (req) => {
     console.log('📚 Processing tutor knowledge file...');
 
     // Chunk by paragraphs (approximately 1500 characters)
-    const paragraphs = fileContent
+    const paragraphs = content
       .split(/\n\n+/)
       .filter((p: string) => p.trim().length > 50);
 
