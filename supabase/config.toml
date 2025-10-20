@@ -116,3 +116,7 @@ timeout_sec = 180
 [functions.parse-tutor-knowledge]
 verify_jwt = false
 timeout_sec = 180
+
+[functions.installation-method-generator]
+verify_jwt = false
+timeout_sec = 300

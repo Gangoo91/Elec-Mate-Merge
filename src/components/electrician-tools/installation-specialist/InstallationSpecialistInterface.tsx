@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { supabase } from "@/integrations/supabase/client";
+import { InstallationMethodDisplay } from "./InstallationMethodDisplay";
 
 const InstallationSpecialistInterface = () => {
   const [prompt, setPrompt] = useState("");
@@ -18,6 +20,7 @@ const InstallationSpecialistInterface = () => {
   const [expandedSections, setExpandedSections] = useState({
     examples: true,
   });
+  const [methodData, setMethodData] = useState<any>(null);
 
   const handleGenerateGuide = async () => {
     if (prompt.trim() === "") {
@@ -28,12 +31,58 @@ const InstallationSpecialistInterface = () => {
       });
       return;
     }
-    
-    // Placeholder for now - show functionality in development
-    toast({
-      title: "Functionality In Development",
-      description: "Full Installation Specialist capabilities will be enabled soon.",
-    });
+
+    setIsLoading(true);
+    setProgress(0);
+    setInstallationGuide("");
+    setMethodData(null);
+
+    // Simulate progress
+    const progressInterval = setInterval(() => {
+      setProgress(prev => Math.min(prev + 10, 90));
+    }, 1000);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('installation-method-generator', {
+        body: {
+          installationDescription: prompt,
+          installationType: installationType,
+          context: {}
+        }
+      });
+
+      clearInterval(progressInterval);
+      setProgress(100);
+
+      if (error) throw error;
+
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to generate installation method');
+      }
+
+      setInstallationGuide(data.installationGuide);
+      setMethodData({
+        steps: data.steps,
+        summary: data.summary
+      });
+
+      toast({
+        title: "Installation Guide Generated",
+        description: `${data.summary.totalSteps} steps created successfully`,
+      });
+
+    } catch (error) {
+      console.error('Installation guide generation error:', error);
+      toast({
+        title: "Generation Failed",
+        description: error instanceof Error ? error.message : "Could not generate installation guide. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      clearInterval(progressInterval);
+      setIsLoading(false);
+      setProgress(0);
+    }
   };
 
   const copyToClipboard = async () => {
@@ -275,12 +324,12 @@ const InstallationSpecialistInterface = () => {
       )}
 
       {/* 6. RESULTS DISPLAY */}
-      {showResults && installationGuide && (
-        <Card className="p-4 sm:p-6">
-          <div className="prose prose-invert max-w-none whitespace-pre-wrap">
-            {installationGuide}
-          </div>
-        </Card>
+      {showResults && methodData && (
+        <InstallationMethodDisplay
+          installationGuide={installationGuide}
+          steps={methodData.steps}
+          summary={methodData.summary}
+        />
       )}
 
       {/* LOADING STATE */}
