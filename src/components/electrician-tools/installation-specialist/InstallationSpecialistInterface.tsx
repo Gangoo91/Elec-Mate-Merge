@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Wrench, Loader, Copy, Eye, EyeOff, ChevronDown, ChevronUp, Download, Clock, CheckCircle2, Sparkles, FileText, Lightbulb, Zap, Building2 } from "lucide-react";
+import { Wrench, Loader, Copy, Eye, EyeOff, ChevronDown, ChevronUp, Download, Clock, CheckCircle2, Sparkles, Lightbulb, Zap, Building2, Home, Factory } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,40 +10,39 @@ import { Badge } from "@/components/ui/badge";
 
 const InstallationSpecialistInterface = () => {
   const [prompt, setPrompt] = useState("");
-  const [installationResult, setInstallationResult] = useState("");
+  const [installationGuide, setInstallationGuide] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(true);
   const [progress, setProgress] = useState(0);
   const [estimatedTime, setEstimatedTime] = useState(20);
+  const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
   const [expandedSections, setExpandedSections] = useState({
-    examples: false,
-    guidance: false
+    examples: true,
   });
 
-  const handleInstallationGuide = async () => {
+  const handleGenerateGuide = async () => {
     if (prompt.trim() === "") {
       toast({
         title: "Empty Description",
-        description: "Please enter an installation requirement first.",
+        description: "Please enter an installation description first.",
         variant: "destructive",
       });
       return;
     }
     
-    // Placeholder for now - show coming soon
+    // Placeholder for now - show functionality in development
     toast({
-      title: "Coming Soon",
-      description: "Installation Specialist functionality will be available next week. Step-by-step installation methods, tool lists, and practical guidance.",
+      title: "Functionality In Development",
+      description: "Full Installation Specialist capabilities will be enabled soon.",
     });
   };
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(installationResult);
+      await navigator.clipboard.writeText(installationGuide);
       toast({
         title: "Copied!",
         description: "Installation guide copied to clipboard successfully.",
-        variant: "success",
       });
     } catch (error) {
       toast({
@@ -104,7 +103,7 @@ const InstallationSpecialistInterface = () => {
     setPrompt(examplePrompt);
     toast({
       title: "Example Loaded",
-      description: "Click Generate Installation Guide to see how it works (coming soon).",
+      description: "Click Generate Installation Guide to see how it works.",
     });
   };
 
@@ -117,7 +116,7 @@ const InstallationSpecialistInterface = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-blue-400/10 rounded-full blur-3xl w-32 h-32 mx-auto"></div>
             <div className="relative inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-400/30 to-blue-400/20 rounded-3xl border border-blue-400/40 backdrop-blur-sm">
-              <Sparkles className="h-8 w-8 sm:h-10 sm:w-10 text-blue-400 animate-pulse" />
+              <Wrench className="h-8 w-8 sm:h-10 sm:w-10 text-blue-400 animate-pulse" />
             </div>
           </div>
           
@@ -126,21 +125,21 @@ const InstallationSpecialistInterface = () => {
               Installation Specialist AI
             </h1>
             <p className="text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed px-2 text-center break-words">
-              Step-by-step installation methods, practical guidance, and real-world advice for electrical installations
+              Step-by-step installation methods, practical guidance, and BS 7671 compliant procedures for electrical installations
             </p>
           </div>
           
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-4 sm:mt-6 px-2">
             <Badge variant="secondary" className="bg-blue-400/20 text-blue-400 border-blue-400/30">
-              <FileText className="w-3 h-3 mr-1" />
+              <CheckCircle2 className="w-3 h-3 mr-1" />
               Step-by-Step Methods
             </Badge>
-            <Badge variant="secondary" className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+            <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30">
               <Wrench className="w-3 h-3 mr-1" />
               Tool Selection
             </Badge>
             <Badge variant="secondary" className="bg-purple-500/20 text-purple-400 border-purple-500/30">
-              <CheckCircle2 className="w-3 h-3 mr-1" />
+              <Sparkles className="w-3 h-3 mr-1" />
               Best Practices
             </Badge>
           </div>
@@ -155,9 +154,9 @@ const InstallationSpecialistInterface = () => {
                   <Wrench className="h-5 w-5 text-blue-400" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg sm:text-xl lg:text-2xl text-white font-semibold break-words">Describe Your Installation</CardTitle>
+                  <CardTitle className="text-lg sm:text-xl lg:text-2xl text-white font-semibold break-words">What installation work do you need guidance for?</CardTitle>
                   <CardDescription className="text-gray-400 mt-1 break-words">
-                    Get step-by-step installation methods and practical guidance
+                    Describe your installation requirements - AI will provide step-by-step methods
                   </CardDescription>
                 </div>
               </div>
@@ -168,7 +167,7 @@ const InstallationSpecialistInterface = () => {
               <div className="space-y-4">
                 <div className="relative">
                   <Textarea
-                    placeholder="Describe your installation requirement... e.g., 'Provide step-by-step installation method for 9.5kW shower circuit, 10mm² cable clipped direct through first floor, 18m run from consumer unit'"
+                    placeholder="e.g., Step-by-step installation method for 9.5kW shower circuit, 10mm² cable clipped direct through first floor, 18m run from consumer unit"
                     className="min-h-[120px] bg-elec-dark/50 border-blue-400/30 focus:border-blue-400 text-white placeholder:text-gray-400 resize-none rounded-xl backdrop-blur-sm transition-all duration-300 focus:shadow-lg focus:shadow-blue-400/20"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
@@ -177,11 +176,54 @@ const InstallationSpecialistInterface = () => {
                     {prompt.length}/500
                   </div>
                 </div>
+
+                {/* Installation Type Selector */}
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-400">Installation Type:</p>
+                  <div className="flex flex-wrap gap-2 sm:gap-3">
+                    <Button 
+                      type="button"
+                      className={installationType === 'domestic' 
+                        ? "bg-gradient-to-r from-blue-400 to-blue-400/80 text-elec-dark" 
+                        : "border-blue-400/30 text-blue-400 hover:bg-blue-400/20"
+                      }
+                      variant={installationType === 'domestic' ? 'default' : 'outline'}
+                      onClick={() => setInstallationType('domestic')}
+                    >
+                      <Home className="h-4 w-4 mr-2" />
+                      Domestic
+                    </Button>
+                    <Button 
+                      type="button"
+                      className={installationType === 'commercial' 
+                        ? "bg-gradient-to-r from-blue-400 to-blue-400/80 text-elec-dark" 
+                        : "border-blue-400/30 text-blue-400 hover:bg-blue-400/20"
+                      }
+                      variant={installationType === 'commercial' ? 'default' : 'outline'}
+                      onClick={() => setInstallationType('commercial')}
+                    >
+                      <Building2 className="h-4 w-4 mr-2" />
+                      Commercial
+                    </Button>
+                    <Button 
+                      type="button"
+                      className={installationType === 'industrial' 
+                        ? "bg-gradient-to-r from-blue-400 to-blue-400/80 text-elec-dark" 
+                        : "border-blue-400/30 text-blue-400 hover:bg-blue-400/20"
+                      }
+                      variant={installationType === 'industrial' ? 'default' : 'outline'}
+                      onClick={() => setInstallationType('industrial')}
+                    >
+                      <Factory className="h-4 w-4 mr-2" />
+                      Industrial
+                    </Button>
+                  </div>
+                </div>
                 
                 <div className="flex flex-col gap-3">
                   <Button 
                     className="w-full bg-gradient-to-r from-blue-400 to-blue-400/80 hover:from-blue-400/90 hover:to-blue-400/70 text-elec-dark font-semibold py-3 h-12 sm:h-14 rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-blue-400/30 touch-manipulation" 
-                    onClick={handleInstallationGuide} 
+                    onClick={handleGenerateGuide} 
                     disabled={isLoading || !prompt.trim()}
                   >
                     {isLoading ? (
@@ -191,13 +233,13 @@ const InstallationSpecialistInterface = () => {
                       </>
                     ) : (
                       <>
-                        <Sparkles className="h-5 w-5 mr-2" />
+                        <Wrench className="h-5 w-5 mr-2" />
                         <span className="text-sm sm:text-base">Generate Installation Guide</span>
                       </>
                     )}
                   </Button>
                   
-                  {installationResult && (
+                  {installationGuide && (
                     <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-3">
                       <Button 
                         variant="outline" 
@@ -226,8 +268,9 @@ const InstallationSpecialistInterface = () => {
                       </Button>
                       <Button 
                         variant="outline" 
-                        className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20 h-12 sm:h-14 rounded-xl touch-manipulation min-h-[44px] opacity-50 cursor-not-allowed"
+                        className="border-purple-500/30 text-purple-400 hover:bg-purple-500/20 h-12 sm:h-14 rounded-xl touch-manipulation min-h-[44px] opacity-50 cursor-not-allowed"
                         disabled
+                        title="Export functionality coming soon"
                       >
                         <Download className="h-4 w-4 sm:mr-2" />
                         <span className="hidden sm:inline">Export</span>
@@ -242,7 +285,7 @@ const InstallationSpecialistInterface = () => {
                 <div className="p-6 bg-gradient-to-br from-elec-dark/80 to-elec-dark/60 rounded-xl border border-blue-400/30 backdrop-blur-sm">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 bg-gradient-to-br from-blue-400/30 to-blue-400/20 rounded-xl flex items-center justify-center border border-blue-400/40">
-                      <Sparkles className="h-6 w-6 text-blue-400 animate-pulse" />
+                      <Wrench className="h-6 w-6 text-blue-400 animate-pulse" />
                     </div>
                     <div>
                       <span className="text-white font-semibold text-lg">Generating Installation Guide</span>
@@ -284,7 +327,7 @@ const InstallationSpecialistInterface = () => {
                   >
                     <div className="flex items-center gap-3">
                       <Lightbulb className="h-5 w-5 text-blue-400" />
-                      <h4 className="font-medium text-white break-words">Quick Start Examples</h4>
+                      <h4 className="font-medium text-white break-words">Example Installation Methods - Click to Use</h4>
                     </div>
                     {expandedSections.examples ? 
                       <ChevronUp className="h-4 w-4 text-gray-400" /> : 
@@ -321,26 +364,13 @@ const InstallationSpecialistInterface = () => {
               </Collapsible>
 
               {/* Results Area Placeholder */}
-              {installationResult && showResults && (
+              {installationGuide && showResults && (
                 <div className="p-6 bg-gradient-to-br from-elec-dark/80 to-elec-dark/60 rounded-xl border border-blue-400/30 backdrop-blur-sm">
                   <div className="prose prose-invert max-w-none">
-                    <p className="text-white">{installationResult}</p>
+                    <p className="text-white">{installationGuide}</p>
                   </div>
                 </div>
               )}
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Coming Soon Notice */}
-        <div className="max-w-4xl mx-auto px-2 sm:px-0">
-          <Card className="bg-gradient-to-br from-blue-400/10 to-blue-400/5 border border-blue-400/30">
-            <CardContent className="p-6 text-center">
-              <Sparkles className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">Full Functionality Coming Next Week</h3>
-              <p className="text-gray-400 text-sm">
-                Complete step-by-step installation methods, tool lists, safety requirements, and practical guidance will be available soon.
-              </p>
             </CardContent>
           </Card>
         </div>

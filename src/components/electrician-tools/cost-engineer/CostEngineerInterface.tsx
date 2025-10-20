@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calculator, Loader, Copy, Eye, EyeOff, ChevronDown, ChevronUp, Download, Clock, CheckCircle2, Sparkles, FileText, Lightbulb, PoundSterling, Clock4, TrendingUp } from "lucide-react";
+import { Calculator, Loader, Copy, Eye, EyeOff, ChevronDown, ChevronUp, Download, Clock, CheckCircle2, Sparkles, Lightbulb, PoundSterling, Clock4, TrendingUp, Home, Building2, Factory } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,9 +15,9 @@ const CostEngineerInterface = () => {
   const [showResults, setShowResults] = useState(true);
   const [progress, setProgress] = useState(0);
   const [estimatedTime, setEstimatedTime] = useState(20);
+  const [projectType, setProjectType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
   const [expandedSections, setExpandedSections] = useState({
-    examples: false,
-    guidance: false
+    examples: true,
   });
 
   const handleCostAnalysis = async () => {
@@ -30,10 +30,10 @@ const CostEngineerInterface = () => {
       return;
     }
     
-    // Placeholder for now - show coming soon
+    // Placeholder for now - show functionality in development
     toast({
-      title: "Coming Soon",
-      description: "Cost Engineer functionality will be available next week. Full pricing and labour cost analysis.",
+      title: "Functionality In Development",
+      description: "Full Cost Engineer capabilities will be enabled soon.",
     });
   };
 
@@ -43,7 +43,6 @@ const CostEngineerInterface = () => {
       toast({
         title: "Copied!",
         description: "Cost analysis copied to clipboard successfully.",
-        variant: "success",
       });
     } catch (error) {
       toast({
@@ -89,7 +88,7 @@ const CostEngineerInterface = () => {
       title: "Solar PV Integration",
       description: "4kW system with battery storage",
       icon: TrendingUp,
-      prompt: "Materials cost for 4kW solar PV system with battery storage integration, AC isolators, and generation meter."
+      prompt: "Materials cost for 4kW solar PV system with battery storage integration, AC isolators, and generation metre."
     }
   ];
 
@@ -104,7 +103,7 @@ const CostEngineerInterface = () => {
     setPrompt(examplePrompt);
     toast({
       title: "Example Loaded",
-      description: "Click Generate Cost Analysis to see how it works (coming soon).",
+      description: "Click Generate Cost Analysis to see how it works.",
     });
   };
 
@@ -117,7 +116,7 @@ const CostEngineerInterface = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-green-400/10 rounded-full blur-3xl w-32 h-32 mx-auto"></div>
             <div className="relative inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-green-400/30 to-green-400/20 rounded-3xl border border-green-400/40 backdrop-blur-sm">
-              <Sparkles className="h-8 w-8 sm:h-10 sm:w-10 text-green-400 animate-pulse" />
+              <Calculator className="h-8 w-8 sm:h-10 sm:w-10 text-green-400 animate-pulse" />
             </div>
           </div>
           
@@ -155,9 +154,9 @@ const CostEngineerInterface = () => {
                   <Calculator className="h-5 w-5 text-green-400" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg sm:text-xl lg:text-2xl text-white font-semibold break-words">Cost Your Project</CardTitle>
+                  <CardTitle className="text-lg sm:text-xl lg:text-2xl text-white font-semibold break-words">What electrical work do you need costed?</CardTitle>
                   <CardDescription className="text-gray-400 mt-1 break-words">
-                    Describe your electrical project and get detailed cost breakdowns
+                    Describe your project requirements - AI will calculate materials and labour
                   </CardDescription>
                 </div>
               </div>
@@ -168,13 +167,56 @@ const CostEngineerInterface = () => {
               <div className="space-y-4">
                 <div className="relative">
                   <Textarea
-                    placeholder="Describe your electrical project in detail... e.g., 'Price out a complete 3-bed house rewire with new consumer unit, upgraded bonding, and LED downlights throughout.'"
+                    placeholder="e.g., Price out a complete 3-bed house rewire with new consumer unit, upgraded bonding, and LED downlights throughout"
                     className="min-h-[120px] bg-elec-dark/50 border-green-400/30 focus:border-green-400 text-white placeholder:text-gray-400 resize-none rounded-xl backdrop-blur-sm transition-all duration-300 focus:shadow-lg focus:shadow-green-400/20"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                   />
                   <div className="absolute bottom-3 right-3 text-xs text-gray-500">
                     {prompt.length}/500
+                  </div>
+                </div>
+
+                {/* Project Type Selector */}
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-400">Project Type:</p>
+                  <div className="flex flex-wrap gap-2 sm:gap-3">
+                    <Button 
+                      type="button"
+                      className={projectType === 'domestic' 
+                        ? "bg-gradient-to-r from-green-400 to-green-400/80 text-elec-dark" 
+                        : "border-green-400/30 text-green-400 hover:bg-green-400/20"
+                      }
+                      variant={projectType === 'domestic' ? 'default' : 'outline'}
+                      onClick={() => setProjectType('domestic')}
+                    >
+                      <Home className="h-4 w-4 mr-2" />
+                      Domestic
+                    </Button>
+                    <Button 
+                      type="button"
+                      className={projectType === 'commercial' 
+                        ? "bg-gradient-to-r from-green-400 to-green-400/80 text-elec-dark" 
+                        : "border-green-400/30 text-green-400 hover:bg-green-400/20"
+                      }
+                      variant={projectType === 'commercial' ? 'default' : 'outline'}
+                      onClick={() => setProjectType('commercial')}
+                    >
+                      <Building2 className="h-4 w-4 mr-2" />
+                      Commercial
+                    </Button>
+                    <Button 
+                      type="button"
+                      className={projectType === 'industrial' 
+                        ? "bg-gradient-to-r from-green-400 to-green-400/80 text-elec-dark" 
+                        : "border-green-400/30 text-green-400 hover:bg-green-400/20"
+                      }
+                      variant={projectType === 'industrial' ? 'default' : 'outline'}
+                      onClick={() => setProjectType('industrial')}
+                    >
+                      <Factory className="h-4 w-4 mr-2" />
+                      Industrial
+                    </Button>
                   </div>
                 </div>
                 
@@ -191,7 +233,7 @@ const CostEngineerInterface = () => {
                       </>
                     ) : (
                       <>
-                        <Sparkles className="h-5 w-5 mr-2" />
+                        <Calculator className="h-5 w-5 mr-2" />
                         <span className="text-sm sm:text-base">Generate Cost Analysis</span>
                       </>
                     )}
@@ -228,6 +270,7 @@ const CostEngineerInterface = () => {
                         variant="outline" 
                         className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20 h-12 sm:h-14 rounded-xl touch-manipulation min-h-[44px] opacity-50 cursor-not-allowed"
                         disabled
+                        title="Export functionality coming soon"
                       >
                         <Download className="h-4 w-4 sm:mr-2" />
                         <span className="hidden sm:inline">Export</span>
@@ -242,7 +285,7 @@ const CostEngineerInterface = () => {
                 <div className="p-6 bg-gradient-to-br from-elec-dark/80 to-elec-dark/60 rounded-xl border border-green-400/30 backdrop-blur-sm">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 bg-gradient-to-br from-green-400/30 to-green-400/20 rounded-xl flex items-center justify-center border border-green-400/40">
-                      <Sparkles className="h-6 w-6 text-green-400 animate-pulse" />
+                      <Calculator className="h-6 w-6 text-green-400 animate-pulse" />
                     </div>
                     <div>
                       <span className="text-white font-semibold text-lg">Generating Cost Analysis</span>
@@ -284,7 +327,7 @@ const CostEngineerInterface = () => {
                   >
                     <div className="flex items-center gap-3">
                       <Lightbulb className="h-5 w-5 text-green-400" />
-                      <h4 className="font-medium text-white break-words">Quick Start Examples</h4>
+                      <h4 className="font-medium text-white break-words">Example Costing Requests - Click to Use</h4>
                     </div>
                     {expandedSections.examples ? 
                       <ChevronUp className="h-4 w-4 text-gray-400" /> : 
@@ -328,19 +371,6 @@ const CostEngineerInterface = () => {
                   </div>
                 </div>
               )}
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Coming Soon Notice */}
-        <div className="max-w-4xl mx-auto px-2 sm:px-0">
-          <Card className="bg-gradient-to-br from-green-400/10 to-green-400/5 border border-green-400/30">
-            <CardContent className="p-6 text-center">
-              <Sparkles className="h-12 w-12 text-green-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-white mb-2">Full Functionality Coming Next Week</h3>
-              <p className="text-gray-400 text-sm">
-                Complete material pricing, labour cost analysis, and professional quotation generation will be available soon.
-              </p>
             </CardContent>
           </Card>
         </div>
