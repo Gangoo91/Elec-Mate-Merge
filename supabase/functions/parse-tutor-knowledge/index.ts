@@ -30,23 +30,103 @@ serve(async (req) => {
 
     console.log('📚 Processing tutor knowledge file...');
 
-    // Chunk by paragraphs (approximately 1500 characters)
+    // Helper function to split large paragraphs intelligently
+    const splitLargeParagraph = (text: string, maxSize: number = 900): string[] => {
+      if (text.length <= maxSize) return [text];
+      
+      // Try splitting by sentences first
+      const sentencePattern = /[^.!?]+[.!?]+(?:\s|$)/g;
+      const sentences = text.match(sentencePattern) || [];
+      
+      // Fallback: if no sentences found, split by newlines or words
+      if (sentences.length === 0) {
+        const lines = text.split(/\n/);
+        if (lines.length > 1) {
+          const chunks: string[] = [];
+          let currentChunk = '';
+          
+          for (const line of lines) {
+            if (currentChunk.length + line.length < maxSize) {
+              currentChunk += line + '\n';
+            } else {
+              if (currentChunk.trim()) chunks.push(currentChunk.trim());
+              currentChunk = line + '\n';
+            }
+          }
+          if (currentChunk.trim()) chunks.push(currentChunk.trim());
+          return chunks;
+        }
+        
+        // Last resort: split at word boundaries
+        const words = text.split(/\s+/);
+        const chunks: string[] = [];
+        let currentChunk = '';
+        
+        for (const word of words) {
+          if (currentChunk.length + word.length + 1 < maxSize) {
+            currentChunk += (currentChunk ? ' ' : '') + word;
+          } else {
+            if (currentChunk.trim()) chunks.push(currentChunk.trim());
+            currentChunk = word;
+          }
+        }
+        if (currentChunk.trim()) chunks.push(currentChunk.trim());
+        return chunks;
+      }
+      
+      // Build chunks from sentences
+      const chunks: string[] = [];
+      let currentChunk = '';
+      
+      for (const sentence of sentences) {
+        if (currentChunk.length + sentence.length < maxSize) {
+          currentChunk += sentence;
+        } else {
+          if (currentChunk.trim()) chunks.push(currentChunk.trim());
+          currentChunk = sentence;
+        }
+      }
+      if (currentChunk.trim()) chunks.push(currentChunk.trim());
+      
+      // Verify no chunk exceeds max size, split further if needed
+      const finalChunks: string[] = [];
+      for (const chunk of chunks) {
+        if (chunk.length > maxSize) {
+          finalChunks.push(...splitLargeParagraph(chunk, maxSize));
+        } else {
+          finalChunks.push(chunk);
+        }
+      }
+      
+      return finalChunks;
+    };
+
+    // Smart chunking: Split by paragraphs, then split large paragraphs
     const paragraphs = content
       .split(/\n\n+/)
       .filter((p: string) => p.trim().length > 50);
 
-    const chunks = [];
-    let currentChunk = '';
+    const chunks: string[] = [];
 
     for (const para of paragraphs) {
-      if (currentChunk.length + para.length < 1500) {
-        currentChunk += para + '\n\n';
+      if (para.length <= 1000) {
+        chunks.push(para.trim());
       } else {
-        if (currentChunk.trim()) chunks.push(currentChunk.trim());
-        currentChunk = para + '\n\n';
+        // Paragraph too large, split it intelligently
+        const subChunks = splitLargeParagraph(para, 900);
+        chunks.push(...subChunks);
       }
     }
-    if (currentChunk.trim()) chunks.push(currentChunk.trim());
+
+    console.log(`📊 Created ${chunks.length} chunks`);
+    
+    // Log chunk statistics
+    if (chunks.length > 0) {
+      const avgChunkSize = Math.round(chunks.reduce((sum, c) => sum + c.length, 0) / chunks.length);
+      const maxChunkSize = Math.max(...chunks.map(c => c.length));
+      const minChunkSize = Math.min(...chunks.map(c => c.length));
+      console.log(`📏 Chunk stats - Avg: ${avgChunkSize} chars, Min: ${minChunkSize}, Max: ${maxChunkSize}`);
+    }
 
     console.log(`📊 Created ${chunks.length} chunks`);
 
