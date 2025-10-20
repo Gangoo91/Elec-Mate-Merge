@@ -67,6 +67,7 @@ import SiteSafety from "@/pages/electrician-tools/SiteSafety";
 import AgentSelectorPage from "@/pages/electrician-tools/AgentSelectorPage";
 import CircuitDesigner from "@/pages/electrician-tools/CircuitDesigner";
 import CostEngineerPage from "@/pages/electrician-tools/CostEngineerPage";
+import InstallationSpecialistPage from "@/pages/electrician-tools/InstallationSpecialistPage";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -137,6 +138,7 @@ const ElectricianHubRoutes = () => (
     <Route path="agent-selector" element={<AgentSelectorPage />} />
     <Route path="circuit-designer" element={<CircuitDesigner />} />
     <Route path="cost-engineer" element={<CostEngineerPage />} />
+    <Route path="installation-specialist" element={<InstallationSpecialistPage />} />
     <Route path="calculations" element={<Calculations />} />
     <Route path="install-planner" element={<InstallPlannerV2 />} />
     <Route path="install-planner/results" element={<InstallPlannerResults />} />

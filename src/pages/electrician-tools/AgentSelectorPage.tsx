@@ -77,6 +77,11 @@ const AgentSelectorPage = () => {
       navigate('/electrician/cost-engineer', {
         state: { fromAgentSelector: true }
       });
+    } else if (agentId === 'installer') {
+      // Navigate to dedicated Installation Specialist page
+      navigate('/electrician/installation-specialist', {
+        state: { fromAgentSelector: true }
+      });
     } else {
       // Navigate to AI chat with pre-selected agent
       navigate('/electrician/install-planner?mode=ai', {
