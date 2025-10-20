@@ -5,10 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Wrench, Loader2, FileDown } from "lucide-react";
+import { Wrench, Loader2 } from "lucide-react";
 import { useSimpleAgent } from '@/hooks/useSimpleAgent';
 import { transformMaintenanceOutputToPDF } from '@/utils/maintenance-transformer';
 import type { MaintenanceAgentOutput } from '@/utils/maintenance-transformer';
+import MaintenancePDFButton from './MaintenancePDFButton';
 import ReactMarkdown from 'react-markdown';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
@@ -46,19 +47,6 @@ const MaintenanceInterface = () => {
     }
   };
 
-  const handleDownloadPDF = () => {
-    if (!result) return;
-    
-    const pdfData = transformMaintenanceOutputToPDF(result, {
-      equipmentType,
-      location,
-      installationAge
-    });
-    
-    // TODO: Integrate with professional PDF generator
-    console.log('PDF Data ready:', pdfData);
-    alert('PDF generation will be implemented in Phase 8');
-  };
 
   return (
     <div className="space-y-6">
@@ -190,10 +178,16 @@ const MaintenanceInterface = () => {
                   {result.equipmentSummary.equipmentType} - {result.equipmentSummary.maintenanceType}
                 </CardDescription>
               </div>
-              <Button onClick={handleDownloadPDF} variant="outline" className="gap-2">
-                <FileDown className="h-4 w-4" />
-                Download PDF
-              </Button>
+              <MaintenancePDFButton
+                maintenancePDFData={transformMaintenanceOutputToPDF(result, {
+                  equipmentType,
+                  location,
+                  installationAge
+                })}
+                equipmentType={equipmentType}
+                variant="outline"
+                className="gap-2"
+              />
             </div>
           </CardHeader>
           <CardContent className="space-y-6">

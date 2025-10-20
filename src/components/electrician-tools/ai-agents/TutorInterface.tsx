@@ -5,10 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { GraduationCap, Loader2, FileDown, Upload } from "lucide-react";
+import { GraduationCap, Loader2, Upload } from "lucide-react";
 import { useSimpleAgent } from '@/hooks/useSimpleAgent';
 import { transformTutorOutputToPDF } from '@/utils/tutor-transformer';
 import type { TutorAgentOutput } from '@/utils/tutor-transformer';
+import TutorPDFButton from './TutorPDFButton';
 import ReactMarkdown from 'react-markdown';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
@@ -46,18 +47,6 @@ const TutorInterface = () => {
     }
   };
 
-  const handleDownloadPDF = () => {
-    if (!result) return;
-    
-    const pdfData = transformTutorOutputToPDF(result, {
-      qualificationLevel,
-      topic: query
-    });
-    
-    // TODO: Integrate with professional PDF generator
-    console.log('PDF Data ready:', pdfData);
-    alert('PDF generation will be implemented in Phase 8');
-  };
 
   return (
     <div className="space-y-6">
@@ -202,10 +191,15 @@ const TutorInterface = () => {
                   Educational guidance for your question
                 </CardDescription>
               </div>
-              <Button onClick={handleDownloadPDF} variant="outline" className="gap-2">
-                <FileDown className="h-4 w-4" />
-                Download PDF
-              </Button>
+              <TutorPDFButton
+                tutorPDFData={transformTutorOutputToPDF(result, {
+                  qualificationLevel,
+                  topic: query
+                })}
+                topic={query}
+                variant="outline"
+                className="gap-2"
+              />
             </div>
           </CardHeader>
           <CardContent className="space-y-6">

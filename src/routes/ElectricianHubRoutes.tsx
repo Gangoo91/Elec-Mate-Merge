@@ -71,6 +71,8 @@ import InstallationSpecialistPage from "@/pages/electrician-tools/InstallationSp
 import HealthSafetyPage from "@/pages/electrician-tools/HealthSafetyPage";
 import CommissioningPage from "@/pages/electrician-tools/CommissioningPage";
 import ProjectManagerPage from "@/pages/electrician-tools/ProjectManagerPage";
+import MaintenancePage from "@/pages/electrician-tools/MaintenancePage";
+import TutorPage from "@/pages/electrician-tools/TutorPage";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -145,6 +147,8 @@ const ElectricianHubRoutes = () => (
     <Route path="health-safety" element={<HealthSafetyPage />} />
     <Route path="commissioning" element={<CommissioningPage />} />
     <Route path="project-manager" element={<ProjectManagerPage />} />
+    <Route path="maintenance" element={<MaintenancePage />} />
+    <Route path="tutor" element={<TutorPage />} />
     <Route path="calculations" element={<Calculations />} />
     <Route path="install-planner" element={<InstallPlannerV2 />} />
     <Route path="install-planner/results" element={<InstallPlannerResults />} />
