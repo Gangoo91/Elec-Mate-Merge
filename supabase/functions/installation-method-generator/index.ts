@@ -30,24 +30,31 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Call installer-v3 agent
+    // Build the detailed query (match AI RAMS pattern)
+    const detailedQuery = `${installationDescription}
+
+Provide a detailed step-by-step installation method statement including:
+1. Preparation and isolation procedures
+2. Installation sequence with specific steps
+3. Testing and commissioning requirements
+4. Tools and materials needed for each step
+5. Safety considerations at each step
+6. Time estimates for each phase
+
+Job type: ${installationType} installation
+${context.projectName ? `Project: ${context.projectName}` : ''}
+${context.location ? `Location: ${context.location}` : ''}
+
+Format as clear, numbered steps suitable for a professional method statement.`;
+
+    // Call installer-v3 agent - MATCH THE AI RAMS PATTERN
     const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
       body: {
-        messages: [
-          {
-            role: 'system',
-            content: `You are an expert electrician providing step-by-step installation guidance for ${installationType} installations in the UK. Focus on practical, clear instructions following BS 7671:2018+A3:2024.`
-          },
-          {
-            role: 'user',
-            content: `${installationDescription}\n\nProvide a detailed step-by-step installation method including:\n1. Preparation and isolation\n2. Installation sequence\n3. Testing requirements\n4. Tools and materials needed\n5. Safety considerations at each step\n6. Time estimates\n\nFormat as clear, numbered steps suitable for a method statement.`
-          }
-        ],
-        jobScale: installationType,
-        context: {
-          ...context,
-          requestMethodStatement: true
-        }
+        query: detailedQuery,
+        installationMethod: installationType,
+        location: context.location || undefined,
+        messages: [],
+        previousAgentOutputs: []
       }
     });
 
@@ -56,16 +63,28 @@ serve(async (req) => {
       throw installerError;
     }
 
+    if (!installerData) {
+      throw new Error('No response from installer agent');
+    }
+
+    // Extract response and structured data
     const installerResponse = installerData.response || '';
     const structuredData = installerData.structuredData || {};
+
+    logger.debug('Installer response received', {
+      hasResponse: !!installerResponse,
+      hasStructuredData: !!structuredData,
+      stepsCount: structuredData.steps?.length || 0
+    });
 
     // PHASE 1: Prioritize structured data over text parsing
     const steps = structuredData.steps && structuredData.steps.length > 0
       ? structuredData.steps.map((s: any, idx: number) => ({
+          id: `step-${idx + 1}`,
           stepNumber: idx + 1,
-          title: s.title || s.stepTitle || `Step ${idx + 1}`,
-          content: s.description || s.instructions || s.details || '',
-          safety: s.safetyNotes || s.safety || s.warnings || []
+          title: s.stepTitle || s.title || `Step ${idx + 1}`,
+          content: s.instructions || s.description || s.details || '',
+          safety: s.safetyNotes || s.safety || []
         }))
       : extractSteps(installerResponse);
 
@@ -101,11 +120,30 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    logger.error('Installation method generation failed', { error });
+    logger.error('Installation method generation failed', { 
+      error,
+      errorMessage: error instanceof Error ? error.message : 'Unknown error',
+      errorStack: error instanceof Error ? error.stack : undefined
+    });
+    
+    let errorMessage = 'Failed to generate installation method';
+    
+    if (error instanceof Error) {
+      if (error.message.includes('query is required')) {
+        errorMessage = 'Installation description is required';
+      } else if (error.message.includes('timeout')) {
+        errorMessage = 'Request timed out. Please try again with a shorter description.';
+      } else if (error.message.includes('rate limit')) {
+        errorMessage = 'Too many requests. Please wait a moment and try again.';
+      } else {
+        errorMessage = error.message;
+      }
+    }
+    
     return new Response(
       JSON.stringify({ 
         success: false,
-        error: error instanceof Error ? error.message : 'Failed to generate installation method'
+        error: errorMessage
       }),
       { 
         status: 500,
@@ -147,24 +185,38 @@ function extractSteps(response: string): Array<{stepNumber: number; title: strin
 
 function extractToolsList(structuredData: any): string[] {
   const tools = new Set<string>();
+  
+  // Check multiple possible locations for tools
   if (structuredData.steps) {
     for (const step of structuredData.steps) {
-      if (step.toolsRequired) {
-        step.toolsRequired.forEach((tool: string) => tools.add(tool));
-      }
+      const stepTools = step.toolsRequired || step.equipmentNeeded || step.tools || [];
+      stepTools.forEach((tool: string) => tools.add(tool));
     }
   }
+  
+  // Also check top-level tools list
+  if (structuredData.toolsRequired) {
+    structuredData.toolsRequired.forEach((tool: string) => tools.add(tool));
+  }
+  
   return Array.from(tools);
 }
 
 function extractMaterialsList(structuredData: any): string[] {
   const materials = new Set<string>();
+  
+  // Check multiple possible locations for materials
   if (structuredData.steps) {
     for (const step of structuredData.steps) {
-      if (step.materialsNeeded) {
-        step.materialsNeeded.forEach((material: string) => materials.add(material));
-      }
+      const stepMaterials = step.materialsNeeded || step.materials || [];
+      stepMaterials.forEach((material: string) => materials.add(material));
     }
   }
+  
+  // Also check top-level materials list
+  if (structuredData.materialsRequired) {
+    structuredData.materialsRequired.forEach((material: string) => materials.add(material));
+  }
+  
   return Array.from(materials);
 }
