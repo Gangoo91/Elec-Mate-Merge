@@ -68,6 +68,9 @@ import AgentSelectorPage from "@/pages/electrician-tools/AgentSelectorPage";
 import CircuitDesigner from "@/pages/electrician-tools/CircuitDesigner";
 import CostEngineerPage from "@/pages/electrician-tools/CostEngineerPage";
 import InstallationSpecialistPage from "@/pages/electrician-tools/InstallationSpecialistPage";
+import HealthSafetyPage from "@/pages/electrician-tools/HealthSafetyPage";
+import CommissioningPage from "@/pages/electrician-tools/CommissioningPage";
+import ProjectManagerPage from "@/pages/electrician-tools/ProjectManagerPage";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -135,10 +138,13 @@ const ElectricianHubRoutes = () => (
     <Route path="business-development/tools/cis-drc" element={<CISDRCHelper />} />
     
     {/* Core Workshop Tools */}
-    <Route path="agent-selector" element={<AgentSelectorPage />} />
+    <Route path="agents" element={<AgentSelectorPage />} />
     <Route path="circuit-designer" element={<CircuitDesigner />} />
     <Route path="cost-engineer" element={<CostEngineerPage />} />
     <Route path="installation-specialist" element={<InstallationSpecialistPage />} />
+    <Route path="health-safety" element={<HealthSafetyPage />} />
+    <Route path="commissioning" element={<CommissioningPage />} />
+    <Route path="project-manager" element={<ProjectManagerPage />} />
     <Route path="calculations" element={<Calculations />} />
     <Route path="install-planner" element={<InstallPlannerV2 />} />
     <Route path="install-planner/results" element={<InstallPlannerResults />} />

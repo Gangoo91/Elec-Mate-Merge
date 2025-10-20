@@ -67,23 +67,20 @@ const AgentSelectorPage = () => {
   const navigate = useNavigate();
 
   const handleAgentSelect = (agentId: string) => {
-    if (agentId === 'designer') {
-      // Navigate to dedicated Circuit Designer page
-      navigate('/electrician/circuit-designer', {
-        state: { fromAgentSelector: true }
-      });
-    } else if (agentId === 'cost-engineer') {
-      // Navigate to dedicated Cost Engineer page
-      navigate('/electrician/cost-engineer', {
-        state: { fromAgentSelector: true }
-      });
-    } else if (agentId === 'installer') {
-      // Navigate to dedicated Installation Specialist page
-      navigate('/electrician/installation-specialist', {
-        state: { fromAgentSelector: true }
-      });
+    const routes: Record<string, string> = {
+      'designer': '/electrician/circuit-designer',
+      'cost-engineer': '/electrician/cost-engineer',
+      'installer': '/electrician/installation-specialist',
+      'health-safety': '/electrician/health-safety',
+      'commissioning': '/electrician/commissioning',
+      'project-manager': '/electrician/project-manager'
+    };
+
+    const route = routes[agentId];
+    if (route) {
+      navigate(route, { state: { fromAgentSelector: true } });
     } else {
-      // Navigate to AI chat with pre-selected agent
+      // Fallback to AI chat
       navigate('/electrician/install-planner?mode=ai', {
         state: { preSelectedAgent: agentId }
       });
