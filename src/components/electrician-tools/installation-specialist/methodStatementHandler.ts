@@ -44,7 +44,7 @@ export const generateMethodStatement = async (
   onProgress?: (message: string) => void
 ): Promise<MergedMethodStatementOutput> => {
   try {
-    // STEP 1: Installer-v3 (Sequential - must go first)
+    // ===== PHASE 1: INSTALLER AGENT (Sequential - must go first) =====
     if (onProgress) onProgress('🔧 Generating installation procedure...');
     
     const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
@@ -73,10 +73,31 @@ export const generateMethodStatement = async (
       throw new Error('Installer agent returned empty response');
     }
     
-    // STEP 2: Maintenance + H&S in PARALLEL
-    if (onProgress) onProgress('🔍 Running inspection and risk assessment in parallel...');
+    console.log('✅ Installer completed:', { steps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []).length });
     
-    const [maintenanceResult, healthSafetyResult] = await Promise.allSettled([
+    // ===== PHASE 2: H&S + MAINTENANCE AGENTS (Parallel) =====
+    if (onProgress) onProgress('🔒 Running risk assessment & maintenance planning...');
+    
+    const [healthSafetyResult, maintenanceResult] = await Promise.allSettled([
+      // Health-Safety-v3 call
+      supabase.functions.invoke('health-safety-v3', {
+        body: {
+          query: `Assess risks for each step of: ${userQuery}`,
+          projectType: 'installation',
+          workType: installerOutput.workType || 'electrical installation',
+          location: projectDetails?.location || 'Site location',
+          // CRITICAL: Pass installation steps in structured format for step-specific hazard linking
+          installationSteps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []).map((s: any, i: number) => ({
+            stepNumber: i + 1,
+            title: s.title || s.stepTitle || `Step ${i + 1}`,
+            description: s.description || s.content || '',
+            safetyRequirements: s.safetyRequirements || [],
+            equipmentNeeded: s.equipmentNeeded || s.tools || []
+          })),
+          detectedHazards: installerOutput.detectedHazards || []
+        }
+      }),
+      
       // Maintenance-v3 call
       supabase.functions.invoke('maintenance-v3', {
         body: {

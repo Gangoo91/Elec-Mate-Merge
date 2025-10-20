@@ -29,7 +29,7 @@ const InstallationSpecialistInterface = () => {
 
     try {
       if (useFullMethodStatement) {
-        // 3-AGENT METHOD STATEMENT MODE (Installer → Maintenance + H&S parallel)
+        // 3-AGENT METHOD STATEMENT MODE (Installer first, then H&S + Maintenance parallel)
         const query = `Create a comprehensive method statement for: ${description}
 
 Project Context:
