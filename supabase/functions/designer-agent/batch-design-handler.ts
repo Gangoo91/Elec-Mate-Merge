@@ -309,7 +309,7 @@ Return complete circuit objects using the provided tool schema.`;
   
   // ✨ SIMPLIFIED SCHEMA - Matching AI RAMS Pattern (5 simple fields)
   const requestBody = {
-    model: aiConfig?.model || 'google/gemini-2.5-flash', // SPEED BOOST: faster default model
+    model: aiConfig?.model || 'openai/gpt-5-mini', // OpenAI for better reasoning
     messages: [
       { 
         role: 'system', 

@@ -57,7 +57,7 @@ export const useAIDesigner = () => {
           body: {
             mode: 'batch-design',
             aiConfig: {
-              model: 'google/gemini-2.5-flash', // SPEED BOOST: faster default model
+              model: 'openai/gpt-5-mini', // OpenAI for better reasoning
               maxTokens: 6000, // SPEED BOOST: reduced from 15000
               timeoutMs: 180000, // SPEED BOOST: 3 min (from 280s)
               noMemory: true,
