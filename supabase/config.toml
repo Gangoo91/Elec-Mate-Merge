@@ -49,6 +49,14 @@ timeout_sec = 300
 verify_jwt = false
 timeout_sec = 300
 
+[functions.maintenance-v3]
+verify_jwt = false
+timeout_sec = 300
+
+[functions.tutor-v3]
+verify_jwt = false
+timeout_sec = 300
+
 # Agent Router - Must be public since it routes to public V3 agents
 [functions.agent-router]
 verify_jwt = false

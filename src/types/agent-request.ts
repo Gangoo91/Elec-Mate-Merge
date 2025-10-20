@@ -79,4 +79,4 @@ export interface AgentResponse {
   suggestedNextAgents?: string[];
 }
 
-export type AgentType = 'designer' | 'cost-engineer' | 'health-safety' | 'installer' | 'project-manager' | 'commissioning';
+export type AgentType = 'designer' | 'cost-engineer' | 'health-safety' | 'installer' | 'project-manager' | 'commissioning' | 'maintenance' | 'tutor';

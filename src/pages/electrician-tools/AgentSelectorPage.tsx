@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard } from "lucide-react";
+import { ArrowLeft, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface Agent {
@@ -60,6 +60,22 @@ const AGENTS: Agent[] = [
     color: 'text-pink-400',
     description: 'Scheduling, coordination, handover documentation',
     expertise: ['Project planning', 'Coordination', 'Documentation', 'Client communication']
+  },
+  {
+    id: 'maintenance',
+    name: 'Maintenance Specialist',
+    icon: Settings,
+    color: 'text-cyan-400',
+    description: 'Periodic inspections, preventive maintenance & fault diagnosis',
+    expertise: ['Periodic inspections', 'Preventive maintenance', 'Fault diagnosis', 'Equipment servicing']
+  },
+  {
+    id: 'tutor',
+    name: 'Training Tutor',
+    icon: GraduationCap,
+    color: 'text-indigo-400',
+    description: 'Educational guidance, exam prep & concept explanations',
+    expertise: ['Level 3 guidance', 'Concept explanations', 'Exam preparation', 'Practice questions']
   }
 ];
 
@@ -73,7 +89,9 @@ const AgentSelectorPage = () => {
       'installer': '/electrician/installation-specialist',
       'health-safety': '/electrician/health-safety',
       'commissioning': '/electrician/commissioning',
-      'project-manager': '/electrician/project-manager'
+      'project-manager': '/electrician/project-manager',
+      'maintenance': '/electrician/maintenance',
+      'tutor': '/electrician/tutor'
     };
 
     const route = routes[agentId];

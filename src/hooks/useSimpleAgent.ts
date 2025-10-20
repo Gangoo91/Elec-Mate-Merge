@@ -26,7 +26,9 @@ const AGENT_FUNCTIONS: Record<AgentType, string> = {
   'health-safety': 'health-safety-v3',
   'installer': 'installer-v3',
   'project-manager': 'project-mgmt-v3',
-  'commissioning': 'commissioning-v3'
+  'commissioning': 'commissioning-v3',
+  'maintenance': 'maintenance-v3',
+  'tutor': 'tutor-v3'
 };
 
 const AGENT_NAMES: Record<AgentType, string> = {
@@ -35,7 +37,9 @@ const AGENT_NAMES: Record<AgentType, string> = {
   'health-safety': 'Health & Safety Advisor',
   'installer': 'Installation Specialist',
   'project-manager': 'Project Manager',
-  'commissioning': 'Commissioning Specialist'
+  'commissioning': 'Commissioning Specialist',
+  'maintenance': 'Maintenance Specialist',
+  'tutor': 'Training Tutor'
 };
 
 export const useSimpleAgent = (): UseSimpleAgentReturn => {

@@ -2701,6 +2701,45 @@ export type Database = {
         }
         Relationships: []
       }
+      maintenance_knowledge: {
+        Row: {
+          content: string
+          created_at: string | null
+          embedding: string | null
+          equipment_type: string | null
+          id: string
+          maintenance_type: string | null
+          metadata: Json | null
+          search_vector: unknown | null
+          source: string
+          topic: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          embedding?: string | null
+          equipment_type?: string | null
+          id?: string
+          maintenance_type?: string | null
+          metadata?: Json | null
+          search_vector?: unknown | null
+          source: string
+          topic: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          embedding?: string | null
+          equipment_type?: string | null
+          id?: string
+          maintenance_type?: string | null
+          metadata?: Json | null
+          search_vector?: unknown | null
+          source?: string
+          topic?: string
+        }
+        Relationships: []
+      }
       major_projects: {
         Row: {
           average_rating: number | null
@@ -5756,6 +5795,48 @@ export type Database = {
         }
         Relationships: []
       }
+      tutor_knowledge: {
+        Row: {
+          content: string
+          created_at: string | null
+          embedding: string | null
+          exam_relevance: string | null
+          id: string
+          metadata: Json | null
+          qualification_level: string | null
+          search_vector: unknown | null
+          source: string
+          subject_area: string | null
+          topic: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          embedding?: string | null
+          exam_relevance?: string | null
+          id?: string
+          metadata?: Json | null
+          qualification_level?: string | null
+          search_vector?: unknown | null
+          source: string
+          subject_area?: string | null
+          topic: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          embedding?: string | null
+          exam_relevance?: string | null
+          id?: string
+          metadata?: Json | null
+          qualification_level?: string | null
+          search_vector?: unknown | null
+          source?: string
+          subject_area?: string | null
+          topic?: string
+        }
+        Relationships: []
+      }
       uk_postcode_districts: {
         Row: {
           area_code: string
@@ -6437,6 +6518,23 @@ export type Database = {
           topic: string
         }[]
       }
+      search_maintenance_hybrid: {
+        Args: {
+          equipment_filter?: string
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          content: string
+          equipment_type: string
+          hybrid_score: number
+          id: string
+          metadata: Json
+          source: string
+          topic: string
+        }[]
+      }
       search_pricing: {
         Args: {
           category_filter?: string
@@ -6482,6 +6580,23 @@ export type Database = {
           match_score: number
           priority_score: number
           regulation_number: string
+        }[]
+      }
+      search_tutor_hybrid: {
+        Args: {
+          level_filter?: string
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          content: string
+          hybrid_score: number
+          id: string
+          metadata: Json
+          qualification_level: string
+          source: string
+          topic: string
         }[]
       }
       sparsevec_out: {
