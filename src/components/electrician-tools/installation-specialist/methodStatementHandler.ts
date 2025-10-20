@@ -45,11 +45,14 @@ export const generateMethodStatement = async (
 ): Promise<MergedMethodStatementOutput> => {
   try {
     // ===== PHASE 1: INSTALLER AGENT (Sequential - must go first) =====
-    if (onProgress) onProgress('🔧 Generating installation procedure...');
+    // Searches RAG for installation procedures and generates base installation steps
+    if (onProgress) onProgress('🔧 Searching installation procedures & generating steps...');
     
     const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
       body: { 
-        query: userQuery,
+        query: `Search RAG for installation procedures and create detailed installation steps for: ${userQuery}
+        
+CRITICAL: Search RAG first for relevant installation procedures, best practices, and BS 7671 requirements`,
         projectDetails,
         conversationId
       }
@@ -75,14 +78,16 @@ export const generateMethodStatement = async (
     
     console.log('✅ Installer completed:', { steps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []).length });
     
-    // ===== PHASE 2: H&S + MAINTENANCE AGENTS (Parallel) =====
-    if (onProgress) onProgress('🔒 Running risk assessment & method statement completion...');
+    // ===== PHASE 2: H&S + MAINTENANCE AGENTS (Parallel - both search RAG) =====
+    if (onProgress) onProgress('🔒 Searching RAG for hazards & testing procedures...');
     
     const [healthSafetyResult, maintenanceResult] = await Promise.allSettled([
-      // Health-Safety-v3 - Fills hazards per step
+      // Health-Safety-v3 - Searches RAG for hazards, then fills hazards per step
       supabase.functions.invoke('health-safety-v3', {
         body: {
-          query: `Assess risks for each step of: ${userQuery}`,
+          query: `Search RAG for health & safety hazards, then assess risks for each step of: ${userQuery}
+          
+CRITICAL: Search RAG first for relevant hazards, control measures, and safety requirements`,
           projectType: 'installation',
           workType: installerOutput.workType || 'electrical installation',
           location: projectDetails?.location || 'Site location',
@@ -98,14 +103,14 @@ export const generateMethodStatement = async (
         }
       }),
       
-      // Maintenance-v3 - THE POWERHOUSE: RAG search, review installer, add testing, fill complete method statement
+      // Maintenance-v3 - Searches RAG, reviews installer, adds testing, fills complete method statement
       supabase.functions.invoke('maintenance-v3', {
         body: {
-          query: `Complete comprehensive method statement for: ${userQuery}
+          query: `Search RAG for procedures, then complete comprehensive method statement for: ${userQuery}
           
 CRITICAL TASKS (in order):
-1. Search RAG for relevant inspection, testing, and commissioning procedures
-2. Review and enhance the installation steps provided by the installer agent
+1. SEARCH RAG FIRST for inspection, testing, and commissioning procedures
+2. Review and enhance the installation steps provided by installer
 3. Add detailed inspection, testing, and commissioning procedures
 4. Fill in ALL remaining method statement fields (tools, materials, practical tips, warnings, compliance regulations)
 5. Validate entire document for BS 7671:2018+A3:2024 compliance`,
