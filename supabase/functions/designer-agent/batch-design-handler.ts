@@ -1042,9 +1042,13 @@ Always cite regulation numbers and show working for calculations.`
       // FIX: Ensure fallback toolCall is pushed to allToolCalls
       allToolCalls.push(toolCall);
     } else {
-      // Try parsing content as JSON or extract from markdown
-      try {
-        const parsed = JSON.parse(content);
+      // Still no tool call after retry - last resort content extraction
+      const content = (batchResults.find(r => r?.aiData)?.aiData?.choices?.[0]?.message?.content) || null;
+      
+      if (content) {
+        // Try parsing content as JSON or extract from markdown
+        try {
+          const parsed = JSON.parse(content);
         if (parsed.circuits) {
           logger.info('✅ Recovered design from direct JSON content');
           toolCall = { function: { arguments: content } };
@@ -1074,7 +1078,15 @@ Always cite regulation numbers and show working for calculations.`
           contentPreview: content?.substring(0, 200),
           fullContentLength: content?.length || 0
         });
-        throw new Error('AI did not return structured design (no tool call). The AI may have returned text instead of calling the design_circuits function. Please try again or simplify your request.');
+        return new Response(JSON.stringify({
+          success: false,
+          error: 'AI returned unstructured output. Please try again or simplify the request.',
+          code: 'UNSTRUCTURED_OUTPUT',
+          design: null
+        }), {
+          status: 200,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
       }
     }
   }
@@ -1148,7 +1160,15 @@ Always cite regulation numbers and show working for calculations.`
       circuitsValue: designData.circuits,
       hasCircuits: !!designData.circuits
     });
-    throw new Error('AI did not generate circuits array. Received: ' + typeof designData.circuits);
+    return new Response(JSON.stringify({
+      success: false,
+      error: 'AI returned invalid circuits data. Please try again.',
+      code: 'INVALID_CIRCUITS',
+      design: null
+    }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
   }
   
   if (designData.circuits.length === 0) {
@@ -1159,12 +1179,15 @@ Always cite regulation numbers and show working for calculations.`
     });
     
     // FIX: Return structured 200 response instead of throwing (prevents retry loop)
-    return {
+    return new Response(JSON.stringify({
       success: false,
       error: 'AI returned no circuits after fallback. Try adding a bit more detail (e.g., circuit names/powers) or reduce complexity.',
       code: 'NO_CIRCUITS',
       design: null
-    };
+    }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
   }
   
   logger.info('✅ Design data merged successfully', {
