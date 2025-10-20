@@ -153,7 +153,32 @@ serve(async (req) => {
     // Build HIGH-LEVEL INSTALL KNOWLEDGE from installer output
     let installKnowledge = '';
     let contextSection = '';
-    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+    
+    // NEW: Parse installationSteps directly from body (preferred) or previousAgentOutputs
+    const installationSteps = body.installationSteps || 
+      previousAgentOutputs?.find((o: any) => o.agent === 'installer')?.response?.structuredData?.steps;
+    
+    if (installationSteps && Array.isArray(installationSteps)) {
+      installKnowledge = '\n\n📋 INSTALLATION STEPS TO ASSESS FOR RISKS:\n';
+      installKnowledge += '⚠️ CRITICAL: Link each hazard to its step number using linkedToStep field\n\n';
+      
+      installationSteps.forEach((step: any, idx: number) => {
+        const stepNum = idx + 1;
+        installKnowledge += `Step ${stepNum}: ${step.title || step.stepTitle || 'Untitled'}\n`;
+        installKnowledge += `  Description: ${step.description || step.content || 'No description'}\n`;
+        if (step.safetyRequirements && step.safetyRequirements.length > 0) {
+          installKnowledge += `  Existing safety: ${step.safetyRequirements.join(', ')}\n`;
+        }
+        if (step.equipmentNeeded && step.equipmentNeeded.length > 0) {
+          installKnowledge += `  Tools: ${step.equipmentNeeded.join(', ')}\n`;
+        }
+        installKnowledge += '\n';
+      });
+      
+      installKnowledge += '⚠️ For each hazard you identify, set linkedToStep to the step number it applies to.\n';
+      installKnowledge += '   Example: If "work at height" applies to step 2, set linkedToStep: 2\n';
+      installKnowledge += '   General hazards (site access, welfare) should use linkedToStep: 0\n\n';
+    } else if (previousAgentOutputs && previousAgentOutputs.length > 0) {
       const installerOutput = previousAgentOutputs.find((o: any) => o.agent === 'installer');
       const designerOutput = previousAgentOutputs.find((o: any) => o.agent === 'designer');
       
@@ -223,11 +248,14 @@ RISK MATRIX (5x5):
 - Risk Score = L × S (1-4: Low, 5-9: Medium, 10-14: High, 15-25: Very High)
 
 INSTRUCTIONS:
-1. Extract hazards from knowledge base with specific regulations (e.g., "EWR 1989 Reg 4(3)", "WAHR 2005 Reg 6")
-2. Apply control hierarchy: Elimination → Substitution → Engineering → Admin → PPE
-3. Calculate BEFORE and AFTER risk scores to show control effectiveness
-4. Reference emergency procedures (HSE INDG231 for shock, CO2 for electrical fires)
-5. Include isolation per BS 7671 Section 462 with lock-off devices
+1. CRITICAL: You will receive installation steps below - identify hazards for EACH SPECIFIC STEP
+2. Use linkedToStep field to link hazards (e.g., step 1 uses linkedToStep: 1, step 2 uses linkedToStep: 2)
+3. General site hazards (access, welfare, site logistics) should use linkedToStep: 0
+4. Extract hazards from knowledge base with specific regulations (e.g., "EWR 1989 Reg 4(3)", "WAHR 2005 Reg 6")
+5. Apply control hierarchy: Elimination → Substitution → Engineering → Admin → PPE
+6. Calculate BEFORE and AFTER risk scores to show control effectiveness
+7. Reference emergency procedures (HSE INDG231 for shock, CO2 for electrical fires)
+8. Include isolation per BS 7671 Section 462 with lock-off devices
 
 ${contextSection}
 
@@ -270,10 +298,14 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                 properties: {
                   hazards: {
                     type: 'array',
-                    items: {
+                     items: {
                       type: 'object',
                       properties: {
                         hazard: { type: 'string', description: 'Hazard description in UK English (authorised, realise, organise, metres)' },
+                        linkedToStep: { 
+                          type: 'number', 
+                          description: 'Step number this hazard applies to (1-based index), or 0 for general site hazards' 
+                        },
                         likelihood: { type: 'number', minimum: 1, maximum: 5 },
                         likelihoodReason: { type: 'string' },
                         severity: { type: 'number', minimum: 1, maximum: 5 },
@@ -282,7 +314,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                         riskLevel: { type: 'string' },
                         regulation: { type: 'string' }
                       },
-                      required: ['hazard', 'likelihood', 'severity', 'riskScore', 'riskLevel']
+                      required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel']
                     }
                   },
                   controls: {

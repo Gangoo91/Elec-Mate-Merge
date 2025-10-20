@@ -92,12 +92,19 @@ export const generateMethodStatement = async (
       // Health-Safety-v3 call (runs at same time)
       supabase.functions.invoke('health-safety-v3', {
         body: {
-          query: userQuery,
+          query: `Assess risks for each step of: ${userQuery}`,
           projectType: 'installation',
-          // Context from installer
-          installationSteps: installerOutput.installationSteps || installerOutput.methodStatementSteps,
-          detectedHazards: installerOutput.detectedHazards || [],
-          workType: installerOutput.workType
+          workType: installerOutput.workType || 'electrical installation',
+          location: projectDetails?.location || 'Site location',
+          // CRITICAL: Pass installation steps in structured format for step-specific hazard linking
+          installationSteps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []).map((s: any, i: number) => ({
+            stepNumber: i + 1,
+            title: s.title || s.stepTitle || `Step ${i + 1}`,
+            description: s.description || s.content || '',
+            safetyRequirements: s.safetyRequirements || [],
+            equipmentNeeded: s.equipmentNeeded || s.tools || []
+          })),
+          detectedHazards: installerOutput.detectedHazards || []
         }
       })
     ]);
@@ -135,23 +142,84 @@ function mergeAgentOutputs(installer: any, maintenance: any | null, healthSafety
   // Get installation steps from installer
   const installerSteps = installer.installationSteps || installer.methodStatementSteps || [];
   
+  // Extract H&S data if available
+  const allHazards = healthSafety?.riskAssessment?.hazards || [];
+  const allControls = healthSafety?.riskAssessment?.controls || [];
+  
+  console.log('🔍 Merging agent outputs:', {
+    installerSteps: installerSteps.length,
+    totalHazards: allHazards.length,
+    hasHealthSafety: !!healthSafety
+  });
+  
   return {
-    // Installation steps (from installer, enriched with other agents)
-    installationSteps: installerSteps.map((step: any, index: number) => ({
-      stepNumber: step.step || step.stepNumber || index + 1,
-      title: step.title || step.stepTitle || `Step ${index + 1}`,
-      description: step.description || step.content || '',
-      safetyRequirements: step.safetyRequirements || [],
-      equipmentNeeded: step.equipmentNeeded || step.tools || [],
-      qualifications: step.qualifications || [],
-      estimatedDuration: step.estimatedDuration || step.duration || 'Not specified',
-      riskLevel: (step.riskLevel || 'medium') as 'low' | 'medium' | 'high',
-      // Add inspection checkpoints from maintenance (if available)
-      inspectionCheckpoints: maintenance?.inspectionChecklist?.[index] || [],
-      // Add hazards and controls from H&S (if available)
-      linkedHazards: healthSafety?.hazards?.[index] || [],
-      controlMeasures: healthSafety?.controlMeasures?.[index] || []
-    })),
+    // Installation steps (enriched with step-specific hazards)
+    installationSteps: installerSteps.map((step: any, index: number) => {
+      const stepNumber = index + 1;
+      
+      // Filter hazards linked to this specific step
+      let stepSpecificHazards = allHazards
+        .filter((h: any) => h.linkedToStep === stepNumber)
+        .map((h: any) => h.hazard);
+      
+      // Fallback: If no step-linked hazards found, try keyword matching
+      if (stepSpecificHazards.length === 0 && allHazards.length > 0) {
+        const stepKeywords = ((step.description || '') + ' ' + (step.title || '')).toLowerCase();
+        const keywordMatchedHazards = allHazards
+          .filter((h: any) => {
+            // Skip if explicitly linked to a different step
+            if (h.linkedToStep !== undefined && h.linkedToStep !== stepNumber && h.linkedToStep !== 0) return false;
+            
+            const hazardText = (h.hazard || '').toLowerCase();
+            const hazardWords = hazardText.split(' ').filter((w: string) => w.length > 3);
+            
+            // Check if any hazard keyword appears in step description
+            return hazardWords.some((word: string) => stepKeywords.includes(word));
+          })
+          .map((h: any) => h.hazard);
+        
+        if (keywordMatchedHazards.length > 0) {
+          console.log(`Step ${stepNumber}: Keyword fallback matched ${keywordMatchedHazards.length} hazards`);
+          stepSpecificHazards = keywordMatchedHazards;
+        }
+      }
+      
+      // Filter controls for this step's hazards
+      const stepSpecificControls = allControls
+        .filter((c: any) => stepSpecificHazards.includes(c.hazard))
+        .map((c: any) => c.controlMeasure);
+      
+      // Calculate max risk level for this step
+      const stepHazardObjects = allHazards.filter((h: any) => 
+        h.linkedToStep === stepNumber || stepSpecificHazards.includes(h.hazard)
+      );
+      const maxRiskLevel = stepHazardObjects.length > 0
+        ? stepHazardObjects.reduce((max: string, h: any) => {
+            const levels: Record<string, number> = { 'low': 1, 'medium': 2, 'high': 3, 'very high': 4 };
+            const currentLevel = (h.riskLevel || 'medium').toLowerCase();
+            return (levels[currentLevel] || 2) > (levels[max.toLowerCase()] || 0) ? currentLevel : max;
+          }, 'low')
+        : (step.riskLevel || 'medium');
+      
+      console.log(`Step ${stepNumber}: ${stepSpecificHazards.length} hazards, risk: ${maxRiskLevel}`);
+      
+      return {
+        stepNumber: step.step || step.stepNumber || stepNumber,
+        title: step.title || step.stepTitle || `Step ${stepNumber}`,
+        description: step.description || step.content || '',
+        safetyRequirements: [
+          ...(step.safetyRequirements || []),
+          ...stepSpecificControls
+        ],
+        equipmentNeeded: step.equipmentNeeded || step.tools || [],
+        qualifications: step.qualifications || [],
+        estimatedDuration: step.estimatedDuration || step.duration || 'Not specified',
+        riskLevel: maxRiskLevel as 'low' | 'medium' | 'high',
+        linkedHazards: stepSpecificHazards,
+        inspectionCheckpoints: maintenance?.inspectionChecklist?.[index] || [],
+        notes: step.criticalPoints?.join('; ') || ''
+      };
+    }),
     
     // Equipment schedule (from maintenance pre-work requirements, or defaults)
     equipmentSchedule: maintenance ? (maintenance.preWorkRequirements || [])
