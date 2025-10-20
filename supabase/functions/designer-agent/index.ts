@@ -1905,11 +1905,6 @@ IMPORTANT - RESPONSE FORMAT:
       stack: error instanceof Error ? error.stack : undefined
     });
     return handleError(error);
-      confidence: 0.3
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
   }
 });
 
