@@ -13,6 +13,7 @@ import MaintenancePDFButton from './MaintenancePDFButton';
 import ReactMarkdown from 'react-markdown';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
+import { MaintenanceSignatureSection } from './MaintenanceSignatureSection';
 
 const MaintenanceInterface = () => {
   const [equipmentType, setEquipmentType] = useState('');
@@ -21,6 +22,18 @@ const MaintenanceInterface = () => {
   const [location, setLocation] = useState('');
   const [query, setQuery] = useState('');
   const [result, setResult] = useState<MaintenanceAgentOutput | null>(null);
+  
+  // Signature state
+  const [technicianSignature, setTechnicianSignature] = useState({
+    name: '',
+    date: '',
+    signatureDataUrl: ''
+  });
+  const [supervisorSignature, setSupervisorSignature] = useState({
+    name: '',
+    date: '',
+    signatureDataUrl: ''
+  });
   
   const { callAgent, isLoading, progress } = useSimpleAgent();
 
@@ -44,8 +57,34 @@ const MaintenanceInterface = () => {
 
     if (response?.success && response.result) {
       setResult(response.result as MaintenanceAgentOutput);
+      // Reset signatures when new result is generated
+      setTechnicianSignature({ name: '', date: '', signatureDataUrl: '' });
+      setSupervisorSignature({ name: '', date: '', signatureDataUrl: '' });
     }
   };
+
+  const handleTechnicianChange = (field: 'name' | 'date' | 'signature', value: string) => {
+    setTechnicianSignature(prev => ({
+      ...prev,
+      [field === 'signature' ? 'signatureDataUrl' : field]: value
+    }));
+  };
+
+  const handleSupervisorChange = (field: 'name' | 'date' | 'signature', value: string) => {
+    setSupervisorSignature(prev => ({
+      ...prev,
+      [field === 'signature' ? 'signatureDataUrl' : field]: value
+    }));
+  };
+
+  // Validation: both signatures must be complete
+  const signaturesComplete = 
+    technicianSignature.name.trim() !== '' &&
+    technicianSignature.date !== '' &&
+    technicianSignature.signatureDataUrl !== '' &&
+    supervisorSignature.name.trim() !== '' &&
+    supervisorSignature.date !== '' &&
+    supervisorSignature.signatureDataUrl !== '';
 
 
   return (
@@ -169,27 +208,18 @@ const MaintenanceInterface = () => {
 
       {/* Results Display */}
       {result && (
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle>Maintenance Instructions</CardTitle>
-                <CardDescription>
-                  {result.equipmentSummary.equipmentType} - {result.equipmentSummary.maintenanceType}
-                </CardDescription>
+        <>
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Maintenance Instructions</CardTitle>
+                  <CardDescription>
+                    {result.equipmentSummary.equipmentType} - {result.equipmentSummary.maintenanceType}
+                  </CardDescription>
+                </div>
               </div>
-              <MaintenancePDFButton
-                maintenancePDFData={transformMaintenanceOutputToPDF(result, {
-                  equipmentType,
-                  location,
-                  installationAge
-                })}
-                equipmentType={equipmentType}
-                variant="outline"
-                className="gap-2"
-              />
-            </div>
-          </CardHeader>
+            </CardHeader>
           <CardContent className="space-y-6">
             {/* Overview */}
             <div>
@@ -285,6 +315,46 @@ const MaintenanceInterface = () => {
             )}
           </CardContent>
         </Card>
+
+        {/* Signature Section */}
+        <MaintenanceSignatureSection
+          technicianSignature={technicianSignature}
+          supervisorSignature={supervisorSignature}
+          onTechnicianChange={handleTechnicianChange}
+          onSupervisorChange={handleSupervisorChange}
+        />
+
+        {/* PDF Download - Only enabled when signatures complete */}
+        <Card className="border-green-500/30 bg-green-950/20">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-lg mb-1">Download Complete Maintenance Instruction</h3>
+                <p className="text-sm text-muted-foreground">
+                  {signaturesComplete 
+                    ? 'All signatures captured. Ready to download PDF.' 
+                    : 'Please complete both signatures above to enable PDF download.'}
+                </p>
+              </div>
+              <MaintenancePDFButton
+                maintenancePDFData={transformMaintenanceOutputToPDF(result, {
+                  equipmentType,
+                  location,
+                  installationAge
+                })}
+                equipmentType={equipmentType}
+                signatures={{
+                  technician: technicianSignature,
+                  supervisor: supervisorSignature
+                }}
+                disabled={!signaturesComplete}
+                variant="default"
+                className="gap-2"
+              />
+            </div>
+          </CardContent>
+        </Card>
+        </>
       )}
     </div>
   );
