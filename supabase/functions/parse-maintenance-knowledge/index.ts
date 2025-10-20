@@ -30,7 +30,7 @@ serve(async (req) => {
 
     console.log('📄 Processing maintenance knowledge file...');
 
-    // Chunk by paragraphs (approximately 1500 characters)
+    // Chunk by paragraphs (approximately 1000 characters)
     const paragraphs = content
       .split(/\n\n+/)
       .filter((p: string) => p.trim().length > 50);
@@ -39,7 +39,7 @@ serve(async (req) => {
     let currentChunk = '';
 
     for (const para of paragraphs) {
-      if (currentChunk.length + para.length < 1500) {
+      if (currentChunk.length + para.length < 1000) {
         currentChunk += para + '\n\n';
       } else {
         if (currentChunk.trim()) chunks.push(currentChunk.trim());
@@ -121,6 +121,9 @@ serve(async (req) => {
         console.error('Insert error:', error);
       } else {
         processedCount++;
+        if (processedCount % 50 === 0) {
+          console.log(`📊 Progress: ${processedCount}/${chunks.length} chunks processed`);
+        }
       }
     }
 

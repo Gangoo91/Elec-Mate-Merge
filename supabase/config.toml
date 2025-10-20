@@ -111,7 +111,7 @@ timeout_sec = 180
 
 [functions.parse-maintenance-knowledge]
 verify_jwt = false
-timeout_sec = 180
+timeout_sec = 600
 
 [functions.parse-tutor-knowledge]
 verify_jwt = false
