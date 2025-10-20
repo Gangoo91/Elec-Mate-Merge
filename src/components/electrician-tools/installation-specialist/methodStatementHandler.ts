@@ -55,13 +55,23 @@ export const generateMethodStatement = async (
       }
     });
     
+    console.log('📦 Installer response structure:', JSON.stringify(installerData, null, 2));
+    
     if (installerError) throw installerError;
     
     if (!installerData?.success) {
       throw new Error(installerData?.error || 'Installer agent failed');
     }
     
-    const installerOutput = installerData.result;
+    // Try multiple possible response structures for resilience
+    const installerOutput = installerData?.result || 
+                            installerData?.data?.result || 
+                            installerData?.structuredData || 
+                            installerData;
+    
+    if (!installerOutput) {
+      throw new Error('Installer agent returned empty response');
+    }
     
     // STEP 2: Maintenance + H&S in PARALLEL
     if (onProgress) onProgress('🔍 Running inspection and risk assessment in parallel...');
@@ -92,26 +102,27 @@ export const generateMethodStatement = async (
       })
     ]);
     
-    // Handle parallel results
-    let maintenanceOutput, healthSafetyOutput;
+    // Handle parallel results with graceful degradation
+    let maintenanceOutput = null;
+    let healthSafetyOutput = null;
     
     if (maintenanceResult.status === 'fulfilled') {
       maintenanceOutput = maintenanceResult.value.data?.result;
       if (onProgress) onProgress('✅ Inspection procedures ready');
     } else {
-      console.error('Maintenance agent failed:', maintenanceResult.reason);
-      throw new Error('Maintenance agent failed');
+      console.warn('Maintenance agent failed, continuing without inspection data:', maintenanceResult.reason);
+      if (onProgress) onProgress('⚠️ Inspection data unavailable, using defaults');
     }
     
     if (healthSafetyResult.status === 'fulfilled') {
       healthSafetyOutput = healthSafetyResult.value.data?.result;
       if (onProgress) onProgress('✅ Risk assessment complete');
     } else {
-      console.error('H&S agent failed:', healthSafetyResult.reason);
-      throw new Error('Health & Safety agent failed');
+      console.warn('H&S agent failed, continuing without risk assessment:', healthSafetyResult.reason);
+      if (onProgress) onProgress('⚠️ Risk assessment unavailable, using defaults');
     }
     
-    // STEP 3: Merge outputs
+    // STEP 3: Merge outputs (handles null agents gracefully)
     return mergeAgentOutputs(installerOutput, maintenanceOutput, healthSafetyOutput);
     
   } catch (error) {
@@ -120,7 +131,7 @@ export const generateMethodStatement = async (
   }
 };
 
-function mergeAgentOutputs(installer: any, maintenance: any, healthSafety: any): MergedMethodStatementOutput {
+function mergeAgentOutputs(installer: any, maintenance: any | null, healthSafety: any | null): MergedMethodStatementOutput {
   // Get installation steps from installer
   const installerSteps = installer.installationSteps || installer.methodStatementSteps || [];
   
@@ -135,15 +146,15 @@ function mergeAgentOutputs(installer: any, maintenance: any, healthSafety: any):
       qualifications: step.qualifications || [],
       estimatedDuration: step.estimatedDuration || step.duration || 'Not specified',
       riskLevel: (step.riskLevel || 'medium') as 'low' | 'medium' | 'high',
-      // Add inspection checkpoints from maintenance
-      inspectionCheckpoints: maintenance.inspectionChecklist?.[index] || [],
-      // Add hazards and controls from H&S
-      linkedHazards: healthSafety.hazards?.[index] || [],
-      controlMeasures: healthSafety.controlMeasures?.[index] || []
+      // Add inspection checkpoints from maintenance (if available)
+      inspectionCheckpoints: maintenance?.inspectionChecklist?.[index] || [],
+      // Add hazards and controls from H&S (if available)
+      linkedHazards: healthSafety?.hazards?.[index] || [],
+      controlMeasures: healthSafety?.controlMeasures?.[index] || []
     })),
     
-    // Equipment schedule (from maintenance pre-work requirements)
-    equipmentSchedule: (maintenance.preWorkRequirements || [])
+    // Equipment schedule (from maintenance pre-work requirements, or defaults)
+    equipmentSchedule: maintenance ? (maintenance.preWorkRequirements || [])
       .filter((req: any) => req.category === 'tools' || req.category === 'equipment')
       .map((req: any) => ({
         name: req.requirement,
@@ -151,55 +162,55 @@ function mergeAgentOutputs(installer: any, maintenance: any, healthSafety: any):
         certification: req.bs7671Reference || 'N/A',
         inspection: 'Daily pre-use check',
         responsible: 'Site Supervisor'
-      })),
+      })) : [],
     
-    // Testing procedures (from maintenance)
-    testingProcedures: (maintenance.testingProcedures || []).map((test: any) => ({
+    // Testing procedures (from maintenance, or defaults)
+    testingProcedures: maintenance ? (maintenance.testingProcedures || []).map((test: any) => ({
       name: test.testName,
       standard: test.bs7671Reference || 'BS 7671:2018+A3:2024',
       procedure: test.procedure || [],
       criteria: test.expectedResult?.value || test.expectedResult?.passFailCriteria || 'Pass',
       certification: maintenance.documentation?.certificatesIssued?.[0] || 'EIC'
-    })),
+    })) : [],
     
-    // Quality requirements (from maintenance)
-    qualityRequirements: (maintenance.testingProcedures || []).map((test: any) => ({
+    // Quality requirements (from maintenance, or defaults)
+    qualityRequirements: maintenance ? (maintenance.testingProcedures || []).map((test: any) => ({
       stage: test.testName,
       requirement: Array.isArray(test.procedure) ? test.procedure.join('. ') : test.testName,
       criteria: test.expectedResult?.passFailCriteria || 'Pass'
-    })),
+    })) : [],
     
-    // Site logistics (from H&S)
+    // Site logistics (from H&S, or defaults)
     siteLogistics: {
-      vehicleAccess: healthSafety.siteLogistics?.vehicleAccess || 'Via main entrance',
-      parking: healthSafety.siteLogistics?.parking || 'On-site parking available',
-      materialStorage: healthSafety.siteLogistics?.materialStorage || 'Secure compound',
-      wasteManagement: healthSafety.siteLogistics?.wasteManagement || 'Segregated waste bins',
-      welfareFacilities: healthSafety.siteLogistics?.welfare || 'On-site facilities',
-      siteRestrictions: healthSafety.siteLogistics?.restrictions || 'None specified'
+      vehicleAccess: healthSafety?.siteLogistics?.vehicleAccess || 'Via main entrance',
+      parking: healthSafety?.siteLogistics?.parking || 'On-site parking available',
+      materialStorage: healthSafety?.siteLogistics?.materialStorage || 'Secure compound',
+      wasteManagement: healthSafety?.siteLogistics?.wasteManagement || 'Segregated waste bins',
+      welfareFacilities: healthSafety?.siteLogistics?.welfare || 'On-site facilities',
+      siteRestrictions: healthSafety?.siteLogistics?.restrictions || 'None specified'
     },
     
-    // Conditional flags (from H&S + installer)
+    // Conditional flags (from H&S + installer, or defaults)
     conditionalFlags: {
-      work_at_height: healthSafety.conditionalFlags?.workAtHeight || false,
-      services_utilities: installer.conditionalFlags?.servicesUtilities || healthSafety.conditionalFlags?.servicesUtilities || false,
-      hot_works: healthSafety.conditionalFlags?.hotWorks || false,
-      confined_spaces: healthSafety.conditionalFlags?.confinedSpaces || false,
-      client_liaison: healthSafety.conditionalFlags?.clientLiaison || true, // Default true for installations
-      noise_dust_controls: healthSafety.conditionalFlags?.noiseDust || false,
-      environmental_considerations: healthSafety.conditionalFlags?.environmental || false,
-      testing_commissioning: true // Always true with maintenance agent
+      work_at_height: healthSafety?.conditionalFlags?.workAtHeight || false,
+      services_utilities: installer.conditionalFlags?.servicesUtilities || healthSafety?.conditionalFlags?.servicesUtilities || false,
+      hot_works: healthSafety?.conditionalFlags?.hotWorks || false,
+      confined_spaces: healthSafety?.conditionalFlags?.confinedSpaces || false,
+      client_liaison: healthSafety?.conditionalFlags?.clientLiaison || true, // Default true for installations
+      noise_dust_controls: healthSafety?.conditionalFlags?.noiseDust || false,
+      environmental_considerations: healthSafety?.conditionalFlags?.environmental || false,
+      testing_commissioning: maintenance !== null // True if maintenance data available
     },
     
-    // Work at height equipment (from H&S if flagged)
-    workAtHeightEquipment: healthSafety.workAtHeightEquipment || [],
+    // Work at height equipment (from H&S if flagged, or defaults)
+    workAtHeightEquipment: healthSafety?.workAtHeightEquipment || [],
     
-    // Competency requirements (from H&S)
+    // Competency requirements (from H&S, or defaults)
     competencyRequirements: {
-      minimumQualifications: healthSafety.competency?.qualifications || '18th Edition BS 7671:2018+A3:2024, ECS Gold Card',
-      mandatoryTraining: healthSafety.competency?.training || 'Site induction, Manual Handling, Working at Height',
-      supervisionLevel: healthSafety.competency?.supervision || 'Continuous supervision by qualified electrician',
-      additionalCertifications: healthSafety.competency?.additional || 'N/A'
+      minimumQualifications: healthSafety?.competency?.qualifications || '18th Edition BS 7671:2018+A3:2024, ECS Gold Card',
+      mandatoryTraining: healthSafety?.competency?.training || 'Site induction, Manual Handling, Working at Height',
+      supervisionLevel: healthSafety?.competency?.supervision || 'Continuous supervision by qualified electrician',
+      additionalCertifications: healthSafety?.competency?.additional || 'N/A'
     },
     
     // Raw agent outputs (for debugging/review)

@@ -18,7 +18,9 @@ const InstallationSpecialistInterface = () => {
   const [generateFullMethodStatement, setGenerateFullMethodStatement] = useState(true);
   const [methodStatementProgress, setMethodStatementProgress] = useState<string>('');
 
-  const handleGenerate = async (projectDetails: ProjectDetailsType, description: string) => {
+  const handleGenerate = async (projectDetails: ProjectDetailsType, description: string, useFullMethodStatement: boolean = false) => {
+    // Update the internal state based on user selection from the form
+    setGenerateFullMethodStatement(useFullMethodStatement);
     setCurrentView('processing');
     setIsProcessing(true);
     setMethodData(null);
@@ -26,7 +28,7 @@ const InstallationSpecialistInterface = () => {
     setMethodStatementProgress('');
 
     try {
-      if (generateFullMethodStatement) {
+      if (useFullMethodStatement) {
         // 3-AGENT METHOD STATEMENT MODE (Installer → Maintenance + H&S parallel)
         const query = `Create a comprehensive method statement for: ${description}
 

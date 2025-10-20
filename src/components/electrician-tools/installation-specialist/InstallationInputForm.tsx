@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import { Sparkles, Wrench } from 'lucide-react';
 import { InstallationTemplateSelector } from './InstallationTemplateSelector';
 import { InstallationProjectDetails } from './InstallationProjectDetails';
@@ -10,7 +12,7 @@ import { InstallationProjectDetails as ProjectDetailsType } from '@/types/instal
 import { toast } from '@/hooks/use-toast';
 
 interface InstallationInputFormProps {
-  onGenerate: (projectDetails: ProjectDetailsType, description: string) => void;
+  onGenerate: (projectDetails: ProjectDetailsType, description: string, generateFullMethodStatement: boolean) => void;
   isProcessing: boolean;
 }
 
@@ -20,6 +22,7 @@ export const InstallationInputForm = ({
 }: InstallationInputFormProps) => {
   const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
   const [description, setDescription] = useState('');
+  const [generateFullMethodStatement, setGenerateFullMethodStatement] = useState(false);
   const [projectDetails, setProjectDetails] = useState<ProjectDetailsType>({
     projectName: '',
     location: '',
@@ -60,7 +63,7 @@ export const InstallationInputForm = ({
       return;
     }
 
-    onGenerate(projectDetails, description);
+    onGenerate(projectDetails, description, generateFullMethodStatement);
   };
 
   const canGenerate = projectDetails.projectName.trim() && description.trim();
@@ -105,6 +108,33 @@ export const InstallationInputForm = ({
         projectDetails={projectDetails}
         onChange={setProjectDetails}
       />
+
+      {/* Method Statement Mode Toggle */}
+      <Card className="p-4 border-blue-500/20">
+        <div className="flex items-start gap-3">
+          <Switch 
+            id="method-statement-mode"
+            checked={generateFullMethodStatement}
+            onCheckedChange={setGenerateFullMethodStatement}
+          />
+          <div className="flex-1">
+            <Label htmlFor="method-statement-mode" className="text-base font-medium cursor-pointer">
+              Generate Full Method Statement
+            </Label>
+            <p className="text-sm text-muted-foreground mt-1">
+              {generateFullMethodStatement ? (
+                <>
+                  <span className="text-blue-400 font-medium">Comprehensive mode:</span> Includes installation steps, testing procedures, risk assessment, and site logistics (~15 seconds)
+                </>
+              ) : (
+                <>
+                  <span className="text-green-400 font-medium">Quick mode:</span> Installation guide only (~5 seconds)
+                </>
+              )}
+            </p>
+          </div>
+        </div>
+      </Card>
 
       {/* Generate Button */}
       <Button
