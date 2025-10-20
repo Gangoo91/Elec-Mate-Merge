@@ -226,8 +226,8 @@ export default function KnowledgeUploadForm({
       console.log(`Routing to edge function: ${edgeFunctionName}`);
       
       const { data, error } = await supabase.functions.invoke(edgeFunctionName, {
-        body: { fileContent },
-      });
+        body: { fileContent }
+      } as any);
 
       if (error) {
         console.error("Edge function error:", error);
