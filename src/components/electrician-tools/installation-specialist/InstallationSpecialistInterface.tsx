@@ -45,13 +45,17 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           'ms-' + Date.now(),
           (msg) => {
             setMethodStatementProgress(msg);
-            // Convert progress messages to stage format
-            if (msg.includes('installation')) {
-              setProgress({ stage: 1, percent: 30, message: msg });
-            } else if (msg.includes('inspection') || msg.includes('risk')) {
-              setProgress({ stage: 2, percent: 60, message: msg });
-            } else if (msg.includes('✅')) {
-              setProgress({ stage: 3, percent: 90, message: msg });
+            // Convert progress messages to stage format with better granularity
+            if (msg.includes('Searching') || msg.includes('installation procedures')) {
+              setProgress({ stage: 1, percent: 20, message: 'Analysing installation requirements...' });
+            } else if (msg.includes('generating steps') || msg.includes('installation')) {
+              setProgress({ stage: 2, percent: 40, message: 'Consulting BS 7671 knowledge base...' });
+            } else if (msg.includes('RAG for hazards') || msg.includes('testing')) {
+              setProgress({ stage: 3, percent: 60, message: 'Generating step-by-step method...' });
+            } else if (msg.includes('Inspection') || msg.includes('ready')) {
+              setProgress({ stage: 4, percent: 80, message: 'Extracting tools and materials...' });
+            } else if (msg.includes('✅') || msg.includes('complete')) {
+              setProgress({ stage: 5, percent: 95, message: 'Finalising safety notes...' });
             }
           }
         );
@@ -183,20 +187,28 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
       console.error('Installation guide generation error:', error);
       
       let errorMessage = "Could not generate installation guide. Please try again.";
+      let errorTitle = "Generation Failed";
+      
       if (error instanceof Error) {
-        if (error.message.includes('timeout')) {
-          errorMessage = "Request timed out. Please try breaking it into smaller parts.";
-        } else if (error.message.includes('rate limit')) {
-          errorMessage = "Too many requests. Please wait a moment and try again.";
-        } else if (error.message.includes('API key')) {
-          errorMessage = "AI service configuration error. Please contact support.";
+        if (error.message.includes('timeout') || error.message.includes('timed out')) {
+          errorTitle = "Request Timed Out";
+          errorMessage = "The installation method is taking longer than expected (>5 minutes). This can happen with complex installations. Please try again or use Quick Mode for faster results.";
+        } else if (error.message.includes('rate limit') || error.message.includes('429')) {
+          errorTitle = "Too Many Requests";
+          errorMessage = "Rate limit exceeded. Please wait a moment and try again.";
+        } else if (error.message.includes('API key') || error.message.includes('LOVABLE_API_KEY')) {
+          errorTitle = "Configuration Error";
+          errorMessage = "AI service is not properly configured. Please contact support.";
+        } else if (error.message.includes('network') || error.message.includes('fetch')) {
+          errorTitle = "Network Error";
+          errorMessage = "Connection issue detected. Please check your internet and try again.";
         } else {
           errorMessage = error.message;
         }
       }
       
       toast({
-        title: "Generation Failed",
+        title: errorTitle,
         description: errorMessage,
         variant: "destructive",
       });

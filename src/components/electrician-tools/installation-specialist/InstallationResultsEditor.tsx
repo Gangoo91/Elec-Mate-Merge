@@ -90,47 +90,79 @@ export const InstallationResultsEditor = ({
         description: "Creating your installation method document...",
       });
 
+      // Build comprehensive method statement payload
+      const methodStatementPayload = {
+        jobTitle: `Installation Method: ${projectDetails?.installationType || 'General Installation'}`,
+        description: projectDetails?.projectName || 'Electrical Installation Method Statement',
+        projectDetails: {
+          projectName: projectDetails?.projectName || 'N/A',
+          location: projectDetails?.location || 'Site Location',
+          clientName: projectDetails?.clientName || 'N/A',
+          electricianName: projectDetails?.electricianName || 'N/A',
+          installationType: projectDetails?.installationType || 'General'
+        },
+        steps: steps.map((step) => ({
+          id: `step-${step.stepNumber}`,
+          stepNumber: step.stepNumber,
+          title: step.title,
+          description: step.content,
+          safetyRequirements: step.safety || [],
+          equipmentNeeded: step.toolsRequired || [],
+          qualifications: summary.requiredQualifications || [],
+          estimatedDuration: step.estimatedDuration || 'Not specified',
+          riskLevel: step.riskLevel || 'medium'
+        })),
+        toolsRequired: summary.toolsRequired || [],
+        materialsRequired: summary.materialsRequired || [],
+        overallRiskLevel: summary.overallRiskLevel || 'medium',
+        estimatedDuration: summary.estimatedDuration || 'Not specified',
+        requiredQualifications: summary.requiredQualifications || ['18th Edition BS 7671:2018+A3:2024']
+      };
+
+      console.log('📄 Sending PDF generation request:', methodStatementPayload);
+
       const { data, error } = await supabase.functions.invoke('generate-method-statement-pdf', {
-        body: {
-          methodStatement: {
-            jobTitle: `Installation Method: ${projectDetails?.installationType || 'General'}`,
-            description: projectDetails?.projectName || 'Installation Method',
-            steps: steps.map((step) => ({
-              id: `step-${step.stepNumber}`,
-              stepNumber: step.stepNumber,
-              title: step.title,
-              description: step.content,
-              safetyRequirements: step.safety || [],
-              equipmentNeeded: [],
-              qualifications: [],
-              estimatedDuration: '',
-              riskLevel: step.riskLevel || 'medium'
-            })),
-            toolsRequired: summary.toolsRequired,
-            materialsRequired: summary.materialsRequired,
-            overallRiskLevel: summary.overallRiskLevel
-          }
-        }
+        body: { methodStatement: methodStatementPayload }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('PDF generation error:', error);
+        throw new Error(error.message || 'Failed to generate PDF');
+      }
 
+      if (!data || !data.publicUrl) {
+        throw new Error('PDF generation returned no URL');
+      }
+
+      // Download the PDF
       const link = document.createElement('a');
       link.href = data.publicUrl;
-      link.download = `installation-method-${Date.now()}.pdf`;
+      link.download = `installation-method-${projectDetails?.projectName?.replace(/\s+/g, '-') || Date.now()}.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
 
       toast({
-        title: "PDF Generated",
-        description: "Your installation method has been exported.",
+        title: "PDF Generated Successfully",
+        description: "Your installation method document has been downloaded.",
       });
     } catch (error) {
       console.error('PDF export error:', error);
+      
+      let errorMessage = "Could not generate PDF. Please try again.";
+      if (error instanceof Error) {
+        if (error.message.includes('timeout')) {
+          errorMessage = "PDF generation timed out. Please try again.";
+        } else if (error.message.includes('publicUrl')) {
+          errorMessage = "PDF was created but download link failed. Please contact support.";
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
       toast({
-        title: "Export Failed",
-        description: "Could not generate PDF. Please try again.",
+        title: "PDF Export Failed",
+        description: errorMessage,
         variant: "destructive",
       });
     }
