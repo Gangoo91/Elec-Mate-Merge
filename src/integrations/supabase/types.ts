@@ -2740,6 +2740,45 @@ export type Database = {
         }
         Relationships: []
       }
+      maintenance_knowledge_backup: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          embedding: string | null
+          equipment_type: string | null
+          id: string | null
+          maintenance_type: string | null
+          metadata: Json | null
+          search_vector: unknown | null
+          source: string | null
+          topic: string | null
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          embedding?: string | null
+          equipment_type?: string | null
+          id?: string | null
+          maintenance_type?: string | null
+          metadata?: Json | null
+          search_vector?: unknown | null
+          source?: string | null
+          topic?: string | null
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          embedding?: string | null
+          equipment_type?: string | null
+          id?: string | null
+          maintenance_type?: string | null
+          metadata?: Json | null
+          search_vector?: unknown | null
+          source?: string | null
+          topic?: string | null
+        }
+        Relationships: []
+      }
       major_projects: {
         Row: {
           average_rating: number | null
