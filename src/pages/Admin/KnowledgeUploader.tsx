@@ -18,7 +18,7 @@ export default function KnowledgeUploader() {
   } | null>(null);
 
   return (
-    <div className="container mx-auto py-8 space-y-6">
+    <div className="container mx-auto py-8 space-y-8">
       <div>
         <h1 className="text-3xl font-bold mb-2">Knowledge Base Uploader</h1>
         <p className="text-muted-foreground">
@@ -35,47 +35,47 @@ export default function KnowledgeUploader() {
         </AlertDescription>
       </Alert>
 
-      <Tabs defaultValue="bs7671" className="w-full">
-        <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 gap-2">
-          <TabsTrigger value="bs7671" className="flex items-center gap-2">
-            <Book className="h-4 w-4" />
-            BS 7671
+      <Tabs defaultValue="bs7671" className="w-full space-y-6">
+        <TabsList className="grid w-full grid-cols-3 md:grid-cols-9 h-auto gap-1 bg-muted p-2">
+          <TabsTrigger value="bs7671" className="flex flex-col items-center gap-1 py-3 data-[state=active]:bg-background">
+            <Book className="h-5 w-5" />
+            <span className="text-xs">BS 7671</span>
           </TabsTrigger>
-          <TabsTrigger value="installation" className="flex items-center gap-2">
-            <Hammer className="h-4 w-4" />
-            Installation
+          <TabsTrigger value="installation" className="flex flex-col items-center gap-1 py-3 data-[state=active]:bg-background">
+            <Hammer className="h-5 w-5" />
+            <span className="text-xs">Installation</span>
           </TabsTrigger>
-          <TabsTrigger value="pricing" className="flex items-center gap-2">
-            <Calculator className="h-4 w-4" />
-            Pricing
+          <TabsTrigger value="pricing" className="flex flex-col items-center gap-1 py-3 data-[state=active]:bg-background">
+            <Calculator className="h-5 w-5" />
+            <span className="text-xs">Pricing</span>
           </TabsTrigger>
-          <TabsTrigger value="design" className="flex items-center gap-2">
-            <ClipboardList className="h-4 w-4" />
-            Design
+          <TabsTrigger value="design" className="flex flex-col items-center gap-1 py-3 data-[state=active]:bg-background">
+            <ClipboardList className="h-5 w-5" />
+            <span className="text-xs">Design</span>
           </TabsTrigger>
-          <TabsTrigger value="project-mgmt" className="flex items-center gap-2">
-            <FolderKanban className="h-4 w-4" />
-            Project Mgmt
+          <TabsTrigger value="project-mgmt" className="flex flex-col items-center gap-1 py-3 data-[state=active]:bg-background">
+            <FolderKanban className="h-5 w-5" />
+            <span className="text-xs">Project</span>
           </TabsTrigger>
-          <TabsTrigger value="health-safety" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
-            Health & Safety
+          <TabsTrigger value="health-safety" className="flex flex-col items-center gap-1 py-3 data-[state=active]:bg-background">
+            <Shield className="h-5 w-5" />
+            <span className="text-xs">Safety</span>
           </TabsTrigger>
-          <TabsTrigger value="inspection" className="flex items-center gap-2">
-            <ClipboardCheck className="h-4 w-4" />
-            Inspection
+          <TabsTrigger value="inspection" className="flex flex-col items-center gap-1 py-3 data-[state=active]:bg-background">
+            <ClipboardCheck className="h-5 w-5" />
+            <span className="text-xs">Inspection</span>
           </TabsTrigger>
-          <TabsTrigger value="maintenance" className="flex items-center gap-2">
-            <Wrench className="h-4 w-4" />
-            Maintenance
+          <TabsTrigger value="maintenance" className="flex flex-col items-center gap-1 py-3 data-[state=active]:bg-background">
+            <Wrench className="h-5 w-5" />
+            <span className="text-xs">Maintenance</span>
           </TabsTrigger>
-          <TabsTrigger value="tutor" className="flex items-center gap-2">
-            <GraduationCap className="h-4 w-4" />
-            Tutor
+          <TabsTrigger value="tutor" className="flex flex-col items-center gap-1 py-3 data-[state=active]:bg-background">
+            <GraduationCap className="h-5 w-5" />
+            <span className="text-xs">Tutor</span>
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="bs7671" className="space-y-4">
+        <TabsContent value="bs7671" className="space-y-6 mt-8">
           <Card>
             <CardHeader>
               <CardTitle>BS 7671:2018+A3:2024 Regulations</CardTitle>
@@ -106,7 +106,7 @@ export default function KnowledgeUploader() {
           )}
         </TabsContent>
 
-        <TabsContent value="installation" className="space-y-4">
+        <TabsContent value="installation" className="space-y-6 mt-8">
           <Card>
             <CardHeader>
               <CardTitle>Installation Knowledge</CardTitle>
@@ -129,7 +129,7 @@ export default function KnowledgeUploader() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="pricing" className="space-y-4">
+        <TabsContent value="pricing" className="space-y-6 mt-8">
           <Card>
             <CardHeader>
               <CardTitle>Pricing Data</CardTitle>
@@ -161,7 +161,7 @@ export default function KnowledgeUploader() {
           )}
         </TabsContent>
 
-        <TabsContent value="design" className="space-y-4">
+        <TabsContent value="design" className="space-y-6 mt-8">
           <Card>
             <CardHeader>
               <CardTitle>Electrical Design Knowledge</CardTitle>
@@ -183,7 +183,7 @@ export default function KnowledgeUploader() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="project-mgmt" className="space-y-4">
+        <TabsContent value="project-mgmt" className="space-y-6 mt-8">
           <Card>
             <CardHeader>
               <CardTitle>Project Management Knowledge</CardTitle>
@@ -205,7 +205,7 @@ export default function KnowledgeUploader() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="health-safety" className="space-y-4">
+        <TabsContent value="health-safety" className="space-y-6 mt-8">
           <Card>
             <CardHeader>
               <CardTitle>Health & Safety Knowledge</CardTitle>
@@ -227,7 +227,7 @@ export default function KnowledgeUploader() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="inspection" className="space-y-4">
+        <TabsContent value="inspection" className="space-y-6 mt-8">
           <Card>
             <CardHeader>
               <CardTitle>Inspection & Testing Knowledge</CardTitle>
@@ -249,7 +249,7 @@ export default function KnowledgeUploader() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="maintenance" className="space-y-4">
+        <TabsContent value="maintenance" className="space-y-6 mt-8">
           <Card>
             <CardHeader>
               <CardTitle>Maintenance Knowledge</CardTitle>
@@ -271,7 +271,7 @@ export default function KnowledgeUploader() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="tutor" className="space-y-4">
+        <TabsContent value="tutor" className="space-y-6 mt-8">
           <Card>
             <CardHeader>
               <CardTitle>Educational & Training Content</CardTitle>
