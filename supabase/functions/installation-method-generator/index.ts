@@ -59,17 +59,27 @@ serve(async (req) => {
     const installerResponse = installerData.response || '';
     const structuredData = installerData.structuredData || {};
 
+    // PHASE 1: Prioritize structured data over text parsing
+    const steps = structuredData.steps && structuredData.steps.length > 0
+      ? structuredData.steps.map((s: any, idx: number) => ({
+          stepNumber: idx + 1,
+          title: s.title || s.stepTitle || `Step ${idx + 1}`,
+          content: s.description || s.instructions || s.details || '',
+          safety: s.safetyNotes || s.safety || s.warnings || []
+        }))
+      : extractSteps(installerResponse);
+
     // Format the response for method statement display
     const formattedOutput = {
       installationGuide: installerResponse,
-      steps: extractSteps(installerResponse),
+      steps: steps,
       summary: {
-        totalSteps: structuredData.steps?.length || 0,
-        estimatedDuration: structuredData.totalDuration || 'Not specified',
-        requiredQualifications: structuredData.requiredQualifications || [],
+        totalSteps: steps.length,
+        estimatedDuration: structuredData.totalDuration || structuredData.estimatedTime || 'Not specified',
+        requiredQualifications: structuredData.requiredQualifications || structuredData.qualifications || [],
         toolsRequired: extractToolsList(structuredData),
         materialsRequired: extractMaterialsList(structuredData),
-        overallRiskLevel: structuredData.overallRiskLevel || 'medium'
+        overallRiskLevel: structuredData.overallRiskLevel || structuredData.riskLevel || 'medium'
       },
       metadata: {
         installationType,

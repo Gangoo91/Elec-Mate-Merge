@@ -15,6 +15,7 @@ const InstallationSpecialistInterface = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [progressStage, setProgressStage] = useState('');
   const [estimatedTime, setEstimatedTime] = useState(20);
   const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
   const [expandedSections, setExpandedSections] = useState({
@@ -34,13 +35,26 @@ const InstallationSpecialistInterface = () => {
 
     setIsLoading(true);
     setProgress(0);
+    setProgressStage('Analysing installation requirements...');
     setInstallationGuide("");
     setMethodData(null);
 
-    // Simulate progress
+    // Enhanced progress with stages
+    const stages = [
+      { progress: 20, message: 'Consulting BS 7671 knowledge base...' },
+      { progress: 40, message: 'Generating step-by-step method...' },
+      { progress: 60, message: 'Extracting tools and materials...' },
+      { progress: 80, message: 'Finalising safety notes...' }
+    ];
+    
+    let stageIndex = 0;
     const progressInterval = setInterval(() => {
-      setProgress(prev => Math.min(prev + 10, 90));
-    }, 1000);
+      if (stageIndex < stages.length) {
+        setProgress(stages[stageIndex].progress);
+        setProgressStage(stages[stageIndex].message);
+        stageIndex++;
+      }
+    }, 2000);
 
     try {
       const { data, error } = await supabase.functions.invoke('installation-method-generator', {
@@ -73,15 +87,29 @@ const InstallationSpecialistInterface = () => {
 
     } catch (error) {
       console.error('Installation guide generation error:', error);
+      
+      // Enhanced error messages
+      let errorMessage = "Could not generate installation guide. Please try again.";
+      if (error instanceof Error) {
+        if (error.message.includes('timeout')) {
+          errorMessage = "Request timed out. The installation is complex - please try breaking it into smaller parts.";
+        } else if (error.message.includes('rate limit')) {
+          errorMessage = "Too many requests. Please wait a moment and try again.";
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
       toast({
         title: "Generation Failed",
-        description: error instanceof Error ? error.message : "Could not generate installation guide. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
       clearInterval(progressInterval);
       setIsLoading(false);
       setProgress(0);
+      setProgressStage('');
     }
   };
 
@@ -313,12 +341,63 @@ const InstallationSpecialistInterface = () => {
           <Button
             variant="outline"
             size="sm"
-            disabled
+            onClick={async () => {
+              try {
+                toast({
+                  title: "Generating PDF",
+                  description: "Creating your method statement document...",
+                });
+                
+                const { data, error } = await supabase.functions.invoke('generate-method-statement-pdf', {
+                  body: {
+                    methodStatement: {
+                      jobTitle: `Installation Method: ${installationType.charAt(0).toUpperCase() + installationType.slice(1)}`,
+                      description: prompt,
+                      steps: methodData.steps.map((step: any, idx: number) => ({
+                        id: `step-${idx}`,
+                        stepNumber: step.stepNumber,
+                        title: step.title,
+                        description: step.content,
+                        safetyRequirements: step.safety || [],
+                        equipmentNeeded: [],
+                        qualifications: [],
+                        estimatedDuration: '',
+                        riskLevel: methodData.summary.overallRiskLevel || 'medium'
+                      })),
+                      toolsRequired: methodData.summary.toolsRequired,
+                      materialsRequired: methodData.summary.materialsRequired,
+                      overallRiskLevel: methodData.summary.overallRiskLevel
+                    }
+                  }
+                });
+
+                if (error) throw error;
+
+                // Download the PDF
+                const link = document.createElement('a');
+                link.href = data.publicUrl;
+                link.download = `installation-method-${Date.now()}.pdf`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                toast({
+                  title: "PDF Generated",
+                  description: "Your installation method has been exported.",
+                });
+              } catch (error) {
+                console.error('PDF export error:', error);
+                toast({
+                  title: "Export Failed",
+                  description: "Could not generate PDF. Please try again.",
+                  variant: "destructive",
+                });
+              }
+            }}
             className="gap-2"
-            title="Coming soon"
           >
             <Download className="h-4 w-4" />
-            Export
+            Export PDF
           </Button>
         </div>
       )}
@@ -341,7 +420,7 @@ const InstallationSpecialistInterface = () => {
             </div>
             <div>
               <span className="font-semibold text-lg">Generating Installation Guide</span>
-              <p className="text-muted-foreground text-sm">Analysing installation requirements and safety procedures...</p>
+              <p className="text-muted-foreground text-sm">{progressStage}</p>
             </div>
           </div>
           
