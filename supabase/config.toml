@@ -108,3 +108,11 @@ timeout_sec = 120
 [functions.wiring-diagram-generator-rag]
 verify_jwt = false
 timeout_sec = 180
+
+[functions.parse-maintenance-knowledge]
+verify_jwt = false
+timeout_sec = 180
+
+[functions.parse-tutor-knowledge]
+verify_jwt = false
+timeout_sec = 180

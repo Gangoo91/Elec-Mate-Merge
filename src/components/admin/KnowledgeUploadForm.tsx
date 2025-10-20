@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface KnowledgeUploadFormProps {
-  targetType: "bs7671" | "installation" | "pricing" | "design" | "project-management" | "health-safety" | "inspection-testing";
+  targetType: "bs7671" | "installation" | "pricing" | "design" | "project-management" | "health-safety" | "inspection-testing" | "maintenance" | "tutor";
   isProcessing: boolean;
   onProcessingStart: () => void;
   onProcessingComplete: (stats: { 
@@ -66,6 +66,10 @@ export default function KnowledgeUploadForm({
         tableName = "health_safety_knowledge";
       } else if (targetType === "inspection-testing") {
         tableName = "inspection_testing_knowledge";
+      } else if (targetType === "maintenance") {
+        tableName = "maintenance_knowledge";
+      } else if (targetType === "tutor") {
+        tableName = "tutor_knowledge";
       }
 
       const { error } = await supabase.from(tableName as any).delete().neq('id', '00000000-0000-0000-0000-000000000000');
@@ -213,6 +217,10 @@ export default function KnowledgeUploadForm({
         edgeFunctionName = "parse-health-safety";
       } else if (targetType === "inspection-testing") {
         edgeFunctionName = "parse-inspection-testing";
+      } else if (targetType === "maintenance") {
+        edgeFunctionName = "parse-maintenance-knowledge";
+      } else if (targetType === "tutor") {
+        edgeFunctionName = "parse-tutor-knowledge";
       }
       
       console.log(`Routing to edge function: ${edgeFunctionName}`);
@@ -301,6 +309,10 @@ export default function KnowledgeUploadForm({
             "Upload health & safety regulations, risk assessments, and safety procedures."}
           {targetType === "inspection-testing" && 
             "Upload inspection procedures, testing guides, and EICR documentation."}
+          {targetType === "maintenance" && 
+            "Upload maintenance procedures, inspection guides, fault diagnosis steps, and servicing instructions as text files. The system will chunk and embed content for fast retrieval."}
+          {targetType === "tutor" && 
+            "Upload course materials, exam prep guides, worked examples, theory explanations, and training resources as text files. Content will be embedded for semantic search."}
         </AlertDescription>
       </Alert>
 

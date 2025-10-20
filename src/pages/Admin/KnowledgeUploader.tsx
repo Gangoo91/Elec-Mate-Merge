@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Book, Hammer, Calculator, ClipboardList, FolderKanban, Shield, ClipboardCheck, Wrench, GraduationCap } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import KnowledgeUploadForm from "@/components/admin/KnowledgeUploadForm";
 import ProcessingProgress from "@/components/admin/ProcessingProgress";
@@ -36,14 +36,43 @@ export default function KnowledgeUploader() {
       </Alert>
 
       <Tabs defaultValue="bs7671" className="w-full">
-        <TabsList className="grid w-full grid-cols-7">
-          <TabsTrigger value="bs7671">BS 7671</TabsTrigger>
-          <TabsTrigger value="installation">Installation</TabsTrigger>
-          <TabsTrigger value="pricing">Pricing</TabsTrigger>
-          <TabsTrigger value="design">Design</TabsTrigger>
-          <TabsTrigger value="project-mgmt">Project Mgmt</TabsTrigger>
-          <TabsTrigger value="health-safety">Health & Safety</TabsTrigger>
-          <TabsTrigger value="inspection">Inspection</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 gap-2">
+          <TabsTrigger value="bs7671" className="flex items-center gap-2">
+            <Book className="h-4 w-4" />
+            BS 7671
+          </TabsTrigger>
+          <TabsTrigger value="installation" className="flex items-center gap-2">
+            <Hammer className="h-4 w-4" />
+            Installation
+          </TabsTrigger>
+          <TabsTrigger value="pricing" className="flex items-center gap-2">
+            <Calculator className="h-4 w-4" />
+            Pricing
+          </TabsTrigger>
+          <TabsTrigger value="design" className="flex items-center gap-2">
+            <ClipboardList className="h-4 w-4" />
+            Design
+          </TabsTrigger>
+          <TabsTrigger value="project-mgmt" className="flex items-center gap-2">
+            <FolderKanban className="h-4 w-4" />
+            Project Mgmt
+          </TabsTrigger>
+          <TabsTrigger value="health-safety" className="flex items-center gap-2">
+            <Shield className="h-4 w-4" />
+            Health & Safety
+          </TabsTrigger>
+          <TabsTrigger value="inspection" className="flex items-center gap-2">
+            <ClipboardCheck className="h-4 w-4" />
+            Inspection
+          </TabsTrigger>
+          <TabsTrigger value="maintenance" className="flex items-center gap-2">
+            <Wrench className="h-4 w-4" />
+            Maintenance
+          </TabsTrigger>
+          <TabsTrigger value="tutor" className="flex items-center gap-2">
+            <GraduationCap className="h-4 w-4" />
+            Tutor
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="bs7671" className="space-y-4">
@@ -209,6 +238,50 @@ export default function KnowledgeUploader() {
             <CardContent>
               <KnowledgeUploadForm
                 targetType="inspection-testing"
+                isProcessing={isProcessing}
+                onProcessingStart={() => setIsProcessing(true)}
+                onProcessingComplete={(stats) => {
+                  setIsProcessing(false);
+                  setProcessingStats(stats);
+                }}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="maintenance" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Maintenance Knowledge</CardTitle>
+              <CardDescription>
+                Upload maintenance procedures, inspection guides, fault diagnosis, and servicing instructions.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <KnowledgeUploadForm
+                targetType="maintenance"
+                isProcessing={isProcessing}
+                onProcessingStart={() => setIsProcessing(true)}
+                onProcessingComplete={(stats) => {
+                  setIsProcessing(false);
+                  setProcessingStats(stats);
+                }}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="tutor" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Educational & Training Content</CardTitle>
+              <CardDescription>
+                Upload course materials, exam prep guides, worked examples, and training resources for electricians.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <KnowledgeUploadForm
+                targetType="tutor"
                 isProcessing={isProcessing}
                 onProcessingStart={() => setIsProcessing(true)}
                 onProcessingComplete={(stats) => {
