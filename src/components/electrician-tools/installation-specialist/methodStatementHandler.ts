@@ -78,8 +78,8 @@ CRITICAL: Search RAG first for relevant installation procedures, best practices,
     
     console.log('✅ Installer completed:', { steps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []).length });
     
-    // ===== PHASE 2: H&S + MAINTENANCE AGENTS (Parallel - both search RAG) =====
-    if (onProgress) onProgress('🔒 Searching RAG for hazards & testing procedures...');
+    // ===== PHASE 2: H&S + MAINTENANCE AGENTS (Parallel - both search RAG concurrently) =====
+    if (onProgress) onProgress('⚡ Searching RAG for hazards & testing procedures in parallel...');
     
     const [healthSafetyResult, maintenanceResult] = await Promise.allSettled([
       // Health-Safety-v3 - Searches RAG for hazards, then fills hazards per step
@@ -103,17 +103,19 @@ CRITICAL: Search RAG first for relevant hazards, control measures, and safety re
         }
       }),
       
-      // Maintenance-v3 - Searches RAG, reviews installer, adds testing, fills complete method statement
+      // Maintenance-v3 - FINAL REVIEWER: Searches RAG, validates installer+H&S, fills gaps, completes method statement
       supabase.functions.invoke('maintenance-v3', {
         body: {
-          query: `Search RAG for procedures, then complete comprehensive method statement for: ${userQuery}
+          query: `FINAL REVIEW & VALIDATION: Search RAG for procedures, then validate and complete comprehensive method statement for: ${userQuery}
           
-CRITICAL TASKS (in order):
+CRITICAL TASKS AS FINAL REVIEWER (in order):
 1. SEARCH RAG FIRST for inspection, testing, and commissioning procedures
-2. Review and enhance the installation steps provided by installer
-3. Add detailed inspection, testing, and commissioning procedures
-4. Fill in ALL remaining method statement fields (tools, materials, practical tips, warnings, compliance regulations)
-5. Validate entire document for BS 7671:2018+A3:2024 compliance`,
+2. VALIDATE installer steps for completeness, safety, and BS 7671 compliance
+3. ADD missing information from RAG knowledge (testing procedures, inspection checkpoints, fault diagnosis)
+4. ENHANCE quality with specific tool requirements, torque settings, acceptance criteria
+5. FILL ALL remaining method statement fields (tools, materials, practical tips, warnings, compliance regulations)
+6. CROSS-CHECK that all outputs align and are consistent
+7. ENSURE comprehensive BS 7671:2018+A3:2024 compliance references`,
           
           projectType: 'installation',
           equipmentType: installerOutput.equipmentType || 'electrical installation',
@@ -121,7 +123,7 @@ CRITICAL TASKS (in order):
           maintenanceType: 'preventive',
           location: projectDetails?.location || 'Site location',
           
-          // INSTALLER OUTPUT FOR REVIEW & ENHANCEMENT
+          // INSTALLER OUTPUT FOR FINAL REVIEW & VALIDATION
           installerSteps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []),
           installerJobDetails: {
             jobTitle: installerOutput.jobTitle,
@@ -143,18 +145,18 @@ CRITICAL TASKS (in order):
     
     if (maintenanceResult.status === 'fulfilled') {
       maintenanceOutput = maintenanceResult.value.data?.result;
-      if (onProgress) onProgress('✅ Inspection procedures ready');
+      if (onProgress) onProgress('✅ Final validation & inspection procedures complete');
     } else {
-      console.warn('Maintenance agent failed, continuing without inspection data:', maintenanceResult.reason);
-      if (onProgress) onProgress('⚠️ Inspection data unavailable, using defaults');
+      console.warn('⚠️ Maintenance agent (final reviewer) failed, continuing without validation:', maintenanceResult.reason);
+      if (onProgress) onProgress('⚠️ Final validation unavailable, using installer baseline');
     }
     
     if (healthSafetyResult.status === 'fulfilled') {
       healthSafetyOutput = healthSafetyResult.value.data?.result;
       if (onProgress) onProgress('✅ Risk assessment complete');
     } else {
-      console.warn('H&S agent failed, continuing without risk assessment:', healthSafetyResult.reason);
-      if (onProgress) onProgress('⚠️ Risk assessment unavailable, using defaults');
+      console.warn('⚠️ H&S agent failed, continuing without risk assessment:', healthSafetyResult.reason);
+      if (onProgress) onProgress('⚠️ Risk assessment unavailable, using baseline hazards');
     }
     
     // STEP 3: Merge outputs (handles null agents gracefully)
