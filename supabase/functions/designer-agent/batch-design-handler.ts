@@ -100,7 +100,7 @@ export async function handleBatchDesign(body: any, logger: any) {
             }
           }
         }),
-        15000, // 15s timeout per search
+        10000, // 10s timeout per search (SPEED BOOST)
         `RAG search for ${loadType}`
       ).catch(error => {
         logger.warn(`⚠️ RAG search timeout for ${loadType}`, { error: error.message });
@@ -127,7 +127,7 @@ export async function handleBatchDesign(body: any, logger: any) {
             }
           }
         }),
-        15000, // 15s timeout
+        10000, // 10s timeout (SPEED BOOST)
         'RAG search for diversity'
       ).catch(error => {
         logger.warn('⚠️ RAG diversity search timeout', { error: error.message });
@@ -177,10 +177,10 @@ export async function handleBatchDesign(body: any, logger: any) {
       mergedRegulations.push(reg);
     }
     
-    // Sort by score and limit
+    // Sort by score and limit (SPEED BOOST: reduced from 25 to 15)
     mergedRegulations = mergedRegulations
       .sort((a: any, b: any) => (b.hybrid_score || 0) - (a.hybrid_score || 0))
-      .slice(0, 25);
+      .slice(0, 15);
       
   } catch (dedupError) {
     logger.error('🚨 Deduplication failed, using empty array (fallback will activate)', { 
@@ -309,7 +309,7 @@ Return complete circuit objects using the provided tool schema.`;
   
   // ✨ SIMPLIFIED SCHEMA - Matching AI RAMS Pattern (5 simple fields)
   const requestBody = {
-    model: aiConfig?.model || 'openai/gpt-5-mini',
+    model: aiConfig?.model || 'google/gemini-2.5-flash', // SPEED BOOST: faster default model
     messages: [
       { 
         role: 'system', 
@@ -1037,8 +1037,10 @@ Always cite regulation numbers and show working for calculations.`
         throw new Error("AI did not return any content in JSON-only fallback.");
       }
       
-      logger.info('✅ JSON-only fallback succeeded', { contentLength: jsonContent.length });
+      logger.info('✅ JSON-only fallback succeeded - appending single tool call', { contentLength: jsonContent.length });
       toolCall = { function: { arguments: jsonContent } };
+      // FIX: Ensure fallback toolCall is pushed to allToolCalls
+      allToolCalls.push(toolCall);
     } else {
       // Try parsing content as JSON or extract from markdown
       try {
@@ -1054,8 +1056,9 @@ Always cite regulation numbers and show working for calculations.`
           try {
             const parsed = JSON.parse(jsonMatch[1]);
             if (parsed.circuits) {
-              logger.info('✅ Recovered design from markdown JSON block');
+              logger.info('✅ Recovered design from markdown JSON block - appending tool call');
               toolCall = { function: { arguments: jsonMatch[1] } };
+              allToolCalls.push(toolCall);
             }
           } catch (e2) {
             logger.error('🚨 Failed to parse extracted JSON', { 
@@ -1076,10 +1079,16 @@ Always cite regulation numbers and show working for calculations.`
     }
   }
   
+  // FIX: Extra guard - ensure fallback toolCall is included
+  if (!allToolCalls.length && toolCall) {
+    logger.info('🔧 No tool calls in array, adding fallback tool call');
+    allToolCalls = [toolCall];
+  }
+  
   // PHASE 1: Log tool call extraction success
   logger.info('✅ Tool calls extracted from batches', {
     batchCount: allToolCalls.length,
-    firstFunctionName: toolCall?.function?.name
+    firstFunctionName: toolCall?.function?.name || allToolCalls[0]?.function?.name
   });
   
   // Merge all circuit designs from batches
@@ -1143,10 +1152,19 @@ Always cite regulation numbers and show working for calculations.`
   }
   
   if (designData.circuits.length === 0) {
-    logger.error('🚨 AI returned empty circuits array', {
-      circuitCount: 0
+    logger.error('🚨 AI returned empty circuits array - returning structured error', {
+      circuitCount: 0,
+      inputCircuits: inputCircuits.length,
+      additionalPrompt: projectInfo.additionalPrompt?.substring(0, 100)
     });
-    throw new Error('AI generated 0 circuits. Please provide more specific requirements or try again.');
+    
+    // FIX: Return structured 200 response instead of throwing (prevents retry loop)
+    return {
+      success: false,
+      error: 'AI returned no circuits after fallback. Try adding a bit more detail (e.g., circuit names/powers) or reduce complexity.',
+      code: 'NO_CIRCUITS',
+      design: null
+    };
   }
   
   logger.info('✅ Design data merged successfully', {

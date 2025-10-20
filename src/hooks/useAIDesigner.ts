@@ -20,13 +20,13 @@ export const useAIDesigner = () => {
     setError(null);
     setDesignData(null);
 
-    // PHASE 4: Updated stages to match backend reality
+    // SPEED BOOST: Shortened stages to match faster backend (total ~120s)
     const stages = [
-      { stage: 1, message: 'Understanding your requirements...', duration: 5000, targetPercent: 5 },
-      { stage: 2, message: 'Searching BS 7671 for each circuit type...', duration: 30000, targetPercent: 25 },
-      { stage: 3, message: 'AI is designing circuits and calculations...', duration: 90000, targetPercent: 70 },
-      { stage: 4, message: 'Validating compliance and voltage drop...', duration: 20000, targetPercent: 90 },
-      { stage: 5, message: 'Finalising materials list...', duration: 15000, targetPercent: 99 }
+      { stage: 1, message: 'Understanding your requirements...', duration: 5000, targetPercent: 8 },
+      { stage: 2, message: 'Searching BS 7671 for circuit types...', duration: 20000, targetPercent: 30 },
+      { stage: 3, message: 'AI is designing circuits...', duration: 60000, targetPercent: 75 },
+      { stage: 4, message: 'Validating compliance...', duration: 25000, targetPercent: 95 },
+      { stage: 5, message: 'Finalising materials...', duration: 10000, targetPercent: 99 }
     ];
 
     let progressInterval: ReturnType<typeof setInterval> | null = null;
@@ -57,9 +57,9 @@ export const useAIDesigner = () => {
           body: {
             mode: 'batch-design',
             aiConfig: {
-              model: 'openai/gpt-5-mini',
-              maxTokens: 15000,
-              timeoutMs: 280000,
+              model: 'google/gemini-2.5-flash', // SPEED BOOST: faster default model
+              maxTokens: 6000, // SPEED BOOST: reduced from 15000
+              timeoutMs: 180000, // SPEED BOOST: 3 min (from 280s)
               noMemory: true,
               ragPriority: {
                 design: 95,
@@ -208,8 +208,21 @@ export const useAIDesigner = () => {
         throw new Error(fullError);
       }
 
+      // FIX: Handle structured errors (success=false) gracefully
       if (!data.success) {
-        throw new Error(data.error || 'Design generation failed');
+        // Clear progress immediately for known errors
+        setProgress(null);
+        
+        const errorMsg = data.error || 'Design generation failed';
+        const isKnownError = data.code === 'NO_CIRCUITS' || data.code;
+        
+        if (isKnownError) {
+          // Friendly message for known errors - no retry needed
+          throw new Error(errorMsg);
+        } else {
+          // Unknown errors
+          throw new Error(errorMsg);
+        }
       }
 
       // Complete progress to 100%
