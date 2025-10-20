@@ -2,6 +2,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Clock, Wrench, Package, AlertTriangle, ShieldCheck } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { CategorisedToolsList } from "./CategorisedToolsList";
+import { categorizeTools, categorizeMaterials } from "@/utils/toolsCategorisation";
 
 interface InstallationMethodDisplayProps {
   installationGuide: string;
@@ -69,35 +71,33 @@ export const InstallationMethodDisplay = ({
           </div>
         </div>
 
-        {/* Tools & Materials */}
+        {/* Tools & Materials - Categorised */}
         {(summary.toolsRequired.length > 0 || summary.materialsRequired.length > 0) && (
           <>
             <Separator className="my-4" />
             <div className="grid sm:grid-cols-2 gap-4">
               {summary.toolsRequired.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 mb-3">
                     <Wrench className="h-4 w-4 text-primary" />
-                    <span className="font-semibold text-sm">Tools Required</span>
+                    <span className="font-semibold text-sm text-foreground">Tools Required</span>
                   </div>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    {summary.toolsRequired.map((tool, i) => (
-                      <li key={i}>• {tool}</li>
-                    ))}
-                  </ul>
+                  <CategorisedToolsList 
+                    categorisedItems={categorizeTools(summary.toolsRequired)} 
+                    icon={<Wrench className="h-4 w-4 text-primary" />}
+                  />
                 </div>
               )}
               {summary.materialsRequired.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 mb-3">
                     <Package className="h-4 w-4 text-primary" />
-                    <span className="font-semibold text-sm">Materials Required</span>
+                    <span className="font-semibold text-sm text-foreground">Materials Required</span>
                   </div>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    {summary.materialsRequired.map((material, i) => (
-                      <li key={i}>• {material}</li>
-                    ))}
-                  </ul>
+                  <CategorisedToolsList 
+                    categorisedItems={categorizeMaterials(summary.materialsRequired)} 
+                    icon={<Package className="h-4 w-4 text-primary" />}
+                  />
                 </div>
               )}
             </div>

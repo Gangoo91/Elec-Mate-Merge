@@ -140,7 +140,7 @@ export const InstallationStepCard = ({
               </div>
 
               {/* Content */}
-              <div className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">
+              <div className="text-sm text-left text-foreground whitespace-pre-wrap leading-relaxed">
                 {step.content}
               </div>
 
@@ -153,16 +153,16 @@ export const InstallationStepCard = ({
 
               {/* Safety Notes */}
               {step.safety && step.safety.length > 0 && (
-                <div className="mt-3 p-4 bg-warning/10 border border-warning/30 rounded-lg">
+                <div className="mt-4 p-4 bg-warning/10 border border-warning/30 rounded-lg">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="h-5 w-5 text-warning flex-shrink-0 mt-0.5" />
-                    <div className="flex-1">
-                      <div className="font-semibold text-sm text-foreground mb-2">Safety Notes</div>
-                      <ul className="text-sm text-foreground space-y-1.5 pl-1">
+                    <AlertTriangle className="h-5 w-5 text-warning flex-shrink-0 mt-1" />
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-sm text-foreground mb-2.5">Safety Notes</div>
+                      <ul className="text-sm text-foreground space-y-2 list-none">
                         {step.safety.map((note, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="text-warning mt-0.5">•</span>
-                            <span>{note}</span>
+                          <li key={i} className="flex items-start gap-2.5 text-left">
+                            <span className="text-warning mt-0.5 flex-shrink-0">•</span>
+                            <span className="flex-1">{note}</span>
                           </li>
                         ))}
                       </ul>

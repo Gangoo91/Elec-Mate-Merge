@@ -8,6 +8,8 @@ import { InstallationStepCard } from "./InstallationStepCard";
 import { InstallationStep, InstallationMethodSummary, InstallationProjectDetails } from "@/types/installation-method";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { CategorisedToolsList } from "./CategorisedToolsList";
+import { categorizeTools, categorizeMaterials } from "@/utils/toolsCategorisation";
 
 interface InstallationResultsEditorProps {
   installationGuide: string;
@@ -213,41 +215,33 @@ export const InstallationResultsEditor = ({
           </div>
         </div>
 
-        {/* Tools & Materials */}
+        {/* Tools & Materials - Categorised */}
         {(summary.toolsRequired.length > 0 || summary.materialsRequired.length > 0) && (
           <>
             <Separator className="my-4 sm:my-6" />
             <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
               {summary.toolsRequired.length > 0 && (
-                <div className="p-4 rounded-lg bg-card/50 border border-primary/10">
+                <div className="space-y-2">
                   <div className="flex items-center gap-2 mb-3">
                     <Wrench className="h-4 w-4 text-primary" />
                     <span className="font-semibold text-sm text-foreground">Tools Required</span>
                   </div>
-                  <ul className="text-sm text-foreground space-y-1.5 pl-1">
-                    {summary.toolsRequired.map((tool, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <span className="text-primary mt-0.5">•</span>
-                        <span>{tool}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <CategorisedToolsList 
+                    categorisedItems={categorizeTools(summary.toolsRequired)} 
+                    icon={<Wrench className="h-4 w-4 text-primary" />}
+                  />
                 </div>
               )}
               {summary.materialsRequired.length > 0 && (
-                <div className="p-4 rounded-lg bg-card/50 border border-primary/10">
+                <div className="space-y-2">
                   <div className="flex items-center gap-2 mb-3">
                     <Package className="h-4 w-4 text-primary" />
                     <span className="font-semibold text-sm text-foreground">Materials Required</span>
                   </div>
-                  <ul className="text-sm text-foreground space-y-1.5 pl-1">
-                    {summary.materialsRequired.map((material, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <span className="text-primary mt-0.5">•</span>
-                        <span>{material}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <CategorisedToolsList 
+                    categorisedItems={categorizeMaterials(summary.materialsRequired)} 
+                    icon={<Package className="h-4 w-4 text-primary" />}
+                  />
                 </div>
               )}
             </div>
