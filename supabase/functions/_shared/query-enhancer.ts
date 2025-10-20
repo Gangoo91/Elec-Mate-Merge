@@ -110,6 +110,11 @@ export function extractContextFromHistory(messages: any[]): EnhancementContext {
  * Detect if query is vague and needs enrichment
  */
 function isVagueQuery(query: string): boolean {
+  // Add null/undefined check to prevent .trim() errors
+  if (!query || typeof query !== 'string') {
+    return false;
+  }
+  
   const vaguePatterns = [
     /^what about/i,
     /^and if/i,
