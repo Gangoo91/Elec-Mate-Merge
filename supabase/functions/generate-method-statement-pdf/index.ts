@@ -81,7 +81,7 @@ serve(async (req) => {
       
       // Debug logging
       _debug_total_steps: (methodData.steps || []).length,
-      _debug_steps_with_hazards: (methodData.steps || []).filter((s: any) => s.linkedHazards && s.linkedHazards.length > 0).length
+      _debug_steps_with_hazards: (methodData.steps || []).filter((s: any) => s.linkedHazards && s.linkedHazards.length > 0).length,
       
       // Equipment schedule (from maintenance agent)
       equipment_list: (methodData.equipmentSchedule || []).map((eq: any) => ({
