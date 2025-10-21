@@ -29,8 +29,23 @@ const CostEngineerInterface = () => {
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
-      setPrompt(instruction || 'Cost analysis for forwarded work');
-      toast({ title: 'Context loaded', description: 'Work forwarded from another agent' });
+      try {
+        // Parse designer output
+        const circuits = contextData.circuits || [];
+        const totalLoad = circuits.reduce((sum: number, c: any) => sum + (c.load || 0), 0);
+        
+        setPrompt(instruction || `Price materials and labour for: ${circuits.length} circuits, total ${totalLoad}W`);
+        
+        if (contextData.projectName) setProjectName(contextData.projectName);
+        if (contextData.location) setLocation(contextData.location);
+        if (contextData.clientName) setClientName(contextData.clientName);
+        if (contextData.projectType) setProjectType(contextData.projectType);
+        
+        toast({ title: 'Context loaded', description: `Loaded ${circuits.length} circuits from Designer` });
+      } catch (error) {
+        setPrompt(instruction || 'Cost analysis for forwarded work');
+        toast({ title: 'Context loaded', description: 'Work forwarded from another agent' });
+      }
     }
   };
 
@@ -63,6 +78,42 @@ const CostEngineerInterface = () => {
         title: "Copy Failed",
         description: "Could not copy to clipboard. Please select and copy manually.",
         variant: "destructive",
+      });
+    }
+  };
+
+  const handleExportPDF = () => {
+    if (!costingResult) return;
+    
+    try {
+      const { generateClientQuotePDF } = require('@/utils/client-quote-pdf');
+      
+      // Parse costingResult to extract structured data
+      const pdfData = {
+        projectName: projectName || 'Untitled Project',
+        clientName: clientName || 'Client',
+        location: location || 'Not specified',
+        date: new Date().toISOString().split('T')[0],
+        materials: [], // TODO: Parse from AI response
+        labourHours: 0, // TODO: Parse from AI response
+        labourRate: 45,
+        companyName: 'Electrical Services',
+        validityDays: 30
+      };
+      
+      const pdf = generateClientQuotePDF(pdfData);
+      pdf.save(`Quote-${projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`);
+      
+      toast({
+        title: "PDF exported",
+        description: "Client quote downloaded successfully"
+      });
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast({
+        title: "Export failed",
+        description: "Could not generate PDF",
+        variant: "destructive"
       });
     }
   };
@@ -322,12 +373,11 @@ const CostEngineerInterface = () => {
           <Button
             variant="outline"
             size="sm"
-            disabled
+            onClick={handleExportPDF}
             className="gap-2"
-            title="Coming soon"
           >
             <Download className="h-4 w-4" />
-            Export
+            Export PDF
           </Button>
           <SendToAgentDropdown 
             currentAgent="cost-engineer" 

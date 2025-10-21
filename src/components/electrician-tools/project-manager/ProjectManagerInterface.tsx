@@ -80,8 +80,28 @@ const ProjectManagerInterface = () => {
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
-      setPrompt(instruction || 'Project planning for forwarded work');
-      toast.success('Context loaded', { description: 'Work forwarded from another agent' });
+      try {
+        // Aggregate all previous agent outputs
+        const hasDesign = contextData.circuits && contextData.circuits.length > 0;
+        const hasCost = contextData.totalCost !== undefined;
+        const hasSafety = contextData.hazards !== undefined;
+        
+        const summary = [];
+        if (hasDesign) summary.push(`${contextData.circuits.length} circuits designed`);
+        if (hasCost) summary.push(`£${contextData.totalCost} estimated`);
+        if (hasSafety) summary.push(`${contextData.hazards?.length || 0} hazards identified`);
+        
+        setPrompt(instruction || `Create project execution plan: ${summary.join(', ')}`);
+        
+        if (contextData.projectName) setProjectName(contextData.projectName);
+        if (contextData.location) setLocation(contextData.location);
+        if (contextData.clientName) setClientName(contextData.clientName);
+        
+        toast.success('Context loaded', { description: 'All agent outputs aggregated' });
+      } catch (error) {
+        setPrompt(instruction || 'Project planning for forwarded work');
+        toast.success('Context loaded');
+      }
     }
   };
 
@@ -99,7 +119,39 @@ const ProjectManagerInterface = () => {
   };
 
   const handleCopy = () => {
-    toast.success("Copied to clipboard");
+    if (results) {
+      navigator.clipboard.writeText(JSON.stringify(results, null, 2));
+      toast.success("Copied to clipboard");
+    }
+  };
+
+  const handleExportPDF = () => {
+    if (!results) return;
+    
+    try {
+      const { generateProjectExecutionPlanPDF } = require('@/utils/pdf-generators/project-execution-plan-pdf');
+      
+      const pdfData = {
+        projectName: projectName || 'Untitled Project',
+        projectManager: 'AI Project Manager',
+        startDate: startDate || new Date().toISOString().split('T')[0],
+        endDate: results.endDate || 'TBC',
+        phases: results.phases || [],
+        resources: results.resources || { materials: [], labour: [], totalCost: 0 },
+        risks: results.risks || [],
+        milestones: results.milestones || [],
+        referencedDocuments: results.referencedDocuments || [],
+        notes: results.notes
+      };
+      
+      const pdf = generateProjectExecutionPlanPDF(pdfData);
+      pdf.save(`Project-Plan-${projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`);
+      
+      toast.success("PDF exported", { description: "Project Execution Plan downloaded successfully" });
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast.error("Export failed", { description: "Could not generate PDF" });
+    }
   };
 
   return (
@@ -320,25 +372,16 @@ const ProjectManagerInterface = () => {
                 <Copy className="h-4 w-4 mr-2" />
                 Copy
               </Button>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      type="button"
-                      size="sm" 
-                      variant="outline"
-                      disabled
-                      className="touch-manipulation"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Export
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Export functionality coming soon</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Button 
+                type="button"
+                size="sm" 
+                variant="outline"
+                onClick={handleExportPDF}
+                className="touch-manipulation"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Export PDF
+              </Button>
               <Button 
                 type="button"
                 size="sm" 

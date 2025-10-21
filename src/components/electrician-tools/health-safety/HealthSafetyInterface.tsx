@@ -75,8 +75,22 @@ const HealthSafetyInterface = () => {
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
-      setPrompt(instruction || 'Safety assessment for forwarded work');
-      toast.success('Context loaded', { description: 'Work forwarded from another agent' });
+      try {
+        // Parse designer/installer output for hazards
+        const voltages = contextData.circuits?.map((c: any) => c.voltage).join(', ') || '230V';
+        const workType = contextData.workType || contextData.installationType || 'installation';
+        
+        setPrompt(instruction || `Risk assessment for ${workType}: ${voltages} system, ${contextData.location || 'site'}`);
+        
+        if (contextData.projectName) setProjectName(contextData.projectName);
+        if (contextData.location) setLocation(contextData.location);
+        if (contextData.clientName) setClientName(contextData.clientName);
+        
+        toast.success('Context loaded', { description: 'Work forwarded from another agent' });
+      } catch (error) {
+        setPrompt(instruction || 'Safety assessment for forwarded work');
+        toast.success('Context loaded');
+      }
     }
   };
 
@@ -94,7 +108,38 @@ const HealthSafetyInterface = () => {
   };
 
   const handleCopy = () => {
-    toast.success("Copied to clipboard");
+    if (results) {
+      navigator.clipboard.writeText(JSON.stringify(results, null, 2));
+      toast.success("Copied to clipboard");
+    }
+  };
+
+  const handleExportPDF = () => {
+    if (!results) return;
+    
+    try {
+      const { generateRiskAssessmentPDF } = require('@/utils/pdf-generators/risk-assessment-pdf');
+      
+      const pdfData = {
+        projectName: projectName || 'Untitled Project',
+        location: location || 'Not specified',
+        assessor: 'AI Health & Safety Advisor',
+        date: new Date().toISOString().split('T')[0],
+        projectType: selectedType,
+        hazards: results.hazards || [],
+        requiredPPE: results.requiredPPE || [],
+        emergencyProcedures: results.emergencyProcedures || [],
+        notes: results.notes
+      };
+      
+      const pdf = generateRiskAssessmentPDF(pdfData);
+      pdf.save(`Risk-Assessment-${projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`);
+      
+      toast.success("PDF exported", { description: "Risk Assessment downloaded successfully" });
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast.error("Export failed", { description: "Could not generate PDF" });
+    }
   };
 
   return (
@@ -295,25 +340,16 @@ const HealthSafetyInterface = () => {
                 <Copy className="h-4 w-4 mr-2" />
                 Copy
               </Button>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      type="button"
-                      size="sm" 
-                      variant="outline"
-                      disabled
-                      className="touch-manipulation"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Export
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Export functionality coming soon</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Button 
+                type="button"
+                size="sm" 
+                variant="outline"
+                onClick={handleExportPDF}
+                className="touch-manipulation"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Export PDF
+              </Button>
               <Button 
                 type="button"
                 size="sm" 

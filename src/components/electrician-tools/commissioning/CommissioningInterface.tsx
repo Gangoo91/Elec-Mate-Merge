@@ -77,8 +77,22 @@ const CommissioningInterface = () => {
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
-      setPrompt(instruction || 'Testing and commissioning for forwarded work');
-      toast.success('Context loaded', { description: 'Work forwarded from another agent' });
+      try {
+        // Extract installation details
+        const circuits = contextData.circuits || [];
+        const installationType = contextData.installationType || 'installation';
+        
+        setPrompt(instruction || `Testing and commissioning for ${circuits.length} circuits - ${installationType}`);
+        
+        if (contextData.projectName) setProjectName(contextData.projectName);
+        if (contextData.location) setLocation(contextData.location);
+        if (contextData.clientName) setClientName(contextData.clientName);
+        
+        toast.success('Context loaded', { description: 'Installation details loaded from previous agent' });
+      } catch (error) {
+        setPrompt(instruction || 'Testing and commissioning for forwarded work');
+        toast.success('Context loaded');
+      }
     }
   };
 
@@ -96,7 +110,36 @@ const CommissioningInterface = () => {
   };
 
   const handleCopy = () => {
-    toast.success("Copied to clipboard");
+    if (results) {
+      navigator.clipboard.writeText(JSON.stringify(results, null, 2));
+      toast.success("Copied to clipboard");
+    }
+  };
+
+  const handleExportPDF = () => {
+    if (!results) return;
+    
+    try {
+      const { generateEICSchedulePDF } = require('@/utils/pdf-generators/eic-schedule-pdf');
+      
+      const pdfData = {
+        projectName: projectName || 'Untitled Project',
+        installationAddress: location || 'Not specified',
+        inspector: 'AI Testing Specialist',
+        inspectionDate: installationDate || new Date().toISOString().split('T')[0],
+        circuits: results.circuits || [],
+        overallResult: results.overallResult || 'Pass',
+        notes: results.notes
+      };
+      
+      const pdf = generateEICSchedulePDF(pdfData);
+      pdf.save(`EIC-Schedule-${projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`);
+      
+      toast.success("PDF exported", { description: "EIC Schedule downloaded successfully" });
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast.error("Export failed", { description: "Could not generate PDF" });
+    }
   };
 
   return (
@@ -307,25 +350,16 @@ const CommissioningInterface = () => {
                 <Copy className="h-4 w-4 mr-2" />
                 Copy
               </Button>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      type="button"
-                      size="sm" 
-                      variant="outline"
-                      disabled
-                      className="touch-manipulation"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Export
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Export functionality coming soon</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Button 
+                type="button"
+                size="sm" 
+                variant="outline"
+                onClick={handleExportPDF}
+                className="touch-manipulation"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Export PDF
+              </Button>
               <Button 
                 type="button"
                 size="sm" 
