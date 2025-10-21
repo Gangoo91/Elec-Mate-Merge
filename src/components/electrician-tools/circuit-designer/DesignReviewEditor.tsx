@@ -620,10 +620,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   {currentCircuit.specialLocationCompliance.locationType}
                 </Badge>
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-white">Requirements:</p>
+                  <p className="text-sm font-medium text-white text-left">Requirements:</p>
                   <ul className="space-y-1">
                     {currentCircuit.specialLocationCompliance.requirements.map((req, idx) => (
-                      <li key={idx} className="text-sm text-white/70 flex items-start gap-2">
+                      <li key={idx} className="text-sm text-white flex items-start gap-2">
                         <CheckCircle2 className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
                         <span>{req}</span>
                       </li>
@@ -631,7 +631,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </ul>
                 </div>
                 {currentCircuit.specialLocationCompliance.zonesApplicable && (
-                  <p className="text-sm text-white/70">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
+                  <p className="text-sm text-white text-left pl-6">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
                 )}
                 <Badge variant="outline" className="text-xs border-amber-500/30">{currentCircuit.specialLocationCompliance.regulation}</Badge>
               </div>
