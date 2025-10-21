@@ -7,6 +7,34 @@ import { createLogger, generateRequestId } from "../_shared/logger.ts";
 import { safeAll } from "../_shared/safe-parallel.ts";
 import { retrieveRegulations } from "../_shared/rag-retrieval.ts";
 
+// JSON extraction and repair helpers to handle occasional malformed outputs
+function extractJSON(text: string): string | null {
+  const match = text.match(/\{[\s\S]*\}/);
+  return match ? match[0] : null;
+}
+
+function repairJSON(text: string): string {
+  let repaired = text.trim();
+  // Remove markdown code fences
+  repaired = repaired.replace(/```json\s*/gi, '').replace(/```\s*/g, '');
+  // If extra prose exists, keep only the first JSON-looking block
+  const extracted = extractJSON(repaired);
+  if (extracted) repaired = extracted;
+  // Remove trailing commas before closing brackets
+  repaired = repaired.replace(/,(\s*[}\]])/g, '$1');
+  // Heuristic: add missing commas between adjacent objects/arrays
+  repaired = repaired.replace(/}(\s*)\{/g, '},$1{');
+  repaired = repaired.replace(/](\s*)\[/g, '],$1[');
+  // Balance brackets if counts differ
+  const openBraces = (repaired.match(/\{/g) || []).length;
+  const closeBraces = (repaired.match(/\}/g) || []).length;
+  if (openBraces > closeBraces) repaired += '}'.repeat(openBraces - closeBraces);
+  const openBrackets = (repaired.match(/\[/g) || []).length;
+  const closeBrackets = (repaired.match(/\]/g) || []).length;
+  if (openBrackets > closeBrackets) repaired += ']'.repeat(openBrackets - closeBrackets);
+  return repaired;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -198,61 +226,41 @@ ${regulations.map(reg => `- [${reg.regulation_number}] ${reg.similarity ? `(rele
 
 CRITICAL UK CABLE COLOUR STANDARDS:
 - Brown = Line (Live) - permanent live or switched live
-- Blue = Neutral - can be used as switched live ONLY if sleeved with brown sleeving at both ends
+- Blue = Neutral - can be used as switched live ONLY if sleeved with brown at both ends
 - Green/Yellow = Earth/CPC - protective conductor, NEVER carries current in normal operation
-- Strappers (2-way/intermediate switching): Use brown/black cores from 3-core+E cable, or properly sleeved cores
+- Strappers (2-way/intermediate switching): Use brown/black cores from 3-core+E, or properly sleeved cores
 - ALWAYS specify when sleeving is required
-- Common strapper practice: Brown and Black cores from twin and earth with appropriate identification
 
-RESPONSE FORMAT:
-You MUST return ONLY valid JSON with no text before or after. Ensure proper commas between array items and closing brackets.
+CRITICAL JSON REQUIREMENTS (STRICT):
+- Return ONLY valid JSON. No markdown/code fences, no prose before/after
+- Use double quotes for all strings
+- Every array/object must be closed properly
+- Commas between items, but NO trailing comma on the last item
+- Keep fields to those specified in the schema only
+
+COMMON MISTAKES TO AVOID (examples):
+- Trailing commas → { "a": 1, }  ✗
+- Missing comma → [ {"a":1} {"b":2} ]  ✗  (must be [{"a":1}, {"b":2}])
+- Unclosed brackets → { "a": [1,2]    ✗
 
 INSTRUCTION DETAIL REQUIREMENTS:
-- Each wiring step instruction must be 2-3 sentences minimum
-- Include practical guidance ("Use a torque screwdriver set to 1.2Nm", "Look for the terminal marked L1")
-- Explain what to check and verify at each step
-- Mention common mistakes to avoid
-- Include visual/physical cues to help electricians
-- Add verification steps ("Gently tug cable to ensure secure connection")
-- Be specific about terminal markings and locations
-- Provide "what_to_check" and "common_mistakes" for each step
+- Each wiring step instruction must be 2–3 sentences minimum
+- Include practical guidance (e.g., torque values, terminal IDs)
+- Explain what to check/verify at each step and common mistakes
+- Include visual/physical cues and BS 7671 references where relevant
 
-DISTRIBUTION BOARDS - ENHANCED GUIDANCE REQUIRED:
-For distribution boards/consumer units specifically, you MUST include:
-
-1. PRE-INSTALLATION CHECKLIST (in "pre_installation_tasks" array):
-   - Photo documentation of existing installation (multiple angles)
-   - Record all circuit details (way numbers, MCB ratings, cable sizes)
-   - Circuit labeling at both ends with tape/labels
-   - Incoming supply voltage verification
-   - Earth/neutral bar capacity check
-
-2. BOARD LAYOUT PLANNING (in "board_layout_guide" object):
-   - MCB arrangement strategy (left-to-right by way number)
-   - Group similar circuits (sockets together, lights together)
-   - RCD split load arrangement if applicable
-   - Spare ways for future expansion
-   - High current circuits near main switch
-
-3. EARTH/NEUTRAL BAR STRATEGY (in "board_layout_guide"):
-   - Number positions to match MCB way numbers (Way 1 → Position 1)
-   - CRITICAL: Terminate ALL earths FIRST (creates workspace, easier ID)
-   - Then terminate ALL neutrals
-   - Finally wire MCB live terminals
-   - Benefits explained: workspace, identification, safety
-
-4. DETAILED WIRING SEQUENCE (in "wiring_sequence_strategy" object):
-   - Step-by-step order with rationale
-   - NOT just "connect terminal" - include cable routing, strain relief
-   - Terminal tightening torque values
-   - Testing between stages
-
-5. PRACTICAL TIPS & COMMON MISTAKES (separate arrays):
-   - Cable management (bundling earths, avoiding crossovers)
-   - Photo documentation points
-   - Cable markers matching way numbers
-   - Leaving earth tails longer for future work
-   - Common mistakes: wiring lives first (cramped), not labeling circuits`
+DISTRIBUTION BOARDS – ENHANCED GUIDANCE REQUIRED:
+1. PRE-INSTALLATION CHECKLIST (pre_installation_tasks):
+   - Photo documentation; record circuit details; labelling; supply verification; bar capacity
+2. BOARD LAYOUT PLANNING (board_layout_guide):
+   - MCB arrangement; grouping; RCD split load; spares; high current near main switch
+3. EARTH/NEUTRAL BAR STRATEGY (board_layout_guide):
+   - Number positions to match ways; earths first, then neutrals, then lives; benefits
+4. DETAILED WIRING SEQUENCE (wiring_sequence_strategy):
+   - Order with rationale; routing/strain relief; tightening torques; staged testing
+5. PRACTICAL TIPS & COMMON MISTAKES (arrays)
+   - Cable management; documentation; markers; longer earth tails; typical pitfalls`
+              },
               },
               {
                 role: 'user',
@@ -345,7 +353,7 @@ Format:
 }`
               }
             ],
-            max_tokens: 4000
+            max_tokens: 3000
           }),
         }).then(async (res) => {
           if (!res.ok) {
@@ -361,18 +369,15 @@ Format:
 
     const guidanceText = guidanceData.choices[0].message.content;
     
-    // Extract JSON with improved regex
+    // Extract and repair JSON
     let jsonMatch = guidanceText.match(/\{[\s\S]*\}/);
     let guidance = null;
-    
+
     try {
-      if (jsonMatch) {
-        // Try to parse the matched JSON
-        guidance = JSON.parse(jsonMatch[0]);
-      } else {
-        // Fallback: try parsing the entire response
-        guidance = JSON.parse(guidanceText.trim());
-      }
+      let jsonText = jsonMatch ? jsonMatch[0] : guidanceText.trim();
+      jsonText = repairJSON(jsonText);
+      guidance = JSON.parse(jsonText);
+
       
       // Validate required fields
       if (!guidance?.component_name || !guidance?.wiring_scenarios || !Array.isArray(guidance.wiring_scenarios)) {
