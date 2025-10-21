@@ -40,7 +40,7 @@ const InstallationVerificationResults: React.FC<InstallationVerificationResultsP
   onExportReport
 }) => {
   // Normalise incoming payload to a stable shape (defensive against model variations)
-  const formatStatus = (s?: string) => (s ? s.replaceAll('_', ' ').toUpperCase() : 'UNKNOWN');
+  const formatStatus = (s?: string) => (s ? s.replace(/_/g, ' ').toUpperCase() : 'UNKNOWN');
   const percent = (n?: number) => {
     const v = n ?? 0;
     return Math.round(v <= 1 ? v * 100 : v);
