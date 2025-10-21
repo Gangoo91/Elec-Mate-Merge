@@ -36,10 +36,10 @@ export const useAIDesigner = () => {
     setError(null);
     setDesignData(null);
 
-    // Validate inputs
-    if (!inputs.circuits || inputs.circuits.length === 0) {
-      toast.error('No circuits to design', {
-        description: 'Please add at least one circuit before generating a design.'
+    // Validate inputs - must have either circuits OR a prompt description
+    if ((!inputs.circuits || inputs.circuits.length === 0) && !inputs.additionalPrompt?.trim()) {
+      toast.error('No circuits or description provided', {
+        description: 'Please either add circuits manually or describe your requirements in the AI prompt.'
       });
       setIsProcessing(false);
       return false;
