@@ -229,35 +229,6 @@ const CableSizingCalculator = () => {
           </div>
         </CardHeader>
         <CardContent>
-          {/* Compliance Status */}
-          {compliance && (
-            <Alert className={`mb-6 ${compliance.overallCompliant ? 'border-green-500/20 bg-green-950/20' : 'border-red-500/20 bg-red-950/20'}`}>
-              {compliance.overallCompliant ? (
-                <CheckCircle2 className="h-4 w-4 text-green-500" />
-              ) : (
-                <AlertCircle className="h-4 w-4 text-red-500" />
-              )}
-              <AlertDescription>
-                <div className="font-medium mb-2">
-                  {compliance.overallCompliant ? "BS 7671 Compliance: ✓ PASSED" : "BS 7671 Compliance: ✗ FAILED"}
-                </div>
-                {compliance.usingFallbackCurrent && (
-                  <div className="text-xs text-yellow-400 mb-2">
-                    ⚠️ Using main current input ({compliance.Ib}A) - consider setting design current for proper validation
-                  </div>
-                )}
-                <div className="text-sm grid grid-cols-3 gap-4">
-                  <div>Ib = {compliance.Ib}A</div>
-                  <div>In = {compliance.In}A</div>
-                  <div>Iz = {compliance.Iz}A</div>
-                </div>
-                <div className="text-xs mt-1">
-                  Ib ≤ In: {compliance.ibInCompliant ? "✓" : "✗"} | In ≤ Iz: {compliance.inIzCompliant ? "✓" : "✗"} | 
-                  Safety margin: {compliance.safetyMargin.toFixed(1)}%
-                </div>
-              </AlertDescription>
-            </Alert>
-          )}
 
           <div className="space-y-8">
             {/* Input Mode Selector */}
@@ -420,6 +391,52 @@ const CableSizingCalculator = () => {
           </div>
           
           <div className="flex flex-col space-y-4 mt-6 xl:mt-0">
+              {/* Compliance Status - Appears with results */}
+              {compliance && result.recommendedCable && (
+                <div className={`p-4 rounded-lg ${
+                  compliance.overallCompliant 
+                    ? 'bg-green-500/10 border border-green-500/30' 
+                    : 'bg-red-500/10 border border-red-500/30'
+                }`}>
+                  <div className="flex items-center gap-2 mb-3">
+                    {compliance.overallCompliant ? (
+                      <CheckCircle2 className="h-6 w-6 text-green-400" />
+                    ) : (
+                      <AlertCircle className="h-6 w-6 text-red-400" />
+                    )}
+                    <span className="text-lg font-bold text-white">
+                      BS 7671 Compliance: {compliance.overallCompliant ? 'PASSED' : 'FAILED'}
+                    </span>
+                  </div>
+                  
+                  {compliance.usingFallbackCurrent && (
+                    <div className="text-xs text-yellow-400 mb-2">
+                      ⚠️ Using main current input ({compliance.Ib}A) - consider setting design current for proper validation
+                    </div>
+                  )}
+                  
+                  <div className="flex flex-wrap gap-4 text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">Ib:</span>
+                      <span className="font-bold text-white">{compliance.Ib}A</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">In:</span>
+                      <span className="font-bold text-white">{compliance.In}A</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">Iz:</span>
+                      <span className="font-bold text-white">{compliance.Iz}A</span>
+                    </div>
+                  </div>
+                  
+                  <div className="text-xs mt-2 text-muted-foreground">
+                    Ib ≤ In: {compliance.ibInCompliant ? "✓" : "✗"} | In ≤ Iz: {compliance.inIzCompliant ? "✓" : "✗"} | 
+                    Safety margin: {compliance.safetyMargin.toFixed(1)}%
+                  </div>
+                </div>
+              )}
+              
               <div className="rounded-md bg-elec-dark border border-elec-yellow/40 p-6 flex-grow flex flex-col min-h-[400px]">
                 <CableSizingResult
                   recommendedCable={result.recommendedCable}

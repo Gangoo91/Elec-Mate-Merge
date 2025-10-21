@@ -1,7 +1,6 @@
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Info, ChevronDown, ChevronUp, HelpCircle, CheckCircle2, Cable, Calculator } from "lucide-react";
+import { Info, ChevronDown, ChevronUp, CheckCircle2, Cable, Calculator } from "lucide-react";
 import { CableSizingInputs } from "./useCableSizing";
 import { CableSizeOption } from "./cableSizeData";
 import EmptyState from "./EmptyState";
@@ -65,145 +64,144 @@ const CableSizingResult = ({
   };
 
   const voltageDropPercent = ((recommendedCable?.calculatedVoltageDrop || 0) / parseFloat(inputs.voltage || '230')) * 100;
+
   return (
-    <div className="flex-grow flex flex-col">
-      {errors.general && (
-        <Alert className="mb-4 bg-amber-900/30 border-amber-500/50">
-          <Info className="h-4 w-4 text-amber-500" />
-          <AlertDescription className="text-amber-100">
-            {errors.general}
-          </AlertDescription>
-        </Alert>
-      )}
-      
-      {recommendedCable ? (
-        <div className="space-y-6 animate-fade-in">
-          {/* Recommended Cable Card - Enhanced */}
-          <Card className="border-elec-yellow/40 bg-gradient-to-br from-elec-yellow/10 via-elec-gray to-elec-gray shadow-lg">
-            <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-2 text-elec-yellow">
-                <CheckCircle2 className="h-5 w-5" />
-                Recommended Cable
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* Cable Size - Prominent Display with proper mm² */}
-              <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-5xl md:text-6xl font-bold text-elec-yellow">
+    <div className="space-y-6">
+      {!recommendedCable ? (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">
+            Enter the circuit specifications and click "Calculate Cable Size" to get results
+          </p>
+        </div>
+      ) : (
+        <>
+          {/* Recommended Cable - Streamlined without nested cards */}
+          <div>
+            <div className="flex items-center gap-2 mb-6">
+              <CheckCircle2 className="h-6 w-6 text-elec-yellow" />
+              <h3 className="text-xl font-semibold text-elec-yellow">Recommended Cable</h3>
+            </div>
+
+            {/* Cable Size - Centered, Prominent */}
+            <div className="text-center mb-8">
+              <div className="flex items-baseline justify-center gap-2 mb-2">
+                <span className="text-6xl md:text-7xl font-bold text-elec-yellow">
                   {recommendedCable.size.replace('mm²', '').replace('mm2', '')}
                 </span>
-                <span className="text-2xl md:text-3xl text-elec-yellow/80">mm²</span>
+                <span className="text-3xl md:text-4xl text-elec-yellow/80">mm²</span>
               </div>
-
-              {/* Cable Type & Installation */}
-              <div className="mb-6">
-                <p className="text-base font-medium text-white mb-1">
+              <div className="space-y-1">
+                <p className="text-lg font-medium text-white">
                   {getCableTypeDisplay(inputs.cableType)}
                 </p>
                 <p className="text-sm text-muted-foreground">
                   {getInstallationMethodDisplay(inputs.installationType)}
                 </p>
               </div>
+            </div>
 
-              {/* Key Specifications Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs text-muted-foreground flex items-center gap-1">
-                      Base Capacity
-                      <RequiredFieldTooltip content={getBaseCapacityTooltip(recommendedCable, inputs.installationType)} />
-                    </span>
+            {/* Simplified Capacity Info - No nested boxes */}
+            <div className="space-y-4 mb-6">
+              <div className="flex items-center justify-between py-3 border-b border-elec-yellow/20">
+                <span className="text-sm text-muted-foreground flex items-center gap-1">
+                  Base Capacity
+                  <RequiredFieldTooltip 
+                    content={getBaseCapacityTooltip(recommendedCable, inputs.installationType)}
+                  />
+                </span>
+                <span className="text-2xl font-bold text-elec-yellow">
+                  {recommendedCable.currentRating[inputs.installationType]}A
+                </span>
+              </div>
+              
+              <div className="flex items-center justify-between py-3 border-b border-elec-yellow/20">
+                <span className="text-sm text-muted-foreground">Derated Capacity</span>
+                <span className="text-2xl font-bold text-elec-yellow">
+                  {Math.round(recommendedCable.currentRating[inputs.installationType] * derating.temperature * derating.grouping)}A
+                </span>
+              </div>
+              
+              <div className="flex items-center justify-between py-3">
+                <span className="text-sm text-muted-foreground flex items-center gap-1">
+                  Voltage Drop
+                  <RequiredFieldTooltip 
+                    content="Voltage drop must not exceed 3% for lighting or 5% for other circuits per BS 7671 regulations."
+                  />
+                </span>
+                <div className="text-right">
+                  <div className="text-xl font-bold text-white">
+                    {(recommendedCable.calculatedVoltageDrop || 0).toFixed(2)}V
                   </div>
-                  <div className="text-2xl font-bold text-white">
-                    {recommendedCable.currentRating[inputs.installationType]}A
-                  </div>
-                </div>
-
-                <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-                  <div className="text-xs text-muted-foreground mb-1">Derated Capacity</div>
-                  <div className="text-2xl font-bold text-white">
-                    {Math.round(recommendedCable.currentRating[inputs.installationType] * derating.temperature * derating.grouping)}A
+                  <div className={`text-sm font-medium ${
+                    voltageDropPercent <= 3 ? 'text-green-400' : 
+                    voltageDropPercent <= 5 ? 'text-amber-400' : 
+                    'text-red-400'
+                  }`}>
+                    ({voltageDropPercent.toFixed(2)}% of 230V)
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* Voltage Drop - Visual Indicator */}
-              <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Voltage Drop:</span>
-                  <div className="text-right">
-                    <div className="text-xl font-bold text-white">
-                      {(recommendedCable.calculatedVoltageDrop || 0).toFixed(2)}V
-                    </div>
-                    <div className={`text-sm font-medium ${
-                      voltageDropPercent <= 3 
-                        ? 'text-green-400' 
-                        : voltageDropPercent <= 5 
-                        ? 'text-amber-400' 
-                        : 'text-red-400'
-                    }`}>
-                      ({voltageDropPercent.toFixed(2)}%)
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          
-          {/* Alternative Cable Options - Enhanced */}
+          {/* Alternative Options - No Card wrapper */}
           {alternativeCables.length > 0 && (
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2 text-elec-yellow">
-                  <Cable className="h-4 w-4" />
-                  Alternative Options
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {alternativeCables.map((cable, index) => (
+            <div className="mt-8 pt-8 border-t border-elec-yellow/30">
+              <h3 className="text-lg font-semibold text-elec-yellow mb-4 flex items-center gap-2">
+                <Cable className="h-5 w-5" />
+                Alternative Options
+              </h3>
+              <div className="space-y-3">
+                {alternativeCables.map((cable, index) => {
+                  const altDerating = inputs.ambientTemp ? (parseFloat(inputs.ambientTemp) - 30) * 0.01 : 0;
+                  const altVoltageDropPercent = ((cable.calculatedVoltageDrop || 0) / 230) * 100;
+                  
+                  return (
                     <div 
                       key={index} 
-                      className="p-4 bg-elec-dark/20 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors"
+                      className="p-4 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors bg-elec-dark/20"
                     >
-                      <div className="flex items-baseline gap-1 mb-3">
-                        <span className="text-2xl font-bold text-white">
+                      <div className="flex items-baseline gap-2 mb-3">
+                        <span className="text-3xl font-bold text-white">
                           {cable.size.replace('mm²', '').replace('mm2', '')}
                         </span>
-                        <span className="text-sm text-muted-foreground">mm²</span>
+                        <span className="text-lg text-muted-foreground">mm²</span>
+                        <span className="text-sm text-muted-foreground ml-auto">
+                          {getCableTypeDisplay(inputs.cableType)}
+                        </span>
                       </div>
-                      <div className="space-y-2 text-xs">
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Capacity:</span>
-                          <span className="font-medium text-white">
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Base Capacity:</span>
+                          <span className="font-bold text-white">
                             {cable.currentRating[inputs.installationType]}A
                           </span>
                         </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">V-Drop:</span>
-                          <span className="font-medium text-white">
-                            {(cable.calculatedVoltageDrop || 0).toFixed(1)}V
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Derated:</span>
+                          <span className="font-bold text-white">
+                            {Math.round(cable.currentRating[inputs.installationType] * derating.temperature * derating.grouping)}A
                           </span>
                         </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">V-Drop %:</span>
-                          <span className={`font-medium ${
-                            ((cable.calculatedVoltageDrop || 0) / parseFloat(inputs.voltage || '230') * 100) <= 3
-                              ? 'text-green-400'
-                              : 'text-amber-400'
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted-foreground">Voltage Drop:</span>
+                          <span className={`font-bold ${
+                            altVoltageDropPercent <= 3 ? 'text-green-400' : 
+                            altVoltageDropPercent <= 5 ? 'text-amber-400' : 
+                            'text-red-400'
                           }`}>
-                            {((cable.calculatedVoltageDrop || 0) / parseFloat(inputs.voltage || '230') * 100).toFixed(2)}%
+                            {(cable.calculatedVoltageDrop || 0).toFixed(1)}V ({altVoltageDropPercent.toFixed(1)}%)
                           </span>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                  );
+                })}
+              </div>
+            </div>
           )}
 
-          {/* Show Calculation Derivation - Enhanced Collapsible */}
+          {/* Show Calculation Derivation - Streamlined */}
           <Collapsible open={showDerivation} onOpenChange={setShowDerivation} className="mt-6">
             <CollapsibleTrigger className="w-full flex items-center justify-center gap-2 p-4 text-sm text-elec-yellow/70 hover:text-elec-yellow transition-all bg-elec-gray/20 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-elec-gray/40">
               {showDerivation ? (
@@ -219,20 +217,19 @@ const CableSizingResult = ({
               )}
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-6">
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardHeader>
-                  <CardTitle className="text-base flex items-center gap-2">
-                    <Calculator className="h-4 w-4 text-elec-yellow" />
-                    Calculation Steps
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4 text-sm">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <Calculator className="h-5 w-5 text-elec-yellow" />
+                  <h4 className="text-lg font-semibold text-elec-yellow">Calculation Steps</h4>
+                </div>
+
+                <div className="space-y-3">
                   <div className="p-4 bg-elec-dark/30 rounded-lg">
                     <h4 className="font-medium text-white mb-2 flex items-center gap-2">
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">1</span>
                       Design Current (Ib)
                     </h4>
-                    <p className="text-muted-foreground">Load current: <span className="text-white font-mono font-bold">{inputs.current}A</span></p>
+                    <p className="text-sm text-muted-foreground">Load current: <span className="text-white font-mono font-bold">{inputs.current}A</span></p>
                   </div>
                   
                   <div className="p-4 bg-elec-dark/30 rounded-lg">
@@ -240,7 +237,7 @@ const CableSizingResult = ({
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">2</span>
                       Derating Factors
                     </h4>
-                    <div className="space-y-1 text-muted-foreground">
+                    <div className="space-y-1 text-sm text-muted-foreground">
                       <p>Temperature factor (Ca): <span className="text-white font-mono">{derating.temperature.toFixed(3)}</span></p>
                       <p>Grouping factor (Cg): <span className="text-white font-mono">{derating.grouping.toFixed(3)}</span></p>
                       <p className="pt-2 border-t border-elec-yellow/10 mt-2">
@@ -254,10 +251,10 @@ const CableSizingResult = ({
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">3</span>
                       Required Tabulated Current (It)
                     </h4>
-                    <p className="text-muted-foreground mb-2">
+                    <p className="text-sm text-muted-foreground mb-2">
                       It = Ib ÷ (Ca × Cg)
                     </p>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       It = {inputs.current}A ÷ {(derating.temperature * derating.grouping).toFixed(3)} = 
                       <span className="text-elec-yellow font-mono font-bold ml-1">
                         {(parseFloat(inputs.current) / (derating.temperature * derating.grouping)).toFixed(1)}A
@@ -270,7 +267,7 @@ const CableSizingResult = ({
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">4</span>
                       Cable Selection
                     </h4>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       Selected <span className="text-elec-yellow font-medium text-base">{recommendedCable.size}</span> with 
                       tabulated capacity of <span className="text-white font-mono font-bold">{recommendedCable.currentRating[inputs.installationType]}A</span>
                     </p>
@@ -281,7 +278,7 @@ const CableSizingResult = ({
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">5</span>
                       Voltage Drop Verification
                     </h4>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       Calculated: <span className="text-white font-mono font-bold">{(recommendedCable.calculatedVoltageDrop || 0).toFixed(2)}V</span>
                       <span className="text-muted-foreground"> ({voltageDropPercent.toFixed(2)}%)</span>
                       {voltageDropPercent <= parseFloat(inputs.voltageDrop || '3') ? (
@@ -291,34 +288,20 @@ const CableSizingResult = ({
                       )}
                     </p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </CollapsibleContent>
           </Collapsible>
-        </div>
-      ) : alternativeCables.length > 0 ? (
-        <div className="space-y-4">
-          <h3 className="text-red-400 text-lg font-medium">Voltage Drop Too High</h3>
-          <p className="text-sm text-muted-foreground">
-            Even the largest available cable cannot meet the voltage drop requirements for this length and current.
-          </p>
-          <div>
-            <h4 className="text-elec-yellow text-sm font-medium mb-2">Best Option (with high voltage drop)</h4>
-            <div className="bg-elec-gray/30 rounded-md p-3 border border-red-500/20">
-              <div className="font-medium">{alternativeCables[0].size}</div>
-              <div className="text-muted-foreground text-xs">
-                Rating: {alternativeCables[0].currentRating[inputs.installationType]}A<br/>
-                Voltage Drop: {(alternativeCables[0].calculatedVoltageDrop || 0).toFixed(1)}V 
-                ({((alternativeCables[0].calculatedVoltageDrop || 0) / parseFloat(inputs.voltage) * 100).toFixed(1)}%)
-              </div>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              Consider using parallel cables, a higher voltage system, or a different route with shorter cable length.
-            </p>
-          </div>
-        </div>
-      ) : (
-        <EmptyState />
+        </>
+      )}
+
+      {errors.general && (
+        <Alert className="bg-amber-900/30 border-amber-500/50">
+          <Info className="h-4 w-4 text-amber-500" />
+          <AlertDescription className="text-amber-100">
+            {errors.general}
+          </AlertDescription>
+        </Alert>
       )}
     </div>
   );
