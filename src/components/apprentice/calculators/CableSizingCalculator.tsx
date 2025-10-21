@@ -239,8 +239,12 @@ const CableSizingCalculator = () => {
               </h3>
               <Tabs value={inputMode} onValueChange={(v) => setInputMode(v as 'current' | 'load')} className="w-full">
                 <TabsList className="grid w-full grid-cols-2 h-12">
-                  <TabsTrigger value="current" className="text-sm">Enter Current (A)</TabsTrigger>
-                  <TabsTrigger value="load" className="text-sm">Calculate from Load (W)</TabsTrigger>
+                  <TabsTrigger value="current" className="text-sm font-semibold data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow">
+                    Current
+                  </TabsTrigger>
+                  <TabsTrigger value="load" className="text-sm font-semibold data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow">
+                    Load
+                  </TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
