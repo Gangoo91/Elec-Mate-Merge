@@ -132,8 +132,9 @@ export interface HybridSearchResult {
   regulations: FoundRegulation[];
   designDocs: any[];
   healthSafetyDocs: any[];
-  installationDocs: any[]; // NEW: Installation knowledge
-  searchMethod: 'exact' | 'vector' | 'keyword' | 'hybrid';
+  installationDocs: any[];
+  maintenanceDocs: any[];
+  searchMethod: 'exact' | 'vector' | 'keyword' | 'hybrid' | 'cached';
   searchTimeMs: number;
   embedding?: number[];
 }
@@ -182,7 +183,7 @@ async function vectorSearch(
   supabase: any,
   params: HybridSearchParams,
   skipIfFound: number = 3
-): Promise<{ regulations: any[]; designDocs: any[]; healthSafetyDocs: any[]; embedding: number[]; timeMs: number }> {
+): Promise<{ regulations: any[]; designDocs: any[]; healthSafetyDocs: any[]; installationDocs: any[]; maintenanceDocs: any[]; embedding: number[]; timeMs: number }> {
   const startTime = Date.now();
 
   // Check if we can reuse cached embedding
@@ -232,7 +233,7 @@ async function vectorSearchWithEmbedding(
   params: HybridSearchParams,
   embedding: number[],
   startTime: number
-): Promise<{ regulations: any[]; designDocs: any[]; healthSafetyDocs: any[]; installationDocs: any[]; embedding: number[]; timeMs: number }> {
+): Promise<{ regulations: any[]; designDocs: any[]; healthSafetyDocs: any[]; installationDocs: any[]; maintenanceDocs: any[]; embedding: number[]; timeMs: number }> {
   
   const priority = params.context?.ragPriority;
   
@@ -321,6 +322,21 @@ async function vectorSearchWithEmbedding(
     console.log('⏭️ Skipping installation search (low priority)');
   }
 
+  // PHASE 4: Maintenance knowledge search - prioritize for industrial/motor circuits
+  if (!priority || priority.maintenance >= 50 || params.circuitType?.includes('industrial') || params.circuitType?.includes('motor')) {
+    searches.push(
+      supabase.rpc('search_maintenance_hybrid', {
+        query_text: params.expandedQuery,
+        query_embedding: embedding,
+        equipment_filter: params.context?.entities?.equipmentType || null,
+        match_count: 8,
+      })
+    );
+    searchTypes.push('maintenance');
+  } else {
+    console.log('⏭️ Skipping maintenance search (low priority)');
+  }
+
   // IMPROVEMENT: Proactive Error Recovery - Execute with retry logic
   const { withRetry, RetryPresets } = await import('./retry.ts');
   
@@ -367,7 +383,8 @@ async function vectorSearchWithEmbedding(
   const totalResults = (resultMap.bs7671?.length || 0) + 
                       (resultMap.design?.length || 0) + 
                       (resultMap.installation?.length || 0) + 
-                      (resultMap.health_safety?.length || 0);
+                      (resultMap.health_safety?.length || 0) +
+                      (resultMap.maintenance?.length || 0);
   
   const hasMinimumResults = totalResults >= 3;
   
@@ -420,6 +437,7 @@ async function vectorSearchWithEmbedding(
     designDocs: resultMap.design || [],
     healthSafetyDocs: resultMap.health_safety || [],
     installationDocs: resultMap.installation || [],
+    maintenanceDocs: resultMap.maintenance || [],
     embedding,
     timeMs: Date.now() - startTime,
     qualityMetrics: {
@@ -509,6 +527,7 @@ export async function intelligentRAGSearch(
       designDocs: cachedResult.structured_data?.designDocs || [],
       healthSafetyDocs: cachedResult.structured_data?.healthSafetyDocs || [],
       installationDocs: cachedResult.structured_data?.installationDocs || [],
+      maintenanceDocs: cachedResult.structured_data?.maintenanceDocs || [],
       searchMethod: 'cached' as any,
       searchTimeMs: 0,
       embedding: cachedResult.structured_data?.embedding
@@ -536,12 +555,12 @@ export async function intelligentRAGSearch(
   console.log(`🔍 Query expanded: "${params.expandedQuery}" → ${expandedTerms.length} terms`);
 
   // Tier 2: Vector search (if needed)
-  let vectorResults = { regulations: [], designDocs: [], healthSafetyDocs: [], installationDocs: [], embedding: [], timeMs: 0 };
+  let vectorResults = { regulations: [], designDocs: [], healthSafetyDocs: [], installationDocs: [], maintenanceDocs: [], embedding: [], timeMs: 0 };
   if (exactResults.regulations.length < 5) {
     // Use enriched query for better vector matching
     const enrichedParams = { ...params, expandedQuery: enrichedQuery };
     vectorResults = await vectorSearch(supabase, enrichedParams);
-    console.log(`✅ Tier 2 (Vector): ${vectorResults.regulations.length} regs, ${vectorResults.designDocs.length} design, ${vectorResults.installationDocs.length} installation docs in ${vectorResults.timeMs}ms`);
+    console.log(`✅ Tier 2 (Vector): ${vectorResults.regulations.length} regs, ${vectorResults.designDocs.length} design, ${vectorResults.installationDocs.length} installation, ${vectorResults.maintenanceDocs.length} maintenance docs in ${vectorResults.timeMs}ms`);
     searchMethod = exactResults.regulations.length > 0 ? 'hybrid' : 'vector';
     embedding = vectorResults.embedding;
   }
@@ -551,6 +570,7 @@ export async function intelligentRAGSearch(
   let allDesignDocs = vectorResults.designDocs;
   let allHealthSafetyDocs = vectorResults.healthSafetyDocs;
   let allInstallationDocs = vectorResults.installationDocs;
+  let allMaintenanceDocs = vectorResults.maintenanceDocs;
   
   // IMPROVEMENT #3: Apply re-ranking to boost important regulations
   if (allRegulations.length > 0) {
@@ -607,9 +627,13 @@ export async function intelligentRAGSearch(
     new Map(allInstallationDocs.map(d => [d.id, d])).values()
   ).slice(0, 10);
 
+  const uniqueMaintenanceDocs = Array.from(
+    new Map(allMaintenanceDocs.map(d => [d.id, d])).values()
+  ).slice(0, 8);
+
   const totalTime = Date.now() - totalStartTime;
 
-  console.log(`📊 Total RAG Results: ${uniqueRegulations.length} regs, ${uniqueDesignDocs.length} design, ${allHealthSafetyDocs.length} H&S, ${uniqueInstallationDocs.length} installation in ${totalTime}ms via ${searchMethod}`);
+  console.log(`📊 Total RAG Results: ${uniqueRegulations.length} regs, ${uniqueDesignDocs.length} design, ${allHealthSafetyDocs.length} H&S, ${uniqueInstallationDocs.length} installation, ${uniqueMaintenanceDocs.length} maintenance in ${totalTime}ms via ${searchMethod}`);
 
   const finalResult = {
     regulations: uniqueRegulations.map(reg => ({
@@ -622,6 +646,7 @@ export async function intelligentRAGSearch(
     designDocs: uniqueDesignDocs,
     healthSafetyDocs: allHealthSafetyDocs,
     installationDocs: uniqueInstallationDocs,
+    maintenanceDocs: uniqueMaintenanceDocs,
     searchMethod,
     searchTimeMs: totalTime,
     embedding,
@@ -636,6 +661,7 @@ export async function intelligentRAGSearch(
       designDocs: finalResult.designDocs,
       healthSafetyDocs: finalResult.healthSafetyDocs,
       installationDocs: finalResult.installationDocs,
+      maintenanceDocs: finalResult.maintenanceDocs,
       embedding: finalResult.embedding
     },
     enrichment: {},
