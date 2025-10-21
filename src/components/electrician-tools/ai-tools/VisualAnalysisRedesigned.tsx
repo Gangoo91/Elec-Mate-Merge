@@ -687,23 +687,13 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       {/* Compact Header */}
       <Card className="bg-gradient-to-br from-elec-card to-elec-grey/50 border-border">
         <CardHeader className="p-3 sm:p-4">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2 flex-1 min-w-0">
-              <Sparkles className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-              <div className="min-w-0 flex-1">
-                <CardTitle className="text-sm sm:text-base text-foreground leading-tight">
-                  {getModeTitle()}
-                </CardTitle>
-              </div>
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <Sparkles className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+            <div className="min-w-0 flex-1">
+              <CardTitle className="text-sm sm:text-base text-foreground leading-tight">
+                {getModeTitle()}
+              </CardTitle>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleBackToModeSelection}
-              className="h-8 px-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
           </div>
         </CardHeader>
       </Card>
