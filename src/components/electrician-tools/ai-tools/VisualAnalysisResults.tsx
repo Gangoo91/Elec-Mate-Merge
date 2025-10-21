@@ -65,10 +65,10 @@ const VisualAnalysisResults: React.FC<VisualAnalysisResultsProps> = ({
 }) => {
   
   // Detect if this is a parse error
-  const isParseError = analysisResult.findings.some(
+  const isParseError = analysisResult?.findings?.some(
     finding => finding.description.toLowerCase().includes('unable to complete') || 
                finding.description.toLowerCase().includes('format was invalid')
-  );
+  ) || false;
 
   const getEicrCodeColor = (code: string) => {
     switch (code) {

@@ -17,6 +17,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
+import InstallationVerificationResults from "./InstallationVerificationResults";
 import ComponentIdentificationResults from "./ComponentIdentificationResults";
 import WiringGuidanceDisplay from "./WiringGuidanceDisplay";
 import WiringGuidanceSection from "./WiringGuidanceSection";
@@ -29,7 +30,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { InspectorChatModal } from "./InspectorChatModal";
 
 interface AnalysisResult {
-  findings: Array<{
+  findings?: Array<{
     description: string;
     eicr_code: 'C1' | 'C2' | 'C3' | 'FI';
     confidence: number;
@@ -45,14 +46,14 @@ interface AnalysisResult {
       verification_status: string;
     };
   }>;
-  recommendations: Array<{
+  recommendations?: Array<{
     action: string;
     priority: 'immediate' | 'urgent' | 'recommended';
     bs7671_reference?: string;
     cost_estimate?: string;
     eicr_code: 'C1' | 'C2' | 'C3';
   }>;
-  compliance_summary: {
+  compliance_summary?: {
     overall_assessment: 'satisfactory' | 'unsatisfactory';
     c1_count: number;
     c2_count: number;
@@ -60,9 +61,21 @@ interface AnalysisResult {
     fi_count: number;
     safety_rating: number;
   };
-  summary: string;
+  summary?: string;
   rag_verified?: boolean;
   verification_note?: string;
+  // Installation Verification fields
+  verification_checks?: Array<{
+    check_name: string;
+    status: 'pass' | 'fail' | 'requires_testing';
+    details: string;
+    bs7671_references: string[];
+    confidence: number;
+  }>;
+  improvement_recommendations?: string[];
+  overall_result?: 'pass' | 'fail' | 'requires_testing';
+  confidence_score?: number;
+  processing_time?: number;
   wiring_schematic?: {
     component_name: string;
     component_details: string;
@@ -1113,9 +1126,9 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
           )}
 
           {/* Installation Verification */}
-          {selectedMode === 'installation_verify' && (
-            <VisualAnalysisResults 
-              analysisResult={analysisResult}
+          {selectedMode === 'installation_verify' && analysisResult.verification_checks && (
+            <InstallationVerificationResults 
+              verificationResult={analysisResult as any}
               onExportReport={() => {}}
               onRetry={handleRetryFromError}
             />
