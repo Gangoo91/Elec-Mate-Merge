@@ -39,7 +39,46 @@ const InstallationVerificationResults: React.FC<InstallationVerificationResultsP
   verificationResult, 
   onExportReport
 }) => {
-  
+  // Normalise incoming payload to a stable shape (defensive against model variations)
+  const formatStatus = (s?: string) => (s ? s.replaceAll('_', ' ').toUpperCase() : 'UNKNOWN');
+  const percent = (n?: number) => {
+    const v = n ?? 0;
+    return Math.round(v <= 1 ? v * 100 : v);
+  };
+
+  const overall = (verificationResult as any)?.overall_result 
+    ?? (verificationResult as any)?.assessment 
+    ?? (verificationResult as any)?.overall 
+    ?? 'requires_testing';
+
+  const confidenceScore = (verificationResult as any)?.confidence_score 
+    ?? (verificationResult as any)?.confidence 
+    ?? 0.7;
+
+  const processingTime = (verificationResult as any)?.processing_time 
+    ?? (verificationResult as any)?.processing_time_ms 
+    ?? 0;
+
+  const checksRaw = Array.isArray((verificationResult as any)?.verification_checks) 
+    ? (verificationResult as any).verification_checks 
+    : [];
+
+  const checks: VerificationCheck[] = checksRaw.map((c: any) => ({
+    check_name: c?.check_name ?? c?.check ?? c?.name ?? 'Verification check',
+    status: (c?.status ?? c?.result ?? 'requires_testing') as VerificationCheck['status'],
+    details: c?.details ?? c?.detail ?? c?.summary ?? c?.description ?? 'No detail provided',
+    bs7671_references: Array.isArray(c?.bs7671_references)
+      ? c.bs7671_references
+      : (c?.bs7671_reference ? [c.bs7671_reference] : []),
+    confidence: typeof c?.confidence === 'number' 
+      ? c.confidence 
+      : (typeof c?.confidence_score === 'number' ? c.confidence_score : 0.7),
+  }));
+
+  const recommendations: string[] = Array.isArray((verificationResult as any)?.improvement_recommendations)
+    ? (verificationResult as any).improvement_recommendations
+    : (Array.isArray((verificationResult as any)?.recommendations) ? (verificationResult as any).recommendations : []);
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'pass': return <CheckCircle className="h-5 w-5 text-green-400" />;
@@ -70,20 +109,18 @@ const InstallationVerificationResults: React.FC<InstallationVerificationResultsP
   const copySummary = () => {
     const summary = `INSTALLATION VERIFICATION REPORT
 Generated: ${new Date().toLocaleDateString('en-GB')}
-Overall Result: ${verificationResult.overall_result.toUpperCase()}
-Confidence: ${Math.round(verificationResult.confidence_score * 100)}%
+Overall Result: ${formatStatus(overall)}
+Confidence: ${percent(confidenceScore)}%
 
 VERIFICATION CHECKS:
-${verificationResult.verification_checks.map(check => 
-  `• ${check.check_name}: ${check.status.toUpperCase()} (${Math.round(check.confidence * 100)}% confidence)\n  ${check.details}\n  BS 7671: ${check.bs7671_references.join(', ')}`
+${checks.map(check => 
+  `• ${check.check_name}: ${formatStatus(check.status)} (${percent(check.confidence)}% confidence)\n  ${check.details}\n  BS 7671: ${Array.isArray(check.bs7671_references) && check.bs7671_references.length > 0 ? check.bs7671_references.join(', ') : 'N/A'}`
 ).join('\n\n')}
 
 IMPROVEMENT RECOMMENDATIONS:
-${verificationResult.improvement_recommendations.map((rec, idx) => 
-  `${idx + 1}. ${rec}`
-).join('\n')}
+${recommendations.map((rec, idx) => `${idx + 1}. ${rec}`).join('\n')}
 
-Processing Time: ${verificationResult.processing_time}ms
+Processing Time: ${processingTime}ms
 
 This verification is visual only and must be supplemented with physical testing by a qualified electrician.`;
 
@@ -94,9 +131,9 @@ This verification is visual only and must be supplemented with physical testing 
     });
   };
 
-  const passCount = verificationResult.verification_checks.filter(c => c.status === 'pass').length;
-  const failCount = verificationResult.verification_checks.filter(c => c.status === 'fail').length;
-  const testingCount = verificationResult.verification_checks.filter(c => c.status === 'requires_testing').length;
+  const passCount = checks.filter(c => c.status === 'pass').length;
+  const failCount = checks.filter(c => c.status === 'fail').length;
+  const testingCount = checks.filter(c => c.status === 'requires_testing').length;
 
   return (
     <Card className="bg-card border-border w-full">
@@ -126,11 +163,11 @@ This verification is visual only and must be supplemented with physical testing 
       
       <CardContent className="p-4 sm:p-6 pt-0 space-y-6">
         {/* Overall Result */}
-        <div className={`border rounded-lg p-6 ${getOverallStatusBg(verificationResult.overall_result)}`}>
+        <div className={`border rounded-lg p-6 ${getOverallStatusBg(overall)}`}>
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-foreground text-lg">Overall Assessment</h3>
-            <Badge className={`${getStatusColor(verificationResult.overall_result)} text-lg px-4 py-2`}>
-              {verificationResult.overall_result.replace('_', ' ').toUpperCase()}
+            <Badge className={`${getStatusColor(overall)} text-lg px-4 py-2`}>
+              {formatStatus(overall)}
             </Badge>
           </div>
           
@@ -148,18 +185,18 @@ This verification is visual only and must be supplemented with physical testing 
               <div className="text-sm text-muted-foreground">Requires Testing</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-foreground">{Math.round(verificationResult.confidence_score * 100)}%</div>
+              <div className="text-3xl font-bold text-foreground">{percent(confidenceScore)}%</div>
               <div className="text-sm text-muted-foreground">Confidence</div>
             </div>
           </div>
         </div>
 
         {/* Verification Checks */}
-        {verificationResult.verification_checks.length > 0 && (
+        {checks.length > 0 && (
           <div className="space-y-5 sm:space-y-6">
             <h3 className="text-base sm:text-lg font-semibold text-foreground">Verification Checks</h3>
             <div className="space-y-4">
-              {verificationResult.verification_checks.map((check, index) => (
+              {checks.map((check, index) => (
                 <div key={index} className="border border-border rounded-lg p-4 sm:p-5 space-y-4">
                   {/* Check Header */}
                   <div className="flex items-start justify-between gap-4">
@@ -170,10 +207,10 @@ This verification is visual only and must be supplemented with physical testing 
                       </div>
                       <div className="flex items-center gap-2 mb-3">
                         <Badge className={getStatusColor(check.status)}>
-                          {check.status.replace('_', ' ').toUpperCase()}
+                          {formatStatus(check.status)}
                         </Badge>
                         <Badge variant="outline" className="text-sm">
-                          {Math.round(check.confidence * 100)}% confidence
+                          {percent(check.confidence)}% confidence
                         </Badge>
                       </div>
                     </div>
@@ -185,7 +222,7 @@ This verification is visual only and must be supplemented with physical testing 
                   </p>
                   
                   {/* BS 7671 References */}
-                  {check.bs7671_references.length > 0 && (
+                  {Array.isArray(check.bs7671_references) && check.bs7671_references.length > 0 && (
                     <div className="bg-accent/30 border border-border rounded-lg p-4 space-y-3">
                       <div className="flex items-center gap-2">
                         <FileText className="h-5 w-5 text-foreground" />
@@ -208,12 +245,12 @@ This verification is visual only and must be supplemented with physical testing 
         )}
 
         {/* Improvement Recommendations */}
-        {verificationResult.improvement_recommendations.length > 0 && (
+        {recommendations.length > 0 && (
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-foreground">Improvement Recommendations</h3>
             <div className="bg-elec-card border border-elec-yellow/20 rounded-lg p-5 space-y-3">
               <ul className="space-y-3">
-                {verificationResult.improvement_recommendations.map((rec, index) => (
+                {recommendations.map((rec, index) => (
                   <li key={index} className="text-sm sm:text-base text-foreground leading-relaxed flex items-start gap-3">
                     <span className="text-elec-yellow font-bold flex-shrink-0">{index + 1}.</span>
                     <span>{rec}</span>
@@ -226,7 +263,7 @@ This verification is visual only and must be supplemented with physical testing 
 
         {/* Processing Info */}
         <div className="text-sm text-muted-foreground text-center">
-          Analysis completed in {verificationResult.processing_time}ms
+          Analysis completed in {processingTime}ms
         </div>
 
         {/* Disclaimer */}

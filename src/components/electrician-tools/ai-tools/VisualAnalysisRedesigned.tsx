@@ -524,7 +524,36 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         return;
       }
       
-      setAnalysisResult(result);
+      // Normalise installation_verify analysis shape for UI stability
+      let normalised: AnalysisResult = result;
+      if (selectedMode === 'installation_verify') {
+        const checksRaw = Array.isArray((result as any)?.verification_checks)
+          ? (result as any).verification_checks
+          : [];
+        const checks = checksRaw.map((c: any) => ({
+          check_name: c?.check_name ?? c?.check ?? c?.name ?? 'Verification check',
+          status: (c?.status ?? c?.result ?? 'requires_testing') as any,
+          details: c?.details ?? c?.detail ?? c?.summary ?? c?.description ?? 'No detail provided',
+          bs7671_references: Array.isArray(c?.bs7671_references)
+            ? c.bs7671_references
+            : (c?.bs7671_reference ? [c.bs7671_reference] : []),
+          confidence: typeof c?.confidence === 'number'
+            ? c.confidence
+            : (typeof c?.confidence_score === 'number' ? c.confidence_score : 0.7),
+        }));
+        normalised = {
+          ...result,
+          verification_checks: checks,
+          improvement_recommendations: Array.isArray((result as any)?.improvement_recommendations)
+            ? (result as any).improvement_recommendations
+            : (Array.isArray((result as any)?.recommendations) ? (result as any).recommendations : []),
+          overall_result: (result as any)?.overall_result ?? (result as any)?.assessment ?? (result as any)?.overall ?? 'requires_testing',
+          confidence_score: (result as any)?.confidence_score ?? (result as any)?.confidence ?? 0.7,
+          processing_time: (result as any)?.processing_time ?? (result as any)?.processing_time_ms ?? 0,
+        } as any;
+      }
+      
+      setAnalysisResult(normalised);
       setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
       setAnalysisProgress(100);
       setRetryAttempts(0); // Reset on success
