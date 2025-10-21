@@ -737,7 +737,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 </h4>
                 <ul className="space-y-1">
                   {currentCircuit.warnings.map((warning, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground">• {warning}</li>
+                    <li key={idx} className="text-sm text-white text-left flex items-start gap-2">
+                      <span className="flex-shrink-0">•</span>
+                      <span>{warning}</span>
+                    </li>
                   ))}
                 </ul>
               </div>
