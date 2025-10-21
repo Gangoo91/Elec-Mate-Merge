@@ -271,8 +271,8 @@ const AIAssistant = () => {
       let data, error;
 
       if (isCircuitDesign) {
-        // Route to designer agent for circuit questions
-        const designResponse = await supabase.functions.invoke('designer-agent', {
+        // Route to designer agent V2 for circuit questions
+        const designResponse = await supabase.functions.invoke('designer-agent-v2', {
           body: { 
             messages: [{ role: 'user', content: prompt }],
             currentDesign: {},

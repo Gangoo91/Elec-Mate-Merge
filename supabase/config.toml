@@ -21,6 +21,10 @@ timeout_sec = 180
 verify_jwt = false
 timeout_sec = 300
 
+[functions.designer-agent-v2]
+verify_jwt = false
+timeout_sec = 300
+
 [functions.designer-v3]
 verify_jwt = false
 timeout_sec = 300

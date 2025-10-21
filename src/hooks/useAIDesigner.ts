@@ -38,13 +38,15 @@ export const useAIDesigner = () => {
 
     // Pre-flight health check
     try {
-      const { data: healthData, error: healthError } = await supabase.functions.invoke('designer-agent/health', {});
+      const { data: healthData, error: healthError } = await supabase.functions.invoke('designer-agent-v2', {
+        method: 'GET'
+      });
       
       if (healthError || !healthData?.status) {
         setProgress({ stage: 0, message: 'Design service starting up...', percent: 0 });
         console.warn('⚠️ Design service not healthy, will retry automatically');
       } else {
-        console.log('✅ Design service healthy', healthData);
+        console.log(`✅ Design service healthy - Version: ${healthData.version}`, healthData);
       }
     } catch (e) {
       // Health check failed - service might be cold starting
@@ -53,13 +55,13 @@ export const useAIDesigner = () => {
 
     const invokeWithRetry = async (attempt = 1, maxAttempts = 3): Promise<any> => {
       try {
-        const { data, error: invokeError } = await supabase.functions.invoke('designer-agent', {
+        const { data, error: invokeError } = await supabase.functions.invoke('designer-agent-v2', {
           body: {
             mode: 'batch-design',
             aiConfig: {
-              model: 'openai/gpt-5-mini', // OpenAI for better reasoning
-              maxTokens: 6000, // SPEED BOOST: reduced from 15000
-              timeoutMs: 180000, // SPEED BOOST: 3 min (from 280s)
+              model: 'openai/gpt-5-mini', // OpenAI GPT-5-mini for fast reasoning
+              maxTokens: 24000, // Increased for complex multi-circuit designs
+              timeoutMs: 180000, // 3 min timeout
               noMemory: true,
               ragPriority: {
                 design: 95,
