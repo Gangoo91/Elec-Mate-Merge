@@ -23,7 +23,7 @@ timeout_sec = 300
 
 [functions.designer-agent-v2]
 verify_jwt = false
-timeout_sec = 300
+timeout_sec = 480
 
 [functions.designer-v3]
 verify_jwt = false

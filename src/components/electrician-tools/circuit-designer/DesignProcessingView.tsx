@@ -67,7 +67,7 @@ export const DesignProcessingView = ({ progress }: DesignProcessingViewProps) =>
           </div>
 
           <div className="text-center text-sm text-muted-foreground pt-4">
-            Estimated time: 1–3 minutes
+            Estimated time: 1–7 minutes depending on design complexity
           </div>
         </div>
       </Card>

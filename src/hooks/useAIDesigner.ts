@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { DesignInputs, InstallationDesign } from '@/types/installation-design';
 
 // Client-side timeout for edge function calls
-const CLIENT_TIMEOUT_MS = 90000; // 90s
+const CLIENT_TIMEOUT_MS = 500000; // 500s
 
 /**
  * Timeout wrapper for promises
@@ -93,7 +93,7 @@ export const useAIDesigner = () => {
             aiConfig: {
               model: 'openai/gpt-5-mini', // OpenAI GPT-5-mini for fast reasoning
               maxTokens: 24000, // Increased for complex multi-circuit designs
-              timeoutMs: 180000, // 3 min timeout
+              timeoutMs: 480000, // 8 min timeout
               noMemory: true,
               ragPriority: {
                 design: 95,
