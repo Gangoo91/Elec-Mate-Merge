@@ -10,6 +10,32 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { CategorisedToolsList } from "./CategorisedToolsList";
 import { categorizeTools, categorizeMaterials } from "@/utils/toolsCategorisation";
+import { ProjectMetadataForm } from "./ProjectMetadataForm";
+
+interface ProjectMetadata {
+  documentRef: string;
+  issueDate: string;
+  reviewDate: string;
+  companyName: string;
+  contractor: string;
+  siteManagerName: string;
+  siteManagerPhone: string;
+  firstAiderName: string;
+  firstAiderPhone: string;
+  safetyOfficerName: string;
+  safetyOfficerPhone: string;
+  assemblyPoint: string;
+  startDate: string;
+  completionDate: string;
+  siteSupervisor: string;
+  clientContact: string;
+  preparedByName: string;
+  preparedByPosition: string;
+  preparedDate: string;
+  authorisedByName: string;
+  authorisedByPosition: string;
+  authorisedDate: string;
+}
 
 interface InstallationResultsEditorProps {
   jobTitle?: string;
@@ -18,6 +44,8 @@ interface InstallationResultsEditorProps {
   steps: InstallationStep[];
   summary: InstallationMethodSummary;
   projectDetails?: InstallationProjectDetails;
+  projectMetadata?: ProjectMetadata;
+  fullMethodStatement?: any;
   onReset: () => void;
 }
 
@@ -28,9 +56,13 @@ export const InstallationResultsEditor = ({
   steps: initialSteps,
   summary,
   projectDetails,
+  projectMetadata: initialMetadata,
+  fullMethodStatement,
   onReset
 }: InstallationResultsEditorProps) => {
   const [steps, setSteps] = useState<InstallationStep[]>(initialSteps);
+  const [showMetadataForm, setShowMetadataForm] = useState(false);
+  const [projectMetadata, setProjectMetadata] = useState<ProjectMetadata | undefined>(initialMetadata);
 
   const riskColors = {
     low: 'bg-success/10 text-success border-success/20',
@@ -263,11 +295,27 @@ export const InstallationResultsEditor = ({
         )}
       </Card>
 
+      {/* Project Metadata Form (conditional) */}
+      {showMetadataForm && projectMetadata && (
+        <ProjectMetadataForm
+          metadata={projectMetadata}
+          onChange={setProjectMetadata}
+        />
+      )}
+
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-2">
         <Button onClick={addNewStep} variant="outline" className="gap-2">
           <Plus className="h-4 w-4" />
           Add Step
+        </Button>
+        <Button 
+          onClick={() => setShowMetadataForm(!showMetadataForm)} 
+          variant={showMetadataForm ? "default" : "outline"} 
+          className="gap-2"
+        >
+          <CheckCircle2 className="h-4 w-4" />
+          {showMetadataForm ? 'Hide' : 'Edit'} Project Metadata
         </Button>
         <Button onClick={handleExportPDF} variant="outline" className="gap-2">
           <Download className="h-4 w-4" />

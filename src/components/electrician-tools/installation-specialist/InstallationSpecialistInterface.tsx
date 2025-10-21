@@ -170,12 +170,42 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           overallRiskLevel: overallRisk as 'low' | 'medium' | 'high'
         };
 
+        // Initialize default project metadata
+        const today = new Date().toISOString().split('T')[0];
+        const nextYear = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        
+        const defaultMetadata = {
+          documentRef: `MS-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
+          issueDate: today,
+          reviewDate: nextYear,
+          companyName: projectDetails.electricianName || 'Your Company Ltd',
+          contractor: 'Main Contractor Ltd',
+          siteManagerName: '',
+          siteManagerPhone: '',
+          firstAiderName: '',
+          firstAiderPhone: '',
+          safetyOfficerName: '',
+          safetyOfficerPhone: '',
+          assemblyPoint: 'Main Car Park',
+          startDate: projectDetails.expectedStartDate || today,
+          completionDate: '',
+          siteSupervisor: projectDetails.electricianName || '',
+          clientContact: projectDetails.clientName || '',
+          preparedByName: projectDetails.electricianName || '',
+          preparedByPosition: 'Electrician',
+          preparedDate: today,
+          authorisedByName: '',
+          authorisedByPosition: 'Contracts Manager',
+          authorisedDate: today
+        };
+
         setMethodData({
           jobTitle: description,
           installationType: projectDetails.installationType,
           steps: installationSteps,
           summary,
           projectDetails,
+          projectMetadata: defaultMetadata,
           // Store full merged data for PDF generation
           _fullMethodStatement: mergedResult
         });
@@ -268,12 +298,41 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         };
 
         setInstallationGuide(data.response || '');
+        
+        // Initialize default project metadata for Quick Mode too
+        const today = new Date().toISOString().split('T')[0];
+        const defaultMetadata = {
+          documentRef: `MS-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
+          issueDate: today,
+          reviewDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          companyName: projectDetails.electricianName || 'Your Company Ltd',
+          contractor: 'Main Contractor Ltd',
+          siteManagerName: '',
+          siteManagerPhone: '',
+          firstAiderName: '',
+          firstAiderPhone: '',
+          safetyOfficerName: '',
+          safetyOfficerPhone: '',
+          assemblyPoint: 'Main Car Park',
+          startDate: projectDetails.expectedStartDate || today,
+          completionDate: '',
+          siteSupervisor: projectDetails.electricianName || '',
+          clientContact: projectDetails.clientName || '',
+          preparedByName: projectDetails.electricianName || '',
+          preparedByPosition: 'Electrician',
+          preparedDate: today,
+          authorisedByName: '',
+          authorisedByPosition: 'Contracts Manager',
+          authorisedDate: today
+        };
+        
         setMethodData({
           jobTitle: description,
           installationType: projectDetails.installationType,
           steps: installationSteps,
           summary,
-          projectDetails
+          projectDetails,
+          projectMetadata: defaultMetadata
         });
 
         toast({
@@ -365,6 +424,8 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           steps={methodData.steps}
           summary={methodData.summary}
           projectDetails={methodData.projectDetails}
+          projectMetadata={methodData.projectMetadata}
+          fullMethodStatement={methodData._fullMethodStatement}
           onReset={handleReset}
         />
       )}

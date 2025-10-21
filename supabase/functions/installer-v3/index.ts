@@ -480,6 +480,29 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                 type: 'array',
                 items: { type: 'string' }
               },
+              scopeOfWork: {
+                type: 'object',
+                description: 'Scope definition with deliverables and exclusions',
+                properties: {
+                  description: { type: 'string', description: 'Overall scope description (2-3 sentences in UK English)' },
+                  keyDeliverables: { 
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Key deliverables list (e.g., "Installation of 1 x consumer unit", "Complete power circuits")'
+                  },
+                  exclusions: { type: 'string', description: 'What is NOT included in this scope (e.g., "External groundworks, building services coordination")' }
+                }
+              },
+              scheduleDetails: {
+                type: 'object',
+                description: 'Project schedule information',
+                properties: {
+                  workingHours: { type: 'string', description: 'Working hours (e.g., "Monday-Friday, 08:00-17:00")' },
+                  teamSize: { type: 'string', description: 'Team size range (e.g., "1-2 electricians")' },
+                  weatherDependency: { type: 'string', description: 'Weather impact (e.g., "Minimal - Internal works only")' },
+                  accessRequirements: { type: 'string', description: 'Special access needs (e.g., "Out of hours access for energisation")' }
+                }
+              },
               compliance: {
                 type: 'object',
                 properties: {

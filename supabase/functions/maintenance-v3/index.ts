@@ -221,6 +221,34 @@ const MAINTENANCE_TOOL_SCHEMA = {
           required: ["symptom", "likelyCauses", "diagnosisSteps", "remedialAction"]
         }
       },
+      equipmentSchedule: {
+        type: "array",
+        description: "Equipment list with certification and inspection requirements",
+        items: {
+          type: "object",
+          properties: {
+            name: { type: "string", description: "Equipment name" },
+            quantity: { type: "string", description: "Quantity required" },
+            certification: { type: "string", description: "Required certification (e.g., LOLER, PAT)" },
+            inspection: { type: "string", description: "Inspection frequency and type" },
+            responsible: { type: "string", description: "Who is responsible for checks" }
+          },
+          required: ["name", "quantity", "inspection", "responsible"]
+        }
+      },
+      qualityRequirements: {
+        type: "array",
+        description: "Quality checkpoints at each stage",
+        items: {
+          type: "object",
+          properties: {
+            stage: { type: "string", description: "Installation/testing stage" },
+            requirement: { type: "string", description: "Quality requirement detail" },
+            criteria: { type: "string", description: "Acceptance criteria and verification method" }
+          },
+          required: ["stage", "requirement", "criteria"]
+        }
+      },
       bs7671References: {
         type: "array",
         description: "BS 7671 regulations referenced in this document",
@@ -241,6 +269,8 @@ const MAINTENANCE_TOOL_SCHEMA = {
       "preWorkRequirements",
       "visualInspection",
       "testingProcedures",
+      "equipmentSchedule",
+      "qualityRequirements",
       "documentation",
       "bs7671References"
     ],

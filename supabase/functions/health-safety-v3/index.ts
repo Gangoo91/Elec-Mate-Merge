@@ -351,6 +351,96 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                 },
                 required: ['hazards', 'controls']
               },
+              siteLogistics: {
+                type: 'object',
+                description: 'Site logistics and project management details',
+                properties: {
+                  vehicleAccess: { type: 'string', description: 'Vehicle access route and restrictions in UK English' },
+                  parking: { type: 'string', description: 'Parking arrangements and allocated spaces' },
+                  materialStorage: { type: 'string', description: 'Material storage location and requirements' },
+                  wasteManagement: { type: 'string', description: 'Waste segregation and disposal procedures' },
+                  welfareFacilities: { type: 'string', description: 'Toilet, rest area, kettle facilities' },
+                  siteRestrictions: { type: 'string', description: 'Noise hours, occupied building rules, cleanliness standards' }
+                }
+              },
+              competencyMatrix: {
+                type: 'object',
+                description: 'Competency, training, and certification requirements',
+                properties: {
+                  competencyRequirements: { type: 'string', description: 'Required qualifications (e.g., ECS Gold Card, 18th Edition)' },
+                  trainingRequired: { type: 'string', description: 'Mandatory training (e.g., IPAF, Asbestos Awareness)' },
+                  supervisionLevel: { type: 'string', description: 'Supervision requirements (e.g., Continuous supervision by approved electrician)' },
+                  additionalCertifications: { type: 'string', description: 'Additional certs needed (e.g., AP/AR persons for HV works)' }
+                }
+              },
+              conditionalProcedures: {
+                type: 'object',
+                description: 'Conditional safety procedures based on installation context',
+                properties: {
+                  workAtHeight: {
+                    type: 'object',
+                    properties: {
+                      required: { type: 'boolean' },
+                      equipment: {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          properties: {
+                            type: { type: 'string', description: 'Equipment type (e.g., MEWP, Scaffold)' },
+                            height: { type: 'string', description: 'Working height' },
+                            fallProtection: { type: 'string', description: 'Fall protection measures' },
+                            inspection: { type: 'string', description: 'Inspection requirements' }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  servicesUtilities: {
+                    type: 'object',
+                    properties: {
+                      required: { type: 'boolean' },
+                      detectionMethod: { type: 'string', description: 'CAT & Genny scan procedures' },
+                      servicesPresent: { type: 'array', items: { type: 'string' } },
+                      catScanner: { type: 'string', description: 'CAT scanner model and usage' },
+                      safeDigging: { type: 'string', description: 'Hand digging protocols near services' }
+                    }
+                  },
+                  hotWorks: {
+                    type: 'object',
+                    properties: {
+                      required: { type: 'boolean' },
+                      permitRequired: { type: 'string', description: 'Hot works permit details' },
+                      fireWatchDuration: { type: 'string', description: 'Fire watch duration after works' },
+                      combustiblesRemoved: { type: 'string', description: 'Clearance distance for combustibles' },
+                      fireExtinguishers: { type: 'string', description: 'Fire extinguisher requirements' },
+                      ventilation: { type: 'string', description: 'Ventilation requirements' }
+                    }
+                  },
+                  noiseDust: {
+                    type: 'object',
+                    properties: {
+                      required: { type: 'boolean' },
+                      noiseLevels: { type: 'string', description: 'Expected dB(A) levels' },
+                      hearingProtection: { type: 'string', description: 'Hearing protection requirements' },
+                      dustSuppression: { type: 'string', description: 'Dust suppression methods' },
+                      rpeRequired: { type: 'string', description: 'Respiratory protective equipment' },
+                      hoursRestriction: { type: 'string', description: 'Noise restriction hours' }
+                    }
+                  },
+                  clientLiaison: {
+                    type: 'object',
+                    properties: {
+                      required: { type: 'boolean' },
+                      occupiedPremises: { type: 'string', description: 'Whether building is occupied' },
+                      accessRestrictions: { type: 'string', description: 'Access restrictions and out-of-hours requirements' },
+                      publicAreas: { type: 'string', description: 'Public area protection (barriers, cable mats)' },
+                      dailyBriefings: { type: 'string', description: 'Client meeting schedule' },
+                      disruptionNotices: { type: 'string', description: 'Power outage notification procedures' },
+                      cleanlinessStandard: { type: 'string', description: 'Daily cleaning requirements' }
+                    }
+                  }
+                }
+              },
               methodStatement: {
                 type: 'object',
                 properties: {
