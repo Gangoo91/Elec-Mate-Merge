@@ -70,7 +70,6 @@ const CableSizingForm = ({
             {errors?.length && <p className="text-red-400 text-sm mt-1">{errors.length}</p>}
           </div>
         </div>
-        </div>
       )}
 
       {/* In load mode, only show cable length */}
@@ -89,7 +88,6 @@ const CableSizingForm = ({
             />
             {errors?.length && <p className="text-red-400 text-sm mt-1">{errors.length}</p>}
           </div>
-        </div>
         </div>
       )}
 
