@@ -309,7 +309,7 @@ Return complete circuit objects using the provided tool schema.`;
   
   // ✨ SIMPLIFIED SCHEMA - Matching AI RAMS Pattern (5 simple fields)
   const requestBody = {
-    model: aiConfig?.model || 'openai/gpt-5', // GPT-5 full model for complex multi-circuit designs
+    model: aiConfig?.model || 'openai/gpt-5-mini', // GPT-5-mini for fast, efficient batch processing
     messages: [
       { 
         role: 'system', 
@@ -344,7 +344,7 @@ Return your design using the provided tool schema.`
       },
       { role: 'user', content: query }
     ],
-    max_completion_tokens: aiConfig?.maxTokens || 16000,
+    max_completion_tokens: aiConfig?.maxTokens || 24000, // Increased for complex multi-circuit designs
     tools: [{
       type: "function",
       function: {
@@ -737,7 +737,7 @@ Return your design using the provided tool schema.`
           },
           { role: 'user', content: query }
         ],
-        max_completion_tokens: aiConfig?.maxTokens || 16000,
+        max_completion_tokens: aiConfig?.maxTokens || 24000, // Increased for complex multi-circuit designs
         tools: [{
           type: "function",
           function: {
@@ -1014,7 +1014,7 @@ Always cite regulation numbers and show working for calculations.`
             },
             { role: 'user', content: query }
           ],
-          max_completion_tokens: aiConfig?.maxTokens || 16000,
+          max_completion_tokens: aiConfig?.maxTokens || 24000, // Increased for complex multi-circuit designs
           response_format: { type: "json_object" }
         })
       });
@@ -1113,15 +1113,16 @@ Always cite regulation numbers and show working for calculations.`
           contentPreview: content?.substring(0, 200),
           fullContentLength: content?.length || 0
         });
-        return new Response(JSON.stringify({
-          success: false,
-          error: 'AI returned unstructured output. Please try again or simplify the request.',
-          code: 'UNSTRUCTURED_OUTPUT',
-          design: null
-        }), {
-          status: 200,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
+      return new Response(JSON.stringify({
+        version: 'v3.2.0-gpt5-mini-24k', // Version identifier for debugging
+        success: false,
+        error: 'AI returned unstructured output. Please try again or simplify the request.',
+        code: 'UNSTRUCTURED_OUTPUT',
+        design: null
+      }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
       }
     }
   }
@@ -1196,6 +1197,7 @@ Always cite regulation numbers and show working for calculations.`
       hasCircuits: !!designData.circuits
     });
     return new Response(JSON.stringify({
+      version: 'v3.2.0-gpt5-mini-24k', // Version identifier for debugging
       success: false,
       error: 'AI returned invalid circuits data. Please try again.',
       code: 'INVALID_CIRCUITS',
@@ -1215,6 +1217,7 @@ Always cite regulation numbers and show working for calculations.`
     
     // FIX: Return structured 200 response instead of throwing (prevents retry loop)
     return new Response(JSON.stringify({
+      version: 'v3.2.0-gpt5-mini-24k', // Version identifier for debugging
       success: false,
       error: 'AI returned no circuits after fallback. Try adding a bit more detail (e.g., circuit names/powers) or reduce complexity.',
       code: 'NO_CIRCUITS',
@@ -1284,6 +1287,7 @@ Always cite regulation numbers and show working for calculations.`
   });
   
   return new Response(JSON.stringify({
+    version: 'v3.2.0-gpt5-mini-24k', // Version identifier for debugging
     success: true,
     response: designData.response || 'Design complete',
     design: {
@@ -1292,7 +1296,7 @@ Always cite regulation numbers and show working for calculations.`
       clientName: projectInfo.clientName,
       electricianName: projectInfo.electricianName,
       installationType: projectInfo.installationType,
-      totalLoad: Array.isArray(designData.circuits) 
+      totalLoad: Array.isArray(designData.circuits)
         ? designData.circuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0)
         : 0,
       circuits: designData.circuits, // ✅ Keep all nested circuit data intact

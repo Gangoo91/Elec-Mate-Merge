@@ -63,7 +63,7 @@ interface DesignedCircuit {
 
 // corsHeaders imported from shared deps
 
-const VERSION = 'v3.1.2';
+const VERSION = 'v3.2.0-gpt5-mini-24k'; // Track deployment: GPT-5-mini + 24k tokens + batch-6
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
