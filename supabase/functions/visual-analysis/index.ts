@@ -170,73 +170,129 @@ Response format:
           return `${baseContext}
 ${responseFormat}
 
-CRITICAL: Identify electrical components with maximum accuracy, especially obscure or older equipment.
+UK ELECTRICAL COMPONENT KNOWLEDGE BASE:
 
-1. READ ALL VISIBLE TEXT/MARKINGS:
-   - Manufacturer logos/names
-   - Model/part numbers
-   - Rating plates (voltage, current, power)
-   - Date codes/serial numbers
-   - Compliance marks (CE, UKCA, BS EN)
+DISTRIBUTION EQUIPMENT:
+• Consumer Units (CU/Fuse Box): Metal enclosure with MCBs/RCBOs, main switch, busbar visible. Brands: Hager (Invicta/Design/Sollysta), Schneider (Acti9), Wylex NH/NMRS, Fusebox, MK Sentry
+• Distribution Boards (DB): Larger commercial versions of consumer units, often grey/metal, multiple MCBs in rows, TPN configurations common
+• Sub-Distribution Boards: Secondary boards fed from main DB, smaller than main DB
+• TP&N Boards: Three-phase distribution with neutral and earth bars, 3-4 rows of devices
+• Meter Boxes: Contain supply meter, main fuse, meter tails
 
-2. ANALYSE PHYSICAL CHARACTERISTICS:
-   - Component type (MCB, RCBO, contactor, isolator, etc.)
-   - Physical size and mounting style
-   - Number of poles/terminals
-   - Colour and material (age indicators)
-   - Condition (new/aged/obsolete)
+PROTECTION DEVICES:
+• MCB (Miniature Circuit Breaker): White/grey DIN rail device, toggle switch, ratings B6-B63A, C10-C63A, D16-D63A. Brands: Hager, Schneider, Wylex, MK
+• RCBO (Residual Current Breaker with Overcurrent): MCB + RCD combined, red "Test" button visible, 30mA trip current
+• RCD (Residual Current Device): Wider than MCB, red Test button, 30mA (sockets), 100mA (fire), 300mA ratings
+• AFDDs (Arc Fault Detection Devices): Modern protection, similar size to RCBO, "AFDD" marking
+• SPD (Surge Protection Device): Square device, LED indicators, Type 1/2/3 markings
+• Main Switch: Double-width isolator, typically 63A-100A, "MAIN SWITCH" label
 
-3. PROVIDE COMPREHENSIVE DETAILS:
-   - Plain English explanation: "What is this?" for non-experts
-   - Technical name and type
-   - Full specifications from visible markings
-   - Manufacturer and model (if identifiable)
-   - Age/era estimate if older component
-   - Current compliance status (meets BS 7671 18th Edition?)
-   - Visual identifiers to confirm the ID
-   - Common applications where found
-   - Historical context for vintage components
+ISOLATORS & SWITCHES:
+• Rotary Isolators: Red handle, square metal box, IP ratings visible, 16A-63A common
+• Switch-Disconnectors: Similar to isolators, may have fuse holders
+• Time Switches: Digital/analogue display, multiple on/off settings, immersion heater control common
+• Emergency Stop Switches: Red mushroom button, yellow enclosure
+• Pull Cord Switches: Ceiling mounted, 6A-45A ratings, bathroom/shower use
 
-4. CONFIDENCE CALCULATION:
-   Return confidence as INTEGER 0-100 (e.g., 95 not 0.95):
-   - 90-100: Clear markings, positive ID
-   - 70-89: Partial markings, high probability match
-   - 50-69: Limited markings, estimated based on appearance
-   - Below 50: Insufficient visual information
+CONTACTORS & STARTERS:
+• Contactors: Coil visible, multiple terminals, brands: Schneider Tesys, ABB, Siemens, Hager
+• Motor Starters: Contactor + overload protection combined
+• Relay Modules: Smaller than contactors, DIN rail mount, coil voltage marked
+
+CONTROL EQUIPMENT:
+• Thermostats: Room stats (white box, temperature dial), cylinder stats (metal probe)
+• Timer Controls: Programmable, 7-day, boost functions
+• PIR Sensors: Motion detection, adjustable sensitivity/time
+• Photocells: Light-level switching, street lighting common
+
+SHOWER & HEATING:
+• Electric Showers: Mira, Triton, Aqualisa, Redring. 7.5kW-10.5kW ratings
+• Immersion Heaters: Cylinder mounted, 3kW typical
+• Panel Heaters: Wall mounted, 0.5kW-3kW
+• Storage Heaters: Large white units, Economy 7 controls
+
+CABLES & ACCESSORIES:
+• Twin & Earth Cable: Grey PVC, 1mm²-10mm² sizes
+• SWA (Steel Wire Armoured): Black outer, galvanised armour
+• Flex: 3-core round cable, 0.5mm²-2.5mm²
+• Conduit: PVC/steel, 20mm-50mm diameter
+• Trunking: White PVC, 25mm×16mm to 100mm×100mm
+
+VINTAGE/OBSOLETE COMPONENTS (Common in older installations):
+• Wylex Standard: Brown/beige consumer units, rewirable fuses, pre-1980s
+• MK Sentry: Metal units, cartridge fuses, 1960s-1990s
+• Memshield: Commercial boards, grey metal, 1970s-2000s
+• Crabtree Starbreaker: Round plug-in MCBs, 1980s-2000s
+• Proteus: Plug-in MCBs, brown/beige, 1970s-1990s
+• Bill/Tenby rewirable fuse boxes: White ceramic, pre-1960s
+• MEM/Memera: Various ranges, 1950s-1990s
+
+VISUAL RECOGNITION KEYS:
+✓ Metal enclosure with door + rows of switches = Consumer Unit or Distribution Board
+✓ White/grey DIN rail devices in rows = Modern MCBs/RCBOs
+✓ Red "Test" button on device = RCD or RCBO
+✓ Rotary switch with red handle = Isolator
+✓ Large black coil/terminals = Contactor
+✓ Brown/beige old units with fuse wires = Vintage rewirable consumer unit (pre-1990s)
+✓ Multiple metal bars with screws = Earth/neutral bars in DB
+✓ Yellow labels "IN SERVICE" or "DANGER 230V" = Commercial distribution equipment
+
+IDENTIFICATION PRIORITY:
+1. READ ALL TEXT FIRST - Manufacturer, model, ratings
+2. COUNT POLES/MODULES - Single/double/triple width
+3. IDENTIFY CONTROLS - Switches, buttons, indicators
+4. CHECK CONDITION - New/aged/vintage/obsolete
+5. CONTEXT CLUES - Domestic vs commercial, location
+
+CRITICAL: If you see a metal enclosure with multiple circuit breakers in rows, this is ALWAYS a Consumer Unit (domestic) or Distribution Board (commercial), NEVER "Unknown Component". Even without clear markings, the physical arrangement of MCBs on DIN rail inside a metal enclosure is distinctive and identifiable.
+
+CONFIDENCE CALCULATION (INTEGER 0-100):
+- 90-100: Clear markings visible, positive identification
+- 70-89: Partial markings, high probability match based on visual features
+- 50-69: Limited markings, estimated from physical characteristics and context
+- 30-49: Generic identification possible (e.g., "Distribution Board") but specific details unclear
+- Below 30: Insufficient visual information - request additional photos
+
+If confidence < 50, suggest user provide:
+- Close-up photo of any text/rating plates
+- Wide shot showing mounting context
+- Photo from different angle
+- Information about building age/type
 
 Response format:
 {
   "analysis": {
     "component": {
-      "name": "Full component name",
-      "type": "Component category",
-      "plain_english": "Simple explanation of what this is and does",
-      "manufacturer": "Brand name if visible",
-      "model": "Model/part number if visible",
-      "confidence": 95,
+      "name": "Full component name (e.g., 'Hager Invicta 3 Consumer Unit' or 'Distribution Board')",
+      "type": "Component category (e.g., 'Consumer Unit', 'MCB', 'RCBO')",
+      "plain_english": "This is a [component] which controls and protects electrical circuits in [location]. It contains [key features].",
+      "manufacturer": "Brand name if visible, otherwise 'Not visible'",
+      "model": "Model/part number if visible, otherwise 'Not visible'",
+      "confidence": 85,
       "specifications": {
-        "voltage_rating": "230V",
+        "voltage_rating": "230V AC",
         "current_rating": "32A",
         "breaking_capacity": "6kA",
-        "poles": "Single pole",
-        "protection_type": "B-curve",
-        "ip_rating": "IP20"
+        "poles": "Single pole / TP&N",
+        "protection_type": "B-curve / C-curve",
+        "ip_rating": "IP20 / IP65"
       },
       "visual_identifiers": [
-        "White toggle switch on front",
-        "Red trip indicator visible",
-        "Model number B16 stamped on side"
+        "Metal enclosure with hinged door",
+        "Multiple MCBs visible in rows",
+        "Main switch at top position"
       ],
       "age_estimate": "Modern (2015+) | Older (2000-2015) | Vintage (pre-2000)",
-      "current_compliance": "Meets BS 7671:2018" | "Non-compliant - replace",
-      "typical_applications": ["Lighting circuits", "Socket circuits"],
-      "bs7671_requirements": ["411.3.3 - Requires RCD protection"],
-      "installation_notes": "Common in domestic installations",
-      "replacement_notes": "Still available" | "Obsolete - modern equivalent: XYZ",
-      "common_issues": "Known for nuisance tripping in older models",
-      "where_found": "Domestic consumer units, commercial distribution boards"
+      "current_compliance": "Meets BS 7671:2018+A3:2024" | "Requires upgrade - non-compliant",
+      "typical_applications": ["Domestic installations", "Commercial distribution"],
+      "bs7671_requirements": ["411.3.3 - RCD protection required", "314.1 - Suitable for supply characteristics"],
+      "installation_notes": "Typical location: utility cupboard, garage, under-stairs",
+      "replacement_notes": "Current product available" | "Obsolete since [year] - modern equivalent: [product]",
+      "common_issues": "Ageing components, lack of RCD protection, insufficient ways",
+      "where_found": "Domestic properties, light commercial, flats/apartments",
+      "additional_photos_needed": ["Close-up of rating plate", "Wide shot of installation"] // Only if confidence < 50
     },
-    "summary": "Brief overview"
+    "summary": "Brief overview identifying the component and its purpose"
   }
 }`;
 
@@ -335,7 +391,10 @@ Response format:
     console.log(`🚀 Calling Lovable AI Gateway (gemini-2.5-flash)...`);
 
     const timeout = analysis_settings.fast_mode ? 12000 : 20000; // 12s fast, 20s full
-    const maxTokens = analysis_settings.fast_mode ? 800 : 2000;
+    // Component identification needs more tokens due to comprehensive knowledge base
+    const maxTokens = analysis_settings.mode === 'component_identify' 
+      ? (analysis_settings.fast_mode ? 1500 : 3000)
+      : (analysis_settings.fast_mode ? 800 : 2000);
 
     const aiResponse = await fetchWithTimeout(
       'https://ai.gateway.lovable.dev/v1/chat/completions',
