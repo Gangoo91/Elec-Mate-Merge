@@ -105,8 +105,19 @@ serve(async (req) => {
         ).join('\n\n')
       : 'Apply general UK electrical project management best practices.';
 
-    // Build conversation context with ALL SPECIALIST OUTPUTS
+    // Build conversation context with ALL SPECIALIST OUTPUTS - Enhanced for PDF export
     let contextSection = '';
+    let aggregatedData = {
+      circuits: [],
+      totalCost: 0,
+      materials: [],
+      labour: { hours: 0, rate: 45 },
+      hazards: [],
+      requiredPPE: [],
+      testSchedule: [],
+      projectMeta: {}
+    };
+    
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
       contextSection += '\n\nPROJECT DELIVERABLES TO COORDINATE:\n';
       
@@ -116,11 +127,40 @@ serve(async (req) => {
       const hs = previousAgentOutputs.find((o: any) => o.agent === 'health-safety');
       const comm = previousAgentOutputs.find((o: any) => o.agent === 'commissioning');
       
-      if (designer) contextSection += `✓ Design: ${designer.response?.structuredData?.circuitType || 'completed'}\n`;
-      if (cost) contextSection += `✓ Costing: £${cost.response?.structuredData?.totalCost || 'TBC'}\n`;
-      if (installer) contextSection += `✓ Installation: ${installer.response?.structuredData?.steps?.length || 0} steps\n`;
-      if (hs) contextSection += `✓ H&S: ${hs.response?.structuredData?.risks?.length || 0} risks assessed\n`;
-      if (comm) contextSection += `✓ Testing: ${comm.response?.structuredData?.tests?.length || 0} tests\n`;
+      if (designer) {
+        contextSection += `✓ Design: ${designer.response?.structuredData?.circuitType || 'completed'}\n`;
+        aggregatedData.circuits = designer.response?.structuredData?.circuits || [];
+        aggregatedData.projectMeta = {
+          ...aggregatedData.projectMeta,
+          projectName: designer.response?.structuredData?.projectName,
+          location: designer.response?.structuredData?.location
+        };
+      }
+      
+      if (cost) {
+        contextSection += `✓ Costing: £${cost.response?.structuredData?.totalCost || 'TBC'}\n`;
+        aggregatedData.totalCost = cost.response?.structuredData?.totalCost || 0;
+        aggregatedData.materials = cost.response?.structuredData?.materials || [];
+        aggregatedData.labour = {
+          hours: cost.response?.structuredData?.labourHours || 0,
+          rate: cost.response?.structuredData?.labourRate || 45
+        };
+      }
+      
+      if (installer) {
+        contextSection += `✓ Installation: ${installer.response?.structuredData?.steps?.length || 0} steps\n`;
+      }
+      
+      if (hs) {
+        contextSection += `✓ H&S: ${hs.response?.structuredData?.risks?.length || 0} risks assessed\n`;
+        aggregatedData.hazards = hs.response?.structuredData?.risks || hs.response?.structuredData?.hazards || [];
+        aggregatedData.requiredPPE = hs.response?.structuredData?.requiredPPE || [];
+      }
+      
+      if (comm) {
+        contextSection += `✓ Testing: ${comm.response?.structuredData?.tests?.length || 0} tests\n`;
+        aggregatedData.testSchedule = comm.response?.structuredData?.tests || [];
+      }
       
       contextSection += '\n\nFULL SPECIALIST DATA:\n' + JSON.stringify(previousAgentOutputs, null, 2);
     }
@@ -382,8 +422,59 @@ Include phases, resources, compliance requirements, and risk management.`;
       query_type: projectType || 'general'
     }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
 
-    // Return enriched response
+    // Return enriched response with aggregated data for PDF export
     const { response, suggestedNextAgents, projectPlan, resources, compliance, risks, recommendations } = pmResult;
+    
+    // Enhance structured data with aggregated specialist outputs
+    const enhancedStructuredData = {
+      projectPlan,
+      resources: {
+        ...resources,
+        materials: aggregatedData.materials,
+        labour: [
+          {
+            role: 'Electrician',
+            hours: aggregatedData.labour.hours,
+            rate: aggregatedData.labour.rate
+          },
+          ...(resources?.labour || [])
+        ],
+        totalCost: aggregatedData.totalCost
+      },
+      compliance,
+      risks: [
+        ...(aggregatedData.hazards.map((h: any) => ({
+          risk: h.hazard || h.risk,
+          mitigation: h.controls || h.mitigation,
+          severity: h.riskRating >= 15 ? 'High' : h.riskRating >= 8 ? 'Medium' : 'Low'
+        })) || []),
+        ...(risks || [])
+      ],
+      recommendations,
+      phases: projectPlan?.phases?.map((phase: any, idx: number) => ({
+        ...phase,
+        phase: idx + 1,
+        tasks: phase.tasks || [],
+        resources: phase.resources || [],
+        duration: phase.duration || '1 day'
+      })) || [],
+      milestones: projectPlan?.phases?.flatMap((p: any) => 
+        (p.milestones || []).map((m: string) => ({
+          milestone: m,
+          targetDate: 'TBC',
+          status: 'Pending' as const
+        }))
+      ) || [],
+      referencedDocuments: [
+        designer ? 'Circuit Design Specification' : null,
+        cost ? 'Cost Estimate & Quote' : null,
+        hs ? 'Risk Assessment' : null,
+        installer ? 'Installation Method Statement' : null,
+        comm ? 'Test Schedule & EIC' : null
+      ].filter(Boolean) as string[],
+      endDate: 'TBC',
+      notes: `Project coordinated from ${previousAgentOutputs?.length || 0} specialist outputs`
+    };
     
     return new Response(
       JSON.stringify({
@@ -392,7 +483,7 @@ Include phases, resources, compliance requirements, and risk management.`;
         enrichment: enrichedResponse.enrichment,
         citations: enrichedResponse.citations,
         rendering: enrichedResponse.rendering,
-        structuredData: { projectPlan, resources, compliance, risks, recommendations },
+        structuredData: enhancedStructuredData,
         suggestedNextAgents: suggestedNextAgents || []
       }),
       { 
