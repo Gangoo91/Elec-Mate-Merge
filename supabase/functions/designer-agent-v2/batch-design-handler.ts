@@ -250,11 +250,18 @@ export async function handleBatchDesign(body: any, logger: any) {
 
 CRITICAL DATA FORMAT REQUIREMENTS:
 - cableSize: NUMERIC mm² value only (e.g., 2.5 NOT "2.5mm²")
-- cpcSize: NUMERIC mm² value only (e.g., 1.5 NOT "1.5mm²")
-- cableType: Full cable description with SPECIFIC sizing details:
-  * For LIGHTING circuits: "1.5mm²/1.0mm² Twin and Earth (PVC), copper" or similar BS 6004 cable
-  * For POWER circuits: Use appropriate sizing like "2.5mm²/1.5mm² Twin and Earth" or SWA for outdoor
-  * Always include conductor sizes, insulation type, and material
+- cpcSize: NUMERIC mm² value only - MUST match Twin and Earth standards:
+  * 1.0mm² live → 1.0mm² CPC
+  * 1.5mm² live → 1.0mm² CPC
+  * 2.5mm² live → 1.5mm² CPC
+  * 4.0mm² live → 1.5mm² CPC
+  * 6.0mm² live → 2.5mm² CPC
+  * 10.0mm² live → 4.0mm² CPC
+- cableType: Full cable description with CORRECT sizing format (live/CPC):
+  * Lighting: "1.5mm²/1.0mm² Twin and Earth (PVC), copper"
+  * Power ring: "2.5mm²/1.5mm² Twin and Earth (PVC), copper"
+  * Cooker/shower: "6.0mm²/2.5mm² Twin and Earth (PVC), copper" or "10.0mm²/4.0mm²"
+  * Always show as "live/CPC" format with insulation type and material
 - installationMethod: Clean format like "Clipped direct (reference method C)" - NO line breaks or hyphens
 - protectionDevice.rating: NUMERIC amps only (e.g., 32 NOT "32A")
 - protectionDevice.curve: LETTER ONLY (e.g., "B" NOT "Type B")
@@ -345,9 +352,9 @@ Return complete circuit objects using the provided tool schema.`;
                   loadType: { type: "string", description: "Load type (e.g., 'Ring Final', 'Radial', 'Lighting')" },
                   loadPower: { type: "number", description: "Load power in watts" },
                   phases: { type: "number", description: "1 for single phase, 3 for three phase" },
-                  cableSize: { type: "number", description: "Live conductor CSA in mm² (numeric only, e.g., 2.5, 4, 6, 10)" },
-                  cpcSize: { type: "number", description: "CPC conductor CSA in mm² (numeric only, e.g., 1.5, 2.5, 4)" },
-                  cableType: { type: "string", description: "Full cable type with specific sizing: For lighting use '1.5mm²/1.0mm² Twin and Earth (PVC), copper'. For power use '2.5mm²/1.5mm²' or larger. Always include conductor sizes." },
+                  cableSize: { type: "number", description: "Live conductor CSA in mm² (e.g., 1.5, 2.5, 4, 6, 10)" },
+                  cpcSize: { type: "number", description: "CPC CSA per BS 6004 Twin and Earth: 1.5→1.0, 2.5→1.5, 4→1.5, 6→2.5, 10→4" },
+                  cableType: { type: "string", description: "Format: 'live/CPC Twin and Earth' e.g., '1.5mm²/1.0mm² Twin and Earth (PVC), copper' or '2.5mm²/1.5mm² Twin and Earth (PVC), copper'" },
                   cableLength: { type: "number", description: "Cable length in metres" },
                   protectionDevice: {
                     type: "object",
