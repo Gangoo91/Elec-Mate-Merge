@@ -147,6 +147,9 @@ export async function handleBatchDesign(body: any, logger: any) {
   const allRAGResults = await Promise.all(ragSearchesWithTimeout);
   const ragElapsedMs = Date.now() - startTime;
   
+  // Clean up deduplicator after all requests complete
+  deduplicator.clear();
+  
   logger.info('✅ All RAG searches complete', {
     totalTimeMs: ragElapsedMs,
     successfulSearches: allRAGResults.filter((r: any) => r.regulations?.length > 0).length,
@@ -311,37 +314,7 @@ Return complete circuit objects using the provided tool schema.`;
   const requestBody = {
     model: aiConfig?.model || 'openai/gpt-5-mini', // GPT-5-mini for fast, efficient batch processing
     messages: [
-      { 
-        role: 'system', 
-          content: `You are an expert electrical designer specialising in BS 7671:2018+A3:2024 compliant circuit design.
-
-KNOWLEDGE BASE (${ragResults.regulations.length} verified regulations):
-${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.substring(0, 200)}...`).join('\n\n')}
-
-YOUR ROLE: Design compliant electrical circuits with complete details for each circuit.
-
-INSTRUCTIONS:
-1. For each circuit in the "circuits" array, include:
-   - name, circuitNumber, loadType, loadPower, phases
-   - cableSize (mm²), cpcSize (mm²), cableLength (m)
-   - protectionDevice: { type, rating, curve, kaRating }
-   - rcdProtected (boolean), afddRequired (boolean)
-   - calculations: { Ib, In, Iz, voltageDrop: { volts, percent, compliant, limit }, zs, maxZs }
-   - justifications: { cableSize, protection, rcd }
-   - warnings: [] (array of strings)
-   - installationMethod (e.g., "Clipped Direct", "In Conduit")
-
-2. In the "materials" array, list required materials with:
-   - name, specification, quantity, unit
-
-3. In the "warnings" array, include any compliance notes or important advisories
-
-4. In the "response" field, provide a brief conversational summary in UK English
-
-Reference BS 7671 regulations (e.g., "433.1.1", "525.1", "411.3.2") in justifications.
-
-Return your design using the provided tool schema.`
-      },
+      { role: 'system', content: systemPrompt },
       { role: 'user', content: query }
     ],
     max_completion_tokens: aiConfig?.maxTokens || 24000, // Increased for complex multi-circuit designs

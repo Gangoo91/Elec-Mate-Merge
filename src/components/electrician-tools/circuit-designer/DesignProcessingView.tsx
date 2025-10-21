@@ -10,13 +10,10 @@ interface DesignProcessingViewProps {
 export const DesignProcessingView = ({ progress }: DesignProcessingViewProps) => {
   const stages = [
     'Understanding your requirements...',
-    'Checking BS 7671 requirements for each circuit...',
-    'Calculating cable sizes and derating factors...',
-    'Determining protection devices...',
-    'Verifying voltage drop compliance...',
-    'Calculating earth fault loop impedance...',
-    'Generating materials list and cost estimate...',
-    'Finalising design documentation...'
+    'Searching BS 7671 for circuit types...',
+    'AI is designing circuits...',
+    'Validating compliance...',
+    'Finalising design...'
   ];
 
   return (
@@ -70,7 +67,7 @@ export const DesignProcessingView = ({ progress }: DesignProcessingViewProps) =>
           </div>
 
           <div className="text-center text-sm text-muted-foreground pt-4">
-            Estimated time: 3–5 minutes
+            Estimated time: 1–3 minutes
           </div>
         </div>
       </Card>

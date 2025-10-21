@@ -29,11 +29,21 @@ export const useAIDesigner = () => {
   const [designData, setDesignData] = useState<InstallationDesign | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<DesignProgress | null>(null);
+  const [retryMessage, setRetryMessage] = useState('');
 
   const generateDesign = async (inputs: DesignInputs): Promise<boolean> => {
     setIsProcessing(true);
     setError(null);
     setDesignData(null);
+
+    // Validate inputs
+    if (!inputs.circuits || inputs.circuits.length === 0) {
+      toast.error('No circuits to design', {
+        description: 'Please add at least one circuit before generating a design.'
+      });
+      setIsProcessing(false);
+      return false;
+    }
 
     // SPEED BOOST: Shortened stages to match faster backend (total ~120s)
     // Cap at 95% until response arrives to prevent stuck-at-99% perception
@@ -47,7 +57,6 @@ export const useAIDesigner = () => {
 
     let progressInterval: ReturnType<typeof setInterval> | null = null;
     let currentPercent = 0;
-    let retryMessage = '';
 
     // Initialize progress immediately
     setProgress({ stage: 1, message: 'Initialising...', percent: 0 });
@@ -71,9 +80,11 @@ export const useAIDesigner = () => {
 
     const invokeWithRetry = async (attempt = 1, maxAttempts = 2): Promise<any> => {
       try {
-        // Clear retry message when starting fresh attempt
+        // Update retry message state
         if (attempt > 1) {
-          retryMessage = `Reconnecting… (retry ${attempt - 1}/${maxAttempts - 1})`;
+          setRetryMessage(`Reconnecting… (retry ${attempt - 1}/${maxAttempts - 1})`);
+        } else {
+          setRetryMessage('');
         }
         
         const invokePromise = supabase.functions.invoke('designer-agent-v2', {
@@ -128,7 +139,7 @@ export const useAIDesigner = () => {
         const { data, error: invokeError } = await withTimeout(invokePromise, CLIENT_TIMEOUT_MS);
 
         if (invokeError) throw invokeError;
-        retryMessage = ''; // Clear retry message on success
+        setRetryMessage(''); // Clear retry message on success
         return { data, error: null };
       } catch (error: any) {
         
@@ -201,7 +212,7 @@ export const useAIDesigner = () => {
           
           setProgress({
             stage: currentStage + 1,
-            message: retryMessage || stages[currentStage].message,
+            message: stages[currentStage].message,
             percent: currentPercent
           });
         }, 1000);
@@ -265,7 +276,7 @@ export const useAIDesigner = () => {
       }
 
       // Complete progress to 100%
-      setProgress({ stage: 8, message: 'Design complete!', percent: 100 });
+      setProgress({ stage: 5, message: 'Design complete!', percent: 100 });
       
       console.log('✅ Design generated successfully', data.design);
       setDesignData(data.design);
