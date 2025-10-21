@@ -161,6 +161,51 @@ export type Database = {
         }
         Relationships: []
       }
+      agent_task_queue: {
+        Row: {
+          completed_at: string | null
+          context_data: Json
+          created_at: string
+          id: string
+          priority: number | null
+          result: Json | null
+          source_agent: string
+          status: string
+          target_agent: string
+          updated_at: string
+          user_id: string
+          user_instruction: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          context_data: Json
+          created_at?: string
+          id?: string
+          priority?: number | null
+          result?: Json | null
+          source_agent: string
+          status?: string
+          target_agent: string
+          updated_at?: string
+          user_id: string
+          user_instruction?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          context_data?: Json
+          created_at?: string
+          id?: string
+          priority?: number | null
+          result?: Json | null
+          source_agent?: string
+          status?: string
+          target_agent?: string
+          updated_at?: string
+          user_id?: string
+          user_instruction?: string | null
+        }
+        Relationships: []
+      }
       ai_interaction_feedback: {
         Row: {
           agent_name: string
