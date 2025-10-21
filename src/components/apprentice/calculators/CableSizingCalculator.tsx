@@ -401,20 +401,6 @@ const CableSizingCalculator = () => {
                     </Select>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  <Label className="text-sm font-medium text-white">Design Current Ib (A)</Label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    value={designCurrent}
-                    onChange={(e) => setDesignCurrent(e.target.value)}
-                    placeholder={inputs.current ? `Leave empty to use ${inputs.current}A` : "Enter design current"}
-                    className="w-full h-14 px-4 py-2 bg-elec-dark border border-elec-yellow/40 rounded-md text-white placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-elec-yellow/40 text-base"
-                  />
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    Optional: If different from calculated current. Leave empty to use {inputs.current || '0'}A.
-                  </p>
-                </div>
               </div>
             </div>
 
