@@ -1,4 +1,3 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, corsHeaders } from '../_shared/deps.ts';
 
 serve(async (req) => {

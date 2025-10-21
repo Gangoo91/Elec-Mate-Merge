@@ -1,6 +1,5 @@
 // INSTALLER AGENT - Practical installation guidance
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
 import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';

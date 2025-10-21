@@ -1,5 +1,4 @@
 // Deployed: 2025-10-12 - Phase 1-5: World-Class RAG Enhancement
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import {
   corsHeaders,

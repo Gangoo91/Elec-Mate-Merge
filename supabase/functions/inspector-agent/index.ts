@@ -1,6 +1,5 @@
 // INSPECTOR AGENT - Testing and inspection guidance
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
 import { validateAgentRequest } from '../_shared/validation.ts';

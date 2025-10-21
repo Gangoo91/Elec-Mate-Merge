@@ -1,7 +1,6 @@
 // DESIGNER AGENT - RAG-enabled with Intelligent Multi-Tier Hybrid Search - v3.1
 // Phase 1: Full RAG Integration - 100% Knowledge-Driven
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
 import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
