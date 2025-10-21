@@ -3,6 +3,21 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { DesignInputs, InstallationDesign } from '@/types/installation-design';
 
+// Client-side timeout for edge function calls
+const CLIENT_TIMEOUT_MS = 90000; // 90s
+
+/**
+ * Timeout wrapper for promises
+ */
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Request timeout')), timeoutMs)
+    ),
+  ]);
+}
+
 export interface DesignProgress {
   stage: number;
   message: string;
@@ -21,12 +36,13 @@ export const useAIDesigner = () => {
     setDesignData(null);
 
     // SPEED BOOST: Shortened stages to match faster backend (total ~120s)
+    // Cap at 95% until response arrives to prevent stuck-at-99% perception
     const stages = [
       { stage: 1, message: 'Understanding your requirements...', duration: 5000, targetPercent: 8 },
       { stage: 2, message: 'Searching BS 7671 for circuit types...', duration: 20000, targetPercent: 30 },
       { stage: 3, message: 'AI is designing circuits...', duration: 60000, targetPercent: 75 },
-      { stage: 4, message: 'Validating compliance...', duration: 25000, targetPercent: 95 },
-      { stage: 5, message: 'Finalising materials...', duration: 10000, targetPercent: 99 }
+      { stage: 4, message: 'Validating compliance...', duration: 25000, targetPercent: 90 },
+      { stage: 5, message: 'Finalising design...', duration: 10000, targetPercent: 95 }
     ];
 
     let progressInterval: ReturnType<typeof setInterval> | null = null;
@@ -53,9 +69,14 @@ export const useAIDesigner = () => {
       setProgress({ stage: 0, message: 'Initialising design service...', percent: 0 });
     }
 
-    const invokeWithRetry = async (attempt = 1, maxAttempts = 3): Promise<any> => {
+    const invokeWithRetry = async (attempt = 1, maxAttempts = 2): Promise<any> => {
       try {
-        const { data, error: invokeError } = await supabase.functions.invoke('designer-agent-v2', {
+        // Clear retry message when starting fresh attempt
+        if (attempt > 1) {
+          retryMessage = `Reconnecting… (retry ${attempt - 1}/${maxAttempts - 1})`;
+        }
+        
+        const invokePromise = supabase.functions.invoke('designer-agent-v2', {
           body: {
             mode: 'batch-design',
             aiConfig: {
@@ -102,26 +123,42 @@ export const useAIDesigner = () => {
             }))
           }
         });
+        
+        // Wrap with client-side timeout
+        const { data, error: invokeError } = await withTimeout(invokePromise, CLIENT_TIMEOUT_MS);
 
         if (invokeError) throw invokeError;
         retryMessage = ''; // Clear retry message on success
         return { data, error: null };
       } catch (error: any) {
+        
         const isTransient = 
           error?.message?.includes('Failed to send a request to the Edge Function') ||
           error?.message?.includes('fetch') ||
           error?.message?.includes('network') ||
+          error?.message?.includes('timeout') ||
+          error?.message?.includes('ECONNREFUSED') ||
+          error?.message?.includes('ECONNRESET') ||
+          error?.message?.includes('500') ||
           error?.message?.includes('502') ||
           error?.message?.includes('503') ||
           error?.message?.includes('504') ||
           error instanceof TypeError;
 
         if (isTransient && attempt < maxAttempts) {
-          const delay = 1500 * Math.pow(2, attempt - 1); // 1.5s, 3s
+          const delay = attempt === 1 ? 1500 : 3000; // 1.5s then 3s
           console.warn(`⚠️ Attempt ${attempt}/${maxAttempts} failed, retrying in ${delay}ms...`, error.message);
-          retryMessage = `Reconnecting to design service… (retry ${attempt}/${maxAttempts - 1})`;
           await new Promise(resolve => setTimeout(resolve, delay));
           return invokeWithRetry(attempt + 1, maxAttempts);
+        }
+
+        // Log final failure with context
+        if (attempt >= maxAttempts) {
+          console.warn('🚨 All retry attempts exhausted', {
+            attempts: maxAttempts,
+            lastError: error.message,
+            payload: { circuits: inputs.circuits.length }
+          });
         }
 
         throw error;
@@ -237,6 +274,9 @@ export const useAIDesigner = () => {
         description: `${data.design.circuits.length} circuits designed and verified`
       });
 
+      // Hold at 100% briefly before clearing
+      setTimeout(() => setProgress(null), 800);
+
       return true;
 
     } catch (err) {
@@ -245,22 +285,24 @@ export const useAIDesigner = () => {
       setError(errorMessage);
 
       if (progressInterval) clearInterval(progressInterval);
+      setProgress(null); // Clear immediately on error
 
-      // Show actionable error message
-      const lines = errorMessage.split('\n');
-      const mainError = lines[0];
-      const details = lines.slice(1).join(' ');
+      // Timeout-specific messaging
+      const isTimeout = errorMessage.includes('timeout');
+      const mainError = errorMessage.split('\n')[0];
+      const details = errorMessage.split('\n').slice(1).join(' ');
 
-      toast.error('Design generation failed', {
-        description: details || mainError,
-        duration: 6000 // Give users more time to read errors
+      toast.error(isTimeout ? 'Design Service Timeout' : 'Design generation failed', {
+        description: isTimeout 
+          ? 'Design service didn\'t respond in time. Please try again.'
+          : (details || mainError),
+        duration: 6000
       });
 
       return false;
     } finally {
       setIsProcessing(false);
       if (progressInterval) clearInterval(progressInterval);
-      setTimeout(() => setProgress(null), 2000);
     }
   };
 
