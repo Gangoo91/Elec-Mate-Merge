@@ -309,7 +309,7 @@ Return complete circuit objects using the provided tool schema.`;
   
   // ✨ SIMPLIFIED SCHEMA - Matching AI RAMS Pattern (5 simple fields)
   const requestBody = {
-    model: aiConfig?.model || 'openai/gpt-5-mini', // OpenAI for better reasoning
+    model: aiConfig?.model || 'openai/gpt-5', // GPT-5 full model for complex multi-circuit designs
     messages: [
       { 
         role: 'system', 
@@ -344,7 +344,7 @@ Return your design using the provided tool schema.`
       },
       { role: 'user', content: query }
     ],
-    max_completion_tokens: aiConfig?.maxTokens || 8000,
+    max_completion_tokens: aiConfig?.maxTokens || 16000,
     tools: [{
       type: "function",
       function: {
@@ -547,14 +547,14 @@ Return your design using the provided tool schema.`
   // ============================================
   // PARALLEL BATCHING: Split circuits into batches for faster processing
   // ============================================
-  const BATCH_SIZE = 2; // REDUCED: Process 2 circuits at a time for stability
+  const BATCH_SIZE = 6; // INCREASED: Process 6 circuits at a time with higher token limit
   const circuitBatches = chunkArray(allCircuits, BATCH_SIZE);
-  
+
   logger.info('🔄 Processing circuits in parallel batches', {
     totalCircuits: allCircuits.length,
     batchSize: BATCH_SIZE,
     batchCount: circuitBatches.length,
-    estimatedTimeSeconds: Math.ceil(circuitBatches.length * 45) // ~45s per batch
+    estimatedTimeSeconds: Math.ceil(circuitBatches.length * 50) // ~50s per batch
   });
   
   // Function to process a single batch with retry logic
@@ -737,7 +737,7 @@ Return your design using the provided tool schema.`
           },
           { role: 'user', content: query }
         ],
-        max_completion_tokens: aiConfig?.maxTokens || 8000,
+        max_completion_tokens: aiConfig?.maxTokens || 16000,
         tools: [{
           type: "function",
           function: {
@@ -1014,7 +1014,7 @@ Always cite regulation numbers and show working for calculations.`
             },
             { role: 'user', content: query }
           ],
-          max_completion_tokens: aiConfig?.maxTokens || 8000,
+          max_completion_tokens: aiConfig?.maxTokens || 16000,
           response_format: { type: "json_object" }
         })
       });
