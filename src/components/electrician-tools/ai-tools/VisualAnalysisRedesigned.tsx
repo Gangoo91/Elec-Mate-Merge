@@ -138,6 +138,8 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
   const [userContext, setUserContext] = useState("");
   const [showContextField, setShowContextField] = useState(false);
   const [retryAttempts, setRetryAttempts] = useState(0);
+  const [analyzedImageUrl, setAnalyzedImageUrl] = useState<string | null>(null);
+  const [analysisTimestamp, setAnalysisTimestamp] = useState<string | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
@@ -519,9 +521,15 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
           duration: 3000
         });
         
-        // Retry immediately with fast mode
+      // Retry immediately with fast mode
         setTimeout(() => handleAnalysis(), 1000);
         return;
+      }
+      
+      // Store image and timestamp for results display
+      if (uploadedImageUrls.length > 0) {
+        setAnalyzedImageUrl(uploadedImageUrls[primaryImageIndex]);
+        setAnalysisTimestamp(new Date().toISOString());
       }
       
       // Normalise installation_verify analysis shape for UI stability
@@ -1157,9 +1165,16 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
           {/* Installation Verification */}
           {selectedMode === 'installation_verify' && analysisResult.verification_checks && (
             <InstallationVerificationResults 
-              verificationResult={analysisResult as any}
-              onExportReport={() => {}}
-              onRetry={handleRetryFromError}
+              analysisResult={analysisResult}
+              imageUrl={analyzedImageUrl || undefined}
+              timestamp={analysisTimestamp || undefined}
+              onStartChat={() => setInspectorModalOpen(true)}
+              onExportReport={() => {
+                toast({
+                  title: "Export coming soon",
+                  description: "PDF export functionality will be available shortly"
+                });
+              }}
             />
           )}
 
