@@ -248,6 +248,32 @@ export async function handleBatchDesign(body: any, logger: any) {
   
   const systemPrompt = `You are a BS 7671:2018+A3:2024 compliant circuit design expert with RAG knowledge.
 
+⚠️ CRITICAL COMPLIANCE REQUIREMENTS - NON-NEGOTIABLE:
+
+1. **Earth Fault Loop Impedance (Zs) Compliance**:
+   - EVERY circuit MUST have calculated zs < maxZs
+   - If zs exceeds maxZs, you MUST modify the design:
+     * Increase CPC size to reduce R2
+     * Reduce cable length if possible
+     * Consider lower impedance cable route
+   - NEVER submit a circuit where zs > maxZs
+
+2. **Ring Circuit Impedance (BS 7671 Reg 433.1.204)**:
+   - Ring finals MUST use parallel conductor formula
+   - R1+R2_ring = (R1+R2_single_leg) / 2
+   - Failure to halve R1+R2 will result in non-compliant Zs calculations
+   - Maximum R1+R2 for 2.5mm² ring: typically 0.8-1.0Ω (after halving)
+
+3. **Current Carrying Capacity (Ib ≤ In ≤ Iz)**:
+   - Design current (Ib) must not exceed device rating (In)
+   - Device rating (In) must not exceed cable capacity (Iz)
+   
+4. **Voltage Drop Compliance**:
+   - Lighting: ≤ 3% (6.9V at 230V)
+   - Power: ≤ 5% (11.5V at 230V)
+
+IF YOU CANNOT ACHIEVE COMPLIANCE: Increase cable size or split the circuit.
+
 CRITICAL DATA FORMAT REQUIREMENTS:
 - cableSize: NUMERIC mm² value only (e.g., 2.5 NOT "2.5mm²")
 - cpcSize: NUMERIC mm² value only - MUST match Twin and Earth standards:
@@ -281,6 +307,17 @@ CRITICAL INSTRUCTIONS - You MUST populate ALL fields using RAG knowledge:
 5. **Installation Method**: Reference Appendix 4 methods from context
 6. **Special Locations**: Check Section 701/702/714 for bathrooms/outdoor
 7. **Expected Test Results**: Calculate R1+R2, Zs, insulation resistance, RCD times
+
+⚠️ CRITICAL: Ring Circuit R1+R2 Calculation (BS 7671 Reg 433.1.204)
+For Ring Final circuits (loadType contains "Ring"):
+- Calculate R1+R2 for ONE leg of the ring using cable length
+- Then DIVIDE by 2 to account for parallel paths
+- Formula: R1+R2_ring = (R1+R2_single_leg) / 2
+- Example: 20m ring, 2.5mm² + 1.5mm² T&E
+  * Single leg: (19.5 + 29.5) mΩ/m × 20m = 980mΩ = 0.98Ω
+  * Ring (parallel): 0.98Ω / 2 = 0.49Ω ✅
+- Apply this halved R1+R2 to Zs calculation: Zs = Ze + (R1+R2_ring)
+- Show working in calculation field: "(R1+R2_leg)/2 = ...Ω"
 
 For each circuit, include:
 - Basic fields: name, circuitNumber, loadType, loadPower, phases
@@ -459,9 +496,9 @@ Return complete circuit objects using the provided tool schema.`;
                       r1r2: {
                         type: "object",
                         properties: {
-                          at20C: { type: "string", description: "e.g. '0.95Ω'" },
-                          at70C: { type: "string", description: "e.g. '1.20Ω'" },
-                          calculation: { type: "string", description: "Show working" }
+                          at20C: { type: "string", description: "e.g. '0.95Ω' - FOR RING CIRCUITS: Show HALVED value accounting for parallel paths" },
+                          at70C: { type: "string", description: "e.g. '1.20Ω' - FOR RING CIRCUITS: Show HALVED value (divide by 2)" },
+                          calculation: { type: "string", description: "Show working - for rings: '(R1+R2_leg)/2 = ...Ω'" }
                         }
                       },
                       zs: {
