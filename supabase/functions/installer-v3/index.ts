@@ -358,6 +358,22 @@ Current date: September 2025.
 ✅ Safety-First: Always highlight critical safety points (e.g., "Isolate and test dead before ANY cable work - this is non-negotiable")
 ❌ Avoid: Robotic lists without context, vague terms like "regular intervals" or "appropriate spacing"
 
+⚠️ CRITICAL: COMPREHENSIVE STEP DESCRIPTIONS REQUIRED
+Each installation step MUST contain:
+✓ Clear overview of what's being done (1 sentence)
+✓ Bulleted or numbered sub-tasks showing the exact sequence (minimum 3-5 sub-tasks per step)
+✓ Specific measurements extracted from knowledge base (e.g., "400mm clip spacing", "1.8m height", "16mm² cable")
+✓ Quality/safety checkpoint at end of step
+✗ Do NOT write single-sentence steps
+
+BAD Example: "Install the consumer unit"
+GOOD Example: "Install the consumer unit enclosure at 1.8m height from finished floor level:
+• Mark fixing positions using a spirit level to ensure level installation
+• Drill fixing holes using 5.5mm masonry bit for 50mm screws
+• Insert wall plugs and secure unit with corrosion-resistant fixings
+• Verify unit is plumb and secure before proceeding with cable entry
+• Check clearances comply with BS 7671 Section 132.8 (minimum 300mm from water sources)"
+
 📋 STRUCTURE YOUR RESPONSE:
 1. **Acknowledge** (1-2 sentences) - Confirm what they're asking and show you understand the job
    Example: "Right, so you're looking at installing a shower circuit - 13kW load over 23m. That's a meaty cable run, let's break it down."
@@ -369,6 +385,7 @@ Current date: September 2025.
    - Protection: 30mA RCD mandatory (bathroom circuit, Reg 701.411.3.3)
 
 3. **Step-by-Step Guidance** - Practical installation sequence with EXACT values from knowledge base
+   CRITICAL: Each step must have 3-5 sentences minimum with detailed sub-tasks
    Use specific measurements: "Clip spacing for 10mm² horizontal run: 250mm (BS 7671 Table 4A2)"
    Include practical tips: "When notching joists, max depth is 1/8th joist depth (e.g., 25mm notch on 200mm joist) - Section 522.6.204"
    
@@ -439,7 +456,10 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                   properties: {
                     step: { type: 'number' },
                     title: { type: 'string' },
-                    description: { type: 'string', description: 'Step description in UK English (authorised, realise, organise, metres, whilst)' },
+                    description: { 
+                      type: 'string', 
+                      description: 'COMPREHENSIVE step description in UK English (authorised, realise, organise, metres, whilst). MUST include: 1) Overview sentence, 2) Detailed sub-tasks as bullet points or numbered list, 3) Specific measurements/values from knowledge base where applicable (e.g., "400mm clip spacing", "1.8m height", "16mm² cable"), 4) Quality checks. Minimum 3-5 sentences or 80-150 words per step. Example format: "Install the consumer unit enclosure at 1.8m height from finished floor level:\n• Mark fixing positions using a spirit level to ensure level installation\n• Drill fixing holes using 5.5mm masonry bit for 50mm screws\n• Insert wall plugs and secure unit with corrosion-resistant fixings\n• Verify unit is plumb and secure before proceeding with cable entry"'
+                    },
                     tools: { type: 'array', items: { type: 'string' }, description: 'CONTEXT-SPECIFIC tools for THIS EXACT PHASE only. Examples: Planning phase = drawings, camera, notepad. Procurement phase = supplier details, order forms (or "No special tools required"). Installation phase = drills, cables, fixings. Testing phase = test equipment. DO NOT list installation tools for planning/procurement phases.' },
                     materials: { type: 'array', items: { type: 'string' } },
                     safetyNotes: { type: 'array', items: { type: 'string', description: 'STEP-SPECIFIC safety requirements for THIS STEP ONLY (not general project safety). In UK English (authorised, organise, metres). If no specific safety requirements for this step, return empty array. Example: Planning phase should have NO or minimal safety notes. Installation/isolation phases MUST have specific requirements like "Isolation and lock-off required".' } },

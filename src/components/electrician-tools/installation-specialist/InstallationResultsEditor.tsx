@@ -12,6 +12,8 @@ import { CategorisedToolsList } from "./CategorisedToolsList";
 import { categorizeTools, categorizeMaterials } from "@/utils/toolsCategorisation";
 
 interface InstallationResultsEditorProps {
+  jobTitle?: string;
+  installationType?: string;
   installationGuide: string;
   steps: InstallationStep[];
   summary: InstallationMethodSummary;
@@ -20,6 +22,8 @@ interface InstallationResultsEditorProps {
 }
 
 export const InstallationResultsEditor = ({
+  jobTitle,
+  installationType,
   installationGuide,
   steps: initialSteps,
   summary,
@@ -172,6 +176,16 @@ export const InstallationResultsEditor = ({
 
   return (
     <div className="space-y-4">
+      {/* Installation Title */}
+      {jobTitle && (
+        <div className="mb-4">
+          <h2 className="text-2xl font-bold text-foreground mb-1">{jobTitle}</h2>
+          <p className="text-sm text-muted-foreground">
+            {installationType ? `${installationType.charAt(0).toUpperCase() + installationType.slice(1)} Installation` : 'Installation Method Statement'}
+          </p>
+        </div>
+      )}
+
       {/* Summary Card */}
       <Card className="p-4 sm:p-6 bg-gradient-to-br from-primary/10 via-primary/5 to-background border-primary/20">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">

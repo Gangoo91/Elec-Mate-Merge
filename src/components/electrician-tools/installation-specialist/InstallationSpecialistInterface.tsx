@@ -146,9 +146,24 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         const overallRisk = riskLevels.includes('high') ? 'high' : 
                            riskLevels.includes('medium') ? 'medium' : 'low';
 
+        // Calculate actual total duration from steps
+        const totalMinutes = installationSteps.reduce((sum: number, step: any) => {
+          const stepTime = typeof step.estimatedDuration === 'number' 
+            ? step.estimatedDuration 
+            : parseInt(step.estimatedDuration) || 20;
+          return sum + stepTime;
+        }, 0);
+
+        const formatDuration = (mins: number): string => {
+          if (mins < 60) return `${mins} minutes`;
+          const hours = Math.floor(mins / 60);
+          const remainingMins = mins % 60;
+          return remainingMins > 0 ? `${hours}h ${remainingMins}m` : `${hours} hours`;
+        };
+
         const summary = {
           totalSteps: installationSteps.length,
-          estimatedDuration: `${installationSteps.length * 20}-${installationSteps.length * 40} minutes`,
+          estimatedDuration: formatDuration(totalMinutes),
           requiredQualifications: [mergedResult.competencyRequirements.minimumQualifications],
           toolsRequired: allTools,
           materialsRequired: [],
@@ -156,6 +171,8 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         };
 
         setMethodData({
+          jobTitle: description,
+          installationType: projectDetails.installationType,
           steps: installationSteps,
           summary,
           projectDetails,
@@ -226,9 +243,24 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         const overallRisk = riskLevels.includes('high') ? 'high' : 
                            riskLevels.includes('medium') ? 'medium' : 'low';
 
+        // Calculate actual total duration from steps
+        const totalMinutes = installationSteps.reduce((sum: number, step: any) => {
+          const stepTime = typeof step.estimatedDuration === 'number' 
+            ? step.estimatedDuration 
+            : parseInt(step.estimatedDuration) || 20;
+          return sum + stepTime;
+        }, 0);
+
+        const formatDuration = (mins: number): string => {
+          if (mins < 60) return `${mins} minutes`;
+          const hours = Math.floor(mins / 60);
+          const remainingMins = mins % 60;
+          return remainingMins > 0 ? `${hours}h ${remainingMins}m` : `${hours} hours`;
+        };
+
         const summary = {
           totalSteps: installationSteps.length,
-          estimatedDuration: `${installationSteps.length * 15}-${installationSteps.length * 30} minutes`,
+          estimatedDuration: formatDuration(totalMinutes),
           requiredQualifications: ['18th Edition BS 7671:2018+A3:2024'],
           toolsRequired: allTools,
           materialsRequired: [],
@@ -237,6 +269,8 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
 
         setInstallationGuide(data.response || '');
         setMethodData({
+          jobTitle: description,
+          installationType: projectDetails.installationType,
           steps: installationSteps,
           summary,
           projectDetails
@@ -325,6 +359,8 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
 
       {currentView === 'results' && methodData && (
         <InstallationResultsEditor
+          jobTitle={methodData.jobTitle}
+          installationType={methodData.installationType}
           installationGuide={installationGuide}
           steps={methodData.steps}
           summary={methodData.summary}
