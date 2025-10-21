@@ -1042,16 +1042,50 @@ Always cite regulation numbers and show working for calculations.`
       // FIX: Ensure fallback toolCall is pushed to allToolCalls
       allToolCalls.push(toolCall);
     } else {
-      // Still no tool call after retry - last resort content extraction
-      const content = (batchResults.find(r => r?.aiData)?.aiData?.choices?.[0]?.message?.content) || null;
+      // Still no tool call after retry - check retry response first, then batch results
+      let content = null;
       
-      if (content) {
-        // Try parsing content as JSON or extract from markdown
+      // First try: Check retry response data
+      if (retryResponse) {
+        try {
+          const retryData = await retryResponse.json();
+          content = retryData?.choices?.[0]?.message?.content || null;
+          
+          if (retryData?.choices?.[0]?.message?.tool_calls?.[0]) {
+            toolCall = retryData.choices[0].message.tool_calls[0];
+            allToolCalls.push(toolCall);
+            logger.info('✅ Found tool call in retry response');
+          }
+        } catch (e) {
+          logger.warn('⚠️ Could not parse retry response', { 
+            error: e instanceof Error ? e.message : String(e) 
+          });
+        }
+      }
+      
+      // Second try: Check batch results if retry didn't help
+      if (!content && !toolCall) {
+        const successfulBatch = batchResults.find(r => r?.success && r?.aiData);
+        if (successfulBatch?.aiData?.choices?.[0]?.message) {
+          const message = successfulBatch.aiData.choices[0].message;
+          content = message.content || null;
+          
+          if (message.tool_calls?.[0]) {
+            toolCall = message.tool_calls[0];
+            allToolCalls.push(toolCall);
+            logger.info('✅ Found tool call in batch results');
+          }
+        }
+      }
+      
+      // Third try: Parse content as JSON if we have content but no tool call
+      if (content && !toolCall) {
         try {
           const parsed = JSON.parse(content);
           if (parsed.circuits) {
             logger.info('✅ Recovered design from direct JSON content');
             toolCall = { function: { arguments: content } };
+            allToolCalls.push(toolCall);
           }
         } catch (e) {
           // Try extracting JSON from markdown code blocks
@@ -1060,7 +1094,7 @@ Always cite regulation numbers and show working for calculations.`
             try {
               const parsed = JSON.parse(jsonMatch[1]);
               if (parsed.circuits) {
-                logger.info('✅ Recovered design from markdown JSON block - appending tool call');
+                logger.info('✅ Recovered design from markdown JSON block');
                 toolCall = { function: { arguments: jsonMatch[1] } };
                 allToolCalls.push(toolCall);
               }
@@ -1071,7 +1105,7 @@ Always cite regulation numbers and show working for calculations.`
             }
           }
         }
-      } // ✅ Close the if (content) block from line 1048
+      }
       
       if (!toolCall) {
         logger.error('🚨 AI did not return structured design after all attempts', {
