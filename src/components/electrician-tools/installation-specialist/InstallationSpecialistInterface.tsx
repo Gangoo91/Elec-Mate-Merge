@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { InstallationInputForm } from "./InstallationInputForm";
@@ -17,8 +17,49 @@ const InstallationSpecialistInterface = () => {
   const [installationGuide, setInstallationGuide] = useState("");
   const [generateFullMethodStatement, setGenerateFullMethodStatement] = useState(true);
   const [methodStatementProgress, setMethodStatementProgress] = useState<string>('');
+  
+  // Watchdog refs for detecting stalls
+  const lastAdvanceRef = useRef(Date.now());
+  const lastProjectRef = useRef<{details: ProjectDetailsType, description: string} | null>(null);
+  const watchdogShownRef = useRef(false);
+
+  // Helper to advance progress without going backwards
+  const applyProgress = (stage: number, percent: number, message: string) => {
+    setProgress(prev => {
+      const shouldUpdate = stage > prev.stage || (stage === prev.stage && percent > prev.percent);
+      if (shouldUpdate) {
+        lastAdvanceRef.current = Date.now();
+      }
+      return shouldUpdate ? { stage, percent, message } : prev;
+    });
+  };
+
+  // Watchdog timer to detect stalls
+  useEffect(() => {
+    if (!isProcessing) {
+      watchdogShownRef.current = false;
+      return;
+    }
+    
+    const watchdogId = setInterval(() => {
+      const stuckMs = Date.now() - lastAdvanceRef.current;
+      if (stuckMs > 120000 && (progress.stage === 1 || progress.stage === 2) && !watchdogShownRef.current) {
+        watchdogShownRef.current = true;
+        toast({
+          title: 'Taking longer than usual',
+          description: 'The full method statement can take 3-5 minutes. Use the "Switch to Quick Mode" button below for a faster result.',
+        });
+        clearInterval(watchdogId);
+      }
+    }, 5000);
+    
+    return () => clearInterval(watchdogId);
+  }, [isProcessing, progress.stage]);
 
   const handleGenerate = async (projectDetails: ProjectDetailsType, description: string, useFullMethodStatement: boolean = false) => {
+    // Store for Quick Mode fallback
+    lastProjectRef.current = { details: projectDetails, description };
+    
     // Update the internal state based on user selection from the form
     setGenerateFullMethodStatement(useFullMethodStatement);
     setCurrentView('processing');
@@ -26,6 +67,9 @@ const InstallationSpecialistInterface = () => {
     setMethodData(null);
     setInstallationGuide("");
     setMethodStatementProgress('');
+    setProgress({ stage: 0, percent: 0, message: '' });
+    lastAdvanceRef.current = Date.now();
+    watchdogShownRef.current = false;
 
     try {
       if (useFullMethodStatement) {
@@ -45,22 +89,43 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           'ms-' + Date.now(),
           (msg) => {
             setMethodStatementProgress(msg);
-            // Convert progress messages to stage format with better granularity
-            if (msg.includes('Searching') || msg.includes('installation procedures')) {
-              setProgress({ stage: 1, percent: 20, message: 'Analysing installation requirements...' });
-            } else if (msg.includes('generating steps') || msg.includes('installation')) {
-              setProgress({ stage: 2, percent: 40, message: 'Consulting BS 7671 knowledge base...' });
-            } else if (msg.includes('RAG for hazards') || msg.includes('testing')) {
-              setProgress({ stage: 3, percent: 60, message: 'Generating step-by-step method...' });
-            } else if (msg.includes('Inspection') || msg.includes('ready')) {
-              setProgress({ stage: 4, percent: 80, message: 'Extracting tools and materials...' });
-            } else if (msg.includes('✅') || msg.includes('complete')) {
-              setProgress({ stage: 5, percent: 95, message: 'Finalising safety notes...' });
+            
+            // Priority 1: Check explicit stage tokens FIRST (from backend)
+            const t = msg.trim().toUpperCase();
+            if (t.startsWith('STAGE_1_START') || t.includes('STAGE_1_START')) {
+              return applyProgress(1, 20, 'Analysing installation requirements...');
+            }
+            if (t.startsWith('STAGE_2_START') || t.includes('STAGE_2_START')) {
+              return applyProgress(2, 40, 'Checking BS 7671 regulations...');
+            }
+            if (t.startsWith('STAGE_3_START') || t.includes('STAGE_3_START')) {
+              return applyProgress(3, 60, 'Creating step-by-step instructions...');
+            }
+            if (t.startsWith('STAGE_4_START') || t.includes('STAGE_4_START')) {
+              return applyProgress(4, 85, 'Listing tools and materials...');
+            }
+            if (t.startsWith('STAGE_5_COMPLETE') || t.includes('STAGE_5_COMPLETE')) {
+              return applyProgress(5, 95, 'Adding safety notes and checks...');
+            }
+
+            // Priority 2: Content hints as fallback (check specific phrases before generic)
+            const m = msg.toLowerCase();
+            if (m.includes('final validation') || m.includes('inspection items')) {
+              applyProgress(4, 90, 'Finalising method and inspection items...');
+            } else if (m.includes('risk assessment complete')) {
+              applyProgress(3, 70, 'Risk assessment complete...');
+            } else if (m.includes('generating steps') && m.includes('installation')) {
+              applyProgress(2, 45, 'Generating installation steps...');
+            } else if (m.includes('searching installation procedures')) {
+              applyProgress(1, 25, 'Searching installation procedures...');
+            } else if (m.includes('searching') && !m.includes('generating') && progress.stage < 2) {
+              // Generic "Searching" only if we haven't progressed beyond stage 1
+              applyProgress(1, 20, 'Analysing installation requirements...');
             }
           }
         );
 
-        setProgress({ stage: 4, percent: 100, message: 'Complete!' });
+        applyProgress(5, 100, 'Complete!');
 
         // Transform merged result for UI display
         const installationSteps = mergedResult.installationSteps.map((step: any) => ({
@@ -101,6 +166,7 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         toast({
           title: "Method Statement Generated",
           description: `Complete with ${summary.totalSteps} steps, testing procedures, and risk assessment`,
+          variant: "success",
         });
 
       } else {
@@ -108,13 +174,14 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         const stages = [
           { stage: 1, percent: 20, message: 'Analysing installation requirements...' },
           { stage: 2, percent: 50, message: 'Generating step-by-step procedures...' },
-          { stage: 3, percent: 80, message: 'Compiling safety requirements...' }
+          { stage: 3, percent: 80, message: 'Compiling safety requirements...' },
+          { stage: 4, percent: 95, message: 'Finalising installation method...' }
         ];
         
         let stageIndex = 0;
         const progressInterval = setInterval(() => {
           if (stageIndex < stages.length) {
-            setProgress(stages[stageIndex]);
+            applyProgress(stages[stageIndex].stage, stages[stageIndex].percent, stages[stageIndex].message);
             stageIndex++;
           }
         }, 1500);
@@ -133,7 +200,7 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         });
 
         clearInterval(progressInterval);
-        setProgress({ stage: 4, percent: 100, message: 'Complete!' });
+        applyProgress(5, 100, 'Complete!');
 
         if (error) throw error;
         if (!data?.success) throw new Error(data?.error || 'Failed to generate installation method');
@@ -178,6 +245,7 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         toast({
           title: "Installation Guide Generated",
           description: `${summary.totalSteps} steps created successfully`,
+          variant: "success",
         });
       }
 
@@ -235,7 +303,24 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
       )}
 
         {currentView === 'processing' && (
-          <InstallationProcessingView progress={progress} isGenerating={isProcessing} />
+          <InstallationProcessingView 
+            progress={progress} 
+            isGenerating={isProcessing}
+            onCancel={() => {
+              setIsProcessing(false);
+              setCurrentView('input');
+            }}
+            onQuickMode={() => {
+              setIsProcessing(false);
+              if (lastProjectRef.current) {
+                handleGenerate(
+                  lastProjectRef.current.details,
+                  lastProjectRef.current.description,
+                  false
+                );
+              }
+            }}
+          />
         )}
 
       {currentView === 'results' && methodData && (

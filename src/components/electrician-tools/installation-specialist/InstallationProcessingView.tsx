@@ -1,14 +1,17 @@
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
 import { CheckCircle2, Loader2, Wrench } from 'lucide-react';
 import { GenerationTimer } from '../site-safety/ai-rams/GenerationTimer';
 
 interface InstallationProcessingViewProps {
   progress: { stage: number; percent: number; message: string } | null;
   isGenerating: boolean;
+  onCancel?: () => void;
+  onQuickMode?: () => void;
 }
 
-export const InstallationProcessingView = ({ progress, isGenerating }: InstallationProcessingViewProps) => {
+export const InstallationProcessingView = ({ progress, isGenerating, onCancel, onQuickMode }: InstallationProcessingViewProps) => {
   const stages = [
     'Analysing installation requirements...',
     'Checking BS 7671 regulations...',
@@ -78,6 +81,31 @@ export const InstallationProcessingView = ({ progress, isGenerating }: Installat
           <div className="text-center text-sm text-muted-foreground pt-4">
             Estimated time: 3–5 minutes
           </div>
+
+          {(onCancel || onQuickMode) && (
+            <div className="flex gap-2 justify-center pt-4">
+              {onCancel && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={onCancel}
+                  className="min-h-[44px] touch-manipulation"
+                >
+                  Cancel
+                </Button>
+              )}
+              {onQuickMode && (
+                <Button 
+                  variant="default" 
+                  size="sm" 
+                  onClick={onQuickMode}
+                  className="min-h-[44px] touch-manipulation"
+                >
+                  Switch to Quick Mode
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </Card>
     </div>
