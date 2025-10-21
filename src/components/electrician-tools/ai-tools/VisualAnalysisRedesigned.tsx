@@ -664,6 +664,24 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
     }
   };
 
+  const getSeverityBorderColor = (code: string) => {
+    switch (code) {
+      case 'C1': return 'border-red-500';
+      case 'C2': return 'border-orange-500';
+      case 'C3': return 'border-yellow-500';
+      default: return 'border-green-500';
+    }
+  };
+
+  const getSeverityBgColor = (code: string) => {
+    switch (code) {
+      case 'C1': return 'bg-red-500/20';
+      case 'C2': return 'bg-orange-500/20';
+      case 'C3': return 'bg-yellow-500/20';
+      default: return 'bg-green-500/20';
+    }
+  };
+
   return (
     <div className="space-y-3 sm:space-y-4 pb-20 sm:pb-6">
       {/* Compact Header */}
@@ -971,49 +989,103 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         <div className="space-y-3 sm:space-y-4">
           {/* Findings */}
           {selectedMode === 'fault_diagnosis' && analysisResult.findings && analysisResult.findings.length > 0 && (
-            <div className="space-y-3">
-              {analysisResult.findings.map((finding, index) => (
-                <Card key={index} className={`border-l-4 ${getSeverityColor(finding.eicr_code)}`}>
-                  <CardContent className="p-4 sm:p-5">
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3 sm:gap-4">
-                        <div className={`p-1.5 rounded flex-shrink-0 ${getSeverityColor(finding.eicr_code)}`}>
-                          {getSeverityIcon(finding.eicr_code)}
-                        </div>
-                        <div className="flex-1 min-w-0 space-y-2">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <Badge variant="outline" className="font-mono text-xs sm:text-sm">
-                              {finding.eicr_code}
-                            </Badge>
-                            <span className="text-xs sm:text-sm text-foreground/80">
-                              {Math.round(finding.confidence * 100)}% confidence
-                            </span>
+            <div className="space-y-4">
+              {/* Summary Header with Classification Counts */}
+              {analysisResult.compliance_summary && (
+                <div className="flex flex-wrap gap-2 p-3 sm:p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
+                  <p className="text-xs font-medium text-muted-foreground w-full mb-1">Classifications Found:</p>
+                  {analysisResult.compliance_summary.c1_count > 0 && (
+                    <Badge variant="outline" className="bg-red-500/10 text-red-400 border-red-500/30">
+                      {analysisResult.compliance_summary.c1_count} × C1
+                    </Badge>
+                  )}
+                  {analysisResult.compliance_summary.c2_count > 0 && (
+                    <Badge variant="outline" className="bg-orange-500/10 text-orange-400 border-orange-500/30">
+                      {analysisResult.compliance_summary.c2_count} × C2
+                    </Badge>
+                  )}
+                  {analysisResult.compliance_summary.c3_count > 0 && (
+                    <Badge variant="outline" className="bg-yellow-500/10 text-yellow-400 border-yellow-500/30">
+                      {analysisResult.compliance_summary.c3_count} × C3
+                    </Badge>
+                  )}
+                  {analysisResult.compliance_summary.fi_count > 0 && (
+                    <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/30">
+                      {analysisResult.compliance_summary.fi_count} × FI
+                    </Badge>
+                  )}
+                </div>
+              )}
+
+              {/* Sorted Findings Cards */}
+              <div className="space-y-3">
+                {analysisResult.findings
+                  .sort((a, b) => {
+                    const order: Record<string, number> = { C1: 0, C2: 1, C3: 2, FI: 3 };
+                    return (order[a.eicr_code] ?? 999) - (order[b.eicr_code] ?? 999);
+                  })
+                  .map((finding, index) => (
+                    <div 
+                      key={index} 
+                      className={`rounded-lg border-l-4 p-4 sm:p-5 ${getSeverityBorderColor(finding.eicr_code)} bg-elec-dark/50`}
+                    >
+                      {/* Header: Classification + Confidence */}
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`p-2 rounded-lg ${getSeverityBgColor(finding.eicr_code)}`}>
+                            {getSeverityIcon(finding.eicr_code)}
                           </div>
-                          <p className="text-sm sm:text-base font-medium text-foreground leading-relaxed">
-                            {finding.description}
-                          </p>
-                          {finding.bs7671_clauses && finding.bs7671_clauses.length > 0 && (
-                            <div className="text-xs sm:text-sm">
-                              <p className="font-medium text-foreground/90 mb-1.5">BS 7671 References:</p>
-                              <ul className="list-disc list-inside space-y-1 text-foreground/85 ml-1">
-                                {finding.bs7671_clauses.map((clause, clauseIndex) => (
-                                  <li key={clauseIndex} className="leading-relaxed">{clause}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
+                          <Badge variant="outline" className="font-mono text-sm px-3 py-1">
+                            {finding.eicr_code}
+                          </Badge>
                         </div>
+                        <span className="text-sm text-muted-foreground">
+                          {Math.round(finding.confidence * 100)}% confidence
+                        </span>
                       </div>
+
+                      {/* Description - LEFT ALIGNED */}
+                      <p className="text-base text-white leading-relaxed mb-4 text-left">
+                        {finding.description}
+                      </p>
+
+                      {/* BS 7671 References - LEFT ALIGNED */}
+                      {finding.bs7671_clauses && finding.bs7671_clauses.length > 0 && (
+                        <div className="mb-4">
+                          <p className="text-sm font-semibold text-elec-yellow mb-2 text-left">
+                            BS 7671 References:
+                          </p>
+                          <ul className="space-y-1.5 text-left">
+                            {finding.bs7671_clauses.map((clause, clauseIndex) => (
+                              <li 
+                                key={clauseIndex}
+                                className="text-sm text-muted-foreground flex items-start gap-2"
+                              >
+                                <span className="text-elec-yellow mt-0.5">•</span>
+                                <span>{clause}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Recommended Fix - LEFT ALIGNED */}
                       {finding.fix_guidance && (
-                        <div className="text-xs sm:text-sm border-l-2 border-elec-yellow/60 pl-3 sm:pl-4 py-1 ml-0">
-                          <p className="font-medium text-foreground/90 mb-1">Recommended Fix:</p>
-                          <p className="text-foreground/85 leading-relaxed">{finding.fix_guidance}</p>
+                        <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+                          <div className="flex items-start gap-2 mb-2">
+                            <Lightbulb className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                            <p className="text-sm font-semibold text-elec-yellow text-left">
+                              Recommended Fix:
+                            </p>
+                          </div>
+                          <p className="text-sm text-muted-foreground leading-relaxed text-left ml-6">
+                            {finding.fix_guidance}
+                          </p>
                         </div>
                       )}
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
+                  ))}
+              </div>
             </div>
           )}
 
