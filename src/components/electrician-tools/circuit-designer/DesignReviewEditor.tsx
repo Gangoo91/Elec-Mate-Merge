@@ -265,16 +265,19 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </span>
                     </div>
                     
-                    <ul className="list-disc list-inside space-y-1.5 text-sm text-white/80">
+                    <ul className="space-y-1.5 text-sm text-white">
                       {currentCircuit.specialLocationCompliance.requirements.map((req, idx) => (
-                        <li key={idx} className="leading-relaxed">{req}</li>
+                        <li key={idx} className="flex items-start gap-2 text-left">
+                          <span className="flex-shrink-0">•</span>
+                          <span className="leading-relaxed">{req}</span>
+                        </li>
                       ))}
                     </ul>
 
                     {currentCircuit.specialLocationCompliance.zonesApplicable && (
                       <div className="py-2 px-3 bg-amber-500/10 rounded border border-amber-500/20">
                         <p className="text-xs font-medium text-amber-400">Zones Applicable:</p>
-                        <p className="text-sm text-white/80">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
+                        <p className="text-sm text-white text-left">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
                       </div>
                     )}
                   </div>
