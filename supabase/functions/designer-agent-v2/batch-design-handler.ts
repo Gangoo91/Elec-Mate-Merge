@@ -251,7 +251,11 @@ export async function handleBatchDesign(body: any, logger: any) {
 CRITICAL DATA FORMAT REQUIREMENTS:
 - cableSize: NUMERIC mm² value only (e.g., 2.5 NOT "2.5mm²")
 - cpcSize: NUMERIC mm² value only (e.g., 1.5 NOT "1.5mm²")
-- cableType: Full cable description (e.g., "70°C thermoplastic insulated and sheathed flat cable with protective conductor (BS 6004)")
+- cableType: Full cable description with SPECIFIC sizing details:
+  * For LIGHTING circuits: "1.5mm²/1.0mm² Twin and Earth (PVC), copper" or similar BS 6004 cable
+  * For POWER circuits: Use appropriate sizing like "2.5mm²/1.5mm² Twin and Earth" or SWA for outdoor
+  * Always include conductor sizes, insulation type, and material
+- installationMethod: Clean format like "Clipped direct (reference method C)" - NO line breaks or hyphens
 - protectionDevice.rating: NUMERIC amps only (e.g., 32 NOT "32A")
 - protectionDevice.curve: LETTER ONLY (e.g., "B" NOT "Type B")
 - protectionDevice.kaRating: NUMERIC kA only (e.g., 6 NOT "6kA")
@@ -343,7 +347,7 @@ Return complete circuit objects using the provided tool schema.`;
                   phases: { type: "number", description: "1 for single phase, 3 for three phase" },
                   cableSize: { type: "number", description: "Live conductor CSA in mm² (numeric only, e.g., 2.5, 4, 6, 10)" },
                   cpcSize: { type: "number", description: "CPC conductor CSA in mm² (numeric only, e.g., 1.5, 2.5, 4)" },
-                  cableType: { type: "string", description: "Full cable type description (e.g., '70°C thermoplastic insulated and sheathed flat cable with protective conductor (BS 6004)')" },
+                  cableType: { type: "string", description: "Full cable type with specific sizing: For lighting use '1.5mm²/1.0mm² Twin and Earth (PVC), copper'. For power use '2.5mm²/1.5mm²' or larger. Always include conductor sizes." },
                   cableLength: { type: "number", description: "Cable length in metres" },
                   protectionDevice: {
                     type: "object",
@@ -484,7 +488,7 @@ Return complete circuit objects using the provided tool schema.`;
                     items: { type: "string" },
                     description: "Circuit-specific warnings"
                   },
-                  installationMethod: { type: "string", description: "Installation method (e.g., 'Method C - clipped direct')" }
+                  installationMethod: { type: "string", description: "Clean format: 'Clipped direct (reference method C)' - NO line breaks or hyphens mid-word" }
                 },
                 required: ["name", "loadType", "cableSize", "protectionDevice", "calculations", "justifications"]
               }

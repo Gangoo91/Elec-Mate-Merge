@@ -339,8 +339,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     </div>
                     <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
                       <span className="text-sm text-white/80">Method:</span>
-                      <span className="font-medium text-white">
-                        {currentCircuit.installationGuidance?.referenceMethod || currentCircuit.installationMethod}
+                      <span className="font-medium text-white text-right sm:text-left">
+                        {(() => {
+                          const method = currentCircuit.installationGuidance?.referenceMethod || currentCircuit.installationMethod || '';
+                          // Clean up installation method formatting
+                          return method
+                            .replace(/\s*-\s*/g, ' - ') // Normalize dashes
+                            .replace(/\s+/g, ' ') // Normalize spaces
+                            .trim();
+                        })()}
                       </span>
                     </div>
                   </div>
