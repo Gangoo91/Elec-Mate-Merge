@@ -6,6 +6,7 @@ import { InstallationProcessingView } from "./InstallationProcessingView";
 import { InstallationResultsEditor } from "./InstallationResultsEditor";
 import { InstallationProjectDetails as ProjectDetailsType } from "@/types/installation-method";
 import { generateMethodStatement } from "./methodStatementHandler";
+import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 
 type ViewMode = 'input' | 'processing' | 'results';
 
@@ -22,6 +23,14 @@ const InstallationSpecialistInterface = () => {
   const lastAdvanceRef = useRef(Date.now());
   const lastProjectRef = useRef<{details: ProjectDetailsType, description: string} | null>(null);
   const watchdogShownRef = useRef(false);
+
+  const handleTaskAccept = (contextData: any, instruction: string | null) => {
+    if (contextData) {
+      // Load context from another agent
+      console.log('Installation task received from another agent:', contextData, instruction);
+      toast({ title: 'Context loaded', description: 'Work forwarded from another agent' });
+    }
+  };
 
   // Helper to advance progress without going backwards
   const applyProgress = (stage: number, percent: number, message: string) => {
@@ -388,6 +397,9 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
 
   return (
     <div className="space-y-3 sm:space-y-4 pb-6">
+      {/* Agent Inbox */}
+      <AgentInbox currentAgent="installer" onTaskAccept={handleTaskAccept} />
+
       {currentView === 'input' && (
         <InstallationInputForm
           onGenerate={handleGenerate}

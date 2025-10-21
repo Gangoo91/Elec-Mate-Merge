@@ -8,6 +8,8 @@ import { toast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Badge } from "@/components/ui/badge";
+import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
+import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 
 const CostEngineerInterface = () => {
   const [prompt, setPrompt] = useState("");
@@ -24,6 +26,13 @@ const CostEngineerInterface = () => {
     examples: true,
     projectInfo: false,
   });
+
+  const handleTaskAccept = (contextData: any, instruction: string | null) => {
+    if (contextData) {
+      setPrompt(instruction || 'Cost analysis for forwarded work');
+      toast({ title: 'Context loaded', description: 'Work forwarded from another agent' });
+    }
+  };
 
   const handleCostAnalysis = async () => {
     if (prompt.trim() === "") {
@@ -96,6 +105,9 @@ const CostEngineerInterface = () => {
 
   return (
     <div className="space-y-3 sm:space-y-4 pb-6">
+      {/* Agent Inbox */}
+      <AgentInbox currentAgent="cost-engineer" onTaskAccept={handleTaskAccept} />
+
       {/* 1. HERO PROMPT SECTION */}
       <Card className="p-3 sm:p-6 bg-gradient-to-br from-green-500/5 via-background to-background border-green-500/20">
         <div className="space-y-3 sm:space-y-4">
@@ -317,6 +329,10 @@ const CostEngineerInterface = () => {
             <Download className="h-4 w-4" />
             Export
           </Button>
+          <SendToAgentDropdown 
+            currentAgent="cost-engineer" 
+            currentOutput={{ prompt, costingResult, projectType }} 
+          />
         </div>
       )}
 

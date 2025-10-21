@@ -23,6 +23,8 @@ import {
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { toast } from "sonner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
+import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 
 interface ExampleScenario {
   title: string;
@@ -71,6 +73,14 @@ const CommissioningInterface = () => {
   const [clientName, setClientName] = useState("");
   const [installationDate, setInstallationDate] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [results, setResults] = useState<any>(null);
+
+  const handleTaskAccept = (contextData: any, instruction: string | null) => {
+    if (contextData) {
+      setPrompt(instruction || 'Testing and commissioning for forwarded work');
+      toast.success('Context loaded', { description: 'Work forwarded from another agent' });
+    }
+  };
 
   const handleExampleClick = (examplePrompt: string) => {
     setPrompt(examplePrompt);
@@ -91,6 +101,9 @@ const CommissioningInterface = () => {
 
   return (
     <form className="space-y-3 sm:space-y-4 pb-6" onSubmit={(e) => { e.preventDefault(); handleGenerate(); }}>
+      {/* Agent Inbox */}
+      <AgentInbox currentAgent="commissioning" onTaskAccept={handleTaskAccept} />
+
       {/* 1. HERO PROMPT CARD */}
       <Card className="p-3 sm:p-6 bg-gradient-to-br from-purple-500/5 via-background to-background border-purple-500/20">
         <div className="flex items-start gap-3 mb-4">
@@ -322,6 +335,10 @@ const CommissioningInterface = () => {
               >
                 {showResults ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </Button>
+              <SendToAgentDropdown 
+                currentAgent="commissioning" 
+                currentOutput={{ prompt, selectedType, projectName, results }} 
+              />
             </div>
           </div>
           <div className="bg-muted/50 rounded-lg p-4 text-sm">

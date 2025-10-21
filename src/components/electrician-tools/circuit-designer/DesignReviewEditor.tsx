@@ -14,6 +14,10 @@ import { downloadEICPDF } from '@/lib/eic/pdfGenerator';
 import { generateEICSchedule } from '@/lib/eic/scheduleGenerator';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { SendToAgentDropdown } from '@/components/install-planner-v2/SendToAgentDropdown';
+import { AgentFlowDiagram } from '@/components/install-planner-v2/AgentFlowDiagram';
+import { AgentType } from '@/types/agent-request';
+import { useNavigate } from 'react-router-dom';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -25,10 +29,28 @@ const fmt = (n: unknown, dp = 1, fallback = '—') =>
   (typeof n === 'number' && !isNaN(n) ? n.toFixed(dp) : fallback);
 
 export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps) => {
+  const navigate = useNavigate();
   const [selectedCircuit, setSelectedCircuit] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
   const [exportId, setExportId] = useState('');
+  
+  const handleQuickForward = (targetAgent: AgentType) => {
+    const routes: Record<AgentType, string> = {
+      'designer': '/electrician/circuit-designer',
+      'cost-engineer': '/electrician/cost-engineer',
+      'installer': '/electrician/installation-specialist',
+      'health-safety': '/electrician/health-safety',
+      'commissioning': '/electrician/commissioning',
+      'maintenance': '/electrician/maintenance',
+      'project-manager': '/electrician/project-manager',
+      'tutor': '/electrician/ai-tutor'
+    };
+    
+    navigate(routes[targetAgent], { 
+      state: { fromAgentSelector: true }
+    });
+  };
 
   const allCompliant = design.circuits.every(c => 
     c.calculations.voltageDrop.compliant && 
@@ -113,6 +135,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
   return (
     <div className="space-y-6">
+      {/* Agent Flow Diagram */}
+      <AgentFlowDiagram currentAgent="designer" onQuickForward={handleQuickForward} />
+
       {/* Summary Card */}
       <Card className="p-6 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
         <div className="flex items-center justify-between mb-4">
@@ -796,11 +821,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       </Card>
 
       {/* Actions */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 flex-wrap">
         <Button size="lg" onClick={handleExportPDF} className="flex-1">
           <Download className="h-5 w-5 mr-2" />
           Export PDF
         </Button>
+        <SendToAgentDropdown 
+          currentAgent="designer" 
+          currentOutput={design} 
+        />
         <Button size="lg" variant="outline" onClick={onReset}>
           New Design
         </Button>

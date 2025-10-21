@@ -14,6 +14,9 @@ import ReactMarkdown from 'react-markdown';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
 import { MaintenanceSignatureSection } from './MaintenanceSignatureSection';
+import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
+import { SendToAgentDropdown } from '@/components/install-planner-v2/SendToAgentDropdown';
+import { toast } from 'sonner';
 
 const MaintenanceInterface = () => {
   const [equipmentType, setEquipmentType] = useState('');
@@ -22,6 +25,13 @@ const MaintenanceInterface = () => {
   const [location, setLocation] = useState('');
   const [query, setQuery] = useState('');
   const [result, setResult] = useState<MaintenanceAgentOutput | null>(null);
+
+  const handleTaskAccept = (contextData: any, instruction: string | null) => {
+    if (contextData) {
+      setQuery(instruction || 'Maintenance work forwarded from another agent');
+      toast.success('Context loaded', { description: 'Work forwarded from another agent' });
+    }
+  };
   
   // Signature state
   const [technicianSignature, setTechnicianSignature] = useState({
@@ -89,6 +99,9 @@ const MaintenanceInterface = () => {
 
   return (
     <div className="space-y-6">
+      {/* Agent Inbox */}
+      <AgentInbox currentAgent="maintenance" onTaskAccept={handleTaskAccept} />
+
       {/* Input Form */}
       <Card>
         <CardHeader>
@@ -324,7 +337,7 @@ const MaintenanceInterface = () => {
           onSupervisorChange={handleSupervisorChange}
         />
 
-        {/* PDF Download - Only enabled when signatures complete */}
+        {/* PDF Download & Send to Agent */}
         <Card className="border-green-500/30 bg-green-950/20">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
@@ -336,21 +349,27 @@ const MaintenanceInterface = () => {
                     : 'Please complete both signatures above to enable PDF download.'}
                 </p>
               </div>
-              <MaintenancePDFButton
-                maintenancePDFData={transformMaintenanceOutputToPDF(result, {
-                  equipmentType,
-                  location,
-                  installationAge
-                })}
-                equipmentType={equipmentType}
-                signatures={{
-                  technician: technicianSignature,
-                  supervisor: supervisorSignature
-                }}
-                disabled={!signaturesComplete}
-                variant="default"
-                className="gap-2"
-              />
+              <div className="flex gap-2">
+                <MaintenancePDFButton
+                  maintenancePDFData={transformMaintenanceOutputToPDF(result, {
+                    equipmentType,
+                    location,
+                    installationAge
+                  })}
+                  equipmentType={equipmentType}
+                  signatures={{
+                    technician: technicianSignature,
+                    supervisor: supervisorSignature
+                  }}
+                  disabled={!signaturesComplete}
+                  variant="default"
+                  className="gap-2"
+                />
+                <SendToAgentDropdown 
+                  currentAgent="maintenance" 
+                  currentOutput={{ result, equipmentType, location, installationAge }} 
+                />
+              </div>
             </div>
           </CardContent>
         </Card>

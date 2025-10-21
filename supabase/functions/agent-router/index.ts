@@ -92,7 +92,8 @@ serve(async (req) => {
       userMessage, 
       selectedAgents,
       messages = [],
-      currentDesign
+      currentDesign,
+      contextFromPreviousAgent
     } = await req.json();
 
     logger.info('🚀 Agent router invoked', { 
@@ -157,7 +158,7 @@ serve(async (req) => {
         agentType,
         endpoint,
         {
-          query: userMessage,
+          query: contextFromPreviousAgent ? `${contextFromPreviousAgent}\n\n${userMessage}` : userMessage,
           messages: [
             ...messages,
             { role: 'user', content: userMessage }
@@ -167,7 +168,8 @@ serve(async (req) => {
           previousAgentOutputs: agentResponses,
           requestSuggestions: true,
           // PHASE 2: Include shared knowledge
-          sharedRegulations: shouldUseSharedRegs ? sharedRegulations : undefined
+          sharedRegulations: shouldUseSharedRegs ? sharedRegulations : undefined,
+          contextFromPreviousAgent
         },
         supabase,
         logger
