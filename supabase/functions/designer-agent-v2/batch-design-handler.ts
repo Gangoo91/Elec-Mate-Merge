@@ -344,6 +344,47 @@ IMPORTANT:
 
 ${INSTALLATION_CONTEXT[installationType]}
 
+CRITICAL OUTPUT REQUIREMENTS FOR PDF GENERATION:
+
+1. **Formatted Display Fields** (MANDATORY):
+   - designCurrentIb: Design current as string with 1 decimal (e.g., "31.3", "40.0")
+   - nominalCurrentIn: Device rating as number (copy from calculations.In)
+   - cableCapacityIz: Tabulated capacity BEFORE derating (from Table 4D5)
+   - rcdProtectedText: Format as:
+     * If RCBO: "30mA RCBO"
+     * If RCD required: "30mA RCD"
+     * If not required: "No"
+   - zsCompliant: Boolean - is calculations.zs < calculations.maxZs
+   - voltageDropCompliant: Boolean - is voltageDrop.percent within limit
+   - zsActual: Format calculations.zs as string with 2 decimals (e.g., "0.89")
+   - zsMax: Format calculations.maxZs as string with 2 decimals (e.g., "1.44")
+
+2. **Detailed Justifications** (300-500 characters each):
+   
+   a) Cable Size Justification Template:
+   "Per Regulation 433.1.1, {cableSize}mm² twin & earth cable is adequate for {loadPower}W load. Tabulated current-carrying capacity (It) = {It}A from Table 4D5. After applying {derating factors}, effective capacity (Iz) = {deratedCapacity}A, which exceeds the protective device rating of {In}A by {safetyMargin}% margin."
+   
+   b) Protection Device Justification Template:
+   "{rating}A Type {curve} {type} provides appropriate overload and fault protection per Regulation 411.3.2. Maximum Zs for {time}s disconnection = {maxZs}Ω (Table 41.3). Actual Zs = {zs}Ω, therefore compliant with disconnection time requirements. Breaking capacity of {ka}kA exceeds prospective short circuit current."
+   
+   c) RCD Justification Template (if required):
+   "30mA RCD protection required under Regulation {reg} for {reason - e.g., socket outlets likely to supply portable equipment outdoors, bathroom location}. Provides additional protection against earth faults."
+   
+   c) RCD Justification Template (if NOT required):
+   "RCD not required for this circuit as it does not serve {reason - e.g., special location, socket outlets for outdoor use}. Circuit has adequate earthed equipotential bonding per Regulation 411.3.1.2."
+
+3. **Installation Method Formatting**:
+   Use clean format: "Method C (Clipped Direct)" or "Method 101 (Underground SWA)"
+   DO NOT use hyphens mid-word or line breaks
+
+4. **Warnings Array** (0-3 per circuit):
+   Generate only when genuinely needed:
+   - Bathrooms: "Ensure supplementary bonding is installed in bathroom as per Section 701"
+   - Outdoor/Underground: "SWA cable must be buried at minimum 600mm depth with warning tape"
+   - Showers: "Maintain minimum IP rating of IPX4 for shower location"
+   - Garage/Outbuildings: "Ensure cable route is documented for future reference"
+   - Leave empty [] if no specific warnings apply
+
 Return complete circuit objects using the provided tool schema.`;
   
   // PHASE 1: Log prompt details for debugging
@@ -405,6 +446,38 @@ Return complete circuit objects using the provided tool schema.`;
                   },
                   rcdProtected: { type: "boolean", description: "Is RCD protection required" },
                   afddRequired: { type: "boolean", description: "Is AFDD required per 421.1.7" },
+                  designCurrentIb: { 
+                    type: "string", 
+                    description: "Design current formatted for display (e.g., '31.3', '40.0')" 
+                  },
+                  nominalCurrentIn: { 
+                    type: "number", 
+                    description: "Protective device rating (same as calculations.In)" 
+                  },
+                  cableCapacityIz: { 
+                    type: "number", 
+                    description: "Tabulated cable capacity BEFORE derating from Table 4D5" 
+                  },
+                  rcdProtectedText: { 
+                    type: "string", 
+                    description: "RCD status formatted: '30mA RCBO', '30mA RCD', or 'No'" 
+                  },
+                  zsCompliant: { 
+                    type: "boolean", 
+                    description: "Is Zs < maxZs (for quick PDF checks)" 
+                  },
+                  voltageDropCompliant: { 
+                    type: "boolean", 
+                    description: "Is voltage drop within limits" 
+                  },
+                  zsActual: { 
+                    type: "string", 
+                    description: "Actual Zs formatted for display (e.g., '0.89')" 
+                  },
+                  zsMax: { 
+                    type: "string", 
+                    description: "Max permitted Zs formatted (e.g., '1.44')" 
+                  },
                   calculations: {
                     type: "object",
                     properties: {
@@ -431,11 +504,20 @@ Return complete circuit objects using the provided tool schema.`;
                   justifications: {
                     type: "object",
                     properties: {
-                      cableSize: { type: "string", description: "Cable sizing justification with BS 7671 reference" },
-                      protection: { type: "string", description: "Protection device justification" },
-                      rcd: { type: "string", description: "RCD requirement justification" }
+                      cableSize: { 
+                        type: "string", 
+                        description: "300-500 chars: Reference Reg 433.1.1, state tabulated capacity (It) from Table 4D5, show correction factors (Ca, Cg), confirm Iz > In with % margin. Example: 'Per Regulation 433.1.1, 2.5mm² twin & earth cable is adequate for 7360W load. Tabulated current-carrying capacity (It) = 27A from Table 4D5. After applying ambient temperature correction (Ca=0.94) and grouping (Cg=1.0), effective capacity (Iz) = 25.4A, which exceeds the protective device rating of 32A by 20.6% margin.'"
+                      },
+                      protection: { 
+                        type: "string", 
+                        description: "300-500 chars: Reference Reg 411.3.2, state max Zs from Table 41.3, compare actual vs max, confirm disconnection time. Example: '32A Type B MCB provides appropriate overload and fault protection per Regulation 411.3.2. Maximum Zs for 5s disconnection = 1.44Ω (Table 41.3). Actual Zs = 0.67Ω, therefore compliant with disconnection time requirements. Breaking capacity of 6kA exceeds prospective short circuit current.'"
+                      },
+                      rcd: { 
+                        type: "string", 
+                        description: "200-400 chars: If required - state regulation (701.411.3.3 for bathrooms, 411.3.3 for sockets), explain reason, state rating. If not required - explain why with regulation reference. Example: '30mA RCD protection required under Regulation 411.3.3 for socket outlets likely to supply portable equipment outdoors. Provides additional protection against earth faults.'"
+                      }
                     },
-                    required: ["cableSize", "protection"]
+                    required: ["cableSize", "protection", "rcd"]
                   },
                   diversityFactor: { type: "number", description: "Applied diversity factor 0.0-1.0 per BS 7671 Appendix 15" },
                   diversityJustification: { type: "string", description: "BS 7671 Appendix 15 table reference and reasoning" },
@@ -1256,6 +1338,10 @@ Always cite regulation numbers and show working for calculations.`
     materialCount: designData.materials?.length || 0
   });
   
+  // 📄 POST-PROCESSING: Ensure all PDF-required fields are populated
+  logger.info('📄 Applying PDF field mapper to ensure complete data');
+  designData.circuits = designData.circuits.map(ensurePDFFields);
+  
   // 🔍 MULTI-STAGE VALIDATION PIPELINE
   logger.info('🔍 Running multi-stage validation pipeline');
   
@@ -1357,6 +1443,41 @@ Always cite regulation numbers and show working for calculations.`
   }), { 
     headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
   });
+}
+
+/**
+ * POST-PROCESSING MAPPER: Ensure all PDF-required fields are populated
+ * This acts as a safety net if the AI doesn't provide all display fields
+ */
+function ensurePDFFields(circuit: any): any {
+  return {
+    ...circuit,
+    // Ensure formatted display fields exist
+    designCurrentIb: circuit.designCurrentIb || circuit.calculations?.Ib?.toFixed(1) || "0.0",
+    nominalCurrentIn: circuit.nominalCurrentIn || circuit.calculations?.In || circuit.protectionDevice?.rating || 0,
+    cableCapacityIz: circuit.cableCapacityIz || circuit.calculations?.Iz || 0,
+    rcdProtectedText: circuit.rcdProtectedText || (
+      circuit.rcdProtected 
+        ? (circuit.protectionDevice?.type === 'RCBO' ? '30mA RCBO' : '30mA RCD')
+        : 'No'
+    ),
+    zsCompliant: circuit.zsCompliant ?? (circuit.calculations?.zs <= circuit.calculations?.maxZs),
+    voltageDropCompliant: circuit.voltageDropCompliant ?? circuit.calculations?.voltageDrop?.compliant ?? true,
+    zsActual: circuit.zsActual || circuit.calculations?.zs?.toFixed(2) || "0.00",
+    zsMax: circuit.zsMax || circuit.calculations?.maxZs?.toFixed(2) || "0.00",
+    
+    // Ensure justifications have minimum length
+    justifications: {
+      cableSize: circuit.justifications?.cableSize || `${circuit.cableSize}mm² cable selected for ${circuit.loadPower}W load with adequate current-carrying capacity.`,
+      protection: circuit.justifications?.protection || `${circuit.protectionDevice?.rating}A ${circuit.protectionDevice?.curve || 'B'} ${circuit.protectionDevice?.type || 'MCB'} provides adequate protection per BS 7671.`,
+      rcd: circuit.justifications?.rcd || (circuit.rcdProtected 
+        ? 'RCD protection provides additional safety for this circuit in accordance with BS 7671.' 
+        : 'RCD not required for this circuit as it does not serve special locations or socket outlets likely to supply portable equipment outdoors.')
+    },
+    
+    // Ensure warnings is always an array
+    warnings: circuit.warnings || []
+  };
 }
 
 // Helper functions

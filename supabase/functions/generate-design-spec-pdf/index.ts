@@ -7,7 +7,7 @@ serve(async (req) => {
   }
 
   try {
-    const { designData, planData, companyDetails, userId } = await req.json();
+    const { designData, installationDesign, planData, companyDetails, userId } = await req.json();
     const pdfMonkeyApiKey = Deno.env.get('PDF_MONKEY_API_KEY');
 
     if (!pdfMonkeyApiKey) {
@@ -16,48 +16,51 @@ serve(async (req) => {
 
     console.log('🎨 Starting PDF generation with PDF Monkey template...');
 
-    // Build payload matching PDF Monkey template: 8C64318C-A404-4A55-9039-294164C19FB4
-    const payload = {
-      company_details: {
-        company_logo_url: companyDetails?.company_logo_url || '',
-        company_name: companyDetails?.company_name || 'Electrical Contractor',
-        company_address: companyDetails?.company_address || '',
-        company_phone: companyDetails?.company_phone || '',
-        company_email: companyDetails?.company_email || '',
-        company_website: companyDetails?.company_website || '',
-      },
-      client_details: {
-        client_name: planData?.clientName || 'Client Name',
-        property_address: planData?.siteInfo?.address || '',
-        postcode: planData?.siteInfo?.postcode || '',
-        contact_number: planData?.clientContact || '',
-        email: planData?.clientEmail || '',
-      },
-      project_info: {
-        project_name: planData?.projectName || 'Electrical Installation Project',
-        location: planData?.siteInfo?.address || '',
-        design_engineer: companyDetails?.company_name || 'Electrical Designer',
-        design_date: new Date().toLocaleDateString('en-GB'),
-        installation_type: planData?.installationType || 'domestic',
-      },
-      document: {
-        reference: `IP-${Date.now()}`,
-        generated_date: new Date().toLocaleDateString('en-GB'),
-        registration_number: companyDetails?.registration_number || '',
-        vat_number: companyDetails?.vat_number || '',
-      },
-      design_parameters: {
-        voltage: planData?.voltage || 230,
-        phases: planData?.phases || 'single',
-        supply_type: planData?.installationType || 'domestic',
-        earthing_system: planData?.environmentalProfile?.finalApplied?.earthing || 'TN-S',
-        ze: planData?.environmentalProfile?.finalApplied?.ze || 0.35,
-        ambient_temperature: planData?.environmentalProfile?.finalApplied?.ambientTemp || 30,
-        installation_method: planData?.installationMethod || 'clipped-direct',
-        cable_type: planData?.cableType || 'pvc-twin-earth',
-      },
-      circuits: mapCircuitsToTemplate(designData, planData),
-    };
+    // Use the new mapper if installationDesign is provided, otherwise fall back to legacy
+    const payload = installationDesign 
+      ? mapInstallationDesignToPDFMonkey(installationDesign, planData)
+      : {
+          // Legacy payload structure
+          company_details: {
+            company_logo_url: companyDetails?.company_logo_url || '',
+            company_name: companyDetails?.company_name || 'Electrical Contractor',
+            company_address: companyDetails?.company_address || '',
+            company_phone: companyDetails?.company_phone || '',
+            company_email: companyDetails?.company_email || '',
+            company_website: companyDetails?.company_website || '',
+          },
+          client_details: {
+            client_name: planData?.clientName || 'Client Name',
+            property_address: planData?.siteInfo?.address || '',
+            postcode: planData?.siteInfo?.postcode || '',
+            contact_number: planData?.clientContact || '',
+            email: planData?.clientEmail || '',
+          },
+          project_info: {
+            project_name: planData?.projectName || 'Electrical Installation Project',
+            location: planData?.siteInfo?.address || '',
+            design_engineer: companyDetails?.company_name || 'Electrical Designer',
+            design_date: new Date().toLocaleDateString('en-GB'),
+            installation_type: planData?.installationType || 'domestic',
+          },
+          document: {
+            reference: `IP-${Date.now()}`,
+            generated_date: new Date().toLocaleDateString('en-GB'),
+            registration_number: companyDetails?.registration_number || '',
+            vat_number: companyDetails?.vat_number || '',
+          },
+          design_parameters: {
+            voltage: planData?.voltage || 230,
+            phases: planData?.phases || 'single',
+            supply_type: planData?.installationType || 'domestic',
+            earthing_system: planData?.environmentalProfile?.finalApplied?.earthing || 'TN-S',
+            ze: planData?.environmentalProfile?.finalApplied?.ze || 0.35,
+            ambient_temperature: planData?.environmentalProfile?.finalApplied?.ambientTemp || 30,
+            installation_method: planData?.installationMethod || 'clipped-direct',
+            cable_type: planData?.cableType || 'pvc-twin-earth',
+          },
+          circuits: mapCircuitsToTemplate(designData, planData),
+        };
 
     console.log('📄 Payload prepared, calling PDF Monkey API...');
 
@@ -148,7 +151,96 @@ serve(async (req) => {
 });
 
 /**
- * Map designer data circuits to PDF template format
+ * Map installation design to PDF Monkey template payload
+ */
+function mapInstallationDesignToPDFMonkey(design: any, planData: any) {
+  // Calculate aggregates
+  const totalConnectedLoad = design.circuits?.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0) || 0;
+  const totalDesignCurrent = Math.round(design.circuits?.reduce((sum: number, c: any) => sum + (c.designCurrent || c.calculations?.Ib || 0), 0) || 0);
+  const compliantCircuits = design.circuits?.filter((c: any) => 
+    (c.zsCompliant ?? (c.calculations?.zs <= c.calculations?.maxZs)) && 
+    (c.voltageDropCompliant ?? c.calculations?.voltageDrop?.compliant)
+  ).length || 0;
+  const warningCount = design.circuits?.reduce((sum: number, c: any) => sum + (c.warnings?.length || 0), 0) || 0;
+  
+  return {
+    // Cover page
+    date: new Date().toLocaleDateString('en-GB'),
+    designReference: `DES-${Date.now()}`,
+    projectName: design.projectName || planData?.projectName || 'Electrical Installation',
+    location: design.location || planData?.siteInfo?.address || '',
+    clientName: design.clientName || planData?.clientName || 'Client Name',
+    electricianName: design.electricianName || planData?.contractorName || 'Electrical Contractor',
+    
+    // Installation summary
+    voltage: design.consumerUnit?.incomingSupply?.voltage || planData?.voltage || 230,
+    phases: (design.consumerUnit?.incomingSupply?.phases === 'single' || planData?.phases === 'single') ? 'Single Phase' : 'Three Phase',
+    earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem || planData?.earthingSystem || 'TN-S',
+    ze: (design.consumerUnit?.incomingSupply?.Ze || planData?.ze || 0.35).toFixed(2),
+    pscc: (design.consumerUnit?.incomingSupply?.incomingPFC || planData?.pscc || 3.2).toFixed(1),
+    
+    totalConnectedLoad: totalConnectedLoad.toLocaleString(),
+    diversityFactor: (design.diversityFactor || design.diversityBreakdown?.overallDiversityFactor || 1.0).toFixed(2),
+    diversifiedLoad: ((design.diversityBreakdown?.diversifiedLoad || totalConnectedLoad) * (design.diversityFactor || 1.0)).toLocaleString(),
+    totalDesignCurrent: totalDesignCurrent,
+    
+    consumerUnitType: design.consumerUnit?.type || '17th Edition RCBO Board',
+    mainSwitchRating: design.consumerUnit?.mainSwitchRating || 100,
+    consumerUnitWays: design.circuits?.length || 0,
+    totalCircuits: design.circuits?.length || 0,
+    
+    // Circuits (map each with all required fields)
+    circuits: (design.circuits || []).map((circuit: any, idx: number) => ({
+      circuitNumber: circuit.circuitNumber || (idx + 1),
+      name: circuit.name || `Circuit ${idx + 1}`,
+      loadType: circuit.loadType || 'General',
+      loadPower: circuit.loadPower || 0,
+      designCurrentIb: circuit.designCurrentIb || circuit.calculations?.Ib?.toFixed(1) || '0.0',
+      voltage: circuit.voltage || design.consumerUnit?.incomingSupply?.voltage || 230,
+      phases: circuit.phases === 3 || circuit.phases === 'three' ? 'Three Phase' : 'Single Phase',
+      
+      cableSize: circuit.cableSize?.toString() || '0',
+      cpcSize: circuit.cpcSize?.toString() || '0',
+      cableLength: circuit.cableLength || 0,
+      installationMethod: circuit.installationMethod || 'Method C (Clipped Direct)',
+      
+      protectionType: circuit.protectionDevice?.type || 'MCB',
+      protectionRating: circuit.protectionDevice?.rating || circuit.calculations?.In || 0,
+      protectionCurve: circuit.protectionDevice?.curve || 'B',
+      protectionKaRating: circuit.protectionDevice?.kaRating || 6,
+      rcdProtected: circuit.rcdProtected || false,
+      rcdProtectedText: circuit.rcdProtectedText || (circuit.rcdProtected ? '30mA RCBO' : 'No'),
+      
+      nominalCurrentIn: circuit.nominalCurrentIn || circuit.calculations?.In || circuit.protectionDevice?.rating || 0,
+      cableCapacityIz: Math.round(circuit.cableCapacityIz || circuit.calculations?.Iz || 0),
+      deratedCapacity: (circuit.calculations?.deratedCapacity || circuit.calculations?.Iz || 0).toFixed(1),
+      safetyMargin: (circuit.calculations?.safetyMargin || 0).toFixed(1),
+      
+      voltageDropVolts: (circuit.calculations?.voltageDrop?.volts || 0).toFixed(1),
+      voltageDropPercent: (circuit.calculations?.voltageDrop?.percent || 0).toFixed(1),
+      voltageDropCompliant: circuit.voltageDropCompliant ?? circuit.calculations?.voltageDrop?.compliant ?? true,
+      
+      zsActual: circuit.zsActual || circuit.calculations?.zs?.toFixed(2) || '0.00',
+      zsMax: circuit.zsMax || circuit.calculations?.maxZs?.toFixed(2) || '0.00',
+      zsCompliant: circuit.zsCompliant ?? ((circuit.calculations?.zs || 0) <= (circuit.calculations?.maxZs || 999)),
+      
+      justificationCable: circuit.justifications?.cableSize || `${circuit.cableSize}mm² cable selected for adequate protection.`,
+      justificationProtection: circuit.justifications?.protection || `${circuit.protectionDevice?.rating}A protection device provides adequate protection.`,
+      justificationRcd: circuit.justifications?.rcd || (circuit.rcdProtected ? 'RCD protection provides additional safety.' : 'RCD not required.'),
+      
+      hasWarnings: (circuit.warnings?.length || 0) > 0,
+      warnings: circuit.warnings || [],
+    })),
+    
+    // Compliance
+    allCircuitsCompliant: compliantCircuits === (design.circuits?.length || 0) && (design.circuits?.length || 0) > 0,
+    compliantCircuits: compliantCircuits,
+    warningCount: warningCount,
+  };
+}
+
+/**
+ * Map designer data circuits to PDF template format (Legacy fallback)
  */
 function mapCircuitsToTemplate(designData: any, planData: any): any[] {
   const circuits = designData?.circuits || [];
