@@ -7,7 +7,7 @@ import CableSizingInfo from "./cable-sizing/CableSizingInfo";
 import SimpleValidationIndicator from "./SimpleValidationIndicator";
 import CalculationReport from "./CalculationReport";
 import { useToast } from "@/hooks/use-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { SimpleValidator, SimpleValidationResult } from "@/services/simplifiedValidation";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const CableSizingCalculator = () => {
   const { toast } = useToast();
@@ -27,6 +28,13 @@ const CableSizingCalculator = () => {
   const [deviceRating, setDeviceRating] = useState<string>("32");
   const [designCurrent, setDesignCurrent] = useState<string>("");
   
+  // Load/Current input mode
+  const [inputMode, setInputMode] = useState<'current' | 'load'>('current');
+  const [loadPower, setLoadPower] = useState<string>("");
+  const [loadVoltage, setLoadVoltage] = useState<string>("230");
+  const [powerFactor, setPowerFactor] = useState<string>("1.0");
+  const [phases, setPhases] = useState<'single' | 'three'>('single');
+  
   const {
     inputs,
     result,
@@ -37,6 +45,31 @@ const CableSizingCalculator = () => {
     calculateCableSize,
     resetCalculator,
   } = useCableSizing();
+
+  // Auto-calculate current from load
+  const calculatedCurrent = useMemo(() => {
+    if (inputMode === 'load' && loadPower && loadVoltage && powerFactor) {
+      const P = parseFloat(loadPower);
+      const V = parseFloat(loadVoltage);
+      const PF = parseFloat(powerFactor);
+      
+      if (P > 0 && V > 0 && PF > 0) {
+        if (phases === 'single') {
+          return (P / (V * PF)).toFixed(2);
+        } else {
+          return (P / (Math.sqrt(3) * V * PF)).toFixed(2);
+        }
+      }
+    }
+    return "";
+  }, [inputMode, loadPower, loadVoltage, powerFactor, phases]);
+
+  // Update inputs.current when calculatedCurrent changes
+  useEffect(() => {
+    if (inputMode === 'load' && calculatedCurrent) {
+      updateInput('current', calculatedCurrent);
+    }
+  }, [calculatedCurrent, inputMode, updateInput]);
 
   // Calculate Ib ≤ In ≤ Iz compliance
   const calculateCompliance = () => {
@@ -169,6 +202,11 @@ const CableSizingCalculator = () => {
     setProtectiveDevice("mcb");
     setDeviceRating("32");
     setDesignCurrent("");
+    setLoadPower("");
+    setLoadVoltage("230");
+    setPowerFactor("1.0");
+    setPhases("single");
+    setInputMode("current");
   };
 
   const compliance = calculateCompliance();
@@ -221,19 +259,119 @@ const CableSizingCalculator = () => {
             </Alert>
           )}
 
-          <div className="space-y-6">
-            {/* Enhanced Input Section */}
-            <div className="space-y-6">
-              <h3 className="text-lg font-semibold text-elec-yellow">Circuit Design Parameters</h3>
-              
-              {/* Protective Device Section */}
-              <div className="space-y-4 p-4 border border-elec-yellow/40 rounded-lg bg-elec-dark/50">
-                <h4 className="font-medium text-white">Protective Device</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-8">
+            {/* Input Mode Selector */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                Current Specification
+              </h3>
+              <Tabs value={inputMode} onValueChange={(v) => setInputMode(v as 'current' | 'load')} className="w-full">
+                <TabsList className="grid w-full grid-cols-2 h-12">
+                  <TabsTrigger value="current" className="text-sm">Enter Current (A)</TabsTrigger>
+                  <TabsTrigger value="load" className="text-sm">Calculate from Load (W)</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+
+            {/* Load Specification Section - Conditional */}
+            {inputMode === 'load' && (
+              <div className="space-y-6 p-6 border border-blue-500/40 rounded-lg bg-blue-500/5">
+                <h4 className="font-medium text-white flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-blue-400" />
+                  Load Specification
+                </h4>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
+                    <Label className="text-sm font-medium text-white">Load Power (W)</Label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={loadPower}
+                      onChange={(e) => setLoadPower(e.target.value)}
+                      placeholder="e.g., 7200"
+                      className="w-full h-14 px-4 py-2 bg-elec-dark border border-blue-500/40 rounded-md text-white placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-base"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-white">System Voltage (V)</Label>
+                    <Select value={loadVoltage} onValueChange={setLoadVoltage}>
+                      <SelectTrigger className="bg-elec-dark border-blue-500/40 text-white h-14">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-elec-dark border-blue-500/40 text-white">
+                        <SelectItem value="230">230V Single Phase</SelectItem>
+                        <SelectItem value="400">400V Three Phase</SelectItem>
+                        <SelectItem value="110">110V Site Supply</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-white">Power Factor</Label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0.1"
+                      max="1.0"
+                      value={powerFactor}
+                      onChange={(e) => setPowerFactor(e.target.value)}
+                      placeholder="0.8 - 1.0"
+                      className="w-full h-14 px-4 py-2 bg-elec-dark border border-blue-500/40 rounded-md text-white placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-base"
+                    />
+                    <p className="text-xs text-muted-foreground">Resistive: 1.0, Inductive: 0.8-0.9</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-white">Phase Type</Label>
+                    <Select value={phases} onValueChange={(v) => setPhases(v as 'single' | 'three')}>
+                      <SelectTrigger className="bg-elec-dark border-blue-500/40 text-white h-14">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-elec-dark border-blue-500/40 text-white">
+                        <SelectItem value="single">Single Phase</SelectItem>
+                        <SelectItem value="three">Three Phase</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Calculated Current Display */}
+                {calculatedCurrent && (
+                  <Alert className="bg-blue-500/10 border-blue-500/40">
+                    <Zap className="h-4 w-4 text-blue-400" />
+                    <AlertDescription>
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-white">Calculated Design Current:</span>
+                        <span className="text-2xl font-bold text-blue-400">
+                          {calculatedCurrent}A
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-2">
+                        {phases === 'single' ? 'I = P / (V × PF)' : 'I = P / (√3 × V × PF)'}
+                      </p>
+                    </AlertDescription>
+                  </Alert>
+                )}
+              </div>
+            )}
+
+            <Separator className="bg-elec-yellow/20" />
+
+            {/* Protective Device Section */}
+            <div className="space-y-6">
+              <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+                <AlertCircle className="h-5 w-5" />
+                Protective Device
+              </h3>
+              <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/50">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="space-y-3">
                     <Label className="text-sm font-medium text-white">Device Type</Label>
                     <Select value={protectiveDevice} onValueChange={setProtectiveDevice}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white h-11">
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white h-14">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50 text-white">
@@ -243,10 +381,10 @@ const CableSizingCalculator = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <Label className="text-sm font-medium text-white">Device Rating (A)</Label>
                     <Select value={deviceRating} onValueChange={setDeviceRating}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white h-11">
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white h-14">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50 text-white">
@@ -263,7 +401,7 @@ const CableSizingCalculator = () => {
                     </Select>
                   </div>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label className="text-sm font-medium text-white">Design Current Ib (A)</Label>
                   <input
                     type="number"
@@ -271,29 +409,31 @@ const CableSizingCalculator = () => {
                     value={designCurrent}
                     onChange={(e) => setDesignCurrent(e.target.value)}
                     placeholder={inputs.current ? `Leave empty to use ${inputs.current}A` : "Enter design current"}
-                    className="w-full h-11 px-3 py-2 bg-elec-dark border border-elec-yellow/40 rounded-md text-white placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-elec-yellow/40"
+                    className="w-full h-14 px-4 py-2 bg-elec-dark border border-elec-yellow/40 rounded-md text-white placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-elec-yellow/40 text-base"
                   />
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Optional: If different from main current input. Leave empty to use main current ({inputs.current || '0'}A).
+                    Optional: If different from calculated current. Leave empty to use {inputs.current || '0'}A.
                   </p>
                 </div>
               </div>
-
-              <Separator />
-
-              <CableSizingForm
-                inputs={inputs}
-                errors={result.errors}
-                uiSelections={uiSelections}
-                updateInput={updateInput}
-                setInstallationType={(type: string) => setInstallationType(type as any)}
-                setCableType={setCableType}
-                calculateCableSize={handleCalculate}
-                resetCalculator={handleReset}
-              />
             </div>
-            
-            <div className="flex flex-col space-y-4 mt-6 xl:mt-0">
+
+            <Separator className="bg-elec-yellow/20" />
+
+            <CableSizingForm
+              inputs={inputs}
+              errors={result.errors}
+              uiSelections={uiSelections}
+              updateInput={updateInput}
+              setInstallationType={(type: string) => setInstallationType(type as any)}
+              setCableType={setCableType}
+              calculateCableSize={handleCalculate}
+              resetCalculator={handleReset}
+              inputMode={inputMode}
+            />
+          </div>
+          
+          <div className="flex flex-col space-y-4 mt-6 xl:mt-0">
               <div className="rounded-md bg-elec-dark border border-elec-yellow/40 p-6 flex-grow flex flex-col min-h-[400px]">
                 <CableSizingResult
                   recommendedCable={result.recommendedCable}
@@ -305,7 +445,6 @@ const CableSizingCalculator = () => {
               
               <CableSizingInfo />
             </div>
-          </div>
         </CardContent>
       </Card>
 

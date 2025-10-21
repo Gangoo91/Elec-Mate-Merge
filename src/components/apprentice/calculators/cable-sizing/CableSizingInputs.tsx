@@ -18,6 +18,7 @@ interface CableSizingFormProps {
   setCableType: (type: string) => void;
   calculateCableSize: () => void;
   resetCalculator: () => void;
+  inputMode: 'current' | 'load';
 }
 
 const CableSizingForm = ({
@@ -29,48 +30,79 @@ const CableSizingForm = ({
   setCableType,
   calculateCableSize,
   resetCalculator,
+  inputMode,
 }: CableSizingFormProps) => {
   return (
-    <div className="space-y-6">
-      <h3 className="text-lg font-medium text-elec-yellow">Cable Sizing Parameters</h3>
+    <div className="space-y-8">
+      <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+        <Calculator className="h-5 w-5" />
+        Cable Sizing Parameters
+      </h3>
       
-      {/* Basic Parameters */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="current" className="text-sm font-medium text-white">Design Current (A)</Label>
-          <Input
-            id="current"
-            type="number"
-            step="0.1"
-            value={inputs.current}
-            onChange={(e) => updateInput('current', e.target.value)}
-            className="bg-elec-dark border-elec-yellow/20 text-white h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20"
-            placeholder="Enter design current"
-          />
-          {errors?.current && <p className="text-red-400 text-sm mt-1">{errors.current}</p>}
-        </div>
+      {/* Basic Parameters - Only show current input in "current" mode */}
+      {inputMode === 'current' && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 border border-blue-500/40 rounded-lg bg-blue-500/5">
+          <div className="space-y-3">
+            <Label htmlFor="current" className="text-sm font-medium text-white">Design Current (A)</Label>
+            <Input
+              id="current"
+              type="number"
+              step="0.1"
+              value={inputs.current}
+              onChange={(e) => updateInput('current', e.target.value)}
+              className="bg-elec-dark border-blue-500/40 text-white h-14 focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/20 text-base"
+              placeholder="Enter design current"
+            />
+            {errors?.current && <p className="text-red-400 text-sm mt-1">{errors.current}</p>}
+          </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="length" className="text-sm font-medium text-white">Cable Length (m)</Label>
-          <Input
-            id="length"
-            type="number"
-            step="0.1"
-            value={inputs.length}
-            onChange={(e) => updateInput('length', e.target.value)}
-            className="bg-elec-dark border-elec-yellow/20 text-white h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20"
-            placeholder="Enter cable length"
-          />
-          {errors?.length && <p className="text-red-400 text-sm mt-1">{errors.length}</p>}
+          <div className="space-y-3">
+            <Label htmlFor="length" className="text-sm font-medium text-white">Cable Length (m)</Label>
+            <Input
+              id="length"
+              type="number"
+              step="0.1"
+              value={inputs.length}
+              onChange={(e) => updateInput('length', e.target.value)}
+              className="bg-elec-dark border-blue-500/40 text-white h-14 focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/20 text-base"
+              placeholder="Enter cable length"
+            />
+            {errors?.length && <p className="text-red-400 text-sm mt-1">{errors.length}</p>}
+          </div>
         </div>
-      </div>
+        </div>
+      )}
 
-      {/* Installation Conditions - Enhanced */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
+      {/* In load mode, only show cable length */}
+      {inputMode === 'load' && (
+        <div className="p-6 border border-blue-500/40 rounded-lg bg-blue-500/5">
+          <div className="space-y-3 max-w-md">
+            <Label htmlFor="length" className="text-sm font-medium text-white">Cable Length (m)</Label>
+            <Input
+              id="length"
+              type="number"
+              step="0.1"
+              value={inputs.length}
+              onChange={(e) => updateInput('length', e.target.value)}
+              className="bg-elec-dark border-blue-500/40 text-white h-14 focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/20 text-base"
+              placeholder="Enter cable length"
+            />
+            {errors?.length && <p className="text-red-400 text-sm mt-1">{errors.length}</p>}
+          </div>
+        </div>
+        </div>
+      )}
+
+      {/* Installation Conditions */}
+      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
+        <h4 className="font-medium text-white flex items-center gap-2">
+          Installation & Cable Selection
+        </h4>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="space-y-3">
           <Label htmlFor="installation-type" className="text-sm font-medium text-white">Installation Method</Label>
           <Select value={uiSelections.installationMethodUI} onValueChange={setInstallationType}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20">
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-14 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20 text-base">
               <SelectValue placeholder="Select installation method" className="text-white" />
             </SelectTrigger>
             <SelectContent className="bg-elec-dark border-elec-yellow/20">
@@ -83,10 +115,10 @@ const CableSizingForm = ({
           </Select>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label htmlFor="cable-type" className="text-sm font-medium text-white">Cable Type</Label>
           <Select value={uiSelections.cableTypeUI} onValueChange={setCableType}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20">
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 h-14 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20 text-base">
               <SelectValue placeholder="Select cable type" className="text-white" />
             </SelectTrigger>
             <SelectContent className="bg-elec-dark border-elec-yellow/20">
@@ -97,24 +129,27 @@ const CableSizingForm = ({
             </SelectContent>
           </Select>
         </div>
+        </div>
       </div>
 
-      {/* Environmental Conditions - New */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="space-y-2">
+      {/* Environmental Conditions */}
+      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
+        <h4 className="font-medium text-white">Environmental Conditions</h4>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="space-y-3">
           <Label htmlFor="ambient-temp" className="text-sm font-medium text-white">Ambient Temperature (°C)</Label>
           <Input
             id="ambient-temp"
             type="number"
             value={inputs.ambientTemp || '30'}
             onChange={(e) => updateInput('ambientTemp', e.target.value)}
-            className="bg-elec-dark border-elec-yellow/20 text-white h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20"
+            className="bg-elec-dark border-elec-yellow/20 text-white h-14 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20 text-base"
             placeholder="30"
           />
           <p className="text-xs text-muted-foreground mt-1">Standard: 30°C</p>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label htmlFor="cable-grouping" className="text-sm font-medium text-white">Number of Cables Grouped</Label>
           <Input
             id="cable-grouping"
@@ -122,13 +157,13 @@ const CableSizingForm = ({
             min="1"
             value={inputs.cableGrouping || '1'}
             onChange={(e) => updateInput('cableGrouping', e.target.value)}
-            className="bg-elec-dark border-elec-yellow/20 text-white h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20"
+            className="bg-elec-dark border-elec-yellow/20 text-white h-14 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20 text-base"
             placeholder="1"
           />
           <p className="text-xs text-muted-foreground mt-1">Affects current rating</p>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label htmlFor="voltage-drop-limit" className="text-sm font-medium text-white">Voltage Drop Limit (%)</Label>
           <Input
             id="voltage-drop-limit"
@@ -136,19 +171,22 @@ const CableSizingForm = ({
             step="0.1"
             value={inputs.voltageDrop || '3'}
             onChange={(e) => updateInput('voltageDrop', e.target.value)}
-            className="bg-elec-dark border-elec-yellow/20 text-white h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20"
+            className="bg-elec-dark border-elec-yellow/20 text-white h-14 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20 text-base"
             placeholder="3"
           />
           <p className="text-xs text-muted-foreground mt-1">Lighting: 3%, Power: 5%</p>
         </div>
+        </div>
       </div>
 
-      {/* Load Characteristics - New */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
+      {/* Load Characteristics */}
+      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
+        <h4 className="font-medium text-white">Load Characteristics</h4>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="space-y-3">
           <Label htmlFor="load-type" className="text-sm font-medium text-white">Load Type</Label>
           <Select value={inputs.loadType || 'resistive'} onValueChange={(value) => updateInput('loadType', value)}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20">
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white h-14 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20 text-base">
               <SelectValue placeholder="Select load type" />
             </SelectTrigger>
             <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white">
@@ -161,7 +199,7 @@ const CableSizingForm = ({
           </Select>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label htmlFor="diversity-factor" className="text-sm font-medium text-white">Diversity Factor</Label>
           <Input
             id="diversity-factor"
@@ -171,19 +209,22 @@ const CableSizingForm = ({
             max="1.0"
             value={inputs.diversityFactor || '1.0'}
             onChange={(e) => updateInput('diversityFactor', e.target.value)}
-            className="bg-elec-dark border-elec-yellow/20 text-white h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20"
+            className="bg-elec-dark border-elec-yellow/20 text-white h-14 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20 text-base"
             placeholder="1.0"
           />
           <p className="text-xs text-muted-foreground mt-1">1.0 = 100% simultaneous load</p>
         </div>
+        </div>
       </div>
 
       {/* System Parameters */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
+      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
+        <h4 className="font-medium text-white">System Parameters</h4>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="space-y-3">
           <Label htmlFor="voltage" className="text-sm font-medium text-white">System Voltage (V)</Label>
           <Select value={inputs.voltage || '230'} onValueChange={(value) => updateInput('voltage', value)}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20">
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white h-14 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20 text-base">
               <SelectValue placeholder="Select voltage" />
             </SelectTrigger>
             <SelectContent className="bg-elec-dark border-elec-yellow/20 text-white">
@@ -194,7 +235,7 @@ const CableSizingForm = ({
           </Select>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label htmlFor="power-factor" className="text-sm font-medium text-white">Power Factor</Label>
           <Input
             id="power-factor"
@@ -204,26 +245,31 @@ const CableSizingForm = ({
             max="1.0"
             value={inputs.powerFactor || '0.9'}
             onChange={(e) => updateInput('powerFactor', e.target.value)}
-            className="bg-elec-dark border-elec-yellow/20 text-white h-11 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20"
+            className="bg-elec-dark border-elec-yellow/20 text-white h-14 focus:border-elec-yellow/40 focus:ring-2 focus:ring-elec-yellow/20 text-base"
             placeholder="0.9"
           />
           <p className="text-xs text-muted-foreground mt-1">Typical: 0.8-0.9</p>
         </div>
+        </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 pt-4">
+      <div className="flex flex-col sm:flex-row gap-4 pt-6">
         <Button 
           onClick={calculateCableSize} 
-          className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex-1 h-11"
+          className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex-1 h-14 text-base font-semibold"
           disabled={!inputs.current || !inputs.length}
         >
-          <Calculator className="mr-2 h-4 w-4" />
+          <Calculator className="mr-2 h-5 w-5" />
           Calculate Cable Size
         </Button>
-        <Button variant="outline" onClick={resetCalculator} className="h-11 sm:w-auto">
-          <RefreshCw className="mr-2 h-4 w-4" />
-          Reset
+        <Button 
+          variant="outline" 
+          onClick={resetCalculator} 
+          className="h-14 sm:w-auto border-elec-yellow/40 hover:bg-elec-yellow/10 text-base"
+        >
+          <RefreshCw className="mr-2 h-5 w-5" />
+          Reset All Fields
         </Button>
       </div>
     </div>
