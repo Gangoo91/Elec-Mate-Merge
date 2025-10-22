@@ -1,7 +1,7 @@
 // 🚀 DEPLOYMENT VERSION: 2024-10-12-HOTFIX-V1
 const DEPLOYMENT_VERSION = '2024-10-12-hotfix-v1';
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from "https://deno.land/std@0.192.0/http/server.ts";
 import {
   corsHeaders, 
   createLogger, 

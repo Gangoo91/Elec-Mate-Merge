@@ -7,7 +7,7 @@
 export { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 // HTTP Server - Locked to std@0.168.0
-export { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+export { serve } from 'https://deno.land/std@0.192.0/http/server.ts';
 
 // CORS Headers
 export { corsHeaders } from './cors.ts';
