@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { format as formatDate } from "date-fns";
-import { RAMSData, RAMSReportOptions, RAMSRisk } from "@/types/rams";
+import { RAMSData, RAMSReportOptions, RAMSRisk, PPEItem } from "@/types/rams";
 import { 
   safeText, 
   safeNumber, 
@@ -1082,6 +1082,87 @@ class ProfessionalRAMSPDFGenerator {
     this.addPageNumber();
   }
 
+  // Enhanced PPE Table with BS standards and purpose
+  private addEnhancedPPETable(data: RAMSData, context: VariableContext): void {
+    // Only add enhanced table if we have structured PPE data
+    if (!data.ppeDetails || data.ppeDetails.length === 0) return;
+    
+    this.checkPageBreak(80);
+    
+    this.yPosition += 16;
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.setFontSize(14);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("REQUIRED PERSONAL PROTECTIVE EQUIPMENT", this.MARGIN, this.yPosition);
+    this.yPosition += 12;
+    
+    // Prepare table data
+    const ppeTableData = data.ppeDetails.map(ppe => [
+      ppe.itemNumber.toString(),
+      safeText(ppe.ppeType),
+      safeText(ppe.standard),
+      ppe.mandatory ? "Yes" : "No",
+      safeText(ppe.purpose)
+    ]);
+    
+    // Generate professional PPE table
+    autoTable(this.doc, {
+      startY: this.yPosition,
+      head: [['ITEM', 'PPE TYPE', 'STANDARD / SPECIFICATION', 'MANDATORY?', 'PURPOSE / PROTECTION AGAINST']],
+      body: ppeTableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [30, 58, 138], // Dark blue
+        textColor: [255, 255, 255],
+        fontSize: 9,
+        fontStyle: 'bold',
+        halign: 'left',
+        cellPadding: 4
+      },
+      styles: {
+        fontSize: 8,
+        cellPadding: 4,
+        lineColor: [200, 200, 200],
+        lineWidth: 0.5,
+        valign: 'top'
+      },
+      columnStyles: {
+        0: { halign: 'center', cellWidth: 15, fontStyle: 'bold' }, // ITEM
+        1: { cellWidth: 40 }, // PPE TYPE
+        2: { cellWidth: 45 }, // STANDARD
+        3: { halign: 'center', cellWidth: 25 }, // MANDATORY
+        4: { cellWidth: 'auto' } // PURPOSE (flexible)
+      },
+      didParseCell: (data: any) => {
+        // Highlight mandatory column
+        if (data.column.index === 3 && data.section === 'body') {
+          if (data.cell.text[0] === 'Yes') {
+            data.cell.styles.fillColor = [220, 38, 127]; // Red for mandatory
+            data.cell.styles.textColor = [255, 255, 255];
+            data.cell.styles.fontStyle = 'bold';
+          } else {
+            data.cell.styles.fillColor = [156, 163, 175]; // Gray for optional
+            data.cell.styles.textColor = [255, 255, 255];
+          }
+        }
+      },
+      margin: { left: this.MARGIN, right: this.MARGIN }
+    });
+    
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 16;
+    
+    // Add compliance note
+    this.doc.setFontSize(8);
+    this.doc.setFont("helvetica", "italic");
+    this.doc.setTextColor(80, 80, 80);
+    const note = "All PPE must be in good condition, correctly fitted, and used in accordance with manufacturer instructions and BS 7671:2018+A3:2024 requirements.";
+    const wrappedNote = this.doc.splitTextToSize(note, this.pageWidth - (2 * this.MARGIN));
+    this.doc.text(wrappedNote, this.MARGIN, this.yPosition);
+    this.yPosition += wrappedNote.length * 4 + 8;
+    
+    this.addPageNumber();
+  }
+
   // Enhanced Approvals Section
   private addEnhancedApprovals(signOff?: SignOff, context?: VariableContext): void {
     this.doc.addPage();
@@ -1317,6 +1398,7 @@ class ProfessionalRAMSPDFGenerator {
     this.addWorkActivities(data, context);
     this.addRiskMatrix();
     this.addDetailedRiskAssessment(data, context);
+    this.addEnhancedPPETable(data, context); // NEW: Add enhanced PPE table
     this.addSafetyInformation(context);
     this.addEnhancedApprovals(options.signOff, context);
     this.addSignOnSheet(context);

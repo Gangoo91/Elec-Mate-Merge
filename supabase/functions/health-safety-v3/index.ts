@@ -276,6 +276,21 @@ INSTRUCTIONS:
 8. Reference emergency procedures (HSE INDG231 for shock, CO2 for electrical fires)
 9. Include isolation per BS 7671 Section 462 with lock-off devices
 
+**PPE REQUIREMENTS - COMPREHENSIVE STRUCTURE:**
+Provide structured PPE with:
+- ppeType: Equipment name (e.g., "Safety helmet", "Insulated gloves")
+- standard: Relevant BS/EN standard (e.g., "BS EN 397", "BS EN 60903 Class 0")
+- mandatory: true for critical PPE like helmets/gloves, false for optional items
+- purpose: Specific hazards it protects against
+
+Example PPE structure:
+{
+  "ppeType": "Insulated gloves",
+  "standard": "BS EN 60903 Class 0",
+  "mandatory": true,
+  "purpose": "Protection against electrical shock from live conductors up to 500V AC"
+}
+
 ${contextSection}
 
 Return comprehensive risk assessment with practical controls from the knowledge base.`;
@@ -367,7 +382,19 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                       afterControls: { type: 'object' }
                     }
                   },
-                  ppe: { type: 'array', items: { type: 'string' } },
+                  ppe: { 
+                    type: 'array', 
+                    items: { 
+                      type: 'object',
+                      properties: {
+                        ppeType: { type: 'string', description: 'PPE equipment name (e.g., "Safety helmet", "Insulated gloves")' },
+                        standard: { type: 'string', description: 'BS/EN standard (e.g., "BS EN 397", "BS EN 60903 Class 0")' },
+                        mandatory: { type: 'boolean', description: 'Whether this PPE is mandatory for the work' },
+                        purpose: { type: 'string', description: 'What hazards it protects against (e.g., "Protection against electrical shock from live conductors")' }
+                      },
+                      required: ['ppeType', 'standard', 'mandatory', 'purpose']
+                    }
+                  },
                   emergencyProcedures: { type: 'array', items: { type: 'string' } }
                 },
                 required: ['hazards', 'controls']
@@ -538,7 +565,32 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                     residualRisk: 6
                   }
                 ],
-                ppe: ["Safety helmet to BS EN 397", "Safety boots to BS EN 20345", "Insulated gloves to BS EN 60903", "Safety glasses to BS EN 166"],
+                ppe: [
+                  {
+                    ppeType: "Safety helmet",
+                    standard: "BS EN 397",
+                    mandatory: true,
+                    purpose: "Protection against head injuries from falling objects and impact"
+                  },
+                  {
+                    ppeType: "Safety boots",
+                    standard: "BS EN ISO 20345 S3",
+                    mandatory: true,
+                    purpose: "Protection against electrical hazards, crushing, and penetration"
+                  },
+                  {
+                    ppeType: "Insulated gloves",
+                    standard: "BS EN 60903 Class 0",
+                    mandatory: true,
+                    purpose: "Protection against electrical shock from live conductors up to 500V AC"
+                  },
+                  {
+                    ppeType: "Safety glasses",
+                    standard: "BS EN 166",
+                    mandatory: true,
+                    purpose: "Eye protection against arc flash, debris, and dust"
+                  }
+                ],
                 emergencyProcedures: ["Isolate power supply in emergency", "Call 999 for electric shock incidents", "Administer first aid if qualified", "Ensure first aider location is known to all workers"]
               }
             }

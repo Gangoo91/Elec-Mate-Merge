@@ -1,5 +1,6 @@
-import type { RAMSData, RAMSRisk } from '@/types/rams';
+import type { RAMSData, RAMSRisk, PPEItem } from '@/types/rams';
 import type { MethodStatementData, MethodStep } from '@/types/method-statement';
+import { v4 as uuidv4 } from 'uuid';
 
 interface AgentResponse {
   response?: string;
@@ -13,10 +14,47 @@ interface AgentResponse {
       severity: number;
       controls: string[];
     }>;
-    ppe?: string[];
+    ppe?: any[]; // Can be string[] (legacy) or PPEItem[] (enhanced)
     emergencyProcedures?: string[];
   };
   methodStatementSteps?: any[];
+}
+
+/**
+ * Transform PPE data to structured format
+ * Handles both legacy string format and new structured format
+ */
+function transformPPEToStructured(ppeData: any[]): PPEItem[] {
+  if (!ppeData || !Array.isArray(ppeData)) return [];
+  
+  return ppeData.map((item, index) => {
+    // Handle both old string format and new object format
+    if (typeof item === 'string') {
+      // Parse legacy string format: "Safety helmet to BS EN 397"
+      const standardMatch = item.match(/BS\s?EN\s?[\d\s]+[A-Z]*|EN\s?[\d\s]+/i);
+      const standard = standardMatch ? standardMatch[0] : 'N/A';
+      const ppeType = item.split(' to ')[0] || item;
+      
+      return {
+        id: uuidv4(),
+        itemNumber: index + 1,
+        ppeType,
+        standard,
+        mandatory: true, // Default to mandatory for safety
+        purpose: 'Required for electrical work safety'
+      };
+    }
+    
+    // New structured format from AI
+    return {
+      id: uuidv4(),
+      itemNumber: index + 1,
+      ppeType: item.ppeType || 'Unspecified PPE',
+      standard: item.standard || 'N/A',
+      mandatory: item.mandatory !== false, // Default to true if not specified
+      purpose: item.purpose || 'Safety protection'
+    };
+  });
 }
 
 /**
@@ -25,7 +63,7 @@ interface AgentResponse {
 export function transformHealthSafetyToRAMS(
   hsResponse: AgentResponse,
   projectInfo: { projectName: string; location: string; assessor: string; date: string }
-): { risks: RAMSRisk[]; hazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }>; activities: string[]; requiredPPE: string[]; emergencyProcedures: string[] } {
+): { risks: RAMSRisk[]; hazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }>; activities: string[]; requiredPPE: string[]; ppeDetails: PPEItem[]; emergencyProcedures: string[] } {
   const risks: RAMSRisk[] = [];
   const identifiedHazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }> = [];
   const activities: string[] = [];
@@ -212,17 +250,47 @@ export function transformHealthSafetyToRAMS(
     });
     
     console.log('✅ Transformer created', risks.length, 'risk entries and', identifiedHazards.length, 'hazard entries');
+    
+    // Transform PPE to both formats
+    const ppeDetails = transformPPEToStructured(ppe && ppe.length > 0 ? ppe : [
+      {
+        ppeType: "Safety helmet",
+        standard: "BS EN 397",
+        mandatory: true,
+        purpose: "Protection against head injuries from falling objects and impact"
+      },
+      {
+        ppeType: "Safety boots",
+        standard: "BS EN ISO 20345 S3",
+        mandatory: true,
+        purpose: "Protection against electrical hazards, crushing, and penetration"
+      },
+      {
+        ppeType: "High-visibility vest",
+        standard: "BS EN ISO 20471",
+        mandatory: true,
+        purpose: "Visibility in low-light conditions and around vehicles"
+      },
+      {
+        ppeType: "Insulated gloves",
+        standard: "BS EN 60903 Class 0",
+        mandatory: true,
+        purpose: "Protection against electrical shock from live conductors"
+      },
+      {
+        ppeType: "Safety glasses",
+        standard: "BS EN 166",
+        mandatory: true,
+        purpose: "Eye protection against arc flash, debris, and dust"
+      }
+    ]);
+    
     return { 
       risks, 
       hazards: identifiedHazards, 
       activities: activities.length > 0 ? activities : ["Electrical installation work"],
-      requiredPPE: ppe && ppe.length > 0 ? ppe : [
-        "Safety helmet to BS EN 397",
-        "Safety boots to BS EN 20345",
-        "High-visibility vest to BS EN ISO 20471",
-        "Insulated gloves to BS EN 60903",
-        "Safety glasses to BS EN 166"
-      ],
+      requiredPPE: ppeDetails.map(p => `${p.ppeType} to ${p.standard}`), // Legacy format for backward compatibility
+      ppeDetails, // NEW: Enhanced structured PPE
       emergencyProcedures: emergencyProcedures && emergencyProcedures.length > 0 ? emergencyProcedures : [
         "In case of electric shock, isolate power and call emergency services",
         "Location of first aid kit and trained first aider",
@@ -338,11 +406,42 @@ export function transformHealthSafetyToRAMS(
     });
   }
   
+  // Fallback PPE for string parsing path
+  const fallbackPPE = [
+    {
+      ppeType: "Safety helmet",
+      standard: "BS EN 397",
+      mandatory: true,
+      purpose: "Protection against head injuries from falling objects and impact"
+    },
+    {
+      ppeType: "Safety boots",
+      standard: "BS EN ISO 20345 S3",
+      mandatory: true,
+      purpose: "Protection against electrical hazards, crushing, and penetration"
+    },
+    {
+      ppeType: "Insulated gloves",
+      standard: "BS EN 60903 Class 0",
+      mandatory: true,
+      purpose: "Protection against electrical shock from live conductors"
+    },
+    {
+      ppeType: "Safety glasses",
+      standard: "BS EN 166",
+      mandatory: true,
+      purpose: "Eye protection against arc flash, debris, and dust"
+    }
+  ];
+  
+  const ppeDetails = transformPPEToStructured(fallbackPPE);
+  
   return { 
     risks, 
     hazards: identifiedHazards, 
     activities,
-    requiredPPE: [],
+    requiredPPE: ppeDetails.map(p => `${p.ppeType} to ${p.standard}`),
+    ppeDetails,
     emergencyProcedures: []
   };
 }

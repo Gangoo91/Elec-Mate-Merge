@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { RAMSData, RAMSRisk } from '@/types/rams';
+import { RAMSData, RAMSRisk, PPEItem } from '@/types/rams';
 import { MethodStatementData, MethodStep } from '@/types/method-statement';
 import { safeText, safeDate, getRiskLevel, getRiskColor, safeNumber } from './rams-pdf-helpers';
 
@@ -177,8 +177,68 @@ export async function generateCombinedRAMSPDF(
   yPos += 15;
   checkPageBreak(40);
 
-  // Add PPE section
-  if (ramsData.requiredPPE && ramsData.requiredPPE.length > 0) {
+  // Enhanced PPE section with table
+  if (ramsData.ppeDetails && ramsData.ppeDetails.length > 0) {
+    checkPageBreak(80);
+    
+    doc.setFillColor(240, 240, 240);
+    doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(20, 20, 20);
+    doc.text('REQUIRED PERSONAL PROTECTIVE EQUIPMENT', margin + 3, yPos + 5.5);
+    yPos += 12;
+    
+    const ppeTableData = ramsData.ppeDetails.map((ppe: PPEItem) => [
+      ppe.itemNumber.toString(),
+      safeText(ppe.ppeType),
+      safeText(ppe.standard),
+      ppe.mandatory ? 'Yes' : 'No',
+      safeText(ppe.purpose)
+    ]);
+    
+    autoTable(doc, {
+      startY: yPos,
+      head: [['ITEM', 'PPE TYPE', 'STANDARD', 'MANDATORY?', 'PURPOSE']],
+      body: ppeTableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [30, 58, 138],
+        textColor: [255, 255, 255],
+        fontSize: 8,
+        fontStyle: 'bold',
+        halign: 'left'
+      },
+      bodyStyles: {
+        fontSize: 7,
+        cellPadding: 2
+      },
+      columnStyles: {
+        0: { cellWidth: 12, halign: 'center', fontStyle: 'bold' },
+        1: { cellWidth: 30 },
+        2: { cellWidth: 30 },
+        3: { cellWidth: 18, halign: 'center' },
+        4: { cellWidth: 'auto' }
+      },
+      didParseCell: (data: any) => {
+        if (data.column.index === 3 && data.section === 'body') {
+          if (data.cell.text[0] === 'Yes') {
+            data.cell.styles.fillColor = [220, 38, 127];
+            data.cell.styles.textColor = [255, 255, 255];
+            data.cell.styles.fontStyle = 'bold';
+          } else {
+            data.cell.styles.fillColor = [156, 163, 175];
+            data.cell.styles.textColor = [255, 255, 255];
+          }
+        }
+      },
+      margin: { left: margin, right: margin }
+    });
+    
+    yPos = (doc as any).lastAutoTable.finalY + 10;
+    checkPageBreak(40);
+  } else if (ramsData.requiredPPE && ramsData.requiredPPE.length > 0) {
+    // Fallback to legacy PPE list
     doc.setFillColor(240, 240, 240);
     doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
     doc.setFontSize(11);

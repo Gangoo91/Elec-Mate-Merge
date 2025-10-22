@@ -1,3 +1,12 @@
+export interface PPEItem {
+  id: string;
+  itemNumber: number;
+  ppeType: string;
+  standard: string;
+  mandatory: boolean;
+  purpose: string;
+}
+
 export interface RAMSData {
   projectName: string;
   location: string;
@@ -14,7 +23,8 @@ export interface RAMSData {
     riskLevel: string;
     regulation?: string;
   }>;
-  requiredPPE?: string[];
+  requiredPPE?: string[]; // Keep for backward compatibility
+  ppeDetails?: PPEItem[]; // NEW: Enhanced PPE structure
   emergencyProcedures?: string[];
   contractor?: string;
   supervisor?: string;

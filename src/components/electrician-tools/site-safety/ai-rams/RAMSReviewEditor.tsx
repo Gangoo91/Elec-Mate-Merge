@@ -654,14 +654,57 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 })}
               </div>
 
-              {/* PPE Section */}
-              {ramsData.requiredPPE && ramsData.requiredPPE.length > 0 && (
+              {/* Enhanced PPE Section */}
+              {ramsData.ppeDetails && ramsData.ppeDetails.length > 0 && (
                 <div className="space-y-3">
-                  <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5 tracking-tight leading-tight">
+                  <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5">
                     <Shield className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
                     Required Personal Protective Equipment
                   </h4>
-                  <Card className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40 shadow-none rounded-lg">
+                  <Card className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40">
+                    <CardContent className="pt-3 md:pt-4 px-0 md:px-4 overflow-x-auto">
+                      <div className="min-w-[600px]">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b-2 border-elec-yellow/30">
+                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm">ITEM</th>
+                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm">PPE TYPE</th>
+                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm">STANDARD / SPECIFICATION</th>
+                              <th className="text-center py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm">MANDATORY?</th>
+                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm">PURPOSE / PROTECTION AGAINST</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {ramsData.ppeDetails.map((ppe) => (
+                              <tr key={ppe.id} className="border-b border-border/20 hover:bg-elec-grey/20">
+                                <td className="py-3 px-3 text-center font-semibold">{ppe.itemNumber}</td>
+                                <td className="py-3 px-3 font-medium">{ppe.ppeType}</td>
+                                <td className="py-3 px-3 text-primary">{ppe.standard}</td>
+                                <td className="py-3 px-3 text-center">
+                                  <Badge variant={ppe.mandatory ? "destructive" : "secondary"} className="text-xs">
+                                    {ppe.mandatory ? "Yes" : "No"}
+                                  </Badge>
+                                </td>
+                                <td className="py-3 px-3 text-muted-foreground text-xs md:text-sm">{ppe.purpose}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
+
+              {/* Fallback to legacy PPE if ppeDetails not available */}
+              {(!ramsData.ppeDetails || ramsData.ppeDetails.length === 0) && 
+               ramsData.requiredPPE && ramsData.requiredPPE.length > 0 && (
+                <div className="space-y-3">
+                  <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5">
+                    <Shield className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
+                    Required Personal Protective Equipment
+                  </h4>
+                  <Card className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40">
                     <CardContent className="pt-3 md:pt-4 px-4">
                       <ul className="list-disc list-outside space-y-2 pl-5">
                         {ramsData.requiredPPE.map((ppe, idx) => (
