@@ -71,7 +71,17 @@ serve(async (req) => {
         firstAiderPhone: ramsData.firstAiderPhone || "",
         safetyOfficerName: ramsData.safetyOfficerName || "",
         safetyOfficerPhone: ramsData.safetyOfficerPhone || "",
-        assemblyPoint: ramsData.assemblyPoint || ""
+        assemblyPoint: ramsData.assemblyPoint || "",
+        // PPE data - both legacy and enhanced
+        requiredPPE: ramsData.requiredPPE || [],
+        ppeDetails: ramsData.ppeDetails?.map((ppe: any) => ({
+          id: ppe.id,
+          itemNumber: ppe.itemNumber,
+          ppeType: ppe.ppeType,
+          standard: ppe.standard,
+          mandatory: ppe.mandatory,
+          purpose: ppe.purpose
+        })) || []
       },
       methodStatementData: {
         jobTitle: methodData.jobTitle,
@@ -102,7 +112,16 @@ serve(async (req) => {
         id: methodData.id || "",
         approvedBy: methodData.approvedBy || "",
         createdAt: methodData.createdAt || new Date().toISOString(),
-        updatedAt: methodData.updatedAt || new Date().toISOString()
+        updatedAt: methodData.updatedAt || new Date().toISOString(),
+        // Extended method statement fields
+        practicalTips: methodData.practicalTips || [],
+        commonMistakes: methodData.commonMistakes || [],
+        toolsRequired: methodData.toolsRequired || [],
+        materialsRequired: methodData.materialsRequired || [],
+        totalEstimatedTime: methodData.totalEstimatedTime || "",
+        difficultyLevel: methodData.difficultyLevel || "",
+        complianceRegulations: methodData.complianceRegulations || [],
+        complianceWarnings: methodData.complianceWarnings || []
       }
     };
 
@@ -114,12 +133,15 @@ serve(async (req) => {
       projectName: payload.ramsData.projectName,
       risksCount: payload.ramsData.risks?.length,
       activitiesCount: payload.ramsData.activities?.length,
+      ppeCount: payload.ramsData.ppeDetails?.length || payload.ramsData.requiredPPE?.length,
       hasEmergencyContacts: !!(payload.ramsData.siteManagerName || payload.ramsData.firstAiderName)
     });
     
     console.log('📋 Method Statement Data:', {
       jobTitle: payload.methodStatementData.jobTitle,
       stepsCount: payload.methodStatementData.steps?.length,
+      toolsCount: payload.methodStatementData.toolsRequired?.length,
+      materialsCount: payload.methodStatementData.materialsRequired?.length,
       workType: payload.methodStatementData.workType
     });
 
