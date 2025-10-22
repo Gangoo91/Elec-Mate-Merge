@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
+import { useSimpleAgent } from "@/hooks/useSimpleAgent";
 
 interface ExampleScenario {
   title: string;
@@ -74,6 +75,8 @@ const CommissioningInterface = () => {
   const [installationDate, setInstallationDate] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<any>(null);
+  
+  const { callAgent, isLoading, progress: agentProgress } = useSimpleAgent();
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
@@ -103,10 +106,28 @@ const CommissioningInterface = () => {
     });
   };
 
-  const handleGenerate = () => {
-    toast.info("Functionality In Development", {
-      description: "Testing & Commissioning AI agent coming soon"
+  const handleGenerate = async () => {
+    if (!prompt.trim()) {
+      toast.error("Please enter a testing requirement");
+      return;
+    }
+    
+    const response = await callAgent('commissioning', {
+      query: prompt,
+      projectContext: {
+        projectType: selectedType,
+        buildingAge: 'modern',
+      },
+      projectName,
+      location,
+      clientName,
+      installationDate
     });
+    
+    if (response?.success) {
+      setResults(response);
+      setShowResults(true);
+    }
   };
 
   const handleCopy = () => {
@@ -327,11 +348,11 @@ const CommissioningInterface = () => {
       <Button 
         type="submit"
         size="lg"
-        disabled={!prompt.trim()}
+        disabled={!prompt.trim() || isLoading}
         className="w-full bg-gradient-to-r from-purple-400 to-purple-400/80 hover:from-purple-500 hover:to-purple-500/80 text-white h-12 sm:h-14 touch-manipulation text-base sm:text-lg"
       >
         <CheckCircle2 className="h-5 w-5 mr-2" />
-        Generate Testing Procedure
+        {isLoading ? agentProgress?.message || 'Generating...' : 'Generate Testing Procedure'}
       </Button>
 
       {/* 6. RESULTS DISPLAY (when showResults) */}
@@ -376,7 +397,13 @@ const CommissioningInterface = () => {
             </div>
           </div>
           <div className="bg-muted/50 rounded-lg p-4 text-sm">
-            <p className="text-muted-foreground">Results will appear here...</p>
+            {results?.response ? (
+              <div className="prose prose-sm dark:prose-invert max-w-none">
+                <div dangerouslySetInnerHTML={{ __html: results.response.replace(/\n/g, '<br />') }} />
+              </div>
+            ) : (
+              <p className="text-muted-foreground">Results will appear here...</p>
+            )}
           </div>
         </Card>
       )}

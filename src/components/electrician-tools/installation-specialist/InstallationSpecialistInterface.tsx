@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { InstallationInputForm } from "./InstallationInputForm";
 import { InstallationProcessingView } from "./InstallationProcessingView";
@@ -7,6 +6,7 @@ import { InstallationResultsEditor } from "./InstallationResultsEditor";
 import { InstallationProjectDetails as ProjectDetailsType } from "@/types/installation-method";
 import { generateMethodStatement } from "./methodStatementHandler";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
+import { useSimpleAgent } from "@/hooks/useSimpleAgent";
 
 type ViewMode = 'input' | 'processing' | 'results';
 
@@ -23,6 +23,8 @@ const InstallationSpecialistInterface = () => {
   const lastAdvanceRef = useRef(Date.now());
   const lastProjectRef = useRef<{details: ProjectDetailsType, description: string} | null>(null);
   const watchdogShownRef = useRef(false);
+  
+  const { callAgent } = useSimpleAgent();
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
@@ -251,20 +253,23 @@ Project Context:
 ${projectDetails.clientName ? `- Client: ${projectDetails.clientName}` : ''}
 ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianName}` : ''}`;
 
-        const { data, error } = await supabase.functions.invoke('installer-v3', {
-          body: { query, installationType: projectDetails.installationType }
+        const response = await callAgent('installer', {
+          query,
+          projectContext: {
+            projectType: projectDetails.installationType as 'domestic' | 'commercial' | 'industrial',
+            buildingAge: 'modern',
+          }
         });
 
         clearInterval(progressInterval);
         applyProgress(5, 100, 'Complete!');
 
-        if (error) throw error;
-        if (!data?.success) throw new Error(data?.error || 'Failed to generate installation method');
+        if (!response?.success) throw new Error(response?.error || 'Failed to generate installation method');
 
         // FIX: Correct field mapping for installer-v3 response
-        const steps = data.structuredData?.installationSteps || 
-                      data.installationSteps || 
-                      data.methodStatementSteps || [];
+        const steps = response.structuredData?.installationSteps || 
+                      (response as any).installationSteps || 
+                      (response as any).methodStatementSteps || [];
 
         const installationSteps = steps.map((step: any, index: number) => ({
           stepNumber: step.step || step.stepNumber || index + 1,
@@ -306,7 +311,7 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           overallRiskLevel: overallRisk as 'low' | 'medium' | 'high'
         };
 
-        setInstallationGuide(data.response || '');
+        setInstallationGuide(response.response || '');
         
         // Initialize default project metadata for Quick Mode too
         const today = new Date().toISOString().split('T')[0];
