@@ -684,7 +684,7 @@ export type Database = {
           complexity_notes: string | null
           created_at: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           job_description: string | null
           job_type: string
           labour_hours: number | null
@@ -702,7 +702,7 @@ export type Database = {
           complexity_notes?: string | null
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           job_description?: string | null
           job_type: string
           labour_hours?: number | null
@@ -720,7 +720,7 @@ export type Database = {
           complexity_notes?: string | null
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           job_description?: string | null
           job_type?: string
           labour_hours?: number | null
@@ -2377,7 +2377,7 @@ export type Database = {
           embedding: string | null
           id: string
           metadata: Json | null
-          search_vector: unknown | null
+          search_vector: unknown
           source: string
           topic: string
         }
@@ -2387,7 +2387,7 @@ export type Database = {
           embedding?: string | null
           id?: string
           metadata?: Json | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           source: string
           topic: string
         }
@@ -2397,7 +2397,7 @@ export type Database = {
           embedding?: string | null
           id?: string
           metadata?: Json | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           source?: string
           topic?: string
         }
@@ -2755,7 +2755,7 @@ export type Database = {
           id: string
           maintenance_type: string | null
           metadata: Json | null
-          search_vector: unknown | null
+          search_vector: unknown
           source: string
           topic: string
         }
@@ -2767,7 +2767,7 @@ export type Database = {
           id?: string
           maintenance_type?: string | null
           metadata?: Json | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           source: string
           topic: string
         }
@@ -2779,7 +2779,7 @@ export type Database = {
           id?: string
           maintenance_type?: string | null
           metadata?: Json | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           source?: string
           topic?: string
         }
@@ -2794,7 +2794,7 @@ export type Database = {
           id: string | null
           maintenance_type: string | null
           metadata: Json | null
-          search_vector: unknown | null
+          search_vector: unknown
           source: string | null
           topic: string | null
         }
@@ -2806,7 +2806,7 @@ export type Database = {
           id?: string | null
           maintenance_type?: string | null
           metadata?: Json | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           source?: string | null
           topic?: string | null
         }
@@ -2818,7 +2818,7 @@ export type Database = {
           id?: string | null
           maintenance_type?: string | null
           metadata?: Json | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           source?: string | null
           topic?: string | null
         }
@@ -3092,63 +3092,87 @@ export type Database = {
       method_statements: {
         Row: {
           approved_by: string | null
+          common_mistakes: string[] | null
+          compliance_regulations: string[] | null
+          compliance_warnings: string[] | null
           contractor: string
           created_at: string
           description: string | null
+          difficulty_level: string | null
           duration: string | null
           id: string
           job_scale: string | null
           job_title: string
           location: string
+          materials_required: string[] | null
           overall_risk_level: string
+          practical_tips: string[] | null
           rams_document_id: string | null
           review_date: string | null
           status: string
           steps: Json
           supervisor: string
           team_size: string | null
+          tools_required: string[] | null
+          total_estimated_time: string | null
           updated_at: string
           user_id: string
           work_type: string
         }
         Insert: {
           approved_by?: string | null
+          common_mistakes?: string[] | null
+          compliance_regulations?: string[] | null
+          compliance_warnings?: string[] | null
           contractor: string
           created_at?: string
           description?: string | null
+          difficulty_level?: string | null
           duration?: string | null
           id?: string
           job_scale?: string | null
           job_title: string
           location: string
+          materials_required?: string[] | null
           overall_risk_level?: string
+          practical_tips?: string[] | null
           rams_document_id?: string | null
           review_date?: string | null
           status?: string
           steps?: Json
           supervisor: string
           team_size?: string | null
+          tools_required?: string[] | null
+          total_estimated_time?: string | null
           updated_at?: string
           user_id: string
           work_type: string
         }
         Update: {
           approved_by?: string | null
+          common_mistakes?: string[] | null
+          compliance_regulations?: string[] | null
+          compliance_warnings?: string[] | null
           contractor?: string
           created_at?: string
           description?: string | null
+          difficulty_level?: string | null
           duration?: string | null
           id?: string
           job_scale?: string | null
           job_title?: string
           location?: string
+          materials_required?: string[] | null
           overall_risk_level?: string
+          practical_tips?: string[] | null
           rams_document_id?: string | null
           review_date?: string | null
           status?: string
           steps?: Json
           supervisor?: string
           team_size?: string | null
+          tools_required?: string[] | null
+          total_estimated_time?: string | null
           updated_at?: string
           user_id?: string
           work_type?: string
@@ -4443,7 +4467,9 @@ export type Database = {
           last_autosave_at: string | null
           location: string
           pdf_url: string | null
+          ppe_details: Json | null
           project_name: string
+          required_ppe: string[] | null
           risks: Json
           status: string
           supervisor: string | null
@@ -4463,7 +4489,9 @@ export type Database = {
           last_autosave_at?: string | null
           location: string
           pdf_url?: string | null
+          ppe_details?: Json | null
           project_name: string
+          required_ppe?: string[] | null
           risks?: Json
           status?: string
           supervisor?: string | null
@@ -4483,7 +4511,9 @@ export type Database = {
           last_autosave_at?: string | null
           location?: string
           pdf_url?: string | null
+          ppe_details?: Json | null
           project_name?: string
+          required_ppe?: string[] | null
           risks?: Json
           status?: string
           supervisor?: string | null
@@ -4811,7 +4841,7 @@ export type Database = {
           content_type: string
           created_at: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           session_id: string | null
           user_agent: string | null
           user_id: string | null
@@ -4821,7 +4851,7 @@ export type Database = {
           content_type: string
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           session_id?: string | null
           user_agent?: string | null
           user_id?: string | null
@@ -4831,7 +4861,7 @@ export type Database = {
           content_type?: string
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           session_id?: string | null
           user_agent?: string | null
           user_id?: string | null
@@ -5156,7 +5186,7 @@ export type Database = {
           action: string
           created_at: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           record_id: string | null
           table_name: string | null
           user_agent: string | null
@@ -5166,7 +5196,7 @@ export type Database = {
           action: string
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           record_id?: string | null
           table_name?: string | null
           user_agent?: string | null
@@ -5176,7 +5206,7 @@ export type Database = {
           action?: string
           created_at?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           record_id?: string | null
           table_name?: string | null
           user_agent?: string | null
@@ -5888,7 +5918,7 @@ export type Database = {
           id: string
           metadata: Json | null
           qualification_level: string | null
-          search_vector: unknown | null
+          search_vector: unknown
           source: string
           subject_area: string | null
           topic: string
@@ -5901,7 +5931,7 @@ export type Database = {
           id?: string
           metadata?: Json | null
           qualification_level?: string | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           source: string
           subject_area?: string | null
           topic: string
@@ -5914,7 +5944,7 @@ export type Database = {
           id?: string
           metadata?: Json | null
           qualification_level?: string | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           source?: string
           subject_area?: string | null
           topic?: string
@@ -6262,78 +6292,29 @@ export type Database = {
       }
     }
     Functions: {
-      binary_quantize: {
-        Args: { "": string } | { "": unknown }
-        Returns: unknown
-      }
       can_access_quote_via_token: {
         Args: { q_id: string; token: string }
         Returns: boolean
       }
-      cleanup_ai_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_cost_query_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_cables_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_course_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_course_dates_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_design_exports: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_education_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_guide_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_market_insights_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      cleanup_ai_cache: { Args: never; Returns: undefined }
+      cleanup_cost_query_cache: { Args: never; Returns: undefined }
+      cleanup_expired_cables_cache: { Args: never; Returns: undefined }
+      cleanup_expired_course_cache: { Args: never; Returns: undefined }
+      cleanup_expired_course_dates_cache: { Args: never; Returns: undefined }
+      cleanup_expired_design_exports: { Args: never; Returns: undefined }
+      cleanup_expired_education_cache: { Args: never; Returns: undefined }
+      cleanup_expired_guide_cache: { Args: never; Returns: undefined }
+      cleanup_expired_market_insights_cache: { Args: never; Returns: undefined }
       cleanup_expired_materials_weekly_cache: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: undefined
       }
-      cleanup_expired_pricing_data: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_temp_pdfs: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_tool_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_expired_tools_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_hs_query_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_rag_cache: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      cleanup_expired_pricing_data: { Args: never; Returns: undefined }
+      cleanup_expired_temp_pdfs: { Args: never; Returns: undefined }
+      cleanup_expired_tool_cache: { Args: never; Returns: undefined }
+      cleanup_expired_tools_cache: { Args: never; Returns: undefined }
+      cleanup_hs_query_cache: { Args: never; Returns: undefined }
+      cleanup_rag_cache: { Args: never; Returns: undefined }
       extract_postcode_district: {
         Args: { full_postcode: string }
         Returns: string
@@ -6357,42 +6338,11 @@ export type Database = {
           upvotes: number
         }[]
       }
-      get_current_user_role: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      get_next_biweekly_refresh: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      get_next_sunday_education_refresh: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      get_next_sunday_market_refresh: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      get_next_sunday_refresh: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      halfvec_avg: {
-        Args: { "": number[] }
-        Returns: unknown
-      }
-      halfvec_out: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      halfvec_send: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      halfvec_typmod_in: {
-        Args: { "": unknown[] }
-        Returns: number
-      }
+      get_current_user_role: { Args: never; Returns: string }
+      get_next_biweekly_refresh: { Args: never; Returns: string }
+      get_next_sunday_education_refresh: { Args: never; Returns: string }
+      get_next_sunday_market_refresh: { Args: never; Returns: string }
+      get_next_sunday_refresh: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -6400,50 +6350,8 @@ export type Database = {
         }
         Returns: boolean
       }
-      hnsw_bit_support: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      hnsw_halfvec_support: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      hnsw_sparsevec_support: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      hnswhandler: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      is_owner_of_quote: {
-        Args: { q_id: string }
-        Returns: boolean
-      }
-      ivfflat_bit_support: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      ivfflat_halfvec_support: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      ivfflathandler: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      l2_norm: {
-        Args: { "": unknown } | { "": unknown }
-        Returns: number
-      }
-      l2_normalize: {
-        Args: { "": string } | { "": unknown } | { "": unknown }
-        Returns: unknown
-      }
-      normalize_query_text: {
-        Args: { query_text: string }
-        Returns: string
-      }
+      is_owner_of_quote: { Args: { q_id: string }; Returns: boolean }
+      normalize_query_text: { Args: { query_text: string }; Returns: string }
       search_bs7671: {
         Args: {
           match_count?: number
@@ -6683,22 +6591,7 @@ export type Database = {
           topic: string
         }[]
       }
-      sparsevec_out: {
-        Args: { "": unknown }
-        Returns: unknown
-      }
-      sparsevec_send: {
-        Args: { "": unknown }
-        Returns: string
-      }
-      sparsevec_typmod_in: {
-        Args: { "": unknown[] }
-        Returns: number
-      }
-      trigger_materials_weekly_refresh: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      trigger_materials_weekly_refresh: { Args: never; Returns: undefined }
       upsert_design_pattern: {
         Args: {
           p_cable_length: number
@@ -6711,30 +6604,6 @@ export type Database = {
           p_voltage: number
         }
         Returns: string
-      }
-      vector_avg: {
-        Args: { "": number[] }
-        Returns: string
-      }
-      vector_dims: {
-        Args: { "": string } | { "": unknown }
-        Returns: number
-      }
-      vector_norm: {
-        Args: { "": string }
-        Returns: number
-      }
-      vector_out: {
-        Args: { "": string }
-        Returns: unknown
-      }
-      vector_send: {
-        Args: { "": string }
-        Returns: string
-      }
-      vector_typmod_in: {
-        Args: { "": unknown[] }
-        Returns: number
       }
     }
     Enums: {

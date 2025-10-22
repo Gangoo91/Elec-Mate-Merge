@@ -122,6 +122,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
         supervisor: ramsData.supervisor || methodData.supervisor || '',
         activities: ramsData.activities,
         risks: ramsData.risks as unknown as any, // JSONB type
+        required_ppe: ramsData.requiredPPE || [],
+        ppe_details: (ramsData.ppeDetails || []) as unknown as any, // JSONB type
         status: 'draft' as const,
         last_autosave_at: new Date().toISOString(),
         ai_generation_metadata: {
@@ -179,6 +181,14 @@ export function useAIRAMS(): UseAIRAMSReturn {
           review_date: methodData.reviewDate,
           approved_by: methodData.approvedBy,
           steps: methodData.steps as unknown as any, // JSONB type
+          tools_required: methodData.toolsRequired || [],
+          materials_required: methodData.materialsRequired || [],
+          practical_tips: methodData.practicalTips || [],
+          common_mistakes: methodData.commonMistakes || [],
+          total_estimated_time: methodData.totalEstimatedTime,
+          difficulty_level: methodData.difficultyLevel,
+          compliance_regulations: methodData.complianceRegulations || [],
+          compliance_warnings: methodData.complianceWarnings || [],
           status: 'draft' as const
         };
 
