@@ -1,5 +1,5 @@
 // Deployed: 2025-10-11 21:30 UTC
-import { serve } from "https://deno.land/std@0.192.0/http/server.ts";
+import { serve } from '../_shared/deps.ts';
 import {
   corsHeaders, 
   createLogger, 
