@@ -211,33 +211,26 @@ export const ConsultationResults = () => {
                     </CollapsibleTrigger>
                     <CollapsibleContent>
                       <CardContent className="pt-0 space-y-4">
-                        <div className="prose prose-invert max-w-none">
-                          {/* Render agent-specific output */}
-                          {result.agent_type === 'designer' && (
-                            <div className="space-y-4">
-                              <div className="p-4 bg-white/5 rounded-lg">
-                                <h3 className="text-sm font-semibold mb-2">Circuit Design</h3>
-                                <pre className="text-xs whitespace-pre-wrap">{JSON.stringify(result.output_data, null, 2)}</pre>
-                              </div>
-                            </div>
-                          )}
-                          
-                          {result.agent_type === 'cost-engineer' && (
-                            <div className="space-y-4">
-                              <div className="p-4 bg-white/5 rounded-lg">
-                                <h3 className="text-sm font-semibold mb-2">Cost Breakdown</h3>
-                                <pre className="text-xs whitespace-pre-wrap">{JSON.stringify(result.output_data, null, 2)}</pre>
-                              </div>
-                            </div>
-                          )}
-                          
-                          {/* Default display for other agents */}
-                          {!['designer', 'cost-engineer'].includes(result.agent_type) && (
-                            <div className="p-4 bg-white/5 rounded-lg">
-                              <pre className="text-xs whitespace-pre-wrap">{JSON.stringify(result.output_data, null, 2)}</pre>
-                            </div>
-                          )}
-                        </div>
+                        {/* Render agent output with better formatting */}
+                        {result.output_data?.response ? (
+                          <div className="prose prose-invert prose-sm max-w-none">
+                            <div 
+                              className="text-sm leading-relaxed whitespace-pre-wrap"
+                              dangerouslySetInnerHTML={{ 
+                                __html: result.output_data.response
+                                  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                  .replace(/\n\n/g, '</p><p class="mt-3">')
+                                  .replace(/^(.+)$/, '<p>$1</p>')
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="p-4 bg-white/5 rounded-lg">
+                            <pre className="text-xs whitespace-pre-wrap overflow-x-auto">
+                              {JSON.stringify(result.output_data, null, 2)}
+                            </pre>
+                          </div>
+                        )}
                         
                         {/* PHASE 5: Resume with Agent Button */}
                         <Button

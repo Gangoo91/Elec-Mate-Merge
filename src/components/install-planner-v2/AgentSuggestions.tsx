@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils";
 interface AgentSuggestion {
   agent: string;
   reason: string;
-  priority?: string;
+  priority?: 'high' | 'medium' | 'low';
+  contextHint?: string; // What info from previous agent makes this relevant
 }
 
 interface AgentSuggestionsProps {
@@ -41,6 +42,30 @@ const getAgentName = (agent: string) => {
 export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestionsProps) => {
   if (suggestions.length === 0) return null;
 
+  // Sort by priority
+  const sortedSuggestions = [...suggestions].sort((a, b) => {
+    const priorityOrder = { high: 0, medium: 1, low: 2 };
+    return priorityOrder[a.priority || 'medium'] - priorityOrder[b.priority || 'medium'];
+  });
+
+  const getPriorityBadge = (priority?: string) => {
+    if (priority === 'high') {
+      return (
+        <span className="text-[9px] px-2 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium whitespace-nowrap">
+          Recommended
+        </span>
+      );
+    }
+    if (priority === 'low') {
+      return (
+        <span className="text-[9px] px-2 py-0.5 rounded bg-muted/20 text-muted-foreground font-medium whitespace-nowrap">
+          Optional
+        </span>
+      );
+    }
+    return null;
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -52,35 +77,36 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
         <span>Who would you like to consult next?</span>
       </div>
       
-      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-1.5 sm:gap-2">
-        {suggestions.map((suggestion, index) => (
+      <div className="flex flex-col gap-2">
+        {sortedSuggestions.map((suggestion, index) => (
           <motion.div
             key={suggestion.agent}
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ delay: index * 0.08 }}
           >
             <Button
               variant="outline"
               size="sm"
               onClick={() => onSelectAgent(suggestion.agent)}
               className={cn(
-                "h-auto w-full sm:w-auto py-1.5 sm:py-2 px-2 sm:px-3 flex-col items-start gap-0.5 sm:gap-1 hover:bg-elec-yellow/10 hover:border-elec-yellow transition-all",
-                suggestion.priority === 'high' && "border-elec-yellow/40"
+                "h-auto w-full py-2.5 px-3 flex items-start gap-3 hover:bg-elec-yellow/10 hover:border-elec-yellow transition-all text-left",
+                suggestion.priority === 'high' && "border-elec-yellow/50 bg-elec-yellow/5"
               )}
             >
-              <div className="flex items-center gap-2 w-full">
-                <span className="text-lg">{getAgentEmoji(suggestion.agent)}</span>
-                <div className="flex-1">
-                  <span className="text-sm font-semibold block">{getAgentName(suggestion.agent)}</span>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {suggestion.reason}
-                  </p>
+              <span className="text-xl shrink-0 mt-0.5">{getAgentEmoji(suggestion.agent)}</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-sm font-semibold">{getAgentName(suggestion.agent)}</span>
+                  {getPriorityBadge(suggestion.priority)}
                 </div>
-                {suggestion.priority === 'high' && (
-                  <span className="text-[9px] px-2 py-1 rounded bg-elec-yellow/20 text-elec-yellow font-medium">
-                    Recommended
-                  </span>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {suggestion.reason}
+                </p>
+                {suggestion.contextHint && (
+                  <p className="text-[10px] text-elec-yellow/60 mt-1.5 italic">
+                    💡 {suggestion.contextHint}
+                  </p>
                 )}
               </div>
             </Button>
