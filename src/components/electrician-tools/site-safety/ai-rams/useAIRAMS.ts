@@ -298,19 +298,34 @@ export function useAIRAMS(): UseAIRAMSReturn {
     maxRetries = 3
   ): Promise<{ data: any; error: any }> => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      const { data, error } = await supabase.functions.invoke(functionName, { body });
+      // Wrap the invoke call with a 4-minute timeout to prevent premature client-side timeout
+      // Edge function execution takes ~173s, so we need more than the default timeout
+      const timeoutPromise = new Promise<{ data: null; error: any }>((_, reject) => 
+        setTimeout(() => reject(new Error('Request timeout after 4 minutes')), 240000)
+      );
       
-      if (!error && data?.success) {
-        console.log(`✅ ${functionName} succeeded on attempt ${attempt}`);
-        return { data, error: null };
-      }
+      const invokePromise = supabase.functions.invoke(functionName, { body });
       
-      if (attempt < maxRetries) {
-        const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
-        console.log(`⏳ Retry ${attempt}/${maxRetries} for ${functionName} after ${delay}ms`);
-        await new Promise(resolve => setTimeout(resolve, delay));
-      } else {
-        console.error(`❌ ${functionName} failed after ${maxRetries} attempts`, { error, data });
+      try {
+        const { data, error } = await Promise.race([invokePromise, timeoutPromise]);
+        
+        if (!error && data?.success) {
+          console.log(`✅ ${functionName} succeeded on attempt ${attempt}`);
+          return { data, error: null };
+        }
+        
+        if (attempt < maxRetries) {
+          const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
+          console.log(`⏳ Retry ${attempt}/${maxRetries} for ${functionName} after ${delay}ms`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+        } else {
+          console.error(`❌ ${functionName} failed after ${maxRetries} attempts`, { error, data });
+        }
+      } catch (timeoutError) {
+        console.error(`❌ ${functionName} timed out on attempt ${attempt}`, timeoutError);
+        if (attempt === maxRetries) {
+          return { data: null, error: timeoutError };
+        }
       }
     }
     
