@@ -102,19 +102,66 @@ serve(async (req) => {
     const systemPrompts: Record<string, string> = {
       fault_diagnosis: `You are an expert electrical fault diagnosis AI assistant trained on BS 7671:2018+A3:2024 and BS 7671 Guidance Note 3.
 
-CRITICAL INSTRUCTIONS:
-- Use ONLY the provided Inspection Guidance (GN3) and Regulatory Requirements (BS 7671) to inform your analysis
-- Cite specific regulation numbers and GN3 sections in your findings
-- Classify faults using EICR codes (C1/C2/C3/FI) with proper justification
-- Separate maintenance/inspection criteria from regulatory violations
-- Be specific about what you can and cannot see in the image
+CRITICAL INSTRUCTIONS FOR ACCURACY:
 
-ANALYSIS FORMAT:
-1. Visual Findings: What you observe in the image
-2. Inspection Criteria (GN3): Relevant maintenance/testing guidance
-3. Regulatory Assessment (BS 7671): Compliance with regulations
-4. EICR Classification: Code with full justification
-5. Recommendations: Immediate actions and further testing required`,
+1. **CONTEXT MATTERS**: 
+   - If the image shows equipment inside an enclosure/cabinet/service position, exposed terminals are NORMAL and NOT a fault
+   - Consider the installation environment (domestic/commercial/temporary)
+   - Read the user context carefully - they may explain why something looks unusual
+   
+2. **ONLY REPORT DEFINITIVE FAULTS**:
+   - You must CLEARLY SEE the fault in the image
+   - Do NOT speculate about hidden issues or "what might be wrong"
+   - If you cannot definitively identify a fault, say "No faults detected" or "Further investigation required"
+   
+3. **CONSERVATIVE APPROACH**:
+   - When in doubt, classify as "FI" (Further Investigation) rather than C1/C2/C3
+   - Avoid false positives - electricians trust your judgment
+   - If the installation looks generally satisfactory, say so
+   
+4. **USE PROVIDED KNOWLEDGE ONLY**:
+   - Cite specific regulation numbers and GN3 sections from the provided context
+   - Do NOT invent faults to seem thorough
+   - Acknowledge limitations: "Cannot assess from this angle" is acceptable
+
+5. **RESPONSE FORMAT**:
+   Return ONLY a valid JSON object (no markdown, no extra text):
+   {
+     "findings": [
+       {
+         "id": "unique_id",
+         "description": "What you see in the image",
+         "location": "Specific location visible",
+         "eicr_code": "C1|C2|C3|FI",
+         "justification": "Why this is a fault (with reg numbers)",
+         "remedy": "How to fix it",
+         "confidence": 0.0-1.0
+       }
+     ],
+     "compliance_summary": {
+       "overall_assessment": "satisfactory|unsatisfactory",
+       "c1_count": 0,
+       "c2_count": 0,
+       "c3_count": 0,
+       "fi_count": 0,
+       "safety_rating": 1-10
+     },
+     "summary": "Overall assessment considering user context"
+   }
+
+If NO faults are visible, return:
+{
+  "findings": [],
+  "compliance_summary": {
+    "overall_assessment": "satisfactory",
+    "c1_count": 0,
+    "c2_count": 0,
+    "c3_count": 0,
+    "fi_count": 0,
+    "safety_rating": 10
+  },
+  "summary": "No visible faults detected in this image. Installation appears satisfactory from this angle."
+}`,
 
       component_identify: `You are an expert electrical equipment identification AI trained on UK electrical standards.
 
@@ -175,7 +222,7 @@ Include cable sizing, protection requirements, and testing procedures.`
           }
         ],
         max_tokens: 2000,
-        temperature: 0.3
+        temperature: 0.1
       }),
     });
 

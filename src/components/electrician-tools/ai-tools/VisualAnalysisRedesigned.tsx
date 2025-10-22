@@ -605,6 +605,74 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         setAnalysisTimestamp(new Date().toISOString());
       }
       
+      // Phase 4: Filter low-confidence findings
+      const filterLowConfidenceFindings = (result: AnalysisResult, threshold = 0.75): AnalysisResult => {
+        if (!result.findings) return result;
+        
+        const filteredFindings = result.findings.filter(f => {
+          if (!f.confidence || f.confidence >= threshold) return true;
+          
+          console.log(`🚫 Filtered low-confidence finding: ${f.description} (confidence: ${f.confidence})`);
+          return false;
+        });
+        
+        return {
+          ...result,
+          findings: filteredFindings
+        };
+      };
+      
+      // Phase 1: Validate and correct compliance_summary counts
+      const validateComplianceCounts = (result: AnalysisResult): AnalysisResult => {
+        if (!result.findings || result.findings.length === 0) {
+          // No findings = no faults
+          return {
+            ...result,
+            compliance_summary: {
+              overall_assessment: 'satisfactory',
+              c1_count: 0,
+              c2_count: 0,
+              c3_count: 0,
+              fi_count: 0,
+              safety_rating: 10
+            }
+          };
+        }
+
+        // Count actual findings
+        const actualCounts = {
+          c1_count: result.findings.filter(f => f.eicr_code === 'C1').length,
+          c2_count: result.findings.filter(f => f.eicr_code === 'C2').length,
+          c3_count: result.findings.filter(f => f.eicr_code === 'C3').length,
+          fi_count: result.findings.filter(f => f.eicr_code === 'FI').length
+        };
+
+        const totalFaults = actualCounts.c1_count + actualCounts.c2_count + actualCounts.c3_count;
+
+        // Log discrepancy if AI counts don't match
+        if (result.compliance_summary) {
+          const aiCounts = result.compliance_summary;
+          if (aiCounts.c1_count !== actualCounts.c1_count ||
+              aiCounts.c2_count !== actualCounts.c2_count ||
+              aiCounts.c3_count !== actualCounts.c3_count ||
+              aiCounts.fi_count !== actualCounts.fi_count) {
+            console.warn('⚠️ AI count mismatch detected!', {
+              ai: aiCounts,
+              actual: actualCounts
+            });
+          }
+        }
+
+        return {
+          ...result,
+          compliance_summary: {
+            overall_assessment: totalFaults > 0 ? 'unsatisfactory' : 'satisfactory',
+            ...actualCounts,
+            safety_rating: totalFaults === 0 ? 10 : Math.max(1, 10 - (actualCounts.c1_count * 3 + actualCounts.c2_count * 2 + actualCounts.c3_count))
+          }
+        };
+      };
+      
       // Normalise installation_verify analysis shape for UI stability
       let normalised: AnalysisResult = result;
       if (selectedMode === 'installation_verify') {
@@ -634,7 +702,11 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         } as any;
       }
       
-      setAnalysisResult(normalised);
+      // Apply Phase 4 & Phase 1 validations
+      const confidentResult = filterLowConfidenceFindings(normalised, 0.75);
+      const validatedResult = validateComplianceCounts(confidentResult);
+      
+      setAnalysisResult(validatedResult);
       setUploadedImageUrls([primaryImageUrl, ...additionalImageUrls]);
       setAnalysisProgress(100);
       setRetryAttempts(0); // Reset on success
@@ -1112,6 +1184,18 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                   {ragSources.maintenanceKnowledge?.length || 0} maintenance references, {ragSources.bs7671Regulations?.length || 0} regulations
                 </p>
               </div>
+            </div>
+          )}
+
+          {/* Phase 5: No Faults Detected UI State */}
+          {selectedMode === 'fault_diagnosis' && (!analysisResult.findings || analysisResult.findings.length === 0) && (
+            <div className="p-6 bg-green-500/10 border border-green-500/30 rounded-lg text-center">
+              <CheckCircle2 className="h-12 w-12 text-green-400 mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-green-400 mb-2">No Faults Detected</h3>
+              <p className="text-sm text-muted-foreground">
+                The installation appears satisfactory from the provided image. 
+                {ragSources && ' Analysis verified against BS 7671 and GN3.'}
+              </p>
             </div>
           )}
 
