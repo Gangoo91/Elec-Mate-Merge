@@ -915,7 +915,7 @@ export function combineAgentOutputsToRAMS(
   }
 ): { ramsData: RAMSData; methodData: Partial<MethodStatementData> } {
   // Transform H&S response to RAMS risks
-  const { risks, hazards, activities, requiredPPE, emergencyProcedures } = transformHealthSafetyToRAMS(hsResponse, projectInfo);
+  const { risks, hazards, activities, requiredPPE, ppeDetails, emergencyProcedures } = transformHealthSafetyToRAMS(hsResponse, projectInfo);
   
   // Transform Installer response to method steps (with hazard linking)
   const steps = transformInstallerToMethodSteps(installerResponse, hazards);
@@ -967,6 +967,7 @@ export function combineAgentOutputsToRAMS(
     commonMistakes: commonMistakes.length,
     toolsRequired: toolsRequired.length,
     materialsRequired: materialsRequired.length,
+    ppeDetails: ppeDetails?.length || 0,
     complianceRegulations: complianceRegulations.length,
     complianceWarnings: complianceWarnings.length
   });
@@ -989,6 +990,7 @@ export function combineAgentOutputsToRAMS(
     activities: activities.length > 0 ? activities : ["Electrical installation work"],
     risks,
     requiredPPE,
+    ppeDetails,
     emergencyProcedures,
     hazards,
     complianceRegulations: [...new Set(complianceRegulations)],
