@@ -98,18 +98,20 @@ export const AIRAMSGenerator: React.FC = () => {
               )}
 
               {ramsData && methodData && (
-                <RAMSReviewEditor
-                  ramsData={ramsData}
-                  methodData={methodData}
-                  isSaving={isSaving}
-                  lastSaved={lastSaved}
-                  onSave={() => saveToDatabase()}
-                  onUpdate={(rams, method) => {
-                    // Update handled by internal state
-                  }}
-                  rawHSResponse={rawHSResponse}
-                  rawInstallerResponse={rawInstallerResponse}
-                />
+                <div className="px-2">
+                  <RAMSReviewEditor
+                    ramsData={ramsData}
+                    methodData={methodData}
+                    isSaving={isSaving}
+                    lastSaved={lastSaved}
+                    onSave={() => saveToDatabase()}
+                    onUpdate={(rams, method) => {
+                      // Update handled by internal state
+                    }}
+                    rawHSResponse={rawHSResponse}
+                    rawInstallerResponse={rawInstallerResponse}
+                  />
+                </div>
               )}
 
               {!isProcessing && ramsData && (
