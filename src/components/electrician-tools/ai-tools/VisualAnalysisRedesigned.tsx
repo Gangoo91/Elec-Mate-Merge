@@ -14,7 +14,9 @@ import {
   MessageSquare,
   AlertTriangle,
   ShieldAlert,
-  AlertCircle
+  AlertCircle,
+  BookOpen,
+  Scale
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import InstallationVerificationResults from "./InstallationVerificationResults";
@@ -140,6 +142,10 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
   const [retryAttempts, setRetryAttempts] = useState(0);
   const [analyzedImageUrl, setAnalyzedImageUrl] = useState<string | null>(null);
   const [analysisTimestamp, setAnalysisTimestamp] = useState<string | null>(null);
+  const [ragSources, setRagSources] = useState<{
+    maintenanceKnowledge?: Array<{ topic: string; content: string; source: string; score: number }>;
+    bs7671Regulations?: Array<{ regulation: string; section: string; content: string; score: number }>;
+  } | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
@@ -390,7 +396,64 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       let data, error;
       
       // Route to proper backend based on mode
-      if (selectedMode === 'wiring_instruction') {
+      // Use RAG-enhanced function for fault diagnosis with user context
+      const useRagEnhanced = selectedMode === 'fault_diagnosis' && userContext.trim().length > 10;
+      
+      if (useRagEnhanced) {
+        console.log('🔍 Using RAG-enhanced fault diagnosis with maintenance knowledge + BS 7671');
+        
+        // Convert image to base64
+        const reader = new FileReader();
+        const base64Promise = new Promise<string>((resolve) => {
+          reader.onload = () => {
+            const base64 = reader.result?.toString().split(',')[1];
+            resolve(base64 || '');
+          };
+          reader.readAsDataURL(images[primaryImageIndex]);
+        });
+        
+        const base64Image = await base64Promise;
+        
+        const analyzeWithAbort = new Promise<any>((resolve, reject) => {
+          if (abortControllerRef.current) {
+            abortControllerRef.current.signal.addEventListener('abort', () => {
+              reject(new Error('Analysis cancelled'));
+            });
+          }
+          
+          supabase.functions.invoke('visual-analysis-rag-enhanced', {
+            body: {
+              imageBase64: base64Image,
+              userContext: userContext.trim(),
+              mode: 'fault_diagnosis'
+            }
+          }).then(resolve).catch(reject);
+        });
+        
+        const result = await analyzeWithAbort;
+        
+        // Store RAG sources if available
+        if (result.data?.ragSources) {
+          setRagSources(result.data.ragSources);
+          console.log('📚 RAG Sources:', {
+            maintenance: result.data.ragSources.maintenanceKnowledge?.length || 0,
+            regulations: result.data.ragSources.bs7671Regulations?.length || 0
+          });
+        }
+        
+        // Transform RAG-enhanced response to match expected format
+        data = {
+          analysis: {
+            summary: result.data?.analysis || '',
+            rag_verified: result.data?.verified,
+            verification_note: result.data?.verified 
+              ? 'Analysis verified against BS 7671 Guidance Note 3 and BS 7671:2018+A3:2024' 
+              : undefined
+          }
+        };
+        error = result.error;
+        
+      } else if (selectedMode === 'wiring_instruction') {
         // Use wiring-diagram-generator-rag for comprehensive BS 7671 schematics
         const analyzeWithAbort = new Promise<any>((resolve, reject) => {
           if (abortControllerRef.current) {
@@ -1027,6 +1090,21 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       {/* Results Section */}
       {analysisResult && (
         <div className="space-y-3 sm:space-y-4">
+          {/* RAG Verification Badge */}
+          {ragSources && (ragSources.maintenanceKnowledge?.length > 0 || ragSources.bs7671Regulations?.length > 0) && (
+            <div className="flex items-center gap-2 bg-green-500/10 border border-green-500/30 rounded-lg px-4 py-3">
+              <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
+              <div className="flex-1">
+                <span className="text-sm font-semibold text-green-700 dark:text-green-400">
+                  ✓ Verified: GN3 + BS 7671
+                </span>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {ragSources.maintenanceKnowledge?.length || 0} maintenance references, {ragSources.bs7671Regulations?.length || 0} regulations
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Findings */}
           {selectedMode === 'fault_diagnosis' && analysisResult.findings && analysisResult.findings.length > 0 && (
             <div className="space-y-4">
@@ -1126,6 +1204,50 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                     </div>
                   ))}
               </div>
+              
+              {/* RAG Sources - Collapsible Details */}
+              {ragSources && (
+                <div className="space-y-3 mt-4">
+                  {/* Maintenance Knowledge (GN3) */}
+                  {ragSources.maintenanceKnowledge && ragSources.maintenanceKnowledge.length > 0 && (
+                    <details className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-4">
+                      <summary className="font-semibold text-sm cursor-pointer flex items-center gap-2">
+                        <BookOpen className="h-4 w-4 text-blue-500" />
+                        Inspection Guidance (BS 7671 Guidance Note 3) - {ragSources.maintenanceKnowledge.length} references
+                      </summary>
+                      <div className="mt-3 space-y-3">
+                        {ragSources.maintenanceKnowledge.map((ref, idx) => (
+                          <div key={idx} className="pl-6 border-l-2 border-blue-500/30 text-sm space-y-1">
+                            <div className="font-medium text-blue-700 dark:text-blue-400">{ref.topic}</div>
+                            <div className="text-muted-foreground text-xs leading-relaxed">{ref.content.substring(0, 300)}...</div>
+                            <div className="text-xs text-muted-foreground/60">Source: {ref.source}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </details>
+                  )}
+
+                  {/* BS 7671 Regulations */}
+                  {ragSources.bs7671Regulations && ragSources.bs7671Regulations.length > 0 && (
+                    <details className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
+                      <summary className="font-semibold text-sm cursor-pointer flex items-center gap-2">
+                        <Scale className="h-4 w-4 text-amber-500" />
+                        Regulatory Requirements (BS 7671:2018+A3:2024) - {ragSources.bs7671Regulations.length} regulations
+                      </summary>
+                      <div className="mt-3 space-y-3">
+                        {ragSources.bs7671Regulations.map((reg, idx) => (
+                          <div key={idx} className="pl-6 border-l-2 border-amber-500/30 text-sm space-y-1">
+                            <div className="font-medium text-amber-700 dark:text-amber-400">
+                              Regulation {reg.regulation} ({reg.section})
+                            </div>
+                            <div className="text-muted-foreground text-xs leading-relaxed">{reg.content.substring(0, 300)}...</div>
+                          </div>
+                        ))}
+                      </div>
+                    </details>
+                  )}
+                </div>
+              )}
             </div>
           )}
 

@@ -103,3 +103,20 @@ timeout_sec = 180
 [functions.generate-temporary-pdf-link]
 verify_jwt = true
 timeout_sec = 180
+
+# AI Tooling - Visual Analysis
+[functions.visual-analysis]
+verify_jwt = false
+timeout_sec = 120
+
+[functions.visual-analysis-rag-enhanced]
+verify_jwt = false
+timeout_sec = 180
+
+[functions.visual-fault-diagnosis-rag]
+verify_jwt = false
+timeout_sec = 120
+
+[functions.wiring-diagram-generator-rag]
+verify_jwt = false
+timeout_sec = 180
