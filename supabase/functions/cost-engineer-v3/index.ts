@@ -14,6 +14,7 @@ import {
 import { parseQueryEntities, type ParsedEntities } from '../_shared/query-parser.ts';
 import { searchPricingKnowledge, formatPricingContext, searchLabourTimeKnowledge, formatLabourTimeContext } from '../_shared/rag-cost-engineer.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
+import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
@@ -934,15 +935,15 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         citations: [],                                 // Cost Engineer doesn't cite regulations
         enrichment,                                    // UI metadata
         rendering,                                     // Display hints + sources callout
-        suggestedNextAgents: (() => {
-          const { suggestNextAgents, generateContextHint } = require('../_shared/agent-suggestions.ts');
-          const previousAgentsList = previousAgentOutputs?.map((o: any) => o.agent) || [];
-          const suggestions = suggestNextAgents('cost-engineer', query, costResult.response, previousAgentsList);
-          return suggestions.map((s: any) => ({
-            ...s,
-            contextHint: generateContextHint(s.agent, 'cost-engineer', costResult)
-          }));
-        })(),
+        suggestedNextAgents: suggestNextAgents(
+          'cost-engineer',
+          query,
+          costResult.response,
+          previousAgentOutputs?.map((o: any) => o.agent) || []
+        ).map((s: any) => ({
+          ...s,
+          contextHint: generateContextHint(s.agent, 'cost-engineer', costResult)
+        })),
         metadata: {
           requestId,
           provider: useOpenAI ? 'openai' : 'lovable-ai',

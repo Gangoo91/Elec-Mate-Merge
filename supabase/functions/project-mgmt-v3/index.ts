@@ -12,6 +12,7 @@ import {
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
+import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -484,15 +485,15 @@ Include phases, resources, compliance requirements, and risk management.`;
         citations: enrichedResponse.citations,
         rendering: enrichedResponse.rendering,
         structuredData: enhancedStructuredData,
-        suggestedNextAgents: (() => {
-          const { suggestNextAgents, generateContextHint } = require('../_shared/agent-suggestions.ts');
-          const previousAgentsList = (previousAgentOutputs || []).map((o: any) => o.agent);
-          const suggestions = suggestNextAgents('project-manager', query, responseStr, previousAgentsList);
-          return suggestions.map((s: any) => ({
-            ...s,
-            contextHint: generateContextHint(s.agent, 'project-manager', enhancedStructuredData)
-          }));
-        })()
+        suggestedNextAgents: suggestNextAgents(
+          'project-manager',
+          query,
+          responseStr,
+          (previousAgentOutputs || []).map((o: any) => o.agent)
+        ).map((s: any) => ({
+          ...s,
+          contextHint: generateContextHint(s.agent, 'project-manager', enhancedStructuredData)
+        }))
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

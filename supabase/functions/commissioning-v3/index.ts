@@ -13,6 +13,7 @@ import {
   parseJsonWithRepair
 } from "../_shared/v3-core.ts";
 import { enrichResponse } from '../_shared/response-enricher.ts';
+import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -454,15 +455,15 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
         citations: enrichedResponse.citations,
         rendering: enrichedResponse.rendering,
         structuredData: { testingProcedure, certification },
-        suggestedNextAgents: (() => {
-          const { suggestNextAgents, generateContextHint } = require('../_shared/agent-suggestions.ts');
-          const previousAgentsList = (previousAgentOutputs || []).map((o: any) => o.agent);
-          const suggestions = suggestNextAgents('commissioning', query, responseStr, previousAgentsList);
-          return suggestions.map((s: any) => ({
-            ...s,
-            contextHint: generateContextHint(s.agent, 'commissioning', { testingProcedure, certification })
-          }));
-        })()
+        suggestedNextAgents: suggestNextAgents(
+          'commissioning',
+          query,
+          responseStr,
+          (previousAgentOutputs || []).map((o: any) => o.agent)
+        ).map((s: any) => ({
+          ...s,
+          contextHint: generateContextHint(s.agent, 'commissioning', { testingProcedure, certification })
+        }))
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

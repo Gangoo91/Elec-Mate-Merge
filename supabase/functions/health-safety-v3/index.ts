@@ -12,6 +12,7 @@ import {
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
+import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -540,15 +541,15 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           compliance,
           ragPreview
         },
-        suggestedNextAgents: (() => {
-          const { suggestNextAgents, generateContextHint } = require('../_shared/agent-suggestions.ts');
-          const previousAgentsList = (previousAgentOutputs || []).map((o: any) => o.agent);
-          const suggestions = suggestNextAgents('health-safety', query, responseStr, previousAgentsList);
-          return suggestions.map((s: any) => ({
-            ...s,
-            contextHint: generateContextHint(s.agent, 'health-safety', { riskAssessment, methodStatement, compliance })
-          }));
-        })()
+        suggestedNextAgents: suggestNextAgents(
+          'health-safety',
+          query,
+          responseStr,
+          (previousAgentOutputs || []).map((o: any) => o.agent)
+        ).map((s: any) => ({
+          ...s,
+          contextHint: generateContextHint(s.agent, 'health-safety', { riskAssessment, methodStatement, compliance })
+        }))
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

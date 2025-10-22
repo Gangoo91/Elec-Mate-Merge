@@ -11,6 +11,7 @@ import {
 } from '../_shared/v3-core.ts';
 import { retrieveInstallationKnowledge } from '../_shared/rag-installation.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
+import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 
 /**
  * Phase 3: Query Expansion - Add technical synonyms and variations
@@ -626,15 +627,15 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         difficultyLevel: installResult.difficultyLevel,
         compliance: installResult.compliance
       },
-      suggestedNextAgents: (() => {
-        const { suggestNextAgents, generateContextHint } = require('../_shared/agent-suggestions.ts');
-        const previousAgentsList = (previousAgentOutputs || []).map((o: any) => o.agent);
-        const suggestions = suggestNextAgents('installer', query, responseStr, previousAgentsList);
-        return suggestions.map((s: any) => ({
-          ...s,
-          contextHint: generateContextHint(s.agent, 'installer', installResult)
-        }));
-      })(),
+      suggestedNextAgents: suggestNextAgents(
+        'installer',
+        query,
+        responseStr,
+        (previousAgentOutputs || []).map((o: any) => o.agent)
+      ).map((s: any) => ({
+        ...s,
+        contextHint: generateContextHint(s.agent, 'installer', installResult)
+      })),
       metadata: {
         performanceMs: timings.total,
         breakdown: timings,
