@@ -1,4 +1,4 @@
-import { Brain, Search, Wrench, AlertTriangle, CheckCircle, Megaphone } from "lucide-react";
+import { Brain, Search, Wrench, AlertTriangle, CheckCircle, Megaphone, Calendar } from "lucide-react";
 
 export const toolOptions = [
   { 
@@ -30,6 +30,12 @@ export const toolOptions = [
     label: "Installation Verification", 
     icon: CheckCircle,
     description: "BS 7671 compliance check with pass/fail assessment"
+  },
+  { 
+    value: "maintenance-advisor", 
+    label: "Maintenance Advisor", 
+    icon: Calendar,
+    description: "Generate equipment-specific maintenance schedules from GN3 guidance"
   },
   { 
     value: "explainer", 

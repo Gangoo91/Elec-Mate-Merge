@@ -120,3 +120,11 @@ timeout_sec = 120
 [functions.wiring-diagram-generator-rag]
 verify_jwt = false
 timeout_sec = 180
+
+[functions.maintenance-plan-generator]
+verify_jwt = false
+timeout_sec = 180
+
+[functions.generate-electrical-report]
+verify_jwt = false
+timeout_sec = 120

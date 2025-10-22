@@ -29,6 +29,7 @@ import ReportWriterPage from "@/pages/electrician-tools/ai-tools/ReportWriterPag
 import RegulationsPage from "@/pages/electrician-tools/ai-tools/RegulationsPage";
 import CircuitDesignerPage from "@/pages/electrician-tools/ai-tools/CircuitDesignerPage";
 import ClientExplainerPage from "@/pages/electrician-tools/ai-tools/ClientExplainerPage";
+import MaintenanceAdvisorPage from "@/pages/electrician-tools/ai-tools/MaintenanceAdvisorPage";
 import TestingProjects from "@/pages/electrician/testing-projects";
 import SiteSafety from "@/pages/electrician-tools/SiteSafety";
 import AIRAMSPage from "@/pages/electrician-tools/AIRAMSPage";
@@ -43,6 +44,7 @@ const ElectricianRoutes = () => (
     <Route path="ai-tooling/wiring-instruction" element={<VisualAnalysisPage />} />
     <Route path="ai-tooling/fault-diagnosis" element={<VisualAnalysisPage />} />
     <Route path="ai-tooling/installation-verify" element={<VisualAnalysisPage />} />
+    <Route path="ai-tooling/maintenance-advisor" element={<MaintenanceAdvisorPage />} />
     <Route path="ai-tooling/explainer" element={<ClientExplainerPage />} />
     <Route path="business-management" element={<BusinessManagement />} />
     <Route path="compliance" element={<ComplianceManager />} />
