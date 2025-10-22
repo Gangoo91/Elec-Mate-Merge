@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, Eye, Calendar, Check, X, Receipt, User, ArrowRight } from 'lucide-react';
+import { Download, Eye, Calendar, Check, X, Receipt, User, ArrowRight, CheckCheck } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format } from 'date-fns';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface QuoteCardViewProps {
   quotes: Quote[];
@@ -18,6 +19,7 @@ interface QuoteCardViewProps {
   formatCurrency: (amount: number) => string;
   canRaiseInvoice: (quote: Quote) => boolean;
   onInvoiceAction: (quote: Quote) => void;
+  onMarkWorkComplete?: (quote: Quote) => void;
 }
 
 const QuoteCardView: React.FC<QuoteCardViewProps> = ({
@@ -32,49 +34,133 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
   formatCurrency,
   canRaiseInvoice,
   onInvoiceAction,
+  onMarkWorkComplete,
 }) => {
+  const isWorkComplete = (quote: Quote) => {
+    return quote.tags?.includes('work_done');
+  };
+
+  const getStatusInfo = (quote: Quote) => {
+    // Invoice already raised - highest priority
+    if (hasInvoiceRaised(quote)) {
+      return {
+        color: 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
+        label: '🧾 Invoiced',
+        icon: Receipt
+      };
+    }
+
+    // Work complete + Accepted = Ready to invoice
+    if (isWorkComplete(quote) && quote.acceptance_status === 'accepted') {
+      return {
+        color: 'bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300 animate-pulse',
+        label: '✅ Ready to Invoice',
+        icon: CheckCheck
+      };
+    }
+
+    // Accepted + Work pending = In progress
+    if (quote.acceptance_status === 'accepted' && !isWorkComplete(quote)) {
+      return {
+        color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300',
+        label: '🟢 Approved - Work Pending',
+        icon: Check
+      };
+    }
+
+    // Sent + Awaiting response
+    if (quote.status === 'sent' && quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected') {
+      return {
+        color: 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
+        label: '🔵 Sent - Awaiting Client',
+        icon: ArrowRight
+      };
+    }
+
+    // Rejected
+    if (quote.acceptance_status === 'rejected') {
+      return {
+        color: 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300',
+        label: '🔴 Declined',
+        icon: X
+      };
+    }
+
+    // Draft
+    if (quote.status === 'draft') {
+      return {
+        color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300',
+        label: '⚪ Draft',
+        icon: Eye
+      };
+    }
+
+    // Default
+    return {
+      color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300',
+      label: quote.status,
+      icon: Eye
+    };
+  };
+
   return (
     <div className="lg:hidden space-y-4">
-      {quotes.map((quote) => (
-        <div
-          key={quote.id}
-          id={`quote-${quote.id}`}
-          className={`relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border ${
-            quote.acceptance_status === 'accepted' 
-              ? 'border-green-500/30 border-l-4 border-l-green-500/60' 
-              : quote.acceptance_status === 'rejected'
-                ? 'border-red-500/30 border-l-4 border-l-red-500/60'
-                : 'border-primary/20 border-l-4 border-l-primary/60'
-          }`}
-        >
-          {/* Content Container */}
-          <div className="relative p-3">
-            {/* Top Row: Quote Number & Status Badge */}
-            <div className="flex items-start justify-between mb-3 pb-2 border-b border-primary/20">
-              <div className="flex flex-col gap-2 w-full">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-base sm:text-lg font-bold text-foreground">
-                    #{quote.quoteNumber}
-                  </h3>
-                  {getAcceptanceStatusBadge(quote)}
+      {quotes.map((quote) => {
+        const statusInfo = getStatusInfo(quote);
+        const StatusIcon = statusInfo.icon;
+        
+        return (
+          <div
+            key={quote.id}
+            id={`quote-${quote.id}`}
+            className={`relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border ${
+              quote.acceptance_status === 'accepted' 
+                ? 'border-green-500/30 border-l-4 border-l-green-500/60' 
+                : quote.acceptance_status === 'rejected'
+                  ? 'border-red-500/30 border-l-4 border-l-red-500/60'
+                  : 'border-primary/20 border-l-4 border-l-primary/60'
+            }`}
+          >
+            {/* Content Container */}
+            <div className="relative p-3">
+              {/* Top Row: Quote Number & Enhanced Status Badge */}
+              <div className="flex items-start justify-between mb-3 pb-2 border-b border-primary/20">
+                <div className="flex flex-col gap-2 w-full">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base sm:text-lg font-bold text-foreground">
+                      #{quote.quoteNumber}
+                    </h3>
+                    <Badge className={`text-xs ${statusInfo.color} border-0 flex items-center gap-1`}>
+                      <StatusIcon className="h-3 w-3" />
+                      {statusInfo.label}
+                    </Badge>
+                  </div>
+                  
+                  {/* Show acceptance details for accepted quotes */}
+                  {quote.acceptance_status === 'accepted' && quote.accepted_by_name && (
+                    <div className="text-xs text-muted-foreground">
+                      ✍️ Signed by {quote.accepted_by_name}
+                      {quote.accepted_at && ` on ${format(new Date(quote.accepted_at), 'dd MMM yyyy')}`}
+                    </div>
+                  )}
+                  
+                  {hasInvoiceRaised(quote) && (
+                    <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30 w-fit">
+                      <Receipt className="h-3 w-3 mr-1" />
+                      Invoice #{quote.invoice_number}
+                    </Badge>
+                  )}
                 </div>
-                {hasInvoiceRaised(quote) && (
-                  <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30 w-fit">
-                    <Receipt className="h-3 w-3 mr-1" />
-                    Invoice #{quote.invoice_number}
-                  </Badge>
-                )}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
+                  className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
+                  aria-label="View quote"
+                >
+                  <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                </Button>
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
-                className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
-                aria-label="View quote"
-              >
-                <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              </Button>
-            </div>
 
             {/* Middle Row: Client Info (left) | Date & Items (right) */}
             <div className="flex items-start justify-between mb-4 gap-3">
@@ -169,7 +255,21 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                 </>
               )}
 
-              {/* Send to Invoice - Only for ACCEPTED quotes */}
+              {/* Quick "Mark Work Complete" button for approved quotes */}
+              {quote.acceptance_status === 'accepted' && !isWorkComplete(quote) && !hasInvoiceRaised(quote) && onMarkWorkComplete && (
+                <button
+                  onClick={() => onMarkWorkComplete(quote)}
+                  disabled={loadingAction === `work-complete-${quote.id}`}
+                  className="col-span-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-600 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation font-semibold"
+                >
+                  <CheckCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="text-xs sm:text-sm">
+                    {loadingAction === `work-complete-${quote.id}` ? 'Updating...' : 'Mark Work Complete'}
+                  </span>
+                </button>
+              )}
+
+              {/* Send to Invoice - Only for work complete + accepted quotes */}
               {canRaiseInvoice(quote) && (
                 <button
                   onClick={() => onInvoiceAction(quote)}
@@ -178,14 +278,14 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                 >
                   <Receipt className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   <span className="text-xs sm:text-sm">
-                    {loadingAction === `invoice-${quote.id}` ? 'Creating...' : 'Send to Invoice'}
+                    {loadingAction === `invoice-${quote.id}` ? 'Creating...' : 'Raise Invoice'}
                   </span>
                 </button>
               )}
             </div>
           </div>
         </div>
-      ))}
+      )})}
     </div>
   );
 };

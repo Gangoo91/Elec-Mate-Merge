@@ -72,17 +72,41 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
 
   const getUnifiedStatusBadge = (quote: Quote) => {
     const acceptanceStatus = quote.acceptance_status || "pending";
+    const isWorkDone = quote.tags?.includes('work_done');
+    const hasInvoice = quote.invoice_raised === true;
     
-    // Priority: acceptance status > quote status
-    if (acceptanceStatus === "accepted") {
+    // Priority hierarchy:
+    // 1. Invoice raised
+    if (hasInvoice) {
       return (
-        <Badge className="bg-green-500 text-white border-0 hover:bg-green-600">
-          <CheckCircle className="h-3 w-3 mr-1" />
-          Accepted
+        <Badge className="bg-blue-500 text-white border-0 hover:bg-blue-600">
+          <Receipt className="h-3 w-3 mr-1" />
+          Invoiced
         </Badge>
       );
     }
     
+    // 2. Work done + accepted = ready to invoice
+    if (isWorkDone && acceptanceStatus === "accepted") {
+      return (
+        <Badge className="bg-green-500 text-white border-0 hover:bg-green-600 animate-pulse">
+          <CheckCheck className="h-3 w-3 mr-1" />
+          Ready to Invoice
+        </Badge>
+      );
+    }
+    
+    // 3. Accepted but work pending
+    if (acceptanceStatus === "accepted" && !isWorkDone) {
+      return (
+        <Badge className="bg-emerald-500 text-white border-0 hover:bg-emerald-600">
+          <CheckCircle className="h-3 w-3 mr-1" />
+          Approved - Work Pending
+        </Badge>
+      );
+    }
+    
+    // 4. Rejected
     if (acceptanceStatus === "rejected") {
       return (
         <Badge className="bg-red-500 text-white border-0 hover:bg-red-600">
@@ -92,30 +116,33 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
       );
     }
     
-    // If pending acceptance, show quote status
-    switch (quote.status) {
-      case "sent":
-        return (
-          <Badge className="bg-blue-500 text-white border-0 hover:bg-blue-600">
-            <Send className="h-3 w-3 mr-1" />
-            Sent
-          </Badge>
-        );
-      case "draft":
-        return (
-          <Badge variant="outline" className="border-muted-foreground/30">
-            <FileText className="h-3 w-3 mr-1" />
-            Draft
-          </Badge>
-        );
-      default:
-        return (
-          <Badge variant="outline" className="border-elec-yellow/50">
-            <Clock className="h-3 w-3 mr-1" />
-            Pending
-          </Badge>
-        );
+    // 5. Sent but not yet accepted/rejected
+    if (quote.status === "sent") {
+      return (
+        <Badge className="bg-blue-500 text-white border-0 hover:bg-blue-600">
+          <Send className="h-3 w-3 mr-1" />
+          Sent - Awaiting Client
+        </Badge>
+      );
     }
+    
+    // 6. Draft
+    if (quote.status === "draft") {
+      return (
+        <Badge variant="outline" className="border-muted-foreground/30">
+          <FileText className="h-3 w-3 mr-1" />
+          Draft
+        </Badge>
+      );
+    }
+    
+    // Default
+    return (
+      <Badge variant="outline" className="border-elec-yellow/50">
+        <Clock className="h-3 w-3 mr-1" />
+        Pending
+      </Badge>
+    );
   };
 
   const formatCurrency = (amount: number) => {
@@ -335,8 +362,14 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                               <XCircle className="h-3.5 w-3.5 text-red-500 shrink-0" />
                             )}
                             <span>
-                              {quote.acceptance_status === "accepted" ? "Accepted" : "Rejected"} {format(quote.accepted_at, "dd MMM yyyy")}
+                              {quote.acceptance_status === "accepted" ? "✍️ Signed" : "Rejected"} by {quote.accepted_by_name || 'client'} on {format(quote.accepted_at, "dd MMM yyyy")}
                             </span>
+                          </div>
+                        )}
+                        {quote.acceptance_status === 'accepted' && !quote.accepted_at && (
+                          <div className="text-xs text-amber-500 flex items-center gap-1">
+                            <CheckCircle className="h-3.5 w-3.5" />
+                            Awaiting digital signature
                           </div>
                         )}
                       </div>
