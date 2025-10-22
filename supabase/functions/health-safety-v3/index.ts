@@ -276,15 +276,26 @@ INSTRUCTIONS:
 8. Reference emergency procedures (HSE INDG231 for shock, CO2 for electrical fires)
 9. Include isolation per BS 7671 Section 462 with lock-off devices
 
-**PPE REQUIREMENTS - COMPREHENSIVE STRUCTURE:**
-Provide structured PPE with:
-- ppeType: Equipment name (e.g., "Safety helmet", "Insulated gloves")
-- standard: Relevant BS/EN standard (e.g., "BS EN 397", "BS EN 60903 Class 0")
-- mandatory: true for critical PPE like helmets/gloves, false for optional items
-- purpose: Specific hazards it protects against
+**PPE REQUIREMENTS - EXTRACT FROM KNOWLEDGE BASE:**
+⚠️ CRITICAL: Extract PPE requirements DIRECTLY from the H&S knowledge base provided above.
 
-Example PPE structure:
+The knowledge base contains comprehensive PPE information with BS/EN standards. You MUST:
+1. Search the knowledge base for PPE requirements relevant to this work
+2. Extract exact PPE types, standards, and purposes from the knowledge base
+3. Structure each PPE item with:
+   - itemNumber: Sequential number (1, 2, 3...)
+   - ppeType: Equipment name as stated in knowledge base
+   - standard: BS/EN standard found in knowledge base (e.g., "BS EN 397", "BS EN 60903 Class 0")
+   - mandatory: true for critical PPE (helmets, gloves, eye protection), false for optional
+   - purpose: Specific protection purpose from knowledge base
+
+4. If knowledge base contains PPE for this work type, use it (mark as mandatory: true)
+5. Only suggest additional PPE if NOT found in knowledge base (mark as mandatory: false)
+6. NEVER generate generic PPE without checking knowledge base first
+
+Example from knowledge base:
 {
+  "itemNumber": 1,
   "ppeType": "Insulated gloves",
   "standard": "BS EN 60903 Class 0",
   "mandatory": true,
@@ -382,17 +393,19 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                       afterControls: { type: 'object' }
                     }
                   },
-                  ppe: { 
-                    type: 'array', 
-                    items: { 
+                  ppeDetails: { 
+                    type: 'array',
+                    description: 'EXTRACT from knowledge base - do not generate generic PPE',
+                    items: {
                       type: 'object',
                       properties: {
-                        ppeType: { type: 'string', description: 'PPE equipment name (e.g., "Safety helmet", "Insulated gloves")' },
-                        standard: { type: 'string', description: 'BS/EN standard (e.g., "BS EN 397", "BS EN 60903 Class 0")' },
-                        mandatory: { type: 'boolean', description: 'Whether this PPE is mandatory for the work' },
-                        purpose: { type: 'string', description: 'What hazards it protects against (e.g., "Protection against electrical shock from live conductors")' }
+                        itemNumber: { type: 'number', description: 'Sequential number (1, 2, 3...)' },
+                        ppeType: { type: 'string', description: 'Equipment name from knowledge base' },
+                        standard: { type: 'string', description: 'BS/EN standard from knowledge base (e.g., BS EN 397)' },
+                        mandatory: { type: 'boolean', description: 'true if from knowledge base, false if suggested' },
+                        purpose: { type: 'string', description: 'Protection purpose from knowledge base' }
                       },
-                      required: ['ppeType', 'standard', 'mandatory', 'purpose']
+                      required: ['itemNumber', 'ppeType', 'standard', 'mandatory', 'purpose']
                     }
                   },
                   emergencyProcedures: { type: 'array', items: { type: 'string' } }
@@ -565,26 +578,30 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                     residualRisk: 6
                   }
                 ],
-                ppe: [
+                ppeDetails: [
                   {
+                    itemNumber: 1,
                     ppeType: "Safety helmet",
                     standard: "BS EN 397",
                     mandatory: true,
                     purpose: "Protection against head injuries from falling objects and impact"
                   },
                   {
+                    itemNumber: 2,
                     ppeType: "Safety boots",
                     standard: "BS EN ISO 20345 S3",
                     mandatory: true,
                     purpose: "Protection against electrical hazards, crushing, and penetration"
                   },
                   {
+                    itemNumber: 3,
                     ppeType: "Insulated gloves",
                     standard: "BS EN 60903 Class 0",
                     mandatory: true,
                     purpose: "Protection against electrical shock from live conductors up to 500V AC"
                   },
                   {
+                    itemNumber: 4,
                     ppeType: "Safety glasses",
                     standard: "BS EN 166",
                     mandatory: true,
@@ -652,18 +669,25 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     }
 
     // Validate response structure before returning
+    const riskAssessment = safetyResult.riskAssessment || {};
+    const methodStatement = safetyResult.methodStatement || {};
+    const compliance = safetyResult.compliance || {};
+    
     const validatedRiskAssessment = {
-      hazards: riskAssessment?.hazards || [],
-      ppe: riskAssessment?.ppe || [],
-      emergencyProcedures: riskAssessment?.emergencyProcedures || []
+      hazards: riskAssessment.hazards || [],
+      controls: riskAssessment.controls || [],
+      ppeDetails: riskAssessment.ppeDetails || [],
+      emergencyProcedures: riskAssessment.emergencyProcedures || []
     };
 
     logger.info('Returning validated response', {
       function: 'health-safety-v3',
       hasHazards: validatedRiskAssessment.hazards.length > 0,
       hazardCount: validatedRiskAssessment.hazards.length,
-      hasPPE: validatedRiskAssessment.ppe.length > 0,
-      ppeCount: validatedRiskAssessment.ppe.length,
+      hasControls: validatedRiskAssessment.controls.length > 0,
+      controlsCount: validatedRiskAssessment.controls.length,
+      hasPPE: validatedRiskAssessment.ppeDetails.length > 0,
+      ppeCount: validatedRiskAssessment.ppeDetails.length,
       hasEmergencyProcs: validatedRiskAssessment.emergencyProcedures.length > 0,
       emergencyProcCount: validatedRiskAssessment.emergencyProcedures.length,
       responseLength: JSON.stringify({ success: true, response, structuredData: { riskAssessment: validatedRiskAssessment } }).length
@@ -685,13 +709,37 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       ];
     }
 
-    if (!validatedRiskAssessment.ppe || validatedRiskAssessment.ppe.length === 0) {
+    if (!validatedRiskAssessment.ppeDetails || validatedRiskAssessment.ppeDetails.length === 0) {
       logger.warn('No PPE specified, adding standard electrical PPE');
-      validatedRiskAssessment.ppe = [
-        "Safety helmet to BS EN 397",
-        "Safety boots to BS EN 20345", 
-        "Insulated gloves to BS EN 60903",
-        "Safety glasses to BS EN 166"
+      validatedRiskAssessment.ppeDetails = [
+        {
+          itemNumber: 1,
+          ppeType: "Safety helmet",
+          standard: "BS EN 397",
+          mandatory: true,
+          purpose: "Protection against head injuries from falling objects and impact"
+        },
+        {
+          itemNumber: 2,
+          ppeType: "Safety boots",
+          standard: "BS EN ISO 20345 S3",
+          mandatory: true,
+          purpose: "Protection against electrical hazards, crushing, and penetration"
+        },
+        {
+          itemNumber: 3,
+          ppeType: "Insulated gloves",
+          standard: "BS EN 60903 Class 0",
+          mandatory: true,
+          purpose: "Protection against electrical shock from live conductors up to 500V AC"
+        },
+        {
+          itemNumber: 4,
+          ppeType: "Safety glasses",
+          standard: "BS EN 166",
+          mandatory: true,
+          purpose: "Eye protection against arc flash, debris, and dust"
+        }
       ];
     }
 
@@ -706,7 +754,8 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
 
     logger.info('Final validation complete', {
       hazardCount: validatedRiskAssessment.hazards.length,
-      ppeCount: validatedRiskAssessment.ppe.length,
+      controlsCount: validatedRiskAssessment.controls.length,
+      ppeCount: validatedRiskAssessment.ppeDetails.length,
       emergencyProcCount: validatedRiskAssessment.emergencyProcedures.length,
       hasAllRequiredData: true
     });

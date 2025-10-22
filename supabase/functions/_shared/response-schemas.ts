@@ -86,6 +86,21 @@ export const HEALTH_SAFETY_RESPONSE_SCHEMA = {
               residualRiskLevel: { type: "string" }
             }
           }
+        },
+        ppeDetails: {
+          type: "array",
+          description: "Structured PPE extracted from knowledge base",
+          items: {
+            type: "object",
+            properties: {
+              itemNumber: { type: "number" },
+              ppeType: { type: "string" },
+              standard: { type: "string" },
+              mandatory: { type: "boolean" },
+              purpose: { type: "string" }
+            },
+            required: ["itemNumber", "ppeType", "standard", "mandatory", "purpose"]
+          }
         }
       },
       required: ["hazards", "controls"]
