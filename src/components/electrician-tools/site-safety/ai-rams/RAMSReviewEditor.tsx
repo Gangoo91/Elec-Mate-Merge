@@ -753,7 +753,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <CardContent className="pt-3 md:pt-4 px-4">
                       <ul className="list-disc list-outside space-y-2 pl-5">
                         {ramsData.emergencyProcedures.map((proc, idx) => (
-                          <li key={idx} className="text-sm text-foreground">{proc}</li>
+                          <li key={idx} className="text-sm text-foreground text-left">{proc}</li>
                         ))}
                       </ul>
                     </CardContent>
