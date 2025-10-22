@@ -690,7 +690,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       ppeCount: validatedRiskAssessment.ppeDetails.length,
       hasEmergencyProcs: validatedRiskAssessment.emergencyProcedures.length > 0,
       emergencyProcCount: validatedRiskAssessment.emergencyProcedures.length,
-      responseLength: JSON.stringify({ success: true, response, structuredData: { riskAssessment: validatedRiskAssessment } }).length
+      responseLength: JSON.stringify({ success: true, response: safetyResult.response, structuredData: { riskAssessment: validatedRiskAssessment } }).length
     });
 
     // Validate we have the minimum required data before returning
