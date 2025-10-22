@@ -396,11 +396,21 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       let data, error;
       
       // Route to proper backend based on mode
-      // Use RAG-enhanced function for fault diagnosis with user context
-      const useRagEnhanced = selectedMode === 'fault_diagnosis' && userContext.trim().length > 10;
+      // Use RAG-enhanced function for fault diagnosis, component ID, and installation verification with user context
+      const useRagEnhanced = (
+        (selectedMode === 'fault_diagnosis' || 
+         selectedMode === 'component_identify' || 
+         selectedMode === 'installation_verify') && 
+        userContext.trim().length > 10
+      );
       
       if (useRagEnhanced) {
-        console.log('🔍 Using RAG-enhanced fault diagnosis with maintenance knowledge + BS 7671');
+        const modeLabels = {
+          fault_diagnosis: 'fault diagnosis',
+          component_identify: 'component identification',
+          installation_verify: 'installation verification'
+        };
+        console.log(`🔍 Using RAG-enhanced ${modeLabels[selectedMode]} with maintenance knowledge + BS 7671`);
         
         // Convert image to base64
         const reader = new FileReader();
@@ -425,7 +435,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             body: {
               imageBase64: base64Image,
               userContext: userContext.trim(),
-              mode: 'fault_diagnosis'
+              mode: selectedMode
             }
           }).then(resolve).catch(reject);
         });
