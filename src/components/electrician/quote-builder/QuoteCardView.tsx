@@ -20,6 +20,7 @@ interface QuoteCardViewProps {
   canRaiseInvoice: (quote: Quote) => boolean;
   onInvoiceAction: (quote: Quote) => void;
   onMarkWorkComplete?: (quote: Quote) => void;
+  onViewInvoice?: (quote: Quote) => void;
 }
 
 const QuoteCardView: React.FC<QuoteCardViewProps> = ({
@@ -35,6 +36,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
   canRaiseInvoice,
   onInvoiceAction,
   onMarkWorkComplete,
+  onViewInvoice,
 }) => {
   const isWorkComplete = (quote: Quote) => {
     return quote.tags?.includes('work_done');
@@ -144,11 +146,14 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                     </div>
                   )}
                   
-                  {hasInvoiceRaised(quote) && (
-                    <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30 w-fit">
-                      <Receipt className="h-3 w-3 mr-1" />
-                      Invoice #{quote.invoice_number}
-                    </Badge>
+                  {hasInvoiceRaised(quote) && onViewInvoice && (
+                    <button
+                      onClick={() => onViewInvoice(quote)}
+                      className="text-xs bg-blue-600/20 text-blue-300 border border-blue-600/30 hover:bg-blue-600/30 px-2 py-1 rounded-full w-fit flex items-center gap-1 transition-colors"
+                    >
+                      <Receipt className="h-3 w-3" />
+                      View Invoice #{quote.invoice_number}
+                    </button>
                   )}
                 </div>
                 <Button

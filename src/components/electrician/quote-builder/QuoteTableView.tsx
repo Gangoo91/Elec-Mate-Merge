@@ -27,6 +27,7 @@ interface QuoteTableViewProps {
   onInvoiceAction: (quote: Quote) => void;
   onShareWhatsApp: (quote: Quote) => void;
   onShareEmail: (quote: Quote) => void;
+  onViewInvoice?: (quote: Quote) => void;
 }
 
 const QuoteTableView: React.FC<QuoteTableViewProps> = ({
@@ -42,6 +43,7 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
   onInvoiceAction,
   onShareWhatsApp,
   onShareEmail,
+  onViewInvoice,
 }) => {
   if (quotes.length === 0) {
     return null;
@@ -71,14 +73,17 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                     <Badge variant="outline" className="text-xs w-fit">
                       #{quote.quoteNumber}
                     </Badge>
-                    {hasInvoiceRaised(quote) && (
-                      <div className="flex items-center gap-1">
+                    {hasInvoiceRaised(quote) && onViewInvoice && (
+                      <button 
+                        onClick={() => onViewInvoice(quote)}
+                        className="flex items-center gap-1 hover:opacity-80 transition-opacity"
+                      >
                         <ArrowRight className="h-3 w-3 text-blue-400" />
-                        <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
+                        <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30 hover:bg-blue-600/30 cursor-pointer">
                           <Receipt className="h-3 w-3 mr-1" />
-                          Invoice
+                          Invoice #{quote.invoice_number}
                         </Badge>
-                      </div>
+                      </button>
                     )}
                   </div>
                 </TableCell>
@@ -141,6 +146,16 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                         <Mail className="h-4 w-4 mr-2" />
                         Send via Email
                       </DropdownMenuItem>
+                      
+                      {hasInvoiceRaised(quote) && onViewInvoice && (
+                        <>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem onClick={() => onViewInvoice(quote)}>
+                            <Receipt className="h-4 w-4 mr-2" />
+                            View Invoice #{quote.invoice_number}
+                          </DropdownMenuItem>
+                        </>
+                      )}
                       
                       {canRaiseInvoice(quote) && (
                         <>

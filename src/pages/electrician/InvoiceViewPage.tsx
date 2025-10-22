@@ -22,6 +22,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
+import { InvoiceQuoteLink } from "@/components/electrician/invoice-builder/InvoiceQuoteLink";
 
 const InvoiceViewPage = () => {
   const { id } = useParams();
@@ -29,6 +30,7 @@ const InvoiceViewPage = () => {
   const [invoice, setInvoice] = useState<Quote | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isMarkingPaid, setIsMarkingPaid] = useState(false);
+  const [sourceQuote, setSourceQuote] = useState<Quote | null>(null);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
@@ -71,7 +73,7 @@ const InvoiceViewPage = () => {
 
       if (error) throw error;
 
-      setInvoice({
+      const quoteData = {
         id: data.id,
         quoteNumber: data.quote_number,
         client: data.client_data as any,
@@ -94,7 +96,17 @@ const InvoiceViewPage = () => {
         invoice_due_date: data.invoice_due_date ? new Date(data.invoice_due_date) : undefined,
         invoice_status: data.invoice_status as any,
         work_completion_date: data.work_completion_date ? new Date(data.work_completion_date) : undefined,
-      });
+        jobDetails: data.job_details as any,
+        acceptance_status: data.acceptance_status as any,
+        acceptance_method: data.acceptance_method as any,
+        accepted_at: data.accepted_at ? new Date(data.accepted_at) : undefined,
+        accepted_by_name: data.accepted_by_name,
+        accepted_by_email: data.accepted_by_email,
+        signature_url: data.signature_url,
+      };
+      
+      setInvoice(quoteData);
+      setSourceQuote(quoteData);
     } catch (error) {
       console.error('Error fetching invoice:', error);
       toast({
@@ -363,6 +375,9 @@ const InvoiceViewPage = () => {
 
       {/* Invoice Details */}
       <div className="grid gap-6">
+        {/* Quote Link - Show quote history and acceptance */}
+        {sourceQuote && <InvoiceQuoteLink quote={sourceQuote} />}
+        
         {/* Invoice Info */}
         <Card>
           <CardHeader>

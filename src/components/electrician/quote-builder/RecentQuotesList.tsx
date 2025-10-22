@@ -596,6 +596,12 @@ ${companyName}`;
     }
   };
 
+  const handleViewInvoice = (quote: Quote) => {
+    if (quote.invoice_raised && quote.id) {
+      navigate(`/electrician/invoices/${quote.id}`);
+    }
+  };
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
@@ -687,6 +693,7 @@ ${companyName}`;
         }}
         onShareWhatsApp={handleShareWhatsApp}
         onShareEmail={handleShareEmail}
+        onViewInvoice={handleViewInvoice}
       />
 
       {/* Mobile/Tablet Card View */}
@@ -705,6 +712,7 @@ ${companyName}`;
           setQuoteForInvoice(quote);
           setShowInvoiceDecision(true);
         }}
+        onViewInvoice={handleViewInvoice}
       />
       
       {!showAll && quotes.length > 10 && (
