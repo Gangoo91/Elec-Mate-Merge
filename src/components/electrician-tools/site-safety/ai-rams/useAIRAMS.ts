@@ -351,6 +351,17 @@ export function useAIRAMS(): UseAIRAMSReturn {
       // Start simulated progress
       simulateSubStepProgress('health-safety', HEALTH_SAFETY_SUBSTEPS);
 
+      // Health check before starting (optional - continues on failure)
+      try {
+        console.log('🏥 Checking edge function health...');
+        const healthCheck = await supabase.functions.invoke('health-safety-v3', {
+          body: { healthCheck: true }
+        });
+        console.log('✅ Health check response:', healthCheck.data);
+      } catch (healthError) {
+        console.warn('⚠️ Health check failed (continuing anyway):', healthError);
+      }
+
       const { data: hsData, error: hsError } = await callAgentWithRetry('health-safety-v3', {
         query: `Create a detailed risk assessment for the following electrical work: ${jobDescription}. Include specific hazards, risk ratings (likelihood and severity), and control measures.`,
         workType: jobScale
@@ -362,20 +373,34 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       let hsDataToUse = hsData;
 
-      // More specific error detection
+      // More specific error detection with enhanced diagnostics
       if (hsError) {
-        console.error('❌ Health & Safety network error:', hsError);
+        console.error('❌ Health & Safety network error:', {
+          error: hsError,
+          message: hsError.message,
+          name: hsError.name,
+          // Check error type
+          isFetchError: hsError.name === 'FunctionsFetchError',
+          isHttpError: hsError.name === 'FunctionsHttpError',
+          isTimeout: hsError.message?.toLowerCase().includes('timeout') || hsError.message?.toLowerCase().includes('fetch'),
+          // Full error details
+          fullError: JSON.stringify(hsError, Object.getOwnPropertyNames(hsError))
+        });
       }
       
       if (!hsData) {
-        console.error('❌ Health & Safety returned no data');
+        console.error('❌ Health & Safety returned no data', {
+          hadError: !!hsError,
+          errorType: hsError?.name
+        });
       }
       
       if (hsData && !hsData.success) {
         console.error('❌ Health & Safety returned success:false', {
           responseKeys: Object.keys(hsData),
           hasStructuredData: !!hsData.structuredData,
-          hasRiskAssessment: !!hsData.structuredData?.riskAssessment
+          hasRiskAssessment: !!hsData.structuredData?.riskAssessment,
+          structuredDataKeys: hsData.structuredData ? Object.keys(hsData.structuredData) : []
         });
       }
       
