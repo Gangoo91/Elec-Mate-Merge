@@ -261,7 +261,6 @@ DISTRIBUTION BOARDS – ENHANCED GUIDANCE REQUIRED:
 5. PRACTICAL TIPS & COMMON MISTAKES (arrays)
    - Cable management; documentation; markers; longer earth tails; typical pitfalls`
               },
-              },
               {
                 role: 'user',
                 content: `Component identified: ${componentDetails}
