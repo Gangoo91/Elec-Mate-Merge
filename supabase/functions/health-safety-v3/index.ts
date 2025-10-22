@@ -761,15 +761,13 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     });
 
     // Return enriched response
-    const { response, suggestedNextAgents } = safetyResult;
-    
     return new Response(
       JSON.stringify({
         success: true,
-        response: enrichedResponse.response,
-        enrichment: enrichedResponse.enrichment,
-        citations: enrichedResponse.citations,
-        rendering: enrichedResponse.rendering,
+        response: safetyResult.response,
+        enrichment: safetyResult.enrichment || {},
+        citations: safetyResult.citations || [],
+        rendering: safetyResult.rendering || {},
         structuredData: { 
           riskAssessment: validatedRiskAssessment, 
           methodStatement, 
@@ -779,7 +777,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         suggestedNextAgents: suggestNextAgents(
           'health-safety',
           query,
-          response,
+          safetyResult.response,
           (previousAgentOutputs || []).map((o: any) => o.agent)
         ).map((s: any) => ({
           ...s,
