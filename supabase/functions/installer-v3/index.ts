@@ -630,7 +630,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       suggestedNextAgents: suggestNextAgents(
         'installer',
         query,
-        responseStr,
+        installResult.response || '',
         (previousAgentOutputs || []).map((o: any) => o.agent)
       ).map((s: any) => ({
         ...s,

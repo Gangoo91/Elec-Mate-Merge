@@ -362,9 +362,30 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       let hsDataToUse = hsData;
 
-      // Use fallback data if H&S agent failed or returned incomplete data
-      if (hsError || !hsData?.success) {
-        console.warn('⚠️ Health & Safety agent issue, using fallback data:', { hsError, hsData });
+      // More specific error detection
+      if (hsError) {
+        console.error('❌ Health & Safety network error:', hsError);
+      }
+      
+      if (!hsData) {
+        console.error('❌ Health & Safety returned no data');
+      }
+      
+      if (hsData && !hsData.success) {
+        console.error('❌ Health & Safety returned success:false', {
+          responseKeys: Object.keys(hsData),
+          hasStructuredData: !!hsData.structuredData,
+          hasRiskAssessment: !!hsData.structuredData?.riskAssessment
+        });
+      }
+      
+      // Use fallback only if truly necessary
+      if (hsError || !hsData || !hsData.success || !hsData.structuredData?.riskAssessment) {
+        console.warn('⚠️ Health & Safety agent issue, using fallback data:', { 
+          hsError: hsError?.message, 
+          hasData: !!hsData,
+          dataKeys: hsData ? Object.keys(hsData) : []
+        });
         hsDataToUse = {
           success: true,
           structuredData: {

@@ -144,12 +144,29 @@ serve(async (req) => {
       avgScore: hsKnowledge.healthSafetyDocs?.length > 0 ? (hsKnowledge.healthSafetyDocs.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / hsKnowledge.healthSafetyDocs.length).toFixed(3) : 'N/A'
     });
 
-    // Step 3: Build H&S context
-    const hsContext = hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0
-      ? hsKnowledge.healthSafetyDocs.map((hs: any) => 
-          `${hs.topic}: ${hs.content}`
-        ).join('\n\n')
-      : 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
+    // Step 3: Build H&S context with error handling
+    let hsContext: string;
+    try {
+      logger.info('Building H&S context from RAG results');
+      
+      hsContext = hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0
+        ? hsKnowledge.healthSafetyDocs.map((hs: any) => 
+            `${hs.topic}: ${hs.content}`
+          ).join('\n\n')
+        : 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
+      
+      logger.info('Context built successfully', {
+        hsContextLength: hsContext.length
+      });
+    } catch (contextError) {
+      logger.error('Failed to build context', {
+        error: contextError instanceof Error ? contextError.message : String(contextError),
+        stack: contextError instanceof Error ? contextError.stack : undefined
+      });
+      
+      // Provide minimal fallback to continue processing
+      hsContext = 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
+    }
 
     // Build HIGH-LEVEL INSTALL KNOWLEDGE from installer output
     let installKnowledge = '';
@@ -272,17 +289,20 @@ ${hazards ? `Known Hazards: ${hazards.join(', ')}` : ''}
 
 Include all safety controls, PPE requirements, and emergency procedures.`;
 
-    // Step 4: Call AI with optimized timeout
+    // Step 4: Call AI with optimized timeout and error handling
     logger.info('💭 THINKING: Assessing likelihood and severity of identified hazards');
+    logger.info('Starting AI call with timeout protection');
     logger.debug('Calling AI with wrapper');
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
-    const aiResult = await callAI(OPENAI_API_KEY!, {
-      model: 'gpt-5-2025-08-07',
-      systemPrompt,
-      userPrompt,
-      maxTokens: 15000,
-      timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
+    let aiResult;
+    try {
+      aiResult = await callAI(OPENAI_API_KEY!, {
+        model: 'gpt-5-2025-08-07',
+        systemPrompt,
+        userPrompt,
+        maxTokens: 15000,
+        timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
       tools: [{
         type: 'function',
         function: {
@@ -476,7 +496,20 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         }
       }],
       toolChoice: { type: 'function', function: { name: 'provide_safety_assessment' } }
-    });
+      });
+      
+      logger.info('AI call completed successfully');
+      
+    } catch (aiError) {
+      logger.error('AI call failed', {
+        error: aiError instanceof Error ? aiError.message : String(aiError),
+        stack: aiError instanceof Error ? aiError.stack : undefined,
+        promptLength: systemPrompt.length + userPrompt.length
+      });
+      
+      // Re-throw to be caught by outer handler
+      throw aiError;
+    }
 
     // AI wrapper already extracts tool call arguments as JSON string
     // Just parse it directly - no need to navigate through choices/message/tool_calls
@@ -534,12 +567,14 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     };
 
     logger.info('Returning validated response', {
+      function: 'health-safety-v3',
       hasHazards: validatedRiskAssessment.hazards.length > 0,
       hazardCount: validatedRiskAssessment.hazards.length,
       hasPPE: validatedRiskAssessment.ppe.length > 0,
       ppeCount: validatedRiskAssessment.ppe.length,
       hasEmergencyProcs: validatedRiskAssessment.emergencyProcedures.length > 0,
-      emergencyProcCount: validatedRiskAssessment.emergencyProcedures.length
+      emergencyProcCount: validatedRiskAssessment.emergencyProcedures.length,
+      responseLength: JSON.stringify({ success: true, response, structuredData: { riskAssessment: validatedRiskAssessment } }).length
     });
 
     // Return enriched response
