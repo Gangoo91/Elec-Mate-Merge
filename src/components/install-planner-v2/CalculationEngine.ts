@@ -232,18 +232,18 @@ const generateMaterialsList = (
   // Ensure minimum 1.5mm² for lighting circuits (industry standard)
   const effectiveCableSize = cableSize < 1.5 ? 1.5 : cableSize;
   
-  // Get pricing for materials
+  // Get pricing for materials - UPDATED 2025 UK MARKET RATES
   const getCablePricePerMeter = (type: CableType, size: number): number => {
     const prices: Record<CableType, Record<number, number>> = {
-      'pvc-twin-earth': { 1.5: 1.50, 2.5: 2.50, 4: 3.80, 6: 5.00, 10: 8.50, 16: 13.50, 25: 21.00, 35: 28.00 },
-      'pvc-single': { 1.5: 3.80, 2.5: 4.50, 4: 5.80, 6: 7.20, 10: 11.50, 16: 17.00, 25: 26.00, 35: 15.00 },
-      'swa': { 1.5: 4.80, 2.5: 6.20, 4: 8.50, 6: 11.20, 10: 17.50, 16: 26.00, 25: 38.00, 35: 52.00 },
-      'xlpe-twin-earth': { 1.5: 1.80, 2.5: 3.00, 4: 4.50, 6: 6.00, 10: 10.00, 16: 16.00, 25: 25.00, 35: 34.00 },
-      'xlpe-single': { 1.5: 0.75, 2.5: 1.20, 4: 1.75, 6: 2.40, 10: 4.00, 16: 6.20, 25: 9.80, 35: 13.20 },
-      'micc': { 1.5: 3.80, 2.5: 5.50, 4: 7.20, 6: 9.50, 10: 15.00, 16: 23.00, 25: 35.00 },
-      'aluminium-xlpe': { 16: 4.50, 25: 7.00, 35: 9.50, 50: 13.00, 70: 18.00, 95: 24.00 }
+      'pvc-twin-earth': { 1.0: 0.85, 1.5: 1.05, 2.5: 1.65, 4: 2.45, 6: 3.55, 10: 5.85, 16: 9.20, 25: 14.50, 35: 19.80 },
+      'pvc-single': { 1.5: 2.80, 2.5: 3.25, 4: 4.20, 6: 5.50, 10: 8.50, 16: 12.50, 25: 19.00, 35: 26.00 },
+      'swa': { 1.5: 3.80, 2.5: 4.85, 4: 6.50, 6: 8.80, 10: 13.50, 16: 20.00, 25: 29.50, 35: 40.00 },
+      'xlpe-twin-earth': { 1.5: 1.35, 2.5: 2.15, 4: 3.20, 6: 4.50, 10: 7.50, 16: 12.00, 25: 19.00, 35: 26.00 },
+      'xlpe-single': { 1.5: 0.65, 2.5: 0.95, 4: 1.35, 6: 1.90, 10: 3.15, 16: 4.90, 25: 7.80, 35: 10.50 },
+      'micc': { 1.5: 3.20, 2.5: 4.50, 4: 5.90, 6: 7.80, 10: 12.50, 16: 19.00, 25: 29.00 },
+      'aluminium-xlpe': { 16: 3.50, 25: 5.50, 35: 7.50, 50: 10.50, 70: 14.50, 95: 19.50 }
     };
-    return prices[type]?.[size] || 2.50;
+    return prices[type]?.[size] || 1.65;
   };
 
   const cablePricePerMeter = getCablePricePerMeter(cableType, effectiveCableSize);
@@ -423,21 +423,21 @@ const generateCostEstimate = (
   cableType: CableType,
   installationMethod: string
 ): { materials: number; labour: number; total: number; breakdown: { item: string; cost: number }[] } => {
-  // UK market prices (September 2025 - ACCURATE)
+  // UK market prices (September 2025 - CORRECTED REAL MARKET RATES)
   // Cable prices per meter based on cable type
   const getCablePricePerMeter = (type: CableType, size: number): number => {
     const prices: Record<CableType, Record<number, number>> = {
       'pvc-twin-earth': {
-        1.0: 1.20, 1.5: 1.50, 2.5: 2.50, 4: 3.80, 6: 5.00,
-        10: 8.50, 16: 13.50, 25: 21.00, 35: 28.00, 50: 39.00
+        1.0: 0.85, 1.5: 1.05, 2.5: 1.65, 4: 2.45, 6: 3.55,
+        10: 5.85, 16: 9.20, 25: 14.50, 35: 19.80, 50: 27.50
       },
       'xlpe-twin-earth': {
-        1.0: 1.50, 1.5: 1.80, 2.5: 3.00, 4: 4.50, 6: 6.00,
-        10: 10.00, 16: 16.00, 25: 25.00, 35: 34.00, 50: 47.00
+        1.0: 1.05, 1.5: 1.35, 2.5: 2.15, 4: 3.20, 6: 4.50,
+        10: 7.50, 16: 12.00, 25: 19.00, 35: 26.00, 50: 36.00
       },
       'swa': {
-        1.5: 4.80, 2.5: 6.20, 4: 8.50, 6: 11.20, 10: 17.50,
-        16: 26.00, 25: 38.00, 35: 52.00, 50: 68.00
+        1.5: 3.80, 2.5: 4.85, 4: 6.50, 6: 8.80, 10: 13.50,
+        16: 20.00, 25: 29.50, 35: 40.00, 50: 52.00
       },
       'pvc-single': { // FP200 Gold fire-rated cable pricing (2025 UK market rates)
         1.0: 3.20, 1.5: 3.80, 2.5: 4.50, 4: 5.80, 6: 7.20,

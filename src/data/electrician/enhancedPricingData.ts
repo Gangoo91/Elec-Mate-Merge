@@ -118,11 +118,11 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 1.15,
+    defaultPrice: 0.85, // Real 2025 UK market price
     code: "TE1.0",
     brand: "Generic Trade",
-    priceSource: "CEF/Rexel average trade pricing",
-    lastUpdated: "2025-01-15",
+    priceSource: "Screwfix/CEF 2025 market rate",
+    lastUpdated: "2025-09-15",
     confidenceLevel: "high",
     quantityTiers: [
       { minQty: 1, discount: 0 },
@@ -133,8 +133,32 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     estimatedInstallTime: 2,
     wasteFactor: 0.15,
     weight: 0.08,
-    alternatives: ["cable-te-1.0-premium"],
+    alternatives: ["cable-te-1.5"],
     commonlyBoughtWith: ["socket-13a-dp", "switch-1g-2w"]
+  },
+  {
+    id: "cable-te-1.5",
+    name: "1.5mm² Twin & Earth Cable",
+    category: "cables",
+    subcategory: "Twin & Earth",
+    unit: "metre",
+    defaultPrice: 1.05, // Real 2025 UK market price
+    code: "TE1.5",
+    brand: "Generic Trade",
+    priceSource: "Screwfix/CEF 2025 market rate",
+    lastUpdated: "2025-09-15",
+    confidenceLevel: "high",
+    quantityTiers: [
+      { minQty: 1, discount: 0 },
+      { minQty: 50, discount: 8 },
+      { minQty: 100, discount: 12 }
+    ],
+    installationDifficulty: "easy",
+    estimatedInstallTime: 2,
+    wasteFactor: 0.15,
+    weight: 0.12,
+    alternatives: ["cable-te-2.5"],
+    commonlyBoughtWith: ["switch-1g-2w", "mcb-6a-b"]
   },
   {
     id: "cable-te-2.5",
@@ -142,11 +166,11 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 2.05,
+    defaultPrice: 1.65, // Real 2025 UK market price (was £2.05)
     code: "TE2.5",
     brand: "Generic Trade",
-    priceSource: "CEF/Rexel average trade pricing",
-    lastUpdated: "2025-01-15",
+    priceSource: "Screwfix/CEF 2025 market rate",
+    lastUpdated: "2025-09-15",
     confidenceLevel: "high",
     quantityTiers: [
       { minQty: 1, discount: 0 },
@@ -157,7 +181,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     estimatedInstallTime: 2,
     wasteFactor: 0.15,
     weight: 0.15,
-    alternatives: ["cable-te-2.5-premium"],
+    alternatives: ["cable-te-4.0"],
     commonlyBoughtWith: ["socket-13a-dp", "mcb-20a-b"]
   },
   {
@@ -166,19 +190,59 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 3.25,
+    defaultPrice: 2.45, // Real 2025 UK market price (was £3.25)
     code: "TE4.0",
     brand: "Generic Trade",
-    priceSource: "CEF/Rexel average trade pricing",
-    lastUpdated: "2025-01-15",
+    priceSource: "Screwfix/CEF 2025 market rate",
+    lastUpdated: "2025-09-15",
     confidenceLevel: "high",
     quantityTiers: standardQuantityTiers,
     installationDifficulty: "medium",
     estimatedInstallTime: 3,
     wasteFactor: 0.15,
     weight: 0.25,
-    alternatives: ["cable-te-4.0-premium"],
+    alternatives: ["cable-te-6.0"],
     commonlyBoughtWith: ["mcb-32a-b", "rcbo-32a"]
+  },
+  {
+    id: "cable-te-6.0",
+    name: "6.0mm² Twin & Earth Cable",
+    category: "cables",
+    subcategory: "Twin & Earth",
+    unit: "metre",
+    defaultPrice: 3.55, // Real 2025 UK market price
+    code: "TE6.0",
+    brand: "Generic Trade",
+    priceSource: "Screwfix/CEF 2025 market rate",
+    lastUpdated: "2025-09-15",
+    confidenceLevel: "high",
+    quantityTiers: standardQuantityTiers,
+    installationDifficulty: "medium",
+    estimatedInstallTime: 3,
+    wasteFactor: 0.15,
+    weight: 0.38,
+    alternatives: ["cable-te-10.0"],
+    commonlyBoughtWith: ["mcb-40a-b", "cooker-switch"]
+  },
+  {
+    id: "cable-te-10.0",
+    name: "10.0mm² Twin & Earth Cable",
+    category: "cables",
+    subcategory: "Twin & Earth",
+    unit: "metre",
+    defaultPrice: 5.85, // Real 2025 UK market price
+    code: "TE10.0",
+    brand: "Generic Trade",
+    priceSource: "Screwfix/CEF 2025 market rate",
+    lastUpdated: "2025-09-15",
+    confidenceLevel: "high",
+    quantityTiers: standardQuantityTiers,
+    installationDifficulty: "medium",
+    estimatedInstallTime: 4,
+    wasteFactor: 0.15,
+    weight: 0.62,
+    alternatives: ["cable-te-16.0"],
+    commonlyBoughtWith: ["mcb-50a-b", "cooker-switch"]
   },
 
   // Accessories - Enhanced with smart pricing
