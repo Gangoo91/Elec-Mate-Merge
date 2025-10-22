@@ -1040,60 +1040,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         </CardContent>
       </Card>
 
-      {/* AI Response JSON Display - Developer/Debug Section */}
-      {(rawHSResponse || rawInstallerResponse) && (
-        <Card className="border-0 md:border md:border-blue-500/30 bg-slate-900/30 md:bg-slate-900/50 shadow-none rounded-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-blue-400">
-                <Code className="h-5 w-5" />
-                AI Response Data (Debug)
-              </span>
-              <Button
-                onClick={() => {
-                  const debugData = {
-                    timestamp: new Date().toISOString(),
-                    rawResponses: {
-                      healthSafety: rawHSResponse,
-                      installer: rawInstallerResponse
-                    },
-                    transformedData: {
-                      ramsData,
-                      methodData
-                    },
-                    dataMapping: {
-                      hazardsIdentified: ramsData.hazards?.length || 0,
-                      risksGenerated: ramsData.risks?.length || 0,
-                      methodSteps: methodData.steps?.length || 0,
-                      linkedHazards: methodData.steps?.filter(s => s.linkedHazards?.length > 0).length || 0,
-                      ppeItems: ramsData.requiredPPE?.length || 0,
-                      emergencyProcedures: ramsData.emergencyProcedures?.length || 0,
-                      practicalTips: methodData.practicalTips?.length || 0,
-                      commonMistakes: methodData.commonMistakes?.length || 0,
-                      toolsRequired: methodData.toolsRequired?.length || 0,
-                      materialsRequired: methodData.materialsRequired?.length || 0,
-                      complianceRegulations: ramsData.complianceRegulations?.length || 0
-                    }
-                  };
-                  
-                  navigator.clipboard.writeText(JSON.stringify(debugData, null, 2));
-                  toast({
-                    title: 'Debug Data Copied',
-                    description: 'Complete AI response data copied to clipboard',
-                    variant: 'default'
-                  });
-                }}
-                size="sm"
-                variant="outline"
-                className="border-blue-500/30"
-              >
-                <Copy className="h-4 w-4 mr-2" />
-                Copy Debug JSON
-              </Button>
-            </CardTitle>
-          </CardHeader>
-        </Card>
-      )}
 
       {/* Modals and Sheets */}
       <PDFGenerationModal
