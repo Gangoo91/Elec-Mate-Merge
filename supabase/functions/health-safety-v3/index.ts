@@ -545,7 +545,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         suggestedNextAgents: suggestNextAgents(
           'health-safety',
           query,
-          responseStr,
+          response,
           (previousAgentOutputs || []).map((o: any) => o.agent)
         ).map((s: any) => ({
           ...s,
