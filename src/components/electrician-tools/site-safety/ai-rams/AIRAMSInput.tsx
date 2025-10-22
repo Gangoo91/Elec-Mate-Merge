@@ -4,7 +4,7 @@ import { MobileButton } from '@/components/ui/mobile-button';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { Textarea } from '@/components/ui/textarea';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Sparkles, Zap, HardHat, FileWarning, ChevronDown, Shield } from 'lucide-react';
+import { Sparkles, Zap, HardHat, FileWarning, ChevronDown, Shield, TestTube2 } from 'lucide-react';
 import { JobScaleBadge } from './JobScaleBadge';
 
 export interface AIRAMSInputProps {
@@ -115,6 +115,26 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       const finalScale = manualScale || detectedScale;
       onGenerate(jobDescription, projectInfo, finalScale);
     }
+  };
+
+  const loadMockData = () => {
+    setJobDescription('Install new 3-phase distribution board in warehouse with additional socket circuits, emergency lighting, and fire alarm panel upgrade. Work includes cable containment, trunking installation, and testing of existing circuits.');
+    setProjectInfo({
+      projectName: 'Industrial Warehouse Electrical Upgrade',
+      location: 'Unit 12, Riverside Industrial Estate, Manchester',
+      assessor: 'John Smith',
+      contractor: 'Elite Electrical Solutions Ltd',
+      supervisor: 'Sarah Johnson',
+      siteManagerName: 'Michael Brown',
+      siteManagerPhone: '07892 123456',
+      firstAiderName: 'Emma Wilson',
+      firstAiderPhone: '07891 234567',
+      safetyOfficerName: 'David Taylor',
+      safetyOfficerPhone: '07890 345678',
+      assemblyPoint: 'Main car park near site entrance'
+    });
+    setManualScale('industrial');
+    setShowEmergencyContacts(true);
   };
 
   const isFormValid = jobDescription.trim() && projectInfo.projectName.trim();
@@ -357,7 +377,17 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       </Card>
 
       {/* Enhanced Generate Button */}
-      <div className="mt-6">
+      <div className="mt-6 space-y-4">
+        <MobileButton
+          onClick={loadMockData}
+          disabled={isProcessing}
+          variant="outline"
+          className="w-full border-primary/40 hover:border-primary hover:bg-primary/10 text-primary"
+        >
+          <TestTube2 className="h-5 w-5 mr-2" />
+          Load Test Data
+        </MobileButton>
+        
         <MobileButton
           onClick={handleSubmit}
           disabled={!isFormValid || isProcessing}
