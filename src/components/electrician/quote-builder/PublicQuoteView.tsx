@@ -151,7 +151,7 @@ const PublicQuoteView = () => {
           accepted_ip: await getUserIP(),
           accepted_user_agent: navigator.userAgent,
           signature_url: publicUrl,
-          status: "completed"
+          status: "approved"
         })
         .eq("id", quote.id);
 

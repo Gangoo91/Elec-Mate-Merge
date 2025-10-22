@@ -47,6 +47,45 @@ export const QuoteSendDropdown = ({
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
+  // Generate or retrieve public token for quote acceptance
+  const getOrCreatePublicToken = async (): Promise<string | null> => {
+    try {
+      // Check if public token already exists
+      const { data: existingView } = await supabase
+        .from('quote_views')
+        .select('public_token')
+        .eq('quote_id', quote.id)
+        .eq('is_active', true)
+        .maybeSingle();
+
+      if (existingView?.public_token) {
+        return existingView.public_token;
+      }
+
+      // Generate new token
+      const newToken = crypto.randomUUID().replace(/-/g, '').substring(0, 20);
+      
+      const { error } = await supabase
+        .from('quote_views')
+        .insert({
+          quote_id: quote.id,
+          public_token: newToken,
+          is_active: true,
+          view_count: 0
+        });
+
+      if (error) {
+        console.error('Error creating public token:', error);
+        return null;
+      }
+
+      return newToken;
+    } catch (error) {
+      console.error('Error in getOrCreatePublicToken:', error);
+      return null;
+    }
+  };
+
   const handleSendEmail = async () => {
     try {
       setIsSendingEmail(true);
@@ -175,7 +214,13 @@ export const QuoteSendDropdown = ({
       // Create email subject
       const subject = `Quote ${quote.quoteNumber} from ${companyName}`;
 
-      // Create email body with PDF link
+      // Get or create public token for acceptance link
+      const publicToken = await getOrCreatePublicToken();
+      const acceptanceLink = publicToken 
+        ? `${window.location.origin}/public-quote/${publicToken}`
+        : null;
+
+      // Create email body with PDF link and acceptance link
       const body = `Dear ${clientName},
 
 Thank you for your enquiry. Please find your quotation for ${jobTitle}.
@@ -185,7 +230,7 @@ Thank you for your enquiry. Please find your quotation for ${jobTitle}.
 • Total Amount: ${formatCurrency(totalAmount)}
 • Valid Until: ${validityDate}
 
-📥 Download Quote (PDF):
+${acceptanceLink ? `✍️ Review & Accept Quote Online:\n${acceptanceLink}\n\n` : ''}📥 Download Quote (PDF):
 ${pdfUrl}
 
 This quote is valid for 30 days from the date of issue. If you have any questions or would like to proceed, please don't hesitate to contact us.
@@ -331,6 +376,12 @@ ${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\
         : freshQuote.job_details;
       const jobTitle = jobDetails?.title || 'Electrical Work';
       
+      // Get or create public token for acceptance link
+      const publicToken = await getOrCreatePublicToken();
+      const acceptanceLink = publicToken 
+        ? `${window.location.origin}/public-quote/${publicToken}`
+        : null;
+      
       const message = `📋 *Quote ${freshQuote.quote_number}*
 
 Dear ${clientName},
@@ -340,7 +391,7 @@ Please find your quote for ${jobTitle}
 💰 Total Amount: ${formatCurrency(totalAmount)}
 Valid until: ${validityDate}
 
-📥 Download Quote (PDF):
+${acceptanceLink ? `✍️ Review & Accept Online:\n${acceptanceLink}\n\n` : ''}📥 Download Quote (PDF):
 ${pdfDownloadUrl}
 
 If you have any questions, please don't hesitate to contact us.

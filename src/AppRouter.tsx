@@ -47,6 +47,7 @@ const AppRouter = () => {
       <Route path="/auth/signin" element={<SignIn />} />
       <Route path="/auth/signup" element={<SignUp />} />
       <Route path="/quote/:token" element={<PublicQuote />} />
+      <Route path="/public-quote/:token" element={<PublicQuote />} />
       <Route path="/pdf-generator" element={<LaTeXPDFGeneratorPage />} />
       
       {/* Legacy/Direct Access Routes - Redirect to proper paths */}
