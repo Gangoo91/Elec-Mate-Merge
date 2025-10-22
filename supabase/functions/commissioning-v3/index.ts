@@ -454,7 +454,15 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
         citations: enrichedResponse.citations,
         rendering: enrichedResponse.rendering,
         structuredData: { testingProcedure, certification },
-        suggestedNextAgents: suggestedNextAgents || []
+        suggestedNextAgents: (() => {
+          const { suggestNextAgents, generateContextHint } = require('../_shared/agent-suggestions.ts');
+          const previousAgentsList = (previousAgentOutputs || []).map((o: any) => o.agent);
+          const suggestions = suggestNextAgents('commissioning', query, responseStr, previousAgentsList);
+          return suggestions.map((s: any) => ({
+            ...s,
+            contextHint: generateContextHint(s.agent, 'commissioning', { testingProcedure, certification })
+          }));
+        })()
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

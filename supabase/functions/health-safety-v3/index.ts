@@ -540,7 +540,15 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           compliance,
           ragPreview
         },
-        suggestedNextAgents: suggestedNextAgents || []
+        suggestedNextAgents: (() => {
+          const { suggestNextAgents, generateContextHint } = require('../_shared/agent-suggestions.ts');
+          const previousAgentsList = (previousAgentOutputs || []).map((o: any) => o.agent);
+          const suggestions = suggestNextAgents('health-safety', query, responseStr, previousAgentsList);
+          return suggestions.map((s: any) => ({
+            ...s,
+            contextHint: generateContextHint(s.agent, 'health-safety', { riskAssessment, methodStatement, compliance })
+          }));
+        })()
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

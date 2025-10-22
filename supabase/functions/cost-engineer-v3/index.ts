@@ -934,6 +934,15 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         citations: [],                                 // Cost Engineer doesn't cite regulations
         enrichment,                                    // UI metadata
         rendering,                                     // Display hints + sources callout
+        suggestedNextAgents: (() => {
+          const { suggestNextAgents, generateContextHint } = require('../_shared/agent-suggestions.ts');
+          const previousAgentsList = previousAgentOutputs?.map((o: any) => o.agent) || [];
+          const suggestions = suggestNextAgents('cost-engineer', query, costResult.response, previousAgentsList);
+          return suggestions.map((s: any) => ({
+            ...s,
+            contextHint: generateContextHint(s.agent, 'cost-engineer', costResult)
+          }));
+        })(),
         metadata: {
           requestId,
           provider: useOpenAI ? 'openai' : 'lovable-ai',

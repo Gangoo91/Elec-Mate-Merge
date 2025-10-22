@@ -484,7 +484,15 @@ Include phases, resources, compliance requirements, and risk management.`;
         citations: enrichedResponse.citations,
         rendering: enrichedResponse.rendering,
         structuredData: enhancedStructuredData,
-        suggestedNextAgents: suggestedNextAgents || []
+        suggestedNextAgents: (() => {
+          const { suggestNextAgents, generateContextHint } = require('../_shared/agent-suggestions.ts');
+          const previousAgentsList = (previousAgentOutputs || []).map((o: any) => o.agent);
+          const suggestions = suggestNextAgents('project-manager', query, responseStr, previousAgentsList);
+          return suggestions.map((s: any) => ({
+            ...s,
+            contextHint: generateContextHint(s.agent, 'project-manager', enhancedStructuredData)
+          }));
+        })()
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
