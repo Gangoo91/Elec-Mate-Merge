@@ -30,6 +30,7 @@ serve(async (req) => {
 
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'health-safety-v3' });
+  const requestStart = Date.now();
 
   try {
     const body = await req.json();
@@ -510,7 +511,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     );
 
     // Log RAG metrics for observability
-    const totalTime = Date.now() - requestId;
+    const totalTime = Date.now() - requestStart;
     const { error: metricsError } = await supabase.from('agent_metrics').insert({
       function_name: 'health-safety-v3',
       request_id: requestId,
