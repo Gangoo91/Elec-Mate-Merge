@@ -901,6 +901,145 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         </CardContent>
       </Card>
 
+      {/* PDF MONKEY PAYLOAD DEBUG PANEL */}
+      <Card className="border-2 border-amber-500/50 bg-amber-950/20 shadow-lg rounded-lg">
+        <CardHeader className="bg-amber-500/10">
+          <CardTitle className="flex items-center gap-2 text-amber-400">
+            <span className="text-xl">🔍</span>
+            PDF Monkey Payload Inspector
+            <span className="ml-auto text-xs bg-amber-500/20 px-2 py-1 rounded">Live Data</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-6 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* RAMS Data Summary */}
+            <div className="space-y-2">
+              <h4 className="text-sm font-semibold text-amber-300 flex items-center gap-2">
+                📊 RAMS Data Summary
+              </h4>
+              <div className="bg-slate-950/50 p-3 rounded text-xs space-y-1 font-mono text-slate-300">
+                <div className="flex justify-between">
+                  <span>Project:</span>
+                  <span className="text-blue-400">{ramsData.projectName || 'N/A'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Risks:</span>
+                  <span className="text-green-400">{ramsData.risks?.length || 0}</span>
+                </div>
+                <div className="flex justify-between border-t border-amber-500/20 pt-1 mt-1">
+                  <span>PPE Details:</span>
+                  <span className={ramsData.ppeDetails?.length ? 'text-green-400' : 'text-red-400'}>
+                    {ramsData.ppeDetails?.length || 0} items {ramsData.ppeDetails?.length ? '✅' : '❌'}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Required PPE:</span>
+                  <span className={ramsData.requiredPPE?.length ? 'text-green-400' : 'text-red-400'}>
+                    {ramsData.requiredPPE?.length || 0} items {ramsData.requiredPPE?.length ? '✅' : '❌'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Method Statement Data Summary */}
+            <div className="space-y-2">
+              <h4 className="text-sm font-semibold text-amber-300 flex items-center gap-2">
+                📋 Method Statement Summary
+              </h4>
+              <div className="bg-slate-950/50 p-3 rounded text-xs space-y-1 font-mono text-slate-300">
+                <div className="flex justify-between">
+                  <span>Job Title:</span>
+                  <span className="text-blue-400 truncate ml-2">{methodData.jobTitle || 'N/A'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Steps:</span>
+                  <span className="text-green-400">{methodData.steps?.length || 0}</span>
+                </div>
+                <div className="flex justify-between border-t border-amber-500/20 pt-1 mt-1">
+                  <span>Tools Required:</span>
+                  <span className={methodData.toolsRequired?.length ? 'text-green-400' : 'text-red-400'}>
+                    {methodData.toolsRequired?.length || 0} items {methodData.toolsRequired?.length ? '✅' : '❌'}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Practical Tips:</span>
+                  <span className={methodData.practicalTips?.length ? 'text-green-400' : 'text-red-400'}>
+                    {methodData.practicalTips?.length || 0} items {methodData.practicalTips?.length ? '✅' : '❌'}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Common Mistakes:</span>
+                  <span className={methodData.commonMistakes?.length ? 'text-green-400' : 'text-red-400'}>
+                    {methodData.commonMistakes?.length || 0} items {methodData.commonMistakes?.length ? '✅' : '❌'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Expandable JSON Views */}
+          <Accordion type="multiple" className="w-full">
+            <AccordionItem value="ppe-details">
+              <AccordionTrigger className="text-amber-300 text-sm hover:text-amber-200">
+                🔍 View PPE Details Array ({ramsData.ppeDetails?.length || 0} items)
+              </AccordionTrigger>
+              <AccordionContent>
+                <pre className="bg-slate-950/50 p-3 rounded text-xs font-mono text-green-400 overflow-x-auto max-h-60 overflow-y-auto">
+                  {JSON.stringify(ramsData.ppeDetails || [], null, 2)}
+                </pre>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="tools-required">
+              <AccordionTrigger className="text-amber-300 text-sm hover:text-amber-200">
+                🔧 View Tools Required Array ({methodData.toolsRequired?.length || 0} items)
+              </AccordionTrigger>
+              <AccordionContent>
+                <pre className="bg-slate-950/50 p-3 rounded text-xs font-mono text-green-400 overflow-x-auto max-h-60 overflow-y-auto">
+                  {JSON.stringify(methodData.toolsRequired || [], null, 2)}
+                </pre>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="practical-tips">
+              <AccordionTrigger className="text-amber-300 text-sm hover:text-amber-200">
+                💡 View Practical Tips Array ({methodData.practicalTips?.length || 0} items)
+              </AccordionTrigger>
+              <AccordionContent>
+                <pre className="bg-slate-950/50 p-3 rounded text-xs font-mono text-green-400 overflow-x-auto max-h-60 overflow-y-auto">
+                  {JSON.stringify(methodData.practicalTips || [], null, 2)}
+                </pre>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="full-payload">
+              <AccordionTrigger className="text-amber-300 text-sm hover:text-amber-200 font-bold">
+                📦 View Complete PDF Monkey Payload (Full JSON)
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-2">
+                  <p className="text-xs text-amber-400/80">This is the exact JSON being sent to the edge function:</p>
+                  <pre className="bg-slate-950/50 p-4 rounded text-xs font-mono text-cyan-400 overflow-x-auto max-h-96 overflow-y-auto border border-cyan-500/30">
+                    {JSON.stringify({ ramsData, methodData }, null, 2)}
+                  </pre>
+                  <Button 
+                    onClick={() => {
+                      navigator.clipboard.writeText(JSON.stringify({ ramsData, methodData }, null, 2));
+                      toast({ title: 'Copied!', description: 'Payload copied to clipboard', variant: 'success' });
+                    }}
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                  >
+                    📋 Copy Full Payload to Clipboard
+                  </Button>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </CardContent>
+      </Card>
+
       {/* AI Response JSON Display - Developer/Debug Section */}
       {(rawHSResponse || rawInstallerResponse) && (
         <Card className="border-0 md:border md:border-blue-500/30 bg-slate-900/30 md:bg-slate-900/50 shadow-none rounded-lg">
