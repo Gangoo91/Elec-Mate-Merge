@@ -10,14 +10,12 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Badge } from "@/components/ui/badge";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
+import { useSimpleAgent } from "@/hooks/useSimpleAgent";
 
 const CostEngineerInterface = () => {
   const [prompt, setPrompt] = useState("");
   const [costingResult, setCostingResult] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(true);
-  const [progress, setProgress] = useState(0);
-  const [estimatedTime, setEstimatedTime] = useState(20);
   const [projectType, setProjectType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
   const [projectName, setProjectName] = useState('');
   const [location, setLocation] = useState('');
@@ -26,6 +24,8 @@ const CostEngineerInterface = () => {
     examples: true,
     projectInfo: false,
   });
+  
+  const { callAgent, isLoading, progress: agentProgress } = useSimpleAgent();
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
@@ -59,11 +59,21 @@ const CostEngineerInterface = () => {
       return;
     }
     
-    // Placeholder for now - show functionality in development
-    toast({
-      title: "Functionality In Development",
-      description: "Full Cost Engineer capabilities will be enabled soon.",
+    const response = await callAgent('cost-engineer', {
+      query: prompt,
+      projectContext: {
+        projectType,
+        buildingAge: 'modern',
+      },
+      projectName,
+      location,
+      clientName
     });
+    
+    if (response?.success) {
+      setCostingResult(response.response || 'No cost analysis generated');
+      setShowResults(true);
+    }
   };
 
   const copyToClipboard = async () => {
@@ -404,25 +414,21 @@ const CostEngineerInterface = () => {
             </div>
             <div>
               <span className="font-semibold text-lg">Generating Cost Analysis</span>
-              <p className="text-muted-foreground text-sm">Calculating materials, labour, and pricing...</p>
+              <p className="text-muted-foreground text-sm">
+                {agentProgress?.message || 'Calculating materials, labour, and pricing...'}
+              </p>
             </div>
           </div>
           
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Progress</span>
-              <span className="text-sm text-green-400">{Math.round(progress)}%</span>
-            </div>
-            <div className="w-full bg-elec-grey rounded-full h-2 overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-green-500 to-green-400 transition-all duration-1000 ease-out rounded-full"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Clock className="h-3 w-3" />
-              Estimated time: {estimatedTime}s
-            </div>
+            {agentProgress && (
+              <div className="flex items-center gap-2 text-xs text-green-400">
+                <Clock className="h-3 w-3 animate-pulse" />
+                {agentProgress.stage === 'rag' && 'Searching regulations...'}
+                {agentProgress.stage === 'ai' && 'AI processing...'}
+                {agentProgress.stage === 'complete' && 'Complete!'}
+              </div>
+            )}
           </div>
           
           <div className="space-y-3 mt-6">
