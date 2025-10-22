@@ -18,16 +18,35 @@ serve(async (req) => {
 
     console.log('📄 Combined RAMS PDF Generation Started');
     console.log('🔧 Template ID:', COMBINED_RAMS_TEMPLATE_ID);
-    console.log('📊 RAMS Data:', { 
+    
+    // 🔍 COMPREHENSIVE INPUT DATA DIAGNOSTICS
+    console.log('📊 Input RAMS Data received:', { 
       projectName: ramsData?.projectName, 
       risksCount: ramsData?.risks?.length,
-      location: ramsData?.location 
+      location: ramsData?.location,
+      ppeDetailsCount: ramsData?.ppeDetails?.length || 0,
+      requiredPPECount: ramsData?.requiredPPE?.length || 0,
+      hasPpeDetails: !!ramsData?.ppeDetails,
+      hasRequiredPPE: !!ramsData?.requiredPPE
     });
-    console.log('📋 Method Data:', { 
+    
+    console.log('📋 Input Method Data received:', { 
       jobTitle: methodData?.jobTitle, 
       stepsCount: methodData?.steps?.length,
-      workType: methodData?.workType
+      workType: methodData?.workType,
+      toolsCount: methodData?.toolsRequired?.length || 0,
+      materialsCount: methodData?.materialsRequired?.length || 0,
+      tipsCount: methodData?.practicalTips?.length || 0,
+      mistakesCount: methodData?.commonMistakes?.length || 0,
+      hasToolsRequired: !!methodData?.toolsRequired,
+      hasPracticalTips: !!methodData?.practicalTips
     });
+    
+    // 🔍 RAW DATA INSPECTION
+    console.log('🔍 Raw PPE Details:', JSON.stringify(ramsData?.ppeDetails || [], null, 2));
+    console.log('🔍 Raw Tools Required:', JSON.stringify(methodData?.toolsRequired || [], null, 2));
+    console.log('🔍 Raw Practical Tips:', JSON.stringify(methodData?.practicalTips || [], null, 2));
+    console.log('🔍 Raw Common Mistakes:', JSON.stringify(methodData?.commonMistakes || [], null, 2));
 
     if (!pdfMonkeyApiKey) {
       console.warn('⚠️  PDF_MONKEY_API_KEY not configured');

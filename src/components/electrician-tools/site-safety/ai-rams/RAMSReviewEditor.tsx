@@ -269,6 +269,32 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     try {
       const { supabase } = await import('@/integrations/supabase/client');
       
+      // 🔍 FRONTEND DATA DIAGNOSTICS - Log what we're sending
+      console.log('📤 Sending to PDF generation:', {
+        ramsData: {
+          projectName: ramsData.projectName,
+          risksCount: ramsData.risks?.length,
+          ppeDetailsCount: ramsData.ppeDetails?.length || 0,
+          requiredPPECount: ramsData.requiredPPE?.length || 0,
+          hasPpeDetails: !!ramsData.ppeDetails,
+          hasRequiredPPE: !!ramsData.requiredPPE
+        },
+        methodData: {
+          jobTitle: methodData.jobTitle,
+          stepsCount: methodData.steps?.length,
+          toolsCount: methodData.toolsRequired?.length || 0,
+          tipsCount: methodData.practicalTips?.length || 0,
+          mistakesCount: methodData.commonMistakes?.length || 0,
+          hasToolsRequired: !!methodData.toolsRequired,
+          hasPracticalTips: !!methodData.practicalTips
+        }
+      });
+      console.log('🔍 Full ramsData.ppeDetails:', ramsData.ppeDetails);
+      console.log('🔍 Full ramsData.requiredPPE:', ramsData.requiredPPE);
+      console.log('🔍 Full methodData.toolsRequired:', methodData.toolsRequired);
+      console.log('🔍 Full methodData.practicalTips:', methodData.practicalTips);
+      console.log('🔍 Full methodData.commonMistakes:', methodData.commonMistakes);
+      
       const { data, error } = await supabase.functions.invoke('generate-combined-rams-pdf', {
         body: { 
           ramsData, 
