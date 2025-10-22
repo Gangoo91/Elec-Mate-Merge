@@ -211,8 +211,7 @@ async function vectorSearch(
       },
       body: JSON.stringify({
         input: params.expandedQuery,
-        model: 'text-embedding-3-large', // PHASE 1: Upgraded from 3-small
-        dimensions: 3072 // Explicit dimension specification
+        model: 'text-embedding-3-small', // 1536D to match database schema
       }),
     }).then(res => {
       if (!res.ok) throw new Error(`OpenAI embedding failed: ${res.status}`);
