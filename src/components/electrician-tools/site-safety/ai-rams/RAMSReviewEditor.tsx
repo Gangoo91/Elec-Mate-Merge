@@ -873,6 +873,38 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 <FileText className="h-4 w-4" />
                 Method Statement
               </Button>
+              <Button
+                onClick={() => {
+                  const blob = new Blob([JSON.stringify(ramsData, null, 2)], { type: 'application/json' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `rams-data-${new Date().toISOString().split('T')[0]}.json`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                className="gap-2"
+                variant="outline"
+              >
+                <FileText className="h-4 w-4" />
+                RAMS JSON
+              </Button>
+              <Button
+                onClick={() => {
+                  const blob = new Blob([JSON.stringify(methodData, null, 2)], { type: 'application/json' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `method-statement-${new Date().toISOString().split('T')[0]}.json`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                className="gap-2"
+                variant="outline"
+              >
+                <FileText className="h-4 w-4" />
+                Method JSON
+              </Button>
             </div>
 
             {/* Mobile View - Single button to open sheet */}
