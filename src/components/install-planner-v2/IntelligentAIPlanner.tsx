@@ -14,6 +14,7 @@ import { CitationBadge } from "./CitationBadge";
 import { AgentSelector } from "./AgentSelector";
 import { AgentSuggestions } from "./AgentSuggestions";
 import { AgentResponseRenderer } from "./AgentResponseRenderer";
+import { AgentOutputTimeline } from "./AgentOutputTimeline";
 import { useNavigate, useLocation } from "react-router-dom";
 import { transformAgentOutputToEIC } from "@/utils/eic-transformer";
 import { exportEICScheduleToInspectionApp } from "@/utils/eic-export";
@@ -1266,6 +1267,27 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                   </div>
                 </Card>
               </div>
+            </div>
+          )}
+
+          {/* Agent Health Banner */}
+          {healthCheckDone && unhealthyAgents.length > 0 && (
+            <div className="mb-4">
+              <AgentHealthBanner unhealthyAgents={unhealthyAgents} />
+            </div>
+          )}
+
+          {/* Agent Output Timeline */}
+          {agentOutputHistory.length > 0 && (
+            <div className="mb-4">
+              <AgentOutputTimeline
+                outputs={agentOutputHistory.map(h => ({
+                  agent: h.agent,
+                  timestamp: h.timestamp,
+                  hasError: h.output?.error
+                }))}
+                currentAgent={currentAgent || undefined}
+              />
             </div>
           )}
 

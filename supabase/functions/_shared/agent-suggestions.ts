@@ -4,8 +4,8 @@ export function suggestNextAgents(
   userQuery: string,
   agentResponse: string,
   previousAgents: string[]
-): Array<{agent: string; reason: string; priority?: string}> {
-  const suggestions = [];
+): Array<{agent: string; reason: string; priority?: string; contextHint?: string}> {
+  const suggestions: Array<{agent: string; reason: string; priority?: string; contextHint?: string}> = [];
   
   // DESIGNER SUGGESTIONS
   if (currentAgent === 'designer') {
@@ -117,4 +117,53 @@ export function suggestNextAgents(
   // Typically the final agent, so no suggestions
   
   return suggestions;
+}
+
+/**
+ * Generate context-aware hints for agent suggestions
+ */
+export function generateContextHint(
+  targetAgent: string,
+  currentAgent: string,
+  structuredData: any
+): string | undefined {
+  // Cost Engineer hints
+  if (targetAgent === 'cost-engineer' && structuredData?.cableSize) {
+    return `Cable: ${structuredData.cableSize}mm² - ready for pricing`;
+  }
+  
+  // Installer hints
+  if (targetAgent === 'installer') {
+    if (structuredData?.cableSize) {
+      return `${structuredData.cableSize}mm² cable installation method needed`;
+    }
+    if (structuredData?.circuitType) {
+      return `${structuredData.circuitType} installation guidance`;
+    }
+  }
+  
+  // H&S hints
+  if (targetAgent === 'health-safety') {
+    if (structuredData?.location === 'bathroom') {
+      return `Bathroom zones risk assessment required`;
+    }
+    if (structuredData?.voltage && structuredData.voltage > 230) {
+      return `High voltage safety procedures needed`;
+    }
+  }
+  
+  // Commissioning hints
+  if (targetAgent === 'commissioning' && structuredData?.circuitBreaker) {
+    return `${structuredData.circuitBreaker} testing requirements`;
+  }
+  
+  // Project Manager hints
+  if (targetAgent === 'project-manager') {
+    const agentCount = structuredData?.consultedAgents?.length || 0;
+    if (agentCount >= 3) {
+      return `${agentCount} specialists consulted - ready to coordinate`;
+    }
+  }
+  
+  return undefined;
 }

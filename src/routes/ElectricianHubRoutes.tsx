@@ -151,7 +151,7 @@ const ElectricianHubRoutes = () => (
     <Route path="tutor" element={<TutorPage />} />
     <Route path="calculations" element={<Calculations />} />
     <Route path="install-planner" element={<InstallPlannerV2 />} />
-    <Route path="install-planner/results" element={<InstallPlannerResults />} />
+    <Route path="install-planner/results/:conversationId?" element={<InstallPlannerResults />} />
     <Route path="inspection-testing" element={<InspectionTesting />} />
     <Route path="site-safety" element={<SiteSafety />} />
   </Routes>

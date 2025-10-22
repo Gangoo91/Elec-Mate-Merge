@@ -421,7 +421,15 @@ Provide a comprehensive electrical design response that addresses the query comp
           queryEnhanced: enhancement.addedContext.length > 0,
           safetyWarningsCount: safetyWarnings.warnings.length
         },
-        suggestedNextAgents: design.success ? ['installer', 'cost-engineer'] : ['health-safety']
+        suggestedNextAgents: (() => {
+          const { suggestNextAgents, generateContextHint } = require('../_shared/agent-suggestions.ts');
+          const previousAgentsList = previousAgentOutputs?.map((o: any) => o.agent) || [];
+          const suggestions = suggestNextAgents('designer', query, responseStr, previousAgentsList);
+          return suggestions.map((s: any) => ({
+            ...s,
+            contextHint: generateContextHint(s.agent, 'designer', design)
+          }));
+        })()
       }), {
         status: 200,
         headers: corsHeaders

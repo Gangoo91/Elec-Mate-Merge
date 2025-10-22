@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useLocation, useNavigate, Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download, RotateCcw, Loader } from "lucide-react";
 import { ResultsPage } from "@/components/install-planner/ResultsPage";
@@ -27,9 +27,12 @@ interface LocationState {
 const InstallPlannerResults = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { conversationId } = useParams();
   const { companyProfile } = useCompanyProfile();
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [activeTab, setActiveTab] = useState("results");
+  const [isLoading, setIsLoading] = useState(false);
+  const [agentResults, setAgentResults] = useState<any[]>([]);
 
   const state = location.state as LocationState;
   
@@ -55,6 +58,44 @@ const InstallPlannerResults = () => {
     designDate: new Date().toISOString().split('T')[0],
     installationType: 'domestic',
   });
+
+  // Fetch results from database if conversationId provided
+  useEffect(() => {
+    const fetchResultsFromDB = async (convId: string) => {
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('consultation_results')
+          .select('*')
+          .eq('conversation_id', convId)
+          .order('created_at', { ascending: true });
+        
+        if (error) {
+          console.error('Failed to load results:', error);
+          toast({
+            title: "Failed to load results",
+            description: "Redirecting to install planner",
+            variant: "destructive",
+          });
+          navigate('/electrician/install-planner');
+          return;
+        }
+        
+        setAgentResults(data || []);
+      } catch (error) {
+        console.error('Error fetching results:', error);
+        navigate('/electrician/install-planner');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (conversationId) {
+      fetchResultsFromDB(conversationId);
+    } else if (!state?.messages) {
+      navigate('/electrician/install-planner?mode=ai');
+    }
+  }, [conversationId, navigate]);
 
   // Initialize project details from planData and companyProfile
   useEffect(() => {
@@ -100,12 +141,60 @@ const InstallPlannerResults = () => {
     }
   }, []);
   
-  if (!state || !state.messages) {
-    navigate('/electrician/install-planner?mode=ai');
-    return null;
+  // Show loading state while fetching
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-elec-dark flex items-center justify-center">
+        <div className="text-center">
+          <Loader className="h-8 w-8 animate-spin mx-auto mb-4 text-elec-yellow" />
+          <p className="text-muted-foreground">Loading results...</p>
+        </div>
+      </div>
+    );
   }
 
-  const { messages, planData, activeAgents } = state;
+  // Use database results if available, otherwise fall back to location.state
+  const messages = agentResults.length > 0
+    ? agentResults.map(r => ({
+        role: 'assistant' as const,
+        content: r.output_data?.response || '',
+        agentName: r.agent_type,
+        structuredData: r.output_data
+      }))
+    : state?.messages || [];
+
+  const planData: InstallPlanDataV2 = state?.planData || {
+    mode: 'ai-guided',
+    installationType: 'domestic',
+    loadType: 'general',
+    totalLoad: 0,
+    voltage: 230,
+    phases: 'single',
+    cableLength: 0,
+    cableType: 'T&E',
+    installationMethod: 'A',
+    circuits: [],
+    siteInfo: {},
+    projectInfo: {},
+    environmentalProfile: {
+      autoDetected: {
+        ambientTemp: 30,
+        conditions: 'normal',
+        earthing: 'TN-S',
+        ze: 0.35,
+        grouping: 1
+      },
+      userOverrides: {},
+      finalApplied: {
+        ambientTemp: 30,
+        conditions: 'normal',
+        earthing: 'TN-S',
+        ze: 0.35,
+        grouping: 1
+      }
+    }
+  };
+  const activeAgents = state?.activeAgents || [];
 
   // Find designer message with structured data
   const designerMessage = messages.find(
