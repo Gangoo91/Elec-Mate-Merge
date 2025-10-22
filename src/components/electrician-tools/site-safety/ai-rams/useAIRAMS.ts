@@ -187,7 +187,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
           .from('method_statements')
           .select('id')
           .eq('rams_document_id', savedDocId)
-          .single();
+          .maybeSingle();
 
         if (existingMethod) {
           await supabase
