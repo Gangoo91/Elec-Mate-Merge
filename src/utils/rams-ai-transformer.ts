@@ -461,12 +461,17 @@ export function transformInstallerToMethodSteps(
     || {};
   
   const methodSteps = installerStructuredData.methodStatementSteps
+    || installerStructuredData.installationSteps
     || installerResponse.methodStatementSteps
     || (installerResponse as any).installationSteps
     || [];
   
   console.log('🔍 Transformer extracting installer data:', {
+    hasStructuredData: !!(installerResponse as any)?.structuredData,
     path: (installerResponse as any)?.structuredData ? 'installerResponse.structuredData' : 'installerResponse.response.structuredData',
+    foundMethodStatementSteps: !!installerStructuredData.methodStatementSteps,
+    foundInstallationSteps: !!installerStructuredData.installationSteps,
+    foundFallbackInstallationSteps: !!(installerResponse as any).installationSteps,
     stepsFound: methodSteps?.length || 0,
     willUseFallback: !methodSteps || methodSteps.length === 0
   });
