@@ -839,7 +839,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
           {/* Download Buttons Section */}
           <div className="mt-6 pt-6 border-t border-border">
-            <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+            <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2 px-4">
               <Download className="h-4 w-4 text-elec-yellow" />
               Download Documents
             </h4>
