@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { QuotesReadyPanel } from "./QuotesReadyPanel";
-import { LinkedInvoicesPanel } from "./LinkedInvoicesPanel";
+import { InvoiceStatusPanel } from "./InvoiceStatusPanel";
 import { Quote } from "@/types/quote";
 import { Card, CardContent } from "@/components/ui/card";
 import { Receipt, FileCheck, TrendingUp, DollarSign } from "lucide-react";
@@ -13,7 +13,7 @@ import { toast } from "@/hooks/use-toast";
 export const QuoteInvoiceDashboard = () => {
   const navigate = useNavigate();
   const { savedQuotes } = useQuoteStorage();
-  const { invoices, saveInvoice } = useInvoiceStorage();
+  const { invoices, saveInvoice, fetchInvoices } = useInvoiceStorage();
   const [showInvoiceDecision, setShowInvoiceDecision] = useState(false);
   const [quoteForInvoice, setQuoteForInvoice] = useState<Quote | null>(null);
   const [loadingAction, setLoadingAction] = useState(false);
@@ -26,24 +26,35 @@ export const QuoteInvoiceDashboard = () => {
       !quote.invoice_raised
   );
 
-  // Recent invoices
-  const recentInvoices = invoices.slice(0, 10);
-
-  // Calculate stats
-  const totalInvoicesThisMonth = invoices.filter((inv) => {
-    const invDate = inv.invoice_date ? new Date(inv.invoice_date) : null;
-    if (!invDate) return false;
+  // Calculate stats with improved categorization
+  const stats = useMemo(() => {
     const now = new Date();
-    return invDate.getMonth() === now.getMonth() && invDate.getFullYear() === now.getFullYear();
-  }).length;
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
 
-  const outstandingValue = invoices
-    .filter((inv) => inv.invoice_status !== "paid")
-    .reduce((sum, inv) => sum + inv.total, 0);
+    const thisMonthInvoices = invoices.filter((inv) => {
+      const invDate = inv.invoice_date ? new Date(inv.invoice_date) : null;
+      return invDate && invDate.getMonth() === currentMonth && invDate.getFullYear() === currentYear;
+    });
 
-  const paidValue = invoices
-    .filter((inv) => inv.invoice_status === "paid")
-    .reduce((sum, inv) => sum + inv.total, 0);
+    const sentInvoices = invoices.filter(
+      (inv) => inv.invoice_status === 'sent' && (!inv.invoice_due_date || new Date(inv.invoice_due_date) >= now)
+    );
+
+    const overdueInvoices = invoices.filter(
+      (inv) => inv.invoice_status !== 'paid' && inv.invoice_due_date && new Date(inv.invoice_due_date) < now
+    );
+
+    const paidInvoices = invoices.filter((inv) => inv.invoice_status === 'paid');
+
+    return {
+      totalInvoicesThisMonth: thisMonthInvoices.length,
+      outstandingValue: sentInvoices.reduce((sum, inv) => sum + (inv.total || 0), 0),
+      overdueValue: overdueInvoices.reduce((sum, inv) => sum + (inv.total || 0), 0),
+      overdueCount: overdueInvoices.length,
+      paidValue: paidInvoices.reduce((sum, inv) => sum + (inv.total || 0), 0),
+    };
+  }, [invoices]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-GB", {
@@ -130,7 +141,7 @@ export const QuoteInvoiceDashboard = () => {
         <Card className="border-elec-yellow/20">
           <CardContent className="p-6 text-center space-y-2">
             <FileCheck className="h-8 w-8 text-blue-400 mx-auto" />
-            <div className="text-2xl font-bold text-primary">{totalInvoicesThisMonth}</div>
+            <div className="text-2xl font-bold text-primary">{stats.totalInvoicesThisMonth}</div>
             <div className="text-sm text-muted-foreground">Invoices This Month</div>
           </CardContent>
         </Card>
@@ -138,15 +149,20 @@ export const QuoteInvoiceDashboard = () => {
         <Card className="border-elec-yellow/20">
           <CardContent className="p-6 text-center space-y-2">
             <TrendingUp className="h-8 w-8 text-orange-400 mx-auto" />
-            <div className="text-2xl font-bold text-primary">{formatCurrency(outstandingValue)}</div>
+            <div className="text-2xl font-bold text-primary">{formatCurrency(stats.outstandingValue)}</div>
             <div className="text-sm text-muted-foreground">Outstanding</div>
+            {stats.overdueCount > 0 && (
+              <div className="text-xs text-destructive font-medium">
+                {stats.overdueCount} overdue • {formatCurrency(stats.overdueValue)}
+              </div>
+            )}
           </CardContent>
         </Card>
 
         <Card className="border-elec-yellow/20">
           <CardContent className="p-6 text-center space-y-2">
             <DollarSign className="h-8 w-8 text-green-400 mx-auto" />
-            <div className="text-2xl font-bold text-primary">{formatCurrency(paidValue)}</div>
+            <div className="text-2xl font-bold text-primary">{formatCurrency(stats.paidValue)}</div>
             <div className="text-sm text-muted-foreground">Paid</div>
           </CardContent>
         </Card>
@@ -155,7 +171,7 @@ export const QuoteInvoiceDashboard = () => {
       {/* Main Dashboard Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <QuotesReadyPanel quotes={quotesReady} onRaiseInvoice={handleRaiseInvoice} />
-        <LinkedInvoicesPanel invoices={recentInvoices} />
+        <InvoiceStatusPanel invoices={invoices} onRefresh={fetchInvoices} />
       </div>
 
       {/* Invoice Decision Dialog */}

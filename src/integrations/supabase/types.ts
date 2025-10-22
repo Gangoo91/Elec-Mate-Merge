@@ -2442,6 +2442,105 @@ export type Database = {
         }
         Relationships: []
       }
+      invoice_payments: {
+        Row: {
+          amount: number
+          created_at: string | null
+          id: string
+          notes: string | null
+          payment_date: string
+          payment_method: string | null
+          payment_reference: string | null
+          quote_id: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          payment_date: string
+          payment_method?: string | null
+          payment_reference?: string | null
+          quote_id?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          payment_date?: string
+          payment_method?: string | null
+          payment_reference?: string | null
+          quote_id?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_payments_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoice_payments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoice_reminders: {
+        Row: {
+          created_at: string | null
+          id: string
+          quote_id: string | null
+          reminder_type: string
+          sent_at: string | null
+          sent_to_email: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          quote_id?: string | null
+          reminder_type: string
+          sent_at?: string | null
+          sent_to_email: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          quote_id?: string | null
+          reminder_type?: string
+          sent_at?: string | null
+          sent_to_email?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_reminders_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoice_reminders_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       job_listings: {
         Row: {
           company: string
@@ -4301,7 +4400,11 @@ export type Database = {
           invoice_due_date: string | null
           invoice_notes: string | null
           invoice_number: string | null
+          invoice_paid_at: string | null
+          invoice_payment_method: string | null
+          invoice_payment_reference: string | null
           invoice_raised: boolean | null
+          invoice_sent_at: string | null
           invoice_status: string | null
           items: Json
           job_details: Json | null
@@ -4346,7 +4449,11 @@ export type Database = {
           invoice_due_date?: string | null
           invoice_notes?: string | null
           invoice_number?: string | null
+          invoice_paid_at?: string | null
+          invoice_payment_method?: string | null
+          invoice_payment_reference?: string | null
           invoice_raised?: boolean | null
+          invoice_sent_at?: string | null
           invoice_status?: string | null
           items?: Json
           job_details?: Json | null
@@ -4391,7 +4498,11 @@ export type Database = {
           invoice_due_date?: string | null
           invoice_notes?: string | null
           invoice_number?: string | null
+          invoice_paid_at?: string | null
+          invoice_payment_method?: string | null
+          invoice_payment_reference?: string | null
           invoice_raised?: boolean | null
+          invoice_sent_at?: string | null
           invoice_status?: string | null
           items?: Json
           job_details?: Json | null

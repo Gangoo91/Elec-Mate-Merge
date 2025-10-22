@@ -107,6 +107,10 @@ export interface Quote {
   invoice_date?: Date;
   invoice_due_date?: Date;
   invoice_status?: 'draft' | 'sent' | 'paid' | 'overdue';
+  invoice_sent_at?: Date;
+  invoice_paid_at?: Date;
+  invoice_payment_method?: string;
+  invoice_payment_reference?: string;
   work_completion_date?: Date;
   invoice_notes?: string;
   additional_invoice_items?: QuoteItem[];

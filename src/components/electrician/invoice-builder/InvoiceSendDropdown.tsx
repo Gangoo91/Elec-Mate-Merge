@@ -84,10 +84,13 @@ export const InvoiceSendDropdown = ({
         duration: 4000,
       });
 
-      // Update status to sent
+      // Update status to sent with timestamp
       await supabase
         .from('quotes')
-        .update({ invoice_status: 'sent' })
+        .update({ 
+          invoice_status: 'sent',
+          invoice_sent_at: new Date().toISOString()
+        })
         .eq('id', invoice.id);
 
       onSuccess?.();
@@ -263,10 +266,13 @@ ${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\
         duration: 4000,
       });
 
-      // Update invoice status to sent
+      // Update invoice status to sent with timestamp
       await supabase
         .from('quotes')
-        .update({ invoice_status: 'sent' })
+        .update({ 
+          invoice_status: 'sent',
+          invoice_sent_at: new Date().toISOString()
+        })
         .eq('id', invoice.id);
 
       onSuccess?.();
