@@ -30,31 +30,34 @@ export function transformHealthSafetyToRAMS(
   const identifiedHazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }> = [];
   const activities: string[] = [];
   
-  // Try multiple possible locations for hazard data
-  const sourceHazards = hsResponse.riskAssessment?.hazards 
-    || (hsResponse.response as any)?.riskAssessment?.hazards
-    || (hsResponse.structuredData as any)?.riskAssessment?.hazards
-    || (hsResponse as any).structuredData?.hazards
-    || (hsResponse as any).hazards;
+  // Defensive extraction with comprehensive fallback paths
+  const structuredData = (hsResponse as any)?.structuredData 
+    || (hsResponse.response as any)?.structuredData 
+    || {};
   
-  // Extract PPE and emergency procedures
-  const ppe = hsResponse.riskAssessment?.ppe
-    || (hsResponse.response as any)?.riskAssessment?.ppe
-    || (hsResponse.structuredData as any)?.riskAssessment?.ppe
+  const riskAssessment = structuredData.riskAssessment 
+    || hsResponse.riskAssessment 
+    || (hsResponse.response as any)?.riskAssessment 
+    || {};
+  
+  const sourceHazards = riskAssessment.hazards 
+    || (hsResponse as any).hazards
+    || [];
+  
+  const ppe = riskAssessment.ppe 
+    || (hsResponse as any).ppe
     || [];
 
-  const emergencyProcedures = hsResponse.riskAssessment?.emergencyProcedures
-    || (hsResponse.response as any)?.riskAssessment?.emergencyProcedures
-    || (hsResponse.structuredData as any)?.riskAssessment?.emergencyProcedures
+  const emergencyProcedures = riskAssessment.emergencyProcedures 
+    || (hsResponse as any).emergencyProcedures
     || [];
   
-  console.log('🔍 Transformer received hsResponse:', {
-    hasRiskAssessment: !!hsResponse.riskAssessment,
-    hasResponseRiskAssessment: !!(hsResponse.response as any)?.riskAssessment,
-    hasStructuredData: !!hsResponse.structuredData,
+  console.log('🔍 Transformer extracting H&S data:', {
+    path: (hsResponse as any)?.structuredData ? 'hsResponse.structuredData' : 'hsResponse.response.structuredData',
     hazardsFound: sourceHazards?.length || 0,
     ppeFound: ppe?.length || 0,
-    emergencyProcsFound: emergencyProcedures?.length || 0
+    emergencyProcsFound: emergencyProcedures?.length || 0,
+    willUseFallback: !sourceHazards || sourceHazards.length === 0
   });
   
   // Generate controls from hazard description if not provided
@@ -353,19 +356,20 @@ export function transformInstallerToMethodSteps(
 ): MethodStep[] {
   const steps: MethodStep[] = [];
   
-  // Try multiple possible locations for steps data
-  const methodSteps = installerResponse.methodStatementSteps
-    || (installerResponse.response as any)?.methodStatementSteps
-    || (installerResponse.structuredData as any)?.methodStatementSteps
-    || (installerResponse as any).installationSteps
-    || (installerResponse.response as any)?.installationSteps
-    || (installerResponse.structuredData as any)?.installationSteps;
+  // Defensive extraction with comprehensive fallback paths
+  const installerStructuredData = (installerResponse as any)?.structuredData 
+    || (installerResponse.response as any)?.structuredData 
+    || {};
   
-  console.log('🔍 Transformer received installerResponse:', {
-    hasMethodSteps: !!installerResponse.methodStatementSteps,
-    hasResponseMethodSteps: !!(installerResponse.response as any)?.methodStatementSteps,
-    hasStructuredData: !!installerResponse.structuredData,
-    stepsFound: methodSteps?.length || 0
+  const methodSteps = installerStructuredData.methodStatementSteps
+    || installerResponse.methodStatementSteps
+    || (installerResponse as any).installationSteps
+    || [];
+  
+  console.log('🔍 Transformer extracting installer data:', {
+    path: (installerResponse as any)?.structuredData ? 'installerResponse.structuredData' : 'installerResponse.response.structuredData',
+    stepsFound: methodSteps?.length || 0,
+    willUseFallback: !methodSteps || methodSteps.length === 0
   });
   
   // Helper function to link hazards to a step based on keyword matching

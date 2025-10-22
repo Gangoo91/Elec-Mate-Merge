@@ -526,8 +526,24 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       logger.warn('Failed to log metrics', { error: metricsError.message });
     }
 
+    // Validate response structure before returning
+    const validatedRiskAssessment = {
+      hazards: riskAssessment?.hazards || [],
+      ppe: riskAssessment?.ppe || [],
+      emergencyProcedures: riskAssessment?.emergencyProcedures || []
+    };
+
+    logger.info('Returning validated response', {
+      hasHazards: validatedRiskAssessment.hazards.length > 0,
+      hazardCount: validatedRiskAssessment.hazards.length,
+      hasPPE: validatedRiskAssessment.ppe.length > 0,
+      ppeCount: validatedRiskAssessment.ppe.length,
+      hasEmergencyProcs: validatedRiskAssessment.emergencyProcedures.length > 0,
+      emergencyProcCount: validatedRiskAssessment.emergencyProcedures.length
+    });
+
     // Return enriched response
-    const { response, suggestedNextAgents, riskAssessment, methodStatement, compliance } = safetyResult;
+    const { response, suggestedNextAgents } = safetyResult;
     
     return new Response(
       JSON.stringify({
@@ -537,7 +553,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         citations: enrichedResponse.citations,
         rendering: enrichedResponse.rendering,
         structuredData: { 
-          riskAssessment, 
+          riskAssessment: validatedRiskAssessment, 
           methodStatement, 
           compliance,
           ragPreview

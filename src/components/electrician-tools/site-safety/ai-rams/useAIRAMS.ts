@@ -282,6 +282,31 @@ export function useAIRAMS(): UseAIRAMSReturn {
     }
   }, [clearProgressIntervals, toast]);
 
+  const callAgentWithRetry = async (
+    functionName: string,
+    body: any,
+    maxRetries = 3
+  ): Promise<{ data: any; error: any }> => {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      const { data, error } = await supabase.functions.invoke(functionName, { body });
+      
+      if (!error && data?.success) {
+        console.log(`✅ ${functionName} succeeded on attempt ${attempt}`);
+        return { data, error: null };
+      }
+      
+      if (attempt < maxRetries) {
+        const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
+        console.log(`⏳ Retry ${attempt}/${maxRetries} for ${functionName} after ${delay}ms`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } else {
+        console.error(`❌ ${functionName} failed after ${maxRetries} attempts`, { error, data });
+      }
+    }
+    
+    return { data: null, error: new Error(`Failed after ${maxRetries} attempts`) };
+  };
+
   const generateRAMS = async (
     jobDescription: string,
     projectInfo: {
@@ -326,60 +351,95 @@ export function useAIRAMS(): UseAIRAMSReturn {
       // Start simulated progress
       simulateSubStepProgress('health-safety', HEALTH_SAFETY_SUBSTEPS);
 
-      const { data: hsData, error: hsError } = await supabase.functions.invoke('health-safety-v3', {
-        body: {
-          query: `Create a detailed risk assessment for the following electrical work: ${jobDescription}. Include specific hazards, risk ratings (likelihood and severity), and control measures.`,
-          workType: jobScale
-        }
+      const { data: hsData, error: hsError } = await callAgentWithRetry('health-safety-v3', {
+        query: `Create a detailed risk assessment for the following electrical work: ${jobDescription}. Include specific hazards, risk ratings (likelihood and severity), and control measures.`,
+        workType: jobScale
       });
 
       if (abortControllerRef.current?.signal.aborted) {
         throw new Error('Generation cancelled');
       }
 
-      if (hsError || !hsData) {
-        console.error('Health & Safety agent error:', hsError);
-        clearProgressIntervals();
+      let hsDataToUse = hsData;
+
+      // Use fallback data if H&S agent failed or returned incomplete data
+      if (hsError || !hsData?.success) {
+        console.warn('⚠️ Health & Safety agent issue, using fallback data:', { hsError, hsData });
+        hsDataToUse = {
+          success: true,
+          structuredData: {
+            riskAssessment: {
+              hazards: [
+                {
+                  hazard: "Electrical shock from live conductors",
+                  risk: "Electric shock, burns, or fatality",
+                  likelihood: 4,
+                  severity: 5,
+                  controls: ["Isolate power supply", "Use voltage tester", "Wear insulated gloves", "Competent supervision"]
+                },
+                {
+                  hazard: "Arc flash during switching operations",
+                  risk: "Burns and blast injuries",
+                  likelihood: 3,
+                  severity: 5,
+                  controls: ["Maintain safe distance", "Wear arc-rated PPE", "Remote operation where possible"]
+                },
+                {
+                  hazard: "Manual handling of equipment",
+                  risk: "Musculoskeletal injury",
+                  likelihood: 4,
+                  severity: 3,
+                  controls: ["Use mechanical aids", "Team lift >25kg", "Proper lifting technique"]
+                }
+              ],
+              ppe: ["Safety helmet to BS EN 397", "Safety boots to BS EN 20345", "Hi-vis vest to BS EN ISO 20471", "Insulated gloves to BS EN 60903", "Safety glasses to BS EN 166"],
+              emergencyProcedures: ["Isolate power in emergency", "Call 999 for electric shock", "First aid kit location known", "Assembly point identified"]
+            }
+          }
+        };
+        
+        toast({
+          title: "Using fallback safety data",
+          description: "Health & Safety agent encountered issues. Using standard electrical hazards.",
+          variant: "default"
+        });
+        
         setReasoningSteps(prev => prev.map(step => 
           step.agent === 'health-safety' 
-            ? { ...step, status: 'error', reasoning: hsError?.message || 'Agent failed to respond', subStep: null }
+            ? { ...step, status: 'complete', reasoning: 'Using fallback electrical hazards (3 hazards)', subStep: null, timeElapsed: Math.round((Date.now() - hsStartTime) / 1000) }
             : step
         ));
-        
-        setError('Health & Safety Agent failed. Please check your input and try again.');
-        setIsProcessing(false);
-        return; // Stop processing if health-safety fails
       }
 
       // Store raw H&S response
-      setRawHSResponse(hsData);
+      setRawHSResponse(hsDataToUse);
 
       clearProgressIntervals();
       const hsTimeElapsed = Math.round((Date.now() - hsStartTime) / 1000);
 
-      // Debug logging to see actual response structure
-      console.log('🔍 Health & Safety raw response:', hsData);
-      console.log('🔍 hsData.response structure:', hsData.response);
-      console.log('🔍 hsData.structuredData:', hsData.structuredData);
+      // Extract hazard count with comprehensive fallback paths
+      const structuredData = hsDataToUse?.structuredData || hsDataToUse?.response?.structuredData || {};
+      const riskAssessment = structuredData.riskAssessment || hsDataToUse?.riskAssessment || {};
+      const hazards = riskAssessment.hazards || [];
+      const hazardCount = hazards.length;
 
-      // Extract hazard count from multiple possible locations
-      const hsActualData = hsData.structuredData?.riskAssessment 
-        || hsData.response?.structuredData?.riskAssessment
-        || hsData.response?.riskAssessment 
-        || hsData.riskAssessment
-        || hsData;
+      console.log('✅ Health & Safety complete:', {
+        success: hsDataToUse?.success,
+        hazardCount,
+        hasPPE: !!(riskAssessment.ppe?.length),
+        hasEmergencyProcs: !!(riskAssessment.emergencyProcedures?.length),
+        dataPath: hsDataToUse?.structuredData ? 'structuredData' : 'response.structuredData'
+      });
 
-      const hazardCount = hsActualData.riskAssessment?.hazards?.length 
-        || hsActualData.hazards?.length 
-        || 0;
-
-      console.log('🔍 Extracted hazard count:', hazardCount);
-
-      setReasoningSteps(prev => prev.map(step => 
-        step.agent === 'health-safety' 
-          ? { ...step, status: 'complete', reasoning: `Generated ${hazardCount} hazards and control measures`, subStep: null, timeElapsed: hsTimeElapsed }
-          : step
-      ));
+      // Only update reasoning if not already set by fallback
+      if (hsData?.success) {
+        setReasoningSteps(prev => prev.map(step => 
+          step.agent === 'health-safety' 
+            ? { ...step, status: 'complete', reasoning: `Generated ${hazardCount || 'multiple'} hazards and control measures`, subStep: null, timeElapsed: hsTimeElapsed }
+            : step
+        ));
+      }
+      
       setOverallProgress(50);
       setEstimatedTimeRemaining(120); // 2 minutes
 
@@ -392,22 +452,22 @@ export function useAIRAMS(): UseAIRAMSReturn {
       // Start simulated progress for installer
       simulateSubStepProgress('installer', INSTALLER_SUBSTEPS);
 
-      const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
-        body: {
-          query: `Create a detailed step-by-step method statement for: ${jobDescription}. Include installation procedures, safety requirements per step, equipment needed, and time estimates.`,
-          previousAgentOutputs: [{
-            agent: 'health-safety',
-            response: hsData
-          }]
-        }
+      const { data: installerData, error: installerError } = await callAgentWithRetry('installer-v3', {
+        query: `Create a detailed step-by-step method statement for: ${jobDescription}. Include installation procedures, safety requirements per step, equipment needed, and time estimates.`,
+        previousAgentOutputs: [{
+          agent: 'health-safety',
+          response: hsDataToUse
+        }]
       });
 
       if (abortControllerRef.current?.signal.aborted) {
         throw new Error('Generation cancelled');
       }
 
-      if (installerError) throw new Error(`Installer Agent failed: ${installerError.message}`);
-      if (!installerData) throw new Error('No response from Installer Agent');
+      if (installerError || !installerData?.success) {
+        console.error('❌ Installer agent failed:', { installerError, installerData });
+        throw new Error(`Installer Agent failed: ${installerError?.message || 'No valid response'}`);
+      }
 
       // Store raw installer response
       setRawInstallerResponse(installerData);
@@ -415,44 +475,40 @@ export function useAIRAMS(): UseAIRAMSReturn {
       clearProgressIntervals();
       const installerTimeElapsed = Math.round((Date.now() - installerStartTime) / 1000);
 
-      // Debug logging to see actual response structure
-      console.log('🔍 Installer raw response:', installerData);
-      console.log('🔍 installerData.response structure:', installerData.response);
-      console.log('🔍 installerData.structuredData:', installerData.structuredData);
+      // Extract steps count with comprehensive fallback paths
+      const installerStructuredData = installerData?.structuredData || installerData?.response?.structuredData || {};
+      const methodSteps = installerStructuredData.methodStatementSteps || installerData?.methodStatementSteps || installerData?.installationSteps || [];
+      const stepsCount = methodSteps.length;
 
-      // Extract steps count from multiple possible locations
-      const installerActualData = installerData.structuredData?.methodStatementSteps
-        || installerData.response?.structuredData?.methodStatementSteps
-        || installerData.response?.methodStatementSteps
-        || installerData.response?.installationSteps
-        || installerData.methodStatementSteps
-        || installerData.installationSteps
-        || installerData;
-
-      const stepsCount = installerActualData.methodStatementSteps?.length 
-        || installerActualData.installationSteps?.length
-        || (Array.isArray(installerActualData) ? installerActualData.length : 0);
-
-      console.log('🔍 Extracted steps count:', stepsCount);
+      console.log('✅ Installer complete:', {
+        success: installerData?.success,
+        stepsCount,
+        dataPath: installerData?.structuredData ? 'structuredData' : 'response.structuredData'
+      });
 
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'installer' 
-          ? { ...step, status: 'complete', reasoning: `Generated ${stepsCount} installation steps`, subStep: null, timeElapsed: installerTimeElapsed }
+          ? { ...step, status: 'complete', reasoning: `Generated ${stepsCount || 'multiple'} installation steps`, subStep: null, timeElapsed: installerTimeElapsed }
           : step
       ));
       setOverallProgress(100);
       setEstimatedTimeRemaining(0);
 
       // Step 3: Transform agent outputs to RAMS format
-      // Pass the full agent response objects to the transformer
+      console.log('🔄 Transforming agent outputs to RAMS format...');
       const combinedData = combineAgentOutputsToRAMS(
-        hsData,
+        hsDataToUse,
         installerData,
         {
           ...projectInfo,
           date: new Date().toISOString()
         }
       );
+
+      console.log('✅ RAMS transformation complete:', {
+        ramsRisks: combinedData.ramsData?.risks?.length || 0,
+        methodSteps: combinedData.methodData?.steps?.length || 0
+      });
 
       setRamsData(combinedData.ramsData);
       setMethodData(combinedData.methodData);
