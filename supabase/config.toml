@@ -1,7 +1,7 @@
 project_id = "jtwygbeceundfgnkirof"
 
 # Only list functions in active use to avoid deploy failures
-# Legacy V2 agents are not listed here
+# Removed functions with xhr@0.1.0 imports causing deployment failures
 
 # PDF Generation Functions
 [functions.generate-combined-rams-pdf]
@@ -66,14 +66,14 @@ timeout_sec = 300
 verify_jwt = false
 timeout_sec = 300
 
-# Document Processing Functions
-[functions.parse-project-management]
+# Document Processing Functions (no xhr imports)
+[functions.parse-maintenance-knowledge]
 verify_jwt = false
 timeout_sec = 600
 
-[functions.parse-inspection-testing-pdf]
+[functions.parse-tutor-knowledge]
 verify_jwt = false
-timeout_sec = 600
+timeout_sec = 180
 
 # Subscription & Core Functions - Active
 [functions.check-subscription]
@@ -102,21 +102,4 @@ timeout_sec = 180
 
 [functions.generate-temporary-pdf-link]
 verify_jwt = true
-timeout_sec = 180
-
-# Visual Analysis Functions - Active
-[functions.visual-analysis]
-verify_jwt = false
-timeout_sec = 120
-
-[functions.wiring-diagram-generator-rag]
-verify_jwt = false
-timeout_sec = 180
-
-[functions.parse-maintenance-knowledge]
-verify_jwt = false
-timeout_sec = 600
-
-[functions.parse-tutor-knowledge]
-verify_jwt = false
 timeout_sec = 180
