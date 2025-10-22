@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { Quote } from '@/types/quote';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -13,10 +13,13 @@ import {
   Eye,
   Mail,
   DollarSign,
+  History,
 } from 'lucide-react';
 import { InvoiceSendDropdown } from './InvoiceSendDropdown';
 import { MarkAsPaidDialog } from './MarkAsPaidDialog';
+import { PaymentHistoryDialog } from './PaymentHistoryDialog';
 import { formatDistanceToNow, differenceInDays } from 'date-fns';
+import { supabase } from '@/integrations/supabase/client';
 
 interface InvoiceStatusPanelProps {
   invoices: Quote[];
@@ -26,9 +29,36 @@ interface InvoiceStatusPanelProps {
 export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelProps) => {
   const navigate = useNavigate();
   const [selectedInvoiceForPayment, setSelectedInvoiceForPayment] = useState<Quote | null>(null);
+  const [selectedInvoiceForHistory, setSelectedInvoiceForHistory] = useState<Quote | null>(null);
+  const [reminderHistory, setReminderHistory] = useState<Map<string, any[]>>(new Map());
 
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
+
+  // Fetch reminder history for all invoices
+  useEffect(() => {
+    const fetchReminderHistory = async () => {
+      if (invoices.length === 0) return;
+
+      const { data } = await supabase
+        .from('invoice_reminders')
+        .select('*')
+        .in('quote_id', invoices.map(i => i.id))
+        .order('sent_at', { ascending: false });
+
+      const historyMap = new Map();
+      data?.forEach(reminder => {
+        if (!historyMap.has(reminder.quote_id)) {
+          historyMap.set(reminder.quote_id, []);
+        }
+        historyMap.get(reminder.quote_id).push(reminder);
+      });
+
+      setReminderHistory(historyMap);
+    };
+
+    fetchReminderHistory();
+  }, [invoices]);
 
   // Categorize invoices
   const categorizedInvoices = useMemo(() => {
@@ -110,6 +140,17 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           )}
         </div>
 
+        {/* Reminder History */}
+        {reminderHistory.has(invoice.id) && reminderHistory.get(invoice.id)!.length > 0 && (
+          <div className="text-xs">
+            <Badge variant="outline" className="text-xs">
+              <Mail className="h-3 w-3 mr-1" />
+              Last reminder: {formatDistanceToNow(new Date(reminderHistory.get(invoice.id)![0].sent_at), { addSuffix: true })}
+              {' '}({reminderHistory.get(invoice.id)![0].reminder_type})
+            </Badge>
+          </div>
+        )}
+
         <div className="flex gap-2 pt-2">
           <Button
             variant="outline"
@@ -122,7 +163,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           <Button
             variant="outline"
             size="sm"
-            onClick={() => navigate(`/electrician/invoices/view/${invoice.id}`)}
+            onClick={() => navigate(`/electrician/invoices/${invoice.id}/view`)}
           >
             <FileText className="mr-1 h-3 w-3" />
             View Invoice
@@ -132,10 +173,23 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
             <InvoiceSendDropdown invoice={invoice} onSuccess={onRefresh} className="ml-auto" />
           )}
 
-          {showActions === 'paid' && invoice.invoice_payment_method && (
-            <Badge variant="outline" className="ml-auto">
-              {invoice.invoice_payment_method.replace('_', ' ')}
-            </Badge>
+          {showActions === 'paid' && (
+            <>
+              {invoice.invoice_payment_method && (
+                <Badge variant="outline">
+                  {invoice.invoice_payment_method.replace(/_/g, ' ')}
+                </Badge>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedInvoiceForHistory(invoice)}
+                className="ml-auto"
+              >
+                <History className="mr-1 h-3 w-3" />
+                Payment History
+              </Button>
+            </>
           )}
 
           {showActions === 'view' && invoice.invoice_status === 'sent' && (
@@ -238,6 +292,14 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           open={!!selectedInvoiceForPayment}
           onOpenChange={(open) => !open && setSelectedInvoiceForPayment(null)}
           onSuccess={onRefresh}
+        />
+      )}
+
+      {selectedInvoiceForHistory && (
+        <PaymentHistoryDialog
+          invoice={selectedInvoiceForHistory}
+          open={!!selectedInvoiceForHistory}
+          onOpenChange={(open) => !open && setSelectedInvoiceForHistory(null)}
         />
       )}
     </>

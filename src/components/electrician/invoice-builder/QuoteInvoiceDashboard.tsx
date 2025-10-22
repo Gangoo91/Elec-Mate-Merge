@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { QuotesReadyPanel } from "./QuotesReadyPanel";
@@ -9,6 +9,7 @@ import { Receipt, FileCheck, TrendingUp, DollarSign } from "lucide-react";
 import { InvoiceDecisionDialog } from "./InvoiceDecisionDialog";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export const QuoteInvoiceDashboard = () => {
   const navigate = useNavigate();
@@ -55,6 +56,41 @@ export const QuoteInvoiceDashboard = () => {
       paidValue: paidInvoices.reduce((sum, inv) => sum + (inv.total || 0), 0),
     };
   }, [invoices]);
+
+  // Auto-detect overdue invoices on load
+  useEffect(() => {
+    const checkOverdueInvoices = async () => {
+      const now = new Date();
+      const overdueInvoices = invoices.filter(
+        inv => inv.invoice_status === 'sent' && 
+               inv.invoice_due_date && 
+               new Date(inv.invoice_due_date) < now
+      );
+
+      if (overdueInvoices.length > 0) {
+        // Update status to 'overdue' in database
+        const updates = overdueInvoices.map(inv =>
+          supabase
+            .from('quotes')
+            .update({ invoice_status: 'overdue' })
+            .eq('id', inv.id)
+        );
+
+        await Promise.all(updates);
+        
+        toast({
+          title: 'Overdue Invoices Detected',
+          description: `${overdueInvoices.length} invoice${overdueInvoices.length > 1 ? 's are' : ' is'} now overdue`,
+          variant: 'destructive',
+        });
+
+        // Refresh to show updated statuses
+        fetchInvoices();
+      }
+    };
+
+    checkOverdueInvoices();
+  }, [invoices, fetchInvoices]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-GB", {

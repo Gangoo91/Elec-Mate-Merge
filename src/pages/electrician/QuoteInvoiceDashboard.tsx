@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, List } from "lucide-react";
 import { QuoteInvoiceDashboard as Dashboard } from "@/components/electrician/invoice-builder/QuoteInvoiceDashboard";
 
 const QuoteInvoiceDashboard = () => {
@@ -41,11 +41,18 @@ const QuoteInvoiceDashboard = () => {
                 Manage quotes ready for invoicing and track your invoices
               </p>
             </div>
-            <Link to="/electrician/business">
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto shadow-lg">
-                <ArrowLeft className="mr-2 h-4 w-4" /> Back to Business Hub
-              </Button>
-            </Link>
+            <div className="flex gap-2">
+              <Link to="/electrician/invoices">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                  <List className="mr-2 h-4 w-4" /> All Invoices
+                </Button>
+              </Link>
+              <Link to="/electrician/business">
+                <Button variant="secondary" size="lg" className="w-full sm:w-auto shadow-lg">
+                  <ArrowLeft className="mr-2 h-4 w-4" /> Business Hub
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </header>

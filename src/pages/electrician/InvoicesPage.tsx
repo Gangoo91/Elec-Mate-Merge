@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { ArrowLeft, FileText, Send, Edit, Eye, Bell, AlertCircle, Plus, Filter, Download, CheckCircle, Mail } from "lucide-react";
+import { ArrowLeft, FileText, Send, Edit, Eye, Bell, AlertCircle, Plus, Filter, Download, CheckCircle, Mail, LayoutDashboard } from "lucide-react";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { format, isPast } from "date-fns";
 import { Quote } from "@/types/quote";
@@ -515,12 +515,17 @@ Thank you for your business!`;
           </h1>
         </div>
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-          <Link to="/electrician" className="w-full sm:w-auto order-1 sm:order-2">
+          <Link to="/electrician/quote-invoice-dashboard" className="w-full sm:w-auto order-1 sm:order-3">
             <MobileButton variant="outline" className="w-full sm:w-auto justify-center">
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Electrical Hub
+              <LayoutDashboard className="mr-2 h-4 w-4" /> Workflow Dashboard
             </MobileButton>
           </Link>
-          <Link to="/electrician/invoice-builder/create" className="w-full sm:w-auto order-2 sm:order-1">
+          <Link to="/electrician" className="w-full sm:w-auto order-2 sm:order-2">
+            <MobileButton variant="outline" className="w-full sm:w-auto justify-center">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Electrical Hub
+            </MobileButton>
+          </Link>
+          <Link to="/electrician/invoice-builder/create" className="w-full sm:w-auto order-3 sm:order-1">
             <MobileButton variant="elec" className="w-full sm:w-auto justify-center">
               <Plus className="mr-2 h-4 w-4" /> Create Invoice
             </MobileButton>
