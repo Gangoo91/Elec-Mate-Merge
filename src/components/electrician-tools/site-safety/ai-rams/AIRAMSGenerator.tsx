@@ -113,7 +113,7 @@ export const AIRAMSGenerator: React.FC = () => {
               )}
 
               {!isProcessing && ramsData && (
-                <div className="flex justify-center pt-4">
+                <div className="flex justify-center pt-4 pb-8">
                   <Button
                     variant="outline"
                     onClick={handleStartOver}
