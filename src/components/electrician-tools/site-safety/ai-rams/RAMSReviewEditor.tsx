@@ -845,7 +845,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             </h4>
             
             {/* Desktop View - All buttons visible */}
-            <div className="hidden md:flex flex-wrap gap-3">
+            <div className="hidden md:flex flex-wrap gap-3 p-4">
               <Button
                 onClick={handleGenerateCombinedRAMS}
                 disabled={isGenerating}
