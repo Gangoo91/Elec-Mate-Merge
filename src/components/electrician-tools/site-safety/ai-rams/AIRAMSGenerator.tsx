@@ -86,52 +86,22 @@ export const AIRAMSGenerator: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
       <div className="w-full px-0 py-6 sm:py-8 md:py-10 max-w-7xl mx-auto sm:px-4 md:px-6 lg:px-8">
         <div className="mb-6 sm:mb-8 px-2 sm:px-0">
-          {/* Back Button */}
-          <div className="mb-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate('/electrician/site-safety')}
-              className="text-foreground/70 hover:text-foreground hover:bg-transparent"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Site Safety
-            </Button>
-          </div>
-
           {/* Clean Header Card */}
           <div className="relative overflow-hidden rounded-lg border border-elec-yellow/10 bg-elec-card/30 backdrop-blur-sm shadow-md hover:shadow-lg hover:border-elec-yellow/20 transition-all duration-300">
             {/* Subtle accent line */}
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-elec-yellow/60 to-transparent" />
             
             <div className="p-4 sm:p-6 space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                <div className="space-y-2 flex-1">
-                  <div className="flex items-baseline gap-3 flex-wrap">
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-                      <span className="bg-gradient-to-r from-elec-yellow to-yellow-400 bg-clip-text text-transparent">
-                        AI RAMS Generator
-                      </span>
-                    </h1>
-                    {/* BS 7671 Badge - inline on desktop */}
-                    <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-elec-yellow/10 border border-elec-yellow/30">
-                      <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-                      <span className="text-xs font-semibold text-elec-yellow whitespace-nowrap">
-                        BS 7671
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
-                    Generate professional Risk Assessments and Method Statements in minutes using advanced AI
-                  </p>
-                  {/* BS 7671 Badge - below on mobile */}
-                  <div className="sm:hidden inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-elec-yellow/10 border border-elec-yellow/30 w-fit">
-                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-                    <span className="text-xs font-semibold text-elec-yellow whitespace-nowrap">
-                      BS 7671 Compliant
-                    </span>
-                  </div>
-                </div>
+              {/* Centered content */}
+              <div className="flex flex-col items-center text-center space-y-3">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
+                  <span className="bg-gradient-to-r from-elec-yellow to-yellow-400 bg-clip-text text-transparent">
+                    AI RAMS Generator
+                  </span>
+                </h1>
+                <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
+                  Generate professional Risk Assessments and Method Statements in minutes using advanced AI
+                </p>
               </div>
               
               {/* Clean divider */}
