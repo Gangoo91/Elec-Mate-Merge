@@ -6,8 +6,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Placeholder template ID - replace with actual PDF Monkey template ID
-const RAMS_TEMPLATE_ID = 'PLACEHOLDER-RAMS-TEMPLATE-ID';
+// PDF Monkey template ID for RAMS documents
+const RAMS_TEMPLATE_ID = '95DF938E-D857-4573-8F0C-3E4FD85D4A24';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
