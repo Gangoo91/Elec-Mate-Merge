@@ -750,6 +750,7 @@ ${companyName}`;
         }}
         onMarkWorkComplete={handleMarkWorkComplete}
         onViewInvoice={handleViewInvoice}
+        onDeleteQuote={handleDeleteQuote}
       />
       
       {!showAll && quotes.length > 10 && (

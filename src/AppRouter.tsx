@@ -22,6 +22,7 @@ import PublicQuote from "@/pages/PublicQuote";
 import LaTeXPDFGeneratorPage from "@/pages/LaTeXPDFGeneratorPage";
 import InvoiceQuoteBuilder from "@/pages/electrician/InvoiceQuoteBuilder";
 import InvoiceViewPage from "@/pages/electrician/InvoiceViewPage";
+import QuoteViewPage from "@/pages/electrician/QuoteViewPage";
 import AdminRAGProcessor from "@/pages/AdminRAGProcessor";
 import { ConsultationResults } from "@/components/install-planner-v2/ConsultationResults";
 import ProcessOnsiteGuide from "@/pages/ProcessOnsiteGuide";
@@ -89,6 +90,7 @@ const AppRouter = () => {
         {/* Canonical Electrician Hub */}
         <Route path="electrician/invoice-quote-builder/:quoteId" element={<InvoiceQuoteBuilder />} />
         <Route path="electrician/invoices/:id/view" element={<InvoiceViewPage />} />
+        <Route path="electrician/quotes/view/:id" element={<QuoteViewPage />} />
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
         {/* Apprentice Routes */}

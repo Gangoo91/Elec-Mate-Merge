@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, Eye, Calendar, Check, X, Receipt, User, ArrowRight, CheckCheck } from 'lucide-react';
+import { Download, Eye, Calendar, Check, X, Receipt, User, ArrowRight, CheckCheck, Trash2 } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format } from 'date-fns';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
@@ -21,6 +21,7 @@ interface QuoteCardViewProps {
   onInvoiceAction: (quote: Quote) => void;
   onMarkWorkComplete?: (quote: Quote) => void;
   onViewInvoice?: (quote: Quote) => void;
+  onDeleteQuote: (quote: Quote) => void;
 }
 
 const QuoteCardView: React.FC<QuoteCardViewProps> = ({
@@ -37,6 +38,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
   onInvoiceAction,
   onMarkWorkComplete,
   onViewInvoice,
+  onDeleteQuote,
 }) => {
   const isWorkComplete = (quote: Quote) => {
     return quote.tags?.includes('work_done');
@@ -221,11 +223,19 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
               </button>
 
               <button
-                onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
+                onClick={() => onNavigate(`/electrician/quotes/view/${quote.id}`)}
                 className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
               >
                 <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 <span className="text-xs sm:text-sm font-medium">View</span>
+              </button>
+
+              <button
+                onClick={() => onDeleteQuote(quote)}
+                className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-600 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
+              >
+                <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                <span className="text-xs sm:text-sm font-medium">Delete</span>
               </button>
 
               {/* Show QuoteSendDropdown as a grid button */}
