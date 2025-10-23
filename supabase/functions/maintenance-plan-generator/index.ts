@@ -145,15 +145,53 @@ ${pricingData?.data?.map((item: any) =>
     console.log(`⚠️ Risk Assessment - Score: ${riskScore}/100, Level: ${riskLevel}`);
 
     // Step 5: Generate comprehensive maintenance plan with AI
-    const systemPrompt = `You are a highly experienced UK electrical maintenance planning expert with 20+ years of field experience. You have deep expertise in:
-- BS 7671:2018+A3:2024 (18th Edition Wiring Regulations)
-- GN3 (Guidance Note 3: Inspection & Testing)  
-- IET Codes of Practice
-- Manufacturer maintenance schedules
-- Real-world failure mode analysis
-- UK electrical industry best practices
+    const systemPrompt = `You are a highly experienced UK electrical maintenance planning expert with 20+ years of field experience and deep knowledge of BS 7671:2018+A3:2024 regulations.
 
-Based on the detailed technical knowledge provided below, generate a comprehensive, professional maintenance plan that demonstrates expert-level understanding.
+CRITICAL REQUIREMENTS:
+- Use ONLY UK English spelling throughout (analyse, organise, colour, standardise, recognise, etc.)
+- Write for professional electricians working to 18th Edition standards
+- All procedures must be field-ready and actionable
+- Reference real-world equipment and tools by model numbers where applicable
+
+RESPONSE QUALITY STANDARDS:
+
+1. TASK PROCEDURES: Each task MUST have 5-8 detailed procedural steps
+   - Each step should be specific enough for an apprentice to follow
+   - Include exact tool specifications (e.g., "Fluke 1653B multifunction tester")
+   - Specify exact test voltages, resistance values, and expected readings
+   - List ALL required PPE for each task
+   - Include pass/fail criteria for each test
+
+2. FAILURE MODE ANALYSIS: Generate 4-6 common failure modes minimum
+   - Each MUST include specific probability percentage (e.g., "35% probability")
+   - List 3-5 specific early warning signs (observable symptoms)
+   - Provide 3-5 actionable preventive measures
+   - Include estimated time-to-failure under current conditions
+
+3. REGULATION EXCERPTS: Provide 6-10 relevant BS 7671 regulations
+   - Each excerpt MUST be 100-150 words minimum (actual regulation text)
+   - Explain WHY each regulation applies in plain English
+   - Show practical implications for this specific installation
+   - Include inspection/testing methods to verify compliance
+   - Note consequences of non-compliance (safety/legal)
+
+4. SAFETY PRECAUTIONS: Be comprehensive
+   - List ALL required PPE items specifically
+   - Detail isolation procedures step-by-step
+   - Include lock-off/tag-out requirements
+   - Specify safe systems of work
+
+5. COST ESTIMATES: Realistic UK market rates (September 2025)
+   - Based on current material costs and labour rates
+   - Include VAT considerations where applicable
+   - Account for regional variations if location specified
+
+PROFESSIONAL DEPTH:
+- Write as if training an apprentice - they need every detail
+- Use proper UK electrical terminology and standards references
+- Include industry best practices beyond minimum compliance
+- Reference manufacturer guidelines where applicable
+- Consider environmental factors (damp, corrosive, etc.) in recommendations
 
 CRITICAL INSTRUCTIONS:
 - Present ALL information as your own expert knowledge and professional experience
@@ -161,7 +199,6 @@ CRITICAL INSTRUCTIONS:
 - Write as if you personally know these regulations and practices from decades of hands-on work
 - Use authoritative language: "Based on BS 7671 Regulation X..." not "According to retrieved data..."
 - Show regulation citations as professional references, not search results
-- All cost estimates should be presented as "industry standard estimates" based on your experience
 
 ${expertKnowledge}
 
@@ -251,7 +288,7 @@ Return ONLY a valid JSON object (no markdown, no code blocks) with this EXACT st
   "recommendations": ["General recommendation 1", "Best practice 2"]
 }`;
 
-    const userPrompt = `Generate a comprehensive maintenance plan for:
+    const userPrompt = `Generate a comprehensive maintenance plan with the following MANDATORY detail levels:
 
 EQUIPMENT DETAILS:
 - Type: ${equipmentType}
@@ -274,45 +311,56 @@ CLIENT INFORMATION:
 - Assessed By: ${assessorName || 'Professional Engineer'}
 - Company: ${companyName || 'Independent Assessment'}
 
-REQUIRED OUTPUT:
-Generate a detailed, field-ready maintenance plan including:
+DETAILED TASK SCHEDULE (minimum 5 tasks for domestic, 8+ for commercial):
+- Each task MUST have 5-8 specific procedural steps
+- Include exact tool specifications and model numbers where possible
+- List ALL required PPE for each task
+- Specify exact test voltages, resistance ranges, expected readings
+- Include "pass" criteria and "fail" criteria for each test
+- Add estimated duration in minutes (be realistic)
+- Cost estimates must include materials, labour, and travel
+- Use UK English throughout (e.g., "metre", "colour", "organise")
 
-1. COMPREHENSIVE TASK SCHEDULE:
-   - Routine visual inspections (monthly/quarterly)
-   - Periodic testing per GN3 intervals
-   - Component-specific maintenance procedures
-   - Emergency/safety-critical checks
-   - Each task MUST include: step-by-step procedure, tools required, safety precautions, qualifications needed, duration, cost estimate
+PREDICTIVE MAINTENANCE ANALYSIS (minimum 4 failure modes):
+- Each failure mode MUST have specific probability % based on:
+  * Equipment age: ${ageYears || 'unknown'} years
+  * Environment: ${environment || 'standard indoor'}
+  * Criticality: ${criticality || 'standard'}
+- List 3-5 specific early warning signs (observable by technician)
+- Provide 3-5 actionable preventive measures
+- Estimate time-to-failure (e.g., "2-3 years under current conditions")
 
-2. RISK ASSESSMENT:
-   - Identify specific risk factors for this ${ageYears || 'aged'} year old ${equipmentType}
-   - Current risk level already calculated as: ${riskLevel} (${riskScore}/100)
-   - Provide actionable risk mitigation steps
+COMPLIANCE & REGULATIONS (6-10 regulations minimum):
+- Each regulation excerpt MUST be 100-150 words of actual BS 7671 text
+- Explain practical implications for THIS specific installation
+- Show how to inspect/test for compliance
+- Note consequences of non-compliance (safety/legal)
+- Cross-reference related regulations where applicable
 
-3. PREDICTIVE MAINTENANCE:
-   - Common failure modes for this equipment type in ${environment || 'indoor'} ${buildingType || 'installation'}
-   - Early warning signs to monitor
-   - Component replacement timeline (when will parts likely need replacing?)
-   - Preventive measures to extend lifespan
+RISK ASSESSMENT:
+- Calculate risk score (0-100) considering:
+  * Age: ${ageYears || 'unknown'} years
+  * Environment: ${environment || 'standard'}
+  * Criticality: ${criticality || 'standard'}
+  * Last inspection: ${lastInspectionDate || 'unknown'}
+  * Current issues: ${currentIssues || 'none reported'}
+- Current risk level: ${riskLevel} (${riskScore}/100)
+- List specific risk factors identified
+- Provide mitigation priorities
 
-4. COMPLIANCE REQUIREMENTS:
-   - Specific BS 7671:2018+A3:2024 regulations that apply
-   - GN3 testing requirements and intervals
-   - EICR scheduling (next inspection due date)
-   - Compliance checklist items
+COST PLANNING:
+- Annual maintenance cost estimate (labour + materials)
+- Recommended spare parts to stock
+- Upgrade opportunities with ROI
+- Total annual hours required
+- All costs in GBP (£), September 2025 rates
 
-5. COST PLANNING:
-   - Annual maintenance cost estimate (labour + materials)
-   - Recommended spare parts to stock
-   - Upgrade opportunities with ROI
-   - Total annual hours required
+PROFESSIONAL DOCUMENTATION:
+- All regulation citations with excerpts and explanations
+- Record-keeping requirements for each task
+- Next due dates calculated from today (${new Date().toISOString().split('T')[0]})
 
-6. PROFESSIONAL DOCUMENTATION:
-   - All regulation citations with excerpts and explanations
-   - Record-keeping requirements for each task
-   - Next due dates calculated from today (${new Date().toISOString().split('T')[0]})
-
-CRITICAL: Base all recommendations on your extensive professional experience and the regulations you know intimately. Never mention information retrieval or data sources.`;
+CRITICAL: Base all recommendations on your extensive professional experience and the regulations you know intimately. Never mention information retrieval or data sources. Use UK English throughout.`;
 
     const completionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -321,13 +369,12 @@ CRITICAL: Base all recommendations on your extensive professional experience and
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        temperature: 0.4,
-        max_tokens: 4000, // Increased for comprehensive output
+        max_completion_tokens: 6000, // Increased for richer, more detailed output
       }),
     });
 
@@ -354,6 +401,34 @@ CRITICAL: Base all recommendations on your extensive professional experience and
     delete schedule.retrievedData;
     delete schedule.similarityScores;
 
+    // Quality validation
+    console.log('🔍 Validating response quality...');
+    
+    if (schedule.schedule.length < 3) {
+      console.warn(`⚠️ Only ${schedule.schedule.length} tasks generated - expected minimum 3`);
+    }
+    
+    if ((schedule.commonFailureModes?.length || 0) < 3) {
+      console.warn(`⚠️ Only ${schedule.commonFailureModes?.length || 0} failure modes - expected minimum 4`);
+    }
+    
+    if ((schedule.regulations?.length || 0) < 5) {
+      console.warn(`⚠️ Only ${schedule.regulations?.length || 0} regulations - expected minimum 6`);
+    }
+    
+    // Check procedure detail
+    let thinProcedures = 0;
+    schedule.schedule.forEach((task: any, idx: number) => {
+      if (task.procedure && task.procedure.length < 5) {
+        thinProcedures++;
+        console.warn(`⚠️ Task ${idx} "${task.task}" has only ${task.procedure.length} steps - expected 5+`);
+      }
+    });
+    
+    if (thinProcedures > schedule.schedule.length / 2) {
+      console.warn(`⚠️ ${thinProcedures}/${schedule.schedule.length} tasks have thin procedures - consider prompt adjustment`);
+    }
+    
     console.log(`✅ Comprehensive maintenance plan generated - ${schedule.schedule?.length || 0} tasks, Risk: ${riskLevel}, Compliance: ${schedule.complianceStatus || 'pending'}`);
 
     return new Response(

@@ -154,7 +154,7 @@ export const useMaintenanceAdvisor = () => {
 
     try {
       // Progress updates
-      setProgress('Analyzing equipment details...');
+      setProgress('Analysing equipment details...');
       await new Promise(resolve => setTimeout(resolve, 500));
       
       setProgress('Searching BS 7671 & GN3 regulations...');

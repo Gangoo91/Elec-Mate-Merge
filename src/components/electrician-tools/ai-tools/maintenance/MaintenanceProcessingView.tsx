@@ -7,7 +7,7 @@ interface MaintenanceProcessingViewProps {
 }
 
 const STEPS = [
-  { id: 1, text: 'Analyzing equipment details...', icon: '📋' },
+  { id: 1, text: 'Analysing equipment details...', icon: '📋' },
   { id: 2, text: 'Searching BS 7671 & GN3 regulations...', icon: '📚' },
   { id: 3, text: 'Calculating risk scores...', icon: '📊' },
   { id: 4, text: 'Generating maintenance tasks...', icon: '🛠️' },
