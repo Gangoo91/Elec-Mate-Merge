@@ -118,7 +118,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 0.85, // Real 2025 UK market price
+    defaultPrice: 0.65, // Real 2025 UK trade price
     code: "TE1.0",
     brand: "Generic Trade",
     priceSource: "Screwfix/CEF 2025 market rate",
@@ -142,7 +142,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 1.05, // Real 2025 UK market price
+    defaultPrice: 0.85, // Real 2025 UK trade price
     code: "TE1.5",
     brand: "Generic Trade",
     priceSource: "Screwfix/CEF 2025 market rate",
@@ -166,7 +166,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 1.65, // Real 2025 UK market price (was £2.05)
+    defaultPrice: 1.05, // Real 2025 UK trade price (user confirmed)
     code: "TE2.5",
     brand: "Generic Trade",
     priceSource: "Screwfix/CEF 2025 market rate",
@@ -190,7 +190,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 2.45, // Real 2025 UK market price (was £3.25)
+    defaultPrice: 1.95, // Real 2025 UK trade price
     code: "TE4.0",
     brand: "Generic Trade",
     priceSource: "Screwfix/CEF 2025 market rate",
@@ -210,7 +210,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 3.55, // Real 2025 UK market price
+    defaultPrice: 2.85, // Real 2025 UK trade price
     code: "TE6.0",
     brand: "Generic Trade",
     priceSource: "Screwfix/CEF 2025 market rate",
@@ -230,7 +230,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 5.85, // Real 2025 UK market price
+    defaultPrice: 4.95, // Real 2025 UK trade price
     code: "TE10.0",
     brand: "Generic Trade",
     priceSource: "Screwfix/CEF 2025 market rate",
@@ -252,7 +252,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "accessories",
     subcategory: "Sockets",
     unit: "each",
-    defaultPrice: 9.25,
+    defaultPrice: 7.50,
     code: "SKT13DP",
     brand: "MK Logic Plus",
     priceSource: "Wholesaler average Jan 2025",
@@ -277,7 +277,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "accessories",
     subcategory: "USB Outlets",
     unit: "each",
-    defaultPrice: 18.50,
+    defaultPrice: 15.50,
     code: "SKT13USB",
     brand: "MK Logic Plus",
     priceSource: "Wholesaler average Jan 2025",
@@ -304,7 +304,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "distribution",
     subcategory: "Consumer Units",
     unit: "each",
-    defaultPrice: 125.00,
+    defaultPrice: 105.00,
     code: "CU10W",
     brand: "Hager Design 30",
     priceSource: "CEF/Rexel trade pricing",
@@ -328,7 +328,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "distribution",
     subcategory: "MCBs",
     unit: "each",
-    defaultPrice: 13.50,
+    defaultPrice: 11.50,
     code: "MCB32B",
     brand: "Hager MTN132",
     priceSource: "Trade wholesaler pricing",
@@ -355,7 +355,7 @@ export const enhancedMaterials: EnhancedMaterialItem[] = [
     category: "lighting",
     subcategory: "LED Downlights",
     unit: "each",
-    defaultPrice: 25.00,
+    defaultPrice: 20.00,
     code: "LEDFIRE10W",
     brand: "JCC Fireguard",
     priceSource: "Lighting specialist pricing",

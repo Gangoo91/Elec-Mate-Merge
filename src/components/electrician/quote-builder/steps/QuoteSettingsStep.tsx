@@ -7,12 +7,12 @@ import { Switch } from "@/components/ui/switch";
 import { QuoteSettings } from "@/types/quote";
 import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, Percent, Brain } from "lucide-react";
+import { Settings, Percent, ListTree } from "lucide-react";
 
 const settingsSchema = z.object({
   vatRate: z.number().min(0).max(100, "VAT rate must be between 0-100%"),
   vatRegistered: z.boolean(),
-  aiEnhancedPDF: z.boolean().optional(),
+  showMaterialsBreakdown: z.boolean().optional(),
 });
 
 interface QuoteSettingsStepProps {
@@ -25,12 +25,19 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
     resolver: zodResolver(settingsSchema),
     defaultValues: settings || {
       vatRate: 20,
-      vatRegistered: true,
-      aiEnhancedPDF: true,
+      vatRegistered: false,
+      showMaterialsBreakdown: true,
     },
   });
 
   useEffect(() => {
+    // Trigger initial validation immediately on mount
+    form.trigger().then(() => {
+      if (form.formState.isValid) {
+        onUpdate(form.getValues() as QuoteSettings);
+      }
+    });
+
     const subscription = form.watch((value) => {
       const isValid = form.formState.isValid;
       if (isValid) {
@@ -100,29 +107,29 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
           </CardContent>
         </Card>
 
-        {/* AI Enhancement Settings */}
+        {/* Materials Display Settings */}
         <Card className="bg-elec-gray/50 border border-elec-yellow/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
-              <Brain className="h-5 w-5" />
-              AI Enhancement Settings
+              <ListTree className="h-5 w-5" />
+              Materials Display
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <FormField
               control={form.control}
-              name="aiEnhancedPDF"
+              name="showMaterialsBreakdown"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
-                    <FormLabel className="text-base">AI-Enhanced PDF Generation</FormLabel>
+                    <FormLabel className="text-base">Show Materials Breakdown</FormLabel>
                     <div className="text-sm text-muted-foreground">
-                      Generate professional PDFs with AI-enhanced descriptions, executive summary, and smart terms & conditions
+                      Display each material as a separate line item. Turn off to group all materials into one line.
                     </div>
                   </div>
                   <FormControl>
                     <Switch
-                      checked={field.value || false}
+                      checked={field.value !== false}
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>

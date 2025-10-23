@@ -14,6 +14,20 @@ interface QuoteData {
   validityDays?: number;
 }
 
+// Helper to group materials if needed
+const processMaterials = (materials: Array<{ item: string; quantity: number; unitCost: number; totalCost: number }>, showBreakdown: boolean = true) => {
+  if (!showBreakdown && materials.length > 1) {
+    const totalCost = materials.reduce((sum, m) => sum + m.totalCost, 0);
+    return [{
+      item: 'Materials & Supplies',
+      quantity: 1,
+      unitCost: totalCost,
+      totalCost: totalCost
+    }];
+  }
+  return materials;
+};
+
 export function generateClientQuotePDF(data: QuoteData): jsPDF {
   const doc = new jsPDF('portrait', 'mm', 'a4');
   const pageWidth = doc.internal.pageSize.width;

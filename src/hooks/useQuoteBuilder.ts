@@ -97,11 +97,41 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     }));
   }, []);
 
+  const processItemsForDisplay = useCallback((items: QuoteItem[], settings: QuoteSettings): QuoteItem[] => {
+    if (!settings.showMaterialsBreakdown) {
+      // Group all materials into one line
+      const materialsItems = items.filter(item => item.category === 'materials');
+      const nonMaterialsItems = items.filter(item => item.category !== 'materials');
+      
+      if (materialsItems.length > 0) {
+        const totalMaterialsCost = materialsItems.reduce((sum, item) => sum + item.totalPrice, 0);
+        
+        const groupedMaterial: QuoteItem = {
+          id: 'materials-grouped',
+          description: 'Materials & Supplies',
+          quantity: 1,
+          unit: 'lot',
+          unitPrice: totalMaterialsCost,
+          totalPrice: totalMaterialsCost,
+          category: 'materials',
+          notes: `Includes ${materialsItems.length} items`
+        };
+        
+        return [...nonMaterialsItems, groupedMaterial];
+      }
+    }
+    
+    return items; // Return as-is if breakdown enabled
+  }, []);
+
   const calculateTotals = useCallback(() => {
     if (!quote.items || !quote.settings) return quote;
 
+    // Process items based on materials breakdown setting
+    const displayItems = processItemsForDisplay(quote.items, quote.settings);
+
     // Calculate subtotal - profit and overhead are now built into unit prices
-    const subtotal = quote.items.reduce((sum, item) => sum + item.totalPrice, 0);
+    const subtotal = displayItems.reduce((sum, item) => sum + item.totalPrice, 0);
     
     // Calculate VAT on the subtotal (which already includes profit and overhead)
     const vatAmount = quote.settings.vatRegistered ? subtotal * (quote.settings.vatRate / 100) : 0;
@@ -109,13 +139,14 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
     return {
       ...quote,
+      items: displayItems,
       subtotal,
       overhead: 0, // No longer calculated separately
       profit: 0,   // No longer calculated separately
       vatAmount,
       total,
     };
-  }, [quote]);
+  }, [quote, processItemsForDisplay]);
 
   const nextStep = useCallback(() => {
     setCurrentStep(prev => Math.min(prev + 1, 2));
@@ -322,5 +353,6 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     generateQuote,
     resetQuote,
     isGenerating,
+    processItemsForDisplay,
   };
 };
