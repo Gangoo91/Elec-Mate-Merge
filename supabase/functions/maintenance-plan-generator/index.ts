@@ -54,6 +54,7 @@ serve(async (req) => {
       {
         query_text: `${equipmentType} ${equipmentDescription} maintenance schedule intervals testing`,
         query_embedding: queryEmbedding,
+        equipment_filter: equipmentType || null,
         match_count: 8
       }
     );

@@ -50,6 +50,7 @@ serve(async (req) => {
       {
         query_text: userContext,
         query_embedding: embedding,
+        equipment_filter: null,
         match_count: 6
       }
     );
