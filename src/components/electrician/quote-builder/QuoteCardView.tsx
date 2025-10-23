@@ -91,9 +91,9 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
     // Draft
     if (quote.status === 'draft') {
       return {
-        color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300',
-        label: '⚪ Draft',
-        icon: Eye
+        color: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
+        label: '🟡 Ready to Send to Client',
+        icon: ArrowRight
       };
     }
 

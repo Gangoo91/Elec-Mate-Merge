@@ -57,7 +57,8 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   };
 
   const canRaiseInvoice = (quote: Quote) => {
-    return quote.acceptance_status === 'accepted' && !quote.invoice_raised;
+    const isWorkComplete = quote.tags?.includes('work_done');
+    return quote.acceptance_status === 'accepted' && isWorkComplete && !quote.invoice_raised;
   };
 
   const hasInvoiceRaised = (quote: Quote) => {
@@ -596,6 +597,41 @@ ${companyName}`;
     }
   };
 
+  const handleMarkWorkComplete = async (quote: Quote) => {
+    if (!onUpdateQuoteStatus) return;
+    
+    setLoadingAction(`work-complete-${quote.id}`);
+    try {
+      const currentTags = quote.tags || [];
+      const newTags = [...currentTags.filter(tag => tag !== 'work_done'), 'work_done'] as Quote['tags'];
+      
+      const success = await onUpdateQuoteStatus(quote.id, quote.status, newTags);
+      
+      if (success) {
+        // Also update work completion date
+        await supabase
+          .from('quotes')
+          .update({ work_completion_date: new Date().toISOString() })
+          .eq('id', quote.id);
+        
+        toast({
+          title: "Work Marked Complete",
+          description: "You can now raise an invoice for this quote",
+        });
+      } else {
+        throw new Error('Failed to mark work complete');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to mark work complete",
+        variant: "destructive"
+      });
+    } finally {
+      setLoadingAction('');
+    }
+  };
+
   const handleViewInvoice = (quote: Quote) => {
     if (quote.invoice_raised && quote.id) {
       navigate(`/electrician/invoices/${quote.id}`);
@@ -712,6 +748,7 @@ ${companyName}`;
           setQuoteForInvoice(quote);
           setShowInvoiceDecision(true);
         }}
+        onMarkWorkComplete={handleMarkWorkComplete}
         onViewInvoice={handleViewInvoice}
       />
       

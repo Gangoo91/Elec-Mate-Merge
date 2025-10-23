@@ -33,6 +33,8 @@ export const useQuoteStorage = () => {
     accepted_by_name: row.accepted_by_name,
     accepted_by_email: row.accepted_by_email,
     public_token: row.public_token,
+    invoice_raised: row.invoice_raised,
+    work_completion_date: row.work_completion_date ? new Date(row.work_completion_date) : undefined,
   }), []);
 
   // Load quotes from Supabase on mount
@@ -68,6 +70,28 @@ export const useQuoteStorage = () => {
     };
 
     loadQuotes();
+
+    // Set up real-time subscription for quote updates
+    const channel = supabase
+      .channel('quote-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'quotes'
+        },
+        (payload) => {
+          console.log('Quote updated in real-time:', payload);
+          // Refresh quotes when any quote is updated (e.g., client accepts/rejects)
+          refreshQuotes();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [convertDbRowToQuote]);
 
   // Save a new quote to Supabase
@@ -283,6 +307,11 @@ export const useQuoteStorage = () => {
       
       if (tags !== undefined) {
         updateData.tags = tags;
+        
+        // If marking work as done, also set completion date
+        if (tags.includes('work_done')) {
+          updateData.work_completion_date = new Date().toISOString();
+        }
       }
 
       if (acceptanceStatus !== undefined) {
@@ -309,6 +338,7 @@ export const useQuoteStorage = () => {
               tags: tags || quote.tags, 
               acceptance_status: acceptanceStatus || quote.acceptance_status,
               accepted_at: acceptanceStatus ? new Date() : quote.accepted_at,
+              work_completion_date: tags?.includes('work_done') ? new Date() : quote.work_completion_date,
               updatedAt: new Date() 
             }
           : quote
