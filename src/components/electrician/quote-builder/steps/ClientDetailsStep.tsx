@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { MobileInput } from "@/components/ui/mobile-input";
-import { PostcodeFinder } from "@/components/ui/postcode-finder";
+import { SmartAddressFinder } from "@/components/ui/smart-address-finder";
 import { QuoteClient } from "@/types/quote";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,6 @@ interface ClientDetailsStepProps {
 }
 
 export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) => {
-  const [showAddressFinder, setShowAddressFinder] = useState(false);
   const [recentClients, setRecentClients] = useState<QuoteClient[]>([]);
   
   const form = useForm<QuoteClient>({
@@ -47,9 +46,8 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
   }, []);
 
   const handleAddressSelect = (address: any) => {
-    form.setValue("address", address.line_1);
+    form.setValue("address", address.line_1 || address.formatted_address);
     form.setValue("postcode", address.postcode);
-    setShowAddressFinder(false);
   };
 
   const handleUseRecentClient = (client: QuoteClient) => {
@@ -147,42 +145,16 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
             </FormItem>
           )}
         />
-        
-        <FormField
-          control={form.control}
-          name="postcode"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <MobileInput label="Postcode *" placeholder="Enter postcode" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
       </div>
       
-      {/* Postcode Finder Section */}
-      <div className="mt-6 pt-4 border-t">
-        <PostcodeFinder 
+      {/* Smart Address Finder */}
+      <div className="mt-6">
+        <SmartAddressFinder
           onAddressSelect={handleAddressSelect}
-          placeholder="Search for address by postcode..."
-          className="mb-4"
-        />
-      </div>
-      
-      <div className="grid grid-cols-1 gap-4">
-        <FormField
-          control={form.control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <MobileInput label="Address *" placeholder="Enter full address" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          postcodeValue={form.watch("postcode")}
+          addressValue={form.watch("address")}
+          onPostcodeChange={(value) => form.setValue("postcode", value)}
+          onAddressChange={(value) => form.setValue("address", value)}
         />
       </div>
     </Form>
