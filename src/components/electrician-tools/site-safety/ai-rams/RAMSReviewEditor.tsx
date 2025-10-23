@@ -83,6 +83,24 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     }));
   };
 
+  const addRisk = () => {
+    const newRisk: RAMSRisk = {
+      id: `risk-${Date.now()}`,
+      hazard: '',
+      risk: '',
+      likelihood: 3,
+      severity: 3,
+      riskRating: 9,
+      controls: '',
+      residualRisk: 6
+    };
+    
+    setRamsData(prev => ({
+      ...prev,
+      risks: [...prev.risks, newRisk]
+    }));
+  };
+
   const updateStep = (stepId: string, updates: Partial<MethodStep>) => {
     setMethodData(prev => ({
       ...prev,
@@ -96,6 +114,26 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     setMethodData(prev => ({
       ...prev,
       steps: prev.steps?.filter(step => step.id !== stepId)
+    }));
+  };
+
+  const addStep = () => {
+    const newStepNumber = (methodData.steps?.length || 0) + 1;
+    const newStep: MethodStep = {
+      id: `step-${Date.now()}`,
+      stepNumber: newStepNumber,
+      title: '',
+      description: '',
+      safetyRequirements: [],
+      equipmentNeeded: [],
+      qualifications: [],
+      estimatedDuration: '15 minutes',
+      riskLevel: 'low'
+    };
+    
+    setMethodData(prev => ({
+      ...prev,
+      steps: [...(prev.steps || []), newStep]
     }));
   };
 
@@ -640,9 +678,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                           <Textarea
                             value={risk.controls}
                             onChange={(e) => updateRisk(risk.id, { controls: e.target.value })}
-                            className="w-full bg-background/50 border-primary/30 text-sm"
+                            className="w-full bg-background/50 border-primary/30 text-sm max-h-[180px] overflow-y-auto resize-y"
                             placeholder="Describe control measures and compliance (e.g., PUWER 1998, BS 7671)"
-                            rows={3}
+                            rows={4}
                           />
                         </div>
 
@@ -687,6 +725,16 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   </Card>
                   );
                 })}
+                
+                {/* Add New Risk Button */}
+                <Button
+                  onClick={addRisk}
+                  variant="outline"
+                  className="w-full border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow mt-4"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add New Risk
+                </Button>
               </div>
 
               {/* Enhanced PPE Section */}
@@ -829,9 +877,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         <Textarea
                           value={step.description}
                           onChange={(e) => updateStep(step.id, { description: e.target.value })}
-                          className="bg-background/50 border-primary/30"
+                          className="bg-background/50 border-primary/30 max-h-[200px] overflow-y-auto resize-y"
                           placeholder="Step description"
-                          rows={2}
+                          rows={4}
                         />
 
                         <div className="text-xs text-muted-foreground">
@@ -841,6 +889,16 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     </CardContent>
                   </Card>
                 ))}
+                
+                {/* Add New Step Button */}
+                <Button
+                  onClick={addStep}
+                  variant="outline"
+                  className="w-full border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow mt-4"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add New Step
+                </Button>
               </div>
 
             </TabsContent>
