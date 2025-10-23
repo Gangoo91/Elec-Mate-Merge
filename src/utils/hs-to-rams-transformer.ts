@@ -21,6 +21,64 @@ export interface HealthSafetyAgentOutput {
   workActivities: string[];
 }
 
+export interface EnhancedHealthSafetyAgentOutput extends HealthSafetyAgentOutput {
+  riskAssessmentDetailed?: {
+    hazards: Array<{
+      hazard: string;
+      linkedToStep: number;
+      likelihood: number;
+      likelihoodReason?: string;
+      severity: number;
+      severityReason?: string;
+      riskScore: number;
+      riskLevel: string;
+      regulation?: string;
+    }>;
+    controls: Array<{
+      hazard: string;
+      linkedToStep: number;
+      controlMeasure: string;
+      residualLikelihood?: number;
+      residualSeverity?: number;
+      residualRisk: number;
+      residualRiskLevel: string;
+      regulation?: string;
+      practicalImplementation?: string;
+    }>;
+    riskMatrix?: any;
+  };
+  ppeDetails?: Array<{
+    itemNumber: number;
+    ppeType: string;
+    standard: string;
+    mandatory: boolean;
+    purpose: string;
+  }>;
+  siteLogistics?: {
+    vehicleAccess?: string;
+    parking?: string;
+    materialStorage?: string;
+    wasteManagement?: string;
+    welfareFacilities?: string;
+    siteRestrictions?: string;
+  };
+  competencyMatrix?: {
+    competencyRequirements?: string;
+    trainingRequired?: string;
+    supervisionLevel?: string;
+    additionalCertifications?: string;
+  };
+  conditionalProcedures?: any;
+  compliance?: {
+    regulations: string[];
+    warnings?: string[];
+  };
+  ragCitations?: Array<{
+    regulation: string;
+    content: string;
+  }>;
+}
+
 /**
  * Transforms Health & Safety agent output into RAMS format
  * Converts 5x5 risk matrix assessments into standardised RAMS document
@@ -133,4 +191,49 @@ function getRiskLevel(riskRating: number): 'low' | 'medium' | 'high' {
   if (riskRating >= 15) return 'high';
   if (riskRating >= 8) return 'medium';
   return 'low';
+}
+
+/**
+ * Transform enhanced H&S output to Method Statement format
+ * Captures full structured data including RAG citations and detailed risk assessments
+ */
+export function transformHealthSafetyOutputToMethodStatement(
+  hsOutput: EnhancedHealthSafetyAgentOutput,
+  projectDetails?: {
+    projectName?: string;
+    location?: string;
+    assessor?: string;
+  }
+): Partial<import('@/types/method-statement').MethodStatementData> {
+  return {
+    // Full risk assessment with all details
+    riskAssessment: hsOutput.riskAssessmentDetailed ? {
+      hazards: hsOutput.riskAssessmentDetailed.hazards,
+      controls: hsOutput.riskAssessmentDetailed.controls,
+      riskMatrix: hsOutput.riskAssessmentDetailed.riskMatrix,
+    } : undefined,
+    
+    // Enhanced PPE with standards
+    ppeDetails: hsOutput.ppeDetails,
+    
+    // Site logistics
+    siteLogistics: hsOutput.siteLogistics,
+    
+    // Competency requirements
+    competencyMatrix: hsOutput.competencyMatrix,
+    
+    // Conditional procedures
+    conditionalProcedures: hsOutput.conditionalProcedures,
+    
+    // RAG citations from H&S agent
+    ragCitations: hsOutput.ragCitations?.map(citation => ({
+      source: 'health-safety' as const,
+      regulation: citation.regulation,
+      content: citation.content,
+    })),
+    
+    // Compliance
+    complianceRegulations: hsOutput.compliance?.regulations,
+    complianceWarnings: hsOutput.compliance?.warnings,
+  };
 }

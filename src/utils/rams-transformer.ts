@@ -24,12 +24,36 @@ export interface InstallerAgentOutput {
   };
 }
 
+export interface EnhancedInstallerAgentOutput extends InstallerAgentOutput {
+  scopeOfWork?: {
+    description: string;
+    keyDeliverables: string[];
+    exclusions?: string;
+  };
+  scheduleDetails?: {
+    workingHours?: string;
+    teamSize?: string;
+    weatherDependency?: string;
+    accessRequirements?: string;
+  };
+  practicalTips?: string[];
+  commonMistakes?: string[];
+  compliance?: {
+    regulations: string[];
+  };
+  ragCitations?: Array<{
+    regulation: string;
+    content: string;
+    linkedToStep?: number;
+  }>;
+}
+
 /**
  * Transforms installer agent output into Method Statement format
  * Maps installation procedures to formal method statement steps with safety requirements
  */
 export function transformInstallerOutputToMethodStatement(
-  installerOutput: InstallerAgentOutput,
+  installerOutput: InstallerAgentOutput | EnhancedInstallerAgentOutput,
   projectDetails: {
     jobTitle: string;
     location: string;
@@ -38,6 +62,8 @@ export function transformInstallerOutputToMethodStatement(
     teamSize: string;
   }
 ): MethodStatementData {
+  const enhancedOutput = installerOutput as EnhancedInstallerAgentOutput;
+  
   const methodSteps: MethodStep[] = installerOutput.steps.map((step, index) => ({
     id: uuidv4(),
     stepNumber: step.stepNumber,
@@ -67,6 +93,27 @@ export function transformInstallerOutputToMethodStatement(
     reviewDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     steps: methodSteps,
     createdAt: new Date().toISOString(),
+    
+    // Enhanced fields from installer agent
+    scopeOfWork: enhancedOutput.scopeOfWork,
+    scheduleDetails: enhancedOutput.scheduleDetails,
+    practicalTips: enhancedOutput.practicalTips,
+    commonMistakes: enhancedOutput.commonMistakes,
+    complianceRegulations: enhancedOutput.compliance?.regulations,
+    
+    // RAG citations from installer
+    ragCitations: enhancedOutput.ragCitations?.map(citation => ({
+      source: 'installer' as const,
+      regulation: citation.regulation,
+      content: citation.content,
+      linkedToStep: citation.linkedToStep,
+    })),
+    
+    // Agent metadata
+    agentMetadata: {
+      installerVersion: 'v3',
+      generatedAt: new Date().toISOString(),
+    },
   };
 }
 

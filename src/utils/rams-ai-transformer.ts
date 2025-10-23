@@ -1002,7 +1002,27 @@ export function combineAgentOutputsToRAMS(
     complianceWarnings: [...new Set(complianceWarnings)]
   };
   
-  // Create Method Statement data
+  // Extract enriched data from agents
+  const hsStructured = hsResponse.structuredData || (hsResponse.response as any)?.structuredData || {};
+  const installerStructured = installerResponse.structuredData || (installerResponse.response as any)?.structuredData || {};
+
+  // Build RAG citations array
+  const ragCitations = [
+    ...(hsStructured.ragCitations || []).map((citation: any) => ({
+      source: 'health-safety' as const,
+      regulation: citation.regulation || citation.source || '',
+      content: citation.content || citation.text || '',
+      linkedToStep: citation.linkedToStep,
+    })),
+    ...(installerStructured.ragCitations || []).map((citation: any) => ({
+      source: 'installer' as const,
+      regulation: citation.regulation || citation.source || '',
+      content: citation.content || citation.text || '',
+      linkedToStep: citation.linkedToStep,
+    })),
+  ];
+
+  // Create Method Statement data with all enriched fields
   const methodData: Partial<MethodStatementData> = {
     jobTitle: projectInfo.projectName,
     location: projectInfo.location,
@@ -1013,7 +1033,7 @@ export function combineAgentOutputsToRAMS(
     teamSize: "2-3 electricians",
     description: extractWorkDescription(installerResponse),
     overallRiskLevel: calculateOverallRisk(risks),
-    reviewDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 year from now
+    reviewDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     steps,
     practicalTips,
     commonMistakes,
@@ -1022,7 +1042,37 @@ export function combineAgentOutputsToRAMS(
     totalEstimatedTime,
     difficultyLevel,
     complianceRegulations: [...new Set(complianceRegulations)],
-    complianceWarnings: [...new Set(complianceWarnings)]
+    complianceWarnings: [...new Set(complianceWarnings)],
+    
+    // Enhanced fields from AI agents
+    riskAssessment: hsStructured.riskAssessmentDetailed ? {
+      hazards: hsStructured.riskAssessmentDetailed.hazards || [],
+      controls: hsStructured.riskAssessmentDetailed.controls || [],
+      riskMatrix: hsStructured.riskAssessmentDetailed.riskMatrix,
+    } : undefined,
+    
+    ppeDetails: ppeDetails,
+    
+    siteLogistics: hsStructured.siteLogistics,
+    
+    competencyMatrix: hsStructured.competencyMatrix,
+    
+    conditionalProcedures: hsStructured.conditionalProcedures,
+    
+    scopeOfWork: installerStructured.scopeOfWork,
+    
+    scheduleDetails: installerStructured.scheduleDetails,
+    
+    // RAG citations from both agents
+    ragCitations: ragCitations.length > 0 ? ragCitations : undefined,
+    
+    // Agent metadata
+    agentMetadata: {
+      healthSafetyVersion: 'v3',
+      installerVersion: 'v3',
+      generatedAt: new Date().toISOString(),
+      aiModel: 'gpt-5-2025-08-07',
+    },
   };
   
   return { ramsData, methodData };
