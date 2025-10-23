@@ -87,6 +87,7 @@ serve(async (req) => {
     // Build payload in the SAME nested structure as combined RAMS
     const payload = {
       methodStatementData: {
+        projectName: methodData.projectName || '',
         jobTitle: methodData.jobTitle || 'Installation Method Statement',
         location: methodData.location || 'Site location',
         contractor: methodData.contractor || 'Contractor name',
