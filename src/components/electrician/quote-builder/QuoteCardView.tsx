@@ -211,6 +211,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
 
             {/* Bottom Action Bar - Grid Layout */}
             <div className="grid grid-cols-2 gap-2">
+              {/* Row 1: PDF and View/Amend */}
               <button
                 onClick={() => handleRegeneratePDF(quote)}
                 disabled={loadingAction === `pdf-${quote.id}`}
@@ -227,9 +228,10 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                 className="bg-background/40 hover:bg-background/60 border border-primary/20 text-foreground py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
               >
                 <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span className="text-xs sm:text-sm font-medium">View</span>
+                <span className="text-xs sm:text-sm font-medium">View/Amend</span>
               </button>
 
+              {/* Row 2: Delete and Mark Work Complete */}
               <button
                 onClick={() => onDeleteQuote(quote)}
                 className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-600 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors touch-manipulation"
@@ -238,7 +240,20 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                 <span className="text-xs sm:text-sm font-medium">Delete</span>
               </button>
 
-              {/* Show QuoteSendDropdown as a grid button */}
+              {quote.acceptance_status === 'accepted' && !isWorkComplete(quote) && !hasInvoiceRaised(quote) && onMarkWorkComplete ? (
+                <button
+                  onClick={() => onMarkWorkComplete(quote)}
+                  disabled={loadingAction === `work-complete-${quote.id}`}
+                  className="bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-600 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation font-semibold"
+                >
+                  <CheckCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="text-xs sm:text-sm">
+                    {loadingAction === `work-complete-${quote.id}` ? 'Updating...' : 'Mark Work Complete'}
+                  </span>
+                </button>
+              ) : null}
+
+              {/* Send Dropdown - Full Width */}
               <div className="col-span-2">
                 <QuoteSendDropdown 
                   quote={quote}
@@ -268,20 +283,6 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                     <span className="text-xs sm:text-sm font-medium">Reject</span>
                   </button>
                 </>
-              )}
-
-              {/* Quick "Mark Work Complete" button for approved quotes */}
-              {quote.acceptance_status === 'accepted' && !isWorkComplete(quote) && !hasInvoiceRaised(quote) && onMarkWorkComplete && (
-                <button
-                  onClick={() => onMarkWorkComplete(quote)}
-                  disabled={loadingAction === `work-complete-${quote.id}`}
-                  className="col-span-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-600 py-2.5 sm:py-3 rounded-lg flex items-center justify-center gap-1.5 sm:gap-2 transition-colors disabled:opacity-50 touch-manipulation font-semibold"
-                >
-                  <CheckCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  <span className="text-xs sm:text-sm">
-                    {loadingAction === `work-complete-${quote.id}` ? 'Updating...' : 'Mark Work Complete'}
-                  </span>
-                </button>
               )}
 
               {/* Send to Invoice - Only for work complete + accepted quotes */}
