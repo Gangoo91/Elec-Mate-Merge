@@ -295,13 +295,12 @@ export function useAIRAMS(): UseAIRAMSReturn {
   const callAgentWithRetry = async (
     functionName: string,
     body: any,
-    maxRetries = 3
+    maxRetries = 2
   ): Promise<{ data: any; error: any }> => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      // Wrap the invoke call with a 4-minute timeout to prevent premature client-side timeout
-      // Edge function execution takes ~173s, so we need more than the default timeout
+      // Optimized timeout for GPT-5-Mini (target: 40-60s backend response)
       const timeoutPromise = new Promise<{ data: null; error: any }>((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout after 4 minutes')), 240000)
+        setTimeout(() => reject(new Error('Request timeout after 90 seconds')), 90000)
       );
       
       const invokePromise = supabase.functions.invoke(functionName, { body });

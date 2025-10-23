@@ -102,20 +102,37 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
     
     const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
-    const hsKnowledge = await intelligentRAGSearch({
-      circuitType: workType,
-      searchTerms: query.split(' ').filter(w => w.length > 3),
-      expandedQuery: query,
-      context: {
-        ragPriority: {
-          bs7671: 70,           // Medium - regulatory compliance for safety
-          design: 20,           // Very Low - below threshold, won't search
-          health_safety: 95,    // HIGHEST - risk assessment procedures, PPE, hazards
-          installation: 70,     // Medium - installation methods inform risk assessments
-          inspection: 0,        // Skip - not relevant for risk assessment
-          project_mgmt: 0       // Skip - not relevant for risk assessment
+    
+    // Add strict timeout to prevent 2+ minute RAG searches
+    const hsKnowledge = await Promise.race([
+      intelligentRAGSearch({
+        circuitType: workType,
+        searchTerms: query.split(' ').filter(w => w.length > 3),
+        expandedQuery: query,
+        context: {
+          ragPriority: {
+            bs7671: 70,           // Medium - regulatory compliance for safety
+            design: 20,           // Very Low - below threshold, won't search
+            health_safety: 95,    // HIGHEST - risk assessment procedures, PPE, hazards
+            installation: 70,     // Medium - installation methods inform risk assessments
+            inspection: 0,        // Skip - not relevant for risk assessment
+            project_mgmt: 0       // Skip - not relevant for risk assessment
+          },
+          maxSearchTime: 8000,    // 8 seconds max total
+          skipFailedSearches: true,
+          useCache: true
         }
-      }
+      }),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('RAG search timeout - using cached results')), 10000)
+      )
+    ]).catch(error => {
+      logger.warn('RAG search timeout, using minimal context', { error });
+      return { 
+        regulations: [],
+        healthSafetyDocs: [],
+        installationDocs: []
+      };
     });
     
     // PHASE 2: Reuse BS 7671 regulations from Designer (filter for H&S relevant ones)
@@ -324,10 +341,10 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     let aiResult;
     try {
       aiResult = await callAI(OPENAI_API_KEY!, {
-        model: 'gpt-5-2025-08-07',
+        model: 'gpt-5-mini-2025-08-07',
         systemPrompt,
         userPrompt,
-        maxTokens: 15000,
+        maxTokens: 8000,
         timeoutMs: 200000,  // 200 seconds (safe margin before Supabase 230s limit)
       tools: [{
         type: 'function',
