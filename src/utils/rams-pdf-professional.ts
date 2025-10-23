@@ -896,7 +896,9 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("4. DETAILED RISK ASSESSMENT", this.MARGIN, this.yPosition);
     this.yPosition += 16;
 
-    const deduplicatedRisks = deduplicateRisks(data.risks);
+    // Sort risks by rating (highest first) then deduplicate
+    const sortedRisks = [...data.risks].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0));
+    const deduplicatedRisks = deduplicateRisks(sortedRisks);
     
     if (deduplicatedRisks.length === 0) {
       this.doc.setTextColor(0, 0, 0);

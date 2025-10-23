@@ -103,8 +103,9 @@ export async function generateCombinedRAMSPDF(
   doc.text('SECTION 1: RISK ASSESSMENT', margin + 3, yPos + 7);
   yPos += 15;
 
-  // Risk Assessment Table
-  const riskTableData = ramsData.risks.map((risk: RAMSRisk) => [
+  // Risk Assessment Table - Sort risks by rating (highest first)
+  const sortedRisks = [...ramsData.risks].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0));
+  const riskTableData = sortedRisks.map((risk: RAMSRisk) => [
     safeText(risk.hazard),
     safeNumber(risk.likelihood).toString(),
     safeNumber(risk.severity).toString(),

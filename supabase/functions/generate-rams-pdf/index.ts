@@ -55,7 +55,8 @@ serve(async (req) => {
           assessor: ramsData.assessor,
           contractor: ramsData.contractor,
           supervisor: ramsData.supervisor,
-          risks: ramsData.risks.map((risk: any) => ({
+          // Sort risks by rating (highest first)
+          risks: [...ramsData.risks].sort((a: any, b: any) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk: any) => ({
             hazard: risk.hazard,
             likelihood: risk.likelihood,
             severity: risk.severity,

@@ -589,7 +589,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   </Badge>
                 </div>
                 
-                {ramsData.risks.map((risk) => {
+                {[...ramsData.risks].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk) => {
                   const riskRating = risk.riskRating || 0;
                   const riskLevel = riskRating <= 4 ? 'low' : riskRating <= 9 ? 'medium' : 'high';
                   const borderColors = {

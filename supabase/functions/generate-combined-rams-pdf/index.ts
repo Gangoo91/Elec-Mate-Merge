@@ -70,7 +70,8 @@ serve(async (req) => {
         contractor: ramsData.contractor,
         supervisor: ramsData.supervisor,
         activities: [methodData.workType || "Electrical installation work"],
-        risks: ramsData.risks.map((risk: any) => ({
+        // Sort risks by rating (highest first)
+        risks: [...ramsData.risks].sort((a: any, b: any) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk: any) => ({
           id: risk.id || `risk-${risk.hazard?.substring(0, 10)}`,
           hazard: risk.hazard,
           likelihood: risk.likelihood,
