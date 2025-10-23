@@ -43,7 +43,7 @@ const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
         token = newView.public_token;
       }
 
-      const link = `${window.location.origin}/quote/${token}`;
+      const link = `${window.location.origin}/public-quote/${token}`;
       setPublicLink(link);
       
       await navigator.clipboard.writeText(link);

@@ -62,8 +62,13 @@ export const QuoteSendDropdown = ({
         return existingView.public_token;
       }
 
-      // Generate new token
-      const newToken = crypto.randomUUID().replace(/-/g, '').substring(0, 20);
+      // Generate new token (full UUID format for consistency)
+      const newToken = crypto.randomUUID();
+      
+      // Validate UUID format
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(newToken)) {
+        throw new Error('Invalid token format generated');
+      }
       
       const { error } = await supabase
         .from('quote_views')
