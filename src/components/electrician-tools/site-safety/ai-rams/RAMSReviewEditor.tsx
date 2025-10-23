@@ -589,7 +589,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   </Badge>
                 </div>
                 
-                {[...ramsData.risks].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk) => {
+                {[...ramsData.risks].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk, sortedIndex) => {
+                  const riskNumber = sortedIndex + 1; // Risk #1 = highest rating
                   const riskRating = risk.riskRating || 0;
                   const riskLevel = riskRating <= 4 ? 'low' : riskRating <= 9 ? 'medium' : 'high';
                   const borderColors = {
@@ -602,11 +603,16 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                       <CardContent className="pt-3 pb-3 px-2 sm:px-4 md:pt-5 md:pb-5 md:px-6">
                       {/* Risk card content */}
                       <div className="space-y-3">
-                        {/* Header row with risk level and delete */}
+                        {/* Header row with risk number and delete */}
                         <div className="flex items-center justify-between gap-2">
-                          <Badge className={`${getRiskLevelColor(risk.riskRating)} text-white whitespace-nowrap`}>
-                            Risk: {risk.riskRating}
-                          </Badge>
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline" className="text-elec-yellow border-elec-yellow/40 whitespace-nowrap font-semibold">
+                              Risk #{riskNumber}
+                            </Badge>
+                            <Badge className={`${getRiskLevelColor(risk.riskRating)} text-white whitespace-nowrap`}>
+                              Rating: {risk.riskRating}
+                            </Badge>
+                          </div>
                           <Button
                             variant="ghost"
                             size="sm"
