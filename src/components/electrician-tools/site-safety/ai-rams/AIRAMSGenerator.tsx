@@ -31,17 +31,19 @@ export const AIRAMSGenerator: React.FC = () => {
 
   const [showResults, setShowResults] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [celebrationShown, setCelebrationShown] = useState(false);
   const [generationStartTime, setGenerationStartTime] = useState<number>(0);
   const [generationEndTime, setGenerationEndTime] = useState<number>(0);
 
   // Trigger celebration when generation completes
   useEffect(() => {
-    if (ramsData && methodData && !isProcessing && showResults && !showCelebration) {
+    if (ramsData && methodData && !isProcessing && showResults && !celebrationShown) {
       setGenerationEndTime(Date.now());
       setShowCelebration(true);
+      setCelebrationShown(true); // Mark as shown
       triggerHaptic([100, 50, 100, 50, 200]); // Victory haptic pattern
     }
-  }, [ramsData, methodData, isProcessing, showResults, showCelebration]);
+  }, [ramsData, methodData, isProcessing, showResults, celebrationShown]);
 
   const handleGenerate = async (
     jobDescription: string,
@@ -57,6 +59,7 @@ export const AIRAMSGenerator: React.FC = () => {
     setGenerationStartTime(Date.now());
     setShowResults(true); // Show processing view immediately
     setShowCelebration(false); // Reset celebration
+    setCelebrationShown(false); // Reset for new generation
     await generateRAMS(jobDescription, projectInfo, jobScale);
   };
 
@@ -64,6 +67,7 @@ export const AIRAMSGenerator: React.FC = () => {
     reset();
     setShowResults(false);
     setShowCelebration(false);
+    setCelebrationShown(false); // Reset for new generation
     setGenerationStartTime(0);
     setGenerationEndTime(0);
   };
