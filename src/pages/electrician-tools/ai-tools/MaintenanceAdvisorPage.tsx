@@ -1,16 +1,29 @@
-import { Wrench, ArrowLeft, Calendar, FileText, Download } from "lucide-react";
+import { ArrowLeft, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { MaintenanceAdvisor } from "@/components/electrician-tools/ai-tools/MaintenanceAdvisor";
+import { useMaintenanceAdvisor } from "@/components/electrician-tools/ai-tools/maintenance/useMaintenanceAdvisor";
+import { MaintenanceInput } from "@/components/electrician-tools/ai-tools/maintenance/MaintenanceInput";
+import { MaintenanceProcessingView } from "@/components/electrician-tools/ai-tools/maintenance/MaintenanceProcessingView";
+import { MaintenanceResults } from "@/components/electrician-tools/ai-tools/maintenance/MaintenanceResults";
 
 const MaintenanceAdvisorPage = () => {
+  const {
+    state,
+    input,
+    results,
+    progress,
+    isProcessing,
+    updateInput,
+    generateSchedule,
+    resetForm,
+  } = useMaintenanceAdvisor();
+
   return (
-    <div className="min-h-screen bg-elec-dark">
+    <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
       {/* Header */}
       <div className="border-b border-elec-gray/20">
         <div className="px-4 py-4 md:py-6">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <div className="flex items-center mb-4">
               <Link to="/electrician-tools/ai-tooling">
                 <Button 
@@ -34,7 +47,7 @@ const MaintenanceAdvisorPage = () => {
               </h1>
               
               <p className="text-base text-elec-light/70 max-w-2xl mx-auto">
-                Generate equipment-specific maintenance schedules based on GN3 guidance and manufacturer recommendations
+                Generate comprehensive maintenance schedules with risk assessment, cost estimates, and compliance tracking
               </p>
             </div>
           </div>
@@ -44,7 +57,22 @@ const MaintenanceAdvisorPage = () => {
       {/* Main Content */}
       <div className="px-4 py-6 md:py-8">
         <div className="max-w-5xl mx-auto">
-          <MaintenanceAdvisor />
+          {state === 'input' && (
+            <MaintenanceInput
+              input={input}
+              onInputChange={updateInput}
+              onGenerate={generateSchedule}
+              isProcessing={isProcessing}
+            />
+          )}
+          
+          {state === 'processing' && (
+            <MaintenanceProcessingView progress={progress} />
+          )}
+          
+          {state === 'results' && results && (
+            <MaintenanceResults results={results} onReset={resetForm} />
+          )}
         </div>
       </div>
     </div>
