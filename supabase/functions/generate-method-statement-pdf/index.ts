@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { emergencyProcedures } from '../_shared/emergencyProcedures.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -19,6 +20,47 @@ const corsHeaders = {
  * - linkedToStep: 0 indicates general site hazards (added to Step 1)
  */
 const METHOD_STATEMENT_TEMPLATE_ID = '9ABC438D-8E08-4FC3-BC12-CFC3BCB0DB3C';
+
+/**
+ * Transform tools and materials into structured equipment schedule
+ */
+function createEquipmentSchedule(toolsRequired: string[] = [], materialsRequired: string[] = []) {
+  const schedule = [];
+  
+  // Tools section
+  toolsRequired.forEach((tool, index) => {
+    schedule.push({
+      itemNumber: index + 1,
+      type: 'Tool',
+      description: tool,
+      quantity: '1 set',
+      inspectionRequired: isInspectableEquipment(tool),
+      inspectionFrequency: isInspectableEquipment(tool) ? 'Before use' : 'N/A'
+    });
+  });
+  
+  // Materials section
+  materialsRequired.forEach((material, index) => {
+    schedule.push({
+      itemNumber: toolsRequired.length + index + 1,
+      type: 'Material',
+      description: material,
+      quantity: 'As required',
+      inspectionRequired: false,
+      inspectionFrequency: 'N/A'
+    });
+  });
+  
+  return schedule;
+}
+
+/**
+ * Check if equipment requires inspection
+ */
+function isInspectableEquipment(tool: string): boolean {
+  const inspectableKeywords = ['ladder', 'scaffold', 'drill', 'meter', 'tester', 'rcd', 'mft', 'megger'];
+  return inspectableKeywords.some(keyword => tool.toLowerCase().includes(keyword));
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -64,6 +106,41 @@ serve(async (req) => {
         safetyOfficerName: methodData.safetyOfficerName || '',
         safetyOfficerPhone: methodData.safetyOfficerPhone || '',
         assemblyPoint: methodData.assemblyPoint || '',
+        
+        // Scope of Work
+        scopeOfWork: methodData.scopeOfWork ? {
+          description: methodData.scopeOfWork.description || '',
+          keyDeliverables: methodData.scopeOfWork.keyDeliverables || [],
+          exclusions: methodData.scopeOfWork.exclusions || ''
+        } : {
+          description: '',
+          keyDeliverables: [],
+          exclusions: ''
+        },
+        
+        // Schedule Details
+        scheduleDetails: methodData.scheduleDetails ? {
+          workingHours: methodData.scheduleDetails.workingHours || '',
+          teamSize: methodData.scheduleDetails.teamSize || '',
+          weatherDependency: methodData.scheduleDetails.weatherDependency || '',
+          accessRequirements: methodData.scheduleDetails.accessRequirements || ''
+        } : {},
+        
+        // Competency Matrix (corrected from competencyRequirements)
+        competencyMatrix: methodData.competencyMatrix ? {
+          competencyRequirements: methodData.competencyMatrix.competencyRequirements || '',
+          trainingRequired: methodData.competencyMatrix.trainingRequired || '',
+          supervisionLevel: methodData.competencyMatrix.supervisionLevel || '',
+          additionalCertifications: methodData.competencyMatrix.additionalCertifications || ''
+        } : {},
+        
+        // Emergency Procedures (static data)
+        emergencyProcedures: {
+          electricShock: emergencyProcedures.electricShock,
+          arcFlash: emergencyProcedures.arcFlash,
+          fire: emergencyProcedures.fire
+        },
+        
         steps: (methodData.steps || []).map((step: any) => ({
           id: step.id || `step-${step.stepNumber}`,
           stepNumber: step.stepNumber,
@@ -92,8 +169,12 @@ serve(async (req) => {
         difficultyLevel: methodData.difficultyLevel || '',
         complianceRegulations: methodData.complianceRegulations || [],
         complianceWarnings: methodData.complianceWarnings || [],
-        // Equipment schedule
-        equipmentSchedule: methodData.equipmentSchedule || [],
+        
+        // Plant, Equipment & Materials Schedule (structured)
+        equipmentSchedule: createEquipmentSchedule(
+          methodData.toolsRequired,
+          methodData.materialsRequired
+        ),
         // Quality requirements
         qualityRequirements: methodData.qualityRequirements || [],
         // Testing procedures
