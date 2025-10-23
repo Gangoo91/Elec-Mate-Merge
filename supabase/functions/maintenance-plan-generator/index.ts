@@ -101,7 +101,7 @@ serve(async (req) => {
         category_filter: null,
         match_threshold: 0.6,
         match_count: 10
-      }).catch(() => ({ data: null })) // Graceful fallback if no pricing data
+      })
     ]);
 
     console.log(`📚 Knowledge retrieved - Maintenance: ${maintenanceKnowledge.data?.length || 0}, Regulations: ${bs7671Regs.data?.length || 0}, Failures: ${failureModes.data?.length || 0}, Parts: ${pricingData?.data?.length || 0}`);
