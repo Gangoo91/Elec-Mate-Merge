@@ -132,7 +132,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 1.25,
+    defaultPrice: 0.65,
     code: "TE1.0"
   },
   {
@@ -141,7 +141,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 1.45,
+    defaultPrice: 0.85,
     code: "TE1.5"
   },
   {
@@ -150,7 +150,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 2.15,
+    defaultPrice: 1.05,
     code: "TE2.5"
   },
   {
@@ -159,7 +159,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 3.45,
+    defaultPrice: 1.95,
     code: "TE4.0"
   },
   {
@@ -168,7 +168,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables", 
     subcategory: "Twin & Earth",
     unit: "metre",
-    defaultPrice: 4.85,
+    defaultPrice: 2.85,
     code: "TE6.0"
   },
   {
@@ -177,7 +177,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth", 
     unit: "metre",
-    defaultPrice: 8.50,
+    defaultPrice: 4.95,
     code: "TE10.0"
   },
   {
@@ -186,7 +186,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth", 
     unit: "metre",
-    defaultPrice: 14.50,
+    defaultPrice: 8.95,
     code: "TE16.0"
   },
   {
@@ -195,7 +195,7 @@ const baseMaterials: MaterialItem[] = [
     category: "cables",
     subcategory: "Twin & Earth", 
     unit: "metre",
-    defaultPrice: 22.50,
+    defaultPrice: 14.95,
     code: "TE25.0"
   },
 
@@ -408,7 +408,7 @@ const baseMaterials: MaterialItem[] = [
     category: "accessories",
     subcategory: "Sockets",
     unit: "each",
-    defaultPrice: 9.25,
+    defaultPrice: 4.85,
     code: "SKT13DP"
   },
   {
@@ -446,7 +446,7 @@ const baseMaterials: MaterialItem[] = [
     category: "accessories",
     subcategory: "USB Outlets", 
     unit: "each",
-    defaultPrice: 18.50,
+    defaultPrice: 12.95,
     code: "SKT13USB"
   },
   {
@@ -695,7 +695,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution", 
     subcategory: "Consumer Units",
     unit: "each",
-    defaultPrice: 215.00,
+    defaultPrice: 145.00,
     code: "CU10W"
   },
   {
@@ -776,7 +776,7 @@ const baseMaterials: MaterialItem[] = [
     category: "distribution",
     subcategory: "MCBs",
     unit: "each", 
-    defaultPrice: 18.50,
+    defaultPrice: 8.95,
     code: "MCB32B"
   },
   {
@@ -868,7 +868,7 @@ const baseMaterials: MaterialItem[] = [
     category: "lighting",
     subcategory: "LED Downlights",
     unit: "each",
-    defaultPrice: 25.00,
+    defaultPrice: 14.95,
     code: "LEDFIRE10W"
   },
   {
