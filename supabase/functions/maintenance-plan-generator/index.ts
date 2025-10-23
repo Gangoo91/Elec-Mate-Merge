@@ -314,7 +314,8 @@ Return JSON with:
 }
 
 Generate ${buildingType === 'domestic' ? '3-5' : '5-7'} essential tasks. Keep concise.`,
-              1800
+              2200,
+              Timeouts.LONG
             );
 
             if (!response.ok) {
@@ -324,7 +325,19 @@ Generate ${buildingType === 'domestic' ? '3-5' : '5-7'} essential tasks. Keep co
             }
 
             const data = await response.json();
-            return JSON.parse(data.choices[0].message.content.trim());
+            let content = data.choices[0].message.content.trim();
+            
+            // Remove code fences if present
+            if (content.includes('```')) {
+              content = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+            }
+            
+            try {
+              return JSON.parse(content);
+            } catch (parseError) {
+              console.error('JSON parse failed (outline-and-tasks):', parseError);
+              throw new Error('PARSE_ERROR: Invalid JSON from AI');
+            }
           }
         },
         {
@@ -358,7 +371,8 @@ Return JSON with:
 }
 
 Generate 3-4 failure modes and 3-5 key regulations. Be concise but professional.`,
-              1500
+              1600,
+              Timeouts.LONG
             );
 
             if (!response.ok) {
@@ -368,25 +382,67 @@ Generate 3-4 failure modes and 3-5 key regulations. Be concise but professional.
             }
 
             const data = await response.json();
-            return JSON.parse(data.choices[0].message.content.trim());
+            let content = data.choices[0].message.content.trim();
+            
+            // Remove code fences if present
+            if (content.includes('```')) {
+              content = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+            }
+            
+            try {
+              return JSON.parse(content);
+            } catch (parseError) {
+              console.error('JSON parse failed (failures-and-regulations):', parseError);
+              throw new Error('PARSE_ERROR: Invalid JSON from AI');
+            }
           }
         }
       ]);
 
-      // Merge results
+      // Merge results with better partial handling
       if (quickResults.successes.length === 0) {
-        throw new Error('All quick mode calls failed');
+        return new Response(
+          JSON.stringify({ 
+            success: false,
+            error: 'Quick mode failed to generate plan. Please try Full Detail mode or simplify your request.',
+            code: 'QUICK_FAILED'
+          }),
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       }
 
-      schedule = quickResults.successes[0].result;
+      const outlineSuccess = quickResults.successes.find(s => s.name === 'outline-and-tasks');
+      const failuresSuccess = quickResults.successes.find(s => s.name === 'failures-and-regulations');
 
-      // Merge failures/regulations if available
-      if (quickResults.successes.length > 1) {
-        const extras = quickResults.successes[1].result;
-        schedule.commonFailureModes = extras.commonFailureModes || [];
-        schedule.regulations = extras.regulations || [];
-      } else {
-        missingSections.push('failures', 'regulations');
+      if (outlineSuccess) {
+        schedule = outlineSuccess.result;
+        
+        if (failuresSuccess) {
+          // Both succeeded - full merge
+          schedule.commonFailureModes = failuresSuccess.result.commonFailureModes || [];
+          schedule.regulations = failuresSuccess.result.regulations || [];
+        } else {
+          // Only outline - partial
+          schedule.commonFailureModes = [];
+          schedule.regulations = [];
+          missingSections.push('failure modes', 'regulations');
+        }
+      } else if (failuresSuccess) {
+        // Only failures succeeded - minimal shell
+        schedule = {
+          equipmentType,
+          location,
+          ageYears,
+          buildingType: buildingType || 'not specified',
+          riskScore: riskAssessment.score,
+          riskLevel: riskAssessment.level,
+          riskFactors: riskAssessment.factors,
+          schedule: [],
+          recommendations: ['Complete full assessment for detailed maintenance plan'],
+          commonFailureModes: failuresSuccess.result.commonFailureModes || [],
+          regulations: failuresSuccess.result.regulations || []
+        };
+        missingSections.push('schedule', 'recommendations');
       }
 
       if (quickResults.failures.length > 0) {
@@ -620,20 +676,33 @@ Generate 6-10 regulations with excerpts and 5-8 compliance checklist items.`,
   } catch (err) {
     console.error('❌ Maintenance plan error:', err);
     
-    let errorMessage = err instanceof Error ? err.message : 'Unknown error';
-    let statusCode = 500;
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+    let friendlyMessage = 'Failed to generate maintenance plan. Please try again.';
+    let errorCode = 'INTERNAL';
 
     if (errorMessage.includes('timeout') || errorMessage.includes('timed out')) {
-      errorMessage = 'Request took too long. Please try Quick mode or simplify your request.';
-      statusCode = 408;
+      friendlyMessage = 'Generation timed out. Try Quick mode or simplify the equipment description.';
+      errorCode = 'TIMEOUT';
     } else if (errorMessage.includes('max_completion_tokens') || errorMessage.includes('token limit')) {
-      errorMessage = 'Response too detailed. Try Quick mode or reduce equipment complexity.';
-      statusCode = 413;
+      friendlyMessage = 'Plan too detailed. Try Quick mode or reduce equipment complexity.';
+      errorCode = 'TOKEN_LIMIT';
+    } else if (errorMessage.includes('PARSE_ERROR')) {
+      friendlyMessage = 'AI response format issue. Please try again.';
+      errorCode = 'PARSE_ERROR';
+    } else if (errorMessage.includes('QUICK_FAILED')) {
+      friendlyMessage = 'Quick mode failed. Try Full Detail mode.';
+      errorCode = 'QUICK_FAILED';
     }
 
+    // Always return 200 with success:false so client can handle gracefully
     return new Response(
-      JSON.stringify({ success: false, error: errorMessage }),
-      { status: statusCode, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      JSON.stringify({ 
+        success: false, 
+        error: friendlyMessage,
+        code: errorCode,
+        details: errorMessage 
+      }),
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });

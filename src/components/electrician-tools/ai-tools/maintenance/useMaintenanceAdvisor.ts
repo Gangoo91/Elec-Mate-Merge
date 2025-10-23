@@ -161,48 +161,8 @@ export const useMaintenanceAdvisor = () => {
     try {
       const isQuick = input.detailLevel === 'quick';
       
-      // Progress updates with timing based on detail level
-      if (isQuick) {
-        // Quick mode: ~25-35 seconds
-        setProgress('Analysing equipment...');
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        
-        setProgress('Generating schedule...');
-        await new Promise(resolve => setTimeout(resolve, 12000));
-        
-        setProgress('Calculating costs...');
-        await new Promise(resolve => setTimeout(resolve, 8000));
-        
-        setProgress('Finalising plan...');
-        await new Promise(resolve => setTimeout(resolve, 5000));
-      } else {
-        // Full mode: ~1-2 mins with continuous updates
-        setProgress('Analysing equipment details...');
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        setProgress('Searching BS 7671 & GN3 regulations...');
-        await new Promise(resolve => setTimeout(resolve, 10000));
-        
-        setProgress('Calculating risk scores...');
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        
-        setProgress('Generating detailed tasks...');
-        await new Promise(resolve => setTimeout(resolve, 18000));
-        
-        setProgress('Expanding procedures...');
-        await new Promise(resolve => setTimeout(resolve, 12000));
-        
-        setProgress('Analysing failure modes...');
-        await new Promise(resolve => setTimeout(resolve, 8000));
-        
-        setProgress('Creating compliance checklist...');
-        await new Promise(resolve => setTimeout(resolve, 10000));
-        
-        setProgress('Finalising maintenance plan...');
-        await new Promise(resolve => setTimeout(resolve, 6000));
-      }
-
-      const { data, error } = await supabase.functions.invoke('maintenance-plan-generator', {
+      // Start backend call immediately
+      const invokePromise = supabase.functions.invoke('maintenance-plan-generator', {
         body: {
           equipmentDescription: input.equipmentDescription.trim(),
           equipmentType: input.equipmentType,
@@ -223,10 +183,57 @@ export const useMaintenanceAdvisor = () => {
         }
       });
 
-      if (error) throw error;
+      // Run progress ticker in parallel
+      let cancelled = false;
+      const progressSteps = isQuick
+        ? [
+            { msg: 'Analysing equipment...', duration: 4000 },
+            { msg: 'Generating schedule...', duration: 8000 },
+            { msg: 'Calculating costs...', duration: 8000 },
+            { msg: 'Finalising plan...', duration: 5000 },
+          ]
+        : [
+            { msg: 'Analysing equipment details...', duration: 3000 },
+            { msg: 'Searching BS 7671 & GN3 regulations...', duration: 10000 },
+            { msg: 'Calculating risk scores...', duration: 4000 },
+            { msg: 'Generating detailed tasks...', duration: 15000 },
+            { msg: 'Expanding procedures...', duration: 12000 },
+            { msg: 'Analysing failure modes...', duration: 10000 },
+            { msg: 'Creating compliance checklist...', duration: 8000 },
+            { msg: 'Finalising maintenance plan...', duration: 8000 },
+          ];
 
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to generate maintenance schedule');
+      const progressTicker = async () => {
+        for (let i = 0; i < progressSteps.length && !cancelled; i++) {
+          setProgress(progressSteps[i].msg);
+          await new Promise(resolve => setTimeout(resolve, progressSteps[i].duration));
+        }
+      };
+
+      // Run both in parallel
+      const tickerPromise = progressTicker();
+      const { data, error } = await invokePromise;
+      cancelled = true;
+      await tickerPromise;
+
+      // Handle errors
+      if (error) {
+        console.error('Invoke error:', error);
+        toast.error('Failed to generate schedule', {
+          description: 'Network error. Please try again.'
+        });
+        setState('input');
+        return;
+      }
+
+      // Handle backend errors (success:false)
+      if (data && data.success === false) {
+        console.error('Backend error:', data.error, data.code);
+        toast.error(data.error || 'Failed to generate schedule', {
+          description: data.code ? `Error: ${data.code}` : 'Please try again.'
+        });
+        setState('input');
+        return;
       }
 
       setResults(data.schedule);
@@ -234,7 +241,7 @@ export const useMaintenanceAdvisor = () => {
       
       if (data.schedule.partial) {
         toast.warning('Partial plan generated', {
-          description: `${data.schedule.schedule.length} tasks identified • Some sections incomplete`
+          description: `${data.schedule.schedule.length} tasks • Missing: ${data.schedule.missingSections?.join(', ')}`
         });
       } else {
         toast.success('Maintenance schedule generated', {
