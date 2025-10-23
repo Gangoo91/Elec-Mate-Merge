@@ -14,7 +14,7 @@ const STEPS = [
   { id: 5, text: 'Estimating costs & durations...', icon: '💷' },
   { id: 6, text: 'Identifying failure modes...', icon: '⚠️' },
   { id: 7, text: 'Creating compliance checklist...', icon: '✅' },
-  { id: 8, text: 'Finalizing maintenance plan...', icon: '📄' },
+  { id: 8, text: 'Finalising maintenance plan...', icon: '📄' },
 ];
 
 export const MaintenanceProcessingView = ({ progress }: MaintenanceProcessingViewProps) => {
@@ -40,7 +40,7 @@ export const MaintenanceProcessingView = ({ progress }: MaintenanceProcessingVie
               Generating Your Maintenance Plan
             </h3>
             <p className="text-sm text-elec-light/60">
-              This typically takes 8-12 seconds
+              This typically takes 2-4 minutes
             </p>
           </div>
 

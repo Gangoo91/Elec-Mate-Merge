@@ -374,26 +374,59 @@ CRITICAL: Base all recommendations on your extensive professional experience and
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        max_completion_tokens: 6000, // Increased for richer, more detailed output
+        response_format: { type: "json_object" },
+        max_completion_tokens: 8000,  // Allow for comprehensive detail
       }),
     });
 
     if (!completionResponse.ok) {
       const errorText = await completionResponse.text();
       console.error('OpenAI API error:', errorText);
+      
+      // Check for token limit errors
+      if (errorText.includes('max_completion_tokens') || errorText.includes('maximum context length')) {
+        throw new Error('Response too long - try reducing equipment complexity or details');
+      }
+      
       throw new Error('Failed to generate maintenance schedule');
     }
 
     const completionData = await completionResponse.json();
-    const rawResponse = completionData.choices[0].message.content.trim();
     
+    // Log token usage to monitor limits
+    if (completionData.usage) {
+      console.log(`📊 Token usage: ${completionData.usage.completion_tokens}/${completionData.usage.total_tokens} (limit: 8000)`);
+      
+      if (completionData.usage.completion_tokens >= 7800) {
+        console.warn('⚠️ Close to token limit! May need to increase further.');
+      }
+    }
+    
+    const rawResponse = completionData.choices[0].message.content.trim();
+
+    // Validate response is complete JSON before parsing
+    if (!rawResponse.includes('}')) {
+      console.error('Incomplete JSON response - likely token limit hit');
+      throw new Error('Generation incomplete - response truncated. Please try again or simplify your request.');
+    }
+
     // Clean response (remove markdown if present)
     const cleanedResponse = rawResponse
       .replace(/```json\n?/g, '')
       .replace(/```\n?/g, '')
       .trim();
 
-    const schedule = JSON.parse(cleanedResponse);
+    // Parse and validate response
+    let schedule;
+    try {
+      schedule = JSON.parse(cleanedResponse);
+    } catch (parseError) {
+      console.error('JSON parsing failed:', parseError);
+      console.error('Raw response length:', rawResponse.length);
+      console.error('First 500 chars:', rawResponse.substring(0, 500));
+      console.error('Last 500 chars:', rawResponse.substring(rawResponse.length - 500));
+      throw new Error('Failed to parse AI response - generation may have been truncated');
+    }
 
     // Sanitize response - REMOVE ALL RAG REFERENCES
     delete schedule.ragSources;

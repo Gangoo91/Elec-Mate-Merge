@@ -153,29 +153,30 @@ export const useMaintenanceAdvisor = () => {
     setResults(null);
 
     try {
-      // Progress updates
+      // Progress updates with realistic timing
       setProgress('Analysing equipment details...');
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
       setProgress('Searching BS 7671 & GN3 regulations...');
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 8000));
       
       setProgress('Calculating risk scores...');
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 3000));
       
       setProgress('Generating maintenance tasks...');
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 15000));
       
       setProgress('Estimating costs & durations...');
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 6000));
       
       setProgress('Identifying failure modes...');
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 10000));
       
       setProgress('Creating compliance checklist...');
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 8000));
       
-      setProgress('Finalizing maintenance plan...');
+      setProgress('Finalising maintenance plan...');
+      await new Promise(resolve => setTimeout(resolve, 5000));
 
       const { data, error } = await supabase.functions.invoke('maintenance-plan-generator', {
         body: {
