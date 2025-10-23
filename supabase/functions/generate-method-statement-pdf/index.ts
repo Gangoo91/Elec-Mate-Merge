@@ -42,96 +42,72 @@ serve(async (req) => {
       });
     }
 
-    // Prepare comprehensive payload for PDF Monkey template
+    // Build payload in the SAME nested structure as combined RAMS
     const payload = {
-      // Document metadata
-      document_ref: `MS-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
-      issue_date: new Date().toLocaleDateString('en-GB'),
-      
-      // Core method statement data
-      jobTitle: methodData.jobTitle || 'Installation Method Statement',
-      location: methodData.location || 'Site location',
-      contractor: methodData.contractor || 'Contractor name',
-      supervisor: methodData.supervisor || 'Site supervisor',
-      workType: methodData.workType || 'Electrical installation',
-      duration: methodData.duration || 'Variable',
-      teamSize: methodData.teamSize || '1-2 persons',
-      description: methodData.description || '',
-      overallRiskLevel: (methodData.overallRiskLevel || 'medium').toUpperCase(),
-      reviewDate: methodData.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB'),
-      
-      // Installation steps (enriched with inspection checkpoints and hazards)
-      steps: (methodData.steps || []).map((step: any) => ({
-        stepNumber: step.stepNumber,
-        title: step.title,
-        description: step.description,
-        safetyRequirements: Array.isArray(step.safetyRequirements) 
-          ? step.safetyRequirements.join(', ') 
-          : (step.safetyRequirements || ''),
-        estimatedDuration: step.estimatedDuration || 'Not specified',
-        riskLevel: (step.riskLevel || 'medium').toUpperCase(),
-        inspectionCheckpoints: Array.isArray(step.inspectionCheckpoints) 
-          ? step.inspectionCheckpoints.join(', ') 
-          : '',
-        linkedHazards: Array.isArray(step.linkedHazards) 
-          ? step.linkedHazards.join(', ') 
-          : ''
-      })),
-      
-      // Debug logging
-      _debug_total_steps: (methodData.steps || []).length,
-      _debug_steps_with_hazards: (methodData.steps || []).filter((s: any) => s.linkedHazards && s.linkedHazards.length > 0).length,
-      
-      // Equipment schedule (from maintenance agent)
-      equipment_list: (methodData.equipmentSchedule || []).map((eq: any) => ({
-        name: eq.name,
-        quantity: eq.quantity || '1 No.',
-        certification: eq.certification || 'N/A',
-        inspection: eq.inspection || 'Daily',
-        responsible: eq.responsible || 'Site Supervisor'
-      })),
-      
-      // Quality requirements (from maintenance agent)
-      quality_requirements: (methodData.qualityRequirements || []).map((qr: any) => ({
-        stage: qr.stage,
-        requirement: qr.requirement,
-        criteria: qr.criteria
-      })),
-      
-      // Testing & commissioning (from maintenance agent)
-      testing_commissioning: methodData.conditionalFlags?.testing_commissioning !== false,
-      testing_procedures: (methodData.testingProcedures || []).map((tp: any) => ({
-        name: tp.name,
-        standard: tp.standard || 'BS 7671:2018+A3:2024',
-        criteria: tp.criteria,
-        certification: tp.certification || 'EIC'
-      })),
-      
-      // Site logistics (from H&S agent)
-      vehicle_access: methodData.siteLogistics?.vehicleAccess || 'Via main entrance',
-      parking: methodData.siteLogistics?.parking || 'On-site parking available',
-      material_storage: methodData.siteLogistics?.materialStorage || 'Secure compound',
-      waste_management: methodData.siteLogistics?.wasteManagement || 'Segregated waste bins',
-      welfare_facilities: methodData.siteLogistics?.welfareFacilities || 'On-site facilities',
-      site_restrictions: methodData.siteLogistics?.siteRestrictions || 'None specified',
-      
-      // Competency requirements (from H&S agent)
-      competency_requirements: methodData.competencyRequirements?.minimumQualifications || '18th Edition BS 7671:2018+A3:2024',
-      training_required: methodData.competencyRequirements?.mandatoryTraining || 'Site induction, Manual Handling',
-      supervision_level: methodData.competencyRequirements?.supervisionLevel || 'Continuous supervision',
-      
-      // Conditional flags (from all agents)
-      work_at_height: methodData.conditionalFlags?.work_at_height || false,
-      wah_equipment: Array.isArray(methodData.workAtHeightEquipment) 
-        ? methodData.workAtHeightEquipment.join(', ') 
-        : '',
-      services_utilities: methodData.conditionalFlags?.services_utilities || false,
-      hot_works: methodData.conditionalFlags?.hot_works || false,
-      confined_spaces: methodData.conditionalFlags?.confined_spaces || false,
-      client_liaison: methodData.conditionalFlags?.client_liaison !== false,
-      noise_dust_controls: methodData.conditionalFlags?.noise_dust_controls || false,
-      environmental_considerations: methodData.conditionalFlags?.environmental_considerations || false
+      methodStatementData: {
+        jobTitle: methodData.jobTitle || 'Installation Method Statement',
+        location: methodData.location || 'Site location',
+        contractor: methodData.contractor || 'Contractor name',
+        supervisor: methodData.supervisor || 'Site supervisor',
+        workType: methodData.workType || 'Electrical installation',
+        duration: methodData.duration || 'Variable',
+        teamSize: methodData.teamSize || '1-2 persons',
+        description: methodData.description || '',
+        overallRiskLevel: methodData.overallRiskLevel || 'MEDIUM',
+        reviewDate: methodData.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB'),
+        steps: (methodData.steps || []).map((step: any) => ({
+          id: step.id || `step-${step.stepNumber}`,
+          stepNumber: step.stepNumber,
+          title: step.title,
+          description: step.description,
+          estimatedDuration: step.estimatedDuration || 'Not specified',
+          riskLevel: step.riskLevel || 'MEDIUM',
+          safetyRequirements: step.safetyRequirements || [],
+          equipmentNeeded: step.equipmentNeeded || [],
+          qualifications: step.qualifications || [],
+          isCompleted: step.isCompleted || false,
+          dependencies: step.dependencies || [],
+          notes: step.notes || '',
+          linkedHazards: step.linkedHazards || []
+        })),
+        id: methodData.id || '',
+        approvedBy: methodData.approvedBy || '',
+        createdAt: methodData.createdAt || new Date().toISOString(),
+        updatedAt: methodData.updatedAt || new Date().toISOString(),
+        // Extended method statement fields
+        practicalTips: methodData.practicalTips || [],
+        commonMistakes: methodData.commonMistakes || [],
+        toolsRequired: methodData.toolsRequired || [],
+        materialsRequired: methodData.materialsRequired || [],
+        totalEstimatedTime: methodData.totalEstimatedTime || '',
+        difficultyLevel: methodData.difficultyLevel || '',
+        complianceRegulations: methodData.complianceRegulations || [],
+        complianceWarnings: methodData.complianceWarnings || [],
+        // Equipment schedule
+        equipmentSchedule: methodData.equipmentSchedule || [],
+        // Quality requirements
+        qualityRequirements: methodData.qualityRequirements || [],
+        // Testing procedures
+        testingProcedures: methodData.testingProcedures || [],
+        // Site logistics
+        siteLogistics: methodData.siteLogistics || {},
+        // Competency requirements
+        competencyRequirements: methodData.competencyRequirements || {},
+        // Conditional flags
+        conditionalFlags: methodData.conditionalFlags || {},
+        // Work at height equipment
+        workAtHeightEquipment: methodData.workAtHeightEquipment || []
+      }
     };
+
+    console.log('📤 Sending payload to PDF Monkey (nested structure)...');
+    console.log('📦 Method Statement Data:', {
+      jobTitle: payload.methodStatementData.jobTitle,
+      stepsCount: payload.methodStatementData.steps?.length,
+      toolsCount: payload.methodStatementData.toolsRequired?.length,
+      materialsCount: payload.methodStatementData.materialsRequired?.length,
+      workType: payload.methodStatementData.workType
+    });
 
     const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
