@@ -67,7 +67,7 @@ const MaintenanceAdvisorPage = () => {
           )}
           
           {state === 'processing' && (
-            <MaintenanceProcessingView progress={progress} />
+            <MaintenanceProcessingView progress={progress} detailLevel={input.detailLevel} />
           )}
           
           {state === 'results' && results && (

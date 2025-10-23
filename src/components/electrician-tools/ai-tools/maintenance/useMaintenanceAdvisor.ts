@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
 export type MaintenanceState = 'input' | 'processing' | 'results';
+export type DetailLevel = 'quick' | 'full';
 
 export interface MaintenanceInput {
   equipmentType: string;
@@ -21,6 +22,7 @@ export interface MaintenanceInput {
   assessorName?: string;
   companyName?: string;
   photos?: File[];
+  detailLevel?: DetailLevel;
 }
 
 export interface MaintenanceTask {
@@ -112,6 +114,8 @@ export interface MaintenanceResults {
     excerpt?: string;
   }>;
   recommendations: string[];
+  partial?: boolean;
+  missingSections?: string[];
 }
 
 export const useMaintenanceAdvisor = () => {
@@ -121,6 +125,7 @@ export const useMaintenanceAdvisor = () => {
     equipmentDescription: '',
     location: '',
     ageYears: 0,
+    detailLevel: 'quick',
   });
   const [results, setResults] = useState<MaintenanceResults | null>(null);
   const [progress, setProgress] = useState('');
@@ -137,6 +142,7 @@ export const useMaintenanceAdvisor = () => {
       equipmentDescription: '',
       location: '',
       ageYears: 0,
+      detailLevel: 'quick',
     });
     setResults(null);
     setProgress('');
@@ -153,30 +159,48 @@ export const useMaintenanceAdvisor = () => {
     setResults(null);
 
     try {
-      // Progress updates with realistic timing
-      setProgress('Analysing equipment details...');
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const isQuick = input.detailLevel === 'quick';
       
-      setProgress('Searching BS 7671 & GN3 regulations...');
-      await new Promise(resolve => setTimeout(resolve, 8000));
-      
-      setProgress('Calculating risk scores...');
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
-      setProgress('Generating maintenance tasks...');
-      await new Promise(resolve => setTimeout(resolve, 15000));
-      
-      setProgress('Estimating costs & durations...');
-      await new Promise(resolve => setTimeout(resolve, 6000));
-      
-      setProgress('Identifying failure modes...');
-      await new Promise(resolve => setTimeout(resolve, 10000));
-      
-      setProgress('Creating compliance checklist...');
-      await new Promise(resolve => setTimeout(resolve, 8000));
-      
-      setProgress('Finalising maintenance plan...');
-      await new Promise(resolve => setTimeout(resolve, 5000));
+      // Progress updates with timing based on detail level
+      if (isQuick) {
+        // Quick mode: ~25-35 seconds
+        setProgress('Analysing equipment...');
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        
+        setProgress('Generating schedule...');
+        await new Promise(resolve => setTimeout(resolve, 12000));
+        
+        setProgress('Calculating costs...');
+        await new Promise(resolve => setTimeout(resolve, 8000));
+        
+        setProgress('Finalising plan...');
+        await new Promise(resolve => setTimeout(resolve, 5000));
+      } else {
+        // Full mode: ~1-2 mins with continuous updates
+        setProgress('Analysing equipment details...');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        setProgress('Searching BS 7671 & GN3 regulations...');
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        
+        setProgress('Calculating risk scores...');
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        
+        setProgress('Generating detailed tasks...');
+        await new Promise(resolve => setTimeout(resolve, 18000));
+        
+        setProgress('Expanding procedures...');
+        await new Promise(resolve => setTimeout(resolve, 12000));
+        
+        setProgress('Analysing failure modes...');
+        await new Promise(resolve => setTimeout(resolve, 8000));
+        
+        setProgress('Creating compliance checklist...');
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        
+        setProgress('Finalising maintenance plan...');
+        await new Promise(resolve => setTimeout(resolve, 6000));
+      }
 
       const { data, error } = await supabase.functions.invoke('maintenance-plan-generator', {
         body: {
@@ -195,6 +219,7 @@ export const useMaintenanceAdvisor = () => {
           siteAddress: input.siteAddress,
           assessorName: input.assessorName,
           companyName: input.companyName,
+          detailLevel: input.detailLevel || 'quick',
         }
       });
 
@@ -207,9 +232,15 @@ export const useMaintenanceAdvisor = () => {
       setResults(data.schedule);
       setState('results');
       
-      toast.success('Maintenance schedule generated', {
-        description: `${data.schedule.schedule.length} tasks identified`
-      });
+      if (data.schedule.partial) {
+        toast.warning('Partial plan generated', {
+          description: `${data.schedule.schedule.length} tasks identified • Some sections incomplete`
+        });
+      } else {
+        toast.success('Maintenance schedule generated', {
+          description: `${data.schedule.schedule.length} tasks identified`
+        });
+      }
 
     } catch (err) {
       console.error('Maintenance generation error:', err);

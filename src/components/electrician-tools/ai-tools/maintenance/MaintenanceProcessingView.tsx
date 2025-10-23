@@ -4,20 +4,29 @@ import { useEffect, useState } from "react";
 
 interface MaintenanceProcessingViewProps {
   progress: string;
+  detailLevel?: 'quick' | 'full';
 }
 
-const STEPS = [
+const QUICK_STEPS = [
+  { id: 1, text: 'Analysing equipment...', icon: '📋' },
+  { id: 2, text: 'Generating schedule...', icon: '🛠️' },
+  { id: 3, text: 'Calculating costs...', icon: '💷' },
+  { id: 4, text: 'Finalising plan...', icon: '📄' },
+];
+
+const FULL_STEPS = [
   { id: 1, text: 'Analysing equipment details...', icon: '📋' },
   { id: 2, text: 'Searching BS 7671 & GN3 regulations...', icon: '📚' },
   { id: 3, text: 'Calculating risk scores...', icon: '📊' },
-  { id: 4, text: 'Generating maintenance tasks...', icon: '🛠️' },
-  { id: 5, text: 'Estimating costs & durations...', icon: '💷' },
-  { id: 6, text: 'Identifying failure modes...', icon: '⚠️' },
+  { id: 4, text: 'Generating detailed tasks...', icon: '🛠️' },
+  { id: 5, text: 'Expanding procedures...', icon: '📝' },
+  { id: 6, text: 'Analysing failure modes...', icon: '⚠️' },
   { id: 7, text: 'Creating compliance checklist...', icon: '✅' },
   { id: 8, text: 'Finalising maintenance plan...', icon: '📄' },
 ];
 
-export const MaintenanceProcessingView = ({ progress }: MaintenanceProcessingViewProps) => {
+export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick' }: MaintenanceProcessingViewProps) => {
+  const STEPS = detailLevel === 'quick' ? QUICK_STEPS : FULL_STEPS;
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
@@ -40,7 +49,7 @@ export const MaintenanceProcessingView = ({ progress }: MaintenanceProcessingVie
               Generating Your Maintenance Plan
             </h3>
             <p className="text-sm text-elec-light/60">
-              This typically takes 2-4 minutes
+              {detailLevel === 'quick' ? 'This typically takes 20-45 seconds' : 'This typically takes 1-3 minutes'}
             </p>
           </div>
 

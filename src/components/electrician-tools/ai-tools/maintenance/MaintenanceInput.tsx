@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Calendar, Lightbulb, Sparkles } from "lucide-react";
+import { Calendar, Lightbulb, Sparkles, Zap, FileText } from "lucide-react";
 import { MaintenanceInput as MaintenanceInputType } from "./useMaintenanceAdvisor";
+import { Badge } from "@/components/ui/badge";
 
 interface MaintenanceInputProps {
   input: MaintenanceInputType;
@@ -113,6 +114,66 @@ export const MaintenanceInput = ({
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-5">
+          {/* Detail Level Toggle */}
+          <div className="space-y-3 pb-4 border-b border-elec-gray/20">
+            <Label className="text-elec-light font-medium">Detail Level</Label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => onInputChange({ detailLevel: 'quick' })}
+                className={`p-4 rounded-lg border-2 transition-all ${
+                  input.detailLevel === 'quick'
+                    ? 'border-elec-yellow bg-elec-yellow/10'
+                    : 'border-elec-gray/30 hover:border-elec-gray/50'
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <Zap className={`h-5 w-5 mt-0.5 ${input.detailLevel === 'quick' ? 'text-elec-yellow' : 'text-elec-light/60'}`} />
+                  <div className="text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <p className={`font-semibold text-sm ${input.detailLevel === 'quick' ? 'text-elec-yellow' : 'text-elec-light'}`}>
+                        Quick
+                      </p>
+                      <Badge variant="outline" className="border-green-400/30 text-green-400 text-xs">
+                        20-45s
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-elec-light/60">
+                      Essential tasks, concise regulations, core failures
+                    </p>
+                  </div>
+                </div>
+              </button>
+              
+              <button
+                type="button"
+                onClick={() => onInputChange({ detailLevel: 'full' })}
+                className={`p-4 rounded-lg border-2 transition-all ${
+                  input.detailLevel === 'full'
+                    ? 'border-elec-yellow bg-elec-yellow/10'
+                    : 'border-elec-gray/30 hover:border-elec-gray/50'
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <FileText className={`h-5 w-5 mt-0.5 ${input.detailLevel === 'full' ? 'text-elec-yellow' : 'text-elec-light/60'}`} />
+                  <div className="text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <p className={`font-semibold text-sm ${input.detailLevel === 'full' ? 'text-elec-yellow' : 'text-elec-light'}`}>
+                        Full Detail
+                      </p>
+                      <Badge variant="outline" className="border-blue-400/30 text-blue-400 text-xs">
+                        1-3m
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-elec-light/60">
+                      Detailed procedures, full regulations, comprehensive analysis
+                    </p>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+
           {/* Equipment Type */}
           <div className="space-y-2">
             <Label htmlFor="equipment-type" className="text-elec-light font-medium">

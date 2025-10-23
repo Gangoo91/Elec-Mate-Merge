@@ -138,6 +138,23 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
 
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Partial Results Banner */}
+      {results.partial && (
+        <Card className="border-yellow-400/30 bg-yellow-400/5">
+          <CardContent className="pt-4 pb-4">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="h-5 w-5 text-yellow-400 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-medium text-yellow-400">Partial Plan Generated</p>
+                <p className="text-sm text-elec-light/70 mt-1">
+                  Some sections may be incomplete: {results.missingSections?.join(', ') || 'Check details'}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+      
       {/* Header Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
