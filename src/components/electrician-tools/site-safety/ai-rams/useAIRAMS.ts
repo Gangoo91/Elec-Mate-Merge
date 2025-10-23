@@ -300,7 +300,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       // Optimized timeout for GPT-5-Mini (target: 40-60s backend response)
       const timeoutPromise = new Promise<{ data: null; error: any }>((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout after 90 seconds')), 90000)
+        setTimeout(() => reject(new Error('Request timeout after 3 minutes')), 180000)
       );
       
       const invokePromise = supabase.functions.invoke(functionName, { body });
@@ -389,6 +389,18 @@ export function useAIRAMS(): UseAIRAMSReturn {
       const { data: hsData, error: hsError } = await callAgentWithRetry('health-safety-v3', {
         query: `Create a detailed risk assessment for the following electrical work: ${jobDescription}. Include specific hazards, risk ratings (likelihood and severity), and control measures.`,
         workType: jobScale
+      });
+
+      // DIAGNOSTIC: Log raw response structure
+      console.log('🔍 RAW Health & Safety Response:', {
+        hasData: !!hsData,
+        dataKeys: hsData ? Object.keys(hsData) : [],
+        success: hsData?.success,
+        structuredDataKeys: hsData?.structuredData ? Object.keys(hsData.structuredData) : [],
+        riskAssessmentKeys: hsData?.structuredData?.riskAssessment ? Object.keys(hsData.structuredData.riskAssessment) : [],
+        hazardCount: hsData?.structuredData?.riskAssessment?.hazards?.length || 0,
+        firstHazard: hsData?.structuredData?.riskAssessment?.hazards?.[0],
+        fullResponsePreview: JSON.stringify(hsData, null, 2).substring(0, 1000) // First 1000 chars
       });
 
       if (abortControllerRef.current?.signal.aborted) {
