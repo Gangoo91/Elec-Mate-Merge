@@ -215,15 +215,20 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         {quote.items?.filter(item => item.category === 'labour').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
           <Card className="bg-card border border-primary/10">
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center justify-between text-base">
-                <div className="flex items-center gap-2">
-                  <Wrench className="h-5 w-5" />
-                  Labour ({quote.items?.filter(item => item.category === 'labour').length})
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Wrench className="h-5 w-5 text-primary" />
+                  <span>Labour</span>
+                  <span className="inline-flex items-center justify-center min-w-[24px] h-5 px-2 rounded-full bg-primary/10 text-xs font-semibold">
+                    {quote.items?.filter(item => item.category === 'labour').length}
+                  </span>
+                </CardTitle>
+                <div className="px-4 py-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                  <span className="text-lg font-bold text-elec-yellow">
+                    £{quote.items?.filter(item => item.category === 'labour').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
+                  </span>
                 </div>
-                <span className="text-primary font-semibold">
-                  £{quote.items?.filter(item => item.category === 'labour').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
-                </span>
-              </CardTitle>
+              </div>
             </CardHeader>
             <CardContent className="pt-0">
               <div className="space-y-3">
@@ -249,17 +254,22 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
 
         {/* Materials Items */}
         {quote.items?.filter(item => item.category === 'materials').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
-          <Card className="bg-card border-green-200 dark:border-green-800">{/* Updated border color for materials */}
+          <Card className="bg-card border-green-200 dark:border-green-800">
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center justify-between text-base">
-                <div className="flex items-center gap-2">
-                  <Package className="h-5 w-5" />
-                  Materials ({quote.items?.filter(item => item.category === 'materials').length})
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Package className="h-5 w-5 text-green-600 dark:text-green-400" />
+                  <span>Materials</span>
+                  <span className="inline-flex items-center justify-center min-w-[24px] h-5 px-2 rounded-full bg-green-500/10 text-xs font-semibold text-green-600 dark:text-green-400">
+                    {quote.items?.filter(item => item.category === 'materials').length}
+                  </span>
+                </CardTitle>
+                <div className="px-4 py-2 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <span className="text-lg font-bold text-green-600 dark:text-green-400">
+                    £{quote.items?.filter(item => item.category === 'materials').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
+                  </span>
                 </div>
-                <span className="text-primary font-semibold">
-                  £{quote.items?.filter(item => item.category === 'materials').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
-                </span>
-              </CardTitle>
+              </div>
             </CardHeader>
             <CardContent className="pt-0">
               <div className="space-y-3">
@@ -285,17 +295,22 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
 
         {/* Equipment Items */}
         {quote.items?.filter(item => item.category === 'equipment').sort((a, b) => b.totalPrice - a.totalPrice).length > 0 && (
-          <Card className="bg-card border-border">
+          <Card className="bg-card border-blue-200 dark:border-blue-800">
             <CardHeader className="pb-3">
-              <CardTitle className="flex items-center justify-between text-base">
-                <div className="flex items-center gap-2">
-                  <Zap className="h-5 w-5" />
-                  Equipment ({quote.items?.filter(item => item.category === 'equipment').length})
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Zap className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <span>Equipment</span>
+                  <span className="inline-flex items-center justify-center min-w-[24px] h-5 px-2 rounded-full bg-blue-500/10 text-xs font-semibold text-blue-600 dark:text-blue-400">
+                    {quote.items?.filter(item => item.category === 'equipment').length}
+                  </span>
+                </CardTitle>
+                <div className="px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                    £{quote.items?.filter(item => item.category === 'equipment').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
+                  </span>
                 </div>
-                <span className="text-primary font-semibold">
-                  £{quote.items?.filter(item => item.category === 'equipment').reduce((sum, item) => sum + item.totalPrice, 0).toFixed(2)}
-                </span>
-              </CardTitle>
+              </div>
             </CardHeader>
             <CardContent className="pt-0">
               <div className="space-y-3">
