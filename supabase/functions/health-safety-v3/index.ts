@@ -293,30 +293,55 @@ INSTRUCTIONS:
 8. Reference emergency procedures (HSE INDG231 for shock, CO2 for electrical fires)
 9. Include isolation per BS 7671 Section 462 with lock-off devices
 
-**PPE REQUIREMENTS - EXTRACT FROM KNOWLEDGE BASE:**
-⚠️ CRITICAL: Extract PPE requirements DIRECTLY from the H&S knowledge base provided above.
+**PPE REQUIREMENTS - CONTEXT-SPECIFIC AND KNOWLEDGE BASE:**
+⚠️ CRITICAL: Extract PPE requirements from the H&S knowledge base AND apply context-specific mandatory flags.
 
-The knowledge base contains comprehensive PPE information with BS/EN standards. You MUST:
+**CONTEXT-SPECIFIC MANDATORY PPE RULES:**
+- Noise exposure >80dB or power tools for >2 hours → Earplugs/defenders (mandatory: false for occasional use, true for sustained exposure)
+- Asbestos survey identifies ACMs → FFP3 respirator (mandatory: true)
+- Work at height >2m using MEWP/scaffold → Harness/fall arrest (mandatory: true)
+- Confined spaces → BA set, gas monitor (mandatory: true)
+- Live electrical work → Insulated gloves + voltage detector (mandatory: true)
+- Cutting/grinding → Face shield + dust mask (mandatory: true)
+- General site work → Hard hat, hi-vis, safety boots (mandatory: true)
+- MEWP operation → Fall arrest harness (mandatory: true)
+- Portable scaffold → Non-slip boots + hard hat (mandatory: true)
+
+Set mandatory: true ONLY if the hazard is definitely present in this work.
+Set mandatory: false for "nice to have" or situational PPE.
+
+You MUST:
 1. Search the knowledge base for PPE requirements relevant to this work
 2. Extract exact PPE types, standards, and purposes from the knowledge base
-3. Structure each PPE item with:
+3. Apply context-specific mandatory flags based on the actual work being done
+4. Structure each PPE item with:
    - itemNumber: Sequential number (1, 2, 3...)
-   - ppeType: Equipment name as stated in knowledge base
-   - standard: BS/EN standard found in knowledge base (e.g., "BS EN 397", "BS EN 60903 Class 0")
-   - mandatory: true for critical PPE (helmets, gloves, eye protection), false for optional
-   - purpose: Specific protection purpose from knowledge base
+   - ppeType: Equipment name as stated in knowledge base or work context
+   - standard: BS/EN standard (e.g., "BS EN 397", "BS EN 60903 Class 0", "BS EN 352-2")
+   - mandatory: true ONLY if hazard definitely present; false for situational
+   - purpose: Specific protection purpose including when it applies
 
-4. If knowledge base contains PPE for this work type, use it (mark as mandatory: true)
-5. Only suggest additional PPE if NOT found in knowledge base (mark as mandatory: false)
-6. NEVER generate generic PPE without checking knowledge base first
-
-Example from knowledge base:
+Examples showing context-specific mandatory flags:
 {
-  "itemNumber": 1,
-  "ppeType": "Insulated gloves",
-  "standard": "BS EN 60903 Class 0",
+  "itemNumber": 6,
+  "ppeType": "Hearing protection (earplugs)",
+  "standard": "BS EN 352-2",
+  "mandatory": false,
+  "purpose": "Protection against noise when using power tools for extended periods (>2 hours). Situational based on task duration."
+}
+{
+  "itemNumber": 7,
+  "ppeType": "Respiratory protective equipment (FFP3 mask)",
+  "standard": "BS EN 149 FFP3",
   "mandatory": true,
-  "purpose": "Protection against electrical shock from live conductors up to 500V AC"
+  "purpose": "Essential protection against asbestos fibres if ACMs are present or suspected on site."
+}
+{
+  "itemNumber": 8,
+  "ppeType": "Fall arrest harness",
+  "standard": "BS EN 361",
+  "mandatory": true,
+  "purpose": "Mandatory fall protection when working at height >2m using MEWP or scaffold tower."
 }
 
 ${contextSection}
@@ -443,10 +468,13 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
               },
               competencyMatrix: {
                 type: 'object',
-                description: 'Competency, training, and certification requirements',
+                description: 'Competency, training, and certification requirements - LINK EQUIPMENT TO CERTIFICATIONS',
                 properties: {
                   competencyRequirements: { type: 'string', description: 'Required qualifications (e.g., ECS Gold Card, 18th Edition)' },
-                  trainingRequired: { type: 'string', description: 'Mandatory training (e.g., IPAF, Asbestos Awareness)' },
+                  trainingRequired: { 
+                    type: 'string', 
+                    description: 'Mandatory certifications based on equipment/environment:\n- MEWP (scissor lift, boom lift, cherry picker) → IPAF 3a/3b certification required\n- Portable scaffold towers → PASMA certification required\n- Asbestos awareness → Mandatory if ACMs present (Category A training)\n- Confined space entry → CS1/CS2 training and permit-to-work\n- HV switching (>1000V) → AP/AR person authorisation\n- First Aid → At least one First Aid at Work certified person on site' 
+                  },
                   supervisionLevel: { type: 'string', description: 'Supervision requirements (e.g., Continuous supervision by approved electrician)' },
                   additionalCertifications: { type: 'string', description: 'Additional certs needed (e.g., AP/AR persons for HV works)' }
                 }
