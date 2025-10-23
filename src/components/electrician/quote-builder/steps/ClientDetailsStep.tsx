@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { MobileInput } from "@/components/ui/mobile-input";
-import { SmartAddressFinder } from "@/components/ui/smart-address-finder";
+import { UnifiedAddressFinder } from "@/components/ui/unified-address-finder";
 import { QuoteClient } from "@/types/quote";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -45,9 +45,9 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
     }
   }, []);
 
-  const handleAddressSelect = (address: any) => {
-    form.setValue("address", address.line_1 || address.formatted_address);
-    form.setValue("postcode", address.postcode);
+  const handleAddressSelect = (address: string, postcode: string) => {
+    form.setValue("address", address);
+    form.setValue("postcode", postcode);
   };
 
   const handleUseRecentClient = (client: QuoteClient) => {
@@ -147,14 +147,11 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
         />
       </div>
       
-      {/* Smart Address Finder */}
+      {/* Unified Address Finder */}
       <div className="mt-6">
-        <SmartAddressFinder
+        <UnifiedAddressFinder
           onAddressSelect={handleAddressSelect}
-          postcodeValue={form.watch("postcode")}
-          addressValue={form.watch("address")}
-          onPostcodeChange={(value) => form.setValue("postcode", value)}
-          onAddressChange={(value) => form.setValue("address", value)}
+          defaultValue={form.watch("address") ? `${form.watch("address")}, ${form.watch("postcode")}` : ""}
         />
       </div>
     </Form>
