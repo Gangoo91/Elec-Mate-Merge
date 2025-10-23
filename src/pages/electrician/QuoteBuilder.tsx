@@ -141,9 +141,9 @@ const QuoteBuilder = () => {
       </header>
 
       <div className="p-0 md:px-6 md:py-8 space-y-6 md:space-y-8 animate-fade-in">
-
-        {/* Prominent Create Quote Section */}
-        <section className="text-center space-y-4">
+        <div className="max-w-[1400px] mx-auto px-4">
+          {/* Prominent Create Quote Section */}
+          <section className="text-center space-y-4">
           <Button 
             onClick={() => navigate('/electrician/quote-builder/create')}
             size="lg"
@@ -225,9 +225,10 @@ const QuoteBuilder = () => {
             )}
           </section>
         </main>
+        </div>
       </div>
 
-      <FinancialSnapshot 
+      <FinancialSnapshot
         isOpen={showFinancialSnapshot}
         onClose={() => setShowFinancialSnapshot(false)}
         quotes={savedQuotes}

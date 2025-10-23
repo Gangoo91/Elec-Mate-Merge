@@ -93,7 +93,8 @@ const QuotesPage = () => {
       </header>
 
       <div className="px-4 py-8 space-y-8 animate-fade-in">
-        <main className="space-y-8">
+        <div className="max-w-[1400px] mx-auto">
+          <main className="space-y-8">
           {/* Filter Badge */}
           {filter && (
             <section className="flex items-center gap-3">
@@ -164,6 +165,7 @@ const QuotesPage = () => {
             )}
           </section>
         </main>
+        </div>
       </div>
     </div>
   );

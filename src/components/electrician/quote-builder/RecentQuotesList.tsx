@@ -730,6 +730,7 @@ ${companyName}`;
         onShareWhatsApp={handleShareWhatsApp}
         onShareEmail={handleShareEmail}
         onViewInvoice={handleViewInvoice}
+        onDeleteQuote={(quote) => onDeleteQuote(quote.id)}
       />
 
       {/* Mobile/Tablet Card View */}

@@ -226,7 +226,8 @@ const QuoteViewPage = () => {
       </header>
 
       <div className="px-4 py-8 space-y-8 animate-fade-in">
-        <main className="space-y-8">
+        <div className="max-w-[1400px] mx-auto">
+          <main className="space-y-8">
           {/* Quote Review Component */}
           <QuoteReviewStep quote={quote} />
 
@@ -260,6 +261,7 @@ const QuoteViewPage = () => {
             </div>
           </div>
         </main>
+        </div>
       </div>
 
       {/* Delete Confirmation Dialog */}

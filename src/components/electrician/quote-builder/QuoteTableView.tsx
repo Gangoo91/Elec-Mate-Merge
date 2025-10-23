@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Download, Eye, Receipt, ArrowRight, User, MoreVertical, Mail, MessageCircle } from 'lucide-react';
+import { Download, Eye, Receipt, ArrowRight, User, MoreVertical, Mail, MessageCircle, Trash2 } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format } from 'date-fns';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
@@ -28,6 +28,7 @@ interface QuoteTableViewProps {
   onShareWhatsApp: (quote: Quote) => void;
   onShareEmail: (quote: Quote) => void;
   onViewInvoice?: (quote: Quote) => void;
+  onDeleteQuote: (quote: Quote) => void;
 }
 
 const QuoteTableView: React.FC<QuoteTableViewProps> = ({
@@ -44,6 +45,7 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
   onShareWhatsApp,
   onShareEmail,
   onViewInvoice,
+  onDeleteQuote,
 }) => {
   if (quotes.length === 0) {
     return null;
@@ -125,7 +127,7 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-48">
-                      <DropdownMenuItem onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}>
+                      <DropdownMenuItem onClick={() => onNavigate(`/electrician/quotes/view/${quote.id}`)}>
                         <Eye className="h-4 w-4 mr-2" />
                         View Quote
                       </DropdownMenuItem>
@@ -169,6 +171,15 @@ const QuoteTableView: React.FC<QuoteTableViewProps> = ({
                           </DropdownMenuItem>
                         </>
                       )}
+                      
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem 
+                        onClick={() => onDeleteQuote(quote)}
+                        className="text-destructive focus:text-destructive focus:bg-destructive/10"
+                      >
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Delete Quote
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
