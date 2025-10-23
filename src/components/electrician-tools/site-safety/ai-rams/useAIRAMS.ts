@@ -526,7 +526,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
       });
 
       // Only update reasoning if not already set by fallback
-      if (hsData?.success) {
+      if (hsDataToUse?.success) {
         setReasoningSteps(prev => prev.map(step => 
           step.agent === 'health-safety' 
             ? { ...step, status: 'complete', reasoning: `Generated ${hazardCount || 'multiple'} hazards and control measures`, subStep: null, timeElapsed: hsTimeElapsed }
