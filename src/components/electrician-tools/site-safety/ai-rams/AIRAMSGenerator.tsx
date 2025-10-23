@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Sparkles } from 'lucide-react';
 import { AIRAMSInput } from './AIRAMSInput';
 import { AgentProcessingView } from './AgentProcessingView';
 import { RAMSReviewEditor } from './RAMSReviewEditor';
+import { CompletionCelebration } from './CompletionCelebration';
 import { useAIRAMS } from './useAIRAMS';
+import { triggerHaptic } from '@/utils/animation-helpers';
 
 export const AIRAMSGenerator: React.FC = () => {
   const navigate = useNavigate();
@@ -28,6 +30,18 @@ export const AIRAMSGenerator: React.FC = () => {
   } = useAIRAMS();
 
   const [showResults, setShowResults] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [generationStartTime, setGenerationStartTime] = useState<number>(0);
+  const [generationEndTime, setGenerationEndTime] = useState<number>(0);
+
+  // Trigger celebration when generation completes
+  useEffect(() => {
+    if (ramsData && methodData && !isProcessing && showResults && !showCelebration) {
+      setGenerationEndTime(Date.now());
+      setShowCelebration(true);
+      triggerHaptic([100, 50, 100, 50, 200]); // Victory haptic pattern
+    }
+  }, [ramsData, methodData, isProcessing, showResults, showCelebration]);
 
   const handleGenerate = async (
     jobDescription: string,
@@ -40,14 +54,29 @@ export const AIRAMSGenerator: React.FC = () => {
     },
     jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => {
+    setGenerationStartTime(Date.now());
     setShowResults(true); // Show processing view immediately
+    setShowCelebration(false); // Reset celebration
     await generateRAMS(jobDescription, projectInfo, jobScale);
   };
 
   const handleStartOver = () => {
     reset();
     setShowResults(false);
+    setShowCelebration(false);
+    setGenerationStartTime(0);
+    setGenerationEndTime(0);
   };
+
+  // Calculate stats for celebration
+  const hazardCount = ramsData?.risks?.length || 0;
+  const controlMeasuresCount = ramsData?.risks?.reduce((sum, risk) => {
+    return sum + (risk.controls?.split('.').filter(c => c.trim()).length || 1);
+  }, 0) || 0;
+  const methodStepsCount = methodData?.steps?.length || 0;
+  const generationTimeSeconds = generationEndTime && generationStartTime 
+    ? (generationEndTime - generationStartTime) / 1000 
+    : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
@@ -129,6 +158,17 @@ export const AIRAMSGenerator: React.FC = () => {
             </>
           )}
         </div>
+
+        {/* Celebration Modal */}
+        {showCelebration && ramsData && methodData && (
+          <CompletionCelebration
+            hazardCount={hazardCount}
+            controlMeasuresCount={controlMeasuresCount}
+            methodStepsCount={methodStepsCount}
+            generationTimeSeconds={generationTimeSeconds}
+            onClose={() => setShowCelebration(false)}
+          />
+        )}
       </div>
     </div>
   );

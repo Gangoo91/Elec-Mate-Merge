@@ -4,6 +4,7 @@ import { combineAgentOutputsToRAMS } from '@/utils/rams-ai-transformer';
 import type { RAMSData } from '@/types/rams';
 import type { MethodStatementData } from '@/types/method-statement';
 import { useToast } from '@/hooks/use-toast';
+import { animateValue } from '@/utils/animation-helpers';
 
 interface SubStep {
   label: string;
@@ -81,6 +82,17 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
   const abortControllerRef = useRef<AbortController | null>(null);
   const progressIntervalsRef = useRef<NodeJS.Timeout[]>([]);
+  const animationCleanupRef = useRef<(() => void) | null>(null);
+
+  // Smooth progress animation
+  const animateProgress = useCallback((targetProgress: number, duration: number = 800) => {
+    if (animationCleanupRef.current) {
+      animationCleanupRef.current();
+    }
+    const startProgress = overallProgress;
+    const cleanup = animateValue(startProgress, targetProgress, duration, setOverallProgress);
+    animationCleanupRef.current = cleanup;
+  }, [overallProgress]);
 
   // Autosave every 30 seconds when data exists
   useEffect(() => {
@@ -369,7 +381,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'health-safety' ? { ...step, status: 'processing', subStep: HEALTH_SAFETY_SUBSTEPS[0] } : step
       ));
-      setOverallProgress(5);
+      animateProgress(5, 600);
       setEstimatedTimeRemaining(240); // 4 minutes
 
       // Start simulated progress
@@ -534,7 +546,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
         ));
       }
       
-      setOverallProgress(50);
+      animateProgress(50, 1000);
       setEstimatedTimeRemaining(120); // 2 minutes
 
       // Step 2: Call Installer Agent (with H&S context)
@@ -585,7 +597,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
           ? { ...step, status: 'complete', reasoning: `Generated ${stepsCount || 'multiple'} installation steps`, subStep: null, timeElapsed: installerTimeElapsed }
           : step
       ));
-      setOverallProgress(100);
+      animateProgress(100, 600);
       setEstimatedTimeRemaining(0);
 
       // Step 3: Transform agent outputs to RAMS format

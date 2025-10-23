@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ShieldCheck, Wrench, CheckCircle2, Loader2, AlertCircle, Clock, Sparkles } from 'lucide-react';
 import { SubStepProgress, SubStep } from './SubStepProgress';
 import { GenerationTimer } from './GenerationTimer';
+import { TimelineExpectation } from './TimelineExpectation';
 
 export interface ReasoningStep {
   agent: 'health-safety' | 'installer';
@@ -44,6 +45,14 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   estimatedTimeRemaining,
   onCancel
 }) => {
+  const [currentSeconds, setCurrentSeconds] = useState(0);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    const interval = setInterval(() => setCurrentSeconds(prev => prev + 1), 1000);
+    return () => clearInterval(interval);
+  }, [isVisible]);
+
   if (!isVisible || steps.length === 0) return null;
 
   const allComplete = steps.every(step => step.status === 'complete');
@@ -90,6 +99,11 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   };
 
   return (
+    <div className="space-y-4 animate-fade-in">
+      {!allComplete && currentSeconds < 10 && (
+        <TimelineExpectation currentSeconds={currentSeconds} />
+      )}
+      
     <Card className="border-elec-yellow/30 shadow-lg bg-gradient-to-br from-elec-grey to-elec-grey/80">
       <CardHeader className="pb-5 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -247,5 +261,6 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
         )}
       </CardContent>
     </Card>
+    </div>
   );
 };
