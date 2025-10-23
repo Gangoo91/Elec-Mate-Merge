@@ -128,3 +128,8 @@ timeout_sec = 180
 [functions.generate-electrical-report]
 verify_jwt = false
 timeout_sec = 120
+
+# PDF Monkey Template Verification
+[functions.check-pdfmonkey-template]
+verify_jwt = false
+timeout_sec = 60
