@@ -847,89 +847,30 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               Download Documents
             </h4>
             
-            {/* Desktop View - All buttons visible */}
-            <div className="hidden md:flex flex-wrap gap-3 p-4">
+            {/* Desktop View - Download Combined RAMS */}
+            <div className="hidden md:flex p-4">
               <Button
                 onClick={handleGenerateCombinedRAMS}
                 disabled={isGenerating}
-                className="gap-2"
+                className="gap-2 w-full md:w-auto"
                 variant="default"
+                size="lg"
               >
-                <FileText className="h-4 w-4" />
-                Combined RAMS
-              </Button>
-              <Button
-                onClick={handleGenerateRAMSPDF}
-                disabled={isGenerating}
-                className="gap-2"
-                variant="outline"
-              >
-                <FileText className="h-4 w-4" />
-                RAMS Only
-              </Button>
-              <Button
-                onClick={handleGenerateMethodPDF}
-                disabled={isGenerating}
-                className="gap-2"
-                variant="outline"
-              >
-                <FileText className="h-4 w-4" />
-                Method Statement
-              </Button>
-              <Button
-                onClick={() => {
-                  const blob = new Blob([JSON.stringify(ramsData, null, 2)], { type: 'application/json' });
-                  const url = URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = `rams-data-${new Date().toISOString().split('T')[0]}.json`;
-                  a.click();
-                  URL.revokeObjectURL(url);
-                }}
-                className="gap-2"
-                variant="outline"
-              >
-                <FileText className="h-4 w-4" />
-                RAMS JSON
-              </Button>
-              <Button
-                onClick={() => {
-                  const blob = new Blob([JSON.stringify(methodData, null, 2)], { type: 'application/json' });
-                  const url = URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = `method-statement-${new Date().toISOString().split('T')[0]}.json`;
-                  a.click();
-                  URL.revokeObjectURL(url);
-                }}
-                className="gap-2"
-                variant="outline"
-              >
-                <FileText className="h-4 w-4" />
-                Method JSON
+                <FileText className="h-5 w-5" />
+                Download Combined RAMS
               </Button>
             </div>
 
-            {/* Mobile View - Single button to open sheet */}
-            <div className="md:hidden">
+            {/* Mobile View - Direct download button */}
+            <div className="md:hidden p-4">
               <Button
-                onClick={() => setShowMobileSheet(true)}
+                onClick={handleGenerateCombinedRAMS}
                 disabled={isGenerating}
                 className="w-full gap-2"
                 size="lg"
               >
                 <Download className="h-5 w-5" />
-                Download PDF Options
-              </Button>
-              <Button
-                onClick={handleCopyJSON}
-                disabled={isGenerating}
-                className="w-full gap-2 mt-2"
-                variant="outline"
-                size="lg"
-              >
-                <Code className="h-5 w-5" />
-                Copy JSON
+                Download Combined RAMS
               </Button>
             </div>
           </div>
@@ -949,8 +890,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         open={showMobileSheet}
         onOpenChange={setShowMobileSheet}
         onDownloadCombined={handleGenerateCombinedRAMS}
-        onDownloadRAMS={handleGenerateRAMSPDF}
-        onDownloadMethod={handleGenerateMethodPDF}
         isGenerating={isGenerating}
       />
 
