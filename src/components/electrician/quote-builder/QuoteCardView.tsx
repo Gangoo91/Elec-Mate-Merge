@@ -108,7 +108,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
   };
 
   return (
-    <div className="lg:hidden space-y-4">
+    <div className="space-y-4">
       {quotes.map((quote) => {
         const statusInfo = getStatusInfo(quote);
         const StatusIcon = statusInfo.icon;

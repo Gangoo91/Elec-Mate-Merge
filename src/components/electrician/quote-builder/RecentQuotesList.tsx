@@ -712,28 +712,7 @@ ${companyName}`;
 
   return (
     <div className="space-y-4">
-      {/* Desktop Table View */}
-      <QuoteTableView
-        quotes={displayQuotes}
-        loadingAction={loadingAction}
-        handleRegeneratePDF={handleRegeneratePDF}
-        handleStatusUpdate={handleStatusUpdate}
-        onNavigate={navigate}
-        hasInvoiceRaised={hasInvoiceRaised}
-        getAcceptanceStatusBadge={getAcceptanceStatusBadge}
-        formatCurrency={formatCurrency}
-        canRaiseInvoice={canRaiseInvoice}
-        onInvoiceAction={(quote) => {
-          setQuoteForInvoice(quote);
-          setShowInvoiceDecision(true);
-        }}
-        onShareWhatsApp={handleShareWhatsApp}
-        onShareEmail={handleShareEmail}
-        onViewInvoice={handleViewInvoice}
-        onDeleteQuote={(quote) => onDeleteQuote(quote.id)}
-      />
-
-      {/* Mobile/Tablet Card View */}
+      {/* Card View for All Screen Sizes */}
       <QuoteCardView
         quotes={displayQuotes}
         loadingAction={loadingAction}
