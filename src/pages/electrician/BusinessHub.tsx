@@ -2,48 +2,36 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Briefcase, Settings as Cog, Calculator, ArrowLeft, FileText, Package, Wrench, PoundSterling, Receipt } from "lucide-react";
+import { Briefcase, Settings as Cog, Calculator, ArrowLeft, Package, Wrench } from "lucide-react";
 
 const BusinessHub = () => {
   const cards = [
     {
       id: 1,
-      title: "Quote Builder",
-      icon: FileText,
-      link: "/electrician/quote-builder",
-    },
-    {
-      id: 2,
-      title: "Invoice Builder",
-      icon: Receipt,
-      link: "/electrician/invoice-builder/create",
-    },
-    {
-      id: 3,
       title: "Start & Grow",
       icon: Briefcase,
       link: "/electrician/business-development",
     },
     {
-      id: 4,
+      id: 2,
       title: "Business Calculators",
       icon: Calculator,
       link: "/electrician/business-development/tools",
     },
     {
-      id: 5,
+      id: 3,
       title: "Materials",
       icon: Package,
       link: "/electrician/materials",
     },
     {
-      id: 6,
+      id: 4,
       title: "Tools",
       icon: Wrench,
       link: "/electrician/tools",
     },
     {
-      id: 7,
+      id: 5,
       title: "Business Admin",
       icon: Cog,
       link: "/electrician/business-admin",
@@ -59,7 +47,7 @@ const BusinessHub = () => {
         <title>Business Hub for Electricians | Start & Run</title>
         <meta
           name="description"
-          content="All business tools for UK electricians in one place — start, run and grow your electrical business. Create quotes, access development guides and admin tools."
+          content="All business tools for UK electricians in one place — start, run and grow your electrical business. Access development guides, calculators, materials, tools and admin features."
         />
         <link rel="canonical" href={canonical} />
       </Helmet>
