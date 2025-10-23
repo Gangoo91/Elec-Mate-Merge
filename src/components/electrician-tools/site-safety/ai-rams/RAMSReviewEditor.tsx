@@ -197,7 +197,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       
       const { data, error } = await supabase.functions.invoke('generate-method-statement-pdf', {
         body: { 
-          methodData
+          methodData: {
+            ...methodData,
+            projectName: ramsData.projectName
+          }
         }
       });
 
