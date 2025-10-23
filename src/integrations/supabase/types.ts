@@ -6621,23 +6621,39 @@ export type Database = {
           topic: string
         }[]
       }
-      search_maintenance_hybrid: {
-        Args: {
-          equipment_filter?: string
-          match_count?: number
-          query_embedding: string
-          query_text: string
-        }
-        Returns: {
-          content: string
-          equipment_type: string
-          hybrid_score: number
-          id: string
-          metadata: Json
-          source: string
-          topic: string
-        }[]
-      }
+      search_maintenance_hybrid:
+        | {
+            Args: {
+              match_count?: number
+              query_embedding: string
+              query_text: string
+            }
+            Returns: {
+              content: string
+              hybrid_score: number
+              id: string
+              metadata: Json
+              source: string
+              topic: string
+            }[]
+          }
+        | {
+            Args: {
+              equipment_filter?: string
+              match_count?: number
+              query_embedding: string
+              query_text: string
+            }
+            Returns: {
+              content: string
+              equipment_type: string
+              hybrid_score: number
+              id: string
+              metadata: Json
+              source: string
+              topic: string
+            }[]
+          }
       search_pricing: {
         Args: {
           category_filter?: string
