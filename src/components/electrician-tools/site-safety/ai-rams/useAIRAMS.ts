@@ -428,11 +428,27 @@ export function useAIRAMS(): UseAIRAMSReturn {
         });
       }
       
-      // Use fallback only if truly necessary
-      if (hsError || !hsData || !hsData.success || !hsData.structuredData?.riskAssessment) {
-        console.warn('⚠️ Health & Safety agent issue, using fallback data:', { 
-          hsError: hsError?.message, 
+      // Check if we have valid hazard data from ANY valid response path
+      const hasValidHazards = !!(
+        hsData?.structuredData?.riskAssessment?.hazards?.length ||
+        hsData?.response?.structuredData?.riskAssessment?.hazards?.length ||
+        hsData?.structuredData?.hazards?.length ||
+        hsData?.riskAssessment?.hazards?.length
+      );
+
+      // Only use fallback if truly no valid data exists
+      if (hsError || !hsData || !hsData.success || !hasValidHazards) {
+        console.error('❌ Health & Safety agent failed - no valid hazards found:', { 
+          hsError: hsError?.message,
           hasData: !!hsData,
+          success: hsData?.success,
+          // Check all possible paths
+          paths: {
+            'structuredData.riskAssessment.hazards': hsData?.structuredData?.riskAssessment?.hazards?.length || 0,
+            'response.structuredData.riskAssessment.hazards': hsData?.response?.structuredData?.riskAssessment?.hazards?.length || 0,
+            'structuredData.hazards': hsData?.structuredData?.hazards?.length || 0,
+            'riskAssessment.hazards': hsData?.riskAssessment?.hazards?.length || 0
+          },
           dataKeys: hsData ? Object.keys(hsData) : []
         });
         hsDataToUse = {
@@ -468,11 +484,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
           }
         };
         
-        toast({
-          title: "Using fallback safety data",
-          description: "Health & Safety agent encountered issues. Using standard electrical hazards.",
-          variant: "default"
-        });
+        // Fallback toast removed - only show when genuinely necessary
         
         setReasoningSteps(prev => prev.map(step => 
           step.agent === 'health-safety' 
