@@ -134,6 +134,15 @@ export interface MethodStatementData {
   duration: string;
   teamSize: string;
   description: string;
+  
+  // Emergency contacts and site personnel
+  siteManagerName?: string;
+  siteManagerPhone?: string;
+  firstAiderName?: string;
+  firstAiderPhone?: string;
+  safetyOfficerName?: string;
+  safetyOfficerPhone?: string;
+  assemblyPoint?: string;
   overallRiskLevel: 'low' | 'medium' | 'high';
   reviewDate: string;
   approvedBy?: string;

@@ -1035,6 +1035,16 @@ export function combineAgentOutputsToRAMS(
     overallRiskLevel: calculateOverallRisk(risks),
     reviewDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     steps,
+    
+    // Emergency contacts and site personnel
+    siteManagerName: projectInfo.siteManagerName || '',
+    siteManagerPhone: projectInfo.siteManagerPhone || '',
+    firstAiderName: projectInfo.firstAiderName || '',
+    firstAiderPhone: projectInfo.firstAiderPhone || '',
+    safetyOfficerName: projectInfo.safetyOfficerName || '',
+    safetyOfficerPhone: projectInfo.safetyOfficerPhone || '',
+    assemblyPoint: projectInfo.assemblyPoint || '',
+    
     practicalTips,
     commonMistakes,
     toolsRequired,

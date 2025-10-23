@@ -55,6 +55,15 @@ serve(async (req) => {
         description: methodData.description || '',
         overallRiskLevel: methodData.overallRiskLevel || 'MEDIUM',
         reviewDate: methodData.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB'),
+        
+        // Emergency contacts and site personnel
+        siteManagerName: methodData.siteManagerName || '',
+        siteManagerPhone: methodData.siteManagerPhone || '',
+        firstAiderName: methodData.firstAiderName || '',
+        firstAiderPhone: methodData.firstAiderPhone || '',
+        safetyOfficerName: methodData.safetyOfficerName || '',
+        safetyOfficerPhone: methodData.safetyOfficerPhone || '',
+        assemblyPoint: methodData.assemblyPoint || '',
         steps: (methodData.steps || []).map((step: any) => ({
           id: step.id || `step-${step.stepNumber}`,
           stepNumber: step.stepNumber,
