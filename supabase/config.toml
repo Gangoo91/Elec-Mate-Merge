@@ -138,3 +138,4 @@ timeout_sec = 60
 [functions.generate-circuit-design-pdf]
 verify_jwt = false
 timeout_sec = 180
+
