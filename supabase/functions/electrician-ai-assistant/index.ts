@@ -330,8 +330,9 @@ Confidence: ${Math.round(reg.similarity * 100)}%
           1. Start with a CLEAR, CONVERSATIONAL ANSWER (2-3 paragraphs) that directly answers the user's question
           2. Then provide 5-8 MOST RELEVANT regulations with clear reasoning
           3. Then provide practical installation and testing guidance
-          4. Return ONLY raw JSON - NO markdown, NO backticks
-          5. Write in natural, flowing English as if speaking to a colleague
+          4. YOU MUST return your response as a JSON object with the structure: {"analysis": "...", "regulations": "...", "practical_guidance": "..."}
+          5. Return ONLY raw JSON - NO markdown, NO backticks
+          6. Write in natural, flowing English as if speaking to a colleague
           
           RESPONSE SCOPE:
           - Cover: Design, Regulations, Installation, Testing ONLY
@@ -461,6 +462,8 @@ Confidence: ${Math.round(reg.similarity * 100)}%
 
     const aiResponse = data.choices[0].message.content;
     console.log('OpenAI response received successfully');
+    console.log('Raw OpenAI response data:', JSON.stringify(data, null, 2));
+    console.log('Content field:', aiResponse);
 
     // Handle structured responses for structured_assistant type
     if (type === "structured_assistant") {
@@ -477,6 +480,18 @@ Confidence: ${Math.round(reg.similarity * 100)}%
       content = content.replace(/^["'](.*)["']$/s, '$1');
       
       console.log('Cleaned content for parsing (first 200 chars):', content.substring(0, 200));
+      
+      // Check if content is empty
+      if (!content || content.trim() === '') {
+        console.error('OpenAI returned empty content');
+        return new Response(
+          JSON.stringify({ 
+            error: 'OpenAI returned empty response',
+            debug: { rawContent: aiResponse, type: type }
+          }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
       
       try {
         const parsedResponse = JSON.parse(content);
