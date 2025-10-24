@@ -298,10 +298,10 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get AI API key
-    const aiApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!aiApiKey) {
-      throw new Error('LOVABLE_API_KEY not configured');
+    // Get AI API keys
+    const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!openaiApiKey) {
+      throw new Error('OPENAI_API_KEY not configured');
     }
 
     // Expand query for better RAG retrieval
@@ -309,14 +309,14 @@ Deno.serve(async (req) => {
     console.log('🔍 Expanded query:', expandedQuery);
 
     // Generate embedding for query
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${aiApiKey}`,
+        'Authorization': `Bearer ${openaiApiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'text-embedding-ada-002',
+        model: 'text-embedding-3-small',
         input: expandedQuery
       })
     });
@@ -365,14 +365,14 @@ Provide comprehensive maintenance instructions following the tool schema structu
     // Call AI with tool calling
     console.log('🤖 Calling AI with maintenance tool schema...');
 
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${aiApiKey}`,
+        'Authorization': `Bearer ${openaiApiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+        model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: MAINTENANCE_SYSTEM_PROMPT },
           { role: 'user', content: userMessage }

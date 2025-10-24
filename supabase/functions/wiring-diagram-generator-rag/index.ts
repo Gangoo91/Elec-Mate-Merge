@@ -52,8 +52,8 @@ serve(async (req) => {
 
     logger.info('Wiring guidance generator initiated', { component_image_url });
 
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+    const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
+    if (!geminiApiKey) throw new Error('GEMINI_API_KEY not configured');
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -64,21 +64,17 @@ serve(async (req) => {
     
     const imageAnalysisData = await withRetry(
       () => withTimeout(
-        fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${lovableApiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'google/gemini-2.5-flash',
-            messages: [
-              { 
-                role: 'user', 
-                content: [
-                  {
-                    type: 'text',
-                    text: `Identify this electrical component. Provide:
+            contents: [{
+              role: 'user',
+              parts: [
+                {
+                  text: `Identify this electrical component. Provide:
 1. Component type (e.g., "Electric Shower", "Socket Outlet", "Light Switch")
 2. Ratings visible (amps/watts/volts)
 3. Manufacturer and model (if visible)
@@ -86,15 +82,19 @@ serve(async (req) => {
 5. Any specific features (2-gang, 3-position, IP rating, etc.)
 
 Be concise and technical.`
-                  },
-                  {
-                    type: 'image_url',
-                    image_url: { url: component_image_url }
+                },
+                {
+                  inlineData: {
+                    mimeType: 'image/jpeg',
+                    data: component_image_url.split(',')[1] || component_image_url
                   }
-                ]
-              }
-            ],
-            max_tokens: 300
+                }
+              ]
+            }],
+            generationConfig: {
+              maxOutputTokens: 300,
+              temperature: 0.2
+            }
           }),
         }).then(async (res) => {
           if (!res.ok) {
@@ -108,7 +108,7 @@ Be concise and technical.`
       RetryPresets.STANDARD
     );
     
-    const componentDetails = imageAnalysisData.choices[0].message.content;
+    const componentDetails = imageAnalysisData.candidates[0].content.parts[0].text;
     logger.info('Component identified', { componentDetails: componentDetails.substring(0, 100) });
 
     // Step 2: Intelligent component-specific RAG retrieval
@@ -211,18 +211,16 @@ ${regulations.map(reg => `- [${reg.regulation_number}] ${reg.similarity ? `(rele
 
     const guidanceData = await withRetry(
       () => withTimeout(
-        fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${lovableApiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'google/gemini-2.5-flash',
-            messages: [
-              {
-                role: 'system',
-                content: `You are an experienced UK electrician providing BS 7671:2018 compliant wiring guidance.
+            contents: [{
+              role: 'user',
+              parts: [{
+                text: `You are an experienced UK electrician providing BS 7671:2018 compliant wiring guidance.
 
 CRITICAL UK CABLE COLOUR STANDARDS:
 - Brown = Line (Live) - permanent live or switched live
@@ -366,7 +364,7 @@ Format:
       RetryPresets.STANDARD
     );
 
-    const guidanceText = guidanceData.choices[0].message.content;
+    const guidanceText = guidanceData.candidates[0].content.parts[0].text;
     
     // Extract and repair JSON
     let jsonMatch = guidanceText.match(/\{[\s\S]*\}/);

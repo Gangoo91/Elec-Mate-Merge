@@ -311,25 +311,28 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Get AI API key
-    const aiApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!aiApiKey) {
-      throw new Error('LOVABLE_API_KEY not configured');
+    // Get Gemini API key
+    const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
+    if (!geminiApiKey) {
+      throw new Error('GEMINI_API_KEY not configured');
     }
 
     // Expand query for better RAG retrieval
     const expandedQuery = `${query} ${topicArea || ''} ${qualificationLevel || ''} electrical education exam`;
     console.log('🔍 Expanded query:', expandedQuery);
 
-    // Generate embedding for query
-    const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+    // Generate embedding for query - use OpenAI for this
+    const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!openaiApiKey) throw new Error('OPENAI_API_KEY required for embeddings');
+    
+    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${aiApiKey}`,
+        'Authorization': `Bearer ${openaiApiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'text-embedding-ada-002',
+        model: 'text-embedding-3-small',
         input: expandedQuery
       })
     });
@@ -378,20 +381,30 @@ Provide comprehensive educational guidance following the tool schema structure. 
     // Call AI with tool calling
     console.log('🤖 Calling AI with tutor tool schema...');
 
-    const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const aiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${aiApiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: TUTOR_SYSTEM_PROMPT },
-          { role: 'user', content: userMessage }
-        ],
-        tools: [{ type: 'function', function: TUTOR_TOOL_SCHEMA }],
-        tool_choice: { type: 'function', function: { name: 'provide_educational_guidance' } }
+        contents: [{
+          role: 'user',
+          parts: [{
+            text: `${TUTOR_SYSTEM_PROMPT}\n\n${userMessage}`
+          }]
+        }],
+        tools: [{
+          functionDeclarations: [TUTOR_TOOL_SCHEMA]
+        }],
+        toolConfig: {
+          functionCallingConfig: {
+            mode: 'ANY',
+            allowedFunctionNames: ['provide_educational_guidance']
+          }
+        },
+        generationConfig: {
+          temperature: 0.3
+        }
       })
     });
 
@@ -404,12 +417,12 @@ Provide comprehensive educational guidance following the tool schema structure. 
     console.log('✅ AI response received');
 
     // Extract tool call result
-    const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
-    if (!toolCall) {
-      throw new Error('No tool call in AI response');
+    const functionCall = aiData.candidates?.[0]?.content?.parts?.find((p: any) => p.functionCall);
+    if (!functionCall) {
+      throw new Error('No function call in AI response');
     }
 
-    const educationalGuidance = JSON.parse(toolCall.function.arguments);
+    const educationalGuidance = functionCall.functionCall.args;
 
     return new Response(
       JSON.stringify({

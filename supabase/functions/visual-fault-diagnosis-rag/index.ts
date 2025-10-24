@@ -65,8 +65,8 @@ serve(async (req) => {
       visible_indicators 
     });
 
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+    const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!openaiApiKey) throw new Error('OPENAI_API_KEY not configured');
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -80,10 +80,10 @@ serve(async (req) => {
       'Lovable AI embedding generation',
       async () => await withRetry(
         () => withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+          fetch('https://api.openai.com/v1/embeddings', {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${lovableApiKey}`,
+              'Authorization': `Bearer ${openaiApiKey}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -211,14 +211,14 @@ YOU MUST respond with valid JSON only:
       'AI fault classification',
       async () => await withRetry(
         () => withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+          fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${lovableApiKey}`,
+              'Authorization': `Bearer ${openaiApiKey}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              model: 'google/gemini-2.5-flash',
+              model: 'gpt-5-mini-2025-08-07',
               messages: [
                 { role: 'system', content: classificationPrompt },
                 { role: 'user', content: 'Classify this fault according to EICR standards using the regulations provided.' }
