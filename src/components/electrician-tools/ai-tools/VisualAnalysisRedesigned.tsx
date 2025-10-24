@@ -1187,16 +1187,99 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             </div>
           )}
 
-          {/* Phase 5: No Faults Detected UI State */}
+          {/* Phase 5: No Faults Detected UI State - Enhanced with Context */}
           {selectedMode === 'fault_diagnosis' && (!analysisResult.findings || analysisResult.findings.length === 0) && (
-            <div className="p-6 bg-green-500/10 border border-green-500/30 rounded-lg text-center">
-              <CheckCircle2 className="h-12 w-12 text-green-400 mx-auto mb-3" />
-              <h3 className="text-lg font-semibold text-green-400 mb-2">No Faults Detected</h3>
-              <p className="text-sm text-muted-foreground">
-                The installation appears satisfactory from the provided image. 
-                {ragSources && ' Analysis verified against BS 7671 and GN3.'}
-              </p>
-            </div>
+            <Card className="bg-emerald-500/10 border-emerald-500/30">
+              <CardContent className="p-4 sm:p-6 space-y-4">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="h-8 w-8 text-emerald-400 flex-shrink-0" />
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-semibold text-emerald-300">
+                      No Faults Detected
+                    </h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
+                      Installation appears compliant • Verified against BS 7671
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Acknowledge user context */}
+                {(analysisResult as any)?.user_context_addressed && (
+                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 sm:p-4">
+                    <h4 className="text-sm font-semibold text-blue-300 mb-2 flex items-center gap-2">
+                      <MessageSquare className="h-4 w-4" />
+                      Regarding Your Query:
+                    </h4>
+                    <p className="text-sm text-foreground/90 leading-relaxed">
+                      {(analysisResult as any).user_context_addressed}
+                    </p>
+                  </div>
+                )}
+                
+                {/* Explain WHY it passed */}
+                {(analysisResult as any)?.reasoning && (
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <Lightbulb className="h-4 w-4 text-yellow-400" />
+                      Why This Installation Passed:
+                    </h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {(analysisResult as any).reasoning}
+                    </p>
+                  </div>
+                )}
+                
+                {/* Positive observations */}
+                {(analysisResult as any)?.positive_observations && (analysisResult as any).positive_observations.length > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                      Compliant Elements Observed:
+                    </h4>
+                    <ul className="space-y-1.5">
+                      {(analysisResult as any).positive_observations.map((obs: string, i: number) => (
+                        <li key={i} className="flex items-start gap-2 text-sm">
+                          <CheckCircle2 className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                          <span className="text-muted-foreground">{obs}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                
+                {/* Regulation references */}
+                {(analysisResult as any)?.regulation_references && (analysisResult as any).regulation_references.length > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <BookOpen className="h-4 w-4 text-emerald-400" />
+                      BS 7671 Compliance:
+                    </h4>
+                    <div className="space-y-2">
+                      {(analysisResult as any).regulation_references.map((reg: any, i: number) => (
+                        <div key={i} className="text-sm bg-emerald-500/5 border border-emerald-500/20 rounded p-3">
+                          <div className="font-mono text-xs sm:text-sm text-emerald-300 mb-1">
+                            Reg {reg.number} - {reg.section}
+                          </div>
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            {reg.severity_justification}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Verification status */}
+                {ragSources && (
+                  <div className="text-xs text-muted-foreground pt-2 border-t border-border/50">
+                    <span className="flex items-center gap-1.5">
+                      <Scale className="h-3.5 w-3.5" />
+                      Verified: {ragSources.bs7671Regulations?.length || 0} BS 7671 regulations, {ragSources.maintenanceKnowledge?.length || 0} maintenance references
+                    </span>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           )}
 
           {/* Findings */}

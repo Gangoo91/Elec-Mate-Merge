@@ -189,22 +189,33 @@ EICR CODES:
 - C2 (Code 2): Potentially dangerous - urgent remedial action required.
 - C3 (Code 3): Improvement recommended to enhance safety and compliance.
 - FI (Further Investigation): Unable to verify compliance from inspection alone.
+- PASS: No faults detected - installation compliant.
+
+**CRITICAL INSTRUCTIONS FOR "PASS" RESPONSES:**
+When the installation passes inspection (no faults detected), you MUST:
+1. **Acknowledge user context**: Directly address any specific concerns mentioned in the fault description (e.g., "Regarding your VR cable concern...")
+2. **Explain WHY it passed**: List specific compliant elements visible and regulations satisfied
+3. **Cite regulations met**: Reference BS 7671 clauses that are satisfied with justifications
+4. **Provide positive observations**: List specific compliant features observed
+5. **Build confidence**: Explain why it's safe/compliant with evidence
 
 YOU MUST respond with valid JSON only:
 {
-  "fault_code": "C1|C2|C3|FI",
+  "fault_code": "C1|C2|C3|FI|PASS",
   "regulation_references": [
     {
       "number": "411.3.2",
       "section": "RCD protection",
       "content": "Full regulation text...",
       "similarity": 0.92,
-      "severity_justification": "Why this regulation determines the code"
+      "severity_justification": "Why this regulation determines the code (or for PASS: why this requirement is met)"
     }
   ],
   "gn3_guidance": "Relevant GN3 guidance text with section reference",
   "confidence": 0.95,
-  "reasoning": "Detailed explanation of why this code was assigned based on BS 7671 and GN3"
+  "reasoning": "Detailed explanation of why this code was assigned based on BS 7671 and GN3",
+  "user_context_addressed": "For PASS only: Address user's specific concerns mentioned in fault description",
+  "positive_observations": ["For PASS only: List of compliant features", "Proper cable support visible", "Appropriate protection devices"]
 }`;
 
     const aiData = await logger.time(
@@ -251,6 +262,8 @@ YOU MUST respond with valid JSON only:
       gn3_guidance: classification.gn3_guidance || 'No specific GN3 guidance found',
       confidence: classification.confidence || 0.8,
       reasoning: classification.reasoning || '',
+      user_context_addressed: classification.user_context_addressed || null,
+      positive_observations: classification.positive_observations || [],
       verification_status: 'Verified against BS 7671 + GN3',
       rag_sources: {
         regulations_count: regulations?.length || 0,
