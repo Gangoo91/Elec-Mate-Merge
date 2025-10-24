@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
-const CIRCUIT_DESIGN_TEMPLATE_ID = 'CIRCUIT_DESIGN_DEFAULT'; // Placeholder - user will create template
+const CIRCUIT_DESIGN_TEMPLATE_ID = 'DF1DE972-30B4-45F9-83C0-4CEB4DE90E70'; // Placeholder - user will create template
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {

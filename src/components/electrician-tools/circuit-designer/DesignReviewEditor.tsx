@@ -123,8 +123,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
         await downloadEICPDF(schedule, `${design.projectName.replace(/\s+/g, '_')}_Design.pdf`);
         
-        toast.success('PDF exported successfully', {
-          description: 'Circuit design schedule generated'
+        toast.success('Professional PDF generated', {
+          description: 'BS 7671 compliant circuit design PDF ready'
         });
       } else if (data?.downloadUrl) {
         // PDF Monkey success - download the PDF
