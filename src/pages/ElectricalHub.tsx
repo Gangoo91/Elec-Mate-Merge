@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, Shield, PoundSterling, Sparkles, FileText, Receipt } from "lucide-react";
+import { Wrench, Heart, Brain, GraduationCap, Briefcase, ArrowLeft, Calculator, Zap, Shield, PoundSterling, Sparkles, FileText, Receipt, ArrowRight } from "lucide-react";
 
 const ElectricalHub = () => {
   // Main 4-card grid - Core daily tools
@@ -97,8 +97,12 @@ const ElectricalHub = () => {
                 AI Design Consultation
               </CardTitle>
               <p className="text-xs sm:text-sm text-muted-foreground mt-2 px-2">
-                Talk to specialist agents one-on-one for design, costing, installation, safety, testing, and project management.
+                Choose from 8 specialist agents for design, costing, installation, safety, testing, and project management.
               </p>
+              <div className="flex items-center gap-1 mt-3 text-elec-yellow text-sm font-medium">
+                <span>Choose Your Agent</span>
+                <ArrowRight className="h-4 w-4" />
+              </div>
             </CardHeader>
           </Card>
         </Link>
