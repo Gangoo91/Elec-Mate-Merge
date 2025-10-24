@@ -432,8 +432,7 @@ Confidence: ${Math.round(reg.similarity * 100)}%
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: messages,
-        max_tokens: type === "visual_analysis_advanced" ? 2000 : (type === "report_writer" ? 800 : 2000),
-        temperature: 0.7,
+        max_completion_tokens: type === "visual_analysis_advanced" ? 2000 : (type === "report_writer" ? 800 : 2000),
         response_format: type === "structured_assistant" || type === "visual_analysis_advanced" ? { type: "json_object" } : undefined,
       }),
     });
