@@ -258,10 +258,12 @@ DISTRIBUTION BOARDS – ENHANCED GUIDANCE REQUIRED:
    - Order with rationale; routing/strain relief; tightening torques; staged testing
 5. PRACTICAL TIPS & COMMON MISTAKES (arrays)
    - Cable management; documentation; markers; longer earth tails; typical pitfalls`
-              },
-              {
-                role: 'user',
-                content: `Component identified: ${componentDetails}
+              }]
+            },
+            {
+              role: 'user',
+              parts: [{
+                text: `Component identified: ${componentDetails}
 
 Using this technical knowledge:
 ${ragContext}
