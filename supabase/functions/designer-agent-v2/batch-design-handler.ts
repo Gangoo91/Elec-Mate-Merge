@@ -1476,6 +1476,7 @@ Always cite regulation numbers and show working for calculations.`
       }
     }
   }), { 
+    status: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
   });
 }
