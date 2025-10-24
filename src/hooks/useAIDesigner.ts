@@ -213,7 +213,7 @@ export const useAIDesigner = () => {
       }
 
       if (!latestDesign) {
-        throw new Error('No design data received from stream');
+        throw new Error('No design data received - please check that you have added circuits or provided a project description');
       }
 
       setTimeout(() => setProgress(null), 800);
