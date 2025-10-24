@@ -87,24 +87,19 @@ serve(async (req) => {
       };
     };
     
-    // NEW: Check for regulation numbers and try direct lookup first
+    // Check for regulation numbers and try direct lookup first
     const regNumbers = extractRegulationNumbers(prompt || '');
     if (prompt && !primary_image && regNumbers.length > 0) {
-      console.log(`🔍 Detected ${regNumbers.length} regulation number(s): ${regNumbers.join(', ')}`);
       try {
         const result = await getRegulationsDirect(regNumbers);
         
         // If we found results, return them immediately
         if (result.regulations && result.regulations.length > 0) {
-          console.log(`✅ Direct lookup returned ${result.regulations.length} regulation(s)`);
           return new Response(
             JSON.stringify(result),
             { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }
-        
-        // If no direct matches, fall through to RAG + AI
-        console.log('⚠️ No direct matches found, falling back to RAG + AI');
       } catch (lookupError) {
         console.error('Direct lookup error:', lookupError);
         // Fall through to normal AI processing if direct lookup fails
@@ -115,7 +110,6 @@ serve(async (req) => {
     let ragRegulations: any[] = [];
     let ragMetadata: any = {};
     if (use_rag && prompt && !primary_image) {
-      console.log('🔍 Fetching regulations via multi-source RAG...');
       try {
         const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
         const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -143,13 +137,9 @@ serve(async (req) => {
             query_type: ragData.queryType,
             search_method: ragData.searchMethod
           };
-          console.log('✅ Retrieved', ragRegulations.length, 'regulations from RAG');
-          console.log('📊 Additional content available:', ragMetadata);
-        } else {
-          console.warn('⚠️ RAG search failed, continuing without regulation context');
         }
       } catch (ragError) {
-        console.error('❌ RAG error:', ragError);
+        console.error('RAG error:', ragError);
         // Continue without RAG if it fails
       }
     }
@@ -509,9 +499,8 @@ Confidence: ${Math.round(reg.similarity * 100)}%
           JSON.stringify({ 
             analysis: analysis || 'No analysis provided.',
             regulations: regulations || 'No regulations specified.',
-            practical_guidance: practical_guidance || 'No practical guidance available.',
-            rag_metadata: ragMetadata,
-            rag_regulations: ragRegulations
+            practical_guidance: practical_guidance || 'No practical guidance available.'
+            // RAG metadata hidden - trade secret
           }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );

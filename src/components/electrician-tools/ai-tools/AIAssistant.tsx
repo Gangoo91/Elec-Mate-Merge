@@ -8,7 +8,6 @@ import { toast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import RegulationSources from "./RegulationSources";
 import DrillDownSection from "./DrillDownSection";
 
 // Parser function for designer agent responses
@@ -73,13 +72,6 @@ const AIAssistant = () => {
   const [practicalGuidanceResult, setPracticalGuidanceResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(true);
-  // RAG search is always enabled
-  const [ragRegulations, setRagRegulations] = useState<any[]>([]);
-  const [searchMethod, setSearchMethod] = useState<string>("");
-  const [hasInstallation, setHasInstallation] = useState(false);
-  const [hasTesting, setHasTesting] = useState(false);
-  const [hasDesign, setHasDesign] = useState(false);
-  const [currentQuery, setCurrentQuery] = useState("");
 
   // Helper function to process content and format it properly
   const processContent = (content: string, colorTheme: 'blue' | 'purple' | 'green') => {
@@ -252,8 +244,6 @@ const AIAssistant = () => {
     setAnalysisResult("");
     setRegulationsResult("");
     setPracticalGuidanceResult("");
-    setRagRegulations([]);
-    setSearchMethod("");
     
     try {
       // All queries go to electrician-ai-assistant with RAG enabled
@@ -314,18 +304,7 @@ const AIAssistant = () => {
         throw new Error(data.error);
       }
       
-      // Store RAG regulations and metadata
-      if (data.rag_regulations) {
-        setRagRegulations(data.rag_regulations);
-      }
-      
-      if (data.rag_metadata) {
-        setSearchMethod(data.rag_metadata.search_method || 'vector');
-        setHasInstallation(data.rag_metadata.has_installation || false);
-        setHasTesting(data.rag_metadata.has_testing || false);
-        setHasDesign(data.rag_metadata.has_design || false);
-        setCurrentQuery(prompt);
-      }
+      // RAG data processing removed - trade secret
       
       // NEW: Handle direct regulation lookups (no AI processing)
       if (data.lookup_mode && data.regulations) {
@@ -509,12 +488,8 @@ const AIAssistant = () => {
           </CardContent>
         </Card>
 
-        {/* RAG Sources */}
-        {ragRegulations.length > 0 && !isLoading && showResults && (
-          <div className="w-full max-w-7xl mx-auto">
-            <RegulationSources regulations={ragRegulations} searchMethod={searchMethod} />
-          </div>
-        )}
+        {/* RAG Sources - HIDDEN (trade secret) */}
+        {/* RAG operations are invisible to users - they just see intelligent AI responses */}
 
         {/* Results - Vertical stack on mobile, grid on desktop */}
         {(analysisResult || regulationsResult || practicalGuidanceResult) && !isLoading && showResults && (
@@ -854,26 +829,7 @@ const AIAssistant = () => {
               </Card>
             )}
             
-            {/* Drill-Down Sections */}
-            {(hasInstallation || hasTesting || hasDesign) && (
-              <div className="space-y-3 mt-6">
-                <DrillDownSection 
-                  type="installation" 
-                  query={currentQuery}
-                  available={hasInstallation}
-                />
-                <DrillDownSection 
-                  type="testing" 
-                  query={currentQuery}
-                  available={hasTesting}
-                />
-                <DrillDownSection 
-                  type="design" 
-                  query={currentQuery}
-                  available={hasDesign}
-                />
-              </div>
-            )}
+            {/* Drill-Down Sections - Hidden (trade secret) */}
             </div>
           </div>
         )}
