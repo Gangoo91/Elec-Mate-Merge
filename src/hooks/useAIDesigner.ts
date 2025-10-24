@@ -37,10 +37,21 @@ export const useAIDesigner = () => {
     setDesignData(null);
     setProgress({ stage: 1, message: 'Initialising...', percent: 0 });
 
-    // Validate inputs
-    if ((!inputs.circuits || inputs.circuits.length === 0) && !inputs.additionalPrompt?.trim()) {
+    // Validate inputs - Fix 1: Safe handling of undefined additionalPrompt
+    if ((!inputs.circuits || inputs.circuits.length === 0) && 
+        (!inputs.additionalPrompt || !inputs.additionalPrompt.trim())) {
       toast.error('No circuits or description provided', {
         description: 'Please either add circuits manually or describe your requirements in the AI prompt.'
+      });
+      setIsProcessing(false);
+      return false;
+    }
+
+    // Fix 5: Validate circuit completeness before submission
+    const invalidCircuits = inputs.circuits.filter(c => !c.name || !c.loadType || !c.loadPower);
+    if (invalidCircuits.length > 0) {
+      toast.error('Incomplete circuit data', {
+        description: `${invalidCircuits.length} circuit(s) are missing required fields (name, type, or power rating). Please complete all circuit details.`
       });
       setIsProcessing(false);
       return false;
@@ -81,15 +92,18 @@ export const useAIDesigner = () => {
           installationMethod: inputs.installationMethod || 'clipped-direct',
           groupingFactor: inputs.groupingFactor || 1
         },
-        circuits: inputs.circuits.map(c => ({
-          name: c.name,
-          loadType: c.loadType,
-          loadPower: c.loadPower,
-          cableLength: c.cableLength,
-          phases: c.phases,
-          specialLocation: c.specialLocation,
-          notes: c.notes
-        }))
+        // Fix 5: Filter out invalid circuits and apply defensive defaults
+        circuits: inputs.circuits
+          .filter(c => c.name && c.loadType && c.loadPower) // Only valid circuits
+          .map(c => ({
+            name: c.name,
+            loadType: c.loadType,
+            loadPower: c.loadPower,
+            cableLength: c.cableLength || 20, // Default if missing
+            phases: c.phases || 'single',
+            specialLocation: c.specialLocation || 'none',
+            notes: c.notes || ''
+          }))
       };
 
       // Streaming SSE request
@@ -212,8 +226,9 @@ export const useAIDesigner = () => {
         }
       }
 
+      // Fix 1: Improved error message
       if (!latestDesign) {
-        throw new Error('No design data received - please check that you have added circuits or provided a project description');
+        throw new Error('No design data received. Please ensure circuits have names and load types, or provide a detailed project description.');
       }
 
       setTimeout(() => setProgress(null), 800);

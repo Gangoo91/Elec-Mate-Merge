@@ -202,6 +202,15 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       return;
     }
 
+    // Fix 4: Validate existing circuits have required fields
+    const invalidCircuits = circuits.filter(c => !c.name || !c.loadType || !c.loadPower);
+    if (invalidCircuits.length > 0) {
+      toast.error('Incomplete circuit data', {
+        description: `${invalidCircuits.length} circuit(s) are missing name, type, or power rating. Please complete all circuit details.`
+      });
+      return;
+    }
+
     const inputs: DesignInputs = {
       projectName,
       location,

@@ -1788,23 +1788,89 @@ export async function handleBatchDesignStreaming(body: any, logger: any, builder
       return;
     }
 
-    // STEP 1: RAG Search
-    builder.sendToken('🔍 Searching regulations...');
-    const entities = parseQueryEntities(projectInfo.additionalPrompt || '');
-    const ragStartTime = Date.now();
-    
-    const ragResults = await intelligentRAGSearch({
-      circuitTypes: allCircuits.map((c: any) => c.loadType),
-      cableLength: Math.max(...allCircuits.map((c: any) => c.cableLength || 20)),
-      voltage: incomingSupply.voltage,
-      entities,
-      installationType
-    });
-    
-    const ragTimeMs = Date.now() - ragStartTime;
-    logger.info('✅ RAG search complete', { timeMs: ragTimeMs, resultCount: ragResults.length });
+    // Fix 3: Enhanced circuit validation - check required fields
+    const invalidCircuits = allCircuits.filter((c: any) => !c.loadType || !c.name);
+    if (invalidCircuits.length > 0) {
+      builder.sendError(`${invalidCircuits.length} circuit(s) missing required fields (name or loadType). Please check your input.`);
+      logger.error('Invalid circuits detected', { 
+        invalidCount: invalidCircuits.length,
+        sampleInvalid: invalidCircuits[0] 
+      });
+      return;
+    }
 
-    // Build context
+    // STEP 1: RAG Search - Fix 2: Correct multi-query RAG approach
+    builder.sendToken('🔍 Searching regulations...');
+    
+    // Extract unique load types
+    const uniqueLoadTypes = [...new Set(allCircuits.map((c: any) => c.loadType).filter(Boolean))];
+    
+    if (uniqueLoadTypes.length === 0) {
+      builder.sendError('Circuits must have valid load types (e.g., "lighting", "socket", "shower")');
+      return;
+    }
+
+    // Build query for context
+    const query = buildDesignQuery(projectInfo, incomingSupply, allCircuits, specialRequirements, installationConstraints);
+    
+    // Parallel RAG searches (same as non-streaming version)
+    const ragStartTime = Date.now();
+    const ragSearches = uniqueLoadTypes.slice(0, 8).map((loadType: string) => 
+      intelligentRAGSearch({
+        circuitType: loadType,
+        searchTerms: [loadType, 'circuit design', installationType],
+        expandedQuery: `${loadType} circuit design requirements ${installationType}`,
+        context: {
+          ragPriority: aiConfig?.ragPriority || {
+            design: 95,
+            bs7671: 85,
+            installation: 75
+          }
+        }
+      }).catch(error => {
+        logger.warn(`⚠️ RAG search failed for ${loadType}`, { error: error.message });
+        return { regulations: [], designDocs: [], searchMethod: 'failed' };
+      })
+    );
+
+    // Add diversity search
+    ragSearches.push(
+      intelligentRAGSearch({
+        circuitType: 'general',
+        searchTerms: ['diversity', 'consumer unit', 'main switch', 'Appendix 15'],
+        expandedQuery: 'electrical installation diversity calculations',
+        context: {
+          ragPriority: aiConfig?.ragPriority || {
+            design: 95,
+            bs7671: 85,
+            installation: 75
+          }
+        }
+      }).catch(error => {
+        logger.warn('⚠️ Diversity RAG search failed', { error: error.message });
+        return { regulations: [], designDocs: [], searchMethod: 'failed' };
+      })
+    );
+
+    // Wait for all RAG searches
+    const ragResultsArray = await Promise.all(ragSearches);
+    const ragTimeMs = Date.now() - ragStartTime;
+
+    // Merge results
+    const ragResults = ragResultsArray.reduce((acc, result) => {
+      return {
+        regulations: [...acc.regulations, ...(result.regulations || [])],
+        designDocs: [...acc.designDocs, ...(result.designDocs || [])]
+      };
+    }, { regulations: [], designDocs: [] });
+
+    logger.info('✅ RAG search complete', { 
+      timeMs: ragTimeMs, 
+      regulations: ragResults.regulations.length,
+      designDocs: ragResults.designDocs.length 
+    });
+
+    // Build query and system prompt with RAG context
     const query = buildDesignQuery(projectInfo, incomingSupply, allCircuits, specialRequirements, installationConstraints);
     const systemPrompt = buildSystemPrompt(allCircuits, ragResults, incomingSupply, installationType, installationConstraints);
     
