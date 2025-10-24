@@ -1,9 +1,9 @@
-// DEPLOYMENT v3.3.2 - Added explicit status codes - 2025-10-24T16:35:00Z
+// DEPLOYMENT v3.3.1 - Fixed lovableApiKey initialization - 2025-10-24T16:10:00Z
 import { corsHeaders, serve } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { handleBatchDesign } from './batch-design-handler.ts';
 
-const VERSION = 'v3.3.2-status-fix'; // Added explicit status 200 to success response
+const VERSION = 'v3.3.1-api-key-fix'; // Fixed API key initialization order
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
