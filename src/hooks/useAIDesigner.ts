@@ -45,13 +45,13 @@ export const useAIDesigner = () => {
       return false;
     }
 
-    // SPEED BOOST: Optimized stages to match faster backend with parallel batches + GPT-4o-mini (total ~45s)
+    // SPEED BOOST: Optimized stages to match batch size 2 with GPT-5-mini (total ~60s)
     // Cap at 95% until response arrives to prevent stuck-at-99% perception
     const stages = [
       { stage: 1, message: 'Understanding your requirements...', duration: 3000, targetPercent: 10 },
       { stage: 2, message: 'Searching BS 7671 for circuit types...', duration: 8000, targetPercent: 25 },
-      { stage: 3, message: 'AI is designing circuits...', duration: 25000, targetPercent: 80 },
-      { stage: 4, message: 'Validating compliance...', duration: 7000, targetPercent: 92 },
+      { stage: 3, message: 'AI is designing circuits...', duration: 42000, targetPercent: 80 },
+      { stage: 4, message: 'Validating compliance...', duration: 5000, targetPercent: 92 },
       { stage: 5, message: 'Finalising design...', duration: 2000, targetPercent: 95 }
     ];
 
