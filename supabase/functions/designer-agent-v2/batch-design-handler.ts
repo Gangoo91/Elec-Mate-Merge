@@ -651,7 +651,7 @@ Return complete circuit objects using the provided tool schema.`;
   // ⚡ PARALLEL BATCH PROCESSING (50% SPEED BOOST)
   // All batches are processed concurrently using Promise.all()
   // ============================================
-  const BATCH_SIZE = 6; // Process 6 circuits per batch with 24k token limit
+  const BATCH_SIZE = 4; // OPTIMIZED: Smaller batches (4) complete faster in parallel (~30s per batch vs 50s)
   const circuitBatches = chunkArray(allCircuits, BATCH_SIZE);
 
   logger.info('⚡ Parallel batch processing enabled', {

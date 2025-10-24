@@ -3,8 +3,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { DesignInputs, InstallationDesign } from '@/types/installation-design';
 
-// Client-side timeout for edge function calls
-const CLIENT_TIMEOUT_MS = 500000; // 500s
+// Client-side timeout for edge function calls (3 minutes safety limit)
+const CLIENT_TIMEOUT_MS = 180000; // 180s (3 minutes max - realistic limit for parallel batches)
 
 /**
  * Timeout wrapper for promises
@@ -45,14 +45,14 @@ export const useAIDesigner = () => {
       return false;
     }
 
-    // SPEED BOOST: Shortened stages to match faster backend (total ~120s)
+    // SPEED BOOST: Optimized stages to match faster backend with parallel batches + GPT-4o-mini (total ~45s)
     // Cap at 95% until response arrives to prevent stuck-at-99% perception
     const stages = [
-      { stage: 1, message: 'Understanding your requirements...', duration: 5000, targetPercent: 8 },
-      { stage: 2, message: 'Searching BS 7671 for circuit types...', duration: 20000, targetPercent: 30 },
-      { stage: 3, message: 'AI is designing circuits...', duration: 60000, targetPercent: 75 },
-      { stage: 4, message: 'Validating compliance...', duration: 25000, targetPercent: 90 },
-      { stage: 5, message: 'Finalising design...', duration: 10000, targetPercent: 95 }
+      { stage: 1, message: 'Understanding your requirements...', duration: 3000, targetPercent: 10 },
+      { stage: 2, message: 'Searching BS 7671 for circuit types...', duration: 8000, targetPercent: 25 },
+      { stage: 3, message: 'AI is designing circuits...', duration: 25000, targetPercent: 80 },
+      { stage: 4, message: 'Validating compliance...', duration: 7000, targetPercent: 92 },
+      { stage: 5, message: 'Finalising design...', duration: 2000, targetPercent: 95 }
     ];
 
     let progressInterval: ReturnType<typeof setInterval> | null = null;
@@ -87,13 +87,17 @@ export const useAIDesigner = () => {
           setRetryMessage('');
         }
         
+        // Create abort controller for timeout safety
+        const abortController = new AbortController();
+        const timeoutId = setTimeout(() => abortController.abort(), CLIENT_TIMEOUT_MS);
+
         const invokePromise = supabase.functions.invoke('designer-agent-v2', {
           body: {
             mode: 'batch-design',
             aiConfig: {
-              model: 'openai/gpt-5-mini', // OpenAI GPT-5-mini for fast reasoning
-              maxTokens: 24000, // Increased for complex multi-circuit designs
-              timeoutMs: 480000, // 8 min timeout
+              model: 'openai/gpt-4o-mini', // OPTIMIZED: Faster model for 30% speed boost
+              maxTokens: 16000, // OPTIMIZED: Reduced but sufficient for parallel batch processing
+              timeoutMs: 180000, // 3 min timeout
               noMemory: true,
               ragPriority: {
                 design: 95,
@@ -135,9 +139,11 @@ export const useAIDesigner = () => {
           }
         });
         
-        // Wrap with client-side timeout
+        // Wrap with client-side timeout (withTimeout handles the actual timeout)
         const { data, error: invokeError } = await withTimeout(invokePromise, CLIENT_TIMEOUT_MS);
 
+        clearTimeout(timeoutId);
+        
         if (invokeError) throw invokeError;
         setRetryMessage(''); // Clear retry message on success
         return { data, error: null };
