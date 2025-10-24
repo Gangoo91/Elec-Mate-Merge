@@ -95,8 +95,8 @@ export const useAIDesigner = () => {
           body: {
             mode: 'batch-design',
             aiConfig: {
-              model: 'openai/gpt-4o-mini', // OPTIMIZED: Faster model for 30% speed boost
-              maxTokens: 16000, // OPTIMIZED: Reduced but sufficient for parallel batch processing
+              model: 'openai/gpt-5-mini', // Proven reliable model from Lovable AI Gateway
+              maxTokens: 20000, // Balanced token limit for quality + speed
               timeoutMs: 180000, // 3 min timeout
               noMemory: true,
               ragPriority: {
