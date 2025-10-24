@@ -133,3 +133,8 @@ timeout_sec = 120
 [functions.check-pdfmonkey-template]
 verify_jwt = false
 timeout_sec = 60
+
+# Circuit Design PDF Generation
+[functions.generate-circuit-design-pdf]
+verify_jwt = false
+timeout_sec = 180

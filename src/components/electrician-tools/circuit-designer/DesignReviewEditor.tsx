@@ -58,43 +58,81 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   );
 
   const handleExportPDF = async () => {
+    setIsExporting(true);
+    
     try {
-      const schedule = generateEICSchedule(
-        {
-          installationId: `DESIGN-${Date.now()}`,
-          circuits: design.circuits.map((c, idx) => ({
-            circuitNumber: idx + 1,
-            name: c.name,
-            loadType: c.loadType,
-            phases: c.phases,
-            cableSize: c.cableSize,
-            cpcSize: c.cpcSize,
-            cableLength: c.cableLength,
-            protectionDevice: c.protectionDevice,
-            rcdProtected: c.rcdProtected,
-            afddRequired: c.afddRequired,
-            calculationResults: {
-              zs: c.calculations.zs,
-              maxZs: c.calculations.maxZs,
-              installationMethod: c.installationMethod
-            }
-          })),
-          consumerUnit: design.consumerUnit
-        },
-        {
-          projectName: design.projectName,
-          leadElectrician: design.electricianName
-        },
-        {
-          propertyAddress: design.location
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      // Try PDF Monkey first
+      const { data, error } = await supabase.functions.invoke('generate-circuit-design-pdf', {
+        body: {
+          design: design,
+          userId: user?.id
         }
-      );
+      });
 
-      await downloadEICPDF(schedule, `${design.projectName.replace(/\s+/g, '_')}_Design.pdf`);
-      toast.success('PDF exported successfully');
+      if (error) {
+        console.error('[PDF-EXPORT] Edge function error:', error);
+        throw error;
+      }
+
+      // Check if we should use fallback
+      if (data?.useFallback || !data?.success) {
+        console.log('[PDF-EXPORT] Using fallback jsPDF method');
+        
+        // Fallback to existing jsPDF method
+        const schedule = generateEICSchedule(
+          {
+            installationId: `DESIGN-${Date.now()}`,
+            circuits: design.circuits.map((c, idx) => ({
+              circuitNumber: idx + 1,
+              name: c.name,
+              loadType: c.loadType,
+              phases: c.phases,
+              cableSize: c.cableSize,
+              cpcSize: c.cpcSize,
+              cableLength: c.cableLength,
+              protectionDevice: c.protectionDevice,
+              rcdProtected: c.rcdProtected,
+              afddRequired: c.afddRequired,
+              calculationResults: {
+                zs: c.calculations.zs,
+                maxZs: c.calculations.maxZs,
+                installationMethod: c.installationMethod
+              }
+            })),
+            consumerUnit: design.consumerUnit
+          },
+          {
+            projectName: design.projectName,
+            leadElectrician: design.electricianName
+          },
+          {
+            propertyAddress: design.location
+          }
+        );
+
+        await downloadEICPDF(schedule, `${design.projectName.replace(/\s+/g, '_')}_Design.pdf`);
+        toast.success('PDF exported successfully');
+      } else if (data?.downloadUrl) {
+        // PDF Monkey success - download the PDF
+        console.log('[PDF-EXPORT] PDF Monkey success, downloading:', data.downloadUrl);
+        
+        const link = document.createElement('a');
+        link.href = data.downloadUrl;
+        link.download = `${design.projectName.replace(/\s+/g, '_')}_Design.pdf`;
+        link.click();
+        
+        toast.success('Professional PDF Generated', {
+          description: 'Circuit design exported with BS 7671 compliance'
+        });
+      }
     } catch (error) {
-      console.error('PDF export error:', error);
+      console.error('[PDF-EXPORT] Error:', error);
       toast.error('Failed to export PDF');
+    } finally {
+      setIsExporting(false);
     }
   };
 
