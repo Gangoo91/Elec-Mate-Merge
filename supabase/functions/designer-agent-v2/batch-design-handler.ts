@@ -1870,8 +1870,7 @@ export async function handleBatchDesignStreaming(body: any, logger: any, builder
       designDocs: ragResults.designDocs.length 
     });
 
-    // Build query and system prompt with RAG context
-    const query = buildDesignQuery(projectInfo, incomingSupply, allCircuits, specialRequirements, installationConstraints);
+    // Build system prompt with RAG context (query already built at line 1814)
     const systemPrompt = buildSystemPrompt(allCircuits, ragResults, incomingSupply, installationType, installationConstraints);
     
     // AI Configuration
