@@ -1,6 +1,7 @@
 import { corsHeaders, serve } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
-import { handleBatchDesign } from './batch-design-handler.ts';
+import { handleBatchDesign, handleBatchDesignStreaming } from './batch-design-handler.ts';
+import { createStreamingResponse } from '../_shared/streaming-utils.ts';
 
 const VERSION = 'v3.2.0-gpt5-mini-24k'; // Track deployment: GPT-5-mini + 24k tokens + batch-6
 
@@ -36,11 +37,16 @@ serve(async (req) => {
   try {
     const body = await req.json();
     
-    // Route to batch design handler
+    // Route to batch design handler (streaming mode)
     if (body.mode === 'batch-design') {
-      const result = await handleBatchDesign(body, logger);
-      logger.info(`✅ Batch design complete - Version: ${VERSION}`);
-      return result;
+      logger.info('🌊 Starting streaming batch design');
+      return createStreamingResponse(
+        async (builder) => {
+          await handleBatchDesignStreaming(body, logger, builder);
+          logger.info(`✅ Streaming batch design complete - Version: ${VERSION}`);
+        },
+        corsHeaders
+      );
     }
 
     // Legacy single-circuit mode (not used anymore)

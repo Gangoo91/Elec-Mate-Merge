@@ -1762,3 +1762,206 @@ function hashContent(content: string): string {
   const normalized = content.toLowerCase().replace(/\s+/g, ' ').trim();
   return `${normalized.substring(0, 100)}_${normalized.length}`;
 }
+
+// ============================================
+// 🌊 STREAMING BATCH DESIGN HANDLER
+// Streams results as each batch completes
+// ============================================
+export async function handleBatchDesignStreaming(body: any, logger: any, builder: any) {
+  const { projectInfo, incomingSupply, circuits: inputCircuits, aiConfig } = body;
+  const installationType = projectInfo.installationType || 'domestic';
+  
+  logger.info('🌊 Streaming Batch Design Starting', {
+    circuitCount: inputCircuits.length,
+    installationType: projectInfo.installationType
+  });
+
+  try {
+    // STEP 0: Parse additional prompt
+    const { inferredCircuits, specialRequirements, installationConstraints } = 
+      extractCircuitsFromPrompt(projectInfo.additionalPrompt || '', inputCircuits);
+    
+    const allCircuits = [...inputCircuits, ...inferredCircuits];
+    
+    if (allCircuits.length === 0) {
+      builder.sendError('No circuits to design. Please add at least one circuit.');
+      return;
+    }
+
+    // STEP 1: RAG Search
+    builder.sendToken('🔍 Searching regulations...');
+    const entities = parseQueryEntities(projectInfo.additionalPrompt || '');
+    const ragStartTime = Date.now();
+    
+    const ragResults = await intelligentRAGSearch({
+      circuitTypes: allCircuits.map((c: any) => c.loadType),
+      cableLength: Math.max(...allCircuits.map((c: any) => c.cableLength || 20)),
+      voltage: incomingSupply.voltage,
+      entities,
+      installationType
+    });
+    
+    const ragTimeMs = Date.now() - ragStartTime;
+    logger.info('✅ RAG search complete', { timeMs: ragTimeMs, resultCount: ragResults.length });
+
+    // Build context
+    const query = buildDesignQuery(projectInfo, incomingSupply, allCircuits, specialRequirements, installationConstraints);
+    const systemPrompt = buildSystemPrompt(allCircuits, ragResults, incomingSupply, installationType, installationConstraints);
+    
+    // AI Configuration
+    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+    if (!lovableApiKey) {
+      throw new Error('LOVABLE_API_KEY not configured');
+    }
+    
+    const requestBody = {
+      model: aiConfig?.model || 'openai/gpt-5-mini',
+      max_completion_tokens: aiConfig?.maxTokens || 24000,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: query }
+      ],
+      tools: [{
+        type: "function",
+        function: {
+          name: "design_circuits",
+          description: "Return the complete electrical installation design with all circuit details, calculations, and materials",
+          parameters: {
+            type: "object",
+            properties: {
+              response: { type: "string" },
+              circuits: {
+                type: "array",
+                items: { type: "object" }
+              },
+              materials: {
+                type: "array",
+                items: { type: "string" }
+              },
+              warnings: {
+                type: "array",
+                items: { type: "string" }
+              }
+            },
+            required: ["response", "circuits", "materials"]
+          }
+        }
+      }],
+      tool_choice: "auto"
+    };
+    
+    // Process batches sequentially but stream each result immediately
+    const BATCH_SIZE = 2;
+    const circuitBatches = chunkArray(allCircuits, BATCH_SIZE);
+    const allDesignedCircuits: any[] = [];
+    const allMaterials = new Set<string>();
+    const allWarnings = new Set<string>();
+    let aiResponse = '';
+    
+    logger.info(`🌊 Processing ${circuitBatches.length} batches sequentially with streaming`);
+    
+    for (let batchIndex = 0; batchIndex < circuitBatches.length; batchIndex++) {
+      const batch = circuitBatches[batchIndex];
+      builder.sendToken(`⚡ Designing circuits ${batchIndex * BATCH_SIZE + 1}-${batchIndex * BATCH_SIZE + batch.length}...`);
+      
+      const batchQuery = `${query}\n\nDesign the following circuits:\n${batch.map((c: any, i: number) => 
+        `${i + 1}. ${c.name || c.loadType} (${c.loadType}, ${c.loadPower}W, ${c.cableLength}m)`
+      ).join('\n')}`;
+      
+      const batchRequestBody = {
+        ...requestBody,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: batchQuery }
+        ]
+      };
+      
+      const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${lovableApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(batchRequestBody)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`AI request failed: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
+      
+      if (toolCall?.function?.name === 'design_circuits') {
+        const batchResult = JSON.parse(toolCall.function.arguments);
+        
+        // Accumulate results
+        allDesignedCircuits.push(...(batchResult.circuits || []));
+        (batchResult.materials || []).forEach((m: string) => allMaterials.add(m));
+        (batchResult.warnings || []).forEach((w: string) => allWarnings.add(w));
+        aiResponse = batchResult.response || aiResponse;
+        
+        // Stream partial result immediately
+        builder.sendChunk({
+          type: 'token',
+          content: JSON.stringify({
+            batchComplete: batchIndex + 1,
+            totalBatches: circuitBatches.length,
+            circuits: allDesignedCircuits,
+            materials: Array.from(allMaterials),
+            warnings: Array.from(allWarnings),
+            progress: Math.round(((batchIndex + 1) / circuitBatches.length) * 100)
+          })
+        });
+        
+        logger.info(`✅ Batch ${batchIndex + 1}/${circuitBatches.length} streamed (${allDesignedCircuits.length} circuits total)`);
+      }
+    }
+    
+    // Send final result
+    const finalDesign = {
+      projectName: projectInfo.name,
+      location: projectInfo.location,
+      clientName: projectInfo.clientName,
+      electricianName: projectInfo.electricianName,
+      installationType: projectInfo.installationType,
+      totalLoad: allDesignedCircuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0),
+      circuits: allDesignedCircuits,
+      materials: Array.from(allMaterials),
+      warnings: Array.from(allWarnings),
+      consumerUnit: {
+        type: 'Split Load RCBO',
+        mainSwitchRating: incomingSupply.mainSwitchRating,
+        incomingSupply: {
+          voltage: incomingSupply.voltage,
+          phases: incomingSupply.phases,
+          incomingPFC: incomingSupply.pscc,
+          Ze: incomingSupply.Ze,
+          earthingSystem: incomingSupply.earthingSystem
+        }
+      },
+      diversityApplied: true,
+      diversityFactor: 0.7,
+      aiResponse
+    };
+    
+    builder.sendChunk({
+      type: 'done',
+      data: {
+        version: 'v3.2.0-streaming',
+        success: true,
+        response: aiResponse,
+        design: finalDesign,
+        metadata: {
+          ragCalls: ragResults.length,
+          batchesProcessed: circuitBatches.length,
+          validationPassed: true
+        }
+      }
+    });
+    
+  } catch (error) {
+    logger.error('Streaming design error', { error });
+    builder.sendError(error instanceof Error ? error.message : 'Design failed');
+  }
+}

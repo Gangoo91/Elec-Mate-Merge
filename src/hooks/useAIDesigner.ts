@@ -35,8 +35,9 @@ export const useAIDesigner = () => {
     setIsProcessing(true);
     setError(null);
     setDesignData(null);
+    setProgress({ stage: 1, message: 'Initialising...', percent: 0 });
 
-    // Validate inputs - must have either circuits OR a prompt description
+    // Validate inputs
     if ((!inputs.circuits || inputs.circuits.length === 0) && !inputs.additionalPrompt?.trim()) {
       toast.error('No circuits or description provided', {
         description: 'Please either add circuits manually or describe your requirements in the AI prompt.'
@@ -45,281 +46,193 @@ export const useAIDesigner = () => {
       return false;
     }
 
-    // SPEED BOOST: Optimized stages to match batch size 2 with GPT-5-mini (total ~60s)
-    // Cap at 95% until response arrives to prevent stuck-at-99% perception
-    const stages = [
-      { stage: 1, message: 'Understanding your requirements...', duration: 3000, targetPercent: 10 },
-      { stage: 2, message: 'Searching BS 7671 for circuit types...', duration: 8000, targetPercent: 25 },
-      { stage: 3, message: 'AI is designing circuits...', duration: 42000, targetPercent: 80 },
-      { stage: 4, message: 'Validating compliance...', duration: 5000, targetPercent: 92 },
-      { stage: 5, message: 'Finalising design...', duration: 2000, targetPercent: 95 }
-    ];
-
-    let progressInterval: ReturnType<typeof setInterval> | null = null;
-    let currentPercent = 0;
-
-    // Initialize progress immediately
-    setProgress({ stage: 1, message: 'Initialising...', percent: 0 });
-
-    // Pre-flight health check
     try {
-      const { data: healthData, error: healthError } = await supabase.functions.invoke('designer-agent-v2', {
-        method: 'GET'
-      });
+      const SUPABASE_URL = 'https://jtwygbeceundfgnkirof.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8';
       
-      if (healthError || !healthData?.status) {
-        setProgress({ stage: 0, message: 'Design service starting up...', percent: 0 });
-        console.warn('⚠️ Design service not healthy, will retry automatically');
-      } else {
-        console.log(`✅ Design service healthy - Version: ${healthData.version}`, healthData);
+      const requestBody = {
+        mode: 'batch-design',
+        aiConfig: {
+          model: 'openai/gpt-5-mini',
+          maxTokens: 24000,
+          timeoutMs: CLIENT_TIMEOUT_MS,
+          noMemory: true,
+          ragPriority: { design: 95, bs7671: 85, installation: 75 }
+        },
+        projectInfo: {
+          name: inputs.projectName,
+          location: inputs.location,
+          clientName: inputs.clientName,
+          electricianName: inputs.electricianName,
+          installationType: inputs.propertyType,
+          propertyAge: inputs.propertyAge,
+          existingInstallation: inputs.existingInstallation,
+          budgetLevel: inputs.budgetLevel,
+          additionalPrompt: inputs.additionalPrompt
+        },
+        incomingSupply: {
+          voltage: inputs.voltage,
+          phases: inputs.phases,
+          Ze: inputs.ze,
+          earthingSystem: inputs.earthingSystem,
+          pscc: inputs.pscc || 3500,
+          mainSwitchRating: inputs.mainSwitchRating || 100,
+          ambientTemp: inputs.ambientTemp || 30,
+          installationMethod: inputs.installationMethod || 'clipped-direct',
+          groupingFactor: inputs.groupingFactor || 1
+        },
+        circuits: inputs.circuits.map(c => ({
+          name: c.name,
+          loadType: c.loadType,
+          loadPower: c.loadPower,
+          cableLength: c.cableLength,
+          phases: c.phases,
+          specialLocation: c.specialLocation,
+          notes: c.notes
+        }))
+      };
+
+      // Streaming SSE request
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/designer-agent-v2`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'apikey': SUPABASE_ANON_KEY
+        },
+        body: JSON.stringify(requestBody)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-    } catch (e) {
-      // Health check failed - service might be cold starting
-      setProgress({ stage: 0, message: 'Initialising design service...', percent: 0 });
-    }
 
-    const invokeWithRetry = async (attempt = 1, maxAttempts = 2): Promise<any> => {
-      try {
-        // Update retry message state
-        if (attempt > 1) {
-          setRetryMessage(`Reconnecting… (retry ${attempt - 1}/${maxAttempts - 1})`);
-        } else {
-          setRetryMessage('');
-        }
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('No response stream available');
+      }
+
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let latestDesign: InstallationDesign | null = null;
+
+      setProgress({ stage: 2, message: 'Searching BS 7671...', percent: 10 });
+
+      while (true) {
+        const { done, value } = await reader.read();
         
-        // Create abort controller for timeout safety
-        const abortController = new AbortController();
-        const timeoutId = setTimeout(() => abortController.abort(), CLIENT_TIMEOUT_MS);
+        if (done) break;
 
-        const invokePromise = supabase.functions.invoke('designer-agent-v2', {
-          body: {
-            mode: 'batch-design',
-            aiConfig: {
-              model: 'openai/gpt-5-mini', // Proven reliable model from Lovable AI Gateway
-              maxTokens: 20000, // Balanced token limit for quality + speed
-              timeoutMs: 180000, // 3 min timeout
-              noMemory: true,
-              ragPriority: {
-                design: 95,
-                bs7671: 85,
-                installation: 75
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          
+          const data = line.slice(6).trim();
+          if (data === '[DONE]') continue;
+
+          try {
+            const chunk = JSON.parse(data);
+            
+            if (chunk.type === 'token') {
+              const content = chunk.content || '';
+              
+              // Try to parse as batch progress
+              try {
+                const partialData = JSON.parse(content);
+                
+                if (partialData.circuits) {
+                  const progressPercent = partialData.progress || 50;
+                  const batchNum = partialData.batchComplete || 0;
+                  const totalBatches = partialData.totalBatches || 1;
+                  
+                  setProgress({
+                    percent: progressPercent,
+                    stage: 3,
+                    message: `Designing batch ${batchNum}/${totalBatches} (${partialData.circuits.length} circuits)...`
+                  });
+                  
+                  // Build partial design
+                  latestDesign = {
+                    projectName: inputs.projectName,
+                    location: inputs.location,
+                    clientName: inputs.clientName,
+                    electricianName: inputs.electricianName,
+                    installationType: inputs.propertyType,
+                    totalLoad: partialData.circuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0),
+                    circuits: partialData.circuits,
+                    materials: (partialData.materials || []).map((m: any) => 
+                      typeof m === 'string' 
+                        ? { name: m, specification: '', quantity: '1', unit: 'item' }
+                        : m
+                    ),
+                    consumerUnit: {
+                      type: 'split-load',
+                      mainSwitchRating: inputs.mainSwitchRating || 100,
+                      incomingSupply: {
+                        voltage: inputs.voltage,
+                        phases: inputs.phases,
+                        incomingPFC: inputs.pscc || 3500,
+                        Ze: inputs.ze,
+                        earthingSystem: inputs.earthingSystem
+                      }
+                    },
+                    diversityApplied: true,
+                    diversityFactor: 0.7,
+                    practicalGuidance: []
+                  };
+                  
+                  // Show partial results in real-time
+                  setDesignData(latestDesign);
+                }
+              } catch {
+                // Not batch progress, just a message
+                console.log('🌊 Stream:', content);
               }
-            },
-            projectInfo: {
-              name: inputs.projectName,
-              location: inputs.location,
-              clientName: inputs.clientName,
-              electricianName: inputs.electricianName,
-              installationType: inputs.propertyType,
-              propertyAge: inputs.propertyAge,
-              existingInstallation: inputs.existingInstallation,
-              budgetLevel: inputs.budgetLevel,
-              additionalPrompt: inputs.additionalPrompt
-            },
-            incomingSupply: {
-              voltage: inputs.voltage,
-              phases: inputs.phases,
-              Ze: inputs.ze,
-              earthingSystem: inputs.earthingSystem,
-              pscc: inputs.pscc || 3500,
-              mainSwitchRating: inputs.mainSwitchRating || 100,
-              ambientTemp: inputs.ambientTemp || 30,
-              installationMethod: inputs.installationMethod || 'clipped-direct',
-              groupingFactor: inputs.groupingFactor || 1
-            },
-            circuits: inputs.circuits.map(c => ({
-              name: c.name,
-              loadType: c.loadType,
-              loadPower: c.loadPower,
-              cableLength: c.cableLength,
-              phases: c.phases,
-              specialLocation: c.specialLocation,
-              notes: c.notes
-            }))
+            } else if (chunk.type === 'done') {
+              // Final complete design
+              if (chunk.data?.design) {
+                latestDesign = chunk.data.design;
+                setDesignData(latestDesign);
+              }
+              
+              setProgress({ percent: 100, stage: 5, message: 'Design complete!' });
+              
+              toast.success('Design Generated!', {
+                description: `${latestDesign?.circuits?.length || 0} circuits designed successfully`
+              });
+            } else if (chunk.type === 'error') {
+              throw new Error(chunk.content || 'Design generation failed');
+            }
+          } catch (parseError) {
+            console.warn('Failed to parse SSE chunk:', parseError);
           }
-        });
-        
-        // Wrap with client-side timeout (withTimeout handles the actual timeout)
-        const { data, error: invokeError } = await withTimeout(invokePromise, CLIENT_TIMEOUT_MS);
-
-        clearTimeout(timeoutId);
-        
-        if (invokeError) throw invokeError;
-        setRetryMessage(''); // Clear retry message on success
-        return { data, error: null };
-      } catch (error: any) {
-        
-        const isTransient = 
-          error?.message?.includes('Failed to send a request to the Edge Function') ||
-          error?.message?.includes('fetch') ||
-          error?.message?.includes('network') ||
-          error?.message?.includes('timeout') ||
-          error?.message?.includes('ECONNREFUSED') ||
-          error?.message?.includes('ECONNRESET') ||
-          error?.message?.includes('500') ||
-          error?.message?.includes('502') ||
-          error?.message?.includes('503') ||
-          error?.message?.includes('504') ||
-          error instanceof TypeError;
-
-        if (isTransient && attempt < maxAttempts) {
-          const delay = attempt === 1 ? 1500 : 3000; // 1.5s then 3s
-          console.warn(`⚠️ Attempt ${attempt}/${maxAttempts} failed, retrying in ${delay}ms...`, error.message);
-          await new Promise(resolve => setTimeout(resolve, delay));
-          return invokeWithRetry(attempt + 1, maxAttempts);
-        }
-
-        // Log final failure with context
-        if (attempt >= maxAttempts) {
-          console.warn('🚨 All retry attempts exhausted', {
-            attempts: maxAttempts,
-            lastError: error.message,
-            payload: { circuits: inputs.circuits.length }
-          });
-        }
-
-        throw error;
-      }
-    };
-
-    try {
-      // Pre-compute cumulative stage durations for monotonic progress (fix temporal dead zone)
-      const cumulativeDurations: number[] = [];
-      stages.forEach((s, i) => {
-        cumulativeDurations[i] = (i === 0 ? 0 : cumulativeDurations[i - 1]) + s.duration;
-      });
-      const totalDuration = cumulativeDurations[cumulativeDurations.length - 1];
-
-      // Defensive check
-      if (totalDuration <= 0) {
-        console.warn('⚠️ Invalid total duration, skipping progress scheduler');
-      } else {
-        // Monotonic progress controller
-        const startTime = Date.now();
-
-        progressInterval = setInterval(() => {
-          const elapsed = Math.min(Date.now() - startTime, totalDuration * 0.99);
-          
-          // Find current stage based on cumulative durations
-          const stageIndex = cumulativeDurations.findIndex(t => elapsed < t);
-          const currentStage = stageIndex === -1 ? stages.length - 1 : stageIndex;
-          
-          const stageStartTime = currentStage === 0 ? 0 : cumulativeDurations[currentStage - 1];
-          const stageDuration = stages[currentStage].duration;
-          const stageElapsed = Math.max(0, elapsed - stageStartTime);
-          const stageFraction = Math.min(1, stageElapsed / stageDuration);
-          
-          const prevPercent = currentStage === 0 ? 0 : stages[currentStage - 1].targetPercent;
-          const targetPercent = stages[currentStage].targetPercent;
-          const computedPercent = Math.floor(prevPercent + (targetPercent - prevPercent) * stageFraction);
-          
-          // Ensure monotonic progress
-          currentPercent = Math.max(currentPercent, computedPercent);
-          
-          setProgress({
-            stage: currentStage + 1,
-            message: stages[currentStage].message,
-            percent: currentPercent
-          });
-        }, 1000);
-      }
-
-      console.log('🔧 Generating installation design', {
-        circuits: inputs.circuits.length,
-        projectName: inputs.projectName
-      });
-
-      const { data, error: invokeError } = await invokeWithRetry();
-
-      if (progressInterval) clearInterval(progressInterval);
-
-      if (invokeError) {
-        let errorMessage = invokeError.message || 'Unknown error occurred';
-        let errorDetails: string | undefined;
-        
-        // Try to parse structured error from backend
-        try {
-          const errorData = typeof data === 'object' && data !== null ? data : {};
-          if ('error' in errorData && 'code' in errorData) {
-            errorMessage = errorData.error as string;
-            errorDetails = `Error code: ${errorData.code}`;
-          }
-        } catch (e) {
-          // Ignore parsing errors
-        }
-        
-        // Friendly error messages based on status patterns
-        if (invokeError.message?.includes('429')) {
-          errorMessage = 'Too many requests. Please wait a moment and try again.';
-        } else if (invokeError.message?.includes('402')) {
-          errorMessage = 'Payment required. Please add Lovable AI credits to continue.';
-        } else if (invokeError.message?.includes('No tool call')) {
-          errorMessage = 'AI did not return a structured design. Please try again.';
-        } else if (invokeError.message?.includes('non-2xx')) {
-          errorMessage = 'Design service error. Please try again or check the logs for details.';
-          errorDetails = invokeError.message;
-        }
-        
-        const fullError = errorDetails ? `${errorMessage}\n${errorDetails}` : errorMessage;
-        throw new Error(fullError);
-      }
-
-      // FIX: Handle structured errors (success=false) gracefully
-      if (!data.success) {
-        // Clear progress immediately for known errors
-        setProgress(null);
-        
-        const errorMsg = data.error || 'Design generation failed';
-        const isKnownError = data.code === 'NO_CIRCUITS' || data.code;
-        
-        if (isKnownError) {
-          // Friendly message for known errors - no retry needed
-          throw new Error(errorMsg);
-        } else {
-          // Unknown errors
-          throw new Error(errorMsg);
         }
       }
 
-      // Complete progress to 100%
-      setProgress({ stage: 5, message: 'Design complete!', percent: 100 });
-      
-      console.log('✅ Design generated successfully', data.design);
-      setDesignData(data.design);
+      if (!latestDesign) {
+        throw new Error('No design data received from stream');
+      }
 
-      toast.success('Design generated successfully', {
-        description: `${data.design.circuits.length} circuits designed and verified`
-      });
-
-      // Hold at 100% briefly before clearing
       setTimeout(() => setProgress(null), 800);
-
       return true;
 
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      console.error('❌ Design generation failed:', errorMessage, err);
+      console.error('❌ Design generation failed:', errorMessage);
       setError(errorMessage);
+      setProgress(null);
 
-      if (progressInterval) clearInterval(progressInterval);
-      setProgress(null); // Clear immediately on error
-
-      // Timeout-specific messaging
-      const isTimeout = errorMessage.includes('timeout');
-      const mainError = errorMessage.split('\n')[0];
-      const details = errorMessage.split('\n').slice(1).join(' ');
-
-      toast.error(isTimeout ? 'Design Service Timeout' : 'Design generation failed', {
-        description: isTimeout 
-          ? 'Design service didn\'t respond in time. Please try again.'
-          : (details || mainError),
+      toast.error('Design Failed', {
+        description: errorMessage,
         duration: 6000
       });
 
       return false;
     } finally {
       setIsProcessing(false);
-      if (progressInterval) clearInterval(progressInterval);
     }
   };
 
