@@ -42,6 +42,13 @@ export async function handleBatchDesign(body: any, logger: any) {
     model: aiConfig?.model || 'openai/gpt-5'
   });
 
+  // Get API keys BEFORE AI extraction
+  const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+  if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+  
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+
   // STEP 0: AI-Powered Circuit Extraction
   logger.info('🔍 STEP 0: AI Circuit Extraction from Prompt');
   
@@ -87,13 +94,6 @@ export async function handleBatchDesign(body: any, logger: any) {
 
   // Build query from structured inputs + parsed context
   const query = buildDesignQuery(projectInfo, incomingSupply, allCircuits, specialRequirements, installationConstraints);
-  
-  // Get API keys before AI extraction
-  const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-  if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
-  
-  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
   
   // STEP 1: Multi-Query RAG Search (circuit-type-specific)
   logger.info('🔍 STEP 1: Multi-Query RAG Retrieval');

@@ -1,9 +1,9 @@
-// DEPLOYMENT v3.3.0 - AI Circuit Extraction - 2025-10-24T16:00:00Z
+// DEPLOYMENT v3.3.1 - Fixed lovableApiKey initialization - 2025-10-24T16:10:00Z
 import { corsHeaders, serve } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { handleBatchDesign } from './batch-design-handler.ts';
 
-const VERSION = 'v3.3.0-ai-extraction'; // AI-powered multi-circuit extraction from natural language
+const VERSION = 'v3.3.1-api-key-fix'; // Fixed API key initialization order
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
