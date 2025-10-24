@@ -256,86 +256,37 @@ const AIAssistant = () => {
     setSearchMethod("");
     
     try {
-      // Detect if this is a circuit design/cable sizing question
-      const lowerPrompt = prompt.toLowerCase();
-      const isCircuitDesign = lowerPrompt.includes('cable') || 
-                             lowerPrompt.includes('sizing') || 
-                             lowerPrompt.includes('circuit') ||
-                             lowerPrompt.includes('ring') ||
-                             lowerPrompt.includes('mcb') ||
-                             lowerPrompt.includes('cooker') ||
-                             lowerPrompt.includes('shower') ||
-                             lowerPrompt.includes('32a') ||
-                             lowerPrompt.includes('load');
+      // All queries go to electrician-ai-assistant with RAG enabled
+      const assistantResponse = await supabase.functions.invoke('electrician-ai-assistant', {
+        body: { 
+          prompt: prompt,
+          type: "structured_assistant",
+          use_rag: true  // Always enable RAG for regulation/design queries
+        },
+      });
 
-      let data, error;
+      const { data, error } = assistantResponse;
 
-      if (isCircuitDesign) {
-        // Route to designer agent V2 for circuit questions
-        const designResponse = await supabase.functions.invoke('designer-agent-v2', {
-          body: { 
-            messages: [{ role: 'user', content: prompt }],
-            currentDesign: {},
-            context: {}
-          }
-        });
-        data = designResponse.data;
-        error = designResponse.error;
-        
-        // PHASE 5: Enhanced error handling for specific edge function errors
-        if (designResponse.error) {
-          const status = (designResponse.error as any)?.status;
-          if (status === 429) {
-            toast({
-              title: "Rate Limit Exceeded",
-              description: "Too many requests. Please wait 30 seconds and try again.",
-              variant: "destructive",
-            });
-            return;
-          }
-          if (status === 402) {
-            toast({
-              title: "Service Quota Exceeded",
-              description: "AI service credits exhausted. Please contact support.",
-              variant: "destructive",
-            });
-            return;
-          }
-          throw new Error(designResponse.error.message || 'Designer agent error');
+      // Enhanced error handling
+      if (assistantResponse.error) {
+        const status = (assistantResponse.error as any)?.status;
+        if (status === 429) {
+          toast({
+            title: "Rate Limit Exceeded",
+            description: "Too many requests. Please wait 30 seconds and try again.",
+            variant: "destructive",
+          });
+          return;
         }
-      } else {
-        // Route to general AI assistant
-        const assistantResponse = await supabase.functions.invoke('electrician-ai-assistant', {
-          body: { 
-            prompt: prompt,
-            type: "structured_assistant",
-            use_rag: true
-          },
-        });
-        data = assistantResponse.data;
-        error = assistantResponse.error;
-        
-        // PHASE 5: Enhanced error handling for assistant errors
-        if (assistantResponse.error) {
-          const status = (assistantResponse.error as any)?.status;
-          if (status === 429) {
-            toast({
-              title: "Rate Limit Exceeded",
-              description: "Too many requests. Please wait 30 seconds and try again.",
-              variant: "destructive",
-            });
-            return;
-          }
-          if (status === 402) {
-            toast({
-              title: "Service Quota Exceeded",
-              description: "AI service credits exhausted. Please contact support.",
-              variant: "destructive",
-            });
-            return;
-          }
-          throw new Error(assistantResponse.error.message || 'Assistant error');
+        if (status === 402) {
+          toast({
+            title: "Service Quota Exceeded",
+            description: "AI service credits exhausted. Please contact support.",
+            variant: "destructive",
+          });
+          return;
         }
+        throw new Error(assistantResponse.error.message || 'Assistant error');
       }
       
       if (error) {
