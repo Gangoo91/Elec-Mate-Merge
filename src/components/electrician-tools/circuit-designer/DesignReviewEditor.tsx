@@ -97,7 +97,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               circuitNumber: idx + 1,
               name: c.name,
               loadType: c.loadType,
-              phases: c.phases,
+              phases: c.phases === 'three' ? 'three-phase' : 'single-phase',
               cableSize: c.cableSize,
               cpcSize: c.cpcSize,
               cableLength: c.cableLength,
