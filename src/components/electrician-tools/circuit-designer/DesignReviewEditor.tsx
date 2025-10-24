@@ -79,7 +79,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
       // Check if we should use fallback
       if (data?.useFallback || !data?.success) {
-        console.log('[PDF-EXPORT] Using fallback jsPDF method');
+        const reason = data?.reason || 'unknown';
+        console.log('[PDF-EXPORT] Using fallback jsPDF method. Reason:', reason);
+        
+        // Show helpful message based on reason
+        if (reason === 'template_missing') {
+          toast.info('Using basic PDF export', {
+            description: 'PDF Monkey template not configured - generating with jsPDF'
+          });
+        }
         
         // Fallback to existing jsPDF method
         const schedule = generateEICSchedule(
@@ -114,7 +122,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         );
 
         await downloadEICPDF(schedule, `${design.projectName.replace(/\s+/g, '_')}_Design.pdf`);
-        toast.success('PDF exported successfully');
+        
+        toast.success('PDF exported successfully', {
+          description: 'Circuit design schedule generated'
+        });
       } else if (data?.downloadUrl) {
         // PDF Monkey success - download the PDF
         console.log('[PDF-EXPORT] PDF Monkey success, downloading:', data.downloadUrl);

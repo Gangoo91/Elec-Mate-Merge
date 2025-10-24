@@ -200,13 +200,16 @@ serve(async (req) => {
 
     if (!pdfMonkeyResponse.ok) {
       const errorText = await pdfMonkeyResponse.text();
+      const isTemplateError = pdfMonkeyResponse.status === 422 && errorText.includes('template must exist');
+      
       console.error('[CIRCUIT-PDF] PDF Monkey API error:', pdfMonkeyResponse.status, errorText);
       
       return new Response(
         JSON.stringify({ 
           success: false,
           useFallback: true,
-          error: `PDF Monkey API error: ${pdfMonkeyResponse.status}`,
+          error: isTemplateError ? 'PDF template not configured' : `PDF Monkey API error: ${pdfMonkeyResponse.status}`,
+          reason: isTemplateError ? 'template_missing' : 'api_error',
           details: errorText
         }),
         { 
