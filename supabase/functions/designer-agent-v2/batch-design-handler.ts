@@ -43,13 +43,16 @@ export async function handleBatchDesign(body: any, logger: any) {
   });
 
   // Get API keys BEFORE AI extraction
-  const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-  if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+  const geminiKey = Deno.env.get('GEMINI_API_KEY');
+  const openAiKey = Deno.env.get('OPENAI_API_KEY');
+  
+  if (!geminiKey) throw new Error('GEMINI_API_KEY not configured');
+  if (!openAiKey) throw new Error('OPENAI_API_KEY not configured');
   
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-  // STEP 0: AI-Powered Circuit Extraction
+  // STEP 0: AI-Powered Circuit Extraction (Gemini 2.5 Flash)
   logger.info('🔍 STEP 0: AI Circuit Extraction from Prompt');
   
   let inferredCircuits: any[] = [];
@@ -61,7 +64,7 @@ export async function handleBatchDesign(body: any, logger: any) {
     const aiResult = await extractCircuitsWithAI(
       projectInfo.additionalPrompt,
       installationType,
-      lovableApiKey,
+      geminiKey,
       logger
     );
     
@@ -688,6 +691,9 @@ Return complete circuit objects using the provided tool schema.`;
     estimatedTimeSeconds: Math.ceil(50) // All batches run in parallel, ~50s total (not per batch)
   });
   
+  // Import Gemini provider
+  const { callGemini, withRetry: providerRetry } = await import('../_shared/ai-providers.ts');
+
   // Function to process a single batch with retry logic
   const processBatch = async (batch: any[], batchIndex: number, attempt = 0): Promise<any> => {
     const batchStartTime = Date.now();
@@ -698,61 +704,39 @@ Return complete circuit objects using the provided tool schema.`;
       `${i + 1}. ${c.name || c.loadType} (${c.loadType}, ${c.loadPower}W, ${c.cableLength}m)`
     ).join('\n')}`;
     
-    const batchRequestBody = {
-      ...requestBody,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: batchQuery }
-      ]
-    };
-    
     try {
-      const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${lovableApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(batchRequestBody)
-      });
+      const result = await providerRetry(async () => {
+        return await callGemini({
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: batchQuery }
+          ],
+          model: 'gemini-2.5-flash',
+          temperature: 0.3,
+          max_tokens: aiConfig?.maxTokens || 24000,
+          tools: requestBody.tools,
+          tool_choice: requestBody.tool_choice
+        }, geminiKey);
+      }, 3, 2000);
       
       const batchElapsedMs = Date.now() - batchStartTime;
-      logger.info(`✅ AI responded for batch ${batchIndex + 1}`, { 
-        status: response.status,
+      logger.info(`✅ Gemini responded for batch ${batchIndex + 1}`, { 
         timeMs: batchElapsedMs
       });
       
-      if (!response.ok) {
-        const errorText = await response.text();
-        const isRetryable = response.status === 429 || response.status >= 500;
-        
-        logger.error(`🚨 Batch ${batchIndex + 1} AI API error (${isRetryable ? 'retryable' : 'fatal'})`, { 
-          status: response.status,
-          attempt,
-          errorPreview: errorText.substring(0, 500)
-        });
-        
-        if (isRetryable && attempt === 0) {
-          const backoffMs = 2000 * Math.pow(2, attempt); // 2s, 4s
-          logger.warn(`⏳ Retrying batch ${batchIndex + 1} in ${backoffMs}ms`);
-          await new Promise(resolve => setTimeout(resolve, backoffMs));
-          return processBatch(batch, batchIndex, attempt + 1);
-        }
-        
-        if (response.status === 429) {
-          throw new Error("Rate limit exceeded. Please try again in a moment.");
-        }
-        if (response.status === 402) {
-          throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
-        }
-        
-        throw new Error(`AI API error: ${response.status} - ${errorText.substring(0, 200)}`);
-      }
+      // Package result as if it came from API
+      const aiData = {
+        choices: [{
+          message: {
+            tool_calls: result.toolCalls ? [{ function: { arguments: result.content } }] : undefined,
+            content: result.content
+          }
+        }],
+        usage: { total_tokens: 0 } // Gemini doesn't return token count
+      };
       
-      const aiData = await response.json();
       logger.info(`✅ Batch ${batchIndex + 1} completed successfully`, {
-        timeMs: batchElapsedMs,
-        tokensUsed: aiData.usage?.total_tokens || 0
+        timeMs: batchElapsedMs
       });
       
       return { aiData, batchElapsedMs, success: true };
@@ -829,18 +813,12 @@ Return complete circuit objects using the provided tool schema.`;
   // Use first batch's tool call as base, we'll merge circuits later
   let toolCall = allToolCalls[0];
   
-  // Retry once if no tool call (AI might have returned text instead)
+  // Retry once if no tool call (Gemini might have returned text instead)
   if (!toolCall && allToolCalls.length === 0) {
-    logger.warn('⚠️ No tool calls in any batch, retrying first batch');
+    logger.warn('⚠️ No tool calls in any batch, retrying first batch with Gemini');
     
-    const retryResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: aiConfig?.model || 'openai/gpt-5-mini',
+    const retryResult = await providerRetry(async () => {
+      return await callGemini({
         messages: [
           { 
             role: 'system', 
@@ -875,210 +853,31 @@ Return your design using the provided tool schema.`
           },
           { role: 'user', content: query }
         ],
-        max_completion_tokens: aiConfig?.maxTokens || 24000, // Increased for complex multi-circuit designs
-        tools: [{
-          type: "function",
-          function: {
-            name: "design_circuits",
-            description: "Return electrical circuit design with BS 7671 compliance. You MUST call this function.",
-            parameters: {
-              type: "object",
-              properties: {
-                response: { 
-                  type: "string",
-                  description: "Conversational summary of the design in UK English"
-                },
-                circuits: { 
-                  type: "array",
-                  description: "Array of circuit designs with cable, breaker, voltage drop, earth fault, regulations",
-                  items: {
-                    type: "object",
-                    properties: {
-                      name: { type: "string" },
-                      circuitNumber: { type: "number" },
-                      loadType: { type: "string" },
-                      loadPower: { type: "number" },
-                      phases: { type: "number" },
-                      cableSize: { type: "number", description: "Numeric mm² only" },
-                      cpcSize: { type: "number", description: "Numeric mm² only" },
-                      cableType: { type: "string", description: "Full cable description" },
-                      cableLength: { type: "number" },
-                      protectionDevice: {
-                        type: "object",
-                        properties: {
-                          type: { type: "string" },
-                          rating: { type: "number", description: "Numeric amps only" },
-                          curve: { type: "string", enum: ["B", "C", "D"], description: "Letter only" },
-                          breakingCapacity: { type: "number", description: "Numeric kA only" }
-                        }
-                      },
-                      rcdProtected: { type: "boolean" },
-                      rcdRating: { type: "number" },
-                      voltageDrop: {
-                        type: "object",
-                        properties: {
-                          volts: { type: "number" },
-                          percent: { type: "number" },
-                          compliant: { type: "boolean" },
-                          limit: { type: "number" }
-                        },
-                        required: ["volts", "percent", "compliant", "limit"]
-                      },
-                      zs: { type: "number" },
-                      maxZs: { type: "number" },
-                      justifications: {
-                        type: "object",
-                        properties: {
-                          cableSize: { type: "string" },
-                          protection: { type: "string" },
-                          rcd: { type: "string" }
-                        },
-                        required: ["cableSize", "protection"]
-                      },
-                      warnings: {
-                        type: "array",
-                        items: { type: "string" }
-                      },
-                      installationMethod: { type: "string" },
-                      diversityFactor: { type: "number" },
-                      diversityJustification: { type: "string" },
-                      faultCurrentAnalysis: {
-                        type: "object",
-                        properties: {
-                          psccAtCircuit: { type: "number" },
-                          deviceBreakingCapacity: { type: "number" },
-                          compliant: { type: "boolean" },
-                          marginOfSafety: { type: "string" },
-                          regulation: { type: "string" }
-                        }
-                      },
-                      earthingRequirements: {
-                        type: "object",
-                        properties: {
-                          cpcSize: { type: "string" },
-                          supplementaryBonding: { type: "boolean" },
-                          bondingConductorSize: { type: "string" },
-                          justification: { type: "string" },
-                          regulation: { type: "string" }
-                        }
-                      },
-                      deratingFactors: {
-                        type: "object",
-                        properties: {
-                          Ca: { type: "number" },
-                          Cg: { type: "number" },
-                          Ci: { type: "number" },
-                          overall: { type: "number" },
-                          explanation: { type: "string" },
-                          tableReferences: { type: "string" }
-                        }
-                      },
-                      installationGuidance: {
-                        type: "object",
-                        properties: {
-                          referenceMethod: { type: "string" },
-                          description: { type: "string" },
-                          clipSpacing: { type: "string" },
-                          practicalTips: {
-                            type: "array",
-                            items: { type: "string" }
-                          },
-                          regulation: { type: "string" }
-                        }
-                      },
-                      specialLocationCompliance: {
-                        type: "object",
-                        properties: {
-                          isSpecialLocation: { type: "boolean" },
-                          locationType: { type: "string" },
-                          requirements: {
-                            type: "array",
-                            items: { type: "string" }
-                          },
-                          zonesApplicable: { type: "string" },
-                          regulation: { type: "string" }
-                        }
-                      },
-                      expectedTestResults: {
-                        type: "object",
-                        properties: {
-                          r1r2: {
-                            type: "object",
-                            properties: {
-                              at20C: { type: "string" },
-                              at70C: { type: "string" },
-                              calculation: { type: "string" }
-                            }
-                          },
-                          zs: {
-                            type: "object",
-                            properties: {
-                              calculated: { type: "string" },
-                              maxPermitted: { type: "string" },
-                              compliant: { type: "boolean" }
-                            }
-                          },
-                          insulationResistance: {
-                            type: "object",
-                            properties: {
-                              testVoltage: { type: "string" },
-                              minResistance: { type: "string" }
-                            }
-                          },
-                          polarity: { type: "string" },
-                          rcdTest: {
-                            type: "object",
-                            properties: {
-                              at1x: { type: "string" },
-                              at5x: { type: "string" },
-                              regulation: { type: "string" }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    required: ["name", "circuitNumber", "loadType", "cableSize", "protectionDevice", "voltageDrop", "justifications"]
-                  }
-                },
-                materials: { 
-                  type: "array",
-                  description: "Required materials list with specifications",
-                  items: { type: "object" }
-                },
-                warnings: { 
-                  type: "array",
-                  description: "Any compliance warnings or important notes",
-                  items: { type: "string" }
-                }
-              },
-              required: ["response", "circuits"]
-            }
-          }
-        }],
-        tool_choice: "auto"
-      })
-    });
+        model: 'gemini-2.5-flash',
+        temperature: 0.3,
+        max_tokens: aiConfig?.maxTokens || 24000,
+        tools: requestBody.tools,
+        tool_choice: requestBody.tool_choice
+      }, geminiKey);
+    }, 3, 2000);
+
+    const retryData = {
+      choices: [{
+        message: {
+          tool_calls: retryResult.toolCalls ? [{ function: { arguments: retryResult.content } }] : undefined,
+          content: retryResult.content
+        }
+      }]
+    };
     
-    if (!retryResponse.ok) {
-      const errorText = await retryResponse.text();
-      if (retryResponse.status === 429) {
-        throw new Error("Rate limit exceeded. Please try again in a moment.");
-      }
-      if (retryResponse.status === 402) {
-        throw new Error("AI credits exhausted. Please add credits to your Lovable workspace.");
-      }
-      logger.error('🚨 Retry request failed', { status: retryResponse.status, errorPreview: errorText.substring(0, 200) });
-    } else {
-      const retryData = await retryResponse.json();
-      toolCall = retryData.choices?.[0]?.message?.tool_calls?.[0];
-      const retryContent = retryData.choices?.[0]?.message?.content;
-      
-      logger.info('⚠️ Retry result', {
-        hasToolCall: !!toolCall,
-        hasContent: !!retryContent,
-        contentLength: retryContent?.length || 0
-      });
-    }
+    toolCall = retryData.choices?.[0]?.message?.tool_calls?.[0];
+    const retryContent = retryData.choices?.[0]?.message?.content;
+    
+    logger.info('⚠️ Retry result from Gemini', {
+      hasToolCall: !!toolCall,
+      hasContent: !!retryContent,
+      contentLength: retryContent?.length || 0
+    });
   }
   
   // PHASE 1: Enhanced fallback - try JSON-only mode if no tool call
@@ -1099,14 +898,8 @@ Return your design using the provided tool schema.`
         `${r.regulation_number}: ${r.content.substring(0, 200)}...`
       ).join('\n\n');
       
-      const jsonResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${lovableApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: aiConfig?.model || 'openai/gpt-5-mini',
+      const jsonResult = await providerRetry(async () => {
+        return await callGemini({
           messages: [
             { 
               role: 'system', 

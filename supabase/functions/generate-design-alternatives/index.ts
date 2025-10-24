@@ -10,8 +10,8 @@ serve(async (req) => {
     
     console.log('🔄 Generating design alternatives for:', userQuery);
 
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
+    const geminiKey = Deno.env.get('GEMINI_API_KEY');
+    if (!geminiKey) throw new Error('GEMINI_API_KEY not configured');
 
     const prompt = `You are an electrical design expert. The user has requested a circuit design.
 
@@ -59,31 +59,23 @@ Respond with valid JSON:
   ]
 }`;
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+    // Import Gemini provider
+    const { callGemini, withRetry } = await import('../_shared/ai-providers.ts');
+
+    const result = await withRetry(async () => {
+      const response = await callGemini({
         messages: [
           { role: 'system', content: 'You are an expert electrical design consultant specializing in BS 7671 compliant installations.' },
           { role: 'user', content: prompt }
         ],
-        response_format: { type: 'json_object' },
-        max_tokens: 2000
-      }),
-    });
+        model: 'gemini-2.5-flash',
+        temperature: 0.3,
+        max_tokens: 2000,
+        response_format: { type: 'json_object' }
+      }, geminiKey);
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('AI API error:', response.status, errorText);
-      throw new Error(`AI API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const result = JSON.parse(data.choices[0].message.content);
+      return JSON.parse(response.content);
+    }, 3, 2000);
 
     console.log('✅ Generated', result.alternatives?.length || 0, 'alternatives');
 

@@ -49,10 +49,10 @@ serve(async (req) => {
 
   try {
     const { structuredCircuit, designerResponse, projectName } = await req.json();
-    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+    const geminiKey = Deno.env.get('GEMINI_API_KEY');
     
-    if (!lovableApiKey) {
-      throw new Error('LOVABLE_API_KEY not configured');
+    if (!geminiKey) {
+      throw new Error('GEMINI_API_KEY not configured');
     }
 
     console.log('📐 Generating circuit diagrams for:', projectName);
@@ -103,7 +103,7 @@ serve(async (req) => {
       type: 'single-line',
       circuitInfo,
       projectName,
-      lovableApiKey
+      geminiKey
     });
 
     // Generate detailed circuit schematic
@@ -111,7 +111,7 @@ serve(async (req) => {
       type: 'schematic',
       circuitInfo,
       projectName,
-      lovableApiKey
+      geminiKey
     });
 
     const diagrams = [

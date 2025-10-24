@@ -25,14 +25,14 @@ interface CircuitExtractionResult {
 export async function extractCircuitsWithAI(
   additionalPrompt: string,
   installationType: string,
-  lovableApiKey: string,
+  geminiKey: string,
   logger: any
 ): Promise<CircuitExtractionResult> {
   if (!additionalPrompt?.trim()) {
     return { inferredCircuits: [], specialRequirements: [], installationConstraints: [] };
   }
 
-  logger.info('🤖 AI Circuit Extraction Starting', { 
+  logger.info('🤖 AI Circuit Extraction Starting (Gemini 2.5 Flash)', { 
     promptLength: additionalPrompt.length,
     installationType 
   });
@@ -61,18 +61,18 @@ Description: ${additionalPrompt}
 
 Extract ALL circuits with their specifications.`;
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+    // Import Gemini provider
+    const { callGemini, withRetry } = await import('../_shared/ai-providers.ts');
+
+    // Use Gemini with tool calling
+    const result = await withRetry(async () => {
+      return await callGemini({
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
+        model: 'gemini-2.5-flash',
+        temperature: 0.3,
         tools: [{
           type: 'function',
           function: {
@@ -137,29 +137,16 @@ Extract ALL circuits with their specifications.`;
             }
           }
         }],
-        tool_choice: { type: 'function', function: { name: 'extract_circuits' } },
-        temperature: 0.3
-      }),
+        tool_choice: { type: 'function', function: { name: 'extract_circuits' } }
+      }, geminiKey);
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      logger.error('❌ AI extraction failed', { 
-        status: response.status, 
-        error: errorText 
-      });
-      throw new Error(`AI extraction failed: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
-    
-    if (!toolCall) {
-      logger.warn('⚠️ No tool call in AI response, using fallback');
+    if (!result.toolCalls || result.toolCalls.length === 0) {
+      logger.warn('⚠️ No tool call in Gemini response, using fallback');
       return { inferredCircuits: [], specialRequirements: [], installationConstraints: [] };
     }
 
-    const extractedData = JSON.parse(toolCall.function.arguments);
+    const extractedData = JSON.parse(result.content);
     const circuits: ExtractedCircuit[] = extractedData.circuits || [];
     
     logger.info('✅ AI Extraction Complete', {

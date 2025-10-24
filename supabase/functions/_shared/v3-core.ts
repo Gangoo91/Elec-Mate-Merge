@@ -127,25 +127,9 @@ export function createClient(url: string, key: string) {
 
 // ============= UTILITIES =============
 export async function generateEmbedding(text: string, apiKey: string): Promise<number[]> {
-  const response = await fetch('https://api.openai.com/v1/embeddings', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      input: text,
-      model: 'text-embedding-3-large', // UPGRADED: 3072 dimensions for +20% accuracy
-      dimensions: 3072
-    }),
-  });
-
-  if (!response.ok) {
-    throw new ExternalAPIError(`Embedding generation failed: ${response.status}`, 'OpenAI');
-  }
-
-  const data = await response.json();
-  return data.data[0].embedding;
+  // Use the new shared provider
+  const { generateEmbedding: genEmbed } = await import('./ai-providers.ts');
+  return await genEmbed(text, apiKey);
 }
 
 export async function callLovableAI(
@@ -160,79 +144,31 @@ export async function callLovableAI(
   } = {}
 ): Promise<string> {
   const {
-    model = 'openai/gpt-5-mini',
-    temperature,
+    model = 'gemini-2.5-flash', // Changed default from gpt-5-mini to Gemini
+    temperature = 0.3,
     maxTokens = 2000,
     responseFormat = 'text'
   } = options;
 
-  // CRITICAL: GPT-5 parameter compatibility
-  const isGPT5 = model.toLowerCase().includes('gpt-5') || model.toLowerCase().includes('openai/gpt-5');
+  console.debug('Calling Gemini AI', { model });
+
+  // Use the new shared provider
+  const { callGemini, withRetry } = await import('./ai-providers.ts');
   
-  const body: any = {
-    model,
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: userPrompt }
-    ]
-  };
+  const result = await withRetry(async () => {
+    return await callGemini({
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ],
+      model,
+      temperature,
+      max_tokens: maxTokens,
+      response_format: responseFormat === 'json_object' ? { type: 'json_object' } : undefined
+    }, apiKey);
+  }, 3, 2000);
 
-  // Use correct token parameter based on model
-  if (isGPT5) {
-    body.max_completion_tokens = maxTokens;
-    // GPT-5 doesn't support temperature parameter - omit it
-    console.debug(`Using max_completion_tokens for GPT-5 model: ${model}`);
-  } else {
-    body.max_tokens = maxTokens;
-    body.temperature = temperature ?? 0.7;
-  }
-
-  if (responseFormat === 'json_object') {
-    body.response_format = { type: 'json_object' };
-  }
-
-  console.debug('Calling Lovable AI', { model, tokenParam: isGPT5 ? 'max_completion_tokens' : 'max_tokens' });
-
-  // Auto-retry mechanism for parameter mismatch
-  let lastError: Error | null = null;
-  for (let attempt = 0; attempt < 2; attempt++) {
-    try {
-      const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        
-        // Check for max_tokens parameter error and auto-fix
-        if (response.status === 400 && errorText.includes('max_tokens') && errorText.includes('not supported')) {
-          if (attempt === 0) {
-            console.warn('⚠️ Detected max_tokens parameter error, retrying with max_completion_tokens');
-            // Swap parameters and retry
-            delete body.max_tokens;
-            body.max_completion_tokens = maxTokens;
-            delete body.temperature; // Also remove temperature for safety
-            continue;
-          }
-        }
-        
-        throw new ExternalAPIError(`AI completion failed: ${response.status} - ${errorText}`, 'Lovable AI');
-      }
-
-      const data = await response.json();
-      return data.choices[0].message.content;
-    } catch (error) {
-      lastError = error instanceof Error ? error : new Error(String(error));
-      if (attempt === 1) throw lastError;
-    }
-  }
-  
-  throw lastError!;
+  return result.content;
 }
 
 // ============= V3 ENHANCEMENTS =============
