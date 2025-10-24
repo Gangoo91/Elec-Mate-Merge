@@ -123,12 +123,12 @@ IMPORTANT: Generate DIFFERENT materials, quantities, and prices each time. Avoid
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: systemMessage },
           { 
             role: 'user', 
-            content: `Generate a unique UK electrical quote for a ${jobType} in a ${propertyDetails.bedrooms}-bedroom ${propertyDetails.type} with ${propertyDetails.floors} floors. 
+            content: `Generate a unique UK electrical quote for a ${jobType} in a ${propertyDetails.bedrooms}-bedroom ${propertyDetails.type} with ${propertyDetails.floors} floors.
 
 SPECIFIC REQUIREMENTS:
 - Use proper cable specifications (1.5mm² lighting, 2.5mm² sockets)
@@ -140,8 +140,7 @@ SPECIFIC REQUIREMENTS:
 Make this quote unique and different from previous quotes with varied pricing and materials.` 
           }
         ],
-        temperature: 0.3, // Increased for more variation
-        max_tokens: 2500,
+        max_completion_tokens: 2500,
       }),
     });
 

@@ -440,7 +440,7 @@ Confidence: ${Math.round(reg.similarity * 100)}%
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: type === "visual_analysis_advanced" ? 'gpt-4o-mini' : 'gpt-4o-mini',
+        model: 'gpt-5-mini-2025-08-07',
         messages: messages,
         max_tokens: type === "visual_analysis_advanced" ? 2000 : (type === "report_writer" ? 800 : 2000),
         temperature: 0.7,

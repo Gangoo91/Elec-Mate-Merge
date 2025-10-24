@@ -27,7 +27,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-mini-2025-08-07',
         messages: [
           { 
             role: 'system', 
@@ -47,7 +47,7 @@ Be professional but approachable.`
             content: `Explain why ${topic} in this context: ${JSON.stringify(context)}` 
           }
         ],
-        max_tokens: 200
+        max_completion_tokens: 200
       }),
     });
 

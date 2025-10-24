@@ -282,12 +282,11 @@ Respond in JSON format:
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: 'You are a BS 7671 compliant electrical design expert who carefully reviews challenges from other specialists.' },
           { role: 'user', content: prompt }
         ],
-        temperature: 0.3,
         response_format: { type: 'json_object' }
       })
     });
