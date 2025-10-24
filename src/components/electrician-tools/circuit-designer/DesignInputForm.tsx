@@ -14,7 +14,7 @@ import { InstallationTypeDetection } from './InstallationTypeDetection';
 import { PromptExamples } from './PromptExamples';
 import { DesignInputs, CircuitInput } from '@/types/installation-design';
 import { DOMESTIC_TEMPLATES, COMMERCIAL_TEMPLATES, INDUSTRIAL_TEMPLATES, SMART_DEFAULTS } from '@/lib/circuit-templates';
-import { Sparkles, Zap, ChevronDown, Plus, Info, Lightbulb, Building2, House, Building, Factory } from 'lucide-react';
+import { Sparkles, Zap, ChevronDown, Plus, Info, Lightbulb, Building2, House, Building, Factory, FlaskConical } from 'lucide-react';
 import { toast } from 'sonner';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -243,6 +243,20 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
     if (!projectName.trim()) missing.push('Project Name');
     if (circuits.length === 0 && !promptDescription.trim()) missing.push('Description or Circuits');
     return missing;
+  };
+
+  // FILL WITH TEST DATA
+  const fillTestData = () => {
+    setProjectName('Test Project - 3 Bed House Rewire');
+    setLocation('123 Test Street, London, SW1A 1AA');
+    setClientName('John Smith');
+    setElectricianName('Test Electrician');
+    setInstallationType('domestic');
+    setPromptDescription('Complete rewire for 3-bedroom house. Include 4 socket rings, 6 lighting circuits, 10.5kW shower, 7.4kW EV charger, cooker circuit, and outdoor socket for garden.');
+    
+    toast.success('Form filled with test data', {
+      description: 'You can now generate the design'
+    });
   };
 
   return (
@@ -717,6 +731,16 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
                 <li key={req}>{req}</li>
               ))}
             </ul>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={fillTestData}
+              className="mt-3 gap-2 hover:bg-primary/10 hover:border-primary transition-all"
+            >
+              <FlaskConical className="h-4 w-4" />
+              Fill Form with Test Data
+            </Button>
           </div>
         )}
         
