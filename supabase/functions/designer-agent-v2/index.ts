@@ -1,8 +1,9 @@
+// DEPLOYMENT v3.2.2 - Cache bust - 2025-10-24T15:35:00Z
 import { corsHeaders, serve } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { handleBatchDesign } from './batch-design-handler.ts';
 
-const VERSION = 'v3.2.0-gpt5-mini-24k'; // Track deployment: GPT-5-mini + 24k tokens + batch-6
+const VERSION = 'v3.2.2-forced-redeploy'; // Force cache invalidation
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
