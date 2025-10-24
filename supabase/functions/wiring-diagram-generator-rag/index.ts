@@ -350,9 +350,10 @@ Format:
     "decision_factors": ["Factor 1 to consider", "Factor 2"]
   }
 }`
-              }
-            ],
-            max_tokens: 3000
+              }]
+            },
+          ],
+          max_tokens: 3000
           }),
         }).then(async (res) => {
           if (!res.ok) {
