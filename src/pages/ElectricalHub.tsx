@@ -99,9 +99,9 @@ const ElectricalHub = () => {
               <p className="text-xs sm:text-sm text-muted-foreground mt-2 px-2">
                 Choose from 8 specialist agents for design, costing, installation, safety, testing, and project management.
               </p>
-              <div className="flex items-center gap-1 mt-3 text-elec-yellow text-sm font-medium">
+              <div className="flex items-center gap-1 mt-3 text-elec-yellow text-sm font-medium transition-all duration-200 hover:gap-2">
                 <span>Choose Your Agent</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </div>
             </CardHeader>
           </Card>
