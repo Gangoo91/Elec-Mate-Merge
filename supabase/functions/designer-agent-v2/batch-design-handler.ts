@@ -5,6 +5,7 @@ import { chunkArray, RequestDeduplicator, generateRequestKey } from './parallel-
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { loadCoreRegulationsCache } from './core-regulations-cache.ts';
 import { validateDesign, calculateCircuitConfidence, calculateOverallConfidence } from './validation-pipeline.ts';
+import { extractCircuitsWithAI } from './ai-circuit-extractor.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
@@ -41,10 +42,35 @@ export async function handleBatchDesign(body: any, logger: any) {
     model: aiConfig?.model || 'openai/gpt-5'
   });
 
-  // STEP 0: Parse additional prompt for circuits and constraints
-  logger.info('🔍 STEP 0: Parse User Prompt');
-  const { inferredCircuits, specialRequirements, installationConstraints } = 
-    extractCircuitsFromPrompt(projectInfo.additionalPrompt || '', inputCircuits);
+  // STEP 0: AI-Powered Circuit Extraction
+  logger.info('🔍 STEP 0: AI Circuit Extraction from Prompt');
+  
+  let inferredCircuits: any[] = [];
+  let specialRequirements: string[] = [];
+  let installationConstraints: string[] = [];
+  
+  // Try AI extraction first
+  if (projectInfo.additionalPrompt?.trim()) {
+    const aiResult = await extractCircuitsWithAI(
+      projectInfo.additionalPrompt,
+      installationType,
+      lovableApiKey,
+      logger
+    );
+    
+    inferredCircuits = aiResult.inferredCircuits;
+    specialRequirements = aiResult.specialRequirements;
+    installationConstraints = aiResult.installationConstraints;
+    
+    // Fallback to regex parser if AI returns nothing
+    if (inferredCircuits.length === 0) {
+      logger.warn('⚠️ AI extraction returned no circuits, using regex fallback');
+      const fallback = extractCircuitsFromPrompt(projectInfo.additionalPrompt, inputCircuits);
+      inferredCircuits = fallback.inferredCircuits;
+      specialRequirements = fallback.specialRequirements;
+      installationConstraints = fallback.installationConstraints;
+    }
+  }
 
   const allCircuits = [...inputCircuits, ...inferredCircuits];
 
@@ -62,7 +88,7 @@ export async function handleBatchDesign(body: any, logger: any) {
   // Build query from structured inputs + parsed context
   const query = buildDesignQuery(projectInfo, incomingSupply, allCircuits, specialRequirements, installationConstraints);
   
-  // Call main designer with RAG + AI (like RAMS does)
+  // Get API keys before AI extraction
   const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
   if (!lovableApiKey) throw new Error('LOVABLE_API_KEY not configured');
   
