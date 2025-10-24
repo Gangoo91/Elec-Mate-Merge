@@ -90,19 +90,15 @@ const ElectricalHub = () => {
       {/* Featured AI Installation Designer */}
       <div className="space-y-4">
         <Link to="/electrician/agent-selector" className="focus:outline-none hover-scale block">
-          <Card className="border-primary/50 bg-gradient-to-br from-primary/20 to-primary/5 hover:border-primary hover:from-primary/25 hover:to-primary/10 transition-all duration-300 cursor-pointer">
-            <CardHeader className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-center md:text-left py-6 md:py-8 px-6 md:px-8">
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
-                <Sparkles className="h-8 w-8 md:h-10 md:w-10 text-primary-foreground" />
-              </div>
-              <div className="flex-1">
-                <CardTitle className="text-xl md:text-2xl mb-2">
-                  AI Design Consultation
-                </CardTitle>
-                <p className="text-sm md:text-base text-muted-foreground">
-                  Talk to specialist agents one-on-one. Get expert advice on design, costing, installation, safety, testing, and project management — with smart handoffs between agents.
-                </p>
-              </div>
+          <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
+            <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
+              <Sparkles className="h-10 w-10 sm:h-12 sm:w-12 mb-3 text-elec-yellow" />
+              <CardTitle className="text-base sm:text-lg leading-tight">
+                AI Design Consultation
+              </CardTitle>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-2 px-2">
+                Talk to specialist agents one-on-one for design, costing, installation, safety, testing, and project management.
+              </p>
             </CardHeader>
           </Card>
         </Link>
