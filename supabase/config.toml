@@ -61,6 +61,19 @@ timeout_sec = 300
 verify_jwt = false
 timeout_sec = 300
 
+# AI Assistant & RAG Search Functions
+[functions.electrician-ai-assistant]
+verify_jwt = false
+timeout_sec = 180
+
+[functions.bs7671-rag-search]
+verify_jwt = false
+timeout_sec = 120
+
+[functions.multi-source-rag-search]
+verify_jwt = false
+timeout_sec = 120
+
 # Agent Router - Must be public since it routes to public V3 agents
 [functions.agent-router]
 verify_jwt = false
@@ -118,10 +131,6 @@ verify_jwt = false
 timeout_sec = 120
 
 [functions.wiring-diagram-generator-rag]
-verify_jwt = false
-timeout_sec = 180
-
-[functions.maintenance-plan-generator]
 verify_jwt = false
 timeout_sec = 180
 

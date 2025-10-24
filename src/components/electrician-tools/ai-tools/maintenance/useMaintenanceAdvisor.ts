@@ -162,7 +162,7 @@ export const useMaintenanceAdvisor = () => {
       const isQuick = input.detailLevel === 'quick';
       
       // Start backend call immediately
-      const invokePromise = supabase.functions.invoke('maintenance-plan-generator', {
+      const invokePromise = supabase.functions.invoke('maintenance-v3', {
         body: {
           equipmentDescription: input.equipmentDescription.trim(),
           equipmentType: input.equipmentType,
