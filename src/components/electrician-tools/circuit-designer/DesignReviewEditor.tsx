@@ -1118,36 +1118,65 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                           clientName: design.clientName || 'N/A',
                           electricianName: design.electricianName || 'N/A',
                           installationType: design.installationType,
-                          totalLoad: design.totalLoad,
-                          diversityApplied: design.diversityApplied,
-                          diversityFactor: design.diversityFactor,
-                          consumerUnit: design.consumerUnit,
+                          
+                          supply: {
+                            voltage: design.consumerUnit.incomingSupply.voltage,
+                            phases: design.consumerUnit.incomingSupply.phases,
+                            earthingSystem: design.consumerUnit.incomingSupply.earthingSystem,
+                            Ze: design.consumerUnit.incomingSupply.Ze,
+                            PSCC: design.consumerUnit.incomingSupply.incomingPFC
+                          },
+                          
+                          consumerUnit: {
+                            type: design.consumerUnit.type,
+                            mainSwitchRating: design.consumerUnit.mainSwitchRating
+                          },
+                          
+                          loadSummary: {
+                            totalConnectedLoad: design.totalLoad,
+                            diversityApplied: design.diversityApplied,
+                            diversityFactor: design.diversityFactor,
+                            diversifiedLoad: design.diversityApplied ? design.totalLoad * (design.diversityFactor || 0.8) : design.totalLoad,
+                            numberOfCircuits: design.circuits.length
+                          },
+                          
                           circuits: design.circuits.map(circuit => ({
                             circuitNumber: circuit.circuitNumber,
                             name: circuit.name,
                             loadType: circuit.loadType,
                             loadPower: circuit.loadPower,
-                            designCurrent: circuit.designCurrent,
+                            designCurrent_Ib: circuit.calculations.Ib,
                             voltage: circuit.voltage,
                             phases: circuit.phases,
-                            cableSize: circuit.cableSize,
-                            cpcSize: circuit.cpcSize,
-                            cableType: circuit.cableType,
-                            cableLength: circuit.cableLength,
-                            installationMethod: circuit.installationMethod,
-                            protectionDevice: circuit.protectionDevice,
-                            rcdProtected: circuit.rcdProtected,
-                            afddRequired: circuit.afddRequired,
+                            
+                            cable: {
+                              size: circuit.cableSize,
+                              cpcSize: circuit.cpcSize,
+                              type: circuit.cableType,
+                              length: circuit.cableLength,
+                              installationMethod: circuit.installationMethod
+                            },
+                            
+                            protection: {
+                              type: circuit.protectionDevice.type,
+                              rating_In: circuit.protectionDevice.rating,
+                              curve: circuit.protectionDevice.curve,
+                              kaRating: circuit.protectionDevice.kaRating,
+                              rcdProtected: circuit.rcdProtected,
+                              afddRequired: circuit.afddRequired
+                            },
+                            
                             calculations: {
                               Ib: circuit.calculations.Ib,
                               In: circuit.calculations.In,
                               Iz: circuit.calculations.Iz,
+                              deratedCapacity: circuit.calculations.deratedCapacity,
+                              safetyMargin: circuit.calculations.safetyMargin,
                               voltageDrop: circuit.calculations.voltageDrop,
                               zs: circuit.calculations.zs,
-                              maxZs: circuit.calculations.maxZs,
-                              deratedCapacity: circuit.calculations.deratedCapacity,
-                              safetyMargin: circuit.calculations.safetyMargin
+                              maxZs: circuit.calculations.maxZs
                             },
+                            
                             justifications: circuit.justifications,
                             diversityFactor: circuit.diversityFactor,
                             diversityJustification: circuit.diversityJustification,
@@ -1159,6 +1188,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                             expectedTestResults: circuit.expectedTestResults,
                             warnings: circuit.warnings
                           })),
+                          
                           diversityBreakdown: design.diversityBreakdown,
                           materials: design.materials,
                           costEstimate: design.costEstimate,
