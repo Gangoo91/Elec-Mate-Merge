@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 
@@ -101,6 +102,31 @@ const fetchWithTimeout = async (url: string, options: any, timeoutMs: number, si
     clearTimeout(timeoutId);
     throw error;
   }
+};
+
+// Convert image URL to Gemini inline_data format
+const urlToInlineData = async (url: string): Promise<{ mime_type: string; data: string }> => {
+  // Handle data URLs (base64 already embedded)
+  if (url.startsWith('data:image')) {
+    const match = url.match(/data:(.*?);base64,(.+)/);
+    if (!match) throw new Error('Invalid data URL format');
+    const [, mimeType, base64Data] = match;
+    return { mime_type: mimeType, data: base64Data };
+  }
+  
+  // Fetch image from URL (Supabase Storage or external)
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch image from ${url}: ${response.status}`);
+  }
+  
+  const contentType = response.headers.get('content-type') || 'image/jpeg';
+  const arrayBuffer = await response.arrayBuffer();
+  const base64Data = base64Encode(new Uint8Array(arrayBuffer));
+  
+  console.log(`🖼️ Converted image: ${url.substring(0, 60)}... | ${contentType} | ${arrayBuffer.byteLength} bytes`);
+  
+  return { mime_type: contentType, data: base64Data };
 };
 
 serve(async (req) => {
@@ -479,27 +505,6 @@ RESPONSE REQUIREMENTS:
 
     const systemPrompt = getSystemPrompt(analysis_settings.mode, analysis_settings.fast_mode || false);
 
-    // Prepare images
-    const images = [{
-      type: "image_url",
-      image_url: {
-        url: primary_image,
-        detail: analysis_settings.fast_mode ? "low" : "high"
-      }
-    }];
-
-    // Limit additional images in fast mode
-    const imageLimit = analysis_settings.fast_mode ? 2 : additional_images.length;
-    additional_images.slice(0, imageLimit).forEach(imageUrl => {
-      images.push({
-        type: "image_url",
-        image_url: {
-          url: imageUrl,
-          detail: analysis_settings.fast_mode ? "low" : "medium"
-        }
-      });
-    });
-
     const getUserPrompt = (mode: AnalysisMode, fast: boolean): string => {
       const focusAreas = analysis_settings.focus_areas?.join(', ') || 'general';
       
@@ -525,21 +530,25 @@ RESPONSE REQUIREMENTS:
       ? (analysis_settings.fast_mode ? 1500 : 3000)
       : (analysis_settings.fast_mode ? 800 : 2000);
 
-    // Convert messages to Gemini format
-    const geminiContents = [
-      {
-        role: 'user',
-        parts: [
-          { text: systemPrompt + '\n\n' + userPrompt },
-          ...images.map((img: any) => ({
-            inline_data: {
-              mime_type: img.source?.type || 'image/jpeg',
-              data: img.source?.data || ''
-            }
-          }))
-        ]
-      }
-    ];
+    // Convert images to Gemini inline_data format
+    const parts: any[] = [{ text: systemPrompt + '\n\n' + userPrompt }];
+    
+    // Add primary image
+    const primaryInlineData = await urlToInlineData(primary_image);
+    parts.push({ inline_data: primaryInlineData });
+    
+    // Add additional images (respecting fast mode limit)
+    const imageLimit = analysis_settings.fast_mode ? 2 : additional_images.length;
+    if (additional_images.length > 0) {
+      const additionalInlineData = await Promise.all(
+        additional_images.slice(0, imageLimit).map(url => urlToInlineData(url))
+      );
+      additionalInlineData.forEach(inlineData => {
+        parts.push({ inline_data: inlineData });
+      });
+    }
+    
+    const geminiContents = [{ role: 'user', parts }];
 
     const aiResponse = await fetchWithTimeout(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`,
@@ -571,6 +580,18 @@ RESPONSE REQUIREMENTS:
           message: 'Too many requests. Please wait a moment.'
         }), {
           status: 429,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
+      // Check for image format errors
+      if (errorText.includes('Invalid InlineData') || errorText.includes('inline_data')) {
+        return new Response(JSON.stringify({
+          error: 'Image format error',
+          code: 400,
+          message: 'Image could not be processed. Try re-uploading or use Quick mode.'
+        }), {
+          status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
       }
