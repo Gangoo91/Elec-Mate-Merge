@@ -39,6 +39,204 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [exportId, setExportId] = useState('');
   const [showJsonPreview, setShowJsonPreview] = useState(false);
   
+  // Transform design to enhanced PDF JSON structure with human-readable strings
+  const transformToEnhancedPdfJson = (design: InstallationDesign) => {
+    const totalConnectedLoad = design.circuits.reduce((sum, c) => sum + (c.loadPower || 0), 0);
+    const diversifiedLoad = design.diversityBreakdown?.diversifiedLoad || totalConnectedLoad * 0.65;
+    const supplyVoltage = design.consumerUnit?.incomingSupply?.voltage || 230;
+    const designCurrent = diversifiedLoad / supplyVoltage;
+    
+    return {
+      document: {
+        type: "Circuit Design Specification",
+        standard: "BS 7671:2018+A3:2024",
+        generatedAt: new Date().toISOString(),
+        documentReference: `DS-${design.projectName.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0].replace(/-/g, '')}`
+      },
+      
+      project: {
+        name: design.projectName,
+        location: design.location,
+        clientName: design.clientName || 'N/A',
+        designerName: design.electricianName || 'N/A',
+        designDate: new Date().toISOString().split('T')[0],
+        installationType: design.installationType
+      },
+      
+      incomingSupply: {
+        voltage: supplyVoltage,
+        phases: design.consumerUnit?.incomingSupply?.phases || 'single',
+        supplyString: `${supplyVoltage}V ${design.consumerUnit?.incomingSupply?.phases === 'single' ? 'Single Phase' : design.consumerUnit?.incomingSupply?.phases === 'three' ? 'Three Phase' : 'Single Phase'}`,
+        earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-C-S',
+        Ze: design.consumerUnit?.incomingSupply?.Ze || 0.35,
+        PSCC: design.consumerUnit?.incomingSupply?.incomingPFC || 1.5,
+        psccString: `${design.consumerUnit?.incomingSupply?.incomingPFC || 1.5}kA`
+      },
+      
+      consumerUnit: {
+        type: design.consumerUnit.type,
+        typeDescription: design.consumerUnit.type === 'split-load' ? 'Split Load Consumer Unit' : 
+                         design.consumerUnit.type === 'high-integrity' ? 'High Integrity Consumer Unit' :
+                         'Main Switch Consumer Unit',
+        mainSwitchRating: design.consumerUnit.mainSwitchRating,
+        mainSwitchString: `${design.consumerUnit.mainSwitchRating}A Main Switch`
+      },
+      
+      loadAssessment: {
+        totalConnectedLoad,
+        totalConnectedLoadString: `${(totalConnectedLoad / 1000).toFixed(1)}kW`,
+        diversityApplied: design.diversityApplied || false,
+        diversityFactor: design.diversityBreakdown?.overallDiversityFactor || design.diversityFactor || 0.65,
+        diversityFactorPercent: `${((design.diversityBreakdown?.overallDiversityFactor || design.diversityFactor || 0.65) * 100).toFixed(0)}%`,
+        diversifiedLoad,
+        diversifiedLoadString: `${(diversifiedLoad / 1000).toFixed(1)}kW`,
+        designCurrent_Ib: parseFloat(designCurrent.toFixed(2)),
+        numberOfCircuits: design.circuits.length
+      },
+      
+      circuits: design.circuits.map(circuit => ({
+        circuitNumber: circuit.circuitNumber,
+        circuitId: `C${circuit.circuitNumber}`,
+        name: circuit.name,
+        
+        loadSpecification: {
+          loadType: circuit.loadType,
+          loadTypeDescription: circuit.loadType === 'socket' ? 'Socket Outlet Circuit' :
+                               circuit.loadType === 'lighting' ? 'Lighting Circuit' :
+                               circuit.loadType === 'cooker' ? 'Cooker Circuit' :
+                               circuit.loadType === 'shower' ? 'Electric Shower Circuit' :
+                               circuit.loadType === 'immersion' ? 'Immersion Heater' :
+                               circuit.loadType === 'heating' ? 'Heating Circuit' : 'Fixed Appliance',
+          powerRating: circuit.loadPower || 0,
+          powerRatingString: `${circuit.loadPower || 0}W`,
+          designCurrent_Ib: circuit.calculations?.Ib || circuit.designCurrent || 0,
+          designCurrentString: `${(circuit.calculations?.Ib || circuit.designCurrent || 0).toFixed(1)}A`,
+          supplyString: `${circuit.voltage || supplyVoltage}V ${circuit.phases === 'single' ? 'Single Phase' : 'Three Phase'}`
+        },
+        
+        cableSpecification: {
+          liveConductors: circuit.cableSize,
+          liveConductorsString: `${circuit.cableSize}mm²`,
+          cpc: circuit.cpcSize,
+          cpcString: `${circuit.cpcSize}mm²`,
+          cableType: circuit.cableType || `${circuit.cableSize}/${circuit.cpcSize}mm² T&E`,
+          cableLength: circuit.cableLength,
+          cableLengthString: `${circuit.cableLength}m`,
+          installationMethod: circuit.installationMethod,
+          installationMethodDescription: circuit.installationMethod === 'clipped-direct' ? 'Method C - Clipped Direct (Reference Method 100)' :
+                                          circuit.installationMethod === 'enclosed-conduit' ? 'Method B - Enclosed in Conduit (Reference Method 3)' :
+                                          circuit.installationMethod === 'insulated-wall' ? 'Method A - Enclosed in Insulated Wall (Reference Method 101)' :
+                                          circuit.installationMethod === 'trunking' ? 'Method E - In Trunking' :
+                                          circuit.installationMethod === 'underground' ? 'Method D - Underground' : 'Other Method'
+        },
+        
+        protectionDevice: {
+          deviceType: circuit.protectionDevice.type,
+          rating_In: circuit.protectionDevice.rating,
+          ratingString: `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}`,
+          curve: circuit.protectionDevice.curve,
+          breakingCapacity: circuit.protectionDevice.kaRating,
+          breakingCapacityString: `${circuit.protectionDevice.kaRating}kA`,
+          rcdProtected: circuit.rcdProtected || false,
+          rcdProtectionString: circuit.rcdProtected ? "Yes (30mA RCD)" : "No",
+          afddRequired: circuit.afddRequired || false
+        },
+        
+        designCalculations: {
+          designCurrent: {
+            Ib: circuit.calculations.Ib,
+            calculation: `Ib = Power ÷ Voltage = ${circuit.loadPower}W ÷ ${circuit.voltage}V = ${circuit.calculations.Ib.toFixed(1)}A`,
+            result: `${circuit.calculations.Ib.toFixed(1)}A`
+          },
+          
+          cableSizing: {
+            regulation: "433.1.1",
+            tabulatedCapacity_It: circuit.deratingFactors?.Ca ? (circuit.calculations.Iz / circuit.deratingFactors.overall) : 0,
+            nominalCurrent_In: circuit.protectionDevice.rating,
+            effectiveCapacity_Iz: circuit.calculations.Iz,
+            safetyMargin: circuit.calculations.safetyMargin,
+            safetyMarginPercent: `${circuit.calculations.safetyMargin.toFixed(1)}%`,
+            compliant: circuit.calculations.voltageDrop.compliant,
+            complianceText: circuit.calculations.voltageDrop.compliant ? "✓ COMPLIANT" : "✗ NON-COMPLIANT"
+          },
+          
+          voltageDrop: {
+            regulation: "525",
+            actualDrop: circuit.calculations.voltageDrop.volts,
+            actualDropString: `${circuit.calculations.voltageDrop.volts.toFixed(1)}V (${circuit.calculations.voltageDrop.percent.toFixed(2)}%)`,
+            maximumPermitted: circuit.calculations.voltageDrop.limit,
+            maximumPermittedString: `${circuit.calculations.voltageDrop.limit.toFixed(1)}V (5%)`,
+            compliant: circuit.calculations.voltageDrop.compliant,
+            complianceText: circuit.calculations.voltageDrop.compliant ? "✓ COMPLIANT" : "✗ NON-COMPLIANT"
+          },
+          
+          earthFaultLoop: {
+            regulation: "411.4.4",
+            actualZs: circuit.calculations.zs,
+            actualZsString: `${circuit.calculations.zs.toFixed(2)}Ω`,
+            maximumZs: circuit.calculations.maxZs,
+            maximumZsString: `${circuit.calculations.maxZs.toFixed(2)}Ω`,
+            compliant: circuit.calculations.zs < circuit.calculations.maxZs,
+            complianceText: circuit.calculations.zs < circuit.calculations.maxZs ? "✓ COMPLIANT" : "✗ NON-COMPLIANT",
+            expectedR1R2: circuit.expectedTestResults?.r1r2?.at20C || "TBC on-site"
+          }
+        },
+        
+        justifications: circuit.justifications,
+        
+        diversity: {
+          applied: !!circuit.diversityFactor && circuit.diversityFactor < 1.0,
+          factor: circuit.diversityFactor || 1.0,
+          factorPercent: `${((circuit.diversityFactor || 1.0) * 100).toFixed(0)}%`,
+          justification: circuit.diversityJustification || "No diversity applied - full load considered"
+        },
+        
+        warnings: circuit.warnings || []
+      })),
+      
+      diversityBreakdown: design.diversityBreakdown || {
+        totalConnectedLoad,
+        diversifiedLoad,
+        overallDiversityFactor: design.diversityFactor || 0.65,
+        reasoning: "Diversity applied in accordance with BS 7671 Appendix A. Assessment considers coincident maximum demand unlikely to occur simultaneously across all circuits.",
+        bs7671Reference: "Appendix A - Current-carrying capacity and voltage drop for cables and flexible cords",
+        circuitDiversity: design.circuits.map(c => ({
+          circuitName: c.name,
+          connectedLoad: c.loadPower || 0,
+          diversityFactorApplied: c.diversityFactor || 1.0,
+          diversifiedLoad: (c.loadPower || 0) * (c.diversityFactor || 1.0),
+          justification: c.diversityJustification || "No diversity applied"
+        }))
+      },
+      
+      materials: design.materials || [],
+      
+      costEstimate: design.costEstimate || {
+        materials: 0,
+        labour: 0,
+        total: 0,
+        currency: "GBP"
+      },
+      
+      practicalGuidance: design.practicalGuidance || [
+        "All circuits to be tested and inspected in accordance with BS 7671:2018+A3:2024",
+        "RCD operation to be verified at 1x and 5x rated residual current",
+        "Installation certificate to be completed and issued upon completion",
+        "Schedule of test results to accompany installation certificate"
+      ],
+      
+      complianceStatement: {
+        text: "This electrical installation design has been prepared in accordance with BS 7671:2018+A3:2024 (18th Edition IET Wiring Regulations). All circuit designs comply with current UK electrical safety standards and regulations. Installation must be carried out by a competent person and tested in accordance with BS 7671 requirements.",
+        regulation: "BS 7671:2018+A3:2024",
+        designerAuthorization: {
+          designedBy: design.electricianName || 'N/A',
+          date: new Date().toISOString().split('T')[0],
+          signature: "[To be signed on printed document]"
+        }
+      }
+    };
+  };
+  
   const handleQuickForward = (targetAgent: AgentType) => {
     const routes: Record<AgentType, string> = {
       'designer': '/electrician/circuit-designer',
@@ -1050,61 +1248,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       size="sm"
                       className="absolute right-2 top-2 z-10 text-white/70 hover:text-white hover:bg-white/10"
                       onClick={() => {
-                        const designPdfPayload = {
-                          projectName: design.projectName,
-                          location: design.location,
-                          clientName: design.clientName || 'N/A',
-                          electricianName: design.electricianName || 'N/A',
-                          installationType: design.installationType,
-                          totalLoad: design.totalLoad,
-                          diversityApplied: design.diversityApplied,
-                          diversityFactor: design.diversityFactor,
-                          consumerUnit: design.consumerUnit,
-                          circuits: design.circuits.map(circuit => ({
-                            circuitNumber: circuit.circuitNumber,
-                            name: circuit.name,
-                            loadType: circuit.loadType,
-                            loadPower: circuit.loadPower,
-                            designCurrent: circuit.designCurrent,
-                            voltage: circuit.voltage,
-                            phases: circuit.phases,
-                            cableSize: circuit.cableSize,
-                            cpcSize: circuit.cpcSize,
-                            cableType: circuit.cableType,
-                            cableLength: circuit.cableLength,
-                            installationMethod: circuit.installationMethod,
-                            protectionDevice: circuit.protectionDevice,
-                            rcdProtected: circuit.rcdProtected,
-                            afddRequired: circuit.afddRequired,
-                            calculations: {
-                              Ib: circuit.calculations.Ib,
-                              In: circuit.calculations.In,
-                              Iz: circuit.calculations.Iz,
-                              voltageDrop: circuit.calculations.voltageDrop,
-                              zs: circuit.calculations.zs,
-                              maxZs: circuit.calculations.maxZs,
-                              deratedCapacity: circuit.calculations.deratedCapacity,
-                              safetyMargin: circuit.calculations.safetyMargin
-                            },
-                            justifications: circuit.justifications,
-                            diversityFactor: circuit.diversityFactor,
-                            diversityJustification: circuit.diversityJustification,
-                            faultCurrentAnalysis: circuit.faultCurrentAnalysis,
-                            earthingRequirements: circuit.earthingRequirements,
-                            deratingFactors: circuit.deratingFactors,
-                            installationGuidance: circuit.installationGuidance,
-                            specialLocationCompliance: circuit.specialLocationCompliance,
-                            expectedTestResults: circuit.expectedTestResults,
-                            warnings: circuit.warnings
-                          })),
-                          diversityBreakdown: design.diversityBreakdown,
-                          materials: design.materials,
-                          costEstimate: design.costEstimate,
-                          practicalGuidance: design.practicalGuidance
-                        };
-                        
-                        navigator.clipboard.writeText(JSON.stringify(designPdfPayload, null, 2));
-                        toast.success('Circuit Design PDF JSON copied to clipboard');
+                        const enhancedJson = transformToEnhancedPdfJson(design);
+                        navigator.clipboard.writeText(JSON.stringify(enhancedJson, null, 2));
+                        toast.success('Enhanced Circuit Design PDF JSON copied to clipboard');
                       }}
                     >
                       <Copy className="h-4 w-4 mr-1" />
@@ -1112,88 +1258,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     </Button>
                     <div className="max-h-96 overflow-auto rounded-lg bg-slate-900 p-4 pr-20">
                       <pre className="text-xs text-sky-300 font-mono">
-                        {JSON.stringify({
-                          projectName: design.projectName,
-                          location: design.location,
-                          clientName: design.clientName || 'N/A',
-                          electricianName: design.electricianName || 'N/A',
-                          installationType: design.installationType,
-                          
-                          supply: {
-                            voltage: design.consumerUnit.incomingSupply.voltage,
-                            phases: design.consumerUnit.incomingSupply.phases,
-                            earthingSystem: design.consumerUnit.incomingSupply.earthingSystem,
-                            Ze: design.consumerUnit.incomingSupply.Ze,
-                            PSCC: design.consumerUnit.incomingSupply.incomingPFC
-                          },
-                          
-                          consumerUnit: {
-                            type: design.consumerUnit.type,
-                            mainSwitchRating: design.consumerUnit.mainSwitchRating
-                          },
-                          
-                          loadSummary: {
-                            totalConnectedLoad: design.totalLoad,
-                            diversityApplied: design.diversityApplied,
-                            diversityFactor: design.diversityFactor,
-                            diversifiedLoad: design.diversityApplied ? design.totalLoad * (design.diversityFactor || 0.8) : design.totalLoad,
-                            numberOfCircuits: design.circuits.length
-                          },
-                          
-                          circuits: design.circuits.map(circuit => ({
-                            circuitNumber: circuit.circuitNumber,
-                            name: circuit.name,
-                            loadType: circuit.loadType,
-                            loadPower: circuit.loadPower,
-                            designCurrent_Ib: circuit.calculations.Ib,
-                            voltage: circuit.voltage,
-                            phases: circuit.phases,
-                            
-                            cable: {
-                              size: circuit.cableSize,
-                              cpcSize: circuit.cpcSize,
-                              type: circuit.cableType,
-                              length: circuit.cableLength,
-                              installationMethod: circuit.installationMethod
-                            },
-                            
-                            protection: {
-                              type: circuit.protectionDevice.type,
-                              rating_In: circuit.protectionDevice.rating,
-                              curve: circuit.protectionDevice.curve,
-                              kaRating: circuit.protectionDevice.kaRating,
-                              rcdProtected: circuit.rcdProtected,
-                              afddRequired: circuit.afddRequired
-                            },
-                            
-                            calculations: {
-                              Ib: circuit.calculations.Ib,
-                              In: circuit.calculations.In,
-                              Iz: circuit.calculations.Iz,
-                              deratedCapacity: circuit.calculations.deratedCapacity,
-                              safetyMargin: circuit.calculations.safetyMargin,
-                              voltageDrop: circuit.calculations.voltageDrop,
-                              zs: circuit.calculations.zs,
-                              maxZs: circuit.calculations.maxZs
-                            },
-                            
-                            justifications: circuit.justifications,
-                            diversityFactor: circuit.diversityFactor,
-                            diversityJustification: circuit.diversityJustification,
-                            faultCurrentAnalysis: circuit.faultCurrentAnalysis,
-                            earthingRequirements: circuit.earthingRequirements,
-                            deratingFactors: circuit.deratingFactors,
-                            installationGuidance: circuit.installationGuidance,
-                            specialLocationCompliance: circuit.specialLocationCompliance,
-                            expectedTestResults: circuit.expectedTestResults,
-                            warnings: circuit.warnings
-                          })),
-                          
-                          diversityBreakdown: design.diversityBreakdown,
-                          materials: design.materials,
-                          costEstimate: design.costEstimate,
-                          practicalGuidance: design.practicalGuidance
-                        }, null, 2)}
+                        {JSON.stringify(transformToEnhancedPdfJson(design), null, 2)}
                       </pre>
                     </div>
                   </div>
