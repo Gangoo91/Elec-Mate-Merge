@@ -3372,6 +3372,33 @@ export type Database = {
           },
         ]
       }
+      oauth_states: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: string
+          provider: string
+          state: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at: string
+          id?: string
+          provider: string
+          state: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          provider?: string
+          state?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       ojt_assessments: {
         Row: {
           created_at: string
@@ -6471,6 +6498,7 @@ export type Database = {
         Args: never
         Returns: undefined
       }
+      cleanup_expired_oauth_states: { Args: never; Returns: undefined }
       cleanup_expired_pricing_data: { Args: never; Returns: undefined }
       cleanup_expired_temp_pdfs: { Args: never; Returns: undefined }
       cleanup_expired_tool_cache: { Args: never; Returns: undefined }
