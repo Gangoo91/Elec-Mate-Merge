@@ -5,7 +5,7 @@ import { QuotesReadyPanel } from "./QuotesReadyPanel";
 import { InvoiceStatusPanel } from "./InvoiceStatusPanel";
 import { Quote } from "@/types/quote";
 import { Card, CardContent } from "@/components/ui/card";
-import { Receipt, FileCheck, TrendingUp, DollarSign } from "lucide-react";
+import { Receipt, FileCheck, TrendingUp, PoundSterling } from "lucide-react";
 import { InvoiceDecisionDialog } from "./InvoiceDecisionDialog";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
@@ -168,7 +168,7 @@ export const QuoteInvoiceDashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="border-elec-yellow/20">
           <CardContent className="p-6 text-center space-y-2">
-            <Receipt className="h-8 w-8 text-elec-yellow mx-auto" />
+            <PoundSterling className="h-8 w-8 text-elec-yellow mx-auto" />
             <div className="text-2xl font-bold text-primary">{quotesReady.length}</div>
             <div className="text-sm text-muted-foreground">Ready for Invoice</div>
           </CardContent>
@@ -197,7 +197,7 @@ export const QuoteInvoiceDashboard = () => {
 
         <Card className="border-elec-yellow/20">
           <CardContent className="p-6 text-center space-y-2">
-            <DollarSign className="h-8 w-8 text-green-400 mx-auto" />
+            <PoundSterling className="h-8 w-8 text-green-400 mx-auto" />
             <div className="text-2xl font-bold text-primary">{formatCurrency(stats.paidValue)}</div>
             <div className="text-sm text-muted-foreground">Paid</div>
           </CardContent>

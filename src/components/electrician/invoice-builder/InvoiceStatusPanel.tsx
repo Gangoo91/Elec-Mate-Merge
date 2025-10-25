@@ -12,7 +12,7 @@ import {
   AlertTriangle,
   Eye,
   Mail,
-  DollarSign,
+  PoundSterling,
   History,
 } from 'lucide-react';
 import { InvoiceSendDropdown } from './InvoiceSendDropdown';
@@ -199,7 +199,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
               onClick={() => setSelectedInvoiceForPayment(invoice)}
               className="ml-auto"
             >
-              <DollarSign className="mr-1 h-3 w-3" />
+              <PoundSterling className="mr-1 h-3 w-3" />
               Mark Paid
             </Button>
           )}
