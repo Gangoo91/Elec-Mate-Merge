@@ -69,10 +69,7 @@ export const InvoiceSendDropdown = ({
       }
       
       const { error } = await supabase.functions.invoke('send-invoice-resend', {
-        body: { invoiceId: invoice.id },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
-        }
+        body: { invoiceId: invoice.id }
       });
 
       if (error) throw error;
