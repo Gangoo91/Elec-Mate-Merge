@@ -4,11 +4,13 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { InstallationDesign, CircuitDesign } from '@/types/installation-design';
 import { 
   CheckCircle2, AlertTriangle, Download, Zap, Cable, Shield, 
   TrendingDown, Percent, Gauge, Wrench, MapPin, ClipboardCheck, FileText,
-  Upload, Loader2, Check
+  Upload, Loader2, Check, ChevronDown, Copy
 } from 'lucide-react';
 import { downloadEICPDF } from '@/lib/eic/pdfGenerator';
 import { generateEICSchedule } from '@/lib/eic/scheduleGenerator';
@@ -18,6 +20,7 @@ import { SendToAgentDropdown } from '@/components/install-planner-v2/SendToAgent
 import { AgentFlowDiagram } from '@/components/install-planner-v2/AgentFlowDiagram';
 import { AgentType } from '@/types/agent-request';
 import { useNavigate } from 'react-router-dom';
+import { calculateExpectedR1R2, getMaxZsForDevice, mapLoadTypeToCircuitDescription } from '@/utils/eic-transformer';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -34,6 +37,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [isExporting, setIsExporting] = useState(false);
   const [exportSuccess, setExportSuccess] = useState(false);
   const [exportId, setExportId] = useState('');
+  const [showJsonPreview, setShowJsonPreview] = useState(false);
   
   const handleQuickForward = (targetAgent: AgentType) => {
     const routes: Record<AgentType, string> = {
@@ -839,6 +843,206 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </p>
             </div>
           </div>
+          
+          {/* JSON Preview Collapsible */}
+          <Collapsible open={showJsonPreview} onOpenChange={setShowJsonPreview}>
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="w-full justify-between text-white/70 hover:text-white hover:bg-white/5">
+                <span className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  {showJsonPreview ? 'Hide' : 'Show'} JSON Payload Preview
+                </span>
+                <ChevronDown className={`h-4 w-4 transition-transform ${showJsonPreview ? 'rotate-180' : ''}`} />
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <Tabs defaultValue="raw" className="mt-3">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="raw">Raw Request</TabsTrigger>
+                  <TabsTrigger value="transformed">EIC Format</TabsTrigger>
+                </TabsList>
+                
+                {/* Tab 1: Raw Request Payload */}
+                <TabsContent value="raw" className="mt-3">
+                  <div className="relative">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-2 top-2 z-10 text-white/70 hover:text-white hover:bg-white/10"
+                      onClick={() => {
+                        const rawPayload = {
+                          design: design,
+                          projectName: design.projectName,
+                          location: design.location,
+                          clientName: design.clientName,
+                          electricianName: design.electricianName
+                        };
+                        navigator.clipboard.writeText(JSON.stringify(rawPayload, null, 2));
+                        toast.success('Raw JSON copied to clipboard');
+                      }}
+                    >
+                      <Copy className="h-4 w-4 mr-1" />
+                      Copy
+                    </Button>
+                    <div className="max-h-96 overflow-auto rounded-lg bg-slate-900 p-4 pr-20">
+                      <pre className="text-xs text-emerald-300 font-mono">
+                        {JSON.stringify({
+                          design: design,
+                          projectName: design.projectName,
+                          location: design.location,
+                          clientName: design.clientName,
+                          electricianName: design.electricianName
+                        }, null, 2)}
+                      </pre>
+                    </div>
+                  </div>
+                </TabsContent>
+                
+                {/* Tab 2: Transformed EIC Format */}
+                <TabsContent value="transformed" className="mt-3">
+                  <div className="relative">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-2 top-2 z-10 text-white/70 hover:text-white hover:bg-white/10"
+                      onClick={() => {
+                        const eicCircuits = design.circuits.map((circuit, index) => {
+                          const liveSize = circuit.cableSize.toString();
+                          const cpcSize = circuit.cpcSize.toString();
+                          const lengthM = circuit.cableLength;
+                          
+                          const expectedR1R2 = calculateExpectedR1R2(liveSize, cpcSize, lengthM);
+                          const expectedZs = expectedR1R2 + (design.consumerUnit.incomingSupply.Ze || 0.35);
+                          const maxZs = getMaxZsForDevice(
+                            circuit.protectionDevice.type, 
+                            circuit.protectionDevice.curve, 
+                            circuit.protectionDevice.rating
+                          );
+                          
+                          return {
+                            circuitNumber: `C${index + 1}`,
+                            phaseType: circuit.phases,
+                            circuitDescription: circuit.name,
+                            referenceMethod: circuit.installationMethod,
+                            liveSize: `${liveSize}mm²`,
+                            cpcSize: `${cpcSize}mm²`,
+                            cableLength: `${lengthM}m`,
+                            protectiveDeviceType: circuit.protectionDevice.type,
+                            protectiveDeviceCurve: circuit.protectionDevice.curve,
+                            protectiveDeviceRating: `${circuit.protectionDevice.rating}A`,
+                            expectedR1R2: `${expectedR1R2.toFixed(3)}Ω`,
+                            expectedZs: `${expectedZs.toFixed(3)}Ω`,
+                            expectedMaxZs: `${maxZs.toFixed(2)}Ω`,
+                            expectedInsulationResistance: "≥1.0MΩ (min), expect >50MΩ",
+                            insulationTestVoltage: circuit.phases === "single" ? "500V DC" : "500V DC",
+                            polarity: "Correct (verify on-site)",
+                            rcdProtection: circuit.rcdProtected,
+                            afddRequired: circuit.afddRequired,
+                            // Blank fields for on-site testing
+                            actualR1R2: null,
+                            actualZs: null,
+                            actualInsulationResistance: null,
+                            actualPolarity: null,
+                            actualRcdTest: null,
+                            actualAfddTest: null,
+                            pfc: null,
+                            functionalTesting: null,
+                            testDate: null,
+                            testedBy: null,
+                            testInstrumentSerial: null
+                          };
+                        });
+                        
+                        const transformedPayload = {
+                          projectName: design.projectName,
+                          location: design.location,
+                          clientName: design.clientName,
+                          electricianName: design.electricianName,
+                          consumerUnit: design.consumerUnit,
+                          eicCircuits: eicCircuits,
+                          exportMetadata: {
+                            exportedAt: new Date().toISOString(),
+                            totalCircuits: eicCircuits.length,
+                            status: "pending",
+                            designType: design.installationType
+                          }
+                        };
+                        
+                        navigator.clipboard.writeText(JSON.stringify(transformedPayload, null, 2));
+                        toast.success('EIC JSON copied to clipboard');
+                      }}
+                    >
+                      <Copy className="h-4 w-4 mr-1" />
+                      Copy
+                    </Button>
+                    <div className="max-h-96 overflow-auto rounded-lg bg-slate-900 p-4 pr-20">
+                      <pre className="text-xs text-emerald-300 font-mono">
+                        {JSON.stringify({
+                          projectName: design.projectName,
+                          location: design.location,
+                          clientName: design.clientName,
+                          electricianName: design.electricianName,
+                          consumerUnit: design.consumerUnit,
+                          eicCircuits: design.circuits.map((circuit, index) => {
+                            const liveSize = circuit.cableSize.toString();
+                            const cpcSize = circuit.cpcSize.toString();
+                            const lengthM = circuit.cableLength;
+                            
+                            const expectedR1R2 = calculateExpectedR1R2(liveSize, cpcSize, lengthM);
+                            const expectedZs = expectedR1R2 + (design.consumerUnit.incomingSupply.Ze || 0.35);
+                            const maxZs = getMaxZsForDevice(
+                              circuit.protectionDevice.type, 
+                              circuit.protectionDevice.curve, 
+                              circuit.protectionDevice.rating
+                            );
+                            
+                            return {
+                              circuitNumber: `C${index + 1}`,
+                              phaseType: circuit.phases,
+                              circuitDescription: circuit.name,
+                              referenceMethod: circuit.installationMethod,
+                              liveSize: `${liveSize}mm²`,
+                              cpcSize: `${cpcSize}mm²`,
+                              cableLength: `${lengthM}m`,
+                              protectiveDeviceType: circuit.protectionDevice.type,
+                              protectiveDeviceCurve: circuit.protectionDevice.curve,
+                              protectiveDeviceRating: `${circuit.protectionDevice.rating}A`,
+                              expectedR1R2: `${expectedR1R2.toFixed(3)}Ω`,
+                              expectedZs: `${expectedZs.toFixed(3)}Ω`,
+                              expectedMaxZs: `${maxZs.toFixed(2)}Ω`,
+                              expectedInsulationResistance: "≥1.0MΩ (min), expect >50MΩ",
+                              insulationTestVoltage: circuit.phases === "single" ? "500V DC" : "500V DC",
+                              polarity: "Correct (verify on-site)",
+                              rcdProtection: circuit.rcdProtected,
+                              afddRequired: circuit.afddRequired,
+                              // Blank fields for on-site testing
+                              actualR1R2: null,
+                              actualZs: null,
+                              actualInsulationResistance: null,
+                              actualPolarity: null,
+                              actualRcdTest: null,
+                              actualAfddTest: null,
+                              pfc: null,
+                              functionalTesting: null,
+                              testDate: null,
+                              testedBy: null,
+                              testInstrumentSerial: null
+                            };
+                          }),
+                          exportMetadata: {
+                            exportedAt: new Date().toISOString(),
+                            totalCircuits: design.circuits.length,
+                            status: "pending",
+                            designType: design.installationType
+                          }
+                        }, null, 2)}
+                      </pre>
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </CollapsibleContent>
+          </Collapsible>
           
           <Button 
             onClick={handleExportToEIC}
