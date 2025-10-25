@@ -132,20 +132,82 @@ serve(async (req) => {
         zsMax: c.calculations.maxZs?.toFixed(2) || 'N/A',
         zsCompliant: c.calculations.zs < c.calculations.maxZs ? 'Yes' : 'No',
 
+        // Diversity
+        diversityFactor: c.diversityFactor ? `${(c.diversityFactor * 100).toFixed(0)}%` : 'N/A',
+        diversityJustification: c.diversityJustification || '',
+
         // Justifications
         cableSizeJustification: c.justifications?.cableSize || '',
         protectionJustification: c.justifications?.protection || '',
         rcdJustification: c.justifications?.rcd || '',
 
+        // Fault Current Analysis
+        faultCurrentAnalysis: c.faultCurrentAnalysis ? {
+          psccAtCircuit: `${c.faultCurrentAnalysis.psccAtCircuit} kA`,
+          deviceBreakingCapacity: `${c.faultCurrentAnalysis.deviceBreakingCapacity} kA`,
+          compliant: c.faultCurrentAnalysis.compliant ? 'Yes' : 'No',
+          marginOfSafety: c.faultCurrentAnalysis.marginOfSafety,
+          regulation: c.faultCurrentAnalysis.regulation
+        } : null,
+
+        // Earthing Requirements
+        earthingRequirements: c.earthingRequirements ? {
+          cpcSize: c.earthingRequirements.cpcSize,
+          supplementaryBonding: c.earthingRequirements.supplementaryBonding ? 'Yes' : 'No',
+          bondingConductorSize: c.earthingRequirements.bondingConductorSize,
+          justification: c.earthingRequirements.justification,
+          regulation: c.earthingRequirements.regulation
+        } : null,
+
+        // Derating Factors
+        deratingFactors: c.deratingFactors ? {
+          Ca: c.deratingFactors.Ca,
+          Cg: c.deratingFactors.Cg,
+          Ci: c.deratingFactors.Ci,
+          overall: c.deratingFactors.overall,
+          explanation: c.deratingFactors.explanation,
+          tableReferences: c.deratingFactors.tableReferences
+        } : null,
+
+        // Installation Guidance
+        installationGuidance: c.installationGuidance ? {
+          referenceMethod: c.installationGuidance.referenceMethod,
+          description: c.installationGuidance.description,
+          clipSpacing: c.installationGuidance.clipSpacing,
+          practicalTips: c.installationGuidance.practicalTips || [],
+          regulation: c.installationGuidance.regulation
+        } : null,
+
         // Special Location
         isSpecialLocation: c.specialLocationCompliance?.isSpecialLocation || false,
         specialLocationType: c.specialLocationCompliance?.locationType || '',
         specialLocationRequirements: (c.specialLocationCompliance?.requirements || []).join('; '),
+        specialLocationRegulation: c.specialLocationCompliance?.regulation || '',
+        specialLocationZones: c.specialLocationCompliance?.zonesApplicable || '',
 
         // Expected Test Results
-        expectedR1R2: c.expectedTestResults?.r1r2?.at70C || 'N/A',
-        expectedZs: c.expectedTestResults?.zs?.calculated || 'N/A',
-        expectedInsulation: c.expectedTestResults?.insulationResistance?.minResistance || 'N/A',
+        expectedTestResults: c.expectedTestResults ? {
+          r1r2: {
+            at20C: c.expectedTestResults.r1r2?.at20C || 'N/A',
+            at70C: c.expectedTestResults.r1r2?.at70C || 'N/A',
+            calculation: c.expectedTestResults.r1r2?.calculation || ''
+          },
+          zs: {
+            calculated: c.expectedTestResults.zs?.calculated || 'N/A',
+            maxPermitted: c.expectedTestResults.zs?.maxPermitted || 'N/A',
+            compliant: c.expectedTestResults.zs?.compliant ? 'Yes' : 'No'
+          },
+          insulationResistance: {
+            testVoltage: c.expectedTestResults.insulationResistance?.testVoltage || '500V DC',
+            minResistance: c.expectedTestResults.insulationResistance?.minResistance || '≥1.0MΩ'
+          },
+          polarity: c.expectedTestResults?.polarity || 'Correct at all points',
+          rcdTest: c.expectedTestResults?.rcdTest ? {
+            at1x: c.expectedTestResults.rcdTest.at1x || 'N/A',
+            at5x: c.expectedTestResults.rcdTest.at5x || 'N/A',
+            regulation: c.expectedTestResults.rcdTest.regulation || 'BS 7671 Regulation 643.2.2'
+          } : null
+        } : null,
 
         // Warnings
         warnings: (c.warnings || []).join('; ')
