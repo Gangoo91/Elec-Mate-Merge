@@ -6212,6 +6212,45 @@ export type Database = {
         }
         Relationships: []
       }
+      user_email_configs: {
+        Row: {
+          created_at: string | null
+          email_address: string
+          email_provider: string
+          encrypted_access_token: string | null
+          encrypted_refresh_token: string | null
+          id: string
+          is_active: boolean | null
+          token_expires_at: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email_address: string
+          email_provider: string
+          encrypted_access_token?: string | null
+          encrypted_refresh_token?: string | null
+          id?: string
+          is_active?: boolean | null
+          token_expires_at?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          email_address?: string
+          email_provider?: string
+          encrypted_access_token?: string | null
+          encrypted_refresh_token?: string | null
+          id?: string
+          is_active?: boolean | null
+          token_expires_at?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_professional_memberships: {
         Row: {
           created_at: string
