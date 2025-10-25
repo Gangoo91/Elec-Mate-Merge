@@ -509,7 +509,7 @@ Thank you for your business!`;
       {/* Header */}
       <header className="relative bg-card border-b">
         <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-        <div className="relative px-4 py-6 space-y-4">
+        <div className="relative px-4 py-8 space-y-6">
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center gap-2 text-sm text-muted-foreground">
             <Link to="/electrician/business" className="hover:text-foreground transition-colors">
@@ -529,21 +529,21 @@ Thank you for your business!`;
                 Manage and track all your electrical invoices
               </p>
             </div>
-            <div className="flex gap-2">
-              <Link to="/electrician/quote-invoice-dashboard">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <Link to="/electrician/quote-invoice-dashboard" className="w-full sm:w-auto">
+                <MobileButton variant="outline" size="wide" className="sm:w-auto">
                   <LayoutDashboard className="mr-2 h-4 w-4" /> Workflow Dashboard
-                </Button>
+                </MobileButton>
               </Link>
-              <Link to="/electrician">
-                <Button variant="secondary" size="lg" className="w-full sm:w-auto shadow-lg">
+              <Link to="/electrician" className="w-full sm:w-auto">
+                <MobileButton variant="secondary" size="wide" className="sm:w-auto">
                   <ArrowLeft className="mr-2 h-4 w-4" /> Electrical Hub
-                </Button>
+                </MobileButton>
               </Link>
-              <Link to="/electrician/invoice-builder/create">
-                <Button variant="default" size="lg" className="w-full sm:w-auto bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold">
+              <Link to="/electrician/invoice-builder/create" className="w-full sm:w-auto">
+                <MobileButton variant="elec" size="wide" className="sm:w-auto">
                   <Plus className="mr-2 h-4 w-4" /> Create Invoice
-                </Button>
+                </MobileButton>
               </Link>
             </div>
           </div>
@@ -552,8 +552,9 @@ Thank you for your business!`;
 
       {/* Dashboard Content */}
       <div className="px-4 md:px-6 py-6 md:py-8 space-y-6">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+        <div className="max-w-[1400px] mx-auto space-y-6">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
           <Card 
             className={`cursor-pointer transition-all hover:border-elec-yellow/40 ${statusFilter === 'all' ? 'ring-2 ring-elec-yellow border-elec-yellow/30' : ''}`}
             onClick={() => setStatusFilter('all')}
@@ -633,9 +634,9 @@ Thank you for your business!`;
               <p className="text-xs text-muted-foreground">Completed</p>
             </CardContent>
           </Card>
-        </div>
+          </div>
 
-        {/* Invoices List */}
+          {/* Invoices List */}
         <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -716,6 +717,7 @@ Thank you for your business!`;
           )}
         </CardContent>
         </Card>
+        </div>
       </div>
     </div>
   );

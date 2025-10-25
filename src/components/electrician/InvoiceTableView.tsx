@@ -132,7 +132,7 @@ const InvoiceTableView = ({
   }
 
   return (
-    <div className="hidden lg:block overflow-hidden">
+    <div className="hidden xl:block overflow-hidden">
       <div className="border rounded-lg border-elec-yellow/20 overflow-hidden">
         <Table>
           <TableHeader>

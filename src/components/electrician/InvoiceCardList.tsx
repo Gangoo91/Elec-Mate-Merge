@@ -153,7 +153,7 @@ const InvoiceCardList = ({
   };
 
   return (
-    <div className="lg:hidden space-y-4">
+    <div className="xl:hidden space-y-4">
       {invoices.map((invoice) => {
         const actionButton = getActionButton(invoice);
 
