@@ -1162,6 +1162,79 @@ Always cite regulation numbers and show working for calculations.`
     totalWarnings: designData.warnings.length
   });
   
+  // PHASE 3: Verify all circuits were designed - add placeholders for missing ones
+  if (designData.circuits.length < allCircuits.length) {
+    logger.warn('⚠️ Circuit count mismatch detected', {
+      requested: allCircuits.length,
+      received: designData.circuits.length,
+      missing: allCircuits.length - designData.circuits.length
+    });
+    
+    // Find which circuits are missing
+    const receivedNames = new Set(
+      designData.circuits.map((c: any) => (c.name || '').toLowerCase())
+    );
+    
+    const missingCircuits = allCircuits.filter((c: any) => {
+      const circuitName = (c.name || c.loadType || '').toLowerCase();
+      return !receivedNames.has(circuitName);
+    });
+    
+    logger.warn('⚠️ Missing circuits identified', {
+      count: missingCircuits.length,
+      names: missingCircuits.map(c => c.name || c.loadType)
+    });
+    
+    // Add placeholder circuits so user knows they were requested
+    for (const missing of missingCircuits) {
+      logger.warn(`⚠️ Adding placeholder for missing circuit: ${missing.name || missing.loadType}`);
+      
+      designData.circuits.push({
+        circuitNumber: 0, // Will be renumbered below
+        name: missing.name || missing.loadType || 'Unknown Circuit',
+        loadType: missing.loadType || 'Unknown',
+        loadPower: missing.loadPower || 0,
+        cableRun: missing.cableRun || 0,
+        phase: missing.phase || 'L1',
+        
+        // Minimal placeholder data
+        protectionDevice: 'Not Designed',
+        protectionRating: 0,
+        cableSize: 0,
+        cableType: 'Not Designed',
+        
+        warnings: [
+          '⚠️ This circuit could not be designed automatically',
+          'Possible reasons: Complex requirements, insufficient data, or AI processing error',
+          'Manual design required - consult BS 7671 or qualified electrician'
+        ],
+        
+        justifications: {
+          cableSize: 'Manual design required',
+          protection: 'Manual design required',
+          rcd: 'Manual design required'
+        }
+      });
+    }
+    
+    // Add warning to main design
+    designData.warnings.push(
+      `⚠️ ${missingCircuits.length} circuit(s) could not be designed automatically and require manual design: ${
+        missingCircuits.map(c => c.name || c.loadType).join(', ')
+      }`
+    );
+    
+    logger.info('✅ Added placeholders for missing circuits', {
+      totalCircuitsNow: designData.circuits.length,
+      placeholdersAdded: missingCircuits.length
+    });
+  } else {
+    logger.info('✅ All circuits designed successfully', {
+      requested: allCircuits.length,
+      received: designData.circuits.length
+    });
+  }
+  
   // PHASE 1: Renumber circuits sequentially (C1, C2, C3... not CC1, CC6, CC10)
   logger.info('🔢 Renumbering circuits sequentially');
   designData.circuits = designData.circuits.map((circuit: any, index: number) => ({
