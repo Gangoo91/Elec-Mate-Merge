@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { ArrowLeft, FileText, Send, Edit, Eye, Bell, AlertCircle, Plus, Filter, Download, CheckCircle, Mail, LayoutDashboard } from "lucide-react";
+import { ArrowLeft, FileText, Send, Edit, Eye, Bell, AlertCircle, Plus, Filter, Download, CheckCircle, Mail, LayoutDashboard, PoundSterling } from "lucide-react";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { format, isPast } from "date-fns";
 import { Quote } from "@/types/quote";
@@ -477,6 +477,15 @@ Thank you for your business!`;
       return isOverdue || i.invoice_status === 'overdue';
     }).length,
     paid: invoices.filter(i => i.invoice_status === 'paid').length,
+    // Calculate monetary totals
+    totalValue: invoices.reduce((sum, inv) => sum + inv.total, 0),
+    draftValue: invoices.filter(i => i.invoice_status === 'draft').reduce((sum, inv) => sum + inv.total, 0),
+    sentValue: invoices.filter(i => i.invoice_status === 'sent').reduce((sum, inv) => sum + inv.total, 0),
+    overdueValue: invoices.filter(i => {
+      const isOverdue = i.invoice_due_date && isPast(new Date(i.invoice_due_date));
+      return isOverdue || i.invoice_status === 'overdue';
+    }).reduce((sum, inv) => sum + inv.total, 0),
+    paidValue: invoices.filter(i => i.invoice_status === 'paid').reduce((sum, inv) => sum + inv.total, 0),
   };
 
   // Highlight invoice when navigating from quote
@@ -567,7 +576,10 @@ Thank you for your business!`;
             </CardHeader>
             <CardContent className="space-y-1">
               <div className="text-3xl font-bold">{stats.total}</div>
-              <p className="text-xs text-muted-foreground">All invoices</p>
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <PoundSterling className="h-3.5 w-3.5" />
+                <span>{stats.totalValue.toFixed(2)}</span>
+              </div>
             </CardContent>
           </Card>
 
@@ -583,7 +595,10 @@ Thank you for your business!`;
             </CardHeader>
             <CardContent className="space-y-1">
               <div className="text-3xl font-bold text-slate-400">{stats.draft}</div>
-              <p className="text-xs text-muted-foreground">Not sent</p>
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <PoundSterling className="h-3.5 w-3.5" />
+                <span>{stats.draftValue.toFixed(2)}</span>
+              </div>
             </CardContent>
           </Card>
 
@@ -599,7 +614,10 @@ Thank you for your business!`;
             </CardHeader>
             <CardContent className="space-y-1">
               <div className="text-3xl font-bold text-blue-400">{stats.sent}</div>
-              <p className="text-xs text-muted-foreground">Awaiting payment</p>
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <PoundSterling className="h-3.5 w-3.5" />
+                <span>{stats.sentValue.toFixed(2)}</span>
+              </div>
             </CardContent>
           </Card>
 
@@ -615,7 +633,10 @@ Thank you for your business!`;
             </CardHeader>
             <CardContent className="space-y-1">
               <div className="text-3xl font-bold text-red-600">{stats.overdue}</div>
-              <p className="text-xs text-muted-foreground">Needs attention</p>
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <PoundSterling className="h-3.5 w-3.5" />
+                <span>{stats.overdueValue.toFixed(2)}</span>
+              </div>
             </CardContent>
           </Card>
 
@@ -631,7 +652,10 @@ Thank you for your business!`;
             </CardHeader>
             <CardContent className="space-y-1">
               <div className="text-3xl font-bold text-green-400">{stats.paid}</div>
-              <p className="text-xs text-muted-foreground">Completed</p>
+              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                <PoundSterling className="h-3.5 w-3.5" />
+                <span>{stats.paidValue.toFixed(2)}</span>
+              </div>
             </CardContent>
           </Card>
           </div>
