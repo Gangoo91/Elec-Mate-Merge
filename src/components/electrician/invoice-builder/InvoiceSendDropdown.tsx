@@ -68,7 +68,7 @@ export const InvoiceSendDropdown = ({
         console.log('Session refreshed successfully');
       }
       
-      const { error } = await supabase.functions.invoke('send-invoice', {
+      const { error } = await supabase.functions.invoke('send-invoice-resend', {
         body: { invoiceId: invoice.id },
         headers: {
           Authorization: `Bearer ${session.access_token}`
@@ -78,7 +78,7 @@ export const InvoiceSendDropdown = ({
       if (error) throw error;
 
       toast({
-        title: 'Invoice sent',
+        title: 'Invoice sent successfully',
         description: `Invoice ${invoice.invoice_number} sent to ${invoice.client?.email}`,
         variant: 'success',
         duration: 4000,
@@ -472,7 +472,7 @@ ${companyName}`;
           )}
           <div className="flex flex-col">
             <span>Send via Email</span>
-            <span className="text-xs text-muted-foreground">Automatic delivery via Gmail</span>
+            <span className="text-xs text-muted-foreground">Professional delivery via Resend</span>
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem

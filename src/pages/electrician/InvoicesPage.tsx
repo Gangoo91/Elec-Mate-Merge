@@ -507,97 +507,136 @@ Thank you for your business!`;
       </Helmet>
 
       {/* Header */}
-      <header className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-2">
-        <div className="flex items-center gap-3">
-          <FileText className="h-8 w-8 text-elec-yellow" />
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Invoices
-          </h1>
-        </div>
-        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-          <Link to="/electrician/quote-invoice-dashboard" className="w-full sm:w-auto order-1 sm:order-3">
-            <MobileButton variant="outline" className="w-full sm:w-auto justify-center">
-              <LayoutDashboard className="mr-2 h-4 w-4" /> Workflow Dashboard
-            </MobileButton>
-          </Link>
-          <Link to="/electrician" className="w-full sm:w-auto order-2 sm:order-2">
-            <MobileButton variant="outline" className="w-full sm:w-auto justify-center">
-              <ArrowLeft className="mr-2 h-4 w-4" /> Electrical Hub
-            </MobileButton>
-          </Link>
-          <Link to="/electrician/invoice-builder/create" className="w-full sm:w-auto order-3 sm:order-1">
-            <MobileButton variant="elec" className="w-full sm:w-auto justify-center">
-              <Plus className="mr-2 h-4 w-4" /> Create Invoice
-            </MobileButton>
-          </Link>
+      <header className="relative bg-card border-b">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        <div className="relative px-4 py-6 space-y-4">
+          {/* Breadcrumb Navigation */}
+          <nav className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Link to="/electrician/business" className="hover:text-foreground transition-colors">
+              Business Hub
+            </Link>
+            <span>/</span>
+            <span>Invoices</span>
+          </nav>
+
+          {/* Title and Back Button */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-2">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+                Invoices
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                Manage and track all your electrical invoices
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Link to="/electrician/quote-invoice-dashboard">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                  <LayoutDashboard className="mr-2 h-4 w-4" /> Workflow Dashboard
+                </Button>
+              </Link>
+              <Link to="/electrician">
+                <Button variant="secondary" size="lg" className="w-full sm:w-auto shadow-lg">
+                  <ArrowLeft className="mr-2 h-4 w-4" /> Electrical Hub
+                </Button>
+              </Link>
+              <Link to="/electrician/invoice-builder/create">
+                <Button variant="default" size="lg" className="w-full sm:w-auto bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold">
+                  <Plus className="mr-2 h-4 w-4" /> Create Invoice
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
-        <Card 
-          className={`cursor-pointer transition-all ${statusFilter === 'all' ? 'ring-2 ring-elec-yellow' : ''}`}
-          onClick={() => setStatusFilter('all')}
-        >
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.total}</div>
-          </CardContent>
-        </Card>
+      {/* Dashboard Content */}
+      <div className="px-4 md:px-6 py-6 md:py-8 space-y-6">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+          <Card 
+            className={`cursor-pointer transition-all hover:border-elec-yellow/40 ${statusFilter === 'all' ? 'ring-2 ring-elec-yellow border-elec-yellow/30' : ''}`}
+            onClick={() => setStatusFilter('all')}
+          >
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <FileText className="h-5 w-5 text-elec-yellow" />
+                <CardTitle className="text-xs font-medium text-muted-foreground uppercase">Total</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-1">
+              <div className="text-3xl font-bold">{stats.total}</div>
+              <p className="text-xs text-muted-foreground">All invoices</p>
+            </CardContent>
+          </Card>
 
-        <Card 
-          className={`cursor-pointer transition-all ${statusFilter === 'draft' ? 'ring-2 ring-elec-yellow' : ''}`}
-          onClick={() => setStatusFilter('draft')}
-        >
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Draft</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-slate-600">{stats.draft}</div>
-          </CardContent>
-        </Card>
+          <Card 
+            className={`cursor-pointer transition-all hover:border-slate-400/40 ${statusFilter === 'draft' ? 'ring-2 ring-slate-400 border-slate-400/30' : ''}`}
+            onClick={() => setStatusFilter('draft')}
+          >
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <Edit className="h-5 w-5 text-slate-400" />
+                <CardTitle className="text-xs font-medium text-muted-foreground uppercase">Draft</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-1">
+              <div className="text-3xl font-bold text-slate-400">{stats.draft}</div>
+              <p className="text-xs text-muted-foreground">Not sent</p>
+            </CardContent>
+          </Card>
 
-        <Card 
-          className={`cursor-pointer transition-all ${statusFilter === 'sent' ? 'ring-2 ring-elec-yellow' : ''}`}
-          onClick={() => setStatusFilter('sent')}
-        >
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Sent</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-blue-600">{stats.sent}</div>
-          </CardContent>
-        </Card>
+          <Card 
+            className={`cursor-pointer transition-all hover:border-blue-400/40 ${statusFilter === 'sent' ? 'ring-2 ring-blue-400 border-blue-400/30' : ''}`}
+            onClick={() => setStatusFilter('sent')}
+          >
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <Send className="h-5 w-5 text-blue-400" />
+                <CardTitle className="text-xs font-medium text-muted-foreground uppercase">Sent</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-1">
+              <div className="text-3xl font-bold text-blue-400">{stats.sent}</div>
+              <p className="text-xs text-muted-foreground">Awaiting payment</p>
+            </CardContent>
+          </Card>
 
-        <Card 
-          className={`cursor-pointer transition-all ${statusFilter === 'overdue' ? 'ring-2 ring-elec-yellow' : ''}`}
-          onClick={() => setStatusFilter('overdue')}
-        >
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Overdue</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-red-600">{stats.overdue}</div>
-          </CardContent>
-        </Card>
+          <Card 
+            className={`cursor-pointer transition-all hover:border-red-400/40 ${statusFilter === 'overdue' ? 'ring-2 ring-red-400 border-red-400/30' : ''}`}
+            onClick={() => setStatusFilter('overdue')}
+          >
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <AlertCircle className="h-5 w-5 text-red-600" />
+                <CardTitle className="text-xs font-medium text-muted-foreground uppercase">Overdue</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-1">
+              <div className="text-3xl font-bold text-red-600">{stats.overdue}</div>
+              <p className="text-xs text-muted-foreground">Needs attention</p>
+            </CardContent>
+          </Card>
 
-        <Card 
-          className={`cursor-pointer transition-all ${statusFilter === 'paid' ? 'ring-2 ring-elec-yellow' : ''}`}
-          onClick={() => setStatusFilter('paid')}
-        >
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Paid</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-emerald-600">{stats.paid}</div>
-          </CardContent>
-        </Card>
-      </div>
+          <Card 
+            className={`cursor-pointer transition-all hover:border-green-400/40 ${statusFilter === 'paid' ? 'ring-2 ring-green-400 border-green-400/30' : ''}`}
+            onClick={() => setStatusFilter('paid')}
+          >
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <CheckCircle className="h-5 w-5 text-green-400" />
+                <CardTitle className="text-xs font-medium text-muted-foreground uppercase">Paid</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-1">
+              <div className="text-3xl font-bold text-green-400">{stats.paid}</div>
+              <p className="text-xs text-muted-foreground">Completed</p>
+            </CardContent>
+          </Card>
+        </div>
 
-      {/* Invoices List */}
-      <Card>
+        {/* Invoices List */}
+        <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
@@ -676,7 +715,8 @@ Thank you for your business!`;
             </>
           )}
         </CardContent>
-      </Card>
+        </Card>
+      </div>
     </div>
   );
 };
