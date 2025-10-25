@@ -313,40 +313,24 @@ ${structuredHazards}
 
 ${installKnowledge}
 
+**AI REASONING APPROACH:**
+1. **Extract from RAG**: Start by converting each hazard category in "HAZARDS IDENTIFIED IN KNOWLEDGE BASE" into a detailed hazard entry
+2. **Assess job specifics**: Consider the installation type, location, and conditions provided
+3. **Add supplementary hazards**: If you identify additional risks not covered by RAG (e.g., asbestos in pre-2000 building, overhead power lines, public access areas), add those
+4. **Expand controls**: Enhance RAG control measures with job-specific details (e.g., "30mA RCD" becomes "30mA Type A RCD to BS EN 61008-1 feeding bathroom circuit per Reg 701.411.3.3")
+
+Your goal: Comprehensive risk assessment covering all hazards (RAG + supplementary), each with specific controls and regulation references.
+
 **CRITICAL: COMPREHENSIVE HAZARD IDENTIFICATION FROM RAG**
-The knowledge base above contains verified hazards for this type of work.
-You MUST:
-1. Review EVERY hazard category in the "HAZARDS IDENTIFIED IN KNOWLEDGE BASE" section
-2. Create a separate hazard entry for EACH category found (minimum 10-18 total)
-3. Expand each RAG hazard with:
-   - Specific likelihood (1-5) based on this particular job
-   - Appropriate severity (1-5) based on potential harm
-   - Detailed control measures from RAG docs + job-specific additions
-   - Regulation references from the hazard context
+The structured hazards section above contains 8-18 verified hazard categories for this work.
+For EACH category listed, create a detailed hazard entry with:
+- Specific likelihood (1-5) and severity (1-5) for this job
+- Detailed controls from RAG + job-specific additions
+- Regulation references from context
 
-**HAZARD CATEGORIES TO ALWAYS CHECK (from RAG + general):**
-- Electrical shock (live parts, damaged equipment, wet conditions)
-- Electric arc flash (short circuits, equipment faults)
-- Fire/explosion (combustible materials, hot works, flammable gases)
-- Manual handling (heavy equipment, cable drums, awkward postures)
-- Work at height (ladders, scaffolds, MEWPs, roof work)
-- Slips/trips/falls (cables, tools, wet surfaces, uneven ground)
-- Confined spaces (metre cupboards, service voids, plant rooms)
-- Buried services (gas, water, telecoms, other electrical)
-- Vehicle movements (site access, delivery lorries, mobile plant)
-- Noise exposure (power tools, drilling, equipment testing)
-- Dust/fumes (cutting, drilling, soldering flux, cable insulation)
-- Asbestos (pre-2000 buildings, textured coatings, insulation)
-- Environmental hazards (weather, lighting, temperature extremes)
-- Site welfare (access, egress, toilet facilities, first aid)
-- Isolation failures (proving dead, lock-off, adjacent circuits)
-- Equipment failure (tool defects, test gear calibration)
-- Working with others (coordination, communication, permits)
-- Public safety (barriers, signage, temporary disconnections)
+Minimum 10 hazards required. Expand each RAG category into a complete risk assessment.
 
-DO NOT generate only 3-5 generic hazards. For a professional electrical installation, you should identify 10-18 specific hazards minimum.
-
-Example of GOOD detail (from RAG knowledge):
+Example GOOD entry:
 {
   "hazardNumber": 4,
   "hazard": "Electric shock from live conductors during isolation failure",
@@ -355,23 +339,16 @@ Example of GOOD detail (from RAG knowledge):
   "severity": 5,
   "riskScore": 15,
   "riskLevel": "Very High",
-  "controls": [
-    "Follow isolation procedure per BS 7671 Section 462",
-    "Use lock-off devices (LOTO) on all sources",
-    "Prove dead with voltage indicator to GS38",
-    "Use proving unit to verify test equipment working",
-    "Display warning signs: 'Electricians at Work - Do Not Switch On'",
-    "Maintain isolation log with names and times"
-  ],
-  "regulation": "Electricity at Work Regulations 1989 Reg 4(3), BS 7671 Section 462",
+  "controls": ["Follow BS 7671 Section 462 isolation", "LOTO on all sources", "Prove dead with GS38 voltage indicator"],
+  "regulation": "EWR 1989 Reg 4(3)",
   "linkedToStep": 2
 }
 
-NOT acceptable (too vague):
+Example BAD (too vague):
 {
   "hazardNumber": 1,
   "hazard": "Electrical hazards",
-  "controls": ["Use PPE", "Follow procedures"]
+  "controls": ["Use PPE"]
 }
 
 RISK MATRIX (5x5):
@@ -466,7 +443,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         model: 'gpt-5-mini-2025-08-07',
         systemPrompt,
         userPrompt,
-        maxTokens: 8000,
+        maxTokens: 16000,  // Doubled: 8000 for reasoning + 8000 for generating 10-18 detailed hazards
         timeoutMs: 200000,  // 200 seconds (safe margin before Supabase 230s limit)
       tools: [{
         type: 'function',

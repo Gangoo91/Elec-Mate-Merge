@@ -459,7 +459,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       model,
       systemPrompt,
       userPrompt,
-      maxTokens: 10000,   // Increased tokens for detailed responses
+      maxTokens: 18000,   // Increased: reasoning + 10-15 detailed installation steps with measurements
       timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
       tools: [{
         type: 'function',
