@@ -14,7 +14,7 @@ const GOOGLE_CLIENT_SECRET = Deno.env.get('GOOGLE_CLIENT_SECRET');
 const MICROSOFT_CLIENT_ID = Deno.env.get('MICROSOFT_CLIENT_ID');
 const MICROSOFT_CLIENT_SECRET = Deno.env.get('MICROSOFT_CLIENT_SECRET');
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
-const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 const FRONTEND_URL = Deno.env.get('FRONTEND_URL');
 
 serve(async (req: Request) => {
@@ -37,7 +37,7 @@ serve(async (req: Request) => {
     }
 
     // Verify state and get user
-    const supabase = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!);
+    const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
 
     const { data: stateData, error: stateError } = await supabase
       .from('oauth_states')
