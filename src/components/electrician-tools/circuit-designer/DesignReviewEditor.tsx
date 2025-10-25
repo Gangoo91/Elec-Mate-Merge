@@ -191,6 +191,76 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           justification: circuit.diversityJustification || "No diversity applied - full load considered"
         },
         
+        faultCurrentAnalysis: circuit.faultCurrentAnalysis ? {
+          psccAtCircuit: circuit.faultCurrentAnalysis.psccAtCircuit,
+          psccAtCircuitString: `${circuit.faultCurrentAnalysis.psccAtCircuit} kA`,
+          deviceBreakingCapacity: circuit.faultCurrentAnalysis.deviceBreakingCapacity,
+          deviceBreakingCapacityString: `${circuit.faultCurrentAnalysis.deviceBreakingCapacity} kA`,
+          compliant: circuit.faultCurrentAnalysis.compliant,
+          complianceText: circuit.faultCurrentAnalysis.compliant ? "✓ COMPLIANT" : "✗ NON-COMPLIANT",
+          marginOfSafety: circuit.faultCurrentAnalysis.marginOfSafety,
+          regulation: circuit.faultCurrentAnalysis.regulation
+        } : null,
+        
+        earthingRequirements: circuit.earthingRequirements ? {
+          cpcSize: circuit.earthingRequirements.cpcSize,
+          supplementaryBonding: circuit.earthingRequirements.supplementaryBonding,
+          supplementaryBondingString: circuit.earthingRequirements.supplementaryBonding ? 'Yes' : 'No',
+          bondingConductorSize: circuit.earthingRequirements.bondingConductorSize,
+          justification: circuit.earthingRequirements.justification,
+          regulation: circuit.earthingRequirements.regulation
+        } : null,
+        
+        deratingFactors: circuit.deratingFactors ? {
+          Ca: circuit.deratingFactors.Ca,
+          Cg: circuit.deratingFactors.Cg,
+          Ci: circuit.deratingFactors.Ci,
+          overall: circuit.deratingFactors.overall,
+          explanation: circuit.deratingFactors.explanation,
+          tableReferences: circuit.deratingFactors.tableReferences
+        } : null,
+        
+        installationGuidance: circuit.installationGuidance ? {
+          referenceMethod: circuit.installationGuidance.referenceMethod,
+          description: circuit.installationGuidance.description,
+          clipSpacing: circuit.installationGuidance.clipSpacing,
+          practicalTips: circuit.installationGuidance.practicalTips || [],
+          regulation: circuit.installationGuidance.regulation
+        } : null,
+        
+        specialLocationCompliance: circuit.specialLocationCompliance ? {
+          isSpecialLocation: circuit.specialLocationCompliance.isSpecialLocation,
+          locationType: circuit.specialLocationCompliance.locationType,
+          requirements: circuit.specialLocationCompliance.requirements || [],
+          requirementsString: (circuit.specialLocationCompliance.requirements || []).join('; '),
+          zonesApplicable: circuit.specialLocationCompliance.zonesApplicable,
+          regulation: circuit.specialLocationCompliance.regulation
+        } : null,
+        
+        expectedTestResults: circuit.expectedTestResults ? {
+          r1r2: {
+            at20C: circuit.expectedTestResults.r1r2?.at20C || 'N/A',
+            at70C: circuit.expectedTestResults.r1r2?.at70C || 'N/A',
+            calculation: circuit.expectedTestResults.r1r2?.calculation || ''
+          },
+          zs: {
+            calculated: circuit.expectedTestResults.zs?.calculated || 'N/A',
+            maxPermitted: circuit.expectedTestResults.zs?.maxPermitted || 'N/A',
+            compliant: circuit.expectedTestResults.zs?.compliant || false,
+            complianceText: circuit.expectedTestResults.zs?.compliant ? "✓ COMPLIANT" : "✗ NON-COMPLIANT"
+          },
+          insulationResistance: {
+            testVoltage: circuit.expectedTestResults.insulationResistance?.testVoltage || '500V DC',
+            minResistance: circuit.expectedTestResults.insulationResistance?.minResistance || '≥1.0MΩ per BS 7671 Table 61'
+          },
+          polarity: circuit.expectedTestResults.polarity || 'Correct at all points',
+          rcdTest: circuit.expectedTestResults.rcdTest ? {
+            at1x: circuit.expectedTestResults.rcdTest.at1x || 'N/A',
+            at5x: circuit.expectedTestResults.rcdTest.at5x || 'N/A',
+            regulation: circuit.expectedTestResults.rcdTest.regulation || 'BS 7671 Regulation 643.2.2'
+          } : null
+        } : null,
+        
         warnings: circuit.warnings || []
       })),
       
