@@ -24,12 +24,15 @@ import {
   Lock, 
   ShieldCheck,
   HelpCircle,
-  Building 
+  Building,
+  Mail
 } from "lucide-react";
+import { EmailSettingsTab } from './EmailSettingsTab';
 
 const TABS = [
   { id: 'account', label: 'Account', icon: User, component: AccountTab, description: 'Manage your account preferences' },
   { id: 'company', label: 'Company Profile', icon: Building, component: CompanyProfileSettings, description: 'Configure your company details and branding for professional quotes' },
+  { id: 'email', label: 'Email Integration', icon: Mail, component: EmailSettingsTab, description: 'Connect Gmail or Outlook to send invoices from your email' },
   { id: 'notifications', label: 'Notifications', icon: Bell, component: NotificationsTab, description: 'Choose what notifications you want to receive' },
   { id: 'appearance', label: 'Appearance', icon: Palette, component: AppearanceTab, description: 'Customize how ElecMate looks for you' },
   { id: 'privacy', label: 'Privacy', icon: Lock, component: PrivacyTab, description: 'Control what information is visible to others' },

@@ -3,6 +3,31 @@ project_id = "jtwygbeceundfgnkirof"
 # Only list functions in active use to avoid deploy failures
 # Removed functions with xhr@0.1.0 imports causing deployment failures
 
+# OAuth Email Integration
+[functions.oauth-email-init]
+verify_jwt = false
+timeout_sec = 30
+
+[functions.oauth-email-callback]
+verify_jwt = false
+timeout_sec = 60
+
+[functions.refresh-email-token]
+verify_jwt = false
+timeout_sec = 60
+
+[functions.send-invoice-smart]
+verify_jwt = false
+timeout_sec = 60
+
+[functions.disconnect-email]
+verify_jwt = false
+timeout_sec = 30
+
+[functions.get-email-config]
+verify_jwt = false
+timeout_sec = 30
+
 # PDF Generation Functions
 [functions.generate-combined-rams-pdf]
 verify_jwt = false
