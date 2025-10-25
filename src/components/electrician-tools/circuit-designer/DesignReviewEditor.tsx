@@ -857,10 +857,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </CollapsibleTrigger>
             <CollapsibleContent>
               <Tabs defaultValue="raw" className="mt-3">
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="raw">Raw Request</TabsTrigger>
-                  <TabsTrigger value="transformed">EIC Format</TabsTrigger>
-                </TabsList>
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="raw">Raw Request</TabsTrigger>
+                <TabsTrigger value="transformed">EIC Format</TabsTrigger>
+                <TabsTrigger value="design-pdf">Design PDF</TabsTrigger>
+              </TabsList>
                 
                 {/* Tab 1: Raw Request Payload */}
                 <TabsContent value="raw" className="mt-3">
@@ -1035,6 +1036,133 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                             status: "pending",
                             designType: design.installationType
                           }
+                        }, null, 2)}
+                      </pre>
+                    </div>
+                  </div>
+                </TabsContent>
+                
+                {/* Tab 3: Circuit Design PDF Format */}
+                <TabsContent value="design-pdf" className="mt-3">
+                  <div className="relative">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-2 top-2 z-10 text-white/70 hover:text-white hover:bg-white/10"
+                      onClick={() => {
+                        const designPdfPayload = {
+                          projectName: design.projectName,
+                          location: design.location,
+                          clientName: design.clientName || 'N/A',
+                          electricianName: design.electricianName || 'N/A',
+                          installationType: design.installationType,
+                          totalLoad: design.totalLoad,
+                          diversityApplied: design.diversityApplied,
+                          diversityFactor: design.diversityFactor,
+                          consumerUnit: design.consumerUnit,
+                          circuits: design.circuits.map(circuit => ({
+                            circuitNumber: circuit.circuitNumber,
+                            name: circuit.name,
+                            loadType: circuit.loadType,
+                            loadPower: circuit.loadPower,
+                            designCurrent: circuit.designCurrent,
+                            voltage: circuit.voltage,
+                            phases: circuit.phases,
+                            cableSize: circuit.cableSize,
+                            cpcSize: circuit.cpcSize,
+                            cableType: circuit.cableType,
+                            cableLength: circuit.cableLength,
+                            installationMethod: circuit.installationMethod,
+                            protectionDevice: circuit.protectionDevice,
+                            rcdProtected: circuit.rcdProtected,
+                            afddRequired: circuit.afddRequired,
+                            calculations: {
+                              Ib: circuit.calculations.Ib,
+                              In: circuit.calculations.In,
+                              Iz: circuit.calculations.Iz,
+                              voltageDrop: circuit.calculations.voltageDrop,
+                              zs: circuit.calculations.zs,
+                              maxZs: circuit.calculations.maxZs,
+                              deratedCapacity: circuit.calculations.deratedCapacity,
+                              safetyMargin: circuit.calculations.safetyMargin
+                            },
+                            justifications: circuit.justifications,
+                            diversityFactor: circuit.diversityFactor,
+                            diversityJustification: circuit.diversityJustification,
+                            faultCurrentAnalysis: circuit.faultCurrentAnalysis,
+                            earthingRequirements: circuit.earthingRequirements,
+                            deratingFactors: circuit.deratingFactors,
+                            installationGuidance: circuit.installationGuidance,
+                            specialLocationCompliance: circuit.specialLocationCompliance,
+                            expectedTestResults: circuit.expectedTestResults,
+                            warnings: circuit.warnings
+                          })),
+                          diversityBreakdown: design.diversityBreakdown,
+                          materials: design.materials,
+                          costEstimate: design.costEstimate,
+                          practicalGuidance: design.practicalGuidance
+                        };
+                        
+                        navigator.clipboard.writeText(JSON.stringify(designPdfPayload, null, 2));
+                        toast.success('Circuit Design PDF JSON copied to clipboard');
+                      }}
+                    >
+                      <Copy className="h-4 w-4 mr-1" />
+                      Copy
+                    </Button>
+                    <div className="max-h-96 overflow-auto rounded-lg bg-slate-900 p-4 pr-20">
+                      <pre className="text-xs text-sky-300 font-mono">
+                        {JSON.stringify({
+                          projectName: design.projectName,
+                          location: design.location,
+                          clientName: design.clientName || 'N/A',
+                          electricianName: design.electricianName || 'N/A',
+                          installationType: design.installationType,
+                          totalLoad: design.totalLoad,
+                          diversityApplied: design.diversityApplied,
+                          diversityFactor: design.diversityFactor,
+                          consumerUnit: design.consumerUnit,
+                          circuits: design.circuits.map(circuit => ({
+                            circuitNumber: circuit.circuitNumber,
+                            name: circuit.name,
+                            loadType: circuit.loadType,
+                            loadPower: circuit.loadPower,
+                            designCurrent: circuit.designCurrent,
+                            voltage: circuit.voltage,
+                            phases: circuit.phases,
+                            cableSize: circuit.cableSize,
+                            cpcSize: circuit.cpcSize,
+                            cableType: circuit.cableType,
+                            cableLength: circuit.cableLength,
+                            installationMethod: circuit.installationMethod,
+                            protectionDevice: circuit.protectionDevice,
+                            rcdProtected: circuit.rcdProtected,
+                            afddRequired: circuit.afddRequired,
+                            calculations: {
+                              Ib: circuit.calculations.Ib,
+                              In: circuit.calculations.In,
+                              Iz: circuit.calculations.Iz,
+                              voltageDrop: circuit.calculations.voltageDrop,
+                              zs: circuit.calculations.zs,
+                              maxZs: circuit.calculations.maxZs,
+                              deratedCapacity: circuit.calculations.deratedCapacity,
+                              safetyMargin: circuit.calculations.safetyMargin
+                            },
+                            justifications: circuit.justifications,
+                            diversityFactor: circuit.diversityFactor,
+                            diversityJustification: circuit.diversityJustification,
+                            faultCurrentAnalysis: circuit.faultCurrentAnalysis,
+                            earthingRequirements: circuit.earthingRequirements,
+                            deratingFactors: circuit.deratingFactors,
+                            installationGuidance: circuit.installationGuidance,
+                            specialLocationCompliance: circuit.specialLocationCompliance,
+                            expectedTestResults: circuit.expectedTestResults,
+                            warnings: circuit.warnings
+                          })),
+                          diversityBreakdown: design.diversityBreakdown,
+                          materials: design.materials,
+                          costEstimate: design.costEstimate,
+                          practicalGuidance: design.practicalGuidance
                         }, null, 2)}
                       </pre>
                     </div>
