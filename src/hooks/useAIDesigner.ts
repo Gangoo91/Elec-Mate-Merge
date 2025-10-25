@@ -264,13 +264,36 @@ export const useAIDesigner = () => {
         throw new Error(fullError);
       }
 
-      // FIX: Handle structured errors (success=false) gracefully
+      // PHASE 6: Handle structured errors including validation failures
       if (!data.success) {
         // Clear progress immediately for known errors
         setProgress(null);
         
         const errorMsg = data.error || 'Design generation failed';
-        const isKnownError = data.code === 'NO_CIRCUITS' || data.code;
+        const errorCode = data.code || 'UNKNOWN_ERROR';
+        
+        // Handle non-compliant design errors (PHASE 6)
+        if (errorCode === 'NON_COMPLIANT_DESIGN' && data.validationErrors) {
+          console.error('❌ Design validation failed:', data.validationErrors);
+          
+          // Build detailed error message
+          const errorDetails = data.validationErrors.map((e: any) => 
+            `• ${e.circuit}: ${e.message}${e.regulation ? ` (${e.regulation})` : ''}`
+          ).join('\n');
+          
+          toast.error('Design Non-Compliant with BS 7671', {
+            description: `${data.validationErrors.length} compliance error(s) detected. Review and adjust parameters.`,
+            duration: 10000
+          });
+          
+          // Store validation errors for display
+          setError(`${errorMsg}\n\n${errorDetails}`);
+          
+          // Don't throw - allow frontend to display structured errors
+          return false;
+        }
+        
+        const isKnownError = errorCode === 'NO_CIRCUITS' || errorCode;
         
         if (isKnownError) {
           // Friendly message for known errors - no retry needed

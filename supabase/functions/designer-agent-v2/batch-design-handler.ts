@@ -84,6 +84,16 @@ export async function handleBatchDesign(body: any, logger: any) {
 
   const allCircuits = [...inputCircuits, ...inferredCircuits];
 
+  // PHASE 3: Circuit count tracking
+  logger.info('🔢 Circuit Count Check (After Input)', {
+    inputCircuits: inputCircuits.length,
+    inputCircuitNames: inputCircuits.map(c => c.name || c.loadType),
+    inferredCircuits: inferredCircuits.length,
+    inferredCircuitNames: inferredCircuits.map(c => c.name || c.loadType),
+    totalCircuits: allCircuits.length,
+    allCircuitNames: allCircuits.map(c => c.name || c.loadType)
+  });
+
   // PHASE 1: Enhanced logging for debugging
   logger.info('✅ STEP 0 Complete - Parsed user requirements', {
     manualCircuits: inputCircuits.length,
@@ -332,8 +342,14 @@ CRITICAL INSTRUCTIONS - You MUST populate ALL fields using RAG knowledge:
 1. **Diversity Factor** (per circuit): Apply BS 7671 Appendix 15 tables from context
 2. **Fault Current Analysis**: Calculate PSCC using Ze + cable impedance, verify device breaking capacity (Reg 434.5.2)
 3. **Earthing/Bonding**: Apply Section 411, 544, 701 requirements from context
-4. **Derating Factors**: Show Ca, Cg, Ci breakdown using Appendix 4 tables
-5. **Installation Method**: Reference Appendix 4 methods from context
+4. **Derating Factors**: Show Ca, Cg, Ci breakdown using Appendix 4 tables from RAG
+5. **Installation Method** (PHASE 4): Must include:
+   - Reference method from Appendix 4 (A1, A2, B, C, etc.)
+   - Grouping factor (Cg) if multiple circuits
+   - Ambient temperature correction (Ca) if >30°C
+   - Thermal insulation factor (Ci) if applicable
+   - Format: "Clipped direct (Method C), Cg=1.0, Ca=1.0, Ci=0.5"
+   - Use RAG knowledge to select correct reference method for cable type and location
 6. **Special Locations**: Check Section 701/702/714 for bathrooms/outdoor
 7. **Expected Test Results**: Calculate R1+R2, Zs, insulation resistance, RCD times
 
@@ -700,6 +716,11 @@ Return complete circuit objects using the provided tool schema.`;
     const batchStartTime = Date.now();
     logger.info(`📦 Batch ${batchIndex + 1}/${circuitBatches.length}: Processing ${batch.length} circuits${attempt > 0 ? ` (retry ${attempt})` : ''}`);
     
+    // PHASE 3: Log batch circuit details
+    logger.info(`📋 Batch ${batchIndex + 1} circuits:`, {
+      circuits: batch.map((c: any) => c.name || c.loadType)
+    });
+    
     // Create batch-specific query
     const batchQuery = `${query}\n\nDesign the following circuits:\n${batch.map((c: any, i: number) => 
       `${i + 1}. ${c.name || c.loadType} (${c.loadType}, ${c.loadPower}W, ${c.cableLength}m)`
@@ -830,12 +851,16 @@ ${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.su
 
 YOUR ROLE: Design compliant electrical circuits with complete details for each circuit.
 
-SOCKET CIRCUIT DESIGN (BS 7671 Appendix 15):
-- Ring finals: 32A MCB, 2.5mm² T&E, max 7.36kW per ring
-- Diversity (Appendix A): 100% for first 10 outlets, 40% next 10, 25% thereafter
-- For loads >7kW: Create multiple rings (e.g., 7200W → 2× 3600W rings)
+SOCKET CIRCUIT DESIGN (BS 7671 Appendix 15) - PHASE 2:
+- Ring finals: **2.5mm²/1.5mm² T&E ONLY** + 32A MCB (never 4mm², 6mm², or 10mm²)
+- BS 7671 Appendix 15: Ring circuits use 2.5mm²/1.5mm² Twin and Earth per regulation 433.1.204
+- Max 7.36kW per ring (32A × 230V = 7360W with 100% diversity applied)
+- **NEVER use 4mm², 6mm², or 10mm² for ring finals** - this is non-compliant
+- If load >7.36kW: Create **multiple 2.5mm² ring circuits**, DO NOT increase cable size
+- Example: 14.72kW office sockets = 2× 2.5mm² rings (not 1× 6mm² ring)
+- Diversity (Appendix A): 100% first 10 outlets, 50% next 10, 25% remainder
 - Include socketCount estimation (~8-10 sockets per ring at 100W each)
-- Radials only for dedicated fixed loads (not general sockets)
+- Radials only for dedicated fixed loads (cooker, shower, immersion) - not for general sockets
 
 INSTRUCTIONS:
 1. For each circuit in the "circuits" array, include:
@@ -845,9 +870,17 @@ INSTRUCTIONS:
    - protectionDevice: { type, rating, curve, kaRating }
    - rcdProtected (boolean), afddRequired (boolean)
    - calculations: { Ib, In, Iz, voltageDrop: { volts, percent, compliant, limit }, zs, maxZs }
-   - justifications: { cableSize, protection, rcd }
+   - justifications (PHASE 5): { 
+       cableSize: "Detailed explanation referencing Appendix 4 table, showing Iz calculation with derating factors Ca×Cg×Ci = X, resulting Iz = YA > In = ZA",
+       protection: "Device selection per Reg 533.X, breaking capacity XkA > PSCC = YkA, curve type chosen per Reg 533.X for load characteristics",
+       rcd: "RCD requirement per Reg 411.3.3 [cite specific sub-regulation], type and rating per [regulation]",
+       diversity: "Diversity applied per Appendix 15 Table X: [show calculation], final load = XW",
+       voltageDrop: "Voltage drop calc: (mV/A/m) × Ib × L = XV < limit YV (Z%)",
+       earthFault: "Zs = Ze + R1+R2 = X + Y = ZΩ < maxZs = WΩ per Table 41.X",
+       testResults: "Expected R1+R2 = XΩ, IR > 1MΩ, RCD trip < 40ms at 1×IΔn"
+     }
    - warnings: [] (array of strings)
-   - installationMethod (e.g., "Clipped Direct", "In Conduit")
+   - installationMethod: "Detailed method including reference (e.g., 'Clipped direct (Method C), Cg=1.0, Ca=1.0, Ci=0.5')"
 
 2. In the "materials" array, list required materials with:
    - name, specification, quantity, unit
@@ -1208,6 +1241,36 @@ Always cite regulation numbers and show working for calculations.`
     validationWarnings.push(...validationResult.warnings.map(w => `⚠️ ${w.message}`));
   }
   
+  // PHASE 1: ENFORCE COMPLIANCE - Reject non-compliant designs
+  if (!validationResult.passed) {
+    logger.error('❌ Design validation failed - returning error to client', {
+      errorCount: validationResult.errors.length,
+      errors: validationResult.errors.map(e => ({ circuit: e.circuitName, message: e.message, regulation: e.regulation }))
+    });
+    
+    return new Response(JSON.stringify({
+      version: 'v3.3.2-compliance-enforcement',
+      success: false,
+      error: 'NON_COMPLIANT_DESIGN',
+      message: 'Cannot generate design: BS 7671 compliance failures detected',
+      validationErrors: validationResult.errors.map(e => ({
+        circuit: e.circuitName,
+        severity: e.severity,
+        message: e.message,
+        regulation: e.regulation,
+        suggestedFix: e.suggestedFix
+      })),
+      validationWarnings: validationResult.warnings.map(w => ({
+        circuit: w.circuitName,
+        message: w.message
+      })),
+      design: designData // Include partial design for debugging
+    }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  }
+  
   // Calculate confidence scores for quality transparency
   const perCircuitConfidence = designData.circuits.map((c: any) => ({
     circuitName: c.name,
@@ -1238,7 +1301,7 @@ Always cite regulation numbers and show working for calculations.`
   });
   
   return new Response(JSON.stringify({
-    version: 'v3.2.0-gpt5-mini-24k', // Version identifier for debugging
+    version: 'v3.3.2-compliance-enforcement',
     success: true,
     response: designData.response || 'Design complete',
     design: {
@@ -1388,9 +1451,9 @@ function getCircuitTypeHints(loadType: string, location?: string): string {
     'ev_charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
     'ev-charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
     'cooker': 'Reg 433.1.204 diversity (10A + 30% remainder + 5A socket), 10mm² typical, 40-50A MCB',
-    'socket': 'Ring final preferred: 2.5mm² T&E + 32A MCB (max 7.36kW/100m²). For >7kW: create multiple rings. Estimate ~8-10 sockets per ring. Apply diversity per Appendix A (1st socket 100%, 2-9 at 40%, 10+ at 25%)',
-    'sockets': 'Ring final preferred: 2.5mm² T&E + 32A MCB (max 7.36kW/100m²). For >7kW: create multiple rings. Estimate ~8-10 sockets per ring. Apply diversity per Appendix A (1st socket 100%, 2-9 at 40%, 10+ at 25%)',
-    'office-sockets': 'Ring finals preferred. 32A MCB, 2.5mm² T&E per ring. Estimate 100W per outlet. Diversity: 100% first 10 outlets, 50% next 10, 25% remainder (Appendix A). Split into multiple rings if >7kW connected load',
+    'socket': 'Ring final: 2.5mm²/1.5mm² T&E + 32A MCB ONLY (BS 7671 Appendix 15). Never 4mm² or 6mm². For >7kW: create multiple rings',
+    'sockets': 'Ring final: 2.5mm²/1.5mm² T&E + 32A MCB ONLY (BS 7671 Appendix 15). Never 4mm² or 6mm². For >7kW: create multiple rings',
+    'office-sockets': 'Ring finals: 2.5mm²/1.5mm² T&E + 32A MCB per ring. **Split >7kW into multiple rings** (e.g., 16 sockets = 2× 8-socket rings). Never use 6mm².',
     'lighting': '1.5mm² cable, 6A MCB Type B, 3% voltage drop limit (6.9V at 230V)',
     'outdoor': '30mA RCD mandatory (411.3.3), SWA cable, IP65+ rating, burial depth 600mm',
     'heat_pump': 'Dedicated circuit, 16mm² typical, 63A MCB, surge protection (534.4)',

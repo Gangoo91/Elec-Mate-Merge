@@ -5,8 +5,11 @@ import { DesignProcessingView } from './DesignProcessingView';
 import { DesignReviewEditor } from './DesignReviewEditor';
 import { DesignInputs } from '@/types/installation-design';
 import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-type ViewMode = 'input' | 'processing' | 'results';
+type ViewMode = 'input' | 'processing' | 'results' | 'validation-error';
 
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<ViewMode>('input');
@@ -26,7 +29,12 @@ export const AIInstallationDesigner = () => {
     if (success) {
       setCurrentView('results');
     } else {
-      setCurrentView('input');
+      // PHASE 6: Check if it's a validation error
+      if (error && error.includes('NON_COMPLIANT_DESIGN')) {
+        setCurrentView('validation-error');
+      } else {
+        setCurrentView('input');
+      }
     }
   };
 
@@ -46,6 +54,25 @@ export const AIInstallationDesigner = () => {
 
       {currentView === 'processing' && (
         <DesignProcessingView progress={progress} />
+      )}
+
+      {/* PHASE 6: Validation Error Display */}
+      {currentView === 'validation-error' && error && (
+        <div className="container mx-auto px-4 py-8 max-w-4xl">
+          <Alert variant="destructive" className="mb-6">
+            <AlertCircle className="h-5 w-5" />
+            <AlertTitle className="text-lg font-semibold">Design Non-Compliant with BS 7671</AlertTitle>
+            <AlertDescription className="mt-3 whitespace-pre-line text-sm">
+              {error}
+            </AlertDescription>
+          </Alert>
+
+          <div className="flex gap-3">
+            <Button onClick={handleReset} variant="outline">
+              Adjust Parameters
+            </Button>
+          </div>
+        </div>
       )}
 
       {currentView === 'results' && designData && (

@@ -255,6 +255,23 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
       }
     }
 
+    // Ring final cable size validation (PHASE 2)
+    const isRingCircuit = circuit.circuitType?.toLowerCase().includes('ring') || 
+                          circuit.loadType?.toLowerCase().includes('ring') ||
+                          (loadType.includes('socket') && circuit.protectionDevice?.rating === 32);
+    
+    if (isRingCircuit && circuit.cableSize > 2.5) {
+      errors.push({
+        circuitIndex: index,
+        circuitName: circuit.name,
+        severity: 'critical',
+        category: 'compliance',
+        message: `Ring final uses ${circuit.cableSize}mm² cable - must be 2.5mm² per BS 7671 Appendix 15`,
+        regulation: 'BS 7671 Appendix 15 / Reg 433.1.204',
+        suggestedFix: 'Use 2.5mm²/1.5mm² T&E and split into multiple ring circuits if load >7.36kW'
+      });
+    }
+
     // High current circuits (>32A)
     if (circuit.protectionDevice?.rating > 32 && loadType.includes('socket')) {
       errors.push({
@@ -303,6 +320,19 @@ export function validateSafety(circuits: any[], projectInfo: any): ValidationRes
   const installationType = projectInfo.installationType || 'domestic';
 
   circuits.forEach((circuit, index) => {
+    // Installation method detail check (PHASE 4)
+    if (!circuit.installationMethod?.includes('Method')) {
+      warnings.push({
+        circuitIndex: index,
+        circuitName: circuit.name,
+        severity: 'warning',
+        category: 'safety',
+        message: 'Installation method missing reference method (A1, A2, B, C, etc.)',
+        regulation: 'Appendix 4',
+        suggestedFix: 'Specify installation reference method from BS 7671 Appendix 4'
+      });
+    }
+
     // Check for missing justifications
     if (!circuit.justifications || Object.keys(circuit.justifications).length === 0) {
       warnings.push({
@@ -313,6 +343,21 @@ export function validateSafety(circuits: any[], projectInfo: any): ValidationRes
         message: 'Missing design justifications',
         suggestedFix: 'Add justifications for cable size, protection, and RCD requirements'
       });
+    }
+
+    // Justification quality check (PHASE 5)
+    if (circuit.justifications) {
+      const cableSizeJust = circuit.justifications.cableSize || '';
+      if (cableSizeJust.length < 50 || !cableSizeJust.includes('Reg')) {
+        warnings.push({
+          circuitIndex: index,
+          circuitName: circuit.name,
+          severity: 'warning',
+          category: 'safety',
+          message: 'Cable size justification lacks detail or regulation references',
+          suggestedFix: 'Include Iz calculation, derating factors, and BS 7671 regulation references'
+        });
+      }
     }
 
     // Check for unusually high power on single circuit
