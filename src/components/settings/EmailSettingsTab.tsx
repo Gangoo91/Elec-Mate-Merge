@@ -56,10 +56,19 @@ export const EmailSettingsTab = () => {
 
       if (error) throw error;
 
-      // Redirect to OAuth provider
+      // Open OAuth in new tab
       if (data?.authUrl) {
-        window.location.href = data.authUrl;
+        const popup = window.open(data.authUrl, '_blank', 'noopener,noreferrer');
+        if (!popup) {
+          // Popup blocked, try top-level redirect
+          if (window.top) {
+            window.top.location.href = data.authUrl;
+          } else {
+            window.location.href = data.authUrl;
+          }
+        }
       }
+      setLoading(false);
     } catch (error: any) {
       console.error('Error initiating OAuth:', error);
       toast({
