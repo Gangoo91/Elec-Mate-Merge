@@ -517,7 +517,7 @@ RESPONSE REQUIREMENTS:
 
     const userPrompt = getUserPrompt(analysis_settings.mode, analysis_settings.fast_mode || false);
 
-    console.log(`🚀 Calling Lovable AI Gateway (gemini-2.5-flash)...`);
+    console.log(`🚀 Calling Direct Gemini API (gemini-2.5-flash)...`);
 
     const timeout = analysis_settings.fast_mode ? 12000 : 20000; // 12s fast, 20s full
     // Component identification needs more tokens due to comprehensive knowledge base
@@ -525,28 +525,36 @@ RESPONSE REQUIREMENTS:
       ? (analysis_settings.fast_mode ? 1500 : 3000)
       : (analysis_settings.fast_mode ? 800 : 2000);
 
+    // Convert messages to Gemini format
+    const geminiContents = [
+      {
+        role: 'user',
+        parts: [
+          { text: systemPrompt + '\n\n' + userPrompt },
+          ...images.map((img: any) => ({
+            inline_data: {
+              mime_type: img.source?.type || 'image/jpeg',
+              data: img.source?.data || ''
+            }
+          }))
+        ]
+      }
+    ];
+
     const aiResponse = await fetchWithTimeout(
-      'https://ai.gateway.lovable.dev/v1/chat/completions',
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`,
       {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${lovableApiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'google/gemini-2.5-flash',
-          messages: [
-            { role: 'system', content: systemPrompt },
-            {
-              role: 'user',
-              content: [
-                { type: "text", text: userPrompt },
-                ...images
-              ]
-            }
-          ],
-          max_tokens: maxTokens,
-          response_format: { type: "json_object" }
+          contents: geminiContents,
+          generationConfig: {
+            maxOutputTokens: maxTokens,
+            temperature: 0.3,
+            responseMimeType: 'application/json'
+          }
         }),
       },
       timeout
@@ -554,7 +562,7 @@ RESPONSE REQUIREMENTS:
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
-      console.error('❌ AI Gateway error:', aiResponse.status, errorText);
+      console.error('❌ Gemini API error:', aiResponse.status, errorText);
       
       if (aiResponse.status === 429) {
         return new Response(JSON.stringify({
@@ -567,17 +575,6 @@ RESPONSE REQUIREMENTS:
         });
       }
       
-      if (aiResponse.status === 402) {
-        return new Response(JSON.stringify({
-          error: 'Payment required',
-          code: 402,
-          message: 'Credits depleted. Please top up your workspace.'
-        }), {
-          status: 402,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
-      }
-      
       throw new Error('Analysis failed');
     }
 
@@ -585,13 +582,13 @@ RESPONSE REQUIREMENTS:
     const duration = Date.now() - startTime;
     console.log(`✅ Analysis complete in ${duration}ms`);
 
-    if (!data.choices?.[0]?.message?.content) {
-      throw new Error('Invalid response from AI Gateway');
+    if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
+      throw new Error('Invalid response from Gemini API');
     }
 
     let analysisResult;
     try {
-      analysisResult = parseAIResponse(data.choices[0].message.content, 'Analysis');
+      analysisResult = parseAIResponse(data.candidates[0].content.parts[0].text, 'Analysis');
       
       if (!analysisResult || typeof analysisResult !== 'object') {
         throw new Error('Invalid analysis result');
