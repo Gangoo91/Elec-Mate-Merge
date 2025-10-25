@@ -251,12 +251,20 @@ serve(async (req) => {
       ragDuration: timings.ragRetrieval
     });
 
-    // Build installation context with focused snippets (400 chars)
+    // PHASE 3: Build installation context with FULL content for detailed procedures
     const installContext = installKnowledge && installKnowledge.length > 0
       ? installKnowledge.map((inst: any) => 
-          `${inst.topic}: ${inst.content.substring(0, 400)}...`
-        ).join('\n\n')
+          `${inst.topic}:\n${inst.content}` // REMOVED 400 char truncation - use full content
+        ).join('\n\n---\n\n')
       : 'Apply general BS 7671 installation methods and best practices.';
+
+    logger.info('Installation context prepared', {
+      contextLength: installContext.length,
+      docsIncluded: installKnowledge.length,
+      avgDocLength: installKnowledge.length > 0 
+        ? Math.round(installContext.length / installKnowledge.length)
+        : 0
+    });
 
     // Build conversation context
     let contextSection = '';
@@ -405,6 +413,22 @@ GOOD Example: "Install the consumer unit enclosure at 1.8m height from finished 
 
 INSTALLATION KNOWLEDGE DATABASE (${installKnowledge?.length || 0} verified guides):
 ${installContext}
+
+**CRITICAL: EXTRACT PROCEDURES FROM RAG KNOWLEDGE**
+The installation knowledge database above contains verified step-by-step procedures.
+You MUST:
+1. Search the knowledge base for procedures matching this work type
+2. Extract specific steps from RAG docs (e.g., "Clip spacing 400mm for horizontal runs")
+3. Include exact measurements from knowledge base (don't guess or generalise)
+4. Reference table numbers if cited in knowledge (e.g., "Table 4A2", "Table 4D5")
+5. Each step should contain 5-10 sub-tasks extracted from RAG procedures
+
+Example of extracting from RAG:
+If knowledge base says: "Cable clips for 2.5mm² T&E: horizontal runs 400mm spacing (Table 4A2), vertical runs 550mm"
+Your step should say: "Install cable clips at 400mm intervals for horizontal runs per Table 4A2 (for 2.5mm² T&E). For vertical runs, increase spacing to 550mm."
+
+DO NOT write generic steps like "Install cable clips at appropriate spacing"
+DO extract specific values: "400mm spacing", "1.8m height", "16mm² cable", "50mm screws"
 
 ⚠️ CRITICAL: Extract specific values from knowledge base above:
 ✓ If database states "Clip spacing 2.5mm² horizontal: 400mm" → use 400mm in your steps

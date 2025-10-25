@@ -135,6 +135,15 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           </div>
           <div className="relative">
             <Progress value={overallProgress} className="h-3" />
+            {isProcessing && overallProgress < 95 && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="flex gap-1">
+                  <div className="w-1 h-1 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <div className="w-1 h-1 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <div className="w-1 h-1 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -214,10 +223,19 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
 
                     {/* Sub-step progress */}
                     {step.status === 'processing' && (
-                      <SubStepProgress 
-                        currentSubStep={step.subStep || null}
-                        isComplete={false}
-                      />
+                      <>
+                        <SubStepProgress 
+                          currentSubStep={step.subStep || null}
+                          isComplete={false}
+                        />
+                        <div className="text-xs text-elec-light/60 mt-2">
+                          <span className="animate-pulse">
+                            {step.agent === 'health-safety' 
+                              ? 'Identifying hazards and controls...' 
+                              : 'Planning installation sequence...'}
+                          </span>
+                        </div>
+                      </>
                     )}
 
                     {/* Time elapsed for completed steps */}

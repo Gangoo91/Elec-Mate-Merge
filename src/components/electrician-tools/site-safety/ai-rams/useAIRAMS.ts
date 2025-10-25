@@ -286,6 +286,30 @@ export function useAIRAMS(): UseAIRAMSReturn {
     return interval;
   }, []);
 
+  // PHASE 1: Smooth progress polling for real-time updates
+  const startProgressPolling = useCallback((
+    agent: 'health-safety' | 'installer',
+    startProgress: number,
+    targetProgress: number,
+    estimatedDuration: number
+  ) => {
+    const startTime = Date.now();
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const progressRatio = Math.min(elapsed / estimatedDuration, 0.95); // Cap at 95% until complete
+      const currentProgress = startProgress + (targetProgress - startProgress) * progressRatio;
+      
+      setOverallProgress(Math.round(currentProgress));
+      
+      // Update estimated time remaining
+      const remaining = Math.max(0, Math.ceil((estimatedDuration - elapsed) / 1000));
+      setEstimatedTimeRemaining(remaining);
+    }, 500); // Update every 500ms
+    
+    progressIntervalsRef.current.push(interval);
+    return interval;
+  }, []);
+
   const clearProgressIntervals = useCallback(() => {
     progressIntervalsRef.current.forEach(interval => clearInterval(interval));
     progressIntervalsRef.current = [];
@@ -381,10 +405,12 @@ export function useAIRAMS(): UseAIRAMSReturn {
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'health-safety' ? { ...step, status: 'processing', subStep: HEALTH_SAFETY_SUBSTEPS[0] } : step
       ));
-      animateProgress(5, 600);
-      setEstimatedTimeRemaining(240); // 4 minutes
+      
+      // PHASE 1: Start smooth progress polling 0% → 45% over 3 minutes
+      startProgressPolling('health-safety', 0, 45, 180000);
+      setEstimatedTimeRemaining(300); // 5 minutes total
 
-      // Start simulated progress
+      // Start simulated substep progress
       simulateSubStepProgress('health-safety', HEALTH_SAFETY_SUBSTEPS);
 
       // Health check before starting (optional - continues on failure)
@@ -452,21 +478,51 @@ export function useAIRAMS(): UseAIRAMSReturn {
         });
       }
       
-      // Check if we have valid hazard data from ANY valid response path
-      const hasValidHazards = !!(
-        hsData?.structuredData?.riskAssessment?.hazards?.length ||
-        hsData?.response?.structuredData?.riskAssessment?.hazards?.length ||
-        hsData?.structuredData?.hazards?.length ||
-        hsData?.riskAssessment?.hazards?.length
-      );
+      // PHASE 2: Enhanced hazard extraction with comprehensive path checking
+      const extractHazards = (responseData: any): any[] => {
+        console.log('🔍 DETAILED HAZARD EXTRACTION:', {
+          responseStructure: JSON.stringify(responseData, null, 2).substring(0, 1000),
+          hasStructuredData: !!responseData?.structuredData,
+          hasRiskAssessment: !!responseData?.structuredData?.riskAssessment,
+          hazardPaths: {
+            path1Count: responseData?.structuredData?.riskAssessment?.hazards?.length || 0,
+            path2Count: responseData?.response?.structuredData?.riskAssessment?.hazards?.length || 0
+          }
+        });
+
+        const possiblePaths = [
+          responseData?.structuredData?.riskAssessment?.hazards,
+          responseData?.response?.structuredData?.riskAssessment?.hazards,
+          responseData?.structuredData?.hazards,
+          responseData?.riskAssessment?.hazards,
+          responseData?.hazards
+        ];
+
+        for (const path of possiblePaths) {
+          if (Array.isArray(path) && path.length > 0) {
+            console.log(`✅ Found ${path.length} hazards`, {
+              firstHazard: path[0],
+              allHazardNames: path.map((h: any) => h.hazard || h.hazardDescription)
+            });
+            return path;
+          }
+        }
+
+        console.error('❌ NO HAZARDS FOUND IN ANY PATH - this should not happen with updated prompt');
+        return [];
+      };
+
+      const extractedHazards = extractHazards(hsData);
+      const hasValidHazards = extractedHazards.length > 0;
 
       // Only use fallback if truly no valid data exists
       if (hsError || !hsData || !hsData.success || !hasValidHazards) {
-        console.error('❌ Health & Safety agent failed - no valid hazards found:', { 
+        console.error('❌ Health & Safety agent failed - using fallback:', { 
           hsError: hsError?.message,
           hasData: !!hsData,
           success: hsData?.success,
-          // Check all possible paths
+          hazardCount: extractedHazards.length,
+          willUseFallback: true,
           paths: {
             'structuredData.riskAssessment.hazards': hsData?.structuredData?.riskAssessment?.hazards?.length || 0,
             'response.structuredData.riskAssessment.hazards': hsData?.response?.structuredData?.riskAssessment?.hazards?.length || 0,
@@ -520,7 +576,9 @@ export function useAIRAMS(): UseAIRAMSReturn {
       // Store raw H&S response
       setRawHSResponse(hsDataToUse);
 
+      // PHASE 1: Clear progress intervals and set to 50% after H&S completion
       clearProgressIntervals();
+      setOverallProgress(50);
       const hsTimeElapsed = Math.round((Date.now() - hsStartTime) / 1000);
 
       // Extract hazard count with comprehensive fallback paths
@@ -545,9 +603,6 @@ export function useAIRAMS(): UseAIRAMSReturn {
             : step
         ));
       }
-      
-      animateProgress(50, 1000);
-      setEstimatedTimeRemaining(120); // 2 minutes
 
       // Step 2: Call Installer Agent (with H&S context)
       const installerStartTime = Date.now();
@@ -555,7 +610,11 @@ export function useAIRAMS(): UseAIRAMSReturn {
         step.agent === 'installer' ? { ...step, status: 'processing', subStep: INSTALLER_SUBSTEPS[0] } : step
       ));
 
-      // Start simulated progress for installer
+      // PHASE 1: Start smooth progress polling 50% → 95% over 2 minutes
+      startProgressPolling('installer', 50, 95, 120000);
+      setEstimatedTimeRemaining(120); // 2 minutes
+
+      // Start simulated substep progress for installer
       simulateSubStepProgress('installer', INSTALLER_SUBSTEPS);
 
       const { data: installerData, error: installerError } = await callAgentWithRetry('installer-v3', {
@@ -592,13 +651,16 @@ export function useAIRAMS(): UseAIRAMSReturn {
         dataPath: installerData?.structuredData ? 'structuredData' : 'response.structuredData'
       });
 
+      // PHASE 1: Clear progress intervals and set to 100% after installer completion
+      clearProgressIntervals();
+      setOverallProgress(100);
+      setEstimatedTimeRemaining(0);
+      
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'installer' 
           ? { ...step, status: 'complete', reasoning: `Generated ${stepsCount || 'multiple'} installation steps`, subStep: null, timeElapsed: installerTimeElapsed }
           : step
       ));
-      animateProgress(100, 600);
-      setEstimatedTimeRemaining(0);
 
       // Step 3: Transform agent outputs to RAMS format
       console.log('🔄 Transforming agent outputs to RAMS format...');

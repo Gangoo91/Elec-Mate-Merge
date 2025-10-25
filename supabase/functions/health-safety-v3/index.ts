@@ -161,19 +161,52 @@ serve(async (req) => {
       avgScore: hsKnowledge.healthSafetyDocs?.length > 0 ? (hsKnowledge.healthSafetyDocs.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / hsKnowledge.healthSafetyDocs.length).toFixed(3) : 'N/A'
     });
 
-    // Step 3: Build H&S context with error handling
+    // PHASE 2A: Build H&S context with STRUCTURED hazard extraction
     let hsContext: string;
+    let structuredHazards = '';
+    
     try {
-      logger.info('Building H&S context from RAG results');
+      logger.info('Building H&S context from RAG results with structured hazard extraction');
       
-      hsContext = hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0
-        ? hsKnowledge.healthSafetyDocs.map((hs: any) => 
-            `${hs.topic}: ${hs.content}`
-          ).join('\n\n')
-        : 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
+      // Extract hazards directly from RAG docs
+      if (hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0) {
+        structuredHazards = '\n\n📋 HAZARDS IDENTIFIED IN KNOWLEDGE BASE (You MUST include these):\n\n';
+        
+        hsKnowledge.healthSafetyDocs.forEach((doc: any, idx: number) => {
+          // Extract hazard category from topic
+          const category = doc.topic || 'General';
+          const content = doc.content || '';
+          
+          structuredHazards += `${idx + 1}. ${category}\n`;
+          structuredHazards += `   Context: ${content.substring(0, 600)}\n`; // Increased from 400 to 600
+          
+          // Extract specific controls if present
+          const controlMatch = content.match(/control[s]?:([^.]+)/i);
+          if (controlMatch) {
+            structuredHazards += `   Controls: ${controlMatch[1].trim()}\n`;
+          }
+          
+          // Extract PPE if present
+          const ppeMatch = content.match(/PPE:([^.]+)/i);
+          if (ppeMatch) {
+            structuredHazards += `   PPE: ${ppeMatch[1].trim()}\n`;
+          }
+          
+          structuredHazards += '\n';
+        });
+        
+        hsContext = hsKnowledge.healthSafetyDocs.map((hs: any) => 
+          `${hs.topic}: ${hs.content}`
+        ).join('\n\n');
+      } else {
+        hsContext = 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
+        structuredHazards = '';
+      }
       
-      logger.info('Context built successfully', {
-        hsContextLength: hsContext.length
+      logger.info('Context built with structured hazards', {
+        hsContextLength: hsContext.length,
+        structuredHazardsLength: structuredHazards.length,
+        hazardCategoriesFound: hsKnowledge?.healthSafetyDocs?.length || 0
       });
     } catch (contextError) {
       logger.error('Failed to build context', {
@@ -183,6 +216,7 @@ serve(async (req) => {
       
       // Provide minimal fallback to continue processing
       hsContext = 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
+      structuredHazards = '';
     }
 
     // Build HIGH-LEVEL INSTALL KNOWLEDGE from installer output
@@ -272,10 +306,73 @@ Always ground your risk assessment in BS 7671:2018+A2:2022 requirements:
 
 YOUR ROLE: Produce BS 8800-compliant risk assessments with 5x5 matrix scoring.
 
-KNOWLEDGE BASE (${hsKnowledge?.length || 0} safety practices):
+KNOWLEDGE BASE (${hsKnowledge?.healthSafetyDocs?.length || 0} safety practices):
 ${hsContext}
 
+${structuredHazards}
+
 ${installKnowledge}
+
+**CRITICAL: COMPREHENSIVE HAZARD IDENTIFICATION FROM RAG**
+The knowledge base above contains verified hazards for this type of work.
+You MUST:
+1. Review EVERY hazard category in the "HAZARDS IDENTIFIED IN KNOWLEDGE BASE" section
+2. Create a separate hazard entry for EACH category found (minimum 10-18 total)
+3. Expand each RAG hazard with:
+   - Specific likelihood (1-5) based on this particular job
+   - Appropriate severity (1-5) based on potential harm
+   - Detailed control measures from RAG docs + job-specific additions
+   - Regulation references from the hazard context
+
+**HAZARD CATEGORIES TO ALWAYS CHECK (from RAG + general):**
+- Electrical shock (live parts, damaged equipment, wet conditions)
+- Electric arc flash (short circuits, equipment faults)
+- Fire/explosion (combustible materials, hot works, flammable gases)
+- Manual handling (heavy equipment, cable drums, awkward postures)
+- Work at height (ladders, scaffolds, MEWPs, roof work)
+- Slips/trips/falls (cables, tools, wet surfaces, uneven ground)
+- Confined spaces (metre cupboards, service voids, plant rooms)
+- Buried services (gas, water, telecoms, other electrical)
+- Vehicle movements (site access, delivery lorries, mobile plant)
+- Noise exposure (power tools, drilling, equipment testing)
+- Dust/fumes (cutting, drilling, soldering flux, cable insulation)
+- Asbestos (pre-2000 buildings, textured coatings, insulation)
+- Environmental hazards (weather, lighting, temperature extremes)
+- Site welfare (access, egress, toilet facilities, first aid)
+- Isolation failures (proving dead, lock-off, adjacent circuits)
+- Equipment failure (tool defects, test gear calibration)
+- Working with others (coordination, communication, permits)
+- Public safety (barriers, signage, temporary disconnections)
+
+DO NOT generate only 3-5 generic hazards. For a professional electrical installation, you should identify 10-18 specific hazards minimum.
+
+Example of GOOD detail (from RAG knowledge):
+{
+  "hazardNumber": 4,
+  "hazard": "Electric shock from live conductors during isolation failure",
+  "whoAffected": "Electricians, Labourers",
+  "likelihood": 3,
+  "severity": 5,
+  "riskScore": 15,
+  "riskLevel": "Very High",
+  "controls": [
+    "Follow isolation procedure per BS 7671 Section 462",
+    "Use lock-off devices (LOTO) on all sources",
+    "Prove dead with voltage indicator to GS38",
+    "Use proving unit to verify test equipment working",
+    "Display warning signs: 'Electricians at Work - Do Not Switch On'",
+    "Maintain isolation log with names and times"
+  ],
+  "regulation": "Electricity at Work Regulations 1989 Reg 4(3), BS 7671 Section 462",
+  "linkedToStep": 2
+}
+
+NOT acceptable (too vague):
+{
+  "hazardNumber": 1,
+  "hazard": "Electrical hazards",
+  "controls": ["Use PPE", "Follow procedures"]
+}
 
 RISK MATRIX (5x5):
 - Likelihood: 1=Rare, 2=Unlikely, 3=Possible, 4=Likely, 5=Almost Certain
