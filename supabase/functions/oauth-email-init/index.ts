@@ -37,11 +37,13 @@ serve(async (req: Request) => {
         client_id: GOOGLE_CLIENT_ID,
         redirect_uri: redirectUri,
         response_type: 'code',
-        scope: 'https://www.googleapis.com/auth/gmail.send',
+        scope: 'https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/userinfo.profile',
         state,
         access_type: 'offline',
         prompt: 'consent',
       });
+
+      console.log('🔐 Gmail OAuth redirect URI:', redirectUri);
 
       authUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
     } else {

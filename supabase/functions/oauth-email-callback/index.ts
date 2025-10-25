@@ -15,6 +15,7 @@ const MICROSOFT_CLIENT_ID = Deno.env.get('MICROSOFT_CLIENT_ID');
 const MICROSOFT_CLIENT_SECRET = Deno.env.get('MICROSOFT_CLIENT_SECRET');
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');
+const FRONTEND_URL = Deno.env.get('FRONTEND_URL');
 
 serve(async (req: Request) => {
   if (req.method === 'OPTIONS') {
@@ -119,12 +120,12 @@ serve(async (req: Request) => {
       email: emailAddress 
     });
 
-    // Redirect to settings page
+    // Redirect to settings page with success
     return new Response(null, {
       status: 302,
       headers: {
         ...corsHeaders,
-        Location: `${SUPABASE_URL.replace('https://jtwygbeceundfgnkirof.supabase.co', window.location.origin)}/settings?tab=email&success=true`,
+        Location: `${FRONTEND_URL}/settings?tab=email&success=true`,
       },
     });
   } catch (error) {
@@ -134,7 +135,7 @@ serve(async (req: Request) => {
       status: 302,
       headers: {
         ...corsHeaders,
-        Location: `/settings?tab=email&error=${encodeURIComponent(error.message)}`,
+        Location: `${FRONTEND_URL}/settings?tab=email&error=${encodeURIComponent(error.message)}`,
       },
     });
   }
