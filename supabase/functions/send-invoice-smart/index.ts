@@ -18,11 +18,18 @@ serve(async (req: Request) => {
   }
 
   try {
-    const { to, subject, body, attachmentBase64, attachmentFilename } = await req.json();
+    const { documentType, quoteId, invoiceId, to, subject, body, attachmentBase64, attachmentFilename } = await req.json();
 
-    // Validate inputs
-    if (!to || !subject || !body) {
-      throw new ValidationError('to, subject, and body are required');
+    // Validate document type (optional - defaults to 'invoice')
+    const type = documentType || 'invoice';
+    
+    if (type !== 'quote' && type !== 'invoice') {
+      throw new ValidationError('documentType must be "quote" or "invoice"');
+    }
+
+    // Validate we have either quote or invoice ID if no manual email details provided
+    if (!to && !quoteId && !invoiceId) {
+      throw new ValidationError('Either documentId or manual email details required');
     }
 
     if (!isValidEmail(to)) {
@@ -58,6 +65,197 @@ serve(async (req: Request) => {
     }
 
     const config = configs[0];
+
+    // If document ID provided, fetch document data and generate email
+    let emailTo = to;
+    let emailSubject = subject;
+    let emailBody = body;
+    let pdfAttachment = attachmentBase64;
+    let pdfFilename = attachmentFilename;
+
+    if (quoteId || invoiceId) {
+      const docId = quoteId || invoiceId;
+      const docType = quoteId ? 'quote' : 'invoice';
+      
+      // Fetch document data
+      const { data: doc, error: docError } = await supabase
+        .from(docType === 'quote' ? 'quotes' : 'quotes')
+        .select('*')
+        .eq('id', docId)
+        .eq('user_id', user.id)
+        .single();
+
+      if (docError || !doc) {
+        throw new ValidationError(`${docType} not found`);
+      }
+
+      // Fetch company profile
+      const { data: company } = await supabase
+        .from('company_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      // Parse client data
+      const clientData = typeof doc.client_data === 'string' 
+        ? JSON.parse(doc.client_data) 
+        : doc.client_data;
+      
+      const jobDetails = doc.job_details 
+        ? (typeof doc.job_details === 'string' ? JSON.parse(doc.job_details) : doc.job_details)
+        : {};
+
+      // Set recipient
+      emailTo = clientData?.email;
+      if (!emailTo) {
+        throw new ValidationError('Client email not found in document');
+      }
+
+      // Generate subject and body based on document type
+      const companyName = company?.company_name || 'ElecMate Professional';
+      const companyPhone = company?.company_phone || '';
+      const companyEmail = company?.company_email || config.email_address;
+      
+      if (docType === 'quote') {
+        const validityDate = doc.expiry_date 
+          ? new Date(doc.expiry_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+          : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        emailSubject = `Quote ${doc.quote_number} from ${companyName}`;
+        emailBody = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="UTF-8">
+            <style>
+              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+              .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+              .header { background: #fbbf24; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+              .header h1 { margin: 0; color: #1f2937; }
+              .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
+              .details { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+              .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e5e7eb; }
+              .detail-row:last-child { border-bottom: none; }
+              .detail-label { font-weight: 600; color: #6b7280; }
+              .detail-value { color: #1f2937; }
+              .cta-button { background: #fbbf24; color: #1f2937; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; margin: 20px 0; font-weight: 600; }
+              .footer { text-align: center; margin-top: 30px; color: #6b7280; font-size: 14px; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>📋 Quote ${doc.quote_number}</h1>
+              </div>
+              <div class="content">
+                <p>Dear ${clientData?.name || 'Valued Client'},</p>
+                <p>Thank you for your enquiry. Please find your quotation for <strong>${jobDetails?.title || 'electrical work'}</strong>.</p>
+                
+                <div class="details">
+                  <div class="detail-row">
+                    <span class="detail-label">Quote Number:</span>
+                    <span class="detail-value">${doc.quote_number}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">Total Amount:</span>
+                    <span class="detail-value">£${(doc.total || 0).toFixed(2)}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">Valid Until:</span>
+                    <span class="detail-value">${validityDate}</span>
+                  </div>
+                </div>
+
+                <p>The detailed quote is attached as a PDF. If you have any questions or would like to proceed, please don't hesitate to contact us.</p>
+
+                <p style="margin-top: 30px;">Best regards,<br>
+                <strong>${companyName}</strong><br>
+                ${companyPhone ? `📞 ${companyPhone}<br>` : ''}
+                ${companyEmail ? `✉️ ${companyEmail}` : ''}</p>
+
+                <div class="footer">
+                  <p>⚡ Powered by ElecMate Professional Suite</p>
+                </div>
+              </div>
+            </div>
+          </body>
+          </html>
+        `;
+      } else {
+        emailSubject = `Invoice ${doc.invoice_number || doc.quote_number} from ${companyName}`;
+        emailBody = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="UTF-8">
+            <style>
+              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+              .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+              .header { background: #fbbf24; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+              .header h1 { margin: 0; color: #1f2937; }
+              .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
+              .details { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+              .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e5e7eb; }
+              .detail-row:last-child { border-bottom: none; }
+              .detail-label { font-weight: 600; color: #6b7280; }
+              .detail-value { color: #1f2937; }
+              .footer { text-align: center; margin-top: 30px; color: #6b7280; font-size: 14px; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>💷 Invoice ${doc.invoice_number || doc.quote_number}</h1>
+              </div>
+              <div class="content">
+                <p>Dear ${clientData?.name || 'Valued Client'},</p>
+                <p>Please find attached your invoice for work completed.</p>
+                
+                <div class="details">
+                  <div class="detail-row">
+                    <span class="detail-label">Invoice Number:</span>
+                    <span class="detail-value">${doc.invoice_number || doc.quote_number}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">Total Amount:</span>
+                    <span class="detail-value">£${(doc.total || 0).toFixed(2)}</span>
+                  </div>
+                  ${doc.invoice_due_date ? `
+                  <div class="detail-row">
+                    <span class="detail-label">Due Date:</span>
+                    <span class="detail-value">${new Date(doc.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                  </div>
+                  ` : ''}
+                </div>
+
+                <p>Payment details and terms are included in the attached invoice. Please contact us if you have any questions.</p>
+
+                <p style="margin-top: 30px;">Best regards,<br>
+                <strong>${companyName}</strong><br>
+                ${companyPhone ? `📞 ${companyPhone}<br>` : ''}
+                ${companyEmail ? `✉️ ${companyEmail}` : ''}</p>
+
+                <div class="footer">
+                  <p>⚡ Powered by ElecMate Professional Suite</p>
+                </div>
+              </div>
+            </div>
+          </body>
+          </html>
+        `;
+      }
+
+      // Note: PDF generation would happen in the frontend before calling this function
+      // or we could integrate generate-pdf-monkey here if needed
+    }
+
+    if (!emailTo || !emailSubject || !emailBody) {
+      throw new ValidationError('Email details incomplete');
+    }
+
+    if (!isValidEmail(emailTo)) {
+      throw new ValidationError('Invalid email address');
+    }
 
     // Check rate limit
     const now = new Date();
@@ -114,7 +312,7 @@ serve(async (req: Request) => {
     if (config.email_provider === 'gmail') {
       await withRetry(
         () => withTimeout(
-          sendGmailEmail(accessToken, to, subject, body, attachmentBase64, attachmentFilename),
+          sendGmailEmail(accessToken, emailTo, emailSubject, emailBody, pdfAttachment, pdfFilename),
           Timeouts.STANDARD,
           'Gmail send'
         ),
@@ -123,7 +321,7 @@ serve(async (req: Request) => {
     } else {
       await withRetry(
         () => withTimeout(
-          sendOutlookEmail(accessToken, to, subject, body, attachmentBase64, attachmentFilename),
+          sendOutlookEmail(accessToken, emailTo, emailSubject, emailBody, pdfAttachment, pdfFilename),
           Timeouts.STANDARD,
           'Outlook send'
         ),
@@ -144,7 +342,8 @@ serve(async (req: Request) => {
     console.log(`✅ Email sent successfully`, {
       user_id: user.id,
       provider: config.email_provider,
-      to,
+      type: type,
+      to: emailTo,
       count: config.daily_sent_count + 1,
     });
 

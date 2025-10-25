@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,6 +28,7 @@ export const QuoteSendDropdown = ({
   disabled = false,
   className = '',
 }: QuoteSendDropdownProps) => {
+  const navigate = useNavigate();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
   const [isGeneratingMailtoLink, setIsGeneratingMailtoLink] = useState(false);
@@ -95,24 +97,46 @@ export const QuoteSendDropdown = ({
     try {
       setIsSendingEmail(true);
 
-      // Try to get current session
+      // Get current session
       let { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
-      // If session is missing or expired, try to refresh
       if (sessionError || !session) {
-        console.log('Session missing or expired, attempting refresh...');
         const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
-        
         if (refreshError || !refreshData.session) {
-          throw new Error('Please log in again to send quotes. Your session has expired.');
+          throw new Error('Please log in again to send quotes.');
         }
-        
         session = refreshData.session;
-        console.log('Session refreshed successfully');
       }
-      
-      const { error } = await supabase.functions.invoke('send-quote-email', {
-        body: { quoteId: quote.id },
+
+      // Check if user has connected email
+      const { data: configData, error: configError } = await supabase.functions.invoke('get-email-config', {
+        headers: { Authorization: `Bearer ${session.access_token}` }
+      });
+
+      const hasEmailConfig = configData?.configs?.length > 0 && 
+                            configData.configs.some((c: any) => c.is_active);
+
+      if (!hasEmailConfig) {
+        toast({
+          title: "Email Not Connected",
+          description: "Connect your Gmail or Outlook in Settings → Email Integration to send quotes",
+          variant: "destructive",
+        });
+        
+        // Navigate after a brief delay
+        setTimeout(() => {
+          navigate('/electrician/settings?tab=email');
+        }, 2000);
+        
+        return;
+      }
+
+      // Send via user's connected email using send-invoice-smart
+      const { error } = await supabase.functions.invoke('send-invoice-smart', {
+        body: { 
+          documentType: 'quote',
+          quoteId: quote.id,
+        },
         headers: {
           Authorization: `Bearer ${session.access_token}`
         }
@@ -122,7 +146,7 @@ export const QuoteSendDropdown = ({
 
       toast({
         title: 'Quote sent',
-        description: `Quote ${quote.quoteNumber} sent to ${quote.client?.email}`,
+        description: `Quote ${quote.quoteNumber} sent from your email to ${quote.client?.email}`,
         variant: 'success',
         duration: 4000,
       });
@@ -137,13 +161,14 @@ export const QuoteSendDropdown = ({
     } catch (error: any) {
       console.error('Error sending quote:', error);
       
-      // Provide specific error messages
       let errorMessage = 'Failed to send quote. Please try again.';
       
-      if (error.message?.includes('session')) {
-        errorMessage = 'Your session has expired. Please refresh the page and try again.';
-      } else if (error.message?.includes('email')) {
-        errorMessage = 'Client email address is missing or invalid.';
+      if (error.message?.includes('email account')) {
+        errorMessage = 'Please connect your email account in Settings first.';
+      } else if (error.message?.includes('rate limit')) {
+        errorMessage = 'Daily email limit reached (100/day). Resets at midnight UTC.';
+      } else if (error.message?.includes('token')) {
+        errorMessage = 'Email authentication expired. Please reconnect your email in Settings.';
       }
       
       toast({

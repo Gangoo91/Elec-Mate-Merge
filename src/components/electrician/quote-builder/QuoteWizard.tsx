@@ -11,6 +11,7 @@ import { QuoteReviewStep } from "./steps/QuoteReviewStep";
 import { CompanyBrandingStep } from "@/components/company/CompanyBrandingStep";
 import { QuoteProgressIndicator } from "./QuoteProgressIndicator";
 import { SmartContinueButton } from "./SmartContinueButton";
+import { EmailStatusBanner } from "./EmailStatusBanner";
 
 const steps = [
   { title: "Client & Company", icon: User, description: "Customer and company details" },
@@ -107,6 +108,9 @@ const {
 
   return (
     <div className="w-full mx-auto space-y-4 md:space-y-6">
+      {/* Email Status Banner */}
+      <EmailStatusBanner />
+      
       {/* Simple Progress */}
       <QuoteProgressIndicator
         currentStep={currentStep}
