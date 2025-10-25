@@ -39,11 +39,13 @@ const handler = async (req: Request): Promise<Response> => {
       }
     );
 
-    // Get the current user
+    // Extract JWT token and authenticate user using it
+    const jwt = authHeader.replace('Bearer ', '').trim();
+
     const {
       data: { user },
       error: userError,
-    } = await supabaseClient.auth.getUser();
+    } = await supabaseClient.auth.getUser(jwt);
 
     if (userError || !user) {
       console.error('❌ User authentication error:', userError);
