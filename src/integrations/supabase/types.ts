@@ -6215,37 +6215,49 @@ export type Database = {
       user_email_configs: {
         Row: {
           created_at: string | null
+          daily_sent_count: number | null
           email_address: string
           email_provider: string
           encrypted_access_token: string | null
           encrypted_refresh_token: string | null
           id: string
           is_active: boolean | null
+          last_sent_at: string | null
+          rate_limit_reset_at: string | null
           token_expires_at: string | null
+          total_sent_count: number | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
           created_at?: string | null
+          daily_sent_count?: number | null
           email_address: string
           email_provider: string
           encrypted_access_token?: string | null
           encrypted_refresh_token?: string | null
           id?: string
           is_active?: boolean | null
+          last_sent_at?: string | null
+          rate_limit_reset_at?: string | null
           token_expires_at?: string | null
+          total_sent_count?: number | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
           created_at?: string | null
+          daily_sent_count?: number | null
           email_address?: string
           email_provider?: string
           encrypted_access_token?: string | null
           encrypted_refresh_token?: string | null
           id?: string
           is_active?: boolean | null
+          last_sent_at?: string | null
+          rate_limit_reset_at?: string | null
           token_expires_at?: string | null
+          total_sent_count?: number | null
           updated_at?: string | null
           user_id?: string
         }
