@@ -104,14 +104,14 @@ const fetchWithTimeout = async (url: string, options: any, timeoutMs: number, si
   }
 };
 
-// Convert image URL to Gemini inline_data format
-const urlToInlineData = async (url: string): Promise<{ mime_type: string; data: string }> => {
+// Convert image URL to Gemini inlineData format (camelCase for REST API)
+const urlToInlineData = async (url: string): Promise<{ mimeType: string; data: string }> => {
   // Handle data URLs (base64 already embedded)
   if (url.startsWith('data:image')) {
     const match = url.match(/data:(.*?);base64,(.+)/);
     if (!match) throw new Error('Invalid data URL format');
     const [, mimeType, base64Data] = match;
-    return { mime_type: mimeType, data: base64Data };
+    return { mimeType, data: base64Data };
   }
   
   // Fetch image from URL (Supabase Storage or external)
@@ -126,10 +126,12 @@ const urlToInlineData = async (url: string): Promise<{ mime_type: string; data: 
   
   console.log(`🖼️ Converted image: ${url.substring(0, 60)}... | ${contentType} | ${arrayBuffer.byteLength} bytes`);
   
-  return { mime_type: contentType, data: base64Data };
+  return { mimeType: contentType, data: base64Data };
 };
 
 serve(async (req) => {
+  console.log('🔧 Visual Analysis | inlineData casing fix | ' + new Date().toISOString());
+  
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -530,12 +532,12 @@ RESPONSE REQUIREMENTS:
       ? (analysis_settings.fast_mode ? 1500 : 3000)
       : (analysis_settings.fast_mode ? 800 : 2000);
 
-    // Convert images to Gemini inline_data format
+    // Convert images to Gemini inlineData format (camelCase for REST API)
     const parts: any[] = [{ text: systemPrompt + '\n\n' + userPrompt }];
     
     // Add primary image
     const primaryInlineData = await urlToInlineData(primary_image);
-    parts.push({ inline_data: primaryInlineData });
+    parts.push({ inlineData: primaryInlineData });
     
     // Add additional images (respecting fast mode limit)
     const imageLimit = analysis_settings.fast_mode ? 2 : additional_images.length;
@@ -544,7 +546,7 @@ RESPONSE REQUIREMENTS:
         additional_images.slice(0, imageLimit).map(url => urlToInlineData(url))
       );
       additionalInlineData.forEach(inlineData => {
-        parts.push({ inline_data: inlineData });
+        parts.push({ inlineData: inlineData });
       });
     }
     
@@ -603,13 +605,39 @@ RESPONSE REQUIREMENTS:
     const duration = Date.now() - startTime;
     console.log(`✅ Analysis complete in ${duration}ms`);
 
-    if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
-      throw new Error('Invalid response from Gemini API');
+    // Robust text extraction with safety checks
+    const candidate = data.candidates?.[0];
+    const textPart = candidate?.content?.parts?.find((p: any) => typeof p.text === 'string');
+    const text = textPart?.text;
+
+    if (!text) {
+      console.error('❌ No text in response:', JSON.stringify(data).substring(0, 500));
+      
+      // Check for safety blocks
+      if (data.promptFeedback?.blockReason || candidate?.finishReason === 'SAFETY') {
+        return new Response(JSON.stringify({
+          error: 'Content blocked',
+          code: 400,
+          message: 'Content blocked by safety filter. Please try a different image.'
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
+      return new Response(JSON.stringify({
+        error: 'Empty response',
+        code: 502,
+        message: 'AI returned empty response. Please try again.'
+      }), {
+        status: 502,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
     let analysisResult;
     try {
-      analysisResult = parseAIResponse(data.candidates[0].content.parts[0].text, 'Analysis');
+      analysisResult = parseAIResponse(text, 'Analysis');
       
       if (!analysisResult || typeof analysisResult !== 'object') {
         throw new Error('Invalid analysis result');
