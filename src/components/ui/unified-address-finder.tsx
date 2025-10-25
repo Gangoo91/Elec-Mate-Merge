@@ -92,7 +92,14 @@ export const UnifiedAddressFinder = ({
 
       if (error) throw error;
 
-      const address = data.address.line_1 || data.address.formatted_address;
+      // Build comprehensive address string
+      const addressParts = [
+        data.address.line_1,
+        data.address.line_2,
+        data.address.post_town,
+      ].filter(Boolean);
+      
+      const address = addressParts.join(', ') || data.address.formatted_address;
       const postcode = data.address.postcode;
 
       setSelectedAddress({ address, postcode });
