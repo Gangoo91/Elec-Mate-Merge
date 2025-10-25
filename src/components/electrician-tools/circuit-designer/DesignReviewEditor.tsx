@@ -803,16 +803,22 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     Load Details
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80">Power:</span>
+                    <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80 min-w-[120px]">Power:</span>
                       <span className="font-medium text-white">{currentCircuit.loadPower}W ({(currentCircuit.loadPower / 1000).toFixed(1)}kW)</span>
                     </div>
-                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80">Design Current (Ib):</span>
+                    {currentCircuit.socketCount && (
+                      <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
+                        <span className="text-sm text-white/80 min-w-[120px]">Sockets:</span>
+                        <span className="font-medium text-white">{currentCircuit.socketCount} outlets</span>
+                      </div>
+                    )}
+                    <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80 min-w-[120px]">Design Current (Ib):</span>
                       <span className="font-medium text-white">{fmt(currentCircuit.calculations?.Ib, 1)}A</span>
                     </div>
-                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80">Phases:</span>
+                    <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80 min-w-[120px]">Phases:</span>
                       <span className="font-medium text-white capitalize">{currentCircuit.phases}</span>
                     </div>
                   </div>
@@ -836,21 +842,21 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   
                   {/* Cable Details Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80">Live Conductor:</span>
+                    <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80 min-w-[120px]">Live Conductor:</span>
                       <span className="font-medium text-white">{currentCircuit.cableSize}mm²</span>
                     </div>
-                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80">CPC:</span>
+                    <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80 min-w-[120px]">CPC:</span>
                       <span className="font-medium text-white">{currentCircuit.cpcSize}mm²</span>
                     </div>
-                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80">Length:</span>
+                    <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80 min-w-[120px]">Length:</span>
                       <span className="font-medium text-white">{currentCircuit.cableLength}m</span>
                     </div>
-                    <div className="flex items-center justify-between sm:justify-start sm:gap-8 py-2 px-3 bg-background/30 rounded-lg">
-                      <span className="text-sm text-white/80">Method:</span>
-                      <span className="font-medium text-white text-right sm:text-left">
+                    <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
+                      <span className="text-sm text-white/80 min-w-[120px]">Method:</span>
+                      <span className="font-medium text-white">
                         {(() => {
                           const method = currentCircuit.installationGuidance?.referenceMethod || currentCircuit.installationMethod || '';
                           // Clean up installation method formatting

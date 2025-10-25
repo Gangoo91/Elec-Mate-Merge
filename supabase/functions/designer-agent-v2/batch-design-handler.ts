@@ -458,6 +458,7 @@ Return complete circuit objects using the provided tool schema.`;
                   circuitNumber: { type: "string", description: "Circuit number (e.g., 'C1', 'C2')" },
                   loadType: { type: "string", description: "Load type (e.g., 'Ring Final', 'Radial', 'Lighting')" },
                   loadPower: { type: "number", description: "Load power in watts" },
+                  socketCount: { type: "number", description: "Number of sockets/outlets (if applicable). Estimate ~8-10 per ring for socket circuits" },
                   phases: { type: "number", description: "1 for single phase, 3 for three phase" },
                   cableSize: { type: "number", description: "Live conductor CSA in mm² (e.g., 1.5, 2.5, 4, 6, 10)" },
                   cpcSize: { type: "number", description: "CPC CSA per BS 6004 Twin and Earth: 1.5→1.0, 2.5→1.5, 4→1.5, 6→2.5, 10→4" },
@@ -829,9 +830,17 @@ ${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.su
 
 YOUR ROLE: Design compliant electrical circuits with complete details for each circuit.
 
+SOCKET CIRCUIT DESIGN (BS 7671 Appendix 15):
+- Ring finals: 32A MCB, 2.5mm² T&E, max 7.36kW per ring
+- Diversity (Appendix A): 100% for first 10 outlets, 40% next 10, 25% thereafter
+- For loads >7kW: Create multiple rings (e.g., 7200W → 2× 3600W rings)
+- Include socketCount estimation (~8-10 sockets per ring at 100W each)
+- Radials only for dedicated fixed loads (not general sockets)
+
 INSTRUCTIONS:
 1. For each circuit in the "circuits" array, include:
    - name, circuitNumber, loadType, loadPower, phases
+   - socketCount (for socket circuits: estimate number of outlets, e.g., 16 for office desks)
    - cableSize (mm²), cpcSize (mm²), cableLength (m)
    - protectionDevice: { type, rating, curve, kaRating }
    - rcdProtected (boolean), afddRequired (boolean)
@@ -1119,6 +1128,13 @@ Always cite regulation numbers and show working for calculations.`
     totalMaterials: designData.materials.length,
     totalWarnings: designData.warnings.length
   });
+  
+  // PHASE 1: Renumber circuits sequentially (C1, C2, C3... not CC1, CC6, CC10)
+  logger.info('🔢 Renumbering circuits sequentially');
+  designData.circuits = designData.circuits.map((circuit: any, index: number) => ({
+    ...circuit,
+    circuitNumber: index + 1 // Sequential numbering: 1, 2, 3, 4...
+  }));
     
   // CRITICAL VALIDATION: Ensure circuits is an array
   if (!designData.circuits || !Array.isArray(designData.circuits)) {
@@ -1372,8 +1388,9 @@ function getCircuitTypeHints(loadType: string, location?: string): string {
     'ev_charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
     'ev-charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
     'cooker': 'Reg 433.1.204 diversity (10A + 30% remainder + 5A socket), 10mm² typical, 40-50A MCB',
-    'socket': 'Ring final: 2.5mm² + 32A MCB | Radial: 4mm² + 32A or 2.5mm² + 20A MCB',
-    'sockets': 'Ring final: 2.5mm² + 32A MCB | Radial: 4mm² + 32A or 2.5mm² + 20A MCB',
+    'socket': 'Ring final preferred: 2.5mm² T&E + 32A MCB (max 7.36kW/100m²). For >7kW: create multiple rings. Estimate ~8-10 sockets per ring. Apply diversity per Appendix A (1st socket 100%, 2-9 at 40%, 10+ at 25%)',
+    'sockets': 'Ring final preferred: 2.5mm² T&E + 32A MCB (max 7.36kW/100m²). For >7kW: create multiple rings. Estimate ~8-10 sockets per ring. Apply diversity per Appendix A (1st socket 100%, 2-9 at 40%, 10+ at 25%)',
+    'office-sockets': 'Ring finals preferred. 32A MCB, 2.5mm² T&E per ring. Estimate 100W per outlet. Diversity: 100% first 10 outlets, 50% next 10, 25% remainder (Appendix A). Split into multiple rings if >7kW connected load',
     'lighting': '1.5mm² cable, 6A MCB Type B, 3% voltage drop limit (6.9V at 230V)',
     'outdoor': '30mA RCD mandatory (411.3.3), SWA cable, IP65+ rating, burial depth 600mm',
     'heat_pump': 'Dedicated circuit, 16mm² typical, 63A MCB, surge protection (534.4)',

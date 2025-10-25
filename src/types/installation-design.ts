@@ -26,6 +26,7 @@ export interface CircuitDesign {
   name: string;
   loadType: string;
   loadPower: number;
+  socketCount?: number; // Number of sockets/outlets (if applicable)
   designCurrent: number;
   voltage: number;
   phases: 'single' | 'three';
