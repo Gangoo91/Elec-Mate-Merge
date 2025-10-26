@@ -172,7 +172,7 @@ function getToolDefinitionForType(briefingType: string) {
   };
 }
 
-const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -182,10 +182,10 @@ serve(async (req) => {
   try {
     console.log('[BRIEFING-AI] Request started');
 
-    if (!LOVABLE_API_KEY) {
-      console.error('[BRIEFING-AI] API key not configured');
+    if (!OPENAI_API_KEY) {
+      console.error('[BRIEFING-AI] OpenAI API key not configured');
       return new Response(
-        JSON.stringify({ error: 'Lovable AI key not configured' }),
+        JSON.stringify({ error: 'OpenAI API key not configured' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -250,18 +250,18 @@ Generate comprehensive, detailed, and highly relevant content for this specific 
 Be specific, actionable, and adapt your response to match the briefing type's focus areas.
 ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - adjust content accordingly.' : ''}`;
 
-    console.log('[BRIEFING-AI] Calling Lovable AI for type:', briefingType);
+    console.log('[BRIEFING-AI] Calling OpenAI GPT-5-Mini for type:', briefingType);
     console.log('[BRIEFING-AI] User prompt preview:', userPrompt.substring(0, 200) + '...');
 
-    // Call Lovable AI with type-specific tool definition
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    // Call OpenAI API directly with type-specific tool definition
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "gpt-5-mini-2025-08-07",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt }
@@ -270,7 +270,8 @@ ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - ad
         tool_choice: {
           type: "function",
           function: { name: "generate_briefing_content" }
-        }
+        },
+        max_completion_tokens: 2000
       }),
     });
 
@@ -301,15 +302,33 @@ ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - ad
     // Extract tool call result
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
     if (!toolCall) {
-      console.error('[BRIEFING-AI] No tool call in response');
+      console.error('[BRIEFING-AI] No tool call in response. Full response:', JSON.stringify(data, null, 2));
+      
+      // Try to parse regular message content if available
+      const regularMessage = data.choices?.[0]?.message?.content;
+      if (regularMessage) {
+        try {
+          const parsedContent = JSON.parse(regularMessage);
+          if (parsedContent.briefingDescription) {
+            console.log('[BRIEFING-AI] Successfully parsed message content as JSON');
+            return new Response(
+              JSON.stringify({ success: true, content: parsedContent }),
+              { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            );
+          }
+        } catch (e) {
+          console.error('[BRIEFING-AI] Failed to parse message content:', e);
+        }
+      }
+      
       return new Response(
-        JSON.stringify({ error: 'Invalid AI response format' }),
+        JSON.stringify({ error: 'Invalid AI response format - no tool call or parseable content' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     const briefingContent = JSON.parse(toolCall.function.arguments);
-    console.log('[BRIEFING-AI] Content generated successfully');
+    console.log('[BRIEFING-AI] Content generated successfully via tool call');
 
     return new Response(
       JSON.stringify({ success: true, content: briefingContent }),
@@ -318,6 +337,7 @@ ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - ad
 
   } catch (error) {
     console.error('[BRIEFING-AI] Error:', error.message);
+    console.error('[BRIEFING-AI] Error stack:', error.stack);
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
