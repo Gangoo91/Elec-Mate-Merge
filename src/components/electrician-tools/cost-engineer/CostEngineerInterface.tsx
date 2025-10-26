@@ -46,54 +46,56 @@ const CostEngineerInterface = () => {
 
     setViewState('processing');
 
-    const enhancedPrompt = `
-You are an expert electrical cost estimator specializing in BS 7671 18th Edition compliant installations.
-
-PROJECT TYPE: ${projectType.toUpperCase()} - ${projectName || 'Electrical Installation'}
-${clientInfo ? `CLIENT: ${clientInfo}` : ''}
-${location ? `LOCATION: ${location}` : ''}
-${additionalInfo ? `ADDITIONAL INFO: ${additionalInfo}` : ''}
-
-PROJECT DESCRIPTION:
-${prompt}
-
-Provide a detailed cost breakdown following this EXACT format:
-
-MATERIALS BREAKDOWN
-• [Item name] ([quantity]) - £[price] from [Supplier]
-• [Item name] ([quantity]) - £[price] from [Supplier]
-(List all materials needed)
-
-Subtotal Materials: £[total]
-
-LABOUR ESTIMATE
-Installation time: [X] hours
-Rate: £[X]/day (typical UK electrician rate)
-Labour cost: £[total]
-
-Subtotal Labour: £[total]
-
-PROJECT TOTAL
-Subtotal: £[materials + labour]
-VAT (20%): £[vat amount]
-FINAL QUOTE: £[total including VAT]
-
-Include current UK market prices and explain any assumptions made.
-`;
-
     try {
-      const { data, error } = await supabase.functions.invoke('cost-engineer', {
+      const { data, error } = await supabase.functions.invoke('cost-engineer-v3', {
         body: { 
-          message: enhancedPrompt,
-          projectType: projectType
+          query: prompt,
+          region: location || 'UK',
+          projectContext: {
+            projectType: projectType,
+            projectName: projectName,
+            clientInfo: clientInfo,
+            additionalInfo: additionalInfo
+          }
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Edge function error:', error);
+        throw new Error(error.message || 'Failed to invoke cost-engineer-v3');
+      }
 
-      const aiResponse = data.response || data.message || '';
-      const parsed = parseCostAnalysis(aiResponse);
-      setParsedResults(parsed);
+      if (!data || !data.success) {
+        throw new Error(data?.error || 'Cost Engineer returned unsuccessful response');
+      }
+
+      // V3 returns both narrative text AND structured data
+      const aiResponse = data.response;
+      const structuredData = data.structuredData;
+
+      // Use structured data if available, otherwise parse markdown
+      if (structuredData && structuredData.totals) {
+        setParsedResults({
+          totalCost: structuredData.totals.total,
+          materialsTotal: structuredData.materials?.subtotal || 0,
+          labourTotal: structuredData.labour?.subtotal || 0,
+          materials: structuredData.materials?.items || [],
+          labour: {
+            hours: structuredData.labour?.totalHours || 0,
+            rate: 50,
+            total: structuredData.labour?.subtotal || 0
+          },
+          additionalCosts: [],
+          vatAmount: structuredData.totals.vat,
+          vatRate: 20,
+          subtotal: structuredData.totals.subtotal,
+          rawText: aiResponse
+        });
+      } else {
+        // Fallback to parsing markdown
+        const parsed = parseCostAnalysis(aiResponse);
+        setParsedResults(parsed);
+      }
       
       setTimeout(() => {
         setViewState('results');
@@ -109,7 +111,7 @@ Include current UK market prices and explain any assumptions made.
       
       toast({
         title: "Analysis failed",
-        description: error.message || 'Failed to generate cost analysis',
+        description: error.message || 'Failed to generate cost analysis. Please try again.',
         variant: "destructive"
       });
     }
