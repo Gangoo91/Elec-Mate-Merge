@@ -394,14 +394,10 @@ export const QuoteSendDropdown = ({
         reader.readAsDataURL(pdfBlob);
       });
 
-      // Send via user's connected email with PDF attachment
-      const { error } = await supabase.functions.invoke('send-invoice-smart', {
+      // Send via send-quote-email function (includes Accept/Reject buttons)
+      const { error } = await supabase.functions.invoke('send-quote-email', {
         body: { 
-          documentType: 'quote',
-          quoteId: quote.id,
-          to: cleanTo,
-          attachmentBase64: pdfBase64,
-          attachmentFilename: `Quote_${quote.quoteNumber}.pdf`
+          quoteId: quote.id
         },
         headers: {
           Authorization: `Bearer ${session.access_token}`
