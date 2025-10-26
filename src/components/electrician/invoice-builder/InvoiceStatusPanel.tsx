@@ -89,73 +89,86 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
     return (
       <div
         key={invoice.id}
-        className={`border rounded-lg p-4 space-y-3 hover:shadow-md transition-shadow ${
-          showActions === 'paid' ? 'bg-success/5 border-success/20' : 'bg-card'
-        } ${daysOverdue > 0 && showActions !== 'paid' ? 'border-destructive' : ''}`}
+        className={`border rounded-xl p-5 md:p-6 space-y-4 hover:shadow-lg transition-all ${
+          showActions === 'paid' ? 'bg-success/5 border-success/20' : 'bg-card border-primary/20'
+        } ${daysOverdue > 0 && showActions !== 'paid' ? 'border-destructive/50 bg-destructive/5' : ''}`}
       >
-        <div className="flex items-start justify-between">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <h4 className="font-semibold">{invoice.invoice_number}</h4>
-              {daysOverdue > 0 && showActions !== 'paid' && (
-                <Badge variant="destructive" className="text-xs">
-                  {daysOverdue} {daysOverdue === 1 ? 'day' : 'days'} overdue
-                </Badge>
-              )}
-              {showActions === 'paid' && (
-                <Badge variant="default" className="text-xs bg-success">
-                  Paid
-                </Badge>
-              )}
-            </div>
-            <p className="text-sm text-muted-foreground">{invoice.client?.name}</p>
+        {/* Header: Invoice number + Status */}
+        <div className="flex items-start justify-between gap-3 pb-3 border-b border-primary/10">
+          <div className="space-y-2 flex-1 min-w-0">
+            <h4 className="font-semibold text-base truncate">{invoice.invoice_number}</h4>
+            <p className="text-sm text-muted-foreground truncate">{invoice.client?.name}</p>
           </div>
-          <p className="text-lg font-bold">{formatCurrency(invoice.total)}</p>
+          <div className="flex flex-col gap-1 items-end shrink-0">
+            {daysOverdue > 0 && showActions !== 'paid' && (
+              <Badge variant="destructive" className="text-xs whitespace-nowrap">
+                {daysOverdue}d overdue
+              </Badge>
+            )}
+            {showActions === 'paid' && (
+              <Badge variant="default" className="text-xs bg-success whitespace-nowrap">
+                Paid
+              </Badge>
+            )}
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+        {/* Amount - Centered and Prominent */}
+        <div className="text-center py-4 bg-background/50 rounded-lg border border-primary/10">
+          <div className="text-xs text-muted-foreground mb-1">Total Amount</div>
+          <div className="text-2xl md:text-3xl font-bold text-elec-yellow">
+            {formatCurrency(invoice.total)}
+          </div>
+        </div>
+
+        {/* Dates Grid - 2 columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           {invoice.invoice_date && (
-            <div>
-              <span className="font-medium">Invoice Date:</span>{' '}
-              {new Date(invoice.invoice_date).toLocaleDateString('en-GB')}
+            <div className="space-y-0.5">
+              <div className="text-muted-foreground font-medium">Invoice Date</div>
+              <div className="text-foreground">{new Date(invoice.invoice_date).toLocaleDateString('en-GB')}</div>
             </div>
           )}
           {invoice.invoice_due_date && (
-            <div>
-              <span className="font-medium">Due Date:</span>{' '}
-              {new Date(invoice.invoice_due_date).toLocaleDateString('en-GB')}
+            <div className="space-y-0.5">
+              <div className="text-muted-foreground font-medium">Due Date</div>
+              <div className={daysOverdue > 0 && showActions !== 'paid' ? 'text-destructive font-semibold' : 'text-foreground'}>
+                {new Date(invoice.invoice_due_date).toLocaleDateString('en-GB')}
+              </div>
             </div>
           )}
           {invoice.invoice_sent_at && (
-            <div>
-              <span className="font-medium">Sent:</span>{' '}
-              {formatDistanceToNow(new Date(invoice.invoice_sent_at), { addSuffix: true })}
+            <div className="space-y-0.5">
+              <div className="text-muted-foreground font-medium">Sent</div>
+              <div className="text-foreground">
+                {formatDistanceToNow(new Date(invoice.invoice_sent_at), { addSuffix: true })}
+              </div>
             </div>
           )}
           {invoice.invoice_paid_at && (
-            <div>
-              <span className="font-medium">Paid:</span>{' '}
-              {new Date(invoice.invoice_paid_at).toLocaleDateString('en-GB')}
+            <div className="space-y-0.5">
+              <div className="text-muted-foreground font-medium">Paid</div>
+              <div className="text-foreground">{new Date(invoice.invoice_paid_at).toLocaleDateString('en-GB')}</div>
             </div>
           )}
         </div>
 
         {/* Reminder History */}
         {reminderHistory.has(invoice.id) && reminderHistory.get(invoice.id)!.length > 0 && (
-          <div className="text-xs">
-            <Badge variant="outline" className="text-xs">
-              <Mail className="h-3 w-3 mr-1" />
-              Last reminder: {formatDistanceToNow(new Date(reminderHistory.get(invoice.id)![0].sent_at), { addSuffix: true })}
-              {' '}({reminderHistory.get(invoice.id)![0].reminder_type})
-            </Badge>
-          </div>
+          <Badge variant="outline" className="text-xs w-full justify-center">
+            <Mail className="h-3 w-3 mr-1" />
+            Last reminder: {formatDistanceToNow(new Date(reminderHistory.get(invoice.id)![0].sent_at), { addSuffix: true })}
+            {' '}({reminderHistory.get(invoice.id)![0].reminder_type})
+          </Badge>
         )}
 
-        <div className="flex gap-2 pt-2">
+        {/* Action Buttons - Stack on mobile, row on desktop */}
+        <div className="flex flex-col sm:flex-row gap-2 pt-2">
           <Button
             variant="outline"
             size="sm"
             onClick={() => navigate(`/electrician/quote-builder/view/${invoice.id}`)}
+            className="w-full sm:w-auto min-h-[44px] sm:min-h-0"
           >
             <Eye className="mr-1 h-3 w-3" />
             View Quote
@@ -164,19 +177,20 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
             variant="outline"
             size="sm"
             onClick={() => navigate(`/electrician/invoices/${invoice.id}/view`)}
+            className="w-full sm:w-auto min-h-[44px] sm:min-h-0"
           >
             <FileText className="mr-1 h-3 w-3" />
             View Invoice
           </Button>
 
           {showActions === 'send' && (
-            <InvoiceSendDropdown invoice={invoice} onSuccess={onRefresh} className="ml-auto" />
+            <InvoiceSendDropdown invoice={invoice} onSuccess={onRefresh} className="sm:ml-auto w-full sm:w-auto" />
           )}
 
           {showActions === 'paid' && (
             <>
               {invoice.invoice_payment_method && (
-                <Badge variant="outline">
+                <Badge variant="outline" className="w-full sm:w-auto justify-center sm:ml-auto">
                   {invoice.invoice_payment_method.replace(/_/g, ' ')}
                 </Badge>
               )}
@@ -184,7 +198,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
                 variant="outline"
                 size="sm"
                 onClick={() => setSelectedInvoiceForHistory(invoice)}
-                className="ml-auto"
+                className="w-full sm:w-auto min-h-[44px] sm:min-h-0"
               >
                 <History className="mr-1 h-3 w-3" />
                 Payment History
@@ -194,10 +208,10 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
 
           {showActions === 'view' && invoice.invoice_status === 'sent' && (
             <Button
-              variant="default"
+              variant="success"
               size="sm"
               onClick={() => setSelectedInvoiceForPayment(invoice)}
-              className="ml-auto"
+              className="sm:ml-auto w-full sm:w-auto min-h-[44px] sm:min-h-0"
             >
               <PoundSterling className="mr-1 h-3 w-3" />
               Mark Paid
@@ -211,9 +225,9 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
   return (
     <>
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5" />
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2 text-xl md:text-2xl">
+            <FileText className="h-5 w-5 md:h-6 md:w-6" />
             Invoice Status
           </CardTitle>
         </CardHeader>
@@ -239,44 +253,44 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="sent" className="space-y-3 mt-4">
+            <TabsContent value="sent" className="space-y-4 mt-4">
               {categorizedInvoices.sent.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  <Send className="h-12 w-12 mx-auto mb-2 opacity-20" />
-                  <p>No sent invoices awaiting payment</p>
+                <div className="text-center py-12 text-muted-foreground">
+                  <Send className="h-16 w-16 mx-auto mb-3 opacity-20" />
+                  <p className="text-base">No sent invoices awaiting payment</p>
                 </div>
               ) : (
                 categorizedInvoices.sent.map((invoice) => renderInvoiceCard(invoice, 'view'))
               )}
             </TabsContent>
 
-            <TabsContent value="draft" className="space-y-3 mt-4">
+            <TabsContent value="draft" className="space-y-4 mt-4">
               {categorizedInvoices.draft.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  <FileText className="h-12 w-12 mx-auto mb-2 opacity-20" />
-                  <p>No draft invoices</p>
+                <div className="text-center py-12 text-muted-foreground">
+                  <FileText className="h-16 w-16 mx-auto mb-3 opacity-20" />
+                  <p className="text-base">No draft invoices</p>
                 </div>
               ) : (
                 categorizedInvoices.draft.map((invoice) => renderInvoiceCard(invoice, 'send'))
               )}
             </TabsContent>
 
-            <TabsContent value="paid" className="space-y-3 mt-4">
+            <TabsContent value="paid" className="space-y-4 mt-4">
               {categorizedInvoices.paid.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  <CheckCircle className="h-12 w-12 mx-auto mb-2 opacity-20" />
-                  <p>No paid invoices yet</p>
+                <div className="text-center py-12 text-muted-foreground">
+                  <CheckCircle className="h-16 w-16 mx-auto mb-3 opacity-20" />
+                  <p className="text-base">No paid invoices yet</p>
                 </div>
               ) : (
                 categorizedInvoices.paid.map((invoice) => renderInvoiceCard(invoice, 'paid'))
               )}
             </TabsContent>
 
-            <TabsContent value="overdue" className="space-y-3 mt-4">
+            <TabsContent value="overdue" className="space-y-4 mt-4">
               {categorizedInvoices.overdue.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  <CheckCircle className="h-12 w-12 mx-auto mb-2 opacity-20 text-success" />
-                  <p className="text-success">No overdue invoices! 🎉</p>
+                <div className="text-center py-12 text-muted-foreground">
+                  <CheckCircle className="h-16 w-16 mx-auto mb-3 opacity-20 text-success" />
+                  <p className="text-base text-success">No overdue invoices! 🎉</p>
                 </div>
               ) : (
                 categorizedInvoices.overdue.map((invoice) => renderInvoiceCard(invoice, 'view'))

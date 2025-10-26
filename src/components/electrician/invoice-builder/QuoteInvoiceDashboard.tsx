@@ -163,49 +163,49 @@ export const QuoteInvoiceDashboard = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 md:space-y-8">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-elec-yellow/20">
-          <CardContent className="p-6 text-center space-y-2">
-            <PoundSterling className="h-8 w-8 text-elec-yellow mx-auto" />
-            <div className="text-2xl font-bold text-primary">{quotesReady.length}</div>
-            <div className="text-sm text-muted-foreground">Ready for Invoice</div>
+        <Card className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
+          <CardContent className="p-5 md:p-6 text-center space-y-2">
+            <PoundSterling className="h-8 w-8 md:h-10 md:w-10 text-elec-yellow mx-auto" />
+            <div className="text-2xl md:text-3xl font-bold text-primary">{quotesReady.length}</div>
+            <div className="text-xs md:text-sm text-muted-foreground">Ready for Invoice</div>
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20">
-          <CardContent className="p-6 text-center space-y-2">
-            <FileCheck className="h-8 w-8 text-blue-400 mx-auto" />
-            <div className="text-2xl font-bold text-primary">{stats.totalInvoicesThisMonth}</div>
-            <div className="text-sm text-muted-foreground">Invoices This Month</div>
+        <Card className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
+          <CardContent className="p-5 md:p-6 text-center space-y-2">
+            <FileCheck className="h-8 w-8 md:h-10 md:w-10 text-blue-400 mx-auto" />
+            <div className="text-2xl md:text-3xl font-bold text-primary">{stats.totalInvoicesThisMonth}</div>
+            <div className="text-xs md:text-sm text-muted-foreground">Invoices This Month</div>
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20">
-          <CardContent className="p-6 text-center space-y-2">
-            <TrendingUp className="h-8 w-8 text-orange-400 mx-auto" />
-            <div className="text-2xl font-bold text-primary">{formatCurrency(stats.outstandingValue)}</div>
-            <div className="text-sm text-muted-foreground">Outstanding</div>
+        <Card className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
+          <CardContent className="p-5 md:p-6 text-center space-y-2">
+            <TrendingUp className="h-8 w-8 md:h-10 md:w-10 text-orange-400 mx-auto" />
+            <div className="text-2xl md:text-3xl font-bold text-primary">{formatCurrency(stats.outstandingValue)}</div>
+            <div className="text-xs md:text-sm text-muted-foreground">Outstanding</div>
             {stats.overdueCount > 0 && (
-              <div className="text-xs text-destructive font-medium">
+              <div className="text-xs text-destructive font-medium mt-1">
                 {stats.overdueCount} overdue • {formatCurrency(stats.overdueValue)}
               </div>
             )}
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20">
-          <CardContent className="p-6 text-center space-y-2">
-            <PoundSterling className="h-8 w-8 text-green-400 mx-auto" />
-            <div className="text-2xl font-bold text-primary">{formatCurrency(stats.paidValue)}</div>
-            <div className="text-sm text-muted-foreground">Paid</div>
+        <Card className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
+          <CardContent className="p-5 md:p-6 text-center space-y-2">
+            <PoundSterling className="h-8 w-8 md:h-10 md:w-10 text-green-400 mx-auto" />
+            <div className="text-2xl md:text-3xl font-bold text-primary">{formatCurrency(stats.paidValue)}</div>
+            <div className="text-xs md:text-sm text-muted-foreground">Paid</div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Main Dashboard Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Main Dashboard - Stacked Vertically for Better Mobile */}
+      <div className="space-y-6 md:space-y-8">
         <QuotesReadyPanel quotes={quotesReady} onRaiseInvoice={handleRaiseInvoice} />
         <InvoiceStatusPanel invoices={invoices} onRefresh={fetchInvoices} />
       </div>
