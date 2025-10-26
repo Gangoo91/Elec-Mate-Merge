@@ -73,6 +73,7 @@ const ProjectTypeSelector = ({ selectedType, onTypeChange, onExampleSelect }: Pr
 
   return (
     <div className="space-y-4">
+      {/* Three Project Type Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {PROJECT_TYPES.map((type) => {
           const Icon = type.icon;
@@ -80,75 +81,95 @@ const ProjectTypeSelector = ({ selectedType, onTypeChange, onExampleSelect }: Pr
           const isExpanded = expandedType === type.id;
 
           return (
-            <div key={type.id} className="space-y-3">
-              <Button
-                variant={isSelected ? "default" : "outline"}
-                size="lg"
-                onClick={() => handleTypeClick(type.id)}
-                className={`
-                  w-full h-auto py-4 px-4 flex flex-col items-start gap-2 touch-manipulation
-                  transition-all duration-300
-                  ${isSelected 
-                    ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 border-elec-yellow' 
-                    : 'border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-elec-yellow/5'
-                  }
-                `}
-              >
-                <div className="flex items-center gap-2 w-full">
-                  <Icon className={`h-5 w-5 ${isSelected ? 'text-elec-dark' : 'text-elec-yellow'}`} />
-                  <span className="font-bold text-base">{type.label}</span>
-                </div>
-                <span className={`text-xs ${isSelected ? 'text-elec-dark/70' : 'text-muted-foreground'}`}>
-                  {type.description}
-                </span>
-                <span className={`text-xs font-medium ${isSelected ? 'text-elec-dark/60' : 'text-elec-yellow/70'}`}>
-                  {isExpanded ? '↑ Hide Examples' : '↓ Show 5 Examples'}
-                </span>
-              </Button>
-
-              {isExpanded && (
-                <Card className="border-elec-yellow/20 bg-elec-card/50 animate-accordion-down">
-                  <CardContent className="p-4 space-y-2">
-                    <p className="text-xs font-semibold text-elec-yellow uppercase tracking-wider mb-3">
-                      Click any example to use it
-                    </p>
-                    <div className="space-y-2">
-                      {type.examples.map((example, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => onExampleSelect(example)}
-                          className="
-                            w-full text-left p-3 rounded-lg
-                            bg-elec-dark/40 hover:bg-elec-yellow/10
-                            border border-elec-yellow/10 hover:border-elec-yellow/30
-                            transition-all duration-200
-                            hover:scale-[1.02] active:scale-[0.98]
-                            touch-manipulation
-                            group
-                          "
-                          style={{
-                            animationDelay: `${idx * 50}ms`,
-                            animation: 'fade-in 0.3s ease-out forwards'
-                          }}
-                        >
-                          <div className="flex items-start gap-2">
-                            <span className="text-elec-yellow font-bold text-sm shrink-0 mt-0.5">
-                              {idx + 1}.
-                            </span>
-                            <span className="text-sm text-foreground/90 group-hover:text-foreground leading-relaxed">
-                              {example}
-                            </span>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
+            <Button
+              key={type.id}
+              variant={isSelected ? "default" : "outline"}
+              onClick={() => handleTypeClick(type.id)}
+              className={`
+                w-full min-h-[110px] py-4 px-4 
+                flex flex-col items-start justify-center gap-2 
+                touch-manipulation text-left
+                transition-all duration-300
+                ${isSelected 
+                  ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 border-elec-yellow' 
+                  : 'border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-elec-yellow/5'
+                }
+                ${isExpanded ? 'ring-2 ring-elec-yellow/50' : ''}
+              `}
+            >
+              {/* Icon + Label Row */}
+              <div className="flex items-center gap-2 w-full">
+                <Icon className={`h-5 w-5 shrink-0 ${isSelected ? 'text-elec-dark' : 'text-elec-yellow'}`} />
+                <span className="font-bold text-base">{type.label}</span>
+              </div>
+              
+              {/* Description - wraps properly */}
+              <span className={`text-xs leading-relaxed line-clamp-2 whitespace-normal ${isSelected ? 'text-elec-dark/70' : 'text-muted-foreground'}`}>
+                {type.description}
+              </span>
+              
+              {/* Show/Hide indicator */}
+              <span className={`text-xs font-medium whitespace-nowrap ${isSelected ? 'text-elec-dark/60' : 'text-elec-yellow/70'}`}>
+                {isExpanded ? '↑ Hide Examples' : '↓ Show 5 Examples'}
+              </span>
+            </Button>
           );
         })}
       </div>
+
+      {/* Full-Width Examples Section */}
+      {expandedType && (
+        <Card className="border-elec-yellow/20 bg-elec-card/50 animate-accordion-down">
+          <CardContent className="p-4 sm:p-6">
+            <div className="text-center mb-4">
+              <p className="text-sm font-semibold text-elec-yellow uppercase tracking-wider">
+                Click any example to use it
+              </p>
+            </div>
+            
+            {/* Responsive Grid of Examples */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {PROJECT_TYPES.find(t => t.id === expandedType)?.examples.map((example, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    onExampleSelect(example);
+                    onTypeChange(expandedType);
+                  }}
+                  className="
+                    group text-left p-4 rounded-lg 
+                    border border-elec-yellow/20 bg-elec-dark/50 
+                    hover:bg-elec-yellow/5 hover:border-elec-yellow/40 
+                    hover:scale-[1.02] active:scale-[0.98]
+                    transition-all duration-200 
+                    touch-manipulation 
+                    min-h-[120px] flex flex-col
+                  "
+                  style={{
+                    animationDelay: `${idx * 50}ms`,
+                    animation: 'fade-in 0.3s ease-out forwards'
+                  }}
+                >
+                  {/* Example Content */}
+                  <div className="flex items-start gap-3 flex-1">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-xs font-bold">
+                      {idx + 1}
+                    </span>
+                    <p className="text-sm leading-relaxed line-clamp-4 flex-1">
+                      {example}
+                    </p>
+                  </div>
+                  
+                  {/* Hover Indicator */}
+                  <div className="mt-2 text-xs text-elec-yellow opacity-0 group-hover:opacity-100 transition-opacity">
+                    Click to use →
+                  </div>
+                </button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

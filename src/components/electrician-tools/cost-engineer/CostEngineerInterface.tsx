@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Calculator, Lightbulb, ChevronDown, ChevronUp, Sparkles } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Calculator, Lightbulb, Sparkles } from "lucide-react";
+
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ProjectTypeSelector from "./ProjectTypeSelector";
@@ -24,7 +24,7 @@ const CostEngineerInterface = () => {
   const [clientInfo, setClientInfo] = useState("");
   const [location, setLocation] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState("");
-  const [isProjectInfoOpen, setIsProjectInfoOpen] = useState(false);
+  
 
   const handleExampleSelect = (example: string) => {
     setPrompt(example);
@@ -149,6 +149,68 @@ Include current UK market prices and explain any assumptions made.
 
   return (
     <div className="space-y-4 sm:space-y-6">
+      {/* Project Information - Always Visible at Top */}
+      <Card className="border-elec-yellow/20 bg-elec-card/50">
+        <CardHeader>
+          <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
+            Project Information
+            <span className="text-xs font-normal px-2 py-1 rounded-full bg-green-500/20 text-green-500 border border-green-500/30">
+              +15% accuracy
+            </span>
+          </CardTitle>
+          <CardDescription className="text-xs sm:text-sm">
+            Add project details for more precise pricing and professional reports
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="project-name">Project Name</Label>
+              <Input
+                id="project-name"
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+                placeholder="e.g., Smith Residence Rewire"
+                className="touch-manipulation"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="client-info">Client Name</Label>
+              <Input
+                id="client-info"
+                value={clientInfo}
+                onChange={(e) => setClientInfo(e.target.value)}
+                placeholder="e.g., Mr & Mrs Smith"
+                className="touch-manipulation"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="location">Location/Postcode</Label>
+            <Input
+              id="location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="e.g., Manchester, M1 1AA"
+              className="touch-manipulation"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="additional-info">Additional Requirements</Label>
+            <Textarea
+              id="additional-info"
+              value={additionalInfo}
+              onChange={(e) => setAdditionalInfo(e.target.value)}
+              placeholder="e.g., Access restrictions, parking arrangements, special requirements..."
+              className="min-h-[100px]"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Project Type Selector */}
       <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50">
         <CardHeader>
           <CardTitle className="text-xl sm:text-2xl flex items-center gap-2">
@@ -168,6 +230,7 @@ Include current UK market prices and explain any assumptions made.
         </CardContent>
       </Card>
 
+      {/* Describe Your Project */}
       <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50">
         <CardHeader>
           <CardTitle className="text-xl sm:text-2xl flex items-center gap-2">
@@ -206,85 +269,10 @@ Include current UK market prices and explain any assumptions made.
             className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold h-14 sm:h-16 text-base sm:text-lg touch-manipulation"
           >
             <Sparkles className="h-5 w-5 mr-2" />
-            Generate Accurate Cost Analysis
+            Generate
           </Button>
         </CardContent>
       </Card>
-
-      <Collapsible open={isProjectInfoOpen} onOpenChange={setIsProjectInfoOpen}>
-        <Card className="border-elec-yellow/20 bg-elec-card/50">
-          <CollapsibleTrigger asChild>
-            <CardHeader className="cursor-pointer hover:bg-elec-yellow/5 transition-colors touch-manipulation">
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
-                    Project Information
-                    <span className="text-xs font-normal px-2 py-1 rounded-full bg-green-500/20 text-green-500 border border-green-500/30">
-                      +15% accuracy
-                    </span>
-                  </CardTitle>
-                  <CardDescription className="text-xs sm:text-sm">
-                    Optional: Add context for more precise pricing
-                  </CardDescription>
-                </div>
-                {isProjectInfoOpen ? (
-                  <ChevronUp className="h-5 w-5 text-elec-yellow" />
-                ) : (
-                  <ChevronDown className="h-5 w-5 text-elec-yellow" />
-                )}
-              </div>
-            </CardHeader>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <CardContent className="space-y-4 pt-0">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="project-name">Project Name</Label>
-                  <Input
-                    id="project-name"
-                    value={projectName}
-                    onChange={(e) => setProjectName(e.target.value)}
-                    placeholder="e.g., Smith Residence Rewire"
-                    className="touch-manipulation"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="client-info">Client Name</Label>
-                  <Input
-                    id="client-info"
-                    value={clientInfo}
-                    onChange={(e) => setClientInfo(e.target.value)}
-                    placeholder="e.g., Mr & Mrs Smith"
-                    className="touch-manipulation"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="location">Location/Postcode</Label>
-                <Input
-                  id="location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  placeholder="e.g., Manchester, M1 1AA"
-                  className="touch-manipulation"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="additional-info">Additional Requirements</Label>
-                <Textarea
-                  id="additional-info"
-                  value={additionalInfo}
-                  onChange={(e) => setAdditionalInfo(e.target.value)}
-                  placeholder="e.g., Access restrictions, parking arrangements, special requirements..."
-                  className="min-h-[100px]"
-                />
-              </div>
-            </CardContent>
-          </CollapsibleContent>
-        </Card>
-      </Collapsible>
     </div>
   );
 };
