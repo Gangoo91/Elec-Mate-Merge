@@ -216,19 +216,47 @@ serve(async (req: Request) => {
         ? JSON.parse(doc.client_data) 
         : doc.client_data;
 
-      // Get public token for Accept/Decline functionality
-      let publicToken: string | null = null;
-      if (docType === 'quote') {
-        const { data: quoteView } = await supabase
-          .from('quote_views')
-          .select('public_token')
-          .eq('quote_id', docId)
-          .eq('is_active', true)
-          .maybeSingle();
+    // Get or create public token for Accept/Decline functionality
+    let publicToken: string | null = null;
+    if (docType === 'quote') {
+      // Try to get existing token
+      const { data: quoteView } = await supabase
+        .from('quote_views')
+        .select('public_token, expires_at, view_count')
+        .eq('quote_id', docId)
+        .eq('is_active', true)
+        .maybeSingle();
+      
+      if (quoteView?.public_token) {
+        publicToken = quoteView.public_token;
+        console.log(`📧 Using existing public token for quote ${doc.quote_number}`);
+      } else {
+        // Create new token if none exists (enables one-click accept/reject)
+        const newToken = crypto.randomUUID();
+        const expiryDate = doc.expiry_date 
+          ? new Date(doc.expiry_date).toISOString()
+          : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days default
         
-        publicToken = quoteView?.public_token || null;
-        console.log(`📧 Public token for quote ${doc.quote_number}:`, publicToken ? 'Found' : 'Not found');
+        const { error: insertError } = await supabase
+          .from('quote_views')
+          .insert({
+            quote_id: docId,
+            public_token: newToken,
+            is_active: true,
+            view_count: 0,
+            expires_at: expiryDate
+          });
+        
+        if (!insertError) {
+          publicToken = newToken;
+          console.log(`✅ Created new public token for quote ${doc.quote_number}: ${newToken}`);
+        } else {
+          console.error('❌ Failed to create public token:', insertError);
+        }
       }
+      
+      console.log(`📧 Public token for quote ${doc.quote_number}:`, publicToken ? 'Available ✓' : 'Not available ✗');
+    }
       
       const jobDetails = doc.job_details 
         ? (typeof doc.job_details === 'string' ? JSON.parse(doc.job_details) : doc.job_details)
@@ -370,7 +398,7 @@ serve(async (req: Request) => {
                               <a href="${acceptUrl}" style="display: block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; padding: 20px 36px; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 17px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);">
                                 ✓ Accept This Quote
                               </a>
-                              <div style="text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; font-weight: 500;">Quick approval with digital signature</div>
+                              <div style="text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; font-weight: 500;">One-click approval • No forms required</div>
                             </td>
                           </tr>
                           <tr>
@@ -383,6 +411,24 @@ serve(async (req: Request) => {
                         </table>
                       </td>
                     </tr>
+                    
+                    ${!publicToken ? `
+                    <!-- Fallback Warning -->
+                    <tr>
+                      <td style="padding: 0 48px 24px 48px;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background: linear-gradient(to right, #fef3c7 0%, #fde68a 100%); border-radius: 10px; border: 2px solid #f59e0b; overflow: hidden;">
+                          <tr>
+                            <td style="padding: 20px 24px;">
+                              <div style="font-size: 14px; color: #92400e; line-height: 1.6;">
+                                <strong style="font-size: 15px; display: block; margin-bottom: 6px;">⚠️ Alternative Response Method</strong>
+                                The quick-response buttons above are temporarily unavailable. Please reply to this email directly to confirm your acceptance or send us a message to discuss the quote.
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    ` : ''}
                     
                     <!-- Blue-tinted PDF attachment notice -->
                     <tr>

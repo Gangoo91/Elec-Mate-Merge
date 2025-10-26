@@ -45,9 +45,21 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     if (viewError || !quoteView) {
-      console.error('Token validation failed:', viewError);
+      console.error('❌ Token validation failed:', {
+        token: token.substring(0, 8) + '...',
+        error: viewError?.message,
+        found: !!quoteView,
+        timestamp: new Date().toISOString()
+      });
       return errorPage('Invalid Link', 'This quote link is invalid or has expired.');
     }
+
+    console.log(`✅ Token validated successfully:`, {
+      quoteId: quoteView.quote_id,
+      isActive: quoteView.is_active,
+      expiresAt: quoteView.expires_at,
+      timestamp: new Date().toISOString()
+    });
 
     // Check if token already used
     if (!quoteView.is_active) {
