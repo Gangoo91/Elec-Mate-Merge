@@ -4440,6 +4440,7 @@ export type Database = {
           overhead: number
           pdf_document_id: string | null
           pdf_generated_at: string | null
+          pdf_url: string | null
           pdf_version: number | null
           profit: number
           public_token: string | null
@@ -4489,6 +4490,7 @@ export type Database = {
           overhead?: number
           pdf_document_id?: string | null
           pdf_generated_at?: string | null
+          pdf_url?: string | null
           pdf_version?: number | null
           profit?: number
           public_token?: string | null
@@ -4538,6 +4540,7 @@ export type Database = {
           overhead?: number
           pdf_document_id?: string | null
           pdf_generated_at?: string | null
+          pdf_url?: string | null
           pdf_version?: number | null
           profit?: number
           public_token?: string | null

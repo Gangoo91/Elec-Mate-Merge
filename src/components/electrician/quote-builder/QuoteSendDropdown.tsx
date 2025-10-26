@@ -133,7 +133,7 @@ export const QuoteSendDropdown = ({
       }
 
       // Validate client email before sending
-      const clientEmail = quote.client?.email;
+      const clientEmail = quote.client?.email?.trim();
       if (!clientEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail)) {
         toast({
           title: "Invalid Client Email",
@@ -143,46 +143,44 @@ export const QuoteSendDropdown = ({
         return;
       }
 
-      // Fetch company profile for PDF branding
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('User not authenticated');
-
-      const { data: companyData } = await supabase
-        .from('company_profiles')
-        .select('company_name')
-        .eq('user_id', user.id)
+      // Check if PDF already generated and is current
+      const { data: freshQuote, error: fetchError } = await supabase
+        .from('quotes')
+        .select('*')
+        .eq('id', quote.id)
         .single();
 
-      // Generate PDF
-      const pdfDoc = generateClientQuotePDF({
-        projectName: quote.jobDetails?.title || 'Electrical Installation',
-        clientName: quote.client?.name || '',
-        location: quote.client?.address || '',
-        date: quote.createdAt.toISOString(),
-        materials: quote.items
-          .filter(item => item.category === 'materials')
-          .map(item => ({
-            item: item.description,
-            quantity: item.quantity,
-            unitCost: item.unitPrice,
-            totalCost: item.totalPrice
-          })),
-        labourHours: quote.items
-          .filter(item => item.category === 'labour')
-          .reduce((sum, item) => sum + (item.hours || 0), 0),
-        labourRate: quote.settings.labourRate,
-        companyName: companyData?.company_name || 'Your Company',
-        validityDays: Math.ceil((new Date(quote.expiryDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
-      });
+      if (fetchError) throw fetchError;
 
-      // Convert PDF to base64
-      const pdfBlob = pdfDoc.output('blob');
-      const pdfBase64 = await new Promise<string>((resolve) => {
+      const pdfIsCurrent = freshQuote?.pdf_url && 
+                          freshQuote?.pdf_generated_at && 
+                          new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
+
+      if (!pdfIsCurrent) {
+        toast({
+          title: 'PDF not generated',
+          description: 'Please generate the PDF first using the "Generate PDF" button, then send.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      // Fetch the PDF from the stored URL
+      const pdfResponse = await fetch(freshQuote.pdf_url);
+      if (!pdfResponse.ok) {
+        throw new Error('Failed to fetch generated PDF');
+      }
+
+      const pdfBlob = await pdfResponse.blob();
+      
+      // Convert to base64
+      const pdfBase64 = await new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           const base64 = (reader.result as string).split(',')[1];
           resolve(base64);
         };
+        reader.onerror = reject;
         reader.readAsDataURL(pdfBlob);
       });
 
@@ -203,7 +201,7 @@ export const QuoteSendDropdown = ({
 
       toast({
         title: 'Quote sent with PDF',
-        description: `Quote ${quote.quoteNumber} sent to ${quote.client?.email} with attached PDF`,
+        description: `Quote ${quote.quoteNumber} sent to ${clientEmail} with attached PDF`,
         variant: 'success',
         duration: 4000,
       });

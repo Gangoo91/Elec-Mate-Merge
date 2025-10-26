@@ -317,6 +317,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
           .from('quotes')
           .update({
             pdf_document_id: documentId,
+            pdf_url: pdfUrl,
             pdf_generated_at: new Date().toISOString(),
             pdf_version: newVersion
           })
@@ -444,6 +445,7 @@ ${companyName}`;
           .from('quotes')
           .update({
             pdf_document_id: documentId,
+            pdf_url: pdfUrl,
             pdf_generated_at: new Date().toISOString(),
             pdf_version: newVersion
           })
