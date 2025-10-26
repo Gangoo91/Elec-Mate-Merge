@@ -79,6 +79,15 @@ const QuoteViewPage = () => {
             invoice_raised: data.invoice_raised || false,
             invoice_number: data.invoice_number || undefined,
           };
+          
+          // Debug logging for send button functionality
+          console.log('Quote loaded for send debugging:', {
+            hasId: !!transformedQuote.id,
+            hasEmail: !!transformedQuote.client?.email,
+            id: transformedQuote.id,
+            email: transformedQuote.client?.email
+          });
+          
           setQuote(transformedQuote);
         }
       } catch (err) {
