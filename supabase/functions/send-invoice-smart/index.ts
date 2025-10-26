@@ -278,27 +278,27 @@ serve(async (req: Request) => {
             <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f3f4f6;">
               <tr>
                 <td align="center" style="padding: 40px 20px;">
-                  <table role="presentation" style="max-width: 600px; width: 100%; border-collapse: collapse; background-color: #ffffff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); border-radius: 12px; overflow: hidden;">
+                  <table role="presentation" style="max-width: 680px; width: 100%; border-collapse: collapse; background-color: #ffffff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); border-radius: 12px; overflow: hidden;">
                     
                     <!-- Header -->
                     <tr>
-                      <td style="padding: 48px 40px; text-align: center; border-bottom: 1px solid #e5e7eb;">
+                      <td style="padding: 48px 48px; text-align: center; border-bottom: 1px solid #e5e7eb;">
                         ${company?.logo_url 
                           ? `<img src="${company.logo_url}" alt="${companyName}" style="max-width: 200px; height: auto; margin-bottom: 32px; display: block; margin-left: auto; margin-right: auto;">` 
                           : `<div style="font-size: 32px; font-weight: 700; color: #0f172a; margin-bottom: 32px; letter-spacing: -0.8px;">${companyName}</div>`
                         }
                         
-                        <!-- Quote number badge -->
-                        <div style="display: inline-block; background-color: #f8fafc; padding: 16px 40px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                          <div style="font-size: 11px; color: #64748b; font-weight: 600; letter-spacing: 1.2px; margin-bottom: 6px; text-transform: uppercase;">Quotation</div>
-                          <div style="font-size: 28px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px;">#${doc.quote_number}</div>
+                        <!-- Blue-accented quote number badge -->
+                        <div style="display: inline-block; background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%); padding: 16px 40px; border-radius: 10px; border: 2px solid #3b82f6; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);">
+                          <div style="font-size: 11px; color: #1e40af; font-weight: 600; letter-spacing: 1.2px; margin-bottom: 6px; text-transform: uppercase;">Quotation</div>
+                          <div style="font-size: 30px; font-weight: 800; color: #1e40af; letter-spacing: -0.5px;">#${doc.quote_number}</div>
                         </div>
                       </td>
                     </tr>
                     
                     <!-- Main content -->
                     <tr>
-                      <td style="padding: 48px 40px 32px 40px;">
+                      <td style="padding: 48px 48px 32px 48px;">
                         <h1 style="margin: 0 0 32px 0; font-size: 26px; font-weight: 700; color: #0f172a; letter-spacing: -0.6px; line-height: 1.2;">Your Quotation</h1>
                         
                         <p style="margin: 0 0 12px 0; font-size: 16px; color: #0f172a; line-height: 1.6;">Dear <strong style="font-weight: 600;">${clientData?.name || 'Valued Client'}</strong>,</p>
@@ -309,10 +309,10 @@ serve(async (req: Request) => {
                     
                     <!-- Quote details card -->
                     <tr>
-                      <td style="padding: 0 40px 32px 40px;">
-                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #ffffff; border: 2px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
+                      <td style="padding: 0 48px 32px 48px;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #ffffff; border: 2px solid #e2e8f0; border-left: 4px solid #3b82f6; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
                           <tr>
-                            <td style="padding: 32px 32px 24px 32px;">
+                            <td style="padding: 32px 36px 24px 36px;">
                               
                               <!-- Quote metadata -->
                               <table role="presentation" style="width: 100%; border-collapse: collapse;">
@@ -348,11 +348,11 @@ serve(async (req: Request) => {
                                 </tr>
                               </table>
                               
-                              <!-- Total amount -->
-                              <div style="margin-top: 24px; padding: 28px; background: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%); border-radius: 10px; text-align: center; border: 1px solid #e2e8f0;">
-                                <div style="font-size: 13px; color: #64748b; font-weight: 600; letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase;">Total Amount</div>
-                                <div style="font-size: 44px; font-weight: 800; color: #0f172a; letter-spacing: -1.5px; line-height: 1;">£${(doc.total || 0).toFixed(2)}</div>
-                                <div style="font-size: 13px; color: #64748b; margin-top: 10px; font-weight: 500;">Including VAT where applicable</div>
+                              <!-- Total amount with blue gradient -->
+                              <div style="margin-top: 24px; padding: 32px; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 12px; text-align: center; border: 2px solid #3b82f6; box-shadow: 0 2px 12px rgba(59, 130, 246, 0.12);">
+                                <div style="font-size: 13px; color: #1e40af; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase;">Total Amount</div>
+                                <div style="font-size: 48px; font-weight: 800; color: #0f172a; letter-spacing: -1.5px; line-height: 1;">£${(doc.total || 0).toFixed(2)}</div>
+                                <div style="font-size: 13px; color: #1e40af; margin-top: 10px; font-weight: 600;">Including VAT where applicable</div>
                               </div>
                               
                             </td>
@@ -363,12 +363,12 @@ serve(async (req: Request) => {
                     
                     <!-- Call to action buttons -->
                     <tr>
-                      <td style="padding: 0 40px 32px 40px;">
+                      <td style="padding: 0 48px 32px 48px;">
                         <table role="presentation" style="width: 100%; border-collapse: collapse;">
                           <tr>
                             <td style="padding: 0 0 12px 0;">
-                              <a href="${acceptUrl}" style="display: block; background-color: #0f172a; color: #ffffff; text-align: center; padding: 18px 32px; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 0.3px; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);">
-                                Accept This Quote
+                              <a href="${acceptUrl}" style="display: block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; padding: 20px 36px; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 17px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);">
+                                ✓ Accept This Quote
                               </a>
                               <div style="text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; font-weight: 500;">Quick approval with digital signature</div>
                             </td>
@@ -384,21 +384,21 @@ serve(async (req: Request) => {
                       </td>
                     </tr>
                     
-                    <!-- PDF attachment notice -->
+                    <!-- Blue-tinted PDF attachment notice -->
                     <tr>
-                      <td style="padding: 0 40px 32px 40px;">
-                        <table role="presentation" style="width: 100%; border-collapse: collapse; background: linear-gradient(to right, #f8fafc 0%, #ffffff 100%); border-radius: 10px; border: 1px solid #e2e8f0; overflow: hidden;">
+                      <td style="padding: 0 48px 32px 48px;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%); border-radius: 10px; border: 2px solid #3b82f6; overflow: hidden; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);">
                           <tr>
                             <td style="padding: 24px 28px;">
                               <table role="presentation" style="width: 100%;">
                                 <tr>
                                   <td style="width: 56px; padding-right: 20px; vertical-align: top;">
-                                    <div style="width: 52px; height: 52px; background-color: #f1f5f9; border-radius: 10px; text-align: center; line-height: 52px; border: 1px solid #e2e8f0;">
+                                    <div style="width: 52px; height: 52px; background-color: #dbeafe; border-radius: 10px; text-align: center; line-height: 52px; border: 2px solid #3b82f6;">
                                       <span style="font-size: 26px;">📄</span>
                                     </div>
                                   </td>
                                   <td style="vertical-align: top;">
-                                    <div style="font-size: 16px; color: #0f172a; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.2px;">Detailed Quotation Attached</div>
+                                    <div style="font-size: 16px; color: #1e40af; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.2px;">Detailed Quotation Attached</div>
                                     <div style="font-size: 14px; color: #64748b; line-height: 1.7; font-weight: 500;">A comprehensive PDF breakdown including all labour, materials, and terms is attached to this email for your records.</div>
                                   </td>
                                 </tr>
@@ -411,11 +411,11 @@ serve(async (req: Request) => {
                     
                     <!-- Closing message and contact -->
                     <tr>
-                      <td style="padding: 0 40px 40px 40px;">
+                      <td style="padding: 0 48px 40px 48px;">
                         <p style="margin: 0 0 28px 0; font-size: 15px; color: #475569; line-height: 1.8;">Should you have any questions or wish to discuss this quotation further, please don't hesitate to contact us directly. We're here to help.</p>
                         
-                        <!-- Contact information card -->
-                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;">
+                        <!-- Contact information card with blue accent -->
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background: linear-gradient(to bottom, #eff6ff 0%, #f8fafc 100%); border: 2px solid #93c5fd; border-radius: 10px;">
                           <tr>
                             <td style="padding: 28px;">
                               <div style="font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 16px; letter-spacing: -0.3px;">Contact Information</div>
