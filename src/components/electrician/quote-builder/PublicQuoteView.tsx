@@ -28,6 +28,26 @@ const PublicQuoteView = () => {
     }
   }, [token]);
 
+  // Auto-scroll to acceptance section when URL has #accept or #reject anchor
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === '#accept' || hash === '#reject') {
+      // Small delay to ensure DOM is ready
+      setTimeout(() => {
+        const acceptSection = document.getElementById('acceptance-section');
+        if (acceptSection) {
+          acceptSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          // Optional: Add a subtle highlight animation
+          acceptSection.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.3)';
+          setTimeout(() => {
+            acceptSection.style.boxShadow = '';
+          }, 2000);
+        }
+      }, 300);
+    }
+  }, []);
+
   const loadQuote = async () => {
     if (!token) return;
 
@@ -426,7 +446,7 @@ const PublicQuoteView = () => {
 
             {/* Acceptance Section */}
             {isPending && (
-              <Card>
+              <Card id="acceptance-section">
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <FileSignature className="h-5 w-5 mr-2" />
