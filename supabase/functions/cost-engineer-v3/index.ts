@@ -411,7 +411,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 5. Include VAT (20%)`;
 
     // Step 4: Call AI with GPT-5-Mini
-    logger.debug('Calling AI', { provider: useOpenAI ? 'OpenAI' : 'Lovable AI' });
+    logger.debug('Calling AI', { provider: 'OpenAI' });
     logger.info('🤖 Calling OpenAI GPT-5-Mini', {
       model: 'gpt-5-mini-2025-08-07',
       maxTokens: 12000,
