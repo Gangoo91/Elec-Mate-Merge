@@ -163,49 +163,105 @@ export const QuoteInvoiceDashboard = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-elec-yellow/20">
-          <CardContent className="p-6 text-center space-y-2">
-            <PoundSterling className="h-8 w-8 text-elec-yellow mx-auto" />
-            <div className="text-2xl font-bold text-primary">{quotesReady.length}</div>
-            <div className="text-sm text-muted-foreground">Ready for Invoice</div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-elec-yellow/20">
-          <CardContent className="p-6 text-center space-y-2">
-            <FileCheck className="h-8 w-8 text-blue-400 mx-auto" />
-            <div className="text-2xl font-bold text-primary">{stats.totalInvoicesThisMonth}</div>
-            <div className="text-sm text-muted-foreground">Invoices This Month</div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-elec-yellow/20">
-          <CardContent className="p-6 text-center space-y-2">
-            <TrendingUp className="h-8 w-8 text-orange-400 mx-auto" />
-            <div className="text-2xl font-bold text-primary">{formatCurrency(stats.outstandingValue)}</div>
-            <div className="text-sm text-muted-foreground">Outstanding</div>
-            {stats.overdueCount > 0 && (
-              <div className="text-xs text-destructive font-medium">
-                {stats.overdueCount} overdue • {formatCurrency(stats.overdueValue)}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* Ready for Invoice - Yellow Theme */}
+        <Card className="relative overflow-hidden border-elec-yellow/30 hover:border-elec-yellow/50 transition-all hover:shadow-lg hover:shadow-elec-yellow/10 hover:scale-105 group">
+          <CardContent className="p-8">
+            <div className="mb-4 flex justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow to-yellow-400 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
+                <div className="relative w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-elec-yellow/20 to-yellow-400/20 border border-elec-yellow/30">
+                  <PoundSterling className="h-8 w-8 text-elec-yellow" />
+                </div>
               </div>
-            )}
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-4xl md:text-5xl font-bold text-elec-yellow">
+                {quotesReady.length}
+              </div>
+              <div className="text-sm font-medium text-muted-foreground">
+                Ready for Invoice
+              </div>
+            </div>
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20">
-          <CardContent className="p-6 text-center space-y-2">
-            <PoundSterling className="h-8 w-8 text-green-400 mx-auto" />
-            <div className="text-2xl font-bold text-primary">{formatCurrency(stats.paidValue)}</div>
-            <div className="text-sm text-muted-foreground">Paid</div>
+        {/* Invoices This Month - Blue Theme */}
+        <Card className="relative overflow-hidden border-blue-400/30 hover:border-blue-400/50 transition-all hover:shadow-lg hover:shadow-blue-400/10 hover:scale-105 group">
+          <CardContent className="p-8">
+            <div className="mb-4 flex justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-400 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
+                <div className="relative w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-blue-400/20 border border-blue-400/30">
+                  <FileCheck className="h-8 w-8 text-blue-400" />
+                </div>
+              </div>
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-4xl md:text-5xl font-bold text-blue-400">
+                {stats.totalInvoicesThisMonth}
+              </div>
+              <div className="text-sm font-medium text-muted-foreground">
+                Invoices This Month
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Outstanding - Orange Theme */}
+        <Card className="relative overflow-hidden border-orange-400/30 hover:border-orange-400/50 transition-all hover:shadow-lg hover:shadow-orange-400/10 hover:scale-105 group">
+          <CardContent className="p-8">
+            <div className="mb-4 flex justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-400 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
+                <div className="relative w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-orange-500/20 to-orange-400/20 border border-orange-400/30">
+                  <TrendingUp className="h-8 w-8 text-orange-400" />
+                </div>
+              </div>
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-3xl md:text-4xl font-bold text-orange-400">
+                {formatCurrency(stats.outstandingValue)}
+              </div>
+              <div className="text-sm font-medium text-muted-foreground">
+                Outstanding
+              </div>
+              {stats.overdueCount > 0 && (
+                <div className="text-xs text-destructive font-semibold pt-1">
+                  {stats.overdueCount} overdue • {formatCurrency(stats.overdueValue)}
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Paid - Green Theme */}
+        <Card className="relative overflow-hidden border-green-400/30 hover:border-green-400/50 transition-all hover:shadow-lg hover:shadow-green-400/10 hover:scale-105 group">
+          <CardContent className="p-8">
+            <div className="mb-4 flex justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-green-400 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
+                <div className="relative w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-green-500/20 to-green-400/20 border border-green-400/30">
+                  <Receipt className="h-8 w-8 text-green-400" />
+                </div>
+              </div>
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-3xl md:text-4xl font-bold text-green-400">
+                {formatCurrency(stats.paidValue)}
+              </div>
+              <div className="text-sm font-medium text-muted-foreground">
+                Paid
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Main Dashboard Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <QuotesReadyPanel quotes={quotesReady} onRaiseInvoice={handleRaiseInvoice} />
         <InvoiceStatusPanel invoices={invoices} onRefresh={fetchInvoices} />
       </div>

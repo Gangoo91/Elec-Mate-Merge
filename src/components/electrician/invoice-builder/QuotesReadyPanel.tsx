@@ -38,7 +38,7 @@ export const QuotesReadyPanel = ({ quotes, onRaiseInvoice }: QuotesReadyPanelPro
   }
 
   return (
-    <Card className="border-elec-yellow/20">
+    <Card className="border-elec-yellow/30 shadow-lg hover:shadow-xl transition-shadow rounded-xl">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">Quotes Ready for Invoice</CardTitle>
