@@ -165,9 +165,15 @@ serve(async (req) => {
 
     // Get API keys - OpenAI primary, Lovable AI fallback
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-    if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY not configured');
-    }
+  if (!OPENAI_API_KEY) {
+    throw new Error('OPENAI_API_KEY not configured');
+  }
+  
+  logger.info('🔍 API Key Check', {
+    hasOpenAIKey: !!OPENAI_API_KEY,
+    keyPrefix: OPENAI_API_KEY?.substring(0, 7),
+    keyLength: OPENAI_API_KEY?.length
+  });
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
@@ -406,6 +412,13 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 
     // Step 4: Call AI with GPT-5-Mini
     logger.debug('Calling AI', { provider: useOpenAI ? 'OpenAI' : 'Lovable AI' });
+    logger.info('🤖 Calling OpenAI GPT-5-Mini', {
+      model: 'gpt-5-mini-2025-08-07',
+      maxTokens: 12000,
+      timeoutMs: 180000,
+      hasTools: true
+    });
+    
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     const aiStart = Date.now();
     
@@ -633,10 +646,18 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       logger.info('AI call succeeded', { provider: 'openai', duration: aiMs });
     } catch (aiError) {
       const aiMs = Date.now() - aiStart;
-      logger.error('AI call failed', { 
-        duration: aiMs, 
-        error: aiError instanceof Error ? aiError.message : String(aiError) 
+      logger.error('❌ OpenAI API call failed', { 
+        duration: aiMs,
+        error: aiError instanceof Error ? aiError.message : String(aiError),
+        errorName: aiError instanceof Error ? aiError.name : 'Unknown',
+        stack: aiError instanceof Error ? aiError.stack?.split('\n')[0] : undefined,
+        model: 'gpt-5-mini-2025-08-07',
+        maxTokens: 12000,
+        hadApiKey: !!OPENAI_API_KEY,
+        apiKeyPrefix: OPENAI_API_KEY?.substring(0, 7)
       });
+      
+      logger.warn('Falling back to deterministic estimate due to AI failure');
       throw new Error(`AI generation failed: ${aiError instanceof Error ? aiError.message : 'Unknown error'}`);
     }
 
