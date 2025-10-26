@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import QuoteTableView from '@/components/electrician/quote-builder/QuoteTableView';
 import QuoteCardView from '@/components/electrician/quote-builder/QuoteCardView';
 import { format } from 'date-fns';
+import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 
 interface RecentQuotesListProps {
   quotes: Quote[];
@@ -249,7 +250,7 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
 
     setLoadingAction(`invoice-${quoteForInvoice.id}`);
     try {
-      const invoiceNumber = `INV-${Date.now()}`;
+      const invoiceNumber = await generateSequentialInvoiceNumber();
       const dueDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
       const invoiceData = {
         ...quoteForInvoice,

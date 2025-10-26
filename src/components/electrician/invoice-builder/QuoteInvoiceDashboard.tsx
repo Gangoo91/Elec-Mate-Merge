@@ -10,6 +10,7 @@ import { InvoiceDecisionDialog } from "./InvoiceDecisionDialog";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { generateSequentialInvoiceNumber } from "@/utils/invoice-number-generator";
 
 export const QuoteInvoiceDashboard = () => {
   const navigate = useNavigate();
@@ -109,7 +110,7 @@ export const QuoteInvoiceDashboard = () => {
 
     setLoadingAction(true);
     try {
-      const invoiceNumber = `INV-${Date.now()}`;
+      const invoiceNumber = await generateSequentialInvoiceNumber();
       const dueDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
       const invoiceData = {
         ...quoteForInvoice,

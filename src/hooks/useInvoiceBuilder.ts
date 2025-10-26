@@ -3,11 +3,10 @@ import { Invoice, InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Quote } from '@/types/quote';
 import { toast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
+import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 
-const generateInvoiceNumber = (): string => {
-  const year = new Date().getFullYear();
-  const timestamp = Date.now().toString().slice(-6);
-  return `INV-${year}-${timestamp}`;
+const generateInvoiceNumber = async (): Promise<string> => {
+  return await generateSequentialInvoiceNumber();
 };
 
 const createInvoiceFromQuote = (quote: Quote): Partial<Invoice> => {
@@ -19,7 +18,7 @@ const createInvoiceFromQuote = (quote: Quote): Partial<Invoice> => {
     ...quote,
     originalQuoteId: quote.id,
     invoice_raised: false,
-    invoice_number: generateInvoiceNumber(),
+    invoice_number: 'Invoice/TEMP', // Will be generated when saved
     invoice_date: invoiceDate,
     invoice_due_date: dueDate,
     invoice_status: 'draft',
@@ -46,7 +45,7 @@ const createEmptyInvoice = (): Partial<Invoice> => {
   return {
     id: uuidv4(),
     invoice_raised: false,
-    invoice_number: generateInvoiceNumber(),
+    invoice_number: 'Invoice/TEMP', // Will be generated when saved
     invoice_date: invoiceDate,
     invoice_due_date: dueDate,
     invoice_status: 'draft',

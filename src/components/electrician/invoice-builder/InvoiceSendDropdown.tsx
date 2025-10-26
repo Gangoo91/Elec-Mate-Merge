@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2, AlertCircle, AlertTriangle, AlertOctagon, MailOpen } from 'lucide-react';
+import { Mail, MessageCircle, Loader2, MailOpen } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -27,9 +28,9 @@ export const InvoiceSendDropdown = ({
   disabled = false,
   className = '',
 }: InvoiceSendDropdownProps) => {
+  const navigate = useNavigate();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
-  const [isSendingReminder, setIsSendingReminder] = useState<'gentle' | 'firm' | 'final' | null>(null);
   const [isGeneratingMailtoLink, setIsGeneratingMailtoLink] = useState(false);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
@@ -52,31 +53,81 @@ export const InvoiceSendDropdown = ({
     try {
       setIsSendingEmail(true);
 
-      // Try to get current session
+      // Validate client email FIRST
+      const cleanTo = invoice.client?.email?.trim();
+      if (!cleanTo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanTo)) {
+        toast({
+          title: "Invalid Client Email",
+          description: "Client email address is invalid. Please correct it in the invoice and try again.",
+          variant: "destructive",
+        });
+        setIsSendingEmail(false);
+        return;
+      }
+
+      // Get current session
       let { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
-      // If session is missing or expired, try to refresh
       if (sessionError || !session) {
-        console.log('Session missing or expired, attempting refresh...');
         const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
-        
         if (refreshError || !refreshData.session) {
-          throw new Error('Please log in again to send invoices. Your session has expired.');
+          throw new Error('Please log in again to send invoices.');
         }
-        
         session = refreshData.session;
-        console.log('Session refreshed successfully');
       }
-      
-      const { error } = await supabase.functions.invoke('send-invoice-resend', {
-        body: { invoiceId: invoice.id }
+
+      // Check if user has connected email
+      const { data: configData, error: configError } = await supabase.functions.invoke('get-email-config', {
+        headers: { Authorization: `Bearer ${session.access_token}` }
       });
 
-      if (error) throw error;
+      const hasEmailConfig = configData?.configs?.length > 0 && 
+                            configData.configs.some((c: any) => c.is_active);
+
+      if (!hasEmailConfig) {
+        toast({
+          title: "Email Not Connected",
+          description: "Connect your Gmail or Outlook in Settings → Email Integration to send invoices",
+          variant: "destructive",
+        });
+        
+        // Navigate after a brief delay
+        setTimeout(() => {
+          navigate('/electrician/settings?tab=email');
+        }, 2000);
+        
+        return;
+      }
+
+      // Use send-invoice-smart edge function (similar to quotes)
+      const { error } = await supabase.functions.invoke('send-invoice-smart', {
+        body: { 
+          documentType: 'invoice',
+          quoteId: invoice.id,
+          to: cleanTo
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      if (error) {
+        const errorMsg = error.message || '';
+        
+        if (errorMsg.includes('Invalid email address')) {
+          throw new Error('Client email address looks invalid. Edit the Client email and save the invoice.');
+        } else if (errorMsg.includes('No email account connected')) {
+          throw new Error('Connect Gmail/Outlook in Settings → Email Integration.');
+        } else if (errorMsg.includes('Daily email limit reached')) {
+          throw new Error('Daily email limit reached (100/day). Resets at midnight UTC.');
+        } else {
+          throw error;
+        }
+      }
 
       toast({
-        title: 'Invoice sent successfully',
-        description: `Invoice ${invoice.invoice_number} sent to ${invoice.client?.email}`,
+        title: 'Invoice sent via your email',
+        description: `Invoice ${invoice.invoice_number} sent to ${cleanTo}`,
         variant: 'success',
         duration: 4000,
       });
@@ -94,13 +145,14 @@ export const InvoiceSendDropdown = ({
     } catch (error: any) {
       console.error('Error sending invoice:', error);
       
-      // Provide specific error messages
       let errorMessage = 'Failed to send invoice. Please try again.';
       
-      if (error.message?.includes('session')) {
-        errorMessage = 'Your session has expired. Please refresh the page and try again.';
-      } else if (error.message?.includes('email')) {
-        errorMessage = 'Client email address is missing or invalid.';
+      if (error.message?.includes('email account')) {
+        errorMessage = 'Please connect your email account in Settings first.';
+      } else if (error.message?.includes('rate limit')) {
+        errorMessage = 'Daily email limit reached (100/day). Resets at midnight UTC.';
+      } else if (error.message?.includes('token')) {
+        errorMessage = 'Email authentication expired. Please reconnect your email in Settings.';
       }
       
       toast({
@@ -113,53 +165,6 @@ export const InvoiceSendDropdown = ({
     }
   };
 
-  const handleSendReminder = async (reminderType: 'gentle' | 'firm' | 'final') => {
-    try {
-      setIsSendingReminder(reminderType);
-
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        throw new Error('Not authenticated');
-      }
-      
-      const { error } = await supabase.functions.invoke('send-payment-reminder', {
-        body: { 
-          quoteId: invoice.id,
-          reminderType 
-        },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
-        }
-      });
-
-      if (error) throw error;
-
-      const reminderLabels = {
-        gentle: 'Gentle reminder',
-        firm: 'Firm reminder',
-        final: 'Final notice'
-      };
-
-      toast({
-        title: 'Reminder sent',
-        description: `Payment reminder sent to ${invoice.client?.email}`,
-        variant: 'success',
-        duration: 3000,
-      });
-
-      onSuccess?.();
-    } catch (error) {
-      console.error('Error sending payment reminder:', error);
-      toast({
-        title: 'Error sending reminder',
-        description: 'Failed to send payment reminder. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSendingReminder(null);
-    }
-  };
 
   const handleSendViaEmailClient = async () => {
     try {
@@ -425,12 +430,7 @@ ${companyName}`;
     }
   };
 
-  const isLoading = isSendingEmail || isSharingWhatsApp || isSendingReminder !== null || isGeneratingMailtoLink;
-  
-  // Check if invoice is overdue
-  const isOverdue = invoice.invoice_due_date && 
-    new Date(invoice.invoice_due_date) < new Date() && 
-    invoice.invoice_status !== 'paid';
+  const isLoading = isSendingEmail || isSharingWhatsApp || isGeneratingMailtoLink;
 
   return (
     <DropdownMenu>
@@ -468,8 +468,8 @@ ${companyName}`;
             <Mail className="mr-2 h-4 w-4" />
           )}
           <div className="flex flex-col">
-            <span>Send via Email</span>
-            <span className="text-xs text-muted-foreground">Professional delivery via Resend</span>
+            <span>Send via Gmail/Outlook</span>
+            <span className="text-xs text-muted-foreground">Using your connected email account</span>
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem
@@ -500,51 +500,6 @@ ${companyName}`;
           )}
           <span>Share via WhatsApp</span>
         </DropdownMenuItem>
-
-        {isOverdue && (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuLabel className="text-xs text-destructive">
-              Payment Reminders
-            </DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => handleSendReminder('gentle')}
-              disabled={isSendingReminder !== null}
-              className="cursor-pointer"
-            >
-              {isSendingReminder === 'gentle' ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <AlertCircle className="mr-2 h-4 w-4 text-blue-500" />
-              )}
-              <span>Send Gentle Reminder</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => handleSendReminder('firm')}
-              disabled={isSendingReminder !== null}
-              className="cursor-pointer"
-            >
-              {isSendingReminder === 'firm' ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <AlertTriangle className="mr-2 h-4 w-4 text-orange-500" />
-              )}
-              <span>Send Firm Reminder</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => handleSendReminder('final')}
-              disabled={isSendingReminder !== null}
-              className="cursor-pointer"
-            >
-              {isSendingReminder === 'final' ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <AlertOctagon className="mr-2 h-4 w-4 text-red-500" />
-              )}
-              <span>Send Final Notice</span>
-            </DropdownMenuItem>
-          </>
-        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

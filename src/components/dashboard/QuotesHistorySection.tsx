@@ -39,6 +39,7 @@ import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { InvoiceDecisionDialog } from "@/components/electrician/invoice-builder/InvoiceDecisionDialog";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { toast } from "sonner";
+import { generateSequentialInvoiceNumber } from "@/utils/invoice-number-generator";
 
 interface QuotesHistorySectionProps {
   quotes: Quote[];
@@ -191,11 +192,12 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
     setLoading(true);
     try {
       // Generate invoice directly from quote data
+      const invoiceNumber = await generateSequentialInvoiceNumber();
       const invoiceData = {
         ...selectedQuote,
         originalQuoteId: selectedQuote.id,
         invoice_raised: true,
-        invoice_number: `INV-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`,
+        invoice_number: invoiceNumber,
         invoice_date: new Date(),
         invoice_due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
         invoice_status: 'draft' as const,
