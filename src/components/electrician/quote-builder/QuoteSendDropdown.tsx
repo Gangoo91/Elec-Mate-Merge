@@ -215,9 +215,10 @@ export const QuoteSendDropdown = ({
         .update({ client_data: quote.client as any })
         .eq('id', quote.id);
 
-      // Send via send-quote-email function (generates and attaches PDF automatically)
-      const { error } = await supabase.functions.invoke('send-quote-email', {
+      // Send via smart sender (uses your connected Gmail/Outlook account)
+      const { error } = await supabase.functions.invoke('send-invoice-smart', {
         body: { 
+          documentType: 'quote',
           quoteId: quote.id
         },
         headers: {
