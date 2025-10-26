@@ -11,8 +11,7 @@ import { Quote } from "@/types/quote";
 import { useState, useEffect } from "react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import InvoiceTableView from "@/components/electrician/InvoiceTableView";
-import InvoiceCardList from "@/components/electrician/InvoiceCardList";
+import InvoiceCardView from "@/components/electrician/InvoiceCardView";
 import { InvoiceSendDropdown } from "@/components/electrician/invoice-builder/InvoiceSendDropdown";
 import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
 
@@ -705,39 +704,20 @@ Thank you for your business!`;
               </Link>
             </div>
           ) : (
-            <>
-              {/* Desktop: Table View */}
-              <InvoiceTableView
-                invoices={sortedInvoices}
-                onInvoiceAction={handleInvoiceAction}
-                onDownloadPDF={handleDownloadPDF}
-                onMarkAsPaid={handleMarkAsPaid}
-                onSendSuccess={handleSendSuccess}
-                onDeleteInvoice={handleDeleteInvoice}
-                onShareWhatsApp={handleShareWhatsApp}
-                onShareEmail={handleShareEmail}
-                markingPaidId={markingPaidId}
-                downloadingPdfId={downloadingPdfId}
-                deletingInvoiceId={deletingInvoiceId}
-              />
-
-              {/* Mobile/Tablet: Card View */}
-              <InvoiceCardList
-                invoices={sortedInvoices}
-                onInvoiceAction={handleInvoiceAction}
-                onDownloadPDF={handleDownloadPDF}
-                onMarkAsPaid={handleMarkAsPaid}
-                onSendSuccess={handleSendSuccess}
-                onDeleteInvoice={handleDeleteInvoice}
-                onShareWhatsApp={handleShareWhatsApp}
-                onShareEmail={handleShareEmail}
-                markingPaidId={markingPaidId}
-                downloadingPdfId={downloadingPdfId}
-                deletingInvoiceId={deletingInvoiceId}
-                sharingWhatsAppId={sharingWhatsAppId}
-                sharingEmailId={sharingEmailId}
-              />
-            </>
+            <InvoiceCardView
+              invoices={sortedInvoices}
+              onInvoiceAction={handleInvoiceAction}
+              onDownloadPDF={handleDownloadPDF}
+              onMarkAsPaid={handleMarkAsPaid}
+              onSendSuccess={handleSendSuccess}
+              onDeleteInvoice={handleDeleteInvoice}
+              onShareWhatsApp={handleShareWhatsApp}
+              onShareEmail={handleShareEmail}
+              markingPaidId={markingPaidId}
+              downloadingPdfId={downloadingPdfId}
+              deletingInvoiceId={deletingInvoiceId}
+              formatCurrency={formatCurrency}
+            />
           )}
         </CardContent>
         </Card>
