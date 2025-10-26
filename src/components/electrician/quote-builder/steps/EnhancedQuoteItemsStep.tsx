@@ -39,7 +39,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
     quantity: 1,
     unit: "each",
     unitPrice: 0,
-    category: "labour" as 'labour' | 'materials' | 'equipment',
+    category: "labour" as 'labour' | 'materials' | 'equipment' | 'manual',
     subcategory: "",
     workerType: "",
     hours: 0,
@@ -62,7 +62,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
   const handleCategoryChange = (category: string) => {
     setNewItem(prev => ({
       ...prev,
-      category: category as 'labour' | 'materials' | 'equipment',
+      category: category as 'labour' | 'materials' | 'equipment' | 'manual',
       subcategory: "",
       workerType: "",
       hours: 0,
@@ -70,7 +70,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
       materialCode: "",
       equipmentCode: "",
       unitPrice: 0,
-      unit: category === "labour" ? "hour" : "each"
+      unit: category === "labour" ? "hour" : category === "manual" ? "item" : "each"
     }));
   };
 
@@ -135,7 +135,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
       setNewItem(prev => ({
         description: "",
         quantity: 1,
-        unit: prev.category === "labour" ? "hour" : "each",
+        unit: prev.category === "labour" ? "hour" : prev.category === "manual" ? "item" : "each",
         unitPrice: 0,
         category: prev.category, // Preserve the selected category
         subcategory: "", // Reset subcategory for flexibility
@@ -154,6 +154,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
       case 'labour': return <Wrench className="h-4 w-4" />;
       case 'materials': return <Package className="h-4 w-4" />;
       case 'equipment': return <Zap className="h-4 w-4" />;
+      case 'manual': return <FileText className="h-4 w-4" />;
       default: return <Package className="h-4 w-4" />;
     }
   };
@@ -257,6 +258,12 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                           <div className="flex items-center gap-3">
                             <Zap className="h-5 w-5 sm:h-4 sm:w-4" />
                             <span className="font-medium">Equipment</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="manual" className="py-3 text-base sm:text-sm">
+                          <div className="flex items-center gap-3">
+                            <FileText className="h-5 w-5 sm:h-4 sm:w-4" />
+                            <span className="font-medium">Manual Entry</span>
                           </div>
                         </SelectItem>
                       </SelectContent>
@@ -461,6 +468,129 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                             ))}
                           </SelectContent>
                         </Select>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Manual Entry specific fields */}
+                  {newItem.category === "manual" && (
+                    <div className="space-y-5">
+                      {/* Description - textarea for flexibility */}
+                      <div className="space-y-3">
+                        <Label htmlFor="manualDescription" className="text-base font-semibold text-foreground">
+                          Description *
+                        </Label>
+                        <Textarea
+                          id="manualDescription"
+                          placeholder="e.g., Site visit fee, Call-out charge, Disposal fee, Parking permit"
+                          value={newItem.description}
+                          onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
+                          className="min-h-[100px] text-base sm:text-sm border-2"
+                        />
+                      </div>
+
+                      {/* Quantity and Unit in a grid */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-3">
+                          <Label htmlFor="manualQuantity" className="text-base font-semibold text-foreground">
+                            Quantity *
+                          </Label>
+                          <Input
+                            id="manualQuantity"
+                            type="number"
+                            inputMode="decimal"
+                            placeholder="1"
+                            value={newItem.quantity || ""}
+                            onChange={(e) => setNewItem(prev => ({ 
+                              ...prev, 
+                              quantity: parseFloat(e.target.value) || 1 
+                            }))}
+                            className="h-14 sm:h-12 text-base sm:text-sm border-2"
+                            min="0.1"
+                            step="0.1"
+                          />
+                        </div>
+
+                        <div className="space-y-3">
+                          <Label htmlFor="manualUnit" className="text-base font-semibold text-foreground">
+                            Unit *
+                          </Label>
+                          <Select 
+                            value={newItem.unit} 
+                            onValueChange={(value) => setNewItem(prev => ({ ...prev, unit: value }))}
+                          >
+                            <SelectTrigger className="h-14 sm:h-12 w-full text-base sm:text-sm border-2">
+                              <SelectValue placeholder="Select unit" />
+                            </SelectTrigger>
+                            <SelectContent className="z-50 bg-background border-2 shadow-lg">
+                              <SelectItem value="item">item</SelectItem>
+                              <SelectItem value="each">each</SelectItem>
+                              <SelectItem value="hour">hour</SelectItem>
+                              <SelectItem value="day">day</SelectItem>
+                              <SelectItem value="week">week</SelectItem>
+                              <SelectItem value="visit">visit</SelectItem>
+                              <SelectItem value="trip">trip</SelectItem>
+                              <SelectItem value="set">set</SelectItem>
+                              <SelectItem value="metre">metre</SelectItem>
+                              <SelectItem value="sq metre">sq metre</SelectItem>
+                              <SelectItem value="panel">panel</SelectItem>
+                              <SelectItem value="circuit">circuit</SelectItem>
+                              <SelectItem value="point">point</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+
+                      {/* Unit Price */}
+                      <div className="space-y-3">
+                        <Label htmlFor="manualUnitPrice" className="text-base font-semibold text-foreground">
+                          Unit Price *
+                        </Label>
+                        <div className="relative">
+                          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-base sm:text-sm font-semibold text-muted-foreground">
+                            £
+                          </span>
+                          <Input
+                            id="manualUnitPrice"
+                            type="number"
+                            inputMode="decimal"
+                            placeholder="0.00"
+                            value={newItem.unitPrice || ""}
+                            onChange={(e) => setNewItem(prev => ({ 
+                              ...prev, 
+                              unitPrice: parseFloat(e.target.value) || 0 
+                            }))}
+                            className="h-14 sm:h-12 pl-8 text-base sm:text-sm border-2"
+                            min="0"
+                            step="0.01"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Total Price Display */}
+                      {newItem.quantity > 0 && newItem.unitPrice > 0 && (
+                        <div className="p-4 rounded-lg bg-primary/5 border-2 border-primary/20">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-muted-foreground">Total Price:</span>
+                            <span className="text-2xl font-bold text-primary">
+                              £{(newItem.quantity * newItem.unitPrice).toFixed(2)}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Optional Notes */}
+                      <div className="space-y-3">
+                        <Label htmlFor="manualNotes" className="text-base font-semibold text-foreground">
+                          Notes (optional)
+                        </Label>
+                        <Textarea
+                          id="manualNotes"
+                          placeholder="Any additional details or notes..."
+                          value={newItem.notes || ""}
+                          onChange={(e) => setNewItem(prev => ({ ...prev, notes: e.target.value }))}
+                          className="min-h-[80px] text-base sm:text-sm border-2"
+                        />
                       </div>
                     </div>
                   )}

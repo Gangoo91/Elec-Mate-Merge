@@ -5,7 +5,7 @@ export interface QuoteItem {
   unit: string;
   unitPrice: number;
   totalPrice: number;
-  category: 'labour' | 'materials' | 'equipment';
+  category: 'labour' | 'materials' | 'equipment' | 'manual';
   subcategory?: string;
   workerType?: string;
   hours?: number;
