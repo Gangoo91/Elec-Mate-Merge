@@ -123,10 +123,9 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Build public URLs for Accept/Decline buttons
-    const baseUrl = 'https://volt-mate.lovable.app';
-    const publicQuoteUrl = `${baseUrl}/public-quote/${publicToken}`;
-    const acceptUrl = `${publicQuoteUrl}#accept`;
-    const rejectUrl = `${publicQuoteUrl}#reject`;
+    const baseUrl = 'https://jtwygbeceundfgnkirof.supabase.co';
+    const acceptUrl = `${baseUrl}/functions/v1/quote-action?token=${publicToken}&action=accept`;
+    const rejectUrl = `${baseUrl}/functions/v1/quote-action?token=${publicToken}&action=reject`;
 
     console.log('Public quote URLs:', { publicQuoteUrl, acceptUrl, rejectUrl });
 

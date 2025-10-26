@@ -28,6 +28,11 @@ timeout_sec = 30
 verify_jwt = false
 timeout_sec = 30
 
+# Quote Action - One-Click Accept/Reject
+[functions.quote-action]
+verify_jwt = false
+timeout_sec = 60
+
 # PDF Generation Functions
 [functions.generate-combined-rams-pdf]
 verify_jwt = false
