@@ -279,6 +279,8 @@ export const QuoteSendDropdown = ({
         variant: 'success',
         duration: 4000,
       });
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // Update status to sent
       await supabase
@@ -305,6 +307,8 @@ export const QuoteSendDropdown = ({
         description: errorMessage,
         variant: 'destructive',
       });
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } finally {
       setIsSendingEmail(false);
     }

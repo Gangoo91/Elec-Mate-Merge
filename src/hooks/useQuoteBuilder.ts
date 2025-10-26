@@ -150,6 +150,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
   const nextStep = useCallback(() => {
     setCurrentStep(prev => Math.min(prev + 1, 2));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const prevStep = useCallback(() => {
@@ -292,6 +293,8 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         console.log('Quote Generation - Moving to review step');
         setCurrentStep(2);
       }
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
       console.log('Quote Generation - Process completed');
     } catch (error) {

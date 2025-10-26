@@ -103,6 +103,8 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           title: "PDF ready",
           variant: "success",
         });
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (documentId) {
         toast({
           title: "PDF in progress",
@@ -118,6 +120,8 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         description: error.message || "Please try again",
         variant: "destructive",
       });
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } finally {
       setIsDownloading(false);
     }
