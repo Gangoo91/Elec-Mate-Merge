@@ -678,7 +678,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                           <Textarea
                             value={risk.controls}
                             onChange={(e) => updateRisk(risk.id, { controls: e.target.value })}
-                            className="w-full bg-background/50 border-primary/30 text-sm max-h-[180px] overflow-y-auto resize-y"
+                            className="w-full bg-background/50 border-primary/30 text-sm max-h-[300px] overflow-y-auto resize-y"
                             placeholder="Describe control measures and compliance (e.g., PUWER 1998, BS 7671)"
                             rows={4}
                           />
@@ -744,17 +744,19 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <Shield className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
                     Required Personal Protective Equipment
                   </h4>
-                  <Card className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40">
-                    <CardContent className="pt-3 md:pt-4 px-0 md:px-4 overflow-x-auto">
-                      <div className="min-w-[600px]">
+                  
+                  {/* Desktop: Table View */}
+                  <Card className="hidden md:block border md:border-primary/20 bg-elec-grey/30 md:bg-card/40">
+                    <CardContent className="pt-4 px-4">
+                      <div className="overflow-x-auto">
                         <table className="w-full text-sm">
                           <thead>
                             <tr className="border-b-2 border-elec-yellow/30">
-                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm">ITEM</th>
-                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm">PPE TYPE</th>
-                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm">STANDARD / SPECIFICATION</th>
-                              <th className="text-center py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm">MANDATORY?</th>
-                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm">PURPOSE / PROTECTION AGAINST</th>
+                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm whitespace-nowrap">ITEM</th>
+                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm whitespace-nowrap">PPE TYPE</th>
+                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm whitespace-nowrap">STANDARD</th>
+                              <th className="text-center py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm whitespace-nowrap">MANDATORY?</th>
+                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm whitespace-nowrap">PURPOSE</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -762,13 +764,16 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                               <tr key={ppe.id} className="border-b border-border/20 hover:bg-elec-grey/20">
                                 <td className="py-3 px-3 text-center font-semibold">{ppe.itemNumber}</td>
                                 <td className="py-3 px-3 font-medium">{ppe.ppeType}</td>
-                                <td className="py-3 px-3 text-primary">{ppe.standard}</td>
+                                <td className="py-3 px-3 text-primary text-xs">{ppe.standard}</td>
                                 <td className="py-3 px-3 text-center">
-                                  <Badge variant={ppe.mandatory ? "destructive" : "secondary"} className="text-xs">
-                                    {ppe.mandatory ? "Yes" : "No"}
+                                  <Badge 
+                                    variant={ppe.mandatory ? "destructive" : "secondary"} 
+                                    className={cn("text-xs whitespace-nowrap", ppe.mandatory && "bg-red-500/90 text-white")}
+                                  >
+                                    {ppe.mandatory ? "MANDATORY" : "Recommended"}
                                   </Badge>
                                 </td>
-                                <td className="py-3 px-3 text-muted-foreground text-xs md:text-sm">{ppe.purpose}</td>
+                                <td className="py-3 px-3 text-muted-foreground text-xs leading-relaxed">{ppe.purpose}</td>
                               </tr>
                             ))}
                           </tbody>
@@ -776,6 +781,40 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                       </div>
                     </CardContent>
                   </Card>
+
+                  {/* Mobile: Card Grid View */}
+                  <div className="md:hidden space-y-3">
+                    {ramsData.ppeDetails.map((ppe) => (
+                      <Card key={ppe.id} className="border-0 bg-elec-grey/30 border-l-4 border-l-elec-yellow/60">
+                        <CardContent className="pt-3 pb-3 px-4">
+                          <div className="space-y-2">
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/40 font-semibold">
+                                  #{ppe.itemNumber}
+                                </Badge>
+                                <Badge 
+                                  variant={ppe.mandatory ? "destructive" : "secondary"}
+                                  className={cn("text-xs", ppe.mandatory && "bg-red-500/90 text-white font-semibold")}
+                                >
+                                  {ppe.mandatory ? "MANDATORY" : "Recommended"}
+                                </Badge>
+                              </div>
+                            </div>
+                            
+                            <h5 className="font-bold text-foreground text-base leading-tight">{ppe.ppeType}</h5>
+                            
+                            <div className="flex items-center gap-2 text-xs">
+                              <span className="text-muted-foreground">Standard:</span>
+                              <span className="text-primary font-medium">{ppe.standard}</span>
+                            </div>
+                            
+                            <p className="text-sm text-muted-foreground leading-relaxed pt-1">{ppe.purpose}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 </div>
               )}
 
@@ -841,54 +880,83 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 </div>
               </div>
 
-              {/* Method Steps */}
+              {/* Method Steps - Now using Accordion */}
               <div className="space-y-3">
-                <h4 className="font-semibold text-foreground flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-elec-yellow" />
-                  Installation Steps ({methodData.steps?.length || 0})
-                </h4>
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold text-foreground flex items-center gap-2">
+                    <FileText className="h-4 w-4 text-elec-yellow" />
+                    Installation Steps ({methodData.steps?.length || 0})
+                  </h4>
+                </div>
                 
-                {methodData.steps?.map((step) => (
-                  <Card key={step.id} className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40 shadow-none rounded-lg border-l-4 border-l-elec-yellow/40">
-                    <CardContent className="pt-3 md:pt-4 px-4">
-                      <div className="space-y-3">
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex items-start gap-3 flex-1 min-w-0">
-                            <Badge variant="outline" className="bg-primary/10 shrink-0">
-                              Step {step.stepNumber}
-                            </Badge>
+                <Accordion type="multiple" className="space-y-2">
+                  {methodData.steps?.map((step, index) => (
+                    <AccordionItem 
+                      key={step.id} 
+                      value={`step-${step.id}`}
+                      className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40 rounded-lg overflow-hidden border-l-4 border-l-elec-yellow/40"
+                    >
+                      <AccordionTrigger className="px-4 py-3 hover:bg-elec-grey/40 hover:no-underline">
+                        <div className="flex items-center gap-3 flex-1 text-left">
+                          <Badge variant="outline" className="bg-primary/10 shrink-0 font-semibold">
+                            Step {step.stepNumber}
+                          </Badge>
+                          <span className="font-medium text-foreground line-clamp-1">{step.title || 'Untitled Step'}</span>
+                          <Badge variant="outline" className={cn("ml-auto mr-4 text-xs", getRiskLevelBadge(step.riskLevel || 'low'))}>
+                            {step.riskLevel || 'low'}
+                          </Badge>
+                        </div>
+                      </AccordionTrigger>
+                      
+                      <AccordionContent className="px-4 pb-4">
+                        <div className="space-y-3 pt-2">
+                          <div className="flex items-start justify-between gap-3">
                             <Input
                               value={step.title}
                               onChange={(e) => updateStep(step.id, { title: e.target.value })}
-                              className="flex-1 bg-background/50 border-primary/30 font-medium text-base md:text-lg min-h-[3rem] leading-relaxed"
+                              className="flex-1 bg-background/50 border-primary/30 font-medium text-base md:text-lg"
                               placeholder="Step title"
                             />
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => removeStep(step.id)}
+                              className="text-red-500 hover:text-red-600 shrink-0"
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeStep(step.id)}
-                            className="text-red-500 hover:text-red-600 shrink-0"
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        </div>
 
-                        <Textarea
-                          value={step.description}
-                          onChange={(e) => updateStep(step.id, { description: e.target.value })}
-                          className="bg-background/50 border-primary/30 max-h-[200px] overflow-y-auto resize-y"
-                          placeholder="Step description"
-                          rows={4}
-                        />
+                          <div className="relative">
+                            <label className="text-xs text-muted-foreground mb-1.5 block">Description</label>
+                            <Textarea
+                              value={step.description}
+                              onChange={(e) => updateStep(step.id, { description: e.target.value })}
+                              className="bg-background/50 border-primary/30 max-h-[400px] min-h-[120px] overflow-y-auto resize-y"
+                              placeholder="Detailed step description with safety requirements..."
+                              rows={6}
+                            />
+                            <div className="absolute bottom-2 right-2 text-xs text-muted-foreground pointer-events-none">
+                              {step.description?.length || 0} chars
+                            </div>
+                          </div>
 
-                        <div className="text-xs text-muted-foreground">
-                          Safety: {step.safetyRequirements.join(', ')}
+                          {step.safetyRequirements && step.safetyRequirements.length > 0 && (
+                            <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-3">
+                              <div className="flex items-start gap-2">
+                                <Shield className="h-4 w-4 text-yellow-500 mt-0.5 shrink-0" />
+                                <div className="flex-1">
+                                  <p className="text-xs font-semibold text-yellow-600 dark:text-yellow-400 mb-1">Safety Requirements:</p>
+                                  <p className="text-xs text-muted-foreground">{step.safetyRequirements.join(' • ')}</p>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
                 
                 {/* Add New Step Button */}
                 <Button
