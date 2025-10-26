@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Invoice } from '@/types/invoice';
 import { Quote } from '@/types/quote';
 import { toast } from '@/hooks/use-toast';
+import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 
 export const useInvoiceStorage = () => {
   const [invoices, setInvoices] = useState<Quote[]>([]);
@@ -111,6 +112,13 @@ export const useInvoiceStorage = () => {
         return false;
       }
 
+      // Generate invoice number if it's TEMP or missing
+      let finalInvoiceNumber = invoice.invoice_number;
+      if (!finalInvoiceNumber || finalInvoiceNumber === 'Invoice/TEMP') {
+        finalInvoiceNumber = await generateSequentialInvoiceNumber();
+        console.log('📝 Generated invoice number:', finalInvoiceNumber);
+      }
+
       // Merge additional invoice items into the main items array
       const mergedItems = [
         ...(invoice.items || []),
@@ -122,7 +130,7 @@ export const useInvoiceStorage = () => {
         .from('quotes')
         .update({
           invoice_raised: true,
-          invoice_number: invoice.invoice_number,
+          invoice_number: finalInvoiceNumber,
           invoice_date: invoice.invoice_date?.toISOString(),
           invoice_due_date: invoice.invoice_due_date?.toISOString(),
           invoice_status: invoice.invoice_status,
