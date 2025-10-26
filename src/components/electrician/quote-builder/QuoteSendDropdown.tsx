@@ -143,6 +143,16 @@ export const QuoteSendDropdown = ({
         return;
       }
 
+      // Fetch company profile for PDF branding
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      const { data: companyData } = await supabase
+        .from('company_profiles')
+        .select('company_name')
+        .eq('user_id', user.id)
+        .single();
+
       // Generate PDF
       const pdfDoc = generateClientQuotePDF({
         projectName: quote.jobDetails?.title || 'Electrical Installation',
@@ -161,7 +171,7 @@ export const QuoteSendDropdown = ({
           .filter(item => item.category === 'labour')
           .reduce((sum, item) => sum + (item.hours || 0), 0),
         labourRate: quote.settings.labourRate,
-        companyName: 'Your Company Name',
+        companyName: companyData?.company_name || 'Your Company',
         validityDays: Math.ceil((new Date(quote.expiryDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
       });
 
