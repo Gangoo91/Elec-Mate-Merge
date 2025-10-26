@@ -127,7 +127,7 @@ const handler = async (req: Request): Promise<Response> => {
     const acceptUrl = `${baseUrl}/functions/v1/quote-action?token=${publicToken}&action=accept`;
     const rejectUrl = `${baseUrl}/functions/v1/quote-action?token=${publicToken}&action=reject`;
 
-    console.log('Public quote URLs:', { publicQuoteUrl, acceptUrl, rejectUrl });
+    console.log('Public quote URLs:', { acceptUrl, rejectUrl });
 
     // Generate fresh PDF
     const pdfResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
@@ -387,8 +387,8 @@ function generateEmailHTML(
   
   // Use company profile data with fallbacks
   const finalCompanyName = company?.company_name || companyName || 'Elec-Mate';
-  const companyPhone = company?.phone || '07506026934';
-  const companyEmail = company?.email || 'andrewgangoo91@gmail.com';
+    const companyPhone = company?.company_phone || '07506026934';
+    const companyEmail = company?.company_email || 'andrewgangoo91@gmail.com';
   
   return `
 <!DOCTYPE html>
