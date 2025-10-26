@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, Eye, Calendar, User, Mail, Phone, Trash2, CheckCircle, AlertCircle, Receipt, Send, Edit } from 'lucide-react';
+import { Download, Eye, Calendar, User, Trash2, CheckCircle, AlertCircle, Receipt, Send, Edit, FileText } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format, isPast } from 'date-fns';
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
@@ -82,7 +82,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {invoices.map((invoice) => {
         const statusInfo = getStatusInfo(invoice);
         const StatusIcon = statusInfo.icon;
@@ -97,23 +97,22 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
             className={`relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border ${statusInfo.borderColor}`}
           >
             {/* Content Container */}
-            <div className="relative p-4">
-              {/* Top Row: Invoice Number & Status Badge */}
-              <div className="flex items-start justify-between mb-3 pb-3 border-b border-primary/20">
-                <div className="flex flex-col gap-2 w-full">
+            <div className="relative p-6">
+              {/* Header with invoice number and status */}
+              <div className="flex items-start justify-between mb-4 pb-3 border-b border-primary/20">
+                <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-lg font-bold text-foreground">
+                    <h3 className="text-lg sm:text-xl font-bold">
                       {invoice.invoice_number}
                     </h3>
-                    <Badge className={`text-xs ${statusInfo.color} border-0 flex items-center gap-1`}>
-                      <StatusIcon className="h-3 w-3" />
+                    <Badge className={`text-xs ${statusInfo.color}`}>
+                      <StatusIcon className="h-3 w-3 mr-1" />
                       {statusInfo.label}
                     </Badge>
                   </div>
-                  
-                  {/* Quote Reference if available */}
                   {invoice.quoteNumber && (
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-xs text-muted-foreground flex items-center gap-1">
+                      <Receipt className="h-3 w-3" />
                       From Quote #{invoice.quoteNumber}
                     </div>
                   )}
@@ -122,48 +121,40 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   variant="ghost"
                   size="icon"
                   onClick={() => onInvoiceAction(invoice)}
-                  className="h-8 w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
-                  aria-label={`View invoice ${invoice.invoice_number}`}
+                  className="h-8 w-8 flex-shrink-0"
                 >
                   <Eye className="h-4 w-4" />
                 </Button>
               </div>
 
-              {/* Client Info */}
-              <div className="flex items-start gap-2 mb-4">
-                <div className="w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <User className="h-10 w-10 text-muted-foreground/40" strokeWidth={1.5} />
+              {/* Client Information */}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">
+                  <User className="h-12 w-12 text-muted-foreground/40" strokeWidth={1.5} />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="text-xs text-muted-foreground mb-0.5">Client</div>
-                  <div className="text-base text-foreground font-medium truncate">
+                  <div className="text-base font-medium truncate">
                     {clientData?.name || 'Unknown Client'}
                   </div>
                   {clientData?.email && (
-                    <div className="text-xs text-muted-foreground flex items-center gap-1 mt-1 truncate">
-                      <Mail className="h-3 w-3 flex-shrink-0" />
-                      <span className="truncate">{clientData.email}</span>
-                    </div>
-                  )}
-                  {clientData?.phone && (
-                    <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5 truncate">
-                      <Phone className="h-3 w-3 flex-shrink-0" />
-                      <span className="truncate">{clientData.phone}</span>
+                    <div className="text-xs text-muted-foreground truncate">
+                      {clientData.email}
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Total Amount - Prominent */}
+              {/* Amount Display */}
               <div className="text-center mb-4 py-4 bg-background/40 rounded-lg border border-primary/10">
-                <div className="text-sm text-muted-foreground mb-1 font-normal">Total Amount</div>
-                <div className="text-3xl font-bold text-elec-yellow">
+                <div className="text-sm text-muted-foreground mb-1">Total Amount</div>
+                <div className="text-3xl sm:text-4xl font-bold text-elec-yellow">
                   {formatCurrency(invoice.total)}
                 </div>
               </div>
 
-              {/* Dates Info */}
-              <div className="grid grid-cols-2 gap-3 mb-4 text-sm">
+              {/* Invoice Details - 2 Column Layout */}
+              <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
                 <div>
                   <div className="text-xs text-muted-foreground mb-1">Invoice Date</div>
                   <div className="text-foreground font-medium flex items-center gap-1">
@@ -173,16 +164,21 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                 </div>
                 <div>
                   <div className="text-xs text-muted-foreground mb-1">Due Date</div>
-                  <div className={`font-medium flex items-center gap-1 ${isOverdue ? 'text-red-600' : 'text-foreground'}`}>
+                  <div className={`font-medium flex items-center gap-1 ${
+                    isOverdue ? 'text-red-600 font-semibold' : 'text-foreground'
+                  }`}>
                     <Calendar className="h-3 w-3" />
                     {invoice.invoice_due_date ? format(new Date(invoice.invoice_due_date), 'dd MMM yyyy') : 'N/A'}
+                    {isOverdue && <AlertCircle className="h-3 w-3 ml-1" />}
                   </div>
                 </div>
-              </div>
-
-              {/* Items Count */}
-              <div className="text-xs text-muted-foreground mb-4">
-                {invoice.items.length} item{invoice.items.length !== 1 ? 's' : ''}
+                <div>
+                  <div className="text-xs text-muted-foreground mb-1">Items</div>
+                  <div className="text-foreground font-medium flex items-center gap-1">
+                    <FileText className="h-3 w-3" />
+                    {invoice.items.length}
+                  </div>
+                </div>
               </div>
 
               {/* Action Buttons Grid */}
