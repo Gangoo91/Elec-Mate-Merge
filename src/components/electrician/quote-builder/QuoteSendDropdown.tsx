@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { Button } from '@/components/ui/button';
+import { generateClientQuotePDF } from '@/utils/client-quote-pdf';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -142,11 +143,46 @@ export const QuoteSendDropdown = ({
         return;
       }
 
-      // Send via user's connected email using send-invoice-smart
+      // Generate PDF
+      const pdfDoc = generateClientQuotePDF({
+        projectName: quote.jobDetails?.title || 'Electrical Installation',
+        clientName: quote.client?.name || '',
+        location: quote.client?.address || '',
+        date: quote.createdAt.toISOString(),
+        materials: quote.items
+          .filter(item => item.category === 'materials')
+          .map(item => ({
+            item: item.description,
+            quantity: item.quantity,
+            unitCost: item.unitPrice,
+            totalCost: item.totalPrice
+          })),
+        labourHours: quote.items
+          .filter(item => item.category === 'labour')
+          .reduce((sum, item) => sum + (item.hours || 0), 0),
+        labourRate: quote.settings.labourRate,
+        companyName: 'Your Company Name',
+        validityDays: Math.ceil((new Date(quote.expiryDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+      });
+
+      // Convert PDF to base64
+      const pdfBlob = pdfDoc.output('blob');
+      const pdfBase64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64 = (reader.result as string).split(',')[1];
+          resolve(base64);
+        };
+        reader.readAsDataURL(pdfBlob);
+      });
+
+      // Send via user's connected email with PDF attachment
       const { error } = await supabase.functions.invoke('send-invoice-smart', {
         body: { 
           documentType: 'quote',
           quoteId: quote.id,
+          attachmentBase64: pdfBase64,
+          attachmentFilename: `Quote_${quote.quoteNumber}.pdf`
         },
         headers: {
           Authorization: `Bearer ${session.access_token}`
@@ -156,8 +192,8 @@ export const QuoteSendDropdown = ({
       if (error) throw error;
 
       toast({
-        title: 'Quote sent',
-        description: `Quote ${quote.quoteNumber} sent from your email to ${quote.client?.email}`,
+        title: 'Quote sent with PDF',
+        description: `Quote ${quote.quoteNumber} sent to ${quote.client?.email} with attached PDF`,
         variant: 'success',
         duration: 4000,
       });
