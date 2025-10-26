@@ -22,9 +22,6 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
     try {
-      // Generate PDF silently - loading state shown in button
-
-      // Create a default company profile if none exists
       const effectiveCompanyProfile = companyProfile || {
         id: 'default',
         user_id: 'default',
@@ -42,12 +39,11 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         updated_at: new Date()
       };
 
-      // Ensure quote has basic required data
       const effectiveQuote = {
         ...quote,
         quoteNumber: quote.quoteNumber || `Q${Date.now()}`,
         createdAt: quote.createdAt || new Date(),
-        expiryDate: quote.expiryDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+        expiryDate: quote.expiryDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         status: quote.status || 'draft',
         subtotal: quote.subtotal || 0,
         total: quote.total || 0,
@@ -68,17 +64,46 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         }
       });
 
-      if (error) {
-        throw error;
+      if (error) throw error;
+
+      let downloadUrl = data.downloadUrl;
+      const documentId = data.documentId;
+
+      // If no download URL yet, poll for status
+      if (!downloadUrl && documentId) {
+        const maxAttempts = 18; // 90 seconds max (18 × 5s)
+        for (let i = 0; i < maxAttempts; i++) {
+          await new Promise(resolve => setTimeout(resolve, 5000));
+          
+          const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
+            body: { mode: 'status', documentId }
+          });
+
+          if (statusData?.downloadUrl) {
+            downloadUrl = statusData.downloadUrl;
+            break;
+          }
+        }
       }
 
-      if (data.success && data.downloadUrl) {
-        window.open(data.downloadUrl, '_blank');
+      if (downloadUrl && quote.id) {
+        // Persist PDF data to database
+        await supabase
+          .from('quotes')
+          .update({
+            pdf_document_id: documentId,
+            pdf_url: downloadUrl,
+            pdf_generated_at: new Date().toISOString(),
+            pdf_version: (quote.pdf_version || 0) + 1
+          })
+          .eq('id', quote.id);
+
+        window.open(downloadUrl, '_blank');
         toast({
           title: "PDF ready",
           variant: "success",
         });
-      } else if (data.documentId) {
+      } else if (documentId) {
         toast({
           title: "PDF in progress",
           description: "Check back in a moment",

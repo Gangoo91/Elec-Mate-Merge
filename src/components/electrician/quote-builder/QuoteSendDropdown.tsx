@@ -143,7 +143,7 @@ export const QuoteSendDropdown = ({
         return;
       }
 
-      // Check if PDF already generated and is current
+      // Get latest quote data
       const { data: freshQuote, error: fetchError } = await supabase
         .from('quotes')
         .select('*')
@@ -152,23 +152,76 @@ export const QuoteSendDropdown = ({
 
       if (fetchError) throw fetchError;
 
+      // Check if PDF is current
       const pdfIsCurrent = freshQuote?.pdf_url && 
                           freshQuote?.pdf_generated_at && 
                           new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
 
+      let pdfUrl = freshQuote.pdf_url;
+
+      // If PDF is not current or missing, try to refresh
       if (!pdfIsCurrent) {
-        toast({
-          title: 'PDF not generated',
-          description: 'Please generate the PDF first using the "Generate PDF" button, then send.',
-          variant: 'destructive',
-        });
-        return;
+        if (freshQuote.pdf_document_id) {
+          // Try to get a fresh download URL
+          const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
+            body: { mode: 'status', documentId: freshQuote.pdf_document_id }
+          });
+
+          if (statusData?.downloadUrl) {
+            pdfUrl = statusData.downloadUrl;
+            // Update the quote with fresh URL
+            await supabase
+              .from('quotes')
+              .update({
+                pdf_url: pdfUrl,
+                pdf_generated_at: new Date().toISOString()
+              })
+              .eq('id', quote.id);
+          } else {
+            toast({
+              title: "PDF not ready",
+              description: "Please generate the PDF first using the PDF button",
+              variant: "destructive"
+            });
+            setIsSendingEmail(false);
+            return;
+          }
+        } else {
+          toast({
+            title: "PDF not generated",
+            description: "Please generate the PDF first using the PDF button",
+            variant: "destructive"
+          });
+          setIsSendingEmail(false);
+          return;
+        }
       }
 
-      // Fetch the PDF from the stored URL
-      const pdfResponse = await fetch(freshQuote.pdf_url);
+      // Fetch the PDF
+      let pdfResponse = await fetch(pdfUrl);
+      
+      // If URL expired, try to refresh once more
+      if (!pdfResponse.ok && freshQuote.pdf_document_id) {
+        const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
+          body: { mode: 'status', documentId: freshQuote.pdf_document_id }
+        });
+
+        if (statusData?.downloadUrl) {
+          pdfUrl = statusData.downloadUrl;
+          await supabase
+            .from('quotes')
+            .update({
+              pdf_url: pdfUrl,
+              pdf_generated_at: new Date().toISOString()
+            })
+            .eq('id', quote.id);
+          
+          pdfResponse = await fetch(pdfUrl);
+        }
+      }
+
       if (!pdfResponse.ok) {
-        throw new Error('Failed to fetch generated PDF');
+        throw new Error('Failed to fetch PDF');
       }
 
       const pdfBlob = await pdfResponse.blob();

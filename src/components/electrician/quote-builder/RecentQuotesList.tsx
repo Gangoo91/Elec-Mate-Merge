@@ -105,9 +105,43 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
 
       if (error) throw error;
 
-      if (data.success && data.downloadUrl) {
+      let downloadUrl = data.downloadUrl;
+      const documentId = data.documentId;
+
+      // If no download URL yet, poll for status
+      if (!downloadUrl && documentId) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          const maxAttempts = 18; // 90 seconds max
+          for (let i = 0; i < maxAttempts; i++) {
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            
+            const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
+              body: { mode: 'status', documentId }
+            });
+
+            if (statusData?.downloadUrl) {
+              downloadUrl = statusData.downloadUrl;
+              break;
+            }
+          }
+        }
+      }
+
+      if (downloadUrl) {
+        // Persist PDF data to database
+        await supabase
+          .from('quotes')
+          .update({
+            pdf_document_id: documentId,
+            pdf_url: downloadUrl,
+            pdf_generated_at: new Date().toISOString(),
+            pdf_version: (quote.pdf_version || 0) + 1
+          })
+          .eq('id', quote.id);
+
         // Download the PDF
-        const response = await fetch(data.downloadUrl);
+        const response = await fetch(downloadUrl);
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
