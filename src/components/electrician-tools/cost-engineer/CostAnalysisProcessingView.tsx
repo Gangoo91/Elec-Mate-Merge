@@ -14,48 +14,38 @@ interface ProcessingStage {
 
 const ANALYSIS_STAGES: ProcessingStage[] = [
   {
-    id: 'materials',
-    title: 'Materials Research',
+    id: 'rag',
+    title: 'Searching Pricing Database',
     icon: Package,
     substeps: [
-      'Cataloguing components...',
-      'Checking current pricing...',
-      'Calculating quantities...'
+      'Querying 45,000+ UK pricing items...',
+      'Finding matching materials and suppliers...',
+      'Retrieving current 2025 prices...'
     ],
-    duration: 10
+    duration: 18
   },
   {
-    id: 'labour',
-    title: 'Labour Calculation',
-    icon: Clock,
-    substeps: [
-      'Estimating installation time...',
-      'Applying trade rates...',
-      'Adding complexity factors...'
-    ],
-    duration: 8
-  },
-  {
-    id: 'compliance',
-    title: 'Compliance Check',
-    icon: ShieldCheck,
-    substeps: [
-      'Reviewing BS 7671 requirements...',
-      'Adding certification costs...',
-      'Checking testing needs...'
-    ],
-    duration: 6
-  },
-  {
-    id: 'breakdown',
-    title: 'Cost Breakdown',
+    id: 'ai',
+    title: 'AI Cost Analysis',
     icon: Calculator,
     substeps: [
-      'Generating itemised quote...',
-      'Calculating totals...',
-      'Formatting report...'
+      'Generating detailed cost breakdown...',
+      'Calculating labour requirements...',
+      'Creating alternative quotes...',
+      'Preparing value engineering suggestions...'
     ],
-    duration: 8
+    duration: 28
+  },
+  {
+    id: 'finalize',
+    title: 'Finalising Report',
+    icon: CheckCircle2,
+    substeps: [
+      'Formatting cost analysis...',
+      'Generating material order list...',
+      'Preparing timescale estimates...'
+    ],
+    duration: 4
   }
 ];
 
@@ -70,7 +60,8 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
   const [elapsedTime, setElapsedTime] = useState(0);
 
   const totalDuration = ANALYSIS_STAGES.reduce((sum, stage) => sum + stage.duration, 0);
-  const estimatedTime = `${totalDuration - 5}-${totalDuration + 5} seconds`;
+  const estimatedTime = `${totalDuration - 10}-${totalDuration + 10} seconds`;
+  const isOverdue = elapsedTime > totalDuration + 10;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -111,11 +102,8 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
       <Card className="w-full max-w-2xl border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50">
         <CardHeader className="text-center space-y-4 pb-6">
           <div className="flex justify-center">
-            <div className="relative">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-elec-yellow/20 to-green-500/20 flex items-center justify-center animate-pulse">
-                <Calculator className="h-10 w-10 text-elec-yellow" />
-              </div>
-              <div className="absolute inset-0 rounded-full bg-elec-yellow/20 animate-ping" />
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-elec-yellow/20 to-green-500/20 flex items-center justify-center">
+              <Calculator className="h-10 w-10 text-elec-yellow" />
             </div>
           </div>
 
@@ -124,10 +112,12 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
               AI Cost Analysis In Progress
             </CardTitle>
             <p className="text-muted-foreground text-sm sm:text-base mt-2">
-              ⏱️ Expected completion: {estimatedTime}
+              ⏱️ Typically takes: {estimatedTime}
             </p>
             <p className="text-muted-foreground text-xs mt-1">
-              AI is analysing materials, labour, and compliance requirements...
+              AI is searching 45,000+ pricing items and generating detailed cost breakdown...
+              <br />
+              <span className="text-elec-yellow/70">This process requires thorough analysis for accurate results</span>
             </p>
           </div>
 
@@ -139,8 +129,15 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
             <Progress value={progress} className="h-3" />
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>Elapsed: {formatTime(elapsedTime)}</span>
-              <span>~{formatTime(totalDuration - elapsedTime)} remaining</span>
+              {isOverdue ? (
+                <span className="text-orange-400">Still processing... AI is being thorough</span>
+              ) : (
+                <span>~{formatTime(Math.max(0, totalDuration - elapsedTime))} remaining</span>
+              )}
             </div>
+            <p className="text-xs text-muted-foreground/60 text-center mt-1">
+              ⏱️ Progress estimate based on typical request duration
+            </p>
           </div>
         </CardHeader>
 
@@ -169,8 +166,8 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                         <CheckCircle2 className="h-6 w-6 text-green-500" />
                       </div>
                     ) : isActive ? (
-                      <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center animate-pulse">
-                        <Loader2 className="h-6 w-6 text-elec-yellow animate-spin" />
+                      <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                        <Icon className="h-6 w-6 text-elec-yellow" />
                       </div>
                     ) : (
                       <div className="w-10 h-10 rounded-full bg-elec-grey/50 flex items-center justify-center">
@@ -188,7 +185,7 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                         <span className="text-xs text-green-500 font-medium">Complete ✓</span>
                       )}
                       {isActive && (
-                        <span className="text-xs text-elec-yellow font-medium animate-pulse">In Progress...</span>
+                        <span className="text-xs text-elec-yellow font-medium">In Progress...</span>
                       )}
                     </div>
 
