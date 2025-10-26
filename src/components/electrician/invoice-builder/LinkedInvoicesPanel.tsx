@@ -95,57 +95,57 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
             className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
           >
             {/* Header with Quote-Invoice Link */}
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <Badge variant="outline" className="text-xs">
-                  Quote #{invoice.quoteNumber}
-                </Badge>
-                <ArrowRight className="h-3 w-3" />
-                <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
-                  <Receipt className="h-3 w-3 mr-1" />
-                  {invoice.invoice_number}
-                </Badge>
+            <div className="flex items-start justify-between">
+              <div className="space-y-2 flex-1">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <Badge variant="outline" className="text-xs">
+                    Quote #{invoice.quoteNumber}
+                  </Badge>
+                  <ArrowRight className="h-3 w-3" />
+                  <Badge variant="default" className="text-xs bg-blue-600/20 text-blue-300 border-blue-600/30">
+                    <Receipt className="h-3 w-3 mr-1" />
+                    {invoice.invoice_number}
+                  </Badge>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  {getStatusBadge(invoice)}
+                </div>
+                
+                <div className="flex items-center gap-2 text-sm">
+                  <User className="h-4 w-4 text-muted-foreground" />
+                  <span className="font-medium truncate">{invoice.client.name}</span>
+                </div>
               </div>
               
-              <div className="flex items-start justify-between gap-3">
-                {getStatusBadge(invoice)}
-                <span className="text-lg font-bold text-elec-yellow shrink-0">
-                  {formatCurrency(invoice.total)}
-                </span>
+              <div className="text-lg font-bold text-elec-yellow shrink-0 ml-4">
+                {formatCurrency(invoice.total)}
               </div>
-            </div>
-
-            {/* Client Info */}
-            <div className="flex items-center gap-2 text-sm">
-              <User className="h-4 w-4 text-muted-foreground" />
-              <span className="font-medium truncate">{invoice.client.name}</span>
             </div>
 
             {/* Meta Info */}
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+            <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
               {invoice.invoice_date && (
-                <>
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5" />
-                    <span>{format(new Date(invoice.invoice_date), "dd MMM yyyy")}</span>
-                  </div>
-                  <span className="text-border">•</span>
-                </>
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="h-3.5 w-3.5" />
+                  <span>{format(new Date(invoice.invoice_date), "dd/MM/yyyy")}</span>
+                </div>
               )}
               {invoice.invoice_due_date && (
                 <div className="flex items-center gap-1.5">
-                  <span>Due: {format(new Date(invoice.invoice_due_date), "dd MMM")}</span>
+                  <Calendar className="h-3.5 w-3.5" />
+                  <span>Due: {format(new Date(invoice.invoice_due_date), "dd/MM/yyyy")}</span>
                 </div>
               )}
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 pt-2">
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
                 onClick={() => navigate(`/electrician/quotes?highlight=${invoice.id}`)}
-                className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
+                className="flex-1"
               >
                 <FileText className="h-3 w-3 mr-1" />
                 View Quote
@@ -154,7 +154,7 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
                 variant="default"
                 size="sm"
                 onClick={() => navigate(`/electrician/invoices?highlight=${invoice.id}`)}
-                className="flex-1 text-xs bg-elec-yellow hover:bg-elec-yellow/90 text-black border-0"
+                className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
               >
                 <Eye className="h-3 w-3 mr-1" />
                 View Invoice
