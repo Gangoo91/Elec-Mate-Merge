@@ -208,7 +208,8 @@ serve(async (req: Request) => {
       binaryString += String.fromCharCode.apply(null, Array.from(chunk));
     }
     pdfAttachment = btoa(binaryString);
-    console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
+    pdfFilename = `${docType}_${doc.quote_number || docId}.pdf`;
+    console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes, filename: ${pdfFilename}`);
 
       // Parse client data
       const clientData = typeof doc.client_data === 'string' 
@@ -240,11 +241,6 @@ serve(async (req: Request) => {
         const quoteDate = doc.created_at 
           ? new Date(doc.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
           : new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-
-        // Generate Accept/Decline URLs using public_token
-        const baseUrl = Deno.env.get('APP_URL') || 'https://jtwygbeceundfgnkirof.lovable.app';
-        const acceptUrl = doc.public_token ? `${baseUrl}/quote/accept/${doc.public_token}` : '#';
-        const declineUrl = doc.public_token ? `${baseUrl}/quote/decline/${doc.public_token}` : '#';
 
         emailSubject = `Quote ${doc.quote_number} from ${companyName}`;
         emailBody = `
@@ -323,28 +319,6 @@ serve(async (req: Request) => {
                                         <td style="font-size: 20px; color: #2563eb; font-weight: 700; text-align: right;">£${(doc.total || 0).toFixed(2)}</td>
                                       </tr>
                                     </table>
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-                        </table>
-
-                        <!-- Call to Action Buttons -->
-                        <table role="presentation" style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
-                          <tr>
-                            <td style="padding: 0;">
-                              <table role="presentation" style="width: 100%; border-collapse: collapse;">
-                                <tr>
-                                  <td style="width: 50%; padding-right: 8px;">
-                                    <a href="${acceptUrl}" style="display: block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; text-align: center; padding: 16px 20px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);">
-                                      ✓ Accept Quote
-                                    </a>
-                                  </td>
-                                  <td style="width: 50%; padding-left: 8px;">
-                                    <a href="${declineUrl}" style="display: block; background-color: #f3f4f6; color: #4b5563; text-align: center; padding: 16px 20px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; border: 2px solid #d1d5db;">
-                                      ✗ Decline
-                                    </a>
                                   </td>
                                 </tr>
                               </table>

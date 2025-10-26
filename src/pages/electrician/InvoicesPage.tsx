@@ -527,9 +527,9 @@ Thank you for your business!`;
             <span>Invoices</span>
           </nav>
 
-          {/* Title and Back Button */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="space-y-2">
+          {/* Title and Description Row */}
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-baseline gap-3">
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 Invoices
               </h1>
@@ -537,6 +537,8 @@ Thank you for your business!`;
                 Manage and track all your electrical invoices
               </p>
             </div>
+            
+            {/* Action Buttons Row */}
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               <Link to="/electrician/quote-invoice-dashboard" className="w-full sm:w-auto">
                 <MobileButton variant="outline" size="wide" className="sm:w-auto">
