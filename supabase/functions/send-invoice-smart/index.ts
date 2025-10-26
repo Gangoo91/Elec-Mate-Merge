@@ -272,134 +272,207 @@ serve(async (req: Request) => {
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Quote ${doc.quote_number}</title>
+            <title>Quote from ${companyName}</title>
           </head>
-          <body style="margin: 0; padding: 0; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
-            <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #ffffff;">
+          <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; background-color: #f3f4f6;">
+            <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f3f4f6;">
               <tr>
                 <td align="center" style="padding: 40px 20px;">
-                  <!-- Main Container -->
-                  <table role="presentation" style="width: 100%; max-width: 600px; border-collapse: collapse; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+                  <table role="presentation" style="max-width: 600px; width: 100%; border-collapse: collapse; background-color: #ffffff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); border-radius: 12px; overflow: hidden;">
                     
                     <!-- Header -->
                     <tr>
-                      <td style="background: #ffffff; padding: 40px 30px; text-align: center; border-bottom: 2px solid #f3f4f6;">
-                        ${company?.logo_url ? `<img src="${company.logo_url}" alt="${companyName}" style="max-width: 150px; height: auto; margin-bottom: 20px;">` : `<div style="font-size: 28px; font-weight: 700; color: #0a0a0a; margin-bottom: 10px;">${companyName}</div>`}
-                        <div style="font-size: 14px; color: #6b7280; margin-bottom: 24px; letter-spacing: 0.3px;">Professional Electrical Services</div>
-                        <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb;">
-                          <div style="font-size: 12px; color: #6b7280; font-weight: 600; letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase;">Quotation</div>
-                          <div style="font-size: 24px; font-weight: 700; color: #0a0a0a;">#${doc.quote_number}</div>
+                      <td style="padding: 48px 40px; text-align: center; border-bottom: 1px solid #e5e7eb;">
+                        ${company?.logo_url 
+                          ? `<img src="${company.logo_url}" alt="${companyName}" style="max-width: 200px; height: auto; margin-bottom: 32px; display: block; margin-left: auto; margin-right: auto;">` 
+                          : `<div style="font-size: 32px; font-weight: 700; color: #0f172a; margin-bottom: 32px; letter-spacing: -0.8px;">${companyName}</div>`
+                        }
+                        
+                        <!-- Quote number badge -->
+                        <div style="display: inline-block; background-color: #f8fafc; padding: 16px 40px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                          <div style="font-size: 11px; color: #64748b; font-weight: 600; letter-spacing: 1.2px; margin-bottom: 6px; text-transform: uppercase;">Quotation</div>
+                          <div style="font-size: 28px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px;">#${doc.quote_number}</div>
                         </div>
                       </td>
                     </tr>
-
-                    <!-- Main Content -->
+                    
+                    <!-- Main content -->
                     <tr>
-                      <td style="padding: 40px 30px;">
-                        <p style="margin: 0 0 20px 0; font-size: 16px; color: #1f2937; line-height: 1.6;">Dear <strong>${clientData?.name || 'Valued Client'}</strong>,</p>
-                        <p style="margin: 0 0 30px 0; font-size: 15px; color: #4b5563; line-height: 1.6;">Thank you for your enquiry. We are pleased to provide you with a detailed quotation for <strong>${jobDetails?.title || jobDetails?.description || 'electrical work'}</strong>. Please find the full details in the attached PDF document.</p>
-
-                        <!-- Quote Details Card -->
-                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 30px;">
+                      <td style="padding: 48px 40px 32px 40px;">
+                        <h1 style="margin: 0 0 32px 0; font-size: 26px; font-weight: 700; color: #0f172a; letter-spacing: -0.6px; line-height: 1.2;">Your Quotation</h1>
+                        
+                        <p style="margin: 0 0 12px 0; font-size: 16px; color: #0f172a; line-height: 1.6;">Dear <strong style="font-weight: 600;">${clientData?.name || 'Valued Client'}</strong>,</p>
+                        
+                        <p style="margin: 0 0 32px 0; font-size: 15px; color: #475569; line-height: 1.8;">Thank you for your enquiry. Please find below our detailed quotation for <strong style="color: #0f172a; font-weight: 600;">${jobDetails?.title || jobDetails?.description || 'your electrical project'}</strong>. A comprehensive PDF breakdown is attached to this email.</p>
+                      </td>
+                    </tr>
+                    
+                    <!-- Quote details card -->
+                    <tr>
+                      <td style="padding: 0 40px 32px 40px;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #ffffff; border: 2px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
                           <tr>
-                            <td style="padding: 24px;">
+                            <td style="padding: 32px 32px 24px 32px;">
+                              
+                              <!-- Quote metadata -->
                               <table role="presentation" style="width: 100%; border-collapse: collapse;">
                                 <tr>
-                                  <td style="padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
-                                    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                  <td style="padding: 16px 0; border-bottom: 1px solid #f1f5f9;">
+                                    <table role="presentation" style="width: 100%;">
                                       <tr>
-                                        <td style="font-size: 13px; color: #6b7280; font-weight: 500; padding-right: 10px;">Quote Number</td>
-                                        <td style="font-size: 15px; color: #0a0a0a; font-weight: 600; text-align: right;">${doc.quote_number}</td>
+                                        <td style="font-size: 14px; color: #64748b; font-weight: 600;">Quote Reference</td>
+                                        <td style="font-size: 16px; color: #0f172a; font-weight: 700; text-align: right; letter-spacing: -0.2px;">${doc.quote_number}</td>
                                       </tr>
                                     </table>
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td style="padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
-                                    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                  <td style="padding: 16px 0; border-bottom: 1px solid #f1f5f9;">
+                                    <table role="presentation" style="width: 100%;">
                                       <tr>
-                                        <td style="font-size: 13px; color: #6b7280; font-weight: 500; padding-right: 10px;">Quote Date</td>
-                                        <td style="font-size: 15px; color: #0a0a0a; font-weight: 600; text-align: right;">${quoteDate}</td>
+                                        <td style="font-size: 14px; color: #64748b; font-weight: 600;">Issue Date</td>
+                                        <td style="font-size: 16px; color: #0f172a; font-weight: 600; text-align: right;">${quoteDate}</td>
                                       </tr>
                                     </table>
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td style="padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
-                                    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                  <td style="padding: 16px 0; border-bottom: 2px solid #f1f5f9;">
+                                    <table role="presentation" style="width: 100%;">
                                       <tr>
-                                        <td style="font-size: 13px; color: #6b7280; font-weight: 500; padding-right: 10px;">Valid Until</td>
-                                        <td style="font-size: 15px; color: #dc2626; font-weight: 700; text-align: right;">${validityDate}</td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td style="padding: 10px 0;">
-                                    <table role="presentation" style="width: 100%; border-collapse: collapse;">
-                                      <tr>
-                                        <td style="font-size: 13px; color: #6b7280; font-weight: 500; padding-right: 10px;">Total Amount</td>
-                                        <td style="font-size: 22px; color: #0a0a0a; font-weight: 700; text-align: right;">£${(doc.total || 0).toFixed(2)}</td>
+                                        <td style="font-size: 14px; color: #64748b; font-weight: 600;">Valid Until</td>
+                                        <td style="font-size: 16px; color: #dc2626; font-weight: 700; text-align: right;">${validityDate}</td>
                                       </tr>
                                     </table>
                                   </td>
                                 </tr>
                               </table>
+                              
+                              <!-- Total amount -->
+                              <div style="margin-top: 24px; padding: 28px; background: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%); border-radius: 10px; text-align: center; border: 1px solid #e2e8f0;">
+                                <div style="font-size: 13px; color: #64748b; font-weight: 600; letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase;">Total Amount</div>
+                                <div style="font-size: 44px; font-weight: 800; color: #0f172a; letter-spacing: -1.5px; line-height: 1;">£${(doc.total || 0).toFixed(2)}</div>
+                                <div style="font-size: 13px; color: #64748b; margin-top: 10px; font-weight: 500;">Including VAT where applicable</div>
+                              </div>
+                              
                             </td>
                           </tr>
                         </table>
-
-                        <!-- Call to Action Buttons -->
-                        <table role="presentation" style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                      </td>
+                    </tr>
+                    
+                    <!-- Call to action buttons -->
+                    <tr>
+                      <td style="padding: 0 40px 32px 40px;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                          <tr>
+                            <td style="padding: 0 0 12px 0;">
+                              <a href="${acceptUrl}" style="display: block; background-color: #0f172a; color: #ffffff; text-align: center; padding: 18px 32px; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 0.3px; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);">
+                                Accept This Quote
+                              </a>
+                              <div style="text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; font-weight: 500;">Quick approval with digital signature</div>
+                            </td>
+                          </tr>
                           <tr>
                             <td style="padding: 0;">
-                              <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                              <a href="${rejectUrl}" style="display: block; background-color: transparent; color: #64748b; text-align: center; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; border: 1px solid #cbd5e1;">
+                                Not suitable at this time
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    
+                    <!-- PDF attachment notice -->
+                    <tr>
+                      <td style="padding: 0 40px 32px 40px;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background: linear-gradient(to right, #f8fafc 0%, #ffffff 100%); border-radius: 10px; border: 1px solid #e2e8f0; overflow: hidden;">
+                          <tr>
+                            <td style="padding: 24px 28px;">
+                              <table role="presentation" style="width: 100%;">
                                 <tr>
-                                  <td style="width: 50%; padding-right: 8px;">
-                                    <a href="${acceptUrl}" style="display: block; background: #10b981; color: #ffffff; text-align: center; padding: 16px 20px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px;">
-                                      ✓ Accept Quote
-                                    </a>
+                                  <td style="width: 56px; padding-right: 20px; vertical-align: top;">
+                                    <div style="width: 52px; height: 52px; background-color: #f1f5f9; border-radius: 10px; text-align: center; line-height: 52px; border: 1px solid #e2e8f0;">
+                                      <span style="font-size: 26px;">📄</span>
+                                    </div>
                                   </td>
-                                  <td style="width: 50%; padding-left: 8px;">
-                                    <a href="${rejectUrl}" style="display: block; background-color: #ffffff; color: #4b5563; text-align: center; padding: 16px 20px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px; border: 1px solid #d1d5db;">
-                                      ✗ Decline
-                                    </a>
+                                  <td style="vertical-align: top;">
+                                    <div style="font-size: 16px; color: #0f172a; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.2px;">Detailed Quotation Attached</div>
+                                    <div style="font-size: 14px; color: #64748b; line-height: 1.7; font-weight: 500;">A comprehensive PDF breakdown including all labour, materials, and terms is attached to this email for your records.</div>
                                   </td>
                                 </tr>
                               </table>
                             </td>
                           </tr>
                         </table>
-
-                        <!-- PDF Attachment Notice -->
-                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f9fafb; border-left: 3px solid #0a0a0a; border-radius: 6px; margin-bottom: 24px;">
+                      </td>
+                    </tr>
+                    
+                    <!-- Closing message and contact -->
+                    <tr>
+                      <td style="padding: 0 40px 40px 40px;">
+                        <p style="margin: 0 0 28px 0; font-size: 15px; color: #475569; line-height: 1.8;">Should you have any questions or wish to discuss this quotation further, please don't hesitate to contact us directly. We're here to help.</p>
+                        
+                        <!-- Contact information card -->
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;">
                           <tr>
-                            <td style="padding: 18px;">
-                              <div style="font-size: 14px; color: #0a0a0a; font-weight: 600; margin-bottom: 4px;">📎 Detailed Quote Attached</div>
-                              <div style="font-size: 13px; color: #4b5563; line-height: 1.5;">The complete quotation with full breakdown is attached as a PDF document for your review and records.</div>
+                            <td style="padding: 28px;">
+                              <div style="font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 16px; letter-spacing: -0.3px;">Contact Information</div>
+                              
+                              <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                ${companyPhone ? `
+                                <tr>
+                                  <td style="padding: 8px 0;">
+                                    <div style="font-size: 14px; color: #64748b; font-weight: 600; margin-bottom: 4px;">Phone</div>
+                                    <a href="tel:${companyPhone}" style="font-size: 16px; color: #0f172a; text-decoration: none; font-weight: 600;">${companyPhone}</a>
+                                  </td>
+                                </tr>
+                                ` : ''}
+                                ${companyEmail ? `
+                                <tr>
+                                  <td style="padding: 8px 0;">
+                                    <div style="font-size: 14px; color: #64748b; font-weight: 600; margin-bottom: 4px;">Email</div>
+                                    <a href="mailto:${companyEmail}" style="font-size: 16px; color: #0f172a; text-decoration: none; font-weight: 600;">${companyEmail}</a>
+                                  </td>
+                                </tr>
+                                ` : ''}
+                              </table>
                             </td>
                           </tr>
                         </table>
-
-                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #4b5563; line-height: 1.6;">If you have any questions about this quotation or would like to discuss any details, please don't hesitate to contact us. We look forward to working with you.</p>
-
-                        <p style="margin: 0; font-size: 15px; color: #1f2937; line-height: 1.8;">
-                          Best regards,<br>
-                          <strong style="font-size: 16px; color: #0a0a0a;">${companyName}</strong><br>
-                          ${companyPhone ? `<span style="color: #6b7280;">📞 ${companyPhone}</span><br>` : ''}
-                          ${companyEmail ? `<span style="color: #6b7280;">✉️ ${companyEmail}</span>` : ''}
+                        
+                        <p style="margin: 28px 0 0 0; font-size: 15px; color: #0f172a; line-height: 1.6;">
+                          Kind regards,<br>
+                          <strong style="font-size: 18px; font-weight: 700; letter-spacing: -0.3px;">${companyName}</strong>
                         </p>
                       </td>
                     </tr>
-
+                    
                     <!-- Footer -->
                     <tr>
-                      <td style="background-color: #ffffff; padding: 24px 30px; border-top: 1px solid #e5e7eb; text-align: center;">
-                        <div style="font-size: 12px; color: #9ca3af; margin-bottom: 6px;">⚡ Quote generated by ElecMate Professional Suite</div>
-                        <div style="font-size: 11px; color: #9ca3af;">This quotation is valid until ${validityDate}. Terms and conditions apply.</div>
+                      <td style="background: linear-gradient(to bottom, #fafafa 0%, #f5f5f5 100%); padding: 28px 40px; border-top: 2px solid #e5e7eb; text-align: center;">
+                        
+                        <!-- Quote validity reminder -->
+                        <div style="font-size: 13px; color: #64748b; line-height: 1.7; margin-bottom: 12px;">
+                          <strong style="color: #0f172a;">Quote Validity:</strong> This quotation is valid until <strong style="color: #0f172a;">${validityDate}</strong>
+                        </div>
+                        
+                        <!-- Legal disclaimer -->
+                        <div style="font-size: 12px; color: #94a3b8; line-height: 1.7; margin-bottom: 16px;">
+                          This quotation is subject to our terms and conditions. All electrical work will be carried out to current UK wiring regulations (BS7671:2018+A2:2022). VAT registration details available upon request.
+                        </div>
+                        
+                        <!-- Minimal powered by -->
+                        <div style="padding-top: 16px; border-top: 1px solid #e5e7eb;">
+                          <div style="font-size: 11px; color: #94a3b8;">
+                            Powered by ElecMate
+                          </div>
+                        </div>
+                        
                       </td>
                     </tr>
-
+                    
                   </table>
                 </td>
               </tr>
