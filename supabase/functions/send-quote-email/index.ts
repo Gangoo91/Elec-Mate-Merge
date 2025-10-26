@@ -130,21 +130,19 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('Public quote URLs:', { acceptUrl, rejectUrl });
 
     // Generate fresh PDF
-    const pdfResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
-      method: 'POST',
-      headers: {
-        'Authorization': authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    const { data: pdfData, error: pdfError } = await userSupabase.functions.invoke('generate-pdf-monkey', {
+      body: {
         quote,
         companyProfile,
         invoice_mode: false,
         force_regenerate: true
-      })
+      }
     });
 
-    const pdfData = await pdfResponse.json();
+    if (pdfError) {
+      console.error('PDF generation failed:', pdfError);
+      throw new Error(`PDF generation failed: ${pdfError.message}`);
+    }
     let pdfDownloadUrl = pdfData?.downloadUrl;
     const documentId = pdfData?.documentId;
 
@@ -152,15 +150,15 @@ const handler = async (req: Request): Promise<Response> => {
     if (!pdfDownloadUrl && documentId) {
       for (let i = 0; i < 45; i++) {
         await new Promise(resolve => setTimeout(resolve, 2000));
-        const statusResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
-          method: 'POST',
-          headers: {
-            'Authorization': authHeader,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ documentId, mode: 'status' })
+        const { data: statusData, error: statusError } = await userSupabase.functions.invoke('generate-pdf-monkey', {
+          body: { documentId, mode: 'status' }
         });
-        const statusData = await statusResponse.json();
+
+        if (statusError) {
+          console.error('Status check error:', statusError);
+          continue; // Skip this iteration and try again
+        }
+
         if (statusData?.downloadUrl) {
           pdfDownloadUrl = statusData.downloadUrl;
           break;
