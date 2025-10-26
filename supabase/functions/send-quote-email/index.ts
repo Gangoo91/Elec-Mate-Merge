@@ -282,8 +282,10 @@ const handler = async (req: Request): Promise<Response> => {
       `--${boundary}--`
     ].join('\r\n');
 
-    // Encode email message in base64url
-    const encodedMessage = btoa(emailMessage)
+    // Encode email message in base64url (using TextEncoder for large messages)
+    const encoder = new TextEncoder();
+    const uint8Array = encoder.encode(emailMessage);
+    const encodedMessage = base64Encode(uint8Array)
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
       .replace(/=+$/, '');
