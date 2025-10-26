@@ -131,6 +131,17 @@ export const QuoteSendDropdown = ({
         return;
       }
 
+      // Validate client email before sending
+      const clientEmail = quote.client?.email;
+      if (!clientEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail)) {
+        toast({
+          title: "Invalid Client Email",
+          description: "Please add a valid email address for this client before sending",
+          variant: "destructive",
+        });
+        return;
+      }
+
       // Send via user's connected email using send-invoice-smart
       const { error } = await supabase.functions.invoke('send-invoice-smart', {
         body: { 

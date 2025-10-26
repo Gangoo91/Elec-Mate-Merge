@@ -32,9 +32,7 @@ serve(async (req: Request) => {
       throw new ValidationError('Either documentId or manual email details required');
     }
 
-    if (!isValidEmail(to)) {
-      throw new ValidationError('Invalid email address');
-    }
+    // Email validation happens after document data extraction (line 256)
 
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
