@@ -361,6 +361,7 @@ ${isExpired ? `<div class="note-box"><p style="margin: 0; font-size: 14px; color
 <p style="margin: 0 0 8px; font-size: 15px; font-weight: 600; color: #166534;">Next Steps:</p>
 <p style="margin: 0; font-size: 14px; color: #15803d; line-height: 1.6;">You'll receive a confirmation email shortly with project details and scheduling information.</p>
 </div>
+<button onclick="window.close()" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border: none; padding: 14px 32px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 24px; transition: opacity 0.2s;">Close this window</button>
 <div class="footer">
 <p style="margin: 0; font-size: 13px; color: #9ca3af;">⚡ Powered by ElecMate Professional Suite</p>
 </div>
@@ -405,6 +406,7 @@ p { color: #6b7280; font-size: 16px; line-height: 1.6; margin: 0 0 32px; }
 <div class="info-box">
 <p style="margin: 0; font-size: 14px; color: #4b5563; line-height: 1.6;">If you'd like to discuss alternative options or have any questions, please don't hesitate to contact us.</p>
 </div>
+<button onclick="window.close()" style="background: #6b7280; color: white; border: none; padding: 14px 32px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 24px; transition: opacity 0.2s;">Close this window</button>
 <div class="footer">
 <p style="margin: 0; font-size: 13px; color: #9ca3af;">⚡ Powered by ElecMate Professional Suite</p>
 </div>
