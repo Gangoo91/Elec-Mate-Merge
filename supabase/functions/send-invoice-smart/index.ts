@@ -274,21 +274,21 @@ serve(async (req: Request) => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Quote ${doc.quote_number}</title>
           </head>
-          <body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
-            <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f3f4f6;">
+          <body style="margin: 0; padding: 0; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+            <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #ffffff;">
               <tr>
                 <td align="center" style="padding: 40px 20px;">
                   <!-- Main Container -->
-                  <table role="presentation" style="width: 100%; max-width: 600px; border-collapse: collapse; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 12px; overflow: hidden;">
+                  <table role="presentation" style="width: 100%; max-width: 600px; border-collapse: collapse; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
                     
-                    <!-- Header with Blue Gradient -->
+                    <!-- Header -->
                     <tr>
-                      <td style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); padding: 40px 30px; text-align: center;">
-                        ${company?.logo_url ? `<img src="${company.logo_url}" alt="${companyName}" style="max-width: 150px; height: auto; margin-bottom: 20px;">` : `<div style="font-size: 32px; font-weight: 700; color: #ffffff; margin-bottom: 10px;">${companyName}</div>`}
-                        <div style="font-size: 15px; color: rgba(255, 255, 255, 0.9); margin-bottom: 24px; letter-spacing: 0.5px;">Professional Electrical Services</div>
-                        <div style="background-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
-                          <div style="font-size: 13px; color: rgba(255, 255, 255, 0.8); font-weight: 500; letter-spacing: 1px; margin-bottom: 8px;">QUOTATION</div>
-                          <div style="font-size: 28px; font-weight: 700; color: #ffffff;">#${doc.quote_number}</div>
+                      <td style="background: #ffffff; padding: 40px 30px; text-align: center; border-bottom: 2px solid #f3f4f6;">
+                        ${company?.logo_url ? `<img src="${company.logo_url}" alt="${companyName}" style="max-width: 150px; height: auto; margin-bottom: 20px;">` : `<div style="font-size: 28px; font-weight: 700; color: #0a0a0a; margin-bottom: 10px;">${companyName}</div>`}
+                        <div style="font-size: 14px; color: #6b7280; margin-bottom: 24px; letter-spacing: 0.3px;">Professional Electrical Services</div>
+                        <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                          <div style="font-size: 12px; color: #6b7280; font-weight: 600; letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase;">Quotation</div>
+                          <div style="font-size: 24px; font-weight: 700; color: #0a0a0a;">#${doc.quote_number}</div>
                         </div>
                       </td>
                     </tr>
@@ -300,46 +300,46 @@ serve(async (req: Request) => {
                         <p style="margin: 0 0 30px 0; font-size: 15px; color: #4b5563; line-height: 1.6;">Thank you for your enquiry. We are pleased to provide you with a detailed quotation for <strong>${jobDetails?.title || jobDetails?.description || 'electrical work'}</strong>. Please find the full details in the attached PDF document.</p>
 
                         <!-- Quote Details Card -->
-                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f9fafb; border: 2px solid #e5e7eb; border-radius: 10px; margin-bottom: 30px;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 30px;">
                           <tr>
                             <td style="padding: 24px;">
                               <table role="presentation" style="width: 100%; border-collapse: collapse;">
                                 <tr>
-                                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                                  <td style="padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
                                     <table role="presentation" style="width: 100%; border-collapse: collapse;">
                                       <tr>
-                                        <td style="font-size: 13px; color: #6b7280; font-weight: 600; padding-right: 10px;">📋 Quote Number</td>
-                                        <td style="font-size: 15px; color: #1f2937; font-weight: 600; text-align: right;">${doc.quote_number}</td>
+                                        <td style="font-size: 13px; color: #6b7280; font-weight: 500; padding-right: 10px;">Quote Number</td>
+                                        <td style="font-size: 15px; color: #0a0a0a; font-weight: 600; text-align: right;">${doc.quote_number}</td>
                                       </tr>
                                     </table>
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                                  <td style="padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
                                     <table role="presentation" style="width: 100%; border-collapse: collapse;">
                                       <tr>
-                                        <td style="font-size: 13px; color: #6b7280; font-weight: 600; padding-right: 10px;">📅 Quote Date</td>
-                                        <td style="font-size: 15px; color: #1f2937; font-weight: 600; text-align: right;">${quoteDate}</td>
+                                        <td style="font-size: 13px; color: #6b7280; font-weight: 500; padding-right: 10px;">Quote Date</td>
+                                        <td style="font-size: 15px; color: #0a0a0a; font-weight: 600; text-align: right;">${quoteDate}</td>
                                       </tr>
                                     </table>
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+                                  <td style="padding: 10px 0; border-bottom: 1px solid #f3f4f6;">
                                     <table role="presentation" style="width: 100%; border-collapse: collapse;">
                                       <tr>
-                                        <td style="font-size: 13px; color: #6b7280; font-weight: 600; padding-right: 10px;">⏰ Valid Until</td>
+                                        <td style="font-size: 13px; color: #6b7280; font-weight: 500; padding-right: 10px;">Valid Until</td>
                                         <td style="font-size: 15px; color: #dc2626; font-weight: 700; text-align: right;">${validityDate}</td>
                                       </tr>
                                     </table>
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td style="padding: 12px 0;">
+                                  <td style="padding: 10px 0;">
                                     <table role="presentation" style="width: 100%; border-collapse: collapse;">
                                       <tr>
-                                        <td style="font-size: 13px; color: #6b7280; font-weight: 600; padding-right: 10px;">💰 Total Amount</td>
-                                        <td style="font-size: 20px; color: #2563eb; font-weight: 700; text-align: right;">£${(doc.total || 0).toFixed(2)}</td>
+                                        <td style="font-size: 13px; color: #6b7280; font-weight: 500; padding-right: 10px;">Total Amount</td>
+                                        <td style="font-size: 22px; color: #0a0a0a; font-weight: 700; text-align: right;">£${(doc.total || 0).toFixed(2)}</td>
                                       </tr>
                                     </table>
                                   </td>
@@ -356,12 +356,12 @@ serve(async (req: Request) => {
                               <table role="presentation" style="width: 100%; border-collapse: collapse;">
                                 <tr>
                                   <td style="width: 50%; padding-right: 8px;">
-                                    <a href="${acceptUrl}" style="display: block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; text-align: center; padding: 16px 20px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);">
+                                    <a href="${acceptUrl}" style="display: block; background: #10b981; color: #ffffff; text-align: center; padding: 16px 20px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px;">
                                       ✓ Accept Quote
                                     </a>
                                   </td>
                                   <td style="width: 50%; padding-left: 8px;">
-                                    <a href="${rejectUrl}" style="display: block; background-color: #f3f4f6; color: #4b5563; text-align: center; padding: 16px 20px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; border: 2px solid #d1d5db;">
+                                    <a href="${rejectUrl}" style="display: block; background-color: #ffffff; color: #4b5563; text-align: center; padding: 16px 20px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 15px; border: 1px solid #d1d5db;">
                                       ✗ Decline
                                     </a>
                                   </td>
@@ -372,11 +372,11 @@ serve(async (req: Request) => {
                         </table>
 
                         <!-- PDF Attachment Notice -->
-                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #eff6ff; border-left: 4px solid #2563eb; border-radius: 6px; margin-bottom: 24px;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f9fafb; border-left: 3px solid #0a0a0a; border-radius: 6px; margin-bottom: 24px;">
                           <tr>
-                            <td style="padding: 20px;">
-                              <div style="font-size: 15px; color: #1e40af; font-weight: 600; margin-bottom: 4px;">📎 Detailed Quote Attached</div>
-                              <div style="font-size: 13px; color: #3b82f6; line-height: 1.5;">The complete quotation with full breakdown is attached as a PDF document for your review and records.</div>
+                            <td style="padding: 18px;">
+                              <div style="font-size: 14px; color: #0a0a0a; font-weight: 600; margin-bottom: 4px;">📎 Detailed Quote Attached</div>
+                              <div style="font-size: 13px; color: #4b5563; line-height: 1.5;">The complete quotation with full breakdown is attached as a PDF document for your review and records.</div>
                             </td>
                           </tr>
                         </table>
@@ -385,7 +385,7 @@ serve(async (req: Request) => {
 
                         <p style="margin: 0; font-size: 15px; color: #1f2937; line-height: 1.8;">
                           Best regards,<br>
-                          <strong style="font-size: 16px; color: #2563eb;">${companyName}</strong><br>
+                          <strong style="font-size: 16px; color: #0a0a0a;">${companyName}</strong><br>
                           ${companyPhone ? `<span style="color: #6b7280;">📞 ${companyPhone}</span><br>` : ''}
                           ${companyEmail ? `<span style="color: #6b7280;">✉️ ${companyEmail}</span>` : ''}
                         </p>
@@ -394,8 +394,8 @@ serve(async (req: Request) => {
 
                     <!-- Footer -->
                     <tr>
-                      <td style="background-color: #f9fafb; padding: 24px 30px; border-top: 1px solid #e5e7eb; text-align: center;">
-                        <div style="font-size: 13px; color: #6b7280; margin-bottom: 8px;">⚡ Quote generated by ElecMate Professional Suite</div>
+                      <td style="background-color: #ffffff; padding: 24px 30px; border-top: 1px solid #e5e7eb; text-align: center;">
+                        <div style="font-size: 12px; color: #9ca3af; margin-bottom: 6px;">⚡ Quote generated by ElecMate Professional Suite</div>
                         <div style="font-size: 11px; color: #9ca3af;">This quotation is valid until ${validityDate}. Terms and conditions apply.</div>
                       </td>
                     </tr>

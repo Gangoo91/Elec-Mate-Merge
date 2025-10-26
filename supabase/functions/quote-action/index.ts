@@ -318,50 +318,43 @@ async function sendEmailNotification(
  * Success page for accepted quotes
  */
 function acceptSuccessPage(quoteNumber: string, clientName: string, isExpired: boolean): Response {
-  const html = `
-<!DOCTYPE html>
+  const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quote Accepted</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quote Accepted</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #ffffff; padding: 60px 20px; margin: 0; -webkit-font-smoothing: antialiased; }
+.container { max-width: 500px; margin: 0 auto; background: white; padding: 48px; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; }
+.icon { width: 80px; height: 80px; background: #10b981; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; }
+h1 { font-size: 28px; font-weight: 700; color: #0a0a0a; margin: 0 0 12px; letter-spacing: -0.5px; }
+p { color: #6b7280; font-size: 16px; line-height: 1.6; margin: 0 0 32px; }
+.note-box { background: #fef3c7; border-left: 3px solid #f59e0b; padding: 16px; border-radius: 6px; text-align: left; margin-bottom: 24px; }
+.info-box { background: #f0fdf4; border-left: 3px solid #10b981; padding: 20px; border-radius: 6px; text-align: left; margin-bottom: 32px; }
+.footer { padding-top: 24px; border-top: 1px solid #e5e7eb; }
+</style>
 </head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f9fafb; padding: 60px 20px; margin: 0; -webkit-font-smoothing: antialiased;">
-    <div style="max-width: 500px; margin: 0 auto; background: white; padding: 48px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); text-align: center;">
-        <div style="width: 80px; height: 80px; background: #10b981; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center;">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-        </div>
-        <h1 style="font-size: 28px; font-weight: 700; color: #0a0a0a; margin: 0 0 12px; letter-spacing: -0.5px;">Quote Accepted!</h1>
-        <p style="color: #6b7280; font-size: 16px; line-height: 1.6; margin: 0 0 32px;">
-            Thank you for accepting quote <strong style="color: #1f2937;">${quoteNumber}</strong>. We've notified our team and will be in touch shortly to schedule the work.
-        </p>
-        
-        ${isExpired ? `
-        <div style="background: #fef3c7; border-left: 3px solid #f59e0b; padding: 16px; border-radius: 6px; text-align: left; margin-bottom: 24px;">
-            <p style="margin: 0; font-size: 14px; color: #92400e;">
-                <strong>Note:</strong> This quote had expired, but we've still recorded your acceptance. We'll contact you to confirm details.
-            </p>
-        </div>
-        ` : ''}
-        
-        <div style="background: #f0f9ff; border-left: 3px solid #3b82f6; padding: 20px; border-radius: 6px; text-align: left; margin-bottom: 32px;">
-            <p style="margin: 0 0 8px; font-size: 15px; font-weight: 600; color: #1e40af;">Next Steps:</p>
-            <p style="margin: 0; font-size: 14px; color: #1e40af; line-height: 1.6;">
-                You'll receive a confirmation email shortly with project details and scheduling information.
-            </p>
-        </div>
-
-        <div style="padding-top: 24px; border-top: 1px solid #e5e7eb;">
-            <p style="margin: 0; font-size: 13px; color: #9ca3af;">
-                ⚡ Powered by ElecMate Professional Suite
-            </p>
-        </div>
-    </div>
+<body>
+<div class="container">
+<div class="icon">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<polyline points="20 6 9 17 4 12"></polyline>
+</svg>
+</div>
+<h1>Quote Accepted!</h1>
+<p>Thank you for accepting quote <strong style="color: #1f2937;">${quoteNumber}</strong>. We've notified our team and will be in touch shortly to schedule the work.</p>
+${isExpired ? `<div class="note-box"><p style="margin: 0; font-size: 14px; color: #92400e;"><strong>Note:</strong> This quote had expired, but we've still recorded your acceptance. We'll contact you to confirm details.</p></div>` : ''}
+<div class="info-box">
+<p style="margin: 0 0 8px; font-size: 15px; font-weight: 600; color: #166534;">Next Steps:</p>
+<p style="margin: 0; font-size: 14px; color: #15803d; line-height: 1.6;">You'll receive a confirmation email shortly with project details and scheduling information.</p>
+</div>
+<div class="footer">
+<p style="margin: 0; font-size: 13px; color: #9ca3af;">⚡ Powered by ElecMate Professional Suite</p>
+</div>
+</div>
 </body>
-</html>
-  `;
+</html>`;
 
   return new Response(html, {
     status: 200,
@@ -376,39 +369,36 @@ function acceptSuccessPage(quoteNumber: string, clientName: string, isExpired: b
  * Success page for rejected quotes
  */
 function rejectSuccessPage(quoteNumber: string, clientName: string): Response {
-  const html = `
-<!DOCTYPE html>
+  const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quote Declined</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quote Declined</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #ffffff; padding: 60px 20px; margin: 0; -webkit-font-smoothing: antialiased; }
+.container { max-width: 500px; margin: 0 auto; background: white; padding: 48px; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; }
+.icon { width: 80px; height: 80px; background: #6b7280; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; }
+h1 { font-size: 28px; font-weight: 700; color: #0a0a0a; margin: 0 0 12px; letter-spacing: -0.5px; }
+p { color: #6b7280; font-size: 16px; line-height: 1.6; margin: 0 0 32px; }
+.info-box { background: #f9fafb; border-left: 3px solid #9ca3af; padding: 20px; border-radius: 6px; text-align: left; margin-bottom: 32px; }
+.footer { padding-top: 24px; border-top: 1px solid #e5e7eb; }
+</style>
 </head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f9fafb; padding: 60px 20px; margin: 0; -webkit-font-smoothing: antialiased;">
-    <div style="max-width: 500px; margin: 0 auto; background: white; padding: 48px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); text-align: center;">
-        <div style="width: 80px; height: 80px; background: #6b7280; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white;">
-            ✕
-        </div>
-        <h1 style="font-size: 28px; font-weight: 700; color: #0a0a0a; margin: 0 0 12px; letter-spacing: -0.5px;">Quote Declined</h1>
-        <p style="color: #6b7280; font-size: 16px; line-height: 1.6; margin: 0 0 32px;">
-            Thank you for letting us know about quote <strong style="color: #1f2937;">${quoteNumber}</strong>. We appreciate your consideration and hope to work with you in the future.
-        </p>
-        
-        <div style="background: #f3f4f6; border-left: 3px solid #9ca3af; padding: 20px; border-radius: 6px; text-align: left; margin-bottom: 32px;">
-            <p style="margin: 0; font-size: 14px; color: #4b5563; line-height: 1.6;">
-                If you'd like to discuss alternative options or have any questions, please don't hesitate to contact us.
-            </p>
-        </div>
-
-        <div style="padding-top: 24px; border-top: 1px solid #e5e7eb;">
-            <p style="margin: 0; font-size: 13px; color: #9ca3af;">
-                ⚡ Powered by ElecMate Professional Suite
-            </p>
-        </div>
-    </div>
+<body>
+<div class="container">
+<div class="icon">✕</div>
+<h1>Quote Declined</h1>
+<p>Thank you for letting us know about quote <strong style="color: #1f2937;">${quoteNumber}</strong>. We appreciate your consideration and hope to work with you in the future.</p>
+<div class="info-box">
+<p style="margin: 0; font-size: 14px; color: #4b5563; line-height: 1.6;">If you'd like to discuss alternative options or have any questions, please don't hesitate to contact us.</p>
+</div>
+<div class="footer">
+<p style="margin: 0; font-size: 13px; color: #9ca3af;">⚡ Powered by ElecMate Professional Suite</p>
+</div>
+</div>
 </body>
-</html>
-  `;
+</html>`;
 
   return new Response(html, {
     status: 200,
