@@ -153,7 +153,7 @@ const AgentSelectorPage = () => {
                 <Card 
                   key={agent.id}
                   className={`
-                    group relative overflow-hidden min-h-[180px]
+                    group relative overflow-hidden
                     border-2 border-elec-yellow/10 
                     hover:border-elec-yellow/40 
                     hover:shadow-2xl hover:scale-[1.02]
@@ -171,15 +171,15 @@ const AgentSelectorPage = () => {
                     </div>
                   )}
 
-                  <CardHeader className="pb-4 space-y-4 p-6 sm:p-8">
+                  <CardHeader className="pb-3 space-y-2 sm:space-y-4 p-4 sm:p-6 lg:p-8">
                     {/* Large Gradient Icon Circle */}
                     <div className={`
-                      w-16 h-16 sm:w-20 sm:h-20 rounded-full 
+                      w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full 
                       flex items-center justify-center
                       bg-gradient-to-br ${getGradientForColor(agent.color)}
                       group-hover:scale-110 transition-transform duration-300
                     `}>
-                      <IconComponent className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                      <IconComponent className="h-6 w-6 sm:h-8 sm:w-8 lg:h-10 lg:w-10 text-white" />
                     </div>
 
                     {/* Agent Name */}
@@ -193,14 +193,14 @@ const AgentSelectorPage = () => {
                     </CardDescription>
                   </CardHeader>
 
-                  <CardContent className="pt-0 px-6 sm:px-8 pb-6 sm:pb-8">
+                  <CardContent className="pt-0 px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">
                     {/* Expertise List */}
                     <div className="space-y-2">
                       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         Expertise
                       </p>
-                      <ul className="space-y-1.5">
-                        {agent.expertise.slice(0, 4).map((item, idx) => (
+                      <ul className="space-y-1">
+                        {agent.expertise.slice(0, 3).map((item, idx) => (
                           <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
                             <span className="text-elec-yellow mt-0.5 font-bold">→</span>
                             <span>{item}</span>
@@ -211,7 +211,7 @@ const AgentSelectorPage = () => {
 
                     {/* Hover CTA Indicator */}
                     {!agent.comingSoon && (
-                      <div className="mt-6 pt-4 border-t border-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="hidden sm:block mt-6 pt-4 border-t border-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity">
                         <p className="text-sm text-elec-yellow font-medium flex items-center gap-2">
                           Click to consult
                           <ArrowRight className="h-4 w-4" />
