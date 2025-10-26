@@ -156,13 +156,22 @@ serve(async (req: Request) => {
 
       // Download PDF as binary data for attachment
       console.log('📥 Downloading PDF for email attachment...');
-      const pdfFileResponse = await fetch(pdfDownloadUrl);
-      if (!pdfFileResponse.ok) {
-        throw new ExternalAPIError('PDF Monkey', 'Failed to download generated PDF');
-      }
-      const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
-      pdfAttachment = btoa(String.fromCharCode(...new Uint8Array(pdfArrayBuffer)));
-      console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
+    const pdfFileResponse = await fetch(pdfDownloadUrl);
+    if (!pdfFileResponse.ok) {
+      throw new ExternalAPIError('PDF Monkey', 'Failed to download generated PDF');
+    }
+    const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
+    
+    // Convert PDF to base64 in chunks to avoid stack overflow
+    const uint8Array = new Uint8Array(pdfArrayBuffer);
+    const chunkSize = 8192; // Process 8KB at a time
+    let binaryString = '';
+    for (let i = 0; i < uint8Array.length; i += chunkSize) {
+      const chunk = uint8Array.subarray(i, Math.min(i + chunkSize, uint8Array.length));
+      binaryString += String.fromCharCode.apply(null, Array.from(chunk));
+    }
+    pdfAttachment = btoa(binaryString);
+    console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
 
       // Parse client data
       const clientData = typeof doc.client_data === 'string' 
