@@ -44,6 +44,30 @@ export const EmailSettingsTab = () => {
   };
 
   useEffect(() => {
+    // Check for OAuth callback parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+    const error = urlParams.get('error');
+    
+    if (success === 'true') {
+      toast({
+        title: "Email Connected",
+        description: "Your email account has been connected successfully",
+      });
+      // Clean up URL
+      window.history.replaceState({}, '', '/settings?tab=email');
+    }
+    
+    if (error) {
+      toast({
+        title: "Connection Failed",
+        description: decodeURIComponent(error),
+        variant: "destructive",
+      });
+      // Clean up URL
+      window.history.replaceState({}, '', '/settings?tab=email');
+    }
+    
     fetchConfigs();
   }, []);
 
