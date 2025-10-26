@@ -50,6 +50,62 @@ export const QuoteSendDropdown = ({
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
+  /**
+   * Generate or regenerate a PDF for a quote
+   * Returns the download URL or null on failure
+   */
+  const generateFreshPDF = async (
+    quoteData: Quote,
+    companyProfileData: any
+  ): Promise<{ downloadUrl: string | null; documentId: string | null }> => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.error('[PDF] No active session');
+        return { downloadUrl: null, documentId: null };
+      }
+
+      console.log('[PDF] Generating fresh PDF for quote:', quoteData.id);
+
+      // Call PDF Monkey edge function to generate PDF
+      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
+        body: {
+          quote: quoteData,
+          companyProfile: companyProfileData,
+          force_regenerate: true
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`
+        }
+      });
+
+      if (pdfError) {
+        console.error('[PDF] Generation error:', pdfError);
+        return { downloadUrl: null, documentId: null };
+      }
+
+      let downloadUrl = pdfData?.downloadUrl;
+      const documentId = pdfData?.documentId;
+
+      // If no download URL yet, poll for status (PDF is being generated asynchronously)
+      if (!downloadUrl && documentId) {
+        console.log('[PDF] Polling for PDF completion...');
+        downloadUrl = await pollPdfDownloadUrl(documentId, session.access_token);
+      }
+
+      if (!downloadUrl) {
+        console.error('[PDF] Failed to get download URL after polling');
+        return { downloadUrl: null, documentId };
+      }
+
+      console.log('[PDF] Successfully generated PDF:', { documentId, hasUrl: !!downloadUrl });
+      return { downloadUrl, documentId };
+    } catch (error) {
+      console.error('[PDF] Exception during generation:', error);
+      return { downloadUrl: null, documentId: null };
+    }
+  };
+
   // Generate or retrieve public token for quote acceptance
   const getOrCreatePublicToken = async (): Promise<string | null> => {
     try {
@@ -159,62 +215,27 @@ export const QuoteSendDropdown = ({
         .update({ client_data: quote.client as any })
         .eq('id', quote.id);
 
-      // Check if PDF is current
+      // Step 1: Check if we have a valid, current PDF
       const pdfIsCurrent = freshQuote?.pdf_url && 
-                          freshQuote?.pdf_generated_at && 
-                          new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
+                           freshQuote?.pdf_generated_at && 
+                           new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
 
       let pdfUrl = freshQuote.pdf_url;
+      let documentId = freshQuote.pdf_document_id;
 
-      // If PDF is not current or missing, try to refresh
-      if (!pdfIsCurrent) {
-        if (freshQuote.pdf_document_id) {
-          // Try to get a fresh download URL
-          const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
-            body: { mode: 'status', documentId: freshQuote.pdf_document_id }
-          });
-
-          if (statusData?.downloadUrl) {
-            pdfUrl = statusData.downloadUrl;
-            // Update the quote with fresh URL
-            await supabase
-              .from('quotes')
-              .update({
-                pdf_url: pdfUrl,
-                pdf_generated_at: new Date().toISOString()
-              })
-              .eq('id', quote.id);
-          } else {
-            toast({
-              title: "PDF not ready",
-              description: "Please generate the PDF first using the PDF button",
-              variant: "destructive"
-            });
-            setIsSendingEmail(false);
-            return;
-          }
-        } else {
-          toast({
-            title: "PDF not generated",
-            description: "Please generate the PDF first using the PDF button",
-            variant: "destructive"
-          });
-          setIsSendingEmail(false);
-          return;
-        }
-      }
-
-      // Fetch the PDF
-      let pdfResponse = await fetch(pdfUrl);
-      
-      // If URL expired, try to refresh once more
-      if (!pdfResponse.ok && freshQuote.pdf_document_id) {
+      // Step 2: If PDF is not current or missing, try to refresh URL first
+      if (!pdfIsCurrent && freshQuote.pdf_document_id) {
+        console.log('[EMAIL] PDF not current, attempting to refresh URL from existing document...');
+        
         const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
           body: { mode: 'status', documentId: freshQuote.pdf_document_id }
         });
 
         if (statusData?.downloadUrl) {
           pdfUrl = statusData.downloadUrl;
+          documentId = freshQuote.pdf_document_id;
+          
+          // Update quote with refreshed URL
           await supabase
             .from('quotes')
             .update({
@@ -223,13 +244,142 @@ export const QuoteSendDropdown = ({
             })
             .eq('id', quote.id);
           
-          pdfResponse = await fetch(pdfUrl);
+          console.log('[EMAIL] ✅ Successfully refreshed PDF URL from existing document');
         }
       }
 
-      if (!pdfResponse.ok) {
-        throw new Error('Failed to fetch PDF');
+      // Step 3: If still no valid URL, regenerate the PDF entirely
+      if (!pdfUrl) {
+        console.log('[EMAIL] No valid PDF URL available, generating fresh PDF...');
+        
+        toast({
+          title: "Generating PDF",
+          description: "Creating a fresh PDF for your email. This will take a moment...",
+        });
+
+        // Fetch company profile if not already loaded
+        const { data: { user } } = await supabase.auth.getUser();
+        let companyProfileData = null;
+        
+        if (user) {
+          const { data: profile } = await supabase
+            .from('company_profiles')
+            .select('*')
+            .eq('user_id', user.id)
+            .maybeSingle();
+          
+          companyProfileData = profile || {
+            company_name: "Your Electrical Company",
+            company_email: "contact@yourcompany.com",
+            company_phone: "0123 456 7890",
+            company_address: "123 Business Street, London",
+            primary_color: "#1e40af",
+            secondary_color: "#3b82f6",
+            currency: "GBP",
+            locale: "en-GB",
+            vat_number: "",
+            payment_terms: "30 days"
+          };
+        }
+
+        // Generate fresh PDF (pass as 'any' since DB types differ from Quote type)
+        const result = await generateFreshPDF(freshQuote as any, companyProfileData);
+        
+        if (!result.downloadUrl) {
+          toast({
+            title: "PDF Generation Failed",
+            description: "Unable to generate PDF. Please try clicking the PDF button first, then send the email.",
+            variant: "destructive"
+          });
+          setIsSendingEmail(false);
+          return;
+        }
+
+        pdfUrl = result.downloadUrl;
+        documentId = result.documentId;
+
+        // Update quote with new PDF info
+        await supabase
+          .from('quotes')
+          .update({
+            pdf_document_id: documentId,
+            pdf_url: pdfUrl,
+            pdf_generated_at: new Date().toISOString(),
+            pdf_version: (freshQuote.pdf_version || 0) + 1
+          })
+          .eq('id', quote.id);
+
+        console.log('[EMAIL] ✅ Successfully generated and saved fresh PDF');
+        
+        toast({
+          title: "PDF Ready",
+          description: "Fresh PDF generated successfully. Proceeding with email...",
+          variant: "success"
+        });
       }
+
+      // Step 4: Validate we have a working URL by testing it
+      console.log('[EMAIL] Validating PDF URL...');
+      let pdfResponse = await fetch(pdfUrl);
+
+      // Step 5: If URL is still invalid, one final regeneration attempt
+      if (!pdfResponse.ok) {
+        console.warn('[EMAIL] PDF URL validation failed, making final regeneration attempt...');
+        
+        toast({
+          title: "Refreshing PDF",
+          description: "PDF link expired, generating a new one...",
+        });
+
+        const { data: { user } } = await supabase.auth.getUser();
+        let companyProfileData = null;
+        
+        if (user) {
+          const { data: profile } = await supabase
+            .from('company_profiles')
+            .select('*')
+            .eq('user_id', user.id)
+            .maybeSingle();
+          companyProfileData = profile;
+        }
+
+        const result = await generateFreshPDF(freshQuote as any, companyProfileData);
+        
+        if (!result.downloadUrl) {
+          toast({
+            title: "Unable to Generate PDF",
+            description: "Please try generating the PDF manually first, then send the email.",
+            variant: "destructive"
+          });
+          setIsSendingEmail(false);
+          return;
+        }
+
+        pdfUrl = result.downloadUrl;
+        
+        await supabase
+          .from('quotes')
+          .update({
+            pdf_document_id: result.documentId,
+            pdf_url: pdfUrl,
+            pdf_generated_at: new Date().toISOString()
+          })
+          .eq('id', quote.id);
+
+        pdfResponse = await fetch(pdfUrl);
+        
+        if (!pdfResponse.ok) {
+          toast({
+            title: "PDF Access Error",
+            description: "Unable to access PDF. Please contact support.",
+            variant: "destructive"
+          });
+          setIsSendingEmail(false);
+          return;
+        }
+      }
+
+      console.log('[EMAIL] ✅ PDF validated and ready for email attachment');
 
       const pdfBlob = await pdfResponse.blob();
       
@@ -323,26 +473,84 @@ export const QuoteSendDropdown = ({
         throw new Error('User not authenticated');
       }
 
-      // Generate temporary PDF link
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
-        'generate-temporary-pdf-link',
-        {
-          body: {
-            documentId: quote.id,
-            documentType: 'quote'
-          },
-          headers: {
-            Authorization: `Bearer ${session.access_token}`
-          }
-        }
-      );
+      // Get latest quote data
+      const { data: freshQuote, error: fetchError } = await supabase
+        .from('quotes')
+        .select('*')
+        .eq('id', quote.id)
+        .single();
 
-      if (pdfError || !pdfData?.success) {
-        console.error('PDF generation error:', pdfError);
-        throw new Error('Failed to generate PDF');
+      if (fetchError) throw fetchError;
+
+      // Check if PDF is current
+      const pdfIsCurrent = freshQuote?.pdf_url && 
+                           freshQuote?.pdf_generated_at && 
+                           new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
+
+      let pdfUrl = freshQuote.pdf_url;
+      let documentId = freshQuote.pdf_document_id;
+
+      // If PDF not current, try to refresh URL first
+      if (!pdfIsCurrent && freshQuote.pdf_document_id) {
+        console.log('[MAILTO] Attempting to refresh PDF URL...');
+        
+        const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
+          body: { mode: 'status', documentId: freshQuote.pdf_document_id }
+        });
+
+        if (statusData?.downloadUrl) {
+          pdfUrl = statusData.downloadUrl;
+          documentId = freshQuote.pdf_document_id;
+          
+          await supabase
+            .from('quotes')
+            .update({
+              pdf_url: pdfUrl,
+              pdf_generated_at: new Date().toISOString()
+            })
+            .eq('id', quote.id);
+          
+          console.log('[MAILTO] ✅ PDF URL refreshed');
+        }
       }
 
-      const pdfUrl = pdfData.publicUrl;
+      // If still no URL, regenerate PDF
+      if (!pdfUrl) {
+        console.log('[MAILTO] Generating fresh PDF...');
+        
+        const { data: { user } } = await supabase.auth.getUser();
+        let companyProfileData = null;
+        
+        if (user) {
+          const { data: profile } = await supabase
+            .from('company_profiles')
+            .select('*')
+            .eq('user_id', user.id)
+            .maybeSingle();
+          companyProfileData = profile;
+        }
+
+        const result = await generateFreshPDF(freshQuote as any, companyProfileData);
+        
+        if (!result.downloadUrl) {
+          throw new Error('Failed to generate PDF');
+        }
+
+        pdfUrl = result.downloadUrl;
+        documentId = result.documentId;
+
+        await supabase
+          .from('quotes')
+          .update({
+            pdf_document_id: documentId,
+            pdf_url: pdfUrl,
+            pdf_generated_at: new Date().toISOString(),
+            pdf_version: (freshQuote.pdf_version || 0) + 1
+          })
+          .eq('id', quote.id);
+
+        console.log('[MAILTO] ✅ Fresh PDF generated');
+      }
 
       // Get client and company data
       const { data: { user } } = await supabase.auth.getUser();
@@ -440,7 +648,6 @@ ${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\
       
       console.log('🔄 Starting WhatsApp share process...');
 
-      // ALWAYS regenerate PDF for guaranteed freshness - fetch latest data first
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('User not authenticated');
@@ -471,56 +678,64 @@ ${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\
         console.error('Company profile error:', companyError);
       }
 
-      // Step 2: Generate fresh PDF with latest data (silently)
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        throw new Error('User not authenticated');
-      }
+      // Step 2: Check if PDF is current
+      const pdfIsCurrent = freshQuote?.pdf_url && 
+                           freshQuote?.pdf_generated_at && 
+                           new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
 
-      console.log('🔄 Generating PDF...');
-      
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke('generate-pdf-monkey', {
-        body: {
-          quote: freshQuote, // Use fresh data from database
-          companyProfile: companyData,
-          invoice_mode: false,
-          force_regenerate: true
-        },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
+      let pdfUrl = freshQuote.pdf_url;
+      let documentId = freshQuote.pdf_document_id;
+
+      // Try to refresh URL if not current
+      if (!pdfIsCurrent && freshQuote.pdf_document_id) {
+        console.log('[WHATSAPP] Attempting to refresh PDF URL...');
+        
+        const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
+          body: { mode: 'status', documentId: freshQuote.pdf_document_id }
+        });
+
+        if (statusData?.downloadUrl) {
+          pdfUrl = statusData.downloadUrl;
+          documentId = freshQuote.pdf_document_id;
+          
+          await supabase
+            .from('quotes')
+            .update({
+              pdf_url: pdfUrl,
+              pdf_generated_at: new Date().toISOString()
+            })
+            .eq('id', quote.id);
+          
+          console.log('[WHATSAPP] ✅ PDF URL refreshed');
         }
-      });
-
-      let pdfUrl = pdfData?.downloadUrl;
-      const documentId = pdfData?.documentId;
-
-      if (!pdfUrl && documentId) {
-        console.log('⏳ PDF not ready, polling for download URL...');
-        pdfUrl = await pollPdfDownloadUrl(documentId, session.access_token) || undefined;
       }
 
-      if (pdfError || !pdfUrl) {
-        console.error('❌ PDF generation failed:', pdfError);
-        throw new Error('Failed to generate professional PDF');
-      }
-      
-      console.log('✅ PDF URL received:', pdfUrl.substring(0, 50) + '...');
+      // If still no URL, regenerate PDF
+      if (!pdfUrl) {
+        console.log('[WHATSAPP] Generating fresh PDF...');
+        
+        const result = await generateFreshPDF(freshQuote as any, companyData);
+        
+        if (!result.downloadUrl) {
+          throw new Error('Failed to generate professional PDF');
+        }
 
-      // Step 3: Store PDF metadata in database (NO URL - it expires)
-      if (documentId) {
-        const newVersion = (freshQuote.pdf_version || 0) + 1;
+        pdfUrl = result.downloadUrl;
+        documentId = result.documentId;
+
         await supabase
           .from('quotes')
           .update({
             pdf_document_id: documentId,
+            pdf_url: pdfUrl,
             pdf_generated_at: new Date().toISOString(),
-            pdf_version: newVersion
+            pdf_version: (freshQuote.pdf_version || 0) + 1
           })
           .eq('id', quote.id);
+
+        console.log('[WHATSAPP] ✅ Fresh PDF generated');
       }
 
-
-      // Step 4: Use PDF URL directly (don't modify signed URLs - it breaks AWS signature)
       const pdfDownloadUrl = pdfUrl;
 
       // Step 5: Create professional WhatsApp message with PDF URL
