@@ -4,19 +4,23 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { 
   Package, Clock, TrendingUp, FileText, Copy, Download, Save, 
-  CheckCircle2, ChevronRight, Sparkles 
+  CheckCircle2, ChevronRight, Sparkles, Calendar, Star 
 } from "lucide-react";
 import { ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
 import CostStatCard from "./CostStatCard";
 import { toast } from "@/hooks/use-toast";
+import TimescalesPanel from "./TimescalesPanel";
+import AlternativeQuotesPanel from "./AlternativeQuotesPanel";
+import OrderListPanel from "./OrderListPanel";
 
 interface CostAnalysisResultsProps {
   analysis: ParsedCostAnalysis;
   projectName?: string;
   onNewAnalysis: () => void;
+  structuredData?: any; // V3 structured response
 }
 
-const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis }: CostAnalysisResultsProps) => {
+const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredData }: CostAnalysisResultsProps) => {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
@@ -107,6 +111,19 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis }: CostAnaly
           iconColor="text-elec-yellow"
         />
       </div>
+
+      {/* Enhanced Panels for V3 Data */}
+      {structuredData?.timescales && (
+        <TimescalesPanel timescales={structuredData.timescales} />
+      )}
+
+      {structuredData?.alternatives && (
+        <AlternativeQuotesPanel alternatives={structuredData.alternatives} />
+      )}
+
+      {structuredData?.orderList && (
+        <OrderListPanel orderList={structuredData.orderList} />
+      )}
 
       {/* Detailed Breakdown Tabs */}
       <Card className="border-elec-yellow/20">

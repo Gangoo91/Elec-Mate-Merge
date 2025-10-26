@@ -302,6 +302,28 @@ ${parsedEntities.jobType === 'board_change' ?
 
 ${labourTimeResults.length > 0 ? `**REMINDER**: Prioritise handbook data above before using fallback estimates!\n` : ''}
 
+TIMESCALE CALCULATION:
+- First fix: 0.5-0.7 days per 10m² floor area (chasing, cabling, conduit)
+- Second fix: 0.3-0.4 days per 10m² floor area (accessories, consumer unit, downlights)
+- Testing: 0.5-1 day per property (full EICR testing + certification)
+- Buffer 10-15% for complex jobs (restricted access, heritage buildings)
+- Break down by phases: First Fix → Second Fix → Testing & Handover
+- Identify critical path and dependencies
+- Working days: Mon-Fri (5 days/week standard)
+
+ALTERNATIVE QUOTES - Generate 3 pricing tiers:
+1. BUDGET: Minimum BS 7671 compliant (dual RCD consumer unit, basic white accessories, standard cables)
+2. STANDARD: Recommended specification (RCBO consumer unit for better isolation, mid-range brushed steel accessories, LED where suitable)
+3. PREMIUM: High-spec with smart features (Schneider Wiser smart CU, designer accessories like Varilight/MK, full LED upgrade with dimming, smart switches)
+- Mark "standard" as recommended tier
+- Clearly state tradeoffs for each tier
+
+ORDER LIST - Group materials by supplier:
+- CEF, TLC, Screwfix, etc.
+- Include product codes where available from database
+- Add delivery estimates (2-3 working days typical)
+- Note trade account setup opportunities for bulk discounts
+
 MATERIAL QUANTITY RULES:
 ${parsedEntities.consumerUnitWays ? 
   `- Consumer unit: ${parsedEntities.consumerUnitWays}-way with RCD/RCBO protection` :
@@ -334,6 +356,21 @@ PRICING RULES:
 - Material markup: +${COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT}% on wholesale
 - VAT: ${COST_ENGINEER_PRICING.VAT_RATE}%
 
+TIMESCALE CALCULATION:
+- First fix: 0.5-0.7 days per 10m²
+- Second fix: 0.3-0.4 days per 10m²
+- Testing: 0.5-1 day per property
+- Break down by phases with critical path
+
+ALTERNATIVE QUOTES:
+1. BUDGET: Minimum BS 7671 compliant
+2. STANDARD: Recommended specification
+3. PREMIUM: High-spec with smart features
+
+ORDER LIST:
+- Group materials by supplier (CEF, TLC, etc)
+- Include product codes and delivery estimates
+
 INSTRUCTIONS:
 1. Match materials to database (prefer database over fallback)
 2. Use realistic quantities (see rules above)
@@ -345,14 +382,17 @@ INSTRUCTIONS:
 
 ${region ? `Region: ${region}\n` : ''}${contextSection}
 
-Output compact JSON (max 1500 tokens):
+Output compact JSON (max 1800 tokens) with timescales, alternatives, and orderList:
 {
-  "response": "Cost analysis with materials, labour, VAT, value engineering",
+  "response": "Cost analysis narrative",
   "materials": { "items": [...], "subtotal": 0, "vat": 0, "total": 0 },
   "labour": { "tasks": [...], "subtotal": 0, "vat": 0, "total": 0 },
   "summary": { "materialsTotal": 0, "labourTotal": 0, "subtotal": 0, "vat": 0, "grandTotal": 0 },
-  "valueEngineering": [{"suggestion": "...", "potentialSaving": 0}],
-  "suggestedNextAgents": [{"agent": "...", "reason": "...", "priority": "high"}]
+  "timescales": {"phases": [...], "totalDays": 0, "totalWeeks": 0, "startToFinish": "...", "criticalPath": "...", "assumptions": [...]},
+  "alternatives": {"budget": {...}, "standard": {...}, "premium": {...}, "recommended": "standard"},
+  "orderList": {"bySupplier": {...}, "totalItems": 0, "estimatedDelivery": "...", "notes": [...]},
+  "valueEngineering": [...],
+  "suggestedNextAgents": [...]
 }`;
 
     const userPrompt = `Cost estimate for: ${query}
@@ -469,6 +509,111 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                 },
                 required: ['grandTotal']
               },
+              timescales: {
+                type: 'object',
+                properties: {
+                  phases: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        phase: { type: 'string' },
+                        days: { type: 'number' },
+                        description: { type: 'string' }
+                      },
+                      required: ['phase', 'days', 'description']
+                    }
+                  },
+                  totalDays: { type: 'number' },
+                  totalWeeks: { type: 'number' },
+                  workingDaysPerWeek: { type: 'number' },
+                  startToFinish: { type: 'string' },
+                  criticalPath: { type: 'string' },
+                  assumptions: {
+                    type: 'array',
+                    items: { type: 'string' }
+                  }
+                },
+                required: ['phases', 'totalDays', 'startToFinish']
+              },
+              alternatives: {
+                type: 'object',
+                properties: {
+                  budget: {
+                    type: 'object',
+                    properties: {
+                      description: { type: 'string' },
+                      materialsTotal: { type: 'number' },
+                      labourTotal: { type: 'number' },
+                      grandTotal: { type: 'number' },
+                      tradeoffs: { type: 'array', items: { type: 'string' } }
+                    },
+                    required: ['description', 'grandTotal', 'tradeoffs']
+                  },
+                  standard: {
+                    type: 'object',
+                    properties: {
+                      description: { type: 'string' },
+                      materialsTotal: { type: 'number' },
+                      labourTotal: { type: 'number' },
+                      grandTotal: { type: 'number' },
+                      tradeoffs: { type: 'array', items: { type: 'string' } }
+                    },
+                    required: ['description', 'grandTotal', 'tradeoffs']
+                  },
+                  premium: {
+                    type: 'object',
+                    properties: {
+                      description: { type: 'string' },
+                      materialsTotal: { type: 'number' },
+                      labourTotal: { type: 'number' },
+                      grandTotal: { type: 'number' },
+                      tradeoffs: { type: 'array', items: { type: 'string' } }
+                    },
+                    required: ['description', 'grandTotal', 'tradeoffs']
+                  },
+                  recommended: { type: 'string', enum: ['budget', 'standard', 'premium'] }
+                },
+                required: ['budget', 'standard', 'premium', 'recommended']
+              },
+              orderList: {
+                type: 'object',
+                properties: {
+                  bySupplier: {
+                    type: 'object',
+                    additionalProperties: {
+                      type: 'object',
+                      properties: {
+                        items: {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              code: { type: 'string' },
+                              description: { type: 'string' },
+                              quantity: { type: 'number' },
+                              unit: { type: 'string' },
+                              unitPrice: { type: 'number' },
+                              total: { type: 'number' }
+                            },
+                            required: ['description', 'quantity', 'unit', 'unitPrice', 'total']
+                          }
+                        },
+                        subtotal: { type: 'number' },
+                        accountNumber: { type: 'string' }
+                      },
+                      required: ['items', 'subtotal']
+                    }
+                  },
+                  totalItems: { type: 'number' },
+                  estimatedDelivery: { type: 'string' },
+                  notes: {
+                    type: 'array',
+                    items: { type: 'string' }
+                  }
+                },
+                required: ['bySupplier', 'totalItems']
+              },
               valueEngineering: {
                 type: 'array',
                 items: {
@@ -497,7 +642,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                 }
               }
             },
-            required: ['response', 'materials', 'summary'],
+            required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList'],
             additionalProperties: false
           }
         }
@@ -588,6 +733,79 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                       },
                       required: ['grandTotal']
                     },
+                    timescales: {
+                      type: 'object',
+                      properties: {
+                        phases: {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              phase: { type: 'string' },
+                              days: { type: 'number' },
+                              description: { type: 'string' }
+                            },
+                            required: ['phase', 'days', 'description']
+                          }
+                        },
+                        totalDays: { type: 'number' },
+                        totalWeeks: { type: 'number' },
+                        startToFinish: { type: 'string' }
+                      },
+                      required: ['phases', 'totalDays', 'startToFinish']
+                    },
+                    alternatives: {
+                      type: 'object',
+                      properties: {
+                        budget: {
+                          type: 'object',
+                          properties: {
+                            description: { type: 'string' },
+                            grandTotal: { type: 'number' },
+                            tradeoffs: { type: 'array', items: { type: 'string' } }
+                          },
+                          required: ['description', 'grandTotal', 'tradeoffs']
+                        },
+                        standard: {
+                          type: 'object',
+                          properties: {
+                            description: { type: 'string' },
+                            grandTotal: { type: 'number' },
+                            tradeoffs: { type: 'array', items: { type: 'string' } }
+                          },
+                          required: ['description', 'grandTotal', 'tradeoffs']
+                        },
+                        premium: {
+                          type: 'object',
+                          properties: {
+                            description: { type: 'string' },
+                            grandTotal: { type: 'number' },
+                            tradeoffs: { type: 'array', items: { type: 'string' } }
+                          },
+                          required: ['description', 'grandTotal', 'tradeoffs']
+                        },
+                        recommended: { type: 'string', enum: ['budget', 'standard', 'premium'] }
+                      },
+                      required: ['budget', 'standard', 'premium', 'recommended']
+                    },
+                    orderList: {
+                      type: 'object',
+                      properties: {
+                        bySupplier: {
+                          type: 'object',
+                          additionalProperties: {
+                            type: 'object',
+                            properties: {
+                              items: { type: 'array', items: { type: 'object' } },
+                              subtotal: { type: 'number' }
+                            },
+                            required: ['items', 'subtotal']
+                          }
+                        },
+                        totalItems: { type: 'number' }
+                      },
+                      required: ['bySupplier', 'totalItems']
+                    },
                     valueEngineering: {
                       type: 'array',
                       items: {
@@ -612,7 +830,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                       }
                     }
                   },
-                  required: ['response', 'materials', 'summary'],
+                  required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList'],
                   additionalProperties: false
                 }
               }

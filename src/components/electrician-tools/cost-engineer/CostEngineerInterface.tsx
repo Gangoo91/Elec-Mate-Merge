@@ -20,6 +20,7 @@ const CostEngineerInterface = () => {
   const [projectType, setProjectType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
   const [prompt, setPrompt] = useState("");
   const [parsedResults, setParsedResults] = useState<ParsedCostAnalysis | null>(null);
+  const [structuredData, setStructuredData] = useState<any>(null);
   const [projectName, setProjectName] = useState("");
   const [clientInfo, setClientInfo] = useState("");
   const [location, setLocation] = useState("");
@@ -73,22 +74,26 @@ const CostEngineerInterface = () => {
       const aiResponse = data.response;
       const structuredData = data.structuredData;
 
+      // Store structured data for enhanced panels
+      setStructuredData(structuredData);
+
       // Use structured data if available, otherwise parse markdown
-      if (structuredData && structuredData.totals) {
+      if (structuredData && structuredData.summary) {
         setParsedResults({
-          totalCost: structuredData.totals.total,
+          totalCost: structuredData.summary.grandTotal,
           materialsTotal: structuredData.materials?.subtotal || 0,
           labourTotal: structuredData.labour?.subtotal || 0,
           materials: structuredData.materials?.items || [],
           labour: {
-            hours: structuredData.labour?.totalHours || 0,
+            hours: structuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
             rate: 50,
-            total: structuredData.labour?.subtotal || 0
+            total: structuredData.labour?.subtotal || 0,
+            description: structuredData.labour?.tasks?.[0]?.description || 'Installation labour'
           },
           additionalCosts: [],
-          vatAmount: structuredData.totals.vat,
+          vatAmount: structuredData.summary.vat,
           vatRate: 20,
-          subtotal: structuredData.totals.subtotal,
+          subtotal: structuredData.summary.subtotal,
           rawText: aiResponse
         });
       } else {
