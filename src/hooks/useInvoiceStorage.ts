@@ -125,34 +125,91 @@ export const useInvoiceStorage = () => {
         ...(invoice.additional_invoice_items || [])
       ];
 
-      // 1. Save invoice data to database
-      const { data: updatedQuote, error: updateError } = await supabase
+      // Check if this is a new standalone invoice or existing quote
+      const { data: existingQuote } = await supabase
         .from('quotes')
-        .update({
-          invoice_raised: true,
-          invoice_number: finalInvoiceNumber,
-          invoice_date: invoice.invoice_date?.toISOString(),
-          invoice_due_date: invoice.invoice_due_date?.toISOString(),
-          invoice_status: invoice.invoice_status,
-          additional_invoice_items: JSON.parse(JSON.stringify([])), // Clear after merging
-          invoice_notes: invoice.invoice_notes || null,
-          work_completion_date: invoice.work_completion_date?.toISOString(),
-          items: JSON.parse(JSON.stringify(mergedItems)), // Save merged items
-          settings: JSON.parse(JSON.stringify(invoice.settings || {})),
-          job_details: invoice.jobDetails ? JSON.parse(JSON.stringify(invoice.jobDetails)) : null,
-          subtotal: invoice.subtotal,
-          overhead: invoice.overhead,
-          profit: invoice.profit,
-          vat_amount: invoice.vatAmount,
-          total: invoice.total,
-          pdf_version: (invoice.pdf_version || 0) + 1,
-          updated_at: new Date().toISOString(),
-        })
+        .select('id')
         .eq('id', invoice.id)
-        .select()
-        .single();
+        .maybeSingle();
 
-      if (updateError) throw updateError;
+      const isNewInvoice = !existingQuote;
+      let updatedQuote;
+
+      if (isNewInvoice) {
+        // INSERT new standalone invoice
+        console.log('📝 Creating new standalone invoice');
+        const { data: newInvoice, error: insertError } = await supabase
+          .from('quotes')
+          .insert([{
+            user_id: user.id,
+            quote_number: finalInvoiceNumber,
+            client_data: JSON.parse(JSON.stringify(invoice.client)) as any,
+            items: JSON.parse(JSON.stringify(mergedItems)) as any,
+            settings: JSON.parse(JSON.stringify(invoice.settings || {})) as any,
+            job_details: invoice.jobDetails ? JSON.parse(JSON.stringify(invoice.jobDetails)) as any : null,
+            subtotal: invoice.subtotal,
+            overhead: invoice.overhead,
+            profit: invoice.profit,
+            vat_amount: invoice.vatAmount,
+            total: invoice.total,
+            status: 'approved',
+            invoice_raised: true,
+            invoice_number: finalInvoiceNumber,
+            invoice_date: invoice.invoice_date?.toISOString(),
+            invoice_due_date: invoice.invoice_due_date?.toISOString(),
+            invoice_status: invoice.invoice_status || 'draft',
+            invoice_notes: invoice.invoice_notes || null,
+            work_completion_date: invoice.work_completion_date?.toISOString(),
+            additional_invoice_items: [] as any,
+            tags: [] as any,
+            expiry_date: invoice.invoice_due_date?.toISOString(),
+            acceptance_status: 'accepted',
+            accepted_at: new Date().toISOString(),
+            pdf_version: 1,
+          }])
+          .select()
+          .single();
+
+        if (insertError) {
+          console.error('❌ Error inserting standalone invoice:', insertError);
+          throw insertError;
+        }
+        updatedQuote = newInvoice;
+      } else {
+        // UPDATE existing quote
+        console.log('📝 Updating existing quote to invoice');
+        const { data: updated, error: updateError } = await supabase
+          .from('quotes')
+          .update({
+            invoice_raised: true,
+            invoice_number: finalInvoiceNumber,
+            invoice_date: invoice.invoice_date?.toISOString(),
+            invoice_due_date: invoice.invoice_due_date?.toISOString(),
+            invoice_status: invoice.invoice_status,
+            additional_invoice_items: JSON.parse(JSON.stringify([])), // Clear after merging
+            invoice_notes: invoice.invoice_notes || null,
+            work_completion_date: invoice.work_completion_date?.toISOString(),
+            items: JSON.parse(JSON.stringify(mergedItems)), // Save merged items
+            settings: JSON.parse(JSON.stringify(invoice.settings || {})),
+            job_details: invoice.jobDetails ? JSON.parse(JSON.stringify(invoice.jobDetails)) : null,
+            subtotal: invoice.subtotal,
+            overhead: invoice.overhead,
+            profit: invoice.profit,
+            vat_amount: invoice.vatAmount,
+            total: invoice.total,
+            pdf_version: (invoice.pdf_version || 0) + 1,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', invoice.id)
+          .select()
+          .single();
+
+        if (updateError) {
+          console.error('❌ Error updating quote:', updateError);
+          throw updateError;
+        }
+        updatedQuote = updated;
+      }
 
       // 2. Force regenerate PDF with LATEST data on every save (silent background process)
       try {
