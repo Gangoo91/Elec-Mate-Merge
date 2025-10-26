@@ -270,89 +270,174 @@ serve(async (req: Request) => {
           <html>
           <head>
             <meta charset="UTF-8">
-            <style>
-              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-              .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-              .header { background: #dc2626; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-              .header h1 { margin: 0; color: white; font-size: 32px; }
-              .invoice-badge { background: white; color: #dc2626; padding: 8px 16px; border-radius: 4px; font-weight: bold; display: inline-block; margin-top: 10px; }
-              .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-              .details { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border: 2px solid #dc2626; }
-              .amount-due { font-size: 36px; color: #dc2626; font-weight: bold; text-align: center; padding: 20px; background: #fee; border-radius: 8px; margin: 20px 0; }
-              .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e5e7eb; }
-              .detail-row:last-child { border-bottom: none; }
-              .detail-label { font-weight: 600; color: #6b7280; }
-              .detail-value { color: #1f2937; font-weight: 600; }
-              .payment-section { background: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border: 2px solid #f59e0b; }
-              .footer { text-align: center; margin-top: 30px; color: #6b7280; font-size: 14px; }
-            </style>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Invoice ${doc.invoice_number || doc.quote_number}</title>
           </head>
-          <body>
-            <div class="container">
-              <div class="header">
-                <h1>💷 INVOICE</h1>
-                <div class="invoice-badge">${doc.invoice_number || doc.quote_number}</div>
-              </div>
-              <div class="content">
-                <p>Dear ${clientData?.name || 'Valued Client'},</p>
-                <p><strong>Please find attached your invoice for completed work.</strong></p>
-                
-                <div class="amount-due">
-                  £${(doc.total || 0).toFixed(2)}
-                  <div style="font-size: 14px; color: #666; font-weight: normal; margin-top: 5px;">Amount Due</div>
-                </div>
-                
-                <div class="details">
-                  <div class="detail-row">
-                    <span class="detail-label">Invoice Number:</span>
-                    <span class="detail-value">${doc.invoice_number || doc.quote_number}</span>
-                  </div>
-                  <div class="detail-row">
-                    <span class="detail-label">Invoice Date:</span>
-                    <span class="detail-value">${doc.invoice_date ? new Date(doc.invoice_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-                  </div>
-                  ${doc.invoice_due_date ? `
-                  <div class="detail-row">
-                    <span class="detail-label">Due Date:</span>
-                    <span class="detail-value" style="color: #dc2626; font-size: 16px;">${new Date(doc.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-                  </div>
-                  ` : ''}
-                  ${doc.work_completion_date ? `
-                  <div class="detail-row">
-                    <span class="detail-label">Work Completed:</span>
-                    <span class="detail-value">${new Date(doc.work_completion_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-                  </div>
-                  ` : ''}
-                </div>
+          <body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+            <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f8fafc;">
+              <tr>
+                <td align="center" style="padding: 40px 20px;">
+                  <!-- Main Container -->
+                  <table role="presentation" style="width: 100%; max-width: 600px; border-collapse: collapse; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 12px; overflow: hidden;">
+                    
+                    <!-- Header -->
+                    <tr>
+                      <td style="background-color: #1e3a8a; padding: 40px 30px; text-align: center;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                          <tr>
+                            <td style="text-align: center;">
+                              ${company?.logo_url ? `<img src="${company.logo_url}" alt="${companyName}" style="max-width: 120px; height: auto; margin-bottom: 20px;">` : `<div style="font-size: 28px; font-weight: 700; color: #ffffff; margin-bottom: 10px;">${companyName}</div>`}
+                              <div style="font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 20px;">Professional Electrical Services</div>
+                              <div style="display: inline-block; background-color: #dc2626; color: #ffffff; padding: 8px 20px; border-radius: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 8px;">INVOICE</div>
+                              <div style="font-size: 24px; font-weight: 700; color: #ffffff; margin-top: 8px;">#${doc.invoice_number || doc.quote_number}</div>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
 
-                ${doc.settings?.paymentTerms || company?.payment_terms ? `
-                <div class="payment-section">
-                  <h3 style="margin-top: 0; color: #f59e0b;">📋 Payment Terms</h3>
-                  <p>${doc.settings?.paymentTerms || company?.payment_terms}</p>
-                </div>
-                ` : ''}
+                    <!-- Amount Due - Prominent -->
+                    <tr>
+                      <td style="padding: 0;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);">
+                          <tr>
+                            <td style="padding: 30px; text-align: center;">
+                              <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9); font-weight: 500; letter-spacing: 1px; margin-bottom: 8px;">AMOUNT DUE</div>
+                              <div style="font-size: 48px; font-weight: 700; color: #ffffff; line-height: 1;">£${(doc.total || 0).toFixed(2)}</div>
+                              ${doc.invoice_due_date ? `
+                                <div style="margin-top: 12px; padding: 8px 16px; background-color: rgba(255, 255, 255, 0.2); border-radius: 20px; display: inline-block; font-size: 13px; color: #ffffff;">
+                                  ⏰ Payment Due: ${new Date(doc.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                </div>
+                              ` : ''}
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
 
-                <p><strong>The complete invoice is attached as a PDF.</strong> Please review the attached document for full details including itemised charges and payment instructions.</p>
+                    <!-- Main Content -->
+                    <tr>
+                      <td style="padding: 40px 30px;">
+                        <p style="margin: 0 0 20px 0; font-size: 16px; color: #1f2937; line-height: 1.6;">Dear <strong>${clientData?.name || 'Valued Client'}</strong>,</p>
+                        <p style="margin: 0 0 30px 0; font-size: 15px; color: #4b5563; line-height: 1.6;">Thank you for your business. Please find attached your invoice for the completed electrical work. Payment is kindly requested by the due date shown above.</p>
 
-                ${doc.invoice_notes ? `
-                <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                  <p style="margin: 0;"><strong>Notes:</strong> ${doc.invoice_notes}</p>
-                </div>
-                ` : ''}
+                        <!-- Invoice Details Card -->
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f9fafb; border: 2px solid #e5e7eb; border-radius: 8px; margin-bottom: 24px;">
+                          <tr>
+                            <td style="padding: 24px;">
+                              <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                  <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">
+                                    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                      <tr>
+                                        <td style="font-size: 13px; color: #6b7280; font-weight: 600;">📄 Invoice Number</td>
+                                        <td style="font-size: 14px; color: #1f2937; font-weight: 600; text-align: right;">${doc.invoice_number || doc.quote_number}</td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">
+                                    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                      <tr>
+                                        <td style="font-size: 13px; color: #6b7280; font-weight: 600;">📅 Invoice Date</td>
+                                        <td style="font-size: 14px; color: #1f2937; font-weight: 600; text-align: right;">${doc.invoice_date ? new Date(doc.invoice_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                ${doc.invoice_due_date ? `
+                                <tr>
+                                  <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">
+                                    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                      <tr>
+                                        <td style="font-size: 13px; color: #6b7280; font-weight: 600;">⏰ Due Date</td>
+                                        <td style="font-size: 14px; color: #dc2626; font-weight: 700; text-align: right;">${new Date(doc.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                ` : ''}
+                                ${doc.work_completion_date ? `
+                                <tr>
+                                  <td style="padding: 10px 0;">
+                                    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                      <tr>
+                                        <td style="font-size: 13px; color: #6b7280; font-weight: 600;">✅ Work Completed</td>
+                                        <td style="font-size: 14px; color: #1f2937; font-weight: 600; text-align: right;">${new Date(doc.work_completion_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                ` : ''}
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
 
-                <p>If you have any questions regarding this invoice, please don't hesitate to contact us.</p>
+                        ${doc.settings?.paymentTerms || company?.payment_terms ? `
+                        <!-- Payment Terms -->
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 6px; margin-bottom: 24px;">
+                          <tr>
+                            <td style="padding: 20px;">
+                              <div style="font-size: 14px; color: #92400e; font-weight: 700; margin-bottom: 8px;">💳 PAYMENT TERMS</div>
+                              <div style="font-size: 14px; color: #78350f; line-height: 1.6;">${doc.settings?.paymentTerms || company?.payment_terms}</div>
+                            </td>
+                          </tr>
+                        </table>
+                        ` : ''}
 
-                <p style="margin-top: 30px;">Best regards,<br>
-                <strong>${companyName}</strong><br>
-                ${companyPhone ? `📞 ${companyPhone}<br>` : ''}
-                ${companyEmail ? `✉️ ${companyEmail}` : ''}</p>
+                        ${doc.invoice_notes ? `
+                        <!-- Invoice Notes -->
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 6px; margin-bottom: 24px;">
+                          <tr>
+                            <td style="padding: 20px;">
+                              <div style="font-size: 14px; color: #1e40af; font-weight: 700; margin-bottom: 8px;">📝 ADDITIONAL NOTES</div>
+                              <div style="font-size: 14px; color: #1e3a8a; line-height: 1.6;">${doc.invoice_notes}</div>
+                            </td>
+                          </tr>
+                        </table>
+                        ` : ''}
 
-                <div class="footer">
-                  <p>⚡ Invoice generated by ElecMate Professional Suite</p>
-                  <p style="font-size: 12px; color: #999;">This is an official invoice. Please retain for your records.</p>
-                </div>
-              </div>
-            </div>
+                        <!-- PDF Attachment Notice -->
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f0fdf4; border: 2px dashed #10b981; border-radius: 8px; margin-bottom: 24px;">
+                          <tr>
+                            <td style="padding: 20px; text-align: center;">
+                              <div style="font-size: 16px; color: #065f46; font-weight: 600; margin-bottom: 4px;">📎 Invoice_${doc.invoice_number || doc.quote_number}.pdf</div>
+                              <div style="font-size: 13px; color: #047857;">Complete invoice details attached as PDF</div>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <p style="margin: 0 0 20px 0; font-size: 14px; color: #4b5563; line-height: 1.6;">If you have any questions regarding this invoice or need to discuss payment arrangements, please don't hesitate to contact us.</p>
+
+                        <p style="margin: 0; font-size: 15px; color: #1f2937; line-height: 1.6;">
+                          Best regards,<br>
+                          <strong style="font-size: 16px;">${companyName}</strong><br>
+                          ${companyPhone ? `<span style="color: #6b7280;">📞 ${companyPhone}</span><br>` : ''}
+                          ${companyEmail ? `<span style="color: #6b7280;">✉️ ${companyEmail}</span>` : ''}
+                        </p>
+                      </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                      <td style="background-color: #f9fafb; padding: 24px 30px; border-top: 1px solid #e5e7eb;">
+                        <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                          <tr>
+                            <td style="text-align: center;">
+                              <div style="font-size: 13px; color: #6b7280; margin-bottom: 8px;">⚡ Invoice generated by ElecMate Professional Suite</div>
+                              <div style="font-size: 11px; color: #9ca3af;">This is an official invoice. Please retain for your records.</div>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+
+                  </table>
+                </td>
+              </tr>
+            </table>
           </body>
           </html>
         `;

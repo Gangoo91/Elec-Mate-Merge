@@ -213,7 +213,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Generate professional email content
     const emailSubject = `Quote ${quoteNumber} from ${companyName}`;
-    const emailBody = generateEmailHTML(quote, clientName, companyName);
+    const emailBody = generateEmailHTML(quote, clientName, companyName, companyProfile);
 
     // Create multipart email with PDF attachment
     const boundary = '----=_Part_' + Date.now();
@@ -308,7 +308,7 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-function generateEmailHTML(quote: any, clientName: string, companyName: string): string {
+function generateEmailHTML(quote: any, clientName: string, companyName: string, company: any): string {
   const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
   const settings = typeof quote.settings === 'string' ? JSON.parse(quote.settings) : quote.settings;
   const jobDetails = typeof quote.job_details === 'string' ? JSON.parse(quote.job_details) : quote.job_details;
@@ -317,6 +317,7 @@ function generateEmailHTML(quote: any, clientName: string, companyName: string):
     ? new Date(quote.expiry_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
     : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
   const jobTitle = jobDetails?.title || 'Electrical Work';
+  const jobDescription = jobDetails?.description || '';
   
   return `
 <!DOCTYPE html>
@@ -326,55 +327,164 @@ function generateEmailHTML(quote: any, clientName: string, companyName: string):
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quote ${quote.quote_number}</title>
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">${companyName}</h1>
-    <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 16px;">Professional Electrical Services</p>
-  </div>
-  
-  <div style="background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px;">
-    <h2 style="color: #667eea; margin-top: 0;">Quote ${quote.quote_number}</h2>
-    
-    <p style="font-size: 16px;">Dear ${clientName},</p>
-    
-    <p style="font-size: 16px;">Thank you for your enquiry. Please find your quotation for <strong>${jobTitle}</strong> attached as a PDF.</p>
-    
-    <div style="background: white; border-left: 4px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 5px;">
-      <table style="width: 100%; border-collapse: collapse;">
-        <tr>
-          <td style="padding: 8px 0; color: #666;">Quote Number:</td>
-          <td style="padding: 8px 0; text-align: right; font-weight: bold;">${quote.quote_number}</td>
-        </tr>
-        <tr>
-          <td style="padding: 8px 0; color: #666;">Total Amount:</td>
-          <td style="padding: 8px 0; text-align: right; font-weight: bold; color: #667eea; font-size: 20px;">£${total.toFixed(2)}</td>
-        </tr>
-        <tr>
-          <td style="padding: 8px 0; color: #666;">Valid Until:</td>
-          <td style="padding: 8px 0; text-align: right; font-weight: bold;">${expiryDate}</td>
-        </tr>
-      </table>
-    </div>
-    
-    <div style="background: #e8f4f8; border: 2px dashed #667eea; padding: 20px; margin: 30px 0; border-radius: 8px; text-align: center;">
-      <p style="margin: 0; font-size: 16px; color: #667eea;">
-        <strong>📎 Quote_${quote.quote_number}.pdf</strong>
-      </p>
-      <p style="margin: 10px 0 0 0; font-size: 14px; color: #666;">
-        Please see the attached PDF for the complete quote details.
-      </p>
-    </div>
-    
-    <p style="font-size: 14px; color: #666; margin-top: 30px;">
-      This quote is valid for 30 days from the date of issue. If you have any questions or would like to proceed, please don't hesitate to contact us.
-    </p>
-    
-    <p style="font-size: 16px; margin-top: 20px;">Best regards,<br><strong>${companyName}</strong></p>
-  </div>
-  
-  <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
-    <p>This is an automated email. Please do not reply directly to this message.</p>
-  </div>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+  <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f8fafc;">
+    <tr>
+      <td align="center" style="padding: 40px 20px;">
+        <!-- Main Container -->
+        <table role="presentation" style="width: 100%; max-width: 600px; border-collapse: collapse; background-color: #ffffff; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 12px; overflow: hidden;">
+          
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #2563eb; padding: 40px 30px; text-align: center;">
+              <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="text-align: center;">
+                    ${company?.logo_url ? `<img src="${company.logo_url}" alt="${companyName}" style="max-width: 120px; height: auto; margin-bottom: 20px;">` : `<div style="font-size: 28px; font-weight: 700; color: #ffffff; margin-bottom: 10px;">${companyName}</div>`}
+                    <div style="font-size: 14px; color: rgba(255, 255, 255, 0.85); margin-bottom: 20px;">Professional Electrical Services</div>
+                    <div style="display: inline-block; background-color: #059669; color: #ffffff; padding: 8px 20px; border-radius: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 8px;">QUOTATION</div>
+                    <div style="font-size: 24px; font-weight: 700; color: #ffffff; margin-top: 8px;">#${quote.quote_number}</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Total Amount - Prominent -->
+          <tr>
+            <td style="padding: 0;">
+              <table role="presentation" style="width: 100%; border-collapse: collapse; background: linear-gradient(135deg, #059669 0%, #047857 100%);">
+                <tr>
+                  <td style="padding: 30px; text-align: center;">
+                    <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9); font-weight: 500; letter-spacing: 1px; margin-bottom: 8px;">TOTAL AMOUNT</div>
+                    <div style="font-size: 48px; font-weight: 700; color: #ffffff; line-height: 1;">£${total.toFixed(2)}</div>
+                    <div style="margin-top: 12px; padding: 8px 16px; background-color: rgba(255, 255, 255, 0.2); border-radius: 20px; display: inline-block; font-size: 13px; color: #ffffff;">
+                      ✓ Valid Until: ${expiryDate}
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 40px 30px;">
+              <p style="margin: 0 0 20px 0; font-size: 16px; color: #1f2937; line-height: 1.6;">Dear <strong>${clientName}</strong>,</p>
+              <p style="margin: 0 0 30px 0; font-size: 15px; color: #4b5563; line-height: 1.6;">Thank you for your enquiry. We are pleased to provide you with a quotation for <strong>${jobTitle}</strong>. Please find the complete details attached as a PDF.</p>
+
+              <!-- Quote Details Card -->
+              <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f0f9ff; border: 2px solid #bfdbfe; border-radius: 8px; margin-bottom: 24px;">
+                <tr>
+                  <td style="padding: 24px;">
+                    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                      <tr>
+                        <td style="padding: 10px 0; border-bottom: 1px solid #dbeafe;">
+                          <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                              <td style="font-size: 13px; color: #1e40af; font-weight: 600;">📄 Quote Number</td>
+                              <td style="font-size: 14px; color: #1e3a8a; font-weight: 700; text-align: right;">${quote.quote_number}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 10px 0; border-bottom: 1px solid #dbeafe;">
+                          <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                              <td style="font-size: 13px; color: #1e40af; font-weight: 600;">🔧 Work Description</td>
+                              <td style="font-size: 14px; color: #1e3a8a; font-weight: 600; text-align: right;">${jobTitle}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 10px 0; border-bottom: 1px solid #dbeafe;">
+                          <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                              <td style="font-size: 13px; color: #1e40af; font-weight: 600;">💷 Total Amount</td>
+                              <td style="font-size: 18px; color: #059669; font-weight: 700; text-align: right;">£${total.toFixed(2)}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 10px 0;">
+                          <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                              <td style="font-size: 13px; color: #1e40af; font-weight: 600;">📅 Valid Until</td>
+                              <td style="font-size: 14px; color: #1e3a8a; font-weight: 700; text-align: right;">${expiryDate}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              ${jobDescription ? `
+              <!-- Job Description -->
+              <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f9fafb; border-left: 4px solid #2563eb; border-radius: 6px; margin-bottom: 24px;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <div style="font-size: 14px; color: #1e40af; font-weight: 700; margin-bottom: 8px;">📋 PROJECT DETAILS</div>
+                    <div style="font-size: 14px; color: #374151; line-height: 1.6;">${jobDescription}</div>
+                  </td>
+                </tr>
+              </table>
+              ` : ''}
+
+              <!-- PDF Attachment Notice -->
+              <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #ecfdf5; border: 2px dashed #10b981; border-radius: 8px; margin-bottom: 24px;">
+                <tr>
+                  <td style="padding: 24px; text-align: center;">
+                    <div style="font-size: 16px; color: #065f46; font-weight: 600; margin-bottom: 6px;">📎 Quote_${quote.quote_number}.pdf</div>
+                    <div style="font-size: 13px; color: #047857; margin-bottom: 16px;">Complete quotation details attached as PDF</div>
+                    <div style="font-size: 12px; color: #059669;">Please review the attached PDF for itemised breakdown and full terms</div>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Call to Action -->
+              <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 6px; margin-bottom: 24px;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <div style="font-size: 14px; color: #92400e; font-weight: 700; margin-bottom: 8px;">💡 READY TO PROCEED?</div>
+                    <div style="font-size: 14px; color: #78350f; line-height: 1.6;">If you would like to accept this quotation or have any questions, please contact us. We're here to help and look forward to working with you.</div>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 0 0 20px 0; font-size: 14px; color: #4b5563; line-height: 1.6;">This quotation is valid for 30 days from the date of issue. All work will be completed to BS 7671 (18th Edition) standards.</p>
+
+              <p style="margin: 0; font-size: 15px; color: #1f2937; line-height: 1.6;">
+                Best regards,<br>
+                <strong style="font-size: 16px;">${companyName}</strong><br>
+                ${company?.phone ? `<span style="color: #6b7280;">📞 ${company.phone}</span><br>` : ''}
+                ${company?.email ? `<span style="color: #6b7280;">✉️ ${company.email}</span>` : ''}
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f9fafb; padding: 24px 30px; border-top: 1px solid #e5e7eb;">
+              <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="text-align: center;">
+                    <div style="font-size: 13px; color: #6b7280; margin-bottom: 8px;">⚡ Quote generated by ElecMate Professional Suite</div>
+                    <div style="font-size: 11px; color: #9ca3af;">This quotation is valid for 30 days and subject to our terms and conditions.</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>
   `;
