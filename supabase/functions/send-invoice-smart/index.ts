@@ -9,6 +9,7 @@ import { handleError, ValidationError, RateLimitError, ExternalAPIError } from '
 import { decryptToken } from '../_shared/encryption.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { encode as encodeBase64 } from 'https://deno.land/std@0.168.0/encoding/base64.ts';
 
 const DAILY_RATE_LIMIT = 100;
 
@@ -376,7 +377,11 @@ async function sendGmailEmail(
   attachmentFilename?: string
 ) {
   const email = createRFC822Email(to, subject, body, attachmentBase64, attachmentFilename);
-  const base64Email = btoa(email).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  
+  // UTF-8 safe base64url encoding
+  const bytes = new TextEncoder().encode(email);
+  const base64 = encodeBase64(bytes);
+  const base64Email = base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
   const response = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
     method: 'POST',
