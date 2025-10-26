@@ -93,6 +93,57 @@ export const QuoteInvoiceDashboard = () => {
     checkOverdueInvoices();
   }, [invoices, fetchInvoices]);
 
+  // Real-time subscription for quote status updates
+  useEffect(() => {
+    console.log('📡 Setting up real-time quote subscription...');
+    
+    const channel = supabase
+      .channel('quotes-realtime-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'quotes',
+        },
+        (payload) => {
+          console.log('🔄 Real-time quote update received:', payload);
+          
+          const updatedQuote = payload.new as Quote;
+          
+          // Show success toast when quote is accepted
+          if (updatedQuote.acceptance_status === 'accepted') {
+            toast({
+              title: "🎉 Quote Accepted!",
+              description: `${updatedQuote.client?.name || 'Client'} accepted quote ${updatedQuote.quoteNumber}`,
+              variant: "default",
+            });
+          }
+          
+          // Show notification when quote is rejected
+          if (updatedQuote.acceptance_status === 'rejected') {
+            toast({
+              title: "Quote Declined",
+              description: `${updatedQuote.client?.name || 'Client'} declined quote ${updatedQuote.quoteNumber}`,
+              variant: "default",
+            });
+          }
+          
+          // Trigger a refresh to update the UI
+          fetchInvoices();
+        }
+      )
+      .subscribe((status) => {
+        console.log('📡 Real-time subscription status:', status);
+      });
+
+    // Cleanup subscription on unmount
+    return () => {
+      console.log('🔌 Cleaning up real-time subscription...');
+      supabase.removeChannel(channel);
+    };
+  }, [fetchInvoices]);
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-GB", {
       style: "currency",
