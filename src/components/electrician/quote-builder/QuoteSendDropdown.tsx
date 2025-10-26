@@ -98,6 +98,18 @@ export const QuoteSendDropdown = ({
     try {
       setIsSendingEmail(true);
 
+      // Validate client email FIRST
+      const cleanTo = quote.client?.email?.trim();
+      if (!cleanTo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanTo)) {
+        toast({
+          title: "Invalid Client Email",
+          description: "Client email address is invalid. Please correct it in the quote and try again.",
+          variant: "destructive",
+        });
+        setIsSendingEmail(false);
+        return;
+      }
+
       // Get current session
       let { data: { session }, error: sessionError } = await supabase.auth.getSession();
       
@@ -132,17 +144,6 @@ export const QuoteSendDropdown = ({
         return;
       }
 
-      // Validate client email before sending
-      const clientEmail = quote.client?.email?.trim();
-      if (!clientEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail)) {
-        toast({
-          title: "Invalid Client Email",
-          description: "Please add a valid email address for this client before sending",
-          variant: "destructive",
-        });
-        return;
-      }
-
       // Get latest quote data
       const { data: freshQuote, error: fetchError } = await supabase
         .from('quotes')
@@ -151,6 +152,12 @@ export const QuoteSendDropdown = ({
         .single();
 
       if (fetchError) throw fetchError;
+
+      // Ensure client_data in DB is current
+      await supabase
+        .from('quotes')
+        .update({ client_data: quote.client as any })
+        .eq('id', quote.id);
 
       // Check if PDF is current
       const pdfIsCurrent = freshQuote?.pdf_url && 
@@ -242,6 +249,7 @@ export const QuoteSendDropdown = ({
         body: { 
           documentType: 'quote',
           quoteId: quote.id,
+          to: cleanTo,
           attachmentBase64: pdfBase64,
           attachmentFilename: `Quote_${quote.quoteNumber}.pdf`
         },
@@ -250,11 +258,24 @@ export const QuoteSendDropdown = ({
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        // Map backend errors to user-friendly messages
+        const errorMsg = error.message || '';
+        
+        if (errorMsg.includes('Invalid email address')) {
+          throw new Error('Client email address looks invalid. Edit the Client email and save the quote.');
+        } else if (errorMsg.includes('No email account connected')) {
+          throw new Error('Connect Gmail/Outlook in Settings → Email Integration.');
+        } else if (errorMsg.includes('Daily email limit reached')) {
+          throw new Error('Daily email limit reached (100/day). Resets at midnight UTC.');
+        } else {
+          throw error;
+        }
+      }
 
       toast({
         title: 'Quote sent with PDF',
-        description: `Quote ${quote.quoteNumber} sent to ${clientEmail} with attached PDF`,
+        description: `Quote ${quote.quoteNumber} sent to ${cleanTo} with attached PDF`,
         variant: 'success',
         duration: 4000,
       });

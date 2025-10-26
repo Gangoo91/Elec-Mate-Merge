@@ -65,7 +65,7 @@ serve(async (req: Request) => {
     const config = configs[0];
 
     // If document ID provided, fetch document data and generate email
-    let emailTo = to;
+    let emailTo = to?.trim();
     let emailSubject = subject;
     let emailBody = body;
     let pdfAttachment = attachmentBase64;
@@ -103,10 +103,12 @@ serve(async (req: Request) => {
         ? (typeof doc.job_details === 'string' ? JSON.parse(doc.job_details) : doc.job_details)
         : {};
 
-      // Set recipient
-      emailTo = clientData?.email;
+      // Set recipient - only use DB email if not provided by caller
       if (!emailTo) {
-        throw new ValidationError('Client email not found in document');
+        emailTo = (clientData?.email || '').trim();
+        if (!emailTo) {
+          throw new ValidationError('Client email not found in document');
+        }
       }
 
       // Generate subject and body based on document type
@@ -251,8 +253,15 @@ serve(async (req: Request) => {
       throw new ValidationError('Email details incomplete');
     }
 
+    // Normalize email - extract from "Name <email@domain>" format if needed
+    emailTo = emailTo.trim();
+    const emailMatch = emailTo.match(/<(.+?)>/);
+    if (emailMatch) {
+      emailTo = emailMatch[1].trim();
+    }
+
     if (!isValidEmail(emailTo)) {
-      throw new ValidationError('Invalid email address');
+      throw new ValidationError(`Invalid email address: ${emailTo || 'empty'}`);
     }
 
     // Check rate limit
