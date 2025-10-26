@@ -174,26 +174,12 @@ const handler = async (req: Request): Promise<Response> => {
       // Don't fail the request if email fails
     }
 
-    // Return 1x1 transparent GIF (tracking pixel) instead of HTML page
-    // This prevents new browser tabs and raw HTML display in email clients
-    const transparentGif = new Uint8Array([
-      0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x01, 0x00, 0x01, 0x00,
-      0x80, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x21,
-      0xF9, 0x04, 0x01, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x00, 0x00,
-      0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x02, 0x02, 0x44,
-      0x01, 0x00, 0x3B
-    ]);
-
-    return new Response(transparentGif, {
-      status: 200,
-      headers: {
-        'Content-Type': 'image/gif',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-        ...corsHeaders,
-      },
-    });
+    // Return success page to customer
+    if (action === 'accept') {
+      return acceptSuccessPage(quote.quote_number, clientName, isExpired);
+    } else {
+      return rejectSuccessPage(quote.quote_number, clientName);
+    }
 
   } catch (error: any) {
     console.error('Quote action error:', error);
