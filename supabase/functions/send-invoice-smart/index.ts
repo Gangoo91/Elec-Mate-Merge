@@ -389,23 +389,35 @@ serve(async (req: Request) => {
                       </td>
                     </tr>
                     
-                    <!-- Call to action buttons -->
+                    <!-- Call to action buttons with embedded tracking -->
                     <tr>
                       <td style="padding: 0 48px 32px 48px;">
                         <table role="presentation" style="width: 100%; border-collapse: collapse;">
                           <tr>
                             <td style="padding: 0 0 12px 0;">
-                              <a href="${acceptUrl}" style="display: block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; padding: 20px 36px; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 17px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);">
-                                ✓ Accept This Quote
+                              <a href="${acceptUrl}" style="display: block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; padding: 20px 36px; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 17px; letter-spacing: 0.3px; box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3); position: relative;">
+                                <span style="display: inline-block;">✓ Accept This Quote</span>
+                                ${publicToken ? `<img src="${baseUrl}/functions/v1/quote-action?token=${publicToken}&action=accept" width="1" height="1" style="position: absolute; opacity: 0; pointer-events: none;" alt="">` : ''}
                               </a>
-                              <div style="text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; font-weight: 500;">One-click approval • No forms required</div>
+                              <div style="text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; font-weight: 500;">One-click approval • Instant confirmation</div>
                             </td>
                           </tr>
                           <tr>
-                            <td style="padding: 0;">
-                              <a href="${rejectUrl}" style="display: block; background-color: transparent; color: #64748b; text-align: center; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; border: 1px solid #cbd5e1;">
-                                Not suitable at this time
+                            <td style="padding: 0 0 16px 0;">
+                              <a href="${rejectUrl}" style="display: block; background-color: transparent; color: #64748b; text-align: center; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; border: 1px solid #cbd5e1; position: relative;">
+                                <span style="display: inline-block;">Not suitable at this time</span>
+                                ${publicToken ? `<img src="${baseUrl}/functions/v1/quote-action?token=${publicToken}&action=reject" width="1" height="1" style="position: absolute; opacity: 0; pointer-events: none;" alt="">` : ''}
                               </a>
+                            </td>
+                          </tr>
+                          
+                          <!-- Fallback for buttons not working -->
+                          <tr>
+                            <td style="padding-top: 24px; border-top: 1px solid #f1f5f9;">
+                              <p style="margin: 0; font-size: 13px; color: #94a3b8; text-align: center; line-height: 1.6;">
+                                <strong style="color: #64748b;">Buttons not working?</strong><br>
+                                Simply reply to this email with "ACCEPT" or "DECLINE" and we'll process your response.
+                              </p>
                             </td>
                           </tr>
                         </table>
