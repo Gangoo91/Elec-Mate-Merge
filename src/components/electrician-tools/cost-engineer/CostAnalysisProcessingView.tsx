@@ -34,7 +34,7 @@ const ANALYSIS_STAGES: ProcessingStage[] = [
       'Creating alternative quotes...',
       'Preparing value engineering suggestions...'
     ],
-    duration: 15
+    duration: 120
   },
   {
     id: 'finalize',
@@ -45,7 +45,7 @@ const ANALYSIS_STAGES: ProcessingStage[] = [
       'Generating material order list...',
       'Preparing timescale estimates...'
     ],
-    duration: 4
+    duration: 12
   }
 ];
 
@@ -117,7 +117,7 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
             <p className="text-muted-foreground text-xs mt-1">
               AI is searching 45,000+ pricing items and generating detailed cost breakdown...
               <br />
-              <span className="text-elec-yellow/70">This process requires thorough analysis for accurate results</span>
+              <span className="text-elec-yellow/70">This typically takes 2-3 minutes for accurate results</span>
             </p>
           </div>
 
@@ -139,6 +139,14 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
               ⏱️ Progress estimate based on typical request duration
             </p>
           </div>
+
+          {elapsedTime > 120 && (
+            <div className="mt-4 p-3 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+              <p className="text-xs text-orange-400">
+                ⏱️ Still processing... Generating alternative quotes and order lists takes time for accuracy.
+              </p>
+            </div>
+          )}
         </CardHeader>
 
         <CardContent className="space-y-6 pb-8">

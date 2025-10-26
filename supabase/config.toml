@@ -61,7 +61,7 @@ timeout_sec = 300
 
 [functions.cost-engineer-v3]
 verify_jwt = false
-timeout_sec = 300
+timeout_sec = 240
 
 [functions.health-safety-v3]
 verify_jwt = false

@@ -415,8 +415,8 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         model: 'gpt-5-mini-2025-08-07',
         systemPrompt,
         userPrompt,
-        maxTokens: 2500,
-        timeoutMs: 35000,
+        maxTokens: 12000,
+        timeoutMs: 180000,
         tools: [{
         type: 'function',
         function: {
