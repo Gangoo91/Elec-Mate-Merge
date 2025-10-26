@@ -88,11 +88,6 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY not configured');
-    }
-
     // Step 1: Use intelligent RAG with cross-encoder reranking
     logger.debug('Starting intelligent RAG for H&S');
     const ragStart = Date.now();
