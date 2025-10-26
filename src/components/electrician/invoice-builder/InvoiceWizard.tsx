@@ -8,7 +8,7 @@ import { Quote } from '@/types/quote';
 import { Invoice } from '@/types/invoice';
 import { useInvoiceBuilder } from '@/hooks/useInvoiceBuilder';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
-import { InvoiceProgressIndicator } from './InvoiceProgressIndicator';
+
 import { InvoiceReviewStep } from './steps/InvoiceReviewStep';
 import { InvoiceClientDetailsStep } from './steps/InvoiceClientDetailsStep';
 import { InvoiceItemsStep } from './steps/InvoiceItemsStep';
@@ -155,10 +155,6 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
           <div className="w-20" />
         </div>
 
-        <InvoiceProgressIndicator
-          currentStep={currentStep}
-          steps={steps}
-        />
       </div>
 
       {/* Main Content with Swipe Gestures */}
