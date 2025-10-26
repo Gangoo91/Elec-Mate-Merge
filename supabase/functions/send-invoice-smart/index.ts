@@ -19,7 +19,7 @@ serve(async (req: Request) => {
   }
 
   try {
-    const { documentType, quoteId, invoiceId, to, subject, body, attachmentBase64, attachmentFilename } = await req.json();
+    const { documentType, quoteId, invoiceId, to, subject, body, attachmentBase64, attachmentFilename, preferExistingPdf } = await req.json();
 
     // Validate document type (optional - defaults to 'invoice')
     const type = documentType || 'invoice';
@@ -32,6 +32,8 @@ serve(async (req: Request) => {
     if (!to && !quoteId && !invoiceId) {
       throw new ValidationError('Either documentId or manual email details required');
     }
+
+    console.log(`📧 Send request - Type: ${type}, preferExistingPdf: ${preferExistingPdf}`);
 
     // Email validation happens after document data extraction (line 256)
 
@@ -95,63 +97,98 @@ serve(async (req: Request) => {
         .eq('user_id', user.id)
         .single();
 
-      // Generate fresh PDF (mirroring send-quote-email logic)
-      console.log('📄 Generating PDF for invoice...');
+      // Check if we should use existing PDF or generate fresh
+      let pdfDownloadUrl: string | null = null;
+      let documentId: string | null = null;
 
-      const pdfResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-pdf-monkey`, {
-        method: 'POST',
-        headers: {
-          'Authorization': authHeader,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          quote: doc,
-          companyProfile: company,
-          invoice_mode: doc.invoice_raised === true || docType === 'invoice',
-          force_regenerate: true
-        })
-      });
+      if (preferExistingPdf && doc.pdf_document_id) {
+        console.log('📄 Attempting to use existing PDF...');
+        
+        // Check if PDF is current
+        const pdfIsCurrent = doc.pdf_generated_at && 
+                            new Date(doc.pdf_generated_at) >= new Date(doc.updated_at);
 
-      const pdfData = await pdfResponse.json();
-      let pdfDownloadUrl = pdfData?.downloadUrl;
-      const documentId = pdfData?.documentId;
-
-      // Poll for PDF if not immediately available (max 90 seconds)
-      if (!pdfDownloadUrl && documentId) {
-        console.log('⏳ Polling for PDF download URL...');
-        for (let i = 0; i < 45; i++) {
-          await new Promise(resolve => setTimeout(resolve, 2000));
+        if (pdfIsCurrent) {
+          // Try to get download URL from existing document
           const statusResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-pdf-monkey`, {
             method: 'POST',
             headers: {
               'Authorization': authHeader,
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ documentId, mode: 'status' })
+            body: JSON.stringify({ documentId: doc.pdf_document_id, mode: 'status' })
           });
+          
           const statusData = await statusResponse.json();
           if (statusData?.downloadUrl) {
             pdfDownloadUrl = statusData.downloadUrl;
-            break;
+            documentId = doc.pdf_document_id;
+            console.log('✅ Using existing PDF');
           }
         }
       }
 
+      // If no existing PDF or preferExistingPdf is false, generate fresh
       if (!pdfDownloadUrl) {
-        throw new ValidationError('Failed to generate PDF - please try again');
-      }
+        console.log('📄 Generating fresh PDF...');
 
-      // Update quote record with PDF metadata
-      if (documentId) {
-        const newVersion = (doc.pdf_version || 0) + 1;
-        await supabase
-          .from('quotes')
-          .update({
-            pdf_document_id: documentId,
-            pdf_generated_at: new Date().toISOString(),
-            pdf_version: newVersion
+        const pdfResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-pdf-monkey`, {
+          method: 'POST',
+          headers: {
+            'Authorization': authHeader,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            quote: doc,
+            companyProfile: company,
+            invoice_mode: doc.invoice_raised === true || docType === 'invoice',
+            force_regenerate: true
           })
-          .eq('id', docId);
+        });
+
+        const pdfData = await pdfResponse.json();
+        pdfDownloadUrl = pdfData?.downloadUrl;
+        documentId = pdfData?.documentId;
+
+        // Poll for PDF if not immediately available (max 90 seconds)
+        if (!pdfDownloadUrl && documentId) {
+          console.log('⏳ Polling for PDF download URL...');
+          for (let i = 0; i < 45; i++) {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            const statusResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-pdf-monkey`, {
+              method: 'POST',
+              headers: {
+                'Authorization': authHeader,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ documentId, mode: 'status' })
+            });
+            const statusData = await statusResponse.json();
+            if (statusData?.downloadUrl) {
+              pdfDownloadUrl = statusData.downloadUrl;
+              break;
+            }
+          }
+        }
+
+        if (!pdfDownloadUrl) {
+          throw new ValidationError('Failed to generate PDF - please try again');
+        }
+
+        // Update quote record with PDF metadata
+        if (documentId) {
+          const newVersion = (doc.pdf_version || 0) + 1;
+          await supabase
+            .from('quotes')
+            .update({
+              pdf_document_id: documentId,
+              pdf_generated_at: new Date().toISOString(),
+              pdf_version: newVersion
+            })
+            .eq('id', docId);
+        }
+
+        console.log('✅ Fresh PDF generated');
       }
 
       // Download PDF as binary data for attachment

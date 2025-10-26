@@ -150,7 +150,7 @@ export const QuoteSendDropdown = ({
     }
   };
 
-  const handleSendEmail = async () => {
+  const handleSendEmail = async (preferExistingPdf = false) => {
     try {
       setIsSendingEmail(true);
 
@@ -192,12 +192,35 @@ export const QuoteSendDropdown = ({
           variant: "destructive",
         });
         
-        // Navigate after a brief delay
         setTimeout(() => {
           navigate('/electrician/settings?tab=email');
         }, 2000);
         
         return;
+      }
+
+      // If user wants to use existing PDF, check if it exists
+      if (preferExistingPdf) {
+        const { data: freshQuote } = await supabase
+          .from('quotes')
+          .select('pdf_document_id, pdf_generated_at, updated_at')
+          .eq('id', quote.id)
+          .single();
+
+        const hasPdf = freshQuote?.pdf_document_id;
+        const pdfIsCurrent = hasPdf && 
+                            freshQuote?.pdf_generated_at && 
+                            new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
+
+        if (!hasPdf || !pdfIsCurrent) {
+          toast({
+            title: "No saved PDF",
+            description: "Tap Download PDF first, then send via Gmail.",
+            variant: "destructive",
+          });
+          setIsSendingEmail(false);
+          return;
+        }
       }
 
       // Get latest quote data
@@ -219,7 +242,8 @@ export const QuoteSendDropdown = ({
       const { error } = await supabase.functions.invoke('send-invoice-smart', {
         body: { 
           documentType: 'quote',
-          quoteId: quote.id
+          quoteId: quote.id,
+          preferExistingPdf
         },
         headers: {
           Authorization: `Bearer ${session.access_token}`
@@ -676,7 +700,7 @@ ${companyName}`;
           Send Options
         </DropdownMenuLabel>
         <DropdownMenuItem
-          onClick={handleSendEmail}
+          onClick={() => handleSendEmail(true)}
           disabled={isSendingEmail}
           className="cursor-pointer"
         >
@@ -686,8 +710,23 @@ ${companyName}`;
             <Mail className="mr-2 h-4 w-4" />
           )}
           <div className="flex flex-col">
-            <span>Send via Email</span>
-            <span className="text-xs text-muted-foreground">Automatic delivery via Gmail</span>
+            <span>Send via Gmail (use existing PDF)</span>
+            <span className="text-xs text-muted-foreground">Send the PDF you generated</span>
+          </div>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => handleSendEmail(false)}
+          disabled={isSendingEmail}
+          className="cursor-pointer"
+        >
+          {isSendingEmail ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Mail className="mr-2 h-4 w-4" />
+          )}
+          <div className="flex flex-col">
+            <span>Send via Gmail (generate fresh PDF)</span>
+            <span className="text-xs text-muted-foreground">Auto-generate and send new PDF</span>
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem
