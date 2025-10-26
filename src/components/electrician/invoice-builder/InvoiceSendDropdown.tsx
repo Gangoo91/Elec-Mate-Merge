@@ -99,12 +99,13 @@ export const InvoiceSendDropdown = ({
         return;
       }
 
-      // Use send-invoice-smart edge function (similar to quotes)
+      // Send via backend (PDF generation happens automatically)
       const { error } = await supabase.functions.invoke('send-invoice-smart', {
         body: { 
           documentType: 'invoice',
-          quoteId: invoice.id,
-          to: cleanTo
+          invoiceId: invoice.id,
+          to: cleanTo,
+          // NO PDF attachment needed - backend generates it!
         },
         headers: {
           Authorization: `Bearer ${session.access_token}`
@@ -126,8 +127,8 @@ export const InvoiceSendDropdown = ({
       }
 
       toast({
-        title: 'Invoice sent via your email',
-        description: `Invoice ${invoice.invoice_number} sent to ${cleanTo}`,
+        title: 'Invoice sent successfully',
+        description: `Invoice ${invoice.invoice_number} sent to ${cleanTo} with PDF attachment`,
         variant: 'success',
         duration: 4000,
       });
@@ -469,7 +470,7 @@ ${companyName}`;
           )}
           <div className="flex flex-col">
             <span>Send via Gmail/Outlook</span>
-            <span className="text-xs text-muted-foreground">Using your connected email account</span>
+            <span className="text-xs text-muted-foreground">Send invoice with PDF attachment</span>
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem

@@ -95,6 +95,75 @@ serve(async (req: Request) => {
         .eq('user_id', user.id)
         .single();
 
+      // Generate fresh PDF (mirroring send-quote-email logic)
+      console.log('📄 Generating PDF for invoice...');
+
+      const pdfResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-pdf-monkey`, {
+        method: 'POST',
+        headers: {
+          'Authorization': authHeader,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          quote: doc,
+          companyProfile: company,
+          invoice_mode: doc.invoice_raised === true || docType === 'invoice',
+          force_regenerate: true
+        })
+      });
+
+      const pdfData = await pdfResponse.json();
+      let pdfDownloadUrl = pdfData?.downloadUrl;
+      const documentId = pdfData?.documentId;
+
+      // Poll for PDF if not immediately available (max 90 seconds)
+      if (!pdfDownloadUrl && documentId) {
+        console.log('⏳ Polling for PDF download URL...');
+        for (let i = 0; i < 45; i++) {
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          const statusResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-pdf-monkey`, {
+            method: 'POST',
+            headers: {
+              'Authorization': authHeader,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ documentId, mode: 'status' })
+          });
+          const statusData = await statusResponse.json();
+          if (statusData?.downloadUrl) {
+            pdfDownloadUrl = statusData.downloadUrl;
+            break;
+          }
+        }
+      }
+
+      if (!pdfDownloadUrl) {
+        throw new ValidationError('Failed to generate PDF - please try again');
+      }
+
+      // Update quote record with PDF metadata
+      if (documentId) {
+        const newVersion = (doc.pdf_version || 0) + 1;
+        await supabase
+          .from('quotes')
+          .update({
+            pdf_document_id: documentId,
+            pdf_generated_at: new Date().toISOString(),
+            pdf_version: newVersion
+          })
+          .eq('id', docId);
+      }
+
+      // Download PDF as binary data for attachment
+      console.log('📥 Downloading PDF for email attachment...');
+      const pdfFileResponse = await fetch(pdfDownloadUrl);
+      if (!pdfFileResponse.ok) {
+        throw new ExternalAPIError('PDF Monkey', 'Failed to download generated PDF');
+      }
+      const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
+      pdfAttachment = btoa(String.fromCharCode(...new Uint8Array(pdfArrayBuffer)));
+      console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
+
       // Parse client data
       const clientData = typeof doc.client_data === 'string' 
         ? JSON.parse(doc.client_data) 
@@ -183,7 +252,10 @@ serve(async (req: Request) => {
           </html>
         `;
       } else {
-        emailSubject = `Invoice ${doc.invoice_number || doc.quote_number} from ${companyName}`;
+        // Set PDF filename based on document type
+        pdfFilename = `Invoice_${doc.invoice_number || doc.quote_number}.pdf`;
+        
+        emailSubject = `Invoice ${doc.invoice_number || doc.quote_number} - Payment Due from ${companyName}`;
         emailBody = `
           <!DOCTYPE html>
           <html>
@@ -192,25 +264,34 @@ serve(async (req: Request) => {
             <style>
               body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
               .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-              .header { background: #fbbf24; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-              .header h1 { margin: 0; color: #1f2937; }
+              .header { background: #dc2626; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+              .header h1 { margin: 0; color: white; font-size: 32px; }
+              .invoice-badge { background: white; color: #dc2626; padding: 8px 16px; border-radius: 4px; font-weight: bold; display: inline-block; margin-top: 10px; }
               .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
-              .details { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+              .details { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border: 2px solid #dc2626; }
+              .amount-due { font-size: 36px; color: #dc2626; font-weight: bold; text-align: center; padding: 20px; background: #fee; border-radius: 8px; margin: 20px 0; }
               .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e5e7eb; }
               .detail-row:last-child { border-bottom: none; }
               .detail-label { font-weight: 600; color: #6b7280; }
-              .detail-value { color: #1f2937; }
+              .detail-value { color: #1f2937; font-weight: 600; }
+              .payment-section { background: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border: 2px solid #f59e0b; }
               .footer { text-align: center; margin-top: 30px; color: #6b7280; font-size: 14px; }
             </style>
           </head>
           <body>
             <div class="container">
               <div class="header">
-                <h1>💷 Invoice ${doc.invoice_number || doc.quote_number}</h1>
+                <h1>💷 INVOICE</h1>
+                <div class="invoice-badge">${doc.invoice_number || doc.quote_number}</div>
               </div>
               <div class="content">
                 <p>Dear ${clientData?.name || 'Valued Client'},</p>
-                <p>Please find attached your invoice for work completed.</p>
+                <p><strong>Please find attached your invoice for completed work.</strong></p>
+                
+                <div class="amount-due">
+                  £${(doc.total || 0).toFixed(2)}
+                  <div style="font-size: 14px; color: #666; font-weight: normal; margin-top: 5px;">Amount Due</div>
+                </div>
                 
                 <div class="details">
                   <div class="detail-row">
@@ -218,18 +299,39 @@ serve(async (req: Request) => {
                     <span class="detail-value">${doc.invoice_number || doc.quote_number}</span>
                   </div>
                   <div class="detail-row">
-                    <span class="detail-label">Total Amount:</span>
-                    <span class="detail-value">£${(doc.total || 0).toFixed(2)}</span>
+                    <span class="detail-label">Invoice Date:</span>
+                    <span class="detail-value">${doc.invoice_date ? new Date(doc.invoice_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                   </div>
                   ${doc.invoice_due_date ? `
                   <div class="detail-row">
                     <span class="detail-label">Due Date:</span>
-                    <span class="detail-value">${new Date(doc.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                    <span class="detail-value" style="color: #dc2626; font-size: 16px;">${new Date(doc.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                  </div>
+                  ` : ''}
+                  ${doc.work_completion_date ? `
+                  <div class="detail-row">
+                    <span class="detail-label">Work Completed:</span>
+                    <span class="detail-value">${new Date(doc.work_completion_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                   </div>
                   ` : ''}
                 </div>
 
-                <p>Payment details and terms are included in the attached invoice. Please contact us if you have any questions.</p>
+                ${doc.settings?.paymentTerms || company?.payment_terms ? `
+                <div class="payment-section">
+                  <h3 style="margin-top: 0; color: #f59e0b;">📋 Payment Terms</h3>
+                  <p>${doc.settings?.paymentTerms || company?.payment_terms}</p>
+                </div>
+                ` : ''}
+
+                <p><strong>The complete invoice is attached as a PDF.</strong> Please review the attached document for full details including itemised charges and payment instructions.</p>
+
+                ${doc.invoice_notes ? `
+                <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                  <p style="margin: 0;"><strong>Notes:</strong> ${doc.invoice_notes}</p>
+                </div>
+                ` : ''}
+
+                <p>If you have any questions regarding this invoice, please don't hesitate to contact us.</p>
 
                 <p style="margin-top: 30px;">Best regards,<br>
                 <strong>${companyName}</strong><br>
@@ -237,7 +339,8 @@ serve(async (req: Request) => {
                 ${companyEmail ? `✉️ ${companyEmail}` : ''}</p>
 
                 <div class="footer">
-                  <p>⚡ Powered by ElecMate Professional Suite</p>
+                  <p>⚡ Invoice generated by ElecMate Professional Suite</p>
+                  <p style="font-size: 12px; color: #999;">This is an official invoice. Please retain for your records.</p>
                 </div>
               </div>
             </div>
@@ -246,8 +349,7 @@ serve(async (req: Request) => {
         `;
       }
 
-      // Note: PDF generation would happen in the frontend before calling this function
-      // or we could integrate generate-pdf-monkey here if needed
+      // PDF is now generated and attached automatically
     }
 
     if (!emailTo || !emailSubject || !emailBody) {
