@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap } from "lucide-react";
+import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface Agent {
@@ -10,7 +11,22 @@ interface Agent {
   color: string;
   description: string;
   expertise: string[];
+  comingSoon?: boolean;
 }
+
+const getGradientForColor = (color: string): string => {
+  const gradients: Record<string, string> = {
+    'text-elec-yellow': 'from-yellow-500 to-yellow-600',
+    'text-green-400': 'from-green-500 to-emerald-600',
+    'text-blue-400': 'from-blue-500 to-blue-600',
+    'text-orange-400': 'from-orange-500 to-red-500',
+    'text-purple-400': 'from-purple-500 to-purple-600',
+    'text-pink-400': 'from-pink-500 to-rose-500',
+    'text-cyan-400': 'from-cyan-500 to-teal-500',
+    'text-indigo-400': 'from-indigo-500 to-indigo-600',
+  };
+  return gradients[color] || 'from-gray-500 to-gray-600';
+};
 
 const AGENTS: Agent[] = [
   {
@@ -38,20 +54,20 @@ const AGENTS: Agent[] = [
     expertise: ['Installation methods', 'Practical tips', 'Tool selection', 'Best practices']
   },
   {
-    id: 'health-safety',
-    name: 'Health & Safety',
-    icon: Shield,
-    color: 'text-orange-400',
-    description: 'Risk assessments, method statements, safety procedures',
-    expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Safety procedures']
-  },
-  {
     id: 'commissioning',
     name: 'Testing & Commissioning',
     icon: CheckCircle2,
     color: 'text-purple-400',
     description: 'Test procedures, certification, compliance verification',
     expertise: ['Testing procedures', 'EIC completion', 'Compliance checks', 'Fault diagnosis']
+  },
+  {
+    id: 'health-safety',
+    name: 'Health & Safety',
+    icon: Shield,
+    color: 'text-orange-400',
+    description: 'Risk assessments, method statements, safety procedures',
+    expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Safety procedures']
   },
   {
     id: 'project-manager',
@@ -75,14 +91,17 @@ const AGENTS: Agent[] = [
     icon: GraduationCap,
     color: 'text-indigo-400',
     description: 'Educational guidance, exam prep & concept explanations',
-    expertise: ['Level 3 guidance', 'Concept explanations', 'Exam preparation', 'Practice questions']
+    expertise: ['Level 3 guidance', 'Concept explanations', 'Exam preparation', 'Practice questions'],
+    comingSoon: true
   }
 ];
 
 const AgentSelectorPage = () => {
   const navigate = useNavigate();
 
-  const handleAgentSelect = (agentId: string) => {
+  const handleAgentSelect = (agentId: string, comingSoon?: boolean) => {
+    if (comingSoon) return;
+    
     const routes: Record<string, string> = {
       'designer': '/electrician/circuit-designer',
       'cost-engineer': '/electrician/cost-engineer',
@@ -127,48 +146,78 @@ const AgentSelectorPage = () => {
           </div>
 
           {/* Agent Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
             {AGENTS.map((agent) => {
               const IconComponent = agent.icon;
               return (
                 <Card 
                   key={agent.id}
-                  className="group hover:border-elec-yellow/40 transition-all duration-300 cursor-pointer"
-                  onClick={() => handleAgentSelect(agent.id)}
+                  className={`
+                    group relative overflow-hidden min-h-[180px]
+                    border-2 border-elec-yellow/10 
+                    hover:border-elec-yellow/40 
+                    hover:shadow-2xl hover:scale-[1.02]
+                    transition-all duration-300 
+                    ${agent.comingSoon ? 'opacity-75 cursor-not-allowed' : 'cursor-pointer'}
+                  `}
+                  onClick={() => handleAgentSelect(agent.id, agent.comingSoon)}
                 >
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <IconComponent className={`h-8 w-8 ${agent.color} transition-transform group-hover:scale-110`} />
+                  {/* Coming Soon Badge */}
+                  {agent.comingSoon && (
+                    <div className="absolute top-3 right-3 z-10">
+                      <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs font-semibold">
+                        Coming Soon
+                      </Badge>
                     </div>
-                    <CardTitle className="text-lg sm:text-xl">{agent.name}</CardTitle>
-                    <CardDescription className="text-sm">
+                  )}
+
+                  <CardHeader className="pb-4 space-y-4 p-6 sm:p-8">
+                    {/* Large Gradient Icon Circle */}
+                    <div className={`
+                      w-16 h-16 sm:w-20 sm:h-20 rounded-full 
+                      flex items-center justify-center
+                      bg-gradient-to-br ${getGradientForColor(agent.color)}
+                      group-hover:scale-110 transition-transform duration-300
+                    `}>
+                      <IconComponent className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
+                    </div>
+
+                    {/* Agent Name */}
+                    <CardTitle className="text-lg sm:text-xl font-bold">
+                      {agent.name}
+                    </CardTitle>
+
+                    {/* Description */}
+                    <CardDescription className="text-sm leading-relaxed">
                       {agent.description}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
+
+                  <CardContent className="pt-0 px-6 sm:px-8 pb-6 sm:pb-8">
+                    {/* Expertise List */}
                     <div className="space-y-2">
-                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                        Expertise:
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                        Expertise
                       </p>
-                      <ul className="space-y-1">
-                        {agent.expertise.map((item, idx) => (
+                      <ul className="space-y-1.5">
+                        {agent.expertise.slice(0, 4).map((item, idx) => (
                           <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                            <span className="text-elec-yellow mt-0.5">•</span>
+                            <span className="text-elec-yellow mt-0.5 font-bold">→</span>
                             <span>{item}</span>
                           </li>
                         ))}
                       </ul>
-                      <Button 
-                        className="w-full mt-4 touch-manipulation"
-                        variant="outline"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleAgentSelect(agent.id);
-                        }}
-                      >
-                        Consult {agent.name}
-                      </Button>
                     </div>
+
+                    {/* Hover CTA Indicator */}
+                    {!agent.comingSoon && (
+                      <div className="mt-6 pt-4 border-t border-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <p className="text-sm text-elec-yellow font-medium flex items-center gap-2">
+                          Click to consult
+                          <ArrowRight className="h-4 w-4" />
+                        </p>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               );
