@@ -119,7 +119,7 @@ const {
       />
 
       {/* Main Content */}
-      <Card>
+      <Card data-quote-step="content">
         <CardHeader className="p-3 sm:p-4 md:p-6 pb-3 sm:pb-4">
           <CardTitle className="text-lg sm:text-xl">{steps[currentStep].title}</CardTitle>
           <p className="text-sm text-muted-foreground">{steps[currentStep].description}</p>

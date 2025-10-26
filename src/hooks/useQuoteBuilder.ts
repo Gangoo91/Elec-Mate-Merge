@@ -150,11 +150,26 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
   const nextStep = useCallback(() => {
     setCurrentStep(prev => Math.min(prev + 1, 2));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Scroll to the Card content, not the page top
+    const cardElement = document.querySelector('[data-quote-step="content"]');
+    if (cardElement) {
+      cardElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, []);
 
   const prevStep = useCallback(() => {
     setCurrentStep(prev => Math.max(prev - 1, 0));
+    
+    // Scroll to the Card content, not the page top
+    const cardElement = document.querySelector('[data-quote-step="content"]');
+    if (cardElement) {
+      cardElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, []);
 
   const generateQuote = useCallback(async () => {
@@ -294,7 +309,13 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         setCurrentStep(2);
       }
       
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Scroll to the Card content
+      const cardElement = document.querySelector('[data-quote-step="content"]');
+      if (cardElement) {
+        cardElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
 
       console.log('Quote Generation - Process completed');
     } catch (error) {
