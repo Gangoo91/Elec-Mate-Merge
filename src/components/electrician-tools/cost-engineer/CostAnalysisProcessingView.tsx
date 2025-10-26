@@ -34,7 +34,7 @@ const ANALYSIS_STAGES: ProcessingStage[] = [
       'Creating alternative quotes...',
       'Preparing value engineering suggestions...'
     ],
-    duration: 28
+    duration: 15
   },
   {
     id: 'finalize',

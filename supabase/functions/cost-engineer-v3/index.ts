@@ -404,27 +404,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 4. Add value engineering suggestions
 5. Include VAT (20%)`;
 
-    // Step 4a: Check system health to determine provider
-    let useOpenAI = true; // Default to OpenAI
-    let lovableAIHealthy = false;
-    
-    if (LOVABLE_API_KEY) {
-      try {
-        const healthResponse = await fetch(`${supabaseUrl}/functions/v1/system-health`, {
-          headers: { 'Authorization': `Bearer ${supabaseKey}` }
-        });
-        if (healthResponse.ok) {
-          const health = await healthResponse.json();
-          const lovableCheck = health.checks?.find((c: any) => c.service === 'lovable_ai');
-          lovableAIHealthy = lovableCheck?.status === 'healthy';
-          logger.info('System health check', { lovableAI: lovableCheck?.status });
-        }
-      } catch (err) {
-        logger.warn('Health check failed', { error: err instanceof Error ? err.message : String(err) });
-      }
-    }
-
-    // Step 4b: Call AI with provider failover - FAST FAIL for mobile
+    // Step 4: Call AI with GPT-5-Mini
     logger.debug('Calling AI', { provider: useOpenAI ? 'OpenAI' : 'Lovable AI' });
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     const aiStart = Date.now();
@@ -432,11 +412,11 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
     let aiResult;
     try {
       aiResult = await callAI(OPENAI_API_KEY, {
-        model: 'gpt-5-2025-08-07',
+        model: 'gpt-5-mini-2025-08-07',
         systemPrompt,
         userPrompt,
-        maxTokens: 1500,
-        timeoutMs: 20000,
+        maxTokens: 2500,
+        timeoutMs: 35000,
         tools: [{
         type: 'function',
         function: {
@@ -653,201 +633,11 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       logger.info('AI call succeeded', { provider: 'openai', duration: aiMs });
     } catch (aiError) {
       const aiMs = Date.now() - aiStart;
-      logger.warn('OpenAI failed, attempting fallback', { duration: aiMs, error: aiError instanceof Error ? aiError.message : String(aiError) });
-      
-      // Try Lovable AI if available and healthy
-      if (LOVABLE_API_KEY && lovableAIHealthy) {
-        try {
-          const geminiStart = Date.now();
-          aiResult = await callAI(OPENAI_API_KEY, {
-            model: 'openai/gpt-5-mini',
-            systemPrompt,
-            userPrompt,
-            maxTokens: 1500,
-            timeoutMs: 25000,
-            temperature: 0.2,
-            tools: [{
-              type: 'function',
-              function: {
-                name: 'provide_cost_estimate',
-                description: 'Return detailed cost estimate with materials and labour breakdown',
-                parameters: {
-                  type: 'object',
-                  properties: {
-                    response: { type: 'string', description: 'Detailed cost analysis (150-250 words)' },
-                    materials: {
-                      type: 'object',
-                      properties: {
-                        items: {
-                          type: 'array',
-                          items: {
-                            type: 'object',
-                            properties: {
-                              description: { type: 'string' },
-                              quantity: { type: 'number' },
-                              unit: { type: 'string' },
-                              unitPrice: { type: 'number' },
-                              total: { type: 'number' },
-                              supplier: { type: 'string' },
-                              inDatabase: { type: 'boolean' }
-                            },
-                            required: ['description', 'quantity', 'unit', 'unitPrice', 'total', 'supplier', 'inDatabase']
-                          }
-                        },
-                        subtotal: { type: 'number' },
-                        vat: { type: 'number' },
-                        total: { type: 'number' }
-                      },
-                      required: ['items', 'subtotal', 'vat', 'total']
-                    },
-                    labour: {
-                      type: 'object',
-                      properties: {
-                        tasks: {
-                          type: 'array',
-                          items: {
-                            type: 'object',
-                            properties: {
-                              task: { type: 'string' },
-                              hours: { type: 'number' },
-                              rate: { type: 'number' },
-                              total: { type: 'number' }
-                            },
-                            required: ['task', 'hours', 'rate', 'total']
-                          }
-                        },
-                        subtotal: { type: 'number' },
-                        vat: { type: 'number' },
-                        total: { type: 'number' }
-                      },
-                      required: ['tasks', 'subtotal', 'vat', 'total']
-                    },
-                    summary: {
-                      type: 'object',
-                      properties: {
-                        materialsTotal: { type: 'number' },
-                        labourTotal: { type: 'number' },
-                        subtotal: { type: 'number' },
-                        vat: { type: 'number' },
-                        grandTotal: { type: 'number' }
-                      },
-                      required: ['grandTotal']
-                    },
-                    timescales: {
-                      type: 'object',
-                      properties: {
-                        phases: {
-                          type: 'array',
-                          items: {
-                            type: 'object',
-                            properties: {
-                              phase: { type: 'string' },
-                              days: { type: 'number' },
-                              description: { type: 'string' }
-                            },
-                            required: ['phase', 'days', 'description']
-                          }
-                        },
-                        totalDays: { type: 'number' },
-                        totalWeeks: { type: 'number' },
-                        startToFinish: { type: 'string' }
-                      },
-                      required: ['phases', 'totalDays', 'startToFinish']
-                    },
-                    alternatives: {
-                      type: 'object',
-                      properties: {
-                        budget: {
-                          type: 'object',
-                          properties: {
-                            description: { type: 'string' },
-                            grandTotal: { type: 'number' },
-                            tradeoffs: { type: 'array', items: { type: 'string' } }
-                          },
-                          required: ['description', 'grandTotal', 'tradeoffs']
-                        },
-                        standard: {
-                          type: 'object',
-                          properties: {
-                            description: { type: 'string' },
-                            grandTotal: { type: 'number' },
-                            tradeoffs: { type: 'array', items: { type: 'string' } }
-                          },
-                          required: ['description', 'grandTotal', 'tradeoffs']
-                        },
-                        premium: {
-                          type: 'object',
-                          properties: {
-                            description: { type: 'string' },
-                            grandTotal: { type: 'number' },
-                            tradeoffs: { type: 'array', items: { type: 'string' } }
-                          },
-                          required: ['description', 'grandTotal', 'tradeoffs']
-                        },
-                        recommended: { type: 'string', enum: ['budget', 'standard', 'premium'] }
-                      },
-                      required: ['budget', 'standard', 'premium', 'recommended']
-                    },
-                    orderList: {
-                      type: 'object',
-                      properties: {
-                        bySupplier: {
-                          type: 'object',
-                          additionalProperties: {
-                            type: 'object',
-                            properties: {
-                              items: { type: 'array', items: { type: 'object' } },
-                              subtotal: { type: 'number' }
-                            },
-                            required: ['items', 'subtotal']
-                          }
-                        },
-                        totalItems: { type: 'number' }
-                      },
-                      required: ['bySupplier', 'totalItems']
-                    },
-                    valueEngineering: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          suggestion: { type: 'string' },
-                          potentialSaving: { type: 'number' }
-                        },
-                        required: ['suggestion', 'potentialSaving']
-                      }
-                    },
-                    suggestedNextAgents: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          agent: { type: 'string' },
-                          reason: { type: 'string' },
-                          priority: { type: 'string', enum: ['high', 'medium', 'low'] }
-                        },
-                        required: ['agent', 'reason', 'priority']
-                      }
-                    }
-                  },
-                  required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList'],
-                  additionalProperties: false
-                }
-              }
-            }],
-            toolChoice: { type: 'function', function: { name: 'provide_cost_estimate' } }
-          });
-          logger.info('Lovable AI fallback succeeded', { duration: Date.now() - geminiStart });
-        } catch (fallbackError) {
-          logger.error('All AI providers failed, using deterministic fallback', { 
-            error: fallbackError instanceof Error ? fallbackError.message : String(fallbackError) 
-          });
-          aiResult = null; // Trigger fallback below
-        }
-      } else {
-        logger.warn('No AI fallback available, using deterministic estimate');
-        aiResult = null;
-      }
+      logger.error('AI call failed', { 
+        duration: aiMs, 
+        error: aiError instanceof Error ? aiError.message : String(aiError) 
+      });
+      throw new Error(`AI generation failed: ${aiError instanceof Error ? aiError.message : 'Unknown error'}`);
     }
 
     // Step 4c: Deterministic fallback if all AI fails
