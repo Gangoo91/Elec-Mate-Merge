@@ -84,6 +84,7 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     const companyName = companyProfile?.company_name || 'Your Company';
+    const senderEmail = (companyProfile?.company_email || 'andrewgangoo91@gmail.com').trim();
 
     console.log(`Sending quote ${quoteNumber} to ${clientEmail}`);
 
@@ -191,8 +192,10 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error('Failed to download PDF from PDF Monkey');
     }
     const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
-    const pdfBase64 = base64Encode(new Uint8Array(pdfArrayBuffer));
-    console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
+      const pdfBase64 = base64Encode(new Uint8Array(pdfArrayBuffer));
+      // Wrap base64 into 76-character lines for MIME compatibility
+      const pdfBase64Wrapped = pdfBase64.replace(/.{1,76}/g, '$&\r\n');
+      console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
 
     // Get Gmail credentials from Supabase secrets
     const rawClientId = Deno.env.get('GMAIL_CLIENT_ID') ?? '';
@@ -262,6 +265,7 @@ const handler = async (req: Request): Promise<Response> => {
     const pdfFilename = `Quote_${quoteNumber}.pdf`;
     
     const emailMessage = [
+      `From: ${companyName} <${senderEmail}>`,
       `To: ${clientEmail}`,
       `Subject: ${emailSubject}`,
       'MIME-Version: 1.0',
@@ -277,7 +281,7 @@ const handler = async (req: Request): Promise<Response> => {
       'Content-Transfer-Encoding: base64',
       `Content-Disposition: attachment; filename="${pdfFilename}"`,
       '',
-      pdfBase64,
+      pdfBase64Wrapped,
       '',
       `--${boundary}--`
     ].join('\r\n');
