@@ -210,7 +210,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
 
   return (
     <>
-      <Card className="border-primary/30 shadow-lg hover:shadow-xl transition-shadow rounded-xl">
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
