@@ -113,10 +113,20 @@ export const useInvoiceStorage = () => {
       }
 
       // Generate invoice number if it's TEMP or missing
+      // Detect if this is a standalone invoice (not from a quote)
+      const isStandaloneInvoice = !invoice.originalQuoteId && !invoice.quoteNumber;
+      
       let finalInvoiceNumber = invoice.invoice_number;
       if (!finalInvoiceNumber || finalInvoiceNumber === 'Invoice/TEMP') {
-        finalInvoiceNumber = await generateSequentialInvoiceNumber();
-        console.log('📝 Generated invoice number:', finalInvoiceNumber);
+        // Import the standalone generator at the top if not already imported
+        const { generateStandaloneInvoiceNumber } = await import('@/utils/invoice-number-generator');
+        
+        finalInvoiceNumber = isStandaloneInvoice 
+          ? await generateStandaloneInvoiceNumber()
+          : await generateSequentialInvoiceNumber();
+        
+        console.log('📝 Generated invoice number:', finalInvoiceNumber, 
+                    isStandaloneInvoice ? '(standalone)' : '(quote-based)');
       }
 
       // Merge additional invoice items into the main items array

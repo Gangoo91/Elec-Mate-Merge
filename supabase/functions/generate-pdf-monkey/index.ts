@@ -275,6 +275,7 @@ serve(async (req) => {
       const vatAmount = settings.vatRegistered 
         ? (itemsSubtotal + overhead + profit) * ((settings.vatRate || 20) / 100)
         : 0;
+      // FIXED: Include overhead + profit in total calculation
       const total = itemsSubtotal + overhead + profit + vatAmount;
 
       console.log('[PDF-MONKEY] Recalculated totals:', {
