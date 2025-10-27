@@ -680,14 +680,34 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                       size="sm"
                       className="w-full justify-between border-primary/30 text-elec-light/70 hover:text-elec-light"
                     >
-                      <span className="text-xs">View Raw JSON Data</span>
+                      <span className="text-xs">View Complete JSON Data (Request + Response)</span>
                       {showJsonData ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                     </Button>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="mt-2">
                     <div className="bg-card/50 border border-primary/20 rounded-lg p-4 max-h-96 overflow-auto">
                       <pre className="text-xs text-elec-light/80 whitespace-pre-wrap font-mono">
-                        {JSON.stringify(aiContent, null, 2)}
+                        {JSON.stringify({
+                          requestData: {
+                            briefingType: formData.briefingType,
+                            briefingContext: {
+                              briefingTitle: formData.briefingTitle,
+                              briefingContent: formData.briefingContent,
+                              workScope: formData.workScope,
+                              environment: formData.environment,
+                              location: formData.location,
+                              teamSize: formData.teamSize,
+                              experienceLevel: formData.experienceLevel
+                            },
+                            hazards: {
+                              identified: formData.identifiedHazards,
+                              custom: formData.customHazards,
+                              riskLevel: formData.riskLevel,
+                              specialConsiderations: formData.specialConsiderations
+                            }
+                          },
+                          aiResponse: aiContent
+                        }, null, 2)}
                       </pre>
                     </div>
                   </CollapsibleContent>
