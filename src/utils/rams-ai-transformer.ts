@@ -68,7 +68,7 @@ export function transformHealthSafetyToRAMS(
   const identifiedHazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }> = [];
   const activities: string[] = [];
   
-  // Defensive extraction with comprehensive fallback paths
+  // STEP 4: Improved extraction with comprehensive fallback paths
   const structuredData = (hsResponse as any)?.structuredData 
     || (hsResponse.response as any)?.structuredData 
     || {};
@@ -78,7 +78,7 @@ export function transformHealthSafetyToRAMS(
     || (hsResponse.response as any)?.riskAssessment 
     || {};
   
-  const sourceHazards = riskAssessment.hazards 
+  let sourceHazards = riskAssessment.hazards 
     || (hsResponse as any).hazards
     || [];
   
@@ -90,9 +90,14 @@ export function transformHealthSafetyToRAMS(
     || (hsResponse as any).emergencyProcedures
     || [];
   
+  // Log detailed extraction for debugging
   console.log('🔍 Transformer extracting H&S data:', {
-    path: (hsResponse as any)?.structuredData ? 'hsResponse.structuredData' : 'hsResponse.response.structuredData',
+    extractionPath: structuredData?.riskAssessment ? 'hsResponse.structuredData' : 
+                    (hsResponse.response as any)?.structuredData ? 'hsResponse.response.structuredData' :
+                    hsResponse.riskAssessment ? 'hsResponse.riskAssessment' :
+                    'hsResponse.hazards',
     hazardsFound: sourceHazards?.length || 0,
+    firstThreeHazards: sourceHazards?.slice(0, 3).map((h: any) => h.hazard || h.hazardDescription) || [],
     ppeFound: ppe?.length || 0,
     emergencyProcsFound: emergencyProcedures?.length || 0,
     willUseFallback: !sourceHazards || sourceHazards.length === 0

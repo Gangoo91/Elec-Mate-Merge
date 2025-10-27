@@ -483,10 +483,11 @@ export function useAIRAMS(): UseAIRAMSReturn {
         throw new Error('Generation cancelled');
       }
 
-      let hsDataToUse = hsData;
-
+      // Health & Safety data will be validated and potentially replaced below
+      
       // More specific error detection with enhanced diagnostics
-      if (hsError) {
+      let mutableHsError = hsError; // Create mutable copy since hsError is const
+      if (mutableHsError) {
         console.error('❌ Health & Safety network error:', {
           error: hsError,
           message: hsError.message,
@@ -553,79 +554,104 @@ export function useAIRAMS(): UseAIRAMSReturn {
       const extractedHazards = extractHazards(hsData);
       const hasValidHazards = extractedHazards.length > 0;
 
-      // STEP 3: Poll for cached response if timeout occurred
-      const pollForCachedResponse = async (): Promise<any | null> => {
-        console.log('🔄 Polling ai_response_cache for completed response...');
-        try {
-          const { data: { user } } = await supabase.auth.getUser();
-          if (!user) return null;
+      let hsDataToUse = hsData;
+      let shouldUseFallback = false;
 
-          // Check cache for recent completed responses
-          const { data: cachedResults } = await supabase
-            .from('ai_response_cache')
-            .select('*')
-            .gte('timestamp', new Date(Date.now() - 600000).toISOString()) // Last 10 minutes
-            .order('timestamp', { ascending: false })
-            .limit(5);
+      // STEP 1: Explicitly preserve AI data when valid (bypasses ALL fallback logic)
+      if (hasValidHazards && extractedHazards.length >= 8) {
+        console.log(`✅ USING AI-GENERATED DATA WITH ${extractedHazards.length} HAZARDS - BYPASSING ALL FALLBACK`);
+        hsDataToUse = hsData; // Explicitly preserve AI data
+        
+        // Ensure success flag is set
+        if (!hsDataToUse.success) {
+          hsDataToUse = { ...hsDataToUse, success: true };
+        }
+        
+        // Skip all fallback logic
+        shouldUseFallback = false;
+        mutableHsError = null; // Clear any errors since we have valid data
+      } else {
+        // STEP 3: Poll for cached response if timeout occurred
+        const pollForCachedResponse = async (): Promise<any | null> => {
+          console.log('🔄 Polling ai_response_cache for completed response...');
+          try {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) return null;
 
-          if (cachedResults && cachedResults.length > 0) {
-            for (const cached of cachedResults) {
-              if (cached.response && typeof cached.response === 'object') {
-                const responseObj = cached.response as any;
-                const hazards = responseObj?.structuredData?.riskAssessment?.hazards;
-                if (Array.isArray(hazards) && hazards.length > 8) {
-                  console.log(`✅ Found cached response with ${hazards.length} hazards`);
-                  return { success: true, ...(responseObj as object) };
+            // Check cache for recent completed responses
+            const { data: cachedResults } = await supabase
+              .from('ai_response_cache')
+              .select('*')
+              .gte('timestamp', new Date(Date.now() - 600000).toISOString()) // Last 10 minutes
+              .order('timestamp', { ascending: false })
+              .limit(5);
+
+            if (cachedResults && cachedResults.length > 0) {
+              for (const cached of cachedResults) {
+                if (cached.response && typeof cached.response === 'object') {
+                  const responseObj = cached.response as any;
+                  const hazards = responseObj?.structuredData?.riskAssessment?.hazards;
+                  if (Array.isArray(hazards) && hazards.length > 8) {
+                    console.log(`✅ Found cached response with ${hazards.length} hazards`);
+                    return { success: true, ...(responseObj as object) };
+                  }
                 }
               }
             }
+          } catch (err) {
+            console.error('Cache poll error:', err);
           }
-        } catch (err) {
-          console.error('Cache poll error:', err);
-        }
-        return null;
-      };
+          return null;
+        };
 
-      // STEP 4: Validate data before triggering fallback
-      let shouldUseFallback = false;
-      
-      if (hsError) {
-        const isTimeout = hsError.message?.toLowerCase().includes('timeout');
-        
-        if (isTimeout) {
-          console.warn('⏱️ Timeout detected - checking for valid data and cache...');
+        // Validate data before triggering fallback
+        if (mutableHsError) {
+          const isTimeout = mutableHsError.message?.toLowerCase().includes('timeout');
           
-          // Check if we got valid data despite timeout
-          if (hasValidHazards && extractedHazards.length >= 8) {
-            console.log('✅ Valid data received despite timeout - using AI data');
-            toast({
-              title: "Network unstable",
-              description: "Risk assessment completed successfully despite connection issues",
-            });
-          } else {
-            // Try to get cached response
-            const cachedData = await pollForCachedResponse();
-            if (cachedData) {
-              console.log('✅ Using cached response from database');
-              hsDataToUse = cachedData;
+          if (isTimeout) {
+            console.warn('⏱️ Timeout detected - checking for valid data and cache...');
+            
+            // Check if we got valid data despite timeout
+            if (hasValidHazards && extractedHazards.length >= 8) {
+              console.log('✅ Valid data received despite timeout - using AI data');
+              hsDataToUse = hsData;
+              shouldUseFallback = false;
+              mutableHsError = null;
               toast({
-                title: "Retrieved from cache",
-                description: "Risk assessment recovered from recent generation",
+                title: "Network unstable",
+                description: "Risk assessment completed successfully despite connection issues",
               });
+            } else {
+              // Try to get cached response
+              const cachedData = await pollForCachedResponse();
+              if (cachedData) {
+                console.log('✅ Using cached response from database');
+                hsDataToUse = cachedData;
+                shouldUseFallback = false;
+                mutableHsError = null;
+                toast({
+                  title: "Retrieved from cache",
+                  description: "Risk assessment recovered from recent generation",
+                });
+              } else {
+                shouldUseFallback = true;
+              }
+            }
+          } else {
+            // Non-timeout error - check if we still got usable data
+            if (hasValidHazards && extractedHazards.length >= 5) {
+              console.warn('⚠️ Network error but valid data received - using AI data, ignoring error');
+              hsDataToUse = hsData;
+              shouldUseFallback = false;
+              mutableHsError = null;
             } else {
               shouldUseFallback = true;
             }
           }
-        } else {
-          // Non-timeout error - check if we still got usable data
-          if (hasValidHazards && extractedHazards.length >= 5) {
-            console.warn('⚠️ Network error but valid data received - using AI data, ignoring error');
-          } else {
-            shouldUseFallback = true;
-          }
+        } else if (!hsData || (!hasValidHazards && !hsData.success)) {
+          // STEP 2: More conservative fallback - only if BOTH no hazards AND no success
+          shouldUseFallback = true;
         }
-      } else if (!hsData || !hsData.success || !hasValidHazards) {
-        shouldUseFallback = true;
       }
 
       // STEP 2 & 5: Only trigger fallback when truly no data available
@@ -833,6 +859,20 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       // Step 3: Transform agent outputs to RAMS format
       console.log('🔄 Transforming agent outputs to RAMS format...');
+      
+      // STEP 3: Defensive check before transformer - ensure we're not passing fallback data
+      const finalHazardCheck = extractHazards(hsDataToUse);
+      if (finalHazardCheck.length < 8 && extractedHazards.length >= 8) {
+        console.warn('⚠️ hsDataToUse has fewer hazards than original - RESTORING AI DATA');
+        hsDataToUse = hsData; // Restore original AI data
+      }
+
+      console.log('🔄 Pre-transformation validation:', {
+        hazardsBeingPassed: finalHazardCheck.length,
+        willUseAIData: finalHazardCheck.length >= 8,
+        originalHazardCount: extractedHazards.length
+      });
+      
       const combinedData = combineAgentOutputsToRAMS(
         hsDataToUse,
         installerData,
@@ -842,10 +882,26 @@ export function useAIRAMS(): UseAIRAMSReturn {
         }
       );
 
+      // STEP 5: Quality gate after transformation - verify no hazard loss
       console.log('✅ RAMS transformation complete:', {
         ramsRisks: combinedData.ramsData?.risks?.length || 0,
         methodSteps: combinedData.methodData?.steps?.length || 0
       });
+
+      // Verify we didn't lose hazards in transformation
+      if (combinedData.ramsData?.risks?.length < 8 && extractedHazards.length >= 8) {
+        console.error('❌ CRITICAL: Hazards lost during transformation!', {
+          extractedFromAI: extractedHazards.length,
+          afterTransformation: combinedData.ramsData?.risks?.length,
+          lostHazards: extractedHazards.length - (combinedData.ramsData?.risks?.length || 0)
+        });
+        
+        toast({
+          title: "Data loss detected",
+          description: `Only ${combinedData.ramsData?.risks?.length} of ${extractedHazards.length} hazards preserved. This is a bug - please report.`,
+          variant: "destructive"
+        });
+      }
 
       setRamsData(combinedData.ramsData);
       setMethodData(combinedData.methodData);
