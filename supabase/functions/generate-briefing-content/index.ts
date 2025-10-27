@@ -331,7 +331,11 @@ ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - ad
     console.log('[BRIEFING-AI] Content generated successfully via tool call');
 
     return new Response(
-      JSON.stringify({ success: true, content: briefingContent }),
+      JSON.stringify({ 
+        success: true, 
+        content: briefingContent,
+        rawAiFields: briefingContent  // Pass through raw AI response fields
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
