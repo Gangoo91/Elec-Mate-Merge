@@ -950,7 +950,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
 
     // Determine expected minimum hazards based on job complexity indicators
     let expectedMinHazards = 10;
-    const jobDesc = planData.jobDescription?.toLowerCase() || '';
+    const jobDesc = query?.toLowerCase() || '';
     const complexityIndicators = [
       jobDesc.includes('3-phase') || jobDesc.includes('three-phase'),
       jobDesc.includes('heritage') || /\b(19\d{2}|18\d{2})\b/.test(jobDesc), // Historical dates

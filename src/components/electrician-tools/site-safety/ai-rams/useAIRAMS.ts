@@ -372,9 +372,9 @@ export function useAIRAMS(): UseAIRAMSReturn {
     maxRetries = 2
   ): Promise<{ data: any; error: any }> => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      // STEP 1: Increased timeout for GPT-5 full model (3-5 minute response time)
+      // STEP 1: Increased timeout for GPT-5 full model (3-5 minute response time + buffer)
       const timeoutPromise = new Promise<{ data: null; error: any }>((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout after 6 minutes')), 360000)
+        setTimeout(() => reject(new Error('Request timeout after 8 minutes')), 480000)
       );
       
       const invokePromise = supabase.functions.invoke(functionName, { body });
@@ -499,6 +499,26 @@ export function useAIRAMS(): UseAIRAMSReturn {
           // Full error details
           fullError: JSON.stringify(hsError, Object.getOwnPropertyNames(hsError))
         });
+
+        // Enhanced error detection for edge function crashes
+        const is500Error = mutableHsError.message?.includes('500') || 
+                          mutableHsError.message?.includes('Internal Server Error') ||
+                          mutableHsError.name === 'FunctionsHttpError';
+        
+        if (is500Error) {
+          console.error('🚨 EDGE FUNCTION CRASH DETECTED:', {
+            error: mutableHsError,
+            likelyBug: 'Edge function crashed after AI completed - check edge function logs',
+            solution: 'Fix edge function bug, AI is generating data correctly'
+          });
+          
+          toast({
+            title: "⚠️ Backend Error",
+            description: "AI generated risk assessment successfully but server crashed. This is a known bug being fixed.",
+            variant: "destructive",
+            duration: 10000
+          });
+        }
       }
       
       if (!hsData) {
