@@ -507,16 +507,23 @@ export function useAIRAMS(): UseAIRAMSReturn {
         workType: jobScale
       });
 
-      // DIAGNOSTIC: Log raw response structure
-      console.log('🔍 RAW Health & Safety Response:', {
-        hasData: !!hsData,
-        dataKeys: hsData ? Object.keys(hsData) : [],
-        success: hsData?.success,
-        structuredDataKeys: hsData?.structuredData ? Object.keys(hsData.structuredData) : [],
-        riskAssessmentKeys: hsData?.structuredData?.riskAssessment ? Object.keys(hsData.structuredData.riskAssessment) : [],
-        hazardCount: hsData?.structuredData?.riskAssessment?.hazards?.length || 0,
-        firstHazard: hsData?.structuredData?.riskAssessment?.hazards?.[0],
-        fullResponsePreview: JSON.stringify(hsData, null, 2).substring(0, 1000) // First 1000 chars
+      // CRITICAL: Log COMPLETE raw response to find exact path
+      console.log('🔍 COMPLETE RAW RESPONSE FROM EDGE FUNCTION:', {
+        typeOfHsData: typeof hsData,
+        isNull: hsData === null,
+        isUndefined: hsData === undefined,
+        topLevelKeys: hsData ? Object.keys(hsData) : 'NO KEYS',
+        fullResponse: JSON.stringify(hsData, null, 2), // FULL response, not truncated
+        // Check ALL possible nesting levels
+        paths: {
+          'direct.success': hsData?.success,
+          'direct.structuredData': !!hsData?.structuredData,
+          'direct.structuredData.riskAssessment': !!hsData?.structuredData?.riskAssessment,
+          'direct.structuredData.riskAssessment.hazards': hsData?.structuredData?.riskAssessment?.hazards?.length,
+          'wrapped.data.success': hsData?.data?.success,
+          'wrapped.data.structuredData.riskAssessment.hazards': hsData?.data?.structuredData?.riskAssessment?.hazards?.length,
+          'wrapped.response.structuredData.riskAssessment.hazards': hsData?.response?.structuredData?.riskAssessment?.hazards?.length,
+        }
       });
 
       if (abortControllerRef.current?.signal.aborted) {
@@ -597,21 +604,36 @@ export function useAIRAMS(): UseAIRAMSReturn {
         });
       }
       
-      // STEP 2: Fixed hazard extraction with correct path priority
+      // STEP 2: Unwrap response if it's wrapped in extra layer + comprehensive path checking
+      // Supabase functions.invoke() returns edge function response directly in `data`
+      // But edge function might wrap its own response
+      let unwrappedData = hsData;
+      
+      // Check if response is wrapped in extra layers
+      if (hsData?.data && typeof hsData.data === 'object') {
+        console.log('🔓 Detected wrapped response - unwrapping hsData.data');
+        unwrappedData = hsData.data;
+      } else if (hsData?.response && typeof hsData.response === 'object') {
+        console.log('🔓 Detected wrapped response - unwrapping hsData.response');
+        unwrappedData = hsData.response;
+      }
+
       const extractHazards = (responseData: any): any[] => {
-        console.log('🔍 HAZARD EXTRACTION STARTING:', {
+        console.log('🔍 HAZARD EXTRACTION WITH UNWRAPPED DATA:', {
           hasStructuredData: !!responseData?.structuredData,
           hasRiskAssessment: !!responseData?.structuredData?.riskAssessment,
-          hazardsAtCorrectPath: responseData?.structuredData?.riskAssessment?.hazards?.length || 0
+          hazardsAtDirectPath: responseData?.structuredData?.riskAssessment?.hazards?.length || 0,
+          responseDataKeys: Object.keys(responseData || {})
         });
 
-        // PRIORITY ORDER: Check most common path first (from edge function logs)
+        // PRIORITY ORDER: Check most common paths including unwrapped
         const possiblePaths = [
-          responseData?.structuredData?.riskAssessment?.hazards, // CORRECT PATH from logs
-          responseData?.response?.structuredData?.riskAssessment?.hazards,
-          responseData?.structuredData?.hazards,
-          responseData?.riskAssessment?.hazards,
-          responseData?.hazards
+          responseData?.structuredData?.riskAssessment?.hazards, // Primary path (edge function format)
+          responseData?.data?.structuredData?.riskAssessment?.hazards, // Double wrapped
+          responseData?.response?.structuredData?.riskAssessment?.hazards, // Alternative wrapping
+          responseData?.riskAssessment?.hazards, // Direct risk assessment
+          responseData?.structuredData?.hazards, // Alternative structure
+          responseData?.hazards, // Direct hazards array
         ];
 
         for (let i = 0; i < possiblePaths.length; i++) {
@@ -619,48 +641,52 @@ export function useAIRAMS(): UseAIRAMSReturn {
           if (Array.isArray(path) && path.length > 0) {
             console.log(`✅ Found ${path.length} hazards at path index ${i}`, {
               pathIndex: i,
-              pathDescription: i === 0 ? 'structuredData.riskAssessment.hazards (CORRECT)' :
-                              i === 1 ? 'response.structuredData.riskAssessment.hazards' :
-                              i === 2 ? 'structuredData.hazards' :
-                              i === 3 ? 'riskAssessment.hazards' : 'hazards',
-              firstHazard: path[0]?.hazard || path[0]?.hazardDescription,
-              sampleHazards: path.slice(0, 3).map((h: any) => h.hazard || h.hazardDescription)
+              pathName: ['structuredData.riskAssessment.hazards', 'data.structuredData.riskAssessment.hazards', 
+                         'response.structuredData.riskAssessment.hazards', 'riskAssessment.hazards',
+                         'structuredData.hazards', 'hazards'][i],
+              sampleHazards: path.slice(0, 3).map((h: any) => h.hazard || h.hazardDescription || 'Unknown')
             });
             return path;
           }
         }
 
-        console.error('❌ NO HAZARDS FOUND IN ANY PATH - AI generation may have failed');
+        console.error('❌ NO HAZARDS FOUND IN ANY PATH', {
+          responseDataType: typeof responseData,
+          responseDataKeys: Object.keys(responseData || {}),
+          fullResponse: JSON.stringify(responseData, null, 2).substring(0, 500)
+        });
         return [];
       };
 
-      const extractedHazards = extractHazards(hsData);
+      // Extract hazards from unwrapped data
+      const extractedHazards = extractHazards(unwrappedData);
       const hasValidHazards = extractedHazards.length > 0;
 
-      console.log('🎯 EXTRACTION RESULTS:', {
+      console.log('🎯 EXTRACTION RESULTS AFTER UNWRAPPING:', {
         extractedCount: extractedHazards.length,
         hasValidHazards,
-        hasSuccessFlag: hsData?.success,
+        unwrappedDataSuccess: unwrappedData?.success,
+        originalDataSuccess: hsData?.success,
         hasError: !!hsError,
-        willUseAIData: hasValidHazards, // ANY valid hazards = use AI data
+        willUseAIData: hasValidHazards,
       });
 
-      let hsDataToUse = hsData;
+      // Use unwrapped data for the rest of processing
+      let hsDataToUse = unwrappedData;
       let shouldUseFallback = false;
 
-      // ✅ FIX: Use AI data if we extracted ANY hazards successfully
-      // Remove arbitrary threshold - if AI generated hazards, use them ALL
-      if (hasValidHazards) {
-        console.log(`✅ USING AI-GENERATED DATA WITH ${extractedHazards.length} HAZARDS - NO FALLBACK`);
-        console.log('🎯 AI data preserved completely - all hazards will be used');
-        hsDataToUse = hsData; // Preserve ALL AI data
+      // CRITICAL: NEVER use fallback if edge function succeeded OR we have valid hazards
+      if (unwrappedData?.success || hasValidHazards) {
+        console.log(`✅ USING AI-GENERATED DATA - Success: ${unwrappedData?.success}, Hazards: ${extractedHazards.length}`);
+        console.log('🎯 AI data preserved - no fallback will be triggered');
+        hsDataToUse = unwrappedData; // Use unwrapped data
         
-        // Ensure success flag is set
-        if (!hsDataToUse.success) {
+        // Ensure success flag is set if we have valid hazards
+        if (!hsDataToUse.success && hasValidHazards) {
           hsDataToUse = { ...hsDataToUse, success: true };
         }
         
-        // Never use fallback if we have AI hazards
+        // Never use fallback
         shouldUseFallback = false;
         mutableHsError = null; // Clear any errors since we have valid data
       } else {
