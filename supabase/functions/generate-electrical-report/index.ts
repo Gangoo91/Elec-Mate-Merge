@@ -148,22 +148,39 @@ Communication Preferences:
 - Emphasize Safety: ${formData.emphasizeSafety ? 'Yes - highlight safety importance' : 'No - balanced approach'}
 - Include BS7671 References: ${formData.includeBS7671 ? 'Yes - include UK regulation references' : 'No - avoid technical references'}
 
-CRITICAL REQUIREMENTS:
-1. Use British English spelling and terminology throughout (colour not color, earthing not grounding, etc.)
-2. Reference UK electrical standards and regulations where appropriate
-3. ${formData.includeBS7671 ? 'Include specific BS7671 18th Edition regulation numbers (e.g., 411.3.3, 134.1.1) and safety classifications (C1, C2, C3, FI)' : 'Avoid technical regulation references but maintain accuracy'}
-4. Use appropriate ${formData.tone} tone whilst remaining professional
-5. Write at ${formData.readingLevel} complexity level appropriate for a ${formData.clientType}
-6. ${formData.includeAnalogy ? 'Include helpful analogies using British everyday examples (like car MOTs, home insurance, etc.)' : 'Use direct, clear explanations without analogies'}
+CRITICAL FORMATTING REQUIREMENTS:
+- Write in clear, flowing paragraphs - NOT bullet points
+- Use a conversational, narrative style that reads naturally
+- Break content into 3-5 well-structured paragraphs maximum
+- Each paragraph should be 3-5 sentences long
+- Use section headings (with **bold** markers) to organize content
+- Only use bullet points sparingly for specific lists (e.g., numbered action items)
 
-Structure your explanation to cover:
-- **What we found:** Clear description of the electrical issue/work
-- **Why it matters:** Safety, compliance, and practical implications
-- **What this means for you:** Direct impact on the client
-- **Next steps:** Clear actions required or recommendations
-- ${formData.includeCostInfo ? '**Cost considerations:** Approximate cost implications and factors affecting pricing' : ''}
+CONTENT STRUCTURE:
+Write your explanation as a cohesive narrative with these sections:
 
-Use natural, conversational British English. Explain any technical terms you must use. ${formData.emphasizeSafety ? 'Emphasise safety aspects and the importance of prompt action where relevant.' : 'Provide balanced information focusing on practical implications.'} Ensure the explanation helps the client make informed decisions about their electrical installation.`;
+**What we found:**
+[Write 2-3 flowing sentences describing the electrical issue/work in clear terms]
+
+**Why it matters:**
+[Write 3-4 sentences explaining safety, compliance, and practical implications. ${formData.includeAnalogy ? 'Include one helpful British analogy (like MOT, home insurance, etc.).' : ''} ${formData.emphasizeSafety ? 'Emphasise the safety aspects clearly.' : ''}]
+
+**What this means for you:**
+[Write 2-3 sentences on direct impact to the client and their property]
+
+**Next steps:**
+[Write 2-3 clear action items as a flowing paragraph OR a simple numbered list only if there are specific sequential steps]
+${formData.includeCostInfo ? '\n\n**Cost considerations:**\n[Write 1-2 sentences about approximate cost implications]' : ''}
+
+TONE & LANGUAGE REQUIREMENTS:
+1. Use British English spelling and terminology (colour not color, earthing not grounding, etc.)
+2. ${formData.includeBS7671 ? 'Include specific BS 7671 18th Edition regulation numbers (e.g., 411.3.3) and safety classifications (C1, C2, C3, FI)' : 'Avoid technical regulation references'}
+3. Write at ${formData.readingLevel} complexity level appropriate for a ${formData.clientType}
+4. Use ${formData.tone} tone whilst remaining professional
+5. Explain technical terms naturally within sentences
+6. Write as if speaking directly to the client in person
+
+Remember: Write in flowing paragraphs that read naturally, not as a bullet-pointed list. Make it sound like a helpful electrician explaining things clearly over a cup of tea, not a formal report.`;
 
     case 'consumer-unit':
       return basePrompt + `

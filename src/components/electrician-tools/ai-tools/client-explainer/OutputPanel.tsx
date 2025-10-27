@@ -27,47 +27,41 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
   const processContentForDisplay = (text: string) => {
     if (!text) return text;
     
-    // Clean the text first
-    let cleanText = text
-      .replace(/\s+/g, ' ')
-      .trim();
-
-    // Split into paragraphs
-    const paragraphs = cleanText.split(/\n\n+/);
+    let cleanText = text.replace(/\s+/g, ' ').trim();
     
-    return paragraphs.map(paragraph => {
-      let formatted = paragraph.trim();
+    // Split by double line breaks to preserve paragraph structure
+    const sections = cleanText.split(/\n\n+/);
+    
+    return sections.map(section => {
+      let formatted = section.trim();
       
-      // Check if it's a heading (ends with colon or is short and caps)
-      if (formatted.endsWith(':') || (formatted.length < 50 && formatted === formatted.toUpperCase())) {
-        return `<h3 class="text-xl font-bold text-foreground mb-6 mt-8 first:mt-0">${formatted}</h3>`;
+      // Check if it's a heading (starts with ** and ends with : or **)
+      if (/^\*\*.*\*\*:?$/.test(formatted)) {
+        const headingText = formatted.replace(/\*\*/g, '').replace(/:$/, '');
+        return `<h3 class="text-lg font-bold text-elec-yellow mb-3 mt-6 first:mt-0">${headingText}</h3>`;
       }
       
-      // Format special terms
+      // Format inline styling
       formatted = formatted
-        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
         .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-        .replace(/BS 7671/g, '<span class="text-elec-yellow font-medium">BS 7671</span>')
-        .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono">$1</span>')
-        .replace(/(C[123]|FI)/g, '<span class="px-2 py-1 rounded bg-red-500/20 text-red-400 text-sm font-semibold">$1</span>');
+        .replace(/BS 7671/gi, '<span class="text-elec-yellow font-medium">BS 7671</span>')
+        .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm">$1</span>')
+        .replace(/(C[123]|FI)\b/g, '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 text-xs font-semibold">$1</span>');
       
-      // Split long paragraphs into sentences for better readability
-      const sentences = formatted.split(/\. (?=[A-Z])/);
-      
-      if (sentences.length > 2) {
-        // Create bullet points for multiple sentences
-        return '<ul class="space-y-4 mb-8 ml-0 list-none">' + 
-          sentences.map(sentence => {
-            const clean = sentence.trim();
-            if (!clean) return '';
-            const withPeriod = clean.endsWith('.') ? clean : clean + '.';
-            return `<li class="text-foreground leading-loose pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold">${withPeriod}</li>`;
-          }).filter(s => s).join('') + 
+      // Check if it's a numbered or bulleted list
+      if (/^[\d\-\*•]\s/.test(formatted)) {
+        const items = formatted.split(/\n/).filter(item => item.trim());
+        return '<ul class="space-y-2 mb-6 ml-0 list-none">' + 
+          items.map(item => {
+            const cleanItem = item.replace(/^[\d\-\*•]\s*/, '').trim();
+            return `<li class="text-foreground leading-relaxed pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold text-[15px]">${cleanItem}</li>`;
+          }).join('') + 
         '</ul>';
-      } else {
-        // Keep as paragraph for short content
-        return `<p class="text-foreground leading-loose mb-6 text-base">${formatted}</p>`;
       }
+      
+      // Otherwise render as paragraph
+      return `<p class="text-foreground leading-relaxed mb-4 text-[15px]">${formatted}</p>`;
     }).join('');
   };
 
@@ -158,25 +152,22 @@ ${content}
   };
 
   const formatForEmail = (content: string) => {
-    // Clean content by removing all markdown formatting
+    // Clean content by removing markdown formatting
     const cleanContent = content
-      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold markers
-      .replace(/\*(.*?)\*/g, '$1') // Remove italic markers
-      .replace(/#{1,6}\s/g, '') // Remove heading markers
-      .replace(/[-*+]\s/g, '') // Remove bullet points
-      .replace(/\n\s*\n/g, '\n\n') // Clean up extra line breaks
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/#{1,6}\s/g, '')
+      .replace(/[-*+]\s/g, '')
+      .replace(/\n\s*\n/g, '\n\n')
       .trim();
 
     return `Dear Valued Client,
 
 I hope this email finds you well. I wanted to provide you with a clear explanation of the electrical work findings from my recent inspection of your property.
 
-Electrical Inspection Summary:
-
 ${cleanContent}
 
-Next Steps:
-If you have any questions about these findings or would like to discuss the recommended work, please don't hesitate to contact me. I'm here to ensure your electrical system is safe and compliant with current regulations.
+If you have any questions about these findings or would like to discuss the work in more detail, please don't hesitate to contact me. I'm here to ensure your electrical system is safe and compliant with current regulations.
 
 Thank you for trusting me with your electrical needs. I look forward to hearing from you soon.
 
