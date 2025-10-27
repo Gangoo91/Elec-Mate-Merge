@@ -89,7 +89,9 @@ serve(async (req) => {
     }
 
     // Step 1: Use intelligent RAG with cross-encoder reranking
-    logger.debug('Starting intelligent RAG for H&S');
+    // 🚀 CACHE-BUSTING: Add timestamp to force fresh results after cache clear
+    const cacheBustingQuery = `${effectiveQuery} [gen:${Date.now()}]`;
+    logger.debug('Starting intelligent RAG for H&S', { cacheBusted: true });
     const ragStart = Date.now();
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -1058,18 +1060,33 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       emergencyProcedures: riskAssessment.emergencyProcedures || []
     };
 
-    logger.info('Returning validated response', {
-      function: 'health-safety-v3',
-      hasHazards: validatedRiskAssessment.hazards.length > 0,
+    // 📊 QUALITY METRICS: Log comprehensive generation stats
+    const qualityMetrics = {
       hazardCount: validatedRiskAssessment.hazards.length,
-      hasControls: validatedRiskAssessment.controls.length > 0,
-      controlsCount: validatedRiskAssessment.controls.length,
-      hasPPE: validatedRiskAssessment.ppeDetails.length > 0,
       ppeCount: validatedRiskAssessment.ppeDetails.length,
-      hasEmergencyProcs: validatedRiskAssessment.emergencyProcedures.length > 0,
       emergencyProcCount: validatedRiskAssessment.emergencyProcedures.length,
-      responseLength: JSON.stringify({ success: true, response: safetyResult.response, structuredData: { riskAssessment: validatedRiskAssessment } }).length
+      controlsCount: validatedRiskAssessment.controls.length,
+      avgRiskScore: validatedRiskAssessment.hazards.length > 0 
+        ? (validatedRiskAssessment.hazards.reduce((sum, h) => sum + (h.riskScore || 0), 0) / validatedRiskAssessment.hazards.length).toFixed(1)
+        : 0,
+      highRiskCount: validatedRiskAssessment.hazards.filter(h => (h.riskScore || 0) >= 15).length,
+      mandatoryPPECount: validatedRiskAssessment.ppeDetails.filter((p: any) => p.mandatory === true).length,
+      totalResponseChars: JSON.stringify(safetyResult).length
+    };
+
+    logger.info('📊 Response Quality Metrics', {
+      function: 'health-safety-v3',
+      ...qualityMetrics,
+      meetsMinimumStandards: qualityMetrics.hazardCount >= 8 && qualityMetrics.ppeCount >= 6
     });
+    
+    // ⚠️ QUALITY WARNING: Flag suspiciously low counts
+    if (qualityMetrics.hazardCount < 8) {
+      logger.warn(`⚠️ LOW HAZARD COUNT: ${qualityMetrics.hazardCount} hazards (expected 15-25 for industrial jobs)`);
+    }
+    if (qualityMetrics.ppeCount < 6) {
+      logger.warn(`⚠️ LOW PPE COUNT: ${qualityMetrics.ppeCount} items (expected 8-12 for electrical work)`);
+    }
 
     // Validate we have the minimum required data before returning
     if (!validatedRiskAssessment.hazards || validatedRiskAssessment.hazards.length === 0) {

@@ -117,13 +117,44 @@ export function useAIRAMS(): UseAIRAMSReturn {
       return;
     }
 
+    // 🔍 QUALITY VALIDATION: Prevent saving incomplete data
+    const hazardCount = ramsData.risks?.length || 0;
+    const ppeCount = ramsData.ppeDetails?.length || 0;
+    
+    if (!isAutosave && hazardCount < 8) {
+      console.warn('⚠️ Low hazard count detected:', hazardCount);
+      toast({
+        title: "Quality warning",
+        description: `Only ${hazardCount} hazards identified. Industrial jobs typically have 15-25 hazards. Consider regenerating or adding more.`,
+        variant: "destructive"
+      });
+      
+      // Allow saving but warn user
+    }
+    
+    if (!isAutosave && ppeCount < 6) {
+      console.warn('⚠️ Low PPE count detected:', ppeCount);
+      toast({
+        title: "PPE warning", 
+        description: `Only ${ppeCount} PPE items. Electrical work typically requires 8-12 items. Check if all necessary protection is listed.`,
+        variant: "destructive"
+      });
+    }
+
+    console.log('💾 Saving RAMS data:', {
+      hazardCount,
+      ppeCount,
+      risksSample: ramsData.risks?.slice(0, 3),
+      ppeSample: ramsData.ppeDetails?.slice(0, 3)
+    });
+
     setIsSaving(true);
     
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
-      // Save or update RAMS document
+      // Save or update RAMS document with ALL hazard data preserved
       const ramsPayload = {
         user_id: user.id,
         project_name: ramsData.projectName,
@@ -133,14 +164,16 @@ export function useAIRAMS(): UseAIRAMSReturn {
         contractor: ramsData.contractor || methodData.contractor || '',
         supervisor: ramsData.supervisor || methodData.supervisor || '',
         activities: ramsData.activities,
-        risks: ramsData.risks as unknown as any, // JSONB type
+        risks: ramsData.risks as unknown as any, // JSONB type - ALL risks preserved
         required_ppe: ramsData.requiredPPE || [],
-        ppe_details: (ramsData.ppeDetails || []) as unknown as any, // JSONB type
+        ppe_details: (ramsData.ppeDetails || []) as unknown as any, // JSONB type - ALL PPE preserved
         status: 'draft' as const,
         last_autosave_at: new Date().toISOString(),
         ai_generation_metadata: {
           generatedAt: new Date().toISOString(),
           autosave: isAutosave,
+          hazardCount: ramsData.risks?.length || 0,
+          ppeCount: ramsData.ppeDetails?.length || 0,
           emergencyContacts: {
             siteManagerName: ramsData.siteManagerName,
             siteManagerPhone: ramsData.siteManagerPhone,
@@ -152,6 +185,11 @@ export function useAIRAMS(): UseAIRAMSReturn {
           }
         } as any
       };
+      
+      console.log('💾 Payload being saved:', {
+        risksLength: (ramsPayload.risks as any)?.length,
+        ppeLength: (ramsPayload.ppe_details as any)?.length
+      });
 
       let savedDocId = documentId;
 
