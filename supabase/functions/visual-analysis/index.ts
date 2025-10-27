@@ -530,10 +530,10 @@ RESPONSE REQUIREMENTS:
     const timeout = analysis_settings.mode === 'component_identify'
       ? (analysis_settings.fast_mode ? 24000 : 30000)  // 24s fast, 30s full for component ID
       : (analysis_settings.fast_mode ? 12000 : 20000); // 12s fast, 20s full for other modes
-    // Component identification needs more tokens due to comprehensive knowledge base
+    // Component identification needs more tokens due to comprehensive structured response
     const maxTokens = analysis_settings.mode === 'component_identify' 
-      ? (analysis_settings.fast_mode ? 1500 : 3000)
-      : (analysis_settings.fast_mode ? 800 : 2000);
+      ? (analysis_settings.fast_mode ? 2500 : 4000)  // INCREASED: 2500 fast, 4000 full
+      : (analysis_settings.fast_mode ? 800 : 2000);   // Other modes unchanged
 
     // Convert images to Gemini inlineData format (camelCase for REST API)
     const parts: any[] = [{ text: systemPrompt + '\n\n' + userPrompt }];
