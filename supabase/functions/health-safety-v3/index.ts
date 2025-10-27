@@ -674,17 +674,17 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     
     let aiResult;
     try {
-      const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-      if (!LOVABLE_API_KEY) {
-        throw new Error('LOVABLE_API_KEY not configured');
+      const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+      if (!OPENAI_API_KEY) {
+        throw new Error('OPENAI_API_KEY not configured');
       }
       
-      aiResult = await callAI(LOVABLE_API_KEY, {
-        model: 'google/gemini-2.5-flash',  // Gemini Flash: 10-20s responses, perfect for structured outputs
+      aiResult = await callAI(OPENAI_API_KEY, {
+        model: 'gpt-5-mini-2025-08-07',  // GPT-5 Mini: Fast, cost-efficient, perfect for structured outputs
         systemPrompt,
         userPrompt,
         maxTokens: 12000,
-        timeoutMs: 60000,  // 60 seconds (Gemini Flash completes in 10-30s)
+        timeoutMs: 90000,  // 90 seconds (GPT-5 Mini completes in 30-60s)
       tools: [{
         type: 'function',
         function: {
