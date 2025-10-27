@@ -549,6 +549,16 @@ export function useAIRAMS(): UseAIRAMSReturn {
         });
       }
       
+      // STEP 1: Add comprehensive response logging
+      console.log('🔍 RAW EDGE FUNCTION RESPONSE:', {
+        topLevelKeys: Object.keys(hsData || {}),
+        hasStructuredData: !!hsData?.structuredData,
+        hasRiskAssessment: !!hsData?.structuredData?.riskAssessment,
+        hasHazardsArray: Array.isArray(hsData?.structuredData?.riskAssessment?.hazards),
+        hazardCount: hsData?.structuredData?.riskAssessment?.hazards?.length || 0,
+        fullStructure: JSON.stringify(hsData, null, 2).substring(0, 2000)
+      });
+      
       if (hsData && !hsData.success) {
         console.error('❌ Health & Safety returned success:false', {
           responseKeys: Object.keys(hsData),
@@ -558,37 +568,40 @@ export function useAIRAMS(): UseAIRAMSReturn {
         });
       }
       
-      // PHASE 2: Enhanced hazard extraction with comprehensive path checking
+      // STEP 2: Fixed hazard extraction with correct path priority
       const extractHazards = (responseData: any): any[] => {
-        console.log('🔍 DETAILED HAZARD EXTRACTION:', {
-          responseStructure: JSON.stringify(responseData, null, 2).substring(0, 1000),
+        console.log('🔍 HAZARD EXTRACTION STARTING:', {
           hasStructuredData: !!responseData?.structuredData,
           hasRiskAssessment: !!responseData?.structuredData?.riskAssessment,
-          hazardPaths: {
-            path1Count: responseData?.structuredData?.riskAssessment?.hazards?.length || 0,
-            path2Count: responseData?.response?.structuredData?.riskAssessment?.hazards?.length || 0
-          }
+          hazardsAtCorrectPath: responseData?.structuredData?.riskAssessment?.hazards?.length || 0
         });
 
+        // PRIORITY ORDER: Check most common path first (from edge function logs)
         const possiblePaths = [
-          responseData?.structuredData?.riskAssessment?.hazards,
+          responseData?.structuredData?.riskAssessment?.hazards, // CORRECT PATH from logs
           responseData?.response?.structuredData?.riskAssessment?.hazards,
           responseData?.structuredData?.hazards,
           responseData?.riskAssessment?.hazards,
           responseData?.hazards
         ];
 
-        for (const path of possiblePaths) {
+        for (let i = 0; i < possiblePaths.length; i++) {
+          const path = possiblePaths[i];
           if (Array.isArray(path) && path.length > 0) {
-            console.log(`✅ Found ${path.length} hazards`, {
-              firstHazard: path[0],
-              allHazardNames: path.map((h: any) => h.hazard || h.hazardDescription)
+            console.log(`✅ Found ${path.length} hazards at path index ${i}`, {
+              pathIndex: i,
+              pathDescription: i === 0 ? 'structuredData.riskAssessment.hazards (CORRECT)' :
+                              i === 1 ? 'response.structuredData.riskAssessment.hazards' :
+                              i === 2 ? 'structuredData.hazards' :
+                              i === 3 ? 'riskAssessment.hazards' : 'hazards',
+              firstHazard: path[0]?.hazard || path[0]?.hazardDescription,
+              sampleHazards: path.slice(0, 3).map((h: any) => h.hazard || h.hazardDescription)
             });
             return path;
           }
         }
 
-        console.error('❌ NO HAZARDS FOUND IN ANY PATH - this should not happen with updated prompt');
+        console.error('❌ NO HAZARDS FOUND IN ANY PATH - AI generation may have failed');
         return [];
       };
 
@@ -598,9 +611,10 @@ export function useAIRAMS(): UseAIRAMSReturn {
       let hsDataToUse = hsData;
       let shouldUseFallback = false;
 
-      // STEP 1: Explicitly preserve AI data when valid (bypasses ALL fallback logic)
-      if (hasValidHazards && extractedHazards.length >= 8) {
+      // STEP 3: Less aggressive fallback threshold (was >= 8, now >= 5)
+      if (hasValidHazards && extractedHazards.length >= 5) {
         console.log(`✅ USING AI-GENERATED DATA WITH ${extractedHazards.length} HAZARDS - BYPASSING ALL FALLBACK`);
+        console.log('🎯 AI data preserved - fallback will NOT trigger');
         hsDataToUse = hsData; // Explicitly preserve AI data
         
         // Ensure success flag is set
@@ -612,6 +626,13 @@ export function useAIRAMS(): UseAIRAMSReturn {
         shouldUseFallback = false;
         mutableHsError = null; // Clear any errors since we have valid data
       } else {
+        console.warn(`⚠️ FALLBACK MAY TRIGGER: Only ${extractedHazards.length} hazards found (threshold: 5+)`);
+        console.log('🔍 Fallback trigger reason:', {
+          extractedCount: extractedHazards.length,
+          hasValidHazards,
+          threshold: 5,
+          willAttemptCache: true
+        });
         // STEP 3: Poll for cached response if timeout occurred
         const pollForCachedResponse = async (): Promise<any | null> => {
           console.log('🔄 Polling ai_response_cache for completed response...');
@@ -931,23 +952,30 @@ export function useAIRAMS(): UseAIRAMSReturn {
         }
       );
 
-      // STEP 5: Quality gate after transformation - verify no hazard loss
+      // STEP 5: Enhanced quality gate - detect hazard loss
       console.log('✅ RAMS transformation complete:', {
         ramsRisks: combinedData.ramsData?.risks?.length || 0,
-        methodSteps: combinedData.methodData?.steps?.length || 0
+        methodSteps: combinedData.methodData?.steps?.length || 0,
+        extractedHazards: extractedHazards.length
       });
 
-      // Verify we didn't lose hazards in transformation
-      if (combinedData.ramsData?.risks?.length < 8 && extractedHazards.length >= 8) {
-        console.error('❌ CRITICAL: Hazards lost during transformation!', {
+      // Verify we didn't lose more than 20% of hazards in transformation
+      const hazardRetentionRate = extractedHazards.length > 0 
+        ? (combinedData.ramsData?.risks?.length || 0) / extractedHazards.length 
+        : 1;
+      
+      if (hazardRetentionRate < 0.8 && extractedHazards.length >= 5) {
+        console.error('❌ CRITICAL: Significant hazard loss during transformation!', {
           extractedFromAI: extractedHazards.length,
-          afterTransformation: combinedData.ramsData?.risks?.length,
-          lostHazards: extractedHazards.length - (combinedData.ramsData?.risks?.length || 0)
+          afterTransformation: combinedData.ramsData?.risks?.length || 0,
+          lostHazards: extractedHazards.length - (combinedData.ramsData?.risks?.length || 0),
+          retentionRate: `${(hazardRetentionRate * 100).toFixed(1)}%`,
+          threshold: '80%'
         });
         
         toast({
           title: "Data loss detected",
-          description: `Only ${combinedData.ramsData?.risks?.length} of ${extractedHazards.length} hazards preserved. This is a bug - please report.`,
+          description: `Only ${combinedData.ramsData?.risks?.length} of ${extractedHazards.length} hazards preserved (${(hazardRetentionRate * 100).toFixed(0)}%). Please report this issue.`,
           variant: "destructive"
         });
       }

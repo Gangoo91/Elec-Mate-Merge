@@ -90,18 +90,26 @@ export function transformHealthSafetyToRAMS(
     || (hsResponse as any).emergencyProcedures
     || [];
   
-  // Log detailed extraction for debugging
-  console.log('🔍 Transformer extracting H&S data:', {
+  // STEP 4: Add transformer validation logging
+  console.log('🔄 Transformer receiving H&S data:', {
     extractionPath: structuredData?.riskAssessment ? 'hsResponse.structuredData' : 
                     (hsResponse.response as any)?.structuredData ? 'hsResponse.response.structuredData' :
                     hsResponse.riskAssessment ? 'hsResponse.riskAssessment' :
                     'hsResponse.hazards',
-    hazardsFound: sourceHazards?.length || 0,
+    hazardsBeingProcessed: sourceHazards?.length || 0,
     firstThreeHazards: sourceHazards?.slice(0, 3).map((h: any) => h.hazard || h.hazardDescription) || [],
     ppeFound: ppe?.length || 0,
     emergencyProcsFound: emergencyProcedures?.length || 0,
     willUseFallback: !sourceHazards || sourceHazards.length === 0
   });
+  
+  if (sourceHazards?.length >= 20) {
+    console.log('✅ EXCELLENT: Transformer received 20+ hazards from AI');
+  } else if (sourceHazards?.length >= 10) {
+    console.log('✅ GOOD: Transformer received 10+ hazards from AI');
+  } else if (sourceHazards?.length > 0) {
+    console.warn(`⚠️ LOW HAZARD COUNT: Only ${sourceHazards.length} hazards received by transformer`);
+  }
   
   // Generate controls from hazard description if not provided
   const generateControlsFromHazard = (hazard: any): string[] => {
