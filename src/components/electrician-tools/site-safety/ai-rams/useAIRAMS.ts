@@ -568,14 +568,24 @@ export function useAIRAMS(): UseAIRAMSReturn {
         });
       }
       
-      // STEP 1: Add comprehensive response logging
-      console.log('🔍 RAW EDGE FUNCTION RESPONSE:', {
+      // STEP 1: Add comprehensive response logging with COMPLETE structure
+      console.log('🔍 RAW EDGE FUNCTION RESPONSE - DEEP INSPECTION:', {
         topLevelKeys: Object.keys(hsData || {}),
         hasStructuredData: !!hsData?.structuredData,
         hasRiskAssessment: !!hsData?.structuredData?.riskAssessment,
         hasHazardsArray: Array.isArray(hsData?.structuredData?.riskAssessment?.hazards),
         hazardCount: hsData?.structuredData?.riskAssessment?.hazards?.length || 0,
-        fullStructure: JSON.stringify(hsData, null, 2).substring(0, 2000)
+        // Show EVERY possible nesting level
+        nestedPaths: {
+          'hsData.hazards': hsData?.hazards?.length,
+          'hsData.riskAssessment.hazards': hsData?.riskAssessment?.hazards?.length,
+          'hsData.structuredData.hazards': hsData?.structuredData?.hazards?.length,
+          'hsData.structuredData.riskAssessment.hazards': hsData?.structuredData?.riskAssessment?.hazards?.length,
+          'hsData.response.structuredData.riskAssessment.hazards': hsData?.response?.structuredData?.riskAssessment?.hazards?.length,
+          'hsData.data.structuredData.riskAssessment.hazards': hsData?.data?.structuredData?.riskAssessment?.hazards?.length,
+        },
+        fullStructure: JSON.stringify(hsData, null, 2).substring(0, 3000), // Increased to 3000 chars
+        firstHazardSample: hsData?.structuredData?.riskAssessment?.hazards?.[0]
       });
       
       if (hsData && !hsData.success) {
@@ -627,29 +637,38 @@ export function useAIRAMS(): UseAIRAMSReturn {
       const extractedHazards = extractHazards(hsData);
       const hasValidHazards = extractedHazards.length > 0;
 
+      console.log('🎯 EXTRACTION RESULTS:', {
+        extractedCount: extractedHazards.length,
+        hasValidHazards,
+        hasSuccessFlag: hsData?.success,
+        hasError: !!hsError,
+        willUseAIData: hasValidHazards, // ANY valid hazards = use AI data
+      });
+
       let hsDataToUse = hsData;
       let shouldUseFallback = false;
 
-      // STEP 3: Less aggressive fallback threshold (was >= 8, now >= 5)
-      if (hasValidHazards && extractedHazards.length >= 5) {
-        console.log(`✅ USING AI-GENERATED DATA WITH ${extractedHazards.length} HAZARDS - BYPASSING ALL FALLBACK`);
-        console.log('🎯 AI data preserved - fallback will NOT trigger');
-        hsDataToUse = hsData; // Explicitly preserve AI data
+      // ✅ FIX: Use AI data if we extracted ANY hazards successfully
+      // Remove arbitrary threshold - if AI generated hazards, use them ALL
+      if (hasValidHazards) {
+        console.log(`✅ USING AI-GENERATED DATA WITH ${extractedHazards.length} HAZARDS - NO FALLBACK`);
+        console.log('🎯 AI data preserved completely - all hazards will be used');
+        hsDataToUse = hsData; // Preserve ALL AI data
         
         // Ensure success flag is set
         if (!hsDataToUse.success) {
           hsDataToUse = { ...hsDataToUse, success: true };
         }
         
-        // Skip all fallback logic
+        // Never use fallback if we have AI hazards
         shouldUseFallback = false;
         mutableHsError = null; // Clear any errors since we have valid data
       } else {
-        console.warn(`⚠️ FALLBACK MAY TRIGGER: Only ${extractedHazards.length} hazards found (threshold: 5+)`);
+        console.warn(`⚠️ NO HAZARDS EXTRACTED - WILL ATTEMPT CACHE OR FALLBACK`);
         console.log('🔍 Fallback trigger reason:', {
-          extractedCount: extractedHazards.length,
-          hasValidHazards,
-          threshold: 5,
+          extractedCount: 0,
+          hasValidHazards: false,
+          hasError: !!hsError,
           willAttemptCache: true
         });
         // STEP 3: Poll for cached response if timeout occurred
@@ -692,15 +711,15 @@ export function useAIRAMS(): UseAIRAMSReturn {
           if (isTimeout) {
             console.warn('⏱️ Timeout detected - checking for valid data and cache...');
             
-            // Check if we got valid data despite timeout
-            if (hasValidHazards && extractedHazards.length >= 8) {
-              console.log('✅ Valid data received despite timeout - using AI data');
+            // ✅ FIX: Use AI data if we have ANY valid hazards (not just >= 8)
+            if (hasValidHazards) {
+              console.log(`✅ Valid data received despite timeout - using ALL ${extractedHazards.length} AI hazards`);
               hsDataToUse = hsData;
               shouldUseFallback = false;
               mutableHsError = null;
               toast({
                 title: "Network unstable",
-                description: "Risk assessment completed successfully despite connection issues",
+                description: `Risk assessment completed successfully with ${extractedHazards.length} hazards despite connection issues`,
               });
             } else {
               // Try to get cached response
@@ -719,9 +738,9 @@ export function useAIRAMS(): UseAIRAMSReturn {
               }
             }
           } else {
-            // Non-timeout error - check if we still got usable data
-            if (hasValidHazards && extractedHazards.length >= 5) {
-              console.warn('⚠️ Network error but valid data received - using AI data, ignoring error');
+            // ✅ FIX: Non-timeout error - use AI data if we have ANY hazards
+            if (hasValidHazards) {
+              console.warn(`⚠️ Network error but valid data received - using ALL ${extractedHazards.length} AI hazards, ignoring error`);
               hsDataToUse = hsData;
               shouldUseFallback = false;
               mutableHsError = null;
@@ -730,7 +749,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
             }
           }
         } else if (!hsData || (!hasValidHazards && !hsData.success)) {
-          // STEP 2: More conservative fallback - only if BOTH no hazards AND no success
+          // Only trigger fallback if truly no data
           shouldUseFallback = true;
         }
       }
