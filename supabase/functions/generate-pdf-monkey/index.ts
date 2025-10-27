@@ -21,6 +21,102 @@ const BRIEFING_TEMPLATES = {
   'general': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D' // For now, use same template
 };
 
+// ============= CONTENT PARSING HELPERS FOR PROFESSIONAL PDF =============
+
+function extractBulletPoints(content: string, section?: string): string[] {
+  if (!content) return [];
+  
+  // If section specified, find that section first
+  if (section) {
+    const sectionRegex = new RegExp(`${section}[:\\n]([^#]*?)(?=\\n#|$)`, 'i');
+    const match = content.match(sectionRegex);
+    if (match) content = match[1];
+  }
+  
+  return content
+    .split('\n')
+    .filter(l => l.trim().match(/^[-*]\s/))
+    .map(l => l.replace(/^[-*]\s+/, '').trim())
+    .filter(l => l.length > 0);
+}
+
+function extractRegulations(content: string): string[] {
+  const regulations: string[] = [];
+  const patterns = [
+    /BS\s*7671[:\s]*\d{4}(?:\+A\d:\d{4})?/gi,
+    /Regulation\s+\d{3}\.\d+\.\d+/gi,
+    /Part\s+\d+/gi,
+    /IET\s+Wiring\s+Regulations/gi,
+    /HSE\s+Guidance\s+Note\s+\w+\d*/gi
+  ];
+  
+  patterns.forEach(pattern => {
+    const matches = content.match(pattern);
+    if (matches) {
+      regulations.push(...matches.map(m => m.trim()));
+    }
+  });
+  
+  return [...new Set(regulations)]; // Remove duplicates
+}
+
+function determineSafetyLevel(warning: string): string {
+  if (!warning) return "CAUTION";
+  
+  const content = warning.toLowerCase();
+  if (content.includes('danger') || content.includes('fatal')) return "DANGER";
+  if (content.includes('warning') || content.includes('serious')) return "WARNING";
+  return "CAUTION";
+}
+
+function parseHazardsContent(hazards: string): any {
+  const hazardsList: any[] = [];
+  const sections = hazards.split(/(?=\*\*Hazard \d+:|Hazard \d+:)/);
+  
+  sections.forEach(section => {
+    const lines = section.split('\n').filter(l => l.trim());
+    if (lines.length === 0) return;
+    
+    const hazard: any = {};
+    let currentField = '';
+    
+    lines.forEach(line => {
+      const trimmed = line.trim();
+      
+      // Detect hazard title
+      if (trimmed.match(/\*\*Hazard \d+:|Hazard \d+:/)) {
+        hazard.title = trimmed.replace(/\*\*/g, '').replace(/Hazard \d+:\s*/, '');
+      }
+      // Detect control measures
+      else if (trimmed.toLowerCase().includes('control:')) {
+        currentField = 'controls';
+        hazard.controls = [];
+      }
+      // Detect risk level
+      else if (trimmed.toLowerCase().includes('risk:')) {
+        hazard.risk_level = trimmed.split(':')[1].trim();
+      }
+      // Add to current field
+      else if (trimmed.startsWith('-') || trimmed.startsWith('*')) {
+        if (currentField === 'controls') {
+          hazard.controls.push(trimmed.replace(/^[-*]\s+/, ''));
+        }
+      }
+      else if (trimmed && !hazard.title) {
+        hazard.title = trimmed;
+      }
+    });
+    
+    if (hazard.title) hazardsList.push(hazard);
+  });
+  
+  return {
+    raw: hazards,
+    structured: hazardsList,
+    count: hazardsList.length
+  };
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -153,7 +249,9 @@ serve(async (req) => {
     // Transform data based on mode
     let payload;
     if (briefing_mode) {
-      // Transform briefing data for PDF
+      // Transform briefing data for PDF with structured AI content
+      const aiPromptData = briefing.ai_prompt_data || {};
+      
       const transformedBriefing = {
         company_logo: companyProfile?.logo_url || companyProfile?.logo_data_url || "",
         company_name: companyProfile?.company_name || "Professional Contractor",
@@ -174,9 +272,34 @@ serve(async (req) => {
         contractor_company: briefing.contractor_company || companyProfile?.company_name || "",
         created_by: briefing.created_by_name,
         
-        briefing_description: briefing.briefing_description || briefing.notes || "",
-        hazards: briefing.hazards || "",
-        safety_warning: briefing.safety_warning || "",
+        // Structured briefing overview
+        briefing_overview: {
+          raw: briefing.briefing_description || briefing.notes || "",
+          paragraphs: (briefing.briefing_description || "")
+            .split('\n\n')
+            .filter(p => p.trim() && !p.startsWith('#'))
+            .map(p => p.trim())
+        },
+        
+        // Structured hazards and controls
+        hazards_and_controls: parseHazardsContent(briefing.hazards || ""),
+        
+        // Structured safety warning
+        safety_warning: {
+          raw: briefing.safety_warning || "",
+          level: determineSafetyLevel(briefing.safety_warning || ""),
+          key_points: extractBulletPoints(briefing.safety_warning || "")
+        },
+        
+        // Equipment from AI data or extracted
+        equipment_required: aiPromptData.equipmentRequired || 
+                           extractBulletPoints(briefing.briefing_description, "equipment"),
+        
+        // Regulations from AI data or extracted
+        key_regulations: aiPromptData.keyRegulations ||
+                        extractRegulations(briefing.briefing_description || ""),
+        
+        // Additional notes
         additional_notes: briefing.notes || "",
         
         photos: (briefing.photos || []).map((p: any) => ({
@@ -195,7 +318,13 @@ serve(async (req) => {
       };
 
       payload = transformedBriefing;
-      console.log('[PDF-MONKEY] Transformed briefing payload');
+      console.log('[PDF-MONKEY] Transformed briefing payload with structured content:', {
+        paragraphs: transformedBriefing.briefing_overview.paragraphs.length,
+        hazards: transformedBriefing.hazards_and_controls.count,
+        equipment: transformedBriefing.equipment_required.length,
+        regulations: transformedBriefing.key_regulations.length,
+        safetyLevel: transformedBriefing.safety_warning.level
+      });
     } else if (invoice_mode) {
       // Transform to invoice format - USE FRESH DATA
       // Use bank details from invoice settings first, fallback to company profile

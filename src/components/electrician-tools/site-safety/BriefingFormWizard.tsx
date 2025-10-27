@@ -243,6 +243,13 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
         briefingDescription: data.content.briefingDescription,
         hazards: data.content.hazardsAndControls,
         safetyWarning: data.content.safetyWarning,
+        // Store structured AI data for professional PDF formatting
+        ai_prompt_data: {
+          rawAiFields: data.rawAiFields || {},
+          equipmentRequired: data.content.equipmentRequired || [],
+          keyRegulations: data.content.keyRegulations || [],
+          briefingType: formData.briefingType
+        }
       }));
 
       toast({
