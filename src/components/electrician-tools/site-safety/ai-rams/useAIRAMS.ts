@@ -424,83 +424,6 @@ export function useAIRAMS(): UseAIRAMSReturn {
     return { data: null, error: new Error(`Failed after ${maxRetries} attempts`) };
   };
 
-  // Streaming H&S call function
-  const callHealthSafetyStreaming = async (jobDescription: string, jobScale: string): Promise<any> => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/health-safety-v3`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
-          },
-          body: JSON.stringify({
-            query: `Create a detailed risk assessment for: ${jobDescription}`,
-            workType: jobScale,
-            stream: true
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-
-        const reader = response.body?.getReader();
-        if (!reader) throw new Error('No response body');
-
-        const decoder = new TextDecoder();
-        let buffer = '';
-        let collectedData: any = null;
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || '';
-
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              const data = line.slice(6).trim();
-              if (data === '[DONE]') continue;
-
-              try {
-                const parsed = JSON.parse(data);
-
-                if (parsed.type === 'progress') {
-                  console.log(`🌊 Streaming progress: ${parsed.message}`);
-                } else if (parsed.type === 'complete') {
-                  collectedData = parsed.data;
-                } else if (parsed.type === 'error') {
-                  throw new Error(parsed.message);
-                } else if (parsed.type === 'done') {
-                  if (collectedData) {
-                    resolve({ success: true, ...collectedData });
-                  } else {
-                    reject(new Error('No data received'));
-                  }
-                  return;
-                }
-              } catch (e: any) {
-                console.error('Parse error:', e);
-              }
-            }
-          }
-        }
-
-        if (collectedData) {
-          resolve({ success: true, ...collectedData });
-        } else {
-          reject(new Error('Streaming completed but no data'));
-        }
-      } catch (error: any) {
-        console.error('Streaming error:', error);
-        reject(error);
-      }
-    });
-  };
-
   const generateRAMS = async (
     jobDescription: string,
     projectInfo: {
@@ -541,30 +464,75 @@ export function useAIRAMS(): UseAIRAMSReturn {
     ]);
 
     try {
-      // Step 1: Call Health & Safety Agent with STREAMING
+      // Step 1: Call Health & Safety Agent
       const hsStartTime = Date.now();
       setReasoningSteps(prev => prev.map(step => 
         step.agent === 'health-safety' ? { ...step, status: 'processing', subStep: HEALTH_SAFETY_SUBSTEPS[0] } : step
       ));
       
-      // Start smooth progress polling 0% → 45%
-      startProgressPolling('health-safety', 0, 45, 120000); // 2 minutes for streaming
-      setEstimatedTimeRemaining(180); // 3 minutes total with streaming
+      // PHASE 1: Start smooth progress polling 0% → 45% over 3 minutes
+      startProgressPolling('health-safety', 0, 45, 180000);
+      setEstimatedTimeRemaining(300); // 5 minutes total
+
+      // Start simulated substep progress
       simulateSubStepProgress('health-safety', HEALTH_SAFETY_SUBSTEPS);
 
-      console.log('🌊 Starting STREAMING health-safety call');
-      
-      let hsData: any = null;
-      let hsError: any = null;
-      
+      // STEP 3: Health check - fail fast if edge function is down (5 second timeout)
       try {
-        hsData = await callHealthSafetyStreaming(jobDescription, jobScale);
-        console.log('✅ Streaming completed successfully', { hasData: !!hsData });
-      } catch (error: any) {
-        hsError = error;
-        console.error('❌ Streaming failed:', error);
+        console.log('🏥 Checking edge function health...');
+        const healthCheckPromise = supabase.functions.invoke('health-safety-v3', {
+          body: { mode: 'health-check' }
+        });
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Health check timeout after 5 seconds')), 5000)
+        );
+        
+        const healthCheck: any = await Promise.race([healthCheckPromise, timeoutPromise]);
+        
+        if (!healthCheck?.data || healthCheck.error) {
+          console.error('❌ Health check failed:', {
+            hasData: !!healthCheck?.data,
+            error: healthCheck?.error,
+            data: healthCheck?.data
+          });
+          throw new Error('AI system is offline - edge function not responding');
+        }
+        console.log('✅ Health check passed:', healthCheck.data);
+      } catch (healthError) {
+        console.error('❌ Health check failed:', healthError);
+        toast({
+          title: "⚠️ AI System Unavailable",
+          description: "The AI risk assessment system is currently offline. Using basic hazard template instead.",
+          variant: "destructive",
+          duration: 10000
+        });
+        // Will fall through to AI call which will timeout and trigger fallback
       }
-      
+
+      const { data: hsData, error: hsError } = await callAgentWithRetry('health-safety-v3', {
+        query: `Create a detailed risk assessment for the following electrical work: ${jobDescription}. Include specific hazards, risk ratings (likelihood and severity), and control measures.`,
+        workType: jobScale
+      });
+
+      // CRITICAL: Log COMPLETE raw response to find exact path
+      console.log('🔍 COMPLETE RAW RESPONSE FROM EDGE FUNCTION:', {
+        typeOfHsData: typeof hsData,
+        isNull: hsData === null,
+        isUndefined: hsData === undefined,
+        topLevelKeys: hsData ? Object.keys(hsData) : 'NO KEYS',
+        fullResponse: JSON.stringify(hsData, null, 2), // FULL response, not truncated
+        // Check ALL possible nesting levels
+        paths: {
+          'direct.success': hsData?.success,
+          'direct.structuredData': !!hsData?.structuredData,
+          'direct.structuredData.riskAssessment': !!hsData?.structuredData?.riskAssessment,
+          'direct.structuredData.riskAssessment.hazards': hsData?.structuredData?.riskAssessment?.hazards?.length,
+          'wrapped.data.success': hsData?.data?.success,
+          'wrapped.data.structuredData.riskAssessment.hazards': hsData?.data?.structuredData?.riskAssessment?.hazards?.length,
+          'wrapped.response.structuredData.riskAssessment.hazards': hsData?.response?.structuredData?.riskAssessment?.hazards?.length,
+        }
+      });
+
       if (abortControllerRef.current?.signal.aborted) {
         throw new Error('Generation cancelled');
       }

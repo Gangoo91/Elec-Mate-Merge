@@ -1,5 +1,5 @@
-// DEPLOYMENT v4.1.0 - Health & Safety with Streaming Support - 2025-10-27T16:00:00Z
-const VERSION = 'v4.1.0';
+// DEPLOYMENT v4.0.0 - Health & Safety RAMS Generator - 2025-10-27T12:00:00Z
+const VERSION = 'v4.0.0';
 const BOOT_TIME = new Date().toISOString();
 console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
 
@@ -17,135 +17,6 @@ import {
 } from '../_shared/v3-core.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
-
-// Streaming helper function
-async function createStreamingHealthSafetyResponse(
-  openaiKey: string,
-  systemPrompt: string,
-  userPrompt: string,
-  corsHeaders: Record<string, string>,
-  logger: any
-): Promise<Response> {
-  const encoder = new TextEncoder();
-  
-  const stream = new ReadableStream({
-    async start(controller) {
-      try {
-        logger.info('🌊 Starting streaming response');
-        
-        // Send initial progress update
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'progress', stage: 'ai_call', message: 'Calling AI...' })}\n\n`));
-        
-        // Call OpenAI with streaming
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${openaiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'gpt-5-mini-2025-08-07',
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: userPrompt }
-            ],
-            max_completion_tokens: 12000,
-            stream: true,
-            tools: [{
-              type: 'function',
-              function: {
-                name: 'provide_safety_assessment',
-                description: 'Return comprehensive health and safety assessment',
-                parameters: {
-                  type: 'object',
-                  properties: {
-                    response: { type: 'string' },
-                    riskAssessment: { type: 'object' }
-                  }
-                }
-              }
-            }],
-            tool_choice: { type: 'function', function: { name: 'provide_safety_assessment' } }
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`OpenAI API error: ${response.status}`);
-        }
-
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'progress', stage: 'streaming', message: 'Receiving data...' })}\n\n`));
-
-        const reader = response.body?.getReader();
-        if (!reader) throw new Error('No response body');
-
-        const decoder = new TextDecoder();
-        let buffer = '';
-        let toolCallArgs = '';
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || '';
-
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              const data = line.slice(6).trim();
-              if (data === '[DONE]') continue;
-
-              try {
-                const parsed = JSON.parse(data);
-                
-                // Stream tokens
-                const content = parsed.choices?.[0]?.delta?.content;
-                if (content) {
-                  controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'token', content })}\n\n`));
-                }
-
-                // Collect tool call arguments
-                const toolCall = parsed.choices?.[0]?.delta?.tool_calls?.[0];
-                if (toolCall?.function?.arguments) {
-                  toolCallArgs += toolCall.function.arguments;
-                }
-              } catch (e) {
-                // Ignore parse errors
-              }
-            }
-          }
-        }
-
-        // Parse complete tool call
-        if (toolCallArgs) {
-          try {
-            const result = JSON.parse(toolCallArgs);
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'complete', data: result })}\n\n`));
-          } catch (e) {
-            logger.error('Failed to parse tool call', { error: e });
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'error', message: 'Failed to parse AI response' })}\n\n`));
-          }
-        }
-
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
-        controller.close();
-      } catch (error) {
-        logger.error('Streaming error', { error });
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'error', message: error.message })}\n\n`));
-        controller.close();
-      }
-    }
-  });
-
-  return new Response(stream, {
-    headers: {
-      ...corsHeaders,
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive'
-    }
-  });
-}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -202,7 +73,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, workType, location, hazards, messages, previousAgentOutputs, sharedRegulations, stream = false } = body;
+    const { query, workType, location, hazards, messages, previousAgentOutputs, sharedRegulations } = body;
 
     // PHASE 1: Query Enhancement
     const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
@@ -795,26 +666,19 @@ ${hazards ? `Known Hazards: ${hazards.join(', ')}` : ''}
 
 Include all safety controls, PPE requirements, and emergency procedures.`;
 
-    // Step 4: Call AI with streaming support
+    // Step 4: Call AI with optimized timeout and error handling
     logger.info('💭 THINKING: Assessing likelihood and severity of identified hazards');
     logger.info('Starting AI call with timeout protection');
     logger.debug('Calling AI with wrapper');
-    
-    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-    if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY not configured');
-    }
-
-    // If streaming is requested, return a streaming response
-    if (stream) {
-      return createStreamingHealthSafetyResponse(OPENAI_API_KEY, systemPrompt, userPrompt, corsHeaders, logger);
-    }
-
-    // Non-streaming path (original logic)
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
     let aiResult;
     try {
+      const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+      if (!OPENAI_API_KEY) {
+        throw new Error('OPENAI_API_KEY not configured');
+      }
+      
       aiResult = await callAI(OPENAI_API_KEY, {
         model: 'gpt-5-mini-2025-08-07',  // GPT-5 Mini: Fast, cost-efficient, perfect for structured outputs
         systemPrompt,
