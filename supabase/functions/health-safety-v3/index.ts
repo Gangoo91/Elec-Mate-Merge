@@ -675,11 +675,11 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     let aiResult;
     try {
       aiResult = await callAI(OPENAI_API_KEY!, {
-        model: 'gpt-5-2025-08-07',  // Full GPT-5 for deep reasoning
+        model: 'gpt-5-mini-2025-08-07',  // GPT-5 Mini: 3-5x faster, optimized for structured outputs
         systemPrompt,
         userPrompt,
-        maxTokens: 20000,  // Increased: sufficient for 18-25 detailed hazards in very complex scenarios
-        timeoutMs: 200000,  // 200 seconds (safe margin before Supabase 230s limit)
+        maxTokens: 12000,  // Optimized: sufficient for 24+ detailed hazards, reduces wait time
+        timeoutMs: 120000,  // 120 seconds (GPT-5 Mini completes in 30-90s)
       tools: [{
         type: 'function',
         function: {
