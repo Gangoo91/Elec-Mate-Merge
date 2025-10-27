@@ -372,9 +372,9 @@ export function useAIRAMS(): UseAIRAMSReturn {
     maxRetries = 2
   ): Promise<{ data: any; error: any }> => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      // Optimized timeout for GPT-5-Mini (target: 40-60s backend response)
+      // STEP 1: Increased timeout for GPT-5 full model (3-5 minute response time)
       const timeoutPromise = new Promise<{ data: null; error: any }>((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout after 3 minutes')), 180000)
+        setTimeout(() => reject(new Error('Request timeout after 6 minutes')), 360000)
       );
       
       const invokePromise = supabase.functions.invoke(functionName, { body });
@@ -553,9 +553,84 @@ export function useAIRAMS(): UseAIRAMSReturn {
       const extractedHazards = extractHazards(hsData);
       const hasValidHazards = extractedHazards.length > 0;
 
-      // Only use fallback if truly no valid data exists
-      if (hsError || !hsData || !hsData.success || !hasValidHazards) {
-        console.error('❌ Health & Safety agent failed - using fallback:', { 
+      // STEP 3: Poll for cached response if timeout occurred
+      const pollForCachedResponse = async (): Promise<any | null> => {
+        console.log('🔄 Polling ai_response_cache for completed response...');
+        try {
+          const { data: { user } } = await supabase.auth.getUser();
+          if (!user) return null;
+
+          // Check cache for recent completed responses
+          const { data: cachedResults } = await supabase
+            .from('ai_response_cache')
+            .select('*')
+            .gte('timestamp', new Date(Date.now() - 600000).toISOString()) // Last 10 minutes
+            .order('timestamp', { ascending: false })
+            .limit(5);
+
+          if (cachedResults && cachedResults.length > 0) {
+            for (const cached of cachedResults) {
+              if (cached.response && typeof cached.response === 'object') {
+                const responseObj = cached.response as any;
+                const hazards = responseObj?.structuredData?.riskAssessment?.hazards;
+                if (Array.isArray(hazards) && hazards.length > 8) {
+                  console.log(`✅ Found cached response with ${hazards.length} hazards`);
+                  return { success: true, ...(responseObj as object) };
+                }
+              }
+            }
+          }
+        } catch (err) {
+          console.error('Cache poll error:', err);
+        }
+        return null;
+      };
+
+      // STEP 4: Validate data before triggering fallback
+      let shouldUseFallback = false;
+      
+      if (hsError) {
+        const isTimeout = hsError.message?.toLowerCase().includes('timeout');
+        
+        if (isTimeout) {
+          console.warn('⏱️ Timeout detected - checking for valid data and cache...');
+          
+          // Check if we got valid data despite timeout
+          if (hasValidHazards && extractedHazards.length >= 8) {
+            console.log('✅ Valid data received despite timeout - using AI data');
+            toast({
+              title: "Network unstable",
+              description: "Risk assessment completed successfully despite connection issues",
+            });
+          } else {
+            // Try to get cached response
+            const cachedData = await pollForCachedResponse();
+            if (cachedData) {
+              console.log('✅ Using cached response from database');
+              hsDataToUse = cachedData;
+              toast({
+                title: "Retrieved from cache",
+                description: "Risk assessment recovered from recent generation",
+              });
+            } else {
+              shouldUseFallback = true;
+            }
+          }
+        } else {
+          // Non-timeout error - check if we still got usable data
+          if (hasValidHazards && extractedHazards.length >= 5) {
+            console.warn('⚠️ Network error but valid data received - using AI data, ignoring error');
+          } else {
+            shouldUseFallback = true;
+          }
+        }
+      } else if (!hsData || !hsData.success || !hasValidHazards) {
+        shouldUseFallback = true;
+      }
+
+      // STEP 2 & 5: Only trigger fallback when truly no data available
+      if (shouldUseFallback) {
+        console.error('❌ Health & Safety agent failed - using enhanced fallback:', { 
           hsError: hsError?.message,
           hasData: !!hsData,
           success: hsData?.success,
@@ -569,6 +644,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
           },
           dataKeys: hsData ? Object.keys(hsData) : []
         });
+        
+        // STEP 5: Enhanced fallback with 8 comprehensive hazards
         hsDataToUse = {
           success: true,
           structuredData: {
@@ -594,19 +671,73 @@ export function useAIRAMS(): UseAIRAMSReturn {
                   likelihood: 4,
                   severity: 3,
                   controls: ["Use mechanical aids", "Team lift >25kg", "Proper lifting technique"]
+                },
+                {
+                  hazard: "Work at height from ladders/scaffolds",
+                  risk: "Falls causing serious injury",
+                  likelihood: 3,
+                  severity: 4,
+                  controls: ["Edge protection", "Harness if required", "3-point contact", "Inspect equipment before use"]
+                },
+                {
+                  hazard: "Asbestos in building materials",
+                  risk: "Respiratory disease from fibre exposure",
+                  likelihood: 2,
+                  severity: 5,
+                  controls: ["Pre-demolition survey", "Licensed asbestos removal", "RPE if disturbed", "Wet methods"]
+                },
+                {
+                  hazard: "Confined spaces (ducting/voids)",
+                  risk: "Asphyxiation or entrapment",
+                  likelihood: 2,
+                  severity: 5,
+                  controls: ["Atmosphere testing", "Forced ventilation", "Emergency rescue plan", "Permit to work"]
+                },
+                {
+                  hazard: "Vehicle movements on site",
+                  risk: "Struck by moving vehicles",
+                  likelihood: 3,
+                  severity: 4,
+                  controls: ["Segregated walkways", "Hi-vis clothing", "Banksman for reversing", "Site speed limits"]
+                },
+                {
+                  hazard: "Fire risk from hot works/electrical faults",
+                  risk: "Burns and smoke inhalation",
+                  likelihood: 2,
+                  severity: 4,
+                  controls: ["Fire extinguishers available", "Hot work permit", "Fire watch", "Clear combustibles"]
                 }
               ],
-              ppe: ["Safety helmet to BS EN 397", "Safety boots to BS EN 20345", "Hi-vis vest to BS EN ISO 20471", "Insulated gloves to BS EN 60903", "Safety glasses to BS EN 166"],
-              emergencyProcedures: ["Isolate power in emergency", "Call 999 for electric shock", "First aid kit location known", "Assembly point identified"]
+              ppe: ["Safety helmet to BS EN 397", "Safety boots to BS EN 20345", "Hi-vis vest to BS EN ISO 20471", "Insulated gloves to BS EN 60903", "Safety glasses to BS EN 166", "Hearing protection to BS EN 352", "Respiratory protection to BS EN 149", "Arc-rated PPE to IEC 61482"],
+              emergencyProcedures: ["Isolate power in emergency", "Call 999 for electric shock", "First aid kit location known", "Assembly point identified", "Nearest hospital: [To be confirmed]"]
             }
           }
         };
         
-        // Fallback toast removed - only show when genuinely necessary
+        // STEP 5: Show prominent warning toast
+        toast({
+          title: "⚠️ Using basic risk assessment",
+          description: "AI generation timed out - 8 common electrical hazards provided. Consider regenerating for job-specific assessment.",
+          variant: "destructive",
+        });
+        
+        // STEP 5: Log fallback usage to edge function
+        try {
+          await supabase.functions.invoke('health-safety-v3', {
+            body: {
+              logFallbackUsage: true,
+              query: jobDescription,
+              reason: hsError?.message || 'No valid response',
+              timestamp: new Date().toISOString()
+            }
+          });
+        } catch (logError) {
+          console.error('Failed to log fallback usage:', logError);
+        }
         
         setReasoningSteps(prev => prev.map(step => 
           step.agent === 'health-safety' 
-            ? { ...step, status: 'complete', reasoning: 'Using fallback electrical hazards (3 hazards)', subStep: null, timeElapsed: Math.round((Date.now() - hsStartTime) / 1000) }
+            ? { ...step, status: 'complete', reasoning: 'Using enhanced fallback electrical hazards (8 hazards)', subStep: null, timeElapsed: Math.round((Date.now() - hsStartTime) / 1000) }
             : step
         ));
       }
