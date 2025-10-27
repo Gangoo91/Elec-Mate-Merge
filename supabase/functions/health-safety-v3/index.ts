@@ -1,4 +1,8 @@
-// Deployed: 2025-10-11 21:30 UTC
+// DEPLOYMENT v4.0.0 - Health & Safety RAMS Generator - 2025-10-27T12:00:00Z
+const VERSION = 'v4.0.0';
+const BOOT_TIME = new Date().toISOString();
+console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
+
 import { serve } from '../_shared/deps.ts';
 import {
   corsHeaders, 
@@ -20,10 +24,18 @@ serve(async (req) => {
   }
 
   // Health check endpoint
-  if (req.method === 'GET') {
+  if (req.method === 'GET' || (req.method === 'POST' && (await req.clone().json()).mode === 'health-check')) {
     const requestId = generateRequestId();
+    console.log(`✅ Health check passed - ${VERSION} at ${BOOT_TIME}`);
     return new Response(
-      JSON.stringify({ status: 'healthy', function: 'health-safety-v3', requestId, timestamp: new Date().toISOString() }),
+      JSON.stringify({ 
+        status: 'healthy', 
+        function: 'health-safety-v3', 
+        version: VERSION,
+        bootTime: BOOT_TIME,
+        requestId, 
+        timestamp: new Date().toISOString() 
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   }

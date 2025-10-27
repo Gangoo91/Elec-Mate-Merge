@@ -451,15 +451,31 @@ export function useAIRAMS(): UseAIRAMSReturn {
       // Start simulated substep progress
       simulateSubStepProgress('health-safety', HEALTH_SAFETY_SUBSTEPS);
 
-      // Health check before starting (optional - continues on failure)
+      // STEP 3: Health check - fail fast if edge function is down (5 second timeout)
       try {
         console.log('🏥 Checking edge function health...');
-        const healthCheck = await supabase.functions.invoke('health-safety-v3', {
-          body: { healthCheck: true }
+        const healthCheckPromise = supabase.functions.invoke('health-safety-v3', {
+          body: { mode: 'health-check' }
         });
-        console.log('✅ Health check response:', healthCheck.data);
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Health check timeout after 5 seconds')), 5000)
+        );
+        
+        const healthCheck: any = await Promise.race([healthCheckPromise, timeoutPromise]);
+        
+        if (!healthCheck?.data || healthCheck.error) {
+          throw new Error('AI system is offline - edge function not responding');
+        }
+        console.log('✅ Health check passed:', healthCheck.data);
       } catch (healthError) {
-        console.warn('⚠️ Health check failed (continuing anyway):', healthError);
+        console.error('❌ Health check failed:', healthError);
+        toast({
+          title: "⚠️ AI System Unavailable",
+          description: "The AI risk assessment system is currently offline. Using basic hazard template instead.",
+          variant: "destructive",
+          duration: 10000
+        });
+        // Will fall through to AI call which will timeout and trigger fallback
       }
 
       const { data: hsData, error: hsError } = await callAgentWithRetry('health-safety-v3', {
@@ -676,7 +692,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       // STEP 2 & 5: Only trigger fallback when truly no data available
       if (shouldUseFallback) {
-        console.error('❌ Health & Safety agent failed - using enhanced fallback:', { 
+        console.error('🚨 CRITICAL: USING FALLBACK DATA - AI GENERATION FAILED', { 
           hsError: hsError?.message,
           hasData: !!hsData,
           success: hsData?.success,
@@ -689,6 +705,14 @@ export function useAIRAMS(): UseAIRAMSReturn {
             'riskAssessment.hazards': hsData?.riskAssessment?.hazards?.length || 0
           },
           dataKeys: hsData ? Object.keys(hsData) : []
+        });
+
+        // STEP 5: Prominent warning that fallback data is being used
+        toast({
+          title: "⚠️ Using Basic Risk Assessment Template",
+          description: "AI generation failed. Showing 8 generic electrical hazards only. This is NOT a comprehensive assessment for your specific job! Please review and add job-specific hazards manually.",
+          variant: "destructive",
+          duration: 15000
         });
         
         // STEP 5: Enhanced fallback with 8 comprehensive hazards
