@@ -238,11 +238,38 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
       if (error) throw error;
       
       setAiContent(data.content);
+
+      // Flatten structured arrays back into text for editing
+      const briefingDescriptionText = data.content.briefingOverview
+        ?.map((p: any) => p.content)
+        .join('\n\n') || data.content.briefingDescription || '';
+
+      const hazardsText = data.content.hazardsAndControls
+        ? Array.isArray(data.content.hazardsAndControls)
+          ? data.content.hazardsAndControls.map((h: any) => {
+              let text = `**Hazard ${h.hazardId}: ${h.hazardName}**\n`;
+              text += `${h.description}\n`;
+              text += `**Risk Level:** ${h.riskLevel}\n\n`;
+              text += `**Control Measures:**\n`;
+              text += h.controls.map((c: string) => `- ${c}`).join('\n');
+              if (h.requiredPPE?.length > 0) {
+                text += `\n\n**Required PPE:**\n`;
+                text += h.requiredPPE.map((ppe: string) => `- ${ppe}`).join('\n');
+              }
+              return text;
+            }).join('\n\n---\n\n')
+          : data.content.hazardsAndControls
+        : '';
+
+      const safetyWarningText = data.content.safetyWarning?.headline 
+        ? `**${data.content.safetyWarning.level}: ${data.content.safetyWarning.headline}**\n\n${data.content.safetyWarning.details.join('\n- ')}`
+        : data.content.safetyWarning || '';
+
       setFormData(prev => ({
         ...prev,
-        briefingDescription: data.content.briefingDescription,
-        hazards: data.content.hazardsAndControls,
-        safetyWarning: data.content.safetyWarning,
+        briefingDescription: briefingDescriptionText,
+        hazards: hazardsText,
+        safetyWarning: safetyWarningText,
       }));
 
       toast({
@@ -312,7 +339,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
             custom: formData.customHazards,
             riskLevel: formData.riskLevel,
           },
-          aiContent: aiContent
+          aiContent: aiContent  // Store FULL structured response
         } : null,
         photos: formData.photos,
         created_by_name: profile?.full_name || user.email,

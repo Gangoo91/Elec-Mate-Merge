@@ -8,33 +8,81 @@ const corsHeaders = {
 // System prompt templates for each briefing type
 function getSystemPromptForType(briefingType: string): string {
   const prompts: Record<string, string> = {
-    'site-work': `You are a UK electrical safety briefing expert with deep knowledge of BS 7671:2018+A3:2024 regulations. Generate professional, concise, and actionable team briefings for electrical installation work.
+    'site-work': `You are a UK electrical safety briefing expert with deep knowledge of BS 7671:2018+A3:2024 regulations.
 
-Focus on: Electrical hazards, BS 7671 compliance, isolation procedures, PPE requirements, and safe working practices.`,
+Generate structured, actionable briefing content with:
+- 3-4 distinct paragraphs for overview (introduction, scope, objectives)
+- Detailed hazard analysis with specific controls for EACH identified hazard
+- Clear risk levels (HIGH/MEDIUM/LOW) based on likelihood and severity
+- Specific PPE requirements with BS/EN standards where applicable
+- Referenced regulations with section numbers
 
-    'business-update': `You are a professional business communications expert. Generate clear, concise, and action-oriented briefings for business updates and organizational changes.
+Focus on: Electrical hazards, BS 7671 compliance, isolation procedures, safe working practices.`,
 
-Focus on: Key changes, impact on team, action items, timelines, stakeholder responsibilities, and transition planning. Avoid safety jargon unless specifically relevant.`,
+    'business-update': `You are a professional business communications expert.
 
-    'hse-update': `You are an HSE (Health, Safety & Environment) compliance specialist with broad knowledge of UK workplace regulations. Generate comprehensive briefings on HSE updates and regulatory changes.
+Generate structured briefing content with:
+- 3-4 overview paragraphs (introduction, background, summary)
+- Detailed list of changes with effective dates and priority levels
+- Impact assessment by area/department with severity
+- Clear action items with owners and deadlines
+- Implementation timeline with milestones
 
-Focus on: Regulatory changes, compliance requirements, impact assessment, implementation steps, and deadlines. Cover all workplace safety, not just electrical.`,
+Focus on: Key changes, team impact, action items, timelines, transition planning.`,
 
-    'lfe': `You are an incident analysis expert specializing in lessons from experience. Generate insightful briefings that help teams learn from past incidents.
+    'hse-update': `You are an HSE compliance specialist with broad knowledge of UK workplace regulations.
 
-Focus on: Incident summary, root cause analysis, contributing factors, preventive measures, and actionable learnings. Use clear, blame-free language.`,
+Generate structured briefing content with:
+- 3-4 overview paragraphs covering regulatory changes
+- Detailed compliance requirements with deadlines
+- Impact assessment by operational area
+- Action items with responsible parties
+- Timeline for implementation
 
-    'safety-alert': `You are an urgent safety communications specialist. Generate immediate, clear, and actionable safety alerts that demand attention.
+Focus on: Regulatory changes, compliance requirements, implementation steps, deadlines.`,
 
-Focus on: Immediate hazard description, specific dangers, required actions, who's affected, and compliance deadlines. Use direct, urgent language.`,
+    'lfe': `You are an incident analysis expert specializing in lessons from experience.
 
-    'regulatory': `You are a regulatory change management expert. Generate detailed briefings on regulatory changes and their business impact.
+Generate structured briefing content with:
+- 3-4 overview paragraphs (incident summary, context, learnings)
+- Detailed hazard analysis showing what went wrong
+- Clear control measures to prevent recurrence
+- Action items for teams with timelines
+- References to relevant safety regulations
 
-Focus on: Change summary, compliance requirements, implementation roadmap, resource needs, training requirements, and deadlines.`,
+Focus on: Root cause analysis, preventive measures, actionable learnings. Use blame-free language.`,
 
-    'general': `You are a professional team briefing coordinator. Generate clear, well-structured briefings for general team communications.
+    'safety-alert': `You are an urgent safety communications specialist.
 
-Focus on: Clear objectives, key information, action items, and next steps. Adapt tone to the content provided.`
+Generate structured briefing content with:
+- 3-4 concise, urgent overview paragraphs
+- Detailed hazard descriptions with HIGH risk levels
+- Immediate control measures required
+- Mandatory PPE and equipment
+- Relevant safety regulations and deadlines
+
+Focus on: Immediate hazard, specific dangers, required actions. Use direct, urgent language.`,
+
+    'regulatory': `You are a regulatory change management expert.
+
+Generate structured briefing content with:
+- 3-4 overview paragraphs explaining the regulatory change
+- Key changes with effective dates and priorities
+- Impact assessment by business area
+- Action items with resource requirements
+- Implementation timeline with milestones
+
+Focus on: Change summary, compliance requirements, implementation roadmap, resource needs.`,
+
+    'general': `You are a professional team briefing coordinator.
+
+Generate structured briefing content with:
+- 3-4 clear overview paragraphs
+- Key points as structured list
+- Action items with clear ownership
+- Timeline or next steps
+
+Focus on: Clear objectives, key information, action items, next steps.`
   };
 
   return prompts[briefingType] || prompts['general'];
@@ -57,44 +105,112 @@ function getBriefingTypeContext(briefingType: string): string {
 
 // Get tool definition based on briefing type
 function getToolDefinitionForType(briefingType: string) {
-  const baseProps = {
-    briefingDescription: {
-      type: "string",
-      description: "2-4 paragraph comprehensive overview"
-    }
-  };
-
   // Safety-related briefings (site-work, safety-alert, lfe)
   if (['site-work', 'safety-alert', 'lfe'].includes(briefingType)) {
     return {
       type: "function",
       function: {
         name: "generate_briefing_content",
-        description: "Generate comprehensive safety briefing content",
+        description: "Generate comprehensive safety briefing content with structured data",
         parameters: {
           type: "object",
           properties: {
-            ...baseProps,
+            briefingOverview: {
+              type: "array",
+              description: "Array of overview paragraphs with context",
+              items: {
+                type: "object",
+                properties: {
+                  paragraph: { type: "number" },
+                  content: { type: "string", description: "Paragraph text (2-4 sentences)" },
+                  type: { 
+                    type: "string", 
+                    enum: ["introduction", "scope", "objectives", "context"],
+                    description: "Paragraph purpose"
+                  }
+                },
+                required: ["paragraph", "content", "type"]
+              }
+            },
             hazardsAndControls: {
-              type: "string",
-              description: "Detailed hazard analysis with controls for each hazard"
+              type: "array",
+              description: "Structured hazard analysis with controls",
+              items: {
+                type: "object",
+                properties: {
+                  hazardId: { type: "number" },
+                  hazardName: { type: "string", description: "Clear hazard name" },
+                  description: { type: "string", description: "Detailed hazard description" },
+                  riskLevel: { 
+                    type: "string", 
+                    enum: ["HIGH", "MEDIUM", "LOW"],
+                    description: "Risk severity"
+                  },
+                  controls: { 
+                    type: "array", 
+                    items: { type: "string" },
+                    description: "Control measures (3-5 items)"
+                  },
+                  requiredPPE: { 
+                    type: "array", 
+                    items: { type: "string" },
+                    description: "Specific PPE needed"
+                  },
+                  regulations: {
+                    type: "array",
+                    items: { type: "string" },
+                    description: "Relevant regulations"
+                  }
+                },
+                required: ["hazardId", "hazardName", "description", "riskLevel", "controls"]
+              }
             },
             safetyWarning: {
-              type: "string",
-              description: "Critical safety warning - clear and direct"
+              type: "object",
+              description: "Critical safety warning structure",
+              properties: {
+                level: { 
+                  type: "string", 
+                  enum: ["DANGER", "WARNING", "CAUTION"],
+                  description: "Warning severity"
+                },
+                headline: { type: "string", description: "Short, impactful warning title" },
+                details: { 
+                  type: "array", 
+                  items: { type: "string" },
+                  description: "Key warning points (3-5 items)"
+                }
+              },
+              required: ["level", "headline", "details"]
             },
             equipmentRequired: {
               type: "array",
-              items: { type: "string" },
-              description: "Required PPE and safety equipment"
+              description: "Required equipment with standards",
+              items: {
+                type: "object",
+                properties: {
+                  item: { type: "string" },
+                  standard: { type: "string", description: "BS/EN standard if applicable" },
+                  mandatory: { type: "boolean" }
+                },
+                required: ["item", "mandatory"]
+              }
             },
             keyRegulations: {
               type: "array",
-              items: { type: "string" },
-              description: "Relevant regulations (BS 7671, HSE guidelines)"
+              description: "Applicable regulations and standards",
+              items: {
+                type: "object",
+                properties: {
+                  regulation: { type: "string", description: "Regulation name" },
+                  section: { type: "string", description: "Specific section/part" },
+                  topic: { type: "string", description: "What it covers" }
+                },
+                required: ["regulation", "topic"]
+              }
             }
           },
-          required: ["briefingDescription", "hazardsAndControls", "safetyWarning", "equipmentRequired", "keyRegulations"]
+          required: ["briefingOverview", "hazardsAndControls", "safetyWarning", "equipmentRequired", "keyRegulations"]
         }
       }
     };
@@ -110,32 +226,92 @@ function getToolDefinitionForType(briefingType: string) {
         parameters: {
           type: "object",
           properties: {
-            ...baseProps,
+            briefingOverview: {
+              type: "array",
+              description: "Overview paragraphs",
+              items: {
+                type: "object",
+                properties: {
+                  paragraph: { type: "number" },
+                  content: { type: "string" },
+                  type: { 
+                    type: "string", 
+                    enum: ["introduction", "background", "summary"]
+                  }
+                },
+                required: ["paragraph", "content", "type"]
+              }
+            },
             keyChanges: {
-              type: "string",
-              description: "Summary of key changes or updates"
+              type: "array",
+              description: "Structured list of changes",
+              items: {
+                type: "object",
+                properties: {
+                  changeId: { type: "number" },
+                  title: { type: "string" },
+                  description: { type: "string" },
+                  effectiveDate: { type: "string" },
+                  priority: { type: "string", enum: ["high", "medium", "low"] }
+                },
+                required: ["changeId", "title", "description", "priority"]
+              }
             },
             impactAssessment: {
-              type: "string",
-              description: "Impact on team, operations, or compliance"
+              type: "array",
+              description: "Impact areas",
+              items: {
+                type: "object",
+                properties: {
+                  area: { type: "string", description: "Team/department/process affected" },
+                  impact: { type: "string", description: "How they're affected" },
+                  severity: { type: "string", enum: ["high", "medium", "low"] }
+                },
+                required: ["area", "impact", "severity"]
+              }
             },
             actionItems: {
               type: "array",
-              items: { type: "string" },
-              description: "Specific actions required from team"
+              description: "Required actions",
+              items: {
+                type: "object",
+                properties: {
+                  action: { type: "string" },
+                  owner: { type: "string" },
+                  deadline: { type: "string" },
+                  priority: { type: "string", enum: ["high", "medium", "low"] }
+                },
+                required: ["action", "priority"]
+              }
             },
             timeline: {
               type: "array",
-              items: { type: "string" },
-              description: "Implementation timeline and key dates"
+              description: "Implementation timeline",
+              items: {
+                type: "object",
+                properties: {
+                  milestone: { type: "string" },
+                  date: { type: "string" },
+                  deliverable: { type: "string" }
+                },
+                required: ["milestone", "date"]
+              }
             },
             resourcesNeeded: {
               type: "array",
-              items: { type: "string" },
-              description: "Resources, training, or support needed"
+              description: "Resources required",
+              items: {
+                type: "object",
+                properties: {
+                  resource: { type: "string" },
+                  type: { type: "string", enum: ["training", "equipment", "personnel", "budget"] },
+                  urgency: { type: "string", enum: ["immediate", "short-term", "long-term"] }
+                },
+                required: ["resource", "type", "urgency"]
+              }
             }
           },
-          required: ["briefingDescription", "keyChanges", "impactAssessment", "actionItems", "timeline"]
+          required: ["briefingOverview", "keyChanges", "impactAssessment", "actionItems", "timeline"]
         }
       }
     };
@@ -150,7 +326,18 @@ function getToolDefinitionForType(briefingType: string) {
       parameters: {
         type: "object",
         properties: {
-          ...baseProps,
+          briefingOverview: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                paragraph: { type: "number" },
+                content: { type: "string" },
+                type: { type: "string" }
+              },
+              required: ["paragraph", "content"]
+            }
+          },
           keyPoints: {
             type: "array",
             items: { type: "string" },
@@ -166,7 +353,7 @@ function getToolDefinitionForType(briefingType: string) {
             description: "Any additional relevant information"
           }
         },
-        required: ["briefingDescription", "keyPoints", "actionItems"]
+        required: ["briefingOverview", "keyPoints", "actionItems"]
       }
     }
   };

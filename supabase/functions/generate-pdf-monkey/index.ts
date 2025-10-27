@@ -174,9 +174,45 @@ serve(async (req) => {
         contractor_company: briefing.contractor_company || companyProfile?.company_name || "",
         created_by: briefing.created_by_name,
         
-        briefing_description: briefing.briefing_description || briefing.notes || "",
-        hazards: briefing.hazards || "",
-        safety_warning: briefing.safety_warning || "",
+        // Use structured AI data directly from ai_prompt_data (with fallback parsing)
+        briefing_overview: {
+          paragraphs: briefing.ai_prompt_data?.aiContent?.briefingOverview || 
+                      (briefing.briefing_description || briefing.notes || "").split('\n\n')
+                        .filter(p => p.trim())
+                        .map((p, i) => ({
+                          paragraph: i + 1,
+                          content: p.trim(),
+                          type: i === 0 ? 'introduction' : 'context'
+                        }))
+        },
+        
+        hazards_and_controls: {
+          structured: briefing.ai_prompt_data?.aiContent?.hazardsAndControls ||
+                      (briefing.hazards || "").split(/---+/).filter(h => h.trim()).map((h, i) => {
+                        const lines = h.trim().split('\n');
+                        const hazardMatch = lines[0]?.match(/\*\*Hazard \d+: (.+?)\*\*/);
+                        const riskMatch = h.match(/\*\*Risk Level:\*\*\s*(\w+)/);
+                        return {
+                          hazardId: i + 1,
+                          hazardName: hazardMatch?.[1] || `Hazard ${i + 1}`,
+                          description: lines.slice(1).join(' ').substring(0, 200),
+                          riskLevel: riskMatch?.[1] || 'MEDIUM',
+                          controls: h.match(/- (.+?)(?=\n|$)/g)?.map(c => c.replace(/^- /, '')) || []
+                        };
+                      }),
+          count: briefing.ai_prompt_data?.aiContent?.hazardsAndControls?.length || 0
+        },
+        
+        safety_warning: briefing.ai_prompt_data?.aiContent?.safetyWarning || {
+          level: "CAUTION",
+          headline: "Safety Precautions Required",
+          details: (briefing.safety_warning || "").match(/- (.+?)(?=\n|$)/g)?.map(b => b.replace(/^- /, '')) || [briefing.safety_warning || ""]
+        },
+        
+        equipment_required: briefing.ai_prompt_data?.aiContent?.equipmentRequired || [],
+        
+        key_regulations: briefing.ai_prompt_data?.aiContent?.keyRegulations || [],
+        
         additional_notes: briefing.notes || "",
         
         photos: (briefing.photos || []).map((p: any) => ({
@@ -195,7 +231,13 @@ serve(async (req) => {
       };
 
       payload = transformedBriefing;
-      console.log('[PDF-MONKEY] Transformed briefing payload');
+      console.log('[PDF-MONKEY] Transformed briefing payload with structured data:', {
+        hasBriefingOverview: !!transformedBriefing.briefing_overview.paragraphs?.length,
+        hazardsCount: transformedBriefing.hazards_and_controls.count,
+        safetyWarningLevel: transformedBriefing.safety_warning.level,
+        equipmentCount: transformedBriefing.equipment_required.length,
+        regulationsCount: transformedBriefing.key_regulations.length
+      });
     } else if (invoice_mode) {
       // Transform to invoice format - USE FRESH DATA
       // Use bank details from invoice settings first, fallback to company profile
