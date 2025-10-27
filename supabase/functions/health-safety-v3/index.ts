@@ -684,7 +684,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         systemPrompt,
         userPrompt,
         maxTokens: 12000,
-        timeoutMs: 90000,  // 90 seconds (GPT-5 Mini completes in 30-60s)
+        timeoutMs: 180000,  // 3 minutes (GPT-5 Mini needs 90-120s for complex jobs)
       tools: [{
         type: 'function',
         function: {
