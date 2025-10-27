@@ -148,6 +148,16 @@ export function useAIRAMS(): UseAIRAMSReturn {
       ppeSample: ramsData.ppeDetails?.slice(0, 3)
     });
 
+    // 🔍 CRITICAL PRE-SAVE CHECKPOINT
+    console.log('🔍 PRE-SAVE DETAILED ANALYSIS:', {
+      totalRisksInMemory: ramsData.risks?.length,
+      totalPPEInMemory: ramsData.ppeDetails?.length,
+      first5Hazards: ramsData.risks?.slice(0, 5).map(r => r.hazard),
+      last5Hazards: ramsData.risks?.slice(-5).map(r => r.hazard),
+      middleHazards: ramsData.risks?.slice(10, 15).map(r => r.hazard),
+      allRiskIds: ramsData.risks?.map(r => r.id)
+    });
+
     setIsSaving(true);
     
     try {
@@ -189,6 +199,15 @@ export function useAIRAMS(): UseAIRAMSReturn {
       console.log('💾 Payload being saved:', {
         risksLength: (ramsPayload.risks as any)?.length,
         ppeLength: (ramsPayload.ppe_details as any)?.length
+      });
+
+      // 🚨 FINAL CHECKPOINT - Ensure payload has all risks
+      console.log('🚨 FINAL DATABASE PAYLOAD CHECKPOINT:', {
+        risksInPayload: (ramsPayload.risks as any)?.length,
+        expectedMinimum: 20,
+        payloadFirst3: (ramsPayload.risks as any)?.slice(0, 3).map((r: any) => r.hazard),
+        payloadLast3: (ramsPayload.risks as any)?.slice(-3).map((r: any) => r.hazard),
+        aboutToSaveToDatabase: true
       });
 
       let savedDocId = documentId;
@@ -957,6 +976,16 @@ export function useAIRAMS(): UseAIRAMSReturn {
         ramsRisks: combinedData.ramsData?.risks?.length || 0,
         methodSteps: combinedData.methodData?.steps?.length || 0,
         extractedHazards: extractedHazards.length
+      });
+
+      // 🎯 CRITICAL CHECKPOINT - Verify risks before state update
+      console.log('🎯 POST-TRANSFORMATION CHECKPOINT:', {
+        risksInCombinedData: combinedData.ramsData?.risks?.length,
+        expectedMinimum: 20,
+        hazardsExtracted: extractedHazards.length,
+        matchesExpectation: (combinedData.ramsData?.risks?.length || 0) >= 20,
+        first3Risks: combinedData.ramsData?.risks?.slice(0, 3).map(r => r.hazard),
+        last3Risks: combinedData.ramsData?.risks?.slice(-3).map(r => r.hazard)
       });
 
       // Verify we didn't lose more than 20% of hazards in transformation
