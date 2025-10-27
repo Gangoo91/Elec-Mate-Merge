@@ -287,10 +287,25 @@ Deno.serve(async (req) => {
     const requestBody = await req.json();
     console.log('📥 Maintenance-v3 request:', JSON.stringify(requestBody, null, 2));
 
-    const { query, equipmentType, installationAge, maintenanceType, location } = requestBody;
+    const { 
+      query, 
+      equipmentDescription,
+      equipmentType, 
+      installationAge,
+      ageYears,
+      maintenanceType, 
+      location,
+      buildingType,
+      environment,
+      criticality,
+      detailLevel
+    } = requestBody;
 
-    if (!query) {
-      throw new Error('Query is required');
+    // Use equipmentDescription as query if query not provided
+    const actualQuery = query || equipmentDescription;
+
+    if (!actualQuery) {
+      throw new Error('Equipment description is required');
     }
 
     // Initialize Supabase client
@@ -305,7 +320,7 @@ Deno.serve(async (req) => {
     }
 
     // Expand query for better RAG retrieval
-    const expandedQuery = `${query} ${equipmentType || ''} ${maintenanceType || ''} maintenance inspection testing procedures`;
+    const expandedQuery = `${actualQuery} ${equipmentType || ''} ${maintenanceType || ''} maintenance inspection testing procedures`;
     console.log('🔍 Expanded query:', expandedQuery);
 
     // Generate embedding for query
@@ -351,11 +366,14 @@ Deno.serve(async (req) => {
 
     // Construct user message with context
     const userMessage = `Equipment: ${equipmentType || 'Not specified'}
-Installation Age: ${installationAge || 'Not specified'}
+Installation Age: ${ageYears || installationAge || 'Not specified'}
 Location: ${location || 'Not specified'}
-Maintenance Type: ${maintenanceType || 'General'}
+Building Type: ${buildingType || 'Not specified'}
+Environment: ${environment || 'indoor'}
+Criticality: ${criticality || 'standard'}
+Detail Level: ${detailLevel || 'quick'}
 
-Query: ${query}
+Query: ${actualQuery}
 
 KNOWLEDGE BASE CONTEXT:
 ${ragContext}
