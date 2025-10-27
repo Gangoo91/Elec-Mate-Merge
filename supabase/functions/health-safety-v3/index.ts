@@ -23,10 +23,10 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Health check endpoint
-  if (req.method === 'GET' || (req.method === 'POST' && (await req.clone().json()).mode === 'health-check')) {
+  // Health check endpoint - MUST come before body parsing
+  if (req.method === 'GET') {
     const requestId = generateRequestId();
-    console.log(`✅ Health check passed - ${VERSION} at ${BOOT_TIME}`);
+    console.log(`✅ Health check passed (GET) - ${VERSION} at ${BOOT_TIME}`);
     return new Response(
       JSON.stringify({ 
         status: 'healthy', 
@@ -38,6 +38,33 @@ serve(async (req) => {
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
+  }
+
+  // For POST requests, check body for health check mode
+  if (req.method === 'POST') {
+    try {
+      const clonedReq = req.clone();
+      const body = await clonedReq.json();
+      
+      if (body.mode === 'health-check') {
+        const requestId = generateRequestId();
+        console.log(`✅ Health check passed (POST) - ${VERSION} at ${BOOT_TIME}`);
+        return new Response(
+          JSON.stringify({ 
+            status: 'healthy', 
+            function: 'health-safety-v3', 
+            version: VERSION,
+            bootTime: BOOT_TIME,
+            requestId, 
+            timestamp: new Date().toISOString() 
+          }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+        );
+      }
+    } catch (e) {
+      // Not a health check or invalid JSON - continue to normal processing
+      console.log('Not a health check request, continuing to normal processing');
+    }
   }
 
   const requestId = generateRequestId();

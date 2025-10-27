@@ -464,6 +464,11 @@ export function useAIRAMS(): UseAIRAMSReturn {
         const healthCheck: any = await Promise.race([healthCheckPromise, timeoutPromise]);
         
         if (!healthCheck?.data || healthCheck.error) {
+          console.error('❌ Health check failed:', {
+            hasData: !!healthCheck?.data,
+            error: healthCheck?.error,
+            data: healthCheck?.data
+          });
           throw new Error('AI system is offline - edge function not responding');
         }
         console.log('✅ Health check passed:', healthCheck.data);
