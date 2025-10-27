@@ -99,12 +99,28 @@ const QuoteBuilder = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
+      {/* Floating Mobile Back Button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="fixed top-4 left-4 z-50 md:hidden bg-elec-card/90 backdrop-blur-sm border border-elec-yellow/20 shadow-lg h-10 w-10"
+        onClick={() => {
+          if (window.history.length > 1) {
+            navigate(-1);
+          } else {
+            navigate('/electrician/business');
+          }
+        }}
+      >
+        <ArrowLeft className="h-5 w-5" />
+      </Button>
+
       {/* Enhanced Header */}
       <header className="relative bg-elec-card/90 backdrop-blur-sm border-b border-primary/20">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div className="relative px-4 py-8 space-y-6">
-          {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="relative px-4 py-4 md:py-8 space-y-3 md:space-y-6">
+          {/* Breadcrumb Navigation - Hidden on Mobile */}
+          <nav className="hidden md:flex items-center gap-2 text-sm text-muted-foreground">
             <Link to="/electrician/business" className="hover:text-foreground transition-colors">
               Business Hub
             </Link>
@@ -113,19 +129,19 @@ const QuoteBuilder = () => {
           </nav>
 
           {/* Title and Back Button */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="space-y-2">
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:gap-4">
+            <div className="space-y-1 md:space-y-2">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
                 Quote Builder
               </h1>
-              <p className="text-white text-lg">
+              <p className="text-white/80 md:text-white text-sm md:text-lg">
                 Create professional electrical quotes with ease
               </p>
             </div>
             <Button 
               variant="secondary" 
               size="lg" 
-              className="w-full sm:w-auto shadow-lg"
+              className="hidden md:flex shadow-lg"
               onClick={() => {
                 if (window.history.length > 1) {
                   navigate(-1);
@@ -140,35 +156,35 @@ const QuoteBuilder = () => {
         </div>
       </header>
 
-      <div className="p-0 md:px-6 md:py-8 space-y-6 md:space-y-8 animate-fade-in">
-        <div className="max-w-[1400px] mx-auto px-4">
+      <div className="p-0 md:px-6 md:py-8 space-y-4 md:space-y-8 animate-fade-in">
+        <div className="max-w-[1400px] mx-auto px-3 md:px-4">
           {/* Prominent Create Quote Section */}
-          <section className="text-center space-y-4">
+          <section className="text-center space-y-2 md:space-y-4">
           <Button 
             onClick={() => navigate('/electrician/quote-builder/create')}
             size="lg"
-            className="mobile-button-primary px-12 py-6 text-xl font-bold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-2xl hover:shadow-3xl transition-all duration-300 group transform hover:scale-105"
+            className="mobile-button-primary w-full md:w-auto px-8 md:px-12 py-4 md:py-6 text-lg md:text-xl font-bold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-2xl hover:shadow-3xl transition-all duration-300 group transform hover:scale-105"
           >
-            <Plus className="mr-3 h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
+            <Plus className="mr-2 md:mr-3 h-5 w-5 md:h-6 md:w-6 group-hover:rotate-90 transition-transform duration-300" />
             Create New Quote
           </Button>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-sm md:text-lg text-muted-foreground">
             Professional electrical quotes in minutes
           </p>
         </section>
 
-        <main className="space-y-6 md:space-y-8">
+        <main className="space-y-4 md:space-y-8">
           {/* Enhanced Stats Dashboard */}
-          <section aria-labelledby="stats-overview" className="space-y-4 md:space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <h2 id="stats-overview" className="text-xl md:text-2xl font-bold">Dashboard Overview</h2>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <section aria-labelledby="stats-overview" className="space-y-3 md:space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 md:gap-3">
+              <h2 id="stats-overview" className="text-lg md:text-2xl font-bold">Dashboard Overview</h2>
+              <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 Live data
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 lg:gap-6">
               {statCards.map((stat, index) => (
                 <Card 
                   key={index} 
@@ -176,19 +192,19 @@ const QuoteBuilder = () => {
                   onClick={() => handleCardClick(stat.type)}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <CardContent className="relative p-4 md:p-6">
+                  <CardContent className="relative p-3 md:p-6">
                     <div className="flex items-center justify-between">
                       <div className="space-y-1 md:space-y-2 flex-1 min-w-0">
-                        <p className="text-xs md:text-sm font-medium text-muted-foreground truncate">{stat.title}</p>
-                        <p className="text-2xl md:text-3xl font-bold">{stat.value}</p>
+                        <p className="text-[10px] md:text-sm font-medium text-muted-foreground truncate">{stat.title}</p>
+                        <p className="text-xl md:text-3xl font-bold">{stat.value}</p>
                         <div className="flex items-center gap-2">
                           <div className="w-full bg-muted rounded-full h-1">
                             <div className="bg-primary h-1 rounded-full transition-all duration-500" style={{ width: `${Math.min(100, (parseInt(stat.value.replace(/[^\d]/g, '')) || 0) * 20)}%` }}></div>
                           </div>
                         </div>
                       </div>
-                      <div className={`p-2 md:p-3 rounded-xl bg-gradient-to-br flex-shrink-0 ml-3 ${index % 2 === 0 ? 'from-primary/10 to-primary/5' : 'from-accent/10 to-accent/5'}`}>
-                        <stat.icon className={`h-5 w-5 md:h-6 md:w-6 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
+                      <div className={`p-1.5 md:p-3 rounded-xl bg-gradient-to-br flex-shrink-0 ml-2 md:ml-3 ${index % 2 === 0 ? 'from-primary/10 to-primary/5' : 'from-accent/10 to-accent/5'}`}>
+                        <stat.icon className={`h-4 w-4 md:h-6 md:w-6 ${stat.color} group-hover:scale-110 transition-transform duration-300`} />
                       </div>
                     </div>
                   </CardContent>
@@ -199,9 +215,9 @@ const QuoteBuilder = () => {
 
 
           {/* Enhanced Recent Quotes */}
-          <section aria-labelledby="recent-quotes" className="space-y-4 md:space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <h2 id="recent-quotes" className="text-xl md:text-2xl font-bold">Recent Quotes</h2>
+          <section aria-labelledby="recent-quotes" className="space-y-3 md:space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 md:gap-3">
+              <h2 id="recent-quotes" className="text-lg md:text-2xl font-bold">Recent Quotes</h2>
               <Link to="/electrician/quotes">
                 <Button variant="outline" size="sm" className="w-full sm:w-auto">
                   View All
