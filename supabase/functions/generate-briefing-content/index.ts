@@ -271,7 +271,7 @@ ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - ad
           type: "function",
           function: { name: "generate_briefing_content" }
         },
-        max_completion_tokens: 2000
+        max_completion_tokens: 8000  // Allow for 2000 reasoning + 6000 output tokens
       }),
     });
 
