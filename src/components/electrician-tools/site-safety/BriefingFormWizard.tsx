@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, ArrowRight, Sparkles, Save, FileText, Users, AlertTriangle, Camera, Loader2, Clock, AlertCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, Save, FileText, Users, AlertTriangle, Camera, Loader2, Clock, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Progress } from "@/components/ui/progress";
 import { TemplateSelector } from "./briefing-templates/TemplateSelector";
 import { FormattedTextDisplay } from "./FormattedTextDisplay";
@@ -46,6 +47,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
   const [showTemplateSelector, setShowTemplateSelector] = useState(!initialData);
   const [showRestoreDialog, setShowRestoreDialog] = useState(false);
+  const [showJsonData, setShowJsonData] = useState(false);
 
   // Form data - pre-populate if editing
   const [formData, setFormData] = useState({
@@ -669,6 +671,27 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                     ✅ AI content generated! Review and edit below.
                   </p>
                 </div>
+
+                {/* Raw JSON Data Viewer */}
+                <Collapsible open={showJsonData} onOpenChange={setShowJsonData}>
+                  <CollapsibleTrigger asChild>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="w-full justify-between border-primary/30 text-elec-light/70 hover:text-elec-light"
+                    >
+                      <span className="text-xs">View Raw JSON Data</span>
+                      {showJsonData ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-2">
+                    <div className="bg-card/50 border border-primary/20 rounded-lg p-4 max-h-96 overflow-auto">
+                      <pre className="text-xs text-elec-light/80 whitespace-pre-wrap font-mono">
+                        {JSON.stringify(aiContent, null, 2)}
+                      </pre>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
 
                 <div className="space-y-2">
                   <Label className="text-elec-light text-sm">Briefing Overview</Label>
