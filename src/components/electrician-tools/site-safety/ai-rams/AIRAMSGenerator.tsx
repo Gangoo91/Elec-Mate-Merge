@@ -150,6 +150,7 @@ export const AIRAMSGenerator: React.FC = () => {
                     onUpdate={(rams, method) => {
                       // Update handled by internal state
                     }}
+                    onRegenerate={handleStartOver}
                     rawHSResponse={rawHSResponse}
                     rawInstallerResponse={rawInstallerResponse}
                   />

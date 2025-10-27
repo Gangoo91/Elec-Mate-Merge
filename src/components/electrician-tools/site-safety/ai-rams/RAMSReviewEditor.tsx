@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle, Code, Shield, AlertCircle, Copy, ChevronDown, ChevronUp, Save } from 'lucide-react';
+import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle, Code, Shield, AlertCircle, Copy, ChevronDown, ChevronUp, Save, Sparkles } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
 import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
@@ -30,6 +30,7 @@ interface RAMSReviewEditorProps {
   rawHSResponse?: any;
   rawInstallerResponse?: any;
   mode?: 'embedded' | 'standalone';
+  onRegenerate?: () => void;
 }
 
 export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
@@ -41,7 +42,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   onUpdate,
   rawHSResponse,
   rawInstallerResponse,
-  mode = 'embedded'
+  mode = 'embedded',
+  onRegenerate
 }) => {
   const [ramsData, setRamsData] = useState<RAMSData>(initialRamsData);
   const [methodData, setMethodData] = useState<Partial<MethodStatementData>>(initialMethodData);
@@ -556,6 +558,17 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             </div>
             {!isMobile && (
               <div className="flex items-center gap-3">
+                {onRegenerate && (
+                  <Button
+                    onClick={onRegenerate}
+                    size="sm"
+                    variant="outline"
+                    className="border-orange-500/40 hover:border-orange-500 h-11 px-5 font-semibold hover:bg-orange-500/10 transition-all text-orange-500"
+                  >
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    Regenerate
+                  </Button>
+                )}
                 {onSave && (
                   <Button
                     onClick={onSave}

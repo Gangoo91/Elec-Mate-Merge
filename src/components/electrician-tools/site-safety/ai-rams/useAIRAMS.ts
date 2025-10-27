@@ -442,6 +442,13 @@ export function useAIRAMS(): UseAIRAMSReturn {
     },
     jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => {
+    // Clear stale state before starting fresh generation
+    setRamsData(null);
+    setMethodData(null);
+    setRawHSResponse(null);
+    setRawInstallerResponse(null);
+    setDocumentId(null);
+    
     setIsProcessing(true);
     setError(null);
     setOverallProgress(0);
