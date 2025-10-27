@@ -163,35 +163,41 @@ serve(async (req) => {
     try {
       logger.info('Building H&S context from RAG results with structured hazard extraction');
       
-      // Extract hazards directly from RAG docs
+      // Optimize RAG context delivery - extract key hazards only
       if (hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0) {
+        const optimizedHazards = hsKnowledge.healthSafetyDocs
+          .map((doc: any) => {
+            // Extract hazard sentences using pattern matching
+            const hazardMatches = doc.content.match(/(?:hazard|risk|danger)[s]?[:\s]+([^.!?]{20,150}[.!?])/gi) || [];
+            const controlMatches = doc.content.match(/(?:control|mitigation|protection|requirement)[s]?[:\s]+([^.!?]{20,150}[.!?])/gi) || [];
+            
+            return {
+              category: doc.topic,
+              keyHazards: hazardMatches.slice(0, 2).map((m: string) => m.trim()), // Top 2 hazards per doc
+              keyControls: controlMatches.slice(0, 2).map((m: string) => m.trim()), // Top 2 controls per doc
+              source: doc.source,
+              relevance: doc.similarity || 0
+            };
+          })
+          .filter((doc: any) => doc.relevance > 0.72) // Only high-relevance docs (raised from implicit 0)
+          .slice(0, 12); // Top 12 docs instead of 18 (33% reduction)
+
+        // Build condensed structured hazards
         structuredHazards = '\n\n📋 HAZARDS IDENTIFIED IN KNOWLEDGE BASE (You MUST include these):\n\n';
-        
-        hsKnowledge.healthSafetyDocs.forEach((doc: any, idx: number) => {
-          // Extract hazard category from topic
-          const category = doc.topic || 'General';
-          const content = doc.content || '';
-          
-          structuredHazards += `${idx + 1}. ${category}\n`;
-          structuredHazards += `   Context: ${content.substring(0, 600)}\n`; // Increased from 400 to 600
-          
-          // Extract specific controls if present
-          const controlMatch = content.match(/control[s]?:([^.]+)/i);
-          if (controlMatch) {
-            structuredHazards += `   Controls: ${controlMatch[1].trim()}\n`;
+        optimizedHazards.forEach((doc: any, idx: number) => {
+          structuredHazards += `${idx + 1}. **${doc.category}** (relevance: ${(doc.relevance * 100).toFixed(0)}%)\n`;
+          if (doc.keyHazards.length > 0) {
+            structuredHazards += `   Hazards: ${doc.keyHazards.join(' | ')}\n`;
           }
-          
-          // Extract PPE if present
-          const ppeMatch = content.match(/PPE:([^.]+)/i);
-          if (ppeMatch) {
-            structuredHazards += `   PPE: ${ppeMatch[1].trim()}\n`;
+          if (doc.keyControls.length > 0) {
+            structuredHazards += `   Controls: ${doc.keyControls.join(' | ')}\n`;
           }
-          
-          structuredHazards += '\n';
+          structuredHazards += `   Source: ${doc.source}\n\n`;
         });
-        
-        hsContext = hsKnowledge.healthSafetyDocs.map((hs: any) => 
-          `${hs.topic}: ${hs.content}`
+
+        // Build condensed context for backward compatibility
+        hsContext = optimizedHazards.map((doc: any) => 
+          `${doc.category}: Hazards: ${doc.keyHazards.join(', ')} | Controls: ${doc.keyControls.join(', ')}`
         ).join('\n\n');
       } else {
         hsContext = 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
@@ -351,6 +357,70 @@ ${installKnowledge}
 4. **Expand controls**: Enhance RAG control measures with job-specific details (e.g., "30mA RCD" becomes "30mA Type A RCD to BS EN 61008-1 feeding bathroom circuit per Reg 701.411.3.3")
 
 Your goal: Comprehensive risk assessment covering all hazards (RAG + supplementary), each with specific controls and regulation references.
+
+**CRITICAL: STEP-BY-STEP REASONING PROTOCOL**
+
+Before generating your risk assessment, you MUST work through this mental checklist:
+
+PHASE 1: HAZARD INVENTORY (2-3 minutes of thinking)
+□ List all installation steps provided (typically 5-12 steps)
+□ For EACH step, identify 2-3 potential hazards
+□ Consider building-specific factors:
+  - Age: Pre-1950 = asbestos risk, Pre-2000 = hidden live cables
+  - Location: Public space = crowd control, Heritage = structural sensitivity
+  - Environment: Contamination, weather exposure, underground services
+□ Add work-specific hazards:
+  - Height: >2m = working at height regs, >5m = MEWP rescue planning
+  - Electrical: Live work, three-phase, HV proximity
+  - Confined space: Basements, roof voids, meter cupboards
+□ Consider "what if" scenarios:
+  - Equipment failure (MEWP breakdown at height)
+  - Emergency response (first aid access, evacuation routes)
+  - Environmental changes (weather deterioration during outdoor work)
+
+PHASE 2: HAZARD COUNT VERIFICATION
+Check your preliminary hazard count against job complexity:
+□ Simple domestic (new build, ground level, single-phase): 10-12 hazards MINIMUM
+□ Standard commercial (multi-circuit, some height, modern building): 12-15 hazards
+□ Complex (3-phase, >2m height, occupied, older building): 15-18 hazards
+□ Very complex (heritage, public space, contamination, >5m, multiple high risks): 18-25 hazards
+
+**IF YOUR COUNT IS LOW:**
+- Go back to Phase 1 and identify missing hazard categories
+- Check: Have you considered manual handling? Vehicle movements? Lone working? Weather? Public interface? Emergency procedures?
+
+PHASE 3: REGULATION LINKING
+□ Every hazard MUST reference a specific regulation
+□ Use precise citations:
+  - "EWR 1989 Reg 4(3)" (not just "EWR 1989")
+  - "WAHR 2005 Reg 6(3)" (not just "working at height")
+  - "BS 7671 Section 411.3.3" (not just "BS 7671")
+□ If unsure of regulation, use broader reference: "CDM 2015 Principal Designer Duty"
+
+PHASE 4: PPE TAILORING
+□ Identify ALL hazard types present: electrical, height, noise, dust, chemicals, confined space, manual handling
+□ For EACH hazard type, specify required PPE with standards:
+  - Electrical: Insulated gloves (BS EN 60903), Arc flash PPE (BS EN 61482)
+  - Height: Full body harness (BS EN 361), Energy absorber (BS EN 355)
+  - Respiratory: FFP3 mask (BS EN 149) for asbestos, Dust mask (FFP2) for general
+  - Chemical: Nitrile gloves (BS EN 374) for oils/contaminants
+□ PPE count MUST scale to job complexity: Simple=5-6, Standard=7-9, Complex=10-12
+
+PHASE 5: LINKEDTOSTEP ACCURACY
+□ Link each hazard to its installation step number
+□ General site hazards use linkedToStep: 0 (vehicle movements, site access, welfare)
+□ Step-specific hazards use linkedToStep: 1, 2, 3, etc.
+□ Verify every hazard has a linkedToStep value (no null/undefined)
+
+PHASE 6: RISK SCORE VALIDATION
+□ Apply 5x5 matrix correctly: Likelihood (1-5) × Severity (1-5) = Risk Score (1-25)
+□ Verify risk levels: 1-4=Low, 5-9=Medium, 10-14=High, 15-25=Very High
+□ Check: Are high-severity hazards (electric shock, falls from height) scored 15-25?
+□ Check: Are minor hazards (hand tools, minor cuts) scored 1-6?
+
+**NOW GENERATE YOUR ASSESSMENT WITH THIS DEPTH APPLIED**
+
+Remember: You are an experienced H&S adviser who thinks about what the client DIDN'T consider. Your job is to identify the hazards they would miss.
 
 **CRITICAL: COMPREHENSIVE HAZARD IDENTIFICATION**
 The structured hazards section above contains 8-18 verified hazard categories for this work.
@@ -564,10 +634,10 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     let aiResult;
     try {
       aiResult = await callAI(OPENAI_API_KEY!, {
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5-2025-08-07',  // Full GPT-5 for deep reasoning
         systemPrompt,
         userPrompt,
-        maxTokens: 16000,  // Doubled: 8000 for reasoning + 8000 for generating 10-18 detailed hazards
+        maxTokens: 20000,  // Increased: sufficient for 18-25 detailed hazards in very complex scenarios
         timeoutMs: 200000,  // 200 seconds (safe margin before Supabase 230s limit)
       tools: [{
         type: 'function',
@@ -871,6 +941,71 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       hazardsIdentified: safetyResult.riskAssessment?.hazards?.length,
       controlsApplied: safetyResult.riskAssessment?.controls?.length
     });
+
+    // Validate AI output quality
+    const hazardCount = safetyResult.riskAssessment?.hazards?.length || 0;
+    const ppeCount = safetyResult.riskAssessment?.ppeDetails?.length || 0;
+
+    // Determine expected minimum hazards based on job complexity indicators
+    let expectedMinHazards = 10;
+    const jobDesc = planData.jobDescription?.toLowerCase() || '';
+    const complexityIndicators = [
+      jobDesc.includes('3-phase') || jobDesc.includes('three-phase'),
+      jobDesc.includes('heritage') || /\b(19\d{2}|18\d{2})\b/.test(jobDesc), // Historical dates
+      jobDesc.includes('contamination') || jobDesc.includes('oil') || jobDesc.includes('asbestos'),
+      jobDesc.includes('public') || jobDesc.includes('occupied'),
+      /\b([5-9]|[1-9]\d+)\s*m(etre|eter)?s?\b/.test(jobDesc), // 5m+ height
+      jobDesc.includes('confined space') || jobDesc.includes('live work')
+    ];
+    const complexityScore = complexityIndicators.filter(Boolean).length;
+
+    if (complexityScore >= 3) {
+      expectedMinHazards = 18; // Very complex
+    } else if (complexityScore >= 2) {
+      expectedMinHazards = 15; // Complex
+    } else if (complexityScore >= 1) {
+      expectedMinHazards = 12; // Standard
+    }
+
+    // Log quality metrics
+    const linkedStepCount = safetyResult.riskAssessment?.hazards?.filter((h: any) => typeof h.linkedToStep === 'number').length || 0;
+    const regulationCount = safetyResult.riskAssessment?.hazards?.filter((h: any) => h.regulation).length || 0;
+
+    logger.info('📊 Response Quality Metrics', {
+      hazardsGenerated: hazardCount,
+      hazardsExpected: expectedMinHazards,
+      ppeItems: ppeCount,
+      linkedStepsAccuracy: `${linkedStepCount}/${hazardCount} (${((linkedStepCount/hazardCount)*100).toFixed(0)}%)`,
+      regulationCoverage: `${regulationCount}/${hazardCount} (${((regulationCount/hazardCount)*100).toFixed(0)}%)`,
+      complexityScore,
+      qualityGrade: hazardCount >= expectedMinHazards && ppeCount >= 5 ? '✅ PASS' : '⚠️ NEEDS IMPROVEMENT'
+    });
+
+    // Warn on quality issues
+    if (hazardCount < expectedMinHazards) {
+      logger.warn('⚠️ QUALITY CHECK: Insufficient hazards generated', { 
+        generated: hazardCount, 
+        expected: expectedMinHazards,
+        shortfall: expectedMinHazards - hazardCount,
+        jobComplexity: complexityScore >= 3 ? 'Very Complex' : 
+                       complexityScore >= 2 ? 'Complex' : 
+                       complexityScore >= 1 ? 'Standard' : 'Simple'
+      });
+    }
+
+    if (ppeCount < 5) {
+      logger.warn('⚠️ QUALITY CHECK: Insufficient PPE items', { 
+        generated: ppeCount, 
+        expected: '5-12 based on job complexity' 
+      });
+    }
+
+    if ((regulationCount / hazardCount) < 0.8) {
+      logger.warn('⚠️ QUALITY CHECK: Low regulation coverage', {
+        coverage: `${((regulationCount/hazardCount)*100).toFixed(0)}%`,
+        expected: '90%+'
+      });
+    }
 
     // Step 5: Build RAG preview from H&S knowledge
     const ragPreview = hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0
