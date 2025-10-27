@@ -24,46 +24,58 @@ const OutputPanel = ({ content, settings }: OutputPanelProps) => {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   // Process content for better mobile rendering
-  const processContentForDisplay = (text: string) => {
-    if (!text) return text;
+const processContentForDisplay = (text: string) => {
+  if (!text) return text;
+  
+  // Normalize whitespace but preserve intentional breaks
+  let cleanText = text.replace(/[ \t]+/g, ' ').trim();
+  
+  // If AI didn't add double line breaks, try to detect paragraph boundaries
+  // Look for section headers or sentence endings followed by capitals
+  if (!cleanText.includes('\n\n')) {
+    cleanText = cleanText
+      .replace(/(\*\*[^*]+\*\*:?)(\s+)(?=[A-Z])/g, '$1\n\n')  // Break after headers
+      .replace(/([.!?])\s+(?=[A-Z][a-z]+ [A-Z])/g, '$1\n\n')  // Break between major sentences
+      .replace(/([.!?])\s+(What |Why |How |Next |This )/g, '$1\n\n$2');  // Break before key phrases
+  }
+  
+  // Split by double line breaks to preserve paragraph structure
+  const sections = cleanText.split(/\n\n+/);
+  
+  return sections.map(section => {
+    let formatted = section.trim();
     
-    let cleanText = text.replace(/\s+/g, ' ').trim();
+    if (!formatted) return '';
     
-    // Split by double line breaks to preserve paragraph structure
-    const sections = cleanText.split(/\n\n+/);
+    // Check if it's a heading (starts with ** and ends with : or **)
+    if (/^\*\*.*\*\*:?$/.test(formatted)) {
+      const headingText = formatted.replace(/\*\*/g, '').replace(/:$/, '');
+      return `<h3 class="text-lg font-bold text-elec-yellow mb-4 mt-6 first:mt-0">${headingText}</h3>`;
+    }
     
-    return sections.map(section => {
-      let formatted = section.trim();
-      
-      // Check if it's a heading (starts with ** and ends with : or **)
-      if (/^\*\*.*\*\*:?$/.test(formatted)) {
-        const headingText = formatted.replace(/\*\*/g, '').replace(/:$/, '');
-        return `<h3 class="text-lg font-bold text-elec-yellow mb-3 mt-6 first:mt-0">${headingText}</h3>`;
-      }
-      
-      // Format inline styling
-      formatted = formatted
-        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-        .replace(/BS 7671/gi, '<span class="text-elec-yellow font-medium">BS 7671</span>')
-        .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm">$1</span>')
-        .replace(/(C[123]|FI)\b/g, '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 text-xs font-semibold">$1</span>');
-      
-      // Check if it's a numbered or bulleted list
-      if (/^[\d\-\*•]\s/.test(formatted)) {
-        const items = formatted.split(/\n/).filter(item => item.trim());
-        return '<ul class="space-y-2 mb-6 ml-0 list-none">' + 
-          items.map(item => {
-            const cleanItem = item.replace(/^[\d\-\*•]\s*/, '').trim();
-            return `<li class="text-foreground leading-relaxed pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold text-[15px]">${cleanItem}</li>`;
-          }).join('') + 
-        '</ul>';
-      }
-      
-      // Otherwise render as paragraph
-      return `<p class="text-foreground leading-relaxed mb-4 text-[15px]">${formatted}</p>`;
-    }).join('');
-  };
+    // Format inline styling - ENSURE white text for body content
+    formatted = formatted
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em class="italic text-white">$1</em>')
+      .replace(/BS 7671/gi, '<span class="text-elec-yellow font-medium">BS 7671</span>')
+      .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="text-blue-400 font-mono text-sm">$1</span>')
+      .replace(/(C[123]|FI)\b/g, '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 text-xs font-semibold">$1</span>');
+    
+    // Check if it's a numbered or bulleted list
+    if (/^[\d\-\*•]\s/.test(formatted)) {
+      const items = formatted.split(/\n/).filter(item => item.trim());
+      return '<ul class="space-y-3 mb-6 ml-0 list-none">' + 
+        items.map(item => {
+          const cleanItem = item.replace(/^[\d\-\*•]\s*/, '').trim();
+          return `<li class="text-white leading-relaxed pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-elec-yellow before:font-bold text-base">${cleanItem}</li>`;
+        }).join('') + 
+      '</ul>';
+    }
+    
+    // Otherwise render as paragraph with WHITE text
+    return `<p class="text-white leading-relaxed mb-6 text-base">${formatted}</p>`;
+  }).filter(s => s).join('');
+};
 
   const handleCopy = async () => {
     try {
@@ -254,13 +266,14 @@ Thank you for choosing our electrical services.`;
               </TabsList>
               
               <TabsContent value="standard" className="mt-4">
-                <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
+                <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4 sm:p-6">
                   <div 
-                    className="text-left max-w-none text-foreground"
+                    className="text-left max-w-none prose prose-invert"
                     style={{ 
-                      fontSize: '15px',
-                      lineHeight: '1.7',
-                      fontFamily: 'system-ui, -apple-system, sans-serif'
+                      fontSize: '16px',
+                      lineHeight: '1.8',
+                      fontFamily: 'system-ui, -apple-system, sans-serif',
+                      color: 'white'
                     }}
                     dangerouslySetInnerHTML={{ 
                       __html: processContentForDisplay(content)
@@ -272,7 +285,7 @@ Thank you for choosing our electrical services.`;
               <TabsContent value="email" className="mt-4">
                 <div className="space-y-3">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                    <h4 className="mobile-small-text font-medium text-foreground">Email Template</h4>
+                    <h4 className="mobile-small-text font-medium text-white">Email Template</h4>
                     <Button
                       variant="outline"
                       size="sm"
@@ -283,17 +296,18 @@ Thank you for choosing our electrical services.`;
                       Open in Email App
                     </Button>
                   </div>
-                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
+                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4 sm:p-6">
                     <div 
-                      className="text-left max-w-none text-foreground"
+                      className="text-left max-w-none"
                       style={{ 
-                        fontSize: '15px',
-                        lineHeight: '1.7',
-                        fontFamily: 'system-ui, -apple-system, sans-serif'
+                        fontSize: '16px',
+                        lineHeight: '1.8',
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                        color: 'white'
                       }}
                     >
                       {formatForEmail(content).split('\n').map((line, index) => (
-                        <p key={index} className="mb-4 leading-relaxed text-foreground">{line}</p>
+                        <p key={index} className="mb-4 leading-relaxed text-white">{line}</p>
                       ))}
                     </div>
                   </div>
@@ -303,7 +317,7 @@ Thank you for choosing our electrical services.`;
               <TabsContent value="sms" className="mt-4">
                 <div className="space-y-3">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                    <h4 className="mobile-small-text font-medium text-foreground">Text Message Version</h4>
+                    <h4 className="mobile-small-text font-medium text-white">Text Message Version</h4>
                     <Button
                       variant="outline"
                       size="sm"
@@ -314,18 +328,11 @@ Thank you for choosing our electrical services.`;
                       Send Text Message
                     </Button>
                   </div>
-                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
-                    <div 
-                      className="text-foreground leading-7"
-                      style={{ 
-                        fontSize: '15px',
-                        lineHeight: '1.7',
-                        fontFamily: 'system-ui, -apple-system, sans-serif'
-                      }}
-                    >
+                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4 sm:p-6">
+                    <p className="text-white leading-relaxed text-base" style={{ lineHeight: '1.8' }}>
                       {formatForSMS(content)}
-                    </div>
-                    <div className="mt-3 text-xs text-foreground bg-muted/20 rounded px-2 py-1">
+                    </p>
+                    <div className="mt-3 text-xs text-white/70 bg-muted/20 rounded px-2 py-1">
                       Characters: {formatForSMS(content).length}/160
                     </div>
                   </div>
@@ -335,7 +342,7 @@ Thank you for choosing our electrical services.`;
               <TabsContent value="quote" className="mt-4">
                 <div className="space-y-3">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                    <h4 className="mobile-small-text font-medium text-foreground">Quotation Format</h4>
+                    <h4 className="mobile-small-text font-medium text-white">Quotation Format</h4>
                     <Button
                       variant="outline"
                       size="sm"
@@ -346,13 +353,14 @@ Thank you for choosing our electrical services.`;
                       Download Document
                     </Button>
                   </div>
-                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-6">
+                  <div className="mobile-card bg-muted/30 border border-border/50 rounded-lg p-4 sm:p-6">
                     <div 
-                      className="text-left max-w-none text-foreground"
+                      className="text-left max-w-none prose prose-invert"
                       style={{ 
-                        fontSize: '15px',
-                        lineHeight: '1.7',
-                        fontFamily: 'system-ui, -apple-system, sans-serif'
+                        fontSize: '16px',
+                        lineHeight: '1.8',
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                        color: 'white'
                       }}
                       dangerouslySetInnerHTML={{ 
                         __html: processContentForDisplay(formatForQuote(content))

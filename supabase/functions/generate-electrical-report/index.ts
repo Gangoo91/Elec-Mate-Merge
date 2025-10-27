@@ -153,6 +153,7 @@ CRITICAL FORMATTING REQUIREMENTS:
 - Use a conversational, narrative style that reads naturally
 - Break content into 3-5 well-structured paragraphs maximum
 - Each paragraph should be 3-5 sentences long
+- IMPORTANT: Add TWO line breaks (\n\n) between each section/paragraph
 - Use section headings (with **bold** markers) to organize content
 - Only use bullet points sparingly for specific lists (e.g., numbered action items)
 
@@ -180,7 +181,9 @@ TONE & LANGUAGE REQUIREMENTS:
 5. Explain technical terms naturally within sentences
 6. Write as if speaking directly to the client in person
 
-Remember: Write in flowing paragraphs that read naturally, not as a bullet-pointed list. Make it sound like a helpful electrician explaining things clearly over a cup of tea, not a formal report.`;
+Remember: Write in flowing paragraphs that read naturally, not as a bullet-pointed list. Make it sound like a helpful electrician explaining things clearly over a cup of tea, not a formal report.
+
+CRITICAL: Ensure you add TWO line breaks (\n\n) between each paragraph and section for proper formatting.`;
 
     case 'consumer-unit':
       return basePrompt + `
