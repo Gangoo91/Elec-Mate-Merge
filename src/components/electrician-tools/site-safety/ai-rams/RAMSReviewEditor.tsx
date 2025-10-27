@@ -338,7 +338,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       
       const { data, error } = await supabase.functions.invoke('generate-combined-rams-pdf', {
         body: { 
-          ramsData, 
+          ramsData: {
+            ...ramsData,
+            risks: [...ramsData.risks].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0))
+          }, 
           methodData
         }
       });

@@ -280,6 +280,42 @@ serve(async (req) => {
       contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
+    // METHOD STATEMENT CRITICAL THINKING GUIDANCE
+    const methodThinkingGuidance = `
+**METHOD STATEMENT CRITICAL THINKING:**
+Your method statement must think 3 steps ahead of what the user would consider.
+
+**EXAMPLE - Replacing a Consumer Unit:**
+
+User thinks:
+1. Isolate supply
+2. Remove old CU
+3. Install new CU
+4. Test circuits
+
+YOU must think:
+0. BEFORE ARRIVAL: Notify DNO of isolation (5 days notice if seal break), check client has occupancy insurance during power outage, arrange generator if critical loads (freezer, medical equipment)
+1. PRE-WORK: Customer belongings protection (dust sheets over items below CU), establish exclusion zone (1m), post "Electrical Work - No Entry" signs, identify location of main incoming fuse (often outside meter cupboard), photograph existing installation for records
+2. ISOLATION: Check DNO cutout seal intact, contact DNO for seal removal if required, isolate main switch, test dead at distribution board AND at each circuit end (sockets, lights), LOTO with personal lock, display "Danger - Men Working" sign
+3. DISCONNECTION: Photograph all final circuit terminations (reference for reconnection), label all cables with circuit designation, safe removal sequence (earth first on removal, earth last on installation), store removed CU in safe location away from work area
+4. INSTALLATION: Check mounting surface structural integrity (some cavity walls need backing plate), verify new CU orientation (upright, level, accessible), route incoming tails with strain relief, segregate final circuits by function (lighting/power/immersion)
+5. TERMINATION: Torque settings per manufacturer (typically 35-40Nm for main switch, 2.5Nm for MCBs), double-check polarity, ensure earth bonding to gas/water <600mm of entry point per Reg 544.1
+6. TESTING: Full sequence: Continuity of protective conductors, Insulation resistance (500V megger), Polarity, Earth fault loop impedance, RCD operation (×1, ×5, ramp test), verify all readings meet BS 7671 Table 41.5
+7. ENERGIZATION: Remove LOTO, inform all persons on site, energize main switch, verify voltage at incoming terminals (230V ±10%), close each MCB individually while checking for overload/fault, test sample outlets on each circuit
+8. HANDOVER: Complete Minor Works Certificate or EIC, explain new consumer unit operation to client, label all circuits, demonstrate RCD test button, advise 10-year inspection interval per BS 7671 Regulation 514.12.1
+
+**OTHER EXAMPLES OF DEEPER THINKING:**
+
+Cable Installation:
+- Not just "install cable" → Consider: Is building occupied? (work out of hours to avoid disruption), Is there asbestos? (Cat A survey needed before penetrations), Are there bats? (protected species, works restricted March-October), What about fire stopping after cables pass through compartment walls? (120-minute rated where required)
+
+MEWP Work:
+- Not just "use MEWP" → Consider: Ground bearing capacity (request ground survey for soft ground/cellars below), Overhead power lines (obtain CAT scan + visual check + 3m exclusion), Weather restrictions (wind speed <12.5 m/s, no rain if electrical work), Rescue plan (who retrieves operator if MEWP fails at height? - need second MEWP or fire brigade pre-arrangement)
+
+Testing & Commissioning:
+- Not just "test circuits" → Consider: Will testing trip any existing circuits? (test sequence to minimise disruption), Can we test without inconveniencing client? (arrange testing during quiet hours), Do we need a standby generator? (care homes, cold storage), Have we allowed time for thermal imaging? (identify loose connections under load), What about proving functional testing? (operate all emergency lighting, fire alarm testing coordination)
+`;
+
     logger.info('💭 THINKING: Identifying electrical hazards and risks');
     
     const systemPrompt = `You are an expert Health & Safety adviser specialising in UK electrical installations.
@@ -316,14 +352,55 @@ ${installKnowledge}
 
 Your goal: Comprehensive risk assessment covering all hazards (RAG + supplementary), each with specific controls and regulation references.
 
-**CRITICAL: COMPREHENSIVE HAZARD IDENTIFICATION FROM RAG**
+**CRITICAL: COMPREHENSIVE HAZARD IDENTIFICATION**
 The structured hazards section above contains 8-18 verified hazard categories for this work.
-For EACH category listed, create a detailed hazard entry with:
-- Specific likelihood (1-5) and severity (1-5) for this job
-- Detailed controls from RAG + job-specific additions
-- Regulation references from context
+You MUST create detailed hazard entries for ALL relevant categories.
 
-Minimum 10 hazards required. Expand each RAG category into a complete risk assessment.
+**TARGET RISK COUNT - SCALE TO JOB COMPLEXITY:**
+
+Simple Jobs (10-12 hazards):
+- Single-phase domestic installation
+- Standard socket circuits
+- New build (no asbestos, clean site)
+- Ground level work only
+Example: "Replace consumer unit in new build flat, ground floor access"
+
+Standard Jobs (12-15 hazards):
+- Commercial single-phase work
+- Multiple circuits or rooms
+- Standard building (post-2000)
+- Some height work (ladders, short scaffold)
+Example: "Commercial kitchen rewire, 3 circuits, 2m height"
+
+Complex Jobs (15-18 hazards):
+- 3-phase installations
+- Multiple work types (installation + testing + commissioning)
+- Height work >2m (MEWP, scaffold)
+- Occupied buildings with public access
+- Older buildings (potential asbestos)
+Example: "3-phase distribution board in 1980s office building, 4m height, occupied premises"
+
+Very Complex Jobs (18-25 hazards):
+- Industrial/heritage buildings (pre-1950)
+- Live work + height work + confined space
+- Public spaces (crowd control, restricted hours)
+- Environmental factors (oil, chemicals, contaminated ground)
+- Multiple high-severity hazards (asbestos, HV, structural)
+Example: "Bus station external lighting at 5m height, 1943 building, oil/grit contamination, closed to public during works"
+
+**CRITICAL THINKING REQUIRED:**
+For each job, think like an experienced H&S adviser:
+1. What could the client NOT have thought of? (e.g., asbestos in 1940s building, underground services, bat roosts)
+2. What secondary hazards exist? (e.g., ladder work = manual handling of ladder, not just falls)
+3. What environmental factors? (weather, contamination, wildlife, adjacent hazards)
+4. What human factors? (lone working, fatigue, competence, communication)
+5. What "what if" scenarios? (power loss, equipment failure, emergency access)
+
+**EXAMPLE - THINK DEEPER:**
+❌ BAD: "Electric shock - use PPE"
+✅ GOOD: "Electric shock from inadvertent contact with concealed live conductors during chasing - Old buildings may have unsleeved cables buried in walls (pre-1960s practice). Control: Cable detection with CAT scanner before any penetration, assume all walls are live until proven dead, use GS38 voltage detector, insulated tools to IEC 60900"
+
+Minimum 10 hazards always required. For complex jobs (3-phase, height, heritage buildings, public spaces), aim for 15-20 comprehensive hazards.
 
 Example GOOD entry:
 {
@@ -363,50 +440,79 @@ INSTRUCTIONS:
 9. Include isolation per BS 7671 Section 462 with lock-off devices
 
 **PPE REQUIREMENTS - CONTEXT IS CRITICAL:**
-⚠️ CRITICAL: TAILOR PPE to the specific job type, hazards, and work environment. Different jobs need different PPE!
+⚠️ CRITICAL: You MUST tailor PPE to the specific job. DO NOT use generic 5-item lists!
 
-**CRITICAL PPE EXAMPLES - DIFFERENT JOBS NEED DIFFERENT PPE:**
+**MANDATORY PPE ANALYSIS PROCESS:**
+1. Identify ALL hazards present (electrical, height, noise, dust, chemicals, confined space, etc.)
+2. For EACH hazard, determine required PPE with specific standards
+3. Minimum 5 items, but ADD MORE based on job complexity:
+   - Simple domestic socket: 5-6 items
+   - Commercial distribution board: 7-9 items
+   - Complex work (height + live + confined space): 10-12 items
 
-Domestic socket installation (light work, chasing walls):
-- Safety helmet (BS EN 397) - head protection from low ceilings/joists
-- Safety boots (BS EN ISO 20345 S3) - electrical protection, foot protection
-- Safety glasses (BS EN 166) - dust protection from chasing
-- Knee pads (BS EN 14404) - floor work protection (RECOMMENDED not mandatory)
-- Dust mask (FFP2) - if chasing walls or drilling masonry
+**EXAMPLES BY JOB TYPE:**
 
-Commercial 3-phase distribution board installation (high voltage):
+Simple Domestic (5-6 PPE items):
 - Safety helmet (BS EN 397) - MANDATORY
-- Safety boots (BS EN ISO 20345 S3) - MANDATORY  
-- Insulated gloves (BS EN 60903 Class 0/00) - MANDATORY for live work
+- Safety boots (BS EN ISO 20345 S3) - MANDATORY
 - Safety glasses (BS EN 166) - MANDATORY
-- Arc-rated clothing (IEC 61482-2) - MANDATORY if live working on 3-phase
-- Voltage detector (GS38) - MANDATORY testing equipment
+- Insulated gloves (BS EN 60903 Class 0) - MANDATORY
+- High-visibility vest (EN ISO 20471 Class 2) - MANDATORY
+- Knee pads (BS EN 14404) - RECOMMENDED if floor work
 
-Work at height using MEWP/scaffold (fall risk):
+Complex Commercial 3-Phase (8-10 PPE items):
+- Safety helmet (BS EN 397) - MANDATORY
+- Safety boots (BS EN ISO 20345 S3) - MANDATORY
+- Insulated gloves (BS EN 60903 Class 0) - MANDATORY for isolation
+- Arc-rated gloves (BS EN 60903 Class 00) - MANDATORY for live work
+- Arc flash suit (IEC 61482-2 Class 2) - MANDATORY if live 3-phase
+- Face shield (BS EN 166) - MANDATORY for arc flash risk
+- Safety glasses (BS EN 166) - MANDATORY
+- High-visibility vest (EN ISO 20471 Class 2) - MANDATORY
+- Voltage detector (GS38) - MANDATORY
+- Insulated tools (IEC 60900) - MANDATORY
+
+Work at Height (10-12 PPE items):
+- Safety helmet with chin strap (BS EN 397) - MANDATORY
 - Fall arrest harness (BS EN 361) - MANDATORY above 2m
-- Hard hat with chin strap (BS EN 397) - MANDATORY
-- Non-slip safety boots (BS EN ISO 20345 S3) - MANDATORY
-- Hi-vis vest (EN ISO 20471) - MANDATORY for site work
-- Tool lanyard - MANDATORY to prevent dropped objects
+- Energy absorbing lanyard (BS EN 355) - MANDATORY
+- Tool lanyard - MANDATORY
+- Safety boots with ankle support (BS EN ISO 20345 S3) - MANDATORY
+- High-visibility vest (EN ISO 20471 Class 3) - MANDATORY
+- Safety glasses (BS EN 166) - MANDATORY
+- Insulated gloves (BS EN 60903 Class 0) - MANDATORY
+- Work positioning belt (BS EN 358) - if required
+- Rescue equipment - MANDATORY (rescue plan required)
+- Mobile phone/radio - MANDATORY for lone working at height
 
-Confined space work (oxygen deficiency risk):
-- Breathing apparatus set (BA) - MANDATORY if oxygen <19.5%
-- Gas monitor (multi-gas) - MANDATORY before entry
+Confined Space (12+ PPE items):
+- Breathing apparatus (BS EN 137) - MANDATORY if O2 < 19.5%
+- Multi-gas detector (calibrated) - MANDATORY
 - Harness with retrieval line (BS EN 361) - MANDATORY
-- Head protection (BS EN 397) - MANDATORY
-- Emergency rescue equipment - MANDATORY
+- Emergency rescue tripod - MANDATORY
+- Safety helmet (BS EN 397) - MANDATORY
+- Safety boots (BS EN ISO 20345 S3) - MANDATORY
+- High-visibility coveralls (EN ISO 20471) - MANDATORY
+- Safety glasses (BS EN 166) - MANDATORY
+- Insulated gloves (BS EN 60903 Class 0) - MANDATORY
+- Emergency lighting (ATEX rated if explosive atmosphere) - MANDATORY
+- Communication system (radio/hands-free) - MANDATORY
+- First aid kit (specific to confined space) - MANDATORY
 
-**CONTEXT-SPECIFIC MANDATORY PPE RULES:**
-- Noise exposure >80dB or power tools for >2 hours → Earplugs/defenders (mandatory: false for occasional use, true for sustained exposure)
-- Asbestos survey identifies ACMs → FFP3 respirator (mandatory: true)
-- Work at height >2m using MEWP/scaffold → Harness with chin strap + tool lanyard (mandatory: true)
-- Confined spaces → BA set, gas monitor, rescue equipment (mandatory: true)
-- Live electrical work → Insulated gloves rated for voltage + voltage detector (mandatory: true)
-- 3-phase/high voltage → Arc-rated clothing + insulated gloves Class 00/0 (mandatory: true)
-- Cutting/grinding → Face shield + dust mask (mandatory: true)
-- General site work → Hard hat, safety boots (mandatory: true)
-- Outdoor site work with traffic/plant → Hi-vis vest Class 2/3 (mandatory: true)
-- MEWP operation → Fall arrest harness with shock absorber (mandatory: true)
+**CRITICAL RULES:**
+- Height work (>2m) → ADD fall arrest harness, tool lanyard, chin strap helmet
+- 3-phase live work → ADD arc flash suit, face shield, arc-rated gloves
+- Noise >85dB or power tools >2hrs → ADD ear defenders (mandatory: true)
+- Dust/drilling → ADD FFP3 mask (mandatory: true if silica dust)
+- Confined space → ADD BA, gas monitor, rescue equipment
+- Outdoor site → ADD hi-vis Class 2 minimum
+- Asbestos risk → ADD Category A PPE (full RPE, coveralls, decontamination)
+- Live testing → ADD insulated tools, voltage detector, arc flash PPE
+
+**NEVER:**
+- Use the same 5-item list for all jobs
+- Mark PPE as "RECOMMENDED" if regulations require it (use mandatory: true)
+- Forget to add equipment-specific PPE (MEWP = harness, confined space = BA)
 
 Set mandatory: true ONLY if the hazard is definitely present in this work.
 Set mandatory: false for "nice to have" or situational PPE.
@@ -811,7 +917,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     const compliance = safetyResult.compliance || {};
     
     const validatedRiskAssessment = {
-      hazards: riskAssessment.hazards || [],
+      hazards: (riskAssessment.hazards || []).sort((a, b) => (b.riskScore || 0) - (a.riskScore || 0)),
       controls: riskAssessment.controls || [],
       ppeDetails: riskAssessment.ppeDetails || [],
       emergencyProcedures: riskAssessment.emergencyProcedures || []
