@@ -688,23 +688,39 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                     <div className="bg-card/50 border border-primary/20 rounded-lg p-4 max-h-96 overflow-auto">
                       <pre className="text-xs text-elec-light/80 whitespace-pre-wrap font-mono">
                         {JSON.stringify({
-                          requestData: {
+                          completeFormData: {
+                            // Basic Info
                             briefingType: formData.briefingType,
-                            briefingContext: {
-                              briefingTitle: formData.briefingTitle,
-                              briefingContent: formData.briefingContent,
-                              workScope: formData.workScope,
-                              environment: formData.environment,
-                              location: formData.location,
-                              teamSize: formData.teamSize,
-                              experienceLevel: formData.experienceLevel
-                            },
-                            hazards: {
-                              identified: formData.identifiedHazards,
-                              custom: formData.customHazards,
-                              riskLevel: formData.riskLevel,
-                              specialConsiderations: formData.specialConsiderations
-                            }
+                            briefingTitle: formData.briefingTitle,
+                            location: formData.location,
+                            contractorCompany: formData.contractorCompany,
+                            conductorName: formData.conductorName,
+                            briefingDate: formData.briefingDate,
+                            briefingTime: formData.briefingTime,
+                            
+                            // Content Details
+                            briefingContent: formData.briefingContent,
+                            workScope: formData.workScope,
+                            environment: formData.environment,
+                            teamSize: formData.teamSize,
+                            experienceLevel: formData.experienceLevel,
+                            
+                            // Hazards
+                            identifiedHazards: formData.identifiedHazards,
+                            customHazards: formData.customHazards,
+                            riskLevel: formData.riskLevel,
+                            specialConsiderations: formData.specialConsiderations,
+                            
+                            // Photos
+                            photos: formData.photos,
+                            
+                            // Attendees
+                            attendees: formData.attendees,
+                            
+                            // AI Generated Content
+                            briefingDescription: formData.briefingDescription,
+                            hazards: formData.hazards,
+                            safetyWarning: formData.safetyWarning,
                           },
                           aiResponse: aiContent
                         }, null, 2)}
