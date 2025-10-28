@@ -74,73 +74,98 @@ const ElectricalHub = () => {
   ];
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4 md:mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-center sm:text-left">
-          Electrical Hub
-        </h1>
-        <Link to="/dashboard" className="flex-shrink-0 w-full sm:w-auto">
-          <Button variant="outline" className="w-full sm:w-auto">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Dashboard
-          </Button>
-        </Link>
-      </div>
-
-      {/* Featured AI Installation Designer */}
-      <div className="space-y-4">
-        <Link to="/electrician/agent-selector" className="focus:outline-none hover-scale block">
-          <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
-            <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
-              <Sparkles className="h-10 w-10 sm:h-12 sm:w-12 mb-3 text-elec-yellow" />
-              <CardTitle className="text-base sm:text-lg leading-tight">
-                AI Design Consultation
-              </CardTitle>
-              <p className="text-xs sm:text-sm text-muted-foreground mt-2 px-2">
-                Choose from 8 specialist agents for design, costing, installation, safety, testing, and project management.
-              </p>
-              <div className="flex items-center gap-1 mt-3 text-elec-yellow text-sm font-medium transition-all duration-200 hover:gap-2">
-                <span>Choose Your Agent</span>
-                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-              </div>
-            </CardHeader>
-          </Card>
-        </Link>
-      </div>
-
-      {/* Main 4-Card Grid - Core Daily Tools */}
-      <div className="space-y-4">
-        <h2 className="text-lg sm:text-xl font-semibold text-center">Core Daily Tools</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
-          {mainResources.map((resource) => (
-            <Link to={resource.link} key={resource.id} className="focus:outline-none hover-scale">
-              <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
-                <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
-                  <resource.icon className="h-10 w-10 sm:h-12 sm:w-12 mb-3 text-elec-yellow" />
-                  <CardTitle className="text-base sm:text-lg leading-tight">{resource.title}</CardTitle>
-                </CardHeader>
-              </Card>
+    <div className="min-h-screen mobile-safe-area">
+      <div className="space-y-8 md:space-y-10 animate-fade-in px-4 sm:px-6 md:px-8 pb-8 md:pb-12 max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col gap-4 pt-4 md:pt-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              Electrical Hub
+            </h1>
+            <Link to="/dashboard" className="w-full sm:w-auto">
+              <Button variant="outline" className="w-full sm:w-auto h-12 sm:h-10 text-base sm:text-sm">
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Dashboard
+              </Button>
             </Link>
-          ))}
+          </div>
+          <p className="text-base text-muted-foreground max-w-2xl">
+            Access all your electrical tools, calculators, and resources in one place
+          </p>
         </div>
-      </div>
 
-      {/* Additional Resources Section */}
-      <div className="space-y-4">
-        <h2 className="text-lg sm:text-xl font-semibold text-center">Business & Development</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
-          {additionalResources.map((resource) => (
-            <Link to={resource.link} key={resource.id} className="focus:outline-none hover-scale">
-              <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
-                <CardHeader className="flex flex-col items-center justify-center text-center py-4 md:py-6 px-2 md:px-6">
-                  <resource.icon className="h-6 w-6 sm:h-8 sm:w-8 mb-2 text-elec-yellow" />
-                  <CardTitle className="text-xs sm:text-sm md:text-base leading-tight text-center">
-                    {resource.title}
-                  </CardTitle>
-                </CardHeader>
-              </Card>
-            </Link>
-          ))}
+        {/* Featured AI Design Consultation */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 px-1">
+            <div className="h-1 w-1 rounded-full bg-elec-yellow"></div>
+            <h2 className="text-xl sm:text-2xl font-bold">AI-Powered Tools</h2>
+          </div>
+          <Link to="/electrician/agent-selector" className="block focus:outline-none group touch-manipulation">
+            <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray to-elec-gray/50 hover:from-elec-gray/90 hover:to-elec-gray/60 hover:border-elec-yellow/50 transition-all duration-300 active:scale-[0.98] overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <CardHeader className="flex flex-col items-center justify-center text-center py-8 md:py-10 px-6 relative">
+                <div className="p-4 rounded-2xl bg-elec-yellow/10 mb-4 group-hover:bg-elec-yellow/20 transition-colors duration-300">
+                  <Sparkles className="h-12 w-12 sm:h-14 sm:w-14 text-elec-yellow" />
+                </div>
+                <CardTitle className="text-xl sm:text-2xl font-bold mb-2">
+                  AI Design Consultation
+                </CardTitle>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl">
+                  Choose from 8 specialist agents for design, costing, installation, safety, testing, and project management
+                </p>
+                <div className="flex items-center gap-2 mt-5 text-elec-yellow text-base font-semibold group-hover:gap-3 transition-all duration-300">
+                  <span>Choose Your Agent</span>
+                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
+              </CardHeader>
+            </Card>
+          </Link>
+        </div>
+
+        {/* Core Daily Tools */}
+        <div className="space-y-5">
+          <div className="flex items-center gap-2 px-1">
+            <div className="h-1 w-1 rounded-full bg-elec-yellow"></div>
+            <h2 className="text-xl sm:text-2xl font-bold">Core Daily Tools</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+            {mainResources.map((resource) => (
+              <Link to={resource.link} key={resource.id} className="block focus:outline-none group touch-manipulation">
+                <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 active:scale-[0.97] h-full min-h-[140px] sm:min-h-[160px]">
+                  <CardHeader className="flex flex-col items-center justify-center text-center py-8 sm:py-10 px-4">
+                    <div className="p-3 rounded-xl bg-elec-yellow/10 mb-4 group-hover:bg-elec-yellow/20 transition-colors duration-300">
+                      <resource.icon className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />
+                    </div>
+                    <CardTitle className="text-lg sm:text-xl font-semibold leading-tight">{resource.title}</CardTitle>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Business & Development Resources */}
+        <div className="space-y-5">
+          <div className="flex items-center gap-2 px-1">
+            <div className="h-1 w-1 rounded-full bg-elec-yellow"></div>
+            <h2 className="text-xl sm:text-2xl font-bold">Business & Development</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
+            {additionalResources.map((resource) => (
+              <Link to={resource.link} key={resource.id} className="block focus:outline-none group touch-manipulation">
+                <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 active:scale-[0.97] h-full min-h-[120px] sm:min-h-[140px]">
+                  <CardHeader className="flex flex-col items-center justify-center text-center py-6 sm:py-8 px-4">
+                    <div className="p-2.5 rounded-lg bg-elec-yellow/10 mb-3 group-hover:bg-elec-yellow/20 transition-colors duration-300">
+                      <resource.icon className="h-8 w-8 sm:h-9 sm:w-9 text-elec-yellow" />
+                    </div>
+                    <CardTitle className="text-base sm:text-lg font-semibold leading-tight">
+                      {resource.title}
+                    </CardTitle>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>
