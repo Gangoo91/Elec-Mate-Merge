@@ -178,3 +178,12 @@ timeout_sec = 60
 verify_jwt = false
 timeout_sec = 180
 
+# Job Queue Architecture for RAMS Generation
+[functions.create-rams-job]
+verify_jwt = false
+timeout_sec = 30
+
+[functions.process-rams-job]
+verify_jwt = false
+timeout_sec = 600
+

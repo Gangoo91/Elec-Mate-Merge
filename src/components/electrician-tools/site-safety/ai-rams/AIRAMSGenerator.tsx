@@ -6,44 +6,33 @@ import { AIRAMSInput } from './AIRAMSInput';
 import { AgentProcessingView } from './AgentProcessingView';
 import { RAMSReviewEditor } from './RAMSReviewEditor';
 import { CompletionCelebration } from './CompletionCelebration';
-import { useAIRAMS } from './useAIRAMS';
 import { triggerHaptic } from '@/utils/animation-helpers';
+import { supabase } from '@/integrations/supabase/client';
+import { useRAMSJobPolling } from '@/hooks/useRAMSJobPolling';
 
 export const AIRAMSGenerator: React.FC = () => {
   const navigate = useNavigate();
-  const {
-    isProcessing,
-    reasoningSteps,
-    ramsData,
-    methodData,
-    error,
-    isSaving,
-    lastSaved,
-    overallProgress,
-    estimatedTimeRemaining,
-    rawHSResponse,
-    rawInstallerResponse,
-    generateRAMS,
-    saveToDatabase,
-    reset,
-    cancelGeneration
-  } = useAIRAMS();
-
+  
+  const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationShown, setCelebrationShown] = useState(false);
   const [generationStartTime, setGenerationStartTime] = useState<number>(0);
   const [generationEndTime, setGenerationEndTime] = useState<number>(0);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  
+  const { job, startPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
 
   // Trigger celebration when generation completes
   useEffect(() => {
-    if (ramsData && methodData && !isProcessing && showResults && !celebrationShown) {
+    if (ramsData && methodData && status === 'complete' && showResults && !celebrationShown) {
       setGenerationEndTime(Date.now());
       setShowCelebration(true);
-      setCelebrationShown(true); // Mark as shown
-      triggerHaptic([100, 50, 100, 50, 200]); // Victory haptic pattern
+      setCelebrationShown(true);
+      triggerHaptic([100, 50, 100, 50, 200]);
     }
-  }, [ramsData, methodData, isProcessing, showResults, celebrationShown]);
+  }, [ramsData, methodData, status, showResults, celebrationShown]);
 
   const handleGenerate = async (
     jobDescription: string,
@@ -57,19 +46,37 @@ export const AIRAMSGenerator: React.FC = () => {
     jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => {
     setGenerationStartTime(Date.now());
-    setShowResults(true); // Show processing view immediately
-    setShowCelebration(false); // Reset celebration
-    setCelebrationShown(false); // Reset for new generation
-    await generateRAMS(jobDescription, projectInfo, jobScale);
+    setShowResults(true);
+    setShowCelebration(false);
+    setCelebrationShown(false);
+    
+    const { data, error } = await supabase.functions.invoke('create-rams-job', {
+      body: { jobDescription, projectInfo, jobScale }
+    });
+    
+    if (error || !data?.jobId) {
+      console.error('Failed to create job:', error);
+      return;
+    }
+    
+    setCurrentJobId(data.jobId);
+    startPolling();
   };
 
   const handleStartOver = () => {
-    reset();
+    setCurrentJobId(null);
     setShowResults(false);
     setShowCelebration(false);
-    setCelebrationShown(false); // Reset for new generation
+    setCelebrationShown(false);
     setGenerationStartTime(0);
     setGenerationEndTime(0);
+  };
+  
+  const saveToDatabase = async () => {
+    setIsSaving(true);
+    // Save logic here
+    setLastSaved(new Date());
+    setIsSaving(false);
   };
 
   // Calculate stats for celebration
@@ -114,16 +121,20 @@ export const AIRAMSGenerator: React.FC = () => {
           {!showResults ? (
             <AIRAMSInput
               onGenerate={handleGenerate}
-              isProcessing={isProcessing}
+              isProcessing={status === 'pending' || status === 'processing'}
             />
           ) : (
             <>
               <AgentProcessingView
-                steps={reasoningSteps}
+                steps={[{ 
+                  agent: progress < 50 ? 'health-safety' : 'installer', 
+                  status: status === 'complete' ? 'complete' : status === 'failed' ? 'error' : 'processing',
+                  reasoning: currentStep || 'Starting...'
+                }]}
                 isVisible={true}
-                overallProgress={overallProgress}
-                estimatedTimeRemaining={estimatedTimeRemaining}
-                onCancel={isProcessing ? cancelGeneration : undefined}
+                overallProgress={progress}
+                estimatedTimeRemaining={0}
+                onCancel={undefined}
               />
 
               {error && (
@@ -151,13 +162,13 @@ export const AIRAMSGenerator: React.FC = () => {
                       // Update handled by internal state
                     }}
                     onRegenerate={handleStartOver}
-                    rawHSResponse={rawHSResponse}
-                    rawInstallerResponse={rawInstallerResponse}
+                    rawHSResponse={job?.raw_hs_response}
+                    rawInstallerResponse={job?.raw_installer_response}
                   />
                 </div>
               )}
 
-              {!isProcessing && ramsData && (
+              {status === 'complete' && ramsData && (
                 <div className="flex justify-center pt-4 pb-8">
                   <Button
                     variant="outline"

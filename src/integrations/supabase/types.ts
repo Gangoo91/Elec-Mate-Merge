@@ -4664,6 +4664,69 @@ export type Database = {
         }
         Relationships: []
       }
+      rams_generation_jobs: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          current_step: string | null
+          error_message: string | null
+          generation_metadata: Json | null
+          id: string
+          job_description: string
+          job_scale: string
+          method_data: Json | null
+          progress: number | null
+          project_info: Json
+          rams_data: Json | null
+          raw_hs_response: Json | null
+          raw_installer_response: Json | null
+          retry_count: number | null
+          started_at: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          current_step?: string | null
+          error_message?: string | null
+          generation_metadata?: Json | null
+          id?: string
+          job_description: string
+          job_scale: string
+          method_data?: Json | null
+          progress?: number | null
+          project_info: Json
+          rams_data?: Json | null
+          raw_hs_response?: Json | null
+          raw_installer_response?: Json | null
+          retry_count?: number | null
+          started_at?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          current_step?: string | null
+          error_message?: string | null
+          generation_metadata?: Json | null
+          id?: string
+          job_description?: string
+          job_scale?: string
+          method_data?: Json | null
+          progress?: number | null
+          project_info?: Json
+          rams_data?: Json | null
+          raw_hs_response?: Json | null
+          raw_installer_response?: Json | null
+          retry_count?: number | null
+          started_at?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       rams_method_links: {
         Row: {
           created_at: string
