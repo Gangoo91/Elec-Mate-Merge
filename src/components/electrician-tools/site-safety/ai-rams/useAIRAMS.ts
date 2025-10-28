@@ -693,16 +693,31 @@ export function useAIRAMS(): UseAIRAMSReturn {
           return [];
         }
         
-        // Validate linkedToStep field
+        // Accept ALL hazards - linkedToStep is optional metadata
         const validHazards = hazards.filter(h => {
-          const hasLinkedStep = typeof h.linkedToStep === 'number';
-          if (!hasLinkedStep) {
-            console.warn('⚠️ Hazard missing linkedToStep:', h.hazard?.substring(0, 50));
+          const hasHazard = h.hazard && typeof h.hazard === 'string';
+          const hasLikelihood = typeof h.likelihood === 'number';
+          const hasSeverity = typeof h.severity === 'number';
+          
+          if (!hasHazard || !hasLikelihood || !hasSeverity) {
+            console.warn('⚠️ Hazard missing required fields:', {
+              hazard: h.hazard?.substring(0, 50),
+              hasHazard,
+              hasLikelihood,
+              hasSeverity
+            });
+            return false;
           }
-          return hasLinkedStep;
+          
+          // Set default linkedToStep if missing
+          if (typeof h.linkedToStep !== 'number') {
+            h.linkedToStep = 0; // 0 = general risk, not linked to specific step
+          }
+          
+          return true;
         });
         
-        console.log(`✅ Extracted ${validHazards.length}/${hazards.length} hazards with valid linkedToStep`);
+        console.log(`✅ Extracted ${validHazards.length}/${hazards.length} hazards with required fields`);
         
         return validHazards;
       };
@@ -710,6 +725,31 @@ export function useAIRAMS(): UseAIRAMSReturn {
       // Extract hazards from unwrapped data
       const extractedHazards = extractHazards(unwrappedData);
       const hasValidHazards = extractedHazards.length > 0;
+
+      // Detailed extraction diagnostics
+      console.log('🔍 EXTRACTION DIAGNOSTICS:', {
+        totalInResponse: unwrappedData?.structuredData?.riskAssessment?.hazards?.length || 0,
+        extracted: extractedHazards.length,
+        retentionRate: unwrappedData?.structuredData?.riskAssessment?.hazards?.length > 0
+          ? `${((extractedHazards.length / unwrappedData.structuredData.riskAssessment.hazards.length) * 100).toFixed(0)}%`
+          : 'N/A',
+        samplesExtracted: extractedHazards.slice(0, 3).map(h => ({
+          hazard: h.hazard?.substring(0, 40),
+          linkedToStep: h.linkedToStep,
+          likelihood: h.likelihood,
+          severity: h.severity
+        })),
+        samplesFiltered: unwrappedData?.structuredData?.riskAssessment?.hazards
+          ?.filter((h: any) => !extractedHazards.find((e: any) => e.hazard === h.hazard))
+          ?.slice(0, 3)
+          .map((h: any) => ({
+            hazard: h.hazard?.substring(0, 40),
+            linkedToStep: h.linkedToStep,
+            reason: !h.hazard ? 'missing hazard' : 
+                    typeof h.likelihood !== 'number' ? 'missing likelihood' :
+                    typeof h.severity !== 'number' ? 'missing severity' : 'unknown'
+          })) || []
+      });
 
       console.log('🎯 EXTRACTION RESULTS AFTER UNWRAPPING:', {
         extractedCount: extractedHazards.length,
@@ -724,8 +764,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
       let hsDataToUse = unwrappedData;
       let shouldUseFallback = false;
 
-      // ✅ STRENGTHENED: Never use fallback if we have ANY valid AI hazards (5+)
-      if (extractedHazards.length >= 5) {
+      // ✅ STRENGTHENED: Never use fallback if we have ANY valid AI hazards (1+)
+      if (extractedHazards.length >= 1) {
         console.log(`✅ USING AI-GENERATED DATA - ${extractedHazards.length} valid hazards found`);
         console.log('🎯 AI data preserved - no fallback will be triggered');
         hsDataToUse = unwrappedData;
