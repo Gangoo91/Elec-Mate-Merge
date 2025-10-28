@@ -86,34 +86,26 @@ serve(async (req) => {
       match_count: matchCount
     });
 
+    // Vector search with 30s timeout (matches DB function timeout)
     const { data: results, error: searchError } = await logger.time(
       'Vector similarity search',
       async () => await withTimeout(
         rpcQuery,
-        Timeouts.STANDARD,
+        30000, // 30 seconds to match DB function timeout
         'Supabase vector search'
       )
     );
 
-    if (searchError) {
-      logger.error('Vector search failed', { error: searchError });
-      throw searchError;
-    }
-
-    logger.info('Vector search completed', { resultsCount: results?.length || 0 });
-
     // Apply supplier filter if provided (client-side filtering)
     let filteredResults = results || [];
-    if (supplierFilter && supplierFilter !== 'all') {
-      filteredResults = filteredResults.filter(
-        item => item.wholesaler?.toLowerCase() === supplierFilter.toLowerCase()
-      );
-      console.log('🏷️ Filtered to', filteredResults.length, 'products from', supplierFilter);
-    }
-
-    // Fallback to keyword search if no results
-    if (filteredResults.length === 0) {
-      logger.warn('No vector results found, trying keyword fallback');
+    
+    // Seamless fallback: if vector search failed or returned nothing, try keyword search
+    if (searchError || filteredResults.length === 0) {
+      if (searchError) {
+        logger.warn('Vector search failed, using keyword fallback', { error: searchError });
+      } else {
+        logger.warn('No vector results found, trying keyword fallback');
+      }
       
       const { data: keywordResults, error: keywordError } = await supabase
         .from('pricing_embeddings')
@@ -127,15 +119,21 @@ serve(async (req) => {
           ...item,
           similarity: 0.5 // Mark as keyword match with lower confidence
         }));
-
-        // Apply supplier filter to keyword results
-        if (supplierFilter && supplierFilter !== 'all') {
-          filteredResults = filteredResults.filter(
-            item => item.wholesaler?.toLowerCase() === supplierFilter.toLowerCase()
-          );
-          logger.debug('Applied supplier filter to keyword results', { count: filteredResults.length, supplier: supplierFilter });
-        }
+      } else if (searchError) {
+        // If both vector and keyword searches failed, just return empty results
+        logger.error('Both vector and keyword search failed');
+        filteredResults = [];
       }
+    } else {
+      logger.info('Vector search completed', { resultsCount: results?.length || 0 });
+    }
+    
+    // Apply supplier filter to final results
+    if (supplierFilter && supplierFilter !== 'all' && filteredResults.length > 0) {
+      filteredResults = filteredResults.filter(
+        item => item.wholesaler?.toLowerCase() === supplierFilter.toLowerCase()
+      );
+      logger.debug('Applied supplier filter', { count: filteredResults.length, supplier: supplierFilter });
     }
 
     // Transform results to match expected format

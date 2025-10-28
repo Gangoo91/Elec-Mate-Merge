@@ -240,12 +240,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
             setRagResults(data.materials);
           }
         } catch (err) {
-          console.error('RAG search failed:', err);
-          toast({
-            title: "Search Error",
-            description: "Failed to search full materials database. Showing instant results only.",
-            variant: "destructive"
-          });
+          console.warn('RAG search failed, using instant results only:', err);
+          // Silent fallback - just show instant results without error message
+          setRagResults([]);
         } finally {
           setIsSearchingRAG(false);
         }
