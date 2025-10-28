@@ -28,9 +28,13 @@ export const AIRAMSGenerator: React.FC = () => {
   const { job, startPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
   const { requestPermission, showCompletionNotification, showErrorNotification } = useRAMSNotifications();
 
-  // Check for in-progress jobs on mount
+  // Check for in-progress jobs on mount (only if user initiated in this session)
   useEffect(() => {
     const checkForInProgressJobs = async () => {
+      // Only check if user has initiated a generation in this session
+      const hasActiveSession = sessionStorage.getItem('rams-generation-active') === 'true';
+      if (!hasActiveSession) return;
+
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
@@ -122,6 +126,9 @@ export const AIRAMSGenerator: React.FC = () => {
   // Trigger celebration when generation completes
   useEffect(() => {
     if (ramsData && methodData && status === 'complete' && showResults && !celebrationShown) {
+      // Clear session flag on completion
+      sessionStorage.removeItem('rams-generation-active');
+      
       setGenerationEndTime(Date.now());
       setShowCelebration(true);
       setCelebrationShown(true);
@@ -140,6 +147,9 @@ export const AIRAMSGenerator: React.FC = () => {
     },
     jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => {
+    // Mark session as having active generation
+    sessionStorage.setItem('rams-generation-active', 'true');
+    
     setGenerationStartTime(Date.now());
     setShowResults(true);
     setShowCelebration(false);
@@ -159,6 +169,9 @@ export const AIRAMSGenerator: React.FC = () => {
   };
 
   const handleStartOver = () => {
+    // Clear session flag
+    sessionStorage.removeItem('rams-generation-active');
+    
     setCurrentJobId(null);
     setShowResults(false);
     setShowCelebration(false);
