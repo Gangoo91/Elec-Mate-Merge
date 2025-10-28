@@ -85,7 +85,13 @@ export const AIRAMSGenerator: React.FC = () => {
               description: `Completed ${Math.floor(minutesAgo)} minute${Math.floor(minutesAgo) !== 1 ? 's' : ''} ago`,
               variant: 'success'
             });
+          } else {
+            // No active or recent job found, clear stale session flag
+            sessionStorage.removeItem('rams-generation-active');
           }
+        } else {
+          // No jobs found at all, clear stale session flag
+          sessionStorage.removeItem('rams-generation-active');
         }
       }
     };
@@ -230,7 +236,7 @@ export const AIRAMSGenerator: React.FC = () => {
           {!showResults ? (
             <AIRAMSInput
               onGenerate={handleGenerate}
-              isProcessing={status === 'pending' || status === 'processing'}
+              isProcessing={!!currentJobId && (status === 'pending' || status === 'processing')}
             />
           ) : (
             <>
