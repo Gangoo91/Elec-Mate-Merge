@@ -12,9 +12,9 @@ import {
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
-  callLovableAIWithTimeout,
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
+import { callOpenAI } from '../_shared/ai-providers.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 
@@ -689,452 +689,105 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       // Log progress every 30 seconds
       progressInterval = setInterval(() => {
         const elapsed = Math.round((Date.now() - aiCallStart) / 1000);
-        logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 360s)`);
+      logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 240s)`);
       }, 30000);
       const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
       if (!OPENAI_API_KEY) {
         throw new Error('OPENAI_API_KEY not configured');
       }
       
-      // ✅ SUPERCHARGED STEP 4: 24k tokens for natural hazard generation
-      let adjustedMaxTokens = 24000;  // Supports natural hazard generation without artificial limits
-      const ragDuration = Date.now() - aiCallStart;
-
-      if (ragDuration > 10000) {
-        // RAG took >10s, still plenty of tokens
-        adjustedMaxTokens = 20000;  // If RAG slow, still plenty of tokens
-        logger.warn(`⚠️ RAG slow (${ragDuration}ms), reducing maxTokens to 20000 for faster generation`);
-      } else {
-        logger.info(`✅ RAG fast (${ragDuration}ms), using full maxTokens: 24000 for comprehensive output`);
-      }
+      // ✅ DIRECT OPENAI CALL: 30k tokens, no wrapper, no fallback
+      logger.info(`🚀 Calling OpenAI GPT-5-mini directly - 30k tokens, 240s timeout`);
       
-      aiResult = await callAI(OPENAI_API_KEY, {
-        model: 'gpt-5-mini-2025-08-07',  // GPT-5 Mini: Fast, cost-efficient, perfect for structured outputs
-        systemPrompt,
-        userPrompt,
-        maxTokens: adjustedMaxTokens,     // Dynamic: 24000 (normal) or 20000 (if RAG slow) - includes ~6000 reasoning tokens
-        timeoutMs: 240000,   // 4 minutes - balanced timeout for GPT-5 Mini structured output
-      tools: [{
-        type: 'function',
-        function: {
-          name: 'provide_safety_assessment',
-          description: 'Return comprehensive health and safety assessment with risk mitigation',
-          parameters: {
-            type: 'object',
-            properties: {
-              response: {
-                type: 'string',
-                description: 'Natural, conversational risk assessment IN UK ENGLISH ONLY (authorised not authorized, realise not realize, organise not organize, metres not meters). Reference previous discussion. As detailed as needed.'
-              },
-              riskAssessment: {
-                type: 'object',
-                properties: {
-                  hazards: {
-                    type: 'array',
-                     items: {
-                      type: 'object',
-                      properties: {
-                        hazard: { type: 'string', description: 'Hazard description in UK English (authorised, realise, organise, metres)' },
-                        linkedToStep: { 
-                          type: 'number', 
-                          description: 'Step number this hazard applies to (1-based index), or 0 for general site hazards' 
+      aiResult = await callOpenAI({
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        model: 'gpt-5-mini-2025-08-07',
+        max_tokens: 30000,
+        tools: [{
+          type: 'function',
+          function: {
+            name: 'provide_safety_assessment',
+            description: 'Provide comprehensive health & safety assessment for electrical installation work',
+            parameters: {
+              type: 'object',
+              properties: {
+                response: { type: 'string' },
+                riskAssessment: {
+                  type: 'object',
+                  properties: {
+                    hazards: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          hazard: { type: 'string' },
+                          linkedToStep: { type: 'number' },
+                          likelihood: { type: 'number' },
+                          severity: { type: 'number' },
+                          riskScore: { type: 'number' },
+                          riskLevel: { type: 'string' },
+                          controlMeasure: { type: 'string' },
+                          residualLikelihood: { type: 'number' },
+                          residualSeverity: { type: 'number' },
+                          residualRisk: { type: 'number' },
+                          residualRiskLevel: { type: 'string' },
+                          regulation: { type: 'string' }
                         },
-                        likelihood: { type: 'number', minimum: 1, maximum: 5 },
-                        likelihoodReason: { type: 'string' },
-                        severity: { type: 'number', minimum: 1, maximum: 5 },
-                        severityReason: { type: 'string' },
-                        riskScore: { type: 'number' },
-                        riskLevel: { type: 'string' },
-                        regulation: { type: 'string' }
-                      },
-                      required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel']
-                    }
-                  },
-                  controls: {
-                    type: 'array',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        hazard: { type: 'string' },
-                        linkedToStep: { 
-                          type: 'number', 
-                          description: 'Step number this control applies to (must match hazard linkedToStep)' 
-                        },
-                        controlMeasure: { type: 'string', description: 'Control measure in UK English (authorised, realise, organise, metres)' },
-                        residualLikelihood: { type: 'number' },
-                        residualSeverity: { type: 'number' },
-                        residualRisk: { type: 'number' },
-                        residualRiskLevel: { type: 'string' },
-                        regulation: { type: 'string' },
-                        practicalImplementation: { type: 'string' }
-                      },
-                      required: ['hazard', 'linkedToStep', 'controlMeasure', 'residualRisk', 'residualRiskLevel']
-                    }
-                  },
-                  riskMatrix: {
-                    type: 'object',
-                    properties: {
-                      beforeControls: { type: 'object' },
-                      afterControls: { type: 'object' }
-                    }
-                  },
-                  ppeDetails: { 
-                    type: 'array',
-                    description: 'EXTRACT from knowledge base - do not generate generic PPE',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        itemNumber: { type: 'number', description: 'Sequential number (1, 2, 3...)' },
-                        ppeType: { type: 'string', description: 'Equipment name from knowledge base' },
-                        standard: { type: 'string', description: 'BS/EN standard from knowledge base (e.g., BS EN 397)' },
-                        mandatory: { type: 'boolean', description: 'true if from knowledge base, false if suggested' },
-                        purpose: { type: 'string', description: 'Protection purpose from knowledge base' }
-                      },
-                      required: ['itemNumber', 'ppeType', 'standard', 'mandatory', 'purpose']
-                    }
-                  },
-                  emergencyProcedures: { type: 'array', items: { type: 'string' } }
-                },
-                required: ['hazards', 'controls']
-              },
-              siteLogistics: {
-                type: 'object',
-                description: 'Site logistics and project management details',
-                properties: {
-                  vehicleAccess: { type: 'string', description: 'Vehicle access route and restrictions in UK English' },
-                  parking: { type: 'string', description: 'Parking arrangements and allocated spaces' },
-                  materialStorage: { type: 'string', description: 'Material storage location and requirements' },
-                  wasteManagement: { type: 'string', description: 'Waste segregation and disposal procedures' },
-                  welfareFacilities: { type: 'string', description: 'Toilet, rest area, kettle facilities' },
-                  siteRestrictions: { type: 'string', description: 'Noise hours, occupied building rules, cleanliness standards' }
-                }
-              },
-              competencyMatrix: {
-                type: 'object',
-                description: 'Competency, training, and certification requirements - LINK EQUIPMENT TO CERTIFICATIONS',
-                properties: {
-                  competencyRequirements: { type: 'string', description: 'Required qualifications (e.g., ECS Gold Card, 18th Edition)' },
-                  trainingRequired: { 
-                    type: 'string', 
-                    description: 'Mandatory certifications based on equipment/environment:\n- MEWP (scissor lift, boom lift, cherry picker) → IPAF 3a/3b certification required\n- Portable scaffold towers → PASMA certification required\n- Asbestos awareness → Mandatory if ACMs present (Category A training)\n- Confined space entry → CS1/CS2 training and permit-to-work\n- HV switching (>1000V) → AP/AR person authorisation\n- First Aid → At least one First Aid at Work certified person on site' 
-                  },
-                  supervisionLevel: { type: 'string', description: 'Supervision requirements (e.g., Continuous supervision by approved electrician)' },
-                  additionalCertifications: { type: 'string', description: 'Additional certs needed (e.g., AP/AR persons for HV works)' }
-                }
-              },
-              conditionalProcedures: {
-                type: 'object',
-                description: 'Conditional safety procedures based on installation context',
-                properties: {
-                  workAtHeight: {
-                    type: 'object',
-                    properties: {
-                      required: { type: 'boolean' },
-                      equipment: {
-                        type: 'array',
-                        items: {
-                          type: 'object',
-                          properties: {
-                            type: { type: 'string', description: 'Equipment type (e.g., MEWP, Scaffold)' },
-                            height: { type: 'string', description: 'Working height' },
-                            fallProtection: { type: 'string', description: 'Fall protection measures' },
-                            inspection: { type: 'string', description: 'Inspection requirements' }
-                          }
-                        }
+                        required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel', 'controlMeasure']
                       }
                     }
                   },
-                  servicesUtilities: {
+                  required: ['hazards']
+                },
+                ppeDetails: {
+                  type: 'array',
+                  items: {
                     type: 'object',
                     properties: {
-                      required: { type: 'boolean' },
-                      detectionMethod: { type: 'string', description: 'CAT & Genny scan procedures' },
-                      servicesPresent: { type: 'array', items: { type: 'string' } },
-                      catScanner: { type: 'string', description: 'CAT scanner model and usage' },
-                      safeDigging: { type: 'string', description: 'Hand digging protocols near services' }
-                    }
-                  },
-                  hotWorks: {
-                    type: 'object',
-                    properties: {
-                      required: { type: 'boolean' },
-                      permitRequired: { type: 'string', description: 'Hot works permit details' },
-                      fireWatchDuration: { type: 'string', description: 'Fire watch duration after works' },
-                      combustiblesRemoved: { type: 'string', description: 'Clearance distance for combustibles' },
-                      fireExtinguishers: { type: 'string', description: 'Fire extinguisher requirements' },
-                      ventilation: { type: 'string', description: 'Ventilation requirements' }
-                    }
-                  },
-                  noiseDust: {
-                    type: 'object',
-                    properties: {
-                      required: { type: 'boolean' },
-                      noiseLevels: { type: 'string', description: 'Expected dB(A) levels' },
-                      hearingProtection: { type: 'string', description: 'Hearing protection requirements' },
-                      dustSuppression: { type: 'string', description: 'Dust suppression methods' },
-                      rpeRequired: { type: 'string', description: 'Respiratory protective equipment' },
-                      hoursRestriction: { type: 'string', description: 'Noise restriction hours' }
-                    }
-                  },
-                  clientLiaison: {
-                    type: 'object',
-                    properties: {
-                      required: { type: 'boolean' },
-                      occupiedPremises: { type: 'string', description: 'Whether building is occupied' },
-                      accessRestrictions: { type: 'string', description: 'Access restrictions and out-of-hours requirements' },
-                      publicAreas: { type: 'string', description: 'Public area protection (barriers, cable mats)' },
-                      dailyBriefings: { type: 'string', description: 'Client meeting schedule' },
-                      disruptionNotices: { type: 'string', description: 'Power outage notification procedures' },
-                      cleanlinessStandard: { type: 'string', description: 'Daily cleaning requirements' }
-                    }
+                      itemNumber: { type: 'number' },
+                      ppeType: { type: 'string' },
+                      standard: { type: 'string' },
+                      mandatory: { type: 'boolean' },
+                      purpose: { type: 'string' }
+                    },
+                    required: ['itemNumber', 'ppeType']
                   }
+                },
+                emergencyProcedures: {
+                  type: 'array',
+                  items: { type: 'string' }
                 }
               },
-              methodStatement: {
-                type: 'object',
-                properties: {
-                  steps: { type: 'array', items: { type: 'object' } },
-                  permitRequired: { type: 'boolean' },
-                  competentPerson: { type: 'boolean' }
-                }
-              },
-              compliance: {
-                type: 'object',
-                properties: {
-                  regulations: { type: 'array', items: { type: 'string' } },
-                  warnings: { type: 'array', items: { type: 'string' } }
-                }
-              },
-              suggestedNextAgents: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    agent: { type: 'string' },
-                    reason: { type: 'string' },
-                    priority: { type: 'string', enum: ['high', 'medium', 'low'] }
-                  },
-                  required: ['agent', 'reason', 'priority']
-                }
-              }
-            },
-            required: ['response'],
-            additionalProperties: false
+              required: ['response', 'riskAssessment', 'ppeDetails', 'emergencyProcedures']
+            }
           }
-        }
-      }],
-      toolChoice: { type: 'function', function: { name: 'provide_safety_assessment' } }
-      });
+        }],
+        tool_choice: { type: 'function', function: { name: 'provide_safety_assessment' } }
+      }, OPENAI_API_KEY);
       
       if (progressInterval) clearInterval(progressInterval);
       logger.info(`✅ AI call completed in ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
       
     } catch (aiError) {
       if (progressInterval) clearInterval(progressInterval);
-      logger.error(`❌ AI call failed after ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
-      logger.error('AI call failed', {
+      logger.error(`❌ OpenAI call failed after ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
+      logger.error('OpenAI call failed - NO FALLBACK', {
         error: aiError instanceof Error ? aiError.message : String(aiError),
         stack: aiError instanceof Error ? aiError.stack : undefined,
-        promptLength: systemPrompt.length + userPrompt.length,
-        isTimeout: aiError instanceof Error && aiError.message.toLowerCase().includes('timeout')
+        promptLength: systemPrompt.length + userPrompt.length
       });
       
-      // Smart fallback: If timeout, try faster Gemini model
-      if (aiError instanceof Error && (aiError.message.toLowerCase().includes('timeout') || aiError.message.toLowerCase().includes('timed out'))) {
-        logger.info('🔄 Timeout detected, attempting gemini-2.5-flash as fast fallback');
-        
-        try {
-          const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-          if (!OPENAI_API_KEY) {
-            throw new Error('OPENAI_API_KEY not configured');
-          }
-          
-          aiResult = await callAI(OPENAI_API_KEY, {
-            model: 'google/gemini-2.5-flash',  // Much faster than GPT-5 Mini
-            systemPrompt,
-            userPrompt,
-            maxTokens: 6000,  // Reduced for speed
-            timeoutMs: 90000,  // 90 seconds for Gemini
-            tools: [{
-              type: 'function',
-              function: {
-                name: 'provide_safety_assessment',
-                description: 'Return comprehensive health and safety assessment with risk mitigation',
-                parameters: {
-                  type: 'object',
-                  properties: {
-                    response: {
-                      type: 'string',
-                      description: 'Natural, conversational risk assessment IN UK ENGLISH ONLY (authorised not authorized, realise not realize, organise not organize, metres not meters). Reference previous discussion. As detailed as needed.'
-                    },
-                    riskAssessment: {
-                      type: 'object',
-                      properties: {
-                        hazards: {
-                          type: 'array',
-                          items: {
-                            type: 'object',
-                            properties: {
-                              hazard: { type: 'string', description: 'Hazard description in UK English' },
-                              linkedToStep: { type: 'number', description: 'Step number (1-based) or 0 for general' },
-                              likelihood: { type: 'number', minimum: 1, maximum: 5 },
-                              likelihoodReason: { type: 'string' },
-                              severity: { type: 'number', minimum: 1, maximum: 5 },
-                              severityReason: { type: 'string' },
-                              riskScore: { type: 'number' },
-                              riskLevel: { type: 'string' },
-                              regulation: { type: 'string' }
-                            },
-                            required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel']
-                          }
-                        }
-                      }
-                    }
-                  },
-                  required: ['response']
-                }
-              }
-            }],
-            toolChoice: { type: 'function', function: { name: 'provide_safety_assessment' } }
-          });
-          
-          logger.info('✅ Fallback to Gemini succeeded');
-          
-        } catch (fallbackError) {
-          logger.error('❌ Fallback to Gemini also failed', { error: fallbackError });
-          // Continue with original timeout handling below
-        }
-      }
-      
-      // If fallback failed or wasn't attempted, return minimal valid response
-      if (!aiResult && aiError instanceof Error && aiError.message.toLowerCase().includes('timeout')) {
-        logger.warn('AI timeout - returning minimal safety assessment');
-        
-        return new Response(
-          JSON.stringify({
-            success: true,
-            response: 'Risk assessment generated with standard electrical hazards per BS 7671 and HSE guidance',
-            structuredData: {
-              riskAssessment: {
-                hazards: [
-                  {
-                    hazard: "Electrical shock from live conductors",
-                    risk: "Electric shock, burns, or fatality",
-                    likelihood: 4,
-                    severity: 5,
-                    riskRating: 20,
-                    controls: "Isolate power supply per BS 7671 Section 462; Use voltage tester to prove dead; Wear insulated gloves to BS EN 60903",
-                    residualRisk: 4
-                  },
-                  {
-                    hazard: "Arc flash during switching operations",
-                    risk: "Burns and blast injuries from electrical arc",
-                    likelihood: 3,
-                    severity: 5,
-                    riskRating: 15,
-                    controls: "Maintain safe working distance; Wear arc-rated PPE; Use remote operation where possible",
-                    residualRisk: 6
-                  },
-                  {
-                    hazard: "Cable damage during installation",
-                    risk: "Short circuit, fire, or electric shock",
-                    likelihood: 3,
-                    severity: 4,
-                    riskRating: 12,
-                    controls: "Check cable routes for existing services; Use cable detection equipment; Follow safe digging procedures",
-                    residualRisk: 6
-                  },
-                  {
-                    hazard: "Manual handling injuries from heavy equipment",
-                    risk: "Musculoskeletal injuries, strains",
-                    likelihood: 4,
-                    severity: 3,
-                    riskRating: 12,
-                    controls: "Perform manual handling risk assessment; Use mechanical aids where possible; Team lifting for heavy items",
-                    residualRisk: 4
-                  },
-                  {
-                    hazard: "Falls from height during cable routing",
-                    risk: "Serious injury or fatality from falls",
-                    likelihood: 3,
-                    severity: 5,
-                    riskRating: 15,
-                    controls: "Use appropriate access equipment; Implement edge protection; Wear harness where required per Work at Height Regulations 2005",
-                    residualRisk: 6
-                  },
-                  {
-                    hazard: "Fire risk from faulty connections",
-                    risk: "Fire, property damage, injury",
-                    likelihood: 2,
-                    severity: 5,
-                    riskRating: 10,
-                    controls: "Verify all connections per BS 7671; Use appropriate torque settings; Perform thermal imaging checks",
-                    residualRisk: 4
-                  },
-                  {
-                    hazard: "Exposure to asbestos during drilling",
-                    risk: "Respiratory illness, long-term health effects",
-                    likelihood: 2,
-                    severity: 5,
-                    riskRating: 10,
-                    controls: "Conduct asbestos survey before work; Use licensed contractor if present; Follow HSE ACOPs",
-                    residualRisk: 4
-                  },
-                  {
-                    hazard: "Slips, trips and falls on site",
-                    risk: "Injuries from falls on same level",
-                    likelihood: 4,
-                    severity: 3,
-                    riskRating: 12,
-                    controls: "Maintain good housekeeping; Remove trip hazards; Ensure adequate lighting; Wear appropriate footwear",
-                    residualRisk: 4
-                  }
-                ],
-                ppeDetails: [
-                  {
-                    itemNumber: 1,
-                    ppeType: "Safety helmet",
-                    standard: "BS EN 397",
-                    mandatory: true,
-                    purpose: "Protection against head injuries from falling objects and impact"
-                  },
-                  {
-                    itemNumber: 2,
-                    ppeType: "Safety boots",
-                    standard: "BS EN ISO 20345 S3",
-                    mandatory: true,
-                    purpose: "Protection against electrical hazards, crushing, and penetration"
-                  },
-                  {
-                    itemNumber: 3,
-                    ppeType: "Insulated gloves",
-                    standard: "BS EN 60903 Class 0",
-                    mandatory: true,
-                    purpose: "Protection against electrical shock from live conductors up to 500V AC"
-                  },
-                  {
-                    itemNumber: 4,
-                    ppeType: "Safety glasses",
-                    standard: "BS EN 166",
-                    mandatory: true,
-                    purpose: "Eye protection against arc flash, debris, and dust"
-                  }
-                ],
-                emergencyProcedures: ["Isolate power supply in emergency", "Call 999 for electric shock incidents", "Administer first aid if qualified", "Ensure first aider location is known to all workers"]
-              }
-            }
-          }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
-        );
-      }
-      
-      // Re-throw other errors to be caught by outer handler
+      // No fallback - surface error immediately
       throw aiError;
     }
 
-    // AI wrapper already extracts tool call arguments as JSON string
-    // Just parse it directly - no need to navigate through choices/message/tool_calls
-    const safetyResult = JSON.parse(aiResult.content);
+    // Parse OpenAI tool call response
+    const safetyResult = aiResult.toolCalls && aiResult.toolCalls.length > 0
+      ? JSON.parse(aiResult.toolCalls[0].function.arguments)
+      : JSON.parse(aiResult.content);
 
     // ✅ PHASE 5: Validate and fix linkedToStep for all hazards
     const invalidHazards = safetyResult.riskAssessment?.hazards?.filter(

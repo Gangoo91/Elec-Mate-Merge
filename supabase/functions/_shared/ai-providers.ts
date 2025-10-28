@@ -202,7 +202,7 @@ export async function callOpenAI(
     messages,
     model = 'gpt-5-mini-2025-08-07',
     temperature = 0.7,
-    max_tokens = 2000,
+    max_tokens = 30000,
     response_format,
     tools,
     tool_choice
@@ -210,12 +210,22 @@ export async function callOpenAI(
 
   console.log(`🤖 Calling OpenAI ${model}`);
 
+  // GPT-5, GPT-4.1, O3, O4 models require max_completion_tokens and NO temperature
+  const isNewModel = model.includes('gpt-5') || model.includes('gpt-4.1') || model.includes('o3') || model.includes('o4');
+
   const body: any = {
     model,
     messages,
-    max_tokens,
-    temperature
   };
+
+  // Use max_completion_tokens for new models, max_tokens for legacy
+  if (isNewModel) {
+    body.max_completion_tokens = max_tokens;
+    // Do NOT send temperature - new models don't support it
+  } else {
+    body.max_tokens = max_tokens;
+    body.temperature = temperature;
+  }
 
   if (response_format) {
     body.response_format = response_format;

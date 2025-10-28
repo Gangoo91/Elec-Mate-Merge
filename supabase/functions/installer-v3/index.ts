@@ -7,8 +7,9 @@ import {
   handleError,
   ValidationError,
   createClient,
-  generateEmbeddingWithRetry,
+  generateEmbeddingWithRetry
 } from '../_shared/v3-core.ts';
+import { callOpenAI } from '../_shared/ai-providers.ts';
 import { retrieveInstallationKnowledge } from '../_shared/rag-installation.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
@@ -453,22 +454,24 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     const model = 'gpt-5-mini-2025-08-07';
     
     logger.debug(`Calling ${model}`);
-    const { callAI } = await import('../_shared/ai-wrapper.ts');
-    
     // Progress monitoring for long-running AI calls
+    const aiCallStart = Date.now();
     const progressInterval = setInterval(() => {
-      const elapsed = Math.floor((Date.now() - Date.now()) / 1000);
-      logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 150s)`);
+      const elapsed = Math.floor((Date.now() - aiCallStart) / 1000);
+      logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 240s)`);
     }, 30000); // Log every 30 seconds
 
     let aiResult;
     try {
-      aiResult = await callAI(OPENAI_API_KEY!, {
-        model,
-        systemPrompt,
-        userPrompt,
-        maxTokens: 8000,   // Reduced from 18000: prevents timeouts while maintaining quality
-        timeoutMs: 150000,  // 2.5 minutes - realistic for 8k tokens
+      logger.info('🚀 Calling OpenAI GPT-5-mini directly - 30k tokens, 240s timeout');
+      
+      aiResult = await callOpenAI({
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        model: 'gpt-5-mini-2025-08-07',
+        max_tokens: 30000,
         tools: [{
         type: 'function',
         function: {
@@ -547,107 +550,33 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
           }
         }
       }],
-      toolChoice: { type: 'function', function: { name: 'provide_installation_guidance' } }
-    });
-    clearInterval(progressInterval);
-  } catch (error) {
-    clearInterval(progressInterval);
-    
-    // Check if it's a timeout error
-    if (error.message?.includes('timeout') || error.message?.includes('timed out')) {
-      logger.warn('⚠️ GPT-5 Mini timeout, falling back to Gemini 2.5 Flash', { 
-        error: error.message,
-        attemptedModel: model 
+        tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
+      }, OPENAI_API_KEY);
+      
+      clearInterval(progressInterval);
+      logger.info(`✅ OpenAI call completed in ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
+      
+    } catch (error) {
+      clearInterval(progressInterval);
+      logger.error(`❌ OpenAI call failed after ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
+      logger.error('OpenAI call failed - NO FALLBACK', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined
       });
       
-      // Fallback to Gemini with reduced tokens
-      const GOOGLE_API_KEY = Deno.env.get('GEMINI_API_KEY');
-      if (!GOOGLE_API_KEY) {
-        throw new Error('Gemini API key not configured for fallback');
-      }
-
-      const fallbackModel = 'google/gemini-2.5-flash';
-      logger.info(`🔄 Retrying with ${fallbackModel} (faster, reduced tokens)`);
-      
-      aiResult = await callAI(GOOGLE_API_KEY, {
-        model: fallbackModel,
-        systemPrompt,
-        userPrompt,
-        maxTokens: 6000,   // Further reduced for faster response
-        timeoutMs: 90000,   // 1.5 minutes
-        tools: [{
-          type: 'function',
-          function: {
-            name: 'provide_installation_guidance',
-            description: 'Return comprehensive installation guidance. MUST extract specific measurements from the installation knowledge database.',
-            parameters: {
-              type: 'object',
-              properties: {
-                response: {
-                  type: 'string',
-                  description: 'Natural, conversational response IN UK ENGLISH ONLY (authorised not authorized, realise not realize, organise not organize, metres not meters, whilst not while). Reference previous messages naturally (e.g., "Right, for that 10mm² cable we discussed..."). As long as needed to answer thoroughly.'
-                },
-                installationSteps: {
-                  type: 'array',
-                  items: {
-                    type: 'object',
-                    properties: {
-                      step: { type: 'number' },
-                      title: { type: 'string' },
-                      description: { 
-                        type: 'string', 
-                        description: 'COMPREHENSIVE step description in UK English (authorised, realise, organise, metres, whilst). MUST include: 1) Overview sentence, 2) Detailed sub-tasks as bullet points or numbered list, 3) Specific measurements/values from knowledge base where applicable (e.g., "400mm clip spacing", "1.8m height", "16mm² cable"), 4) Quality checks. Minimum 3-5 sentences or 80-150 words per step.'
-                      },
-                      tools: { type: 'array', items: { type: 'string' } },
-                      materials: { type: 'array', items: { type: 'string' } },
-                      safetyNotes: { type: 'array', items: { type: 'string' } },
-                      estimatedTime: { type: 'number' }
-                    },
-                    required: ['step', 'title', 'description']
-                  }
-                },
-                practicalTips: {
-                  type: 'array',
-                  items: { type: 'string' }
-                },
-                commonMistakes: {
-                  type: 'array',
-                  items: { type: 'string' }
-                },
-                toolsRequired: {
-                  type: 'array',
-                  items: { type: 'string' }
-                }
-              },
-              required: ['response'],
-              additionalProperties: false
-            }
-          }
-        }],
-        toolChoice: { type: 'function', function: { name: 'provide_installation_guidance' } }
-      });
-
-      logger.info(`✅ Gemini fallback successful`);
-    } else {
-      // Non-timeout error, re-throw
+      // No fallback - surface error immediately
       throw error;
     }
-  }
 
-    // Parse tool call response (handle both tool calls and JSON-in-content)
+    // Parse OpenAI tool call response
     let installResult: any;
     
     if (aiResult.toolCalls && aiResult.toolCalls.length > 0) {
-      // OpenAI-style tool calls (from Gemini via gateway)
+      // OpenAI tool calls - parse arguments
       installResult = JSON.parse(aiResult.toolCalls[0].function.arguments);
     } else if (aiResult.content) {
-      // Anthropic direct or JSON-in-content response
+      // Direct content - parse as JSON
       try {
-        // Try to extract JSON from markdown code blocks
-        const jsonMatch = aiResult.content.match(/```json\s*([\s\S]*?)\s*```/) || 
-                         aiResult.content.match(/```\s*([\s\S]*?)\s*```/) ||
-                         [null, aiResult.content];
-        
         const jsonStr = jsonMatch[1] || aiResult.content;
         installResult = JSON.parse(jsonStr.trim());
       } catch (parseError) {
