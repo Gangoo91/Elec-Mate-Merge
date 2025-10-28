@@ -1150,16 +1150,16 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     );
 
     // CRITICAL: Validate response structure before returning
-    const hazardCount = enrichedResponse?.structuredData?.riskAssessment?.hazards?.length || 
-                       enrichedResponse?.riskAssessment?.hazards?.length || 0;
+    const finalHazardCount = enrichedResponse?.structuredData?.riskAssessment?.hazards?.length || 
+                             enrichedResponse?.riskAssessment?.hazards?.length || 0;
 
     console.log('📦 FINAL RESPONSE VALIDATION:', {
       success: enrichedResponse.success,
-      hazardCount,
+      finalHazardCount,
       hasStructuredData: !!enrichedResponse.structuredData,
       hasRiskAssessment: !!enrichedResponse.riskAssessment,
       topLevelKeys: Object.keys(enrichedResponse),
-      willFrontendFind: hazardCount > 0 ? 'YES' : 'NO - EMPTY RESPONSE',
+      willFrontendFind: finalHazardCount > 0 ? 'YES' : 'NO - EMPTY RESPONSE',
       firstThreeHazards: (enrichedResponse?.structuredData?.riskAssessment?.hazards || 
                           enrichedResponse?.riskAssessment?.hazards || [])
         .slice(0, 3)
@@ -1178,7 +1178,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     }
 
     // Fail early if no hazards generated (triggers retry logic)
-    if (hazardCount === 0) {
+    if (finalHazardCount === 0) {
       logger.error('🚨 CRITICAL: AI generated zero hazards - triggering retry');
       throw new Error('AI generated no hazards - empty response');
     }
