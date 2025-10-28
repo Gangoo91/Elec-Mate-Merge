@@ -681,8 +681,8 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         model: 'gpt-5-mini-2025-08-07',  // GPT-5 Mini: Fast, cost-efficient, perfect for structured outputs
         systemPrompt,
         userPrompt,
-        maxTokens: 16000,    // GPT-5 Mini needs more tokens than Gemini for comprehensive hazards
-        timeoutMs: 240000,   // 4 minutes - ample time for GPT-5 Mini generation + RAG + validation (180s needed + 60s buffer)
+        maxTokens: 12000,    // Optimized for 18-25 hazards - reduced from 16000 to prevent timeout
+        timeoutMs: 360000,   // 6 minutes - allows GPT-5 Mini to complete comprehensive structured output
       tools: [{
         type: 'function',
         function: {
@@ -933,6 +933,60 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                     riskRating: 15,
                     controls: "Maintain safe working distance; Wear arc-rated PPE; Use remote operation where possible",
                     residualRisk: 6
+                  },
+                  {
+                    hazard: "Cable damage during installation",
+                    risk: "Short circuit, fire, or electric shock",
+                    likelihood: 3,
+                    severity: 4,
+                    riskRating: 12,
+                    controls: "Check cable routes for existing services; Use cable detection equipment; Follow safe digging procedures",
+                    residualRisk: 6
+                  },
+                  {
+                    hazard: "Manual handling injuries from heavy equipment",
+                    risk: "Musculoskeletal injuries, strains",
+                    likelihood: 4,
+                    severity: 3,
+                    riskRating: 12,
+                    controls: "Perform manual handling risk assessment; Use mechanical aids where possible; Team lifting for heavy items",
+                    residualRisk: 4
+                  },
+                  {
+                    hazard: "Falls from height during cable routing",
+                    risk: "Serious injury or fatality from falls",
+                    likelihood: 3,
+                    severity: 5,
+                    riskRating: 15,
+                    controls: "Use appropriate access equipment; Implement edge protection; Wear harness where required per Work at Height Regulations 2005",
+                    residualRisk: 6
+                  },
+                  {
+                    hazard: "Fire risk from faulty connections",
+                    risk: "Fire, property damage, injury",
+                    likelihood: 2,
+                    severity: 5,
+                    riskRating: 10,
+                    controls: "Verify all connections per BS 7671; Use appropriate torque settings; Perform thermal imaging checks",
+                    residualRisk: 4
+                  },
+                  {
+                    hazard: "Exposure to asbestos during drilling",
+                    risk: "Respiratory illness, long-term health effects",
+                    likelihood: 2,
+                    severity: 5,
+                    riskRating: 10,
+                    controls: "Conduct asbestos survey before work; Use licensed contractor if present; Follow HSE ACOPs",
+                    residualRisk: 4
+                  },
+                  {
+                    hazard: "Slips, trips and falls on site",
+                    risk: "Injuries from falls on same level",
+                    likelihood: 4,
+                    severity: 3,
+                    riskRating: 12,
+                    controls: "Maintain good housekeeping; Remove trip hazards; Ensure adequate lighting; Wear appropriate footwear",
+                    residualRisk: 4
                   }
                 ],
                 ppeDetails: [
