@@ -158,7 +158,7 @@ serve(async (req) => {
         }
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('RAG search timeout - using cached results')), 10000)
+        setTimeout(() => reject(new Error('RAG search timeout - using cached results')), 30000)  // Increased from 10s to 30s for complex queries
       )
     ]).catch(error => {
       logger.warn('RAG search timeout, using minimal context', { error });
@@ -1148,6 +1148,42 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       'health-safety',
       { workType, location, hazards }
     );
+
+    // CRITICAL: Validate response structure before returning
+    const hazardCount = enrichedResponse?.structuredData?.riskAssessment?.hazards?.length || 
+                       enrichedResponse?.riskAssessment?.hazards?.length || 0;
+
+    console.log('📦 FINAL RESPONSE VALIDATION:', {
+      success: enrichedResponse.success,
+      hazardCount,
+      hasStructuredData: !!enrichedResponse.structuredData,
+      hasRiskAssessment: !!enrichedResponse.riskAssessment,
+      topLevelKeys: Object.keys(enrichedResponse),
+      willFrontendFind: hazardCount > 0 ? 'YES' : 'NO - EMPTY RESPONSE',
+      firstThreeHazards: (enrichedResponse?.structuredData?.riskAssessment?.hazards || 
+                          enrichedResponse?.riskAssessment?.hazards || [])
+        .slice(0, 3)
+        .map((h: any) => h.hazard?.substring(0, 40))
+    });
+
+    // Ensure hazards are at BOTH levels for frontend compatibility
+    if (enrichedResponse.riskAssessment?.hazards && !enrichedResponse.structuredData) {
+      logger.info('Adding structuredData wrapper for frontend compatibility');
+      enrichedResponse.structuredData = {
+        riskAssessment: enrichedResponse.riskAssessment
+      };
+    } else if (enrichedResponse.structuredData?.riskAssessment?.hazards && !enrichedResponse.riskAssessment) {
+      logger.info('Adding top-level riskAssessment for frontend compatibility');
+      enrichedResponse.riskAssessment = enrichedResponse.structuredData.riskAssessment;
+    }
+
+    // Fail early if no hazards generated (triggers retry logic)
+    if (hazardCount === 0) {
+      logger.error('🚨 CRITICAL: AI generated zero hazards - triggering retry');
+      throw new Error('AI generated no hazards - empty response');
+    }
+
+    logger.info(`✅ Response validated: ${hazardCount} hazards will be available to frontend`);
 
     // Log RAG metrics for observability
     const totalTime = Date.now() - requestStart;

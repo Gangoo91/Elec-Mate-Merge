@@ -441,10 +441,12 @@ export function useAIRAMS(): UseAIRAMSReturn {
   const callAgentWithRetry = async (
     functionName: string,
     body: any,
-    maxRetries = 2
+    maxRetries = 3  // Increased from 2 to 3 for better reliability
   ): Promise<{ data: any; error: any }> => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
+        console.log(`🔄 Attempt ${attempt}/${maxRetries} for ${functionName}`);
+        
         // Wrap the supabase invoke call with a timeout
         const invokePromise = supabase.functions.invoke(functionName, { body });
         const timeoutPromise = new Promise((_, reject) =>
@@ -456,21 +458,43 @@ export function useAIRAMS(): UseAIRAMSReturn {
           timeoutPromise
         ]) as { data: any; error: any };
         
+        // NEW: Validate result has actual hazards (not just success=true)
         if (!error && data?.success) {
-          console.log(`✅ ${functionName} succeeded on attempt ${attempt}`);
-          return { data, error: null };
+          const hazardCount = data?.structuredData?.riskAssessment?.hazards?.length || 
+                             data?.riskAssessment?.hazards?.length || 0;
+          
+          if (hazardCount >= 8) {  // Minimum acceptable hazard count
+            console.log(`✅ ${functionName} succeeded on attempt ${attempt} with ${hazardCount} hazards`);
+            return { data, error: null };
+          } else if (hazardCount > 0) {
+            console.warn(`⚠️ ${functionName} returned only ${hazardCount} hazards (expected 15+)`);
+            if (attempt === maxRetries) {
+              // Last attempt - accept what we got
+              console.log(`✅ Accepting partial result on final attempt: ${hazardCount} hazards`);
+              return { data, error: null };
+            }
+            // Otherwise retry for better results
+            console.log(`🔄 Retrying for more complete results...`);
+          } else {
+            console.warn(`⚠️ ${functionName} returned success but no hazards - retrying`);
+          }
         }
         
+        // Exponential backoff before retry
         if (attempt < maxRetries) {
-          const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
-          console.log(`⏳ Retry ${attempt}/${maxRetries} for ${functionName} after ${delay}ms`);
-          await new Promise(resolve => setTimeout(resolve, delay));
+          const backoffMs = Math.min(1000 * Math.pow(2, attempt - 1), 5000); // 1s, 2s, 4s (capped at 5s)
+          console.log(`⏳ Waiting ${backoffMs}ms before retry...`);
+          await new Promise(resolve => setTimeout(resolve, backoffMs));
         } else {
           console.error(`❌ ${functionName} failed after ${maxRetries} attempts`, { error, data });
         }
       } catch (timeoutError) {
         console.error(`❌ ${functionName} timed out on attempt ${attempt}`, timeoutError);
-        if (attempt === maxRetries) {
+        if (attempt < maxRetries) {
+          const backoffMs = Math.min(1000 * Math.pow(2, attempt - 1), 5000);
+          console.log(`⏳ Waiting ${backoffMs}ms before retry after timeout...`);
+          await new Promise(resolve => setTimeout(resolve, backoffMs));
+        } else {
           return { data: null, error: timeoutError };
         }
       }
@@ -832,13 +856,29 @@ export function useAIRAMS(): UseAIRAMSReturn {
               for (const cached of cachedResults) {
                 if (cached.response && typeof cached.response === 'object') {
                   const responseObj = cached.response as any;
-                  const hazards = responseObj?.structuredData?.riskAssessment?.hazards;
-                  if (Array.isArray(hazards) && hazards.length > 8) {
+                  // Check multiple possible paths for hazards
+                  const hazards = responseObj?.structuredData?.riskAssessment?.hazards ||
+                                 responseObj?.riskAssessment?.hazards;
+                  
+                  if (Array.isArray(hazards) && hazards.length >= 8) {
                     console.log(`✅ Found cached response with ${hazards.length} hazards`);
-                    return { success: true, ...(responseObj as object) };
+                    // Ensure hazards are at both levels for compatibility
+                    const normalizedResponse = {
+                      success: true,
+                      ...responseObj,
+                      riskAssessment: responseObj.riskAssessment || responseObj.structuredData?.riskAssessment,
+                      structuredData: {
+                        ...(responseObj.structuredData || {}),
+                        riskAssessment: responseObj.structuredData?.riskAssessment || responseObj.riskAssessment
+                      }
+                    };
+                    return normalizedResponse;
                   }
                 }
               }
+              console.log('⚠️ Cache checked but no responses with sufficient hazards found');
+            } else {
+              console.log('⚠️ No cached results found in last 10 minutes');
             }
           } catch (err) {
             console.error('Cache poll error:', err);
