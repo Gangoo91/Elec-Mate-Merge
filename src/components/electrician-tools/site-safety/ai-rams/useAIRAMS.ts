@@ -955,10 +955,10 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
         // STEP 5: Prominent warning that fallback data is being used
         toast({
-          title: "⚠️ Using Basic Risk Assessment Template",
-          description: "AI generation failed. Showing 8 generic electrical hazards only. This is NOT a comprehensive assessment for your specific job! Please review and add job-specific hazards manually.",
+          title: "AI Generation Timed Out",
+          description: "GPT-5 Mini took longer than 2 minutes to generate your specific hazards. Showing 8 generic electrical hazards as a starting point.\n\nWhat you can do:\n• Click 'Regenerate' button to try again\n• Manually add your job-specific hazards using the form\n• Edit the generic hazards to match your specific work\n\nThis is NOT a comprehensive assessment for your job!",
           variant: "destructive",
-          duration: 15000
+          duration: 20000
         });
         
         // STEP 5: Enhanced fallback with 8 comprehensive hazards

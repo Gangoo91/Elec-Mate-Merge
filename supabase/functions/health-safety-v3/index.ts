@@ -686,11 +686,23 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         throw new Error('OPENAI_API_KEY not configured');
       }
       
+      // Dynamic token adjustment based on RAG duration
+      let adjustedMaxTokens = 6000;
+      const ragDuration = Date.now() - aiCallStart;
+
+      if (ragDuration > 10000) {
+        // RAG took >10s, reduce tokens to fit remaining time budget
+        adjustedMaxTokens = 5000;
+        logger.warn(`⚠️ RAG slow (${ragDuration}ms), reducing maxTokens to 5000 for faster generation`);
+      } else {
+        logger.info(`✅ RAG fast (${ragDuration}ms), using standard maxTokens: 6000`);
+      }
+      
       aiResult = await callAI(OPENAI_API_KEY, {
         model: 'gpt-5-mini-2025-08-07',  // GPT-5 Mini: Fast, cost-efficient, perfect for structured outputs
         systemPrompt,
         userPrompt,
-        maxTokens: 8000,     // Reduced from 12000 - generates 15-18 hazards in ~2.5 min
+        maxTokens: adjustedMaxTokens,     // Dynamic: 6000 (normal) or 5000 (if RAG slow) - optimised for 120s timeout
         timeoutMs: 360000,   // 6 minutes - allows GPT-5 Mini to complete comprehensive structured output
       tools: [{
         type: 'function',
@@ -1262,6 +1274,26 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       throw new Error('AI generated no hazards - empty response');
     }
 
+    // Enforce minimum quality threshold to prevent inadequate assessments
+    if (finalHazardCount < expectedMinHazards && finalHazardCount < 10) {
+      const shortfallRatio = (expectedMinHazards - finalHazardCount) / expectedMinHazards;
+      
+      logger.error(`🚨 QUALITY THRESHOLD NOT MET: Generated ${finalHazardCount} hazards, expected ${expectedMinHazards}`, {
+        jobComplexity: complexityScore,
+        generatedCount: finalHazardCount,
+        requiredCount: expectedMinHazards,
+        shortfall: expectedMinHazards - finalHazardCount,
+        shortfallPercentage: `${(shortfallRatio * 100).toFixed(0)}%`
+      });
+      
+      // Only enforce if significantly below threshold (>30% shortfall)
+      if (shortfallRatio > 0.3) {
+        throw new Error(`Insufficient hazards: ${finalHazardCount}/${expectedMinHazards} generated - quality threshold not met (${(shortfallRatio * 100).toFixed(0)}% shortfall)`);
+      } else {
+        logger.warn(`⚠️ Minor shortfall (${(shortfallRatio * 100).toFixed(0)}%) - accepting response but flagging for review`);
+      }
+    }
+
     logger.info(`✅ Response validated: ${hazardCount} hazards will be available to frontend`);
 
     // Log RAG metrics for observability
@@ -1508,6 +1540,29 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         compliance,
         ragPreview
       },
+      metadata: {
+        requestId,
+        timestamp: new Date().toISOString(),
+        responseSource: 'gpt-5-mini-2025-08-07',
+        ragDuration: ragStart ? Date.now() - ragStart : null,
+        totalDuration: Date.now() - requestStart,
+        // Quality indicators for transparency
+        qualityMetrics: {
+          hazardCount: finalHazardCount,
+          expectedCount: expectedMinHazards,
+          qualityGrade: finalHazardCount >= expectedMinHazards ? 'EXCELLENT' :
+                         finalHazardCount >= (expectedMinHazards * 0.8) ? 'GOOD' :
+                         finalHazardCount >= (expectedMinHazards * 0.6) ? 'ACCEPTABLE' : 'POOR',
+          meetsThreshold: finalHazardCount >= expectedMinHazards || 
+                          (finalHazardCount / expectedMinHazards) >= 0.7,
+          ppeCount: validatedRiskAssessment.ppeDetails?.length || 0,
+          controlsCount: validatedRiskAssessment.controls?.length || 0,
+          emergencyProceduresCount: validatedRiskAssessment.emergencyProcedures?.length || 0,
+          linkedStepAccuracy: linkedStepCount > 0 ? `${linkedStepCount}/${finalHazardCount}` : 'N/A',
+          generationTime: Math.round((Date.now() - aiCallStart) / 1000),
+          adjustedTokens: adjustedMaxTokens
+        }
+      },
       suggestedNextAgents: suggestNextAgents(
         'health-safety',
         query,
@@ -1519,10 +1574,25 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       }))
     };
     
-    // Validate critical fields before returning
-    if (!responsePayload.structuredData.riskAssessment.hazards || responsePayload.structuredData.riskAssessment.hazards.length === 0) {
-      throw new Error('Response validation failed: No hazards in final payload');
+    // CRITICAL: Ensure hazards accessible at ALL expected frontend paths
+    if (!responsePayload.riskAssessment) {
+      logger.info('🔧 Adding top-level riskAssessment for frontend compatibility');
+      responsePayload.riskAssessment = responsePayload.structuredData.riskAssessment;
     }
+
+    // Double-check hazards are accessible at the path frontend expects
+    const frontendPath = responsePayload?.structuredData?.riskAssessment?.hazards;
+    if (!frontendPath || frontendPath.length === 0) {
+      logger.error('🚨 CRITICAL: Hazards not at expected frontend path', {
+        structuredDataExists: !!responsePayload.structuredData,
+        riskAssessmentExists: !!responsePayload.structuredData?.riskAssessment,
+        hazardsExists: !!responsePayload.structuredData?.riskAssessment?.hazards,
+        hazardCount: responsePayload.structuredData?.riskAssessment?.hazards?.length || 0
+      });
+      throw new Error('Response structure invalid - hazards not accessible at expected path');
+    }
+
+    logger.info(`✅ Response structure validated: ${frontendPath.length} hazards accessible at frontend path`);
 
     // Return enriched response
     return new Response(
