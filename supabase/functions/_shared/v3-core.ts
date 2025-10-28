@@ -144,19 +144,19 @@ export async function callLovableAI(
   } = {}
 ): Promise<string> {
   const {
-    model = 'gemini-2.5-flash', // Changed default from gpt-5-mini to Gemini
+    model = 'gpt-5-mini-2025-08-07', // GPT-5 Mini for superior reasoning and RAMS quality
     temperature = 0.3,
     maxTokens = 24000, // Increased to 24000 for highly detailed RAMS with extensive hazard coverage
     responseFormat = 'text'
   } = options;
 
-  console.debug('Calling Gemini AI', { model });
+  console.debug('🤖 Calling OpenAI GPT-5 Mini', { model });
 
   // Use the new shared provider
-  const { callGemini, withRetry } = await import('./ai-providers.ts');
+  const { callOpenAI, withRetry } = await import('./ai-providers.ts');
   
   const result = await withRetry(async () => {
-    return await callGemini({
+    return await callOpenAI({
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
