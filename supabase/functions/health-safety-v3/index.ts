@@ -983,6 +983,21 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     // Just parse it directly - no need to navigate through choices/message/tool_calls
     const safetyResult = JSON.parse(aiResult.content);
 
+    // ✅ PHASE 5: Validate and fix linkedToStep for all hazards
+    const invalidHazards = safetyResult.riskAssessment?.hazards?.filter(
+      (h: any) => typeof h.linkedToStep !== 'number'
+    ) || [];
+    
+    if (invalidHazards.length > 0) {
+      logger.warn(`⚠️ ${invalidHazards.length} hazards missing linkedToStep - setting to 0 (general)`, {
+        sampleHazards: invalidHazards.slice(0, 3).map((h: any) => h.hazard?.substring(0, 50))
+      });
+      
+      invalidHazards.forEach((h: any) => { 
+        h.linkedToStep = 0; // Default to general hazard
+      });
+    }
+
     logger.info('Risk assessment completed', {
       hazardsIdentified: safetyResult.riskAssessment?.hazards?.length,
       controlsApplied: safetyResult.riskAssessment?.controls?.length
@@ -1013,19 +1028,25 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       expectedMinHazards = 12; // Standard
     }
 
-    // Log quality metrics
+    // ✅ PHASE 5: Enhanced quality metrics with linkedToStep validation
     const linkedStepCount = safetyResult.riskAssessment?.hazards?.filter((h: any) => typeof h.linkedToStep === 'number').length || 0;
     const regulationCount = safetyResult.riskAssessment?.hazards?.filter((h: any) => h.regulation).length || 0;
+    const linkedStepAccuracy = hazardCount > 0 ? (linkedStepCount / hazardCount) * 100 : 0;
 
     logger.info('📊 Response Quality Metrics', {
       hazardsGenerated: hazardCount,
       hazardsExpected: expectedMinHazards,
       ppeItems: ppeCount,
-      linkedStepsAccuracy: `${linkedStepCount}/${hazardCount} (${((linkedStepCount/hazardCount)*100).toFixed(0)}%)`,
+      linkedStepsAccuracy: `${linkedStepCount}/${hazardCount} (${linkedStepAccuracy.toFixed(0)}%)`,
       regulationCoverage: `${regulationCount}/${hazardCount} (${((regulationCount/hazardCount)*100).toFixed(0)}%)`,
       complexityScore,
-      qualityGrade: hazardCount >= expectedMinHazards && ppeCount >= 5 ? '✅ PASS' : '⚠️ NEEDS IMPROVEMENT'
+      qualityGrade: hazardCount >= expectedMinHazards && ppeCount >= 5 && linkedStepAccuracy >= 80 ? '✅ PASS' : '⚠️ NEEDS IMPROVEMENT'
     });
+    
+    // ✅ Validate linkedToStep coverage
+    if (linkedStepAccuracy < 80 && hazardCount >= 10) {
+      logger.warn(`⚠️ LOW LINKED STEP COVERAGE: ${linkedStepAccuracy.toFixed(0)}% of hazards have linkedToStep`);
+    }
 
     // Warn on quality issues
     if (hazardCount < expectedMinHazards) {
@@ -1132,8 +1153,13 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       logger.warn(`⚠️ LOW PPE COUNT: ${qualityMetrics.ppeCount} items (expected 8-12 for electrical work)`);
     }
 
-    // Validate we have the minimum required data before returning
-    if (!validatedRiskAssessment.hazards || validatedRiskAssessment.hazards.length === 0) {
+    // ✅ PHASE 5: Validate response structure before returning
+    try {
+      if (!validatedRiskAssessment.hazards || !Array.isArray(validatedRiskAssessment.hazards)) {
+        throw new Error('Invalid hazards structure');
+      }
+      
+      if (validatedRiskAssessment.hazards.length === 0) {
       logger.warn('No hazards generated, adding fallback hazards');
       validatedRiskAssessment.hazards = [
         {
@@ -1302,35 +1328,66 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       hasAllRequiredData: true
     });
 
+    // ✅ PHASE 5: Robust response building with validation
+    const responsePayload = {
+      success: true,
+      response: safetyResult.response,
+      enrichment: safetyResult.enrichment || {},
+      citations: safetyResult.citations || [],
+      rendering: safetyResult.rendering || {},
+      structuredData: { 
+        riskAssessment: validatedRiskAssessment, 
+        methodStatement, 
+        compliance,
+        ragPreview
+      },
+      suggestedNextAgents: suggestNextAgents(
+        'health-safety',
+        query,
+        safetyResult.response,
+        (previousAgentOutputs || []).map((o: any) => o.agent)
+      ).map((s: any) => ({
+        ...s,
+        contextHint: generateContextHint(s.agent, 'health-safety', { riskAssessment, methodStatement, compliance })
+      }))
+    };
+    
+    // Validate critical fields before returning
+    if (!responsePayload.structuredData.riskAssessment.hazards || responsePayload.structuredData.riskAssessment.hazards.length === 0) {
+      throw new Error('Response validation failed: No hazards in final payload');
+    }
+
     // Return enriched response
     return new Response(
-      JSON.stringify({
-        success: true,
-        response: safetyResult.response,
-        enrichment: safetyResult.enrichment || {},
-        citations: safetyResult.citations || [],
-        rendering: safetyResult.rendering || {},
-        structuredData: { 
-          riskAssessment: validatedRiskAssessment, 
-          methodStatement, 
-          compliance,
-          ragPreview
-        },
-        suggestedNextAgents: suggestNextAgents(
-          'health-safety',
-          query,
-          safetyResult.response,
-          (previousAgentOutputs || []).map((o: any) => o.agent)
-        ).map((s: any) => ({
-          ...s,
-          contextHint: generateContextHint(s.agent, 'health-safety', { riskAssessment, methodStatement, compliance })
-        }))
-      }),
+      JSON.stringify(responsePayload),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200 
       }
     );
+    
+    } catch (validationError) {
+      logger.error('Response building failed', { 
+        error: validationError instanceof Error ? validationError.message : String(validationError),
+        hazardsAvailable: validatedRiskAssessment?.hazards?.length || 0
+      });
+      
+      // Return structured error instead of crashing
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Response validation failed',
+          details: validationError instanceof Error ? validationError.message : String(validationError),
+          partialData: validatedRiskAssessment?.hazards?.length > 0 ? {
+            hazardCount: validatedRiskAssessment.hazards.length
+          } : undefined
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 500
+        }
+      );
+    }
 
   } catch (error) {
     logger.error('Health & Safety V3 error', { error: error instanceof Error ? error.message : String(error) });

@@ -53,6 +53,12 @@ export interface RAMSRisk {
   responsible?: string;
   actionBy?: string;
   done?: boolean;
+  /**
+   * Links hazard to a specific installation step
+   * 0 = general hazard (applies to entire job)
+   * 1-N = specific step number in method statement
+   */
+  linkedToStep?: number;
 }
 
 export interface RAMSReportOptions {

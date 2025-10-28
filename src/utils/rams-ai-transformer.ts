@@ -258,7 +258,8 @@ export function transformHealthSafetyToRAMS(
         furtherAction: "",
         responsible: projectInfo.assessor,
         actionBy: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        done: false
+        done: false,
+        linkedToStep: sourceHazard.linkedToStep ?? 0 // ✅ Preserve from AI (0 = general, 1-N = step)
       });
     });
     
@@ -489,39 +490,21 @@ export function transformInstallerToMethodSteps(
     willUseFallback: !methodSteps || methodSteps.length === 0
   });
   
-  // Helper function to link hazards to a step based on keyword matching
+  // ✅ SIMPLIFIED: Use linkedToStep from AI instead of keyword matching
   const linkHazardsToStep = (step: any): string[] => {
-    const stepText = `${step.title || step.step || ''} ${step.description || ''}`.toLowerCase();
-    const linkedHazardIds: string[] = [];
+    const stepNumber = step.stepNumber || step.step_number || 1;
     
-    hazards.forEach(hazard => {
-      const hazardText = hazard.hazard.toLowerCase();
-      
-      // Keyword matching logic
-      const keywords = [
-        { hazard: ['electric', 'shock', 'live', 'voltage'], step: ['electric', 'cable', 'wire', 'circuit', 'terminal', 'connect', 'test', 'energi'] },
-        { hazard: ['height', 'fall', 'working at height'], step: ['ladder', 'scaffold', 'height', 'above', 'ceiling', 'roof', 'elevated'] },
-        { hazard: ['manual', 'handling', 'lifting'], step: ['lift', 'carry', 'move', 'install', 'position', 'transport', 'handling'] },
-        { hazard: ['confined', 'space'], step: ['confined', 'enclosed', 'restricted', 'access', 'tight'] },
-        { hazard: ['dust', 'silica', 'debris'], step: ['dust', 'drill', 'cut', 'chase', 'grind', 'debris'] },
-        { hazard: ['fire', 'burn'], step: ['hot', 'heat', 'solder', 'burn', 'flame', 'fire'] },
-        { hazard: ['sharp', 'cut'], step: ['cut', 'strip', 'sharp', 'blade', 'knife', 'trim'] },
-        { hazard: ['noise'], step: ['drill', 'noise', 'loud', 'power tool', 'drilling'] },
-        { hazard: ['trip', 'slip'], step: ['cable', 'route', 'floor', 'access', 'install'] }
-      ];
-      
-      for (const match of keywords) {
-        const hazardMatch = match.hazard.some(keyword => hazardText.includes(keyword));
-        const stepMatch = match.step.some(keyword => stepText.includes(keyword));
-        
-        if (hazardMatch && stepMatch) {
-          linkedHazardIds.push(hazard.id);
-          break;
-        }
-      }
-    });
+    // Filter hazards by linkedToStep value (AI already determined this)
+    const linkedHazardIds = hazards
+      .filter(hazard => {
+        const linkedStep = (hazard as any).linkedToStep ?? 0;
+        return linkedStep === stepNumber;
+      })
+      .map(hazard => hazard.id);
     
-    return [...new Set(linkedHazardIds)]; // Remove duplicates
+    console.log(`✅ Step ${stepNumber}: Found ${linkedHazardIds.length} linked hazards via linkedToStep`);
+    
+    return linkedHazardIds;
   };
   
   // Infer safety requirements from step description - only if SPECIFIC safety requirements are detected

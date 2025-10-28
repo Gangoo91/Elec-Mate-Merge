@@ -158,6 +158,28 @@ export function useAIRAMS(): UseAIRAMSReturn {
       allRiskIds: ramsData.risks?.map(r => r.id)
     });
 
+    // ✅ PHASE 6: Pre-save quality gate - prevent data loss
+    const extractedHazardCount = (ramsData as any)._extractedHazardCount || ramsData.risks?.length || 0;
+    const riskCount = ramsData.risks?.length || 0;
+    const hazardLoss = extractedHazardCount > 0 ? (extractedHazardCount - riskCount) / extractedHazardCount : 0;
+    
+    if (hazardLoss > 0.2 && extractedHazardCount >= 10) {
+      console.error('🚨 ABORTING SAVE - Detected >20% hazard loss', {
+        extracted: extractedHazardCount,
+        aboutToSave: riskCount,
+        lossPercentage: `${(hazardLoss * 100).toFixed(1)}%`
+      });
+      
+      toast({
+        title: "Data loss prevented",
+        description: `Cannot save - ${Math.round(hazardLoss * 100)}% of hazards would be lost. Please regenerate.`,
+        variant: "destructive"
+      });
+      
+      setIsSaving(false);
+      return;
+    }
+
     setIsSaving(true);
     
     try {
@@ -231,6 +253,37 @@ export function useAIRAMS(): UseAIRAMSReturn {
         if (insertError) throw insertError;
         savedDocId = newDoc.id;
         setDocumentId(newDoc.id);
+      }
+
+      // ✅ PHASE 6: Post-save verification
+      if (savedDocId && !isAutosave) {
+        const { data: savedDoc, error: verifyError } = await supabase
+          .from('rams_documents')
+          .select('risks, ppe_details')
+          .eq('id', savedDocId)
+          .single();
+        
+        if (!verifyError && savedDoc) {
+          const savedRiskCount = (savedDoc.risks as any)?.length || 0;
+          const expectedRiskCount = riskCount;
+          const postSaveLoss = expectedRiskCount > 0 ? (expectedRiskCount - savedRiskCount) / expectedRiskCount : 0;
+          
+          if (postSaveLoss > 0.2) {
+            console.error('🚨 POST-SAVE VERIFICATION FAILED', {
+              expected: expectedRiskCount,
+              saved: savedRiskCount,
+              lossPercentage: `${(postSaveLoss * 100).toFixed(1)}%`
+            });
+            
+            toast({
+              title: "Data integrity issue",
+              description: `Only ${savedRiskCount}/${expectedRiskCount} risks were saved. Document may be incomplete.`,
+              variant: "destructive"
+            });
+          } else {
+            console.log(`✅ Post-save verification passed: ${savedRiskCount} risks saved`);
+          }
+        }
       }
 
       // Save method statement
@@ -626,43 +679,30 @@ export function useAIRAMS(): UseAIRAMSReturn {
       }
 
       const extractHazards = (responseData: any): any[] => {
-        console.log('🔍 HAZARD EXTRACTION WITH UNWRAPPED DATA:', {
-          hasStructuredData: !!responseData?.structuredData,
-          hasRiskAssessment: !!responseData?.structuredData?.riskAssessment,
-          hazardsAtDirectPath: responseData?.structuredData?.riskAssessment?.hazards?.length || 0,
-          responseDataKeys: Object.keys(responseData || {})
-        });
-
-        // PRIORITY ORDER: Check most common paths including unwrapped
-        const possiblePaths = [
-          responseData?.structuredData?.riskAssessment?.hazards, // Primary path (edge function format)
-          responseData?.data?.structuredData?.riskAssessment?.hazards, // Double wrapped
-          responseData?.response?.structuredData?.riskAssessment?.hazards, // Alternative wrapping
-          responseData?.riskAssessment?.hazards, // Direct risk assessment
-          responseData?.structuredData?.hazards, // Alternative structure
-          responseData?.hazards, // Direct hazards array
-        ];
-
-        for (let i = 0; i < possiblePaths.length; i++) {
-          const path = possiblePaths[i];
-          if (Array.isArray(path) && path.length > 0) {
-            console.log(`✅ Found ${path.length} hazards at path index ${i}`, {
-              pathIndex: i,
-              pathName: ['structuredData.riskAssessment.hazards', 'data.structuredData.riskAssessment.hazards', 
-                         'response.structuredData.riskAssessment.hazards', 'riskAssessment.hazards',
-                         'structuredData.hazards', 'hazards'][i],
-              sampleHazards: path.slice(0, 3).map((h: any) => h.hazard || h.hazardDescription || 'Unknown')
-            });
-            return path;
-          }
+        // ✅ SIMPLIFIED: Single expected path after edge function stabilization
+        const hazards = responseData?.structuredData?.riskAssessment?.hazards;
+        
+        if (!Array.isArray(hazards)) {
+          console.error('❌ Invalid response structure - hazards not found', {
+            hasStructuredData: !!responseData?.structuredData,
+            hasRiskAssessment: !!responseData?.structuredData?.riskAssessment,
+            responseKeys: Object.keys(responseData || {})
+          });
+          return [];
         }
-
-        console.error('❌ NO HAZARDS FOUND IN ANY PATH', {
-          responseDataType: typeof responseData,
-          responseDataKeys: Object.keys(responseData || {}),
-          fullResponse: JSON.stringify(responseData, null, 2).substring(0, 500)
+        
+        // Validate linkedToStep field
+        const validHazards = hazards.filter(h => {
+          const hasLinkedStep = typeof h.linkedToStep === 'number';
+          if (!hasLinkedStep) {
+            console.warn('⚠️ Hazard missing linkedToStep:', h.hazard?.substring(0, 50));
+          }
+          return hasLinkedStep;
         });
-        return [];
+        
+        console.log(`✅ Extracted ${validHazards.length}/${hazards.length} hazards with valid linkedToStep`);
+        
+        return validHazards;
       };
 
       // Extract hazards from unwrapped data
@@ -682,20 +722,20 @@ export function useAIRAMS(): UseAIRAMSReturn {
       let hsDataToUse = unwrappedData;
       let shouldUseFallback = false;
 
-      // CRITICAL: NEVER use fallback if edge function succeeded OR we have valid hazards
-      if (unwrappedData?.success || hasValidHazards) {
-        console.log(`✅ USING AI-GENERATED DATA - Success: ${unwrappedData?.success}, Hazards: ${extractedHazards.length}`);
+      // ✅ STRENGTHENED: Never use fallback if we have ANY valid AI hazards (5+)
+      if (extractedHazards.length >= 5) {
+        console.log(`✅ USING AI-GENERATED DATA - ${extractedHazards.length} valid hazards found`);
         console.log('🎯 AI data preserved - no fallback will be triggered');
-        hsDataToUse = unwrappedData; // Use unwrapped data
+        hsDataToUse = unwrappedData;
         
-        // Ensure success flag is set if we have valid hazards
-        if (!hsDataToUse.success && hasValidHazards) {
+        // Ensure success flag is set
+        if (!hsDataToUse.success) {
           hsDataToUse = { ...hsDataToUse, success: true };
         }
         
-        // Never use fallback
+        // Never use fallback when we have valid data
         shouldUseFallback = false;
-        mutableHsError = null; // Clear any errors since we have valid data
+        mutableHsError = null; // Clear errors since we have valid data
       } else {
         console.warn(`⚠️ NO HAZARDS EXTRACTED - WILL ATTEMPT CACHE OR FALLBACK`);
         console.log('🔍 Fallback trigger reason:', {
