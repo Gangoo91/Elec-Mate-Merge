@@ -670,8 +670,17 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     logger.debug('Calling AI with wrapper');
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
+    // Add progress monitoring
+    const aiCallStart = Date.now();
+    let progressInterval: number | undefined;
+    
     let aiResult;
     try {
+      // Log progress every 30 seconds
+      progressInterval = setInterval(() => {
+        const elapsed = Math.round((Date.now() - aiCallStart) / 1000);
+        logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 360s)`);
+      }, 30000);
       const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
       if (!OPENAI_API_KEY) {
         throw new Error('OPENAI_API_KEY not configured');
@@ -681,7 +690,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         model: 'gpt-5-mini-2025-08-07',  // GPT-5 Mini: Fast, cost-efficient, perfect for structured outputs
         systemPrompt,
         userPrompt,
-        maxTokens: 12000,    // Optimized for 18-25 hazards - reduced from 16000 to prevent timeout
+        maxTokens: 8000,     // Reduced from 12000 - generates 15-18 hazards in ~2.5 min
         timeoutMs: 360000,   // 6 minutes - allows GPT-5 Mini to complete comprehensive structured output
       tools: [{
         type: 'function',
@@ -895,9 +904,12 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       toolChoice: { type: 'function', function: { name: 'provide_safety_assessment' } }
       });
       
-      logger.info('AI call completed successfully');
+      if (progressInterval) clearInterval(progressInterval);
+      logger.info(`✅ AI call completed in ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
       
     } catch (aiError) {
+      if (progressInterval) clearInterval(progressInterval);
+      logger.error(`❌ AI call failed after ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
       logger.error('AI call failed', {
         error: aiError instanceof Error ? aiError.message : String(aiError),
         stack: aiError instanceof Error ? aiError.stack : undefined,
@@ -905,8 +917,75 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         isTimeout: aiError instanceof Error && aiError.message.toLowerCase().includes('timeout')
       });
       
-      // For timeouts, return minimal valid response instead of failing completely
-      if (aiError instanceof Error && aiError.message.toLowerCase().includes('timeout')) {
+      // Smart fallback: If timeout, try faster Gemini model
+      if (aiError instanceof Error && (aiError.message.toLowerCase().includes('timeout') || aiError.message.toLowerCase().includes('timed out'))) {
+        logger.info('🔄 Timeout detected, attempting gemini-2.5-flash as fast fallback');
+        
+        try {
+          const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+          if (!OPENAI_API_KEY) {
+            throw new Error('OPENAI_API_KEY not configured');
+          }
+          
+          aiResult = await callAI(OPENAI_API_KEY, {
+            model: 'google/gemini-2.5-flash',  // Much faster than GPT-5 Mini
+            systemPrompt,
+            userPrompt,
+            maxTokens: 6000,  // Reduced for speed
+            timeoutMs: 90000,  // 90 seconds for Gemini
+            tools: [{
+              type: 'function',
+              function: {
+                name: 'provide_safety_assessment',
+                description: 'Return comprehensive health and safety assessment with risk mitigation',
+                parameters: {
+                  type: 'object',
+                  properties: {
+                    response: {
+                      type: 'string',
+                      description: 'Natural, conversational risk assessment IN UK ENGLISH ONLY (authorised not authorized, realise not realize, organise not organize, metres not meters). Reference previous discussion. As detailed as needed.'
+                    },
+                    riskAssessment: {
+                      type: 'object',
+                      properties: {
+                        hazards: {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              hazard: { type: 'string', description: 'Hazard description in UK English' },
+                              linkedToStep: { type: 'number', description: 'Step number (1-based) or 0 for general' },
+                              likelihood: { type: 'number', minimum: 1, maximum: 5 },
+                              likelihoodReason: { type: 'string' },
+                              severity: { type: 'number', minimum: 1, maximum: 5 },
+                              severityReason: { type: 'string' },
+                              riskScore: { type: 'number' },
+                              riskLevel: { type: 'string' },
+                              regulation: { type: 'string' }
+                            },
+                            required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel']
+                          }
+                        }
+                      }
+                    }
+                  },
+                  required: ['response']
+                }
+              }
+            }],
+            toolChoice: { type: 'function', function: { name: 'provide_safety_assessment' } }
+          });
+          
+          logger.info('✅ Fallback to Gemini succeeded');
+          
+        } catch (fallbackError) {
+          logger.error('❌ Fallback to Gemini also failed', { error: fallbackError });
+          // Continue with original timeout handling below
+        }
+      }
+      
+      // If fallback failed or wasn't attempted, return minimal valid response
+      if (!aiResult && aiError instanceof Error && aiError.message.toLowerCase().includes('timeout')) {
         logger.warn('AI timeout - returning minimal safety assessment');
         
         return new Response(

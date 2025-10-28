@@ -202,14 +202,31 @@ export async function callAI(
           }
         }
 
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(body),
-        });
+        // Add explicit timeout to prevent indefinite hanging
+        const controller = new AbortController();
+        const fetchTimeout = setTimeout(() => controller.abort(), 120000); // 2 min max per attempt
+
+        let response;
+        try {
+          response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${apiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+            signal: controller.signal,
+          });
+          clearTimeout(fetchTimeout);
+        } catch (fetchError: any) {
+          clearTimeout(fetchTimeout);
+          
+          // Handle abort as timeout
+          if (fetchError.name === 'AbortError') {
+            throw new AIError('OpenAI API call timed out after 120s', providerName, undefined, true);
+          }
+          throw fetchError;
+        }
 
         if (!response.ok) {
           const errorText = await response.text();
