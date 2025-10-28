@@ -295,12 +295,14 @@ async function vectorSearchWithEmbedding(
   }
 
   // Health & Safety search
-  if (priority && priority.health_safety > 70) {
+  if (!priority || priority.health_safety > 50) {
     searches.push(
       supabase.rpc('search_health_safety', {
         query_embedding: embedding,
-        match_threshold: 0.55,
-        match_count: 8,
+        scale_filter: null,
+        source_filter: null,
+        match_threshold: 0.50,
+        match_count: 12,
       })
     );
     searchTypes.push('health_safety');
