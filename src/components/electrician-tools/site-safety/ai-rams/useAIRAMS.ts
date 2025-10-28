@@ -458,25 +458,25 @@ export function useAIRAMS(): UseAIRAMSReturn {
           timeoutPromise
         ]) as { data: any; error: any };
         
-        // NEW: Validate result has actual hazards (not just success=true)
+        // ✅ SUPERCHARGED STEP 5: Trust the AI - accept any positive hazard count
         if (!error && data?.success) {
           const hazardCount = data?.structuredData?.riskAssessment?.hazards?.length || 
                              data?.riskAssessment?.hazards?.length || 0;
           
-          if (hazardCount >= 8) {  // Minimum acceptable hazard count
+          // Accept any positive hazard count
+          if (hazardCount > 0) {
             console.log(`✅ ${functionName} succeeded on attempt ${attempt} with ${hazardCount} hazards`);
             return { data, error: null };
-          } else if (hazardCount > 0) {
-            console.warn(`⚠️ ${functionName} returned only ${hazardCount} hazards (expected 15+)`);
-            if (attempt === maxRetries) {
-              // Last attempt - accept what we got
-              console.log(`✅ Accepting partial result on final attempt: ${hazardCount} hazards`);
-              return { data, error: null };
+          }
+          
+          // Only retry if truly empty
+          if (hazardCount === 0) {
+            console.warn(`⚠️ ${functionName} attempt ${attempt}/${maxRetries}: Zero hazards generated`);
+            if (attempt < maxRetries) {
+              console.log(`🔄 Retrying for hazards...`);
+            } else {
+              console.error(`❌ All attempts produced zero hazards`);
             }
-            // Otherwise retry for better results
-            console.log(`🔄 Retrying for more complete results...`);
-          } else {
-            console.warn(`⚠️ ${functionName} returned success but no hazards - retrying`);
           }
         }
         
@@ -1067,8 +1067,30 @@ export function useAIRAMS(): UseAIRAMSReturn {
         originalHazardCount: extractedHazards.length
       });
       
+      // ✅ SUPERCHARGED STEP 1: Normalize data before transformer
+      const normalizedHsData = {
+        structuredData: {
+          riskAssessment: {
+            hazards: extractedHazards,  // Already extracted successfully by frontend
+            ppe: hsDataToUse?.structuredData?.riskAssessment?.ppe || 
+                 hsDataToUse?.riskAssessment?.ppe || 
+                 hsDataToUse?.structuredData?.riskAssessment?.ppeDetails || [],
+            emergencyProcedures: hsDataToUse?.structuredData?.riskAssessment?.emergencyProcedures ||
+                                 hsDataToUse?.riskAssessment?.emergencyProcedures || []
+          }
+        },
+        // Preserve original response text
+        response: hsDataToUse.response
+      };
+
+      console.log('📦 Normalized data for transformer:', {
+        hazardsCount: extractedHazards.length,
+        ppeCount: normalizedHsData.structuredData.riskAssessment.ppe.length,
+        emergencyProcsCount: normalizedHsData.structuredData.riskAssessment.emergencyProcedures.length
+      });
+      
       const combinedData = combineAgentOutputsToRAMS(
-        hsDataToUse,
+        normalizedHsData,  // ✅ Use normalized data instead of hsDataToUse
         installerData,
         {
           ...projectInfo,

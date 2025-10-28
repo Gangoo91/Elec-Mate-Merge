@@ -68,19 +68,27 @@ export function transformHealthSafetyToRAMS(
   const identifiedHazards: Array<{ id: string; hazard: string; likelihood: number; severity: number; riskScore: number; riskLevel: string; regulation?: string; }> = [];
   const activities: string[] = [];
   
-  // STEP 4: Improved extraction with comprehensive fallback paths
-  const structuredData = (hsResponse as any)?.structuredData 
-    || (hsResponse.response as any)?.structuredData 
-    || {};
-  
-  const riskAssessment = structuredData.riskAssessment 
-    || hsResponse.riskAssessment 
-    || (hsResponse.response as any)?.riskAssessment 
-    || {};
-  
-  let sourceHazards = riskAssessment.hazards 
-    || (hsResponse as any).hazards
-    || [];
+  // ✅ SUPERCHARGED STEP 2: Direct extraction from normalized input
+  const structuredData = hsResponse.structuredData || {};
+  const riskAssessment = structuredData.riskAssessment || {};
+  let sourceHazards = riskAssessment.hazards || [];
+
+  console.log('🔧 Transformer extraction:', {
+    foundStructuredData: !!hsResponse.structuredData,
+    foundRiskAssessment: !!riskAssessment,
+    sourceHazardsCount: sourceHazards.length,
+    firstThreeHazards: sourceHazards.slice(0, 3).map((h: any) => h.hazard || h.hazardDescription)
+  });
+
+  // If extraction failed, log full structure for debugging
+  if (sourceHazards.length === 0) {
+    console.error('❌ EXTRACTION FAILED - Full response structure:', {
+      hsResponseKeys: Object.keys(hsResponse),
+      structuredDataKeys: structuredData ? Object.keys(structuredData) : [],
+      riskAssessmentKeys: riskAssessment ? Object.keys(riskAssessment) : []
+    });
+    throw new Error('Transformer received zero hazards - check data normalization');
+  }
   
   const ppe = riskAssessment.ppe 
     || (hsResponse as any).ppe
@@ -402,22 +410,14 @@ export function transformHealthSafetyToRAMS(
     });
   }
   
-  // Add default risks if none extracted
+  // ✅ SUPERCHARGED STEP 3: No fallback - surface the real issue
   if (risks.length === 0) {
-    risks.push({
-      id: 'risk-1',
-      hazard: "Electrical shock from live conductors",
-      risk: "Electric shock, burns, or fatality",
-      likelihood: 4,
-      severity: 5,
-      riskRating: 20,
-      controls: "• Isolate and lock-off power supply\n• Use approved voltage tester\n• Wear insulated gloves and safety boots\n• Competent person supervision required",
-      residualRisk: 6,
-      furtherAction: "Regular equipment testing",
-      responsible: projectInfo.assessor,
-      actionBy: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      done: false
+    console.error('🚨 TRANSFORMER PRODUCED ZERO RISKS', {
+      sourceHazardsCount: sourceHazards?.length || 0,
+      hsResponseKeys: Object.keys(hsResponse),
+      projectInfo
     });
+    throw new Error('Transformer produced zero risks - this should never happen with normalized data');
   }
   
   // Fallback PPE for string parsing path

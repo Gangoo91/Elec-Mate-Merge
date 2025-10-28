@@ -686,16 +686,16 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         throw new Error('OPENAI_API_KEY not configured');
       }
       
-      // Dynamic token adjustment based on RAG duration
-      let adjustedMaxTokens = 6000;
+      // ✅ SUPERCHARGED STEP 4: 2x tokens for comprehensive output
+      let adjustedMaxTokens = 12000;  // Up from 6000 - allows 25-30 comprehensive hazards
       const ragDuration = Date.now() - aiCallStart;
 
       if (ragDuration > 10000) {
-        // RAG took >10s, reduce tokens to fit remaining time budget
-        adjustedMaxTokens = 5000;
-        logger.warn(`⚠️ RAG slow (${ragDuration}ms), reducing maxTokens to 5000 for faster generation`);
+        // RAG took >10s, still give plenty of tokens but slightly reduced
+        adjustedMaxTokens = 10000;  // Up from 5000
+        logger.warn(`⚠️ RAG slow (${ragDuration}ms), reducing maxTokens to 10000 for faster generation`);
       } else {
-        logger.info(`✅ RAG fast (${ragDuration}ms), using standard maxTokens: 6000`);
+        logger.info(`✅ RAG fast (${ragDuration}ms), using full maxTokens: 12000 for comprehensive output`);
       }
       
       aiResult = await callAI(OPENAI_API_KEY, {
