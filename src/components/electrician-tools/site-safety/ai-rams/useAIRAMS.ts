@@ -444,15 +444,13 @@ export function useAIRAMS(): UseAIRAMSReturn {
     maxRetries = 2
   ): Promise<{ data: any; error: any }> => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      // STEP 1: Increased timeout for GPT-5 full model (3-5 minute response time + buffer)
-      const timeoutPromise = new Promise<{ data: null; error: any }>((_, reject) => 
-        setTimeout(() => reject(new Error('Request timeout after 8 minutes')), 480000)
-      );
-      
-      const invokePromise = supabase.functions.invoke(functionName, { body });
-      
       try {
-        const { data, error } = await Promise.race([invokePromise, timeoutPromise]);
+        const { data, error } = await supabase.functions.invoke(functionName, { 
+          body,
+          headers: {
+            'x-timeout': '480000' // 8 minutes - match edge function timeout
+          }
+        });
         
         if (!error && data?.success) {
           console.log(`✅ ${functionName} succeeded on attempt ${attempt}`);
