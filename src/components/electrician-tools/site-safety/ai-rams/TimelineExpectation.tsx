@@ -31,6 +31,31 @@ const FUN_FACTS = [
     icon: AlertTriangle,
     text: "BS 7671 compliant documentation protects both workers and contractors",
     color: "text-orange-400"
+  },
+  {
+    icon: Shield,
+    text: "Over 90% of electrical accidents are preventable with proper risk assessment",
+    color: "text-red-400"
+  },
+  {
+    icon: FileText,
+    text: "RAMS documents must be reviewed and signed before work begins",
+    color: "text-indigo-400"
+  },
+  {
+    icon: Zap,
+    text: "The AI analyses thousands of electrical safety regulations in real-time",
+    color: "text-cyan-400"
+  },
+  {
+    icon: Clock,
+    text: "Proper RAMS reduce project delays by identifying risks early",
+    color: "text-amber-400"
+  },
+  {
+    icon: Shield,
+    text: "All control measures are based on the hierarchy of controls (HSE guidelines)",
+    color: "text-emerald-400"
   }
 ];
 
@@ -40,11 +65,11 @@ export const TimelineExpectation: React.FC<TimelineExpectationProps> = ({
 }) => {
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
 
-  // Rotate facts every 10 seconds
+  // Rotate facts every 8 seconds for better engagement
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentFactIndex((prev) => (prev + 1) % FUN_FACTS.length);
-    }, 10000);
+    }, 8000);
     return () => clearInterval(interval);
   }, []);
 

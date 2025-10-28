@@ -118,7 +118,24 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
 
   return (
     <div className="space-y-4 animate-fade-in">
-      {!allComplete && currentSeconds < 10 && (
+      {/* Sticky Progress Header - Mobile First */}
+      <div className="sticky top-0 z-50 bg-elec-grey/95 backdrop-blur-sm border-b border-elec-yellow/20 rounded-lg shadow-lg mb-4">
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-lg font-bold">Generating RAMS...</span>
+            <span className="text-2xl font-bold text-elec-yellow">{Math.round(overallProgress)}%</span>
+          </div>
+          <Progress value={overallProgress} className="h-2 mb-2" />
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span>Time: {Math.floor(currentSeconds / 60)}:{(currentSeconds % 60).toString().padStart(2, '0')}</span>
+            {!allComplete && estimatedTimeRemaining && estimatedTimeRemaining > 0 && (
+              <span>~{formatTimeRemaining(estimatedTimeRemaining)}</span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {!allComplete && currentSeconds < 60 && (
         <TimelineExpectation currentSeconds={currentSeconds} />
       )}
       
@@ -194,22 +211,22 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                   }`} />
                 )}
                 
-                <div className={`relative flex gap-4 sm:gap-5 p-4 sm:p-5 rounded-xl transition-all duration-300 ${
+                <div className={`relative flex gap-3 sm:gap-5 p-4 sm:p-5 rounded-xl transition-all duration-300 min-h-[80px] ${
                   step.status === 'processing'
                     ? 'bg-gradient-to-br from-elec-yellow/10 via-elec-grey/90 to-elec-grey/90 border border-elec-yellow/40 shadow-[0_0_20px_rgba(255,193,7,0.15)] backdrop-blur-sm'
                     : isActive 
                     ? 'bg-elec-grey/80 border border-elec-yellow/30' 
                     : 'bg-elec-grey/50 border border-elec-yellow/10'
                 } ${step.status === 'complete' ? 'animate-in fade-in slide-in-from-left-4 duration-500' : ''}`}>
-                  {/* Icon with glow effect */}
-                  <div className={`shrink-0 h-12 w-12 sm:h-14 sm:w-14 rounded-xl flex items-center justify-center transition-all duration-300 relative ${
+                  {/* Icon with glow effect - MOBILE OPTIMIZED */}
+                  <div className={`shrink-0 h-14 w-14 sm:h-16 sm:w-16 rounded-xl flex items-center justify-center transition-all duration-300 relative ${
                     step.status === 'complete' 
                       ? 'bg-gradient-to-br from-green-500/30 to-green-500/10 border-2 border-green-500/50 shadow-[0_0_20px_rgba(34,197,94,0.3)]' 
                       : step.status === 'processing'
                       ? 'bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 border-2 border-elec-yellow/60 shadow-[0_0_20px_rgba(255,193,7,0.4)]'
                       : 'bg-muted border-2 border-border'
                   }`}>
-                    <Icon className={`relative h-6 w-6 sm:h-7 sm:w-7 ${
+                    <Icon className={`relative h-7 w-7 sm:h-8 sm:w-8 ${
                       step.status === 'complete' 
                         ? 'text-green-400' 
                         : step.status === 'processing'
@@ -217,43 +234,44 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                         : 'text-muted-foreground'
                     }`} />
                     {step.status === 'complete' && (
-                      <Sparkles className="absolute -top-1 -right-1 h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-300 animate-in zoom-in duration-300" />
+                      <Sparkles className="absolute -top-1 -right-1 h-4 w-4 sm:h-5 sm:w-5 text-green-300 animate-in zoom-in duration-300" />
+                    )}
+                    {step.status === 'processing' && (
+                      <div className="absolute inset-0 rounded-xl animate-ping bg-elec-yellow/20" />
                     )}
                   </div>
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0 space-y-3">
+                  {/* Content - MOBILE OPTIMIZED */}
+                  <div className="flex-1 min-w-0 space-y-2 sm:space-y-3">
                     {/* Title and Status Row */}
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3">
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-bold text-base sm:text-lg leading-tight tracking-tight">
-                          {agentNames[step.agent]}
-                        </h4>
-                        <p className="text-sm sm:text-base text-elec-light/70 mt-1 sm:mt-1.5 font-medium leading-relaxed">
-                          {agentDescriptions[step.agent]}
-                        </p>
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-bold text-lg sm:text-xl leading-tight tracking-tight">
+                            {agentNames[step.agent]}
+                          </h4>
+                        </div>
+                        <div className="shrink-0 flex items-center gap-2">
+                          {getStatusIcon(step.status)}
+                          {getStatusBadge(step.status)}
+                        </div>
                       </div>
-                      <div className="shrink-0 flex items-center gap-2.5 self-start">
-                        {getStatusIcon(step.status)}
-                        {getStatusBadge(step.status)}
-                      </div>
+                      <p className="text-base sm:text-lg text-elec-light/70 font-medium leading-relaxed">
+                        {agentDescriptions[step.agent]}
+                      </p>
                     </div>
 
-                    {/* Sub-step progress */}
-                    {step.status === 'processing' && (
-                      <>
-                        <SubStepProgress 
-                          currentSubStep={step.subStep || null}
-                          isComplete={false}
-                        />
-                        {step.reasoning && (
-                          <div className="text-xs sm:text-sm text-elec-light/70 mt-2 p-2 bg-elec-yellow/5 rounded border border-elec-yellow/10">
-                            <span className="animate-pulse">
-                              {step.reasoning}
-                            </span>
-                          </div>
-                        )}
-                      </>
+                    {/* Reasoning/Status - MOBILE OPTIMIZED */}
+                    {step.reasoning && (
+                      <div className={`text-sm sm:text-base p-3 rounded-lg ${
+                        step.status === 'processing' 
+                          ? 'bg-elec-yellow/5 border border-elec-yellow/20 text-elec-light animate-pulse' 
+                          : 'bg-green-500/5 border border-green-500/20 text-elec-light/90'
+                      }`}>
+                        <span className="font-medium leading-relaxed">
+                          {step.reasoning}
+                        </span>
+                      </div>
                     )}
 
                     {/* Time elapsed for completed steps */}

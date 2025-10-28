@@ -885,10 +885,10 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     });
 
     // ✅ PHASE 1: Hazards are now at TOP LEVEL (not nested in riskAssessment)
-    const hazards = safetyResult.hazards || [];
+    const extractedHazards = safetyResult.hazards || [];
     
     // 🚨 PHASE 1 FIX: Zero Hazards Bug - Immediate detection with retry capability
-    if (hazards.length === 0) {
+    if (extractedHazards.length === 0) {
       logger.error('🚨 PHASE 1 CRITICAL: AI generated ZERO hazards', {
         hadToolCall: !!aiResult.toolCalls,
         hadHazardsArray: !!safetyResult.hazards,
@@ -904,11 +904,11 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       throw new Error(`PHASE 1 ERROR: AI generated zero hazards. Schema validation: ${safetyResult.hazards ? 'array exists but empty' : 'hazards array missing'}`);
     }
 
-    logger.info(`✅ PHASE 1: Extracted ${hazards.length} hazards from standardized response`);
+    logger.info(`✅ PHASE 1: Extracted ${extractedHazards.length} hazards from standardized response`);
 
     // ✅ PHASE 1: Validate and fix linkedToStep for all hazards (data integrity)
     let fixedCount = 0;
-    hazards.forEach((h: any) => {
+    extractedHazards.forEach((h: any) => {
       if (typeof h.linkedToStep !== 'number') {
         h.linkedToStep = 0; // Default to general hazard
         fixedCount++;
@@ -916,7 +916,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     });
     
     if (fixedCount > 0) {
-      logger.warn(`⚠️ PHASE 1: Fixed ${fixedCount}/${hazards.length} hazards missing linkedToStep (set to 0)`);
+      logger.warn(`⚠️ PHASE 1: Fixed ${fixedCount}/${extractedHazards.length} hazards missing linkedToStep (set to 0)`);
     }
 
     logger.info('Risk assessment completed', {
@@ -951,18 +951,18 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     }));
 
     // Step 6: Enrich response with UI metadata
-    const enrichedResponse = enrichResponse(
+    const enrichedResponseData = enrichResponse(
       safetyResult,
       hsKnowledge?.healthSafetyDocs || [],
       'health-safety',
-      { workType, location, hazards }
+      { workType, location, hazards: extractedHazards }
     );
 
     // ✅ PHASE 1: Build standardized response structure
     const standardizedResponse: HealthSafetyV3Response = {
       success: true,
       data: {
-        hazards: hazards.map((h: any, idx: number) => ({
+        hazards: extractedHazards.map((h: any, idx: number) => ({
           id: `hazard-${idx + 1}`,
           hazard: h.hazard,
           likelihood: h.likelihood,
@@ -981,7 +981,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       },
       metadata: {
         generationTimeMs: performanceMetrics.aiGeneration,
-        hazardCount: hazards.length,
+        hazardCount: extractedHazards.length,
         ppeCount: (safetyResult.ppeDetails || []).length,
         ragSourceCount: hsKnowledge?.healthSafetyDocs?.length || 0,
         aiModel: 'gpt-5-mini-2025-08-07',

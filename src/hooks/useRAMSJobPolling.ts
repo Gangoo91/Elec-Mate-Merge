@@ -32,6 +32,8 @@ interface UseRAMSJobPollingReturn {
 export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn => {
   const [job, setJob] = useState<RAMSJob | null>(null);
   const [isPolling, setIsPolling] = useState(false);
+  const [lastProgress, setLastProgress] = useState(0);
+  const [lastProgressUpdate, setLastProgressUpdate] = useState(Date.now());
 
   const pollJob = useCallback(async () => {
     if (!jobId) return;
@@ -50,6 +52,29 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
 
       setJob(data);
 
+      // Stuck job detection: if progress hasn't changed in 45 seconds, mark as failed
+      if (data.status === 'processing') {
+        if (data.progress === lastProgress) {
+          const stuckDuration = Date.now() - lastProgressUpdate;
+          if (stuckDuration > 45000) {
+            console.error('❌ STUCK JOB DETECTED: No progress in 45s at', data.progress + '%');
+            // Update the job in the database to failed status
+            await supabase
+              .from('rams_generation_jobs')
+              .update({
+                status: 'failed',
+                error_message: 'Generation stalled - no progress detected for 45 seconds. Please try again.'
+              })
+              .eq('id', jobId);
+            setIsPolling(false);
+            return;
+          }
+        } else {
+          setLastProgress(data.progress);
+          setLastProgressUpdate(Date.now());
+        }
+      }
+
       // Stop polling when complete or failed
       if (data.status === 'complete' || data.status === 'failed') {
         setIsPolling(false);
@@ -57,7 +82,7 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     } catch (error) {
       console.error('Error polling job:', error);
     }
-  }, [jobId]);
+  }, [jobId, lastProgress, lastProgressUpdate]);
 
   useEffect(() => {
     if (!jobId || !isPolling) return;

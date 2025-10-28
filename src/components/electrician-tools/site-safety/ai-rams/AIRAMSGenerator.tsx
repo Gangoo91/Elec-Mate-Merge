@@ -256,11 +256,18 @@ export const AIRAMSGenerator: React.FC = () => {
               )}
 
               <AgentProcessingView
-                steps={[{ 
-                  agent: progress < 50 ? 'health-safety' : 'installer', 
-                  status: status === 'complete' ? 'complete' : status === 'failed' ? 'error' : 'processing',
-                  reasoning: currentStep || 'Starting...'
-                }]}
+                steps={[
+                  {
+                    agent: 'health-safety',
+                    status: progress >= 40 ? 'complete' : (status === 'failed' ? 'error' : 'processing'),
+                    reasoning: progress < 40 ? currentStep : '✅ Risk assessment complete'
+                  },
+                  {
+                    agent: 'installer',
+                    status: status === 'complete' ? 'complete' : progress >= 40 ? (status === 'failed' ? 'error' : 'processing') : 'pending',
+                    reasoning: progress >= 40 && progress < 100 ? currentStep : progress === 100 ? '✅ Method statement complete' : 'Waiting for health & safety analysis...'
+                  }
+                ]}
                 isVisible={true}
                 overallProgress={progress}
                 estimatedTimeRemaining={0}
