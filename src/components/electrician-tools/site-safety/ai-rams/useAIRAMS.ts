@@ -445,12 +445,16 @@ export function useAIRAMS(): UseAIRAMSReturn {
   ): Promise<{ data: any; error: any }> => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        const { data, error } = await supabase.functions.invoke(functionName, { 
-          body,
-          headers: {
-            'x-timeout': '480000' // 8 minutes - match edge function timeout
-          }
-        });
+        // Wrap the supabase invoke call with a timeout
+        const invokePromise = supabase.functions.invoke(functionName, { body });
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Request timed out after 8 minutes')), 480000)
+        );
+        
+        const { data, error } = await Promise.race([
+          invokePromise,
+          timeoutPromise
+        ]) as { data: any; error: any };
         
         if (!error && data?.success) {
           console.log(`✅ ${functionName} succeeded on attempt ${attempt}`);
