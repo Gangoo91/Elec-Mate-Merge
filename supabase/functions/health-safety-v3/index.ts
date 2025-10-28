@@ -1,7 +1,7 @@
-// DEPLOYMENT v4.2.0 - Edge Function Timeout Enforcement - 2025-10-28
-const VERSION = 'v4.2.0-timeout-enforcement';
+// DEPLOYMENT v4.3.0 - AI Call Timeout & Zero Hazard Detection - 2025-10-28
+const VERSION = 'v4.3.0-ai-timeout';
 const BOOT_TIME = new Date().toISOString();
-const EDGE_FUNCTION_TIMEOUT_MS = 40000; // 40s - leave 5s buffer for frontend timeout
+const EDGE_FUNCTION_TIMEOUT_MS = 120000; // 120s - matches frontend timeout
 console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
 
 import { serve } from '../_shared/deps.ts';
@@ -129,7 +129,7 @@ serve(async (req) => {
   // Timeout promise
   const timeoutPromise = new Promise<Response>((_, reject) => {
     setTimeout(() => {
-      reject(new Error('Edge function timeout after 40s'));
+      reject(new Error('Edge function timeout after 120s'));
     }, EDGE_FUNCTION_TIMEOUT_MS);
   });
 
@@ -838,7 +838,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           }
         }],
         tool_choice: { type: 'function', function: { name: 'provide_safety_assessment' } }
-      }, OPENAI_API_KEY);
+      }, OPENAI_API_KEY, 110000); // 110s timeout
       
       if (progressInterval) clearInterval(progressInterval);
       performanceMetrics.aiGeneration = Date.now() - aiGenerationStartTime;
@@ -867,6 +867,19 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     const safetyResult = aiResult.toolCalls && aiResult.toolCalls.length > 0
       ? JSON.parse(aiResult.toolCalls[0].function.arguments)
       : JSON.parse(aiResult.content);
+
+    // 🚨 CRITICAL: Validate non-zero hazards immediately
+    const hazards = safetyResult.riskAssessment?.hazards || [];
+    if (hazards.length === 0) {
+      logger.error('🚨 CRITICAL: AI generated ZERO hazards', {
+        hadToolCall: !!aiResult.toolCalls,
+        hadArguments: !!safetyResult.riskAssessment,
+        rawSample: JSON.stringify(safetyResult).substring(0, 300)
+      });
+      throw new Error('AI generated zero hazards - invalid response');
+    }
+
+    logger.info(`✅ Extracted ${hazards.length} hazards from AI response`);
 
     // ✅ PHASE 5: Validate and fix linkedToStep for all hazards
     const invalidHazards = safetyResult.riskAssessment?.hazards?.filter(

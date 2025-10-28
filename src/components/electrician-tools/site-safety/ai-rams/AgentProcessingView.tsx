@@ -47,17 +47,35 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
 }) => {
   const [currentSeconds, setCurrentSeconds] = useState(0);
 
+  // Calculate status flags first (needed in useEffect)
+  const allComplete = steps.every(step => step.status === 'complete');
+  const hasError = steps.some(step => step.status === 'error');
+  const isProcessing = steps.some(step => step.status === 'processing');
+
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible) {
+      setCurrentSeconds(0);
+      return;
+    }
     const interval = setInterval(() => setCurrentSeconds(prev => prev + 1), 1000);
     return () => clearInterval(interval);
   }, [isVisible]);
 
-  if (!isVisible || steps.length === 0) return null;
+  // Reset timer on error
+  useEffect(() => {
+    if (hasError) {
+      setCurrentSeconds(0);
+    }
+  }, [hasError]);
 
-  const allComplete = steps.every(step => step.status === 'complete');
-  const hasError = steps.some(step => step.status === 'error');
-  const isProcessing = steps.some(step => step.status === 'processing');
+  // Reset timer when processing starts
+  useEffect(() => {
+    if (isProcessing && steps.length > 0) {
+      setCurrentSeconds(0);
+    }
+  }, [isProcessing, steps.length]);
+
+  if (!isVisible || steps.length === 0) return null;
 
   const totalTimeElapsed = useMemo(() => {
     return steps.reduce((sum, step) => sum + (step.timeElapsed || 0), 0);

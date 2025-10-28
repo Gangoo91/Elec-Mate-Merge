@@ -196,7 +196,8 @@ export async function callGemini(
  */
 export async function callOpenAI(
   options: AICallOptions,
-  openAiKey: string
+  openAiKey: string,
+  timeoutMs: number = 110000 // 110s timeout - leave 10s buffer for edge function
 ): Promise<AIResponse> {
   const {
     messages,
@@ -208,7 +209,7 @@ export async function callOpenAI(
     tool_choice
   } = options;
 
-  console.log(`🤖 Calling OpenAI ${model}`);
+  console.log(`🤖 Calling OpenAI ${model} (timeout: ${timeoutMs}ms)`);
 
   // GPT-5, GPT-4.1, O3, O4 models require max_completion_tokens and NO temperature
   const isNewModel = model.includes('gpt-5') || model.includes('gpt-4.1') || model.includes('o3') || model.includes('o4');
@@ -238,31 +239,42 @@ export async function callOpenAI(
     }
   }
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${openAiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
+  // Create AbortController for timeout
+  const abortController = new AbortController();
+  const timeoutId = setTimeout(() => {
+    console.error(`⏱️ ABORTING: OpenAI call exceeded ${timeoutMs}ms`);
+    abortController.abort();
+  }, timeoutMs);
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    
-    if (response.status === 429) {
-      throw new AIProviderError('OpenAI rate limit exceeded', 'openai', 429, true);
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+      signal: abortController.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      
+      if (response.status === 429) {
+        throw new AIProviderError('OpenAI rate limit exceeded', 'openai', 429, true);
+      }
+      
+      throw new AIProviderError(
+        `OpenAI API error: ${response.status} - ${errorText}`,
+        'openai',
+        response.status,
+        response.status >= 500
+      );
     }
-    
-    throw new AIProviderError(
-      `OpenAI API error: ${response.status} - ${errorText}`,
-      'openai',
-      response.status,
-      response.status >= 500
-    );
-  }
 
-  const data = await response.json();
+    const data = await response.json();
   
   // Handle tool calls
   if (data.choices?.[0]?.message?.tool_calls) {
@@ -273,17 +285,32 @@ export async function callOpenAI(
     };
   }
 
-  const content = data.choices?.[0]?.message?.content;
-  if (!content) {
-    throw new AIProviderError(
-      `Empty response from OpenAI (finish reason: ${data.choices?.[0]?.finish_reason || 'unknown'})`,
-      'openai',
-      undefined,
-      true
-    );
-  }
+    const content = data.choices?.[0]?.message?.content;
+    if (!content) {
+      throw new AIProviderError(
+        `Empty response from OpenAI (finish reason: ${data.choices?.[0]?.finish_reason || 'unknown'})`,
+        'openai',
+        undefined,
+        true
+      );
+    }
 
-  return { content };
+    return { content };
+  } catch (error: any) {
+    clearTimeout(timeoutId);
+    
+    // Handle abort errors
+    if (error.name === 'AbortError') {
+      throw new AIProviderError(
+        `OpenAI API timeout after ${timeoutMs}ms`,
+        'openai',
+        408, // Request Timeout
+        true // retryable
+      );
+    }
+    
+    throw error;
+  }
 }
 
 /**

@@ -362,8 +362,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
   ) => {
     let currentSubStepIndex = 0;
     let currentProgress = 0;
-    const totalDuration = 45000; // 45s per agent (reduced from 120s)
-    const updateInterval = 2000; // Update every 2s (was 150ms)
+    const totalDuration = 120000; // 120s per agent - matches new timeout
+    const updateInterval = 3000; // Update every 3s
     const progressPerUpdate = (100 / (totalDuration / updateInterval)) / subSteps.length;
 
     const interval = setInterval(() => {
@@ -463,7 +463,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
   };
 
   // Phase 2: Aggressive Timeout with Real Cancellation
-  const AGENT_TIMEOUT_MS = 45000; // 45 seconds
+  const AGENT_TIMEOUT_MS = 120000; // 120 seconds - matches edge function timeout
   const MAX_RETRIES = 2;
 
   const callAgentWithRetry = async (
@@ -848,26 +848,28 @@ export function useAIRAMS(): UseAIRAMSReturn {
         willUseAIData: hasValidHazards,
       });
 
-      // Display timing breakdown from H&S
+      // ✅ PRIORITY 6: Display timing breakdown from H&S with enhanced visibility
+      const hsTimeElapsed = Math.round((Date.now() - hsStartTime) / 1000);
       if (hsData?.metadata?.timingBreakdown) {
         const timing = hsData.metadata.timingBreakdown;
-        const ragPercent = timing.totalTime > 0 ? Math.round((timing.ragRetrieval / timing.totalTime) * 100) : 0;
-        const aiPercent = timing.totalTime > 0 ? Math.round((timing.aiGeneration / timing.totalTime) * 100) : 0;
+        const ragMs = timing.ragRetrieval || 0;
+        const aiMs = timing.aiGeneration || 0;
+        const totalMs = timing.totalTime || 0;
+        const ragPercent = totalMs > 0 ? Math.round((ragMs / totalMs) * 100) : 0;
+        const aiPercent = totalMs > 0 ? Math.round((aiMs / totalMs) * 100) : 0;
         
-        console.log('⏱️ H&S TIMING BREAKDOWN:', {
-          queryEnhancement: `${timing.queryEnhancement}ms`,
-          ragRetrieval: `${timing.ragRetrieval}ms (${ragPercent}%)`,
-          aiGeneration: `${timing.aiGeneration}ms (${aiPercent}%)`,
-          totalTime: `${timing.totalTime}ms`
-        });
+        console.log(`✅ Health & Safety complete: ${extractedHazards.length} hazards, ${hsTimeElapsed}s`);
+        console.log(`📊 H&S Time Breakdown: RAG ${(ragMs / 1000).toFixed(1)}s (${ragPercent}%), AI ${(aiMs / 1000).toFixed(1)}s (${aiPercent}%), Total ${(totalMs / 1000).toFixed(1)}s`);
 
-        // Warn if components are slow
-        if (timing.ragRetrieval > 5000) {
-          console.warn(`🐌 H&S RAG BOTTLENECK: ${timing.ragRetrieval}ms (expected <3000ms)`);
+        // Enhanced bottleneck warnings
+        if (ragMs > 5000) {
+          console.warn(`🐌 H&S RAG BOTTLENECK: ${(ragMs / 1000).toFixed(1)}s (expected <3s)`);
         }
-        if (timing.aiGeneration > 45000) {
-          console.warn(`🐌 H&S AI BOTTLENECK: ${timing.aiGeneration}ms (expected <40000ms)`);
+        if (aiMs > 110000) {
+          console.warn(`🐌 H&S AI BOTTLENECK: ${(aiMs / 1000).toFixed(1)}s (expected <110s)`);
         }
+      } else {
+        console.warn('⚠️ No timing data returned from H&S agent');
       }
 
       // Use unwrapped data for the rest of processing
@@ -1027,7 +1029,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
       // PHASE 1: Clear progress intervals and set to 50% after H&S completion
       clearProgressIntervals();
       setOverallProgress(50);
-      const hsTimeElapsed = Math.round((Date.now() - hsStartTime) / 1000);
+      // hsTimeElapsed already declared earlier for timing display
 
       // Extract hazard count with comprehensive fallback paths
       const structuredData = hsDataToUse?.structuredData || hsDataToUse?.response?.structuredData || {};
@@ -1127,11 +1129,29 @@ export function useAIRAMS(): UseAIRAMSReturn {
       const methodSteps = installerStructuredData.methodStatementSteps || installerData?.methodStatementSteps || installerData?.installationSteps || [];
       const stepsCount = methodSteps.length;
 
-      console.log('✅ Installer complete:', {
-        success: installerData?.success,
-        stepsCount,
-        dataPath: installerData?.structuredData ? 'structuredData' : 'response.structuredData'
-      });
+      console.log(`✅ Installer complete: ${stepsCount} steps, ${installerTimeElapsed}s`);
+
+      // ✅ PRIORITY 6: Display timing breakdown from Installer with enhanced visibility
+      if (installerData?.metadata?.timingBreakdown) {
+        const timing = installerData.metadata.timingBreakdown;
+        const ragMs = timing.ragRetrieval || 0;
+        const aiMs = timing.aiGeneration || 0;
+        const totalMs = timing.totalTime || 0;
+        const ragPercent = totalMs > 0 ? Math.round((ragMs / totalMs) * 100) : 0;
+        const aiPercent = totalMs > 0 ? Math.round((aiMs / totalMs) * 100) : 0;
+        
+        console.log(`📊 Installer Time Breakdown: RAG ${(ragMs / 1000).toFixed(1)}s (${ragPercent}%), AI ${(aiMs / 1000).toFixed(1)}s (${aiPercent}%), Total ${(totalMs / 1000).toFixed(1)}s`);
+
+        // Enhanced bottleneck warnings
+        if (ragMs > 5000) {
+          console.warn(`🐌 Installer RAG BOTTLENECK: ${(ragMs / 1000).toFixed(1)}s (expected <3s)`);
+        }
+        if (aiMs > 110000) {
+          console.warn(`🐌 Installer AI BOTTLENECK: ${(aiMs / 1000).toFixed(1)}s (expected <110s)`);
+        }
+      } else {
+        console.warn('⚠️ No timing data returned from Installer agent');
+      }
 
       // PHASE 1: Clear progress intervals and set to 100% after installer completion
       clearProgressIntervals();

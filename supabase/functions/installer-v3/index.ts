@@ -1,5 +1,5 @@
-// Deployed: 2025-10-28 - v4.2.0 Edge Function Timeout Enforcement
-const EDGE_FUNCTION_TIMEOUT_MS = 40000; // 40s - leave 5s buffer for frontend timeout
+// Deployed: 2025-10-28 - v4.3.0 AI Call Timeout & Zero Steps Detection
+const EDGE_FUNCTION_TIMEOUT_MS = 120000; // 120s - matches frontend timeout
 
 import { serve } from '../_shared/deps.ts';
 import {
@@ -141,7 +141,7 @@ serve(async (req) => {
   // Timeout promise
   const timeoutPromise = new Promise<Response>((_, reject) => {
     setTimeout(() => {
-      reject(new Error('Edge function timeout after 40s'));
+      reject(new Error('Edge function timeout after 120s'));
     }, EDGE_FUNCTION_TIMEOUT_MS);
   });
 
@@ -589,7 +589,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         }
       }],
         tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
-      }, OPENAI_API_KEY);
+      }, OPENAI_API_KEY, 110000); // 110s timeout
       
       clearInterval(progressInterval);
       logger.info(`✅ OpenAI call completed in ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
@@ -647,6 +647,19 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     } else {
       throw new Error('No content or tool calls returned from AI');
     }
+
+    // 🚨 CRITICAL: Validate non-zero steps immediately
+    const steps = installResult.installationSteps || [];
+    if (steps.length === 0) {
+      logger.error('🚨 CRITICAL: AI generated ZERO steps', {
+        hadToolCall: !!aiResult.toolCalls,
+        hadInstallationSteps: !!installResult.installationSteps,
+        rawSample: JSON.stringify(installResult).substring(0, 300)
+      });
+      throw new Error('AI generated zero installation steps - invalid response');
+    }
+
+    logger.info(`✅ Extracted ${steps.length} installation steps from AI response`);
 
     timings.aiGeneration = Date.now() - timings.start - timings.ragRetrieval - timings.cacheCheck;
     timings.total = Date.now() - timings.start;
