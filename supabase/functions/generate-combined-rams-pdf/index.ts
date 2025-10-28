@@ -340,10 +340,3 @@ serve(async (req) => {
     });
   }
 });
-
-function getRiskLevel(rating: number): string {
-  if (rating <= 4) return 'Low';
-  if (rating <= 9) return 'Medium';
-  if (rating <= 16) return 'High';
-  return 'Very High';
-}
